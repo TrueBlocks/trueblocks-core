@@ -42,7 +42,7 @@ func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 
 // UniqFromTraces extracts addresses from traces
 func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
-	var store *cacheNew.Store = nil
+	var store *cacheNew.Store = cacheNew.NoCache
 
 	for _, trace := range traces {
 		trace := trace

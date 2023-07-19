@@ -8,6 +8,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -32,7 +33,7 @@ func (opts *BlocksOptions) HandleList() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for bn := start; bn > end; bn-- {
-			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, nil)
+			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, cacheNew.NoCache)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {

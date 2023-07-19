@@ -6,6 +6,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -18,7 +19,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	// cache := opts.Globals.CacheStore(opts.Cache)
+	var store *cacheNew.Store = cacheNew.NoCache
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
@@ -33,7 +34,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 			defer iterCancel()
 
 			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleReceipt) error {
-				if tx, err := app.FetchTransactionById(chain, false /* needsTraces */, nil); err != nil {
+				if tx, err := app.FetchTransactionById(chain, false /* needsTraces */, store); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil || tx.Receipt == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

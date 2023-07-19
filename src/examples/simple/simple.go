@@ -10,8 +10,7 @@ import (
 )
 
 func main() {
-	var cache *cacheNew.Store
-	if block, err := rpcClient.GetBlockByNumber("mainnet", base.Blknum(3500000), cache); err != nil {
+	if block, err := rpcClient.GetBlockByNumber("mainnet", base.Blknum(3500000), cacheNew.NoCache); err != nil {
 		fmt.Println(err)
 	} else {
 		bytes, _ := json.MarshalIndent(block, "", "  ")

@@ -87,7 +87,7 @@ func GetLogCountByBlockNumber(chain string, bn uint64) (uint64, error) {
 }
 
 func GetLogsByTransactionId(chain string, bn, txid uint64) ([]types.SimpleLog, error) {
-	var store *cacheNew.Store = nil
+	var store *cacheNew.Store = cacheNew.NoCache
 	blockTs := rpc.GetBlockTimestamp(chain, bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,

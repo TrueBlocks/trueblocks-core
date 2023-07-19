@@ -69,7 +69,7 @@ func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types
 	} else {
 		var blockHash base.Hash
 		var ts int64
-		if block, err := GetBlockByNumber(chain, uint64(0), nil); err != nil {
+		if block, err := GetBlockByNumber(chain, uint64(0), cacheNew.NoCache); err != nil {
 			return nil, err
 		} else {
 			blockHash = block.Hash
@@ -142,7 +142,7 @@ func getBlockReward(bn uint64) *big.Int {
 }
 
 func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
-	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber), nil); err != nil {
+	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber), cacheNew.NoCache); err != nil {
 		return nil, err
 	} else {
 		if uncles, err := GetUnclesByNumber(chain, uint64(appearance.BlockNumber)); err != nil {

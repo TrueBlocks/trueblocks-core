@@ -71,6 +71,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 
 	return nil
 
+	// TODO: Review then remove
 	// pairs := []base.NumPair[uint32]{}
 	// for _, br := range opts.BlockIds {
 	// 	blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
