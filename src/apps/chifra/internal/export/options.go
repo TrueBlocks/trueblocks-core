@@ -140,9 +140,6 @@ func (opts *ExportOptions) toCmdLine() string {
 	if opts.CacheTraces {
 		options += " --cache_traces"
 	}
-	if opts.Count {
-		options += " --count"
-	}
 	if opts.FirstRecord != 0 {
 		options += (" --first_record " + fmt.Sprintf("%d", opts.FirstRecord))
 	}
