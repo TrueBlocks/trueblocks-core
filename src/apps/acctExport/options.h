@@ -64,7 +64,6 @@ class COptions : public CStatementOptions {
     bool articulate;
     bool cache;
     bool cache_traces;
-    bool count;
     uint64_t first_record;
     uint64_t max_records;
     bool relevant;
