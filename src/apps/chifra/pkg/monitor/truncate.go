@@ -19,11 +19,10 @@ func (m *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 		var keep []index.AppearanceRecord
 		for _, app := range apps {
 			if app.BlockNumber <= num {
-				iApp := index.AppearanceRecord{
+				keep = append(keep, index.AppearanceRecord{
 					BlockNumber:   app.BlockNumber,
 					TransactionId: app.TransactionIndex,
-				}
-				keep = append(keep, iApp)
+				})
 			}
 		}
 		lastScanned := utils.Min(num, m.Header.LastScanned)

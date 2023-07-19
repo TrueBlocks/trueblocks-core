@@ -59,15 +59,6 @@ func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
 	}
 }
 
-// These purposefully chosen baddresses are used to indicate that the transaction is a prefund
-// and uncle reward, or a mining reward. They are not real addresses, but are used to indicate
-// that the transaction is not a normal transaction. They are not (currently) indexed.
-var (
-	PrefundSender     = base.HexToAddress("0x0000000000000000000000000050726566756e64") // The word "Prefund" in hex
-	BlockRewardSender = base.HexToAddress("0x0000000000000000000000000000004d696e6572") // The word "Miner" in hex
-	UncleRewardSender = base.HexToAddress("0x000000000000000000000000000000556e636c65") // The word "Uncle" in hex
-)
-
 func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
 	// TODO: performance - This loads and then drops the file every time it's called. Quite slow.
 	// TODO: performance - in the old C++ we stored these values in a pre fundAddrMap so that given a txid in block zero
@@ -92,7 +83,7 @@ func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types
 				BlockNumber:      uint64(appearance.BlockNumber),
 				TransactionIndex: uint64(appearance.TransactionIndex),
 				Timestamp:        ts,
-				From:             PrefundSender,
+				From:             base.PrefundSender,
 				To:               base.HexToAddress(appearance.Address),
 				Value:            entry.Prefund,
 			}
@@ -168,7 +159,7 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 			switch rt {
 			case BLOCK_REWARD:
 				if block.Miner.Hex() == appearance.Address {
-					sender = BlockRewardSender
+					sender = base.BlockRewardSender
 					nUncles := len(uncles)
 					if nUncles > 0 {
 						nephewReward = new(big.Int).Mul(blockReward, big.NewInt(int64(nUncles)))
@@ -185,7 +176,7 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 			case UNCLE_REWARD:
 				for _, uncle := range uncles {
 					if uncle.Miner.Hex() == appearance.Address {
-						sender = UncleRewardSender
+						sender = base.UncleRewardSender
 						if bn < uncle.BlockNumber+6 {
 							diff := (uncle.BlockNumber + 8 - bn) // positive since +6 < bn
 							uncleReward = new(big.Int).Mul(blockReward, big.NewInt(int64(diff)))
@@ -194,7 +185,7 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 					}
 				}
 				if block.Miner.Hex() == appearance.Address {
-					sender = BlockRewardSender // if it's both, it's the block reward
+					sender = base.BlockRewardSender // if it's both, it's the block reward
 					// The uncle miner may also have been the miner of the block
 					if minerTx, err := GetRewardTxByTypeAndApp(chain, BLOCK_REWARD, appearance); err != nil {
 						return nil, err

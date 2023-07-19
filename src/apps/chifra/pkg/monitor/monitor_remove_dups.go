@@ -28,7 +28,7 @@ func (mon *Monitor) RemoveDups() (int64, int64, error) {
 				BlockNumber:   app.BlockNumber,
 				TransactionId: app.TransactionIndex,
 			}
-			if i == 0 || (prev.BlockNumber != app.BlockNumber || prev.TransactionId != iApp.TransactionId) {
+			if i == 0 || (prev.BlockNumber != iApp.BlockNumber || prev.TransactionId != iApp.TransactionId) {
 				deDupped = append(deDupped, iApp)
 			}
 			prev = iApp

@@ -121,7 +121,6 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 		}
 		for i := 0; i < len(apps); i++ {
 			cur := apps[i].BlockNumber
-
 			prev := uint32(0)
 			if apps[i].BlockNumber > 0 {
 				prev = apps[i].BlockNumber - 1
