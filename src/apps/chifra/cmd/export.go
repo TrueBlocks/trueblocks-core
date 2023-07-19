@@ -97,6 +97,10 @@ One of [ in | out | zero ]`)
 	exportCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
+	// This no-op makes scripting a bit easier. You may provide `--txs` option to the chifra export command, and it will be the same as no parameters at all.
+	var unused bool
+	exportCmd.Flags().BoolVarP(&unused, "txs", "", false, "no-op options shows transactions (same as default)")
+	exportCmd.Flags().MarkHidden("txs")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(exportCmd)

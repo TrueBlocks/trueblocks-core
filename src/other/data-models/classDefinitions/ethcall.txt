@@ -9,5 +9,3 @@ doc_group = 03-Chain State
 doc_descr = the result (articulated if possible, as bytes otherwise) of a call to a smart contract (deprecated)
 doc_route = 303-ethCall
 doc_producer = state
-
-cpp_output = src/libs/etherlib/
