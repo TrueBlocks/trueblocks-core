@@ -21,13 +21,6 @@ extern void start_Log(CTraverser* trav, void* data);
 extern bool prog_Log(CTraverser* trav, void* data);
 extern void end_Log(CTraverser* trav, void* data);
 
-extern bool app_Post(CTraverser* trav, void* data);
-extern bool app_Display(CTraverser* trav, void* data);
-class CAppearanceTraverser : public CTraverser {
-  public:
-    CAppearanceTraverser(void);
-};
-
 extern bool receipts_Display(CTraverser* trav, void* data);
 class CReceiptTraverser : public CTraverser {
   public:

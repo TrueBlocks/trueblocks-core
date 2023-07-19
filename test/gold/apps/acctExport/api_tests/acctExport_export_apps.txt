@@ -4,10 +4,8 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=1&appearances
     {
       "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "blockNumber": 0,
-      "transactionIndex": 2,
       "name": "Prefund_0002",
-      "timestamp": 1438269975,
-      "date": "2015-07-30 15:26:15 UTC"
+      "transactionIndex": 2
     }
   ],
   "meta": {
@@ -18,22 +16,6 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=1&appearances
     "unripe": "0xdeadbeef",
     "chainId": 1,
     "networkId": 1,
-    "chain": "mainnet",
-    "first_block": "0xdeadbeef",
-    "last_block": "0xdeadbeef",
-    "accountedFor": {
-      "tags": "80-Prefund",
-      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-      "name": "Prefund_0002",
-      "symbol": "",
-      "source": "Genesis",
-      "decimals": 0,
-      "petname": "noticeably-noble-pangolin",
-      "isCustom": false,
-      "isPrefund": true,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
-    }
+    "chain": "mainnet"
   }
 }

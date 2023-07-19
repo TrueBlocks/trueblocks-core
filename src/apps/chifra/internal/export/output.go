@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -53,18 +54,28 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	timer := logger.NewTimer()
 	msg := "chifra export"
 	// EXISTING_CODE
-	_, err = opts.FreshenMonitorsForExport()
-	if err != nil {
+	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
+	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
 		return err, true
 	}
 
-	if opts.Globals.IsApiMode() {
-		// The caller has to handle this when in API mode
-		return nil, false
+	if !opts.IsPorted() {
+		if opts.Globals.IsApiMode() {
+			// The caller has to handle this when in API mode
+			return nil, false
+		}
+
+		handled = true
+		err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		return
 	}
 
 	handled = true
-	err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+	if opts.Count {
+		err = opts.HandleCount(monitorArray)
+	} else if opts.Appearances {
+		err = opts.HandleAppearances(monitorArray)
+	}
 	// EXISTING_CODE
 	timer.Report(msg)
 
@@ -82,7 +93,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = false
+	ported = opts.Appearances || opts.Count
 	// EXISTING_CODE
 	return
 }

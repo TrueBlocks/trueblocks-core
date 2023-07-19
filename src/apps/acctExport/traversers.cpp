@@ -14,15 +14,6 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------
-CAppearanceTraverser::CAppearanceTraverser(void) : CTraverser("appearances") {
-    filterFunc = filterByRange;
-    preFunc = pre_Func;
-    postFunc = app_Post;
-    dataFunc = noopFunc;
-    displayFunc = app_Display;
-}
-
-//--------------------------------------------------------------------------
 CReceiptTraverser::CReceiptTraverser(void) : CTraverser("receipts") {
     filterFunc = filterByRange;
     preFunc = pre_Func;

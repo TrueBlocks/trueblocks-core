@@ -32,7 +32,6 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more log topics (only for --logs option)"),
     COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
-    COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
@@ -98,9 +97,6 @@ bool COptions::parseArguments(string_q& command) {
             // do nothing -- make auto code generation easier
         } else if (arg == "--cache_tx") {
             cache = true;
-        } else if (arg == "-p" || arg == "--appearances") {
-            appearances = true;
-
         } else if (arg == "-r" || arg == "--receipts") {
             receipts = true;
 
@@ -263,10 +259,6 @@ bool COptions::parseArguments(string_q& command) {
         allMonitors.push_back(monitor);
     }
 
-    if (appearances || count) {
-        articulate = false;
-    }
-
     if (articulate) {
         abi_spec.loadAbisFromKnown();
         for (auto monitor : allMonitors) {
@@ -338,7 +330,6 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params, OPT_PREFUND);
 
-    appearances = false;
     receipts = false;
     logs = false;
     traces = false;
@@ -515,8 +506,6 @@ bool COptions::setDisplayFormatting(void) {
                 }
             } else if (logs) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["log_fmt"]);
-            } else if (appearances) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
             } else {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
             }
@@ -558,9 +547,6 @@ bool COptions::setDisplayFormatting(void) {
     if (receipts) {
         SHOW_FIELD(CReceipt, "blockNumber");
         SHOW_FIELD(CReceipt, "transactionIndex");
-    } else if (appearances) {
-        manageFields("CName:all", false);
-        manageFields(verbose ? "CName:address,name" : "CName:address,name,timestamp,date", true);
     }
 
     return true;

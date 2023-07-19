@@ -123,7 +123,7 @@ Flags:
   -o, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
   -U, --count               only available for --appearances mode, if present, return only the number of records
-  -c, --first_record uint   the first record to process (default 1)
+  -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
   -N, --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
   -m, --emitter strings     for log export only, export only logs if emitted by one of these address(es)

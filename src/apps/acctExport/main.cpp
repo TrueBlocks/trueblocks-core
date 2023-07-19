@@ -30,8 +30,6 @@ int main(int argc, const char* argv[]) {
             // clang-format off
             options.className =
             (options.count ? GETRUNTIME_CLASS(CMonitorCount)->m_ClassName
-             : options.appearances
-             ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
              : (options.traces
                 ? GETRUNTIME_CLASS(CTrace)->m_ClassName
                 : (options.receipts
@@ -47,11 +45,6 @@ int main(int argc, const char* argv[]) {
 
             if (once)
                 cout << exportPreamble(expContext().fmtMap["header"], options.className);
-
-            if (options.appearances) {
-                CAppearanceTraverser at;
-                traversers.push_back(at);
-            }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
