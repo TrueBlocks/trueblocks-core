@@ -10,7 +10,7 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
     {
       "blockNumber": 3790483,
       "date": "2017-05-30 03:00:06 UTC",
-      "ether": "184761.000000000000000000",
+      "ether": "184761",
       "from": "0xccfddfe5f7a205e792dda6d235d5897222a46d4c",
       "gas": 2300,
       "gasCost": 0,
@@ -24,7 +24,7 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
     {
       "blockNumber": 3835659,
       "date": "2017-06-07 16:58:15 UTC",
-      "ether": "184460.000000000000000000",
+      "ether": "184460",
       "from": "0x621744ce57ea3cd4684731e6069223698c92df79",
       "gas": 2300,
       "gasCost": 0,
@@ -38,7 +38,7 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
     {
       "blockNumber": 3912453,
       "date": "2017-06-22 09:30:57 UTC",
-      "ether": "184392.780000000000000000",
+      "ether": "184392.78",
       "from": "0x26c4deafd3332bd5dc35d87895ebf038134fa24e",
       "gas": 2300,
       "gasCost": 0,
