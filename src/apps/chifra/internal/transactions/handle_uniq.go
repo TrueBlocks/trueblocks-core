@@ -17,6 +17,12 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 	rpcOptions.TraceWriteDisabled = !opts.CacheTraces
 	chain := opts.Globals.Chain
 
+	// If the cache is writeable, fetch the latest block timestamp so that we never
+	// cache pending blocks
+	if !rpcOptions.Store.ReadOnly() {
+		rpcOptions.LatestBlockTimestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, nil)
+	}
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		procFunc := func(s *types.SimpleAppearance) error {

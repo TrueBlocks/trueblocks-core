@@ -1,6 +1,9 @@
 package rpcClient
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+)
 
 var NoOptions *Options = nil
 
@@ -9,6 +12,8 @@ type Options struct {
 	// Cache Store to use for read/write. Write can be disabled
 	// by setting Store to read-only mode
 	Store *cacheNew.Store
+
+	LatestBlockTimestamp base.Timestamp
 	// Disable caching transactions
 	TransactionWriteDisabled bool
 	// Disable caching traces
@@ -23,4 +28,12 @@ func (o *Options) HasStore() bool {
 	}
 
 	return o.Store != nil
+}
+
+func (o *Options) HasStoreWriteable() bool {
+	if !o.HasStore() {
+		return false
+	}
+
+	return !o.Store.ReadOnly()
 }

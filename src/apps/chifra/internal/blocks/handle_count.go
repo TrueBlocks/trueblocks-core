@@ -21,6 +21,12 @@ func (opts *BlocksOptions) HandleCounts() error {
 	rpcOptions.TransactionWriteDisabled = !opts.CacheTxs
 	rpcOptions.TraceWriteDisabled = !opts.CacheTraces
 
+	// If the cache is writeable, fetch the latest block timestamp so that we never
+	// cache pending blocks
+	if !rpcOptions.Store.ReadOnly() {
+		rpcOptions.LatestBlockTimestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, nil)
+	}
+
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())

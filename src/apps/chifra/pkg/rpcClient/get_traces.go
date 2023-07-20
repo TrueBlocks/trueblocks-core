@@ -310,7 +310,7 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 			if !options.Store.ReadOnly() {
 				writeOptions = &cacheNew.WriteOptions{
 					// Check if the block is final
-					Pending: new(types.SimpleBlock[string]).Pending(rpc.GetBlockTimestamp(chain, nil)),
+					Pending: (&types.SimpleBlock[string]{Timestamp: transaction.Timestamp}).Pending(options.LatestBlockTimestamp),
 				}
 			}
 			traceGroup := types.NewSimpleTraceGroup(transaction)
