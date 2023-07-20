@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
@@ -26,6 +27,7 @@ type GlobalOptions struct {
 	Version bool   `json:"version,omitempty"`
 	Noop    bool   `json:"noop,omitempty"`
 	NoColor bool   `json:"noColor,omitempty"`
+	Cache   bool   `json:"cache,omitempty"`
 	output.OutputOptions
 }
 
@@ -67,6 +69,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 
 	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
 	cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "", false, "report JSON data from the node with minimal processing")
+	cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
 	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
@@ -213,13 +216,13 @@ func (opts *GlobalOptions) FinishParse(args []string) {
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns
 // a cache that will not write new items. If nil is returned, it means "no caching"
-func (opts *GlobalOptions) CacheStore(readonly bool) *cacheNew.Store {
+func (opts *GlobalOptions) cacheStore(forceReadonly bool) *cacheNew.Store {
 	// We call NewStore, but Storer implementation (Fs by default) should decide
 	// whether it has to return a new instance or reuse the existing one
 	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{
 		Location: cacheNew.FsCache,
 		Chain:    opts.Chain,
-		ReadOnly: readonly,
+		ReadOnly: !opts.Cache || forceReadonly,
 	})
 	// If there was an error, we won't use the cache
 	if err != nil {
@@ -227,6 +230,21 @@ func (opts *GlobalOptions) CacheStore(readonly bool) *cacheNew.Store {
 		return nil
 	}
 	return store
+}
+
+type DefaultRpcOptionsSettings struct {
+	ReadonlyCache bool
+}
+
+func (opts *GlobalOptions) DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *rpcClient.Options {
+	readonlyCache := false
+	if settings != nil {
+		readonlyCache = settings.ReadonlyCache
+	}
+
+	return &rpcClient.Options{
+		Store: opts.cacheStore(readonlyCache),
+	}
 }
 
 func IsGlobalOption(key string) bool {

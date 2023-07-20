@@ -9,7 +9,6 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -20,7 +19,7 @@ import (
 
 func (opts *TracesOptions) HandleShowTraces() error {
 	abiCache := articulate.NewAbiCache()
-	var store *cacheNew.Store = cacheNew.NoCache
+	var rpcOptions *rpcClient.Options = rpcClient.NoOptions
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -41,7 +40,7 @@ func (opts *TracesOptions) HandleShowTraces() error {
 			ts := rpc.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(txIds[0].BlockNumber)))
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
-				traces, err := rpcClient.GetTracesByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex), store)
+				traces, err := rpcClient.GetTracesByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex), rpcOptions)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

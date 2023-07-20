@@ -24,17 +24,17 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock[string],
 }
 
 // GetBlockByNumberWithTxs fetches the block with transactions from the RPC.
-func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (types.SimpleBlock[types.SimpleTransaction], error) {
-	if store != nil {
+func GetBlockByNumberWithTxs(chain string, bn uint64, options *Options) (types.SimpleBlock[types.SimpleTransaction], error) {
+	if options.HasStore() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.SimpleBlock[string]{BlockNumber: bn}
-		if err := store.Read(&cachedBlock, nil); err == nil {
+		if err := options.Store.Read(&cachedBlock, nil); err == nil {
 			// Success, we now have to fill in transaction objects
 			result := types.SimpleBlock[types.SimpleTransaction]{}
 			result.Transactions = make([]types.SimpleTransaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
-				tx, err := GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index), store)
+				tx, err := GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index), options)
 				if err != nil {
 					success = false
 					break
@@ -55,7 +55,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (ty
 	}
 
 	var writeOptions *cacheNew.WriteOptions
-	if store != nil && !store.ReadOnly() {
+	if options.HasStore() && !options.Store.ReadOnly() {
 		writeOptions = &cacheNew.WriteOptions{
 			// Check if the block is final
 			Pending: block.Pending(rpc.GetBlockTimestamp(chain, nil)),
@@ -94,7 +94,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (ty
 			GasPrice: txGasPrice,
 			NeedsTs:  true,
 			Ts:       ts,
-		}, store)
+		}, options)
 		if err != nil {
 			return block, err
 		}
@@ -123,22 +123,22 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (ty
 		}
 		tx.SetGasCost(&receipt)
 		block.Transactions = append(block.Transactions, tx)
-		if store != nil {
-			store.Write(&tx, writeOptions)
+		if options.HasStore() && !options.TransactionWriteDisabled {
+			options.Store.Write(&tx, writeOptions)
 		}
 	}
 
-	if store != nil {
-		store.Write(&block, writeOptions)
+	if options.HasStore() {
+		options.Store.Write(&block, writeOptions)
 	}
 	return block, nil
 }
 
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
-func GetBlockByNumber(chain string, bn uint64, store *cacheNew.Store) (block types.SimpleBlock[string], err error) {
-	if store != nil {
+func GetBlockByNumber(chain string, bn uint64, options *Options) (block types.SimpleBlock[string], err error) {
+	if options.HasStore() {
 		block.BlockNumber = bn
-		if err := store.Read(&block, nil); err == nil {
+		if err := options.Store.Read(&block, nil); err == nil {
 			// Success
 			return block, nil
 		}
@@ -160,12 +160,12 @@ func GetBlockByNumber(chain string, bn uint64, store *cacheNew.Store) (block typ
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
 	}
 
-	if store != nil {
+	if options.HasStore() && !options.Store.ReadOnly() {
 		writeOptions := &cacheNew.WriteOptions{
 			// Check if the block is final
 			Pending: block.Pending(rpc.GetBlockTimestamp(chain, nil)),
 		}
-		store.Write(&block, writeOptions)
+		options.Store.Write(&block, writeOptions)
 	}
 
 	return block, nil

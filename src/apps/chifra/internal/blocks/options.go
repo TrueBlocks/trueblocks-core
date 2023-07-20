@@ -20,25 +20,26 @@ import (
 
 // BlocksOptions provides all command options for the chifra blocks command.
 type BlocksOptions struct {
-	Blocks     []string                 `json:"blocks,omitempty"`     // A space-separated list of one or more block identifiers
-	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
-	Hashes     bool                     `json:"hashes,omitempty"`     // Display only transaction hashes, default is to display full transaction detail
-	Uncles     bool                     `json:"uncles,omitempty"`     // Display uncle blocks (if any) instead of the requested block
-	Traces     bool                     `json:"traces,omitempty"`     // Export the traces from the block as opposed to the block data
-	Uniq       bool                     `json:"uniq,omitempty"`       // Display a list of uniq address appearances per transaction
-	Flow       string                   `json:"flow,omitempty"`       // For the uniq option only, export only from or to (including trace from or to)
-	Logs       bool                     `json:"logs,omitempty"`       // Display only the logs found in the block(s)
-	Emitter    []string                 `json:"emitter,omitempty"`    // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
-	Topic      []string                 `json:"topic,omitempty"`      // For the --logs option only, filter logs to show only those with this topic(s)
-	Articulate bool                     `json:"articulate,omitempty"` // For the --logs option only, articulate the retrieved data if ABIs can be found
-	BigRange   uint64                   `json:"bigRange,omitempty"`   // For the --logs option only, allow for block ranges larger than 500
-	Count      bool                     `json:"count,omitempty"`      // Display the number of the lists of appearances for --addrs or --uniq
-	Cache      bool                     `json:"cache,omitempty"`      // Force a write of the block to the cache
-	Decache    bool                     `json:"decache,omitempty"`    // Removes a block and any transactions or traces in the block from the cache
-	List       uint64                   `json:"list,omitempty"`       // Summary list of blocks running backwards from latest block minus num
-	ListCount  uint64                   `json:"listCount,omitempty"`  // The number of blocks to report for --list option
-	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
-	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
+	Blocks      []string                 `json:"blocks,omitempty"`      // A space-separated list of one or more block identifiers
+	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
+	Hashes      bool                     `json:"hashes,omitempty"`      // Display only transaction hashes, default is to display full transaction detail
+	Uncles      bool                     `json:"uncles,omitempty"`      // Display uncle blocks (if any) instead of the requested block
+	Traces      bool                     `json:"traces,omitempty"`      // Export the traces from the block as opposed to the block data
+	Uniq        bool                     `json:"uniq,omitempty"`        // Display a list of uniq address appearances per transaction
+	Flow        string                   `json:"flow,omitempty"`        // For the uniq option only, export only from or to (including trace from or to)
+	Logs        bool                     `json:"logs,omitempty"`        // Display only the logs found in the block(s)
+	Emitter     []string                 `json:"emitter,omitempty"`     // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
+	Topic       []string                 `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
+	Articulate  bool                     `json:"articulate,omitempty"`  // For the --logs option only, articulate the retrieved data if ABIs can be found
+	BigRange    uint64                   `json:"bigRange,omitempty"`    // For the --logs option only, allow for block ranges larger than 500
+	Count       bool                     `json:"count,omitempty"`       // Display the number of the lists of appearances for --addrs or --uniq
+	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block transactions to the cache
+	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block transaction traces to the cache
+	Decache     bool                     `json:"decache,omitempty"`     // Removes a block and any transactions or traces in the block from the cache
+	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
+	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option
+	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
+	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -61,7 +62,8 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.BigRange != 500, "BigRange: ", opts.BigRange)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.CacheTxs, "CacheTxs: ", opts.CacheTxs)
+	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
@@ -116,8 +118,10 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.BigRange = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
-		case "cache":
-			opts.Cache = true
+		case "cacheTxs":
+			opts.CacheTxs = true
+		case "cacheTraces":
+			opts.CacheTraces = true
 		case "decache":
 			opts.Decache = true
 		case "list":
