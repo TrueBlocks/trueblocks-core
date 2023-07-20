@@ -33,7 +33,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 
 			for _, app := range txIds {
 				bn := uint64(app.BlockNumber)
-				ts := rpc.GetBlockTimestamp(chain, bn)
+				ts := rpc.GetBlockTimestamp(chain, &bn)
 				addrMap := make(index.AddressBooleanMap)
 
 				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true, store); err != nil {

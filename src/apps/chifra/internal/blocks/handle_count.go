@@ -92,7 +92,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					}
 
 					addrMap := make(index.AddressBooleanMap)
-					ts := rpc.GetBlockTimestamp(chain, bn)
+					ts := rpc.GetBlockTimestamp(chain, &bn)
 					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts, store); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
