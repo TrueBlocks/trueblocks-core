@@ -8,9 +8,11 @@ import (
 )
 
 // Total header size in bytes
-const HeaderByteSize = 8
+const HeaderByteSize = 4 + 8
+const Magic uint32 = 3735928559 // 0xdeadbeef
 
 type header struct {
+	Magic   uint32
 	Version uint64
 }
 
@@ -25,6 +27,7 @@ func init() {
 		panic(err)
 	}
 	currentHeader = &header{
+		Magic:   Magic,
 		Version: ver.Uint64(),
 	}
 }
