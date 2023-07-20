@@ -15,6 +15,10 @@ func (opts *AbisOptions) validateAbis() error {
 		return opts.BadFlag
 	}
 
+	if opts.Globals.Cache {
+		return validate.Usage("The {0} option is not available for this command.", "--cache")
+	}
+
 	if opts.Clean {
 		if len(opts.Encode) > 0 {
 			return validate.Usage("Please choose only one of {0}.", "--clean or --encode")

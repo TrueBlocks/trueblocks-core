@@ -38,6 +38,10 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("Cannot test block scraper")
 	}
 
+	if opts.Globals.Cache {
+		return validate.Usage("The {0} option is not available for this command.", "--cache")
+	}
+
 	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if err != nil {
 		return err

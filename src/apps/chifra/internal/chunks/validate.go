@@ -32,6 +32,10 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
+	if opts.Globals.Cache {
+		return validate.Usage("The {0} option is not available for this command.", "--cache")
+	}
+
 	isIndexOrManifest := opts.Mode == "index" || opts.Mode == "manifest"
 	if !isIndexOrManifest {
 		if err = opts.isDisallowed(!isIndexOrManifest /* i.e., true */, opts.Mode); err != nil {

@@ -16,9 +16,11 @@ import (
 
 func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiCache := articulate.NewAbiCache()
-	readOnly := !opts.Cache
-	store := opts.Globals.CacheStore(readOnly)
-	rpcOptions := &rpcClient.Options{Store: store}
+	store := opts.Globals.CacheStore(false)
+	rpcOptions := &rpcClient.Options{
+		Store:              store,
+		TraceWriteDisabled: !opts.CacheTraces,
+	}
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0

@@ -13,9 +13,11 @@ import (
 )
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
-	readOnly := !opts.Cache
-	store := opts.Globals.CacheStore(readOnly)
-	rpcOptions := &rpcClient.Options{Store: store}
+	store := opts.Globals.CacheStore(false)
+	rpcOptions := &rpcClient.Options{
+		Store:              store,
+		TraceWriteDisabled: !opts.CacheTraces,
+	}
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())

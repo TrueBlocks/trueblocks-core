@@ -17,8 +17,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleUniq() (err error) {
-	readOnly := !opts.Cache
-	store := opts.Globals.CacheStore(readOnly)
+	store := opts.Globals.CacheStore(false)
 	rpcOptions := &rpcClient.Options{Store: store}
 	chain := opts.Globals.Chain
 

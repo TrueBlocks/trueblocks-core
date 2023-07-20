@@ -18,6 +18,10 @@ func (opts *NamesOptions) validateNames() error {
 		return opts.BadFlag
 	}
 
+	if opts.Globals.Cache {
+		return validate.Usage("The {0} option is not available for this command.", "--cache")
+	}
+
 	isDryRunnable := opts.Clean || len(opts.Autoname) > 0
 	if opts.DryRun && !isDryRunnable {
 		return validate.Usage("The {0} option is is only available with {1}.", "--dry_run", "--clean or --autoname")
