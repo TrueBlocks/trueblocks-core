@@ -1048,22 +1048,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: cacheTxs
-          description: force a write of the block transactions to the cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: cacheTraces
-          description: force a write of the block transaction traces to the cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: decache
           description: removes a block and any transactions or traces in the block from the cache
           required: false
@@ -1196,14 +1180,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: cacheTraces
-          description: force the results of the query into the trace cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: decache
           description: removes a transactions and any traces in the transaction from the cache
           required: false

@@ -35,11 +35,13 @@ Flags:
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
   -U, --count             display the number of the lists of appearances for --addrs or --uniq
-  -o, --cache             force a write of the block to the cache
+      --cache_txs         force a write of the block transactions to the cache
+      --cache_traces      force a write of the block transaction traces to the cache
   -D, --decache           removes a block and any transactions or traces in the block from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
+  -o, --cache             force the results of the query into the cache
 
 Notes:
   - Blocks is a space-separated list of values, a start-end range, a special, or any combination.

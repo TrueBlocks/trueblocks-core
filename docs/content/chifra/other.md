@@ -45,6 +45,7 @@ Flags:
   -l, --local    open the local TrueBlocks explorer
   -g, --google   search google excluding popular blockchain explorers
   -h, --help     display this help screen
+  -o, --cache    force the results of the query into the cache
 ```
 
 Data models produced by this tool:
@@ -90,6 +91,7 @@ Flags:
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
+  -o, --cache           force the results of the query into the cache
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.

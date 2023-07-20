@@ -50,6 +50,7 @@ Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
+  -o, --cache        force the results of the query into the cache
 ```
 
 Data models produced by this tool:
@@ -81,6 +82,7 @@ Flags:
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
+  -o, --cache               force the results of the query into the cache
 
 Notes:
   - The some mode includes index, monitors, names, slurps, and abis.
@@ -133,6 +135,7 @@ Flags:
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
+  -o, --cache           force the results of the query into the cache
 
 Notes:
   - To start API open terminal window and run chifra daemon.
@@ -185,6 +188,7 @@ Flags:
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
+  -o, --cache              force the results of the query into the cache
 ```
 
 Data models produced by this tool:
@@ -292,6 +296,7 @@ Flags:
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
+  -o, --cache              force the results of the query into the cache
 
 Notes:
   - Mode determines which type of data to display or process.
@@ -360,6 +365,7 @@ Flags:
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
+  -o, --cache              force the results of the query into the cache
 
 Notes:
   - If run with no options, this tool will download or freshen only the Bloom filters.

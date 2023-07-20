@@ -64,10 +64,11 @@ One of [ from | to ]`)
 	transactionsCmd.Flags().StringSliceVarP(&transactionsPkg.GetOptions().Emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)")
 	transactionsCmd.Flags().StringSliceVarP(&transactionsPkg.GetOptions().Topic, "topic", "B", nil, "for the --logs option only, filter logs to show only those with this topic(s)")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().AccountFor, "account_for", "A", "", "reconcile the transaction as per the provided address")
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "", false, "force the results of the query into the trace cache")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "", false, "force the results of the query into the trace cache (hidden)")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Decache, "decache", "D", false, "removes a transactions and any traces in the transaction from the cache")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Source, "source", "s", false, "find the source of the funds sent to the receiver (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
+		transactionsCmd.Flags().MarkHidden("cache_traces")
 		transactionsCmd.Flags().MarkHidden("source")
 	}
 	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals)

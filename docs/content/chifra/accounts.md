@@ -62,6 +62,7 @@ Flags:
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
+  -o, --cache               force the results of the query into the cache
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -120,7 +121,6 @@ Flags:
   -A, --statements          for the accounting options only, export only statements
   -b, --balances            traverse the transaction history and show each change in ETH balances
   -a, --articulate          articulate transactions, traces, logs, and outputs
-  -o, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
   -U, --count               only available for --appearances mode, if present, return only the number of records
   -c, --first_record uint   the first record to process (default 1)
@@ -140,6 +140,7 @@ Flags:
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
+  -o, --cache               force the results of the query into the cache
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -218,6 +219,7 @@ Flags:
   -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
+  -o, --cache         force the results of the query into the cache
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -277,6 +279,7 @@ Flags:
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
+  -o, --cache             force the results of the query into the cache
 
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
@@ -330,6 +333,7 @@ Flags:
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
+  -o, --cache           force the results of the query into the cache
 
 Notes:
   - Search for either four byte signatures or event signatures with the --find option.
