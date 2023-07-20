@@ -16,6 +16,7 @@ import (
 
 func (opts *BlocksOptions) HandleDecache() error {
 	store := opts.Globals.CacheStore(true)
+	rpcOptions := &rpcClient.Options{Store: store}
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, br := range opts.BlockIds {
 		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
@@ -23,7 +24,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 			return err
 		}
 		for _, bn := range blockNums {
-			rawBlock, err := rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, store)
+			rawBlock, err := rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, rpcOptions)
 			if err != nil {
 				return err
 			}

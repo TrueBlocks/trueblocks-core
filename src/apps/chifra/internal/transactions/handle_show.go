@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -17,6 +18,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiCache := articulate.NewAbiCache()
 	readOnly := !opts.Cache
 	store := opts.Globals.CacheStore(readOnly)
+	rpcOptions := &rpcClient.Options{Store: store}
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
@@ -34,7 +36,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 			defer iterCancel()
 
 			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
-				if tx, err := app.FetchTransactionById(chain, opts.Traces /* needsTraces */, store); err != nil {
+				if tx, err := app.FetchTransactionById(chain, opts.Traces /* needsTraces */, rpcOptions); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

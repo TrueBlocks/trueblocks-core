@@ -9,7 +9,6 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -94,7 +93,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 
 // GetTracesCountByTransactionId returns the number of traces in a given transaction
 func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error) {
-	traces, err := GetTracesByTransactionId(chain, bn, txid, cacheNew.NoCache)
+	traces, err := GetTracesByTransactionId(chain, bn, txid, NoOptions)
 	if err != nil {
 		return 0, err
 	}
@@ -102,15 +101,15 @@ func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error
 }
 
 // GetTracesByTransactionId returns a slice of traces in a given transaction
-func GetTracesByTransactionId(chain string, bn, txid uint64, store *cacheNew.Store) ([]types.SimpleTrace, error) {
+func GetTracesByTransactionId(chain string, bn, txid uint64, options *Options) ([]types.SimpleTrace, error) {
 	var ret []types.SimpleTrace
-	if store != nil {
+	if options.HasStore() {
 		traceGroup := &types.SimpleTraceGroup{
 			BlockNumber:      bn,
 			TransactionIndex: int(txid),
 		}
 
-		if err := store.Read(traceGroup, nil); err == nil {
+		if err := options.Store.Read(traceGroup, nil); err == nil {
 			// success
 			return traceGroup.Traces, nil
 		}
@@ -120,12 +119,12 @@ func GetTracesByTransactionId(chain string, bn, txid uint64, store *cacheNew.Sto
 	if err != nil {
 		return ret, err
 	}
-	return GetTracesByTransactionHash(chain, txHash, nil, store)
+	return GetTracesByTransactionHash(chain, txHash, nil, options)
 }
 
 // GetTracesCountByTransactionHash returns the number of traces in a given transaction
 func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error) {
-	traces, err := GetTracesByTransactionHash(chain, txHash, nil, cacheNew.NoCache)
+	traces, err := GetTracesByTransactionHash(chain, txHash, nil, NoOptions)
 	if err != nil {
 		return 0, err
 	}
@@ -217,11 +216,11 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
-func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, store *cacheNew.Store) ([]types.SimpleTrace, error) {
-	if store != nil && transaction != nil {
+func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, options *Options) ([]types.SimpleTrace, error) {
+	if options.HasStore() && transaction != nil {
 		traceGroup := types.NewSimpleTraceGroup(transaction)
 
-		if err := store.Read(traceGroup, nil); err == nil {
+		if err := options.Store.Read(traceGroup, nil); err == nil {
 			// success
 			return traceGroup.Traces, nil
 		}
@@ -305,10 +304,10 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 			ret = append(ret, trace)
 		}
 
-		if store != nil && transaction != nil {
+		if options.HasStore() && !options.TraceWriteDisabled && transaction != nil {
 			traceGroup := types.NewSimpleTraceGroup(transaction)
 			traceGroup.Traces = ret
-			store.Write(traceGroup, nil)
+			options.Store.Write(traceGroup, nil)
 		}
 
 		return ret, nil

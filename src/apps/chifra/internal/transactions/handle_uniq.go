@@ -15,6 +15,7 @@ import (
 func (opts *TransactionsOptions) HandleUniq() (err error) {
 	readOnly := !opts.Cache
 	store := opts.Globals.CacheStore(readOnly)
+	rpcOptions := &rpcClient.Options{Store: store}
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -36,10 +37,10 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				ts := rpc.GetBlockTimestamp(chain, bn)
 				addrMap := make(index.AddressBooleanMap)
 
-				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true, store); err != nil {
+				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true, rpcOptions); err != nil {
 					errorChan <- err
 				} else {
-					if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, trans, ts, addrMap, store); err != nil {
+					if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, trans, ts, addrMap, rpcOptions); err != nil {
 						errorChan <- err
 					}
 				}

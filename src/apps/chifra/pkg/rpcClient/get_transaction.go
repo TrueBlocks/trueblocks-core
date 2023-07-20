@@ -60,6 +60,7 @@ func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
 }
 
 func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
+	var options *Options = NoOptions
 	// TODO: performance - This loads and then drops the file every time it's called. Quite slow.
 	// TODO: performance - in the old C++ we stored these values in a pre fundAddrMap so that given a txid in block zero
 	// TODO: performance - we knew which address was granted allocation at that transaction.
@@ -69,7 +70,7 @@ func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types
 	} else {
 		var blockHash base.Hash
 		var ts int64
-		if block, err := GetBlockByNumber(chain, uint64(0), cacheNew.NoCache); err != nil {
+		if block, err := GetBlockByNumber(chain, uint64(0), options); err != nil {
 			return nil, err
 		} else {
 			blockHash = block.Hash
@@ -142,7 +143,7 @@ func getBlockReward(bn uint64) *big.Int {
 }
 
 func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
-	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber), cacheNew.NoCache); err != nil {
+	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber), &Options{Store: cacheNew.NoCache}); err != nil {
 		return nil, err
 	} else {
 		if uncles, err := GetUnclesByNumber(chain, uint64(appearance.BlockNumber)); err != nil {
@@ -221,20 +222,20 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 	}
 }
 
-func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool, store *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
+func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool, options *Options) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
-	if store != nil {
+	if options.HasStore() {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
 
-		if err := store.Read(tx, nil); err == nil {
+		if err := options.Store.Read(tx, nil); err == nil {
 			// success
 			if fetchTraces {
-				traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, store)
+				traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, options)
 				if err != nil {
 					return nil, err
 				}
@@ -259,8 +260,8 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		}
 	}
 	if tx != nil {
-		if store != nil {
-			store.Write(tx, nil)
+		if options.HasStore() {
+			options.Store.Write(tx, nil)
 		}
 		return tx, nil
 	}
@@ -271,7 +272,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	}, cacheNew.NoCache)
+	}, options)
 	if err != nil {
 		return
 	}
@@ -302,12 +303,12 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
-	if store != nil {
-		store.Write(tx, nil)
+	if options.HasStore() {
+		options.Store.Write(tx, nil)
 	}
 
 	if fetchTraces {
-		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, store)
+		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, options)
 		if err != nil {
 			return nil, err
 		}
@@ -317,14 +318,14 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	return
 }
 
-func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, store *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
-	if store != nil {
+func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, options *Options) (tx *types.SimpleTransaction, err error) {
+	if options.HasStore() {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
 
-		if err := store.Read(tx, nil); err == nil {
+		if err := options.Store.Read(tx, nil); err == nil {
 			// success
 			return tx, nil
 		}
@@ -340,7 +341,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, store
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	}, cacheNew.NoCache)
+	}, options)
 	if err != nil {
 		return
 	}
@@ -367,8 +368,8 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, store
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
-	if store != nil {
-		store.Write(tx, nil)
+	if options.HasStore() {
+		options.Store.Write(tx, nil)
 	}
 
 	return
