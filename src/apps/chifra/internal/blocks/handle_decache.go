@@ -7,6 +7,7 @@ package blocksPkg
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -15,8 +16,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleDecache() error {
-	store := opts.Globals.CacheStore(true)
-	rpcOptions := &rpcClient.Options{Store: store}
+	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{ReadonlyCache: true})
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, br := range opts.BlockIds {
 		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
@@ -62,7 +62,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 		return true
 	}
 
-	store.Decache(toRemove, processorFunc)
+	rpcOptions.Store.Decache(toRemove, processorFunc)
 
 	if itemsSeen == 0 {
 		logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))

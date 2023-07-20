@@ -15,12 +15,9 @@ import (
 )
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
-	store := opts.Globals.CacheStore(false)
-	rpcOptions := &rpcClient.Options{
-		Store:                    store,
-		TransactionWriteDisabled: !opts.CacheTxs,
-		TraceWriteDisabled:       !opts.CacheTraces,
-	}
+	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
+	rpcOptions.TransactionWriteDisabled = !opts.CacheTxs
+	rpcOptions.TraceWriteDisabled = !opts.CacheTraces
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {

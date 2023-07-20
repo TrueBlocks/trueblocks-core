@@ -9,18 +9,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiCache := articulate.NewAbiCache()
-	store := opts.Globals.CacheStore(false)
-	rpcOptions := &rpcClient.Options{
-		Store:              store,
-		TraceWriteDisabled: !opts.CacheTraces,
-	}
+	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
+	rpcOptions.TraceWriteDisabled = !opts.CacheTraces
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0

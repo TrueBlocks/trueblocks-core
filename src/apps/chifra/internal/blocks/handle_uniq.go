@@ -17,8 +17,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleUniq() (err error) {
-	store := opts.Globals.CacheStore(false)
-	rpcOptions := &rpcClient.Options{Store: store}
+	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())

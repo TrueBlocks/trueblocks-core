@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
@@ -215,7 +216,7 @@ func (opts *GlobalOptions) FinishParse(args []string) {
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns
 // a cache that will not write new items. If nil is returned, it means "no caching"
-func (opts *GlobalOptions) CacheStore(forceReadonly bool) *cacheNew.Store {
+func (opts *GlobalOptions) cacheStore(forceReadonly bool) *cacheNew.Store {
 	// We call NewStore, but Storer implementation (Fs by default) should decide
 	// whether it has to return a new instance or reuse the existing one
 	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{
@@ -229,6 +230,21 @@ func (opts *GlobalOptions) CacheStore(forceReadonly bool) *cacheNew.Store {
 		return nil
 	}
 	return store
+}
+
+type DefaultRpcOptionsSettings struct {
+	ReadonlyCache bool
+}
+
+func (opts *GlobalOptions) DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *rpcClient.Options {
+	readonlyCache := false
+	if settings != nil {
+		readonlyCache = settings.ReadonlyCache
+	}
+
+	return &rpcClient.Options{
+		Store: opts.cacheStore(readonlyCache),
+	}
 }
 
 func IsGlobalOption(key string) bool {

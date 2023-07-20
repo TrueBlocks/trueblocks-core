@@ -17,12 +17,10 @@ import (
 )
 
 func (opts *BlocksOptions) HandleCounts() error {
-	store := opts.Globals.CacheStore(false)
-	rpcOptions := &rpcClient.Options{
-		Store:                    store,
-		TransactionWriteDisabled: !opts.CacheTxs,
-		TraceWriteDisabled:       !opts.CacheTraces,
-	}
+	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
+	rpcOptions.TransactionWriteDisabled = !opts.CacheTxs
+	rpcOptions.TraceWriteDisabled = !opts.CacheTraces
+
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
