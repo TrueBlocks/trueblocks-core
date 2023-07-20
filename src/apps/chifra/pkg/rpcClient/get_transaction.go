@@ -225,6 +225,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
+	var writeOptions *cacheNew.WriteOptions
 	if store != nil {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
@@ -241,6 +242,13 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 				tx.Traces = traces
 			}
 			return tx, nil
+		}
+
+		if !store.ReadOnly() {
+			writeOptions = &cacheNew.WriteOptions{
+				// Check if the block is final
+				Pending: new(types.SimpleBlock[string]).Pending(rpc.GetBlockTimestamp(chain, nil)),
+			}
 		}
 	}
 
@@ -260,12 +268,12 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	}
 	if tx != nil {
 		if store != nil {
-			store.Write(tx, nil)
+			store.Write(tx, writeOptions)
 		}
 		return tx, nil
 	}
 
-	blockTs := rpc.GetBlockTimestamp(chain, bn)
+	blockTs := rpc.GetBlockTimestamp(chain, &bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
@@ -303,7 +311,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	tx.SetRaw(rawTx)
 
 	if store != nil {
-		store.Write(tx, nil)
+		store.Write(tx, writeOptions)
 	}
 
 	if fetchTraces {
@@ -318,6 +326,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 }
 
 func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, store *cacheNew.Store) (tx *types.SimpleTransaction, err error) {
+	var writeOptions *cacheNew.WriteOptions
 	if store != nil {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
@@ -328,13 +337,20 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, store
 			// success
 			return tx, nil
 		}
+
+		if !store.ReadOnly() {
+			writeOptions = &cacheNew.WriteOptions{
+				// Check if the block is final
+				Pending: new(types.SimpleBlock[string]).Pending(rpc.GetBlockTimestamp(chain, nil)),
+			}
+		}
 	}
 
 	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
 	if err != nil {
 		return
 	}
-	blockTs := rpc.GetBlockTimestamp(chain, bn)
+	blockTs := rpc.GetBlockTimestamp(chain, &bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
@@ -368,7 +384,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, store
 	tx.SetRaw(rawTx)
 
 	if store != nil {
-		store.Write(tx, nil)
+		store.Write(tx, writeOptions)
 	}
 
 	return

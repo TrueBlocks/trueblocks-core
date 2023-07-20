@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -51,6 +52,14 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (ty
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
+	}
+
+	var writeOptions *cacheNew.WriteOptions
+	if store != nil && !store.ReadOnly() {
+		writeOptions = &cacheNew.WriteOptions{
+			// Check if the block is final
+			Pending: block.Pending(rpc.GetBlockTimestamp(chain, nil)),
+		}
 	}
 
 	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
@@ -115,12 +124,12 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (ty
 		tx.SetGasCost(&receipt)
 		block.Transactions = append(block.Transactions, tx)
 		if store != nil {
-			store.Write(&tx, nil)
+			store.Write(&tx, writeOptions)
 		}
 	}
 
 	if store != nil {
-		store.Write(&block, nil)
+		store.Write(&block, writeOptions)
 	}
 	return block, nil
 }
@@ -152,7 +161,11 @@ func GetBlockByNumber(chain string, bn uint64, store *cacheNew.Store) (block typ
 	}
 
 	if store != nil {
-		store.Write(&block, nil)
+		writeOptions := &cacheNew.WriteOptions{
+			// Check if the block is final
+			Pending: block.Pending(rpc.GetBlockTimestamp(chain, nil)),
+		}
+		store.Write(&block, writeOptions)
 	}
 
 	return block, nil
@@ -219,7 +232,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
+			block.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 		} else if mustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}

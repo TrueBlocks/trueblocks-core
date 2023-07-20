@@ -34,7 +34,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 		return []types.SimpleTrace{}, err
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
-		curTs := rpc.GetBlockTimestamp(chain, bn)
+		curTs := rpc.GetBlockTimestamp(chain, &bn)
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
@@ -80,7 +80,7 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				curTs = rpc.GetBlockTimestamp(chain, trace.BlockNumber)
+				curTs = rpc.GetBlockTimestamp(chain, &trace.BlockNumber)
 				idx = 0
 			}
 			trace.TraceIndex = idx
@@ -144,7 +144,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
-		curTs := rpc.GetBlockTimestamp(chain, mustParseUint(f.FromBlock))
+		curTs := rpc.GetBlockTimestamp(chain, utils.PointerOf(mustParseUint(f.FromBlock)))
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
@@ -203,7 +203,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				curTs = rpc.GetBlockTimestamp(chain, trace.BlockNumber)
+				curTs = rpc.GetBlockTimestamp(chain, utils.PointerOf(trace.BlockNumber))
 				idx = 0
 			}
 			trace.TraceIndex = idx
@@ -306,9 +306,16 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 		}
 
 		if store != nil && transaction != nil {
+			var writeOptions *cacheNew.WriteOptions
+			if !store.ReadOnly() {
+				writeOptions = &cacheNew.WriteOptions{
+					// Check if the block is final
+					Pending: new(types.SimpleBlock[string]).Pending(rpc.GetBlockTimestamp(chain, nil)),
+				}
+			}
 			traceGroup := types.NewSimpleTraceGroup(transaction)
 			traceGroup.Traces = ret
-			store.Write(traceGroup, nil)
+			store.Write(traceGroup, writeOptions)
 		}
 
 		return ret, nil
