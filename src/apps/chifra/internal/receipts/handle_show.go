@@ -19,7 +19,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	var rpcOptions *rpcClient.Options = rpcClient.NoOptions
+	var rpcOptions = rpcClient.NoOptions
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {

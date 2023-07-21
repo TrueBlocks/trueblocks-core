@@ -19,7 +19,7 @@ func (opts *LogsOptions) HandleShowLogs() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	var rpcOptions *rpcClient.Options = rpcClient.NoOptions
+	var rpcOptions = rpcClient.NoOptions
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
