@@ -12,7 +12,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,for the accounting options only&#44; export only statements
 10290,apps,Accounts,export,acctExport,balances,b,,false,false,true,true,gocmd,switch,<boolean>,traverse the transaction history and show each change in ETH balances
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
-10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
+10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,force the transaction's traces into the cache
 10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records
 10336,apps,Accounts,export,acctExport,first_record,c,1,false,false,true,true,header,flag,<uint64>,the first record to process
 10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,header,flag,<uint64>,the maximum number of records to process
@@ -111,8 +111,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,gocmd,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,gocmd,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
-12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,header,switch,<boolean>,force a write of the block transactions to the cache
-12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,header,switch,<boolean>,force a write of the block transaction traces to the cache
+12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,header,switch,<boolean>,force a write of the block's transactions to the cache (slow)
+12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,header,switch,<boolean>,force a write of the block's traces to the cache (slower)
 12581,tools,ChainData,blocks,getBlocks,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a block and any transactions or traces in the block from the cache
 12582,tools,ChainData,blocks,getBlocks,list,L,0,false,false,false,false,gocmd,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,false,gocmd,flag,<blknum>,the number of blocks to report for --list option
@@ -134,7 +134,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13613,tools,ChainData,transactions,getTrans,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 13615,tools,ChainData,transactions,getTrans,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,gocmd,flag,<address>,reconcile the transaction as per the provided address
-13629,tools,ChainData,transactions,getTrans,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force the results of the query into the trace cache
+13629,tools,ChainData,transactions,getTrans,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force the transaction's traces into the cache
 13621,tools,ChainData,transactions,getTrans,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a transactions and any traces in the transaction from the cache
 13622,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
 13623,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.

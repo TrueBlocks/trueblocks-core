@@ -34,7 +34,7 @@ type ExportOptions struct {
 	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
 	Balances    bool                  `json:"balances,omitempty"`    // Traverse the transaction history and show each change in ETH balances
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
-	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
+	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Force the transaction's traces into the cache
 	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
