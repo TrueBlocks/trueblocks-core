@@ -14,13 +14,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-// 0x01ffc9a7 is supportsInterface -- https://eips.ethereum.org/EIPS/eip-165
-// 0x80ac58cd is ERC-721 interface ID -- https://eips.ethereum.org/EIPS/eip-721
+// Erc721SupportsInterfaceData is the data needed to call the ERC-721 supportsInterface function
+// 0x01ffc9a7: supportsInterface -- eips.ethereum.org/EIPS/eip-165
+// 0x80ac58cd: ERC-721 interface ID -- eips.ethereum.org/EIPS/eip-721
 const Erc721SupportsInterfaceData = "0x01ffc9a780ac58cd00000000000000000000000000000000000000000000000000000000"
 
 type TokenStateSelector = string
 
 // TODO: If we used encoding we could use the function signature instead of the selector.
+
 const TokenStateTotalSupply TokenStateSelector = "0x18160ddd"
 const TokenStateDecimals TokenStateSelector = "0x313ce567"
 const TokenStateSymbol TokenStateSelector = "0x95d89b41"

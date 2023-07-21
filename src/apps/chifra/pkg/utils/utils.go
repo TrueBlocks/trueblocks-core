@@ -105,7 +105,6 @@ func ToCamelCase(in string) string {
 // TODO: Might be nice if the below two values were the same so we could cast between them.
 // TODO: Trouble is that these values may be stored on disc.
 
-// maximum uint64
 const NOPOS = uint64(^uint64(0))
 const NOPOSI = int64(0xdeadbeef)
 

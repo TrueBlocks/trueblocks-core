@@ -164,6 +164,7 @@ func IsRange(chain, str string) (bool, error) {
 
 // Errors returned by ValidateIdentifiers (note: it can also return an
 // error passed from IsRange)
+
 var ErrTooManyRanges = errors.New("too many ranges")
 
 type InvalidIdentifierLiteralError struct {
