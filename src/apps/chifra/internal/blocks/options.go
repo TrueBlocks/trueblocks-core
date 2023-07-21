@@ -33,8 +33,8 @@ type BlocksOptions struct {
 	Articulate  bool                     `json:"articulate,omitempty"`  // For the --logs option only, articulate the retrieved data if ABIs can be found
 	BigRange    uint64                   `json:"bigRange,omitempty"`    // For the --logs option only, allow for block ranges larger than 500
 	Count       bool                     `json:"count,omitempty"`       // Display the number of the lists of appearances for --addrs or --uniq
-	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block transactions to the cache
-	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block transaction traces to the cache
+	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block's transactions to the cache (slow)
+	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block's traces to the cache (slower)
 	Decache     bool                     `json:"decache,omitempty"`     // Removes a block and any transactions or traces in the block from the cache
 	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
 	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option

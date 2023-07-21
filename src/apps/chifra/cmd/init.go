@@ -29,7 +29,7 @@ var initCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("init", func() *globals.GlobalOptions {
 		return &initPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &initPkg.GetOptions().Globals
 	}),
@@ -49,13 +49,17 @@ Notes:
   - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	initCmd.Flags().SortFlags = false
 
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, "in addition to Bloom filters, download full index chunks (recommended)")
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().DryRun, "dry_run", "d", false, "display the results of the download without actually downloading")
 	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, "do not download any chunks earlier than this block")
 	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, "seconds to sleep between downloads")
-	globals.InitGlobals(initCmd, &initPkg.GetOptions().Globals)
+	globals.InitGlobals(initCmd, &initPkg.GetOptions().Globals, allowCaching)
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
 	initCmd.SetOut(os.Stderr)

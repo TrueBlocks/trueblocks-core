@@ -29,7 +29,7 @@ var stateCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("state", func() *globals.GlobalOptions {
 		return &statePkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("state", statePkg.RunState, statePkg.ResetOptions),
+	RunE: file.RunWithFileSupport("state", statePkg.RunState, statePkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &statePkg.GetOptions().Globals
 	}),
@@ -57,6 +57,11 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	allowCaching = true
+	// EXISTING_CODE
+
 	stateCmd.Flags().SortFlags = false
 
 	stateCmd.Flags().StringSliceVarP(&statePkg.GetOptions().Parts, "parts", "p", nil, `control which state to export
@@ -65,7 +70,7 @@ One or more of [ none | some | all | balance | nonce | code | proxy | deployed |
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
-	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals)
+	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals, allowCaching)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	stateCmd.SetOut(os.Stderr)

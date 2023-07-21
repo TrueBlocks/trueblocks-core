@@ -31,7 +31,7 @@ type TransactionsOptions struct {
 	Emitter        []string                 `json:"emitter,omitempty"`        // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic          []string                 `json:"topic,omitempty"`          // For the --logs option only, filter logs to show only those with this topic(s)
 	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
-	CacheTraces    bool                     `json:"cacheTraces,omitempty"`    // Force the results of the query into the trace cache
+	CacheTraces    bool                     `json:"cacheTraces,omitempty"`    // Force the transaction's traces into the cache
 	Decache        bool                     `json:"decache,omitempty"`        // Removes a transactions and any traces in the transaction from the cache
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options

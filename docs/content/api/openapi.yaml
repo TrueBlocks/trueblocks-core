@@ -332,7 +332,7 @@ paths:
           schema:
             type: boolean
         - name: cacheTraces
-          description: write traces to the cache (see notes)
+          description: force the transaction's traces into the cache
           required: false
           style: form
           in: query
