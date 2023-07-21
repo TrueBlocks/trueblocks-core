@@ -46,6 +46,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.NoColor, "NoColor: ", opts.NoColor)
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
+	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }
@@ -63,13 +64,13 @@ func SetDefaults(opts *GlobalOptions) {
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	opts.TestMode = file.IsTestMode()
 
+	cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
 	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
 	cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "", false, "report JSON data from the node with minimal processing")
-	cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
 	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
@@ -263,6 +264,7 @@ func IsGlobalOption(key string) bool {
 		"file",
 		"output",
 		"append",
+		"cache",
 	}
 	for _, per := range permitted {
 		if per == key {
