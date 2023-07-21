@@ -247,7 +247,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 
 	var writeOptions *cacheNew.WriteOptions
 	var blockTs base.Timestamp
-	if options.HasStoreWriteable() {
+	if options.HasStoreWritable() {
 		blockTs = rpc.GetBlockTimestamp(chain, &bn)
 		writeOptions = &cacheNew.WriteOptions{
 			// Check if the block is final
@@ -348,7 +348,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, optio
 	blockTs := rpc.GetBlockTimestamp(chain, &bn)
 
 	var writeOptions *cacheNew.WriteOptions
-	if options.HasStoreWriteable() {
+	if options.HasStoreWritable() {
 		writeOptions = &cacheNew.WriteOptions{
 			// Check if the block is final
 			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(options.LatestBlockTimestamp),

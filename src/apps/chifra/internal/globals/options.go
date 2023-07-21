@@ -237,6 +237,15 @@ func (opts *GlobalOptions) cacheStore(forceReadonly bool) *cacheNew.Store {
 
 type DefaultRpcOptionsSettings struct {
 	ReadonlyCache bool
+	// Because every command has its own options type, we have to
+	// accept any here, but will use interfaces to read the needed
+	// information
+	Opts any
+}
+
+// CacheStater informs us if we should write txs and traces to the cache
+type CacheStater interface {
+	CacheState() (bool, bool)
 }
 
 func (opts *GlobalOptions) DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *rpcClient.Options {
@@ -245,8 +254,19 @@ func (opts *GlobalOptions) DefaultRpcOptions(settings *DefaultRpcOptionsSettings
 		readonlyCache = settings.ReadonlyCache
 	}
 
+	// Check if cache should write txs and traces
+	var cacheTxWriteEnabled bool
+	var cacheTraceWriteEnabled bool
+	if settings != nil {
+		if cs, ok := settings.Opts.(CacheStater); ok {
+			cacheTxWriteEnabled, cacheTraceWriteEnabled = cs.CacheState()
+		}
+	}
+
 	return &rpcClient.Options{
-		Store: opts.cacheStore(readonlyCache),
+		Store:                    opts.cacheStore(readonlyCache),
+		TransactionWriteDisabled: !cacheTxWriteEnabled,
+		TraceWriteDisabled:       !cacheTraceWriteEnabled,
 	}
 }
 

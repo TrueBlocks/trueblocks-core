@@ -55,7 +55,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, options *Options) (types.S
 	}
 
 	var writeOptions *cacheNew.WriteOptions
-	if options.HasStoreWriteable() {
+	if options.HasStoreWritable() {
 		writeOptions = &cacheNew.WriteOptions{
 			// Check if the block is final
 			Pending: block.Pending(options.LatestBlockTimestamp),
@@ -160,7 +160,7 @@ func GetBlockByNumber(chain string, bn uint64, options *Options) (block types.Si
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
 	}
 
-	if options.HasStoreWriteable() {
+	if options.HasStoreWritable() {
 		writeOptions := &cacheNew.WriteOptions{
 			// Check if the block is final
 			Pending: block.Pending(options.LatestBlockTimestamp),

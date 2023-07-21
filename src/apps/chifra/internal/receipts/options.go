@@ -98,3 +98,6 @@ func ResetOptions() {
 	globals.SetDefaults(&defaultReceiptsOptions.Globals)
 	defaultReceiptsOptions.Globals.Writer = w
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

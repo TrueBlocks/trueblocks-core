@@ -30,7 +30,7 @@ func (o *Options) HasStore() bool {
 	return o.Store != nil
 }
 
-func (o *Options) HasStoreWriteable() bool {
+func (o *Options) HasStoreWritable() bool {
 	if !o.HasStore() {
 		return false
 	}
