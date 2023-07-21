@@ -29,7 +29,7 @@ var exportCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("export", func() *globals.GlobalOptions {
 		return &exportPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &exportPkg.GetOptions().Globals
 	}),
@@ -59,6 +59,11 @@ Notes:
   - The _block and _record options are ignored when used with the --count option.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	allowCaching = true
+	// EXISTING_CODE
+
 	exportCmd.Flags().SortFlags = false
 
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Appearances, "appearances", "p", false, "export a list of appearances")
@@ -70,8 +75,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "for the accounting options only, export only statements")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, "traverse the transaction history and show each change in ETH balances")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Cache, "cache", "o", false, "write transactions to the cache (see notes)")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "write traces to the cache (see notes)")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "force the transaction's traces into the cache")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 1, "the first record to process")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
@@ -91,7 +95,7 @@ One of [ in | out | zero ]`)
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("load")
 	}
-	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals)
+	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals, allowCaching)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)

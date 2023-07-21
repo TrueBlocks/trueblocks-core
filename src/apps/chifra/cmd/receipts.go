@@ -29,7 +29,7 @@ var receiptsCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("receipts", func() *globals.GlobalOptions {
 		return &receiptsPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("receipts", receiptsPkg.RunReceipts, receiptsPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("receipts", receiptsPkg.RunReceipts, receiptsPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &receiptsPkg.GetOptions().Globals
 	}),
@@ -52,11 +52,15 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	allowCaching = true
+	// EXISTING_CODE
+
 	receiptsCmd.Flags().SortFlags = false
 
 	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Cache, "cache", "o", false, "write the results of the query into the cache")
-	globals.InitGlobals(receiptsCmd, &receiptsPkg.GetOptions().Globals)
+	globals.InitGlobals(receiptsCmd, &receiptsPkg.GetOptions().Globals, allowCaching)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 	receiptsCmd.SetOut(os.Stderr)

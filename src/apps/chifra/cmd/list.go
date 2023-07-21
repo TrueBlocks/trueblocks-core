@@ -29,7 +29,7 @@ var listCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("list", func() *globals.GlobalOptions {
 		return &listPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("list", listPkg.RunList, listPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("list", listPkg.RunList, listPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &listPkg.GetOptions().Globals
 	}),
@@ -51,6 +51,10 @@ Notes:
   - No other options are permitted when --silent is selected.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	listCmd.Flags().SortFlags = false
 
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Count, "count", "U", false, "display only the count of records for each monitor")
@@ -63,7 +67,7 @@ func init() {
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when freshening)")
-	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals)
+	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals, allowCaching)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	listCmd.SetOut(os.Stderr)

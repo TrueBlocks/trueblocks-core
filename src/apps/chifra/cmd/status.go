@@ -29,7 +29,7 @@ var statusCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("status", func() *globals.GlobalOptions {
 		return &statusPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("status", statusPkg.RunStatus, statusPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("status", statusPkg.RunStatus, statusPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &statusPkg.GetOptions().Globals
 	}),
@@ -52,11 +52,15 @@ Notes:
   - If no mode is supplied, a terse report is generated.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	statusCmd.Flags().SortFlags = false
 
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, "the maximum number of records to process")
-	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals)
+	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals, allowCaching)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	statusCmd.SetOut(os.Stderr)

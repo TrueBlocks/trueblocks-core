@@ -6,7 +6,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -42,7 +41,7 @@ func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 
 // UniqFromTraces extracts addresses from traces
 func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
-	var store *cacheNew.Store = cacheNew.NoCache
+	var rpcOptions *rpcClient.Options = rpcClient.NoOptions
 
 	for _, trace := range traces {
 		trace := trace
@@ -135,7 +134,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 							Bn:      uint64(bn),
 							Txid:    uint64(txid),
 							NeedsTs: false,
-						}, store)
+						}, rpcOptions)
 						if err != nil {
 							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, trace.TransactionHash, err)
 							logger.Warn(colors.Red, msg, colors.Off)

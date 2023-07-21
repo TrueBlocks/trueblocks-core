@@ -31,7 +31,7 @@ type TransactionsOptions struct {
 	Emitter        []string                 `json:"emitter,omitempty"`        // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic          []string                 `json:"topic,omitempty"`          // For the --logs option only, filter logs to show only those with this topic(s)
 	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
-	Cache          bool                     `json:"cache,omitempty"`          // Force the results of the query into the tx cache (and the trace cache if applicable)
+	CacheTraces    bool                     `json:"cacheTraces,omitempty"`    // Force the transaction's traces into the cache
 	Decache        bool                     `json:"decache,omitempty"`        // Removes a transactions and any traces in the transaction from the cache
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
@@ -53,7 +53,7 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
-	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.Source, "Source: ", opts.Source)
 	opts.Globals.TestLog()
@@ -98,8 +98,8 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			}
 		case "accountFor":
 			opts.AccountFor = value[0]
-		case "cache":
-			opts.Cache = true
+		case "cacheTraces":
+			opts.CacheTraces = true
 		case "decache":
 			opts.Decache = true
 		case "source":
@@ -147,3 +147,13 @@ func ResetOptions() {
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
 	defaultTransactionsOptions.Globals.Writer = w
 }
+
+// EXISTING_CODE
+// CacheState returns booleans indicating if transaction cache and trace
+// cache should be writable (usually it is set by the user using --cache_txs
+// and --cache_traces flags)
+func (opts *TransactionsOptions) CacheState() (bool, bool) {
+	return true, opts.CacheTraces
+}
+
+// EXISTING_CODE

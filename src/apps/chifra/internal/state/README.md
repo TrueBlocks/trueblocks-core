@@ -26,6 +26,7 @@ Flags:
   -z, --no_zero            suppress the display of zero balance accounts
   -a, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
+  -o, --cache              force the results of the query into the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen

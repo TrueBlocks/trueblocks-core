@@ -21,6 +21,7 @@ func init() {
 }
 
 var ErrReadOnly = errors.New("cache is read-only")
+var ErrCanceled = errors.New("write canceled")
 
 var defaultStore *Store
 var defaultStoreOnce sync.Once
@@ -71,8 +72,21 @@ func (s *Store) resolvePath(value Locator) (resolved string, err error) {
 	return
 }
 
-// Write options that we might need in the future
-type WriteOptions interface{}
+// WriteOptions passes additional context to Write
+type WriteOptions struct {
+	// Pending indicates that the resource can change over time
+	Pending bool
+}
+
+// ShouldProceed can cancel writing the data if it returns false
+func (w *WriteOptions) ShouldProceed() bool {
+	if w == nil {
+		return true
+	}
+
+	// Currently we only store immutable data
+	return !w.Pending
+}
 
 // Write saves value to a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
@@ -81,6 +95,11 @@ func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
 	if s.readOnly {
 		err = ErrReadOnly
 		printErr("write", err)
+		return
+	}
+	if !options.ShouldProceed() {
+		err = ErrCanceled
+		printErr("write ShouldProceed", err)
 		return
 	}
 
@@ -186,6 +205,10 @@ func (s *Store) Decache(locators []Locator, processor DecacheFunc) (err error) {
 	}
 
 	return nil
+}
+
+func (s *Store) ReadOnly() bool {
+	return s.readOnly
 }
 
 func printErr(desc string, err error) {

@@ -29,7 +29,7 @@ var scrapeCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("scrape", func() *globals.GlobalOptions {
 		return &scrapePkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("scrape", scrapePkg.RunScrape, scrapePkg.ResetOptions),
+	RunE: file.RunWithFileSupport("scrape", scrapePkg.RunScrape, scrapePkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &scrapePkg.GetOptions().Globals
 	}),
@@ -45,6 +45,10 @@ const longScrape = `Purpose:
 const notesScrape = ``
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	scrapeCmd.Flags().SortFlags = false
 
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
@@ -66,7 +70,7 @@ func init() {
 		scrapeCmd.Flags().MarkHidden("channel_count")
 		scrapeCmd.Flags().MarkHidden("allow_missing")
 	}
-	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals)
+	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals, allowCaching)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	scrapeCmd.SetOut(os.Stderr)

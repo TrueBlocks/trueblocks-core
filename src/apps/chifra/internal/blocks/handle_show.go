@@ -8,15 +8,24 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
-	readOnly := !opts.Cache
-	store := opts.Globals.CacheStore(readOnly)
+	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{
+		Opts: opts,
+	})
+
+	// If the cache is writeable, fetch the latest block timestamp so that we never
+	// cache pending blocks
+	if !rpcOptions.Store.ReadOnly() {
+		rpcOptions.LatestBlockTimestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, nil)
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
@@ -37,11 +46,11 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, store)
+					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, rpcOptions)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, store)
+					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, rpcOptions)
 					block = &b
 				}
 

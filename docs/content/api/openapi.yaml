@@ -331,16 +331,8 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: cache
-          description: write transactions to the cache (see notes)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: cacheTraces
-          description: write traces to the cache (see notes)
+          description: force the transaction's traces into the cache
           required: false
           style: form
           in: query
@@ -1056,14 +1048,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: cache
-          description: force a write of the block to the cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: decache
           description: removes a block and any transactions or traces in the block from the cache
           required: false
@@ -1196,15 +1180,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: cache
-          description: >
-            force the results of the query into the tx cache (and the trace cache if applicable)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: decache
           description: removes a transactions and any traces in the transaction from the cache
           required: false
@@ -1251,14 +1226,6 @@ paths:
               format: tx_id
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: cache
-          description: write the results of the query into the cache
           required: false
           style: form
           in: query

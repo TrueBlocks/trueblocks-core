@@ -8,9 +8,13 @@ import (
 )
 
 // Total header size in bytes
-const HeaderByteSize = 8
+const HeaderByteSize = 4 + 8
+const Magic uint32 = 3735928559 // 0xdeadbeef
+
+var ErrInvalidMagic = errors.New("invalid magic number")
 
 type header struct {
+	Magic   uint32
 	Version uint64
 }
 
@@ -25,6 +29,7 @@ func init() {
 		panic(err)
 	}
 	currentHeader = &header{
+		Magic:   Magic,
 		Version: ver.Uint64(),
 	}
 }
@@ -49,7 +54,12 @@ func (i *Item) writeHeader() error {
 func (i *Item) readHeader() (h *header, err error) {
 	h = new(header)
 	i.header = h
-	i.unmarshal(h)
+	if err = i.unmarshal(h); err != nil {
+		return
+	}
+	if h.Magic != Magic {
+		return nil, ErrInvalidMagic
+	}
 	return
 }
 

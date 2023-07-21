@@ -53,7 +53,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		}
 
 		if len(opts.AccountFor) > 0 {
-			if opts.Cache {
+			if opts.Globals.Cache {
 				return validate.Usage("The {0} option is not available with the {1} option", "--cache", "--account_for")
 			}
 			if opts.Uniq {

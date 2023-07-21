@@ -29,7 +29,7 @@ var daemonCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("daemon", func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("daemon", daemonPkg.RunDaemon, daemonPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("daemon", daemonPkg.RunDaemon, daemonPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
@@ -51,6 +51,10 @@ Notes:
   - See the API documentation (https://trueblocks.io/api) for more information.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	daemonCmd.Flags().SortFlags = false
 
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "specify the server's port")
@@ -60,7 +64,7 @@ One of [ off | on ]`)
 One of [ off | blooms | index ]`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool")
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, "run gRPC server to serve names")
-	globals.InitGlobals(daemonCmd, &daemonPkg.GetOptions().Globals)
+	globals.InitGlobals(daemonCmd, &daemonPkg.GetOptions().Globals, allowCaching)
 
 	daemonCmd.SetUsageTemplate(UsageWithNotes(notesDaemon))
 	daemonCmd.SetOut(os.Stderr)

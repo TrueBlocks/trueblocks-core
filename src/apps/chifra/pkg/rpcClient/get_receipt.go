@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -27,13 +26,13 @@ type ReceiptQuery struct {
 
 // GetTransactionReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func GetTransactionReceipt(chain string, query ReceiptQuery, store *cacheNew.Store) (receipt types.SimpleReceipt, err error) {
-	if store != nil {
+func GetTransactionReceipt(chain string, query ReceiptQuery, options *Options) (receipt types.SimpleReceipt, err error) {
+	if options.HasStore() {
 		tx := &types.SimpleTransaction{
 			BlockNumber:      query.Bn,
 			TransactionIndex: query.Txid,
 		}
-		if err := store.Read(tx, nil); err == nil {
+		if err := options.Store.Read(tx, nil); err == nil {
 			// success
 			if tx.Receipt == nil {
 				return receipt, nil
@@ -48,7 +47,7 @@ func GetTransactionReceipt(chain string, query ReceiptQuery, store *cacheNew.Sto
 	}
 
 	if query.NeedsTs && query.Ts == 0 {
-		query.Ts = rpc.GetBlockTimestamp(chain, query.Bn)
+		query.Ts = rpc.GetBlockTimestamp(chain, &query.Bn)
 	}
 
 	logs := []types.SimpleLog{}

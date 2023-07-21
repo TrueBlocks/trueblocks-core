@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -13,9 +14,16 @@ import (
 )
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
-	readOnly := !opts.Cache
-	store := opts.Globals.CacheStore(readOnly)
+	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{
+		Opts: opts,
+	})
 	chain := opts.Globals.Chain
+
+	// If the cache is writeable, fetch the latest block timestamp so that we never
+	// cache pending blocks
+	if !rpcOptions.Store.ReadOnly() {
+		rpcOptions.LatestBlockTimestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, nil)
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
@@ -33,13 +41,13 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 
 			for _, app := range txIds {
 				bn := uint64(app.BlockNumber)
-				ts := rpc.GetBlockTimestamp(chain, bn)
+				ts := rpc.GetBlockTimestamp(chain, &bn)
 				addrMap := make(index.AddressBooleanMap)
 
-				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true, store); err != nil {
+				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true, rpcOptions); err != nil {
 					errorChan <- err
 				} else {
-					if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, trans, ts, addrMap, store); err != nil {
+					if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, trans, ts, addrMap, rpcOptions); err != nil {
 						errorChan <- err
 					}
 				}
