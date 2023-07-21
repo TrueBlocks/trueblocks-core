@@ -54,6 +54,7 @@ Notes:
 func init() {
 	allowCaching := false
 	// EXISTING_CODE
+	allowCaching = true
 	// EXISTING_CODE
 
 	receiptsCmd.Flags().SortFlags = false

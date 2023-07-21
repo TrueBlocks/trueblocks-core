@@ -64,9 +64,9 @@ func SetDefaults(opts *GlobalOptions) {
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, allowCaching bool) {
 	opts.TestMode = file.IsTestMode()
 
-	// if allowCaching {
-	cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
-	//}
+	if allowCaching {
+		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
+	}
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")

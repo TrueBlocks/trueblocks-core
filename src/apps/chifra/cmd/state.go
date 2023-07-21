@@ -59,6 +59,7 @@ Notes:
 func init() {
 	allowCaching := false
 	// EXISTING_CODE
+	allowCaching = true
 	// EXISTING_CODE
 
 	stateCmd.Flags().SortFlags = false
