@@ -29,7 +29,7 @@ var transactionsCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("transactions", func() *globals.GlobalOptions {
 		return &transactionsPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("transactions", transactionsPkg.RunTransactions, transactionsPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("transactions", transactionsPkg.RunTransactions, transactionsPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &transactionsPkg.GetOptions().Globals
 	}),
@@ -53,6 +53,11 @@ Notes:
   - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	allowCaching = true
+	// EXISTING_CODE
+
 	transactionsCmd.Flags().SortFlags = false
 
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
@@ -64,13 +69,14 @@ One of [ from | to ]`)
 	transactionsCmd.Flags().StringSliceVarP(&transactionsPkg.GetOptions().Emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)")
 	transactionsCmd.Flags().StringSliceVarP(&transactionsPkg.GetOptions().Topic, "topic", "B", nil, "for the --logs option only, filter logs to show only those with this topic(s)")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().AccountFor, "account_for", "A", "", "reconcile the transaction as per the provided address")
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "", false, "force the transaction's traces into the cache (hidden)")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Decache, "decache", "D", false, "removes a transactions and any traces in the transaction from the cache")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Source, "source", "s", false, "find the source of the funds sent to the receiver (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
+		transactionsCmd.Flags().MarkHidden("cache_traces")
 		transactionsCmd.Flags().MarkHidden("source")
 	}
-	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals)
+	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals, allowCaching)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	transactionsCmd.SetOut(os.Stderr)

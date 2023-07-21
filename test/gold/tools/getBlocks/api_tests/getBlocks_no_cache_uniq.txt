@@ -1,6 +1,0 @@
-blocks?blocks=4012000-4012001&cache&uniq
-{
-  "errors": [
-    "The --cache option is not available with the --uniq option."
-  ]
-}

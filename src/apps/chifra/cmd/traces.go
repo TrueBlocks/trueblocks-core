@@ -29,7 +29,7 @@ var tracesCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("traces", func() *globals.GlobalOptions {
 		return &tracesPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("traces", tracesPkg.RunTraces, tracesPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("traces", tracesPkg.RunTraces, tracesPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &tracesPkg.GetOptions().Globals
 	}),
@@ -53,12 +53,17 @@ Notes:
   - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	allowCaching = true
+	// EXISTING_CODE
+
 	tracesCmd.Flags().SortFlags = false
 
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	tracesCmd.Flags().StringVarP(&tracesPkg.GetOptions().Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Count, "count", "U", false, "show the number of traces for the transaction only (fast)")
-	globals.InitGlobals(tracesCmd, &tracesPkg.GetOptions().Globals)
+	globals.InitGlobals(tracesCmd, &tracesPkg.GetOptions().Globals, allowCaching)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
 	tracesCmd.SetOut(os.Stderr)

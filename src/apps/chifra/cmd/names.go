@@ -29,7 +29,7 @@ var namesCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("names", func() *globals.GlobalOptions {
 		return &namesPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("names", namesPkg.RunNames, namesPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("names", namesPkg.RunNames, namesPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &namesPkg.GetOptions().Globals
 	}),
@@ -51,6 +51,10 @@ Notes:
   - The --match_case option enables case sensitive matching.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	namesCmd.Flags().SortFlags = false
 
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
@@ -77,7 +81,7 @@ func init() {
 		namesCmd.Flags().MarkHidden("undelete")
 		namesCmd.Flags().MarkHidden("remove")
 	}
-	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals)
+	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals, allowCaching)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)

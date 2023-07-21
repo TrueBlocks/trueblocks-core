@@ -6,10 +6,10 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -19,7 +19,7 @@ func (opts *LogsOptions) HandleShowLogs() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	var store *cacheNew.Store = cacheNew.NoCache
+	var rpcOptions *rpcClient.Options = rpcClient.NoOptions
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
@@ -34,7 +34,7 @@ func (opts *LogsOptions) HandleShowLogs() error {
 			defer iterCancel()
 
 			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleReceipt) error {
-				if tx, err := app.FetchTransactionById(chain, false /* needsTraces */, store); err != nil {
+				if tx, err := app.FetchTransactionById(chain, false /* needsTraces */, rpcOptions); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil || tx.Receipt == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

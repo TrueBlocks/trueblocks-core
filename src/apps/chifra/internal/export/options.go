@@ -33,8 +33,7 @@ type ExportOptions struct {
 	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
 	Balances    bool                  `json:"balances,omitempty"`    // Traverse the transaction history and show each change in ETH balances
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
-	Cache       bool                  `json:"cache,omitempty"`       // Write transactions to the cache (see notes)
-	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
+	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Force the transaction's traces into the cache
 	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
@@ -75,7 +74,6 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
 	logger.TestLog(opts.Balances, "Balances: ", opts.Balances)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
@@ -144,8 +142,6 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Balances = true
 		case "articulate":
 			opts.Articulate = true
-		case "cache":
-			opts.Cache = true
 		case "cacheTraces":
 			opts.CacheTraces = true
 		case "count":

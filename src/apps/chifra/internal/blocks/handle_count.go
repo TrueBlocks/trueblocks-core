@@ -8,7 +8,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -18,8 +17,16 @@ import (
 )
 
 func (opts *BlocksOptions) HandleCounts() error {
-	readOnly := !opts.Cache
-	store := opts.Globals.CacheStore(readOnly)
+	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
+	rpcOptions.TransactionWriteDisabled = !opts.CacheTxs
+	rpcOptions.TraceWriteDisabled = !opts.CacheTraces
+
+	// If the cache is writeable, fetch the latest block timestamp so that we never
+	// cache pending blocks
+	if !rpcOptions.Store.ReadOnly() {
+		rpcOptions.LatestBlockTimestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, nil)
+	}
+
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -37,7 +44,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 
 			for _, bn := range blockNums {
 				var block types.SimpleBlock[string]
-				if block, err = rpcClient.GetBlockByNumber(chain, bn, cacheNew.NoCache); err != nil {
+				if block, err = rpcClient.GetBlockByNumber(chain, bn, rpcClient.NoOptions); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue
@@ -92,8 +99,8 @@ func (opts *BlocksOptions) HandleCounts() error {
 					}
 
 					addrMap := make(index.AddressBooleanMap)
-					ts := rpc.GetBlockTimestamp(chain, bn)
-					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts, store); err != nil {
+					ts := rpc.GetBlockTimestamp(chain, &bn)
+					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts, rpcOptions); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
