@@ -29,7 +29,7 @@ var exportCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("export", func() *globals.GlobalOptions {
 		return &exportPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &exportPkg.GetOptions().Globals
 	}),
@@ -59,6 +59,9 @@ Notes:
   - The _block and _record options are ignored when used with the --count option.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	exportCmd.Flags().SortFlags = false
 
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Appearances, "appearances", "p", false, "export a list of appearances")

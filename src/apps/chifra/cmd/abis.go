@@ -29,7 +29,7 @@ var abisCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("abis", func() *globals.GlobalOptions {
 		return &abisPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("abis", abisPkg.RunAbis, abisPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("abis", abisPkg.RunAbis, abisPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &abisPkg.GetOptions().Globals
 	}),
@@ -50,6 +50,9 @@ Notes:
   - Search for either four byte signatures or event signatures with the --find option.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	abisCmd.Flags().SortFlags = false
 
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Known, "known", "k", false, "load common 'known' ABIs from cache")

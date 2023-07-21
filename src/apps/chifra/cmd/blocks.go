@@ -29,7 +29,7 @@ var blocksCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("blocks", func() *globals.GlobalOptions {
 		return &blocksPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("blocks", blocksPkg.RunBlocks, blocksPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("blocks", blocksPkg.RunBlocks, blocksPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &blocksPkg.GetOptions().Globals
 	}),
@@ -56,6 +56,9 @@ Notes:
   - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	blocksCmd.Flags().SortFlags = false
 
 	blocksCmd.Flags().BoolVarP(&blocksPkg.GetOptions().Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")

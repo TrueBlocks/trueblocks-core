@@ -29,7 +29,7 @@ var tokensCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("tokens", func() *globals.GlobalOptions {
 		return &tokensPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("tokens", tokensPkg.RunTokens, tokensPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("tokens", tokensPkg.RunTokens, tokensPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &tokensPkg.GetOptions().Globals
 	}),
@@ -56,6 +56,9 @@ Notes:
   - If the --parts option is not empty, all addresses are considered tokens and each token's attributes are presented.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	tokensCmd.Flags().SortFlags = false
 
 	tokensCmd.Flags().StringSliceVarP(&tokensPkg.GetOptions().Parts, "parts", "p", nil, `which parts of the token information to retrieve

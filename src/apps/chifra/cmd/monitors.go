@@ -29,7 +29,7 @@ var monitorsCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("monitors", func() *globals.GlobalOptions {
 		return &monitorsPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("monitors", monitorsPkg.RunMonitors, monitorsPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("monitors", monitorsPkg.RunMonitors, monitorsPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &monitorsPkg.GetOptions().Globals
 	}),
@@ -52,6 +52,9 @@ Notes:
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	monitorsCmd.Flags().SortFlags = false
 
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Delete, "delete", "", false, "delete a monitor, but do not remove it")

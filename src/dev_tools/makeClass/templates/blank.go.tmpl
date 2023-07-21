@@ -19,7 +19,7 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("[{ROUTE}]", func() *globals.GlobalOptions {
 		return &[{ROUTE}]Pkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("[{ROUTE}]", [{ROUTE}]Pkg.Run[{PROPER}], [{ROUTE}]Pkg.ResetOptions),
+	RunE: file.RunWithFileSupport("[{ROUTE}]", [{ROUTE}]Pkg.Run[{PROPER}], [{ROUTE}]Pkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &[{ROUTE}]Pkg.GetOptions().Globals
 	}),
@@ -34,6 +34,9 @@ const long[{PROPER}] = `[{LONG}]`
 const notes[{PROPER}] = `[{POSTNOTES}]`
 
 [{OPT_DEF}]func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	[{ROUTE}]Cmd.Flags().SortFlags = false
 
 [{SET_OPTS}][{HIDDEN}]	globals.InitGlobals([{ROUTE}]Cmd, &[{ROUTE}]Pkg.GetOptions().Globals)

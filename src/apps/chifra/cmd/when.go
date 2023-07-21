@@ -29,7 +29,7 @@ var whenCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("when", func() *globals.GlobalOptions {
 		return &whenPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("when", whenPkg.RunWhen, whenPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("when", whenPkg.RunWhen, whenPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &whenPkg.GetOptions().Globals
 	}),
@@ -52,6 +52,9 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	whenCmd.Flags().SortFlags = false
 
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, "export a list of the 'special' blocks")

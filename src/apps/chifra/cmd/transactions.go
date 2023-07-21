@@ -29,7 +29,7 @@ var transactionsCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("transactions", func() *globals.GlobalOptions {
 		return &transactionsPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("transactions", transactionsPkg.RunTransactions, transactionsPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("transactions", transactionsPkg.RunTransactions, transactionsPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &transactionsPkg.GetOptions().Globals
 	}),
@@ -53,6 +53,9 @@ Notes:
   - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	transactionsCmd.Flags().SortFlags = false
 
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")

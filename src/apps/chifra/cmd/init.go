@@ -29,7 +29,7 @@ var initCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("init", func() *globals.GlobalOptions {
 		return &initPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &initPkg.GetOptions().Globals
 	}),
@@ -49,6 +49,9 @@ Notes:
   - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	initCmd.Flags().SortFlags = false
 
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, "in addition to Bloom filters, download full index chunks (recommended)")

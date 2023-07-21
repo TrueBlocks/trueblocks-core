@@ -29,7 +29,7 @@ var daemonCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("daemon", func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("daemon", daemonPkg.RunDaemon, daemonPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("daemon", daemonPkg.RunDaemon, daemonPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
@@ -51,6 +51,9 @@ Notes:
   - See the API documentation (https://trueblocks.io/api) for more information.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	daemonCmd.Flags().SortFlags = false
 
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "specify the server's port")

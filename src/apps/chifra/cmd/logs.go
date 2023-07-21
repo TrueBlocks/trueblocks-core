@@ -29,7 +29,7 @@ var logsCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("logs", func() *globals.GlobalOptions {
 		return &logsPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("logs", logsPkg.RunLogs, logsPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("logs", logsPkg.RunLogs, logsPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &logsPkg.GetOptions().Globals
 	}),
@@ -53,6 +53,9 @@ Notes:
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if it is not, the hash will be used as a topic.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	logsCmd.Flags().SortFlags = false
 
 	logsCmd.Flags().BoolVarP(&logsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")

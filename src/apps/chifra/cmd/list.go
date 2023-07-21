@@ -29,7 +29,7 @@ var listCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("list", func() *globals.GlobalOptions {
 		return &listPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("list", listPkg.RunList, listPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("list", listPkg.RunList, listPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &listPkg.GetOptions().Globals
 	}),
@@ -51,6 +51,9 @@ Notes:
   - No other options are permitted when --silent is selected.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	listCmd.Flags().SortFlags = false
 
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Count, "count", "U", false, "display only the count of records for each monitor")

@@ -29,7 +29,7 @@ var exploreCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("explore", func() *globals.GlobalOptions {
 		return &explorePkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("explore", explorePkg.RunExplore, explorePkg.ResetOptions),
+	RunE: file.RunWithFileSupport("explore", explorePkg.RunExplore, explorePkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &explorePkg.GetOptions().Globals
 	}),
@@ -48,6 +48,9 @@ const longExplore = `Purpose:
 const notesExplore = ``
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	exploreCmd.Flags().SortFlags = false
 
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, "open the local TrueBlocks explorer")

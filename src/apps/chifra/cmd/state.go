@@ -29,7 +29,7 @@ var stateCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("state", func() *globals.GlobalOptions {
 		return &statePkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("state", statePkg.RunState, statePkg.ResetOptions),
+	RunE: file.RunWithFileSupport("state", statePkg.RunState, statePkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &statePkg.GetOptions().Globals
 	}),
@@ -57,6 +57,9 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	stateCmd.Flags().SortFlags = false
 
 	stateCmd.Flags().StringSliceVarP(&statePkg.GetOptions().Parts, "parts", "p", nil, `control which state to export

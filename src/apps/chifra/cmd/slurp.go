@@ -29,7 +29,7 @@ var slurpCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("slurp", func() *globals.GlobalOptions {
 		return &slurpPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("slurp", slurpPkg.RunSlurp, slurpPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &slurpPkg.GetOptions().Globals
 	}),
@@ -52,6 +52,9 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.`
 
 func init() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	slurpCmd.Flags().SortFlags = false
 
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `which types of transactions to request
