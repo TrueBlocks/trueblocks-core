@@ -56,6 +56,7 @@ Notes:
   - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -84,7 +85,7 @@ One of [ from | to | reward ]`)
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")
 	}
-	globals.InitGlobals(blocksCmd, &blocksPkg.GetOptions().Globals)
+	globals.InitGlobals(blocksCmd, &blocksPkg.GetOptions().Globals, allowCaching)
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 	blocksCmd.SetOut(os.Stderr)

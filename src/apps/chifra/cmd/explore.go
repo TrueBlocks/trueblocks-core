@@ -48,6 +48,7 @@ const longExplore = `Purpose:
 const notesExplore = ``
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -55,7 +56,7 @@ func init() {
 
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, "open the local TrueBlocks explorer")
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, "search google excluding popular blockchain explorers")
-	globals.InitGlobals(exploreCmd, &explorePkg.GetOptions().Globals)
+	globals.InitGlobals(exploreCmd, &explorePkg.GetOptions().Globals, allowCaching)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	exploreCmd.SetOut(os.Stderr)

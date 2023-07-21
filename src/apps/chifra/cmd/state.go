@@ -57,6 +57,7 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -68,7 +69,7 @@ One or more of [ none | some | all | balance | nonce | code | proxy | deployed |
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
-	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals)
+	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals, allowCaching)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	stateCmd.SetOut(os.Stderr)

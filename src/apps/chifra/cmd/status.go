@@ -52,6 +52,7 @@ Notes:
   - If no mode is supplied, a terse report is generated.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -59,7 +60,7 @@ func init() {
 
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, "the maximum number of records to process")
-	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals)
+	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals, allowCaching)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	statusCmd.SetOut(os.Stderr)

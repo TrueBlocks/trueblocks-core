@@ -59,6 +59,7 @@ Notes:
   - The --publish option requires a private key.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -78,7 +79,7 @@ func init() {
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("truncate")
 	}
-	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
+	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals, allowCaching)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
 	chunksCmd.SetOut(os.Stderr)

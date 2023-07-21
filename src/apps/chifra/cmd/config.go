@@ -49,13 +49,14 @@ const longConfig = `Purpose:
 const notesConfig = ``
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	configCmd.Flags().SortFlags = false
 
 	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system")
-	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals)
+	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals, allowCaching)
 
 	configCmd.SetUsageTemplate(UsageWithNotes(notesConfig))
 	configCmd.SetOut(os.Stderr)

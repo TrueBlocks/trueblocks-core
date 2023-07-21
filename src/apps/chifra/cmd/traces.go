@@ -53,6 +53,7 @@ Notes:
   - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -61,7 +62,7 @@ func init() {
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	tracesCmd.Flags().StringVarP(&tracesPkg.GetOptions().Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Count, "count", "U", false, "show the number of traces for the transaction only (fast)")
-	globals.InitGlobals(tracesCmd, &tracesPkg.GetOptions().Globals)
+	globals.InitGlobals(tracesCmd, &tracesPkg.GetOptions().Globals, allowCaching)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
 	tracesCmd.SetOut(os.Stderr)

@@ -51,6 +51,7 @@ Notes:
   - No other options are permitted when --silent is selected.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -66,7 +67,7 @@ func init() {
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when freshening)")
-	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals)
+	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals, allowCaching)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	listCmd.SetOut(os.Stderr)

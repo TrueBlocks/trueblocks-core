@@ -45,6 +45,7 @@ const longScrape = `Purpose:
 const notesScrape = ``
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -69,7 +70,7 @@ func init() {
 		scrapeCmd.Flags().MarkHidden("channel_count")
 		scrapeCmd.Flags().MarkHidden("allow_missing")
 	}
-	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals)
+	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals, allowCaching)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	scrapeCmd.SetOut(os.Stderr)

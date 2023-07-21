@@ -51,6 +51,7 @@ Notes:
   - The --match_case option enables case sensitive matching.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -80,7 +81,7 @@ func init() {
 		namesCmd.Flags().MarkHidden("undelete")
 		namesCmd.Flags().MarkHidden("remove")
 	}
-	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals)
+	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals, allowCaching)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)

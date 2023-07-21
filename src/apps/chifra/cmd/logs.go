@@ -53,13 +53,14 @@ Notes:
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if it is not, the hash will be used as a topic.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	logsCmd.Flags().SortFlags = false
 
 	logsCmd.Flags().BoolVarP(&logsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	globals.InitGlobals(logsCmd, &logsPkg.GetOptions().Globals)
+	globals.InitGlobals(logsCmd, &logsPkg.GetOptions().Globals, allowCaching)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 	logsCmd.SetOut(os.Stderr)

@@ -59,6 +59,7 @@ Notes:
   - The _block and _record options are ignored when used with the --count option.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -93,7 +94,7 @@ One of [ in | out | zero ]`)
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("load")
 	}
-	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals)
+	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals, allowCaching)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)

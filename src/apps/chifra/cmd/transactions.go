@@ -53,6 +53,7 @@ Notes:
   - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -74,7 +75,7 @@ One of [ from | to ]`)
 		transactionsCmd.Flags().MarkHidden("cache_traces")
 		transactionsCmd.Flags().MarkHidden("source")
 	}
-	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals)
+	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals, allowCaching)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	transactionsCmd.SetOut(os.Stderr)

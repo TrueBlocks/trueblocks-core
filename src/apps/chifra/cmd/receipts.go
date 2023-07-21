@@ -52,13 +52,14 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	receiptsCmd.Flags().SortFlags = false
 
 	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	globals.InitGlobals(receiptsCmd, &receiptsPkg.GetOptions().Globals)
+	globals.InitGlobals(receiptsCmd, &receiptsPkg.GetOptions().Globals, allowCaching)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 	receiptsCmd.SetOut(os.Stderr)

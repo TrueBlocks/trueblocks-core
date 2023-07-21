@@ -50,6 +50,7 @@ Notes:
   - Search for either four byte signatures or event signatures with the --find option.`
 
 func init() {
+	allowCaching := false
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -61,7 +62,7 @@ func init() {
 	abisCmd.Flags().StringVarP(&abisPkg.GetOptions().Encode, "encode", "e", "", "generate the 32-byte encoding for a given cannonical function or event signature")
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Clean, "clean", "C", false, "remove an abi file for an address or all zero-length files if no address is given")
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Sol, "sol", "s", false, "please use the `solc --abi` tool instead")
-	globals.InitGlobals(abisCmd, &abisPkg.GetOptions().Globals)
+	globals.InitGlobals(abisCmd, &abisPkg.GetOptions().Globals, allowCaching)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	abisCmd.SetOut(os.Stderr)
