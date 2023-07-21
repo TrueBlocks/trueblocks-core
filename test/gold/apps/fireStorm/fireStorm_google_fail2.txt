@@ -12,5 +12,6 @@ Arguments:
 Flags:
   -l, --local    open the local TrueBlocks explorer
   -g, --google   search google excluding popular blockchain explorers
+  -o, --cache    force the results of the query into the cache
   -h, --help     display this help screen
 
