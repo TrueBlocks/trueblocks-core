@@ -270,7 +270,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		}
 	}
 	if tx != nil {
-		if options.HasStore() {
+		if options.HasStore() && !options.TransactionWriteDisabled {
 			options.Store.Write(tx, writeOptions)
 		}
 		return tx, nil
@@ -313,7 +313,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
-	if options.HasStore() {
+	if options.HasStore() && !options.TransactionWriteDisabled {
 		options.Store.Write(tx, writeOptions)
 	}
 
@@ -387,7 +387,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, optio
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
-	if options.HasStore() {
+	if options.HasStore() && !options.TransactionWriteDisabled {
 		options.Store.Write(tx, writeOptions)
 	}
 
