@@ -116,9 +116,9 @@ func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
 	return result, nil
 }
 
-func (p *Service) PinFile(filepath string, local bool) (base.IpfsHash, error) {
+func (s *Service) PinFile(filepath string, local bool) (base.IpfsHash, error) {
 	if local {
-		return p.pinFileLocally(filepath)
+		return s.pinFileLocally(filepath)
 	}
-	return p.pinFileRemotely(filepath)
+	return s.pinFileRemotely(filepath)
 }
