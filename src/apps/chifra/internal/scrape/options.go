@@ -135,3 +135,6 @@ func ResetOptions() {
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
 	defaultScrapeOptions.Globals.Writer = w
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

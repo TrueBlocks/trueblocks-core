@@ -8,6 +8,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -17,9 +18,9 @@ import (
 )
 
 func (opts *BlocksOptions) HandleCounts() error {
-	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
-	rpcOptions.TransactionWriteDisabled = !opts.CacheTxs
-	rpcOptions.TraceWriteDisabled = !opts.CacheTraces
+	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{
+		Opts: opts,
+	})
 
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks

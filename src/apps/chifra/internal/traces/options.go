@@ -106,3 +106,6 @@ func ResetOptions() {
 	globals.SetDefaults(&defaultTracesOptions.Globals)
 	defaultTracesOptions.Globals.Writer = w
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

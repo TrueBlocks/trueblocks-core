@@ -147,3 +147,13 @@ func ResetOptions() {
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
 	defaultTransactionsOptions.Globals.Writer = w
 }
+
+// EXISTING_CODE
+// CacheState returns booleans indicating if transaction cache and trace
+// cache should be writable (usually it is set by the user using --cache_txs
+// and --cache_traces flags)
+func (opts *TransactionsOptions) CacheState() (bool, bool) {
+	return true, opts.CacheTraces
+}
+
+// EXISTING_CODE
