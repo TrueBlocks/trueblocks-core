@@ -54,10 +54,10 @@ Flags:
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)
+  -o, --cache               force the results of the query into the cache
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
-  -o, --cache               force the results of the query into the cache
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.

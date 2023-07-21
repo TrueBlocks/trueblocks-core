@@ -59,10 +59,10 @@ Flags:
   -E, --reversed            produce results in reverse chronological order
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)
   -L, --last_block uint     last block to export (inclusive, ignored when freshening)
+  -o, --cache               force the results of the query into the cache
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
-  -o, --cache               force the results of the query into the cache
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -137,10 +137,10 @@ Flags:
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)
+  -o, --cache               force the results of the query into the cache
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
-  -o, --cache               force the results of the query into the cache
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -216,10 +216,10 @@ Flags:
   -l, --list          list monitors in the cache (--verbose for more detail)
   -w, --watch         continually scan for new blocks and extract data for monitored addresses
   -s, --sleep float   seconds to sleep between monitor passes (default 14)
+  -o, --cache         force the results of the query into the cache
   -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen
-  -o, --cache         force the results of the query into the cache
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
@@ -276,10 +276,10 @@ Flags:
   -r, --regular           only available with --clean, cleans regular names database
   -d, --dry_run           only available with --clean or --autoname, outputs changes to stdout instead of updating databases
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true
+  -o, --cache             force the results of the query into the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
-  -o, --cache             force the results of the query into the cache
 
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
@@ -330,10 +330,10 @@ Flags:
   -n, --hint strings    for the --find option only, provide hints to speed up the search
   -e, --encode string   generate the 32-byte encoding for a given cannonical function or event signature
   -C, --clean           remove an abi file for an address or all zero-length files if no address is given
+  -o, --cache           force the results of the query into the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
-  -o, --cache           force the results of the query into the cache
 
 Notes:
   - Search for either four byte signatures or event signatures with the --find option.

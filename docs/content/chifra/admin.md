@@ -47,10 +47,10 @@ Arguments:
 
 Flags:
   -a, --paths        show the configuration paths for the system
+  -o, --cache        force the results of the query into the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
   -h, --help         display this help screen
-  -o, --cache        force the results of the query into the cache
 ```
 
 Data models produced by this tool:
@@ -79,10 +79,10 @@ Arguments:
 Flags:
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
+  -o, --cache               force the results of the query into the cache
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
-  -o, --cache               force the results of the query into the cache
 
 Notes:
   - The some mode includes index, monitors, names, slurps, and abis.
@@ -132,10 +132,10 @@ Flags:
                         One of [ off | blooms | index ]
   -m, --monitor         instruct the node to start the monitors tool
   -g, --grpc            run gRPC server to serve names
+  -o, --cache           force the results of the query into the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
-  -o, --cache           force the results of the query into the cache
 
 Notes:
   - To start API open terminal window and run chifra daemon.
@@ -185,10 +185,10 @@ Flags:
   -r, --remote             pin new chunks to the gateway (requires pinning service keys)
   -s, --sleep float        seconds to sleep between scraper passes (default 14)
   -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -o, --cache              force the results of the query into the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
-  -o, --cache              force the results of the query into the cache
 ```
 
 Data models produced by this tool:
@@ -293,10 +293,10 @@ Flags:
   -m, --max_addrs uint     the max number of addresses to process in a given chunk
   -d, --deep               if true, dig more deeply during checking (manifest only)
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
+  -o, --cache              force the results of the query into the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
-  -o, --cache              force the results of the query into the cache
 
 Notes:
   - Mode determines which type of data to display or process.
@@ -362,10 +362,10 @@ Flags:
   -d, --dry_run            display the results of the download without actually downloading
   -F, --first_block uint   do not download any chunks earlier than this block
   -s, --sleep float        seconds to sleep between downloads
+  -o, --cache              force the results of the query into the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
-  -o, --cache              force the results of the query into the cache
 
 Notes:
   - If run with no options, this tool will download or freshen only the Bloom filters.

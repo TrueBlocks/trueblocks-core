@@ -30,10 +30,10 @@ Flags:
                         One of [ off | blooms | index ]
   -m, --monitor         instruct the node to start the monitors tool
   -g, --grpc            run gRPC server to serve names
+  -o, --cache           force the results of the query into the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen
-  -o, --cache           force the results of the query into the cache
 
 Notes:
   - To start API open terminal window and run chifra daemon.

@@ -18,8 +18,8 @@ Arguments:
 Flags:
   -l, --local    open the local TrueBlocks explorer
   -g, --google   search google excluding popular blockchain explorers
-  -h, --help     display this help screen
   -o, --cache    force the results of the query into the cache
+  -h, --help     display this help screen
 ```
 
 Data models produced by this tool:

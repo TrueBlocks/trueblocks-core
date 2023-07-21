@@ -37,10 +37,10 @@ Flags:
   -r, --regular           only available with --clean, cleans regular names database
   -d, --dry_run           only available with --clean or --autoname, outputs changes to stdout instead of updating databases
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true
+  -o, --cache             force the results of the query into the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
-  -o, --cache             force the results of the query into the cache
 
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
