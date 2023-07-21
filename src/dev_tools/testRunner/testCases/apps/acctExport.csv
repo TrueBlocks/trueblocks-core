@@ -132,7 +132,8 @@ on      ,both ,fast  ,export   ,apps/acctExport ,export_apps              ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,simple_data2             ,n    ,addrs = 0x1234567890123456789012345678901234567890 & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & fmt = csv & no_header & max_records = 20
 
 # Testing --receipts
-on      ,both ,fast  ,export   ,apps/acctExport ,export_receipts          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & receipts & fmt = json
+# not sure - works in cmd line not API
+local   ,both ,fast  ,export   ,apps/acctExport ,export_receipts          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & receipts & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,export_receipts_v        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & receipts & fmt = json & verbose
 
 # Testing --neighbors (disabled)

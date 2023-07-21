@@ -21,5 +21,6 @@ TEST[DATE|TIME] Format:  json
       "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
       "transactionIndex": 2
     }
+    should show three records
   ]
 }
