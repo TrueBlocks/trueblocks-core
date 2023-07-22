@@ -40,7 +40,6 @@ class COptions : public COptionsBase {
     bool all;
     bool sdk;
     bool openapi;
-    bool lint{false};
 
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
@@ -52,7 +51,6 @@ class COptions : public COptionsBase {
     CToml classFile;
     CCounter counter;
     timestamp_t lastFormat;
-    timestamp_t lastLint;
     CCommandOptionArray endpointArray;
     map<string_q, string_q> hugoAliasMap;
 
@@ -69,7 +67,6 @@ class COptions : public COptionsBase {
 
     bool handle_readmes(void);
     bool handle_gocmds(void);
-    bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);
     bool handle_datamodel(void);

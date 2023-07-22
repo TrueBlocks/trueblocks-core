@@ -26,7 +26,6 @@ static const COption params[] = {
     COption("gocmds", "g", "", OPT_SWITCH, "export go command code"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
-    COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("sdk", "s", "", OPT_SWITCH, "create typescript sdk"),
     COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
@@ -70,9 +69,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-f" || arg == "--format") {
             format = true;
-
-        } else if (arg == "-l" || arg == "--lint") {
-            lint = true;
 
         } else if (arg == "-s" || arg == "--sdk") {
             sdk = true;
@@ -207,8 +203,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // Default to run if we get only all
 
-    // Maybe the user only wants to generate code, format, or lint...
-    if (all && (options + format + lint + readmes) > 0)
+    // Maybe the user only wants to generate code, or format
+    if (all && (options + format + readmes) > 0)
         return false;
 
     // If not, we need classDefs to work with...
@@ -241,7 +237,6 @@ void COptions::Init(void) {
 
     CToml toml(rootConfigToml_makeClass);
     lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_format", 0));
-    lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_lint", 0));
     toml.Release();
 }
 
