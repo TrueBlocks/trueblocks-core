@@ -171,6 +171,8 @@ func (s *SimpleReceipt) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleReceipt) IsDefault() bool {
 	a := s.ContractAddress.IsZero()
 	b := s.EffectiveGasPrice == 0

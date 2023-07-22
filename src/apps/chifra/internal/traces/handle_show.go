@@ -19,7 +19,7 @@ import (
 
 func (opts *TracesOptions) HandleShowTraces() error {
 	abiCache := articulate.NewAbiCache()
-	var rpcOptions *rpcClient.Options = rpcClient.NoOptions
+	var rpcOptions = rpcClient.NoOptions
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())

@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// HandleCrudCommands
+// HandleCrudCommands handles the chifra monitors delete, undelete, remove and decache commands.
 //
 // [State]     | Delete | Undelete | Remove | Decache                    |
 // ------------|--------|------------------------------------------------|

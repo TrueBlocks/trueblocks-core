@@ -3,8 +3,7 @@
 <!-- markdownlint-disable MD041 -->
 `chifra monitors`` has two purposes: (1) to `--watch` a set of addresses. This function is in its early
 stages and will be better explained elsewhere. Please see an example of what one may do with
-`chifra monitors --watch` [here](https://tokenomics.io/), and (2) allows one to manage existing
-monitored addresses.
+`chifra monitors --watch`, and (2) allows one to manage existing monitored addresses.
 
 A "monitor" is simply a file on a hard drive that represents the transactional history of a given
 Ethereum address. Monitors are very small, being only the `<block_no><tx_id>` pair representing each

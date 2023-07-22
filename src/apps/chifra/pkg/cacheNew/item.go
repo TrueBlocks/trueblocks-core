@@ -7,8 +7,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// Total header size in bytes
+// HeaderByteSize is the total size of a cache item's header in bytes.
 const HeaderByteSize = 4 + 8
+
+// Magic is the first bytes of a cache item's header. It is always set to 0xdeadbeef.
 const Magic uint32 = 3735928559 // 0xdeadbeef
 
 var ErrInvalidMagic = errors.New("invalid magic number")

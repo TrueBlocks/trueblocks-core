@@ -299,7 +299,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11780,dev_tools,,,makeClass,gocmds,g,,false,false,true,true,local,switch,<boolean>,export go command code
 11780,dev_tools,,,makeClass,readmes,m,,false,false,true,true,local,switch,<boolean>,create readme files for each tool and app
 11782,dev_tools,,,makeClass,format,f,,false,false,true,true,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
-11784,dev_tools,,,makeClass,lint,l,,false,false,true,true,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
 11787,dev_tools,,,makeClass,sdk,s,,false,false,true,true,header,switch,<boolean>,create typescript sdk
 11781,dev_tools,,,makeClass,openapi,A,,false,false,true,true,header,switch,<boolean>,export openapi.yaml file for API documentation
 11824,dev_tools,,,makeClass,,,,false,false,true,true,--,description,,Automatically writes C++ for various purposes.

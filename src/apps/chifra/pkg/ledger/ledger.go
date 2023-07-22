@@ -12,6 +12,8 @@ import (
 // TODO: Two things to note. (1) if balances were part of this structure, we could fill those
 // TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
+
+// Ledger is a structure that carries enough information to complate a reconciliation
 type Ledger struct {
 	Chain       string
 	AccountFor  base.Address

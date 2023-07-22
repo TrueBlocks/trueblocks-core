@@ -127,7 +127,7 @@ func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
 	return
 }
 
-// Read options that we might need in the future
+// ReadOptions are options that we might need in the future
 type ReadOptions interface{}
 
 // Read retrieves value from a location defined by options.Location. If options is nil,

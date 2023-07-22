@@ -67,6 +67,7 @@ func GetTxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error)
 }
 
 // TODO: DUPLICATED DUE TO CYCLICAL IMPORT
+
 func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
 	provider := config.GetRpcProvider(chain)
 	ec := getClient(provider)

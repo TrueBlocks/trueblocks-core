@@ -46,6 +46,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 }
 
 // TODO: Protect against overwriting files on disc
+
 func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uint64) error {
 	sort.Slice(tsArray, func(i, j int) bool {
 		return tsArray[i].Bn < tsArray[j].Bn

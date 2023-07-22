@@ -15,7 +15,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleList() error {
-	var rpcOptions *rpcClient.Options = rpcClient.NoOptions
+	var rpcOptions = rpcClient.NoOptions
 
 	// Don't do this in the loop
 	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)

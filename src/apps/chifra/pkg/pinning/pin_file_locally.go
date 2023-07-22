@@ -7,7 +7,7 @@ import (
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
-func (p *Service) pinFileLocally(filepath string) (base.IpfsHash, error) {
+func (s *Service) pinFileLocally(filepath string) (base.IpfsHash, error) {
 	file, err := os.OpenFile(filepath, os.O_RDONLY, 0)
 	if err != nil {
 		return "", err

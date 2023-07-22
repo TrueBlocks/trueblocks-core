@@ -28,7 +28,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	maxTestItems := 10
 	filenameChan := make(chan cache.CacheFileInfo)
 
-	var nRoutines int = 1
+	var nRoutines = 1
 	go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}

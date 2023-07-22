@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// Initalize makes sure everything is ready to run. These routines don't return if they aren't
+// Initialize makes sure everything is ready to run. These routines don't return if they aren't
 func Initialize() bool {
 	if os.Getenv("NO_COLOR") == "true" {
 		colors.ColorsOff()

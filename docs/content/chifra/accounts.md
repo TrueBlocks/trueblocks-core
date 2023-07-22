@@ -180,8 +180,7 @@ Links:
 <!-- markdownlint-disable MD041 -->
 `chifra monitors`` has two purposes: (1) to `--watch` a set of addresses. This function is in its early
 stages and will be better explained elsewhere. Please see an example of what one may do with
-`chifra monitors --watch` [here](https://tokenomics.io/), and (2) allows one to manage existing
-monitored addresses.
+`chifra monitors --watch`, and (2) allows one to manage existing monitored addresses.
 
 A "monitor" is simply a file on a hard drive that represents the transactional history of a given
 Ethereum address. Monitors are very small, being only the `<block_no><tx_id>` pair representing each
@@ -296,7 +295,7 @@ Links:
 
 <!-- markdownlint-disable MD041 -->
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
-the current local folder, the TrueBlocks cache, [Etherscan](http://etherscan.io), or (in the
+the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.
 
 While this tool may be used from the command line and the API, its primary purpose is in support of
