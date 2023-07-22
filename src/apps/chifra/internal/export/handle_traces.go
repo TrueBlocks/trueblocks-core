@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -29,11 +30,12 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
+	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if items, err := opts.readTraces(monitorArray, &mon, filter, errorChan, abiCache); err != nil {
+			if items, err := opts.readTraces(monitorArray, &mon, filter, errorChan, abiCache, rpcOptions); err != nil {
 				errorChan <- err
 				continue
 			} else {
@@ -69,13 +71,14 @@ func (opts *ExportOptions) readTraces(
 	filter *monitor.AppearanceFilter,
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
+	rpcOptions *rpcClient.Options,
 ) ([]*types.SimpleTrace, error) {
 	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
 		chain := opts.Globals.Chain
-		if err := opts.readTransactions(mon, txMap, true /* readTraces */); err != nil {
+		if err := opts.readTransactions(mon, txMap, true /* readTraces */, rpcOptions); err != nil {
 			return nil, err
 		}
 

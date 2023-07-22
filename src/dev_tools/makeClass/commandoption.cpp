@@ -771,8 +771,8 @@ bool CCommandOption::finishCleanup(void) {
 //---------------------------------------------------------------------------------------------------
 // TODO: search for go-port
 bool isFullyPorted(const string_q& a) {
-    CStringArray tools = {"when",     "list",   "monitors", "chunks",       "init",   "scrape", "abis",
-                          "receipts", "logs",   "state",    "tokens",       "traces", "slurp",  "names",
+    CStringArray tools = {"when",     "list",   "monitors", "chunks",       "init",   "scrape",  "abis",
+                          "receipts", "logs",   "state",    "tokens",       "traces", "slurp",   "names",
                           "daemon",   "config", "status",   "transactions", "blocks", "explore", "export"};
     for (auto tool : tools) {
         if (contains(a, tool))

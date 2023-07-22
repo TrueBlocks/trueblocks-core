@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -35,11 +36,12 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
+	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if statements, err := opts.readStatements(monitorArray, &mon, filter, errorChan, abiCache); err != nil {
+			if statements, err := opts.readStatements(monitorArray, &mon, filter, errorChan, abiCache, rpcOptions); err != nil {
 				errorChan <- err
 			} else {
 				for _, statement := range statements {
@@ -75,6 +77,7 @@ func (opts *ExportOptions) readStatements(
 	filter *monitor.AppearanceFilter,
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
+	rpcOptions *rpcClient.Options,
 ) ([]*types.SimpleStatement, error) {
 	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
@@ -82,7 +85,7 @@ func (opts *ExportOptions) readStatements(
 	} else if !opts.NoZero || cnt > 0 {
 		chain := opts.Globals.Chain
 		testMode := opts.Globals.TestMode
-		if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil {
+		if err := opts.readTransactions(mon, txMap, false /* readTraces */, rpcOptions); err != nil {
 			return nil, err
 		}
 
