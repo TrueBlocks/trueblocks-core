@@ -156,6 +156,8 @@ func (s *SimpleTokenBalance) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleTokenBalance) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }

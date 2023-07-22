@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
+// DownloadAbi downloads the ABI for the given address and saves it to the cache.
 // TODO: This function should be easy to replace with "ABI providers" (different services like
 // Sourcify or custom ones configured by the user)
 func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap) error {

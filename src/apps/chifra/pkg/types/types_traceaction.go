@@ -13,8 +13,8 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -139,6 +139,9 @@ func (s *SimpleTraceAction) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
+// MarshalCache writes the object to the cache.
 func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
 	if err = cacheNew.WriteValue(writer, s.Address); err != nil {
 		return err

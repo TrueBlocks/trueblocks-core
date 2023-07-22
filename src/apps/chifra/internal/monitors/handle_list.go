@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// HandleList
+// HandleList handles the chifra monitors --list command.
 func (opts *MonitorsOptions) HandleList() error {
 	testMode := opts.Globals.TestMode
 	chain := opts.Globals.Chain

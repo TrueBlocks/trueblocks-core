@@ -179,13 +179,11 @@ The following tools are documented, but customizing them is not supported. If yo
 | [settings]  |                                                                                                                      |
 | disabled    | If true, makeClass is enabled. Be warned -- this will overwrite source code file if improperly configured<br />false |
 | last_format | The timestamp at date the makeClass formatter was run<br />0                                                         |
-| last_lint   | The timestamp at the date the makeClass linter was run<br />0                                                        |
 |             |                                                                                                                      |
 | [enabled]   |                                                                                                                      |
 | auto_format | If true, run the auto-formatter<br />false                                                                           |
 | generate    | If true, run the auto-code generator<br />false                                                                      |
 | readmes     | If true, generate README files with `make generate`<br />false                                                       |
-| lint_all    | If true, run the linter when doing `make finish`<br />false                                                          |
 
 The follow values are defined for each classDefinition file
 

@@ -1,2 +1,2 @@
-// Package nameslib caries the names database
+// Package names caries the names database
 package names

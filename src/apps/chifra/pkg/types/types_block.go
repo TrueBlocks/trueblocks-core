@@ -208,6 +208,8 @@ func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleBlock[Tx]) CacheName() string {
 	return "Block"
 }

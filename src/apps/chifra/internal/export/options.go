@@ -182,7 +182,11 @@ func (opts *ExportOptions) toCmdLine() string {
 	options += " " + strings.Join(opts.Topics, " ")
 	options += " " + strings.Join(opts.Fourbytes, " ")
 	// EXISTING_CODE
+	if opts.Globals.Cache {
+		options += " --cache"
+	}
 	// EXISTING_CODE
+	//lint:ignore S1025 following line make code-generation easier
 	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
 	return options
 }

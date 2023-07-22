@@ -6,13 +6,14 @@ import (
 )
 
 // TODO: This should be in the rpc package, but identifiers has circular imports.
-// FetchTransactionsById fetch a transaction given an identifier
-func (app *ResolvedId) FetchTransactionById(chain string, fetchTraces bool, rpcOptions *rpcClient.Options) (tx *types.SimpleTransaction, err error) {
+
+// FetchTransactionById fetch a transaction given an identifier
+func (r *ResolvedId) FetchTransactionById(chain string, fetchTraces bool, rpcOptions *rpcClient.Options) (tx *types.SimpleTransaction, err error) {
 	return rpcClient.GetTransactionByAppearance(
 		chain,
 		&types.RawAppearance{
-			BlockNumber:      uint32(app.BlockNumber),
-			TransactionIndex: uint32(app.TransactionIndex),
+			BlockNumber:      uint32(r.BlockNumber),
+			TransactionIndex: uint32(r.TransactionIndex),
 		},
 		fetchTraces,
 		rpcOptions)

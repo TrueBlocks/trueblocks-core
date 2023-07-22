@@ -394,7 +394,7 @@ CSourceSearch::CSourceSearch(COptions* o) : opt(o) {
             }
         }
 
-        debugging = getEnvStr("SHOW_TRANSFERS") == "true" || toml.getConfigBool("settings", "debugging", false);
+        debugging = get EnvStr("SHOW_TRANSFERS") == "true" || toml.getConfigBool("settings", "debugging", false);
         if (debugging || verbose) {
             cerr << "whiteList:" << endl;
             for (auto name : whiteList) {

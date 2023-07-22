@@ -51,7 +51,6 @@ class COptions : public COptionsBase {
     CToml classFile;
     CCounter counter;
     timestamp_t lastFormat;
-    timestamp_t lastLint;
     CCommandOptionArray endpointArray;
     map<string_q, string_q> hugoAliasMap;
 
@@ -68,7 +67,6 @@ class COptions : public COptionsBase {
 
     bool handle_readmes(void);
     bool handle_gocmds(void);
-    bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);
     bool handle_datamodel(void);
@@ -83,6 +81,7 @@ class COptions : public COptionsBase {
 
     bool handle_gocmds_cmd(const CCommandOption& cmd);
     bool handle_gocmds_options(const CCommandOption& cmd);
+    bool handle_gocmds_docfile(const CCommandOption& cmd);
     bool handle_gocmds_output(const CCommandOption& cmd);
     void verifyGoEnumValidators(void);
 
@@ -94,7 +93,6 @@ class COptions : public COptionsBase {
 
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void* data);
-extern bool lintFiles(const string_q& path, void* data);
 extern bool formatCppFiles(const string_q& path, void* data);
 extern bool formatGoFiles(const string_q& path, void* data);
 extern string_q getCaseGetCode(const CMemberArray& fields);

@@ -773,7 +773,7 @@ bool CCommandOption::finishCleanup(void) {
 bool isFullyPorted(const string_q& a) {
     CStringArray tools = {"when",     "list",   "monitors", "chunks",       "init",   "scrape", "abis",
                           "receipts", "logs",   "state",    "tokens",       "traces", "slurp",  "names",
-                          "daemon",   "config", "status",   "transactions", "blocks"};
+                          "daemon",   "config", "status",   "transactions", "blocks", "explore"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;

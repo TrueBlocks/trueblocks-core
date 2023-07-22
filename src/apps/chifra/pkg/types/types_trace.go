@@ -326,7 +326,7 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	return nil
 }
 
-// We store traces in the cache as an array, so we need
+// SimpleTraceGroup stores traces in the cache as an array, so we need
 // a data type reflecting this.
 type SimpleTraceGroup struct {
 	// The actual traces being cached

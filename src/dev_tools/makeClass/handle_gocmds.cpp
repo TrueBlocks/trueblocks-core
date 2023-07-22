@@ -103,6 +103,35 @@ void COptions::verifyGoEnumValidators(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool COptions::handle_gocmds_docfile(const CCommandOption& p) {
+    string_q source = asciiFileToString(getPathToTemplates("blank_doc.go.tmpl"));
+    string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/doc.go");
+    establishFolder(fn);
+
+    string_q docFn = substitute(toLower(p.group), " ", "") + "-" + p.api_route + ".md";
+    string_q docSource = getDocsPathTemplates("readme-intros/" + docFn);
+    const char* STR_WHAT = "// Package [{API_ROUTE}]Pkg handles the chifra [{API_ROUTE}] command. It ";
+    string_q contents = STR_WHAT + asciiFileToString(docSource);
+    contents = substitute(substitute(substitute(contents, "\n", " "), "\t", " "), "\r", " ");
+    replaceAll(contents, "  ", " ");
+    replaceAll(contents, " <!-- markdownlint-disable MD041 -->", "");
+    replaceAll(contents, "`", "");
+    replaceAll(contents, "[{NAME}]", "[chifra {ROUTE}]");
+    replaceAll(source, "TEXT_TEMPLATE", contents);
+    replaceAll(source, "[{ROUTE}]", p.api_route);
+    replaceAll(source, "[{LOWER}]", toLower(p.api_route));
+    source = p.Format(source);
+
+    codewrite_t cw(fn, source);
+    cw.nSpaces = 0;
+    cw.stripEOFNL = false;
+    counter.nProcessed += writeCodeIn(this, cw);
+    counter.nVisited++;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
     string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/options.go");
     establishFolder(fn);
@@ -228,6 +257,7 @@ bool COptions::handle_gocmds(void) {
         handle_gocmds_cmd(p);
         handle_gocmds_options(p);
         handle_gocmds_output(p);
+        handle_gocmds_docfile(p);
         chifraHelpStream << toChifraHelp(p);
     }
     chifraHelpStream << STR_CHIFRA_HELP_END;
@@ -821,6 +851,7 @@ const char* STR_TO_CMD_LINE =
     "[{DASH_STR}][{POSITIONALS}]"
     "\t// EXISTING_CODE\n"
     "\t// EXISTING_CODE\n"
+    "\t//lint:ignore S1025 following line make code-generation easier\n"
     "\toptions += fmt.Sprintf(\"%s\", \"\") // silence compiler warning for auto gen\n"
     "\treturn options\n"
     "}\n\n";

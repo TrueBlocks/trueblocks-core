@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
-// HeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
+// IndexHeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
 // a version specifier (32 bytes), and two four-byte integers representing the number of records in each
 // of the two tables.
 type IndexHeaderRecord struct {

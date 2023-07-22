@@ -87,7 +87,7 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 }
 
 // TODO: Most other Stringer interfaces produce JSON data. Can we switch the polarity of this...
-// String implements the Stringer interface
+
 func (mon Monitor) String() string {
 	if mon.Deleted {
 		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)

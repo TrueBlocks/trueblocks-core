@@ -15,7 +15,7 @@ import (
 )
 
 func (opts *BlocksOptions) HandleUncles() error {
-	var rpcOptions *rpcClient.Options = rpcClient.NoOptions
+	var rpcOptions = rpcClient.NoOptions
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {

@@ -20,6 +20,8 @@ import (
 
 // TODO: We need a better way to handle configuration files
 // TODO: See issue #2259 and OLD_BLOCKSCRAPE_CONFIG_CODE below
+
+// ScrapeSettings are configuration items needed by the scraper
 type ScrapeSettings struct {
 	Apps_per_chunk uint64 `json:"appsPerChunk"`           // The number of appearances to build into a chunk before consolidating it
 	Snap_to_grid   uint64 `json:"snapToGrid"`             // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
@@ -155,24 +157,24 @@ func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSetting
 	return base, nil
 }
 
-func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
+func (s *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 	if !overlay.isDefault(chain, "Apps_per_chunk") && overlay.Apps_per_chunk != 0 && overlay.Apps_per_chunk != utils.NOPOS {
-		base.Apps_per_chunk = overlay.Apps_per_chunk
+		s.Apps_per_chunk = overlay.Apps_per_chunk
 	}
 	if !overlay.isDefault(chain, "Snap_to_grid") && overlay.Snap_to_grid != 0 && overlay.Snap_to_grid != utils.NOPOS {
-		base.Snap_to_grid = overlay.Snap_to_grid
+		s.Snap_to_grid = overlay.Snap_to_grid
 	}
 	if !overlay.isDefault(chain, "First_snap") && overlay.First_snap != 0 && overlay.First_snap != utils.NOPOS {
-		base.First_snap = overlay.First_snap
+		s.First_snap = overlay.First_snap
 	}
 	if !overlay.isDefault(chain, "Unripe_dist") && overlay.Unripe_dist != 0 && overlay.Unripe_dist != utils.NOPOS {
-		base.Unripe_dist = overlay.Unripe_dist
+		s.Unripe_dist = overlay.Unripe_dist
 	}
 	if !overlay.isDefault(chain, "Channel_count") && overlay.Channel_count != 0 && overlay.Channel_count != utils.NOPOS {
-		base.Channel_count = overlay.Channel_count
+		s.Channel_count = overlay.Channel_count
 	}
 	if !overlay.isDefault(chain, "Allow_missing") && overlay.Allow_missing {
-		base.Allow_missing = overlay.Allow_missing
+		s.Allow_missing = overlay.Allow_missing
 	}
 
 	// EXISTING_CODE
@@ -180,6 +182,8 @@ func (base *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 }
 
 // EXISTING_CODE
+//
+
 func AllowMissing(chain string) bool {
 	s, _ := GetSettings(chain, "blockScrape.toml", nil)
 	return s.Allow_missing

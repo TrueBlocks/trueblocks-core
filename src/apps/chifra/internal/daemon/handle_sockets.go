@@ -47,6 +47,7 @@ func (c *Connection) write() {
 		c.connection.Close()
 	}()
 
+	//lint:ignore S1000 this is a common pattern for a websocket connection
 	for {
 		select {
 		case message, ok := <-c.send:

@@ -14,6 +14,7 @@ import (
 )
 
 // TODO: Protect against overwriting files on disc
+
 // WriteMonHeader writes the monitor's header
 func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32, force bool) (err error) {
 	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
@@ -61,6 +62,7 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 }
 
 // TODO: Protect against overwriting files on disc
+
 // WriteAppearances writes appearances to a Monitor
 func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool) (int64, error) {
 	var f *os.File

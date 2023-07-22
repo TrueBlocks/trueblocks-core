@@ -32,7 +32,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 
 	tmpPath := config.GetPathToCache(opts.Globals.Chain) + "tmp/"
 
-	var s *Scraper = &MonitorScraper
+	var s = &MonitorScraper
 	s.ChangeState(true, tmpPath)
 
 	for {
