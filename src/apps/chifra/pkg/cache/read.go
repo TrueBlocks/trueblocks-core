@@ -33,8 +33,7 @@ func createReadFn(reader *bufio.Reader) readBytes {
 	}
 }
 
-// This generic type describes what can be array item in cache binary
-// files
+// ArrayItem is a generic type describes what can be array item in cache binary files
 type ArrayItem interface {
 	~string |
 		base.Hash |

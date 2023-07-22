@@ -92,11 +92,10 @@ type Modifier struct {
 	Period string `parser:"| @('hourly'|'daily'|'weekly'|'monthly'|'quarterly'|'annually'|'next'|'prev'|'all')" json:"period,omitempty"`
 }
 
-// Having defined both Point and Modifier, we can construct our Range, which
-// consist of a starting point, optionally followed by an ending point and
-// optionally finished by a modifier.
-// Separators for points and modifier are defined above as PointSeparator and
-// ModifierSeparator
+// Range is uses after having defined both Point and Modifier, we can construct
+// our Range, which consist of a starting point, optionally followed by an ending
+// point and optionally finished by a modifier. Separators for points and modifier
+// are defined above as PointSeparator and ModifierSeparator
 type Range struct {
 	Points   []*Point  `parser:"@@('-'@@)?"`
 	Modifier *Modifier `parser:"(':'@@)?"`

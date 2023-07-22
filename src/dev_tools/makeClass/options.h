@@ -83,6 +83,7 @@ class COptions : public COptionsBase {
 
     bool handle_gocmds_cmd(const CCommandOption& cmd);
     bool handle_gocmds_options(const CCommandOption& cmd);
+    bool handle_gocmds_docfile(const CCommandOption& cmd);
     bool handle_gocmds_output(const CCommandOption& cmd);
     void verifyGoEnumValidators(void);
 
