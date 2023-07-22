@@ -96,6 +96,7 @@ func (m *Manifest) LoadChunkMap() {
 }
 
 // TODO: Protect against overwriting files on disc
+
 func UpdateManifest(chain string, chunk ChunkRecord) error {
 	man, err := ReadManifest(chain, FromCache)
 	if err != nil {

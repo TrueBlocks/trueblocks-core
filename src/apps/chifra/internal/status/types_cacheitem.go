@@ -48,6 +48,8 @@ func (s *simpleCacheItem) Model(verbose bool, format string, extraOptions map[st
 }
 
 // EXISTING_CODE
+//
+
 func NewSingleCacheStats(t cache.CacheType, now time.Time) *simpleCacheItem {
 	return &simpleCacheItem{
 		CacheItemType: t.CacheName(),

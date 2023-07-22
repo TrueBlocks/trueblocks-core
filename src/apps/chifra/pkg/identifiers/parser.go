@@ -106,7 +106,7 @@ var parser = participle.MustBuild[Range](
 	participle.Lexer(rangeLexer),
 )
 
-// Takes a string and tries to parse it into Range struct, which always have
+// Parse takes a string and tries to parse it into Range struct, which always have
 // at least one Point (but no more than two: start and end) and may have
 // Modifier.
 func Parse(source string) (*Range, error) {

@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// GetStatementFromTransaction returns a statement from a given transaction
+// GetStatementsFromTransaction returns a statement from a given transaction
 func (l *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (statements []*types.SimpleStatement) {
 	// make room for our results
 	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need

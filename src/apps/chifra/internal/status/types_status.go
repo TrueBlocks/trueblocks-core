@@ -147,6 +147,8 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 }
 
 // EXISTING_CODE
+//
+
 func ToProgress(chain string, meta *rpcClient.MetaData) string {
 	nTs, _ := tslib.NTimestamps(chain)
 	format := "%d, %d, %d, %d ts: %d"

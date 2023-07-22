@@ -6,7 +6,8 @@ import (
 )
 
 // TODO: This should be in the rpc package, but identifiers has circular imports.
-// FetchTransactionsById fetch a transaction given an identifier
+
+// FetchTransactionById fetch a transaction given an identifier
 func (r *ResolvedId) FetchTransactionById(chain string, fetchTraces bool, rpcOptions *rpcClient.Options) (tx *types.SimpleTransaction, err error) {
 	return rpcClient.GetTransactionByAppearance(
 		chain,

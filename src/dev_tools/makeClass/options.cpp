@@ -50,7 +50,6 @@ bool COptions::parseArguments(string_q& command) {
     bool gocmds = false;
     bool readmes = false;
     bool format = false;
-    bool lint = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -171,6 +170,7 @@ bool COptions::parseArguments(string_q& command) {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
+
     LOG_INFO("Processing ", classDefs.size(), " class definition files.");
 
     for (auto classDefIn : classDefs) {
@@ -201,8 +201,6 @@ bool COptions::parseArguments(string_q& command) {
     if (readmes && !handle_readmes())
         return false;
     if (format && !handle_format())
-        return false;
-    if (lint && !handle_lint())
         return false;
     if (sdk && !handle_sdk())
         return false;

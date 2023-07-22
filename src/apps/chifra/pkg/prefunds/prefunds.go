@@ -26,6 +26,7 @@ var emptyAllocs = []Allocation{{Address: base.HexToAddress("0x0"), Balance: *big
 type AllocCallback func(*Allocation, *any) (bool, error)
 
 // TODO: In the c++ code, the prefunds were cached in memory. We should do the same here.
+
 // LoadPrefunds loads the prefunds from the genesis file and processes each with provided callback if present
 func LoadPrefunds(chain string, thePath string, userCallback AllocCallback) ([]Allocation, error) {
 	allocations := make([]Allocation, 0, 4000)
@@ -63,7 +64,6 @@ func LoadPrefunds(chain string, thePath string, userCallback AllocCallback) ([]A
 	return allocations, nil
 }
 
-// -----------------------------------------------------------------------
 func GetLargestPrefund(chain, thePath string) (Allocation, error) {
 	largest := Allocation{}
 	getLargest := func(alloc *Allocation, data *any) (bool, error) {

@@ -182,6 +182,8 @@ func (s *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 }
 
 // EXISTING_CODE
+//
+
 func AllowMissing(chain string) bool {
 	s, _ := GetSettings(chain, "blockScrape.toml", nil)
 	return s.Allow_missing

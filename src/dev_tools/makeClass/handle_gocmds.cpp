@@ -851,6 +851,7 @@ const char* STR_TO_CMD_LINE =
     "[{DASH_STR}][{POSITIONALS}]"
     "\t// EXISTING_CODE\n"
     "\t// EXISTING_CODE\n"
+    "\t//lint:ignore S1025 following line make code-generation easier\n"
     "\toptions += fmt.Sprintf(\"%s\", \"\") // silence compiler warning for auto gen\n"
     "\treturn options\n"
     "}\n\n";

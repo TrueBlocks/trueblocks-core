@@ -216,6 +216,8 @@ func (s *SimpleName) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleName) ToMessage() *proto.Name {
 	return &proto.Name{
 		Address:    s.Address.Hex(),

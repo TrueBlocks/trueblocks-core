@@ -39,5 +39,9 @@ int main(int argc, const char* argv[]) {
                  options.counter.nProcessed, ").", string_q(40, ' '));
     }
 
+    if (options.lint) {
+        options.handle_lint();
+    }
+
     return 0;
 }

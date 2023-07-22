@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// HandleClean
+// HandleClean handles the chifra monitors --clean command.
 func (opts *MonitorsOptions) HandleClean() error {
 	testMode := opts.Globals.TestMode
 	_, monArray := monitor.GetMonitorMap(opts.Globals.Chain)

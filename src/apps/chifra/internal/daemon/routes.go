@@ -334,7 +334,7 @@ var OptionsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reques
 	addCorsHeaders(w)
 })
 
-// Logger sends information to the server's console
+// CorsHandler handles CORS requests
 func CorsHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		addCorsHeaders(w)

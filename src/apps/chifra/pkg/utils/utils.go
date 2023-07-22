@@ -88,20 +88,6 @@ func PadRight(str string, totalLen int, pad rune) string {
 	return str + tail
 }
 
-func ToCamelCase(in string) string {
-	if len(in) == 0 {
-		return in
-	}
-
-	var arr []string
-	fields := strings.Fields(in)
-	for _, field := range fields {
-		arr = append(arr, strings.Title(field))
-	}
-	arr[0] = strings.ToLower(arr[0])
-	return strings.Join(arr, "")
-}
-
 // TODO: Might be nice if the below two values were the same so we could cast between them.
 // TODO: Trouble is that these values may be stored on disc.
 

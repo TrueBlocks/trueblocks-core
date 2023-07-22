@@ -174,6 +174,8 @@ func ResetOptions() {
 }
 
 // EXISTING_CODE
+//
+
 // CacheState returns booleans indicating if transaction cache and trace
 // cache should be writable (usually it is set by the user using --cache_txs
 // and --cache_traces flags)

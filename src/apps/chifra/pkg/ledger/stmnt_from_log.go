@@ -50,7 +50,7 @@ func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleState
 	}
 
 	b := strings.Replace(log.Data, "0x", "", -1)
-	val := big.NewInt(0)
+	var val *big.Int
 	if val, _ = new(big.Int).SetString(b, 16); val == nil {
 		val = big.NewInt(0)
 	}

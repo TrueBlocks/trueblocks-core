@@ -40,6 +40,7 @@ class COptions : public COptionsBase {
     bool all;
     bool sdk;
     bool openapi;
+    bool lint{false};
 
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
@@ -95,7 +96,6 @@ class COptions : public COptionsBase {
 
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void* data);
-extern bool lintFiles(const string_q& path, void* data);
 extern bool formatCppFiles(const string_q& path, void* data);
 extern bool formatGoFiles(const string_q& path, void* data);
 extern string_q getCaseGetCode(const CMemberArray& fields);

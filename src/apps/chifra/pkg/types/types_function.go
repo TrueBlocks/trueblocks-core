@@ -141,6 +141,8 @@ func (s *SimpleFunction) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleFunction) Clone() *SimpleFunction {
 	shallowCopy := *s
 	shallowCopy.Inputs = make([]SimpleParameter, len(s.Inputs))
@@ -347,6 +349,7 @@ func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 }
 
 // TODO: I feel like we might be able to remove stateMutability since we don't really use it.
+
 // Normalize sets StateMutability from `payable` field. It is only useful when
 // reading ABIs generated before Solidity 0.5.0, which use `payable` field:
 // https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
