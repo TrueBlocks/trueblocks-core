@@ -481,7 +481,7 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
     if (theMap.size() == 0)
         return false;
 
-    if (getEnvStr("HIDE_NAMES") == "true") {
+    if (get EnvStr("HIDE_NAMES") == "true") {
         return false;
     }
 
