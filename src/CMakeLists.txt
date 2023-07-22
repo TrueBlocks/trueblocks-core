@@ -111,6 +111,7 @@ endfunction(COMPILE_PROTOBUFFERS)
 # ----------------------------------------------------------------------------------------
 # Enable testing
 # enable_testing()
+add_custom_target(lint COMMAND "staticcheck" "--checks" "all,-ST1003" "./..." WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
 add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --openapi" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "--all --readmes --openapi --options --gocmds --sdk" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
