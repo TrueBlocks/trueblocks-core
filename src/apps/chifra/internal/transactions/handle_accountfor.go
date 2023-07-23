@@ -30,6 +30,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		nil,
 	)
 	ledgers.SetContextsFromIds(chain, opts.TransactionIds)
+	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
@@ -41,7 +42,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 			}
 
 			for _, app := range txIds {
-				if statements, err := ledgers.GetStatementsFromAppearance(chain, &app); err != nil {
+				if statements, err := ledgers.GetStatementsFromAppearance(chain, &app, rpcOptions); err != nil {
 					errorChan <- err
 				} else {
 					for _, statement := range statements {
