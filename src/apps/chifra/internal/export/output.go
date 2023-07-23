@@ -73,6 +73,8 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	handled = true
 	if opts.Count {
 		err = opts.HandleCount(monitorArray)
+	} else if opts.Logs {
+		err = opts.HandleLogs(monitorArray)
 	} else if opts.Appearances {
 		err = opts.HandleAppearances(monitorArray)
 	}
@@ -93,7 +95,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.Appearances || opts.Count
+	ported = opts.Appearances || opts.Count || opts.Logs
 	// EXISTING_CODE
 	return
 }
