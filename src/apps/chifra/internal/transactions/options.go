@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -105,7 +106,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 		case "source":
 			opts.Source = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
 				return opts
 			}
@@ -146,6 +147,10 @@ func ResetOptions() {
 	defaultTransactionsOptions = TransactionsOptions{}
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
 	defaultTransactionsOptions.Globals.Writer = w
+	defaultTransactionsOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	// EXISTING_CODE
+	defaultTransactionsOptions.Globals.Caps = defaultTransactionsOptions.Globals.Caps.Add(caps.Caching)
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

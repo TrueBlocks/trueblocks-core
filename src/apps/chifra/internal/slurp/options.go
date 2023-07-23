@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -86,7 +87,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
 				return opts
 			}
@@ -161,6 +162,10 @@ func ResetOptions() {
 	defaultSlurpOptions = SlurpOptions{}
 	globals.SetDefaults(&defaultSlurpOptions.Globals)
 	defaultSlurpOptions.Globals.Writer = w
+	defaultSlurpOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	// EXISTING_CODE
+	defaultSlurpOptions.Globals.Caps = defaultSlurpOptions.Globals.Caps.Add(caps.Caching)
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

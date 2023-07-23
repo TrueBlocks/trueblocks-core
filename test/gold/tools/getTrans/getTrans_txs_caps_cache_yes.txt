@@ -1,0 +1,5 @@
+chifra transactions  12.0 --cache
+TEST[DATE|TIME] Transactions:  [12.0]
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Format:  txt
+EROR[DATE|TIME] transaction at 12.0 returned an error: not found

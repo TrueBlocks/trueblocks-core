@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -52,9 +53,9 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 
 	slurpCmd.Flags().SortFlags = false
@@ -64,7 +65,7 @@ One or more of [ ext | int | token | nfts | 1155 | miner | uncles | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, "show only the blocknumber.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 5000, "the number of records to request on each page")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
-	globals.InitGlobals(slurpCmd, &slurpPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
 	slurpCmd.SetOut(os.Stderr)

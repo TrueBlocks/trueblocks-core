@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -52,9 +53,9 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 
 	whenCmd.Flags().SortFlags = false
@@ -70,7 +71,7 @@ func init() {
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("truncate")
 	}
-	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals, capabilities)
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 	whenCmd.SetOut(os.Stderr)

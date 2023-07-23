@@ -85,9 +85,6 @@ func (opts *BlocksOptions) validateBlocks() error {
 			if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
 				return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
 			}
-			if opts.Globals.Cache && opts.Uncles {
-				return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uncles option")
-			}
 			if opts.Traces && opts.Hashes {
 				return validate.Usage("The {0} option is not available{1}.", "--traces", " with the --hashes option")
 			}

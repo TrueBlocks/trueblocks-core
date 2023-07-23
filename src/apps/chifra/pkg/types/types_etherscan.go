@@ -148,9 +148,7 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 		if s.Input == "deprecated" {
 			s.Input = "0x"
 		}
-		if len(s.Input) > 2 {
-			model["input"] = s.Input
-		}
+		model["input"] = s.Input
 	}
 
 	return Model{

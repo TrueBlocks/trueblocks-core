@@ -12,6 +12,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -67,7 +68,7 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 		case "grpc":
 			opts.Grpc = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
 				return opts
 			}
@@ -105,6 +106,9 @@ func ResetOptions() {
 	defaultDaemonOptions = DaemonOptions{}
 	globals.SetDefaults(&defaultDaemonOptions.Globals)
 	defaultDaemonOptions.Globals.Writer = w
+	defaultDaemonOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

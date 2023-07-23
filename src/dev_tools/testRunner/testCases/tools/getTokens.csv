@@ -66,6 +66,9 @@ on      ,both ,slow  ,tokens ,tools/getTokens ,by_account_table_verbose_long ,y 
 on      ,both ,slow  ,tokens ,tools/getTokens ,by_account_table              ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf & by_acct & blocks = 4000000
 on      ,both ,slow  ,tokens ,tools/getTokens ,top_three_swarm1              ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 4285364 3510999 2510010 & by_acct
 
+# Capabilities
+on       ,both ,fast ,tokens ,tools/getTokens ,tokens_caps_cache_yes         ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb9 & cache
+
 # See issue #3001 - non-existant block not identified as such
 local    ,both ,fast  ,tokens ,tools/getTokens ,block_not_found               ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 

@@ -1,0 +1,6 @@
+when?blocks=12&cache&failTest
+{
+  "errors": [
+    "Invalid key (failTest) in when route."
+  ]
+}

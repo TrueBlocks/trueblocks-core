@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -49,7 +50,7 @@ Notes:
   - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -59,7 +60,7 @@ func init() {
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().DryRun, "dry_run", "d", false, "display the results of the download without actually downloading")
 	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, "do not download any chunks earlier than this block")
 	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, "seconds to sleep between downloads")
-	globals.InitGlobals(initCmd, &initPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(initCmd, &initPkg.GetOptions().Globals, capabilities)
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
 	initCmd.SetOut(os.Stderr)

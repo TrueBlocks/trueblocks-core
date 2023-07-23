@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -66,7 +67,7 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 		case "count":
 			opts.Count = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")
 				return opts
 			}
@@ -105,6 +106,10 @@ func ResetOptions() {
 	defaultTracesOptions = TracesOptions{}
 	globals.SetDefaults(&defaultTracesOptions.Globals)
 	defaultTracesOptions.Globals.Writer = w
+	defaultTracesOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	// EXISTING_CODE
+	defaultTracesOptions.Globals.Caps = defaultTracesOptions.Globals.Caps.Add(caps.Caching)
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

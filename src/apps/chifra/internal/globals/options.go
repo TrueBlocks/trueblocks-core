@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -20,14 +21,15 @@ import (
 )
 
 type GlobalOptions struct {
-	Wei     bool   `json:"wei,omitempty"`
-	Ether   bool   `json:"ether,omitempty"`
-	Help    bool   `json:"help,omitempty"`
-	File    string `json:"file,omitempty"`
-	Version bool   `json:"version,omitempty"`
-	Noop    bool   `json:"noop,omitempty"`
-	NoColor bool   `json:"noColor,omitempty"`
-	Cache   bool   `json:"cache,omitempty"`
+	Wei     bool            `json:"wei,omitempty"`
+	Ether   bool            `json:"ether,omitempty"`
+	Help    bool            `json:"help,omitempty"`
+	File    string          `json:"file,omitempty"`
+	Version bool            `json:"version,omitempty"`
+	Noop    bool            `json:"noop,omitempty"`
+	NoColor bool            `json:"noColor,omitempty"`
+	Cache   bool            `json:"cache,omitempty"`
+	Caps    caps.Capability `json:"-"`
 	output.OutputOptions
 }
 
@@ -47,6 +49,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	// logger.TestLog(opts.Caps != caps.None, "Caps: ", opts.Caps)
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }
@@ -61,12 +64,14 @@ func SetDefaults(opts *GlobalOptions) {
 	}
 }
 
-func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, allowCaching bool) {
+func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	opts.TestMode = file.IsTestMode()
+	opts.Caps = c
 
-	if allowCaching {
+	if opts.Caps.Has(caps.Caching) {
 		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
 	}
+
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
@@ -270,7 +275,7 @@ func (opts *GlobalOptions) DefaultRpcOptions(settings *DefaultRpcOptionsSettings
 	}
 }
 
-func IsGlobalOption(key string) bool {
+func IsGlobalOption(c caps.Capability, key string) bool {
 	permitted := []string{
 		"fmt",
 		"verbose",
@@ -286,12 +291,18 @@ func IsGlobalOption(key string) bool {
 		"file",
 		"output",
 		"append",
-		"cache",
 	}
 	for _, per := range permitted {
 		if per == key {
 			return true
 		}
 	}
+
+	for _, cap := range caps.AllCaps {
+		if c.Has(cap) && c.Text() == key {
+			return true
+		}
+	}
+
 	return false
 }

@@ -48,10 +48,6 @@ func (opts *ListOptions) validateList() error {
 		return validate.Usage("--unripe is disabled for testing.")
 	}
 
-	if opts.Globals.Cache {
-		return validate.Usage("The {0} option is not available for this command.", "--cache")
-	}
-
 	if opts.Count && opts.MaxRecords != 250 {
 		return validate.Usage("The {0} option is not available with the {1}-{2} option.", "--count", "--max_records", fmt.Sprintf("%d", opts.MaxRecords))
 	}

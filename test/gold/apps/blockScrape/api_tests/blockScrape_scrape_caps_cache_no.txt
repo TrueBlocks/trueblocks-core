@@ -1,0 +1,6 @@
+scrape?chain=sepolia&cache
+{
+  "errors": [
+    "Invalid key (cache) in scrape route."
+  ]
+}

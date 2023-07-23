@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -56,9 +57,9 @@ Notes:
   - If the --parts option is not empty, all addresses are considered tokens and each token's attributes are presented.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 
 	tokensCmd.Flags().SortFlags = false
@@ -68,7 +69,7 @@ One or more of [ name | symbol | decimals | totalSupply | version | all ]`)
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
-	globals.InitGlobals(tokensCmd, &tokensPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(tokensCmd, &tokensPkg.GetOptions().Globals, capabilities)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	tokensCmd.SetOut(os.Stderr)

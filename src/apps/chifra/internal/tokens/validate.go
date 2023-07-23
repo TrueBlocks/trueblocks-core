@@ -30,10 +30,6 @@ func (opts *TokensOptions) validateTokens() error {
 		return validate.Usage("The {0} is not yet implemented.", "--changes")
 	}
 
-	if opts.Globals.Cache {
-		return validate.Usage("The {0} option is not available for this command.", "--cache")
-	}
-
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral
