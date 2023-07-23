@@ -17,7 +17,6 @@ Flags:
   -g, --gocmds      export go command code
   -m, --readmes     create readme files for each tool and app
   -f, --format      format source code files (.cpp and .h) found in local folder and below
-  -l, --lint        lint source code files (.cpp and .h) found in local folder and below
   -d, --dump        dump any classDefinition config tomls to screen and quit (hidden)
   -A, --openapi     export openapi.yaml file for API documentation (hidden)
 

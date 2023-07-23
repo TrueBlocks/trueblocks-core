@@ -33,8 +33,7 @@ func createReadFn(reader *bufio.Reader) readBytes {
 	}
 }
 
-// This generic type describes what can be array item in cache binary
-// files
+// ArrayItem is a generic type describes what can be array item in cache binary files
 type ArrayItem interface {
 	~string |
 		base.Hash |
@@ -223,6 +222,7 @@ func readCacheHeader(reader *bufio.Reader, target *cacheHeader) (err error) {
 // TODO(cache): (see https://github.com/TrueBlocks/trueblocks-core/pull/2584#discussion_r1031564867)
 // TODO(cache): Eventually much of this code will be auto-generated.
 // (applies to the rest of "Read[DataType]" functions below as well)
+
 func ReadBlock(reader *bufio.Reader) (block *types.SimpleBlock[types.SimpleTransaction], err error) {
 	block = &types.SimpleBlock[types.SimpleTransaction]{}
 	read := createReadFn(reader)

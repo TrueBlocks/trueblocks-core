@@ -70,6 +70,7 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 
 // TODO: We could, if we wished, use getLogs with a block range to retrieve all of the logs in the range
 // TODO: with a single query. See closed issue #1829
+
 func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (ok bool, err error) {
 	//
 	// We build a pipeline that takes block numbers in through the blockChannel which queries the chain
@@ -138,7 +139,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 
 		ts := tslib.TimestampRecord{
 			Bn: uint32(bn),
-			Ts: uint32(rpc.GetBlockTimestamp(opts.Chain, uint64(bn))),
+			Ts: uint32(rpc.GetBlockTimestamp(opts.Chain, utils.PointerOf(uint64(bn)))),
 		}
 
 		tsChannel <- ts

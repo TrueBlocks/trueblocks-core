@@ -98,3 +98,6 @@ func ResetOptions() {
 	globals.SetDefaults(&defaultLogsOptions.Globals)
 	defaultLogsOptions.Globals.Writer = w
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

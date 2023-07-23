@@ -37,7 +37,7 @@ func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
 	return blocks, nil
 }
 
-// getBounds returns the earliest and latest blocks for an array of identifiers
+// GetBounds returns the earliest and latest blocks for an array of identifiers
 func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error) {
 	ret = base.BlockRange{
 		First: utils.NOPOS,
@@ -109,7 +109,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(rpc.GetBlockTimestamp(chain, 0))
+	firstDate := gostradamus.FromUnixTimestamp(rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -189,7 +189,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		if err == tslib.ErrInTheFuture {
 			provider := config.GetRpcProvider(chain)
 			latest := rpcClient.BlockNumber(provider)
-			tsFuture := rpc.GetBlockTimestamp(chain, latest)
+			tsFuture := rpc.GetBlockTimestamp(chain, &latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks

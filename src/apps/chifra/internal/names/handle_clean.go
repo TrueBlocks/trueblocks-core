@@ -1,6 +1,7 @@
-// New tests -- chifra names --autoname (address in the environment)
-// New tests -- chifra names --autoname <address>
 package namesPkg
+
+// TODO: New tests -- chifra names --autoname (address in the environment)
+// TODO: New tests -- chifra names --autoname <address>
 
 import (
 	"context"

@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -27,12 +26,12 @@ func visitTrace(trace *types.SimpleTrace, data *any) error {
 
 func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) error) error {
 	for blknum := from; blknum <= to; blknum++ {
-		if block, err := rpcClient.GetBlockByNumber("mainnet", blknum, cacheNew.NoCache); err != nil {
+		if block, err := rpcClient.GetBlockByNumber("mainnet", blknum, rpcClient.NoOptions); err != nil {
 			return err
 		} else {
 			bar.Tick()
 			for _, txHash := range block.Transactions {
-				if traces, err := rpcClient.GetTracesByTransactionHash("mainnet", txHash, nil, cacheNew.NoCache); err != nil {
+				if traces, err := rpcClient.GetTracesByTransactionHash("mainnet", txHash, nil, rpcClient.NoOptions); err != nil {
 					return err
 				} else {
 					for _, trace := range traces {

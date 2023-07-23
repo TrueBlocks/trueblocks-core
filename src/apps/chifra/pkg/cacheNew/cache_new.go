@@ -29,27 +29,27 @@ type Storer interface {
 	Stat(path string) (*locations.ItemInfo, error)
 }
 
-// A struct implementing Locator can describe its location in the
-// cache
+// Locator is a struct implementing the Locator interface. It can describe its
+// location in the cache
 type Locator interface {
 	CacheLocation() (directory string, extension string)
 	CacheId() string
 	CacheName() string
 }
 
-// A struct implementing Unmarshaler can be read from binary by
+// Unmarshaler is a struct implementing Unmarshaler can be read from binary by
 // calling UnmarshalCache
 type Unmarshaler interface {
 	UnmarshalCache(version uint64, reader io.Reader) error
 }
 
-// A struct implementing Marshaler can be written to binary by
-// calling MarshalCache
+// Marshaler is a struct implementing the Marshaler interface. It can be
+// written to binary by calling MarshalCache
 type Marshaler interface {
 	MarshalCache(writer io.Writer) error
 }
 
-// Options used by Store
+// StoreOptions used by Store
 type StoreOptions struct {
 	Location StoreLocation
 	Chain    string

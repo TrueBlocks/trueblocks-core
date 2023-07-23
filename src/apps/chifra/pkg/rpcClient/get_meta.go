@@ -62,7 +62,7 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 
 	filenameChan := make(chan cache.CacheFileInfo)
 
-	var nRoutines int = 4
+	var nRoutines = 4
 	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Bloom, nil, filenameChan)
 	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Staging, nil, filenameChan)
 	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Ripe, nil, filenameChan)

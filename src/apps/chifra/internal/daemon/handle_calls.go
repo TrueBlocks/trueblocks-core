@@ -5,6 +5,7 @@
  * Parts of this file were auto generated with makeClass --gocmds. Edit only those parts of
  * the code outside of 'BEG_/END_' tags.
  */
+
 package daemonPkg
 
 import (

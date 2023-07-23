@@ -9,17 +9,17 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *TracesOptions) HandleShowTraces() error {
 	abiCache := articulate.NewAbiCache()
-	var store *cacheNew.Store = cacheNew.NoCache
+	var rpcOptions = rpcClient.NoOptions
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -37,10 +37,10 @@ func (opts *TracesOptions) HandleShowTraces() error {
 
 			// Timestamp is not part of the raw trace data so we need to get it separately
 			// TxIds don't span blocks, so we can use the first one outside the loop to find timestamp
-			ts := rpc.GetBlockTimestamp(opts.Globals.Chain, uint64(txIds[0].BlockNumber))
+			ts := rpc.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(txIds[0].BlockNumber)))
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
-				traces, err := rpcClient.GetTracesByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex), store)
+				traces, err := rpcClient.GetTracesByTransactionId(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex), rpcOptions)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

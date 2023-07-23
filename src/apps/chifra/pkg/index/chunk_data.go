@@ -71,8 +71,8 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 }
 
 // String returns a JSON representation of the Chunk
-func (cd ChunkData) String() string {
-	s, _ := json.MarshalIndent(cd, "", "  ")
+func (chunk ChunkData) String() string {
+	s, _ := json.MarshalIndent(chunk, "", "  ")
 	return string(s)
 }
 

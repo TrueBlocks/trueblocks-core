@@ -12,7 +12,8 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-// Context is a struct to hold the context of a reconciliation (i.e., its previous and next blocks and whether they are different)
+// LedgerContext is a struct to hold the context of a reconciliation (i.e., its
+// previous and next blocks and whether they are different)
 type LedgerContext struct {
 	PrevBlock  base.Blknum
 	CurBlock   base.Blknum

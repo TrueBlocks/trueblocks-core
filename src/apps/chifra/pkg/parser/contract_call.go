@@ -39,7 +39,8 @@ var contractCallLexer = lexer.MustSimple([]lexer.SimpleRule{
 	{Name: `Punctation`, Pattern: `[(),]`},
 })
 
-// The call is any of the 3 supported forms (see Input syntax above)
+// ContractCall is a call to a smart contract in any of the 3 supported forms
+// (see Input syntax above)
 type ContractCall struct {
 	// Four byte selector, e.g.
 	// 0xcdba2fd4(105)
@@ -154,7 +155,7 @@ func (a *ContractCallArgument) AbiType(abiType *abi.Type) (any, error) {
 	return a.Interface(), nil
 }
 
-// Type alias to capture bool values correctly
+// Boolean is a type alias to capture bool values correctly
 type Boolean bool
 
 func (b *Boolean) Capture(values []string) error {

@@ -8,7 +8,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -16,6 +15,8 @@ import (
 )
 
 func (opts *BlocksOptions) HandleUncles() error {
+	var rpcOptions = rpcClient.NoOptions
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
@@ -35,11 +36,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, cacheNew.NoCache)
+					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, rpcOptions)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, cacheNew.NoCache)
+					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, rpcOptions)
 					block = &b
 				}
 

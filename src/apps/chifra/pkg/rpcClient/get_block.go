@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -23,17 +24,17 @@ func GetBlockHeaderByNumber(chain string, bn uint64) (types.SimpleBlock[string],
 }
 
 // GetBlockByNumberWithTxs fetches the block with transactions from the RPC.
-func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (types.SimpleBlock[types.SimpleTransaction], error) {
-	if store != nil {
+func GetBlockByNumberWithTxs(chain string, bn uint64, options *Options) (types.SimpleBlock[types.SimpleTransaction], error) {
+	if options.HasStore() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.SimpleBlock[string]{BlockNumber: bn}
-		if err := store.Read(&cachedBlock, nil); err == nil {
+		if err := options.Store.Read(&cachedBlock, nil); err == nil {
 			// Success, we now have to fill in transaction objects
 			result := types.SimpleBlock[types.SimpleTransaction]{}
 			result.Transactions = make([]types.SimpleTransaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
-				tx, err := GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index), store)
+				tx, err := GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index), options)
 				if err != nil {
 					success = false
 					break
@@ -51,6 +52,14 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (ty
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
+	}
+
+	var writeOptions *cacheNew.WriteOptions
+	if options.HasStoreWritable() {
+		writeOptions = &cacheNew.WriteOptions{
+			// Check if the block is final
+			Pending: block.Pending(options.LatestBlockTimestamp),
+		}
 	}
 
 	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
@@ -85,7 +94,7 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (ty
 			GasPrice: txGasPrice,
 			NeedsTs:  true,
 			Ts:       ts,
-		}, store)
+		}, options)
 		if err != nil {
 			return block, err
 		}
@@ -114,22 +123,22 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, store *cacheNew.Store) (ty
 		}
 		tx.SetGasCost(&receipt)
 		block.Transactions = append(block.Transactions, tx)
-		if store != nil {
-			store.Write(&tx, nil)
+		if options.HasStore() && !options.TransactionWriteDisabled {
+			options.Store.Write(&tx, writeOptions)
 		}
 	}
 
-	if store != nil {
-		store.Write(&block, nil)
+	if options.HasStore() {
+		options.Store.Write(&block, writeOptions)
 	}
 	return block, nil
 }
 
 // GetBlockByNumber fetches the block with only transactions' hashes from the RPC
-func GetBlockByNumber(chain string, bn uint64, store *cacheNew.Store) (block types.SimpleBlock[string], err error) {
-	if store != nil {
+func GetBlockByNumber(chain string, bn uint64, options *Options) (block types.SimpleBlock[string], err error) {
+	if options.HasStore() {
 		block.BlockNumber = bn
-		if err := store.Read(&block, nil); err == nil {
+		if err := options.Store.Read(&block, nil); err == nil {
 			// Success
 			return block, nil
 		}
@@ -151,8 +160,12 @@ func GetBlockByNumber(chain string, bn uint64, store *cacheNew.Store) (block typ
 		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
 	}
 
-	if store != nil {
-		store.Write(&block, nil)
+	if options.HasStoreWritable() {
+		writeOptions := &cacheNew.WriteOptions{
+			// Check if the block is final
+			Pending: block.Pending(options.LatestBlockTimestamp),
+		}
+		options.Store.Write(&block, writeOptions)
 	}
 
 	return block, nil
@@ -219,7 +232,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, 0))
+			block.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 		} else if mustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}

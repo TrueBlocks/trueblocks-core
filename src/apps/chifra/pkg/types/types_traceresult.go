@@ -109,6 +109,8 @@ func (s *SimpleTraceResult) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
 	if err = cacheNew.WriteValue(writer, s.Address); err != nil {
 		return err

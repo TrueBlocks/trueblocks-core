@@ -12,6 +12,7 @@ type Reason struct {
 }
 
 // TODO: BOGUS
+
 func GetNeighbors(app *types.SimpleAppearance) ([]Reason, error) {
 	reasons := make([]Reason, 0)
 	reasons = append(reasons, Reason{app, &app.Address, "self"})

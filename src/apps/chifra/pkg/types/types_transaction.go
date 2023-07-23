@@ -330,6 +330,8 @@ func (s *SimpleTransaction) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
 	if receipt == nil {
 		return 0

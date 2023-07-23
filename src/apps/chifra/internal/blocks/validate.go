@@ -33,7 +33,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 		}
 	}
 
-	if opts.Cache && (opts.List > 0 || opts.ListCount > 0) {
+	if opts.Globals.Cache && (opts.List > 0 || opts.ListCount > 0) {
 		return validate.Usage("You may not use the {0} option with the {1} options.", "--cache", "--list")
 	}
 
@@ -85,7 +85,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 			if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
 				return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
 			}
-			if opts.Cache && opts.Uncles {
+			if opts.Globals.Cache && opts.Uncles {
 				return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uncles option")
 			}
 			if opts.Traces && opts.Hashes {

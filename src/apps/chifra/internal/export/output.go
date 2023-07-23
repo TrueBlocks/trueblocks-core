@@ -99,6 +99,9 @@ func (opts *ExportOptions) IsPorted() (ported bool) {
 }
 
 // EXISTING_CODE
+//
+
+// Validate calls into the opts validateExport routine
 func (opts *ExportOptions) Validate() error {
 	return opts.validateExport()
 }

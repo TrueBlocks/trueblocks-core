@@ -143,6 +143,7 @@ func ValidateEnumSlice(field string, values []string, valid string) error {
 // TODO: we can use this to decide. But, do so way down the call stack, so if the
 // TODO: ABI is present, and the Etherscan key is not, we can still articulate.
 // TODO: Only fail this if we're at the last resort.
+
 func CanArticulate(on bool) bool {
 	// if !on {
 	return true

@@ -19,9 +19,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// A data structure consisting of a list of chunk records (i.e. block ranges, Bloom filter hashes, and
-// chunk hashes) and the nessacary additional information needed to reproduce the index from scratch
-// using only the node as source of truth.
+// Manifest is a data structure consisting of a list of chunk records (i.e. block ranges, Bloom
+// filter hashes, and chunk hashes) and the nessacary additional information needed to
+// reproduce the index from scratch using only the node as source of truth.
 type Manifest struct {
 	// The specification version used to build this instance of Unchained Index
 	Version string `json:"version"`
@@ -42,9 +42,9 @@ type Manifest struct {
 	ChunkMap map[string]*ChunkRecord `json:"-"`
 }
 
-// A single record in the Manifest's Chunks table. It associates a block range, an IPFS hash of the chunk
-// covering that block range, and a hash of the Bloom filter covering that chunk. The format of the chunk and the Bloom
-// filter are detailed in the manifest's Schema record.
+// ChunkRecord is asingle record in the Manifest's Chunks table. It associates a block range, an
+// IPFS hash of the chunk covering that block range, and a hash of the Bloom filter covering that
+// chunk. The format of the chunk and the Bloom filter are detailed in the manifest's Schema record.
 type ChunkRecord struct {
 	Range     string        `json:"range"`
 	BloomHash base.IpfsHash `json:"bloomHash"`
@@ -96,6 +96,7 @@ func (m *Manifest) LoadChunkMap() {
 }
 
 // TODO: Protect against overwriting files on disc
+
 func UpdateManifest(chain string, chunk ChunkRecord) error {
 	man, err := ReadManifest(chain, FromCache)
 	if err != nil {

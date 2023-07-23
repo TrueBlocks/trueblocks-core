@@ -7,10 +7,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// Total header size in bytes
-const HeaderByteSize = 8
+// HeaderByteSize is the total size of a cache item's header in bytes.
+const HeaderByteSize = 4 + 8
+
+// Magic is the first bytes of a cache item's header. It is always set to 0xdeadbeef.
+const Magic uint32 = 3735928559 // 0xdeadbeef
+
+var ErrInvalidMagic = errors.New("invalid magic number")
 
 type header struct {
+	Magic   uint32
 	Version uint64
 }
 
@@ -25,6 +31,7 @@ func init() {
 		panic(err)
 	}
 	currentHeader = &header{
+		Magic:   Magic,
 		Version: ver.Uint64(),
 	}
 }
@@ -49,7 +56,12 @@ func (i *Item) writeHeader() error {
 func (i *Item) readHeader() (h *header, err error) {
 	h = new(header)
 	i.header = h
-	i.unmarshal(h)
+	if err = i.unmarshal(h); err != nil {
+		return
+	}
+	if h.Magic != Magic {
+		return nil, ErrInvalidMagic
+	}
 	return
 }
 

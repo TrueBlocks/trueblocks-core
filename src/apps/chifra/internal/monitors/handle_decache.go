@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/user"
 )
 
-// HandleDecache
+// HandleDecache handles the command chifra monitors --decache
 func (opts *MonitorsOptions) HandleDecache() error {
 	if opts.Globals.TestMode {
 		logger.Warn("Decache option not tested.")

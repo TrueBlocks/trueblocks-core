@@ -120,8 +120,7 @@ Flags:
   -A, --statements          for the accounting options only, export only statements
   -b, --balances            traverse the transaction history and show each change in ETH balances
   -a, --articulate          articulate transactions, traces, logs, and outputs
-  -o, --cache               write transactions to the cache (see notes)
-  -R, --cache_traces        write traces to the cache (see notes)
+  -R, --cache_traces        force the transaction's traces into the cache
   -U, --count               only available for --appearances mode, if present, return only the number of records
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
@@ -137,6 +136,7 @@ Flags:
   -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
   -F, --first_block uint    first block to process (inclusive)
   -L, --last_block uint     last block to process (inclusive)
+  -o, --cache               force the results of the query into the cache
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose (increase detail with --log_level)
   -h, --help                display this help screen
@@ -180,8 +180,7 @@ Links:
 <!-- markdownlint-disable MD041 -->
 `chifra monitors`` has two purposes: (1) to `--watch` a set of addresses. This function is in its early
 stages and will be better explained elsewhere. Please see an example of what one may do with
-`chifra monitors --watch` [here](https://tokenomics.io/), and (2) allows one to manage existing
-monitored addresses.
+`chifra monitors --watch`, and (2) allows one to manage existing monitored addresses.
 
 A "monitor" is simply a file on a hard drive that represents the transactional history of a given
 Ethereum address. Monitors are very small, being only the `<block_no><tx_id>` pair representing each
@@ -296,7 +295,7 @@ Links:
 
 <!-- markdownlint-disable MD041 -->
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
-the current local folder, the TrueBlocks cache, [Etherscan](http://etherscan.io), or (in the
+the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.
 
 While this tool may be used from the command line and the API, its primary purpose is in support of

@@ -57,6 +57,7 @@ Flags:
   -z, --no_zero            suppress the display of zero balance accounts
   -a, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
+  -o, --cache              force the results of the query into the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose (increase detail with --log_level)
   -h, --help               display this help screen
@@ -115,6 +116,7 @@ Flags:
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -c, --changes         only report a balance when it changes from one block to the next
   -z, --no_zero         suppress the display of zero balance accounts
+  -o, --cache           force the results of the query into the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen

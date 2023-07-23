@@ -29,7 +29,7 @@ var chunksCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("chunks", func() *globals.GlobalOptions {
 		return &chunksPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("chunks", chunksPkg.RunChunks, chunksPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("chunks", chunksPkg.RunChunks, chunksPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &chunksPkg.GetOptions().Globals
 	}),
@@ -59,6 +59,10 @@ Notes:
   - The --publish option requires a private key.`
 
 func init() {
+	allowCaching := false
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	chunksCmd.Flags().SortFlags = false
 
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Check, "check", "c", false, "check the manifest, index, or blooms for internal consistency")
@@ -75,7 +79,7 @@ func init() {
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("truncate")
 	}
-	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals)
+	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals, allowCaching)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
 	chunksCmd.SetOut(os.Stderr)

@@ -19,6 +19,7 @@ Flags:
   -c, --check           with --timestamps only, checks the validity of the timestamp data
   -u, --update          with --timestamps only, bring the timestamp database forward to the latest block
   -d, --deep            with --timestamps --check only, verifies timestamps from on chain (slow)
+  -o, --cache           force the results of the query into the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)
   -h, --help            display this help screen

@@ -162,6 +162,8 @@ func (s *SimpleAppearance) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleAppearance) GetKey() string {
 	return fmt.Sprintf("%s\t%09d\t%05d", s.Address, s.BlockNumber, s.TransactionIndex)
 }

@@ -19,6 +19,7 @@
 - [Docker version](#docker-version)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
+  - [Linting](#linting)
 - [Contact](#contact)
 - [List of Contributors](#list-of-contributors)
 
@@ -139,6 +140,10 @@ We love contributors. Please see information about our [workflow](https://github
 3. Make changes to your local branch and commit them to your forked repo: `git commit -m '<commit_message>'`
 4. Push back to the original branch: `git push origin TrueBlocks/trueblocks-core`
 5. Create the pull request.
+
+### Linting
+
+In the near future, we will be adding a linting step to our workflow. Before submitting a PR, please first install [staticcheck](https://staticcheck.dev/) with `go install honnef.co/go/tools/cmd/staticcheck@latest` and then run `staticcheck --checks all,-ST1003` (from the `./src/apps/chifra` folder) before submitting.
 
 ## Contact
 

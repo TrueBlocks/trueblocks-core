@@ -133,3 +133,6 @@ func ResetOptions() {
 	globals.SetDefaults(&defaultWhenOptions.Globals)
 	defaultWhenOptions.Globals.Writer = w
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

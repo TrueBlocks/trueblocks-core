@@ -187,6 +187,8 @@ func (s *SimpleStatement) ReadFrom(r io.Reader) (n int64, err error) {
 }
 
 // EXISTING_CODE
+//
+
 func (s *SimpleStatement) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }

@@ -21,6 +21,7 @@ import (
 
 // TODO: We should repond to non-tracing (i.e. Geth) nodes better
 // TODO: Make sure we're not running acctScrape and/or pause if it's running
+
 func (opts *ScrapeOptions) HandleScrape() error {
 	progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if err != nil {

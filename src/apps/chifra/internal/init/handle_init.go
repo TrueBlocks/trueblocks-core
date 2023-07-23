@@ -22,7 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
-// InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
+// HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *InitOptions) HandleInit() error {
 	// Make the code below cleaner...
 	chain := opts.Globals.Chain
