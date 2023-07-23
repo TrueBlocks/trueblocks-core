@@ -40,10 +40,6 @@ func (opts *ExploreOptions) validateExplore() error {
 		return opts.BadFlag
 	}
 
-	if opts.Globals.Cache {
-		return validate.Usage("The {0} option is not available for this command.", "--cache")
-	}
-
 	if opts.Google && opts.Local {
 		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}

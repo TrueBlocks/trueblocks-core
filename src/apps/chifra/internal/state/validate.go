@@ -30,10 +30,6 @@ func (opts *StateOptions) validateState() error {
 		return validate.Usage("The {0} value is currently not available{1}.", "nonce", " with the --parts option")
 	}
 
-	if opts.Globals.Cache {
-		return validate.Usage("The {0} option is not available for this command.", "--cache")
-	}
-
 	if len(opts.Globals.File) > 0 {
 		// do nothing for now
 

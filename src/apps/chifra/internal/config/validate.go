@@ -15,10 +15,6 @@ func (opts *ConfigOptions) validateConfig() error {
 		return opts.BadFlag
 	}
 
-	if opts.Globals.Cache {
-		return validate.Usage("The {0} option is not available for this command.", "--cache")
-	}
-
 	err := validate.ValidateEnum("modes", opts.Mode, "[show|edit]")
 	if err != nil {
 		return err

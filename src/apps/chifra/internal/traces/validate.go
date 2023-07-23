@@ -18,10 +18,6 @@ func (opts *TracesOptions) validateTraces() error {
 		return opts.BadFlag
 	}
 
-	if opts.Globals.Cache {
-		return validate.Usage("The {0} option is not available for this command.", "--cache")
-	}
-
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
