@@ -34,13 +34,13 @@ const long[{PROPER}] = `[{LONG}]`
 const notes[{PROPER}] = `[{POSTNOTES}]`
 
 [{OPT_DEF}]func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	[{ROUTE}]Cmd.Flags().SortFlags = false
 
-[{SET_OPTS}][{HIDDEN}]	globals.InitGlobals([{ROUTE}]Cmd, &[{ROUTE}]Pkg.GetOptions().Globals, allowCaching)
+[{SET_OPTS}][{HIDDEN}]	globals.InitGlobals([{ROUTE}]Cmd, &[{ROUTE}]Pkg.GetOptions().Globals, capabilities)
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
