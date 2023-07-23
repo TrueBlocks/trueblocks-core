@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -51,7 +52,7 @@ Notes:
   - The --match_case option enables case sensitive matching.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -81,7 +82,7 @@ func init() {
 		namesCmd.Flags().MarkHidden("undelete")
 		namesCmd.Flags().MarkHidden("remove")
 	}
-	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals, capabilities)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)

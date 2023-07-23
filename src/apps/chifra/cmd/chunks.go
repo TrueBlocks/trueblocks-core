@@ -13,6 +13,7 @@ import (
 
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -59,7 +60,7 @@ Notes:
   - The --publish option requires a private key.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -79,7 +80,7 @@ func init() {
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("truncate")
 	}
-	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals, capabilities)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
 	chunksCmd.SetOut(os.Stderr)

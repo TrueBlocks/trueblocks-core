@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -52,15 +53,15 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 
 	receiptsCmd.Flags().SortFlags = false
 
 	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	globals.InitGlobals(receiptsCmd, &receiptsPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(receiptsCmd, &receiptsPkg.GetOptions().Globals, capabilities)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 	receiptsCmd.SetOut(os.Stderr)

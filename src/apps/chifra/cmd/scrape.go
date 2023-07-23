@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -45,7 +46,7 @@ const longScrape = `Purpose:
 const notesScrape = ``
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -70,7 +71,7 @@ func init() {
 		scrapeCmd.Flags().MarkHidden("channel_count")
 		scrapeCmd.Flags().MarkHidden("allow_missing")
 	}
-	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals, capabilities)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	scrapeCmd.SetOut(os.Stderr)

@@ -13,6 +13,7 @@ import (
 
 	daemonPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/daemon"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -51,7 +52,7 @@ Notes:
   - See the API documentation (https://trueblocks.io/api) for more information.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -64,7 +65,7 @@ One of [ off | on ]`)
 One of [ off | blooms | index ]`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool")
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, "run gRPC server to serve names")
-	globals.InitGlobals(daemonCmd, &daemonPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
 
 	daemonCmd.SetUsageTemplate(UsageWithNotes(notesDaemon))
 	daemonCmd.SetOut(os.Stderr)

@@ -13,6 +13,7 @@ import (
 
 	configPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -49,14 +50,14 @@ const longConfig = `Purpose:
 const notesConfig = ``
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.None // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	configCmd.Flags().SortFlags = false
 
 	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system")
-	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals, capabilities)
 
 	configCmd.SetUsageTemplate(UsageWithNotes(notesConfig))
 	configCmd.SetOut(os.Stderr)
