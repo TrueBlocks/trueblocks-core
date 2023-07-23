@@ -4,6 +4,7 @@
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
 ## v0.80.0 (coming soon)
+Starts to move chifra export to goLang
 
 ## v0.71.0 (xxx)
 THE SDK REPO IS A NICE WAY TO SEE WHAT'S CHANGED
