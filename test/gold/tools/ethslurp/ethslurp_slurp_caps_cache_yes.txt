@@ -1,0 +1,26 @@
+chifra slurp  3000000 --cache --fail_test
+Error: 
+  unknown flag: --fail_test
+
+Usage:
+  chifra slurp [flags] <address> [address...] [block...]
+
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp
+
+Flags:
+  -t, --types strings   which types of transactions to request
+                        One or more of [ ext | int | token | nfts | 1155 | miner | uncles | all ]
+  -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
+  -P, --per_page uint   the number of records to request on each page (default 5000)
+  -s, --sleep float     seconds to sleep between requests (default 0.25)
+  -o, --cache           force the results of the query into the cache
+  -x, --fmt string      export format, one of [none|json*|txt|csv]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
+
+Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
+  - Portions of this software are Powered by Etherscan.io APIs.
+

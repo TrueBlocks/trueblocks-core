@@ -1,11 +1,14 @@
-enabled ,mode ,speed ,route  ,path/tool        ,filename            ,post ,options
-on      ,cmd  ,fast  ,config ,apps/config ,RESET               ,n    ,RESET
-on      ,cmd  ,fast  ,config ,apps/config ,help                ,n    ,@h
-on      ,cmd  ,fast  ,config ,apps/config ,help_long           ,n    ,help
-on      ,cmd  ,fast  ,config ,apps/config ,invalid_param_2     ,y    ,@l & junk
+enabled ,mode ,speed ,route  ,path/tool   ,filename             ,post ,options
+on      ,cmd  ,fast  ,config ,apps/config ,RESET                ,n    ,RESET
+on      ,cmd  ,fast  ,config ,apps/config ,help                 ,n    ,@h
+on      ,cmd  ,fast  ,config ,apps/config ,help_long            ,n    ,help
+on      ,cmd  ,fast  ,config ,apps/config ,invalid_param_2      ,y    ,@l & junk
 
-on      ,both ,fast  ,config ,apps/config ,config_show         ,y    ,modes = show
-on      ,both ,fast  ,config ,apps/config ,config_edit         ,y    ,modes = edit
+on      ,both ,fast  ,config ,apps/config ,config_show          ,y    ,modes = show
+on      ,both ,fast  ,config ,apps/config ,config_edit          ,y    ,modes = edit
+
+# Capabilities
+on      ,both ,fast  ,config ,apps/config ,config_caps_cache_no ,y    ,modes = edit & cache
 
 # This fails because the timestamp is not test proof - simple fix
-local   ,both ,fast  ,config ,apps/config ,config_paths        ,y    ,paths
+local   ,both ,fast  ,config ,apps/config ,config_paths         ,y    ,paths

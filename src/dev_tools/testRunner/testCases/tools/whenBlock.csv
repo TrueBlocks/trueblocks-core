@@ -94,3 +94,6 @@ on      ,both ,medi  ,when  ,tools/whenBlock ,skip_weekly                 ,n    
 on      ,both ,medi  ,when  ,tools/whenBlock ,skip_monthly                ,n    ,fmt = txt & blocks = 768414-1856235:monthly
 on      ,both ,medi  ,when  ,tools/whenBlock ,skip_quaterly               ,n    ,fmt = txt & blocks = 768414-1856235:quarterly
 on      ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_annually               ,n    ,fmt = txt & blocks = 768414-4838611:annually
+
+# Capabilities
+on      ,both ,fast  ,when  ,tools/whenBlock ,when_caps_cache_yes         ,y    ,blocks = 12 & cache & fail_test

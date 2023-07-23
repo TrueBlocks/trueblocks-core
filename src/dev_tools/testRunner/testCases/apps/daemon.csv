@@ -1,4 +1,7 @@
-enabled ,mode ,speed ,route  ,path/tool   ,filename  ,post ,options
-on      ,cmd  ,fast  ,daemon ,apps/daemon ,help      ,n    ,@h
-on      ,cmd  ,fast  ,daemon ,apps/daemon ,help_long ,n    ,help
-on      ,both ,fast  ,daemon ,apps/daemon ,bad_cmd   ,n    ,not-an-option
+enabled ,mode ,speed ,route  ,path/tool   ,filename             ,post ,options
+on      ,cmd  ,fast  ,daemon ,apps/daemon ,help                 ,n    ,@h
+on      ,cmd  ,fast  ,daemon ,apps/daemon ,help_long            ,n    ,help
+on      ,both ,fast  ,daemon ,apps/daemon ,bad_cmd              ,n    ,not-an-option
+
+# Capabilities
+on      ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_cache_no ,y    ,cache
