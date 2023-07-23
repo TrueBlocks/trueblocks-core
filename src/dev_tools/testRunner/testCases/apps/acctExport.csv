@@ -216,6 +216,7 @@ bal     ,both ,fast  ,export   ,apps/acctExport ,balances_2               ,n    
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_bad          ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_2              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
+
 local   ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 local   ,both ,fast  ,export   ,apps/acctExport ,accounting_to_cache      ,y    ,addrs = 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c & last_block = 100 & accounting & statements
 local   ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
