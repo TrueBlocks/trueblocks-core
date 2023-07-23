@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -269,7 +270,7 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
 				return opts
 			}
@@ -326,6 +327,10 @@ func ResetOptions() {
 	defaultExportOptions = ExportOptions{}
 	globals.SetDefaults(&defaultExportOptions.Globals)
 	defaultExportOptions.Globals.Writer = w
+	defaultExportOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	// EXISTING_CODE
+	defaultExportOptions.Globals.Caps = defaultExportOptions.Globals.Caps.Add(caps.Caching)
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE
