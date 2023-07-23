@@ -192,7 +192,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes       ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes_trace ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
 local   ,both ,fast  ,export   ,apps/acctExport ,accounting_intra_tokens  ,y    ,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 683 & accounting & fmt = json & log_level = 10
 
-on      ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
+local   ,both ,fast  ,export   ,apps/acctExport ,statement_unfiltered     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
 
 # correctly reports an error, but should report a n ot found error instead, it reports a not an integer error. first_block/last_block should accept hashes
