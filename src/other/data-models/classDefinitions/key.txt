@@ -3,6 +3,5 @@ class = CKey
 fields = key.csv
 includes = utillib.h
 cpp_includes =
-
-cpp_output = src/libs/utillib/
+cpp_output = src/dev_tools/utillib/
 go_output =

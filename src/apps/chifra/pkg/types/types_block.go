@@ -341,6 +341,7 @@ func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
 }
 
 func (s *SimpleBlock[Tx]) Pending(latestTimestamp int64) bool {
+	// TODO: This should be 28 blocks like we use in scraper and it should be less after 1559
 	return (latestTimestamp - s.Timestamp) <= PendingPeriod
 }
 

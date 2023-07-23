@@ -16,7 +16,9 @@ import (
 )
 
 func (opts *BlocksOptions) HandleDecache() error {
-	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{ReadonlyCache: true})
+	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{
+		ReadonlyCache: true,
+	})
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, br := range opts.BlockIds {
 		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)

@@ -26,9 +26,6 @@ bool visitOnLoad(CAppearance_mon& app, void* data) {
 
 //-----------------------------------------------------------------------
 bool COptions::loadMonitors(void) {
-    if (count)
-        return true;
-
     for (CMonitor& monitor : allMonitors) {
         curMonitor = &monitor;
         if (!monitor.readAppearances(visitOnLoad, this)) {

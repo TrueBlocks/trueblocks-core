@@ -60,7 +60,7 @@ func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
 }
 
 func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
-	var options = NoOptions
+	var rpcOptions = NoOptions
 	// TODO: performance - This loads and then drops the file every time it's called. Quite slow.
 	// TODO: performance - in the old C++ we stored these values in a pre fundAddrMap so that given a txid in block zero
 	// TODO: performance - we knew which address was granted allocation at that transaction.
@@ -70,7 +70,7 @@ func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types
 	} else {
 		var blockHash base.Hash
 		var ts int64
-		if block, err := GetBlockByNumber(chain, uint64(0), options); err != nil {
+		if block, err := GetBlockByNumber(chain, uint64(0), rpcOptions); err != nil {
 			return nil, err
 		} else {
 			blockHash = block.Hash
@@ -222,36 +222,26 @@ func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawA
 	}
 }
 
-func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool, options *Options) (tx *types.SimpleTransaction, err error) {
+func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool, rpcOptions *Options) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
-	if options.HasStore() {
+	if rpcOptions.HasStore() {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
 
-		if err := options.Store.Read(tx, nil); err == nil {
+		if err := rpcOptions.Store.Read(tx, nil); err == nil {
 			// success
 			if fetchTraces {
-				traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, options)
+				traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, rpcOptions)
 				if err != nil {
 					return nil, err
 				}
 				tx.Traces = traces
 			}
 			return tx, nil
-		}
-	}
-
-	var writeOptions *cacheNew.WriteOptions
-	var blockTs base.Timestamp
-	if options.HasStoreWritable() {
-		blockTs = rpc.GetBlockTimestamp(chain, &bn)
-		writeOptions = &cacheNew.WriteOptions{
-			// Check if the block is final
-			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(options.LatestBlockTimestamp),
 		}
 	}
 
@@ -270,8 +260,39 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		}
 	}
 	if tx != nil {
-		if options.HasStore() && !options.TransactionWriteDisabled {
-			options.Store.Write(tx, writeOptions)
+		if rpcOptions.Store != nil {
+			rpcOptions.Store.Write(tx, nil)
+		}
+		return tx, nil
+	}
+
+	var writeOptions *cacheNew.WriteOptions
+	var blockTs base.Timestamp
+	if rpcOptions.HasStoreWritable() {
+		blockTs = rpc.GetBlockTimestamp(chain, &bn)
+		writeOptions = &cacheNew.WriteOptions{
+			// Check if the block is final
+			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(rpcOptions.LatestBlockTimestamp),
+		}
+	}
+
+	tx = nil
+	if bn == 0 {
+		if tx, err = GetPrefundTxByApp(chain, appearance); err != nil {
+			return nil, err
+		}
+	} else if txid == 99999 || txid == 99997 || txid == 99996 {
+		if tx, err = GetRewardTxByTypeAndApp(chain, BLOCK_REWARD, appearance); err != nil {
+			return nil, err
+		}
+	} else if txid == 99998 {
+		if tx, err = GetRewardTxByTypeAndApp(chain, UNCLE_REWARD, appearance); err != nil {
+			return nil, err
+		}
+	}
+	if tx != nil {
+		if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
+			rpcOptions.Store.Write(tx, writeOptions)
 		}
 		return tx, nil
 	}
@@ -282,7 +303,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	}, options)
+	}, rpcOptions)
 	if err != nil {
 		return
 	}
@@ -313,12 +334,12 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
-	if options.HasStore() && !options.TransactionWriteDisabled {
-		options.Store.Write(tx, writeOptions)
+	if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
+		rpcOptions.Store.Write(tx, writeOptions)
 	}
 
 	if fetchTraces {
-		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, options)
+		traces, err := GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx, rpcOptions)
 		if err != nil {
 			return nil, err
 		}
@@ -328,14 +349,14 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 	return
 }
 
-func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, options *Options) (tx *types.SimpleTransaction, err error) {
-	if options.HasStore() {
+func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, rpcOptions *Options) (tx *types.SimpleTransaction, err error) {
+	if rpcOptions.HasStore() {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
 
-		if err := options.Store.Read(tx, nil); err == nil {
+		if err := rpcOptions.Store.Read(tx, nil); err == nil {
 			// success
 			return tx, nil
 		}
@@ -348,10 +369,10 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, optio
 	blockTs := rpc.GetBlockTimestamp(chain, &bn)
 
 	var writeOptions *cacheNew.WriteOptions
-	if options.HasStoreWritable() {
+	if rpcOptions.HasStoreWritable() {
 		writeOptions = &cacheNew.WriteOptions{
 			// Check if the block is final
-			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(options.LatestBlockTimestamp),
+			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(rpcOptions.LatestBlockTimestamp),
 		}
 	}
 
@@ -360,7 +381,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, optio
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	}, options)
+	}, rpcOptions)
 	if err != nil {
 		return
 	}
@@ -387,8 +408,8 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, optio
 	tx.SetGasCost(&receipt)
 	tx.SetRaw(rawTx)
 
-	if options.HasStore() && !options.TransactionWriteDisabled {
-		options.Store.Write(tx, writeOptions)
+	if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
+		rpcOptions.Store.Write(tx, writeOptions)
 	}
 
 	return

@@ -17,7 +17,9 @@ import (
 )
 
 func (opts *TransactionsOptions) HandleDecache() error {
-	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{ReadonlyCache: true})
+	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{
+		ReadonlyCache: true,
+	})
 
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, rng := range opts.TransactionIds {

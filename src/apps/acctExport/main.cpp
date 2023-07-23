@@ -29,10 +29,7 @@ int main(int argc, const char* argv[]) {
         if (options.load.empty()) {
             // clang-format off
             options.className =
-            (options.count ? GETRUNTIME_CLASS(CMonitorCount)->m_ClassName
-             : options.appearances
-             ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
-             : (options.traces
+            (options.traces
                 ? GETRUNTIME_CLASS(CTrace)->m_ClassName
                 : (options.receipts
                 ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
@@ -42,16 +39,11 @@ int main(int argc, const char* argv[]) {
                     ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
                       : (options.logs
                       ? GETRUNTIME_CLASS(CLog)->m_ClassName
-                        : GETRUNTIME_CLASS(CTransaction)->m_ClassName))))));
+                        : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
             // clang-format on
 
             if (once)
                 cout << exportPreamble(expContext().fmtMap["header"], options.className);
-
-            if (options.appearances) {
-                CAppearanceTraverser at;
-                traversers.push_back(at);
-            }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
@@ -93,7 +85,7 @@ int main(int argc, const char* argv[]) {
     ostringstream os;
     os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
-    if (!options.count && options.allMonitors.size() == 1) {
+    if (options.allMonitors.size() == 1) {
         HIDE_FIELD(CMonitor, "abi_spec");
         if (!findName(options.ledgerManager.accountedFor, options.allMonitors[0])) {
             blknum_t blk = min(options.exportRange.second, options.meta.client);

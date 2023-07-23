@@ -38,5 +38,6 @@ func AsMap[T any](chain string, ids []Identifier) (map[ResolvedId]*T, error) {
 			}
 		}
 	}
+
 	return ret, nil
 }

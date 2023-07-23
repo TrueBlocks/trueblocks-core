@@ -62,9 +62,6 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	return
 }
 
-func Sort(apps []index.AppearanceRecord, sortBy AppearanceSort) {
-}
-
 // ReadAppearancesToMap reads all appearances from the monitor and returns a map of the appearances to the given type.
 func ReadAppearancesToMap[T any](mon *Monitor, filter *AppearanceFilter) (theMap map[types.SimpleAppearance]*T, cnt int, err error) {
 	if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {

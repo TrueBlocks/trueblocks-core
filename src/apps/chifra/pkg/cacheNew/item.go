@@ -60,6 +60,7 @@ func (i *Item) readHeader() (h *header, err error) {
 		return
 	}
 	if h.Magic != Magic {
+		// This should be silently ignored
 		return nil, ErrInvalidMagic
 	}
 	return
