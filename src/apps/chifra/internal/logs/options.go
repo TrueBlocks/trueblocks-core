@@ -59,7 +59,7 @@ func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 		case "articulate":
 			opts.Articulate = true
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "logs")
 				return opts
 			}
@@ -98,7 +98,7 @@ func ResetOptions() {
 	defaultLogsOptions = LogsOptions{}
 	globals.SetDefaults(&defaultLogsOptions.Globals)
 	defaultLogsOptions.Globals.Writer = w
-	defaultLogsOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	defaultLogsOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	defaultLogsOptions.Globals.Caps = defaultLogsOptions.Globals.Caps.Add(caps.Caching)
 	// EXISTING_CODE

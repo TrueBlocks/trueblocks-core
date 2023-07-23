@@ -52,7 +52,7 @@ Notes:
   - See the API documentation (https://trueblocks.io/api) for more information.`
 
 func init() {
-	var capabilities = caps.None // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 

@@ -53,7 +53,7 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
 func init() {
-	var capabilities = caps.None // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE

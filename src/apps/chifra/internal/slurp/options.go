@@ -87,7 +87,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
 				return opts
 			}
@@ -162,7 +162,7 @@ func ResetOptions() {
 	defaultSlurpOptions = SlurpOptions{}
 	globals.SetDefaults(&defaultSlurpOptions.Globals)
 	defaultSlurpOptions.Globals.Writer = w
-	defaultSlurpOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	defaultSlurpOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	defaultSlurpOptions.Globals.Caps = defaultSlurpOptions.Globals.Caps.Add(caps.Caching)
 	// EXISTING_CODE

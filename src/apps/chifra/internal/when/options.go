@@ -91,7 +91,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 		case "deep":
 			opts.Deep = true
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
 				return opts
 			}
@@ -133,7 +133,7 @@ func ResetOptions() {
 	defaultWhenOptions = WhenOptions{}
 	globals.SetDefaults(&defaultWhenOptions.Globals)
 	defaultWhenOptions.Globals.Writer = w
-	defaultWhenOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	defaultWhenOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	defaultWhenOptions.Globals.Caps = defaultWhenOptions.Globals.Caps.Add(caps.Caching)
 	// EXISTING_CODE

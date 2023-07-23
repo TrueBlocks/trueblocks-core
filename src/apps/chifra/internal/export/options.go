@@ -270,7 +270,7 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
 				return opts
 			}
@@ -327,7 +327,7 @@ func ResetOptions() {
 	defaultExportOptions = ExportOptions{}
 	globals.SetDefaults(&defaultExportOptions.Globals)
 	defaultExportOptions.Globals.Writer = w
-	defaultExportOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	defaultExportOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	defaultExportOptions.Globals.Caps = defaultExportOptions.Globals.Caps.Add(caps.Caching)
 	// EXISTING_CODE

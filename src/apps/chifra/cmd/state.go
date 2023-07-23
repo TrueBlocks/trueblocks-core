@@ -58,9 +58,11 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 func init() {
-	var capabilities = caps.None // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 
 	stateCmd.Flags().SortFlags = false

@@ -87,7 +87,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		case "proxyFor":
 			opts.ProxyFor = value[0]
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
 				return opts
 			}
@@ -167,7 +167,7 @@ func ResetOptions() {
 	defaultStateOptions = StateOptions{}
 	globals.SetDefaults(&defaultStateOptions.Globals)
 	defaultStateOptions.Globals.Writer = w
-	defaultStateOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	defaultStateOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	defaultStateOptions.Globals.Caps = defaultStateOptions.Globals.Caps.Add(caps.Caching)
 	// EXISTING_CODE

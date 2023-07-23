@@ -49,7 +49,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
-	// logger.TestLog(opts.Caps != caps.None, "Caps: ", opts.Caps)
+	// logger.TestLog(opts.Caps != caps.Default, "Caps: ", opts.Caps)
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }
@@ -273,36 +273,4 @@ func (opts *GlobalOptions) DefaultRpcOptions(settings *DefaultRpcOptionsSettings
 		TransactionWriteDisabled: !cacheTxWriteEnabled,
 		TraceWriteDisabled:       !cacheTraceWriteEnabled,
 	}
-}
-
-func IsGlobalOption(c caps.Capability, key string) bool {
-	permitted := []string{
-		"fmt",
-		"verbose",
-		"raw",
-		"version",
-		"noop",
-		"nocolor",
-		"logLevel",
-		"noHeader",
-		"chain",
-		"wei",
-		"ether",
-		"file",
-		"output",
-		"append",
-	}
-	for _, per := range permitted {
-		if per == key {
-			return true
-		}
-	}
-
-	for _, cap := range caps.AllCaps {
-		if c.Has(cap) && c.Text() == key {
-			return true
-		}
-	}
-
-	return false
 }

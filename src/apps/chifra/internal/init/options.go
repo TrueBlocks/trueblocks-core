@@ -63,7 +63,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
 				return opts
 			}
@@ -104,7 +104,7 @@ func ResetOptions() {
 	defaultInitOptions = InitOptions{}
 	globals.SetDefaults(&defaultInitOptions.Globals)
 	defaultInitOptions.Globals.Writer = w
-	defaultInitOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	defaultInitOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

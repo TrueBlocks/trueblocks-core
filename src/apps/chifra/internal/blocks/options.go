@@ -130,7 +130,7 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 		case "listCount":
 			opts.ListCount = globals.ToUint64(value[0])
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
 				return opts
 			}
@@ -172,7 +172,7 @@ func ResetOptions() {
 	defaultBlocksOptions = BlocksOptions{}
 	globals.SetDefaults(&defaultBlocksOptions.Globals)
 	defaultBlocksOptions.Globals.Writer = w
-	defaultBlocksOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	defaultBlocksOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	defaultBlocksOptions.Globals.Caps = defaultBlocksOptions.Globals.Caps.Add(caps.Caching)
 	// EXISTING_CODE
