@@ -153,7 +153,7 @@ func ResetOptions() {
 	defaultTokensOptions = TokensOptions{}
 	globals.SetDefaults(&defaultTokensOptions.Globals)
 	defaultTokensOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra tokens
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE

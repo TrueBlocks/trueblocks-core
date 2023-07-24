@@ -163,7 +163,7 @@ func ResetOptions() {
 	defaultNamesOptions = NamesOptions{}
 	globals.SetDefaults(&defaultNamesOptions.Globals)
 	defaultNamesOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra names
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultNamesOptions.Globals.Caps = capabilities

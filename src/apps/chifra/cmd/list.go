@@ -52,7 +52,7 @@ Notes:
   - No other options are permitted when --silent is selected.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra list
 	// EXISTING_CODE
 	// EXISTING_CODE
 

@@ -1,4 +1,4 @@
-chifra names  find_nothing --chain --log_level --nocolor --noop --version --verbose --no_header --output --append --fail_on_purpose
+chifra names  find_nothing --chain --fmt --log_level 4 --nocolor --noop --version --verbose --no_header --file --output --append --fail_on_purpose
 Error: 
   unknown flag: --fail_on_purpose
 

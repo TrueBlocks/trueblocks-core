@@ -1,5 +1,7 @@
-chifra daemon  --file file.fil
-Error: The --file option is not allowed in daemon mode.
+chifra daemon  --ether
+Error: 
+  unknown flag: --ether
+
 Usage:
   chifra daemon [flags]
 

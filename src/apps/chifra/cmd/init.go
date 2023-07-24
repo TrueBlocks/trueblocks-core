@@ -50,7 +50,7 @@ Notes:
   - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra init
 	// EXISTING_CODE
 	// EXISTING_CODE
 

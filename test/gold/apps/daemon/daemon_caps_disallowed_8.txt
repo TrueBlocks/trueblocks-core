@@ -1,6 +1,6 @@
-chifra daemon  --chain no
+chifra daemon  --raw
 Error: 
-  unknown flag: --chain
+  unknown flag: --raw
 
 Usage:
   chifra daemon [flags]

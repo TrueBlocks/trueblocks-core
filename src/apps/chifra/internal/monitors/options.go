@@ -127,7 +127,7 @@ func ResetOptions() {
 	defaultMonitorsOptions = MonitorsOptions{}
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
 	defaultMonitorsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra monitors
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultMonitorsOptions.Globals.Caps = capabilities

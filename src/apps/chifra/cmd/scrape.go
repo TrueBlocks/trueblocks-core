@@ -46,7 +46,7 @@ const longScrape = `Purpose:
 const notesScrape = ``
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra scrape
 	// EXISTING_CODE
 	// EXISTING_CODE
 

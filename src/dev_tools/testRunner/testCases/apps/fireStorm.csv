@@ -24,10 +24,15 @@ on      ,both ,fast  ,explore ,apps/fireStorm ,failApi                  ,y    ,t
 on      ,both ,fast  ,explore ,apps/fireStorm ,block_not_found          ,y    ,terms = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
 # Capabilities
-on      ,both ,fast  ,explore ,apps/fireStorm ,explore_caps_cache_no    ,y    ,terms = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & cache
-on      ,both ,fast  ,explore ,apps/fireStorm ,explore_caps_noHeader_no ,y    ,terms = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & no_header
-on      ,both ,fast  ,explore ,apps/fireStorm ,explore_caps_output_no   ,y    ,terms = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & output
-on      ,both ,fast  ,explore ,apps/fireStorm ,explore_caps_append_no   ,y    ,terms = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & append
-
-# Capabilities doesn't work for these
-local   ,both ,fast  ,explore ,apps/fireStorm ,explore_caps_verbose_no  ,y    ,terms = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & verbose
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_allowed           ,y    ,terms = 12.0 & chain & nocolor & noop & verbose & file & fail_on_purpose
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_1      ,y    ,terms = 12.0 & fmt = json
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_2      ,y    ,terms = 12.0 & log_level = 4
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_3      ,y    ,terms = 12.0 & no_header
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_4      ,y    ,terms = 12.0 & output
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_5      ,y    ,terms = 12.0 & append
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_6      ,y    ,terms = 12.0 & raw
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_7      ,y    ,terms = 12.0 & ether
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_8      ,y    ,terms = 12.0 & wei
+on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_9      ,y    ,terms = 12.0 & cache
+# skipped: version

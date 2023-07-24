@@ -162,7 +162,7 @@ func ResetOptions() {
 	defaultSlurpOptions = SlurpOptions{}
 	globals.SetDefaults(&defaultSlurpOptions.Globals)
 	defaultSlurpOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra slurp
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)

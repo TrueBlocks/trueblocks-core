@@ -84,10 +84,9 @@ delay   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delet
 delay   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
 
 # Capabilities
-on      ,both ,fast  ,names ,tools/ethNames ,names_caps_every       ,y    ,terms = find_nothing & chain & log_level & nocolor & noop & version & verbose & fail_on_purpose
-on      ,both ,fast  ,names ,tools/ethNames ,names_caps_default     ,y    ,terms = find_nothing & chain & log_level & nocolor & noop & version & verbose & no_header & output & append & fail_on_purpose
-on      ,both ,fast  ,names ,tools/ethNames ,names_caps_enabled_1   ,y    ,terms = find_nothing
-on      ,both ,fast  ,names ,tools/ethNames ,names_caps_disabled_1  ,y    ,terms = find_nothing & cache
-on      ,both ,fast  ,names ,tools/ethNames ,names_caps_disabled_2  ,y    ,terms = find_nothing & raw
-on      ,both ,fast  ,names ,tools/ethNames ,names_caps_disabled_3  ,y    ,terms = find_nothing & ether
-on      ,both ,fast  ,names ,tools/ethNames ,names_caps_disabled_4  ,y    ,terms = find_nothing & wei
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on      ,both ,fast  ,names ,tools/ethNames ,caps_allowed           ,y    ,terms = find_nothing & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_1      ,y    ,terms = find_nothing & cache
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_2      ,y    ,terms = find_nothing & raw
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_3      ,y    ,terms = find_nothing & ether
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_4      ,y    ,terms = find_nothing & wei

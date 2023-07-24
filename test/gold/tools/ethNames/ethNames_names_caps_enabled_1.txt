@@ -1,4 +1,0 @@
-chifra names  find_nothing
-TEST[DATE|TIME] Terms:  [find_nothing]
-TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] No results for [chifra names find_nothing]

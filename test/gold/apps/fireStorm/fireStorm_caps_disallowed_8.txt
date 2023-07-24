@@ -1,6 +1,6 @@
-chifra explore  0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 --output
+chifra explore  12.0 --wei
 Error: 
-  unknown flag: --output
+  unknown flag: --wei
 
 Usage:
   chifra explore [flags] <term> [term...]
