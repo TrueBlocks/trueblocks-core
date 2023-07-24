@@ -1,0 +1,6 @@
+status?modes=blooms&ether
+{
+  "errors": [
+    "Invalid key (ether) in status route."
+  ]
+}

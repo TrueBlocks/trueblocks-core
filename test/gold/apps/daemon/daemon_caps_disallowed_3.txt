@@ -1,6 +1,6 @@
-chifra daemon  --no_header
+chifra daemon  --output
 Error: 
-  unknown flag: --no_header
+  unknown flag: --output
 
 Usage:
   chifra daemon [flags]

@@ -1,6 +1,6 @@
-chifra daemon  --raw
+chifra daemon  --wei
 Error: 
-  unknown flag: --raw
+  unknown flag: --wei
 
 Usage:
   chifra daemon [flags]

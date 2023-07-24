@@ -1,0 +1,6 @@
+config?noHeader
+{
+  "errors": [
+    "Invalid key (noHeader) in config route."
+  ]
+}

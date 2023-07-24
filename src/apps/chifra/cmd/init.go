@@ -52,6 +52,9 @@ Notes:
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra init
 	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 
 	initCmd.Flags().SortFlags = false

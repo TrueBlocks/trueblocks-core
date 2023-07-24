@@ -96,9 +96,6 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,with_uncles_art       ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_hashes_art       ,y    ,blocks = 4012000-4012001 & hashes & articulate
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
 
-# Capabilities
-# on       ,both ,fast  ,blocks ,tools/getBlocks ,blocks_caps_cache_yes ,y    ,blocks = 3000000 & cache & fail_test
-
 # We should support reconcilations for chifra blocks
 delay    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner       ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0
 delay    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle       ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448
@@ -109,3 +106,9 @@ file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,fil
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blocks = 1001001-1001005 & fmt = csv & output = output_test_file
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed           ,y    ,blocks = 3000000 & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & fail_on_purpose
+on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1      ,y    ,blocks = 3000000 & ether
+on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_2      ,y    ,blocks = 3000000 & wei

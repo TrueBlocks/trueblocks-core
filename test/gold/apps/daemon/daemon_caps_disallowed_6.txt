@@ -1,6 +1,6 @@
-chifra daemon  --append
+chifra daemon  --raw
 Error: 
-  unknown flag: --append
+  unknown flag: --raw
 
 Usage:
   chifra daemon [flags]

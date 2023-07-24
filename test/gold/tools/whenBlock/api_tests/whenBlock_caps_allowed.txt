@@ -1,0 +1,6 @@
+when?blocks=3000000&chain&fmt&logLevel=4&nocolor&noop&version&verbose&noHeader&file&output&append&cache&failOnPurpose
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in when route."
+  ]
+}

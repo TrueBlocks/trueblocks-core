@@ -77,9 +77,6 @@ slow     ,both ,fast  ,traces ,tools/getTraces ,by_filter9            ,y    ,fmt
 slow     ,both ,fast  ,traces ,tools/getTraces ,by_filter10           ,y    ,fmt = json & filter = 4370000!4370002!!!!1
 slow     ,both ,fast  ,traces ,tools/getTraces ,by_filter11           ,y    ,fmt = json & filter = 4370000!4370002!!!1!2
 
-# Capabilities
-# on       ,both ,fast  ,traces ,tools/getTraces ,traces_caps_cache_yes ,y    ,transactions = 12.0 & cache
-
 # These don't work because :next and :prev are not parsed in goLang
 delay    ,both ,fast  ,traces ,tools/getTraces ,first                 ,y    ,transactions = 40500.0:next
 delay    ,both ,fast  ,traces ,tools/getTraces ,nav_prev1             ,y    ,transactions = 1001001.1:prev
@@ -90,3 +87,9 @@ delay    ,both ,fast  ,traces ,tools/getTraces ,nav_next2             ,y    ,tra
 file_cmd ,cmd  ,fast  ,traces ,tools/getTraces ,by_file_v             ,y    ,verbose & file = cmd_file & fmt = json
 on       ,both ,fast  ,traces ,tools/getTraces ,redir_output          ,y    ,transactions = 3657480.12 & verbose & fmt = json & output = output_test_file
 on       ,both ,fast  ,traces ,tools/getTraces ,redir_output_append   ,n    ,transactions = 3657480.9 & fmt = json & output = output_test_file & no_header & append
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,traces ,tools/getTraces ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & fail_on_purpose
+on       ,both ,fast  ,traces ,tools/getTraces ,caps_disallowed_1   ,y    ,transactions = 12.0 & ether
+on       ,both ,fast  ,traces ,tools/getTraces ,caps_disallowed_2   ,y    ,transactions = 12.0 & wei

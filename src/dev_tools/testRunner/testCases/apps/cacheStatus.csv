@@ -56,8 +56,13 @@ local   ,both ,fast  ,status ,apps/cacheStatus ,explorer_1           ,y    ,fmt 
 local   ,both ,fast  ,status ,apps/cacheStatus ,explorer_2           ,y    ,modes = monitors & fmt = json & verbose & max_records = 2
 local   ,both ,fast  ,status ,apps/cacheStatus ,explorer_3           ,y    ,modes = index & fmt = json & verbose & max_records = 2
 
-# Capabilities
-# on      ,both ,fast  ,status ,apps/cacheStatus ,status_caps_cache_no ,y    ,modes = index & cache
-
 cache   ,both ,slow  ,status ,apps/cacheStatus ,redir_output         ,y    ,modes = names & output = output_test_file & max_records = 2
 cache   ,both ,slow  ,status ,apps/cacheStatus ,redir_output_append  ,n    ,modes = index & output = output_test_file & no_header & append & max_records = 2
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,status ,apps/cacheStatus ,caps_allowed         ,y    ,modes = blooms & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on       ,both ,fast  ,status ,apps/cacheStatus ,caps_disallowed_1    ,y    ,modes = blooms & cache
+on       ,both ,fast  ,status ,apps/cacheStatus ,caps_disallowed_2    ,y    ,modes = blooms & raw
+on       ,both ,fast  ,status ,apps/cacheStatus ,caps_disallowed_3    ,y    ,modes = blooms & ether
+on       ,both ,fast  ,status ,apps/cacheStatus ,caps_disallowed_4    ,y    ,modes = blooms & wei

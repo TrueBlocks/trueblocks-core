@@ -1,6 +1,6 @@
-chifra daemon  --output
+chifra daemon  --cache
 Error: 
-  unknown flag: --output
+  unknown flag: --cache
 
 Usage:
   chifra daemon [flags]

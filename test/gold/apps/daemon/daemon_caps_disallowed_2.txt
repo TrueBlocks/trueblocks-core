@@ -1,6 +1,6 @@
-chifra daemon  --wei
+chifra daemon  --no_header
 Error: 
-  unknown flag: --wei
+  unknown flag: --no_header
 
 Usage:
   chifra daemon [flags]

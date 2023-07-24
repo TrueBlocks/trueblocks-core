@@ -51,9 +51,6 @@ on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,cmd_file_8_alone        ,y   
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,cmd_file_8_with         ,n    ,file = cmd_file.8 & no_header & fmt = csv & transactions = 5644782.0
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,cmd_file_full_path      ,n    ,file = cmd_file.9 & no_header & transactions = 5644782.0
 
-# Capabilities
-# on      ,both ,fast  ,receipts ,tools/getReceipts ,receipts_caps_cache_yes ,y    ,transactions = 12.0 & cache
-
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_filebad              ,n    ,file = cmd_file & bad
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file                 ,n    ,file = cmd_file
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file_v               ,n    ,file = cmd_file & fmt = json & verbose
@@ -62,3 +59,9 @@ on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output_append     ,n   
 
 # This fails for an unknown reason for multiple tools
 local   ,both ,fast  ,receipts ,tools/getReceipts ,multi_articulate        ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,receipts ,tools/getReceipts ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & fail_on_purpose
+on       ,both ,fast  ,receipts ,tools/getReceipts ,caps_disallowed_1   ,y    ,transactions = 12.0 & ether
+on       ,both ,fast  ,receipts ,tools/getReceipts ,caps_disallowed_2   ,y    ,transactions = 12.0 & wei

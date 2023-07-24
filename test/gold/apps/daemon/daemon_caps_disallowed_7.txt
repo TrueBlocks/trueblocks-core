@@ -1,6 +1,6 @@
-chifra daemon  --cache
+chifra daemon  --ether
 Error: 
-  unknown flag: --cache
+  unknown flag: --ether
 
 Usage:
   chifra daemon [flags]

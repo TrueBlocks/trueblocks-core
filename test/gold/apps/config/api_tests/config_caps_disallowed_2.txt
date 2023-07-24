@@ -1,0 +1,6 @@
+config?output
+{
+  "errors": [
+    "Invalid key (output) in config route."
+  ]
+}
