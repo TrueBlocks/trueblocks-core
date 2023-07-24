@@ -60,7 +60,7 @@ Notes:
   - The _block and _record options are ignored when used with the --count option.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra export
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)

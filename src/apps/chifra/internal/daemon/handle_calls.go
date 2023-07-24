@@ -216,6 +216,8 @@ func convertToCommandLine(in string) string {
 		return "match_case"
 	case "maxRecords":
 		return "max_records"
+	case "nocolor":
+		return "nocolor"
 	case "noHeader":
 		return "no_header"
 	case "noZero":

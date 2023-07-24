@@ -126,7 +126,7 @@ func ResetOptions() {
 	defaultAbisOptions = AbisOptions{}
 	globals.SetDefaults(&defaultAbisOptions.Globals)
 	defaultAbisOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra abis
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultAbisOptions.Globals.Caps = capabilities

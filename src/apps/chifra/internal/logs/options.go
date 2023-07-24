@@ -98,7 +98,7 @@ func ResetOptions() {
 	defaultLogsOptions = LogsOptions{}
 	globals.SetDefaults(&defaultLogsOptions.Globals)
 	defaultLogsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra logs
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)

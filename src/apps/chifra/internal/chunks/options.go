@@ -190,7 +190,7 @@ func ResetOptions() {
 	defaultChunksOptions = ChunksOptions{}
 	globals.SetDefaults(&defaultChunksOptions.Globals)
 	defaultChunksOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra chunks
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultChunksOptions.Globals.Caps = capabilities

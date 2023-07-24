@@ -67,9 +67,6 @@ on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_all_custom ,y    ,addr 
 on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr
 on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr
 
-# Capabilities
-on      ,both ,fast  ,names ,tools/ethNames ,names_caps_cache_no    ,y    ,terms = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & cache
-
 # Various parts of editing names does not work
 on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & fmt = json
 on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & fmt = json
@@ -85,3 +82,11 @@ delay   ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms
 
 delay   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
 delay   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & to_custom & all
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on      ,both ,fast  ,names ,tools/ethNames ,caps_allowed           ,y    ,terms = find_nothing & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_1      ,y    ,terms = find_nothing & cache
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_2      ,y    ,terms = find_nothing & raw
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_3      ,y    ,terms = find_nothing & ether
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_4      ,y    ,terms = find_nothing & wei

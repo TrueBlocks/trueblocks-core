@@ -55,7 +55,12 @@ on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_3      ,n    
 on      ,both ,fast  ,list     ,apps/acctExport ,130_list_fb_lb_fr_mr     ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3 & max_records = 10
 
 # Capabilities
-on      ,both ,fast  ,list     ,apps/acctExport ,list_caps_cache_no       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & cache
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_allowed_l         ,y    ,addrs = trueblocks.eth & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_1_l    ,y    ,addrs = trueblocks.eth & cache
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_2_l    ,y    ,addrs = trueblocks.eth & raw
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_3_l    ,y    ,addrs = trueblocks.eth & ether
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l    ,y    ,addrs = trueblocks.eth & wei
 
 # Not tested for chifra list
 # chifra list --silent
@@ -94,7 +99,12 @@ on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2_v         ,n    
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 
 # Capabilities
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_caps_cache_no   ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & cache
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_allowed_m         ,y    ,addrs = trueblocks.eth & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_1_m    ,y    ,addrs = trueblocks.eth & cache
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_2_m    ,y    ,addrs = trueblocks.eth & raw
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_3_m    ,y    ,addrs = trueblocks.eth & ether
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_4_m    ,y    ,addrs = trueblocks.eth & wei
 
 # Not tested for chifra monitors...
 # chifra monitors --watch
@@ -110,9 +120,6 @@ on      ,both ,fast  ,export   ,apps/acctExport ,110_export_lb_mr_2       ,n    
 on      ,both ,fast  ,export   ,apps/acctExport ,112_export_lb_fr         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & last_block = 100 & first_record = 1
 on      ,both ,fast  ,export   ,apps/acctExport ,114_export_lb_fr_mr      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & last_block = 100 & first_record = 1 & max_records = 10
 on      ,both ,fast  ,export   ,apps/acctExport ,114_export_lb_fr_mr_2    ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & last_block = 100 & first_record = 1 & max_records = 1
-
-# Capabilities
-on      ,both ,fast  ,export   ,apps/acctExport ,export_caps_cache_yes    ,y    ,addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & cache & fail_test
 
 on      ,both ,fast  ,export   ,apps/acctExport ,116_export_fb            ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 90 & max_records = 100
 on      ,both ,fast  ,export   ,apps/acctExport ,118_export_fb_mr         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 90 & max_records = 10
@@ -249,3 +256,8 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_1      ,y    
 on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
 on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & last_block = 9231343 & articulate & ether & fmt = json
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e         ,y    ,addrs = trueblocks.eth & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & ether & wei & fail_on_purpose
+on       ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_1_e    ,y    ,addrs = trueblocks.eth & raw

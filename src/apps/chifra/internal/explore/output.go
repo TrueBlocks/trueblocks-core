@@ -10,7 +10,6 @@ package explorePkg
 
 // EXISTING_CODE
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -68,9 +67,11 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 	} else {
 		for _, url := range urls {
 			ret := url.getUrl(opts)
-			fmt.Printf("Opening %s\n", ret)
 			if !opts.Globals.TestMode {
+				logger.Info("Opening", ret)
 				utils.OpenBrowser(ret)
+			} else {
+				logger.Info("Not opening", ret, "in test mode")
 			}
 		}
 	}

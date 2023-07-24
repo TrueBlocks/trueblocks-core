@@ -54,7 +54,7 @@ Notes:
   - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra transactions
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)

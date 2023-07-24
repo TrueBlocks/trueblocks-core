@@ -57,7 +57,7 @@ Notes:
   - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra blocks
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)

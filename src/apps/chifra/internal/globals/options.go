@@ -78,15 +78,21 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	cmd.Flags().MarkHidden("wei")
 
 	if opts.Caps.Has(caps.Raw) {
-		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the node with minimal processing")
+		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the source with minimal processing")
 	}
 
 	if opts.Caps.Has(caps.Caching) {
 		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
 	}
 
-	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
-	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
+	if opts.Caps.Has(caps.Fmt) {
+		cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
+	}
+
+	if opts.Caps.Has(caps.Verbose) {
+		cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
+	}
+
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
 	if opts.Caps.Has(caps.Chain) {

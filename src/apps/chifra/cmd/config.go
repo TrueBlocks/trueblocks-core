@@ -50,8 +50,11 @@ const longConfig = `Purpose:
 const notesConfig = ``
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra config
 	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 
 	configCmd.Flags().SortFlags = false
