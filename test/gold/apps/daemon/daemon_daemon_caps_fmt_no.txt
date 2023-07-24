@@ -1,0 +1,12 @@
+chifra daemon  --fmt json
+TEST[DATE|TIME] Port:  :8080
+TEST[DATE|TIME] Api:  on
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] Server URL:         http://localhost:8080
+INFO[DATE|TIME] RPC Provider:       http://localhost:23456
+INFO[DATE|TIME] Root Config Path:   /Users/jrush/Library/Application Support/TrueBlocks/
+INFO[DATE|TIME] Chain Config Path:  /Users/jrush/Library/Application Support/TrueBlocks/config/mainnet/
+INFO[DATE|TIME] Cache Path:         /Users/jrush/Data/trueblocks/v0.70.0/cache/mainnet/
+INFO[DATE|TIME] Index Path:         /Users/jrush/Data/trueblocks/v0.70.0/unchained/mainnet/
+INFO[DATE|TIME] Progress:           17760286, 17349142, 17349142, 17349142, ts: 17349288
+2023/07/23 23:28:39 listen tcp :8080: bind: address already in use

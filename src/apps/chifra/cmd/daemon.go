@@ -54,6 +54,12 @@ Notes:
 func init() {
 	var capabilities = caps.Default // Additional global caps for individual command lines...
 	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Chain)
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
+	// capabilities = capabilities.Remove(caps.Fmt)
+	// capabilities = capabilities.Remove(caps.File)
 	// EXISTING_CODE
 
 	daemonCmd.Flags().SortFlags = false

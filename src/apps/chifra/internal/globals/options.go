@@ -75,6 +75,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	if opts.Caps.Has(caps.Wei) {
 		cmd.Flags().BoolVarP(&opts.Wei, "wei", "W", false, "specify value in wei (the default)")
 	}
+	cmd.Flags().MarkHidden("wei")
 
 	if opts.Caps.Has(caps.Raw) {
 		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the node with minimal processing")
@@ -88,25 +89,49 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
-	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
-	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
-	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
-	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
-	cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
-	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
-	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
-	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
-	cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
-
+	if opts.Caps.Has(caps.Chain) {
+		cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
+	}
 	cmd.Flags().MarkHidden("chain")
+
+	if opts.Caps.Has(caps.Version) {
+		cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
+	}
 	cmd.Flags().MarkHidden("version")
+
+	if opts.Caps.Has(caps.Noop) {
+		cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
+	}
 	cmd.Flags().MarkHidden("noop")
+
+	if opts.Caps.Has(caps.NoColor) {
+		cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
+	}
 	cmd.Flags().MarkHidden("nocolor")
+
+	if opts.Caps.Has(caps.LogLevel) {
+		cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
+	}
 	cmd.Flags().MarkHidden("log_level")
+
+	if opts.Caps.Has(caps.NoHeader) {
+		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+	}
 	cmd.Flags().MarkHidden("no_header")
-	cmd.Flags().MarkHidden("wei")
+
+	// if opts.Caps.Has(caps.File) {
+	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
+	// }
 	cmd.Flags().MarkHidden("file")
+
+	if opts.Caps.Has(caps.Output) {
+		cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
+	}
 	cmd.Flags().MarkHidden("output")
+
+	if opts.Caps.Has(caps.Append) {
+		cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
+	}
 	cmd.Flags().MarkHidden("append")
 
 	SetDefaults(opts)

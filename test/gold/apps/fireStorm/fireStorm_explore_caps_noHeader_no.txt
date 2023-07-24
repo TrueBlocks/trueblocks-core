@@ -1,0 +1,15 @@
+chifra explore  0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 --no_header
+Error: 
+  unknown flag: --no_header
+
+Usage:
+  chifra explore [flags] <term> [term...]
+
+Arguments:
+  terms - one or more address, name, block, or transaction identifier
+
+Flags:
+  -l, --local    open the local TrueBlocks explorer
+  -g, --google   search google excluding popular blockchain explorers
+  -h, --help     display this help screen
+
