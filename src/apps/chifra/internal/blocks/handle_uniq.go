@@ -17,8 +17,10 @@ import (
 )
 
 func (opts *BlocksOptions) HandleUniq() (err error) {
-	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
 	chain := opts.Globals.Chain
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
 
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks

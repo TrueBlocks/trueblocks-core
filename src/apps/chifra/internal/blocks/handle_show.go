@@ -8,7 +8,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -17,8 +16,9 @@ import (
 )
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
-	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{
-		Opts: opts,
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: opts.Globals.Chain,
+		Opts:  opts,
 	})
 
 	// If the cache is writeable, fetch the latest block timestamp so that we never
