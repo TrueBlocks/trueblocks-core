@@ -88,7 +88,7 @@ func (c Capability) Text() string {
 	case Noop:
 		return "noop"
 	case NoColor:
-		return "noColor"
+		return "nocolor"
 	case LogLevel:
 		return "logLevel"
 	case Chain:
