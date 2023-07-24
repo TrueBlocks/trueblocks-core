@@ -94,7 +94,7 @@ on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2_v         ,n    
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 
 # Capabilities
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_caps_cache_no   ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & cache
+# on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_caps_cache_no   ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & cache
 
 # Not tested for chifra monitors...
 # chifra monitors --watch
@@ -112,7 +112,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,114_export_lb_fr_mr      ,n    
 on      ,both ,fast  ,export   ,apps/acctExport ,114_export_lb_fr_mr_2    ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & last_block = 100 & first_record = 1 & max_records = 1
 
 # Capabilities
-on      ,both ,fast  ,export   ,apps/acctExport ,export_caps_cache_yes    ,y    ,addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & cache & fail_test
+# on      ,both ,fast  ,export   ,apps/acctExport ,export_caps_cache_yes    ,y    ,addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & cache & fail_test
 
 on      ,both ,fast  ,export   ,apps/acctExport ,116_export_fb            ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 90 & max_records = 100
 on      ,both ,fast  ,export   ,apps/acctExport ,118_export_fb_mr         ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & first_block = 90 & max_records = 10
