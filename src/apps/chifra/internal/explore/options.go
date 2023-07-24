@@ -102,9 +102,10 @@ func ResetOptions() {
 	defaultExploreOptions = ExploreOptions{}
 	globals.SetDefaults(&defaultExploreOptions.Globals)
 	defaultExploreOptions.Globals.Writer = w
-	defaultExploreOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultExploreOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

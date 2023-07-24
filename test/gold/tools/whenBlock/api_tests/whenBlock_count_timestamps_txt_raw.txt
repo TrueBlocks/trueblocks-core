@@ -1,6 +1,6 @@
 when?count&fmt=txt&timestamps&raw
 {
   "errors": [
-    "The --raw option is not available for when command"
+    "Invalid key (raw) in when route."
   ]
 }

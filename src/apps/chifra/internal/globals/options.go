@@ -68,6 +68,18 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	opts.TestMode = file.IsTestMode()
 	opts.Caps = c
 
+	if opts.Caps.Has(caps.Ether) {
+		cmd.Flags().BoolVarP(&opts.Ether, "ether", "H", false, "specify value in ether")
+	}
+
+	if opts.Caps.Has(caps.Wei) {
+		cmd.Flags().BoolVarP(&opts.Wei, "wei", "W", false, "specify value in wei (the default)")
+	}
+
+	if opts.Caps.Has(caps.Raw) {
+		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the node with minimal processing")
+	}
+
 	if opts.Caps.Has(caps.Caching) {
 		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
 	}
@@ -77,27 +89,22 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
 	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
-	cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "", false, "report JSON data from the node with minimal processing")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
 	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
 	cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
 	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
-	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
-	cmd.Flags().BoolVarP(&opts.Ether, "ether", "", false, "specify value in ether")
 	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
 	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
 	cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
 
 	cmd.Flags().MarkHidden("chain")
-	cmd.Flags().MarkHidden("raw")
 	cmd.Flags().MarkHidden("version")
 	cmd.Flags().MarkHidden("noop")
 	cmd.Flags().MarkHidden("nocolor")
 	cmd.Flags().MarkHidden("log_level")
 	cmd.Flags().MarkHidden("no_header")
 	cmd.Flags().MarkHidden("wei")
-	cmd.Flags().MarkHidden("ether")
 	cmd.Flags().MarkHidden("file")
 	cmd.Flags().MarkHidden("output")
 	cmd.Flags().MarkHidden("append")

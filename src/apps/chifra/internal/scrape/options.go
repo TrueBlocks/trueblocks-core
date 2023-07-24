@@ -135,9 +135,10 @@ func ResetOptions() {
 	defaultScrapeOptions = ScrapeOptions{}
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
 	defaultScrapeOptions.Globals.Writer = w
-	defaultScrapeOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultScrapeOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

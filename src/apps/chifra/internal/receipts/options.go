@@ -98,10 +98,12 @@ func ResetOptions() {
 	defaultReceiptsOptions = ReceiptsOptions{}
 	globals.SetDefaults(&defaultReceiptsOptions.Globals)
 	defaultReceiptsOptions.Globals.Writer = w
-	defaultReceiptsOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
-	defaultReceiptsOptions.Globals.Caps = defaultReceiptsOptions.Globals.Caps.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
+	defaultReceiptsOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

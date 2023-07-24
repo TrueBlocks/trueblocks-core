@@ -106,9 +106,10 @@ func ResetOptions() {
 	defaultDaemonOptions = DaemonOptions{}
 	globals.SetDefaults(&defaultDaemonOptions.Globals)
 	defaultDaemonOptions.Globals.Writer = w
-	defaultDaemonOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultDaemonOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

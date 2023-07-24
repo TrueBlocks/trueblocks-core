@@ -60,6 +60,7 @@ func init() {
 	var capabilities = caps.Default // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 
 	blocksCmd.Flags().SortFlags = false

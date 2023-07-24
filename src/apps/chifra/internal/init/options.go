@@ -104,9 +104,10 @@ func ResetOptions() {
 	defaultInitOptions = InitOptions{}
 	globals.SetDefaults(&defaultInitOptions.Globals)
 	defaultInitOptions.Globals.Writer = w
-	defaultInitOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultInitOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

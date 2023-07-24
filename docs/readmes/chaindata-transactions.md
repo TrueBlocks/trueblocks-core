@@ -34,6 +34,8 @@ Flags:
   -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
   -A, --account_for string   reconcile the transaction as per the provided address
   -D, --decache              removes a transactions and any traces in the transaction from the cache
+  -H, --ether                specify value in ether
+  -w, --raw                  report JSON data from the node with minimal processing
   -o, --cache                force the results of the query into the cache
   -x, --fmt string           export format, one of [none|json*|txt|csv]
   -v, --verbose              enable verbose (increase detail with --log_level)

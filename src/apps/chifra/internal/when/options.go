@@ -133,10 +133,11 @@ func ResetOptions() {
 	defaultWhenOptions = WhenOptions{}
 	globals.SetDefaults(&defaultWhenOptions.Globals)
 	defaultWhenOptions.Globals.Writer = w
-	defaultWhenOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
-	defaultWhenOptions.Globals.Caps = defaultWhenOptions.Globals.Caps.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
+	defaultWhenOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

@@ -172,10 +172,12 @@ func ResetOptions() {
 	defaultBlocksOptions = BlocksOptions{}
 	globals.SetDefaults(&defaultBlocksOptions.Globals)
 	defaultBlocksOptions.Globals.Writer = w
-	defaultBlocksOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
-	defaultBlocksOptions.Globals.Caps = defaultBlocksOptions.Globals.Caps.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
+	defaultBlocksOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

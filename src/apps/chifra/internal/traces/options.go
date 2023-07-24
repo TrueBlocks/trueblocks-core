@@ -106,10 +106,12 @@ func ResetOptions() {
 	defaultTracesOptions = TracesOptions{}
 	globals.SetDefaults(&defaultTracesOptions.Globals)
 	defaultTracesOptions.Globals.Writer = w
-	defaultTracesOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
-	defaultTracesOptions.Globals.Caps = defaultTracesOptions.Globals.Caps.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
+	defaultTracesOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

@@ -327,10 +327,13 @@ func ResetOptions() {
 	defaultExportOptions = ExportOptions{}
 	globals.SetDefaults(&defaultExportOptions.Globals)
 	defaultExportOptions.Globals.Writer = w
-	defaultExportOptions.Globals.Caps = caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
-	defaultExportOptions.Globals.Caps = defaultExportOptions.Globals.Caps.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
+	defaultExportOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE
