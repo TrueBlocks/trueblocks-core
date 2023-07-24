@@ -16,7 +16,7 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n 
 on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = non-tracing
 
 # Capabilities
-on      ,both ,fast  ,scrape ,apps/blockScrape ,scrape_caps_cache_no         ,y    ,chain = sepolia & cache
+# on      ,both ,fast  ,scrape ,apps/blockScrape ,scrape_caps_cache_no         ,y    ,chain = sepolia & cache
 
 off     ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,modes = both & block_cnt = 12
 off     ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,modes = both & pin

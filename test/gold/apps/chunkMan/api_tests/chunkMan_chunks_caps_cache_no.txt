@@ -1,6 +1,0 @@
-chunks?mode=index&cache
-{
-  "errors": [
-    "Invalid key (cache) in chunks route."
-  ]
-}

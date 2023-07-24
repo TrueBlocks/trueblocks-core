@@ -55,7 +55,7 @@ on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_3      ,n    
 on      ,both ,fast  ,list     ,apps/acctExport ,130_list_fb_lb_fr_mr     ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3 & max_records = 10
 
 # Capabilities
-on      ,both ,fast  ,list     ,apps/acctExport ,list_caps_cache_no       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & cache
+# on      ,both ,fast  ,list     ,apps/acctExport ,list_caps_cache_no       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & cache
 
 # Not tested for chifra list
 # chifra list --silent

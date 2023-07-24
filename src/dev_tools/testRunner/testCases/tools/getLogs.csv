@@ -33,7 +33,7 @@ on       ,both ,fast  ,logs  ,tools/getLogs ,from_raw            ,y    ,transact
 on       ,both ,medi  ,logs  ,tools/getLogs ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
 
 # Capabilities
-on       ,both ,fast  ,logs  ,tools/getLogs ,logs_caps_cache_yes ,y    ,transactions = 12.0 & cache
+# on       ,both ,fast  ,logs  ,tools/getLogs ,logs_caps_cache_yes ,y    ,transactions = 12.0 & cache
 
 # This fails for an unknown reason for multiple tools
 local    ,both ,fast  ,logs  ,tools/getLogs ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json

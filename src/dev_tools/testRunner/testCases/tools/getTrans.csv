@@ -135,7 +135,7 @@ on       ,cmd  ,fast  ,transactions ,tools/getTrans ,reconcile_by_file_pre    ,y
 local    ,cmd  ,fast  ,transactions ,tools/getTrans ,reconcile_by_file        ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & ether & file = cmd_file_3 & output = output_test_file2 & append & fmt = json
 
 # Capabilities
-on       ,both ,fast  ,transactions ,tools/getTrans ,txs_caps_cache_yes       ,y    ,transactions = 12.0 & cache
+# on       ,both ,fast  ,transactions ,tools/getTrans ,txs_caps_cache_yes       ,y    ,transactions = 12.0 & cache
 
 # This test case does not reconcile because there are two transfers of the same asset to the same address in a single block.
 # Because balances are only available per block, the first transfer's ending balance is wrong (when queried) and the second

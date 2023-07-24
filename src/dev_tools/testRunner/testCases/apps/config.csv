@@ -8,7 +8,7 @@ on      ,both ,fast  ,config ,apps/config ,config_show          ,y    ,modes = s
 on      ,both ,fast  ,config ,apps/config ,config_edit          ,y    ,modes = edit
 
 # Capabilities
-local   ,both ,fast  ,config ,apps/config ,config_caps_cache_no ,y    ,modes = edit & cache
+# on   ,both ,fast  ,config ,apps/config ,config_caps_cache_no ,y    ,modes = edit & cache
 
 # This fails because the timestamp is not test proof - simple fix
 local   ,both ,fast  ,config ,apps/config ,config_paths         ,y    ,paths

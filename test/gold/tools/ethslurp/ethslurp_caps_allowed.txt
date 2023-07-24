@@ -1,6 +1,6 @@
-chifra slurp  3000000 --cache --fail_test
+chifra slurp  trueblocks.eth --chain --fmt --log_level 4 --nocolor --noop --version --verbose --no_header --file --output --append --cache --raw --fail_on_purpose
 Error: 
-  unknown flag: --fail_test
+  unknown flag: --fail_on_purpose
 
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
@@ -15,6 +15,7 @@ Flags:
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -P, --per_page uint   the number of records to request on each page (default 5000)
   -s, --sleep float     seconds to sleep between requests (default 0.25)
+  -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)

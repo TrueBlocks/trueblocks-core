@@ -1,6 +1,0 @@
-status?modes=index&cache
-{
-  "errors": [
-    "Invalid key (cache) in status route."
-  ]
-}

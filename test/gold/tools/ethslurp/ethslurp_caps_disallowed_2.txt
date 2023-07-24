@@ -1,6 +1,6 @@
-chifra slurp  --help
-Purpose:
-  Fetch data from Etherscan for any address.
+chifra slurp  trueblocks.eth --wei
+Error: 
+  unknown flag: --wei
 
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
@@ -24,3 +24,4 @@ Flags:
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
+

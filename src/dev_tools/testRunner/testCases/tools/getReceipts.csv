@@ -52,7 +52,7 @@ on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,cmd_file_8_with         ,n   
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,cmd_file_full_path      ,n    ,file = cmd_file.9 & no_header & transactions = 5644782.0
 
 # Capabilities
-on      ,both ,fast  ,receipts ,tools/getReceipts ,receipts_caps_cache_yes ,y    ,transactions = 12.0 & cache
+# on      ,both ,fast  ,receipts ,tools/getReceipts ,receipts_caps_cache_yes ,y    ,transactions = 12.0 & cache
 
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_filebad              ,n    ,file = cmd_file & bad
 on      ,cmd  ,fast  ,receipts ,tools/getReceipts ,by_file                 ,n    ,file = cmd_file

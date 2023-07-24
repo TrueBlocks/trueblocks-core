@@ -1,6 +1,0 @@
-slurp?blocks=3000000&cache&failTest
-{
-  "errors": [
-    "Invalid key (failTest) in slurp route."
-  ]
-}

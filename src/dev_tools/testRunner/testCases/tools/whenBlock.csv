@@ -96,4 +96,4 @@ on      ,both ,medi  ,when  ,tools/whenBlock ,skip_quaterly               ,n    
 on      ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_annually               ,n    ,fmt = txt & blocks = 768414-4838611:annually
 
 # Capabilities
-on      ,both ,fast  ,when  ,tools/whenBlock ,when_caps_cache_yes         ,y    ,blocks = 12 & cache & fail_test
+# on      ,both ,fast  ,when  ,tools/whenBlock ,when_caps_cache_yes         ,y    ,blocks = 12 & cache & fail_test
