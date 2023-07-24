@@ -55,7 +55,7 @@ func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
 	if rawTx, err := GetRawTransactionByHash(chain, base.HexToHash(hash)); err != nil {
 		return 0, 0, err
 	} else {
-		return mustParseUint(rawTx.BlockNumber), mustParseUint(rawTx.TransactionIndex), nil
+		return utils.MustParseUint(rawTx.BlockNumber), utils.MustParseUint(rawTx.TransactionIndex), nil
 	}
 }
 
@@ -292,26 +292,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		return
 	}
 
-	tx = &types.SimpleTransaction{
-		Hash:             base.HexToHash(rawTx.Hash),
-		BlockHash:        base.HexToHash(rawTx.BlockHash),
-		BlockNumber:      bn,
-		TransactionIndex: txid,
-		Nonce:            mustParseUint(rawTx.Nonce),
-		Timestamp:        blockTs,
-		From:             base.HexToAddress(rawTx.From),
-		To:               base.HexToAddress(rawTx.To),
-		Gas:              mustParseUint(rawTx.Gas),
-		GasPrice:         mustParseUint(rawTx.GasPrice),
-		GasUsed:          receipt.GasUsed,
-		Input:            rawTx.Input,
-		IsError:          receipt.IsError,
-		HasToken:         IsTokenRelated(rawTx.Input),
-		Receipt:          &receipt,
-	}
-	tx.Value.SetString(rawTx.Value, 0)
-	tx.SetGasCost(&receipt)
-	tx.SetRaw(rawTx)
+	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs, IsTokenRelated(rawTx.Input))
 
 	if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
 		rpcOptions.Store.Write(tx, writeOptions)
@@ -365,27 +346,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, rpcOp
 		return
 	}
 
-	// TODO: this gets repeated
-	tx = &types.SimpleTransaction{
-		Hash:             base.HexToHash(rawTx.Hash),
-		BlockHash:        base.HexToHash(rawTx.BlockHash),
-		BlockNumber:      bn,
-		TransactionIndex: txid,
-		Nonce:            mustParseUint(rawTx.Nonce),
-		Timestamp:        blockTs,
-		From:             base.HexToAddress(rawTx.From),
-		To:               base.HexToAddress(rawTx.To),
-		Gas:              mustParseUint(rawTx.Gas),
-		GasPrice:         mustParseUint(rawTx.GasPrice),
-		GasUsed:          receipt.GasUsed,
-		Input:            rawTx.Input,
-		IsError:          receipt.IsError,
-		HasToken:         IsTokenRelated(rawTx.Input),
-		Receipt:          &receipt,
-	}
-	tx.Value.SetString(rawTx.Value, 0)
-	tx.SetGasCost(&receipt)
-	tx.SetRaw(rawTx)
+	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs, IsTokenRelated(rawTx.Input))
 
 	if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
 		rpcOptions.Store.Write(tx, writeOptions)

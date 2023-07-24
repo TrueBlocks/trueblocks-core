@@ -332,6 +332,79 @@ func (s *SimpleTransaction) ReadFrom(r io.Reader) (n int64, err error) {
 // EXISTING_CODE
 //
 
+// NewRawTransactionFromMap is useful when we get a map of transaction properties, e.g.
+// from a call to eth_getBlockByHash [0x..., true]
+func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
+	r = &RawTransaction{}
+
+	r.BlockHash = fmt.Sprint(input["blockHash"])
+	r.BlockNumber = fmt.Sprint(input["blockNumber"])
+	// Missing in block query
+	if _, ok := input["chainId"]; ok {
+		r.ChainId = fmt.Sprint(input["chainId"])
+	}
+	r.From = fmt.Sprint(input["from"])
+	r.Gas = fmt.Sprint(input["gas"])
+	r.GasPrice = fmt.Sprint(input["gasPrice"])
+	r.Hash = fmt.Sprint(input["hash"])
+	r.Input = fmt.Sprint(input["input"])
+	r.MaxFeePerGas = fmt.Sprint(input["maxFeePerGas"])
+	r.MaxPriorityFeePerGas = fmt.Sprint(input["maxPriorityFeePerGas"])
+	r.Nonce = fmt.Sprint(input["nonce"])
+	r.To = fmt.Sprint(input["to"])
+	r.TransactionIndex = fmt.Sprint(input["transactionIndex"])
+	r.Value = fmt.Sprint(input["value"])
+
+	return
+}
+
+func (r *RawTransaction) TxIndex() uint64 {
+	return utils.MustParseUint(r.TransactionIndex)
+}
+
+func (r *RawTransaction) TxGasPrice() uint64 {
+	return utils.MustParseUint(r.GasPrice)
+}
+
+func (r *RawTransaction) TxHash() *base.Hash {
+	hash := base.HexToHash(r.Hash)
+	return &hash
+}
+
+// NewSimpleTransaction builds SimpleTransaction using data from raw and receipt. Receipt can be nil.
+// Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
+func NewSimpleTransaction(raw *RawTransaction, receipt *SimpleReceipt, timestamp base.Timestamp, hasToken bool) (s *SimpleTransaction) {
+	s = &SimpleTransaction{}
+
+	// TODO: use RawTransaction methods
+	s.Hash = base.HexToHash(raw.Hash)
+	s.BlockHash = base.HexToHash(raw.BlockHash)
+	s.BlockNumber = utils.MustParseUint(raw.BlockNumber)
+	s.TransactionIndex = utils.MustParseUint(raw.TransactionIndex)
+	s.Nonce = utils.MustParseUint(raw.Nonce)
+	s.Timestamp = timestamp
+	s.From = base.HexToAddress(raw.From)
+	s.To = base.HexToAddress(raw.To)
+	s.Value.SetString(raw.Value, 0)
+	s.Gas = utils.MustParseUint(raw.Gas)
+	s.GasPrice = utils.MustParseUint(raw.GasPrice)
+	s.MaxFeePerGas = utils.MustParseUint(raw.MaxFeePerGas)
+	s.MaxPriorityFeePerGas = utils.MustParseUint(raw.MaxPriorityFeePerGas)
+	s.Input = raw.Input
+
+	s.HasToken = hasToken
+	if receipt != nil {
+		s.GasUsed = receipt.GasUsed
+		s.IsError = receipt.IsError
+		s.Receipt = receipt
+
+		s.SetGasCost(receipt)
+	}
+	s.SetRaw(raw)
+
+	return
+}
+
 func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
 	if receipt == nil {
 		return 0
