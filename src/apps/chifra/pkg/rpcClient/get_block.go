@@ -7,7 +7,6 @@ package rpcClient
 import (
 	"errors"
 	"fmt"
-	"math/big"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -71,27 +70,20 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, options *Options) (types.S
 	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
 		// cast transaction to a concrete type
-		t, ok := rawTx.(map[string]any)
+		rawData, ok := rawTx.(map[string]any)
 		if !ok {
 			err = errors.New("cannot cast raw block transaction into map")
 			return block, err
 		}
-
-		txHash := base.HexToHash(fmt.Sprint(t["hash"]))
-		txGasPrice := mustParseUint(t["gasPrice"])
-		input := fmt.Sprint(t["input"])
-		value := big.NewInt(0)
-		value.SetString(fmt.Sprint(t["value"]), 0)
-		txIndex := mustParseUint(t["transactionIndex"])
-		hasToken := IsTokenRelated(input)
+		raw := types.NewRawTransactionFromMap(rawData)
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
 		receipt, err = GetTransactionReceipt(chain, ReceiptQuery{
 			Bn:       uint64(bn),
-			Txid:     uint64(txIndex),
-			TxHash:   &txHash,
-			GasPrice: txGasPrice,
+			Txid:     uint64(raw.TxIndex()),
+			TxHash:   raw.TxHash(),
+			GasPrice: raw.TxGasPrice(),
 			NeedsTs:  true,
 			Ts:       ts,
 		}, options)
@@ -99,32 +91,11 @@ func GetBlockByNumberWithTxs(chain string, bn uint64, options *Options) (types.S
 			return block, err
 		}
 
-		tx := types.SimpleTransaction{
-			Hash:                 txHash,
-			BlockHash:            base.HexToHash(fmt.Sprint(t["blockHash"])),
-			BlockNumber:          mustParseUint(t["blockNumber"]),
-			TransactionIndex:     mustParseUint(t["transactionIndex"]),
-			Nonce:                mustParseUint(t["nonce"]),
-			Timestamp:            ts,
-			From:                 base.HexToAddress(fmt.Sprint(t["from"])),
-			To:                   base.HexToAddress(fmt.Sprint(t["to"])),
-			Value:                *value,
-			Gas:                  mustParseUint(t["gas"]),
-			GasPrice:             txGasPrice,
-			GasUsed:              receipt.GasUsed,
-			MaxFeePerGas:         mustParseUint(t["maxFeePerGas"]),
-			MaxPriorityFeePerGas: mustParseUint(t["maxPriorityFeePerGas"]),
-			Input:                input,
-			IsError:              receipt.IsError,
-			HasToken:             hasToken,
-			Receipt:              &receipt,
-			// Traces               []SimpleTrace   `json:"traces"`
-			// ArticulatedTx        *SimpleFunction `json:"articulatedTx"`
-		}
-		tx.SetGasCost(&receipt)
-		block.Transactions = append(block.Transactions, tx)
+		tx := types.NewSimpleTransaction(raw, &receipt, ts, IsTokenRelated(raw.Input))
+		block.Transactions = append(block.Transactions, *tx)
+
 		if options.HasStore() && !options.TransactionWriteDisabled {
-			options.Store.Write(&tx, writeOptions)
+			options.Store.Write(tx, writeOptions)
 		}
 	}
 
@@ -233,7 +204,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
 			block.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
-		} else if mustParseUint(block.Timestamp) == 0 {
+		} else if utils.MustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
 
