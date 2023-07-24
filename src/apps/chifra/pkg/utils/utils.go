@@ -239,3 +239,8 @@ func FormattedCode(verbose bool, code string) string {
 func PointerOf[T any](value T) *T {
 	return &value
 }
+
+func MustParseUint(input any) (result uint64) {
+	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
+	return
+}
