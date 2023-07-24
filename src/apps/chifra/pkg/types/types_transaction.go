@@ -337,6 +337,7 @@ func (s *SimpleTransaction) ReadFrom(r io.Reader) (n int64, err error) {
 func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
 	r = &RawTransaction{}
 
+	// TODO: I wonder why we make copies here
 	r.BlockHash = fmt.Sprint(input["blockHash"])
 	r.BlockNumber = fmt.Sprint(input["blockNumber"])
 	// Missing in block query
