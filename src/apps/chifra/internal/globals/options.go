@@ -78,7 +78,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	cmd.Flags().MarkHidden("wei")
 
 	if opts.Caps.Has(caps.Raw) {
-		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the node with minimal processing")
+		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the source with minimal processing")
 	}
 
 	if opts.Caps.Has(caps.Caching) {
