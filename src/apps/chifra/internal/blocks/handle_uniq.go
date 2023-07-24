@@ -20,6 +20,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
 	chain := opts.Globals.Chain
 
+	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
