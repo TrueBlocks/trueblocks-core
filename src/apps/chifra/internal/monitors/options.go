@@ -87,7 +87,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
 				return opts
 			}
@@ -127,9 +127,10 @@ func ResetOptions() {
 	defaultMonitorsOptions = MonitorsOptions{}
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
 	defaultMonitorsOptions.Globals.Writer = w
-	defaultMonitorsOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultMonitorsOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

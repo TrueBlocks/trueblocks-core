@@ -57,7 +57,7 @@ Notes:
   - If the --parts option is not empty, all addresses are considered tokens and each token's attributes are presented.`
 
 func init() {
-	var capabilities = caps.None // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE

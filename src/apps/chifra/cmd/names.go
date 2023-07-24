@@ -52,7 +52,7 @@ Notes:
   - The --match_case option enables case sensitive matching.`
 
 func init() {
-	var capabilities = caps.None // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for individual command lines...
 	// EXISTING_CODE
 	// EXISTING_CODE
 

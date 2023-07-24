@@ -59,6 +59,7 @@ Flags:
   -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
   -U, --count             display the number of the lists of appearances for --addrs or --uniq
   -D, --decache           removes a block and any transactions or traces in the block from the cache
+  -w, --raw               report JSON data from the node with minimal processing
   -o, --cache             force the results of the query into the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose (increase detail with --log_level)
@@ -126,6 +127,8 @@ Flags:
   -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
   -A, --account_for string   reconcile the transaction as per the provided address
   -D, --decache              removes a transactions and any traces in the transaction from the cache
+  -H, --ether                specify value in ether
+  -w, --raw                  report JSON data from the node with minimal processing
   -o, --cache                force the results of the query into the cache
   -x, --fmt string           export format, one of [none|json*|txt|csv]
   -v, --verbose              enable verbose (increase detail with --log_level)
@@ -174,6 +177,7 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
+  -w, --raw          report JSON data from the node with minimal processing
   -o, --cache        force the results of the query into the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
@@ -215,6 +219,7 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
+  -w, --raw          report JSON data from the node with minimal processing
   -o, --cache        force the results of the query into the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose (increase detail with --log_level)
@@ -263,6 +268,7 @@ Flags:
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -U, --count           show the number of traces for the transaction only (fast)
+  -w, --raw             report JSON data from the node with minimal processing
   -o, --cache           force the results of the query into the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose (increase detail with --log_level)

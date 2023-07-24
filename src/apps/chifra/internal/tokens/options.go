@@ -83,7 +83,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 		case "noZero":
 			opts.NoZero = true
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "tokens")
 				return opts
 			}
@@ -153,10 +153,11 @@ func ResetOptions() {
 	defaultTokensOptions = TokensOptions{}
 	globals.SetDefaults(&defaultTokensOptions.Globals)
 	defaultTokensOptions.Globals.Writer = w
-	defaultTokensOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
-	defaultTokensOptions.Globals.Caps = defaultTokensOptions.Globals.Caps.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
+	defaultTokensOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

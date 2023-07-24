@@ -83,7 +83,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 		case "sol":
 			opts.Sol = true
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
 				return opts
 			}
@@ -126,9 +126,10 @@ func ResetOptions() {
 	defaultAbisOptions = AbisOptions{}
 	globals.SetDefaults(&defaultAbisOptions.Globals)
 	defaultAbisOptions.Globals.Writer = w
-	defaultAbisOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultAbisOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

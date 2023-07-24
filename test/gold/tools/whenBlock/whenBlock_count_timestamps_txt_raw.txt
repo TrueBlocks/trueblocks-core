@@ -1,9 +1,7 @@
 chifra when  --count --fmt txt --timestamps --raw
-TEST[DATE|TIME] Timestamps:  true
-TEST[DATE|TIME] Count:  true
-TEST[DATE|TIME] ShowRaw:  true
-TEST[DATE|TIME] Format:  txt
-Error: The --raw option is not available for when command
+Error: 
+  unknown flag: --raw
+
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

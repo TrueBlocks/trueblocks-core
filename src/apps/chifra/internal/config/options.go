@@ -53,7 +53,7 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 		case "paths":
 			opts.Paths = true
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
 				return opts
 			}
@@ -100,9 +100,10 @@ func ResetOptions() {
 	defaultConfigOptions = ConfigOptions{}
 	globals.SetDefaults(&defaultConfigOptions.Globals)
 	defaultConfigOptions.Globals.Writer = w
-	defaultConfigOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultConfigOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

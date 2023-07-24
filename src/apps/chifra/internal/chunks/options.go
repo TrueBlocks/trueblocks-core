@@ -118,7 +118,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
 				return opts
 			}
@@ -190,9 +190,10 @@ func ResetOptions() {
 	defaultChunksOptions = ChunksOptions{}
 	globals.SetDefaults(&defaultChunksOptions.Globals)
 	defaultChunksOptions.Globals.Writer = w
-	defaultChunksOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultChunksOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

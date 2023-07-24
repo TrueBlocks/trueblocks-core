@@ -90,7 +90,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 		case "allowMissing":
 			opts.Settings.Allow_missing = true
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
 				return opts
 			}
@@ -135,9 +135,10 @@ func ResetOptions() {
 	defaultScrapeOptions = ScrapeOptions{}
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
 	defaultScrapeOptions.Globals.Writer = w
-	defaultScrapeOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultScrapeOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

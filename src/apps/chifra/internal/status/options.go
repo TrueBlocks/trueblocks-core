@@ -67,7 +67,7 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 		case "maxRecords":
 			opts.MaxRecords = globals.ToUint64(value[0])
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
 				return opts
 			}
@@ -117,9 +117,10 @@ func ResetOptions() {
 	defaultStatusOptions = StatusOptions{}
 	globals.SetDefaults(&defaultStatusOptions.Globals)
 	defaultStatusOptions.Globals.Writer = w
-	defaultStatusOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultStatusOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

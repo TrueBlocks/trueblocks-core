@@ -62,7 +62,7 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 		case "google":
 			opts.Google = true
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "explore")
 				return opts
 			}
@@ -102,9 +102,10 @@ func ResetOptions() {
 	defaultExploreOptions = ExploreOptions{}
 	globals.SetDefaults(&defaultExploreOptions.Globals)
 	defaultExploreOptions.Globals.Writer = w
-	defaultExploreOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultExploreOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

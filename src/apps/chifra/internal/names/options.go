@@ -123,7 +123,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 		case "named":
 			opts.Named = true
 		default:
-			if !globals.IsGlobalOption(copy.Globals.Caps, key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
 				return opts
 			}
@@ -163,9 +163,10 @@ func ResetOptions() {
 	defaultNamesOptions = NamesOptions{}
 	globals.SetDefaults(&defaultNamesOptions.Globals)
 	defaultNamesOptions.Globals.Writer = w
-	defaultNamesOptions.Globals.Caps = caps.None // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for use with --file option
 	// EXISTING_CODE
 	// EXISTING_CODE
+	defaultNamesOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE
