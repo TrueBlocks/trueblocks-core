@@ -21,12 +21,23 @@
 
 ### Global Options Disabled
 
-| Tool    | --chain | --fmt | --verbose | --no_header | --file | --output | --append |
-| ------- | ------- | ----- | --------- | ----------- | ------ | -------- | -------- |
-| daemon  | x       | x     |           | x           | x      | x        | x        |
-| scrape  |         | x     | x         | x           | x      | x        | x        |
-| init    |         | x     | x         | x           | x      | x        | x        |
-| config  |         | x     | x         | x           | x      | x        | x        |
-| explore |         | x     | x         | x           |        | x        | x        |
-| status  |         | x     |           | x           | x      | x        | x        |
-| chunks  |         |       |           |             | x      | x        | x        |
+| Tool    | --chain | --no_header | --output | --append |
+| ------- | ------- | ----------- | -------- | -------- |
+| daemon  | x       | x           | x        | x        |
+| scrape  |         | x           | x        | x        |
+| init    |         | x           | x        | x        |
+| config  |         | x           | x        | x        |
+| explore |         | x           | x        | x        |
+| status  |         | x           | x        | x        |
+| chunks  |         |             | x        | x        |
+
+### Global Options Not Able to Be Disabled but Not Used
+
+| Tool    | --fmt | --verbose | --file |
+| ------- | ----- | --------- | ------ |
+| daemon  | x     |           | x      |
+| scrape  | x     | x         | x      |
+| init    | x     | x         | x      |
+| config  | x     | x         |        |
+| explore | x     | x         |        |
+| status  | x     |           |        |

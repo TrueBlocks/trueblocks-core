@@ -1,7 +1,15 @@
-enabled ,mode ,speed ,route  ,path/tool   ,filename             ,post ,options
-on      ,cmd  ,fast  ,daemon ,apps/daemon ,help                 ,n    ,@h
-on      ,cmd  ,fast  ,daemon ,apps/daemon ,help_long            ,n    ,help
-on      ,both ,fast  ,daemon ,apps/daemon ,bad_cmd              ,n    ,not-an-option
+enabled ,mode ,speed ,route  ,path/tool   ,filename                ,post ,options
+on      ,cmd  ,fast  ,daemon ,apps/daemon ,help                    ,n    ,@h
+on      ,cmd  ,fast  ,daemon ,apps/daemon ,help_long               ,n    ,help
+on      ,both ,fast  ,daemon ,apps/daemon ,bad_cmd                 ,n    ,not-an-option
 
 # Capabilities
-on      ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_cache_no ,y    ,cache
+on      ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_cache_no    ,y    ,cache
+on      ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_chain_no    ,y    ,chain = no
+on      ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_noheader_no ,y    ,no_header
+on      ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_output_no   ,y    ,output
+on      ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_append_no   ,y    ,append
+
+# Capabilities doesn't work for these
+local   ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_fmt_no      ,y    ,fmt = json
+local   ,both ,fast  ,daemon ,apps/daemon ,daemon_caps_file_no     ,y    ,file = file.fil

@@ -6,12 +6,12 @@ type Capability int
 
 const (
 	Caching Capability = 1 << iota
-	Format
+	// Fmt
 	Raw
 	NoHeader
 	Wei
 	Ether
-	File
+	// File
 	Output
 	Append
 	Verbose
@@ -21,18 +21,19 @@ const (
 	LogLevel
 	Chain
 	EveryTool = Verbose | Version | Noop | NoColor | LogLevel | Chain
-	Default   = EveryTool | Format | NoHeader | File | Output | Append
+	Default   = EveryTool | NoHeader | Output | Append
+	// Fmt and File are different and don't really work right
 )
 
 var AllCaps = []Capability{
 	Default,
 	Caching,
-	Format,
+	// Fmt,
 	Raw,
 	NoHeader,
 	Wei,
 	Ether,
-	File,
+	// File,
 	Output,
 	Append,
 	Verbose,
@@ -64,8 +65,8 @@ func (c Capability) Text() string {
 	switch c {
 	case Caching:
 		return "cache"
-	case Format:
-		return "fmt"
+	// case Fmt:
+	// 	return "fmt"
 	case Raw:
 		return "raw"
 	case NoHeader:
@@ -74,8 +75,8 @@ func (c Capability) Text() string {
 		return "wei"
 	case Ether:
 		return "ether"
-	case File:
-		return "file"
+	// case File:
+	// 	return "file"
 	case Output:
 		return "output"
 	case Append:
@@ -102,11 +103,16 @@ func (c Capability) Text() string {
 }
 
 func (c Capability) HasKey(key string) bool {
+	if key == "fmt" || key == "file" {
+		return true
+	}
+
 	for _, cap := range AllCaps {
 		if key == cap.Text() {
 			return c.Has(cap)
 		}
 	}
+
 	return false
 }
 

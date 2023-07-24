@@ -7,7 +7,6 @@ package daemonPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -36,10 +35,6 @@ func (opts *DaemonOptions) validateDaemon() error {
 
 	if !opts.Monitor && len(opts.Scrape) == 0 && len(opts.Api) == 0 {
 		return validate.Usage("At least one of --scrape, --monitors, or --api must be present.")
-	}
-
-	if len(opts.Globals.Chain) > 0 && opts.Globals.Chain != config.GetDefaultChain() {
-		return validate.Usage("The {0} option is not supported by the {1} command.", "--chain", "daemon")
 	}
 
 	if len(opts.Port) > 0 && !strings.Contains(opts.Port, ":") {
