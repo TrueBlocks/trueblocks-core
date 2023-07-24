@@ -6,12 +6,12 @@ type Capability int
 
 const (
 	Caching Capability = 1 << iota
-	// Fmt
+	Fmt
 	Raw
 	NoHeader
 	Wei
 	Ether
-	// File
+	File
 	Output
 	Append
 	Verbose
@@ -20,20 +20,19 @@ const (
 	NoColor
 	LogLevel
 	Chain
-	EveryTool = Verbose | Version | Noop | NoColor | LogLevel | Chain
-	Default   = EveryTool | NoHeader | Output | Append
-	// Fmt and File are different and don't really work right
+	EveryTool = Verbose | Fmt | Version | Noop | NoColor | LogLevel | Chain
+	Default   = EveryTool | NoHeader | File | Output | Append
 )
 
 var AllCaps = []Capability{
 	Default,
 	Caching,
-	// Fmt,
+	Fmt,
 	Raw,
 	NoHeader,
 	Wei,
 	Ether,
-	// File,
+	File,
 	Output,
 	Append,
 	Verbose,
@@ -65,8 +64,8 @@ func (c Capability) Text() string {
 	switch c {
 	case Caching:
 		return "cache"
-	// case Fmt:
-	// 	return "fmt"
+	case Fmt:
+		return "fmt"
 	case Raw:
 		return "raw"
 	case NoHeader:
@@ -75,8 +74,8 @@ func (c Capability) Text() string {
 		return "wei"
 	case Ether:
 		return "ether"
-	// case File:
-	// 	return "file"
+	case File:
+		return "file"
 	case Output:
 		return "output"
 	case Append:
@@ -88,7 +87,7 @@ func (c Capability) Text() string {
 	case Noop:
 		return "noop"
 	case NoColor:
-		return "noColor"
+		return "nocolor"
 	case LogLevel:
 		return "logLevel"
 	case Chain:

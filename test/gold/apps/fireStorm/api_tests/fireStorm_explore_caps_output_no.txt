@@ -1,6 +1,0 @@
-explore?terms=0x1728039ce0d18a799c081c5c7fa2090dd365a8d0&output
-{
-  "errors": [
-    "Invalid key (output) in explore route."
-  ]
-}

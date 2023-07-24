@@ -1,0 +1,15 @@
+chifra explore  12.0 --log_level 4
+Error: 
+  unknown flag: --log_level
+
+Usage:
+  chifra explore [flags] <term> [term...]
+
+Arguments:
+  terms - one or more address, name, block, or transaction identifier
+
+Flags:
+  -l, --local    open the local TrueBlocks explorer
+  -g, --google   search google excluding popular blockchain explorers
+  -h, --help     display this help screen
+

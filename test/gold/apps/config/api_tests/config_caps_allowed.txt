@@ -1,0 +1,6 @@
+config?chain&logLevel=4&nocolor&noop&version&verbose&failOnPurpose
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in config route."
+  ]
+}

@@ -1,8 +1,8 @@
 ## Global Options
 
-|           |                                                                                                                              |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| All tools | --help, --chain, --fmt, --verbose, --no_header,<br>--version, --file, --output, --append, --log_level,<br>--no_color, --noop |
+|           |                                                                                                                             |
+| --------- | --------------------------------------------------------------------------------------------------------------------------- |
+| All tools | --help, --chain, --fmt, --verbose, --no_header,<br>--version, --file, --output, --append, --log_level,<br>--nocolor, --noop |
 
 ### Additional Global Options
 
@@ -24,10 +24,10 @@
 | Tool    | --chain | --no_header | --output | --append |
 | ------- | ------- | ----------- | -------- | -------- |
 | daemon  | x       | x           | x        | x        |
+| explore |         | x           | x        | x        |
 | scrape  |         | x           | x        | x        |
 | init    |         | x           | x        | x        |
 | config  |         | x           | x        | x        |
-| explore |         | x           | x        | x        |
 | status  |         | x           | x        | x        |
 | chunks  |         |             | x        | x        |
 

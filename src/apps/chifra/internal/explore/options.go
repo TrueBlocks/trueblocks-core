@@ -102,14 +102,14 @@ func ResetOptions() {
 	defaultExploreOptions = ExploreOptions{}
 	globals.SetDefaults(&defaultExploreOptions.Globals)
 	defaultExploreOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra explore
 	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Fmt)
+	capabilities = capabilities.Remove(caps.LogLevel)
 	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.File)
 	capabilities = capabilities.Remove(caps.Output)
 	capabilities = capabilities.Remove(caps.Append)
-	// capabilities = capabilities.Remove(caps.Fmt)
-	// capabilities = capabilities.Remove(caps.Verbose)
-	// capabilities = capabilities.Remove(caps.File)
 	// EXISTING_CODE
 	defaultExploreOptions.Globals.Caps = capabilities
 }

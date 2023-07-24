@@ -53,7 +53,7 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra when
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE

@@ -1,0 +1,6 @@
+abis?addrs=trueblocks.eth&wei
+{
+  "errors": [
+    "Invalid key (wei) in abis route."
+  ]
+}

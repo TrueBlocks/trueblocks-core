@@ -52,7 +52,7 @@ Notes:
   - See the API documentation (https://trueblocks.io/api) for more information.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for individual command lines...
+	var capabilities = caps.Default // Additional global caps for chifra daemon
 	// EXISTING_CODE
 	capabilities = capabilities.Remove(caps.Chain)
 	capabilities = capabilities.Remove(caps.NoHeader)

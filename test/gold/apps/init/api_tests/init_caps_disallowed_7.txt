@@ -1,0 +1,6 @@
+init?wei
+{
+  "errors": [
+    "Invalid key (wei) in init route."
+  ]
+}

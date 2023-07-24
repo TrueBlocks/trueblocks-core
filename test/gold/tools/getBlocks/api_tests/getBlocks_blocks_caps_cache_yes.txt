@@ -1,6 +1,0 @@
-blocks?blocks=3000000&cache&failTest
-{
-  "errors": [
-    "Invalid key (failTest) in blocks route."
-  ]
-}

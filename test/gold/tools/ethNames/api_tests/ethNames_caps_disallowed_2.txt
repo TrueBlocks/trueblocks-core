@@ -1,0 +1,6 @@
+names?terms=find_nothing&raw
+{
+  "errors": [
+    "Invalid key (raw) in names route."
+  ]
+}

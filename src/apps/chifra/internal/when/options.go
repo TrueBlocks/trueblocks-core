@@ -133,7 +133,7 @@ func ResetOptions() {
 	defaultWhenOptions = WhenOptions{}
 	globals.SetDefaults(&defaultWhenOptions.Globals)
 	defaultWhenOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra when
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE

@@ -40,6 +40,10 @@ func (opts *ExploreOptions) validateExplore() error {
 		return opts.BadFlag
 	}
 
+	if opts.Globals.IsApiMode() {
+		return validate.Usage("The {0} option is not available in {1}.", "explore", "api mode")
+	}
+
 	if opts.Google && opts.Local {
 		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}

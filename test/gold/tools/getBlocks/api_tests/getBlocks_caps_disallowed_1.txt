@@ -1,0 +1,6 @@
+blocks?blocks=3000000&ether
+{
+  "errors": [
+    "Invalid key (ether) in blocks route."
+  ]
+}

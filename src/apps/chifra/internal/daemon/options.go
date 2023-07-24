@@ -106,7 +106,7 @@ func ResetOptions() {
 	defaultDaemonOptions = DaemonOptions{}
 	globals.SetDefaults(&defaultDaemonOptions.Globals)
 	defaultDaemonOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for use with --file option
+	capabilities := caps.Default // Additional global caps for chifra daemon
 	// EXISTING_CODE
 	capabilities = capabilities.Remove(caps.Chain)
 	capabilities = capabilities.Remove(caps.NoHeader)
