@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -122,7 +123,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 		case "named":
 			opts.Named = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
 				return opts
 			}
@@ -162,6 +163,10 @@ func ResetOptions() {
 	defaultNamesOptions = NamesOptions{}
 	globals.SetDefaults(&defaultNamesOptions.Globals)
 	defaultNamesOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra names
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultNamesOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

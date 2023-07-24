@@ -94,3 +94,10 @@ on      ,both ,medi  ,when  ,tools/whenBlock ,skip_weekly                 ,n    
 on      ,both ,medi  ,when  ,tools/whenBlock ,skip_monthly                ,n    ,fmt = txt & blocks = 768414-1856235:monthly
 on      ,both ,medi  ,when  ,tools/whenBlock ,skip_quaterly               ,n    ,fmt = txt & blocks = 768414-1856235:quarterly
 on      ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_annually               ,n    ,fmt = txt & blocks = 768414-4838611:annually
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on      ,both ,fast  ,when  ,tools/whenBlock ,caps_allowed           ,y    ,blocks = 3000000 & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & fail_on_purpose
+on      ,both ,fast  ,when  ,tools/whenBlock ,caps_disallowed_1      ,y    ,blocks = 3000000 & raw
+on      ,both ,fast  ,when  ,tools/whenBlock ,caps_disallowed_2      ,y    ,blocks = 3000000 & ether
+on      ,both ,fast  ,when  ,tools/whenBlock ,caps_disallowed_3      ,y    ,blocks = 3000000 & wei

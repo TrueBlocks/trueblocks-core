@@ -1,0 +1,6 @@
+logs?transactions=12.0&wei
+{
+  "errors": [
+    "Invalid key (wei) in logs route."
+  ]
+}

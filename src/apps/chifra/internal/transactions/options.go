@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -105,7 +106,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 		case "source":
 			opts.Source = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
 				return opts
 			}
@@ -146,6 +147,14 @@ func ResetOptions() {
 	defaultTransactionsOptions = TransactionsOptions{}
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
 	defaultTransactionsOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra transactions
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
+	// EXISTING_CODE
+	defaultTransactionsOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

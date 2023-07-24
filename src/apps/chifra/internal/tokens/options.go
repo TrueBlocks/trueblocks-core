@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -82,7 +83,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 		case "noZero":
 			opts.NoZero = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "tokens")
 				return opts
 			}
@@ -152,6 +153,11 @@ func ResetOptions() {
 	defaultTokensOptions = TokensOptions{}
 	globals.SetDefaults(&defaultTokensOptions.Globals)
 	defaultTokensOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra tokens
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	defaultTokensOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -52,7 +53,7 @@ Notes:
   - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra monitors
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -66,7 +67,7 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().List, "list", "l", false, "list monitors in the cache (--verbose for more detail)")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Watch, "watch", "w", false, "continually scan for new blocks and extract data for monitored addresses")
 	monitorsCmd.Flags().Float64VarP(&monitorsPkg.GetOptions().Sleep, "sleep", "s", 14, "seconds to sleep between monitor passes")
-	globals.InitGlobals(monitorsCmd, &monitorsPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 	monitorsCmd.SetOut(os.Stderr)

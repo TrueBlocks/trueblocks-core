@@ -1,0 +1,6 @@
+when?blocks=3000000&wei
+{
+  "errors": [
+    "Invalid key (wei) in when route."
+  ]
+}

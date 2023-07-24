@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -58,7 +59,7 @@ func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 		case "articulate":
 			opts.Articulate = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "logs")
 				return opts
 			}
@@ -97,6 +98,12 @@ func ResetOptions() {
 	defaultLogsOptions = LogsOptions{}
 	globals.SetDefaults(&defaultLogsOptions.Globals)
 	defaultLogsOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra logs
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
+	defaultLogsOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

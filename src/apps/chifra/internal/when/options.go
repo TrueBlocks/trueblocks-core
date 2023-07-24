@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -90,7 +91,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 		case "deep":
 			opts.Deep = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
 				return opts
 			}
@@ -132,6 +133,11 @@ func ResetOptions() {
 	defaultWhenOptions = WhenOptions{}
 	globals.SetDefaults(&defaultWhenOptions.Globals)
 	defaultWhenOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra when
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+	defaultWhenOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

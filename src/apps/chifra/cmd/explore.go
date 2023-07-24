@@ -13,6 +13,7 @@ import (
 
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -48,15 +49,21 @@ const longExplore = `Purpose:
 const notesExplore = ``
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra explore
 	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Fmt)
+	capabilities = capabilities.Remove(caps.LogLevel)
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.File)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 
 	exploreCmd.Flags().SortFlags = false
 
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, "open the local TrueBlocks explorer")
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, "search google excluding popular blockchain explorers")
-	globals.InitGlobals(exploreCmd, &explorePkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(exploreCmd, &explorePkg.GetOptions().Globals, capabilities)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	exploreCmd.SetOut(os.Stderr)

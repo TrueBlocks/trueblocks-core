@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -129,7 +130,7 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 		case "listCount":
 			opts.ListCount = globals.ToUint64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
 				return opts
 			}
@@ -171,6 +172,12 @@ func ResetOptions() {
 	defaultBlocksOptions = BlocksOptions{}
 	globals.SetDefaults(&defaultBlocksOptions.Globals)
 	defaultBlocksOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra blocks
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
+	defaultBlocksOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

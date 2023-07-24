@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -53,9 +54,12 @@ Notes:
   - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra transactions
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 
 	transactionsCmd.Flags().SortFlags = false
@@ -76,7 +80,7 @@ One of [ from | to ]`)
 		transactionsCmd.Flags().MarkHidden("cache_traces")
 		transactionsCmd.Flags().MarkHidden("source")
 	}
-	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	transactionsCmd.SetOut(os.Stderr)

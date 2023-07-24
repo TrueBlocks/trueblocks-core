@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -51,7 +52,7 @@ Notes:
   - No other options are permitted when --silent is selected.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra list
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -67,7 +68,7 @@ func init() {
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when freshening)")
-	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals, capabilities)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	listCmd.SetOut(os.Stderr)

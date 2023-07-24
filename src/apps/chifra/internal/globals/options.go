@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -20,14 +21,15 @@ import (
 )
 
 type GlobalOptions struct {
-	Wei     bool   `json:"wei,omitempty"`
-	Ether   bool   `json:"ether,omitempty"`
-	Help    bool   `json:"help,omitempty"`
-	File    string `json:"file,omitempty"`
-	Version bool   `json:"version,omitempty"`
-	Noop    bool   `json:"noop,omitempty"`
-	NoColor bool   `json:"noColor,omitempty"`
-	Cache   bool   `json:"cache,omitempty"`
+	Wei     bool            `json:"wei,omitempty"`
+	Ether   bool            `json:"ether,omitempty"`
+	Help    bool            `json:"help,omitempty"`
+	File    string          `json:"file,omitempty"`
+	Version bool            `json:"version,omitempty"`
+	Noop    bool            `json:"noop,omitempty"`
+	NoColor bool            `json:"noColor,omitempty"`
+	Cache   bool            `json:"cache,omitempty"`
+	Caps    caps.Capability `json:"-"`
 	output.OutputOptions
 }
 
@@ -47,6 +49,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	// logger.TestLog(opts.Caps != caps.Default, "Caps: ", opts.Caps)
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }
@@ -61,40 +64,80 @@ func SetDefaults(opts *GlobalOptions) {
 	}
 }
 
-func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, allowCaching bool) {
+func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	opts.TestMode = file.IsTestMode()
+	opts.Caps = c
 
-	if allowCaching {
+	if opts.Caps.Has(caps.Ether) {
+		cmd.Flags().BoolVarP(&opts.Ether, "ether", "H", false, "specify value in ether")
+	}
+
+	if opts.Caps.Has(caps.Wei) {
+		cmd.Flags().BoolVarP(&opts.Wei, "wei", "W", false, "specify value in wei (the default)")
+	}
+	cmd.Flags().MarkHidden("wei")
+
+	if opts.Caps.Has(caps.Raw) {
+		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the source with minimal processing")
+	}
+
+	if opts.Caps.Has(caps.Caching) {
 		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
 	}
-	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
-	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
+
+	if opts.Caps.Has(caps.Fmt) {
+		cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
+	}
+
+	if opts.Caps.Has(caps.Verbose) {
+		cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
+	}
+
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
-	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
-	cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "", false, "report JSON data from the node with minimal processing")
-	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
-	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
-	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
-	cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
-	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
-	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
-	cmd.Flags().BoolVarP(&opts.Ether, "ether", "", false, "specify value in ether")
-	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
-	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
-	cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
-
+	if opts.Caps.Has(caps.Chain) {
+		cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
+	}
 	cmd.Flags().MarkHidden("chain")
-	cmd.Flags().MarkHidden("raw")
+
+	if opts.Caps.Has(caps.Version) {
+		cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
+	}
 	cmd.Flags().MarkHidden("version")
+
+	if opts.Caps.Has(caps.Noop) {
+		cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
+	}
 	cmd.Flags().MarkHidden("noop")
+
+	if opts.Caps.Has(caps.NoColor) {
+		cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
+	}
 	cmd.Flags().MarkHidden("nocolor")
+
+	if opts.Caps.Has(caps.LogLevel) {
+		cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
+	}
 	cmd.Flags().MarkHidden("log_level")
+
+	if opts.Caps.Has(caps.NoHeader) {
+		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+	}
 	cmd.Flags().MarkHidden("no_header")
-	cmd.Flags().MarkHidden("wei")
-	cmd.Flags().MarkHidden("ether")
+
+	// if opts.Caps.Has(caps.File) {
+	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
+	// }
 	cmd.Flags().MarkHidden("file")
+
+	if opts.Caps.Has(caps.Output) {
+		cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
+	}
 	cmd.Flags().MarkHidden("output")
+
+	if opts.Caps.Has(caps.Append) {
+		cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
+	}
 	cmd.Flags().MarkHidden("append")
 
 	SetDefaults(opts)
@@ -268,30 +311,4 @@ func (opts *GlobalOptions) DefaultRpcOptions(settings *DefaultRpcOptionsSettings
 		TransactionWriteDisabled: !cacheTxWriteEnabled,
 		TraceWriteDisabled:       !cacheTraceWriteEnabled,
 	}
-}
-
-func IsGlobalOption(key string) bool {
-	permitted := []string{
-		"fmt",
-		"verbose",
-		"raw",
-		"version",
-		"noop",
-		"nocolor",
-		"logLevel",
-		"noHeader",
-		"chain",
-		"wei",
-		"ether",
-		"file",
-		"output",
-		"append",
-		"cache",
-	}
-	for _, per := range permitted {
-		if per == key {
-			return true
-		}
-	}
-	return false
 }

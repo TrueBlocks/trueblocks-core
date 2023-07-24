@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -86,7 +87,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
 				return opts
 			}
@@ -126,6 +127,10 @@ func ResetOptions() {
 	defaultMonitorsOptions = MonitorsOptions{}
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
 	defaultMonitorsOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra monitors
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultMonitorsOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

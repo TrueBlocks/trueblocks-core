@@ -13,6 +13,7 @@ import (
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -59,9 +60,11 @@ Notes:
   - The _block and _record options are ignored when used with the --count option.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra export
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 
 	exportCmd.Flags().SortFlags = false
@@ -95,7 +98,7 @@ One of [ in | out | zero ]`)
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("load")
 	}
-	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals, capabilities)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)

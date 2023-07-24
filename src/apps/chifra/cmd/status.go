@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -52,7 +53,7 @@ Notes:
   - If no mode is supplied, a terse report is generated.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra status
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -60,7 +61,7 @@ func init() {
 
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, "the maximum number of records to process")
-	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals, capabilities)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	statusCmd.SetOut(os.Stderr)

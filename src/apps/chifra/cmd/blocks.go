@@ -13,6 +13,7 @@ import (
 
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -56,9 +57,10 @@ Notes:
   - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra blocks
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 
 	blocksCmd.Flags().SortFlags = false
@@ -86,7 +88,7 @@ One of [ from | to | reward ]`)
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")
 	}
-	globals.InitGlobals(blocksCmd, &blocksPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(blocksCmd, &blocksPkg.GetOptions().Globals, capabilities)
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 	blocksCmd.SetOut(os.Stderr)

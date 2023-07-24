@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -82,7 +83,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 		case "sol":
 			opts.Sol = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
 				return opts
 			}
@@ -125,6 +126,10 @@ func ResetOptions() {
 	defaultAbisOptions = AbisOptions{}
 	globals.SetDefaults(&defaultAbisOptions.Globals)
 	defaultAbisOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra abis
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultAbisOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

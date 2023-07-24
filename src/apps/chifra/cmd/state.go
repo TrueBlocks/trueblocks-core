@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -57,9 +58,11 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra state
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 
 	stateCmd.Flags().SortFlags = false
@@ -70,7 +73,7 @@ One or more of [ none | some | all | balance | nonce | code | proxy | deployed |
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
-	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals, capabilities)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	stateCmd.SetOut(os.Stderr)

@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -53,15 +54,16 @@ Notes:
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if it is not, the hash will be used as a topic.`
 
 func init() {
-	allowCaching := false
+	var capabilities = caps.Default // Additional global caps for chifra logs
 	// EXISTING_CODE
-	allowCaching = true
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 
 	logsCmd.Flags().SortFlags = false
 
 	logsCmd.Flags().BoolVarP(&logsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	globals.InitGlobals(logsCmd, &logsPkg.GetOptions().Globals, allowCaching)
+	globals.InitGlobals(logsCmd, &logsPkg.GetOptions().Globals, capabilities)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 	logsCmd.SetOut(os.Stderr)

@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -86,7 +87,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		case "proxyFor":
 			opts.ProxyFor = value[0]
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
 				return opts
 			}
@@ -166,6 +167,13 @@ func ResetOptions() {
 	defaultStateOptions = StateOptions{}
 	globals.SetDefaults(&defaultStateOptions.Globals)
 	defaultStateOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra state
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
+	// EXISTING_CODE
+	defaultStateOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

@@ -54,6 +54,14 @@ on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_2      ,n    
 on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_3      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 4
 on      ,both ,fast  ,list     ,apps/acctExport ,130_list_fb_lb_fr_mr     ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3 & max_records = 10
 
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_allowed_l         ,y    ,addrs = trueblocks.eth & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_1_l    ,y    ,addrs = trueblocks.eth & cache
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_2_l    ,y    ,addrs = trueblocks.eth & raw
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_3_l    ,y    ,addrs = trueblocks.eth & ether
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l    ,y    ,addrs = trueblocks.eth & wei
+
 # Not tested for chifra list
 # chifra list --silent
 # chifra list --unripe
@@ -89,6 +97,14 @@ on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_decache_again   ,y    
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2           ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2_v         ,n    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7533 & list & fmt = csv & verbose
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_allowed_m         ,y    ,addrs = trueblocks.eth & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_1_m    ,y    ,addrs = trueblocks.eth & cache
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_2_m    ,y    ,addrs = trueblocks.eth & raw
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_3_m    ,y    ,addrs = trueblocks.eth & ether
+on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_4_m    ,y    ,addrs = trueblocks.eth & wei
 
 # Not tested for chifra monitors...
 # chifra monitors --watch
@@ -253,9 +269,20 @@ local   ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    
 # correctly reports an error, but should report a not found error instead, it reports a not an integer error. first_block/last_block should accept hashes
 local   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
+<<<<<<< HEAD
 # Not tested for chifra export
 # chifra export --cache
 # chifra export --cache_traces
 # chifra export --unripe
 
 # --no_header (and other global options) work, but there's no testing for them here
+=======
+on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
+on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & last_block = 9231343 & articulate & ether & fmt = json
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e         ,y    ,addrs = trueblocks.eth & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & ether & wei & fail_on_purpose
+on       ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_1_e    ,y    ,addrs = trueblocks.eth & raw
+>>>>>>> develop

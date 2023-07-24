@@ -40,3 +40,9 @@ on       ,cmd  ,slow  ,logs  ,tools/getLogs ,by_file             ,y    ,file = c
 file_cmd ,cmd  ,fast  ,logs  ,tools/getLogs ,by_file_v           ,y    ,file = cmd_file & verbose & fmt = json
 on       ,both ,fast  ,logs  ,tools/getLogs ,redir_output        ,y    ,transactions = 3657480.12 3657480.9 & output = output_test_file
 on       ,both ,fast  ,logs  ,tools/getLogs ,redir_output_append ,y    ,transactions = 3657480.11 3657480.10 & output = output_test_file & no_header & append
+
+# Capabilities
+# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on       ,both ,fast  ,logs  ,tools/getLogs ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & fail_on_purpose
+on       ,both ,fast  ,logs  ,tools/getLogs ,caps_disallowed_1   ,y    ,transactions = 12.0 & ether
+on       ,both ,fast  ,logs  ,tools/getLogs ,caps_disallowed_2   ,y    ,transactions = 12.0 & wei

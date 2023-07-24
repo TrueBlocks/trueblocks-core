@@ -12,6 +12,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -62,7 +63,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
 				return opts
 			}
@@ -103,6 +104,13 @@ func ResetOptions() {
 	defaultInitOptions = InitOptions{}
 	globals.SetDefaults(&defaultInitOptions.Globals)
 	defaultInitOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra init
+	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
+	// EXISTING_CODE
+	defaultInitOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

@@ -112,8 +112,7 @@ func RunWithFileSupport(
 
 		// TODO: see issue #2444 - probably better ways to do this
 		disallowed := map[string]bool{
-			"daemon": true,
-			"init":   true,
+			"init": true,
 		}
 		if disallowed[mode] {
 			msg := fmt.Sprintf("The --file option is not allowed in %s mode.", mode)

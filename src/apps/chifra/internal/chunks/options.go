@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
@@ -117,7 +118,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
 				return opts
 			}
@@ -189,6 +190,10 @@ func ResetOptions() {
 	defaultChunksOptions = ChunksOptions{}
 	globals.SetDefaults(&defaultChunksOptions.Globals)
 	defaultChunksOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra chunks
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultChunksOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE

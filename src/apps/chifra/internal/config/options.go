@@ -12,6 +12,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -52,7 +53,7 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 		case "paths":
 			opts.Paths = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
 				return opts
 			}
@@ -99,6 +100,13 @@ func ResetOptions() {
 	defaultConfigOptions = ConfigOptions{}
 	globals.SetDefaults(&defaultConfigOptions.Globals)
 	defaultConfigOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra config
+	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
+	// EXISTING_CODE
+	defaultConfigOptions.Globals.Caps = capabilities
 }
 
 // EXISTING_CODE
