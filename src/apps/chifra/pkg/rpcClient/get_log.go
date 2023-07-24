@@ -38,7 +38,7 @@ func getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLo
 		curDate := gostradamus.FromUnixTimestamp(0)
 		var ret []types.SimpleLog
 		for _, rawLog := range rawLogs {
-			bn := mustParseUint(rawLog.BlockNumber)
+			bn := utils.MustParseUint(rawLog.BlockNumber)
 			if bn != curBlock {
 				curTs = rpc.GetBlockTimestamp(chain, &bn)
 				curDate = gostradamus.FromUnixTimestamp(curTs)
@@ -47,13 +47,13 @@ func getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLo
 			log := types.SimpleLog{
 				Address:          base.HexToAddress(rawLog.Address),
 				BlockHash:        base.HexToHash(rawLog.BlockHash),
-				BlockNumber:      mustParseUint(rawLog.BlockNumber),
+				BlockNumber:      utils.MustParseUint(rawLog.BlockNumber),
 				Data:             rawLog.Data,
-				LogIndex:         mustParseUint(rawLog.LogIndex),
+				LogIndex:         utils.MustParseUint(rawLog.LogIndex),
 				Timestamp:        curTs,
 				Date:             curDate.String(),
 				TransactionHash:  base.HexToHash(rawLog.TransactionHash),
-				TransactionIndex: mustParseUint(rawLog.TransactionIndex),
+				TransactionIndex: utils.MustParseUint(rawLog.TransactionIndex),
 			}
 			for _, topic := range rawLog.Topics {
 				log.Topics = append(log.Topics, base.HexToHash(topic))

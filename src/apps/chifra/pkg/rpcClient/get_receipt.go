@@ -55,10 +55,10 @@ func GetTransactionReceipt(chain string, query ReceiptQuery, rpcOptions *Options
 		rawLog := rawLog
 		log := types.SimpleLog{
 			Address:          base.HexToAddress(rawLog.Address),
-			LogIndex:         mustParseUint(rawLog.LogIndex),
-			BlockNumber:      mustParseUint(rawLog.BlockNumber),
+			LogIndex:         utils.MustParseUint(rawLog.LogIndex),
+			BlockNumber:      utils.MustParseUint(rawLog.BlockNumber),
 			BlockHash:        base.HexToHash(rawLog.BlockHash),
-			TransactionIndex: mustParseUint(rawLog.TransactionIndex),
+			TransactionIndex: utils.MustParseUint(rawLog.TransactionIndex),
 			TransactionHash:  base.HexToHash(tx.Hash().Hex()),
 			Timestamp:        query.Ts,
 			Date:             utils.FormattedDate(query.Ts),
@@ -78,15 +78,15 @@ func GetTransactionReceipt(chain string, query ReceiptQuery, rpcOptions *Options
 
 	receipt = types.SimpleReceipt{
 		BlockHash:         base.HexToHash(rawReceipt.BlockHash),
-		BlockNumber:       mustParseUint(rawReceipt.BlockNumber),
+		BlockNumber:       utils.MustParseUint(rawReceipt.BlockNumber),
 		ContractAddress:   base.HexToAddress(rawReceipt.ContractAddress),
 		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
-		GasUsed:           mustParseUint(rawReceipt.GasUsed),
+		GasUsed:           utils.MustParseUint(rawReceipt.GasUsed),
 		Logs:              logs,
-		Status:            uint32(mustParseUint(rawReceipt.Status)),
-		IsError:           mustParseUint(rawReceipt.Status) == 0,
+		Status:            uint32(utils.MustParseUint(rawReceipt.Status)),
+		IsError:           utils.MustParseUint(rawReceipt.Status) == 0,
 		TransactionHash:   base.HexToHash(rawReceipt.TransactionHash),
-		TransactionIndex:  mustParseUint(rawReceipt.TransactionIndex),
+		TransactionIndex:  utils.MustParseUint(rawReceipt.TransactionIndex),
 	}
 	receipt.SetRaw(rawReceipt)
 

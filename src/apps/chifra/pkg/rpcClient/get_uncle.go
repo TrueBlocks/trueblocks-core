@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetUncleCountByNumber returns the number of uncles in a block.
@@ -69,11 +70,11 @@ func GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.Simpl
 			} else {
 				// TODO: expand other fields if we ever need them (probably not)
 				ret = append(ret, types.SimpleBlock[types.SimpleTransaction]{
-					BlockNumber: mustParseUint(rawUncle.BlockNumber),
+					BlockNumber: utils.MustParseUint(rawUncle.BlockNumber),
 					Hash:        base.HexToHash(rawUncle.Hash),
 					Miner:       base.HexToAddress(rawUncle.Miner),
 					ParentHash:  base.HexToHash(rawUncle.ParentHash),
-					Timestamp:   int64(mustParseUint(rawUncle.Timestamp)),
+					Timestamp:   int64(utils.MustParseUint(rawUncle.Timestamp)),
 					// Transactions: rawUncle.Transactions,
 					// BaseFeePerGas: rawUncle.BaseFeePerGas,
 					// Difficulty: rawUncle.Difficulty,

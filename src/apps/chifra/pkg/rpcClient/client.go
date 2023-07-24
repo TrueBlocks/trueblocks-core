@@ -318,8 +318,3 @@ func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (strin
 	}
 	return BlockHashFromNumber(provider, blockNum)
 }
-
-func mustParseUint(input any) (result uint64) {
-	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
-	return
-}
