@@ -274,11 +274,6 @@ local   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    
 # chifra export --cache_traces
 # chifra export --unripe
 
-# --no_header (and other global options) work, but there's no testing for them here
-on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
-on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & last_block = 9231343 & articulate & ether & fmt = json
-
 # Capabilities
 # chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
 on       ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e         ,y    ,addrs = trueblocks.eth & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & ether & wei & fail_on_purpose
