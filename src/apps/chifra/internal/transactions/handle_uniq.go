@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -14,10 +13,11 @@ import (
 )
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
-	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{
-		Opts: opts,
-	})
 	chain := opts.Globals.Chain
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+		Opts:  opts,
+	})
 
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
