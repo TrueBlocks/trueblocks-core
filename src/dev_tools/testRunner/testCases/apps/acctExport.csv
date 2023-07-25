@@ -178,7 +178,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,invalid_emitter_fail     ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & max_records = 3
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & max_records = 4
 
-x1    ,both ,fast  ,export   ,apps/acctExport ,export_logs              ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json
+x1      ,both ,fast  ,export   ,apps/acctExport ,export_logs              ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_logs_art          ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json & articulate
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_logs_emit         ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & emitter = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & first_block = 1429283 & last_block = 1429468 & fmt = csv
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not      ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = json
@@ -237,6 +237,7 @@ local   ,both ,fast  ,export   ,apps/acctExport ,reversed_reversed        ,y    
 # reversed accounting does not work
 local   ,both ,fast  ,export   ,apps/acctExport ,reversed_not_accounting  ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & last_block = 8856511 & ether & max_records = 100 & log_level = 10 & fmt = json
 local   ,both ,fast  ,export   ,apps/acctExport ,reversed_accounting      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & last_block = 8856511 & ether & max_records = 100 & log_level = 10 & fmt = json & reversed
+
 # other reasons for failing
 local   ,both ,fast  ,export   ,apps/acctExport ,by_file_1                ,n    ,file = cmd_file & fmt = csv
 local   ,both ,fast  ,export   ,apps/acctExport ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
