@@ -63,6 +63,9 @@ local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_a_lot       ,n    ,find = 0x
 # We do not currently support searching for function signatures
 off     ,both ,fast  ,abis  ,tools/grabABI ,findSig_event       ,y    ,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008
 
+# Don't move this. It removes something that needs to be removed for follwing tests
+on      ,both ,fast  ,abis  ,tools/grabABI ,clean_etherdelta    ,y    ,addrs = 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 & clean
+
 # Capabilities
 # chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
 on      ,both ,fast  ,abis  ,tools/grabABI ,caps_allowed        ,y    ,addrs = trueblocks.eth & chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose

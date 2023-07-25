@@ -121,9 +121,6 @@ func (opts *ExportOptions) toCmdLine() string {
 	if opts.Traces {
 		options += " --traces"
 	}
-	if opts.Neighbors {
-		options += " --neighbors"
-	}
 	if opts.Accounting {
 		options += " --accounting"
 	}
@@ -159,9 +156,6 @@ func (opts *ExportOptions) toCmdLine() string {
 	}
 	if opts.Factory {
 		options += " --factory"
-	}
-	if len(opts.Load) > 0 {
-		options += " --load " + opts.Load
 	}
 	if opts.Reversed {
 		options += " --reversed"
