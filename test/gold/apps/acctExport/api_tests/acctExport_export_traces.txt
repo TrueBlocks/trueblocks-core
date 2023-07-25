@@ -1,61 +1,41 @@
-export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRecords=5&traces&fmt=json
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&traces&maxRecords=5&lastBlock=1506480&fmt=json
 {
   "data": [
     {
-      "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
-      "blockNumber": 202249,
-      "subtraces": 0,
-      "traceAddress": null,
-      "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
-      "transactionIndex": 0,
-      "type": "call",
-      "error": "",
       "action": {
-        "selfDestructed": "0x0",
-        "balance": 0,
         "callType": "call",
         "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
         "gas": 28388,
         "input": "0x454e34563147544238",
-        "refundAddress": "0x0",
         "to": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-        "value": 4.1999e+21
+        "value": "4199900000000000000000"
       },
-      "result": {
-        "address": "0x0",
-        "gasUsed": 0,
-        "output": "0x"
-      },
-      "compressedTrace": "",
-      "timestamp": 1441703356
+      "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
+      "blockNumber": 202249,
+      "result": {},
+      "subtraces": 0,
+      "timestamp": 1441703356,
+      "traceAddress": [],
+      "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
+      "transactionIndex": 0,
+      "type": "call"
     },
     {
-      "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
-      "blockNumber": 1501459,
-      "subtraces": 0,
-      "traceAddress": null,
-      "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
-      "transactionIndex": 2,
-      "type": "call",
-      "error": "",
       "action": {
-        "selfDestructed": "0x0",
-        "balance": 0,
         "callType": "call",
         "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
-        "gas": 0,
-        "input": "0x",
-        "refundAddress": "0x0",
         "to": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
-        "value": 74259320489077340
+        "value": "74259320489077336"
       },
-      "result": {
-        "address": "0x0",
-        "gasUsed": 0,
-        "output": "0x"
-      },
-      "compressedTrace": "",
-      "timestamp": 1463025233
+      "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
+      "blockNumber": 1501459,
+      "result": {},
+      "subtraces": 0,
+      "timestamp": 1463025233,
+      "traceAddress": [],
+      "transactionHash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
+      "transactionIndex": 2,
+      "type": "call"
     }
   ],
   "meta": {
@@ -66,22 +46,6 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&lastBlock=1506480&maxRec
     "unripe": "0xdeadbeef",
     "chainId": 1,
     "networkId": 1,
-    "chain": "mainnet",
-    "first_block": "0xdeadbeef",
-    "last_block": "0xdeadbeef",
-    "accountedFor": {
-      "tags": "80-Prefund",
-      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-      "name": "Prefund_0002",
-      "symbol": "",
-      "source": "Genesis",
-      "decimals": 0,
-      "petname": "noticeably-noble-pangolin",
-      "isCustom": false,
-      "isPrefund": true,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
-    }
+    "chain": "mainnet"
   }
 }
