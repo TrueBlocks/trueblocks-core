@@ -1,7 +1,9 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --fmt json --tox
-Error: 
-  unknown flag: --tox
-
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --topic 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Topic:  [0x7d655c57f71464b6f83811c55d84009cd9f5221c]
+TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Format:  txt
+Error: The --topic option is only available with the --logs option.
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 

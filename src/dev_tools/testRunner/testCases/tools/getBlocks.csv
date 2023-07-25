@@ -58,10 +58,6 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_e2  ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_t1  ,y    ,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 on       ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_t2  ,y    ,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a
 
-# Don't move this. It first removes then replaces an ABI that we need for the following tests. Note it calls into grabABI
-on       ,both ,fast  ,abis   ,tools/grabABI   ,clean_etherdelta      ,y    ,addrs = 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 & clean
-on       ,both ,fast  ,abis   ,tools/grabABI   ,grab_etherdelta       ,y    ,addrs = 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819
-
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs             ,y    ,blocks = 4012000-4012001 & logs
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv         ,n    ,blocks = 4012000-4012001 & logs & fmt = csv
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_topic       ,y    ,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef

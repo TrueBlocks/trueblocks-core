@@ -2,6 +2,7 @@ chifra export  rhyslindmark.eth --first_block 4037786 --last_block 4081450
 TEST[DATE|TIME] Addrs:  [0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3]
 TEST[DATE|TIME] FirstBlock:  4037786
 TEST[DATE|TIME] LastBlock:  4081450
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex	date	timestamp	from	to	ether	ethGasPrice	gasUsed	hash	isError	encoding	compressedTx
 4037786	47	2017-07-18 04:41:28 UTC	1500352888	0x29205869522cc9d1f84b0ad5279a8e74a7c66c15	0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	0.084353870000000000	0.000000020000000000	21000	0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7	0	0x	0x()
