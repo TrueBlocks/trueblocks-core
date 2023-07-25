@@ -102,9 +102,6 @@ func ResetOptions() {
 	defaultConfigOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra config
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 	defaultConfigOptions.Globals.Caps = capabilities
 }

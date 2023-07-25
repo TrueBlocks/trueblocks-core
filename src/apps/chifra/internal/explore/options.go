@@ -107,7 +107,6 @@ func ResetOptions() {
 	capabilities = capabilities.Remove(caps.Fmt)
 	capabilities = capabilities.Remove(caps.LogLevel)
 	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
 	capabilities = capabilities.Remove(caps.Output)
 	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
