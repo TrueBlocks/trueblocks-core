@@ -7,6 +7,7 @@ package exportPkg
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -32,9 +33,30 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option is currenlty disabled.", "--load")
 	}
 
+	if opts.TooManyOptions() {
+		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.")
+	}
+
+	if opts.Count {
+		if opts.Logs || opts.Traces || opts.Neighbors {
+			return validate.Usage("The {0} option is not available with {1}.", "--count", "--logs, --traces, or --neighbors")
+		}
+	}
+
 	if len(opts.Globals.File) == 0 {
 		if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
 			return err
+		}
+		for _, a := range opts.Addrs {
+			if !base.IsValidAddress(a) {
+				if len(a) < 10 {
+					return validate.Usage("Invalid fourbyte: {0}", a)
+				} else if len(a) > 60 {
+					return validate.Usage("Invalid hash: {0}", a)
+				} else {
+					return validate.Usage("Invalid address: {0}", a)
+				}
+			}
 		}
 	}
 
@@ -60,38 +82,57 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if opts.Count {
-		if opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors {
-			return validate.Usage("The {0} option is only available with transactional options.", "--count")
+	if opts.Logs {
+		for _, e := range opts.Emitter {
+			if !base.IsValidAddress(e) {
+				return validate.Usage("Invalid emitter: {0}", e)
+			}
 		}
-		if opts.MaxRecords > 0 && opts.MaxRecords != 250 {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--count", "--max_records")
+		for _, t := range opts.Topics {
+			if !validate.IsValidHash(t) {
+				return validate.Usage("Invalid topic: {0}", t)
+			}
+		}
+		for _, t := range opts.Topic {
+			if !validate.IsValidHash(t) {
+				return validate.Usage("Invalid topic: {0}", t)
+			}
+		}
+	} else {
+		if len(opts.Emitter) > 0 {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--emitter", "--logs")
+		}
+		if !opts.Receipts && len(opts.Topics) > 0 {
+			return validate.Usage("You may only provide topics with the {0} option.", "--logs")
+		}
+		if len(opts.Topic) > 0 {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--topic", "--logs")
+		}
+		if opts.Relevant {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--relevant", "--logs")
 		}
 	}
 
-	if !opts.Logs && len(opts.Emitter) > 0 {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--emitter", "--logs")
+	if !opts.Traces {
+		if opts.Factory {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--factory", "--traces")
+		}
 	}
 
-	if !opts.Logs && len(opts.Topics) > 0 {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--topic", "--logs")
-	}
-
-	if !opts.Traces && opts.Factory {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--factory", "--traces")
-	}
-
-	if len(opts.Fourbytes) > 0 && (opts.Logs || opts.Receipts || opts.Appearances) {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--fourbyte", "no option or the --accounting")
+	if len(opts.Fourbytes) > 0 {
+		if opts.Logs || opts.Receipts || opts.Appearances {
+			return validate.Usage("The {0} option is only available {1} option.", "--fourbyte", "when exporting or with the --accounting")
+		}
+		for _, t := range opts.Fourbytes {
+			if !validate.IsValidFourByte(t) {
+				return validate.Usage("Invalid four byte: {0}", t)
+			}
+		}
 	}
 
 	if opts.Accounting {
 		if len(opts.Addrs) != 1 {
 			return validate.Usage("The {0} option is allows with only a single address.", "--accounting")
-		}
-
-		if opts.Appearances || opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors {
-			return validate.Usage("The {0} option is not available with other options.", "--accounting")
 		}
 
 		if opts.Globals.Chain != "mainnet" {
@@ -109,10 +150,6 @@ func (opts *ExportOptions) validateExport() error {
 			if len(opts.Flow) > 0 {
 				return validate.Usage("The {0} option is only available with {1} option.", "--flow", "--statements")
 			}
-
-			if len(opts.Asset) > 0 {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
-			}
 		}
 
 		if !node.IsArchiveNode(opts.Globals.Chain) {
@@ -127,6 +164,10 @@ func (opts *ExportOptions) validateExport() error {
 		if opts.Globals.Format == "ofx" {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
 		}
+	}
+
+	if len(opts.Asset) > 0 && !opts.Statements {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
 	}
 
 	if !validate.CanArticulate(opts.Articulate) {
@@ -148,4 +189,27 @@ func (opts *ExportOptions) validateExport() error {
 	// 	err = nil
 	// }
 	// return err
+}
+
+func (opts *ExportOptions) TooManyOptions() bool {
+	cnt := 0
+	if opts.Appearances {
+		cnt++
+	}
+	if opts.Receipts {
+		cnt++
+	}
+	if opts.Logs {
+		cnt++
+	}
+	if opts.Traces {
+		cnt++
+	}
+	if opts.Neighbors {
+		cnt++
+	}
+	if opts.Accounting {
+		cnt++
+	}
+	return cnt > 1
 }

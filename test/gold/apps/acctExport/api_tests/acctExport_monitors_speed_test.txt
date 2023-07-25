@@ -1,6 +1,0 @@
-monitors?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&fmt=txt
-{
-  "errors": [
-    "Please provide either --clean or one of the CRUD commands."
-  ]
-}
