@@ -1,5 +1,6 @@
 chifra state  
 TEST[DATE|TIME] Blocks:  [17000000]
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: Please specify at least one valid Ethereum address.
 Usage:

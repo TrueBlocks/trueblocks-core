@@ -1,6 +1,6 @@
-chifra scrape  --append
+chifra scrape  --no_header
 Error: 
-  unknown flag: --append
+  unknown flag: --no_header
 
 Usage:
   chifra scrape [flags]
@@ -17,7 +17,6 @@ Flags:
       --unripe_dist uint      the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden) (default 28)
       --channel_count uint    number of concurrent processing channels (hidden) (default 20)
       --allow_missing         do not report errors for blockchains that contain blocks with zero addresses (hidden)
-  -x, --fmt string            export format, one of [none|json*|txt|csv]
   -v, --verbose               enable verbose (increase detail with --log_level)
   -h, --help                  display this help screen
 

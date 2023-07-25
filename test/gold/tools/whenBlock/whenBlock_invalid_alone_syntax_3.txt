@@ -1,5 +1,6 @@
 chifra when  pppppp1
 TEST[DATE|TIME] Blocks:  [pppppp1]
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
 Error: The given value 'pppppp1' is not a valid identifier.
 Usage:

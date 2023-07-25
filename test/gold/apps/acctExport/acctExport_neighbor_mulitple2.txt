@@ -3,6 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x33990122638b9132ca29c723bdf037f1a891a70c 0x72202bb5d0
 TEST[DATE|TIME] Neighbors:  true
 TEST[DATE|TIME] MaxRecords:  30
 TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
 0x33990122638b9132ca29c723bdf037f1a891a70c	282880	0	creation
 0xfe78b27b9a135636679f07fbccca7cabd8e5c370	282880	0	from

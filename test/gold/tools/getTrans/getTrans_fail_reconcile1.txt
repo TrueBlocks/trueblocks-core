@@ -1,6 +1,7 @@
 chifra transactions  0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --account_for 0x12 --fmt json
 TEST[DATE|TIME] Transactions:  [0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63]
 TEST[DATE|TIME] AccountFor:  0x12
+TEST[DATE|TIME] Caps:  cache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 Error: Invalid reconcilation address 0x12.
 Usage:

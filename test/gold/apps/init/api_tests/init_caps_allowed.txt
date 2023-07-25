@@ -1,4 +1,4 @@
-init?chain&logLevel=4&nocolor&noop&version&verbose&failOnPurpose
+init?chain&nocolor&noop&version&verbose&failOnPurpose
 {
   "errors": [
     "Invalid key (failOnPurpose) in init route."

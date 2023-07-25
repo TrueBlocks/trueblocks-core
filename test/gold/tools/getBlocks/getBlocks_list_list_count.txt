@@ -1,6 +1,7 @@
 chifra blocks  --list 1000 --list_count 10
 TEST[DATE|TIME] List:  1000
 TEST[DATE|TIME] ListCount:  10
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  txt
 blockNumber	timestamp	hash	parentHash	miner	difficulty	baseFeePerGas	gasLimit	gasUsed	transactionsCnt	unclesCnt
 1999100	1470160466	0x848490db42344c146a129d68342dcdf88b5e4668bb65ce2c9bf8d448f0b93bcb	0x04e32cc0a4ac556424551eb4d98a7b93c28a306d3a5eb35fa7908b5e4f3ea44e	0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01	50175511434372	0	4712388	21000	1	0

@@ -1,5 +1,6 @@
 chifra blocks  daofork
 TEST[DATE|TIME] Blocks:  [daofork]
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

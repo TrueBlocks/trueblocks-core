@@ -4,6 +4,7 @@ TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  100
 TEST[DATE|TIME] OutputFn:  accounting_to_cache_out.file
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] 000000013-99999:         13         13          22    same-diff false true
 INFO[DATE|TIME] 000000022-99999:         13         22          37

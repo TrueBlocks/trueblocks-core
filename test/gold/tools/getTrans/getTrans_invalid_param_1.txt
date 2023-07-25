@@ -1,5 +1,6 @@
 chifra transactions  .clink
 TEST[DATE|TIME] Transactions:  [.clink]
+TEST[DATE|TIME] Caps:  cache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: The given value '.clink' is not a valid identifier.
 Usage:

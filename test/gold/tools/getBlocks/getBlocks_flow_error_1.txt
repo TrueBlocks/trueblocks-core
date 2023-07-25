@@ -1,6 +1,7 @@
 chifra blocks  4102000 --fmt txt --flow to
 TEST[DATE|TIME] Blocks:  [4102000]
 TEST[DATE|TIME] Flow:  to
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  txt
 Error: The --flow option is only available with the --uniq option
 Usage:

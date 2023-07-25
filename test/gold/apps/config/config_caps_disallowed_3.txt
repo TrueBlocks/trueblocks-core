@@ -1,6 +1,6 @@
-chifra config  --append
+chifra config  --ether
 Error: 
-  unknown flag: --append
+  unknown flag: --ether
 
 Usage:
   chifra config <mode> [flags]

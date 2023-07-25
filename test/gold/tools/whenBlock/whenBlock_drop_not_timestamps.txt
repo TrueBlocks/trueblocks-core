@@ -1,6 +1,7 @@
 chifra when  1301000 --repair
 TEST[DATE|TIME] Blocks:  [1301000]
 TEST[DATE|TIME] Repair:  true
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
 Error: The --repair option is only available with the --timestamps option.
 Usage:

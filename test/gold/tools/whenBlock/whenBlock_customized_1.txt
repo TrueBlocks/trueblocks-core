@@ -1,5 +1,6 @@
 chifra when  myblock
 TEST[DATE|TIME] Blocks:  [myblock]
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
 Error: The given value 'myblock' is not a valid identifier.
 Usage:

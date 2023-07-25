@@ -2,6 +2,7 @@ chifra blocks  4012000-4012001 --traces --uniq
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  txt
 Error: The --traces option is not available with the --uniq option.
 Usage:

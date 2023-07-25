@@ -1,6 +1,7 @@
 chifra traces  0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab --raw
 TEST[DATE|TIME] Transactions:  [0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab]
 TEST[DATE|TIME] ShowRaw:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  txt
 {
   "data": [

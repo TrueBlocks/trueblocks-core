@@ -1,5 +1,6 @@
 chifra transactions  2222221.* --fmt json
 TEST[DATE|TIME] Transactions:  [2222221.*]
+TEST[DATE|TIME] Caps:  cache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
