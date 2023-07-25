@@ -61,8 +61,8 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.Count {
-		if opts.Logs || opts.Receipts || opts.Traces || opts.Neighbors {
-			return validate.Usage("The {0} option is only available with transactional options.", "--count")
+		if opts.Logs || opts.Traces || opts.Neighbors {
+			return validate.Usage("The {0} option is not available with {1}.", "--count", "--logs, --traces, or --neighbors")
 		}
 		if opts.MaxRecords > 0 && opts.MaxRecords != 250 {
 			return validate.Usage("The {0} option is not available with the {1} option.", "--count", "--max_records")
