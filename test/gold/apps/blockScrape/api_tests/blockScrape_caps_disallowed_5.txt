@@ -1,6 +1,6 @@
-scrape?raw
+scrape?append
 {
   "errors": [
-    "Invalid key (raw) in scrape route."
+    "Invalid key (append) in scrape route."
   ]
 }

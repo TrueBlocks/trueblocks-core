@@ -1,0 +1,6 @@
+init?logLevel=4
+{
+  "errors": [
+    "Invalid key (logLevel) in init route."
+  ]
+}

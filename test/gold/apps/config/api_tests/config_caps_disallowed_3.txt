@@ -1,6 +1,6 @@
-config?append
+config?ether
 {
   "errors": [
-    "Invalid key (append) in config route."
+    "Invalid key (ether) in config route."
   ]
 }

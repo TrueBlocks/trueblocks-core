@@ -15,7 +15,7 @@ on      ,both ,fast  ,init  ,apps/init ,first_block       ,y    ,first_block = 1
 
 # Capabilities
 # chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on      ,both ,fast  ,init  ,apps/init ,caps_allowed      ,y    ,chain & log_level = 4 & nocolor & noop & version & verbose & fail_on_purpose
+on      ,both ,fast  ,init  ,apps/init ,caps_allowed      ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
 on      ,both ,fast  ,init  ,apps/init ,caps_disallowed_1 ,y    ,no_header
 on      ,both ,fast  ,init  ,apps/init ,caps_disallowed_2 ,y    ,output
 on      ,both ,fast  ,init  ,apps/init ,caps_disallowed_3 ,y    ,append
@@ -23,4 +23,5 @@ on      ,both ,fast  ,init  ,apps/init ,caps_disallowed_4 ,y    ,cache
 on      ,both ,fast  ,init  ,apps/init ,caps_disallowed_5 ,y    ,raw
 on      ,both ,fast  ,init  ,apps/init ,caps_disallowed_6 ,y    ,ether
 on      ,both ,fast  ,init  ,apps/init ,caps_disallowed_7 ,y    ,wei
+on      ,both ,fast  ,init  ,apps/init ,caps_disallowed_8 ,y    ,log_level = 4
 # caps not tested: fmt, file

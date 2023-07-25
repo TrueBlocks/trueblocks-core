@@ -1,6 +1,7 @@
 chifra when  --timestamps --repair
 TEST[DATE|TIME] Timestamps:  true
 TEST[DATE|TIME] Repair:  true
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
 Error: The --repair option requires at least one block identifier.
 Usage:

@@ -1,5 +1,6 @@
 chifra when  a
 TEST[DATE|TIME] Blocks:  [a]
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
 Error: The given value 'a' is not a valid identifier.
 Usage:

@@ -3,6 +3,7 @@ TEST[DATE|TIME] Addrs:  [0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  100
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex	logindex	transactionHash	timestamp	date	assetAddress	assetSymbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	encoding	signature	reconciliationType	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevAppBlk	prevBal	begBalDiff	endBalDiff	endBalCalc
 TEST[DATE|TIME] ===================================================

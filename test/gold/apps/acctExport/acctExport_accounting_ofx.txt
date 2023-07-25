@@ -2,6 +2,7 @@ chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --acco
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  5
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  ofx
 Error: The --fmt option (ofx) must be one of [ json | txt | csv ]
 Usage:

@@ -2,6 +2,7 @@ chifra receipts  --file cmd_file.7 --no_header --fmt txt 5644782.0
 TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.7
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -19,12 +20,14 @@ TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.7
 TEST[DATE|TIME] OutputFn:  out.csv
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  csv
 TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  cmd_file.7
 TEST[DATE|TIME] OutputFn:  out.tsv
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  tsv
 Error: The --fmt option (tsv) must be one of [ json | txt | csv ]
 Usage:

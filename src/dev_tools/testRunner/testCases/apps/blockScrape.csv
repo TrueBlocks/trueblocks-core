@@ -43,12 +43,14 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,by_file_bad                  ,n 
 
 # Capabilities
 # chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_allowed                 ,y    ,chain & log_level = 4 & nocolor & noop & version & verbose & fail_on_purpose
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_1            ,y    ,no_header
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_2            ,y    ,output
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_3            ,y    ,append
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_4            ,y    ,cache
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_5            ,y    ,raw
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_6            ,y    ,ether
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_7            ,y    ,wei
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_allowed                 ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_1            ,y    ,fmt = json
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_2            ,y    ,log_level = 4
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_3            ,y    ,no_header
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_4            ,y    ,output
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_5            ,y    ,append
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_6            ,y    ,cache
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_7            ,y    ,raw
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_8            ,y    ,ether
+on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_9            ,y    ,wei
 # caps not tested: fmt, file

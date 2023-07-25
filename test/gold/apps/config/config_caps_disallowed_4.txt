@@ -1,6 +1,6 @@
-chifra config  --cache
+chifra config  --wei
 Error: 
-  unknown flag: --cache
+  unknown flag: --wei
 
 Usage:
   chifra config <mode> [flags]

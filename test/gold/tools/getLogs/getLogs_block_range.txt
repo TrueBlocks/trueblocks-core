@@ -1,5 +1,6 @@
 chifra logs  1718400-1718420
 TEST[DATE|TIME] Transactions:  [1718400-1718420]
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  txt
 Error: The given value '1718400-1718420' is not a valid identifier.
 Usage:

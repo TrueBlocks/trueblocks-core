@@ -1,6 +1,7 @@
 chifra when  23123 --list --fmt txt
 TEST[DATE|TIME] Blocks:  [23123]
 TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
 Error: Please supply either block identifiers or the --list option.
 Usage:

@@ -3,6 +3,7 @@ TEST[DATE|TIME] Addrs:  [0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] CacheTraces:  true
 TEST[DATE|TIME] MaxRecords:  10
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex	traceAddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasUsed	action::input	compressedTrace	result::output	timestamp
 2303252	0	null	call		0x761e39255dd721996a98a7147fdcb5095852643d	0xd714dd60e22bbb1cbafd0e40de5cfa7bbdd3f3c8	50000000000000000	0.050000000000000000	0		0x		0x	1474504235

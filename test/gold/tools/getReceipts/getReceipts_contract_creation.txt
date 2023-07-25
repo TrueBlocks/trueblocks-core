@@ -1,5 +1,6 @@
 chifra receipts  1428757.0 --fmt json
 TEST[DATE|TIME] Transactions:  [1428757.0]
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

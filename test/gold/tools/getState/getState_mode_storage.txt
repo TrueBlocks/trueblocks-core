@@ -2,6 +2,7 @@ chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts storage 2500000
 TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] Blocks:  [2500000]
 TEST[DATE|TIME] Parts:  [storage]
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: The --parts option (storage) must be one of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
 Usage:

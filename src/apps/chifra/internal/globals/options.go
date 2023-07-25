@@ -49,7 +49,7 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
-	// logger.TestLog(opts.Caps != caps.Default, "Caps: ", opts.Caps)
+	logger.TestLog(opts.Caps != caps.Default, "Caps: ", opts.Caps.Show())
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }

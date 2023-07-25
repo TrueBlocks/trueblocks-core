@@ -3,6 +3,7 @@ chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 1 --firs
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] FirstRecord:  213
 TEST[DATE|TIME] MaxRecords:  1
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  json
 { "data": [
 {

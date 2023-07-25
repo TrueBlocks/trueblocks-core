@@ -1,6 +1,6 @@
-chifra config  --no_header
+chifra config  --cache
 Error: 
-  unknown flag: --no_header
+  unknown flag: --cache
 
 Usage:
   chifra config <mode> [flags]

@@ -1,5 +1,6 @@
 chifra when  1001001 --fmt api
 TEST[DATE|TIME] Blocks:  [1001001]
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  api
 Error: The --fmt option (api) must be one of [ json | txt | csv ]
 Usage:
