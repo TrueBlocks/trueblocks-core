@@ -112,15 +112,6 @@ func (opts *ExportOptions) getEnvStr() []string {
 // toCmdLine converts the option to a command line for calling out to the system.
 func (opts *ExportOptions) toCmdLine() string {
 	options := ""
-	if opts.Receipts {
-		options += " --receipts"
-	}
-	if opts.Logs {
-		options += " --logs"
-	}
-	if opts.Traces {
-		options += " --traces"
-	}
 	if opts.Accounting {
 		options += " --accounting"
 	}
