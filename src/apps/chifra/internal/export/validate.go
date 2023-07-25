@@ -23,6 +23,15 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
+	if opts.Neighbors {
+		return validate.Usage("The {0} option is currenlty disabled.", "--neighbors")
+	}
+
+	if len(opts.Load) > 0 {
+		// See https://pkg.go.dev/plugin
+		return validate.Usage("The {0} option is currenlty disabled.", "--load")
+	}
+
 	if len(opts.Globals.File) == 0 {
 		if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
 			return err

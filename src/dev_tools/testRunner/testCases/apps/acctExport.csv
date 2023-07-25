@@ -171,14 +171,14 @@ on      ,both ,fast  ,export   ,apps/acctExport ,statements_wei_2         ,n    
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx_bad       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & fmt = ofx
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & accounting & fmt = ofx
 
-on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
-on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
-on      ,both ,fast  ,export   ,apps/acctExport ,neighbor3                ,y    ,addrs = 0xffeac0305ede3a915295ec8e61c7f881006f4474 & neighbors & first_block = 0 & last_block = 10
-on      ,both ,fast  ,export   ,apps/acctExport ,neighbor4                ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & neighbors & first_block = 0 & last_block = 10
-on      ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple        ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f 0x004bfbe1546bc6c65b5c7eaa55304b38bbfec6d3 & neighbors & first_block = 0 & last_block = 10
-on      ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple2       ,y    ,addrs = 0x33990122638b9132ca29c723bdf037f1a891a70c 0x72202bb5d0645d495e4bbc1feffbdc3c9cb8d6e1 0x5de92686587b10cd47e03b71f2e2350606fcaf14 & neighbors & max_records = 30 & no_header
-on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
-on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
+neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
+neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
+neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor3                ,y    ,addrs = 0xffeac0305ede3a915295ec8e61c7f881006f4474 & neighbors & first_block = 0 & last_block = 10
+neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor4                ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & neighbors & first_block = 0 & last_block = 10
+neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple        ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f 0x004bfbe1546bc6c65b5c7eaa55304b38bbfec6d3 & neighbors & first_block = 0 & last_block = 10
+neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor_mulitple2       ,y    ,addrs = 0x33990122638b9132ca29c723bdf037f1a891a70c 0x72202bb5d0645d495e4bbc1feffbdc3c9cb8d6e1 0x5de92686587b10cd47e03b71f2e2350606fcaf14 & neighbors & max_records = 30 & no_header
+neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor1_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
+neigh   ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
 
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_1              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & last_block = 4000000 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_2              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
