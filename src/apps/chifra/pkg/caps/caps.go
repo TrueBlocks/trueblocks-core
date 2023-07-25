@@ -118,6 +118,16 @@ func (c Capability) HasKey(key string) bool {
 func (c Capability) String() string {
 	ret := []string{}
 	for _, cap := range AllCaps {
+		if c.Has(cap) {
+			ret = append(ret, cap.Text())
+		}
+	}
+	return strings.Join(ret, ",")
+}
+
+func (c Capability) Show() string {
+	ret := []string{}
+	for _, cap := range AllCaps {
 		if c.Has(cap) && !Default.Has(cap) {
 			ret = append(ret, cap.Text())
 		}

@@ -1,6 +1,7 @@
 chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --last_block 9000000 --fmt json
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] LastBlock:  9000000
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

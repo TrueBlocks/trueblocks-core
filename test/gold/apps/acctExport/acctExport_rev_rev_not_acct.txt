@@ -4,6 +4,7 @@ TEST[DATE|TIME] MaxRecords:  10
 TEST[DATE|TIME] Reversed:  true
 TEST[DATE|TIME] LastBlock:  8856511
 TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
