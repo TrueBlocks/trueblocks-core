@@ -9,13 +9,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
@@ -257,58 +255,5 @@ func (opts *GlobalOptions) FinishParse(args []string) {
 				opts.Format = last
 			}
 		}
-	}
-}
-
-// CacheStore returns cache for the given chain. If readonly is true, it returns
-// a cache that will not write new items. If nil is returned, it means "no caching"
-func (opts *GlobalOptions) cacheStore(forceReadonly bool) *cacheNew.Store {
-	// We call NewStore, but Storer implementation (Fs by default) should decide
-	// whether it has to return a new instance or reuse the existing one
-	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{
-		Location: cacheNew.FsCache,
-		Chain:    opts.Chain,
-		ReadOnly: !opts.Cache || forceReadonly,
-	})
-	// If there was an error, we won't use the cache
-	if err != nil {
-		logger.Warn("Cannot initialize cache:", err)
-		return nil
-	}
-	return store
-}
-
-type DefaultRpcOptionsSettings struct {
-	ReadonlyCache bool
-	// Because every command has its own options type, we have to
-	// accept any here, but will use interfaces to read the needed
-	// information
-	Opts any
-}
-
-// CacheStater informs us if we should write txs and traces to the cache
-type CacheStater interface {
-	CacheState() (bool, bool)
-}
-
-func (opts *GlobalOptions) DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *rpcClient.Options {
-	readonlyCache := false
-	if settings != nil {
-		readonlyCache = settings.ReadonlyCache
-	}
-
-	// Check if cache should write txs and traces
-	var cacheTxWriteEnabled bool
-	var cacheTraceWriteEnabled bool
-	if settings != nil {
-		if cs, ok := settings.Opts.(CacheStater); ok {
-			cacheTxWriteEnabled, cacheTraceWriteEnabled = cs.CacheState()
-		}
-	}
-
-	return &rpcClient.Options{
-		Store:                    opts.cacheStore(readonlyCache),
-		TransactionWriteDisabled: !cacheTxWriteEnabled,
-		TraceWriteDisabled:       !cacheTraceWriteEnabled,
 	}
 }

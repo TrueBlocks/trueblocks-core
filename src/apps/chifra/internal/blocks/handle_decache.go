@@ -7,7 +7,6 @@ package blocksPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -16,7 +15,8 @@ import (
 )
 
 func (opts *BlocksOptions) HandleDecache() error {
-	rpcOptions := opts.Globals.DefaultRpcOptions(&globals.DefaultRpcOptionsSettings{
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain:         opts.Globals.Chain,
 		ReadonlyCache: true,
 	})
 	toRemove := make([]cacheNew.Locator, 0)
