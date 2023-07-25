@@ -60,14 +60,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	}
 
 	if !opts.IsPorted() {
-		if opts.Globals.IsApiMode() {
-			// The caller has to handle this when in API mode
-			return nil, false
-		}
-
-		handled = true
-		err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-		return
+		logger.Fatal("Should not happen in BlocksInternal")
 	}
 
 	handled = true
@@ -107,7 +100,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.Appearances || opts.Count || opts.Logs || opts.Balances || opts.Neighbors || opts.Receipts || opts.Traces
+	ported = true
 	// EXISTING_CODE
 	return
 }

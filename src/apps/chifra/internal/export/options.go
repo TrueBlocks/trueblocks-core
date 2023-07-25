@@ -9,7 +9,6 @@ package exportPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -99,75 +98,6 @@ func (opts *ExportOptions) testLog() {
 func (opts *ExportOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *ExportOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *ExportOptions) toCmdLine() string {
-	options := ""
-	if opts.Accounting {
-		options += " --accounting"
-	}
-	if opts.Statements {
-		options += " --statements"
-	}
-	if opts.Articulate {
-		options += " --articulate"
-	}
-	if opts.CacheTraces {
-		options += " --cache_traces"
-	}
-	if opts.FirstRecord != 0 {
-		options += (" --first_record " + fmt.Sprintf("%d", opts.FirstRecord))
-	}
-	if opts.MaxRecords != 250 {
-		options += (" --max_records " + fmt.Sprintf("%d", opts.MaxRecords))
-	}
-	if opts.Relevant {
-		options += " --relevant"
-	}
-	for _, emitter := range opts.Emitter {
-		options += " --emitter " + emitter
-	}
-	for _, topic := range opts.Topic {
-		options += " --topic " + topic
-	}
-	for _, asset := range opts.Asset {
-		options += " --asset " + asset
-	}
-	if len(opts.Flow) > 0 {
-		options += " --flow " + opts.Flow
-	}
-	if opts.Factory {
-		options += " --factory"
-	}
-	if opts.Reversed {
-		options += " --reversed"
-	}
-	if opts.FirstBlock != 0 {
-		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
-	}
-	if opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS {
-		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
-	}
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += " " + strings.Join(opts.Topics, " ")
-	options += " " + strings.Join(opts.Fourbytes, " ")
-	// EXISTING_CODE
-	if opts.Globals.Cache {
-		options += " --cache"
-	}
-	// EXISTING_CODE
-	//lint:ignore S1025 following line make code-generation easier
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // exportFinishParseApi finishes the parsing for server invocations. Returns a new ExportOptions.
