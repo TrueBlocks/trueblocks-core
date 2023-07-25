@@ -30,7 +30,9 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-	rpcOptions := opts.Globals.DefaultRpcOptions(nil)
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
