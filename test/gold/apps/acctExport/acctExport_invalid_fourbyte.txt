@@ -1,7 +1,9 @@
-chifra export  --file cmd_file_2 --bad
-Error: 
-  unknown flag: --bad
-
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059c --max_records 10 --fmt json
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059c]
+TEST[DATE|TIME] MaxRecords:  10
+TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Format:  json
+Error: Invalid fourbyte: 0xa9059c
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 
