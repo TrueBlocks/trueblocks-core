@@ -77,12 +77,18 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		err = opts.HandleReceipts(monitorArray)
 	} else if opts.Logs {
 		err = opts.HandleLogs(monitorArray)
+	} else if opts.Traces {
+		err = opts.HandleTraces(monitorArray)
 	} else if opts.Appearances {
 		err = opts.HandleAppearances(monitorArray)
+	} else if opts.Statements {
+		err = opts.HandleStatements(monitorArray)
 	} else if opts.Balances {
 		err = opts.HandleBalances(monitorArray)
 	} else if opts.Neighbors {
 		err = opts.HandleNeighbors(monitorArray)
+	} else {
+		err = opts.HandleShow(monitorArray)
 	}
 	// EXISTING_CODE
 	timer.Report(msg)
@@ -101,7 +107,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.Appearances || opts.Count || opts.Logs || opts.Balances || opts.Neighbors || opts.Receipts
+	ported = opts.Appearances || opts.Count || opts.Logs || opts.Balances || opts.Neighbors || opts.Receipts || opts.Traces
 	// EXISTING_CODE
 	return
 }
