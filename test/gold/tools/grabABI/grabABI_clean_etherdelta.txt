@@ -1,0 +1,5 @@
+chifra abis  0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 --clean
+TEST[DATE|TIME] Addrs:  [0x8d12a197cb00d4747a1fe03395095ce2a5cc6819]
+TEST[DATE|TIME] Clean:  true
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME]  Abi for 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 removed 
