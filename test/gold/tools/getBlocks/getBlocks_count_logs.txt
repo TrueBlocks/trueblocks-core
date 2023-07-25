@@ -4,6 +4,7 @@ TEST[DATE|TIME] Uncles:  true
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

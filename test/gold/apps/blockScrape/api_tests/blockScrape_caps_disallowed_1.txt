@@ -1,6 +1,6 @@
-scrape?noHeader
+scrape?fmt=json
 {
   "errors": [
-    "Invalid key (noHeader) in scrape route."
+    "Cannot test block scraper"
   ]
 }

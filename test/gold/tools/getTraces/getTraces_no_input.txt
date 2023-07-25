@@ -1,4 +1,5 @@
 chifra traces  
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  txt
 Error: Please supply one or more transaction identifiers or filters.
 Usage:

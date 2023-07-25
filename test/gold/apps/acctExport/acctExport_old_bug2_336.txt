@@ -3,6 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x000001f568875f378bf6d170b790967fe429c81a]
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] FirstRecord:  337
 TEST[DATE|TIME] MaxRecords:  2
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  json
 { "data": [
 {

@@ -12,12 +12,9 @@ local   ,both ,fast  ,config ,apps/config ,config_paths         ,y    ,paths
 
 # Capabilities
 # chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on      ,both ,fast  ,config ,apps/config ,caps_allowed      ,y    ,chain & log_level = 4 & nocolor & noop & version & verbose & fail_on_purpose
-on      ,both ,fast  ,config ,apps/config ,caps_disallowed_1 ,y    ,no_header
-on      ,both ,fast  ,config ,apps/config ,caps_disallowed_2 ,y    ,output
-on      ,both ,fast  ,config ,apps/config ,caps_disallowed_3 ,y    ,append
-on      ,both ,fast  ,config ,apps/config ,caps_disallowed_4 ,y    ,cache
-on      ,both ,fast  ,config ,apps/config ,caps_disallowed_5 ,y    ,raw
-on      ,both ,fast  ,config ,apps/config ,caps_disallowed_6 ,y    ,ether
-on      ,both ,fast  ,config ,apps/config ,caps_disallowed_7 ,y    ,wei
+on      ,both ,fast  ,config ,apps/config ,caps_allowed      ,y    ,chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on      ,both ,fast  ,config ,apps/config ,caps_disallowed_1 ,y    ,cache
+on      ,both ,fast  ,config ,apps/config ,caps_disallowed_2 ,y    ,raw
+on      ,both ,fast  ,config ,apps/config ,caps_disallowed_3 ,y    ,ether
+on      ,both ,fast  ,config ,apps/config ,caps_disallowed_4 ,y    ,wei
 # caps not tested: fmt, file

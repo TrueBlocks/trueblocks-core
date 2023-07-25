@@ -1,6 +1,7 @@
 chifra transactions  0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --source --fmt json
 TEST[DATE|TIME] Transactions:  [0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a]
 TEST[DATE|TIME] Source:  true
+TEST[DATE|TIME] Caps:  cache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 Error: The --source flag is currently disabled.
 Usage:

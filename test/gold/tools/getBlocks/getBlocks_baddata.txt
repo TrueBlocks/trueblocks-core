@@ -1,5 +1,6 @@
 chifra blocks  1590000 4000001-4000002 x400x001
 TEST[DATE|TIME] Blocks:  [1590000 4000001-4000002 x400x001]
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 Error: The given value 'x400x001' is not a valid identifier.
 Usage:

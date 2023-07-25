@@ -2,6 +2,7 @@ chifra transactions  4102000.0 --fmt txt --uniq --flow not-a-choice
 TEST[DATE|TIME] Transactions:  [4102000.0]
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Flow:  not-a-choice
+TEST[DATE|TIME] Caps:  cache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: The flow option (not-a-choice) must be one of [ from | to ]
 Usage:

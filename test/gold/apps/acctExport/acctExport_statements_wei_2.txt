@@ -3,6 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] MaxRecords:  15
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  csv
 "blockNumber","transactionIndex","logindex","transactionHash","timestamp","date","assetAddress","assetSymbol","decimals","spotPrice","priceSource","accountedFor","sender","recipient","begBal","amountNet","endBal","encoding","signature","reconciliationType","reconciled","totalIn","amountIn","internalIn","selfDestructIn","minerBaseRewardIn","minerNephewRewardIn","minerTxFeeIn","minerUncleRewardIn","prefundIn","totalOut","amountOut","internalOut","selfDestructOut","gasOut","totalOutLessGas","prevAppBlk","prevBal","begBalDiff","endBalDiff","endBalCalc"
 TEST[DATE|TIME] ===================================================

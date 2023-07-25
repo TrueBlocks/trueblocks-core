@@ -1,5 +1,6 @@
 chifra transactions  .whatever
 TEST[DATE|TIME] Transactions:  [.whatever]
+TEST[DATE|TIME] Caps:  cache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: The given value '.whatever' is not a valid identifier.
 Usage:

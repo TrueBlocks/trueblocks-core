@@ -1,5 +1,6 @@
 chifra blocks  --list 0 --list_count 12
 TEST[DATE|TIME] ListCount:  12
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 Error: You must supply a non-zero value for the --list option with --list_count.
 Usage:

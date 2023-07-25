@@ -1,6 +1,6 @@
-chifra config  --output
+chifra config  --raw
 Error: 
-  unknown flag: --output
+  unknown flag: --raw
 
 Usage:
   chifra config <mode> [flags]

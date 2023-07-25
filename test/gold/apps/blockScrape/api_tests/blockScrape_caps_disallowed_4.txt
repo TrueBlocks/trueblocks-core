@@ -1,6 +1,6 @@
-scrape?cache
+scrape?output
 {
   "errors": [
-    "Invalid key (cache) in scrape route."
+    "Invalid key (output) in scrape route."
   ]
 }

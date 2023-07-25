@@ -1,6 +1,7 @@
 chifra when  213123213 --list
 TEST[DATE|TIME] Blocks:  [213123213]
 TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
 Error: Please supply either block identifiers or the --list option.
 Usage:

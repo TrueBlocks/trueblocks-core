@@ -1,6 +1,6 @@
-scrape?output
+scrape?logLevel=4
 {
   "errors": [
-    "Invalid key (output) in scrape route."
+    "Invalid key (logLevel) in scrape route."
   ]
 }

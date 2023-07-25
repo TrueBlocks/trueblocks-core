@@ -1,6 +1,7 @@
 chifra traces  4348290.92 --fmt json --count
 TEST[DATE|TIME] Transactions:  [4348290.92]
 TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

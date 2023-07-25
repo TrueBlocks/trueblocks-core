@@ -1,6 +1,7 @@
 chifra receipts  1428968.4 --fmt json --articulate
 TEST[DATE|TIME] Transactions:  [1428968.4]
 TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

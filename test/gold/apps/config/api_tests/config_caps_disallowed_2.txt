@@ -1,6 +1,6 @@
-config?output
+config?raw
 {
   "errors": [
-    "Invalid key (output) in config route."
+    "Invalid key (raw) in config route."
   ]
 }

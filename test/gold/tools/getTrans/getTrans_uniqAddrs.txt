@@ -2,6 +2,7 @@ chifra transactions  1301011.0 1301672.0 1301324.0 --uniq --fmt json --verbose
 TEST[DATE|TIME] Transactions:  [1301011.0 1301672.0 1301324.0]
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Caps:  cache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
