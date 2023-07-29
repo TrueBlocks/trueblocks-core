@@ -14,9 +14,9 @@ func lowerIfHex(addr string) string {
 	return strings.ToLower(addr)
 }
 
-// ConvertEns converts an array of strings, if they contains .eth, into addresses. Note, we take
+// ConvertEnsAddresses converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func ConvertEns(chain string, addrsIn []string) ([]string, bool) {
+func ConvertEnsAddresses(chain string, addrsIn []string) ([]string, bool) {
 	provider := config.GetRpcProvider("mainnet")
 	ec := GetClient(provider)
 	defer ec.Close()
@@ -37,9 +37,9 @@ func ConvertEns(chain string, addrsIn []string) ([]string, bool) {
 	return out, found
 }
 
-// ConvertOneEns converts a single string, if it contains .eth, into an address. Note, we take
+// ConvertEnsAddress converts a single string, if it contains .eth, into an address. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func ConvertOneEns(chain string, in string) (string, bool) {
+func ConvertEnsAddress(chain string, in string) (string, bool) {
 	if !strings.Contains(in, ".eth") {
 		return lowerIfHex(in), false
 	}

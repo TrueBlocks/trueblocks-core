@@ -17,14 +17,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func Test_Client(t *testing.T) {
-	a := DecodeHex("0xAb")
+	a := hexutil.MustDecode("0xAb")
 	b := []byte{0xAb}
 	c := bytes.Compare(a, b)
 	if c != 0 {
-		t.Error("incorrect result from DecodeHex")
+		t.Error("incorrect result from MustDecode")
 	}
 
 	addr := base.HexToAddress("0x00000000000000000000000000000000deadbeef")
@@ -63,12 +64,12 @@ func Test_Client(t *testing.T) {
 		t.Error("couldn't get known transaction hash from block hash and tx id")
 	}
 
-	_, err = BlockHashFromHash(provider, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53")
+	_, err = GetBlockHashFromHash(chain, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53")
 	if err != nil {
 		t.Error("couldn't get known block hash from block hash")
 	}
 
-	_, err = BlockHashFromNumber(provider, 12)
+	_, err = GetBlockHashFromNumber(chain, 12)
 	if err != nil {
 		t.Error("couldn't get known block hash from block number")
 	}

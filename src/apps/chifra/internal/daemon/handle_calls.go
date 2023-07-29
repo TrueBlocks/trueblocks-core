@@ -81,7 +81,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		GetOptions().Globals.LogLevel = 4
 	}
 
-	allDogs, _ = rpcClient.ConvertEns(chain, allDogs)
+	allDogs, _ = rpcClient.ConvertEnsAddresses(chain, allDogs)
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)

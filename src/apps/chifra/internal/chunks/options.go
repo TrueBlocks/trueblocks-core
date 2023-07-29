@@ -127,7 +127,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// TODO: Do we know if an option is an address? If yes, we could automate this
-	opts.Belongs, _ = rpcClient.ConvertEns(opts.Globals.Chain, opts.Belongs)
+	opts.Belongs, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, opts.Belongs)
 	// EXISTING_CODE
 
 	return opts
@@ -151,7 +151,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 			}
 		}
 	}
-	opts.Belongs, _ = rpcClient.ConvertEns(opts.Globals.Chain, opts.Belongs)
+	opts.Belongs, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, opts.Belongs)
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}

@@ -91,7 +91,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs, _ = rpcClient.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -106,7 +106,7 @@ func abisFinishParse(args []string) *AbisOptions {
 	if opts.Globals.IsApiMode() {
 		defFmt = "json"
 	}
-	opts.Addrs, _ = rpcClient.ConvertEns(opts.Globals.Chain, args)
+	opts.Addrs, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

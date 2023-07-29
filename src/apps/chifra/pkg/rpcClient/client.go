@@ -18,7 +18,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
@@ -172,8 +171,9 @@ func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
 	return uint64(cnt), err
 }
 
-// BlockHashFromHash returns a block's hash if it's a valid block
-func BlockHashFromHash(provider, hash string) (string, error) {
+// GetBlockHashFromHash returns a block's hash if it's a valid block
+func GetBlockHashFromHash(chain, hash string) (string, error) {
+	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -185,8 +185,9 @@ func BlockHashFromHash(provider, hash string) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
-// BlockNumberFromHash returns a block's hash if it's a valid block
-func BlockNumberFromHash(provider, hash string) (uint64, error) {
+// GetBlockNumberFromHash returns a block's hash if it's a valid block
+func GetBlockNumberFromHash(chain, hash string) (uint64, error) {
+	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -198,8 +199,9 @@ func BlockNumberFromHash(provider, hash string) (uint64, error) {
 	return block.NumberU64(), nil
 }
 
-// BlockHashFromNumber returns a block's hash if it's a valid block
-func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
+// GetBlockHashFromNumber returns a block's hash if it's a valid block
+func GetBlockHashFromNumber(chain string, blkNum uint64) (string, error) {
+	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -253,11 +255,6 @@ func (ec *Client) TransactionCount(ctx context.Context, blockHash commo n.Hash) 
 func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block commo n.Hash, index uint) (commo n.Address, error)
 */
 
-// DecodeHex decodes a string with hex into a slice of bytes
-func DecodeHex(hex string) []byte {
-	return hexutil.MustDecode(hex)
-}
-
 func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
 	// return IsValidAddress(addr)
 	provider := config.GetRpcProvider(chain)
@@ -309,12 +306,12 @@ func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (strin
 	CheckRpc(provider)
 
 	if isBlockHash(arg) {
-		return BlockHashFromHash(provider, arg)
+		return GetBlockHashFromHash(chain, arg)
 	}
 
 	blockNum, err := strconv.ParseUint(arg, 10, 64)
 	if err != nil {
 		return "", nil
 	}
-	return BlockHashFromNumber(provider, blockNum)
+	return GetBlockHashFromNumber(chain, blockNum)
 }
