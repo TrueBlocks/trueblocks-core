@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -56,7 +55,7 @@ func (opts *StateOptions) validateState() error {
 				contract = opts.ProxyFor
 			}
 
-			ok, err := validate.IsSmartContract(opts.Globals.Chain, contract)
+			ok, err := rpcClient.IsSmartContract(opts.Globals.Chain, contract)
 			if err != nil {
 				return err
 			}
@@ -104,7 +103,7 @@ func (opts *StateOptions) validateState() error {
 
 		latest := rpcClient.BlockNumber(config.GetRpcProvider(opts.Globals.Chain))
 		// TODO: Should be configurable
-		if bounds.First < (latest-250) && !node.IsArchiveNode(opts.Globals.Chain) {
+		if bounds.First < (latest-250) && !rpcClient.IsArchiveNode(opts.Globals.Chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}

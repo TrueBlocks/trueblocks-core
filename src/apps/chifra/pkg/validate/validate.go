@@ -10,9 +10,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Usage(msg string, values ...string) error {
@@ -58,11 +56,6 @@ func IsValidTopicE(val string) (bool, error) {
 func IsValidTopic(val string) bool {
 	ok, _ := IsValidHex("topic", val, 32)
 	return ok
-}
-
-func IsSmartContract(chain, addr string) (bool, error) {
-	bytes, err := rpcClient.GetCodeAt(chain, base.HexToAddress(addr), utils.NOPOS)
-	return len(bytes) > 0, err
 }
 
 func IsZeroAddress(val string) bool {

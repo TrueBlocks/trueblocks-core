@@ -1,11 +1,10 @@
-package node
+package rpcClient
 
 import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 func IsArchiveNode(chain string) bool {
@@ -24,7 +23,7 @@ func IsArchiveNode(chain string) bool {
 		return false
 	}
 
-	bal, err := rpcClient.GetBalanceAt(chain, largest.Address, 0)
+	bal, err := GetBalanceAt(chain, largest.Address, 0)
 	if err != nil {
 		return false
 	}

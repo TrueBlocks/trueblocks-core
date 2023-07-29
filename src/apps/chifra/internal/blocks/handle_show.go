@@ -51,7 +51,7 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, rpcOptions)
+					b, err = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn, rpcOptions)
 					block = &b
 				}
 

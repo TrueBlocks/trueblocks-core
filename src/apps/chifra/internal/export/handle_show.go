@@ -39,6 +39,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	)
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
+		Opts:  opts,
 	})
 
 	ctx := context.Background()

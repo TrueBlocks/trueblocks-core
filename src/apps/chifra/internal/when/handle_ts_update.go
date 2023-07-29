@@ -38,7 +38,7 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 
 	logger.Info("Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
 	for bn := cnt; bn < meta.Latest; bn++ {
-		block, _ := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
+		block, _ := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn, rpcClient.NoOptions)
 		record := tslib.TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 		timestamps = append(timestamps, record)
 		logger.Progress(true, "Adding block", bn, "to timestamp array")

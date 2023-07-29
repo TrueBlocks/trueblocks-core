@@ -34,7 +34,11 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 			defer iterCancel()
 
 			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleReceipt) error {
-				if tx, err := app.FetchTransactionById(chain, false /* needsTraces */, rpcOptions); err != nil {
+				a := &types.RawAppearance{
+					BlockNumber:      uint32(app.BlockNumber),
+					TransactionIndex: uint32(app.TransactionIndex),
+				}
+				if tx, err := rpcClient.GetTransactionByAppearance(chain, a, false /* needsTraces */, rpcOptions); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil || tx.Receipt == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

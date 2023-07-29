@@ -1,4 +1,4 @@
-package node
+package rpcClient
 
 // TODO: BOGUS This needs to be implemented in a cross-chain, cross-client manner
 

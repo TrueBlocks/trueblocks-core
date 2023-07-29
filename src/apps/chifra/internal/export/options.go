@@ -252,4 +252,13 @@ func ResetOptions() {
 }
 
 // EXISTING_CODE
+//
+
+// CacheState returns booleans indicating if transaction cache and trace
+// cache should be writable (usually it is set by the user using --cache_txs
+// and --cache_traces flags)
+func (opts *ExportOptions) CacheState() (bool, bool, bool) {
+	return opts.Globals.Cache, true, opts.CacheTraces
+}
+
 // EXISTING_CODE

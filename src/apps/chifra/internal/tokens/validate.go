@@ -9,7 +9,6 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -53,7 +52,7 @@ func (opts *TokensOptions) validateTokens() error {
 
 			// all but the last is assumed to be a token
 			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
-				ok, err := validate.IsSmartContract(opts.Globals.Chain, addr)
+				ok, err := rpcClient.IsSmartContract(opts.Globals.Chain, addr)
 				if err != nil {
 					return err
 				}
@@ -64,7 +63,7 @@ func (opts *TokensOptions) validateTokens() error {
 		} else {
 			// the first is assumed to be a smart contract, the rest can be either non-existant, another smart contract or an EOA
 			addr := opts.Addrs[0]
-			ok, err := validate.IsSmartContract(opts.Globals.Chain, addr)
+			ok, err := rpcClient.IsSmartContract(opts.Globals.Chain, addr)
 			if err != nil {
 				return err
 			}
@@ -103,7 +102,7 @@ func (opts *TokensOptions) validateTokens() error {
 
 		latest := rpcClient.BlockNumber(config.GetRpcProvider(opts.Globals.Chain))
 		// TODO: Should be configurable
-		if bounds.First < (latest-250) && !node.IsArchiveNode(opts.Globals.Chain) {
+		if bounds.First < (latest-250) && !rpcClient.IsArchiveNode(opts.Globals.Chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}
