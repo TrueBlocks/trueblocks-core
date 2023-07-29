@@ -29,7 +29,7 @@ extern string_q get_godefaults(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_positionals(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
-extern string_q clean_go_positionals(const string_q& in, bool hasEns);
+extern string_q clean_go_positionals(const string_q& in, bool hasRpc);
 extern string_q clean_positionals(const string& progName, const string_q& strIn);
 
 extern const char* STR_REQUEST_CASE1;
@@ -135,7 +135,7 @@ bool COptions::handle_gocmds_docfile(const CCommandOption& p) {
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
     string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/options.go");
     establishFolder(fn);
-    bool hasEns = contains(asciiFileToString(fn), "ens.Convert");
+    bool hasRpc = contains(asciiFileToString(fn), "rpcClient.");
 
     string_q source = asciiFileToString(getPathToTemplates("blank_options.go.tmpl"));
     if (isFullyPorted(p.api_route)) {
@@ -166,7 +166,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{POSITIONALS}]", get_positionals(p));
     replaceAll(source, "[{GODEFS}]", get_godefaults(p));
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
-    source = clean_go_positionals(source, hasEns);
+    source = clean_go_positionals(source, hasRpc);
     if (isFullyPorted(p.api_route)) {
         if (!contains(source, "fmt.")) {
             replaceAll(source, "\t\"fmt\"\n", "");
@@ -669,7 +669,7 @@ string_q get_goDescription(const CCommandOption& cmd) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q clean_go_positionals(const string_q& in, bool hasEns) {
+string_q clean_go_positionals(const string_q& in, bool hasRpc) {
     string_q ret = in;
     replaceAll(ret, "\t[]string{} = args\n", "");
     replaceAll(ret, "opts.[]string{}", "[]string{}");
@@ -677,8 +677,8 @@ string_q clean_go_positionals(const string_q& in, bool hasEns) {
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n", "");
     if (!contains(ret, "identifiers."))
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers\"\n", "");
-    if (!hasEns)
-        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens\"\n", "");
+    if (!hasRpc)
+        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient\"\n", "");
     return ret;
 }
 

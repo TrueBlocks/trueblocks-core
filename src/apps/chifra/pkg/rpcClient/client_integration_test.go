@@ -8,32 +8,15 @@
 package rpcClient
 
 import (
-	"bytes"
 	"context"
-	"math/big"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func Test_Client(t *testing.T) {
-	a := hexutil.MustDecode("0xAb")
-	b := []byte{0xAb}
-	c := bytes.Compare(a, b)
-	if c != 0 {
-		t.Error("incorrect result from MustDecode")
-	}
-
-	addr := base.HexToAddress("0x00000000000000000000000000000000deadbeef")
-	expected := base.BigToAddress(big.NewInt(0x00000000000000000000000000000000DEADBeeF))
-	if addr != expected {
-		t.Error("incorrect result from HexToAddress")
-	}
-
 	chain := utils.GetTestChain()
 	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider) // won't return if it doesn't connect
@@ -43,7 +26,7 @@ func Test_Client(t *testing.T) {
 		t.Error("probably not the right chain")
 	}
 
-	chainId, networkId, _ := GetIDs(provider)
+	chainId, networkId, _ := GetIDs(chain)
 	if chainId != networkId || chainId != 1 {
 		t.Error("provider chain id is 1")
 	}
@@ -54,12 +37,12 @@ func Test_Client(t *testing.T) {
 		t.Error("timestamp for block 1 is not correct")
 	}
 
-	_, err := TxHashFromHash(provider, "0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08")
+	_, err := GetTxHashFromHash(chain, "0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08")
 	if err != nil {
 		t.Error("couldn't get known transaction hash from tx hash")
 	}
 
-	_, err = TxHashFromHashAndId(provider, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53", 0)
+	_, err = GetTxHashFromHashAndId(chain, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53", 0)
 	if err != nil {
 		t.Error("couldn't get known transaction hash from block hash and tx id")
 	}

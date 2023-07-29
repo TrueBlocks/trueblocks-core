@@ -52,9 +52,7 @@ func GetContractDeployBlock(chain string, address base.Address) (block base.Blkn
 		return
 	}
 
-	provider := config.GetRpcProvider(chain)
-	latest := BlockNumber(provider)
-
+	latest := GetLatestBlockNumber(chain)
 	if err = IsContractAt(chain, address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
 		return
 	}
@@ -79,7 +77,8 @@ var locations = []string{
 }
 
 func GetProxy(chain string, address base.Address, blockNumber base.Blknum) (proxy base.Address, err error) {
-	client := GetClient(config.GetRpcProvider(chain))
+	provider := config.GetRpcProvider(chain)
+	client := GetClient(provider)
 	proxyAddr, err := rpc.Query[string](chain, "eth_call", rpc.Params{
 		map[string]any{
 			"to": address,

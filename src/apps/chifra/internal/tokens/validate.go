@@ -8,7 +8,6 @@ package tokensPkg
 import (
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -100,7 +99,7 @@ func (opts *TokensOptions) validateTokens() error {
 			return err
 		}
 
-		latest := rpcClient.BlockNumber(config.GetRpcProvider(opts.Globals.Chain))
+		latest := rpcClient.GetLatestBlockNumber(opts.Globals.Chain)
 		// TODO: Should be configurable
 		if bounds.First < (latest-250) && !rpcClient.IsArchiveNode(opts.Globals.Chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")

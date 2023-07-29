@@ -26,7 +26,7 @@ import (
 // fromRemote gets the CID from the smart contract, calls
 // the gateway and returns the parsed manifest
 func fromRemote(chain string) (*Manifest, error) {
-	cid, err := ReadUnchainIndex(chain, "", unchained.PreferredPublisher)
+	cid, err := ReadUnchainedIndex(chain, "", unchained.PreferredPublisher)
 	if err != nil {
 		return nil, err
 	}
@@ -40,16 +40,15 @@ func fromRemote(chain string) (*Manifest, error) {
 	return downloadManifest(chain, gatewayUrl, cid)
 }
 
-// ReadUnchainIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
+// ReadUnchainedIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
 // published by the given publisher
-func ReadUnchainIndex(ch, reason, publisher string) (string, error) {
+func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 	cid := os.Getenv("TB_OVERRIDE_CID")
 	if cid != "" {
 		return cid, nil
 	}
 
 	provider := config.GetRpcProvider("mainnet") // we always read from the mainnet smart contract
-	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()
 

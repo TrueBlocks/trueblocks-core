@@ -8,7 +8,6 @@ import (
 	"context"
 	"fmt"
 	"math/big"
-	"strconv"
 	"strings"
 	"sync"
 
@@ -45,7 +44,8 @@ func GetClient(provider string) *ethclient.Client {
 }
 
 // BlockNumber returns the block number at the front of the chain (i.e. latest)
-func BlockNumber(provider string) uint64 {
+func GetLatestBlockNumber(chain string) uint64 {
+	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -64,21 +64,16 @@ var noProvider string = `
   value in the file {T}[{FILE}]{O}. Quitting...
 `
 
-// CheckRpc will not return if the RPC is not available
-func CheckRpc(provider string) {
-	GetIDs(provider)
-}
-
 // GetIDs returns both chainId and networkId from the node
-func GetIDs(provider string) (uint64, uint64, error) {
-	// We might need it, so create it
-	msg := noProvider
-	msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
-	msg = strings.Replace(msg, "[{FILE}]", config.GetPathToRootConfig()+"trueBlocks.toml", -1)
-	msg = strings.Replace(msg, "{R}", colors.Red, -1)
-	msg = strings.Replace(msg, "{T}", colors.Cyan, -1)
-	msg = strings.Replace(msg, "{O}", colors.Off, -1)
+func GetIDs(chain string) (uint64, uint64, error) {
+	provider := config.GetRpcProvider(chain)
 	if provider == "https://" {
+		msg := noProvider
+		msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
+		msg = strings.Replace(msg, "[{FILE}]", config.GetPathToRootConfig()+"trueBlocks.toml", -1)
+		msg = strings.Replace(msg, "{R}", colors.Red, -1)
+		msg = strings.Replace(msg, "{T}", colors.Cyan, -1)
+		msg = strings.Replace(msg, "{O}", colors.Off, -1)
 		msg = strings.Replace(msg, "https://", "<empty>", -1)
 		return 0, 0, fmt.Errorf("%s", msg)
 	}
@@ -112,8 +107,9 @@ func GetVersion(chain string) (version string, err error) {
 	}
 }
 
-// TxHashFromHash returns a transaction's hash if it's a valid transaction
-func TxHashFromHash(provider, hash string) (string, error) {
+// GetTxHashFromHash returns a transaction's hash if it's a valid transaction
+func GetTxHashFromHash(chain, hash string) (string, error) {
+	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -125,8 +121,9 @@ func TxHashFromHash(provider, hash string) (string, error) {
 	return tx.Hash().Hex(), nil
 }
 
-// TxHashFromHashAndId returns a transaction's hash if it's a valid transaction
-func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
+// GetTxHashFromHashAndId returns a transaction's hash if it's a valid transaction
+func GetTxHashFromHashAndId(chain, hash string, txId uint64) (string, error) {
+	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -157,8 +154,9 @@ func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transacti
 	return *tx, nil
 }
 
-// TxCountByBlockNumber returns the number of transactions in a block
-func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
+// GetTxCountByBlockNumber returns the number of transactions in a block
+func GetTxCountByBlockNumber(chain string, blkNum uint64) (uint64, error) {
+	provider := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -261,57 +259,4 @@ func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
 	ec := GetClient(provider)
 	// TODO: we don't use block number, but we should - we need to convert it
 	return ec.CodeAt(context.Background(), addr.ToCommon(), nil) // nil is latest block
-}
-
-// Id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
-// and returns the transaction hash represented by that identifier. (If it's a valid transaction.
-// It may not be because transaction hashes and block hashes are both 32-byte hex)
-func Id_2_TxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
-	provider := config.GetRpcProvider(chain)
-	CheckRpc(provider)
-
-	// simple case first
-	if !strings.Contains(arg, ".") {
-		// We know it's a hash, but we want to know if it's a legitimate tx on chain
-		return TxHashFromHash(provider, arg)
-	}
-
-	parts := strings.Split(arg, ".")
-	if len(parts) != 2 {
-		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
-	}
-
-	if isBlockHash(parts[0]) {
-		txId, err := strconv.ParseUint(parts[1], 10, 64)
-		if err != nil {
-			return "", nil
-		}
-		return TxHashFromHashAndId(provider, parts[0], txId)
-	}
-
-	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
-	if err != nil {
-		return "", nil
-	}
-	txId, err := strconv.ParseUint(parts[1], 10, 64)
-	if err != nil {
-		return "", nil
-	}
-
-	return rpc.GetTxHashFromNumberAndId(chain, blockNum, txId)
-}
-
-func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
-	provider := config.GetRpcProvider(chain)
-	CheckRpc(provider)
-
-	if isBlockHash(arg) {
-		return GetBlockHashFromHash(chain, arg)
-	}
-
-	blockNum, err := strconv.ParseUint(arg, 10, 64)
-	if err != nil {
-		return "", nil
-	}
-	return GetBlockHashFromNumber(chain, blockNum)
 }

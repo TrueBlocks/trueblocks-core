@@ -3,33 +3,47 @@ package base
 import (
 	"bytes"
 	"fmt"
+	"math/big"
 	"reflect"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func TestAddress_Hex(t *testing.T) {
+	a := hexutil.MustDecode("0xAb")
+	b := []byte{0xAb}
+	c := bytes.Compare(a, b)
+	if c != 0 {
+		t.Error("incorrect result from MustDecode")
+	}
+
+	addr := HexToAddress("0x00000000000000000000000000000000deadbeef")
+	expectedAddr := BigToAddress(big.NewInt(0x00000000000000000000000000000000DEADBeeF))
+	if addr != expectedAddr {
+		t.Error("incorrect result from HexToAddress")
+	}
+
 	hex := "0xF1AA581F353005BA3765B81BF52D6B1C488C2101"
-	var addr Address
 	addr.SetHex(hex)
 
-	expected := "0xf1aa581f353005ba3765b81bf52d6b1c488c2101"
-	if result := addr.Hex(); result != expected {
+	expectedHex := "0xf1aa581f353005ba3765b81bf52d6b1c488c2101"
+	if result := addr.Hex(); result != expectedHex {
 		t.Fatal("wrong Hex() return value:", result)
 	}
 
 	zero := "0x0000000000000000000000000000000000000000"
-	expected = "0x0"
+	expectedHex = "0x0"
 	addr = HexToAddress(zero)
-	if result := addr.Hex(); result != expected {
+	if result := addr.Hex(); result != expectedHex {
 		t.Fatal("wrong Hex() return value for 0x0:", result)
 	}
 
 	var zero2 Address
 	addrStr := fmt.Sprint(zero2)
-	if addrStr != expected {
+	if addrStr != expectedHex {
 		t.Fatal("wrong Hex() return value for 0x0:", addrStr)
 	}
 }

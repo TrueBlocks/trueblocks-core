@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -34,9 +33,7 @@ func (m MetaData) Age(bn uint64) int64 {
 }
 
 func GetMetaData(chain string, testmode bool) (*MetaData, error) {
-	provider := config.GetRpcProvider(chain)
-
-	chainId, networkId, err := GetIDs(provider)
+	chainId, networkId, err := GetIDs(chain)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +55,7 @@ func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	meta.Chain = chain
 	meta.ChainId = chainId
 	meta.NetworkId = networkId
-	meta.Latest = BlockNumber(provider)
+	meta.Latest = GetLatestBlockNumber(chain)
 
 	filenameChan := make(chan cache.CacheFileInfo)
 

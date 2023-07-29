@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -73,8 +72,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS {
-		provider := config.GetRpcProvider(opts.Globals.Chain)
-		latest := rpcClient.BlockNumber(provider)
+		latest := rpcClient.GetLatestBlockNumber(opts.Globals.Chain)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
