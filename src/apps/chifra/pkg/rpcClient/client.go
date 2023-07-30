@@ -142,6 +142,7 @@ func GetTransactionHashFromHashAndID(chain, hash string, txId uint64) (string, e
 func GetTransactionFromNumberAndID(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
 	if ec, err := GetClient(chain); err != nil {
 		return ethTypes.Transaction{}, err
+
 	} else {
 		defer ec.Close()
 
@@ -193,7 +194,7 @@ func GetBlockHashFromHash(chain, hash string) (string, error) {
 }
 
 // GetBlockNumberFromHash returns a block's hash if it's a valid block
-func GetBlockNumberFromHash(chain, hash string) (uint64, error) {
+func GetBlockNumberFromHash(chain, hash string) (base.Blknum, error) {
 	if ec, err := GetClient(chain); err != nil {
 		return 0, err
 	} else {

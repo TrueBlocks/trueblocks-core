@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum"
@@ -170,5 +169,5 @@ func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, e
 		return "", nil
 	}
 
-	return rpc.GetTxHashFromNumberAndId(chain, blockNum, txId)
+	return rpcClient.GetTxHashFromNumberAndId(chain, blockNum, txId)
 }

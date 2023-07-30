@@ -21,11 +21,9 @@ func GetAddressesFromEns(chain string, addrsIn []string) (out []string, found bo
 		return
 	} else {
 		defer ec.Close()
-		for i := 0; i < len(addrsIn); i++ {
-			term := addrsIn[i]
+		for _, term := range addrsIn {
 			if strings.Contains(term, ".eth") {
-				val, err := ensGo.Resolve(ec, term)
-				if err == nil && len(val) > 0 {
+				if val, err := ensGo.Resolve(ec, term); err == nil && len(val) > 0 {
 					term = val.Hex()
 					found = true
 				}
@@ -38,9 +36,9 @@ func GetAddressesFromEns(chain string, addrsIn []string) (out []string, found bo
 
 // GetAddressFromEns converts a single string, if it contains .eth, into an address. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func GetAddressFromEns(chain string, in string) (string, bool) {
-	if !strings.Contains(in, ".eth") {
-		return lowerIfHex(in), false
+func GetAddressFromEns(chain string, addrIn string) (string, bool) {
+	if !strings.Contains(addrIn, ".eth") {
+		return lowerIfHex(addrIn), false
 	}
 
 	// Note: we use ENS on mainnet always
@@ -48,10 +46,9 @@ func GetAddressFromEns(chain string, in string) (string, bool) {
 		return "", false
 	} else {
 		defer ec.Close()
-		val, err := ensGo.Resolve(ec, in)
-		if err == nil && len(val) > 0 {
+		if val, err := ensGo.Resolve(ec, addrIn); err == nil && len(val) > 0 {
 			return lowerIfHex(val.Hex()), true
 		}
-		return lowerIfHex(in), false
+		return lowerIfHex(addrIn), false
 	}
 }

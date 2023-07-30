@@ -116,7 +116,7 @@ func GetTracesByTransactionId(chain string, bn, txid uint64, rpcOptions *Options
 		}
 	}
 
-	txHash, err := rpc.GetTxHashFromNumberAndId(chain, bn, txid)
+	txHash, err := GetTxHashFromNumberAndId(chain, bn, txid)
 	if err != nil {
 		return ret, err
 	}

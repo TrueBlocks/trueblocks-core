@@ -5,8 +5,10 @@
 package rpcClient
 
 import (
+	"context"
 	"errors"
 	"fmt"
+	"math/big"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -205,5 +207,26 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 		}
 
 		return block, nil
+	}
+}
+
+// GetTxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
+func GetTxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
+	if ec, err := GetClient(chain); err != nil {
+		return "", err
+	} else {
+		defer ec.Close()
+
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+		if err != nil {
+			return "", fmt.Errorf("error at block %s: %w", fmt.Sprintf("%d", blkNum), err)
+		}
+
+		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
+		if err != nil {
+			return "", fmt.Errorf("transaction at %s returned an error: %w", fmt.Sprintf("%s.%d", block.Hash(), txId), err)
+		}
+
+		return tx.Hash().Hex(), nil
 	}
 }

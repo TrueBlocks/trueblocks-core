@@ -20,8 +20,7 @@ const (
 	NoColor
 	LogLevel
 	Chain
-	EveryTool = Verbose | Fmt | Version | Noop | NoColor | LogLevel | Chain
-	Default   = EveryTool | NoHeader | File | Output | Append
+	Default = Verbose | Fmt | Version | Noop | NoColor | LogLevel | Chain | NoHeader | File | Output | Append
 )
 
 var AllCaps = []Capability{
@@ -92,8 +91,6 @@ func (c Capability) Text() string {
 		return "logLevel"
 	case Chain:
 		return "chain"
-	case EveryTool:
-		return "every"
 	case Default:
 		return "default"
 	default:

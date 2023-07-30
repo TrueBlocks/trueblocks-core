@@ -145,6 +145,8 @@ func getBlockReward(bn uint64) *big.Int {
 	}
 }
 
+// TODO: This is not cross-chain correct
+
 func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
 	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber), &Options{Store: cacheNew.NoCache}); err != nil {
 		return nil, err
