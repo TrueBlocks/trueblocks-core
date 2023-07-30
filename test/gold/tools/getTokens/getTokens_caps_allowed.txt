@@ -1,4 +1,4 @@
-chifra tokens  trueblocks.eth --chain --fmt --log_level 4 --nocolor --noop --version --verbose --no_header --file --output --append --cache --fail_on_purpose
+chifra tokens  trueblocks.eth --chain --fmt --nocolor --noop --version --verbose --no_header --file --output --append --cache --fail_on_purpose
 Error: 
   unknown flag: --fail_on_purpose
 
@@ -17,7 +17,7 @@ Flags:
   -z, --no_zero         suppress the display of zero balance accounts
   -o, --cache           force the results of the query into the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
+  -v, --verbose         enable verbose output
   -h, --help            display this help screen
 
 Notes:

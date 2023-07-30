@@ -34,7 +34,7 @@ Flags:
   -d, --dry_run            display the results of the download without actually downloading
   -F, --first_block uint   do not download any chunks earlier than this block
   -s, --sleep float        seconds to sleep between downloads
-  -v, --verbose            enable verbose (increase detail with --log_level)
+  -v, --verbose            enable verbose output
   -h, --help               display this help screen
 
 Notes:

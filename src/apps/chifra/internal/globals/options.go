@@ -33,7 +33,6 @@ type GlobalOptions struct {
 
 func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
-	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
 	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
@@ -88,7 +87,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	}
 
 	if opts.Caps.Has(caps.Verbose) {
-		cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
+		cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose output")
 	}
 
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
@@ -113,10 +112,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	}
 	cmd.Flags().MarkHidden("nocolor")
 
-	if opts.Caps.Has(caps.LogLevel) {
-		cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
-	}
-	cmd.Flags().MarkHidden("log_level")
+	cmd.Flags().MarkDeprecated("log_level", "please use the --verbose option instead")
 
 	if opts.Caps.Has(caps.NoHeader) {
 		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
@@ -152,12 +148,8 @@ func (opts *GlobalOptions) toCmdLine() string {
 	if len(opts.Format) > 0 {
 		options += " --fmt " + opts.Format
 	}
-	if opts.Verbose || opts.LogLevel > 0 {
-		level := opts.LogLevel
-		if level == 0 {
-			level = 1
-		}
-		options += " --verbose " + fmt.Sprintf("%d", level)
+	if opts.Verbose {
+		options += " --verbose " + fmt.Sprintf("%d", 1)
 	}
 	if len(opts.OutputFn) > 0 {
 		options += " --output " + opts.OutputFn
@@ -197,8 +189,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 			// do nothing
 		case "nocolor":
 			opts.NoColor = true
-		case "logLevel":
-			opts.LogLevel = ToUint64(value[0])
 		case "noHeader":
 			opts.NoHeader = true
 		case "chain":

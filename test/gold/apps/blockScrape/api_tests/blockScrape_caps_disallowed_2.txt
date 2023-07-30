@@ -1,6 +1,1 @@
-scrape?logLevel=4
-{
-  "errors": [
-    "Invalid key (logLevel) in scrape route."
-  ]
-}
+REMOVE ME

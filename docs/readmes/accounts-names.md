@@ -38,7 +38,7 @@ Flags:
   -d, --dry_run           only available with --clean or --autoname, outputs changes to stdout instead of updating databases
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true
   -x, --fmt string        export format, one of [none|json*|txt|csv]
-  -v, --verbose           enable verbose (increase detail with --log_level)
+  -v, --verbose           enable verbose output
   -h, --help              display this help screen
 
 Notes:

@@ -11,7 +11,7 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins
 delay   ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
 on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,action = badmode
-delay   ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin & log_level = 8
+delay   ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin
 on      ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,sleep = .5
 on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = non-tracing
 
@@ -36,16 +36,16 @@ off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_33_paused_restart_okay  ,n 
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_34_running_pause_3_okay ,n    ,modes = both & action = pause
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n    ,modes = both & action = quit
 off     ,both ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET
-off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,modes = both & sleep = .5 & pin & log_level = 8
+off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,modes = both & sleep = .5 & pin
 off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,modes = both & sleep = .5
 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,by_file_bad                  ,n    ,file = cmd_file_2
 
 # Capabilities
-# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_allowed                 ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_1            ,y    ,fmt = json
-on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_2            ,y    ,log_level = 4
+#off    ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_2            ,y    ,log_ level = 4
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_3            ,y    ,no_header
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_4            ,y    ,output
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_5            ,y    ,append

@@ -85,7 +85,7 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 		var wg sync.WaitGroup
 
 		wg.Add(1)
-		MonitorScraper = NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+		MonitorScraper = NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, 1)
 		// Note that this never returns
 		go opts.RunMonitorScraper(&wg)
 

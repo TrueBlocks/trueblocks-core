@@ -31,7 +31,7 @@ Flags:
   -d, --deep               if true, dig more deeply during checking (manifest only)
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string         export format, one of [none|json*|txt|csv]
-  -v, --verbose            enable verbose (increase detail with --log_level)
+  -v, --verbose            enable verbose output
   -h, --help               display this help screen
 
 Notes:

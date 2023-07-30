@@ -32,7 +32,7 @@ Flags:
   -r, --remote             pin new chunks to the gateway (requires pinning service keys)
   -s, --sleep float        seconds to sleep between scraper passes (default 14)
   -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
-  -v, --verbose            enable verbose (increase detail with --log_level)
+  -v, --verbose            enable verbose output
   -h, --help               display this help screen
 ```
 

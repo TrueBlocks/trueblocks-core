@@ -1,4 +1,4 @@
-slurp?addrs=trueblocks.eth&chain&fmt&logLevel=4&nocolor&noop&version&verbose&noHeader&file&output&append&cache&raw&failOnPurpose
+slurp?addrs=trueblocks.eth&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&cache&raw&failOnPurpose
 {
   "errors": [
     "Invalid key (failOnPurpose) in slurp route."

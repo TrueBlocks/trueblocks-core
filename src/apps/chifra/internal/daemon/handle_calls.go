@@ -76,9 +76,6 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// If the server was started with --verbose and the command does not have --verbose...
 	if GetOptions().Globals.Verbose && !hasVerbose {
 		allDogs = append(allDogs, "--verbose")
-		allDogs = append(allDogs, "--log_level")
-		allDogs = append(allDogs, "4")
-		GetOptions().Globals.LogLevel = 4
 	}
 
 	allDogs, _ = rpcClient.GetAddressesFromEns(chain, allDogs)
@@ -212,8 +209,6 @@ func convertToCommandLine(in string) string {
 		return "last_block"
 	case "listCount":
 		return "list_count"
-	case "logLevel":
-		return "log_level"
 	case "matchCase":
 		return "match_case"
 	case "maxRecords":

@@ -33,7 +33,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 			}
 
 			if opts.Globals.Verbose {
-				displayBloom(&bl, int(opts.Globals.LogLevel))
+				displayBloom(&bl, 1)
 			}
 
 			stats, err := GetChunkStats(opts.Globals.Chain, path)

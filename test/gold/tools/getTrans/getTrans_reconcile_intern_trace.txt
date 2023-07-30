@@ -1,8 +1,7 @@
-chifra transactions  10681057.170 10607241.278 --account_for 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 --fmt json --log_level 10 --traces
+chifra transactions  10681057.170 10607241.278 --account_for 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 --fmt json --traces
 TEST[DATE|TIME] Transactions:  [10681057.170 10607241.278]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] AccountFor:  0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
-TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Caps:  cache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report

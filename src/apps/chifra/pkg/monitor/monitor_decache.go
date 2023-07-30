@@ -25,9 +25,9 @@ func (mon *Monitor) Decache(chain string, processor cache.DecacheFunc) error {
 	} else if cnt == 0 {
 		return nil
 	} else {
-		pairs := make([]base.NumPair[uint32], 0, len(apps))
+		pairs := make([]base.Pair[uint32, uint32], 0, len(apps))
 		for _, app := range apps {
-			pairs = append(pairs, base.NumPair[uint32]{N1: app.BlockNumber, N2: app.TransactionIndex})
+			pairs = append(pairs, base.Pair[uint32, uint32]{First: app.BlockNumber, Second: app.TransactionIndex})
 		}
 
 		// TODO: This should use go routines

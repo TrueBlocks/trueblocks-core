@@ -1,6 +1,5 @@
-chifra when  1000 --log_level 3
+chifra when  1000
 TEST[DATE|TIME] Blocks:  [1000]
-TEST[DATE|TIME] LogLevel:  3
 TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
 blockNumber	timestamp	date	name

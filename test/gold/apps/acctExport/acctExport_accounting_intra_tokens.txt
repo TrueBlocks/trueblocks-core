@@ -1,9 +1,8 @@
-chifra export  0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E --max_records 3 --first_record 683 --accounting --fmt json --log_level 10
+chifra export  0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E --max_records 3 --first_record 683 --accounting --fmt json
 TEST[DATE|TIME] Addrs:  [0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] FirstRecord:  683
 TEST[DATE|TIME] MaxRecords:  3
-TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] OutputFn:  accounting_intra_tokens_out.file
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] ===================================================
