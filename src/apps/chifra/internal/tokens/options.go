@@ -91,7 +91,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -126,7 +126,7 @@ func tokensFinishParse(args []string) *TokensOptions {
 			}
 		}
 	}
-	opts.Addrs, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}

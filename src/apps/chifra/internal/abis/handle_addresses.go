@@ -34,13 +34,15 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					cancel()
 				}
 				// Let's try to download the file from somewhere
-				if err := rpcClient.IsContractAt(opts.Globals.Chain, address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
-					errorChan <- err
-					cancel()
-				} else if errors.Is(err, rpcClient.ErrNotAContract) {
-					logger.Info("Address", address, "is not a smart contract. Skipping...")
-					err = nil // not an error to not be a contract
-					continue
+				if err := rpcClient.IsContractAt(opts.Globals.Chain, address, nil); err != nil {
+					if !errors.Is(err, rpcClient.ErrNotAContract) {
+						errorChan <- err
+						cancel()
+					} else {
+						logger.Info("Address", address, "is not a smart contract. Skipping...")
+						err = nil // not an error to not be a contract
+						continue
+					}
 				} else {
 					// It's okay to not find the ABI. We report an error, but do not stop processing
 					if err = abi.DownloadAbi(opts.Globals.Chain, address, result); err != nil {

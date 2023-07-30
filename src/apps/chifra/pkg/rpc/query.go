@@ -49,7 +49,7 @@ func getClient(provider string) *ethclient.Client {
 
 // GetTxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
 func GetTxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	ec := getClient(provider)
 	defer ec.Close()
 
@@ -68,8 +68,8 @@ func GetTxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error)
 
 // TODO: DUPLICATED DUE TO CYCLICAL IMPORT
 
-func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
-	provider := config.GetRpcProvider(chain)
+func GetTransactionFromNumberAndID(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
+	provider, _ := config.GetRpcProvider(chain)
 	ec := getClient(provider)
 	defer ec.Close()
 
@@ -88,7 +88,7 @@ func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transacti
 
 // GetBlockTimestamp returns the timestamp associated with a given block
 func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	ec := getClient(provider)
 	defer ec.Close()
 

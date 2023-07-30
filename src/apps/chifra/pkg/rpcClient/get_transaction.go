@@ -51,11 +51,14 @@ func GetRawTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64) (r
 	return getRawTransaction(chain, notAHash, notAHash, bn, txid)
 }
 
-func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
+func GetAppearanceFromHash(chain string, hash string) (types.RawAppearance, error) {
+	var ret types.RawAppearance
 	if rawTx, err := GetRawTransactionByHash(chain, base.HexToHash(hash)); err != nil {
-		return 0, 0, err
+		return ret, err
 	} else {
-		return utils.MustParseUint(rawTx.BlockNumber), utils.MustParseUint(rawTx.TransactionIndex), nil
+		ret.BlockNumber = uint32(utils.MustParseUint(rawTx.BlockNumber))
+		ret.TransactionIndex = uint32(utils.MustParseUint(rawTx.TransactionIndex))
+		return ret, nil
 	}
 }
 
@@ -292,7 +295,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		return
 	}
 
-	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs, IsTokenRelated(rawTx.Input))
+	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
 	if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
 		rpcOptions.Store.Write(tx, writeOptions)
@@ -346,7 +349,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, rpcOp
 		return
 	}
 
-	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs, IsTokenRelated(rawTx.Input))
+	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
 	if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
 		rpcOptions.Store.Write(tx, writeOptions)

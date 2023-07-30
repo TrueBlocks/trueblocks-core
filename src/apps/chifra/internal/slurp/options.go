@@ -95,7 +95,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -130,7 +130,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {

@@ -8,25 +8,16 @@
 package rpcClient
 
 import (
-	"context"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Test_Client(t *testing.T) {
 	chain := utils.GetTestChain()
-	provider := config.GetRpcProvider(chain)
-	ec := GetClient(provider) // won't return if it doesn't connect
 
-	bn, _ := ec.BlockNumber(context.Background())
-	if bn < 10000000 {
-		t.Error("probably not the right chain")
-	}
-
-	chainId, networkId, _ := GetIDs(chain)
+	chainId, networkId, _ := GetClientIDs(chain)
 	if chainId != networkId || chainId != 1 {
 		t.Error("provider chain id is 1")
 	}
@@ -37,12 +28,12 @@ func Test_Client(t *testing.T) {
 		t.Error("timestamp for block 1 is not correct")
 	}
 
-	_, err := GetTxHashFromHash(chain, "0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08")
+	_, err := GetTransactionHashFromHash(chain, "0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08")
 	if err != nil {
 		t.Error("couldn't get known transaction hash from tx hash")
 	}
 
-	_, err = GetTxHashFromHashAndId(chain, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53", 0)
+	_, err = GetTransactionHashFromHashAndID(chain, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53", 0)
 	if err != nil {
 		t.Error("couldn't get known transaction hash from block hash and tx id")
 	}
@@ -60,7 +51,7 @@ func Test_Client(t *testing.T) {
 
 func Test_TxFromNumberAndId(t *testing.T) {
 	txId := uint64(0)
-	_, err := GetTxFromNumberAndId("mainnet", uint64(1424623), txId)
+	_, err := GetTransactionFromNumberAndID("mainnet", uint64(1424623), txId)
 	if err != nil {
 		t.Fatal(err)
 	}

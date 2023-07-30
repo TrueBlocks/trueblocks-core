@@ -92,8 +92,8 @@ func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error
 	}
 }
 
-// GetTracesCountByTransactionId returns the number of traces in a given transaction
-func GetTracesCountByTransactionId(chain string, bn, txid uint64) (uint64, error) {
+// GetTraceCountByTransactionId returns the number of traces in a given transaction
+func GetTraceCountByTransactionId(chain string, bn, txid uint64) (uint64, error) {
 	traces, err := GetTracesByTransactionId(chain, bn, txid, NoOptions)
 	if err != nil {
 		return 0, err
@@ -123,8 +123,8 @@ func GetTracesByTransactionId(chain string, bn, txid uint64, rpcOptions *Options
 	return GetTracesByTransactionHash(chain, txHash, nil, rpcOptions)
 }
 
-// GetTracesCountByTransactionHash returns the number of traces in a given transaction
-func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error) {
+// GetTraceCountByTransactionHash returns the number of traces in a given transaction
+func GetTraceCountByTransactionHash(chain string, txHash string) (uint64, error) {
 	traces, err := GetTracesByTransactionHash(chain, txHash, nil, NoOptions)
 	if err != nil {
 		return 0, err

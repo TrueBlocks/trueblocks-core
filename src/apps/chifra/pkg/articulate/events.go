@@ -8,7 +8,7 @@ import (
 // Because these three topics make up almost all of the logs in the entire history
 // of the chain, we get significant speed-ups if we handle these items without
 // regular processing.
-var transferTopic = base.HexToHash(
+var TransferTopic = base.HexToHash(
 	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
 )
 var ensTransferTopic = base.HexToHash(
@@ -19,7 +19,7 @@ var approvalTopic = base.HexToHash(
 )
 
 func ParseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
-	if log.Topics[0] != transferTopic {
+	if log.Topics[0] != TransferTopic {
 		return nil
 	}
 	if len(log.Topics) < 3 {
@@ -32,7 +32,7 @@ func ParseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	function = &types.SimpleFunction{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
-	function.Encoding = transferTopic.Hex()
+	function.Encoding = TransferTopic.Hex()
 	function.Inputs = []types.SimpleParameter{
 		{
 			Name:          "_from",
@@ -67,7 +67,7 @@ func ParseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction
 	function = &types.SimpleFunction{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
-	function.Encoding = transferTopic.Hex() // TODO: THIS IS WRONG! SHOULDN'T THIS BE ENSTRANSFERTOPIC?
+	function.Encoding = TransferTopic.Hex() // TODO: THIS IS WRONG! SHOULDN'T THIS BE ENSTRANSFERTOPIC?
 	function.Inputs = []types.SimpleParameter{
 		{
 			Name:          "_node",
@@ -97,7 +97,7 @@ func ParseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	function = &types.SimpleFunction{}
 	function.Name = "Approval"
 	function.FunctionType = "event"
-	function.Encoding = transferTopic.Hex() // TODO: THIS IS WRONG! SHOULDN'T THIS BE APPROVALTOPIC?
+	function.Encoding = TransferTopic.Hex() // TODO: THIS IS WRONG! SHOULDN'T THIS BE APPROVALTOPIC?
 	function.Inputs = []types.SimpleParameter{
 		{
 			Name:          "_owner",

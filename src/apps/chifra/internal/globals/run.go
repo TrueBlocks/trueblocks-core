@@ -24,6 +24,8 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 	var wg sync.WaitGroup
 	wg.Add(2)
 
+	provider, _ := config.GetRpcProvider(chain)
+
 	var env config.ConfigEnv
 	env.Chain = chain
 	env.ConfigPath = config.GetPathToRootConfig()
@@ -31,7 +33,7 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 	env.CachePath = config.GetPathToCache(env.Chain)
 	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain) // order matters
 	env.IndexPath = config.GetPathToIndex(env.Chain)             // order matters
-	env.RpcProvider = config.GetRpcProvider(env.Chain)
+	env.RpcProvider = provider
 	envStr := env.ToCSV()
 
 	cmd := exec.Command(config.GetPathToCommands(path), options)

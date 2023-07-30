@@ -33,7 +33,7 @@ func (m MetaData) Age(bn uint64) int64 {
 }
 
 func GetMetaData(chain string, testmode bool) (*MetaData, error) {
-	chainId, networkId, err := GetIDs(chain)
+	chainId, networkId, err := GetClientIDs(chain)
 	if err != nil {
 		return nil, err
 	}

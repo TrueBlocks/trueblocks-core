@@ -202,7 +202,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			cnt, err := rpcClient.GetTxCountByBlockNumber(chain, uint64(id.Start.Number))
+			cnt, err := rpcClient.GetTransactionCountByBlockNumber(chain, uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
@@ -224,7 +224,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			cnt, err := rpcClient.GetTxCountByBlockNumber(chain, uint64(id.Start.resolvePoint(chain)))
+			cnt, err := rpcClient.GetTransactionCountByBlockNumber(chain, uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}
@@ -240,8 +240,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		bn, txid, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
-		app := types.RawAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
+		app, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
 		return append(txs, app), err
 	}
 

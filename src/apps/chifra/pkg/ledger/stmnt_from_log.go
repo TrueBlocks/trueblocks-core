@@ -8,14 +8,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // GetStatementFromLog returns a statement from a given log
 func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleStatement, err error) {
-	if !rpcClient.IsTransferTopic(log.Topics[0].Hex()) || len(log.Topics) < 3 {
+	if log.Topics[0] != token.TransferTopic || len(log.Topics) < 3 {
 		// isn't a transfer, return silently
 		return nil, nil
 	}

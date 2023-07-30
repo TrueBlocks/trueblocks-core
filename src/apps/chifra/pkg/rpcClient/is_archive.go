@@ -7,7 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 )
 
-func IsArchiveNode(chain string) bool {
+func IsNodeArchive(chain string) bool {
 	// TODO: from C++ code
 	// const CToml* config = getGlobalConfig("blockScrape");
 	// if (!config->getConfigBool("requires", "archive", true))

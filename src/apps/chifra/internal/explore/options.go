@@ -70,7 +70,7 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Terms, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, opts.Terms)
+	opts.Terms, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -82,7 +82,7 @@ func exploreFinishParse(args []string) *ExploreOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	opts.Terms, _ = rpcClient.ConvertEnsAddresses(opts.Globals.Chain, args)
+	opts.Terms, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
