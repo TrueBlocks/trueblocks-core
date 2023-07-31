@@ -45,17 +45,22 @@ func GetClient(provider string) *ethclient.Client {
 }
 
 // GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
-func GetLatestBlockNumber(provider string) uint64 {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	r, err := ec.BlockNumber(context.Background())
-	if err != nil {
-		logger.Error("Could not connect to RPC client")
+func GetLatestBlockNumber(chain string) uint64 {
+	if provider, err := config.GetRpcProvider(chain); err != nil {
+		logger.Info("Shit")
 		return 0
-	}
+	} else {
+		ec := GetClient(provider)
+		defer ec.Close()
 
-	return r
+		r, err := ec.BlockNumber(context.Background())
+		if err != nil {
+			logger.Error("Could not connect to RPC client")
+			return 0
+		}
+
+		return r
+	}
 }
 
 var noProvider string = `

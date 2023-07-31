@@ -52,8 +52,7 @@ func GetContractDeployBlock(chain string, address base.Address) (block base.Blkn
 		return
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
-	latest := GetLatestBlockNumber(provider)
+	latest := GetLatestBlockNumber(chain)
 
 	if err = IsContractAt(chain, address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
 		return

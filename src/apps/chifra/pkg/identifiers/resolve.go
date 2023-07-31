@@ -186,8 +186,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		var err error
 		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
-			provider, _ := config.GetRpcProvider(chain)
-			latest := rpcClient.GetLatestBlockNumber(provider)
+			latest := rpcClient.GetLatestBlockNumber(chain)
 			tsFuture := rpcClient.GetBlockTimestamp(chain, &latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
