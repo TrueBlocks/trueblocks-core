@@ -261,3 +261,4 @@ func GetTransactionHashByNumberAndID(chain string, bn, txId uint64) (string, err
 		return tx.Hash().Hex(), nil
 	}
 }
+
