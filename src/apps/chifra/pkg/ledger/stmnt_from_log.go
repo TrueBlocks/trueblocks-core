@@ -6,15 +6,15 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // GetStatementFromLog returns a statement from a given log
 func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleStatement, err error) {
-	if !rpcClient.IsTransferTopic(log.Topics[0].Hex()) || len(log.Topics) < 3 {
+	if log.Topics[0] != token.TransferTopic || len(log.Topics) < 3 {
 		// isn't a transfer, return silently
 		return nil, nil
 	}
@@ -88,7 +88,9 @@ func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleState
 
 	if ofInterst {
 		if !l.TrialBalance("TOKENS", &ret) {
-			logger.Warn("Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "does not reconcile")
+			logger.Warn(colors.Yellow+"Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "does not reconcile"+colors.Off)
+		} else {
+			logger.Progress(true, colors.Green+"Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "reconciled"+colors.Off)
 		}
 	}
 

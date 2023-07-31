@@ -229,3 +229,9 @@ func (t *Token) IsErc20() bool {
 func (t *Token) IsErc721() bool {
 	return t.Type == TokenErc721
 }
+
+// TODO: DUPLICATED
+
+var TransferTopic = base.HexToHash(
+	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+)

@@ -91,7 +91,7 @@ func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.Simp
 			return block, err
 		}
 
-		tx := types.NewSimpleTransaction(raw, &receipt, ts, IsTokenRelated(raw.Input))
+		tx := types.NewSimpleTransaction(raw, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
 		if options.HasStore() && !options.TransactionWriteDisabled {

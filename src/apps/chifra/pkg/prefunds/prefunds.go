@@ -23,12 +23,12 @@ type Allocation struct {
 // emptyAllocs is a list of empty allocations. We use this to return at least one allocation
 var emptyAllocs = []Allocation{{Address: base.HexToAddress("0x0"), Balance: *big.NewInt(0)}}
 
-type AllocCallback func(*Allocation, *any) (bool, error)
+type allocCallback func(*Allocation, *any) (bool, error)
 
 // TODO: In the c++ code, the prefunds were cached in memory. We should do the same here.
 
 // LoadPrefunds loads the prefunds from the genesis file and processes each with provided callback if present
-func LoadPrefunds(chain string, thePath string, userCallback AllocCallback) ([]Allocation, error) {
+func LoadPrefunds(chain string, thePath string, userCallback allocCallback) ([]Allocation, error) {
 	allocations := make([]Allocation, 0, 4000)
 	callbackFunc := func(record Allocation) error {
 		if base.IsValidAddress(record.Address.Hex()) {

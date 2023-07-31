@@ -100,7 +100,7 @@ func (s *SimpleParameter) DisplayName(index int) string {
 	return "val_" + fmt.Sprint(index)
 }
 
-func ParametersToMap(params []SimpleParameter) (result map[string]any) {
+func parametersToMap(params []SimpleParameter) (result map[string]any) {
 	// This produces `null` in JSON instead of an empty object (`{}`)
 	if len(params) == 0 {
 		return nil

@@ -292,7 +292,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		return
 	}
 
-	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs, IsTokenRelated(rawTx.Input))
+	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
 	if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
 		rpcOptions.Store.Write(tx, writeOptions)
@@ -346,7 +346,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, rpcOp
 		return
 	}
 
-	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs, IsTokenRelated(rawTx.Input))
+	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
 	if rpcOptions.HasStore() && !rpcOptions.TransactionWriteDisabled {
 		rpcOptions.Store.Write(tx, writeOptions)
