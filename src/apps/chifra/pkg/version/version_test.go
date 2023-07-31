@@ -45,11 +45,11 @@ func TestNewVersion(t *testing.T) {
 		{
 			name: "library version string",
 			args: args{
-				str: "GHC-TrueBlocks//0.72.0-beta",
+				str: "GHC-TrueBlocks//0.76.0-beta",
 			},
 			wantVers: Version{
 				Major:  0,
-				Minor:  72,
+				Minor:  76,
 				Build:  0,
 				Aspect: "beta",
 			},

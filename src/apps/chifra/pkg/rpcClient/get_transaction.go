@@ -269,12 +269,12 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 	}
 
 	blockTs = GetBlockTimestamp(chain, &bn)
-	receipt, err := GetReceipt(chain, ReceiptQuery{
+	receipt, err := options.GetReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	}, options)
+	})
 	if err != nil {
 		return
 	}
@@ -328,12 +328,12 @@ func (options *Options) GetTransactionByBlockAndId(chain string, bn base.Blknum,
 		}
 	}
 
-	receipt, err := GetReceipt(chain, ReceiptQuery{
+	receipt, err := options.GetReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
 		NeedsTs: true,
 		Ts:      blockTs,
-	}, options)
+	})
 	if err != nil {
 		return
 	}

@@ -78,14 +78,14 @@ func (options *Options) GetBlockBodyByNumber(chain string, bn uint64) (types.Sim
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
-		receipt, err = GetReceipt(chain, ReceiptQuery{
+		receipt, err = options.GetReceipt(chain, ReceiptQuery{
 			Bn:       uint64(bn),
 			Txid:     uint64(raw.TxIndex()),
 			TxHash:   raw.TxHash(),
 			GasPrice: raw.TxGasPrice(),
 			NeedsTs:  true,
 			Ts:       ts,
-		}, options)
+		})
 		if err != nil {
 			return block, err
 		}

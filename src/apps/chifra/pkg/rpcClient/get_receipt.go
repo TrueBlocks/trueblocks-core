@@ -26,13 +26,13 @@ type ReceiptQuery struct {
 
 // GetReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func GetReceipt(chain string, query ReceiptQuery, rpcOptions *Options) (receipt types.SimpleReceipt, err error) {
-	if rpcOptions.HasStore() {
+func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
+	if options.HasStore() {
 		tx := &types.SimpleTransaction{
 			BlockNumber:      query.Bn,
 			TransactionIndex: query.Txid,
 		}
-		if err := rpcOptions.Store.Read(tx, nil); err == nil {
+		if err := options.Store.Read(tx, nil); err == nil {
 			// success
 			if tx.Receipt == nil {
 				return receipt, nil
