@@ -10,8 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"io"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -62,14 +60,6 @@ func (s *SimpleEthCall) Model(verbose bool, format string, extraOptions map[stri
 		Data:  model,
 		Order: order,
 	}
-}
-
-func (s *SimpleEthCall) WriteTo(w io.Writer) (n int64, err error) {
-	return 0, nil
-}
-
-func (s *SimpleEthCall) ReadFrom(r io.Reader) (n int64, err error) {
-	return 0, nil
 }
 
 // EXISTING_CODE

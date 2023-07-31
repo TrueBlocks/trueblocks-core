@@ -2,8 +2,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"io"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -70,14 +68,6 @@ func (s *SimpleMonitor) Model(verbose bool, format string, extraOptions map[stri
 		Data:  model,
 		Order: order,
 	}
-}
-
-func (s *SimpleMonitor) WriteTo(w io.Writer) (n int64, err error) {
-	return 0, nil
-}
-
-func (s *SimpleMonitor) ReadFrom(r io.Reader) (n int64, err error) {
-	return 0, nil
 }
 
 // EXISTING_CODE

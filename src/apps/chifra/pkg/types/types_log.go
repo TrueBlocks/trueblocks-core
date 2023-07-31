@@ -94,7 +94,7 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	var articulatedLog = make(map[string]any)
 	if isArticulated {
 		articulatedLog["name"] = s.ArticulatedLog.Name
-		inputModels := ParametersToMap(s.ArticulatedLog.Inputs)
+		inputModels := parametersToMap(s.ArticulatedLog.Inputs)
 		if inputModels != nil {
 			articulatedLog["inputs"] = inputModels
 		}

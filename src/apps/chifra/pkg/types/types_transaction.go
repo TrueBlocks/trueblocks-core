@@ -168,11 +168,11 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		articulatedTx = map[string]interface{}{
 			"name": s.ArticulatedTx.Name,
 		}
-		inputModels := ParametersToMap(s.ArticulatedTx.Inputs)
+		inputModels := parametersToMap(s.ArticulatedTx.Inputs)
 		if inputModels != nil {
 			articulatedTx["inputs"] = inputModels
 		}
-		outputModels := ParametersToMap(s.ArticulatedTx.Outputs)
+		outputModels := parametersToMap(s.ArticulatedTx.Outputs)
 		if outputModels != nil {
 			articulatedTx["outputs"] = outputModels
 		}
@@ -246,7 +246,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 					"date":      utils.FormattedDate(s.Timestamp),
 				}
 				if extraOptions["articulate"] == true && log.ArticulatedLog != nil {
-					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+					inputModels := parametersToMap(log.ArticulatedLog.Inputs)
 					articulatedLog := map[string]any{
 						"name":   log.ArticulatedLog.Name,
 						"inputs": inputModels,

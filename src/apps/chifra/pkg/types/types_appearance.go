@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"fmt"
-	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -147,14 +146,6 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 		Data:  model,
 		Order: order,
 	}
-}
-
-func (s *SimpleAppearance) WriteTo(w io.Writer) (n int64, err error) {
-	return 0, nil
-}
-
-func (s *SimpleAppearance) ReadFrom(r io.Reader) (n int64, err error) {
-	return 0, nil
 }
 
 // EXISTING_CODE

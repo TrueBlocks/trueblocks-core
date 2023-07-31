@@ -1,15 +1,8 @@
 package types
 
-import "io"
-
 type Modeler[RT RawData] interface {
 	Model(verbose bool, format string, extraOptions map[string]any) Model
 	Raw() *RT
-}
-
-type Cacheable interface {
-	WriteTo(w io.Writer) (n int64, err error)
-	ReadFrom(r io.Reader) (n int64, err error)
 }
 
 type Model struct {

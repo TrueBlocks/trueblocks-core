@@ -110,7 +110,7 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 					articulatedLog := map[string]any{
 						"name": log.ArticulatedLog.Name,
 					}
-					inputModels := ParametersToMap(log.ArticulatedLog.Inputs)
+					inputModels := parametersToMap(log.ArticulatedLog.Inputs)
 					if inputModels != nil {
 						articulatedLog["inputs"] = inputModels
 					}

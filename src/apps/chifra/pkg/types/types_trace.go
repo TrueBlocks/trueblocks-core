@@ -105,11 +105,11 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 		articulatedTrace = map[string]interface{}{
 			"name": s.ArticulatedTrace.Name,
 		}
-		inputModels := ParametersToMap(s.ArticulatedTrace.Inputs)
+		inputModels := parametersToMap(s.ArticulatedTrace.Inputs)
 		if inputModels != nil {
 			articulatedTrace["inputs"] = inputModels
 		}
-		outputModels := ParametersToMap(s.ArticulatedTrace.Outputs)
+		outputModels := parametersToMap(s.ArticulatedTrace.Outputs)
 		if outputModels != nil {
 			articulatedTrace["outputs"] = outputModels
 		}
