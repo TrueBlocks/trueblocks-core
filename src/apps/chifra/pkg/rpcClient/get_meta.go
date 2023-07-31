@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -34,9 +33,7 @@ func (m MetaData) Age(bn uint64) int64 {
 }
 
 func GetMetaData(chain string, testmode bool) (*MetaData, error) {
-	provider, _ := config.GetRpcProvider(chain)
-
-	chainId, networkId, err := GetClientIDs(provider)
+	chainId, networkId, err := GetClientIDs(chain)
 	if err != nil {
 		return nil, err
 	}

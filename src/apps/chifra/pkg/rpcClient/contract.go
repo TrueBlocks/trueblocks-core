@@ -8,7 +8,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
@@ -18,25 +17,26 @@ var ErrNotAContract = errors.New("not a contract")
 
 // IsContractAt checks if an account is a contract
 func IsContractAt(chain string, address base.Address, block *types.SimpleNamedBlock) error {
-	provider, _ := config.GetRpcProvider(chain)
-	ec, _ := GetClient(provider)
-	defer ec.Close()
-
-	var clientBlockArg *big.Int = nil
-	if block != nil && block.Name != "latest" {
-		clientBlockArg = big.NewInt(0).SetUint64(block.BlockNumber)
-	}
-
-	ctx := context.Background()
-	if code, err := ec.CodeAt(ctx, address.ToCommon(), clientBlockArg); err != nil {
+	if ec, err := GetClient(chain); err != nil {
 		return err
 	} else {
-		if len(code) == 0 {
-			return ErrNotAContract
-		}
-	}
+		defer ec.Close()
 
-	return nil
+		var clientBlockArg *big.Int = nil
+		if block != nil && block.Name != "latest" {
+			clientBlockArg = big.NewInt(0).SetUint64(block.BlockNumber)
+		}
+
+		ctx := context.Background()
+		if code, err := ec.CodeAt(ctx, address.ToCommon(), clientBlockArg); err != nil {
+			return err
+		} else {
+			if len(code) == 0 {
+				return ErrNotAContract
+			}
+		}
+		return nil
+	}
 }
 
 var deployedCacheMutex sync.Mutex
@@ -78,50 +78,52 @@ var locations = []string{
 
 // GetProxyAt returns the proxy address for a contract if any
 func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (base.Address, error) {
-	provider, _ := config.GetRpcProvider(chain)
-	ec, _ := GetClient(provider)
-	defer ec.Close()
+	if ec, err := GetClient(chain); err != nil {
+		return base.Address{}, err
+	} else {
+		defer ec.Close()
 
-	proxyAddr, err := rpc.Query[string](chain, "eth_call", rpc.Params{
-		map[string]any{
-			"to": address,
-			// implementation()
-			"data": "0x59679b0f",
-		},
-		blockNumber,
-	})
-	var proxy base.Address
-	if proxyAddr != nil {
-		proxy = base.HexToAddress(*proxyAddr)
-	}
-	if err == nil && !proxy.IsZero() && proxy.Hex() != address.Hex() {
-		return proxy, nil
-	}
-
-	bn := big.NewInt(0).SetUint64(blockNumber)
-
-	for _, location := range locations {
-		var value []byte
-		value, err = ec.StorageAt(
-			context.Background(),
-			address.Address,
-			common.HexToHash(location),
-			bn,
-		)
-		if err != nil {
+		proxyAddr, err := rpc.Query[string](chain, "eth_call", rpc.Params{
+			map[string]any{
+				"to": address,
+				// implementation()
+				"data": "0x59679b0f",
+			},
+			blockNumber,
+		})
+		var proxy base.Address
+		if proxyAddr != nil {
+			proxy = base.HexToAddress(*proxyAddr)
+		}
+		if err == nil && !proxy.IsZero() && proxy.Hex() != address.Hex() {
 			return proxy, err
 		}
-		proxy = base.BytesToAddress(value)
-		if !proxy.IsZero() && proxy.Hex() != address.Hex() {
-			err = IsContractAt(chain, proxy, &types.SimpleNamedBlock{BlockNumber: blockNumber})
-			if errors.Is(err, ErrNotAContract) {
-				// Not a proxy
-				return base.Address{}, nil
+
+		bn := big.NewInt(0).SetUint64(blockNumber)
+
+		for _, location := range locations {
+			var value []byte
+			value, err = ec.StorageAt(
+				context.Background(),
+				address.Address,
+				common.HexToHash(location),
+				bn,
+			)
+			if err != nil {
+				return proxy, err
 			}
-			return proxy, err
+			proxy = base.BytesToAddress(value)
+			if !proxy.IsZero() && proxy.Hex() != address.Hex() {
+				err = IsContractAt(chain, proxy, &types.SimpleNamedBlock{BlockNumber: blockNumber})
+				if errors.Is(err, ErrNotAContract) {
+					// Not a proxy
+					return base.Address{}, nil
+				}
+				return proxy, err
+			}
+			proxy = base.Address{}
 		}
-		proxy = base.Address{}
-	}
 
-	return proxy, err
+		return proxy, err
+	}
 }

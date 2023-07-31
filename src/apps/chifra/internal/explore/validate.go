@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum"
@@ -127,10 +126,8 @@ func (t ExploreType) String() string {
 }
 
 func idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
-	provider, _ := config.GetRpcProvider(chain)
-
 	if isBlockHash(arg) {
-		return rpcClient.BlockHashFromHash(provider, arg)
+		return rpcClient.GetBlockHashFromHashStr(chain, arg)
 	}
 
 	blockNum, err := strconv.ParseUint(arg, 10, 64)
@@ -144,12 +141,10 @@ func idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string
 // and returns the transaction hash represented by that identifier. (If it's a valid transaction.
 // It may not be because transaction hashes and block hashes are both 32-byte hex)
 func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
-	provider, _ := config.GetRpcProvider(chain)
-
 	// simple case first
 	if !strings.Contains(arg, ".") {
 		// We know it's a hash, but we want to know if it's a legitimate tx on chain
-		return rpcClient.TxHashFromHash(provider, arg)
+		return rpcClient.GetTransactionHashFromHashStr(chain, arg)
 	}
 
 	parts := strings.Split(arg, ".")
@@ -162,7 +157,7 @@ func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, e
 		if err != nil {
 			return "", nil
 		}
-		return rpcClient.TxHashFromHashAndId(provider, parts[0], txId)
+		return rpcClient.GetTransactionHashByHashAndID(chain, parts[0], txId)
 	}
 
 	blockNum, err := strconv.ParseUint(parts[0], 10, 64)

@@ -48,8 +48,10 @@ func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 		return cid, nil
 	}
 
-	provider, _ := config.GetRpcProvider("mainnet") // we always read from the mainnet smart contract
-	ec, _ := rpcClient.GetClient(provider)
+	ec, err := rpcClient.GetClient("mainnet")
+	if err != nil {
+		return "", fmt.Errorf("while connecting to client: %w", err)
+	}
 	defer ec.Close()
 
 	abiFn := filepath.Join(config.GetPathToRootConfig(), "abis/known-000/unchainedV2.json")
@@ -92,8 +94,8 @@ func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 	}
 
 	if len(response) == 0 {
-		msg := fmt.Sprintf("empty response %sfrom provider %s on chain %s",
-			response, provider, which)
+		msg := fmt.Sprintf("empty response %sfrom client on chain %s",
+			response, which)
 		// Node may be syncing
 		response, err := ec.SyncProgress(context.Background())
 		// If synced, return the empty response message.
@@ -105,7 +107,7 @@ func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 			}
 			// Syncing
 			// TODO: This should be broadened to handle all queries to the node that end with no response
-			msg := fmt.Sprintf("chain %s on provider %s is syncing. Please wait until this is finished.", which, provider)
+			msg := fmt.Sprintf("chain %s is syncing. Please wait until this is finished.", which)
 			return "", fmt.Errorf(msg)
 		}
 	}

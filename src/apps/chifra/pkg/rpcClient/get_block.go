@@ -13,7 +13,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -214,9 +213,8 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 // GetBlockTimestamp returns the timestamp associated with a given block
 func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
-	provider, _ := config.GetRpcProvider(chain)
-	if ec, _ := GetClient(provider); ec == nil {
-		logger.Error("Could not connect to RPC client")
+	if ec, err := GetClient(chain); err != nil {
+		logger.Error("Could not connect to RPC client", err)
 		return 0
 	} else {
 		defer ec.Close()
@@ -240,5 +238,26 @@ func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
 		}
 
 		return ts
+	}
+}
+
+// GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
+func GetTransactionHashByNumberAndID(chain string, bn, txId uint64) (string, error) {
+	if ec, err := GetClient(chain); err != nil {
+		return "", err
+	} else {
+		defer ec.Close()
+
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
+		if err != nil {
+			return "", fmt.Errorf("error at block %s: %w", fmt.Sprintf("%d", bn), err)
+		}
+
+		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
+		if err != nil {
+			return "", fmt.Errorf("transaction at %s returned an error: %w", fmt.Sprintf("%s.%d", block.Hash(), txId), err)
+		}
+
+		return tx.Hash().Hex(), nil
 	}
 }
