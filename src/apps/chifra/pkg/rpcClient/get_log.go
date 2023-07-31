@@ -65,10 +65,12 @@ func getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLo
 	}
 }
 
+// GetLogsByFilter returns the logs given a filter
 func GetLogsByFilter(chain string, filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
 	return getSimpleLogs(chain, filter)
 }
 
+// GetLogsByBlockNumber returns the logs of a block
 func GetLogsByBlockNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
 	filter := types.SimpleLogFilter{
 		FromBlock: bn,
@@ -77,7 +79,8 @@ func GetLogsByBlockNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
 	return getSimpleLogs(chain, filter)
 }
 
-func GetLogCountByBlockNumber(chain string, bn uint64) (uint64, error) {
+// GetCountLogsInBlock returns the number of logs in a block
+func GetCountLogsInBlock(chain string, bn uint64) (uint64, error) {
 	if logs, err := GetLogsByBlockNumber(chain, bn); err != nil {
 		return 0, err
 	} else {
@@ -85,6 +88,7 @@ func GetLogCountByBlockNumber(chain string, bn uint64) (uint64, error) {
 	}
 }
 
+// GetLogsByTransactionId returns the logs of a transaction
 func GetLogsByTransactionId(chain string, bn, txid uint64) ([]types.SimpleLog, error) {
 	blockTs := GetBlockTimestamp(chain, &bn)
 	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
