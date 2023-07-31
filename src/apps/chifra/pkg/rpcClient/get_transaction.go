@@ -42,23 +42,14 @@ func getRawTransaction(chain string, blkHash base.Hash, txHash base.Hash, bn bas
 	}
 }
 
-func GetRawTransactionByHashAndId(chain string, blkHash base.Hash, txid uint64) (raw *types.RawTransaction, err error) {
-	return getRawTransaction(chain, blkHash, notAHash, notAnInt, txid)
-}
-
-func GetRawTransactionByHash(chain string, txHash base.Hash) (raw *types.RawTransaction, err error) {
-	return getRawTransaction(chain, notAHash, txHash, notAnInt, notAnInt)
-}
-
-func GetRawTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64) (raw *types.RawTransaction, err error) {
-	return getRawTransaction(chain, notAHash, notAHash, bn, txid)
-}
-
-func GetAppearanceFromHash(chain string, hash string) (uint64, uint64, error) {
-	if rawTx, err := GetRawTransactionByHash(chain, base.HexToHash(hash)); err != nil {
-		return 0, 0, err
+func GetAppearanceFromHash(chain string, hash string) (types.RawAppearance, error) {
+	var ret types.RawAppearance
+	if rawTx, err := getRawTransaction(chain, notAHash, base.HexToHash(hash), notAnInt, notAnInt); err != nil {
+		return ret, err
 	} else {
-		return utils.MustParseUint(rawTx.BlockNumber), utils.MustParseUint(rawTx.TransactionIndex), nil
+		ret.BlockNumber = uint32(utils.MustParseUint(rawTx.BlockNumber))
+		ret.TransactionIndex = uint32(utils.MustParseUint(rawTx.TransactionIndex))
+		return ret, nil
 	}
 }
 
@@ -144,6 +135,8 @@ func getBlockReward(bn uint64) *big.Int {
 		return big.NewInt(2000000000000000000)
 	}
 }
+
+// TODO: This is not cross-chain correct
 
 func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
 	if block, err := GetBlockBodyByNumber(chain, uint64(appearance.BlockNumber), &Options{Store: cacheNew.NoCache}); err != nil {
@@ -290,7 +283,7 @@ func GetTransactionByAppearance(chain string, appearance *types.RawAppearance, f
 		return
 	}
 
-	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
+	rawTx, err := getRawTransaction(chain, notAHash, notAHash, bn, txid)
 	if err != nil {
 		return
 	}
@@ -325,7 +318,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, rpcOp
 		}
 	}
 
-	rawTx, err := GetRawTransactionByBlockAndId(chain, bn, txid)
+	rawTx, err := getRawTransaction(chain, notAHash, notAHash, bn, txid)
 	if err != nil {
 		return
 	}

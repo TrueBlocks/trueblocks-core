@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -202,8 +201,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			provider, _ := config.GetRpcProvider(chain)
-			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.Number))
+			cnt, err := rpcClient.GetCountTransactionsInBlock(chain, uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
@@ -225,8 +223,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			provider, _ := config.GetRpcProvider(chain)
-			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.resolvePoint(chain)))
+			cnt, err := rpcClient.GetCountTransactionsInBlock(chain, uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}
@@ -242,8 +239,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		bn, txid, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
-		app := types.RawAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
+		app, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
 		return append(txs, app), err
 	}
 

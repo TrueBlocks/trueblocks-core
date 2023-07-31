@@ -36,7 +36,7 @@ func (m MetaData) Age(bn uint64) int64 {
 func GetMetaData(chain string, testmode bool) (*MetaData, error) {
 	provider, _ := config.GetRpcProvider(chain)
 
-	chainId, networkId, err := GetIDs(provider)
+	chainId, networkId, err := GetClientIDs(provider)
 	if err != nil {
 		return nil, err
 	}

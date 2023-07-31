@@ -41,7 +41,7 @@ func Test_Client(t *testing.T) {
 		t.Error("probably not the right chain")
 	}
 
-	chainId, networkId, _ := GetIDs(provider)
+	chainId, networkId, _ := GetClientIDs(provider)
 	if chainId != networkId || chainId != 1 {
 		t.Error("provider chain id is 1")
 	}

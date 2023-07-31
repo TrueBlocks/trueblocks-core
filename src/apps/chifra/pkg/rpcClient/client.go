@@ -68,13 +68,8 @@ var noProvider string = `
   value in the file {T}[{FILE}]{O}. Quitting...
 `
 
-// CheckRpc will not return if the RPC is not available
-func CheckRpc(provider string) {
-	GetIDs(provider)
-}
-
-// GetIDs returns both chainId and networkId from the node
-func GetIDs(provider string) (uint64, uint64, error) {
+// GetClientIDs returns both chainId and networkId from the node
+func GetClientIDs(provider string) (uint64, uint64, error) {
 	// We might need it, so create it
 	msg := noProvider
 	msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
@@ -142,8 +137,9 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 	return tx.Hash().Hex(), nil
 }
 
-// TxCountByBlockNumber returns the number of transactions in a block
-func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
+// GetCountTransactionsInBlock returns the number of transactions in a block
+func GetCountTransactionsInBlock(chain string, blkNum uint64) (uint64, error) {
+	provider, _ := config.GetRpcProvider(chain)
 	ec, _ := GetClient(provider)
 	defer ec.Close()
 

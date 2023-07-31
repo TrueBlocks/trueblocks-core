@@ -53,7 +53,6 @@ func GetContractDeployBlock(chain string, address base.Address) (block base.Blkn
 	}
 
 	latest := GetLatestBlockNumber(chain)
-
 	if err = IsContractAt(chain, address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
 		return
 	}
@@ -78,7 +77,7 @@ var locations = []string{
 }
 
 // GetProxyAt returns the proxy address for a contract if any
-func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (proxy base.Address, err error) {
+func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (base.Address, error) {
 	provider, _ := config.GetRpcProvider(chain)
 	ec, _ := GetClient(provider)
 	defer ec.Close()
@@ -91,13 +90,13 @@ func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (pr
 		},
 		blockNumber,
 	})
+	var proxy base.Address
 	if proxyAddr != nil {
 		proxy = base.HexToAddress(*proxyAddr)
 	}
 	if err == nil && !proxy.IsZero() && proxy.Hex() != address.Hex() {
-		return
+		return proxy, nil
 	}
-	proxy = base.Address{}
 
 	bn := big.NewInt(0).SetUint64(blockNumber)
 
@@ -110,7 +109,7 @@ func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (pr
 			bn,
 		)
 		if err != nil {
-			return
+			return proxy, err
 		}
 		proxy = base.BytesToAddress(value)
 		if !proxy.IsZero() && proxy.Hex() != address.Hex() {
@@ -119,10 +118,10 @@ func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (pr
 				// Not a proxy
 				return base.Address{}, nil
 			}
-			return
+			return proxy, err
 		}
 		proxy = base.Address{}
 	}
 
-	return
+	return proxy, err
 }

@@ -49,7 +49,6 @@ func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 	}
 
 	provider, _ := config.GetRpcProvider("mainnet") // we always read from the mainnet smart contract
-	rpcClient.CheckRpc(provider)
 	ec, _ := rpcClient.GetClient(provider)
 	defer ec.Close()
 
