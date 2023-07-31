@@ -176,7 +176,7 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 func (p *Point) resolvePoint(chain string) uint64 {
 	var bn uint64
 	if p.Hash != "" {
-		provider := config.GetRpcProvider(chain)
+		provider, _ := config.GetRpcProvider(chain)
 		bn, _ = rpcClient.BlockNumberFromHash(provider, p.Hash)
 	} else if p.Date != "" {
 		bn, _ = tslib.FromDateToBn(chain, p.Date)
@@ -186,7 +186,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		var err error
 		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
-			provider := config.GetRpcProvider(chain)
+			provider, _ := config.GetRpcProvider(chain)
 			latest := rpcClient.GetLatestBlockNumber(provider)
 			tsFuture := rpcClient.GetBlockTimestamp(chain, &latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
@@ -204,7 +204,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			provider := config.GetRpcProvider(chain)
+			provider, _ := config.GetRpcProvider(chain)
 			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
@@ -227,7 +227,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			provider := config.GetRpcProvider(chain)
+			provider, _ := config.GetRpcProvider(chain)
 			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err

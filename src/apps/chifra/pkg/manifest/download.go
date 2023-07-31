@@ -48,7 +48,7 @@ func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 		return cid, nil
 	}
 
-	provider := config.GetRpcProvider("mainnet") // we always read from the mainnet smart contract
+	provider, _ := config.GetRpcProvider("mainnet") // we always read from the mainnet smart contract
 	rpcClient.CheckRpc(provider)
 	ethClient := rpcClient.GetClient(provider)
 	defer ethClient.Close()

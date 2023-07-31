@@ -33,7 +33,7 @@ func Test_Client(t *testing.T) {
 	}
 
 	chain := utils.GetTestChain()
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	ec := GetClient(provider) // won't return if it doesn't connect
 
 	bn, _ := ec.BlockNumber(context.Background())

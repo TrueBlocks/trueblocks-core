@@ -73,7 +73,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS {
-		provider := config.GetRpcProvider(opts.Globals.Chain)
+		provider, _ := config.GetRpcProvider(opts.Globals.Chain)
 		latest := rpcClient.GetLatestBlockNumber(provider)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)

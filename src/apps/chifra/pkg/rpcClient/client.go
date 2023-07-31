@@ -140,7 +140,7 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 
 // GetTxFromNumberAndId returns an actual transaction
 func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -212,7 +212,7 @@ func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
 
 // GetBalanceAt returns a balance for an address at a block
 func GetBalanceAt(chain string, addr base.Address, blkNum uint64) (*big.Int, error) {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -259,7 +259,7 @@ func DecodeHex(hex string) []byte {
 
 func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
 	// return IsValidAddress(addr)
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	ec := GetClient(provider)
 	// TODO: we don't use block number, but we should - we need to convert it
 	return ec.CodeAt(context.Background(), addr.ToCommon(), nil) // nil is latest block

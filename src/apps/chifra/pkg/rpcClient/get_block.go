@@ -216,7 +216,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 // GetBlockTimestamp returns the timestamp associated with a given block
 func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	if ec := GetClient(provider); ec == nil {
 		logger.Error("Could not connect to RPC client")
 		return 0

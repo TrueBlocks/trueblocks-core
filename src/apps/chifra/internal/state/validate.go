@@ -101,7 +101,8 @@ func (opts *StateOptions) validateState() error {
 			return err
 		}
 
-		latest := rpcClient.GetLatestBlockNumber(config.GetRpcProvider(opts.Globals.Chain))
+		provider, _ := config.GetRpcProvider(opts.Globals.Chain)
+		latest := rpcClient.GetLatestBlockNumber(provider)
 		// TODO: Should be configurable
 		if bounds.First < (latest-250) && !rpcClient.IsNodeArchive(opts.Globals.Chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")

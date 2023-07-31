@@ -18,7 +18,7 @@ var ErrNotAContract = errors.New("not a contract")
 
 // IsContractAt checks if an account is a contract
 func IsContractAt(chain string, address base.Address, block *types.SimpleNamedBlock) error {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	client := GetClient(provider)
 	defer client.Close()
 
@@ -52,7 +52,7 @@ func GetContractDeployBlock(chain string, address base.Address) (block base.Blkn
 		return
 	}
 
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	latest := GetLatestBlockNumber(provider)
 
 	if err = IsContractAt(chain, address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
@@ -80,7 +80,8 @@ var locations = []string{
 
 // GetProxyAt returns the proxy address for a contract if any
 func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (proxy base.Address, err error) {
-	client := GetClient(config.GetRpcProvider(chain))
+	provider, _ := config.GetRpcProvider(chain)
+	client := GetClient(provider)
 	proxyAddr, err := rpc.Query[string](chain, "eth_call", rpc.Params{
 		map[string]any{
 			"to": address,

@@ -47,7 +47,7 @@ func getClient(provider string) *ethclient.Client {
 
 // GetTxHashFromNumberAndId returns a transaction's hash if it's a valid transaction
 func GetTxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error) {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	ec := getClient(provider)
 	defer ec.Close()
 
@@ -67,7 +67,7 @@ func GetTxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error)
 // TODO: DUPLICATED DUE TO CYCLICAL IMPORT
 
 func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	ec := getClient(provider)
 	defer ec.Close()
 

@@ -128,7 +128,7 @@ func (t ExploreType) String() string {
 }
 
 func idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	rpcClient.CheckRpc(provider)
 
 	if isBlockHash(arg) {
@@ -146,7 +146,7 @@ func idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string
 // and returns the transaction hash represented by that identifier. (If it's a valid transaction.
 // It may not be because transaction hashes and block hashes are both 32-byte hex)
 func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 	rpcClient.CheckRpc(provider)
 
 	// simple case first

@@ -29,7 +29,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	chain := opts.Globals.Chain
-	provider := config.GetRpcProvider(chain)
+	provider, _ := config.GetRpcProvider(chain)
 
 	blazeOpts := BlazeOptions{
 		Chain:        opts.Globals.Chain,
@@ -73,7 +73,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		chain := opts.Globals.Chain
-		provider := config.GetRpcProvider(chain)
+		provider, _ := config.GetRpcProvider(chain)
 
 		blazeOpts = BlazeOptions{
 			Chain:        opts.Globals.Chain,

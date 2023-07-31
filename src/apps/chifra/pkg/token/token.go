@@ -64,7 +64,8 @@ func (e ErrNodeConnection) Error() string {
 // GetState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
 func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
-	client := rpcClient.GetClient(config.GetRpcProvider(chain))
+	provider, _ := config.GetRpcProvider(chain)
+	client := rpcClient.GetClient(provider)
 	defer client.Close()
 
 	// Check if we can dial the node. This way we can make sure we report back the correct state

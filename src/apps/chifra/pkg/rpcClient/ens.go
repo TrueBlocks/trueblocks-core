@@ -21,7 +21,7 @@ func lowerIfHex(addr string) string {
 // GetAddressesFromEns converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
 func GetAddressesFromEns(chain string, addrsIn []string) ([]string, bool) {
-	provider := config.GetRpcProvider("mainnet")
+	provider, _ := config.GetRpcProvider("mainnet")
 	ec := GetClient(provider)
 	defer ec.Close()
 
@@ -48,7 +48,7 @@ func GetAddressFromEns(chain string, in string) (string, bool) {
 		return lowerIfHex(in), false
 	}
 
-	provider := config.GetRpcProvider("mainnet")
+	provider, _ := config.GetRpcProvider("mainnet")
 	ec := GetClient(provider)
 	defer ec.Close()
 
