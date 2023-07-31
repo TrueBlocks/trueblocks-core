@@ -61,7 +61,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Uncles {
-					if blockCount.UnclesCnt, err = rpcClient.GetUncleCountByNumber(chain, bn); err != nil {
+					if blockCount.UnclesCnt, err = rpcClient.GetCountUnclesInBlock(chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
