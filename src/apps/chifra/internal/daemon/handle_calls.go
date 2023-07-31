@@ -99,7 +99,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		}()
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetRpcProvider(chain)
 
 	var env config.ConfigEnv
 	env.Chain = chain

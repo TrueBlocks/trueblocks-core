@@ -24,7 +24,7 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetRpcProvider(chain)
 
 	var env config.ConfigEnv
 	env.Chain = chain

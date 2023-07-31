@@ -28,6 +28,9 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return err
 	}
 
+	chain := opts.Globals.Chain
+	provider := config.GetRpcProvider(chain)
+
 	blazeOpts := BlazeOptions{
 		Chain:        opts.Globals.Chain,
 		NChannels:    opts.Settings.Channel_count,
@@ -35,7 +38,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		StartBlock:   opts.StartBlock,
 		BlockCount:   opts.BlockCnt,
 		UnripeDist:   opts.Settings.Unripe_dist,
-		RpcProvider:  config.GetRpcProvider(opts.Globals.Chain),
+		RpcProvider:  provider,
 		TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 		AppsPerChunk: opts.Settings.Apps_per_chunk,
@@ -69,6 +72,9 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			ripeBlock = progress.Latest - opts.Settings.Unripe_dist
 		}
 
+		chain := opts.Globals.Chain
+		provider := config.GetRpcProvider(chain)
+
 		blazeOpts = BlazeOptions{
 			Chain:        opts.Globals.Chain,
 			NChannels:    opts.Settings.Channel_count,
@@ -77,7 +83,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			BlockCount:   opts.BlockCnt,
 			RipeBlock:    ripeBlock,
 			UnripeDist:   opts.Settings.Unripe_dist,
-			RpcProvider:  config.GetRpcProvider(opts.Globals.Chain),
+			RpcProvider:  provider,
 			TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 			ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 			AppsPerChunk: opts.Settings.Apps_per_chunk,
