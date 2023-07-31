@@ -169,17 +169,21 @@ func BlockHashFromHash(provider, hash string) (string, error) {
 	return block.Hash().Hex(), nil
 }
 
-// BlockNumberFromHash returns a block's hash if it's a valid block
-func BlockNumberFromHash(provider, hash string) (uint64, error) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
-	if err != nil {
+// GetBlockNumberByHash returns a block's hash if it's a valid block
+func GetBlockNumberByHash(chain, hash string) (uint64, error) {
+	if provider, err := config.GetRpcProvider(chain); err != nil {
 		return 0, err
-	}
+	} else {
+		ec := GetClient(provider)
+		defer ec.Close()
 
-	return block.NumberU64(), nil
+		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+		if err != nil {
+			return 0, err
+		}
+
+		return block.NumberU64(), nil
+	}
 }
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
