@@ -102,7 +102,7 @@ func (opts *TokensOptions) validateTokens() error {
 
 		latest := rpcClient.BlockNumber(config.GetRpcProvider(opts.Globals.Chain))
 		// TODO: Should be configurable
-		if bounds.First < (latest-250) && !rpcClient.IsArchiveNode(opts.Globals.Chain) {
+		if bounds.First < (latest-250) && !rpcClient.IsNodeArchive(opts.Globals.Chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}
