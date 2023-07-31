@@ -113,7 +113,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 
 			for _, trans := range block.Transactions {
-				if trans.Traces, err = rpcClient.GetTracesByTransactionId(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex, rpcOptions); err != nil {
+				if trans.Traces, err = rpcClient.GetTracesByTransactionID(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex, rpcOptions); err != nil {
 					return err
 				}
 				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, rpcOptions); err != nil {
