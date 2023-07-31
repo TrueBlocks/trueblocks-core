@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 // Erc721SupportsInterfaceData is the data needed to call the ERC-721 supportsInterface function
@@ -62,12 +61,7 @@ func (e ErrNodeConnection) Error() string {
 // GetState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
 func GetState(chain string, tokenAddress base.Address, blockNumber string) (*Token, error) {
-	if ec, err := rpcClient.GetClient(chain); err != nil {
-		return nil, NewErrNodeConnection(err)
-	} else {
-		defer ec.Close()
-		return queryToken(chain, tokenAddress, blockNumber)
-	}
+	return queryToken(chain, tokenAddress, blockNumber)
 }
 
 // GetTokenBalance returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or

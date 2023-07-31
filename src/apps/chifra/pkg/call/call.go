@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ContractCall struct {
@@ -28,7 +27,7 @@ type ContractCall struct {
 func NewContractCall(chain string, callAddress base.Address, theCall string, showSuggestions bool) (*ContractCall, error) {
 	parsed, err := parser.ParseContractCall(theCall)
 	if err != nil {
-		err = validate.Usage("The value provided --call ({0}) is invalid. See below.", theCall)
+		err = fmt.Errorf("The value provided --call (%s) is invalid. See below.", theCall)
 		return nil, err
 	}
 
