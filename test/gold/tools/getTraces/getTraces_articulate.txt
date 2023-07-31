@@ -129,7 +129,6 @@ TEST[DATE|TIME] Format:  json
         "callType": "call",
         "from": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
         "gas": 2300,
-        "input": "0x",
         "to": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
         "value": "4569662960000000000"
       },
