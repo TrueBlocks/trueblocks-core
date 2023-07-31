@@ -8,7 +8,6 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/alecthomas/participle/v2"
 	"github.com/alecthomas/participle/v2/lexer"
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -173,7 +172,7 @@ type ContractCallHex struct {
 func (h *ContractCallHex) Capture(values []string) error {
 	hexLiteral := values[0]
 
-	if valid, _ := validate.IsValidHex("", hexLiteral, 20); !valid {
+	if valid, _ := base.IsValidHex("", hexLiteral, 20); !valid {
 		h.String = &hexLiteral
 		return nil
 	}
@@ -268,7 +267,7 @@ type Selector struct {
 
 func (s *Selector) Capture(values []string) error {
 	literal := values[0]
-	if valid, _ := validate.IsValidHex("", literal, 4); !valid {
+	if valid, _ := base.IsValidHex("", literal, 4); !valid {
 		return errInvalidSelector
 	}
 

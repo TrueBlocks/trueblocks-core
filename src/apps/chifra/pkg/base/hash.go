@@ -2,6 +2,7 @@ package base
 
 import (
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io"
 	"math/big"
@@ -84,4 +85,21 @@ func BytesToHash(b []byte) (hash Hash) {
 
 func bytesToHashString(hashBytes []byte) string {
 	return "0x" + hex.EncodeToString(hashBytes)
+}
+
+func IsValidHex(typ string, val string, nBytes int) (bool, error) {
+	if _, err := ValidHex(typ, val, nBytes); err != nil {
+		if errors.Is(err, ErrInvalidLength) {
+			//lint:ignore ST1005 sorry
+			return false, fmt.Errorf("The %s option (%s) must be %d bytes long.", typ, val, nBytes)
+		} else if errors.Is(err, ErrInvalidHex) {
+			//lint:ignore ST1005 sorry
+			return false, fmt.Errorf("The %s option (%s) must be hex.", typ, val)
+		} else if errors.Is(err, ErrNoLeading0x) {
+			//lint:ignore ST1005 sorry
+			return false, fmt.Errorf("The %s option (%s) must start with '0x'.", typ, val)
+		}
+		return false, err
+	}
+	return true, nil
 }

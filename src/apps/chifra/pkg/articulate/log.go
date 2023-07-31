@@ -48,12 +48,14 @@ func articulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulate
 		return
 	}
 	data := log.Data[2:]
-	err = ArticulateArguments(
+	if err = ArticulateArguments(
 		abiEvent.Inputs,
 		data,
 		log.Topics,
 		articulated.Inputs,
-	)
+	); err != nil {
+		return
+	}
 
 	return
 }

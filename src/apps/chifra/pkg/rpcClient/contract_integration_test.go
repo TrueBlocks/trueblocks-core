@@ -52,7 +52,7 @@ func TestGetProxy(t *testing.T) {
 
 	// 0x4Fabb145d64652a948d72533023f6E7A623C7C53
 	// 0x00000000441378008ea67f4284a57932b1c000a5
-	proxy, err := GetProxy("mainnet", base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"), base.Blknum(12983248))
+	proxy, err := GetProxyAt("mainnet", base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"), base.Blknum(12983248))
 	if err != nil {
 		t.Fatal(err)
 	}

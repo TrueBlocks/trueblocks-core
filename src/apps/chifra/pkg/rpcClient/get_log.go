@@ -40,7 +40,7 @@ func getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLo
 		for _, rawLog := range rawLogs {
 			bn := utils.MustParseUint(rawLog.BlockNumber)
 			if bn != curBlock {
-				curTs = rpc.GetBlockTimestamp(chain, &bn)
+				curTs = GetBlockTimestamp(chain, &bn)
 				curDate = gostradamus.FromUnixTimestamp(curTs)
 				curBlock = bn
 			}
@@ -65,11 +65,13 @@ func getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLo
 	}
 }
 
+// GetLogsByFilter returns the logs given a filter
 func GetLogsByFilter(chain string, filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
 	return getSimpleLogs(chain, filter)
 }
 
-func GetLogsByBlockNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
+// GetLogsByNumber returns the logs of a block
+func GetLogsByNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
 	filter := types.SimpleLogFilter{
 		FromBlock: bn,
 		ToBlock:   bn,
@@ -77,26 +79,13 @@ func GetLogsByBlockNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
 	return getSimpleLogs(chain, filter)
 }
 
-func GetLogCountByBlockNumber(chain string, bn uint64) (uint64, error) {
-	if logs, err := GetLogsByBlockNumber(chain, bn); err != nil {
+// GetCountLogsInBlock returns the number of logs in a block
+func GetCountLogsInBlock(chain string, bn uint64) (uint64, error) {
+	if logs, err := GetLogsByNumber(chain, bn); err != nil {
 		return 0, err
 	} else {
 		return uint64(len(logs)), nil
 	}
-}
-
-func GetLogsByTransactionId(chain string, bn, txid uint64) ([]types.SimpleLog, error) {
-	blockTs := rpc.GetBlockTimestamp(chain, &bn)
-	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
-		Bn:      bn,
-		Txid:    txid,
-		NeedsTs: true,
-		Ts:      blockTs,
-	}, NoOptions)
-	if err != nil {
-		return []types.SimpleLog{}, err
-	}
-	return receipt.Logs, nil
 }
 
 /*

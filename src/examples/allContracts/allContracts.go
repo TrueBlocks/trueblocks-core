@@ -12,7 +12,7 @@ import (
 var bar = logger.NewBar("Visiting", true, int64(17000000))
 
 func main() {
-	latest := rpcClient.BlockNumber("http://localhost:23456")
+	latest := rpcClient.GetLatestBlockNumber("mainnet")
 	forEveryTrace(46000, latest, visitTrace)
 	bar.Finish(true)
 }
@@ -26,7 +26,7 @@ func visitTrace(trace *types.SimpleTrace, data *any) error {
 
 func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) error) error {
 	for blknum := from; blknum <= to; blknum++ {
-		if block, err := rpcClient.GetBlockByNumber("mainnet", blknum, rpcClient.NoOptions); err != nil {
+		if block, err := rpcClient.GetBlockHeaderByNumber("mainnet", blknum, rpcClient.NoOptions); err != nil {
 			return err
 		} else {
 			bar.Tick()

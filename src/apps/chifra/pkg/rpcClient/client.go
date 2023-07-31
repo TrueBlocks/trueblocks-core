@@ -8,17 +8,14 @@ import (
 	"context"
 	"fmt"
 	"math/big"
-	"strconv"
 	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
@@ -29,11 +26,23 @@ import (
 var perProviderClientMap = map[string]*ethclient.Client{}
 var clientMutex sync.Mutex
 
-func GetClient(provider string) *ethclient.Client {
+func getClient(chain string) (*ethclient.Client, error) {
+	provider, _ := config.GetRpcProvider(chain)
+	if provider == "https://" {
+		var noProvider string = `
+
+  Warning: The RPC server ([{PROVIDER}]) was not available. Either start it, or edit the rpcProvider
+  value in the file [{FILE}]. Quitting...
+`
+		msg := noProvider
+		msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
+		msg = strings.Replace(msg, "[{FILE}]", config.GetPathToRootConfig()+"trueBlocks.toml", -1)
+		msg = strings.Replace(msg, "https://", "<empty>", -1)
+		return nil, fmt.Errorf("%s", msg)
+	}
+
 	clientMutex.Lock()
 	if perProviderClientMap[provider] == nil {
-		// TODO: I don't like the fact that we Dail In every time we want to us this
-		// TODO: If we make this a cached item, it needs to be cached per chain, see timestamps
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
 			logger.Error("Missdial("+provider+"):", err)
@@ -42,67 +51,52 @@ func GetClient(provider string) *ethclient.Client {
 		perProviderClientMap[provider] = ec
 	}
 	clientMutex.Unlock()
-	return perProviderClientMap[provider]
+	return perProviderClientMap[provider], nil
 }
 
-// BlockNumber returns the block number at the front of the chain (i.e. latest)
-func BlockNumber(provider string) uint64 {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	r, err := ec.BlockNumber(context.Background())
-	if err != nil {
-		logger.Error("Could not connect to RPC client")
+// GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
+func GetLatestBlockNumber(chain string) uint64 {
+	if ec, err := getClient(chain); err != nil {
+		logger.Error("Could not connect to RPC client: %w", err)
 		return 0
-	}
+	} else {
+		defer ec.Close()
 
-	return r
+		r, err := ec.BlockNumber(context.Background())
+		if err != nil {
+			logger.Error("Could not connect to RPC client: %w", err)
+			return 0
+		}
+
+		return r
+	}
 }
 
-var noProvider string = `
-
-  {R}Warning{O}: The RPC server ([{PROVIDER}]) was not available. Either start it, or edit the {T}rpcProvider{O}
-  value in the file {T}[{FILE}]{O}. Quitting...
-`
-
-// CheckRpc will not return if the RPC is not available
-func CheckRpc(provider string) {
-	GetIDs(provider)
-}
-
-// GetIDs returns both chainId and networkId from the node
-func GetIDs(provider string) (uint64, uint64, error) {
-	// We might need it, so create it
-	msg := noProvider
-	msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
-	msg = strings.Replace(msg, "[{FILE}]", config.GetPathToRootConfig()+"trueBlocks.toml", -1)
-	msg = strings.Replace(msg, "{R}", colors.Red, -1)
-	msg = strings.Replace(msg, "{T}", colors.Cyan, -1)
-	msg = strings.Replace(msg, "{O}", colors.Off, -1)
-	if provider == "https://" {
-		msg = strings.Replace(msg, "https://", "<empty>", -1)
-		return 0, 0, fmt.Errorf("%s", msg)
-	}
-
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	ch, err := ec.ChainID(context.Background())
-	if err != nil {
+// GetClientIDs returns both chainId and networkId from the node
+func GetClientIDs(chain string) (uint64, uint64, error) {
+	if ec, err := getClient(chain); err != nil {
 		return 0, 0, err
-	}
+	} else {
+		defer ec.Close()
 
-	n, err := ec.NetworkID(context.Background())
-	if err != nil {
-		return 0, 0, err
-	}
+		ch, err := ec.ChainID(context.Background())
+		if err != nil {
+			return 0, 0, err
+		}
 
-	return ch.Uint64(), n.Uint64(), nil
+		n, err := ec.NetworkID(context.Background())
+		if err != nil {
+			return ch.Uint64(), 0, err
+		}
+
+		return ch.Uint64(), n.Uint64(), nil
+	}
 }
 
 // TODO: C++ code used to cache version info
 
-func GetVersion(chain string) (version string, err error) {
+// GetClientVersion returns the version of the client
+func GetClientVersion(chain string) (version string, err error) {
 	method := "web3_clientVersion"
 	params := rpc.Params{}
 
@@ -113,116 +107,143 @@ func GetVersion(chain string) (version string, err error) {
 	}
 }
 
-// TxHashFromHash returns a transaction's hash if it's a valid transaction
-func TxHashFromHash(provider, hash string) (string, error) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	tx, _, err := ec.TransactionByHash(context.Background(), common.HexToHash(hash))
-	if err != nil {
+// GetTransactionHashFromHashStr returns a transaction's hash if it's a valid transaction, an empty string otherwise
+func GetTransactionHashFromHashStr(chain, hash string) (string, error) {
+	if ec, err := getClient(chain); err != nil {
 		return "", err
-	}
+	} else {
+		defer ec.Close()
 
-	return tx.Hash().Hex(), nil
+		tx, _, err := ec.TransactionByHash(context.Background(), common.HexToHash(hash))
+		if err != nil {
+			return "", err
+		}
+
+		return tx.Hash().Hex(), nil
+	}
 }
 
-// TxHashFromHashAndId returns a transaction's hash if it's a valid transaction
-func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	tx, err := ec.TransactionInBlock(context.Background(), common.HexToHash(hash), uint(txId))
-	if err != nil {
+// GetBlockHashFromHashStr returns a block's hash if it's a valid block
+func GetBlockHashFromHashStr(chain, hash string) (string, error) {
+	if ec, err := getClient(chain); err != nil {
 		return "", err
-	}
+	} else {
+		defer ec.Close()
 
-	return tx.Hash().Hex(), nil
+		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+		if err != nil {
+			return "", err
+		}
+
+		return block.Hash().Hex(), nil
+	}
 }
 
-// GetTxFromNumberAndId returns an actual transaction
-func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
-	provider := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
-	defer ec.Close()
+// GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
+func GetTransactionHashByHashAndID(chain, hash string, txId uint64) (string, error) {
+	if ec, err := getClient(chain); err != nil {
+		return "", err
+	} else {
+		defer ec.Close()
 
-	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
-	if err != nil {
+		tx, err := ec.TransactionInBlock(context.Background(), common.HexToHash(hash), uint(txId))
+		if err != nil {
+			return "", err
+		}
+
+		return tx.Hash().Hex(), nil
+	}
+}
+
+// GetTransactionByNumberAndID returns an actual transaction
+func GetTransactionByNumberAndID(chain string, bn, txId uint64) (ethTypes.Transaction, error) {
+	if ec, err := getClient(chain); err != nil {
 		return ethTypes.Transaction{}, err
-	}
+	} else {
+		defer ec.Close()
 
-	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
-	if err != nil {
-		return ethTypes.Transaction{}, err
-	}
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
+		if err != nil {
+			return ethTypes.Transaction{}, err
+		}
 
-	return *tx, nil
+		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
+		if err != nil {
+			return ethTypes.Transaction{}, err
+		}
+
+		return *tx, nil
+	}
 }
 
-// TxCountByBlockNumber returns the number of transactions in a block
-func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
-	if err != nil {
+// GetCountTransactionsInBlock returns the number of transactions in a block
+func GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
+	if ec, err := getClient(chain); err != nil {
 		return 0, err
-	}
+	} else {
+		defer ec.Close()
 
-	cnt, err := ec.TransactionCount(context.Background(), block.Hash())
-	return uint64(cnt), err
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
+		if err != nil {
+			return 0, err
+		}
+
+		cnt, err := ec.TransactionCount(context.Background(), block.Hash())
+		return uint64(cnt), err
+	}
 }
 
-// BlockHashFromHash returns a block's hash if it's a valid block
-func BlockHashFromHash(provider, hash string) (string, error) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
-	if err != nil {
-		return "", err
-	}
-
-	return block.Hash().Hex(), nil
-}
-
-// BlockNumberFromHash returns a block's hash if it's a valid block
-func BlockNumberFromHash(provider, hash string) (uint64, error) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
-	if err != nil {
+// GetBlockNumberByHash returns a block's hash if it's a valid block
+func GetBlockNumberByHash(chain, hash string) (base.Blknum, error) {
+	if ec, err := getClient(chain); err != nil {
 		return 0, err
-	}
+	} else {
+		defer ec.Close()
 
-	return block.NumberU64(), nil
+		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+		if err != nil {
+			return 0, err
+		}
+
+		return block.NumberU64(), nil
+	}
 }
 
-// BlockHashFromNumber returns a block's hash if it's a valid block
-func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
-	if err != nil {
+// GetBlockHashByNumber returns a block's hash if it's a valid block
+func GetBlockHashByNumber(chain string, bn uint64) (string, error) {
+	if ec, err := getClient(chain); err != nil {
 		return "", err
-	}
+	} else {
+		defer ec.Close()
 
-	return block.Hash().Hex(), nil
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
+		if err != nil {
+			return "", err
+		}
+
+		return block.Hash().Hex(), nil
+	}
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func GetBalanceAt(chain string, addr base.Address, blkNum uint64) (*big.Int, error) {
-	provider := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	bal, err := ec.BalanceAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(blkNum))
-	if err != nil {
-		return bal, err
+func GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) {
+	if ec, err := getClient(chain); err != nil {
+		var zero big.Int
+		return &zero, err
+	} else {
+		defer ec.Close()
+		return ec.BalanceAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(bn))
 	}
+}
 
-	return bal, nil
+// GetCodeAt returns a code (if any) for an address at a block
+func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
+	if ec, err := getClient(chain); err != nil {
+		return []byte{}, err
+	} else {
+		defer ec.Close()
+		return ec.CodeAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(bn))
+	}
 }
 
 /*
@@ -252,69 +273,3 @@ func (ec *Client) SyncProgress(ctx context.Context) (*ethereum.SyncProgress, err
 func (ec *Client) TransactionCount(ctx context.Context, blockHash commo n.Hash) (uint, error)
 func (ec *Client) TransactionSender(ctx context.Context, tx *types.Transaction, block commo n.Hash, index uint) (commo n.Address, error)
 */
-
-// DecodeHex decodes a string with hex into a slice of bytes
-func DecodeHex(hex string) []byte {
-	return hexutil.MustDecode(hex)
-}
-
-func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
-	// return IsValidAddress(addr)
-	provider := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
-	// TODO: we don't use block number, but we should - we need to convert it
-	return ec.CodeAt(context.Background(), addr.ToCommon(), nil) // nil is latest block
-}
-
-// Id_2_TxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
-// and returns the transaction hash represented by that identifier. (If it's a valid transaction.
-// It may not be because transaction hashes and block hashes are both 32-byte hex)
-func Id_2_TxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
-	provider := config.GetRpcProvider(chain)
-	CheckRpc(provider)
-
-	// simple case first
-	if !strings.Contains(arg, ".") {
-		// We know it's a hash, but we want to know if it's a legitimate tx on chain
-		return TxHashFromHash(provider, arg)
-	}
-
-	parts := strings.Split(arg, ".")
-	if len(parts) != 2 {
-		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
-	}
-
-	if isBlockHash(parts[0]) {
-		txId, err := strconv.ParseUint(parts[1], 10, 64)
-		if err != nil {
-			return "", nil
-		}
-		return TxHashFromHashAndId(provider, parts[0], txId)
-	}
-
-	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
-	if err != nil {
-		return "", nil
-	}
-	txId, err := strconv.ParseUint(parts[1], 10, 64)
-	if err != nil {
-		return "", nil
-	}
-
-	return rpc.GetTxHashFromNumberAndId(chain, blockNum, txId)
-}
-
-func Id_2_BlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
-	provider := config.GetRpcProvider(chain)
-	CheckRpc(provider)
-
-	if isBlockHash(arg) {
-		return BlockHashFromHash(provider, arg)
-	}
-
-	blockNum, err := strconv.ParseUint(arg, 10, 64)
-	if err != nil {
-		return "", nil
-	}
-	return BlockHashFromNumber(provider, blockNum)
-}

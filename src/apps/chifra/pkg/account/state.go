@@ -131,7 +131,7 @@ func GetState(chain string, fields GetStateField, address base.Address, blockNum
 	var proxy base.Address
 
 	if (fields&Proxy) != 0 || (fields&Type) != 0 {
-		proxy, err = rpcClient.GetProxy(chain, address, blockNumber)
+		proxy, err = rpcClient.GetProxyAt(chain, address, blockNumber)
 		if err != nil {
 			return
 		}

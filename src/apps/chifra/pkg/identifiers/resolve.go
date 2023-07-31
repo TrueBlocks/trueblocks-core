@@ -9,8 +9,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -109,7 +107,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
+	firstDate := gostradamus.FromUnixTimestamp(rpcClient.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -177,8 +175,7 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 func (p *Point) resolvePoint(chain string) uint64 {
 	var bn uint64
 	if p.Hash != "" {
-		provider := config.GetRpcProvider(chain)
-		bn, _ = rpcClient.BlockNumberFromHash(provider, p.Hash)
+		bn, _ = rpcClient.GetBlockNumberByHash(chain, p.Hash)
 	} else if p.Date != "" {
 		bn, _ = tslib.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {
@@ -187,9 +184,8 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		var err error
 		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
-			provider := config.GetRpcProvider(chain)
-			latest := rpcClient.BlockNumber(provider)
-			tsFuture := rpc.GetBlockTimestamp(chain, &latest)
+			latest := rpcClient.GetLatestBlockNumber(chain)
+			tsFuture := rpcClient.GetBlockTimestamp(chain, &latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
@@ -205,8 +201,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			provider := config.GetRpcProvider(chain)
-			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.Number))
+			cnt, err := rpcClient.GetCountTransactionsInBlock(chain, uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
@@ -228,8 +223,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			provider := config.GetRpcProvider(chain)
-			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.resolvePoint(chain)))
+			cnt, err := rpcClient.GetCountTransactionsInBlock(chain, uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}
@@ -245,8 +239,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		bn, txid, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
-		app := types.RawAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
+		app, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
 		return append(txs, app), err
 	}
 

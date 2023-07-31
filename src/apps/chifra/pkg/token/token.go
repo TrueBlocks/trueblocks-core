@@ -1,7 +1,6 @@
 package token
 
 import (
-	"context"
 	"errors"
 	"math/big"
 	"strconv"
@@ -9,9 +8,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 // Erc721SupportsInterfaceData is the data needed to call the ERC-721 supportsInterface function
@@ -63,21 +60,12 @@ func (e ErrNodeConnection) Error() string {
 
 // GetState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
-	client := rpcClient.GetClient(config.GetRpcProvider(chain))
-	defer client.Close()
-
-	// Check if we can dial the node. This way we can make sure we report back the correct state
-	// (err meaning that an address is not a token).
-	_, err = client.BlockNumber(context.Background())
-	if err != nil {
-		err = NewErrNodeConnection(err)
-		return
-	}
-
+func GetState(chain string, tokenAddress base.Address, blockNumber string) (*Token, error) {
 	return queryToken(chain, tokenAddress, blockNumber)
 }
 
+// GetTokenBalance returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
+// decimal number or hex number with 0x prefix.
 func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
 	output, err := rpc.QueryBatch[string](
 		chain,
@@ -229,3 +217,9 @@ func (t *Token) IsErc20() bool {
 func (t *Token) IsErc721() bool {
 	return t.Type == TokenErc721
 }
+
+// TODO: DUPLICATED
+
+var TransferTopic = base.HexToHash(
+	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+)

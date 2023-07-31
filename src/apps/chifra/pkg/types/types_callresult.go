@@ -75,7 +75,7 @@ func (s *SimpleCallResult) Model(verbose bool, format string, extraOptions map[s
 	}
 
 	model["signature"] = s.Signature
-	model["compressedResult"] = MakeCompressed(s.Outputs)
+	model["compressedResult"] = makeCompressed(s.Outputs)
 	order = []string{
 		"blockNumber",
 		"address",

@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -28,7 +27,7 @@ func (opts *TracesOptions) HandleFilter() error {
 		}
 
 		for index := range traces {
-			traces[index].Timestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
+			traces[index].Timestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
 			if opts.Articulate {
 				if err = abiCache.ArticulateTrace(chain, &traces[index]); err != nil {
 					errorChan <- err // continue even with an error

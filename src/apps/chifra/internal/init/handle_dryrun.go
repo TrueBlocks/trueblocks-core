@@ -42,7 +42,7 @@ func (opts *InitOptions) HandleDryRun() error {
 	}
 
 	// Tell the user what we're doing
-	logger.InfoTable("Unchained Index:", unchained.Address_V2)
+	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
 	logger.InfoTable("Schemas:", schema)
 	logger.InfoTable("Config Folder:", config.GetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.GetPathToIndex(chain))

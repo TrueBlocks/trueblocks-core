@@ -121,7 +121,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     replaceAll(contents, "[{FIELDS}]", fieldStr);
 
     // hackathon!
-    replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx BlockTransaction] struct {");
+    replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx string | SimpleTransaction] struct {");
 
     string_q fn = substitute(
         substitute(getPathToSource(modelIn.go_output + "types_" + toLower(model.base_name) + ".go"), "//", "/"), "/./",

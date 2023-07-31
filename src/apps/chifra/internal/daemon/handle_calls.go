@@ -99,6 +99,8 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		}()
 	}
 
+	provider, _ := config.GetRpcProvider(chain)
+
 	var env config.ConfigEnv
 	env.Chain = chain
 	env.ConfigPath = config.GetPathToRootConfig()
@@ -106,7 +108,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain) // order matters
 	env.IndexPath = config.GetPathToIndex(env.Chain)             // order matters
 	env.DefaultChain = config.GetDefaultChain()
-	env.RpcProvider = config.GetRpcProvider(env.Chain)
+	env.RpcProvider = provider
 	envStr := env.ToCSV()
 
 	if utils.IsTestModeServer(r) {
