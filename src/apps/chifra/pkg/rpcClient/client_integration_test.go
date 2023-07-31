@@ -75,7 +75,7 @@ func Test_Client(t *testing.T) {
 
 func Test_TxFromNumberAndId(t *testing.T) {
 	txId := uint64(0)
-	_, err := GetTxFromNumberAndId("mainnet", uint64(1424623), txId)
+	_, err := GetTransactionByNumberAndID("mainnet", uint64(1424623), txId)
 	if err != nil {
 		t.Fatal(err)
 	}

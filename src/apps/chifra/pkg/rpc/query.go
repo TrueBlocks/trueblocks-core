@@ -8,7 +8,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -62,24 +61,4 @@ func GetTxHashFromNumberAndId(chain string, blkNum, txId uint64) (string, error)
 	}
 
 	return tx.Hash().Hex(), nil
-}
-
-// TODO: DUPLICATED DUE TO CYCLICAL IMPORT
-
-func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
-	provider, _ := config.GetRpcProvider(chain)
-	ec := getClient(provider)
-	defer ec.Close()
-
-	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
-	if err != nil {
-		return ethTypes.Transaction{}, err
-	}
-
-	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
-	if err != nil {
-		return ethTypes.Transaction{}, err
-	}
-
-	return *tx, nil
 }

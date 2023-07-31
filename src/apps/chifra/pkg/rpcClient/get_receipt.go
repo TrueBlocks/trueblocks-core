@@ -113,7 +113,7 @@ func GetReceipt(chain string, query ReceiptQuery, rpcOptions *Options) (receipt 
 
 // getRawTransactionReceipt fetches raw transaction given blockNumber and transactionIndex
 func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
-	if fetched, err := GetTxFromNumberAndId(chain, bn, txid); err != nil {
+	if fetched, err := GetTransactionByNumberAndID(chain, bn, txid); err != nil {
 		return nil, nil, err
 
 	} else {

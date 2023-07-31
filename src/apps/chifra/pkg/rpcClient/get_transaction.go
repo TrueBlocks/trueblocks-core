@@ -1,16 +1,19 @@
 package rpcClient
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
 var (
@@ -353,4 +356,23 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, rpcOp
 	}
 
 	return
+}
+
+// GetTransactionByNumberAndID returns an actual transaction
+func GetTransactionByNumberAndID(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
+	provider, _ := config.GetRpcProvider(chain)
+	ec := GetClient(provider)
+	defer ec.Close()
+
+	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+	if err != nil {
+		return ethTypes.Transaction{}, err
+	}
+
+	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
+	if err != nil {
+		return ethTypes.Transaction{}, err
+	}
+
+	return *tx, nil
 }

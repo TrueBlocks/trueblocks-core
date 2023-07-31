@@ -18,7 +18,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
-	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -141,25 +140,6 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 	}
 
 	return tx.Hash().Hex(), nil
-}
-
-// GetTxFromNumberAndId returns an actual transaction
-func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
-	provider, _ := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
-	if err != nil {
-		return ethTypes.Transaction{}, err
-	}
-
-	tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
-	if err != nil {
-		return ethTypes.Transaction{}, err
-	}
-
-	return *tx, nil
 }
 
 // TxCountByBlockNumber returns the number of transactions in a block
