@@ -8,7 +8,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -109,7 +109,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--big_range", "--logs")
 			}
 
-			if opts.Traces && !node.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
+			if opts.Traces && !rpcClient.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}
