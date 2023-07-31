@@ -12,7 +12,7 @@ import (
 var bar = logger.NewBar("Visiting", true, int64(17000000))
 
 func main() {
-	latest := rpcClient.BlockNumber("http://localhost:23456")
+	latest := rpcClient.GetLatestBlockNumber("http://localhost:23456")
 	forEveryTrace(46000, latest, visitTrace)
 	bar.Finish(true)
 }

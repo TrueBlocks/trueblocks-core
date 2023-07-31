@@ -45,8 +45,8 @@ func GetClient(provider string) *ethclient.Client {
 	return perProviderClientMap[provider]
 }
 
-// BlockNumber returns the block number at the front of the chain (i.e. latest)
-func BlockNumber(provider string) uint64 {
+// GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
+func GetLatestBlockNumber(provider string) uint64 {
 	ec := GetClient(provider)
 	defer ec.Close()
 

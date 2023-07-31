@@ -37,7 +37,7 @@ func (opts *ListOptions) validateList() error {
 
 	if opts.LastBlock != utils.NOPOS && !opts.Globals.TestMode {
 		provider := config.GetRpcProvider(opts.Globals.Chain)
-		latest := rpcClient.BlockNumber(provider)
+		latest := rpcClient.GetLatestBlockNumber(provider)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
