@@ -21,7 +21,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -180,8 +179,8 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		Progress:      ToProgress(chain, meta),
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
-		IsArchive:     node.IsArchiveNode(chain),
-		IsTracing:     node.IsTracingNode(testMode, chain),
+		IsArchive:     rpcClient.IsNodeArchive(chain),
+		IsTracing:     rpcClient.IsNodeTracing(testMode, chain),
 		HasEsKey:      config.HasEsKeys(chain),
 		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,

@@ -449,7 +449,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - [#2844 - chifra config - add --chains option](https://github.com/TrueBlocks/trueblocks-core/issues/2844)
 - [#2843 - chifra transactions (and others) should export `nonce` field.](https://github.com/TrueBlocks/trueblocks-core/issues/2843)
 - [#2841 - how to integrate gRPC types](https://github.com/TrueBlocks/trueblocks-core/issues/2841)
-- [#2839 - golang IsArchiveNode always returns true. should not](https://github.com/TrueBlocks/trueblocks-core/issues/2839)
+- [#2839 - golang IsNodeArchive always returns true. should not](https://github.com/TrueBlocks/trueblocks-core/issues/2839)
 - [#2837 - chifra names on rpc branch reports errors when running from command line](https://github.com/TrueBlocks/trueblocks-core/issues/2837)
 - [#2836 - chifra export --pending](https://github.com/TrueBlocks/trueblocks-core/issues/2836)
 - [#2835 - chifra config does not report is_scraping when run through API, but it does when run through command line](https://github.com/TrueBlocks/trueblocks-core/issues/2835)
