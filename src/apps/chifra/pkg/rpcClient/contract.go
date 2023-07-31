@@ -17,7 +17,7 @@ var ErrNotAContract = errors.New("not a contract")
 
 // IsContractAt checks if an account is a contract
 func IsContractAt(chain string, address base.Address, block *types.SimpleNamedBlock) error {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return err
 	} else {
 		defer ec.Close()
@@ -78,7 +78,7 @@ var locations = []string{
 
 // GetProxyAt returns the proxy address for a contract if any
 func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (base.Address, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return base.Address{}, err
 	} else {
 		defer ec.Close()

@@ -213,7 +213,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 
 // GetBlockTimestamp returns the timestamp associated with a given block
 func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		logger.Error("Could not connect to RPC client", err)
 		return 0
 	} else {
@@ -243,7 +243,7 @@ func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
 
 // GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
 func GetTransactionHashByNumberAndID(chain string, bn, txId uint64) (string, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()

@@ -26,7 +26,7 @@ import (
 var perProviderClientMap = map[string]*ethclient.Client{}
 var clientMutex sync.Mutex
 
-func GetClient(chain string) (*ethclient.Client, error) {
+func getClient(chain string) (*ethclient.Client, error) {
 	provider, _ := config.GetRpcProvider(chain)
 	if provider == "https://" {
 		var noProvider string = `
@@ -56,7 +56,7 @@ func GetClient(chain string) (*ethclient.Client, error) {
 
 // GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
 func GetLatestBlockNumber(chain string) uint64 {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		logger.Error("Could not connect to RPC client: %w", err)
 		return 0
 	} else {
@@ -74,7 +74,7 @@ func GetLatestBlockNumber(chain string) uint64 {
 
 // GetClientIDs returns both chainId and networkId from the node
 func GetClientIDs(chain string) (uint64, uint64, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return 0, 0, err
 	} else {
 		defer ec.Close()
@@ -109,7 +109,7 @@ func GetClientVersion(chain string) (version string, err error) {
 
 // GetTransactionHashFromHashStr returns a transaction's hash if it's a valid transaction, an empty string otherwise
 func GetTransactionHashFromHashStr(chain, hash string) (string, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
@@ -125,7 +125,7 @@ func GetTransactionHashFromHashStr(chain, hash string) (string, error) {
 
 // GetBlockHashFromHashStr returns a block's hash if it's a valid block
 func GetBlockHashFromHashStr(chain, hash string) (string, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
@@ -141,7 +141,7 @@ func GetBlockHashFromHashStr(chain, hash string) (string, error) {
 
 // GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
 func GetTransactionHashByHashAndID(chain, hash string, txId uint64) (string, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
@@ -157,7 +157,7 @@ func GetTransactionHashByHashAndID(chain, hash string, txId uint64) (string, err
 
 // GetTransactionByNumberAndID returns an actual transaction
 func GetTransactionByNumberAndID(chain string, bn, txId uint64) (ethTypes.Transaction, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return ethTypes.Transaction{}, err
 	} else {
 		defer ec.Close()
@@ -178,7 +178,7 @@ func GetTransactionByNumberAndID(chain string, bn, txId uint64) (ethTypes.Transa
 
 // GetCountTransactionsInBlock returns the number of transactions in a block
 func GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return 0, err
 	} else {
 		defer ec.Close()
@@ -195,7 +195,7 @@ func GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
 
 // GetBlockNumberByHash returns a block's hash if it's a valid block
 func GetBlockNumberByHash(chain, hash string) (base.Blknum, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return 0, err
 	} else {
 		defer ec.Close()
@@ -211,7 +211,7 @@ func GetBlockNumberByHash(chain, hash string) (base.Blknum, error) {
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
 func GetBlockHashByNumber(chain string, bn uint64) (string, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
@@ -227,7 +227,7 @@ func GetBlockHashByNumber(chain string, bn uint64) (string, error) {
 
 // GetBalanceAt returns a balance for an address at a block
 func GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		var zero big.Int
 		return &zero, err
 	} else {
@@ -238,7 +238,7 @@ func GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) 
 
 // GetCodeAt returns a code (if any) for an address at a block
 func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
-	if ec, err := GetClient(chain); err != nil {
+	if ec, err := getClient(chain); err != nil {
 		return []byte{}, err
 	} else {
 		defer ec.Close()
