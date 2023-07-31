@@ -8,6 +8,7 @@ package tokensPkg
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -51,23 +52,25 @@ func (opts *TokensOptions) validateTokens() error {
 
 			// all but the last is assumed to be a token
 			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
-				ok, err := validate.IsSmartContract(opts.Globals.Chain, addr)
+				err := rpcClient.IsContractAt(opts.Globals.Chain, base.HexToAddress(addr), nil)
 				if err != nil {
+					if errors.Is(err, rpcClient.ErrNotAContract) {
+						return validate.Usage("The value {0} is not a token contract.", addr)
+					}
 					return err
-				}
-				if !ok {
-					return validate.Usage("The value {0} is not a token contract.", addr)
 				}
 			}
 		} else {
 			// the first is assumed to be a smart contract, the rest can be either non-existant, another smart contract or an EOA
 			addr := opts.Addrs[0]
-			ok, err := validate.IsSmartContract(opts.Globals.Chain, addr)
+			err := rpcClient.IsContractAt(opts.Globals.Chain, base.HexToAddress(addr), nil)
 			if err != nil {
-				return err
-			}
-			if !ok {
-				return validate.Usage("The value {0} is not a token contract.", addr)
+				if err != nil {
+					if errors.Is(err, rpcClient.ErrNotAContract) {
+						return validate.Usage("The value {0} is not a token contract.", addr)
+					}
+					return err
+				}
 			}
 		}
 	}
