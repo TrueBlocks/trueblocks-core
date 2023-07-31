@@ -50,12 +50,14 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 	if reason != "" {
 		database += ("-" + reason)
 	}
+
+	unchainedChain := "mainnet" // the unchained index is on mainnet
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
-	if contractCall, err := call.NewContractCall(chain, unchained.GetUnchainedIndexAddress(), theCall, false); err != nil {
+	if contractCall, err := call.NewContractCall(unchainedChain, unchained.GetUnchainedIndexAddress(), theCall, false); err != nil {
 		return "", err
 	} else {
-		contractCall.BlockNumber = rpcClient.GetLatestBlockNumber(chain)
-		if result, err := call.CallContract("mainnet", contractCall); err != nil {
+		contractCall.BlockNumber = rpcClient.GetLatestBlockNumber(unchainedChain)
+		if result, err := call.CallContract(unchainedChain, contractCall); err != nil {
 			return "", err
 		} else {
 			return result.Outputs["val_0"], nil
