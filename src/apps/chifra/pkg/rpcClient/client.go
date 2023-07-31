@@ -182,17 +182,21 @@ func BlockNumberFromHash(provider, hash string) (uint64, error) {
 	return block.NumberU64(), nil
 }
 
-// BlockHashFromNumber returns a block's hash if it's a valid block
-func BlockHashFromNumber(provider string, blkNum uint64) (string, error) {
-	ec := GetClient(provider)
-	defer ec.Close()
-
-	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
-	if err != nil {
+// GetBlockHashByNumber returns a block's hash if it's a valid block
+func GetBlockHashByNumber(chain string, blkNum uint64) (string, error) {
+	if provider, err := config.GetRpcProvider(chain); err != nil {
 		return "", err
-	}
+	} else {
+		ec := GetClient(provider)
+		defer ec.Close()
 
-	return block.Hash().Hex(), nil
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+		if err != nil {
+			return "", err
+		}
+
+		return block.Hash().Hex(), nil
+	}
 }
 
 // GetBalanceAt returns a balance for an address at a block

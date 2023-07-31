@@ -139,7 +139,7 @@ func idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string
 	if err != nil {
 		return "", nil
 	}
-	return rpcClient.BlockHashFromNumber(provider, blockNum)
+	return rpcClient.GetBlockHashByNumber(chain, blockNum)
 }
 
 // idToTxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)

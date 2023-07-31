@@ -67,7 +67,7 @@ func Test_Client(t *testing.T) {
 		t.Error("couldn't get known block hash from block hash")
 	}
 
-	_, err = BlockHashFromNumber(provider, 12)
+	_, err = GetBlockHashByNumber(chain, 12)
 	if err != nil {
 		t.Error("couldn't get known block hash from block number")
 	}
