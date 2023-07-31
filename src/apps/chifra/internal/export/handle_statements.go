@@ -36,7 +36,9 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-	rpcOptions := rpcClient.DefaultRpcOptions(nil)
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
