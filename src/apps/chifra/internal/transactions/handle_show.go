@@ -28,7 +28,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, nil)
+		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(opts.Globals.Chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())

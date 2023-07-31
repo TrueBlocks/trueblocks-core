@@ -122,14 +122,18 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 			blockNumber: base.Blknum(bn),
 		}
 
+		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+			Chain: opts.Chain,
+		})
+
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
-		if sd.traces, err = rpcClient.GetTracesByNumber(opts.Chain, uint64(bn)); err != nil {
+		if sd.traces, err = rpcOptions.GetTracesByNumber(opts.Chain, uint64(bn)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
 		}
 
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
-		if sd.logs, err = rpcClient.GetLogsByNumber(opts.Chain, uint64(bn)); err != nil {
+		if sd.logs, err = rpcOptions.GetLogsByNumber(opts.Chain, uint64(bn)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
 		}
@@ -138,7 +142,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 
 		ts := tslib.TimestampRecord{
 			Bn: uint32(bn),
-			Ts: uint32(rpcClient.GetBlockTimestamp(opts.Chain, utils.PointerOf(uint64(bn)))),
+			Ts: uint32(rpcOptions.GetBlockTimestamp(opts.Chain, utils.PointerOf(uint64(bn)))),
 		}
 
 		tsChannel <- ts

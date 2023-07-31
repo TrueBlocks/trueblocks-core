@@ -25,7 +25,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, nil)
+		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(opts.Globals.Chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -51,7 +51,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 					logger.Info("Processing block", fmt.Sprintf("%d", bn))
 				}
 				addrMap := make(index.AddressBooleanMap)
-				ts := rpcClient.GetBlockTimestamp(chain, &bn)
+				ts := rpcOptions.GetBlockTimestamp(chain, &bn)
 				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts, rpcOptions); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -95,7 +95,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 			index.StreamAppearance(procFunc, opts.Flow, "miner", miner, bn, txid, utils.NOPOS, ts, addrMap)
 
-			if uncles, err := rpcClient.GetUnclesByNumber(chain, bn); err != nil {
+			if uncles, err := rpcOptions.GetUnclesByNumber(chain, bn); err != nil {
 				return err
 			} else {
 				for _, uncle := range uncles {

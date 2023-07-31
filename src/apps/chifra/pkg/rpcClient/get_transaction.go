@@ -138,7 +138,7 @@ func (options *Options) GetRewardTxByTypeAndApp(chain string, rt RewardType, app
 	if block, err := options.GetBlockBodyByNumber(chain, uint64(appearance.BlockNumber)); err != nil {
 		return nil, err
 	} else {
-		if uncles, err := GetUnclesByNumber(chain, uint64(appearance.BlockNumber)); err != nil {
+		if uncles, err := options.GetUnclesByNumber(chain, uint64(appearance.BlockNumber)); err != nil {
 			return nil, err
 		} else {
 			var blockReward = big.NewInt(0)
@@ -240,7 +240,7 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 	var writeOptions *cacheNew.WriteOptions
 	var blockTs base.Timestamp
 	if options.HasStoreWritable() {
-		blockTs = GetBlockTimestamp(chain, &bn)
+		blockTs = options.GetBlockTimestamp(chain, &bn)
 		writeOptions = &cacheNew.WriteOptions{
 			// Check if the block is final
 			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(options.LatestBlockTimestamp),
@@ -268,7 +268,7 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 		return tx, nil
 	}
 
-	blockTs = GetBlockTimestamp(chain, &bn)
+	blockTs = options.GetBlockTimestamp(chain, &bn)
 	receipt, err := options.GetReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
@@ -318,7 +318,7 @@ func (options *Options) GetTransactionByBlockAndId(chain string, bn base.Blknum,
 	if err != nil {
 		return
 	}
-	blockTs := GetBlockTimestamp(chain, &bn)
+	blockTs := options.GetBlockTimestamp(chain, &bn)
 
 	var writeOptions *cacheNew.WriteOptions
 	if options.HasStoreWritable() {

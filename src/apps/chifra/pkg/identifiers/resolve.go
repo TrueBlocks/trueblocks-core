@@ -72,6 +72,10 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 }
 
 func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+
 	dt, err := tslib.FromBnToDate(chain, bn)
 	if err != nil {
 		return bn, err
@@ -107,7 +111,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(rpcClient.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
+	firstDate := gostradamus.FromUnixTimestamp(rpcOptions.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -187,8 +191,8 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		var err error
 		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
-			latest := rpcClient.GetLatestBlockNumber(chain)
-			tsFuture := rpcClient.GetBlockTimestamp(chain, &latest)
+			latest := rpcOptions.GetLatestBlockNumber(chain)
+			tsFuture := rpcOptions.GetBlockTimestamp(chain, &latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
@@ -202,9 +206,13 @@ func (p *Point) resolvePoint(chain string) uint64 {
 func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	txs := []types.RawAppearance{}
 
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			cnt, err := rpcClient.GetCountTransactionsInBlock(chain, uint64(id.Start.Number))
+			cnt, err := rpcOptions.GetCountTransactionsInBlock(chain, uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
@@ -226,7 +234,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			cnt, err := rpcClient.GetCountTransactionsInBlock(chain, uint64(id.Start.resolvePoint(chain)))
+			cnt, err := rpcOptions.GetCountTransactionsInBlock(chain, uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}

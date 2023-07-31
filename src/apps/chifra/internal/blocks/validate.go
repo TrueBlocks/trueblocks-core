@@ -112,7 +112,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 			rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 				Chain: opts.Globals.Chain,
 			})
-			if opts.Traces && !rpcOptions.IsNodeTracing(opts.Globals.TestMode, opts.Globals.Chain) {
+			if opts.Traces && !rpcOptions.IsNodeTracing(opts.Globals.Chain, opts.Globals.TestMode) {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}

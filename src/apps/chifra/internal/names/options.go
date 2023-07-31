@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -131,7 +130,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Terms, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Terms)
+	opts.Terms, _ = opts.Globals.RpcOpts.GetAddressesFromEns(opts.Globals.Chain, opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -143,7 +142,7 @@ func namesFinishParse(args []string) *NamesOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	// EXISTING_CODE
-	opts.Terms, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, args)
+	opts.Terms, _ = opts.Globals.RpcOpts.GetAddressesFromEns(opts.Globals.Chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

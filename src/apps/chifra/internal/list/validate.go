@@ -17,6 +17,10 @@ import (
 func (opts *ListOptions) validateList() error {
 	opts.testLog()
 
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: opts.Globals.Chain,
+	})
+
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
@@ -35,7 +39,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS && !opts.Globals.TestMode {
-		latest := rpcClient.GetLatestBlockNumber(opts.Globals.Chain)
+		latest := rpcOptions.GetLatestBlockNumber(opts.Globals.Chain)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)

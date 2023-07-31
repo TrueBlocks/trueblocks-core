@@ -47,7 +47,7 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt ty
 	}
 
 	if query.NeedsTs && query.Ts == 0 {
-		query.Ts = GetBlockTimestamp(chain, &query.Bn)
+		query.Ts = options.GetBlockTimestamp(chain, &query.Bn)
 	}
 
 	logs := []types.SimpleLog{}

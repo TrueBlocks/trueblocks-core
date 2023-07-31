@@ -144,7 +144,11 @@ func (options *Options) GetBlockHeaderByNumber(chain string, bn uint64) (block t
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
 func loadBlock[Tx string | types.SimpleTransaction](chain string, bn uint64, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
-	rawBlock, err = getRawBlock(chain, bn, withTxs)
+	rpcOptions := DefaultRpcOptions(&DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+
+	rawBlock, err = rpcOptions.getRawBlock(chain, bn, withTxs)
 	if err != nil {
 		return
 	}
@@ -193,7 +197,7 @@ func loadBlock[Tx string | types.SimpleTransaction](chain string, bn uint64, wit
 	return
 }
 
-func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error) {
+func (options *Options) getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
 
@@ -202,7 +206,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
+			block.Timestamp = fmt.Sprintf("0x%x", options.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 		} else if utils.MustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
@@ -212,7 +216,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 }
 
 // GetBlockTimestamp returns the timestamp associated with a given block
-func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
+func (options *Options) GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
 	if ec, err := getClient(chain); err != nil {
 		logger.Error("Could not connect to RPC client", err)
 		return 0
@@ -234,7 +238,7 @@ func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
 		if ts == 0 {
 			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
 			// TODO: Chain specific
-			return GetBlockTimestamp(chain, utils.PointerOf(uint64(1))) - 13
+			return options.GetBlockTimestamp(chain, utils.PointerOf(uint64(1))) - 13
 		}
 
 		return ts
@@ -242,7 +246,7 @@ func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
 }
 
 // GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
-func GetTransactionHashByNumberAndID(chain string, bn, txId uint64) (string, error) {
+func (options *Options) GetTransactionHashByNumberAndID(chain string, bn, txId uint64) (string, error) {
 	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
@@ -261,4 +265,3 @@ func GetTransactionHashByNumberAndID(chain string, bn, txId uint64) (string, err
 		return tx.Hash().Hex(), nil
 	}
 }
-

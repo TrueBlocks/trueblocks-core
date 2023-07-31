@@ -178,5 +178,5 @@ func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, e
 		return "", nil
 	}
 
-	return rpcClient.GetTransactionHashByNumberAndID(chain, blockNum, txId)
+	return rpcOptions.GetTransactionHashByNumberAndID(chain, blockNum, txId)
 }

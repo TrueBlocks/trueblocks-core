@@ -39,7 +39,7 @@ func (opts *TracesOptions) HandleShowTraces() error {
 
 			// Timestamp is not part of the raw trace data so we need to get it separately
 			// TxIds don't span blocks, so we can use the first one outside the loop to find timestamp
-			ts := rpcClient.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(txIds[0].BlockNumber)))
+			ts := rpcOptions.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(txIds[0].BlockNumber)))
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
 				traces, err := rpcOptions.GetTracesByTransactionID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))

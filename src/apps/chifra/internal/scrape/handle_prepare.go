@@ -47,10 +47,14 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 		})
 	}
 
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: opts.Globals.Chain,
+	})
+
 	array := []tslib.TimestampRecord{}
 	array = append(array, tslib.TimestampRecord{
 		Bn: uint32(0),
-		Ts: uint32(rpcClient.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(0)))),
+		Ts: uint32(rpcOptions.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(0)))),
 	})
 	tslib.Append(opts.Globals.Chain, array)
 

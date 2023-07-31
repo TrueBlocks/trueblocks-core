@@ -8,7 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -55,7 +54,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 
 // readContractAndClean will read contract data and call `cleanName` for the given address
 func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err error) {
-	converted, ok := rpcClient.GetAddressesFromEns(opts.Globals.Chain, []string{opts.Autoname})
+	converted, ok := opts.Globals.RpcOpts.GetAddressesFromEns(opts.Globals.Chain, []string{opts.Autoname})
 	term := opts.Autoname
 	if ok {
 		term = converted[0]

@@ -18,6 +18,10 @@ import (
 func (opts *ExportOptions) validateExport() error {
 	opts.testLog()
 
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: opts.Globals.Chain,
+	})
+
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
@@ -72,7 +76,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS {
-		latest := rpcClient.GetLatestBlockNumber(opts.Globals.Chain)
+		latest := rpcOptions.GetLatestBlockNumber(opts.Globals.Chain)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
@@ -149,9 +153,6 @@ func (opts *ExportOptions) validateExport() error {
 			}
 		}
 
-		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-			Chain: opts.Globals.Chain,
-		})
 		if !rpcOptions.IsNodeArchive(opts.Globals.Chain) {
 			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
 		}

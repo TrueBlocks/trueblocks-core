@@ -13,10 +13,13 @@ import (
 func (opts *TracesOptions) HandleFilter() error {
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		traces, err := rpcClient.GetTracesByFilter(opts.Globals.Chain, opts.Filter)
+		traces, err := rpcOptions.GetTracesByFilter(chain, opts.Filter)
 		if err != nil {
 			errorChan <- err
 			cancel()
@@ -27,7 +30,7 @@ func (opts *TracesOptions) HandleFilter() error {
 		}
 
 		for index := range traces {
-			traces[index].Timestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
+			traces[index].Timestamp = rpcOptions.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
 			if opts.Articulate {
 				if err = abiCache.ArticulateTrace(chain, &traces[index]); err != nil {
 					errorChan <- err // continue even with an error

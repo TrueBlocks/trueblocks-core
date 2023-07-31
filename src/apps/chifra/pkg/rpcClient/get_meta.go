@@ -55,7 +55,7 @@ func (options *Options) GetMetaData(chain string, testmode bool) (*MetaData, err
 	meta.Chain = chain
 	meta.ChainId = chainId
 	meta.NetworkId = networkId
-	meta.Latest = GetLatestBlockNumber(chain)
+	meta.Latest = options.GetLatestBlockNumber(chain)
 
 	filenameChan := make(chan cache.CacheFileInfo)
 

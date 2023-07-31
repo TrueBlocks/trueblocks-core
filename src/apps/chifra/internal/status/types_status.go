@@ -167,7 +167,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		return nil, err
 	}
 
-	vers, err := rpcClient.GetClientVersion(chain)
+	vers, err := rpcOptions.GetClientVersion(chain)
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +185,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     rpcOptions.IsNodeArchive(chain),
-		IsTracing:     rpcOptions.IsNodeTracing(testMode, chain),
+		IsTracing:     rpcOptions.IsNodeTracing(chain, testMode),
 		HasEsKey:      config.HasEsKeys(chain),
 		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,

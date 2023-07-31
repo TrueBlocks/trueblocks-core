@@ -52,7 +52,7 @@ func (options *Options) GetContractDeployBlock(chain string, address base.Addres
 		return
 	}
 
-	latest := GetLatestBlockNumber(chain)
+	latest := options.GetLatestBlockNumber(chain)
 	if err = options.IsContractAt(chain, address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
 		return
 	}

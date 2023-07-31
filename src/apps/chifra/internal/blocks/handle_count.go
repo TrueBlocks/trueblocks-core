@@ -16,8 +16,9 @@ import (
 )
 
 func (opts *BlocksOptions) HandleCounts() error {
+	chain := opts.Globals.Chain
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 		Opts:  opts,
 	})
 
@@ -25,10 +26,8 @@ func (opts *BlocksOptions) HandleCounts() error {
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, nil)
+		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(opts.Globals.Chain, nil)
 	}
-
-	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -61,7 +60,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Uncles {
-					if blockCount.UnclesCnt, err = rpcClient.GetCountUnclesInBlock(chain, bn); err != nil {
+					if blockCount.UnclesCnt, err = rpcOptions.GetCountUnclesInBlock(chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -72,7 +71,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Traces {
-					if blockCount.TracesCnt, err = rpcClient.GetCountTracesInBlock(chain, bn); err != nil {
+					if blockCount.TracesCnt, err = rpcOptions.GetCountTracesInBlock(chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -83,7 +82,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = rpcClient.GetCountLogsInBlock(chain, bn); err != nil {
+					if blockCount.LogsCnt, err = rpcOptions.GetCountLogsInBlock(chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -100,7 +99,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					}
 
 					addrMap := make(index.AddressBooleanMap)
-					ts := rpcClient.GetBlockTimestamp(chain, &bn)
+					ts := rpcOptions.GetBlockTimestamp(chain, &bn)
 					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts, rpcOptions); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {

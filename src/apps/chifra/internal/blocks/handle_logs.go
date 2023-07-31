@@ -20,6 +20,9 @@ import (
 func (opts *BlocksOptions) HandleLogs() error {
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
@@ -54,7 +57,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 					errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
 				}
 
-				logs, err := rpcClient.GetLogsByFilter(chain, logFilter)
+				logs, err := rpcOptions.GetLogsByFilter(chain, logFilter)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

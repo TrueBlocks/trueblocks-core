@@ -16,6 +16,10 @@ import (
 func (opts *TokensOptions) validateTokens() error {
 	opts.testLog()
 
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: opts.Globals.Chain,
+	})
+
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
@@ -107,7 +111,7 @@ func (opts *TokensOptions) validateTokens() error {
 			return err
 		}
 
-		latest := rpcClient.GetLatestBlockNumber(opts.Globals.Chain)
+		latest := rpcOptions.GetLatestBlockNumber(opts.Globals.Chain)
 		// TODO: Should be configurable
 		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 			Chain: opts.Globals.Chain,

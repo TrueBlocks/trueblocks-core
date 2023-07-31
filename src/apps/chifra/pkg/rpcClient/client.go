@@ -55,7 +55,7 @@ func getClient(chain string) (*ethclient.Client, error) {
 }
 
 // GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
-func GetLatestBlockNumber(chain string) uint64 {
+func (options *Options) GetLatestBlockNumber(chain string) uint64 {
 	if ec, err := getClient(chain); err != nil {
 		logger.Error("Could not connect to RPC client: %w", err)
 		return 0
@@ -96,7 +96,7 @@ func (options *Options) GetClientIDs(chain string) (uint64, uint64, error) {
 // TODO: C++ code used to cache version info
 
 // GetClientVersion returns the version of the client
-func GetClientVersion(chain string) (version string, err error) {
+func (options *Options) GetClientVersion(chain string) (version string, err error) {
 	method := "web3_clientVersion"
 	params := rpc.Params{}
 
@@ -177,7 +177,7 @@ func (options *Options) GetTransactionByNumberAndID(chain string, bn, txId uint6
 }
 
 // GetCountTransactionsInBlock returns the number of transactions in a block
-func GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
+func (options *Options) GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
 	if ec, err := getClient(chain); err != nil {
 		return 0, err
 	} else {
