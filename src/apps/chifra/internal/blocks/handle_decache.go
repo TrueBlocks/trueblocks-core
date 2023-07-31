@@ -75,7 +75,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	return nil
 
 	// TODO: Review then remove
-	// pairs := []base.NumPair[uint32]{}
+	// pairs := []base.Pair[uint32,uint32]{}
 	// for _, br := range opts.BlockIds {
 	// 	blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
 	// 	if err != nil {
@@ -87,7 +87,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	// 			return err
 	// 		}
 	// 		for _, tx := range rawBlock.Transactions {
-	// 			pairs = append(pairs, base.NumPair[uint32]{N1: uint32(bn), N2: uint32(tx.TransactionIndex)})
+	// 			pairs = append(pairs, base.Pair[uint32,uint32]{N1: uint32(bn), N2: uint32(tx.TransactionIndex)})
 	// 		}
 	// 	}
 	// }

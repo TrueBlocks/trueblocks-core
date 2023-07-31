@@ -13,7 +13,7 @@ import (
 
 type DecacheFunc func(string) bool
 
-func DecacheItems(chain, address string, processor DecacheFunc, caches []string, apps []base.NumPair[uint32]) (bool, error) {
+func DecacheItems(chain, address string, processor DecacheFunc, caches []string, apps []base.Pair[uint32, uint32]) (bool, error) {
 	lastBlock := 0
 	lastBasePath := ""
 
@@ -28,7 +28,7 @@ func DecacheItems(chain, address string, processor DecacheFunc, caches []string,
 			}
 		} else {
 			for index, app := range apps {
-				basePath, path := getCachePath(chain, cache, address, app.N1, app.N2)
+				basePath, path := getCachePath(chain, cache, address, app.First, app.Second)
 				folderExists := file.FolderExists(basePath)
 				if basePath == lastBasePath && !folderExists {
 					logger.Progress(index%207 == 0, "Skipping: ", path)
@@ -43,14 +43,14 @@ func DecacheItems(chain, address string, processor DecacheFunc, caches []string,
 						goto outer
 					}
 				case "blocks":
-					if lastBlock > 0 && app.N1 == uint32(lastBlock) {
+					if lastBlock > 0 && app.First == uint32(lastBlock) {
 						logger.Progress(index%207 == 0, "Skipping: ", path)
 						continue
 					}
 				default:
 					// do nothing
 				}
-				lastBlock = int(app.N1)
+				lastBlock = int(app.First)
 				lastBasePath = basePath
 
 				if folderExists && file.FileExists(path) {
