@@ -2,13 +2,12 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package ens
+package rpcClient
 
 import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	ensGo "github.com/wealdtech/go-ens/v3"
 )
 
@@ -19,11 +18,11 @@ func lowerIfHex(addr string) string {
 	return strings.ToLower(addr)
 }
 
-// ConvertEns converts an array of strings, if they contains .eth, into addresses. Note, we take
+// GetAddressesFromEns converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func ConvertEns(chain string, addrsIn []string) ([]string, bool) {
+func GetAddressesFromEns(chain string, addrsIn []string) ([]string, bool) {
 	provider := config.GetRpcProvider("mainnet")
-	ec := rpcClient.GetClient(provider)
+	ec := GetClient(provider)
 	defer ec.Close()
 
 	found := false
@@ -42,15 +41,15 @@ func ConvertEns(chain string, addrsIn []string) ([]string, bool) {
 	return out, found
 }
 
-// ConvertOneEns converts a single string, if it contains .eth, into an address. Note, we take
+// GetAddressFromEns converts a single string, if it contains .eth, into an address. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func ConvertOneEns(chain string, in string) (string, bool) {
+func GetAddressFromEns(chain string, in string) (string, bool) {
 	if !strings.Contains(in, ".eth") {
 		return lowerIfHex(in), false
 	}
 
 	provider := config.GetRpcProvider("mainnet")
-	ec := rpcClient.GetClient(provider)
+	ec := GetClient(provider)
 	defer ec.Close()
 
 	val, err := ensGo.Resolve(ec, in)

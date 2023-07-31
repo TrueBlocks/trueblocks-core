@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -100,8 +100,8 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		unquoted := strings.Trim(opts.Call, "'")
 		opts.Call = unquoted
 	}
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.ProxyFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor, _ = rpcClient.GetAddressFromEns(opts.Globals.Chain, opts.ProxyFor)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -131,14 +131,14 @@ func stateFinishParse(args []string) *StateOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.ProxyFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
+	opts.ProxyFor, _ = rpcClient.GetAddressFromEns(opts.Globals.Chain, opts.ProxyFor)
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
 	parts := strings.Split(opts.Call, "!")
 	if len(parts) > 0 {
-		val, _ := ens.ConvertOneEns(opts.Globals.Chain, parts[0])
+		val, _ := rpcClient.GetAddressFromEns(opts.Globals.Chain, parts[0])
 		opts.Call = strings.Replace(opts.Call, parts[0], val, -1)
 	}
 	if len(opts.Blocks) == 0 {

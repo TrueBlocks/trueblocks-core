@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -127,7 +127,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
 	// TODO: Do we know if an option is an address? If yes, we could automate this
-	opts.Belongs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Belongs)
+	opts.Belongs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Belongs)
 	// EXISTING_CODE
 
 	return opts
@@ -151,7 +151,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 			}
 		}
 	}
-	opts.Belongs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Belongs)
+	opts.Belongs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Belongs)
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}

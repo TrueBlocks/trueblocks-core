@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -114,7 +114,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.AccountFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = rpcClient.GetAddressFromEns(opts.Globals.Chain, opts.AccountFor)
 	// EXISTING_CODE
 
 	return opts
@@ -127,7 +127,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	defFmt := "txt"
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.AccountFor, _ = ens.ConvertOneEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = rpcClient.GetAddressFromEns(opts.Globals.Chain, opts.AccountFor)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
