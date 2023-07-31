@@ -1,4 +1,4 @@
-chifra abis  trueblocks.eth --chain --fmt --log_level 4 --nocolor --noop --version --verbose --no_header --file --output --append --fail_on_purpose
+chifra abis  trueblocks.eth --chain --fmt --nocolor --noop --version --verbose --no_header --file --output --append --fail_on_purpose
 Error: 
   unknown flag: --fail_on_purpose
 

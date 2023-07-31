@@ -188,8 +188,7 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 |              |              | --types                   |             |
 |              |              | --appearances             |             |
 |              |              |                           |             |
-| globals      |              | --log_level               | logLevel    |
-|              |              | --no_header               | noHeader    |
+| globals      |              | --no_header               | noHeader    |
 |              |              | --to_file (since removed) | toFile      |
 
 

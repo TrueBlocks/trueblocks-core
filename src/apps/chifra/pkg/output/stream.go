@@ -20,8 +20,6 @@ type OutputOptions struct {
 	ShowRaw bool
 	// If set, hidden fields will be printed as well (depends on the format)
 	Verbose bool
-	// If Verbose is true, this is the level of detail (verbose alone implies LogLevel=1)
-	LogLevel uint64
 	// If set, the first line of "txt" and "csv" output will NOT (the keys) will squelched
 	NoHeader bool
 	// The format in which to print the output

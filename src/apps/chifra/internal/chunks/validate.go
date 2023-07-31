@@ -112,12 +112,6 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
-	// if opts.Globals.Verbose || opts.Globals.LogLevel > 0 {
-	// 	if opts.Mode == "addresses" && opts.Globals.Format == "json" {
-	// 		return validate.Usage("Do not use {0} with {1}", "--format json", "--verbose in the addresses mode")
-	// 	}
-	// }
-
 	err = validate.ValidateIdentifiers(
 		opts.Globals.Chain,
 		opts.Blocks,

@@ -1,6 +1,6 @@
 chifra scrape  --sleep .5
 TEST[DATE|TIME] Sleep:  0.5
-TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append,-logLevel
+TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
 TEST[DATE|TIME] Format:  txt
 Error: Cannot test block scraper
 Usage:

@@ -1,5 +1,5 @@
 chifra init  
-TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append,-logLevel
+TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
 TEST[DATE|TIME] Format:  txt
 Error: integration testing was skipped for chifra init
 Usage:

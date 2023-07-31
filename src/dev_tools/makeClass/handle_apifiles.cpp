@@ -383,7 +383,6 @@ bool COptions::writeOpenApiFile(void) {
         goPkgStream << pkg.first << " " << pkg.second << endl;
     goPkgStream << "\tconfig \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"" << endl;
 
-    converts["logLevel"] = "log_level";
     converts["noHeader"] = "no_header";
     goConvertStream << "\tswitch in {" << endl;
     for (auto item : converts) {

@@ -1,6 +1,6 @@
 chifra init  --first_block 12
 TEST[DATE|TIME] FirstBlock:  12
-TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append,-logLevel
+TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
 TEST[DATE|TIME] Format:  txt
 Error: integration testing was skipped for chifra init
 Usage:

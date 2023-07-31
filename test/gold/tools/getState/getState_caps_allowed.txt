@@ -1,4 +1,4 @@
-chifra state  trueblocks.eth --chain --fmt --log_level 4 --nocolor --noop --version --verbose --no_header --file --output --append --cache --ether --wei --fail_on_purpose
+chifra state  trueblocks.eth --chain --fmt --nocolor --noop --version --verbose --no_header --file --output --append --cache --ether --wei --fail_on_purpose
 Error: 
   unknown flag: --fail_on_purpose
 

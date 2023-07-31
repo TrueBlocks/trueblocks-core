@@ -22,10 +22,6 @@ The `--verbose` flag has been part of `chifra` from the beginning. You may still
 
 Previously, one could specify `--verbose N` where `N` indicated the log level. This usage will now report an error.
 
-To accomplish the same task, use `--log_level N` instead. The old usage will report an error. You do not need to include the `--verbose` switch, it will be ignored if also present.
-
-In the new usage, only the presence or absence of the `--verbose` switch matters. Including `--verbose` is identical to `--log_level 1`.
-
 This is a breaking change and will break any previously-existing shell scripts or front-end applications using `--verbose N`.
 
 ## You're Finished

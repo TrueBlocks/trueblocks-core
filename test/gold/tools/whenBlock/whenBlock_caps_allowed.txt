@@ -1,4 +1,4 @@
-chifra when  3000000 --chain --fmt --log_level 4 --nocolor --noop --version --verbose --no_header --file --output --append --cache --fail_on_purpose
+chifra when  3000000 --chain --fmt --nocolor --noop --version --verbose --no_header --file --output --append --cache --fail_on_purpose
 Error: 
   unknown flag: --fail_on_purpose
 
