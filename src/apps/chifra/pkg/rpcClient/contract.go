@@ -78,7 +78,8 @@ var locations = []string{
 	"0x",
 }
 
-func GetProxy(chain string, address base.Address, blockNumber base.Blknum) (proxy base.Address, err error) {
+// GetProxyAt returns the proxy address for a contract if any
+func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (proxy base.Address, err error) {
 	client := GetClient(config.GetRpcProvider(chain))
 	proxyAddr, err := rpc.Query[string](chain, "eth_call", rpc.Params{
 		map[string]any{
