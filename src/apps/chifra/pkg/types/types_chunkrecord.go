@@ -10,8 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"io"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -71,18 +69,6 @@ func (s *SimpleChunkRecord) Model(verbose bool, format string, extraOptions map[
 		Data:  model,
 		Order: order,
 	}
-}
-
-func (s *SimpleChunkRecord) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleChunkRecord) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
 }
 
 // EXISTING_CODE

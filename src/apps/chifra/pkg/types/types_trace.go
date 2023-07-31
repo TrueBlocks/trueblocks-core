@@ -187,18 +187,6 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 	}
 }
 
-func (s *SimpleTrace) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleTrace) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
 // EXISTING_CODE
 func mustParseUint(input any) (result uint64) {
 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)

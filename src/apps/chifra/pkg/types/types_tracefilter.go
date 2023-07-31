@@ -11,7 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -74,18 +73,6 @@ func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[
 		Data:  model,
 		Order: order,
 	}
-}
-
-func (s *SimpleTraceFilter) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleTraceFilter) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
 }
 
 // EXISTING_CODE

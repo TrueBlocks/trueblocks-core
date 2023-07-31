@@ -147,18 +147,6 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	}
 }
 
-func (s *SimpleLog) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleLog) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
 // EXISTING_CODE
 //
 

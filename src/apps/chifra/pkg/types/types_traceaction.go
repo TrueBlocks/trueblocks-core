@@ -126,18 +126,6 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 	}
 }
 
-func (s *SimpleTraceAction) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleTraceAction) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
 // EXISTING_CODE
 //
 
