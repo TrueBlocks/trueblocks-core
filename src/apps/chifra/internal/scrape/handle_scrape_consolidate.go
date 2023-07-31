@@ -144,7 +144,10 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		} else {
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
-		m, _ := rpcClient.GetMetaData(blazeOpts.Chain, opts.Globals.TestMode)
+		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+			Chain: blazeOpts.Chain,
+		})
+		m, _ := rpcOptions.GetMetaData(blazeOpts.Chain, opts.Globals.TestMode)
 		rng := base.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)
 		fileName := filepath.Join(config.GetPathToIndex(blazeOpts.Chain), "staging", f)

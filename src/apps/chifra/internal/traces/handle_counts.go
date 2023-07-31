@@ -37,7 +37,7 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 
 			for _, id := range txIds {
-				tx, err := rpcClient.GetTransactionByNumberAndID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				tx, err := rpcOptions.GetTransactionByNumberAndID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

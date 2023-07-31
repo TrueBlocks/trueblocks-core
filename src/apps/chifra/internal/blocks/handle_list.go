@@ -15,13 +15,13 @@ import (
 )
 
 func (opts *BlocksOptions) HandleList() error {
+	chain := opts.Globals.Chain
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
-		Opts:  opts,
+		Chain: chain,
 	})
 
 	// Don't do this in the loop
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	meta, err := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}

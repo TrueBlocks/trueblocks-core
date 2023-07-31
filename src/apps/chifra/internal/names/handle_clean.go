@@ -183,7 +183,10 @@ func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
 }
 
 func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
-	if err = rpcClient.IsContractAt(chain, name.Address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+	if err = rpcOptions.IsContractAt(chain, name.Address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
 		return
 	}
 

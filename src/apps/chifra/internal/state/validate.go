@@ -55,7 +55,11 @@ func (opts *StateOptions) validateState() error {
 				contract = opts.ProxyFor
 			}
 
-			err := rpcClient.IsContractAt(opts.Globals.Chain, base.HexToAddress(contract), nil)
+			chain := opts.Globals.Chain
+			rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+				Chain: chain,
+			})
+			err := rpcOptions.IsContractAt(chain, base.HexToAddress(contract), nil)
 			if err != nil {
 				if errors.Is(err, rpcClient.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")

@@ -16,8 +16,9 @@ import (
 
 // HandleTimestampsCheck handles chifra when --timestamps --check
 func (opts *WhenOptions) HandleTimestampsCheck() error {
+	chain := opts.Globals.Chain
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 		Opts:  opts,
 	})
 
@@ -29,12 +30,12 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	// For display only
 	skip := uint64(500)
 	if opts.Deep {
-		m, _ := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		m, _ := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
 		skip = m.Latest / 500
 	}
 	scanBar := progress.NewScanBar(cnt /* wanted */, (cnt / skip) /* freq */, cnt /* max */, (2. / 3.))
 
-	blockNums, err := identifiers.GetBlockNumbers(opts.Globals.Chain, opts.BlockIds)
+	blockNums, err := identifiers.GetBlockNumbers(chain, opts.BlockIds)
 	if err != nil {
 		return err
 	}

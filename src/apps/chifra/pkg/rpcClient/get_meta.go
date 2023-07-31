@@ -32,8 +32,8 @@ func (m MetaData) Age(bn uint64) int64 {
 	return int64(m.Latest) - int64(bn) // Allows negative
 }
 
-func GetMetaData(chain string, testmode bool) (*MetaData, error) {
-	chainId, networkId, err := GetClientIDs(chain)
+func (options *Options) GetMetaData(chain string, testmode bool) (*MetaData, error) {
+	chainId, networkId, err := options.GetClientIDs(chain)
 	if err != nil {
 		return nil, err
 	}

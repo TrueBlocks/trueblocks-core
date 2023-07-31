@@ -173,9 +173,12 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 }
 
 func (p *Point) resolvePoint(chain string) uint64 {
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
 	var bn uint64
 	if p.Hash != "" {
-		bn, _ = rpcClient.GetBlockNumberByHash(chain, p.Hash)
+		bn, _ = rpcOptions.GetBlockNumberByHash(chain, p.Hash)
 	} else if p.Date != "" {
 		bn, _ = tslib.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {
@@ -239,7 +242,10 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		app, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
+		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+			Chain: chain,
+		})
+		app, err := rpcOptions.GetAppearanceFromHash(chain, id.Start.Hash)
 		return append(txs, app), err
 	}
 

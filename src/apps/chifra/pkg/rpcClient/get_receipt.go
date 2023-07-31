@@ -26,7 +26,7 @@ type ReceiptQuery struct {
 
 // GetReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
+func (options *Options) GetReceipt(chain string, query ReceiptQuery) (types.SimpleReceipt, error) {
 	if options.HasStore() {
 		tx := &types.SimpleTransaction{
 			BlockNumber:      query.Bn,
@@ -35,7 +35,7 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt ty
 		if err := options.Store.Read(tx, nil); err == nil {
 			// success
 			if tx.Receipt == nil {
-				return receipt, nil
+				return types.SimpleReceipt{}, nil
 			}
 			return *tx.Receipt, nil
 		}
@@ -43,7 +43,7 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt ty
 
 	rawReceipt, tx, err := getRawTransactionReceipt(chain, query.Bn, query.Txid)
 	if err != nil {
-		return
+		return types.SimpleReceipt{}, nil
 	}
 
 	if query.NeedsTs && query.Ts == 0 {
@@ -73,10 +73,10 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt ty
 
 	cumulativeGasUsed, err := hexutil.DecodeUint64(rawReceipt.CumulativeGasUsed)
 	if err != nil {
-		return
+		return types.SimpleReceipt{}, nil
 	}
 
-	receipt = types.SimpleReceipt{
+	receipt := types.SimpleReceipt{
 		BlockHash:         base.HexToHash(rawReceipt.BlockHash),
 		BlockNumber:       utils.MustParseUint(rawReceipt.BlockNumber),
 		ContractAddress:   base.HexToAddress(rawReceipt.ContractAddress),
@@ -108,12 +108,16 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt ty
 			receipt.EffectiveGasPrice = gasPrice
 		}
 	}
-	return
+
+	return receipt, nil
 }
 
 // getRawTransactionReceipt fetches raw transaction given blockNumber and transactionIndex
 func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
-	if fetched, err := GetTransactionByNumberAndID(chain, bn, txid); err != nil {
+	rpcOptions := DefaultRpcOptions(&DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+	if fetched, err := rpcOptions.GetTransactionByNumberAndID(chain, bn, txid); err != nil {
 		return nil, nil, err
 
 	} else {

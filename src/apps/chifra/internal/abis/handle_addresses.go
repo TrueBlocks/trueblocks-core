@@ -22,19 +22,24 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 		}
 	}
 
+	chain := opts.Globals.Chain
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := base.HexToAddress(addr)
-			if err = abi.LoadAbiFromAddress(opts.Globals.Chain, address, result); err != nil {
+			if err = abi.LoadAbiFromAddress(chain, address, result); err != nil {
 				if !os.IsNotExist(err) {
 					// The error was not due to a missing file...
 					errorChan <- err
 					cancel()
 				}
 				// Let's try to download the file from somewhere
-				if err := rpcClient.IsContractAt(opts.Globals.Chain, address, nil); err != nil {
+				if err := rpcOptions.IsContractAt(chain, address, nil); err != nil {
 					if !errors.Is(err, rpcClient.ErrNotAContract) {
 						errorChan <- err
 						cancel()

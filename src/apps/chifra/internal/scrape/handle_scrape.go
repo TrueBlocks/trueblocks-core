@@ -23,13 +23,15 @@ import (
 // TODO: Make sure we're not running acctScrape and/or pause if it's running
 
 func (opts *ScrapeOptions) HandleScrape() error {
-	progress, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	chain := opts.Globals.Chain
+	provider, _ := config.GetRpcProvider(chain)
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+	progress, err := rpcOptions.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
-
-	chain := opts.Globals.Chain
-	provider, _ := config.GetRpcProvider(chain)
 
 	blazeOpts := BlazeOptions{
 		Chain:        opts.Globals.Chain,
@@ -50,7 +52,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 	origBlockCnt := opts.BlockCnt
 	for {
-		progress, err = rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		progress, err = rpcOptions.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
 		if err != nil {
 			return err
 		}

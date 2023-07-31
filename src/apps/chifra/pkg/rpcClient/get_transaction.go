@@ -39,7 +39,7 @@ func getRawTransaction(chain string, blkHash base.Hash, txHash base.Hash, bn bas
 	}
 }
 
-func GetAppearanceFromHash(chain string, hash string) (types.RawAppearance, error) {
+func (options *Options) GetAppearanceFromHash(chain string, hash string) (types.RawAppearance, error) {
 	var ret types.RawAppearance
 	if rawTx, err := getRawTransaction(chain, notAHash, base.HexToHash(hash), notAnInt, notAnInt); err != nil {
 		return ret, err

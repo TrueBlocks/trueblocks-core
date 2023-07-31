@@ -106,7 +106,10 @@ func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions)
 		jw := output.NewDefaultJsonWriter(w, false)
 		jw.ShouldWriteMeta = true
 		jw.GetMeta = func() (*rpcClient.MetaData, error) {
-			return rpcClient.GetMetaData(opts.Chain, opts.OutputOptions.TestMode)
+			rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+				Chain: opts.Chain,
+			})
+			return rpcOptions.GetMetaData(opts.Chain, opts.OutputOptions.TestMode)
 		}
 		opts.Writer = jw
 	}

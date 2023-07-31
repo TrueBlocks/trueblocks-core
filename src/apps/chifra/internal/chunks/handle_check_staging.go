@@ -22,6 +22,11 @@ import (
 //  3. Makes sure that the first block inside is == first if allow_missing == false, > otherwise
 //  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
 func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *simpleReportCheck) error {
+	chain := opts.Globals.Chain
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+
 	stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if !file.FileExists(stageFn) {
@@ -29,7 +34,7 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 	}
 
 	fileRange := base.RangeFromFilename(stageFn)
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	meta, err := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}

@@ -38,7 +38,11 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("Cannot test block scraper")
 	}
 
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	chain := opts.Globals.Chain
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+	meta, err := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}

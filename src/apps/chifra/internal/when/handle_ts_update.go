@@ -14,8 +14,9 @@ import (
 
 // HandleTimestampUpdate update the timestamp file to the latest block
 func (opts *WhenOptions) HandleTimestampUpdate() error {
+	chain := opts.Globals.Chain
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 		Opts:  opts,
 	})
 
@@ -24,12 +25,12 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 		return nil
 	}
 
-	cnt, err := tslib.NTimestamps(opts.Globals.Chain)
+	cnt, err := tslib.NTimestamps(chain)
 	if err != nil {
 		return err
 	}
 
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, false)
+	meta, err := rpcOptions.GetMetaData(chain, false)
 	if err != nil {
 		return err
 	}
@@ -43,7 +44,7 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 
 	logger.Info("Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
 	for bn := cnt; bn < meta.Latest; bn++ {
-		block, _ := rpcOptions.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
+		block, _ := rpcOptions.GetBlockHeaderByNumber(chain, bn)
 		record := tslib.TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 		timestamps = append(timestamps, record)
 		logger.Progress(true, "Adding block", bn, "to timestamp array")
