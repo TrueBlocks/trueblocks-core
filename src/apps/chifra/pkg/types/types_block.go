@@ -195,18 +195,6 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-func (s *SimpleBlock[Tx]) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
 // EXISTING_CODE
 //
 

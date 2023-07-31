@@ -34,7 +34,7 @@ Flags:
   -e, --encode string   generate the 32-byte encoding for a given cannonical function or event signature
   -C, --clean           remove an abi file for an address or all zero-length files if no address is given
   -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
+  -v, --verbose         enable verbose output
   -h, --help            display this help screen
 
 Notes:

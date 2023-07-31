@@ -5,6 +5,7 @@ TEST[DATE|TIME] Types:  [ext]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] Processing [0x1324e7b922b30b49ab8ea81086341cc41c249346] --types: [ext] [3730590-3730700]
 INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlist&address=0x1324e7b922b30b49ab8ea81086341cc41c249346&page=1&offset=100

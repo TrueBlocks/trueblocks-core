@@ -1,8 +1,8 @@
 ## Global Options
 
-|           |                                                                                                                             |
-| --------- | --------------------------------------------------------------------------------------------------------------------------- |
-| All tools | --help, --chain, --fmt, --verbose, --no_header,<br>--version, --file, --output, --append, --log_level,<br>--nocolor, --noop |
+|           |                                                                                                                |
+| --------- | -------------------------------------------------------------------------------------------------------------- |
+| All tools | --help, --chain, --fmt, --verbose, --no_header,<br>--version, --file, --output, --append,<br>--nocolor, --noop |
 
 ### Additional Global Options
 

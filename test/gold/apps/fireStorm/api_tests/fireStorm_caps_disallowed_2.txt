@@ -1,6 +1,0 @@
-explore?terms=12.0&logLevel=4
-{
-  "errors": [
-    "Invalid key (logLevel) in explore route."
-  ]
-}

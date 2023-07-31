@@ -2,6 +2,7 @@ chifra slurp  0x83f564d180b58ad9a02a449105568189ee7de8cb --types 1155 13103657-1
 TEST[DATE|TIME] Addrs:  [0x83f564d180b58ad9a02a449105568189ee7de8cb]
 TEST[DATE|TIME] Blocks:  [13103657-13255822]
 TEST[DATE|TIME] Types:  [1155]
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] Processing [0x83f564d180b58ad9a02a449105568189ee7de8cb] --types: [1155] [13103657-13255822]
 INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=token1155tx&address=0x83f564d180b58ad9a02a449105568189ee7de8cb&page=1&offset=100

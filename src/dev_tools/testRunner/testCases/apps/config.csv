@@ -11,8 +11,8 @@ on      ,both ,fast  ,config ,apps/config ,config_edit          ,y    ,modes = e
 local   ,both ,fast  ,config ,apps/config ,config_paths         ,y    ,paths
 
 # Capabilities
-# chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on      ,both ,fast  ,config ,apps/config ,caps_allowed      ,y    ,chain & fmt & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+on      ,both ,fast  ,config ,apps/config ,caps_allowed      ,y    ,chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on      ,both ,fast  ,config ,apps/config ,caps_disallowed_1 ,y    ,cache
 on      ,both ,fast  ,config ,apps/config ,caps_disallowed_2 ,y    ,raw
 on      ,both ,fast  ,config ,apps/config ,caps_disallowed_3 ,y    ,ether

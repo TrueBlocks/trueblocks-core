@@ -1,6 +1,6 @@
 chifra scrape  --block_cnt 12
 TEST[DATE|TIME] BlockCnt:  12
-TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append,-logLevel
+TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
 TEST[DATE|TIME] Format:  txt
 Error: Cannot test block scraper
 Usage:
@@ -18,6 +18,6 @@ Flags:
       --unripe_dist uint      the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden) (default 28)
       --channel_count uint    number of concurrent processing channels (hidden) (default 20)
       --allow_missing         do not report errors for blockchains that contain blocks with zero addresses (hidden)
-  -v, --verbose               enable verbose (increase detail with --log_level)
+  -v, --verbose               enable verbose output
   -h, --help                  display this help screen
 

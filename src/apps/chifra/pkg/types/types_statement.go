@@ -10,7 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"io"
 	"math/big"
 	"strings"
 
@@ -172,18 +171,6 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		Data:  model,
 		Order: order,
 	}
-}
-
-func (s *SimpleStatement) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleStatement) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
 }
 
 // EXISTING_CODE

@@ -22,7 +22,7 @@ Arguments:
 Flags:
   -a, --paths        show the configuration paths for the system
   -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -v, --verbose      enable verbose output
   -h, --help         display this help screen
 ```
 

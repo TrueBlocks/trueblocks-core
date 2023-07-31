@@ -1,4 +1,4 @@
-status?modes=blooms&chain&fmt&logLevel=4&nocolor&noop&version&verbose&noHeader&file&output&append&failOnPurpose
+status?modes=blooms&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&failOnPurpose
 {
   "errors": [
     "Invalid key (failOnPurpose) in status route."

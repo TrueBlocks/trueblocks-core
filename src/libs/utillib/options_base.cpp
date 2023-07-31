@@ -83,8 +83,6 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
                 cleaned_.pop_back();
         } else if (arg == "--readme") {
             cleaned_.push_back(arg);
-        } else if (arg == "--log_level") {
-            cleaned_.push_back("--verbose");
         } else {
             // add this arg
             cleaned_.push_back(arg);
@@ -113,8 +111,8 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output", "append",
-                                "raw",     "wei",       "version", "nocolor", "noop"};
+    CStringArray builtInCmds = {"verbose", "fmt", "ether",   "output",  "append",
+                                "raw",     "wei", "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
         if (arg == ("-" + bi))

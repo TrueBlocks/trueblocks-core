@@ -300,7 +300,6 @@ const char* STR_PATH_FILE =
     "    noHeader?: boolean,\n"
     "    fmt?: string,\n"
     "    verbose?: boolean,\n"
-    "    logLevel?: number,\n"
     "    wei?: boolean,\n"
     "    ether?: boolean,\n"
     "    dollars?: boolean,\n"
