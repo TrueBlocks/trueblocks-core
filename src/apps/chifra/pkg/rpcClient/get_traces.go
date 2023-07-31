@@ -16,8 +16,8 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-// GetTraceCountByBlockNumber returns the number of traces in a block
-func GetTraceCountByBlockNumber(chain string, bn uint64) (uint64, error) {
+// GetCountTracesInBlock returns the number of traces in a block
+func GetCountTracesInBlock(chain string, bn uint64) (uint64, error) {
 	if traces, err := GetTracesByNumber(chain, bn); err != nil {
 		return utils.NOPOS, err
 	} else {

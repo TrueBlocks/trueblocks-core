@@ -72,7 +72,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Traces {
-					if blockCount.TracesCnt, err = rpcClient.GetTraceCountByBlockNumber(chain, bn); err != nil {
+					if blockCount.TracesCnt, err = rpcClient.GetCountTracesInBlock(chain, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
