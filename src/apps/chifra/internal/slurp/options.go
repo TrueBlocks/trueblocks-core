@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -95,7 +95,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -130,7 +130,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {

@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -263,9 +263,9 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	// EXISTING_CODE
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter, _ = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset, _ = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 
 	return opts
@@ -290,9 +290,9 @@ func exportFinishParse(args []string) *ExportOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter, _ = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset, _ = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
+	opts.Emitter, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Emitter)
+	opts.Asset, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
