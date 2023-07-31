@@ -18,15 +18,15 @@ import (
 
 // GetTraceCountByBlockNumber returns the number of traces in a block
 func GetTraceCountByBlockNumber(chain string, bn uint64) (uint64, error) {
-	if traces, err := GetTracesByBlockNumber(chain, bn); err != nil {
+	if traces, err := GetTracesByNumber(chain, bn); err != nil {
 		return utils.NOPOS, err
 	} else {
 		return uint64(len(traces)), nil
 	}
 }
 
-// GetTracesByBlockNumber returns a slice of traces in the given block
-func GetTracesByBlockNumber(chain string, bn uint64) ([]types.SimpleTrace, error) {
+// GetTracesByNumber returns a slice of traces in the given block
+func GetTracesByNumber(chain string, bn uint64) ([]types.SimpleTrace, error) {
 	method := "trace_block"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
 
