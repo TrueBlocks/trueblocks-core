@@ -149,7 +149,10 @@ func (opts *ExportOptions) validateExport() error {
 			}
 		}
 
-		if !rpcClient.IsNodeArchive(opts.Globals.Chain) {
+		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+			Chain: opts.Globals.Chain,
+		})
+		if !rpcOptions.IsNodeArchive(opts.Globals.Chain) {
 			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
 		}
 

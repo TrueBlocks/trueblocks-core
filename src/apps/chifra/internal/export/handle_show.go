@@ -41,6 +41,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		Chain: chain,
 		Opts:  opts,
 	})
+	ledgers.RpcOptions = rpcOptions
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
@@ -68,7 +69,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					}
 
 					if opts.Accounting {
-						if statements, err := ledgers.GetStatementsFromAppearance(chain, &raw, rpcOptions); err != nil {
+						if statements, err := ledgers.GetStatementsFromAppearance(chain, &raw); err != nil {
 							errorChan <- err
 						} else {
 							tx.Statements = &statements

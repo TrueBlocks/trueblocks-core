@@ -118,6 +118,7 @@ func (opts *ExportOptions) readStatements(
 			opts.Traces,
 			&opts.Asset,
 		)
+		ledgers.RpcOptions = rpcOptions
 		if opts.Accounting {
 			apps := make([]types.SimpleAppearance, 0, len(txMap))
 			for _, tx := range txArray {

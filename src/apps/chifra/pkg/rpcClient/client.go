@@ -226,7 +226,7 @@ func (options *Options) GetBlockHashByNumber(chain string, bn uint64) (string, e
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) {
+func (options *Options) GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) {
 	if ec, err := getClient(chain); err != nil {
 		var zero big.Int
 		return &zero, err
@@ -237,7 +237,7 @@ func GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) 
 }
 
 // GetCodeAt returns a code (if any) for an address at a block
-func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
+func (options *Options) GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
 	if ec, err := getClient(chain); err != nil {
 		return []byte{}, err
 	} else {
