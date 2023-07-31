@@ -175,7 +175,7 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 func (p *Point) resolvePoint(chain string) uint64 {
 	var bn uint64
 	if p.Hash != "" {
-		bn, _ = rpcClient.GetBlockNumberFromHash(chain, p.Hash)
+		bn, _ = rpcClient.GetBlockNumberByHash(chain, p.Hash)
 	} else if p.Date != "" {
 		bn, _ = tslib.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {

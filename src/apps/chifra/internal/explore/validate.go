@@ -127,14 +127,14 @@ func (t ExploreType) String() string {
 
 func idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
 	if isBlockHash(arg) {
-		return arg, nil
+		return rpcClient.GetBlockHashFromHashStr(chain, arg)
 	}
 
 	blockNum, err := strconv.ParseUint(arg, 10, 64)
 	if err != nil {
 		return "", nil
 	}
-	return rpcClient.GetBlockHashFromNumber(chain, blockNum)
+	return rpcClient.GetBlockHashByNumber(chain, blockNum)
 }
 
 // idToTxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
@@ -144,7 +144,7 @@ func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, e
 	// simple case first
 	if !strings.Contains(arg, ".") {
 		// We know it's a hash, but we want to know if it's a legitimate tx on chain
-		return arg, nil
+		return rpcClient.GetTransactionHashFromHashStr(chain, arg)
 	}
 
 	parts := strings.Split(arg, ".")

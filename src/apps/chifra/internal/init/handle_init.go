@@ -51,7 +51,7 @@ func (opts *InitOptions) HandleInit() error {
 	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 
 	// Tell the user what we're doing
-	logger.InfoTable("Unchained Index:", unchained.Address_V2)
+	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
 	logger.InfoTable("Schemas:", unchained.Schemas)
 	logger.InfoTable("Config Folder:", config.GetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.GetPathToIndex(chain))

@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 )
 
+// IsNodeArchive returns true if the node is an archive node
 func IsNodeArchive(chain string) bool {
 	// TODO: from C++ code
 	// const CToml* config = getGlobalConfig("blockScrape");

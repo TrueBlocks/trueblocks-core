@@ -27,7 +27,6 @@ on      ,both ,fast  ,explore ,apps/fireStorm ,block_not_found          ,y    ,t
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
 on      ,both ,fast  ,explore ,apps/fireStorm ,caps_allowed           ,y    ,terms = 12.0 & chain & nocolor & noop & verbose & file & fail_on_purpose
 on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_1      ,y    ,terms = 12.0 & fmt = json
-#off    ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_2      ,y    ,terms = 12.0 & log_ level = 4
 on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_3      ,y    ,terms = 12.0 & no_header
 on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_4      ,y    ,terms = 12.0 & output
 on      ,both ,fast  ,explore ,apps/fireStorm ,caps_disallowed_5      ,y    ,terms = 12.0 & append

@@ -45,7 +45,6 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,by_file_bad                  ,n 
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_allowed                 ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_1            ,y    ,fmt = json
-#off    ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_2            ,y    ,log_ level = 4
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_3            ,y    ,no_header
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_4            ,y    ,output
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_5            ,y    ,append

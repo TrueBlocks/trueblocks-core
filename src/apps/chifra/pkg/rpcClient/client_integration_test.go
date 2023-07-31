@@ -27,12 +27,22 @@ func Test_Client(t *testing.T) {
 		t.Error("timestamp for block 1 is not correct")
 	}
 
-	_, err := GetTransactionHashByHashAndID(chain, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53", 0)
+	_, err := GetTransactionHashFromHashStr(chain, "0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08")
+	if err != nil {
+		t.Error("couldn't get known transaction hash from tx hash")
+	}
+
+	_, err = GetTransactionHashByHashAndID(chain, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53", 0)
 	if err != nil {
 		t.Error("couldn't get known transaction hash from block hash and tx id")
 	}
 
-	_, err = GetBlockHashFromNumber(chain, 12)
+	_, err = GetBlockHashFromHashStr(chain, "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53")
+	if err != nil {
+		t.Error("couldn't get known block hash from block hash")
+	}
+
+	_, err = GetBlockHashByNumber(chain, 12)
 	if err != nil {
 		t.Error("couldn't get known block hash from block number")
 	}

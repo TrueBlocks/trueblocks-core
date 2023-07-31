@@ -1,3 +1,7 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
 package rpcClient
 
 import (
@@ -17,7 +21,7 @@ func lowerIfHex(addr string) string {
 // chain parameter, but ignore it choosing to look at mainnet ENS only
 func GetAddressesFromEns(chain string, addrs []string) (out []string, found bool) {
 	// Note: we use ENS on mainnet always
-	if ec, err := GetClient("mainnet"); err != nil {
+	if ec, err := getClient("mainnet"); err != nil {
 		return
 	} else {
 		defer ec.Close()
@@ -42,7 +46,7 @@ func GetAddressFromEns(chain string, addr string) (string, bool) {
 	}
 
 	// Note: we use ENS on mainnet always
-	if ec, err := GetClient("mainnet"); err != nil {
+	if ec, err := getClient("mainnet"); err != nil {
 		return "", false
 	} else {
 		defer ec.Close()

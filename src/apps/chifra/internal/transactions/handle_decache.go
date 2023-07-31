@@ -69,14 +69,14 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	return nil
 
 	// TODO: Review then remove
-	// pairs := []base.Pair[uint32]{}
+	// pairs := []base.Pair[uint32,uint32]{}
 	// for _, rng := range opts.TransactionIds {
 	// 	txIds, err := rng.ResolveTxs(opts.Globals.Chain)
 	// 	if err != nil && !errors.Is(err, ethereum.NotFound) {
 	// 		continue
 	// 	}
 	// 	for _, app := range txIds {
-	// 		pairs = append(pairs, base.Pair[uint32]{N1: app.BlockNumber, N2: app.TransactionIndex})
+	// 		pairs = append(pairs, base.Pair[uint32,uint32]{N1: app.BlockNumber, N2: app.TransactionIndex})
 	// 	}
 	// }
 
