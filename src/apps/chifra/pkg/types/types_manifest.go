@@ -10,8 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"io"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -70,18 +68,6 @@ func (s *SimpleManifest) Model(verbose bool, format string, extraOptions map[str
 		Data:  model,
 		Order: order,
 	}
-}
-
-func (s *SimpleManifest) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleManifest) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
 }
 
 // EXISTING_CODE

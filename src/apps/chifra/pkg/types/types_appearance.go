@@ -150,14 +150,10 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 }
 
 func (s *SimpleAppearance) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
 	return 0, nil
 }
 
 func (s *SimpleAppearance) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
 	return 0, nil
 }
 
