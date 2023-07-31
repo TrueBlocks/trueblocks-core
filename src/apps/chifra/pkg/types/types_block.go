@@ -21,10 +21,6 @@ import (
 
 var PendingPeriod = (5 * time.Minute).Milliseconds()
 
-type BlockTransaction interface {
-	string | SimpleTransaction
-}
-
 // EXISTING_CODE
 
 type RawBlock struct {
@@ -54,7 +50,7 @@ type RawBlock struct {
 	// EXISTING_CODE
 }
 
-type SimpleBlock[Tx BlockTransaction] struct {
+type SimpleBlock[Tx string | SimpleTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    uint64         `json:"difficulty"`
