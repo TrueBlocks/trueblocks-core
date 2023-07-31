@@ -34,7 +34,7 @@ func Test_Client(t *testing.T) {
 
 	chain := utils.GetTestChain()
 	provider, _ := config.GetRpcProvider(chain)
-	ec := GetClient(provider) // won't return if it doesn't connect
+	ec, _ := GetClient(provider) // won't return if it doesn't connect
 
 	bn, _ := ec.BlockNumber(context.Background())
 	if bn < 10000000 {

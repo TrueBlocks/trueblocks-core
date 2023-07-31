@@ -19,8 +19,8 @@ var ErrNotAContract = errors.New("not a contract")
 // IsContractAt checks if an account is a contract
 func IsContractAt(chain string, address base.Address, block *types.SimpleNamedBlock) error {
 	provider, _ := config.GetRpcProvider(chain)
-	client := GetClient(provider)
-	defer client.Close()
+	ec, _ := GetClient(provider)
+	defer ec.Close()
 
 	var clientBlockArg *big.Int = nil
 	if block != nil && block.Name != "latest" {
@@ -28,7 +28,7 @@ func IsContractAt(chain string, address base.Address, block *types.SimpleNamedBl
 	}
 
 	ctx := context.Background()
-	if code, err := client.CodeAt(ctx, address.ToCommon(), clientBlockArg); err != nil {
+	if code, err := ec.CodeAt(ctx, address.ToCommon(), clientBlockArg); err != nil {
 		return err
 	} else {
 		if len(code) == 0 {
@@ -80,7 +80,9 @@ var locations = []string{
 // GetProxyAt returns the proxy address for a contract if any
 func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (proxy base.Address, err error) {
 	provider, _ := config.GetRpcProvider(chain)
-	client := GetClient(provider)
+	ec, _ := GetClient(provider)
+	defer ec.Close()
+
 	proxyAddr, err := rpc.Query[string](chain, "eth_call", rpc.Params{
 		map[string]any{
 			"to": address,
@@ -101,7 +103,7 @@ func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (pr
 
 	for _, location := range locations {
 		var value []byte
-		value, err = client.StorageAt(
+		value, err = ec.StorageAt(
 			context.Background(),
 			address.Address,
 			common.HexToHash(location),

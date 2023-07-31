@@ -361,7 +361,7 @@ func GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64, rpcOp
 // GetTransactionByNumberAndID returns an actual transaction
 func GetTransactionByNumberAndID(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
 	provider, _ := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))

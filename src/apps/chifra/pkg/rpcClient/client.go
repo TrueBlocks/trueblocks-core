@@ -27,7 +27,7 @@ import (
 var perProviderClientMap = map[string]*ethclient.Client{}
 var clientMutex sync.Mutex
 
-func GetClient(provider string) *ethclient.Client {
+func GetClient(provider string) (*ethclient.Client, error) {
 	clientMutex.Lock()
 	if perProviderClientMap[provider] == nil {
 		// TODO: I don't like the fact that we Dail In every time we want to us this
@@ -40,7 +40,7 @@ func GetClient(provider string) *ethclient.Client {
 		perProviderClientMap[provider] = ec
 	}
 	clientMutex.Unlock()
-	return perProviderClientMap[provider]
+	return perProviderClientMap[provider], nil
 }
 
 // GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
@@ -49,7 +49,7 @@ func GetLatestBlockNumber(chain string) uint64 {
 		logger.Info("Shit")
 		return 0
 	} else {
-		ec := GetClient(provider)
+		ec, _ := GetClient(provider)
 		defer ec.Close()
 
 		r, err := ec.BlockNumber(context.Background())
@@ -87,7 +87,7 @@ func GetIDs(provider string) (uint64, uint64, error) {
 		return 0, 0, fmt.Errorf("%s", msg)
 	}
 
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	ch, err := ec.ChainID(context.Background())
@@ -118,7 +118,7 @@ func GetClientVersion(chain string) (version string, err error) {
 
 // TxHashFromHash returns a transaction's hash if it's a valid transaction
 func TxHashFromHash(provider, hash string) (string, error) {
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	tx, _, err := ec.TransactionByHash(context.Background(), common.HexToHash(hash))
@@ -131,7 +131,7 @@ func TxHashFromHash(provider, hash string) (string, error) {
 
 // TxHashFromHashAndId returns a transaction's hash if it's a valid transaction
 func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	tx, err := ec.TransactionInBlock(context.Background(), common.HexToHash(hash), uint(txId))
@@ -144,7 +144,7 @@ func TxHashFromHashAndId(provider, hash string, txId uint64) (string, error) {
 
 // TxCountByBlockNumber returns the number of transactions in a block
 func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
@@ -158,7 +158,7 @@ func TxCountByBlockNumber(provider string, blkNum uint64) (uint64, error) {
 
 // BlockHashFromHash returns a block's hash if it's a valid block
 func BlockHashFromHash(provider, hash string) (string, error) {
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
@@ -174,7 +174,7 @@ func GetBlockNumberByHash(chain, hash string) (uint64, error) {
 	if provider, err := config.GetRpcProvider(chain); err != nil {
 		return 0, err
 	} else {
-		ec := GetClient(provider)
+		ec, _ := GetClient(provider)
 		defer ec.Close()
 
 		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
@@ -191,7 +191,7 @@ func GetBlockHashByNumber(chain string, blkNum uint64) (string, error) {
 	if provider, err := config.GetRpcProvider(chain); err != nil {
 		return "", err
 	} else {
-		ec := GetClient(provider)
+		ec, _ := GetClient(provider)
 		defer ec.Close()
 
 		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
@@ -206,7 +206,7 @@ func GetBlockHashByNumber(chain string, blkNum uint64) (string, error) {
 // GetBalanceAt returns a balance for an address at a block
 func GetBalanceAt(chain string, addr base.Address, blkNum uint64) (*big.Int, error) {
 	provider, _ := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	bal, err := ec.BalanceAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(blkNum))
@@ -253,7 +253,7 @@ func DecodeHex(hex string) []byte {
 func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
 	// return IsValidAddress(addr)
 	provider, _ := config.GetRpcProvider(chain)
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	// TODO: we don't use block number, but we should - we need to convert it
 	return ec.CodeAt(context.Background(), addr.ToCommon(), nil) // nil is latest block
 }

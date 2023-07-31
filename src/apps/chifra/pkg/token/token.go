@@ -65,12 +65,12 @@ func (e ErrNodeConnection) Error() string {
 // decimal number or hex number with 0x prefix.
 func GetState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
 	provider, _ := config.GetRpcProvider(chain)
-	client := rpcClient.GetClient(provider)
-	defer client.Close()
+	ec, _ := rpcClient.GetClient(provider)
+	defer ec.Close()
 
 	// Check if we can dial the node. This way we can make sure we report back the correct state
 	// (err meaning that an address is not a token).
-	_, err = client.BlockNumber(context.Background())
+	_, err = ec.BlockNumber(context.Background())
 	if err != nil {
 		err = NewErrNodeConnection(err)
 		return
@@ -79,6 +79,8 @@ func GetState(chain string, tokenAddress base.Address, blockNumber string) (toke
 	return queryToken(chain, tokenAddress, blockNumber)
 }
 
+// GetTokenBalance returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
+// decimal number or hex number with 0x prefix.
 func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
 	output, err := rpc.QueryBatch[string](
 		chain,

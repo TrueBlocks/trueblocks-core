@@ -22,7 +22,7 @@ func lowerIfHex(addr string) string {
 // chain parameter, but ignore it choosing to look at mainnet ENS only
 func GetAddressesFromEns(chain string, addrsIn []string) ([]string, bool) {
 	provider, _ := config.GetRpcProvider("mainnet")
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	found := false
@@ -49,7 +49,7 @@ func GetAddressFromEns(chain string, in string) (string, bool) {
 	}
 
 	provider, _ := config.GetRpcProvider("mainnet")
-	ec := GetClient(provider)
+	ec, _ := GetClient(provider)
 	defer ec.Close()
 
 	val, err := ensGo.Resolve(ec, in)

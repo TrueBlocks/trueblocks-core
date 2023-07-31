@@ -50,8 +50,8 @@ func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 
 	provider, _ := config.GetRpcProvider("mainnet") // we always read from the mainnet smart contract
 	rpcClient.CheckRpc(provider)
-	ethClient := rpcClient.GetClient(provider)
-	defer ethClient.Close()
+	ec, _ := rpcClient.GetClient(provider)
+	defer ec.Close()
 
 	abiFn := filepath.Join(config.GetPathToRootConfig(), "abis/known-000/unchainedV2.json")
 	address := common.HexToAddress(unchained.Address_V2)
@@ -83,7 +83,7 @@ func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 		Data: callData,
 	}
 
-	response, err := ethClient.CallContract(
+	response, err := ec.CallContract(
 		context.Background(),
 		msg,
 		nil,
@@ -96,7 +96,7 @@ func ReadUnchainedIndex(ch, reason, publisher string) (string, error) {
 		msg := fmt.Sprintf("empty response %sfrom provider %s on chain %s",
 			response, provider, which)
 		// Node may be syncing
-		response, err := ethClient.SyncProgress(context.Background())
+		response, err := ec.SyncProgress(context.Background())
 		// If synced, return the empty response message.
 		if response == nil {
 			return "", fmt.Errorf(msg)
