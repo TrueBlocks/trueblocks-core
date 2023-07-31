@@ -91,7 +91,7 @@ func GetCountLogsInBlock(chain string, bn uint64) (uint64, error) {
 // GetLogsByTransactionId returns the logs of a transaction
 func GetLogsByTransactionId(chain string, bn, txid uint64) ([]types.SimpleLog, error) {
 	blockTs := GetBlockTimestamp(chain, &bn)
-	receipt, err := GetTransactionReceipt(chain, ReceiptQuery{
+	receipt, err := GetReceipt(chain, ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
 		NeedsTs: true,

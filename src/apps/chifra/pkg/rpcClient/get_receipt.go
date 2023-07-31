@@ -24,9 +24,9 @@ type ReceiptQuery struct {
 	Ts       base.Timestamp
 }
 
-// GetTransactionReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
+// GetReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func GetTransactionReceipt(chain string, query ReceiptQuery, rpcOptions *Options) (receipt types.SimpleReceipt, err error) {
+func GetReceipt(chain string, query ReceiptQuery, rpcOptions *Options) (receipt types.SimpleReceipt, err error) {
 	if rpcOptions.HasStore() {
 		tx := &types.SimpleTransaction{
 			BlockNumber:      query.Bn,

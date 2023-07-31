@@ -79,7 +79,7 @@ func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.Simp
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
-		receipt, err = GetTransactionReceipt(chain, ReceiptQuery{
+		receipt, err = GetReceipt(chain, ReceiptQuery{
 			Bn:       uint64(bn),
 			Txid:     uint64(raw.TxIndex()),
 			TxHash:   raw.TxHash(),

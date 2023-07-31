@@ -19,8 +19,7 @@ const (
 	Noop
 	NoColor
 	Chain
-	EveryTool = Verbose | Fmt | Version | Noop | NoColor | Chain
-	Default   = EveryTool | NoHeader | File | Output | Append
+	Default = Verbose | Fmt | Version | Noop | NoColor | Chain | NoHeader | File | Output | Append
 )
 
 var AllCaps = []Capability{
@@ -88,8 +87,6 @@ func (c Capability) Text() string {
 		return "nocolor"
 	case Chain:
 		return "chain"
-	case EveryTool:
-		return "every"
 	case Default:
 		return "default"
 	default:
