@@ -26,7 +26,7 @@ func visitTrace(trace *types.SimpleTrace, data *any) error {
 
 func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) error) error {
 	for blknum := from; blknum <= to; blknum++ {
-		if block, err := rpcClient.GetBlockByNumber("mainnet", blknum, rpcClient.NoOptions); err != nil {
+		if block, err := rpcClient.GetBlockHeaderByNumber("mainnet", blknum, rpcClient.NoOptions); err != nil {
 			return err
 		} else {
 			bar.Tick()

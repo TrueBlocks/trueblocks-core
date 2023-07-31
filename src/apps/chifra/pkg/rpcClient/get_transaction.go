@@ -70,7 +70,7 @@ func GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types
 	} else {
 		var blockHash base.Hash
 		var ts int64
-		if block, err := GetBlockByNumber(chain, uint64(0), rpcOptions); err != nil {
+		if block, err := GetBlockHeaderByNumber(chain, uint64(0), rpcOptions); err != nil {
 			return nil, err
 		} else {
 			blockHash = block.Hash

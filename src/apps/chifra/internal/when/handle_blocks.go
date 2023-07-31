@@ -32,7 +32,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 			}
 
 			for _, bn := range blockNums {
-				block, err := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
+				block, err := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn, nil)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

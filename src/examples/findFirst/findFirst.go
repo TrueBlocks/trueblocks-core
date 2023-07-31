@@ -33,7 +33,7 @@ func slowWay() {
 	start := time.Now()
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 	for i := 40000; i < 60000; i++ {
-		if block, err := rpcClient.GetBlockByNumber(chain, base.Blknum(i), rpcClient.NoOptions); err != nil {
+		if block, err := rpcClient.GetBlockHeaderByNumber(chain, base.Blknum(i), rpcClient.NoOptions); err != nil {
 			fmt.Println(err)
 		} else {
 			if len(block.Transactions) > 0 {
@@ -66,7 +66,7 @@ func fastWay() {
 		var firstBlock types.SimpleBlock[string]
 		firstBlock.BlockNumber = utils.NOPOS
 		iterateFunc := func(key identifiers.ResolvedId, value *bool) error {
-			if theBlock, err := rpcClient.GetBlockByNumber(chain, base.Blknum(key.BlockNumber), rpcClient.NoOptions); err != nil {
+			if theBlock, err := rpcClient.GetBlockHeaderByNumber(chain, base.Blknum(key.BlockNumber), rpcClient.NoOptions); err != nil {
 				return err
 			} else {
 				if len(theBlock.Transactions) > 0 {
