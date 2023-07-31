@@ -16,6 +16,11 @@ import (
 
 // HandleTimestampsCheck handles chifra when --timestamps --check
 func (opts *WhenOptions) HandleTimestampsCheck() error {
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: opts.Globals.Chain,
+		Opts:  opts,
+	})
+
 	cnt, err := tslib.NTimestamps(opts.Globals.Chain)
 	if err != nil {
 		return err
@@ -42,14 +47,14 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	if len(blockNums) > 0 {
 		for _, bn := range blockNums {
 			if bn < cnt { // ranges may include blocks after last block
-				if err = opts.checkOneBlock(scanBar, &prev, bn); err != nil {
+				if err = opts.checkOneBlock(scanBar, &prev, bn, rpcOptions); err != nil {
 					return err
 				}
 			}
 		}
 	} else {
 		for bn := uint64(0); bn < cnt; bn++ {
-			if err = opts.checkOneBlock(scanBar, &prev, bn); err != nil {
+			if err = opts.checkOneBlock(scanBar, &prev, bn, rpcOptions); err != nil {
 				return err
 			}
 		}
@@ -58,7 +63,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	return nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64, rpcOptions *rpcClient.Options) error {
 	// The i'th item in the timestamp array on disc
 	itemOnDisc, err := tslib.FromBn(opts.Globals.Chain, bn)
 	if err != nil {
@@ -74,7 +79,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
-		expected, _ = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn, rpcClient.NoOptions)
+		expected, _ = rpcOptions.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 	}
 
 	if prev.Timestamp != utils.NOPOSI {

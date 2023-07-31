@@ -93,15 +93,15 @@ func GetTracesByNumber(chain string, bn uint64) ([]types.SimpleTrace, error) {
 }
 
 // GetTracesByTransactionID returns a slice of traces in a given transaction
-func GetTracesByTransactionID(chain string, bn, txid uint64, rpcOptions *Options) ([]types.SimpleTrace, error) {
+func (options *Options) GetTracesByTransactionID(chain string, bn, txid uint64) ([]types.SimpleTrace, error) {
 	var ret []types.SimpleTrace
-	if rpcOptions.HasStore() {
+	if options.HasStore() {
 		traceGroup := &types.SimpleTraceGroup{
 			BlockNumber:      bn,
 			TransactionIndex: int(txid),
 		}
 
-		if err := rpcOptions.Store.Read(traceGroup, nil); err == nil {
+		if err := options.Store.Read(traceGroup, nil); err == nil {
 			// success
 			return traceGroup.Traces, nil
 		}
@@ -111,12 +111,12 @@ func GetTracesByTransactionID(chain string, bn, txid uint64, rpcOptions *Options
 	if err != nil {
 		return ret, err
 	}
-	return GetTracesByTransactionHash(chain, txHash, nil, rpcOptions)
+	return options.GetTracesByTransactionHash(chain, txHash, nil)
 }
 
 // GetCountTracesInTransaction returns the number of traces in a given transaction
-func GetCountTracesInTransaction(chain string, txHash string) (uint64, error) {
-	traces, err := GetTracesByTransactionHash(chain, txHash, nil, NoOptions)
+func (options *Options) GetCountTracesInTransaction(chain string, txHash string) (uint64, error) {
+	traces, err := options.GetTracesByTransactionHash(chain, txHash, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -208,11 +208,11 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
-func GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction, rpcOptions *Options) ([]types.SimpleTrace, error) {
-	if rpcOptions.HasStore() && transaction != nil {
+func (options *Options) GetTracesByTransactionHash(chain string, txHash string, transaction *types.SimpleTransaction) ([]types.SimpleTrace, error) {
+	if options.HasStore() && transaction != nil {
 		traceGroup := types.NewSimpleTraceGroup(transaction)
 
-		if err := rpcOptions.Store.Read(traceGroup, nil); err == nil {
+		if err := options.Store.Read(traceGroup, nil); err == nil {
 			// success
 			return traceGroup.Traces, nil
 		}
@@ -296,17 +296,17 @@ func GetTracesByTransactionHash(chain string, txHash string, transaction *types.
 			ret = append(ret, trace)
 		}
 
-		if rpcOptions.HasStore() && !rpcOptions.TraceWriteDisabled && transaction != nil {
+		if options.HasStore() && !options.TraceWriteDisabled && transaction != nil {
 			var writeOptions *cacheNew.WriteOptions
-			if !rpcOptions.Store.ReadOnly() {
+			if !options.Store.ReadOnly() {
 				writeOptions = &cacheNew.WriteOptions{
 					// Check if the block is final
-					Pending: (&types.SimpleBlock[string]{Timestamp: transaction.Timestamp}).Pending(rpcOptions.LatestBlockTimestamp),
+					Pending: (&types.SimpleBlock[string]{Timestamp: transaction.Timestamp}).Pending(options.LatestBlockTimestamp),
 				}
 			}
 			traceGroup := types.NewSimpleTraceGroup(transaction)
 			traceGroup.Traces = ret
-			rpcOptions.Store.Write(traceGroup, writeOptions)
+			options.Store.Write(traceGroup, writeOptions)
 		}
 
 		return ret, nil

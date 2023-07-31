@@ -23,17 +23,20 @@ import (
 // forEveryTrace, forEveryLog, etc.
 // -----------------------------------------------------------------------------------------------
 func main() {
-	slowWay()
-	fastWay()
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+	slowWay(rpcOptions)
+	fastWay(rpcOptions)
 }
 
 var chain = "mainnet"
 
-func slowWay() {
+func slowWay(rpcOptions *rpcClient.Options) {
 	start := time.Now()
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 	for i := 40000; i < 60000; i++ {
-		if block, err := rpcClient.GetBlockHeaderByNumber(chain, base.Blknum(i), rpcClient.NoOptions); err != nil {
+		if block, err := rpcOptions.GetBlockHeaderByNumber(chain, base.Blknum(i)); err != nil {
 			fmt.Println(err)
 		} else {
 			if len(block.Transactions) > 0 {
@@ -49,7 +52,7 @@ func slowWay() {
 	}
 }
 
-func fastWay() {
+func fastWay(rpcOptions *rpcClient.Options) {
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 
 	var TxIds []identifiers.Identifier
@@ -66,7 +69,7 @@ func fastWay() {
 		var firstBlock types.SimpleBlock[string]
 		firstBlock.BlockNumber = utils.NOPOS
 		iterateFunc := func(key identifiers.ResolvedId, value *bool) error {
-			if theBlock, err := rpcClient.GetBlockHeaderByNumber(chain, base.Blknum(key.BlockNumber), rpcClient.NoOptions); err != nil {
+			if theBlock, err := rpcOptions.GetBlockHeaderByNumber(chain, base.Blknum(key.BlockNumber)); err != nil {
 				return err
 			} else {
 				if len(theBlock.Transactions) > 0 {

@@ -210,7 +210,7 @@ func GetBlockNumberByHash(chain, hash string) (base.Blknum, error) {
 }
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
-func GetBlockHashByNumber(chain string, bn uint64) (string, error) {
+func (options *Options) GetBlockHashByNumber(chain string, bn uint64) (string, error) {
 	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {

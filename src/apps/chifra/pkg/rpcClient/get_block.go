@@ -22,7 +22,7 @@ import (
 )
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
-func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.SimpleBlock[types.SimpleTransaction], error) {
+func (options *Options) GetBlockBodyByNumber(chain string, bn uint64) (types.SimpleBlock[types.SimpleTransaction], error) {
 	if options.HasStore() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.SimpleBlock[string]{BlockNumber: bn}
@@ -32,7 +32,7 @@ func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.Simp
 			result.Transactions = make([]types.SimpleTransaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
-				tx, err := GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index), options)
+				tx, err := options.GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index))
 				if err != nil {
 					success = false
 					break
@@ -105,7 +105,7 @@ func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.Simp
 }
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
-func GetBlockHeaderByNumber(chain string, bn uint64, options *Options) (block types.SimpleBlock[string], err error) {
+func (options *Options) GetBlockHeaderByNumber(chain string, bn uint64) (block types.SimpleBlock[string], err error) {
 	if options.HasStore() {
 		block.BlockNumber = bn
 		if err := options.Store.Read(&block, nil); err == nil {

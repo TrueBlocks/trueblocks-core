@@ -18,8 +18,11 @@ import (
 
 func (opts *TracesOptions) HandleShowTraces() error {
 	abiCache := articulate.NewAbiCache()
-	var rpcOptions = rpcClient.NoOptions
 	chain := opts.Globals.Chain
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+		Opts:  opts,
+	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
@@ -39,7 +42,7 @@ func (opts *TracesOptions) HandleShowTraces() error {
 			ts := rpcClient.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(txIds[0].BlockNumber)))
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
-				traces, err := rpcClient.GetTracesByTransactionID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex), rpcOptions)
+				traces, err := rpcOptions.GetTracesByTransactionID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

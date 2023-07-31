@@ -15,7 +15,10 @@ import (
 )
 
 func (opts *BlocksOptions) HandleList() error {
-	var rpcOptions = rpcClient.NoOptions
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: opts.Globals.Chain,
+		Opts:  opts,
+	})
 
 	// Don't do this in the loop
 	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
@@ -34,7 +37,7 @@ func (opts *BlocksOptions) HandleList() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for bn := start; bn > end; bn-- {
-			block, err := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn, rpcOptions)
+			block, err := rpcOptions.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {

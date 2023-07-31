@@ -46,11 +46,11 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcClient.GetBlockBodyByNumber(opts.Globals.Chain, bn, rpcOptions)
+					b, err = rpcOptions.GetBlockBodyByNumber(opts.Globals.Chain, bn)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn, rpcOptions)
+					b, err = rpcOptions.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
 					block = &b
 				}
 

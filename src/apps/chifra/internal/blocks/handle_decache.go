@@ -26,7 +26,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 			return err
 		}
 		for _, bn := range blockNums {
-			rawBlock, err := rpcClient.GetBlockBodyByNumber(opts.Globals.Chain, bn, rpcOptions)
+			rawBlock, err := rpcOptions.GetBlockBodyByNumber(opts.Globals.Chain, bn)
 			if err != nil {
 				return err
 			}
@@ -82,7 +82,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	// 		return err
 	// 	}
 	// 	for _, bn := range blockNums {
-	// 		rawBlock, err := rpcClient.GetBlockBodyByNumber(opts.Globals.Chain, bn, nil)
+	// 		rawBlock, err := rpcOptions.GetBlockBodyByNumber(opts.Globals.Chain, bn)
 	// 		if err != nil {
 	// 			return err
 	// 		}

@@ -10,15 +10,10 @@ var NoOptions *Options = nil
 
 // Options carry additional context to rpcClient calls
 type Options struct {
-	// Cache Store to use for read/write. Write can be disabled
-	// by setting Store to read-only mode
-	Store *cacheNew.Store
-
-	LatestBlockTimestamp base.Timestamp
-	// Disable caching transactions
-	TransactionWriteDisabled bool
-	// Disable caching traces
-	TraceWriteDisabled bool
+	Store                    *cacheNew.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
+	LatestBlockTimestamp     base.Timestamp
+	TransactionWriteDisabled bool // Disable caching transactions
+	TraceWriteDisabled       bool // Disable caching traces
 }
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns
@@ -80,18 +75,18 @@ func DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *Options {
 
 // HasStore is a shorthand to check if Store is initialized. It will return
 // false for nil pointer to Options
-func (o *Options) HasStore() bool {
-	if o == nil {
+func (options *Options) HasStore() bool {
+	if options == nil {
 		return false
 	}
 
-	return o.Store != nil
+	return options.Store != nil
 }
 
-func (o *Options) HasStoreWritable() bool {
-	if !o.HasStore() {
+func (options *Options) HasStoreWritable() bool {
+	if !options.HasStore() {
 		return false
 	}
 
-	return !o.Store.ReadOnly()
+	return !options.Store.ReadOnly()
 }

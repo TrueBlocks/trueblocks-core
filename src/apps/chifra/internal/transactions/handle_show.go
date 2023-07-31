@@ -16,14 +16,14 @@ import (
 
 func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	abiCache := articulate.NewAbiCache()
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
-		Opts:  opts,
-	})
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
+	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+		Chain: opts.Globals.Chain,
+		Opts:  opts,
+	})
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
@@ -48,7 +48,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
 				}
-				if tx, err := rpcClient.GetTransactionByAppearance(chain, a, opts.Traces /* needsTraces */, rpcOptions); err != nil {
+				if tx, err := rpcOptions.GetTransactionByAppearance(chain, a, opts.Traces /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

@@ -42,7 +42,10 @@ func Test_Client(t *testing.T) {
 		t.Error("couldn't get known block hash from block hash")
 	}
 
-	_, err = GetBlockHashByNumber(chain, 12)
+	rpcOptions := DefaultRpcOptions(&DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+	_, err = rpcOptions.GetBlockHashByNumber(chain, 12)
 	if err != nil {
 		t.Error("couldn't get known block hash from block number")
 	}

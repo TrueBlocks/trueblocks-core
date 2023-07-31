@@ -82,7 +82,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 		}
 
 	} else {
-		if block, err := rpcClient.GetBlockBodyByNumber(chain, bn, rpcOptions); err != nil {
+		if block, err := rpcOptions.GetBlockBodyByNumber(chain, bn); err != nil {
 			return err
 		} else {
 			miner := block.Miner.Hex()
@@ -112,7 +112,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 
 			for _, trans := range block.Transactions {
-				if trans.Traces, err = rpcClient.GetTracesByTransactionID(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex, rpcOptions); err != nil {
+				if trans.Traces, err = rpcOptions.GetTracesByTransactionID(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex); err != nil {
 					return err
 				}
 				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, rpcOptions); err != nil {
