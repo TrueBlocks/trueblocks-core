@@ -26,7 +26,7 @@ type ReceiptQuery struct {
 
 // GetReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func (options *Options) GetReceipt(chain string, query ReceiptQuery) (types.SimpleReceipt, error) {
+func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
 	if options.HasStore() {
 		tx := &types.SimpleTransaction{
 			BlockNumber:      query.Bn,
@@ -35,7 +35,7 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (types.Simp
 		if err := options.Store.Read(tx, nil); err == nil {
 			// success
 			if tx.Receipt == nil {
-				return types.SimpleReceipt{}, nil
+				return receipt, nil
 			}
 			return *tx.Receipt, nil
 		}
@@ -43,7 +43,7 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (types.Simp
 
 	rawReceipt, tx, err := getRawTransactionReceipt(chain, query.Bn, query.Txid)
 	if err != nil {
-		return types.SimpleReceipt{}, nil
+		return
 	}
 
 	if query.NeedsTs && query.Ts == 0 {
@@ -73,10 +73,10 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (types.Simp
 
 	cumulativeGasUsed, err := hexutil.DecodeUint64(rawReceipt.CumulativeGasUsed)
 	if err != nil {
-		return types.SimpleReceipt{}, nil
+		return
 	}
 
-	receipt := types.SimpleReceipt{
+	receipt = types.SimpleReceipt{
 		BlockHash:         base.HexToHash(rawReceipt.BlockHash),
 		BlockNumber:       utils.MustParseUint(rawReceipt.BlockNumber),
 		ContractAddress:   base.HexToAddress(rawReceipt.ContractAddress),
@@ -108,8 +108,7 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (types.Simp
 			receipt.EffectiveGasPrice = gasPrice
 		}
 	}
-
-	return receipt, nil
+	return
 }
 
 // getRawTransactionReceipt fetches raw transaction given blockNumber and transactionIndex
