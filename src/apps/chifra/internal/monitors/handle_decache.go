@@ -14,7 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/user"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 )
 
 // HandleDecache handles the command chifra monitors --decache
@@ -30,7 +30,7 @@ func (opts *MonitorsOptions) HandleDecache() error {
 		}
 
 		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
-		if !user.QueryUser(getWarning(addr, m.Count()), "Not decaching") {
+		if !usage.QueryUser(getWarning(addr, m.Count()), "Not decaching") {
 			continue
 		}
 
