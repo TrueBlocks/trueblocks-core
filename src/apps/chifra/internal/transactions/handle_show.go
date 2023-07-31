@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -29,7 +28,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, nil)
+		rpcOptions.LatestBlockTimestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())

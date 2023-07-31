@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -139,7 +138,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 
 		ts := tslib.TimestampRecord{
 			Bn: uint32(bn),
-			Ts: uint32(rpc.GetBlockTimestamp(opts.Chain, utils.PointerOf(uint64(bn)))),
+			Ts: uint32(rpcClient.GetBlockTimestamp(opts.Chain, utils.PointerOf(uint64(bn)))),
 		}
 
 		tsChannel <- ts

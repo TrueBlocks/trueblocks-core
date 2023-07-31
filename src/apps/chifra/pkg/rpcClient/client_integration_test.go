@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -47,7 +46,7 @@ func Test_Client(t *testing.T) {
 		t.Error("provider chain id is 1")
 	}
 
-	ts := rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(1)))
+	ts := GetBlockTimestamp(chain, utils.PointerOf(uint64(1)))
 	blockOneTimestamp := int64(1438269988)
 	if ts != blockOneTimestamp {
 		t.Error("timestamp for block 1 is not correct")

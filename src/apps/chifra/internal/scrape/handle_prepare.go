@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -51,7 +50,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	array := []tslib.TimestampRecord{}
 	array = append(array, tslib.TimestampRecord{
 		Bn: uint32(0),
-		Ts: uint32(rpc.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(0)))),
+		Ts: uint32(rpcClient.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(0)))),
 	})
 	tslib.Append(opts.Globals.Chain, array)
 

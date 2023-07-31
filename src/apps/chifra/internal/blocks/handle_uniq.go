@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -26,7 +25,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpc.GetBlockTimestamp(opts.Globals.Chain, nil)
+		rpcOptions.LatestBlockTimestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -52,7 +51,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 					logger.Info("Processing block", fmt.Sprintf("%d", bn))
 				}
 				addrMap := make(index.AddressBooleanMap)
-				ts := rpc.GetBlockTimestamp(chain, &bn)
+				ts := rpcClient.GetBlockTimestamp(chain, &bn)
 				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts, rpcOptions); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

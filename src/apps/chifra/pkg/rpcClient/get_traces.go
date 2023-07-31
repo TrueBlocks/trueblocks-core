@@ -34,7 +34,7 @@ func GetTracesByNumber(chain string, bn uint64) ([]types.SimpleTrace, error) {
 		return []types.SimpleTrace{}, err
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
-		curTs := rpc.GetBlockTimestamp(chain, &bn)
+		curTs := GetBlockTimestamp(chain, &bn)
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
@@ -80,7 +80,7 @@ func GetTracesByNumber(chain string, bn uint64) ([]types.SimpleTrace, error) {
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				curTs = rpc.GetBlockTimestamp(chain, &trace.BlockNumber)
+				curTs = GetBlockTimestamp(chain, &trace.BlockNumber)
 				idx = 0
 			}
 			trace.TraceIndex = idx
@@ -144,7 +144,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
-		curTs := rpc.GetBlockTimestamp(chain, utils.PointerOf(utils.MustParseUint(f.FromBlock)))
+		curTs := GetBlockTimestamp(chain, utils.PointerOf(utils.MustParseUint(f.FromBlock)))
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
@@ -203,7 +203,7 @@ func GetTracesByFilter(chain string, filter string) ([]types.SimpleTrace, error)
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				curTs = rpc.GetBlockTimestamp(chain, utils.PointerOf(trace.BlockNumber))
+				curTs = GetBlockTimestamp(chain, utils.PointerOf(trace.BlockNumber))
 				idx = 0
 			}
 			trace.TraceIndex = idx

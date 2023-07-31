@@ -10,7 +10,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -109,7 +108,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
+	firstDate := gostradamus.FromUnixTimestamp(rpcClient.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -189,7 +188,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		if err == tslib.ErrInTheFuture {
 			provider := config.GetRpcProvider(chain)
 			latest := rpcClient.GetLatestBlockNumber(provider)
-			tsFuture := rpc.GetBlockTimestamp(chain, &latest)
+			tsFuture := rpcClient.GetBlockTimestamp(chain, &latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks

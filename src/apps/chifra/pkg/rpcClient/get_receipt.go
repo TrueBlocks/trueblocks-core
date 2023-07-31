@@ -47,7 +47,7 @@ func GetTransactionReceipt(chain string, query ReceiptQuery, rpcOptions *Options
 	}
 
 	if query.NeedsTs && query.Ts == 0 {
-		query.Ts = rpc.GetBlockTimestamp(chain, &query.Bn)
+		query.Ts = GetBlockTimestamp(chain, &query.Bn)
 	}
 
 	logs := []types.SimpleLog{}

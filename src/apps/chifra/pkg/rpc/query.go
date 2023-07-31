@@ -6,10 +6,8 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	ethTypes "github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
@@ -84,31 +82,4 @@ func GetTxFromNumberAndId(chain string, blkNum, txId uint64) (ethTypes.Transacti
 	}
 
 	return *tx, nil
-}
-
-// GetBlockTimestamp returns the timestamp associated with a given block
-func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
-	provider := config.GetRpcProvider(chain)
-	ec := getClient(provider)
-	defer ec.Close()
-
-	var blockNumber *big.Int
-	if bn != nil {
-		blockNumber = big.NewInt(int64(*bn))
-	}
-
-	r, err := ec.HeaderByNumber(context.Background(), blockNumber)
-	if err != nil {
-		logger.Error("Could not connect to RPC client", err)
-		return 0
-	}
-
-	ts := base.Timestamp(r.Time)
-	if ts == 0 {
-		// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
-		// TODO: Chain specific
-		return GetBlockTimestamp(chain, utils.PointerOf(uint64(1))) - 13
-	}
-
-	return ts
 }

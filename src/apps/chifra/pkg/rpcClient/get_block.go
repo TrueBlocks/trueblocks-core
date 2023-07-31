@@ -5,12 +5,16 @@
 package rpcClient
 
 import (
+	"context"
 	"errors"
 	"fmt"
+	"math/big"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -199,11 +203,44 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
+			block.Timestamp = fmt.Sprintf("0x%x", GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 		} else if utils.MustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
 
 		return block, nil
+	}
+}
+
+//---------------------------------------------------------------------------
+
+// GetBlockTimestamp returns the timestamp associated with a given block
+func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
+	provider := config.GetRpcProvider(chain)
+	if ec := GetClient(provider); ec == nil {
+		logger.Error("Could not connect to RPC client")
+		return 0
+	} else {
+		defer ec.Close()
+
+		var blockNumber *big.Int
+		if bn != nil {
+			blockNumber = big.NewInt(int64(*bn))
+		}
+
+		r, err := ec.HeaderByNumber(context.Background(), blockNumber)
+		if err != nil {
+			logger.Error("Could not connect to RPC client", err)
+			return 0
+		}
+
+		ts := base.Timestamp(r.Time)
+		if ts == 0 {
+			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
+			// TODO: Chain specific
+			return GetBlockTimestamp(chain, utils.PointerOf(uint64(1))) - 13
+		}
+
+		return ts
 	}
 }
