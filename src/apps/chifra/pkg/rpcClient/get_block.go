@@ -18,8 +18,8 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// GetBlockByNumberWithTxs fetches the block with transactions from the RPC.
-func GetBlockByNumberWithTxs(chain string, bn uint64, options *Options) (types.SimpleBlock[types.SimpleTransaction], error) {
+// GetBlockBodyByNumber fetches the block with transactions from the RPC.
+func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.SimpleBlock[types.SimpleTransaction], error) {
 	if options.HasStore() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.SimpleBlock[string]{BlockNumber: bn}

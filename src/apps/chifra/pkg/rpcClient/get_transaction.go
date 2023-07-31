@@ -143,7 +143,7 @@ func getBlockReward(bn uint64) *big.Int {
 }
 
 func GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
-	if block, err := GetBlockByNumberWithTxs(chain, uint64(appearance.BlockNumber), &Options{Store: cacheNew.NoCache}); err != nil {
+	if block, err := GetBlockBodyByNumber(chain, uint64(appearance.BlockNumber), &Options{Store: cacheNew.NoCache}); err != nil {
 		return nil, err
 	} else {
 		if uncles, err := GetUnclesByNumber(chain, uint64(appearance.BlockNumber)); err != nil {

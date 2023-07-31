@@ -83,7 +83,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 		}
 
 	} else {
-		if block, err := rpcClient.GetBlockByNumberWithTxs(chain, bn, rpcOptions); err != nil {
+		if block, err := rpcClient.GetBlockBodyByNumber(chain, bn, rpcOptions); err != nil {
 			return err
 		} else {
 			miner := block.Miner.Hex()
