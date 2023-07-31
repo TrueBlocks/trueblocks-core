@@ -102,7 +102,7 @@ func GetIDs(provider string) (uint64, uint64, error) {
 
 // TODO: C++ code used to cache version info
 
-func GetVersion(chain string) (version string, err error) {
+func GetClientVersion(chain string) (version string, err error) {
 	method := "web3_clientVersion"
 	params := rpc.Params{}
 

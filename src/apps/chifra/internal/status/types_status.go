@@ -164,7 +164,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		return nil, err
 	}
 
-	vers, err := rpcClient.GetVersion(chain)
+	vers, err := rpcClient.GetClientVersion(chain)
 	if err != nil {
 		return nil, err
 	}
