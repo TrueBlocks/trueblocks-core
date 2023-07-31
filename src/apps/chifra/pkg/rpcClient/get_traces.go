@@ -123,8 +123,8 @@ func GetTracesByTransactionID(chain string, bn, txid uint64, rpcOptions *Options
 	return GetTracesByTransactionHash(chain, txHash, nil, rpcOptions)
 }
 
-// GetTracesCountByTransactionHash returns the number of traces in a given transaction
-func GetTracesCountByTransactionHash(chain string, txHash string) (uint64, error) {
+// GetCountTracesInTransaction returns the number of traces in a given transaction
+func GetCountTracesInTransaction(chain string, txHash string) (uint64, error) {
 	traces, err := GetTracesByTransactionHash(chain, txHash, nil, NoOptions)
 	if err != nil {
 		return 0, err

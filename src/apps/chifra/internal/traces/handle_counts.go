@@ -43,7 +43,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				}
 
 				txHash := tx.Hash().Hex()
-				cnt, err := rpcClient.GetTracesCountByTransactionHash(opts.Globals.Chain, txHash)
+				cnt, err := rpcClient.GetCountTracesInTransaction(opts.Globals.Chain, txHash)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
