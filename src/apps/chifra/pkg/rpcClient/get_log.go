@@ -70,8 +70,8 @@ func GetLogsByFilter(chain string, filter types.SimpleLogFilter) ([]types.Simple
 	return getSimpleLogs(chain, filter)
 }
 
-// GetLogsByBlockNumber returns the logs of a block
-func GetLogsByBlockNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
+// GetLogsByNumber returns the logs of a block
+func GetLogsByNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
 	filter := types.SimpleLogFilter{
 		FromBlock: bn,
 		ToBlock:   bn,
@@ -81,7 +81,7 @@ func GetLogsByBlockNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
 
 // GetCountLogsInBlock returns the number of logs in a block
 func GetCountLogsInBlock(chain string, bn uint64) (uint64, error) {
-	if logs, err := GetLogsByBlockNumber(chain, bn); err != nil {
+	if logs, err := GetLogsByNumber(chain, bn); err != nil {
 		return 0, err
 	} else {
 		return uint64(len(logs)), nil
