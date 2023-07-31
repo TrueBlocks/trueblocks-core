@@ -48,6 +48,12 @@ type CacheStater interface {
 	CacheState() (bool, bool, bool)
 }
 
+func NewConnection(chain string, caches []string) *Options {
+	return DefaultRpcOptions(&DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+}
+
 func DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *Options {
 	readonlyCache := false
 	if settings != nil {

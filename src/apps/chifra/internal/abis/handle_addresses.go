@@ -15,14 +15,15 @@ import (
 )
 
 func (opts *AbisOptions) HandleAddresses() (err error) {
+	chain := opts.Globals.Chain
+
 	result := make(abi.AbiInterfaceMap)
 	if opts.Known {
-		if err = abi.PreloadKnownAbis(opts.Globals.Chain, result); err != nil {
+		if err = abi.PreloadKnownAbis(chain, result); err != nil {
 			return
 		}
 	}
 
-	chain := opts.Globals.Chain
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 	})
@@ -50,7 +51,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					}
 				} else {
 					// It's okay to not find the ABI. We report an error, but do not stop processing
-					if err = abi.DownloadAbi(opts.Globals.Chain, address, result); err != nil {
+					if err = abi.DownloadAbi(chain, address, result); err != nil {
 						errorChan <- err
 					}
 				}

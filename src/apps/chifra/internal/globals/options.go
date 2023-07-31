@@ -14,22 +14,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
 
 type GlobalOptions struct {
-	Wei     bool               `json:"wei,omitempty"`
-	Ether   bool               `json:"ether,omitempty"`
-	Help    bool               `json:"help,omitempty"`
-	File    string             `json:"file,omitempty"`
-	Version bool               `json:"version,omitempty"`
-	Noop    bool               `json:"noop,omitempty"`
-	NoColor bool               `json:"noColor,omitempty"`
-	Cache   bool               `json:"cache,omitempty"`
-	Caps    caps.Capability    `json:"-"`
-	RpcOpts *rpcClient.Options `json:"-"`
+	Wei     bool            `json:"wei,omitempty"`
+	Ether   bool            `json:"ether,omitempty"`
+	Help    bool            `json:"help,omitempty"`
+	File    string          `json:"file,omitempty"`
+	Version bool            `json:"version,omitempty"`
+	Noop    bool            `json:"noop,omitempty"`
+	NoColor bool            `json:"noColor,omitempty"`
+	Cache   bool            `json:"cache,omitempty"`
+	Caps    caps.Capability `json:"-"`
 	output.OutputOptions
 }
 
@@ -229,10 +227,6 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	opts.RpcOpts = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Chain,
-	})
-
 	return opts
 
 	// The 'help' command is a special case for cobra, so doesn't need to be handled here
@@ -253,8 +247,4 @@ func (opts *GlobalOptions) FinishParse(args []string) {
 			}
 		}
 	}
-
-	opts.RpcOpts = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Chain,
-	})
 }

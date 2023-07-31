@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -28,6 +29,7 @@ type AbisOptions struct {
 	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no address is given
 	Sol     bool                  `json:"sol,omitempty"`     // Please use the `solc --abi` tool instead
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	Conn    *rpcClient.Options    `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -89,8 +91,12 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Globals.RpcOpts.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -101,15 +107,20 @@ func abisFinishParse(args []string) *AbisOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
 	if opts.Globals.IsApiMode() {
 		defFmt = "json"
 	}
-	opts.Addrs, _ = opts.Globals.RpcOpts.GetAddressesFromEns(opts.Globals.Chain, args)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

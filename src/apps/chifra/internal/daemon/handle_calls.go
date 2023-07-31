@@ -77,7 +77,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 		allDogs = append(allDogs, "--verbose")
 	}
 
-	allDogs, _ = GetOptions().Globals.RpcOpts.GetAddressesFromEns(chain, allDogs)
+	allDogs, _ = GetOptions().Conn.GetAddressesFromEns(chain, allDogs)
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
