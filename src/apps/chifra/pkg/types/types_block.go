@@ -50,7 +50,7 @@ type RawBlock struct {
 	// EXISTING_CODE
 }
 
-type SimpleBlock[Tx string | SimpleTransaction] struct {
+type SimpleBlock[Tx string | types.SimpleTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    uint64         `json:"difficulty"`
