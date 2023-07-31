@@ -13,7 +13,7 @@ Flags:
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
   -x, --fmt string          export format, one of [none|json*|txt|csv]
-  -v, --verbose             enable verbose (increase detail with --log_level)
+  -v, --verbose             enable verbose output
   -h, --help                display this help screen
 
 Notes:

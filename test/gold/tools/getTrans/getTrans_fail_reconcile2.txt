@@ -24,7 +24,7 @@ Flags:
   -D, --decache              removes a transactions and any traces in the transaction from the cache
   -s, --source               find the source of the funds sent to the receiver (hidden)
   -x, --fmt string           export format, one of [none|json*|txt|csv]
-  -v, --verbose              enable verbose (increase detail with --log_level)
+  -v, --verbose              enable verbose output
   -h, --help                 display this help screen
 
 Notes:

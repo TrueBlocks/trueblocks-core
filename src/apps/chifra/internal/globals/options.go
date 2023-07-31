@@ -88,7 +88,7 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	}
 
 	if opts.Caps.Has(caps.Verbose) {
-		cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
+		cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose output")
 	}
 
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")

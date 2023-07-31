@@ -48,7 +48,7 @@ Arguments:
 Flags:
   -a, --paths        show the configuration paths for the system
   -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -v, --verbose      enable verbose output
   -h, --help         display this help screen
 ```
 
@@ -79,7 +79,7 @@ Flags:
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
   -x, --fmt string          export format, one of [none|json*|txt|csv]
-  -v, --verbose             enable verbose (increase detail with --log_level)
+  -v, --verbose             enable verbose output
   -h, --help                display this help screen
 
 Notes:
@@ -131,7 +131,7 @@ Flags:
   -m, --monitor         instruct the node to start the monitors tool
   -g, --grpc            run gRPC server to serve names
   -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
+  -v, --verbose         enable verbose output
   -h, --help            display this help screen
 
 Notes:
@@ -182,7 +182,7 @@ Flags:
   -r, --remote             pin new chunks to the gateway (requires pinning service keys)
   -s, --sleep float        seconds to sleep between scraper passes (default 14)
   -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
-  -v, --verbose            enable verbose (increase detail with --log_level)
+  -v, --verbose            enable verbose output
   -h, --help               display this help screen
 ```
 
@@ -203,14 +203,14 @@ Each of the following additional configurable command line options are available
 **Configuration file:** `$CONFIG/$CHAIN/blockScrape.toml`  
 **Configuration group:** `[settings]`  
 
-| Item               | Type         | Default      | Description / Default |
-| ------------------ | ------------ | ------------ | --------- |
-| apps&lowbar;per&lowbar;chunk | uint64       | 200000       | the number of appearances to build into a chunk before consolidating it |
-| snap&lowbar;to&lowbar;grid | uint64       | 100000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| first&lowbar;snap  | uint64       | 0            | the first block at which snap_to_grid is enabled |
-| unripe&lowbar;dist | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
-| channel&lowbar;count | uint64       | 20           | number of concurrent processing channels |
-| allow&lowbar;missing | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
+| Item                         | Type   | Default | Description / Default                                                                                                    |
+| ---------------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| apps&lowbar;per&lowbar;chunk | uint64 | 200000  | the number of appearances to build into a chunk before consolidating it                                                  |
+| snap&lowbar;to&lowbar;grid   | uint64 | 100000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| first&lowbar;snap            | uint64 | 0       | the first block at which snap_to_grid is enabled                                                                         |
+| unripe&lowbar;dist           | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
+| channel&lowbar;count         | uint64 | 20      | number of concurrent processing channels                                                                                 |
+| allow&lowbar;missing         | bool   | true    | do not report errors for blockchains that contain blocks with zero addresses                                             |
 
 
 These items may be set in three ways, each overridding the preceeding method:
@@ -289,7 +289,7 @@ Flags:
   -d, --deep               if true, dig more deeply during checking (manifest only)
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string         export format, one of [none|json*|txt|csv]
-  -v, --verbose            enable verbose (increase detail with --log_level)
+  -v, --verbose            enable verbose output
   -h, --help               display this help screen
 
 Notes:
@@ -356,7 +356,7 @@ Flags:
   -d, --dry_run            display the results of the download without actually downloading
   -F, --first_block uint   do not download any chunks earlier than this block
   -s, --sleep float        seconds to sleep between downloads
-  -v, --verbose            enable verbose (increase detail with --log_level)
+  -v, --verbose            enable verbose output
   -h, --help               display this help screen
 
 Notes:
