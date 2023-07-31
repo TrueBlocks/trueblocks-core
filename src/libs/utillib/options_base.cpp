@@ -111,8 +111,8 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "fmt",     "ether",   "output", "append",
-                                "raw",     "wei",       "version", "nocolor", "noop"};
+    CStringArray builtInCmds = {"verbose", "fmt", "ether",   "output",  "append",
+                                "raw",     "wei", "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
         if (arg == ("-" + bi))
