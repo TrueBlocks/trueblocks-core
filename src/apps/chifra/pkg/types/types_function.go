@@ -245,7 +245,7 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	return
 }
 
-func AbiMethodFromFunction(function *SimpleFunction) (ethMethod *abi.Method, err error) {
+func (function *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, err error) {
 	if !function.IsMethod() {
 		err = fmt.Errorf("FunctionToAbiMethod called for an event")
 		return
@@ -269,7 +269,7 @@ func AbiMethodFromFunction(function *SimpleFunction) (ethMethod *abi.Method, err
 	return
 }
 
-func AbiEventFromFunction(function *SimpleFunction) (ethMethod *abi.Event, err error) {
+func (function *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, err error) {
 	if function.IsMethod() {
 		err = fmt.Errorf("functionToAbiEvent called for a method")
 		return
@@ -322,7 +322,7 @@ func (s *SimpleFunction) SetAbiMethod(method *abi.Method) {
 
 func (s *SimpleFunction) GetAbiMethod() (abiMethod *abi.Method, err error) {
 	if s.abiMethod == nil {
-		abiMethod, err = AbiMethodFromFunction(s)
+		abiMethod, err = s.AbiMethodFromFunction(s)
 		if err != nil {
 			return
 		}
@@ -338,7 +338,7 @@ func (s *SimpleFunction) SetAbiEvent(event *abi.Event) {
 
 func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 	if s.abiEvent == nil {
-		abiEvent, err = AbiEventFromFunction(s)
+		abiEvent, err = s.AbiEventFromFunction()
 		if err != nil {
 			return
 		}

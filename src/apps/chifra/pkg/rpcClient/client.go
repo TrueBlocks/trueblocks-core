@@ -95,6 +95,7 @@ func GetClientIDs(chain string) (uint64, uint64, error) {
 
 // TODO: C++ code used to cache version info
 
+// GetClientVersion returns the version of the client
 func GetClientVersion(chain string) (version string, err error) {
 	method := "web3_clientVersion"
 	params := rpc.Params{}
@@ -106,24 +107,8 @@ func GetClientVersion(chain string) (version string, err error) {
 	}
 }
 
-// GetTransactionHashFromHash returns a transaction's hash if it's a valid transaction
-func GetTransactionHashFromHash(chain, hash string) (string, error) {
-	if ec, err := GetClient(chain); err != nil {
-		return "", err
-	} else {
-		defer ec.Close()
-
-		tx, _, err := ec.TransactionByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			return "", err
-		}
-
-		return tx.Hash().Hex(), nil
-	}
-}
-
-// GetTransactionHashFromHashAndID returns a transaction's hash if it's a valid transaction
-func GetTransactionHashFromHashAndID(chain, hash string, txId uint64) (string, error) {
+// GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
+func GetTransactionHashByHashAndID(chain, hash string, txId uint64) (string, error) {
 	if ec, err := GetClient(chain); err != nil {
 		return "", err
 	} else {
@@ -138,15 +123,15 @@ func GetTransactionHashFromHashAndID(chain, hash string, txId uint64) (string, e
 	}
 }
 
-// GetTransactionFromNumberAndID returns an actual transaction
-func GetTransactionFromNumberAndID(chain string, blkNum, txId uint64) (ethTypes.Transaction, error) {
+// GetTransactionByNumberAndID returns an actual transaction
+func GetTransactionByNumberAndID(chain string, bn, txId uint64) (ethTypes.Transaction, error) {
 	if ec, err := GetClient(chain); err != nil {
 		return ethTypes.Transaction{}, err
 
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
 		if err != nil {
 			return ethTypes.Transaction{}, err
 		}
@@ -160,36 +145,20 @@ func GetTransactionFromNumberAndID(chain string, blkNum, txId uint64) (ethTypes.
 	}
 }
 
-// GetTransactionCountByBlockNumber returns the number of transactions in a block
-func GetTransactionCountByBlockNumber(chain string, blkNum uint64) (uint64, error) {
+// GetCountTransactionsInBlock returns the number of transactions in a block
+func GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
 	if ec, err := GetClient(chain); err != nil {
 		return 0, err
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
 		if err != nil {
 			return 0, err
 		}
 
 		cnt, err := ec.TransactionCount(context.Background(), block.Hash())
 		return uint64(cnt), err
-	}
-}
-
-// GetBlockHashFromHash returns a block's hash if it's a valid block
-func GetBlockHashFromHash(chain, hash string) (string, error) {
-	if ec, err := GetClient(chain); err != nil {
-		return "", err
-	} else {
-		defer ec.Close()
-
-		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
-		if err != nil {
-			return "", err
-		}
-
-		return block.Hash().Hex(), nil
 	}
 }
 
@@ -210,13 +179,13 @@ func GetBlockNumberFromHash(chain, hash string) (base.Blknum, error) {
 }
 
 // GetBlockHashFromNumber returns a block's hash if it's a valid block
-func GetBlockHashFromNumber(chain string, blkNum uint64) (string, error) {
+func GetBlockHashFromNumber(chain string, bn uint64) (string, error) {
 	if ec, err := GetClient(chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(blkNum))
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
 		if err != nil {
 			return "", err
 		}
@@ -226,23 +195,23 @@ func GetBlockHashFromNumber(chain string, blkNum uint64) (string, error) {
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func GetBalanceAt(chain string, addr base.Address, blkNum uint64) (*big.Int, error) {
+func GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) {
 	if ec, err := GetClient(chain); err != nil {
 		var zero big.Int
 		return &zero, err
 	} else {
 		defer ec.Close()
-		return ec.BalanceAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(blkNum))
+		return ec.BalanceAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(bn))
 	}
 }
 
 // GetCodeAt returns a code (if any) for an address at a block
-func GetCodeAt(chain string, addr base.Address, blkNum uint64) ([]byte, error) {
+func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
 	if ec, err := GetClient(chain); err != nil {
 		return []byte{}, err
 	} else {
 		defer ec.Close()
-		return ec.CodeAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(blkNum))
+		return ec.CodeAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(bn))
 	}
 }
 

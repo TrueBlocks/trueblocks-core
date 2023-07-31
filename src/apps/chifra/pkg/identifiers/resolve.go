@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -108,7 +107,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(rpc.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
+	firstDate := gostradamus.FromUnixTimestamp(rpcClient.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -186,7 +185,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
 			latest := rpcClient.GetLatestBlockNumber(chain)
-			tsFuture := rpc.GetBlockTimestamp(chain, &latest)
+			tsFuture := rpcClient.GetBlockTimestamp(chain, &latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
@@ -202,7 +201,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			cnt, err := rpcClient.GetTransactionCountByBlockNumber(chain, uint64(id.Start.Number))
+			cnt, err := rpcClient.GetCountTransactionsInBlock(chain, uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
@@ -224,7 +223,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			cnt, err := rpcClient.GetTransactionCountByBlockNumber(chain, uint64(id.Start.resolvePoint(chain)))
+			cnt, err := rpcClient.GetCountTransactionsInBlock(chain, uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}

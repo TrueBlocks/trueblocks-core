@@ -14,8 +14,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// GetUncleCountByNumber returns the number of uncles in a block.
-func GetUncleCountByNumber(chain string, bn uint64) (uint64, error) {
+// GetCountUnclesInBlock returns the number of uncles in a block.
+func GetCountUnclesInBlock(chain string, bn uint64) (uint64, error) {
 	method := "eth_getUncleCountByBlockNumber"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
 
@@ -28,7 +28,7 @@ func GetUncleCountByNumber(chain string, bn uint64) (uint64, error) {
 
 // GetUncleHashesByNumber returns the uncle hashes in a block.
 func GetUncleHashesByNumber(chain string, bn uint64) ([]base.Hash, error) {
-	if count, err := GetUncleCountByNumber(chain, bn); err != nil {
+	if count, err := GetCountUnclesInBlock(chain, bn); err != nil {
 		return nil, err
 	} else if count > 0 {
 		ret := make([]base.Hash, count)
@@ -54,7 +54,7 @@ func GetUncleHashesByNumber(chain string, bn uint64) ([]base.Hash, error) {
 
 // GetUnclesByNumber returns the number of uncles in a block.
 func GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
-	if count, err := GetUncleCountByNumber(chain, bn); err != nil {
+	if count, err := GetCountUnclesInBlock(chain, bn); err != nil {
 		return nil, err
 	} else if count > 0 {
 		ret := make([]types.SimpleBlock[types.SimpleTransaction], count)

@@ -105,6 +105,7 @@ func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
 	return json.Unmarshal(theBytes, result)
 }
 
+// Query returns a single result for given method and params.
 func Query[T any](chain string, method string, params Params) (*T, error) {
 	var response rpcResponse[T]
 
@@ -125,6 +126,7 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 	return &response.Result, err
 }
 
+// QuerySlice returns a slice of results for given method and params.
 func QuerySlice[T any](chain string, method string, params Params) ([]T, error) {
 	var response rpcResponse[[]T]
 

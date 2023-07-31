@@ -31,7 +31,7 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 
 			for _, id := range txIds {
-				tx, err := rpcClient.GetTransactionFromNumberAndID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				tx, err := rpcClient.GetTransactionByNumberAndID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -42,7 +42,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				}
 
 				txHash := tx.Hash().Hex()
-				cnt, err := rpcClient.GetTraceCountByTransactionHash(opts.Globals.Chain, txHash)
+				cnt, err := rpcClient.GetCountTracesInTransaction(opts.Globals.Chain, txHash)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

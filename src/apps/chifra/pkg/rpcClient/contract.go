@@ -76,7 +76,7 @@ var locations = []string{
 	"0x",
 }
 
-func GetProxy(chain string, address base.Address, blockNumber base.Blknum) (base.Address, error) {
+func GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (base.Address, error) {
 	if ec, err := GetClient(chain); err != nil {
 		return base.Address{}, err
 	} else {

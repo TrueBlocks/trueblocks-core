@@ -15,13 +15,13 @@ func lowerIfHex(addr string) string {
 
 // GetAddressesFromEns converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func GetAddressesFromEns(chain string, addrsIn []string) (out []string, found bool) {
+func GetAddressesFromEns(chain string, addrs []string) (out []string, found bool) {
 	// Note: we use ENS on mainnet always
 	if ec, err := GetClient("mainnet"); err != nil {
 		return
 	} else {
 		defer ec.Close()
-		for _, term := range addrsIn {
+		for _, term := range addrs {
 			if strings.Contains(term, ".eth") {
 				if val, err := ensGo.Resolve(ec, term); err == nil && len(val) > 0 {
 					term = val.Hex()
@@ -36,9 +36,9 @@ func GetAddressesFromEns(chain string, addrsIn []string) (out []string, found bo
 
 // GetAddressFromEns converts a single string, if it contains .eth, into an address. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func GetAddressFromEns(chain string, addrIn string) (string, bool) {
-	if !strings.Contains(addrIn, ".eth") {
-		return lowerIfHex(addrIn), false
+func GetAddressFromEns(chain string, addr string) (string, bool) {
+	if !strings.Contains(addr, ".eth") {
+		return lowerIfHex(addr), false
 	}
 
 	// Note: we use ENS on mainnet always
@@ -46,9 +46,9 @@ func GetAddressFromEns(chain string, addrIn string) (string, bool) {
 		return "", false
 	} else {
 		defer ec.Close()
-		if val, err := ensGo.Resolve(ec, addrIn); err == nil && len(val) > 0 {
+		if val, err := ensGo.Resolve(ec, addr); err == nil && len(val) > 0 {
 			return lowerIfHex(val.Hex()), true
 		}
-		return lowerIfHex(addrIn), false
+		return lowerIfHex(addr), false
 	}
 }

@@ -298,7 +298,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		model["encoding"] = enc
 
 		if isArticulated {
-			model["compressedTx"] = MakeCompressed(articulatedTx)
+			model["compressedTx"] = makeCompressed(articulatedTx)
 		} else if s.Message != "" {
 			model["encoding"] = ""
 			model["compressedTx"] = s.Message

@@ -175,7 +175,7 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 		}
 
 		if isArticulated {
-			model["compressedTrace"] = MakeCompressed(articulatedTrace)
+			model["compressedTrace"] = makeCompressed(articulatedTrace)
 			order = append(order, "compressedTrace")
 		}
 	}
