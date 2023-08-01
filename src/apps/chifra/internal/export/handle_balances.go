@@ -36,6 +36,10 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
+	// TODO: Why does this have to dirty the caller?
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
+	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
