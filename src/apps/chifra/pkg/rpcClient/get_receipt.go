@@ -26,13 +26,13 @@ type ReceiptQuery struct {
 
 // GetReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func GetReceipt(chain string, query ReceiptQuery, rpcOptions *Options) (receipt types.SimpleReceipt, err error) {
-	if rpcOptions.HasStore() {
+func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
+	if options.HasStore() {
 		tx := &types.SimpleTransaction{
 			BlockNumber:      query.Bn,
 			TransactionIndex: query.Txid,
 		}
-		if err := rpcOptions.Store.Read(tx, nil); err == nil {
+		if err := options.Store.Read(tx, nil); err == nil {
 			// success
 			if tx.Receipt == nil {
 				return receipt, nil
@@ -47,7 +47,7 @@ func GetReceipt(chain string, query ReceiptQuery, rpcOptions *Options) (receipt 
 	}
 
 	if query.NeedsTs && query.Ts == 0 {
-		query.Ts = GetBlockTimestamp(chain, &query.Bn)
+		query.Ts = options.GetBlockTimestamp(chain, &query.Bn)
 	}
 
 	logs := []types.SimpleLog{}
@@ -113,7 +113,8 @@ func GetReceipt(chain string, query ReceiptQuery, rpcOptions *Options) (receipt 
 
 // getRawTransactionReceipt fetches raw transaction given blockNumber and transactionIndex
 func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
-	if fetched, err := GetTransactionByNumberAndID(chain, bn, txid); err != nil {
+	conn := NewConnection(chain, []string{})
+	if fetched, err := conn.GetTransactionByNumberAndID(chain, bn, txid); err != nil {
 		return nil, nil, err
 
 	} else {

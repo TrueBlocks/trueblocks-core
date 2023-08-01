@@ -9,8 +9,12 @@ package rpcClient
 
 import (
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Test_GetMetaData(t *testing.T) {
-	GetMetaData("mainnet", false)
+	chain := utils.GetTestChain()
+	conn := NewConnection(chain, []string{})
+	conn.GetMetaData(chain, false)
 }

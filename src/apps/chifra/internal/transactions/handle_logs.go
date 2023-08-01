@@ -11,18 +11,16 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *TransactionsOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
-
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
-			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
+			txIds, err := ids.ResolveTxs(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -54,7 +52,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 					errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
 				}
 
-				logs, err := rpcClient.GetLogsByFilter(chain, logFilter)
+				logs, err := opts.Conn.GetLogsByFilter(chain, logFilter)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

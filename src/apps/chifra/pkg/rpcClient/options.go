@@ -10,15 +10,34 @@ var NoOptions *Options = nil
 
 // Options carry additional context to rpcClient calls
 type Options struct {
-	// Cache Store to use for read/write. Write can be disabled
-	// by setting Store to read-only mode
-	Store *cacheNew.Store
+	Store                    *cacheNew.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
+	LatestBlockTimestamp     base.Timestamp
+	TransactionWriteDisabled bool // Disable caching transactions
+	TraceWriteDisabled       bool // Disable caching traces
+}
 
-	LatestBlockTimestamp base.Timestamp
-	// Disable caching transactions
-	TransactionWriteDisabled bool
-	// Disable caching traces
-	TraceWriteDisabled bool
+func (options *Options) TestLog() {
+	logger.TestLog(!options.TraceWriteDisabled, "TraceWriteDisabled: ", options.TraceWriteDisabled)
+	logger.TestLog(!options.TransactionWriteDisabled, "TransactionWriteDisabled: ", options.TransactionWriteDisabled)
+	logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp", options.LatestBlockTimestamp)
+}
+
+func NewConnection(chain string, caches []string) *Options {
+	settings := DefaultRpcOptionsSettings{
+		Chain: chain,
+	}
+	return settings.DefaultRpcOptions()
+}
+
+func NewReadOnlyConnection(chain string) *Options {
+	settings := DefaultRpcOptionsSettings{
+		Chain:         chain,
+		ReadonlyCache: true,
+	}
+	return settings.DefaultRpcOptions()
+}
+
+func (options *Options) EnableCaches(on, txs, traces bool) {
 }
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns
@@ -53,7 +72,7 @@ type CacheStater interface {
 	CacheState() (bool, bool, bool)
 }
 
-func DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *Options {
+func (settings *DefaultRpcOptionsSettings) DefaultRpcOptions() *Options {
 	readonlyCache := false
 	if settings != nil {
 		readonlyCache = settings.ReadonlyCache
@@ -80,18 +99,18 @@ func DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *Options {
 
 // HasStore is a shorthand to check if Store is initialized. It will return
 // false for nil pointer to Options
-func (o *Options) HasStore() bool {
-	if o == nil {
+func (options *Options) HasStore() bool {
+	if options == nil {
 		return false
 	}
 
-	return o.Store != nil
+	return options.Store != nil
 }
 
-func (o *Options) HasStoreWritable() bool {
-	if !o.HasStore() {
+func (options *Options) HasStoreWritable() bool {
+	if !options.HasStore() {
 		return false
 	}
 
-	return !o.Store.ReadOnly()
+	return !options.Store.ReadOnly()
 }

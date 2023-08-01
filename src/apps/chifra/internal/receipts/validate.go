@@ -9,6 +9,8 @@ import (
 )
 
 func (opts *ReceiptsOptions) validateReceipts() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -27,7 +29,7 @@ func (opts *ReceiptsOptions) validateReceipts() error {
 	}
 
 	err := validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Transactions,
 		validate.ValidTransId,
 		-1,

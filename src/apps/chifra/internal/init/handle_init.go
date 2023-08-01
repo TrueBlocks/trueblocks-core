@@ -37,8 +37,8 @@ func (opts *InitOptions) HandleInit() error {
 		return err
 	}
 
-	if remoteManifest.Chain != opts.Globals.Chain {
-		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, opts.Globals.Chain)
+	if remoteManifest.Chain != chain {
+		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, chain)
 		return errors.New(msg)
 	}
 
@@ -115,6 +115,8 @@ var nStarted12 int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
 func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType cache.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
+	chain := opts.Globals.Chain
+
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 
@@ -126,7 +128,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 	poolSize := runtime.NumCPU() * 2
 
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
-	go index.DownloadChunks(opts.Globals.Chain, chunks, chunkType, poolSize, progressChannel)
+	go index.DownloadChunks(chain, chunks, chunkType, poolSize, progressChannel)
 
 	for event := range progressChannel {
 		chunk, ok := event.Payload.(*manifest.ChunkRecord)

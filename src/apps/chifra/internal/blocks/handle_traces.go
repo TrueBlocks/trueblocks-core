@@ -9,14 +9,12 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleTraces() error {
 	chain := opts.Globals.Chain
-
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, br := range opts.BlockIds {
@@ -32,7 +30,7 @@ func (opts *BlocksOptions) HandleTraces() error {
 
 			for _, bn := range blockNums {
 				var traces []types.SimpleTrace
-				traces, err = rpcClient.GetTracesByNumber(chain, bn)
+				traces, err = opts.Conn.GetTracesByNumber(chain, bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

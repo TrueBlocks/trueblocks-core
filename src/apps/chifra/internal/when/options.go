@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -33,6 +34,7 @@ type WhenOptions struct {
 	Update     bool                     `json:"update,omitempty"`     // With --timestamps only, bring the timestamp database forward to the latest block
 	Deep       bool                     `json:"deep,omitempty"`       // With --timestamps --check only, verifies timestamps from on chain (slow)
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	Conn       *rpcClient.Options       `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -53,6 +55,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -92,13 +95,19 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Deep = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	// EXISTING_CODE
 
 	return opts
@@ -109,7 +118,12 @@ func whenFinishParse(args []string) *WhenOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	opts.Blocks = args
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
@@ -118,6 +132,7 @@ func whenFinishParse(args []string) *WhenOptions {
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

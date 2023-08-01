@@ -28,7 +28,7 @@ func (opts *TokensOptions) HandleShow() error {
 		for _, address := range opts.Addrs[1:] {
 			addr := base.HexToAddress(address)
 			for _, br := range opts.BlockIds {
-				blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+				blockNums, err := br.ResolveBlocks(chain)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

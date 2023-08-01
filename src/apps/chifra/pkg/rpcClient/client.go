@@ -55,7 +55,7 @@ func getClient(chain string) (*ethclient.Client, error) {
 }
 
 // GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
-func GetLatestBlockNumber(chain string) uint64 {
+func (options *Options) GetLatestBlockNumber(chain string) uint64 {
 	if ec, err := getClient(chain); err != nil {
 		logger.Error("Could not connect to RPC client: %w", err)
 		return 0
@@ -73,7 +73,7 @@ func GetLatestBlockNumber(chain string) uint64 {
 }
 
 // GetClientIDs returns both chainId and networkId from the node
-func GetClientIDs(chain string) (uint64, uint64, error) {
+func (options *Options) GetClientIDs(chain string) (uint64, uint64, error) {
 	if ec, err := getClient(chain); err != nil {
 		return 0, 0, err
 	} else {
@@ -96,7 +96,7 @@ func GetClientIDs(chain string) (uint64, uint64, error) {
 // TODO: C++ code used to cache version info
 
 // GetClientVersion returns the version of the client
-func GetClientVersion(chain string) (version string, err error) {
+func (options *Options) GetClientVersion(chain string) (version string, err error) {
 	method := "web3_clientVersion"
 	params := rpc.Params{}
 
@@ -108,7 +108,7 @@ func GetClientVersion(chain string) (version string, err error) {
 }
 
 // GetTransactionHashFromHashStr returns a transaction's hash if it's a valid transaction, an empty string otherwise
-func GetTransactionHashFromHashStr(chain, hash string) (string, error) {
+func (options *Options) GetTransactionHashFromHashStr(chain, hash string) (string, error) {
 	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
@@ -124,7 +124,7 @@ func GetTransactionHashFromHashStr(chain, hash string) (string, error) {
 }
 
 // GetBlockHashFromHashStr returns a block's hash if it's a valid block
-func GetBlockHashFromHashStr(chain, hash string) (string, error) {
+func (options *Options) GetBlockHashFromHashStr(chain, hash string) (string, error) {
 	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
@@ -140,7 +140,7 @@ func GetBlockHashFromHashStr(chain, hash string) (string, error) {
 }
 
 // GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
-func GetTransactionHashByHashAndID(chain, hash string, txId uint64) (string, error) {
+func (options *Options) GetTransactionHashByHashAndID(chain, hash string, txId uint64) (string, error) {
 	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
@@ -156,7 +156,7 @@ func GetTransactionHashByHashAndID(chain, hash string, txId uint64) (string, err
 }
 
 // GetTransactionByNumberAndID returns an actual transaction
-func GetTransactionByNumberAndID(chain string, bn, txId uint64) (ethTypes.Transaction, error) {
+func (options *Options) GetTransactionByNumberAndID(chain string, bn, txId uint64) (ethTypes.Transaction, error) {
 	if ec, err := getClient(chain); err != nil {
 		return ethTypes.Transaction{}, err
 	} else {
@@ -177,7 +177,7 @@ func GetTransactionByNumberAndID(chain string, bn, txId uint64) (ethTypes.Transa
 }
 
 // GetCountTransactionsInBlock returns the number of transactions in a block
-func GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
+func (options *Options) GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
 	if ec, err := getClient(chain); err != nil {
 		return 0, err
 	} else {
@@ -194,7 +194,7 @@ func GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
 }
 
 // GetBlockNumberByHash returns a block's hash if it's a valid block
-func GetBlockNumberByHash(chain, hash string) (base.Blknum, error) {
+func (options *Options) GetBlockNumberByHash(chain, hash string) (base.Blknum, error) {
 	if ec, err := getClient(chain); err != nil {
 		return 0, err
 	} else {
@@ -210,7 +210,7 @@ func GetBlockNumberByHash(chain, hash string) (base.Blknum, error) {
 }
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
-func GetBlockHashByNumber(chain string, bn uint64) (string, error) {
+func (options *Options) GetBlockHashByNumber(chain string, bn uint64) (string, error) {
 	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {
@@ -226,7 +226,7 @@ func GetBlockHashByNumber(chain string, bn uint64) (string, error) {
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) {
+func (options *Options) GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) {
 	if ec, err := getClient(chain); err != nil {
 		var zero big.Int
 		return &zero, err
@@ -237,7 +237,7 @@ func GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) 
 }
 
 // GetCodeAt returns a code (if any) for an address at a block
-func GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
+func (options *Options) GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
 	if ec, err := getClient(chain); err != nil {
 		return []byte{}, err
 	} else {

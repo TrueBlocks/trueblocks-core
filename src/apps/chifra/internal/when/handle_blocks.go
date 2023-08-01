@@ -11,17 +11,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *WhenOptions) HandleShowBlocks() error {
+	chain := opts.Globals.Chain
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -32,7 +33,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 			}
 
 			for _, bn := range blockNums {
-				block, err := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn, rpcClient.NoOptions)
+				block, err := opts.Conn.GetBlockHeaderByNumber(chain, bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -47,7 +48,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 				}
 
 				d, _ := tslib.FromTsToDate(block.Timestamp)
-				nm, _ := tslib.FromBnToName(opts.Globals.Chain, block.BlockNumber)
+				nm, _ := tslib.FromBnToName(chain, block.BlockNumber)
 				modelChan <- &types.SimpleNamedBlock{
 					BlockNumber: block.BlockNumber,
 					Timestamp:   block.Timestamp,

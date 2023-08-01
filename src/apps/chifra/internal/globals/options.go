@@ -222,6 +222,7 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
+
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		logger.Error("Could not establish ts file:", err)
 	}

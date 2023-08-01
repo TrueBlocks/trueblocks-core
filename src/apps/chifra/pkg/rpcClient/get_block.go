@@ -22,7 +22,7 @@ import (
 )
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
-func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.SimpleBlock[types.SimpleTransaction], error) {
+func (options *Options) GetBlockBodyByNumber(chain string, bn uint64) (types.SimpleBlock[types.SimpleTransaction], error) {
 	if options.HasStore() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.SimpleBlock[string]{BlockNumber: bn}
@@ -32,7 +32,7 @@ func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.Simp
 			result.Transactions = make([]types.SimpleTransaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
-				tx, err := GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index), options)
+				tx, err := options.GetTransactionByBlockAndId(chain, cachedBlock.BlockNumber, uint64(index))
 				if err != nil {
 					success = false
 					break
@@ -78,14 +78,14 @@ func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.Simp
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
-		receipt, err = GetReceipt(chain, ReceiptQuery{
+		receipt, err = options.GetReceipt(chain, ReceiptQuery{
 			Bn:       uint64(bn),
 			Txid:     uint64(raw.TxIndex()),
 			TxHash:   raw.TxHash(),
 			GasPrice: raw.TxGasPrice(),
 			NeedsTs:  true,
 			Ts:       ts,
-		}, options)
+		})
 		if err != nil {
 			return block, err
 		}
@@ -105,7 +105,7 @@ func GetBlockBodyByNumber(chain string, bn uint64, options *Options) (types.Simp
 }
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
-func GetBlockHeaderByNumber(chain string, bn uint64, options *Options) (block types.SimpleBlock[string], err error) {
+func (options *Options) GetBlockHeaderByNumber(chain string, bn uint64) (block types.SimpleBlock[string], err error) {
 	if options.HasStore() {
 		block.BlockNumber = bn
 		if err := options.Store.Read(&block, nil); err == nil {
@@ -144,7 +144,9 @@ func GetBlockHeaderByNumber(chain string, bn uint64, options *Options) (block ty
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
 func loadBlock[Tx string | types.SimpleTransaction](chain string, bn uint64, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
-	rawBlock, err = getRawBlock(chain, bn, withTxs)
+	conn := NewConnection(chain, []string{})
+
+	rawBlock, err = conn.getRawBlock(chain, bn, withTxs)
 	if err != nil {
 		return
 	}
@@ -193,7 +195,7 @@ func loadBlock[Tx string | types.SimpleTransaction](chain string, bn uint64, wit
 	return
 }
 
-func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error) {
+func (options *Options) getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error) {
 	method := "eth_getBlockByNumber"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
 
@@ -202,7 +204,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
+			block.Timestamp = fmt.Sprintf("0x%x", options.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
 		} else if utils.MustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
@@ -212,7 +214,7 @@ func getRawBlock(chain string, bn uint64, withTxs bool) (*types.RawBlock, error)
 }
 
 // GetBlockTimestamp returns the timestamp associated with a given block
-func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
+func (options *Options) GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
 	if ec, err := getClient(chain); err != nil {
 		logger.Error("Could not connect to RPC client", err)
 		return 0
@@ -234,7 +236,7 @@ func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
 		if ts == 0 {
 			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
 			// TODO: Chain specific
-			return GetBlockTimestamp(chain, utils.PointerOf(uint64(1))) - 13
+			return options.GetBlockTimestamp(chain, utils.PointerOf(uint64(1))) - 13
 		}
 
 		return ts
@@ -242,7 +244,7 @@ func GetBlockTimestamp(chain string, bn *uint64) base.Timestamp {
 }
 
 // GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
-func GetTransactionHashByNumberAndID(chain string, bn, txId uint64) (string, error) {
+func (options *Options) GetTransactionHashByNumberAndID(chain string, bn, txId uint64) (string, error) {
 	if ec, err := getClient(chain); err != nil {
 		return "", err
 	} else {

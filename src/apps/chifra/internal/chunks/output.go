@@ -63,7 +63,8 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 
 	handled = true
 
-	blockNums, err := identifiers.GetBlockNumbers(opts.Globals.Chain, opts.BlockIds)
+	chain := opts.Globals.Chain
+	blockNums, err := identifiers.GetBlockNumbers(chain, opts.BlockIds)
 	if err != nil {
 		return
 	}

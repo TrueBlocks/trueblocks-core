@@ -483,6 +483,7 @@ string_q get_optfields(const CCommandOption& cmd) {
         }
     }
     varWidth = max(string_q("Globals").length(), varWidth);
+    varWidth = max(string_q("Conn").length(), varWidth);
     varWidth = max(string_q("BadFlag").length(), varWidth);
     typeWidth = max(string_q("globals.GlobalOptions").length(), typeWidth);
     typeWidth = max(string_q("error").length(), typeWidth);
@@ -531,6 +532,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     }
 
     ONE(os, "Globals", varWidth, "globals.GlobalOptions", typeWidth, "the global options");
+    ONE(os, "Conn", varWidth, "*rpcClient.Options", typeWidth, "the connection to the RPC server");
     ONE(os, "BadFlag", varWidth, "error", typeWidth, "an error flag if needed");
 
     return os.str();

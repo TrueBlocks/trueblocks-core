@@ -21,8 +21,8 @@ func (opts *InitOptions) HandleDryRun() error {
 		return err
 	}
 
-	if remoteManifest.Chain != opts.Globals.Chain {
-		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, opts.Globals.Chain)
+	if remoteManifest.Chain != chain {
+		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, chain)
 		return errors.New(msg)
 	}
 

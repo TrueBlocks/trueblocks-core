@@ -34,6 +34,7 @@ type reporter struct {
 // Bloom filter. In `manifest` mode, it checks that each IPFS hash in the manifest is
 // actually pinned. The later requires a locally running IPFS node.
 func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simpleReportCheck) error {
+	chain := opts.Globals.Chain
 
 	mutex := sync.Mutex{}
 	theMap := make(map[string]*reporter)
@@ -54,7 +55,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		tick = 1000
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
-			_, path := rng.RangeToFilename(opts.Globals.Chain)
+			_, path := rng.RangeToFilename(chain)
 			bloomFilename := cache.ToBloomPath(path)
 			bl, err := bloom.NewChunkBloom(bloomFilename)
 			if err != nil {

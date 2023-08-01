@@ -8,7 +8,7 @@ import (
 )
 
 // IsNodeArchive returns true if the node is an archive node
-func IsNodeArchive(chain string) bool {
+func (options *Options) IsNodeArchive(chain string) bool {
 	// TODO: from C++ code
 	// const CToml* config = getGlobalConfig("blockScrape");
 	// if (!config->getConfigBool("requires", "archive", true))
@@ -24,10 +24,11 @@ func IsNodeArchive(chain string) bool {
 		return false
 	}
 
-	bal, err := GetBalanceAt(chain, largest.Address, 0)
+	bal, err := options.GetBalanceAt(chain, largest.Address, 0)
 	if err != nil {
 		return false
 	}
+
 	// fmt.Println("Largest:", largest.Balance, "Balance:", *bal, "Cmp:", bal.Cmp(&largest.Balance) == 0)
 	return bal.Cmp(&largest.Balance) == 0
 }

@@ -14,8 +14,9 @@ import (
 
 // HandleClean handles the chifra monitors --clean command.
 func (opts *MonitorsOptions) HandleClean() error {
+	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	_, monArray := monitor.GetMonitorMap(opts.Globals.Chain)
+	_, monArray := monitor.GetMonitorMap(chain)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {

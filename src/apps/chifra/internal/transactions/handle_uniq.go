@@ -13,16 +13,17 @@ import (
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
-	})
+	}
+	opts.Conn = settings.DefaultRpcOptions()
 
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
-	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, nil)
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -33,7 +34,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 		}
 
 		for _, rng := range opts.TransactionIds {
-			txIds, err := rng.ResolveTxs(opts.Globals.Chain)
+			txIds, err := rng.ResolveTxs(chain)
 			if err != nil && !errors.Is(err, ethereum.NotFound) {
 				errorChan <- err
 				cancel()
@@ -41,13 +42,13 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 
 			for _, app := range txIds {
 				bn := uint64(app.BlockNumber)
-				ts := rpcClient.GetBlockTimestamp(chain, &bn)
+				ts := opts.Conn.GetBlockTimestamp(chain, &bn)
 				addrMap := make(index.AddressBooleanMap)
 
-				if trans, err := rpcClient.GetTransactionByAppearance(chain, &app, true, rpcOptions); err != nil {
+				if trans, err := opts.Conn.GetTransactionByAppearance(chain, &app, true); err != nil {
 					errorChan <- err
 				} else {
-					if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, trans, ts, addrMap, rpcOptions); err != nil {
+					if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, trans, ts, addrMap, opts.Conn); err != nil {
 						errorChan <- err
 					}
 				}

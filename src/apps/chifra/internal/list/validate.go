@@ -9,12 +9,13 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *ListOptions) validateList() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -35,7 +36,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS && !opts.Globals.TestMode {
-		latest := rpcClient.GetLatestBlockNumber(opts.Globals.Chain)
+		latest := opts.Conn.GetLatestBlockNumber(chain)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
@@ -62,7 +63,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+	if err := index.IndexIsInitialized(chain); err != nil {
 		if opts.Globals.IsApiMode() {
 			return err
 		} else {

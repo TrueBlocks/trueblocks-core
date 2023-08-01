@@ -14,6 +14,8 @@ import (
 )
 
 func (opts *StateOptions) validateState() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -55,7 +57,7 @@ func (opts *StateOptions) validateState() error {
 				contract = opts.ProxyFor
 			}
 
-			err := rpcClient.IsContractAt(opts.Globals.Chain, base.HexToAddress(contract), nil)
+			err := opts.Conn.IsContractAt(chain, base.HexToAddress(contract), nil)
 			if err != nil {
 				if errors.Is(err, rpcClient.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")
@@ -82,7 +84,7 @@ func (opts *StateOptions) validateState() error {
 	// Blocks are optional, but if they are present, they must be valid
 	if len(opts.Blocks) > 0 {
 		bounds, err := validate.ValidateIdentifiersWithBounds(
-			opts.Globals.Chain,
+			chain,
 			opts.Blocks,
 			validate.ValidBlockIdWithRangeAndDate,
 			1,
@@ -101,9 +103,9 @@ func (opts *StateOptions) validateState() error {
 			return err
 		}
 
-		latest := rpcClient.GetLatestBlockNumber(opts.Globals.Chain)
+		latest := opts.Conn.GetLatestBlockNumber(chain)
 		// TODO: Should be configurable
-		if bounds.First < (latest-250) && !rpcClient.IsNodeArchive(opts.Globals.Chain) {
+		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive(chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}

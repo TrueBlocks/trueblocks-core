@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum"
 )
@@ -35,6 +34,8 @@ type ExploreUrl struct {
 var urls []ExploreUrl
 
 func (opts *ExploreOptions) validateExplore() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -67,9 +68,9 @@ func (opts *ExploreOptions) validateExplore() error {
 			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
 		}
 
-		valid, _ := validate.IsValidTransId(opts.Globals.Chain, []string{arg}, validate.ValidTransId)
+		valid, _ := validate.IsValidTransId(chain, []string{arg}, validate.ValidTransId)
 		if valid {
-			txHash, err := idToTxHash(opts.Globals.Chain, arg, validate.IsBlockHash)
+			txHash, err := opts.idToTxHash(chain, arg, validate.IsBlockHash)
 			if err == nil {
 				urls = append(urls, ExploreUrl{txHash, ExploreTx})
 				continue
@@ -77,9 +78,9 @@ func (opts *ExploreOptions) validateExplore() error {
 			// an error here is okay since we can't distinquish between tx hashes and block hashes...
 		}
 
-		valid, _ = validate.IsValidBlockId(opts.Globals.Chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)
+		valid, _ = validate.IsValidBlockId(chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)
 		if valid {
-			blockHash, err := idToBlockHash(opts.Globals.Chain, arg, validate.IsBlockHash)
+			blockHash, err := opts.idToBlockHash(chain, arg, validate.IsBlockHash)
 			if err == nil {
 				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
 				continue
@@ -125,26 +126,27 @@ func (t ExploreType) String() string {
 	}
 }
 
-func idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
 	if isBlockHash(arg) {
-		return rpcClient.GetBlockHashFromHashStr(chain, arg)
+		return opts.Conn.GetBlockHashFromHashStr(chain, arg)
 	}
 
 	blockNum, err := strconv.ParseUint(arg, 10, 64)
 	if err != nil {
 		return "", nil
 	}
-	return rpcClient.GetBlockHashByNumber(chain, blockNum)
+
+	return opts.Conn.GetBlockHashByNumber(chain, blockNum)
 }
 
 // idToTxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
 // and returns the transaction hash represented by that identifier. (If it's a valid transaction.
 // It may not be because transaction hashes and block hashes are both 32-byte hex)
-func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
 	// simple case first
 	if !strings.Contains(arg, ".") {
 		// We know it's a hash, but we want to know if it's a legitimate tx on chain
-		return rpcClient.GetTransactionHashFromHashStr(chain, arg)
+		return opts.Conn.GetTransactionHashFromHashStr(chain, arg)
 	}
 
 	parts := strings.Split(arg, ".")
@@ -157,7 +159,7 @@ func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, e
 		if err != nil {
 			return "", nil
 		}
-		return rpcClient.GetTransactionHashByHashAndID(chain, parts[0], txId)
+		return opts.Conn.GetTransactionHashByHashAndID(chain, parts[0], txId)
 	}
 
 	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
@@ -169,5 +171,5 @@ func idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, e
 		return "", nil
 	}
 
-	return rpcClient.GetTransactionHashByNumberAndID(chain, blockNum, txId)
+	return opts.Conn.GetTransactionHashByNumberAndID(chain, blockNum, txId)
 }

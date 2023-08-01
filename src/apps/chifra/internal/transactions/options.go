@@ -36,6 +36,7 @@ type TransactionsOptions struct {
 	Decache        bool                     `json:"decache,omitempty"`        // Removes a transactions and any traces in the transaction from the cache
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	Conn           *rpcClient.Options       `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -57,6 +58,7 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.Source, "Source: ", opts.Source)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -107,14 +109,20 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.Source = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.AccountFor, _ = rpcClient.GetAddressFromEns(opts.Globals.Chain, opts.AccountFor)
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
+	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
 	// EXISTING_CODE
 
 	return opts
@@ -125,13 +133,19 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
 	opts.Transactions = args
-	opts.AccountFor, _ = rpcClient.GetAddressFromEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

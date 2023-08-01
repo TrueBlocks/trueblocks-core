@@ -18,6 +18,8 @@ import (
 )
 
 func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
+	chain := opts.Globals.Chain
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		showBloom := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
@@ -36,7 +38,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				displayBloom(&bl, 1)
 			}
 
-			stats, err := GetChunkStats(opts.Globals.Chain, path)
+			stats, err := GetChunkStats(chain, path)
 			if err != nil {
 				return false, err
 			}
@@ -56,7 +58,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 		}
 
 		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+			chain,
 			opts.Globals.TestMode,
 			10, /* maxTests */
 			showBloom,

@@ -15,6 +15,7 @@ import (
 )
 
 func (opts *NamesOptions) HandleTerms() error {
+	chain := opts.Globals.Chain
 	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
 
 	apiMode := opts.Globals.IsApiMode()
@@ -43,7 +44,7 @@ func (opts *NamesOptions) HandleTerms() error {
 			logger.Warn("falling back to file-based search")
 		}
 
-		namesArray, err := names.LoadNamesArray(opts.Globals.Chain, opts.getType(), names.SortByAddress, opts.Terms)
+		namesArray, err := names.LoadNamesArray(chain, opts.getType(), names.SortByAddress, opts.Terms)
 		if err != nil {
 			return err
 		}

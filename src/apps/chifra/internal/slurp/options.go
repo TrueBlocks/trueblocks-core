@@ -31,6 +31,7 @@ type SlurpOptions struct {
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
+	Conn        *rpcClient.Options       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -48,6 +49,7 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.PerPage != 5000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -88,14 +90,20 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -118,7 +126,12 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {
@@ -130,7 +143,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -147,6 +160,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

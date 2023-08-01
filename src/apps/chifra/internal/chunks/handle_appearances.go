@@ -17,6 +17,8 @@ import (
 )
 
 func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
+	chain := opts.Globals.Chain
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		showAppearances := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
@@ -61,7 +63,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 		}
 
 		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+			chain,
 			opts.Globals.TestMode,
 			10, /* maxTests */
 			showAppearances,

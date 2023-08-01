@@ -29,6 +29,7 @@ type AbisOptions struct {
 	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no address is given
 	Sol     bool                  `json:"sol,omitempty"`     // Please use the `solc --abi` tool instead
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	Conn    *rpcClient.Options    `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -44,6 +45,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -84,14 +86,19 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			opts.Sol = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -102,15 +109,20 @@ func abisFinishParse(args []string) *AbisOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
 	if opts.Globals.IsApiMode() {
 		defFmt = "json"
 	}
-	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, args)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
