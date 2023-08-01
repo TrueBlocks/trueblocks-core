@@ -25,11 +25,13 @@ import (
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
 func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
+	chain := opts.Globals.Chain
+
 	maxTestItems := 10
 	filenameChan := make(chan cache.CacheFileInfo)
 
 	var nRoutines = 1
-	go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Index_Bloom, nil, filenameChan)
+	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
@@ -60,7 +62,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	}
 
 	if len(fileNames) == 0 {
-		msg := fmt.Sprint("No files found to check in", config.GetPathToIndex(opts.Globals.Chain))
+		msg := fmt.Sprint("No files found to check in", config.GetPathToIndex(chain))
 		return errors.New(msg)
 	}
 
@@ -68,12 +70,12 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
+	cacheManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
 	if err != nil {
 		return err
 	}
 
-	remoteManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -108,7 +110,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 
 	reports := []simpleReportCheck{}
 
-	allowMissing := scrapeCfg.AllowMissing(opts.Globals.Chain)
+	allowMissing := scrapeCfg.AllowMissing(chain)
 	seq := simpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
@@ -155,7 +157,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	reports = append(reports, r2c)
 
 	// we only check the stage if it exists
-	stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+	stagePath := cache.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if file.FileExists(stageFn) {
 		stage := simpleReportCheck{Reason: "Check staging folder"}

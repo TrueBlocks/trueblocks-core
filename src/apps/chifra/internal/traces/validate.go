@@ -12,6 +12,8 @@ import (
 )
 
 func (opts *TracesOptions) validateTraces() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -26,9 +28,9 @@ func (opts *TracesOptions) validateTraces() error {
 		}
 
 		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-			Chain: opts.Globals.Chain,
+			Chain: chain,
 		})
-		if !rpcOptions.IsNodeTracing(opts.Globals.Chain, opts.Globals.TestMode) {
+		if !rpcOptions.IsNodeTracing(chain, opts.Globals.TestMode) {
 			return validate.Usage("Tracing is required for this program to work properly.")
 		}
 
@@ -46,7 +48,7 @@ func (opts *TracesOptions) validateTraces() error {
 	}
 
 	err := validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Transactions,
 		validate.ValidTransId,
 		-1,

@@ -81,11 +81,12 @@ func (opts *ExportOptions) readBalances(
 	errorChan chan error,
 	rpcOptions *rpcClient.Options,
 ) ([]*types.SimpleTokenBalance, error) {
+	chain := opts.Globals.Chain
+
 	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
-		chain := opts.Globals.Chain
 		showProgress := !opts.Globals.TestMode
 		var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
 

@@ -27,7 +27,7 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 		Chain: chain,
 	})
 
-	stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+	stagePath := cache.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if !file.FileExists(stageFn) {
 		return nil

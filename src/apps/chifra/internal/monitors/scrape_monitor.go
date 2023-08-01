@@ -30,7 +30,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
-	tmpPath := config.GetPathToCache(opts.Globals.Chain) + "tmp/"
+	tmpPath := config.GetPathToCache(chain) + "tmp/"
 
 	var s = &MonitorScraper
 	s.ChangeState(true, tmpPath)
@@ -92,6 +92,7 @@ func (sp SemiParse) String() string {
 const addrsPerBatch = 8
 
 func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
+	chain := opts.Globals.Chain
 	theCmds, _ := getCommandsFromFile(opts.Globals)
 
 	batches := batchMonitors(monitors, addrsPerBatch)
@@ -133,7 +134,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 					cmd = strings.Replace(cmd, "  ", " ", -1)
 					o := opts
 					o.Globals.File = ""
-					o.Globals.PassItOn("acctExport", opts.Globals.Chain, cmd, []string{})
+					o.Globals.PassItOn("acctExport", chain, cmd, []string{})
 					// fmt.Println("Processing:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
 					// } else {
 					// 	fmt.Println("Skipping:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)

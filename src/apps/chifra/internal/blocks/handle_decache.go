@@ -15,18 +15,20 @@ import (
 )
 
 func (opts *BlocksOptions) HandleDecache() error {
+	chain := opts.Globals.Chain
+
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain:         opts.Globals.Chain,
+		Chain:         chain,
 		ReadonlyCache: true,
 	})
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, br := range opts.BlockIds {
-		blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+		blockNums, err := br.ResolveBlocks(chain)
 		if err != nil {
 			return err
 		}
 		for _, bn := range blockNums {
-			rawBlock, err := rpcOptions.GetBlockBodyByNumber(opts.Globals.Chain, bn)
+			rawBlock, err := rpcOptions.GetBlockBodyByNumber(chain, bn)
 			if err != nil {
 				return err
 			}
@@ -77,12 +79,12 @@ func (opts *BlocksOptions) HandleDecache() error {
 	// TODO: Review then remove
 	// pairs := []base.Pair[uint32,uint32]{}
 	// for _, br := range opts.BlockIds {
-	// 	blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+	// 	blockNums, err := br.ResolveBlocks(chain)
 	// 	if err != nil {
 	// 		return err
 	// 	}
 	// 	for _, bn := range blockNums {
-	// 		rawBlock, err := rpcOptions.GetBlockBodyByNumber(opts.Globals.Chain, bn)
+	// 		rawBlock, err := rpcOptions.GetBlockBodyByNumber(chain, bn)
 	// 		if err != nil {
 	// 			return err
 	// 		}
@@ -123,7 +125,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	// }
 
 	// caches := []string{"blocks", "txs", "traces"}
-	// if cont, err := cache.DecacheItems(opts.Globals.Chain, "", processorFunc, caches, pairs); err != nil || !cont {
+	// if cont, err := cache.DecacheItems(chain, "", processorFunc, caches, pairs); err != nil || !cont {
 	// 	return err
 	// }
 

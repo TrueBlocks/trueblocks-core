@@ -19,13 +19,13 @@ import (
 func (opts *TransactionsOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
-			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
+			txIds, err := ids.ResolveTxs(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {

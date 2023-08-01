@@ -15,10 +15,12 @@ import (
 )
 
 func (opts *ListOptions) validateList() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 	})
 
 	if opts.BadFlag != nil {
@@ -39,7 +41,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS && !opts.Globals.TestMode {
-		latest := rpcOptions.GetLatestBlockNumber(opts.Globals.Chain)
+		latest := rpcOptions.GetLatestBlockNumber(chain)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
@@ -66,7 +68,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+	if err := index.IndexIsInitialized(chain); err != nil {
 		if opts.Globals.IsApiMode() {
 			return err
 		} else {

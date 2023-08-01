@@ -18,15 +18,17 @@ import (
 )
 
 func (opts *WhenOptions) HandleShowBlocks() error {
+	chain := opts.Globals.Chain
+
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 		Opts:  opts,
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -37,7 +39,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 			}
 
 			for _, bn := range blockNums {
-				block, err := rpcOptions.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
+				block, err := rpcOptions.GetBlockHeaderByNumber(chain, bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -52,7 +54,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 				}
 
 				d, _ := tslib.FromTsToDate(block.Timestamp)
-				nm, _ := tslib.FromBnToName(opts.Globals.Chain, block.BlockNumber)
+				nm, _ := tslib.FromBnToName(chain, block.BlockNumber)
 				modelChan <- &types.SimpleNamedBlock{
 					BlockNumber: block.BlockNumber,
 					Timestamp:   block.Timestamp,

@@ -19,6 +19,8 @@ import (
 
 // HandleIndexBelongs displays the resolved records in a chunk given a single address
 func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
+	chain := opts.Globals.Chain
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		showAddressesBelongs := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
@@ -26,7 +28,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 		}
 
 		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+			chain,
 			opts.Globals.TestMode,
 			10000, /* maxTests */
 			showAddressesBelongs,

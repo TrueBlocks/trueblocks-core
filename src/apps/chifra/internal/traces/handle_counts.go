@@ -26,7 +26,7 @@ func (opts *TracesOptions) HandleCounts() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
-			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
+			txIds, err := ids.ResolveTxs(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -37,7 +37,7 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 
 			for _, id := range txIds {
-				tx, err := rpcOptions.GetTransactionByNumberAndID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				tx, err := rpcOptions.GetTransactionByNumberAndID(chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -48,7 +48,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				}
 
 				txHash := tx.Hash().Hex()
-				cnt, err := rpcOptions.GetCountTracesInTransaction(opts.Globals.Chain, txHash)
+				cnt, err := rpcOptions.GetCountTracesInTransaction(chain, txHash)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -58,7 +58,7 @@ func (opts *TracesOptions) HandleCounts() error {
 					return
 				}
 
-				ts, err := tslib.FromBnToTs(opts.Globals.Chain, uint64(id.BlockNumber))
+				ts, err := tslib.FromBnToTs(chain, uint64(id.BlockNumber))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

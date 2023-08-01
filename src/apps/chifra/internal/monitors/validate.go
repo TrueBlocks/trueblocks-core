@@ -15,6 +15,8 @@ import (
 )
 
 func (opts *MonitorsOptions) validateMonitors() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -29,7 +31,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 			// phonied up just to make sure we have bloom for block zero
 			var expOpts exportPkg.ExportOptions
 			expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
-			expOpts.Globals.Chain = opts.Globals.Chain
+			expOpts.Globals.Chain = chain
 			err := expOpts.Validate()
 			if err != nil {
 				return validate.Usage(err.Error())

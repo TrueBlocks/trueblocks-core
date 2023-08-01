@@ -17,6 +17,8 @@ import (
 )
 
 func (opts *ChunksOptions) validateChunks() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -46,7 +48,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	if opts.Mode == "manifest" {
 		if opts.Pin {
 			if opts.Remote {
-				pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
+				pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(chain)
 				if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 				}
@@ -113,7 +115,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	err = validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Blocks,
 		validate.ValidBlockIdWithRangeAndDate,
 		1,
@@ -143,7 +145,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+	if err := index.IndexIsInitialized(chain); err != nil {
 		if opts.Globals.IsApiMode() {
 			return err
 		} else {

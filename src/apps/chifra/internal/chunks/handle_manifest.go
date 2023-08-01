@@ -18,8 +18,9 @@ var sourceMap = map[bool]manifest.Source{
 }
 
 func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
+	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	man, err := manifest.ReadManifest(opts.Globals.Chain, sourceMap[opts.Remote])
+	man, err := manifest.ReadManifest(chain, sourceMap[opts.Remote])
 	if err != nil {
 		return err
 	}

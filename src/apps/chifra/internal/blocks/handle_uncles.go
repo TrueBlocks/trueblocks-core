@@ -15,15 +15,16 @@ import (
 )
 
 func (opts *BlocksOptions) HandleUncles() error {
+	chain := opts.Globals.Chain
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 		Opts:  opts,
 	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -39,11 +40,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcOptions.GetBlockBodyByNumber(opts.Globals.Chain, bn)
+					b, err = rpcOptions.GetBlockBodyByNumber(chain, bn)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcOptions.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
+					b, err = rpcOptions.GetBlockHeaderByNumber(chain, bn)
 					block = &b
 				}
 

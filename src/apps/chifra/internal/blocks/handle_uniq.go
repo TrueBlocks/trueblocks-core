@@ -25,7 +25,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(opts.Globals.Chain, nil)
+		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -36,7 +36,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 		}
 
 		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -72,7 +72,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 
 func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqProcFunc, bn uint64, addrMap index.AddressBooleanMap, ts int64, rpcOptions *rpcClient.Options) error {
 	if bn == 0 {
-		if namesArray, err := names.LoadNamesArray(opts.Globals.Chain, names.Prefund, names.SortByAddress, []string{}); err != nil {
+		if namesArray, err := names.LoadNamesArray(chain, names.Prefund, names.SortByAddress, []string{}); err != nil {
 			return err
 		} else {
 			for i, name := range namesArray {
@@ -112,7 +112,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 
 			for _, trans := range block.Transactions {
-				if trans.Traces, err = rpcOptions.GetTracesByTransactionID(opts.Globals.Chain, trans.BlockNumber, trans.TransactionIndex); err != nil {
+				if trans.Traces, err = rpcOptions.GetTracesByTransactionID(chain, trans.BlockNumber, trans.TransactionIndex); err != nil {
 					return err
 				}
 				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, rpcOptions); err != nil {

@@ -157,7 +157,7 @@ func ToProgress(chain string, meta *rpcClient.MetaData) string {
 func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	chain := opts.Globals.Chain
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 	})
 
 	testMode := opts.Globals.TestMode

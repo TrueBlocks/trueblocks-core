@@ -119,7 +119,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
-	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
 	// EXISTING_CODE
 
 	return opts
@@ -136,7 +136,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(opts.Globals.Chain, opts.AccountFor)
+	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

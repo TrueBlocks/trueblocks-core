@@ -21,14 +21,14 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	nErrors := 0
 
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 		Opts:  opts,
 	})
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(opts.Globals.Chain, nil)
+		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())

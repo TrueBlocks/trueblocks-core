@@ -22,7 +22,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
 	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(opts.Globals.Chain, nil)
+		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -33,7 +33,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 		}
 
 		for _, rng := range opts.TransactionIds {
-			txIds, err := rng.ResolveTxs(opts.Globals.Chain)
+			txIds, err := rng.ResolveTxs(chain)
 			if err != nil && !errors.Is(err, ethereum.NotFound) {
 				errorChan <- err
 				cancel()

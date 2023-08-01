@@ -12,6 +12,8 @@ import (
 )
 
 func (opts *NamesOptions) HandleAutoname() error {
+	chain := opts.Globals.Chain
+
 	// For --dry_run, we don't want to write to the real database
 	var overrideDatabase names.Database
 	if opts.DryRun {
@@ -23,7 +25,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 		return err
 	}
 
-	err = names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
+	err = names.WriteRegularNames(chain, overrideDatabase)
 	if err != nil {
 		return err
 	}
@@ -68,7 +70,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 		Source:   "TrueBlocks.io",
 		IsCustom: false,
 	}
-	if _, err = cleanName(opts.Globals.Chain, name); err != nil {
+	if _, err = cleanName(chain, name); err != nil {
 		err = fmt.Errorf("autoname %s: %w", &address, err)
 		return
 	}
@@ -79,7 +81,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 		return
 	}
 
-	if _, err = names.LoadNamesMap(opts.Globals.Chain, names.Regular, []string{}); err != nil {
+	if _, err = names.LoadNamesMap(chain, names.Regular, []string{}); err != nil {
 		return
 	}
 

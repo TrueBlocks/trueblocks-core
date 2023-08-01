@@ -14,10 +14,12 @@ import (
 )
 
 func (opts *TokensOptions) validateTokens() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: opts.Globals.Chain,
+		Chain: chain,
 	})
 
 	if opts.BadFlag != nil {
@@ -49,7 +51,6 @@ func (opts *TokensOptions) validateTokens() error {
 		return validate.Usage("You must specify at least two address")
 
 	} else {
-		chain := opts.Globals.Chain
 		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 			Chain: chain,
 		})
@@ -92,7 +93,7 @@ func (opts *TokensOptions) validateTokens() error {
 	// Blocks are optional, but if they are present, they must be valid
 	if len(opts.Blocks) > 0 {
 		bounds, err := validate.ValidateIdentifiersWithBounds(
-			opts.Globals.Chain,
+			chain,
 			opts.Blocks,
 			validate.ValidBlockIdWithRangeAndDate,
 			1,
@@ -111,13 +112,13 @@ func (opts *TokensOptions) validateTokens() error {
 			return err
 		}
 
-		latest := rpcOptions.GetLatestBlockNumber(opts.Globals.Chain)
+		latest := rpcOptions.GetLatestBlockNumber(chain)
 		// TODO: Should be configurable
 		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-			Chain: opts.Globals.Chain,
+			Chain: chain,
 		})
 
-		if bounds.First < (latest-250) && !rpcOptions.IsNodeArchive(opts.Globals.Chain) {
+		if bounds.First < (latest-250) && !rpcOptions.IsNodeArchive(chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}

@@ -27,7 +27,7 @@ func (opts *TracesOptions) HandleShowTraces() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, ids := range opts.TransactionIds {
-			txIds, err := ids.ResolveTxs(opts.Globals.Chain)
+			txIds, err := ids.ResolveTxs(chain)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
@@ -39,10 +39,10 @@ func (opts *TracesOptions) HandleShowTraces() error {
 
 			// Timestamp is not part of the raw trace data so we need to get it separately
 			// TxIds don't span blocks, so we can use the first one outside the loop to find timestamp
-			ts := rpcOptions.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(txIds[0].BlockNumber)))
+			ts := rpcOptions.GetBlockTimestamp(chain, utils.PointerOf(uint64(txIds[0].BlockNumber)))
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
-				traces, err := rpcOptions.GetTracesByTransactionID(opts.Globals.Chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				traces, err := rpcOptions.GetTracesByTransactionID(chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

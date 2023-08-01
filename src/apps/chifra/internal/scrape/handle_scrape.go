@@ -28,13 +28,13 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 	})
-	progress, err := rpcOptions.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	progress, err := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
 
 	blazeOpts := BlazeOptions{
-		Chain:        opts.Globals.Chain,
+		Chain:        chain,
 		NChannels:    opts.Settings.Channel_count,
 		NProcessed:   0,
 		StartBlock:   opts.StartBlock,
@@ -52,7 +52,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 	origBlockCnt := opts.BlockCnt
 	for {
-		progress, err = rpcOptions.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+		progress, err = rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
 		if err != nil {
 			return err
 		}
@@ -74,11 +74,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			ripeBlock = progress.Latest - opts.Settings.Unripe_dist
 		}
 
-		chain := opts.Globals.Chain
 		provider, _ := config.GetRpcProvider(chain)
 
 		blazeOpts = BlazeOptions{
-			Chain:        opts.Globals.Chain,
+			Chain:        chain,
 			NChannels:    opts.Settings.Channel_count,
 			NProcessed:   0,
 			StartBlock:   opts.StartBlock,
@@ -94,7 +93,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// Remove whatever's in the unripePath before running each round. We do this
 		// because the chain may have re-organized (which it does frequently). This is
 		// why we have an unripePath.
-		unripePath := filepath.Join(config.GetPathToIndex(opts.Globals.Chain), "unripe")
+		unripePath := filepath.Join(config.GetPathToIndex(chain), "unripe")
 		err = os.RemoveAll(unripePath)
 		if err != nil {
 			return err

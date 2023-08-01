@@ -12,7 +12,9 @@ import (
 
 // HandleTimestampsRepair handles chifra when --timestamps --reset <bn> to reset a single block's timestamps (call repeatedly if needed)
 func (opts *WhenOptions) HandleTimestampsRepair() error {
-	cnt, err := tslib.NTimestamps(opts.Globals.Chain)
+	chain := opts.Globals.Chain
+
+	cnt, err := tslib.NTimestamps(chain)
 	if err != nil {
 		return err
 	}
@@ -20,23 +22,23 @@ func (opts *WhenOptions) HandleTimestampsRepair() error {
 	// skip := uint64(500)
 	// scanBar := progress.NewScanBar(cnt /* wanted */, (cnt / skip) /* freq */, cnt /* max */, (2. / 3.))
 
-	blockNums, err := identifiers.GetBlockNumbers(opts.Globals.Chain, opts.BlockIds)
+	blockNums, err := identifiers.GetBlockNumbers(chain, opts.BlockIds)
 	if err != nil {
 		return err
 	}
 
 	for _, bn := range blockNums {
 		if bn < cnt { // ranges may include blocks after last block
-			if err := tslib.Repair(opts.Globals.Chain, bn); err != nil {
+			if err := tslib.Repair(chain, bn); err != nil {
 				return err
 			}
 			if bn == 1 { // weird special case because because I don't know how to get Cobra to handle non-zero defaults
-				if err := tslib.Repair(opts.Globals.Chain, 0); err != nil {
+				if err := tslib.Repair(chain, 0); err != nil {
 					return err
 				}
 			}
 
-			ts, _ := tslib.FromBnToTs(opts.Globals.Chain, bn)
+			ts, _ := tslib.FromBnToTs(chain, bn)
 			logger.Info("The timestamp at block", bn, "was reset to", ts, "from on chain.")
 		}
 	}

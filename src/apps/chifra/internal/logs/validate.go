@@ -9,6 +9,8 @@ import (
 )
 
 func (opts *LogsOptions) validateLogs() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -27,7 +29,7 @@ func (opts *LogsOptions) validateLogs() error {
 	}
 
 	err := validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Transactions,
 		validate.ValidTransId,
 		-1,

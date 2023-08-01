@@ -46,6 +46,8 @@ func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ExportInternal handles the internal workings of the export command.  Returns error and a bool if handled
 func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
+	chain := opts.Globals.Chain
+
 	err = opts.validateExport()
 	if err != nil {
 		return err, true
@@ -66,7 +68,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		}
 
 		handled = true
-		err = opts.Globals.PassItOn("acctExport", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
+		err = opts.Globals.PassItOn("acctExport", chain, opts.toCmdLine(), opts.getEnvStr())
 		return
 	}
 

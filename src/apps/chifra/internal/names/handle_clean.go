@@ -22,13 +22,15 @@ import (
 )
 
 func (opts *NamesOptions) HandleClean() error {
+	chain := opts.Globals.Chain
+
 	label := "custom"
 	db := names.DatabaseCustom
 	if opts.Regular {
 		label = "regular"
 		db = names.DatabaseRegular
 	}
-	sourcePath := names.GetDatabasePath(opts.Globals.Chain, db)
+	sourcePath := names.GetDatabasePath(chain, db)
 	logger.Info("Processing", label, "names file", "("+sourcePath+")")
 	destinationLabel := sourcePath
 	if opts.DryRun {
@@ -57,17 +59,19 @@ func (opts *NamesOptions) HandleClean() error {
 }
 
 func (opts *NamesOptions) cleanNames() (int, error) {
+	chain := opts.Globals.Chain
+
 	parts := names.Custom
 	if opts.Regular {
 		parts = names.Regular
 	}
 
 	// Load databases
-	allNames, err := names.LoadNamesMap(opts.Globals.Chain, parts, []string{})
+	allNames, err := names.LoadNamesMap(chain, parts, []string{})
 	if err != nil {
 		return 0, err
 	}
-	prefundMap, err := preparePrefunds(opts.Globals.Chain)
+	prefundMap, err := preparePrefunds(chain)
 	if err != nil {
 		return 0, err
 	}
@@ -110,7 +114,7 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 	defer cancel()
 	errorChan := make(chan error)
 	go utils.IterateOverMap(ctx, errorChan, allNames, func(address base.Address, name types.SimpleName) error {
-		modified, err := cleanName(opts.Globals.Chain, &name)
+		modified, err := cleanName(chain, &name)
 		if err != nil {
 			return wrapErrorWithAddr(&address, err)
 		}
@@ -154,10 +158,10 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 
 	// Write to disk
 	if opts.Regular {
-		return modifiedCount, names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
+		return modifiedCount, names.WriteRegularNames(chain, overrideDatabase)
 	}
 
-	return modifiedCount, names.WriteCustomNames(opts.Globals.Chain, overrideDatabase)
+	return modifiedCount, names.WriteCustomNames(chain, overrideDatabase)
 }
 
 // wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles

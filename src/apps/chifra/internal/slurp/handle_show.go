@@ -243,6 +243,8 @@ func mustParseInt(input any) (result int64) {
 }
 
 func (opts *SlurpOptions) isInRange(bn uint, errorChan chan error) bool {
+	chain := opts.Globals.Chain
+
 	// Note that validation ensures that there is only a single isInRange
 	if len(opts.BlockIds) == 0 {
 		return true
@@ -254,7 +256,7 @@ func (opts *SlurpOptions) isInRange(bn uint, errorChan chan error) bool {
 		return br.Start.Number <= bn && bn <= br.End.Number
 	}
 
-	blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
+	blockNums, err := br.ResolveBlocks(chain)
 	if err != nil {
 		errorChan <- err
 		return false

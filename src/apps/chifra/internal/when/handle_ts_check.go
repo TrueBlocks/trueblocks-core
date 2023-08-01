@@ -22,7 +22,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 		Opts:  opts,
 	})
 
-	cnt, err := tslib.NTimestamps(opts.Globals.Chain)
+	cnt, err := tslib.NTimestamps(chain)
 	if err != nil {
 		return err
 	}
@@ -65,8 +65,10 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 }
 
 func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64, rpcOptions *rpcClient.Options) error {
+	chain := opts.Globals.Chain
+
 	// The i'th item in the timestamp array on disc
-	itemOnDisc, err := tslib.FromBn(opts.Globals.Chain, bn)
+	itemOnDisc, err := tslib.FromBn(chain, bn)
 	if err != nil {
 		return err
 	}
@@ -80,7 +82,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
-		expected, _ = rpcOptions.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
+		expected, _ = rpcOptions.GetBlockHeaderByNumber(chain, bn)
 	}
 
 	if prev.Timestamp != utils.NOPOSI {

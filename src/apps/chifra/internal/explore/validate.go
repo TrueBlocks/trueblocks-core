@@ -35,6 +35,8 @@ type ExploreUrl struct {
 var urls []ExploreUrl
 
 func (opts *ExploreOptions) validateExplore() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -67,9 +69,9 @@ func (opts *ExploreOptions) validateExplore() error {
 			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
 		}
 
-		valid, _ := validate.IsValidTransId(opts.Globals.Chain, []string{arg}, validate.ValidTransId)
+		valid, _ := validate.IsValidTransId(chain, []string{arg}, validate.ValidTransId)
 		if valid {
-			txHash, err := idToTxHash(opts.Globals.Chain, arg, validate.IsBlockHash)
+			txHash, err := idToTxHash(chain, arg, validate.IsBlockHash)
 			if err == nil {
 				urls = append(urls, ExploreUrl{txHash, ExploreTx})
 				continue
@@ -77,9 +79,9 @@ func (opts *ExploreOptions) validateExplore() error {
 			// an error here is okay since we can't distinquish between tx hashes and block hashes...
 		}
 
-		valid, _ = validate.IsValidBlockId(opts.Globals.Chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)
+		valid, _ = validate.IsValidBlockId(chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)
 		if valid {
-			blockHash, err := idToBlockHash(opts.Globals.Chain, arg, validate.IsBlockHash)
+			blockHash, err := idToBlockHash(chain, arg, validate.IsBlockHash)
 			if err == nil {
 				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
 				continue

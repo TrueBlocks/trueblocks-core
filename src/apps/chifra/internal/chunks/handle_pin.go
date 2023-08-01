@@ -22,16 +22,16 @@ import (
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	firstBlock := mustParseUint(os.Getenv("TB_CHUNK_PIN_FIRST_BLOCK"))
 
+	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		man := simpleChunkPinReport{
 			Version: version.ManifestVersion,
-			Chain:   opts.Globals.Chain,
+			Chain:   chain,
 			Schemas: unchained.Schemas,
 		}
 
 		var err error
-		chain := opts.Globals.Chain
 		tsPath := config.GetPathToIndex(chain) + "ts.bin"
 		if man.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
 			errorChan <- err
@@ -61,7 +61,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					return false, fmt.Errorf("should not happen in pinChunk")
 				}
 
-				result, err := pinning.PinChunk(opts.Globals.Chain, path, opts.Remote)
+				result, err := pinning.PinChunk(chain, path, opts.Remote)
 				if err != nil {
 					return false, err
 				}
@@ -98,7 +98,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 
 			walker := index.NewCacheWalker(
-				opts.Globals.Chain,
+				chain,
 				opts.Globals.TestMode,
 				100, /* maxTests */
 				pinChunk,

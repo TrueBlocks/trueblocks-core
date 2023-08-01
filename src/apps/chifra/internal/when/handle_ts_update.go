@@ -50,14 +50,14 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 		logger.Progress(true, "Adding block", bn, "to timestamp array")
 		if bn%1000 == 0 {
 			logger.Info("Writing...", len(timestamps), "timestamps at block", bn)
-			tslib.Append(opts.Globals.Chain, timestamps)
+			tslib.Append(chain, timestamps)
 			timestamps = []tslib.TimestampRecord{}
 		}
 	}
 
 	if len(timestamps) > 0 {
 		logger.Info("Writing...", len(timestamps), "timestamps at block", meta.Latest)
-		tslib.Append(opts.Globals.Chain, timestamps)
+		tslib.Append(chain, timestamps)
 	}
 
 	return nil

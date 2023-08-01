@@ -13,6 +13,8 @@ import (
 )
 
 func (opts *BlocksOptions) validateBlocks() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -39,7 +41,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 
 	if opts.ListCount == 0 {
 		err := validate.ValidateIdentifiers(
-			opts.Globals.Chain,
+			chain,
 			opts.Blocks,
 			validate.ValidBlockIdWithRange,
 			1,
@@ -110,9 +112,9 @@ func (opts *BlocksOptions) validateBlocks() error {
 			}
 
 			rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-				Chain: opts.Globals.Chain,
+				Chain: chain,
 			})
-			if opts.Traces && !rpcOptions.IsNodeTracing(opts.Globals.Chain, opts.Globals.TestMode) {
+			if opts.Traces && !rpcOptions.IsNodeTracing(chain, opts.Globals.TestMode) {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}

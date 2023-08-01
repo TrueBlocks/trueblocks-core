@@ -71,6 +71,8 @@ func unlockForAddress(address string) {
 }
 
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) (bool, error) {
+	chain := opts.Globals.Chain
+
 	// TODO: There are special case addresses for the sender of mining rewards and
 	// TODO: prefund allocations that get ignored here because they are baddresses.
 	// TODO: We could, if we wished, create special cases here to (for example) report
@@ -107,7 +109,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
-			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
+			mon, _ := monitor.NewStagedMonitor(chain, addr)
 			mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
 				updater.FirstBlock = uint64(mon.LastScanned)
@@ -118,7 +120,6 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	chain := opts.Globals.Chain
 	bloomPath := config.GetPathToIndex(chain) + "blooms/"
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
@@ -188,7 +189,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	if !opts.Globals.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+		stagePath := cache.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}

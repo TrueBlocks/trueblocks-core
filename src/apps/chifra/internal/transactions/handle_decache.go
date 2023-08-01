@@ -17,14 +17,16 @@ import (
 )
 
 func (opts *TransactionsOptions) HandleDecache() error {
+	chain := opts.Globals.Chain
+
 	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain:         opts.Globals.Chain,
+		Chain:         chain,
 		ReadonlyCache: true,
 	})
 
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, rng := range opts.TransactionIds {
-		txIds, err := rng.ResolveTxs(opts.Globals.Chain)
+		txIds, err := rng.ResolveTxs(chain)
 		if err != nil && !errors.Is(err, ethereum.NotFound) {
 			continue
 		}
@@ -71,7 +73,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	// TODO: Review then remove
 	// pairs := []base.Pair[uint32,uint32]{}
 	// for _, rng := range opts.TransactionIds {
-	// 	txIds, err := rng.ResolveTxs(opts.Globals.Chain)
+	// 	txIds, err := rng.ResolveTxs(chain)
 	// 	if err != nil && !errors.Is(err, ethereum.NotFound) {
 	// 		continue
 	// 	}
@@ -111,7 +113,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	// }
 
 	// caches := []string{"txs", "traces"}
-	// if cont, err := cache.DecacheItems(opts.Globals.Chain, "", processorFunc, caches, pairs); err != nil || !cont {
+	// if cont, err := cache.DecacheItems(chain, "", processorFunc, caches, pairs); err != nil || !cont {
 	// 	return err
 	// }
 

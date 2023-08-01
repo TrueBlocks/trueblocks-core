@@ -30,7 +30,7 @@ func (opts *TracesOptions) HandleFilter() error {
 		}
 
 		for index := range traces {
-			traces[index].Timestamp = rpcOptions.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
+			traces[index].Timestamp = rpcOptions.GetBlockTimestamp(chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
 			if opts.Articulate {
 				if err = abiCache.ArticulateTrace(chain, &traces[index]); err != nil {
 					errorChan <- err // continue even with an error
