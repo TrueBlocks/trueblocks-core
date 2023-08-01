@@ -1,6 +1,7 @@
 chifra traces  0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 --fmt json --articulate
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -435,7 +436,7 @@ TEST[DATE|TIME] Format:  json
         },
         "name": "balanceOf",
         "outputs": {
-          "val_0": "8000000000000000000000"
+          "val_0": "2750000000000000000"
         }
       },
       "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
