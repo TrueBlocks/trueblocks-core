@@ -49,6 +49,7 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.PerPage != 5000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -89,6 +90,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
 				return opts
 			}

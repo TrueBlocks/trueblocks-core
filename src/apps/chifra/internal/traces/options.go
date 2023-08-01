@@ -42,6 +42,7 @@ func (opts *TracesOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -70,6 +71,7 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 			opts.Count = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")
 				return opts
 			}

@@ -55,6 +55,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -94,6 +95,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Deep = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
 				return opts
 			}

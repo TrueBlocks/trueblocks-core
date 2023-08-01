@@ -8,17 +8,12 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // HandleTimestampUpdate update the timestamp file to the latest block
 func (opts *WhenOptions) HandleTimestampUpdate() error {
 	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-		Opts:  opts,
-	})
 
 	if opts.Globals.TestMode {
 		logger.Warn("Update option not tested.")

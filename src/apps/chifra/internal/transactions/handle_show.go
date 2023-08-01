@@ -24,6 +24,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 		Chain: chain,
 		Opts:  opts,
 	})
+
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks

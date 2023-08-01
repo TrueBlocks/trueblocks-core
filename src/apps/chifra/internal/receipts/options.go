@@ -38,6 +38,7 @@ var defaultReceiptsOptions = ReceiptsOptions{}
 func (opts *ReceiptsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -62,6 +63,7 @@ func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 			opts.Articulate = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "receipts")
 				return opts
 			}

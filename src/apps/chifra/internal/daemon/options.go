@@ -44,6 +44,7 @@ func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
 	logger.TestLog(opts.Grpc, "Grpc: ", opts.Grpc)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -71,6 +72,7 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 			opts.Grpc = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
 				return opts
 			}

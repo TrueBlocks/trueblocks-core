@@ -39,6 +39,7 @@ func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -66,6 +67,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
 				return opts
 			}

@@ -49,6 +49,7 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -89,6 +90,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 			opts.ProxyFor = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
 				return opts
 			}

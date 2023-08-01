@@ -70,6 +70,7 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -133,6 +134,7 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.ListCount = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
 				return opts
 			}

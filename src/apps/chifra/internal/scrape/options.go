@@ -46,6 +46,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -93,6 +94,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.Settings.Allow_missing = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
 				return opts
 			}

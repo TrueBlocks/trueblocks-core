@@ -58,6 +58,7 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.Source, "Source: ", opts.Source)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -108,6 +109,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.Source = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
 				return opts
 			}

@@ -38,6 +38,7 @@ var defaultLogsOptions = LogsOptions{}
 func (opts *LogsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -62,6 +63,7 @@ func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 			opts.Articulate = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "logs")
 				return opts
 			}

@@ -69,6 +69,7 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Named, "Named: ", opts.Named)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -125,6 +126,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Named = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
 				return opts
 			}

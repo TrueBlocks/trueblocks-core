@@ -50,6 +50,7 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -89,6 +90,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
 				return opts
 			}

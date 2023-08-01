@@ -45,6 +45,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -85,6 +86,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			opts.Sol = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
 				return opts
 			}

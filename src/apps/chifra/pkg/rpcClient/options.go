@@ -16,6 +16,27 @@ type Options struct {
 	TraceWriteDisabled       bool // Disable caching traces
 }
 
+func (options *Options) TestLog() {
+	logger.TestLog(!options.TraceWriteDisabled, "TraceWriteDisabled: ", options.TraceWriteDisabled)
+	logger.TestLog(!options.TransactionWriteDisabled, "TransactionWriteDisabled: ", options.TransactionWriteDisabled)
+	logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp", options.LatestBlockTimestamp)
+}
+
+func NewConnection(chain string, caches []string) *Options {
+	options := DefaultRpcOptions(&DefaultRpcOptionsSettings{
+		Chain: chain,
+	})
+	return options
+}
+
+func NewReadOnlyConnection(chain string, caches []string) *Options {
+	options := DefaultRpcOptions(&DefaultRpcOptionsSettings{
+		Chain:         chain,
+		ReadonlyCache: true,
+	})
+	return options
+}
+
 // CacheStore returns cache for the given chain. If readonly is true, it returns
 // a cache that will not write new items. If nil is returned, it means "no caching"
 func cacheStore(chain string, forceReadonly bool) *cacheNew.Store {
@@ -46,19 +67,6 @@ type DefaultRpcOptionsSettings struct {
 // CacheStater informs us if we should write txs and traces to the cache
 type CacheStater interface {
 	CacheState() (bool, bool, bool)
-}
-
-func NewConnection(chain string, caches []string) *Options {
-	return DefaultRpcOptions(&DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-}
-
-func NewReadOnlyConnection(chain string, caches []string) *Options {
-	return DefaultRpcOptions(&DefaultRpcOptionsSettings{
-		Chain:         chain,
-		ReadonlyCache: true,
-	})
 }
 
 func DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *Options {

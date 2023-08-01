@@ -66,6 +66,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -120,6 +121,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
 				return opts
 			}

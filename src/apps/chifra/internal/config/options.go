@@ -35,6 +35,7 @@ var defaultConfigOptions = ConfigOptions{}
 func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -56,6 +57,7 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 			opts.Paths = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
 				return opts
 			}

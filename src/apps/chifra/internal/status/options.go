@@ -42,6 +42,7 @@ func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -70,6 +71,7 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			opts.MaxRecords = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
 				return opts
 			}
