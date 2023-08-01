@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -49,6 +50,15 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 			}
 		}
 	}
+	settings := rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+		Opts:  opts,
+	}
+	opts.Conn = settings.DefaultRpcOptions()
+	// TODO: Why does this have to dirty the caller?
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
+	}
 
 	extra := map[string]interface{}{
 		"articulate": opts.Articulate,
@@ -82,7 +92,7 @@ func (opts *ExportOptions) readStatements(
 	} else if !opts.NoZero || cnt > 0 {
 		chain := opts.Globals.Chain
 		testMode := opts.Globals.TestMode
-		if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil {
+		if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
 

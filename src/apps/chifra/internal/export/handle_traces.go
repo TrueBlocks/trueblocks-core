@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -29,6 +30,15 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
+	settings := rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+		Opts:  opts,
+	}
+	opts.Conn = settings.DefaultRpcOptions()
+	// TODO: Why does this have to dirty the caller?
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
+	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
@@ -75,7 +85,7 @@ func (opts *ExportOptions) readTraces(
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
 		chain := opts.Globals.Chain
-		if err := opts.readTransactions(mon, txMap, true /* readTraces */); err != nil {
+		if err := opts.readTransactions(mon, txMap, true /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
 

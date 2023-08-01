@@ -4,7 +4,7 @@ TEST[DATE|TIME] Neighbors:  true
 TEST[DATE|TIME] Count:  true
 TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
-Error: The --neighbors option is currenlty disabled.
+Error: The --neighbors option requires a license key. Please contact us in our discord.
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 

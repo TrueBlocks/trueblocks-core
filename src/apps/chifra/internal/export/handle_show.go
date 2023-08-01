@@ -42,6 +42,11 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
+	// TODO: Why does this have to dirty the caller?
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
+	}
+
 	ledgers.Conn = opts.Conn
 
 	ctx := context.Background()
