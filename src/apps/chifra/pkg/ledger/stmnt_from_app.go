@@ -7,7 +7,7 @@ import (
 // GetStatementsFromAppearance visits an appearance and returns a list of (hopefully) reconciled statements.
 func (l *Ledger) GetStatementsFromAppearance(chain string, app *types.RawAppearance) (statements []types.SimpleStatement, err error) {
 	var tx *types.SimpleTransaction
-	if tx, err = l.RpcOptions.GetTransactionByAppearance(chain, app, false); err != nil {
+	if tx, err = l.Conn.GetTransactionByAppearance(chain, app, false); err != nil {
 		return []types.SimpleStatement{}, err
 
 	} else {

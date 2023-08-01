@@ -19,12 +19,12 @@ func (l *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (s
 	if l.AssetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
 		// TODO: performance - This greatly increases the number of times we call into eth_getBalance which is quite slow
-		prevBal, _ := l.RpcOptions.GetBalanceAt(l.Chain, l.AccountFor, ctx.PrevBlock)
+		prevBal, _ := l.Conn.GetBalanceAt(l.Chain, l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
 			prevBal = new(big.Int)
 		}
-		begBal, _ := l.RpcOptions.GetBalanceAt(l.Chain, l.AccountFor, ctx.CurBlock-1)
-		endBal, _ := l.RpcOptions.GetBalanceAt(l.Chain, l.AccountFor, ctx.CurBlock)
+		begBal, _ := l.Conn.GetBalanceAt(l.Chain, l.AccountFor, ctx.CurBlock-1)
+		endBal, _ := l.Conn.GetBalanceAt(l.Chain, l.AccountFor, ctx.CurBlock)
 
 		ret := types.SimpleStatement{
 			AccountedFor:     l.AccountFor,

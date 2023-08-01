@@ -49,8 +49,6 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ChunksInternal handles the internal workings of the chunks command.  Returns error and a bool if handled
 func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
-	chain := opts.Globals.Chain
-
 	err = opts.validateChunks()
 	if err != nil {
 		return err, true
@@ -65,6 +63,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 
 	handled = true
 
+	chain := opts.Globals.Chain
 	blockNums, err := identifiers.GetBlockNumbers(chain, opts.BlockIds)
 	if err != nil {
 		return

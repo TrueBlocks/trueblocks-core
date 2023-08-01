@@ -41,7 +41,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		Chain: chain,
 		Opts:  opts,
 	})
-	ledgers.RpcOptions = rpcOptions
+	ledgers.Conn = rpcOptions
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {

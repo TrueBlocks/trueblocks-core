@@ -46,8 +46,6 @@ func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled boo
 
 // ExportInternal handles the internal workings of the export command.  Returns error and a bool if handled
 func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
-	chain := opts.Globals.Chain
-
 	err = opts.validateExport()
 	if err != nil {
 		return err, true
@@ -56,6 +54,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	timer := logger.NewTimer()
 	msg := "chifra export"
 	// EXISTING_CODE
+	chain := opts.Globals.Chain
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
 		return err, true
