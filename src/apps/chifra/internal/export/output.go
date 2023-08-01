@@ -54,7 +54,6 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	timer := logger.NewTimer()
 	msg := "chifra export"
 	// EXISTING_CODE
-	chain := opts.Globals.Chain
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
 		return err, true
