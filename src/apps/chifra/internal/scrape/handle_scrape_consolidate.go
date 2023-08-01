@@ -23,14 +23,16 @@ const asciiAppearanceSize = 59
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
 func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (bool, error) {
+	chain := blazeOpts.Chain
+
 	// Get a sorted list of files in the ripe folder
-	ripeFolder := filepath.Join(config.GetPathToIndex(blazeOpts.Chain), "ripe")
+	ripeFolder := filepath.Join(config.GetPathToIndex(chain), "ripe")
 	ripeFileList, err := os.ReadDir(ripeFolder)
 	if err != nil {
 		return true, err
 	}
 
-	stageFolder := filepath.Join(config.GetPathToIndex(blazeOpts.Chain), "staging")
+	stageFolder := filepath.Join(config.GetPathToIndex(chain), "staging")
 	if len(ripeFileList) == 0 {
 		// On active chains, this most likely never happens, but on some less used or private chains, this is a frequent occurrence.
 		// return a message, but don't do anything about it.
@@ -55,9 +57,9 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	ripeCnt := len(ripeFileList)
 	if uint64(ripeCnt) < (blazeOpts.BlockCount - blazeOpts.UnripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
-		allowMissing := scrapeCfg.AllowMissing(blazeOpts.Chain)
-		if err := isListSequential(blazeOpts.Chain, ripeFileList, allowMissing); err != nil {
-			index.CleanTemporaryFolders(config.GetPathToCache(blazeOpts.Chain), false)
+		allowMissing := scrapeCfg.AllowMissing(chain)
+		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
+			index.CleanTemporaryFolders(config.GetPathToCache(chain), false)
 			return true, err
 		}
 	}
@@ -74,7 +76,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 	}
 
 	// Note, this file may be empty or non-existant
-	tmpPath := filepath.Join(config.GetPathToCache(blazeOpts.Chain) + "tmp")
+	tmpPath := filepath.Join(config.GetPathToCache(chain) + "tmp")
 	backupFn, err := file.MakeBackup(tmpPath, stageFn)
 	if err != nil {
 		return true, errors.New("Could not create backup file: " + err.Error())
@@ -119,8 +121,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 				}
 			}
 
-			indexPath := config.GetPathToIndex(blazeOpts.Chain) + "finalized/" + curRange.String() + ".bin"
-			if report, err := index.WriteChunk(blazeOpts.Chain, indexPath, appMap, len(appearances), opts.Pin, opts.Remote); err != nil {
+			indexPath := config.GetPathToIndex(chain) + "finalized/" + curRange.String() + ".bin"
+			if report, err := index.WriteChunk(chain, indexPath, appMap, len(appearances), opts.Pin, opts.Remote); err != nil {
 				return false, err
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")
@@ -144,13 +146,12 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		} else {
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
-		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-			Chain: blazeOpts.Chain,
-		})
-		m, _ := rpcOptions.GetMetaData(blazeOpts.Chain, opts.Globals.TestMode)
+
+		conn := rpcClient.NewConnection(chain, []string{})
+		m, _ := conn.GetMetaData(chain, opts.Globals.TestMode)
 		rng := base.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)
-		fileName := filepath.Join(config.GetPathToIndex(blazeOpts.Chain), "staging", f)
+		fileName := filepath.Join(config.GetPathToIndex(chain), "staging", f)
 		err = file.LinesToAsciiFile(fileName, appearances)
 		if err != nil {
 			os.Remove(fileName) // cleans up by replacing the previous stage

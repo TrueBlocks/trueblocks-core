@@ -31,19 +31,19 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
-		Opts:  opts.Globals,
+		Opts:  opts,
 	})
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if items, err := opts.readBalances(&mon, filter, errorChan, rpcOptions); err != nil {
+			if items, err := opts.readBalances(&mon, filter, errorChan); err != nil {
 				errorChan <- err
 				continue
 			} else {
-				prevBalance, _ := rpcOptions.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
+				prevBalance, _ := opts.Conn.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
 				for index, item := range items {
 					item := item
 					item.PriorBalance = *prevBalance
@@ -79,7 +79,6 @@ func (opts *ExportOptions) readBalances(
 	mon *monitor.Monitor,
 	filter *monitor.AppearanceFilter,
 	errorChan chan error,
-	rpcOptions *rpcClient.Options,
 ) ([]*types.SimpleTokenBalance, error) {
 	chain := opts.Globals.Chain
 
@@ -92,7 +91,7 @@ func (opts *ExportOptions) readBalances(
 
 		// This is called concurrently, once for each appearance
 		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTokenBalance) error {
-			if b, err := rpcOptions.GetBalanceAt(chain, mon.Address, uint64(app.BlockNumber)); err != nil {
+			if b, err := opts.Conn.GetBalanceAt(chain, mon.Address, uint64(app.BlockNumber)); err != nil {
 				return err
 			} else {
 				value.Address = base.FAKE_ETH_ADDRESS

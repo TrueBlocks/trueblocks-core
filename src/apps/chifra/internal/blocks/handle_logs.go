@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
@@ -20,9 +19,6 @@ import (
 func (opts *BlocksOptions) HandleLogs() error {
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
@@ -57,7 +53,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 					errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
 				}
 
-				logs, err := rpcOptions.GetLogsByFilter(chain, logFilter)
+				logs, err := opts.Conn.GetLogsByFilter(chain, logFilter)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

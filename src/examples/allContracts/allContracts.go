@@ -12,10 +12,9 @@ import (
 var bar = logger.NewBar("Visiting", true, int64(17000000))
 
 func main() {
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: "mainnet",
-	})
-	latest := rpcOptions.GetLatestBlockNumber("mainnet")
+	chain := "mainnet"
+	conn := rpcClient.NewConnection(chain, []string{})
+	latest := conn.GetLatestBlockNumber(chain)
 	forEveryTrace(46000, latest, visitTrace)
 	bar.Finish(true)
 }
@@ -28,16 +27,15 @@ func visitTrace(trace *types.SimpleTrace, data *any) error {
 }
 
 func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) error) error {
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: "mainnet",
-	})
+	chain := "mainnet"
+	conn := rpcClient.NewConnection(chain, []string{})
 	for blknum := from; blknum <= to; blknum++ {
-		if block, err := rpcOptions.GetBlockHeaderByNumber("mainnet", blknum); err != nil {
+		if block, err := conn.GetBlockHeaderByNumber(chain, blknum); err != nil {
 			return err
 		} else {
 			bar.Tick()
 			for _, txHash := range block.Transactions {
-				if traces, err := rpcOptions.GetTracesByTransactionHash("mainnet", txHash, nil); err != nil {
+				if traces, err := conn.GetTracesByTransactionHash(chain, txHash, nil); err != nil {
 					return err
 				} else {
 					for _, trace := range traces {

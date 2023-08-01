@@ -144,11 +144,9 @@ func (options *Options) GetBlockHeaderByNumber(chain string, bn uint64) (block t
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
 func loadBlock[Tx string | types.SimpleTransaction](chain string, bn uint64, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
-	rpcOptions := DefaultRpcOptions(&DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
+	conn := NewConnection(chain, []string{})
 
-	rawBlock, err = rpcOptions.getRawBlock(chain, bn, withTxs)
+	rawBlock, err = conn.getRawBlock(chain, bn, withTxs)
 	if err != nil {
 		return
 	}

@@ -4,7 +4,6 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -15,10 +14,7 @@ func (l *Ledger) GetStatementsFromTraces(trans *types.SimpleTransaction, s *type
 	ret := *s
 	ret.ClearInternal()
 
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-	if traces, err := rpcOptions.GetTracesByTransactionHash(chain, trans.Hash.Hex(), trans); err != nil {
+	if traces, err := l.Conn.GetTracesByTransactionHash(chain, trans.Hash.Hex(), trans); err != nil {
 		logger.Error(err)
 
 	} else {

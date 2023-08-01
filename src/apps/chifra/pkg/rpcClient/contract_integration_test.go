@@ -11,13 +11,13 @@ import (
 )
 
 func TestGetContractDeployBlock(t *testing.T) {
-	rpcOptions := DefaultRpcOptions(&DefaultRpcOptionsSettings{
-		Chain: utils.GetTestChain(),
-	})
+	chain := utils.GetTestChain()
+	conn := NewConnection(chain, []string{})
+
 	// Finding the first block
 	unchainedIndex := base.HexToAddress("0x0C316b7042b419d07d343F2f4F5Bd54FF731183d")
 	expected := base.Blknum(14957097)
-	result, err := rpcOptions.GetContractDeployBlock("mainnet", unchainedIndex)
+	result, err := conn.GetContractDeployBlock("mainnet", unchainedIndex)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -35,7 +35,7 @@ func TestGetContractDeployBlock(t *testing.T) {
 	// Reading from cache shortcut
 	fakeBlock := base.Blknum(13000000)
 	deployedCache[unchainedIndex] = fakeBlock
-	result, err = rpcOptions.GetContractDeployBlock("mainnet", unchainedIndex)
+	result, err = conn.GetContractDeployBlock("mainnet", unchainedIndex)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -44,7 +44,7 @@ func TestGetContractDeployBlock(t *testing.T) {
 	}
 
 	// Error when the address is not a contract
-	_, err = rpcOptions.GetContractDeployBlock("mainnet", base.HexToAddress("0x0"))
+	_, err = conn.GetContractDeployBlock("mainnet", base.HexToAddress("0x0"))
 	if err != ErrNotAContract {
 		t.Fatal("expected ErrNotAContract, but got", err)
 	}
@@ -56,11 +56,10 @@ func TestGetProxy(t *testing.T) {
 
 	// 0x4Fabb145d64652a948d72533023f6E7A623C7C53
 	// 0x00000000441378008ea67f4284a57932b1c000a5
-	rpcOptions := DefaultRpcOptions(&DefaultRpcOptionsSettings{
-		Chain: utils.GetTestChain(),
-	})
+	chain := utils.GetTestChain()
+	conn := NewConnection(chain, []string{})
 
-	proxy, err := rpcOptions.GetProxyAt("mainnet", base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"), base.Blknum(12983248))
+	proxy, err := conn.GetProxyAt(chain, base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"), base.Blknum(12983248))
 	if err != nil {
 		t.Fatal(err)
 	}

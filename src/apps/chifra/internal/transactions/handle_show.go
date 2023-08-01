@@ -20,15 +20,15 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	})
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
-	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(chain, nil)
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -48,7 +48,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
 				}
-				if tx, err := rpcOptions.GetTransactionByAppearance(chain, a, opts.Traces /* needsTraces */); err != nil {
+				if tx, err := opts.Conn.GetTransactionByAppearance(chain, a, opts.Traces /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

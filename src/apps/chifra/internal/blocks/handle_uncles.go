@@ -16,7 +16,7 @@ import (
 
 func (opts *BlocksOptions) HandleUncles() error {
 	chain := opts.Globals.Chain
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	})
@@ -40,11 +40,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcOptions.GetBlockBodyByNumber(chain, bn)
+					b, err = opts.Conn.GetBlockBodyByNumber(chain, bn)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcOptions.GetBlockHeaderByNumber(chain, bn)
+					b, err = opts.Conn.GetBlockHeaderByNumber(chain, bn)
 					block = &b
 				}
 

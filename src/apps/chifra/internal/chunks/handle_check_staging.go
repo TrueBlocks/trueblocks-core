@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
 // CheckStaging checks the staging file which should be names first-second.txt
@@ -23,10 +22,6 @@ import (
 //  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
 func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *simpleReportCheck) error {
 	chain := opts.Globals.Chain
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-
 	stagePath := cache.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if !file.FileExists(stageFn) {
@@ -34,7 +29,7 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 	}
 
 	fileRange := base.RangeFromFilename(stageFn)
-	meta, err := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
+	meta, err := opts.Conn.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}

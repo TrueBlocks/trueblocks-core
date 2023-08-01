@@ -37,11 +37,11 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	})
-	ledgers.Conn = rpcOptions
+	ledgers.Conn = opts.Conn
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
@@ -51,7 +51,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				BlockNumber:      uint32(app.BlockNumber),
 				TransactionIndex: uint32(app.TransactionIndex),
 			}
-			if tx, err := rpcOptions.GetTransactionByAppearance(chain, &raw, false); err != nil {
+			if tx, err := opts.Conn.GetTransactionByAppearance(chain, &raw, false); err != nil {
 				errorChan <- err
 				return nil
 			} else {

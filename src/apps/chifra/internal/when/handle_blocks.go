@@ -19,8 +19,7 @@ import (
 
 func (opts *WhenOptions) HandleShowBlocks() error {
 	chain := opts.Globals.Chain
-
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	})
@@ -39,7 +38,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 			}
 
 			for _, bn := range blockNums {
-				block, err := rpcOptions.GetBlockHeaderByNumber(chain, bn)
+				block, err := opts.Conn.GetBlockHeaderByNumber(chain, bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

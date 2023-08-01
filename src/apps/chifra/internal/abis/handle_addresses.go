@@ -24,10 +24,6 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 		}
 	}
 
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
@@ -40,7 +36,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					cancel()
 				}
 				// Let's try to download the file from somewhere
-				if err := rpcOptions.IsContractAt(chain, address, nil); err != nil {
+				if err := opts.Conn.IsContractAt(chain, address, nil); err != nil {
 					if !errors.Is(err, rpcClient.ErrNotAContract) {
 						errorChan <- err
 						cancel()

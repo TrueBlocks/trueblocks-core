@@ -54,6 +54,13 @@ func NewConnection(chain string, caches []string) *Options {
 	})
 }
 
+func NewReadOnlyConnection(chain string, caches []string) *Options {
+	return DefaultRpcOptions(&DefaultRpcOptionsSettings{
+		Chain:         chain,
+		ReadonlyCache: true,
+	})
+}
+
 func DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *Options {
 	readonlyCache := false
 	if settings != nil {

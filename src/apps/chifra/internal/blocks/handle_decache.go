@@ -16,11 +16,8 @@ import (
 
 func (opts *BlocksOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
+	opts.Conn = rpcClient.NewReadOnlyConnection(chain, []string{})
 
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain:         chain,
-		ReadonlyCache: true,
-	})
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, br := range opts.BlockIds {
 		blockNums, err := br.ResolveBlocks(chain)
@@ -28,7 +25,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 			return err
 		}
 		for _, bn := range blockNums {
-			rawBlock, err := rpcOptions.GetBlockBodyByNumber(chain, bn)
+			rawBlock, err := opts.Conn.GetBlockBodyByNumber(chain, bn)
 			if err != nil {
 				return err
 			}
@@ -66,7 +63,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 		return true
 	}
 
-	rpcOptions.Store.Decache(toRemove, processorFunc)
+	opts.Conn.Store.Decache(toRemove, processorFunc)
 
 	if itemsSeen == 0 {
 		logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))

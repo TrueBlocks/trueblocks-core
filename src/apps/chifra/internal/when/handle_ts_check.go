@@ -17,7 +17,7 @@ import (
 // HandleTimestampsCheck handles chifra when --timestamps --check
 func (opts *WhenOptions) HandleTimestampsCheck() error {
 	chain := opts.Globals.Chain
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	})
@@ -30,7 +30,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	// For display only
 	skip := uint64(500)
 	if opts.Deep {
-		m, _ := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
+		m, _ := opts.Conn.GetMetaData(chain, opts.Globals.TestMode)
 		skip = m.Latest / 500
 	}
 	scanBar := progress.NewScanBar(cnt /* wanted */, (cnt / skip) /* freq */, cnt /* max */, (2. / 3.))
@@ -48,14 +48,14 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	if len(blockNums) > 0 {
 		for _, bn := range blockNums {
 			if bn < cnt { // ranges may include blocks after last block
-				if err = opts.checkOneBlock(scanBar, &prev, bn, rpcOptions); err != nil {
+				if err = opts.checkOneBlock(scanBar, &prev, bn); err != nil {
 					return err
 				}
 			}
 		}
 	} else {
 		for bn := uint64(0); bn < cnt; bn++ {
-			if err = opts.checkOneBlock(scanBar, &prev, bn, rpcOptions); err != nil {
+			if err = opts.checkOneBlock(scanBar, &prev, bn); err != nil {
 				return err
 			}
 		}
@@ -64,7 +64,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	return nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64, rpcOptions *rpcClient.Options) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.SimpleNamedBlock, bn uint64) error {
 	chain := opts.Globals.Chain
 
 	// The i'th item in the timestamp array on disc
@@ -82,7 +82,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
-		expected, _ = rpcOptions.GetBlockHeaderByNumber(chain, bn)
+		expected, _ = opts.Conn.GetBlockHeaderByNumber(chain, bn)
 	}
 
 	if prev.Timestamp != utils.NOPOSI {

@@ -19,7 +19,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	})
@@ -41,7 +41,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
 				}
-				if tx, err := rpcOptions.GetTransactionByAppearance(chain, a, false /* needsTraces */); err != nil {
+				if tx, err := opts.Conn.GetTransactionByAppearance(chain, a, false /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil || tx.Receipt == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

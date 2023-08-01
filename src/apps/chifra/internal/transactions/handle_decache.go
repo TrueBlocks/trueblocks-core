@@ -18,11 +18,7 @@ import (
 
 func (opts *TransactionsOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
-
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain:         chain,
-		ReadonlyCache: true,
-	})
+	opts.Conn = rpcClient.NewReadOnlyConnection(chain, []string{})
 
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, rng := range opts.TransactionIds {
@@ -60,7 +56,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 		return true
 	}
 
-	rpcOptions.Store.Decache(toRemove, processorFunc)
+	opts.Conn.Store.Decache(toRemove, processorFunc)
 
 	if itemsSeen == 0 {
 		logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))

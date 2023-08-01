@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
@@ -17,15 +16,12 @@ import (
 
 func (opts *BlocksOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
 
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
-	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(chain, nil)
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -51,8 +47,8 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 					logger.Info("Processing block", fmt.Sprintf("%d", bn))
 				}
 				addrMap := make(index.AddressBooleanMap)
-				ts := rpcOptions.GetBlockTimestamp(chain, &bn)
-				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts, rpcOptions); err != nil {
+				ts := opts.Conn.GetBlockTimestamp(chain, &bn)
+				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue
@@ -70,7 +66,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqProcFunc, bn uint64, addrMap index.AddressBooleanMap, ts int64, rpcOptions *rpcClient.Options) error {
+func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqProcFunc, bn uint64, addrMap index.AddressBooleanMap, ts int64) error {
 	if bn == 0 {
 		if namesArray, err := names.LoadNamesArray(chain, names.Prefund, names.SortByAddress, []string{}); err != nil {
 			return err
@@ -82,7 +78,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 		}
 
 	} else {
-		if block, err := rpcOptions.GetBlockBodyByNumber(chain, bn); err != nil {
+		if block, err := opts.Conn.GetBlockBodyByNumber(chain, bn); err != nil {
 			return err
 		} else {
 			miner := block.Miner.Hex()
@@ -95,7 +91,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 			index.StreamAppearance(procFunc, opts.Flow, "miner", miner, bn, txid, utils.NOPOS, ts, addrMap)
 
-			if uncles, err := rpcOptions.GetUnclesByNumber(chain, bn); err != nil {
+			if uncles, err := opts.Conn.GetUnclesByNumber(chain, bn); err != nil {
 				return err
 			} else {
 				for _, uncle := range uncles {
@@ -112,10 +108,10 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 
 			for _, trans := range block.Transactions {
-				if trans.Traces, err = rpcOptions.GetTracesByTransactionID(chain, trans.BlockNumber, trans.TransactionIndex); err != nil {
+				if trans.Traces, err = opts.Conn.GetTracesByTransactionID(chain, trans.BlockNumber, trans.TransactionIndex); err != nil {
 					return err
 				}
-				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, rpcOptions); err != nil {
+				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, opts.Conn); err != nil {
 					return err
 				}
 			}

@@ -156,18 +156,14 @@ func ToProgress(chain string, meta *rpcClient.MetaData) string {
 
 func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	chain := opts.Globals.Chain
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-
 	testMode := opts.Globals.TestMode
 
-	meta, err := rpcOptions.GetMetaData(chain, false)
+	meta, err := opts.Conn.GetMetaData(chain, false)
 	if err != nil {
 		return nil, err
 	}
 
-	vers, err := rpcOptions.GetClientVersion(chain)
+	vers, err := opts.Conn.GetClientVersion(chain)
 	if err != nil {
 		return nil, err
 	}
@@ -184,8 +180,8 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		Progress:      ToProgress(chain, meta),
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
-		IsArchive:     rpcOptions.IsNodeArchive(chain),
-		IsTracing:     rpcOptions.IsNodeTracing(chain, testMode),
+		IsArchive:     opts.Conn.IsNodeArchive(chain),
+		IsTracing:     opts.Conn.IsNodeTracing(chain, testMode),
 		HasEsKey:      config.HasEsKeys(chain),
 		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,

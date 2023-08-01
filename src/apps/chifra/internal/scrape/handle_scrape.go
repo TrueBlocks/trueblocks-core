@@ -24,15 +24,14 @@ import (
 
 func (opts *ScrapeOptions) HandleScrape() error {
 	chain := opts.Globals.Chain
-	provider, _ := config.GetRpcProvider(chain)
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-	progress, err := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
+	conn := rpcClient.NewConnection(chain, []string{})
+
+	progress, err := conn.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
 
+	provider, _ := config.GetRpcProvider(chain)
 	blazeOpts := BlazeOptions{
 		Chain:        chain,
 		NChannels:    opts.Settings.Channel_count,
@@ -52,7 +51,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 	origBlockCnt := opts.BlockCnt
 	for {
-		progress, err = rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
+		progress, err = conn.GetMetaData(chain, opts.Globals.TestMode)
 		if err != nil {
 			return err
 		}

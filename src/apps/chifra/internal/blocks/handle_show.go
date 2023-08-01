@@ -16,8 +16,7 @@ import (
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
 	chain := opts.Globals.Chain
-
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	})
@@ -25,8 +24,8 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
 	// cache pending blocks
-	if !rpcOptions.Store.ReadOnly() {
-		rpcOptions.LatestBlockTimestamp = rpcOptions.GetBlockTimestamp(chain, nil)
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -48,11 +47,11 @@ func (opts *BlocksOptions) HandleShowBlocks() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcOptions.GetBlockBodyByNumber(chain, bn)
+					b, err = opts.Conn.GetBlockBodyByNumber(chain, bn)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = rpcOptions.GetBlockHeaderByNumber(chain, bn)
+					b, err = opts.Conn.GetBlockHeaderByNumber(chain, bn)
 					block = &b
 				}
 

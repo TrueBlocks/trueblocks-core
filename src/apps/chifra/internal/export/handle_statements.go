@@ -82,7 +82,7 @@ func (opts *ExportOptions) readStatements(
 	} else if !opts.NoZero || cnt > 0 {
 		chain := opts.Globals.Chain
 		testMode := opts.Globals.TestMode
-		if err := opts.readTransactions(mon, txMap, false /* readTraces */, opts.Conn); err != nil {
+		if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil {
 			return nil, err
 		}
 

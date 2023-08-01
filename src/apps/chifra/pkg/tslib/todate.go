@@ -25,11 +25,9 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 	}
 
 	if name == "latest" {
-		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-			Chain: chain,
-		})
-		meta, _ := rpcOptions.GetMetaData(chain, false)
-		ts := rpcOptions.GetBlockTimestamp(chain, utils.PointerOf(meta.Latest))
+		conn := rpcClient.NewConnection(chain, []string{})
+		meta, _ := conn.GetMetaData(chain, false)
+		ts := conn.GetBlockTimestamp(chain, utils.PointerOf(meta.Latest))
 		return FromTsToDate(ts)
 	}
 

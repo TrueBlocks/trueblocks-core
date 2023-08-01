@@ -14,8 +14,7 @@ import (
 )
 
 func Test_GetMetaData(t *testing.T) {
-	rpcOptions := DefaultRpcOptions(&DefaultRpcOptionsSettings{
-		Chain: utils.GetTestChain(),
-	})
-	rpcOptions.GetMetaData("mainnet", false)
+	chain := utils.GetTestChain()
+	conn := NewConnection(chain, []string{})
+	conn.GetMetaData(chain, false)
 }
