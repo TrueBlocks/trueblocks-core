@@ -1,14 +1,13 @@
 package ledger
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // GetStatementsFromAppearance visits an appearance and returns a list of (hopefully) reconciled statements.
-func (l *Ledger) GetStatementsFromAppearance(chain string, app *types.RawAppearance, rpcOptions *rpcClient.Options) (statements []types.SimpleStatement, err error) {
+func (l *Ledger) GetStatementsFromAppearance(chain string, app *types.RawAppearance) (statements []types.SimpleStatement, err error) {
 	var tx *types.SimpleTransaction
-	if tx, err = rpcClient.GetTransactionByAppearance(chain, app, false, rpcOptions); err != nil {
+	if tx, err = l.Conn.GetTransactionByAppearance(chain, app, false); err != nil {
 		return []types.SimpleStatement{}, err
 
 	} else {

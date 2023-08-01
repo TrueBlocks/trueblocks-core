@@ -15,6 +15,7 @@ import (
 )
 
 func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
+	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		showFinalizedStats := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
@@ -22,7 +23,7 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")
 			}
 
-			if s, err := GetChunkStats(opts.Globals.Chain, path); err != nil {
+			if s, err := GetChunkStats(chain, path); err != nil {
 				return false, err
 
 			} else {
@@ -33,7 +34,7 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 		}
 
 		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+			chain,
 			opts.Globals.TestMode,
 			100, /* maxTests */
 			showFinalizedStats,

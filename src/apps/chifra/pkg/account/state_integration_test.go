@@ -17,6 +17,8 @@ import (
 )
 
 func TestGetState(t *testing.T) {
+	chain := utils.GetTestChain()
+	conn := rpcClient.NewConnection(chain, []string{})
 
 	type args struct {
 		chain       string
@@ -63,7 +65,7 @@ func TestGetState(t *testing.T) {
 				}(),
 				Nonce: 0,
 				Code: func() string {
-					code, err := rpcClient.GetCodeAt("mainnet", base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"), uint64(15531843))
+					code, err := conn.GetCodeAt("mainnet", base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"), uint64(15531843))
 					if err != nil {
 						t.Fatal("error when fetching code for smart contract:", err)
 					}

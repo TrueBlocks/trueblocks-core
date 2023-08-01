@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -27,6 +28,7 @@ type TracesOptions struct {
 	Filter         string                   `json:"filter,omitempty"`         // Call the node's trace_filter routine with bang-separated filter
 	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
+	Conn           *rpcClient.Options       `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -40,6 +42,7 @@ func (opts *TracesOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -68,13 +71,19 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 			opts.Count = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, true)
 	// EXISTING_CODE
 
 	return opts
@@ -85,12 +94,18 @@ func tracesFinishParse(args []string) *TracesOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, true)
 	opts.Transactions = args
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

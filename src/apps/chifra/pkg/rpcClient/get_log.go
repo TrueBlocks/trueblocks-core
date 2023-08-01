@@ -10,7 +10,7 @@ import (
 	"github.com/bykof/gostradamus"
 )
 
-func getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
+func (options *Options) getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
 	p := struct {
 		FromBlock string   `json:"fromBlock"`
 		ToBlock   string   `json:"toBlock"`
@@ -40,7 +40,7 @@ func getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLo
 		for _, rawLog := range rawLogs {
 			bn := utils.MustParseUint(rawLog.BlockNumber)
 			if bn != curBlock {
-				curTs = GetBlockTimestamp(chain, &bn)
+				curTs = options.GetBlockTimestamp(chain, &bn)
 				curDate = gostradamus.FromUnixTimestamp(curTs)
 				curBlock = bn
 			}
@@ -66,22 +66,22 @@ func getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLo
 }
 
 // GetLogsByFilter returns the logs given a filter
-func GetLogsByFilter(chain string, filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
-	return getSimpleLogs(chain, filter)
+func (options *Options) GetLogsByFilter(chain string, filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
+	return options.getSimpleLogs(chain, filter)
 }
 
 // GetLogsByNumber returns the logs of a block
-func GetLogsByNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
+func (options *Options) GetLogsByNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
 	filter := types.SimpleLogFilter{
 		FromBlock: bn,
 		ToBlock:   bn,
 	}
-	return getSimpleLogs(chain, filter)
+	return options.getSimpleLogs(chain, filter)
 }
 
 // GetCountLogsInBlock returns the number of logs in a block
-func GetCountLogsInBlock(chain string, bn uint64) (uint64, error) {
-	if logs, err := GetLogsByNumber(chain, bn); err != nil {
+func (options *Options) GetCountLogsInBlock(chain string, bn uint64) (uint64, error) {
+	if logs, err := options.GetLogsByNumber(chain, bn); err != nil {
 		return 0, err
 	} else {
 		return uint64(len(logs)), nil

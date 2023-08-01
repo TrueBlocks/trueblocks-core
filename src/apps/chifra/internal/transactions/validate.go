@@ -6,11 +6,12 @@ package transactionsPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *TransactionsOptions) validateTransactions() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -61,7 +62,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			}
 		}
 
-		if opts.Traces && !rpcClient.IsNodeTracing(opts.Globals.TestMode, opts.Globals.Chain) {
+		if opts.Traces && !opts.Conn.IsNodeTracing(chain, opts.Globals.TestMode) {
 			return validate.Usage("Tracing is required for this program to work properly.")
 		}
 
@@ -71,7 +72,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 	}
 
 	err := validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Transactions,
 		validate.ValidTransId,
 		-1,

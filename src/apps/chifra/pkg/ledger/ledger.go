@@ -6,6 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -27,6 +28,7 @@ type Ledger struct {
 	UseTraces   bool
 	AssetFilter *[]base.Address
 	Tx          *types.SimpleTransaction
+	Conn        *rpcClient.Options
 }
 
 // NewLedger returns a new empty Ledger struct

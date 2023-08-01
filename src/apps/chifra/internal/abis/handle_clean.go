@@ -17,6 +17,8 @@ import (
 )
 
 func (opts *AbisOptions) HandleClean() error {
+	chain := opts.Globals.Chain
+
 	if opts.Globals.IsApiMode() {
 		return fmt.Errorf("clean is not supported in API mode")
 	}
@@ -25,14 +27,14 @@ func (opts *AbisOptions) HandleClean() error {
 		// TODO: This code is not actually used
 		// filenameChan := make(chan cache.CacheFileInfo)
 		// var nRoutines int = 1
-		// go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Cache_Abis, nil, filenameChan)
+		// go cache.WalkCacheFolder(context.Background(), chain, cache.Cache_Abis, nil, filenameChan)
 		// for result := range filenameChan {
 		// 	switch result.Type {
 		// 	case cache.Cache_Abis:
 		// 		skip := !cache.IsCacheType(result.Path, cache.Cache_Abis, true /* checkExt */)
 		// 		if !skip {
 		// 			if file.FileSize(result.Path) == 0 {
-		// 				logger.Info("Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(opts.Globals.Chain)+"abis/", "", -1), file.FileSize(result.Path))
+		// 				logger.Info("Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(chain)+"abis/", "", -1), file.FileSize(result.Path))
 		// 				// if err := cleanOneAbi(result.Path, ""); err != nil {
 		// 				// 	return err
 		// 				// }
@@ -47,7 +49,7 @@ func (opts *AbisOptions) HandleClean() error {
 		// }
 	} else {
 		for _, addr := range opts.Addrs {
-			if err := cleanOneAbi(config.GetPathToCache(opts.Globals.Chain)+"abis/", addr); err != nil {
+			if err := cleanOneAbi(config.GetPathToCache(chain)+"abis/", addr); err != nil {
 				return err
 			}
 		}

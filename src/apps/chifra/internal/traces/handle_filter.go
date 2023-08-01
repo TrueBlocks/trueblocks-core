@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -16,7 +15,7 @@ func (opts *TracesOptions) HandleFilter() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		traces, err := rpcClient.GetTracesByFilter(opts.Globals.Chain, opts.Filter)
+		traces, err := opts.Conn.GetTracesByFilter(chain, opts.Filter)
 		if err != nil {
 			errorChan <- err
 			cancel()
@@ -27,7 +26,7 @@ func (opts *TracesOptions) HandleFilter() error {
 		}
 
 		for index := range traces {
-			traces[index].Timestamp = rpcClient.GetBlockTimestamp(opts.Globals.Chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
+			traces[index].Timestamp = opts.Conn.GetBlockTimestamp(chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
 			if opts.Articulate {
 				if err = abiCache.ArticulateTrace(chain, &traces[index]); err != nil {
 					errorChan <- err // continue even with an error

@@ -9,7 +9,9 @@ import (
 )
 
 func main() {
-	if block, err := rpcClient.GetBlockHeaderByNumber("mainnet", base.Blknum(3500000), rpcClient.NoOptions); err != nil {
+	chain := "mainnet"
+	conn := rpcClient.NewConnection(chain, []string{})
+	if block, err := conn.GetBlockHeaderByNumber(chain, base.Blknum(3500000)); err != nil {
 		fmt.Println(err)
 	} else {
 		bytes, _ := json.MarshalIndent(block, "", "  ")

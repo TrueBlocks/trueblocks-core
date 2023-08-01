@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -20,12 +19,12 @@ func (l *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (s
 	if l.AssetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
 		// TODO: performance - This greatly increases the number of times we call into eth_getBalance which is quite slow
-		prevBal, _ := rpcClient.GetBalanceAt(l.Chain, l.AccountFor, ctx.PrevBlock)
+		prevBal, _ := l.Conn.GetBalanceAt(l.Chain, l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
 			prevBal = new(big.Int)
 		}
-		begBal, _ := rpcClient.GetBalanceAt(l.Chain, l.AccountFor, ctx.CurBlock-1)
-		endBal, _ := rpcClient.GetBalanceAt(l.Chain, l.AccountFor, ctx.CurBlock)
+		begBal, _ := l.Conn.GetBalanceAt(l.Chain, l.AccountFor, ctx.CurBlock-1)
+		endBal, _ := l.Conn.GetBalanceAt(l.Chain, l.AccountFor, ctx.CurBlock)
 
 		ret := types.SimpleStatement{
 			AccountedFor:     l.AccountFor,

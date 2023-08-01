@@ -12,6 +12,8 @@ import (
 )
 
 func (opts *WhenOptions) validateWhen() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -81,7 +83,7 @@ func (opts *WhenOptions) validateWhen() error {
 	}
 
 	err := validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Blocks,
 		validate.ValidBlockIdWithRangeAndDate,
 		1,

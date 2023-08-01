@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -25,6 +26,7 @@ type StatusOptions struct {
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	Conn        *rpcClient.Options    `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	ModeTypes []cache.CacheType `json:"-"`
@@ -40,6 +42,7 @@ func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -68,12 +71,17 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			opts.MaxRecords = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
@@ -89,6 +97,10 @@ func statusFinishParse(args []string) *StatusOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
 	opts.Modes = append(opts.Modes, args...)
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
@@ -102,6 +114,7 @@ func statusFinishParse(args []string) *StatusOptions {
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

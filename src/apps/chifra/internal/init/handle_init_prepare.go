@@ -105,7 +105,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	}
 
 	walker := index.NewCacheWalker(
-		opts.Globals.Chain,
+		chain,
 		opts.Globals.TestMode,
 		10, /* maxTests */
 		cleanIndex,
@@ -130,7 +130,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			if rng.Last < opts.FirstBlock {
 				continue
 			}
-			_, indexPath := rng.RangeToFilename(opts.Globals.Chain)
+			_, indexPath := rng.RangeToFilename(chain)
 			if !opts.All && !file.FileExists(indexPath) {
 				chunk.IndexHash = ""
 				chunk.IndexSize = 0

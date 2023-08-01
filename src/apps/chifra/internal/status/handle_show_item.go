@@ -13,8 +13,8 @@ import (
 )
 
 func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[string]any, error) {
-	testMode := opts.Globals.TestMode
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	date := "--fileDate--"
 	info, err := os.Stat(path)

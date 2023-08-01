@@ -12,6 +12,8 @@ import (
 )
 
 func (opts *SlurpOptions) validateSlurp() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -28,7 +30,7 @@ func (opts *SlurpOptions) validateSlurp() error {
 		return err
 	}
 
-	if opts.Globals.Chain != "mainnet" {
+	if chain != "mainnet" {
 		return validate.Usage("The {0} command is currently available only on the {1} chain.", "slurp", "mainnet")
 	}
 
@@ -43,7 +45,7 @@ func (opts *SlurpOptions) validateSlurp() error {
 	}
 
 	err = validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Blocks,
 		validate.ValidBlockIdWithRange,
 		1,

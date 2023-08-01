@@ -17,14 +17,12 @@ import (
 )
 
 func (opts *TransactionsOptions) HandleDecache() error {
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain:         opts.Globals.Chain,
-		ReadonlyCache: true,
-	})
+	chain := opts.Globals.Chain
+	opts.Conn = rpcClient.NewReadOnlyConnection(chain)
 
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, rng := range opts.TransactionIds {
-		txIds, err := rng.ResolveTxs(opts.Globals.Chain)
+		txIds, err := rng.ResolveTxs(chain)
 		if err != nil && !errors.Is(err, ethereum.NotFound) {
 			continue
 		}
@@ -58,7 +56,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 		return true
 	}
 
-	rpcOptions.Store.Decache(toRemove, processorFunc)
+	opts.Conn.Store.Decache(toRemove, processorFunc)
 
 	if itemsSeen == 0 {
 		logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))
@@ -71,7 +69,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	// TODO: Review then remove
 	// pairs := []base.Pair[uint32,uint32]{}
 	// for _, rng := range opts.TransactionIds {
-	// 	txIds, err := rng.ResolveTxs(opts.Globals.Chain)
+	// 	txIds, err := rng.ResolveTxs(chain)
 	// 	if err != nil && !errors.Is(err, ethereum.NotFound) {
 	// 		continue
 	// 	}
@@ -111,7 +109,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	// }
 
 	// caches := []string{"txs", "traces"}
-	// if cont, err := cache.DecacheItems(opts.Globals.Chain, "", processorFunc, caches, pairs); err != nil || !cont {
+	// if cont, err := cache.DecacheItems(chain, "", processorFunc, caches, pairs); err != nil || !cont {
 	// 	return err
 	// }
 

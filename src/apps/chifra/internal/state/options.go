@@ -32,6 +32,7 @@ type StateOptions struct {
 	Call     string                   `json:"call,omitempty"`     // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
 	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
+	Conn     *rpcClient.Options       `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -48,6 +49,7 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -88,20 +90,26 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 			opts.ProxyFor = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	if opts.Call != "" {
 		// The tests need single quotes
 		unquoted := strings.Trim(opts.Call, "'")
 		opts.Call = unquoted
 	}
-	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
-	opts.ProxyFor, _ = rpcClient.GetAddressFromEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetAddressFromEns(chain, opts.ProxyFor)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -119,7 +127,12 @@ func stateFinishParse(args []string) *StateOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {
@@ -131,14 +144,14 @@ func stateFinishParse(args []string) *StateOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
-	opts.ProxyFor, _ = rpcClient.GetAddressFromEns(opts.Globals.Chain, opts.ProxyFor)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetAddressFromEns(chain, opts.ProxyFor)
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
 	parts := strings.Split(opts.Call, "!")
 	if len(parts) > 0 {
-		val, _ := rpcClient.GetAddressFromEns(opts.Globals.Chain, parts[0])
+		val, _ := opts.Conn.GetAddressFromEns(chain, parts[0])
 		opts.Call = strings.Replace(opts.Call, parts[0], val, -1)
 	}
 	if len(opts.Blocks) == 0 {
@@ -152,6 +165,7 @@ func stateFinishParse(args []string) *StateOptions {
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

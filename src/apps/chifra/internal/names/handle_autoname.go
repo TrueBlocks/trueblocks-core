@@ -8,11 +8,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *NamesOptions) HandleAutoname() error {
+	chain := opts.Globals.Chain
+
 	// For --dry_run, we don't want to write to the real database
 	var overrideDatabase names.Database
 	if opts.DryRun {
@@ -24,7 +25,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 		return err
 	}
 
-	err = names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
+	err = names.WriteRegularNames(chain, overrideDatabase)
 	if err != nil {
 		return err
 	}
@@ -55,7 +56,8 @@ func (opts *NamesOptions) HandleAutoname() error {
 
 // readContractAndClean will read contract data and call `cleanName` for the given address
 func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err error) {
-	converted, ok := rpcClient.GetAddressesFromEns(opts.Globals.Chain, []string{opts.Autoname})
+	chain := opts.Globals.Chain
+	converted, ok := opts.Conn.GetAddressesFromEns(chain, []string{opts.Autoname})
 	term := opts.Autoname
 	if ok {
 		term = converted[0]
@@ -68,7 +70,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 		Source:   "TrueBlocks.io",
 		IsCustom: false,
 	}
-	if _, err = cleanName(opts.Globals.Chain, name); err != nil {
+	if _, err = cleanName(chain, name); err != nil {
 		err = fmt.Errorf("autoname %s: %w", &address, err)
 		return
 	}
@@ -79,7 +81,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 		return
 	}
 
-	if _, err = names.LoadNamesMap(opts.Globals.Chain, names.Regular, []string{}); err != nil {
+	if _, err = names.LoadNamesMap(chain, names.Regular, []string{}); err != nil {
 		return
 	}
 

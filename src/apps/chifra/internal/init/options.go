@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -24,6 +25,7 @@ type InitOptions struct {
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
 	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between downloads
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
+	Conn       *rpcClient.Options    `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -37,6 +39,7 @@ func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -64,12 +67,17 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -81,6 +89,10 @@ func initFinishParse(args []string) *InitOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
 	if len(args) > 0 {
 		opts.BadFlag = validate.Usage("Invalid argument ({0}).", args[0])
@@ -89,6 +101,7 @@ func initFinishParse(args []string) *InitOptions {
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

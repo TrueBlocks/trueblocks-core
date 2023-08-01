@@ -40,6 +40,7 @@ type NamesOptions struct {
 	Remove    bool                  `json:"remove,omitempty"`    // Remove a previously deleted name
 	Named     bool                  `json:"named,omitempty"`     // Please use the --all option instead
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
+	Conn      *rpcClient.Options    `json:"conn,omitempty"`      // The connection to the RPC server
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
 	crudData *CrudData
@@ -68,6 +69,7 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Named, "Named: ", opts.Named)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -124,14 +126,19 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Named = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.Terms, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Terms)
+	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -142,12 +149,17 @@ func namesFinishParse(args []string) *NamesOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.Terms, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, args)
+	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

@@ -34,7 +34,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	indexPath := config.GetPathToIndex(opts.Globals.Chain)
+	indexPath := config.GetPathToIndex(chain)
 	index.CleanTemporaryFolders(indexPath, true)
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -82,7 +82,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		}
 
 		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+			chain,
 			opts.Globals.TestMode,
 			100, /* maxTests */
 			truncateIndex,

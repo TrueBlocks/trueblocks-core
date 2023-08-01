@@ -15,9 +15,11 @@ import (
 )
 
 func (opts *AbisOptions) HandleAddresses() (err error) {
+	chain := opts.Globals.Chain
+
 	result := make(abi.AbiInterfaceMap)
 	if opts.Known {
-		if err = abi.PreloadKnownAbis(opts.Globals.Chain, result); err != nil {
+		if err = abi.PreloadKnownAbis(chain, result); err != nil {
 			return
 		}
 	}
@@ -27,14 +29,14 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := base.HexToAddress(addr)
-			if err = abi.LoadAbiFromAddress(opts.Globals.Chain, address, result); err != nil {
+			if err = abi.LoadAbiFromAddress(chain, address, result); err != nil {
 				if !os.IsNotExist(err) {
 					// The error was not due to a missing file...
 					errorChan <- err
 					cancel()
 				}
 				// Let's try to download the file from somewhere
-				if err := rpcClient.IsContractAt(opts.Globals.Chain, address, nil); err != nil {
+				if err := opts.Conn.IsContractAt(chain, address, nil); err != nil {
 					if !errors.Is(err, rpcClient.ErrNotAContract) {
 						errorChan <- err
 						cancel()
@@ -45,7 +47,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					}
 				} else {
 					// It's okay to not find the ABI. We report an error, but do not stop processing
-					if err = abi.DownloadAbi(opts.Globals.Chain, address, result); err != nil {
+					if err = abi.DownloadAbi(chain, address, result); err != nil {
 						errorChan <- err
 					}
 				}

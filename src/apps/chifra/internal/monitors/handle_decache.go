@@ -24,12 +24,13 @@ func (opts *MonitorsOptions) HandleDecache() error {
 		return nil
 	}
 
+	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {
 		if !base.IsValidAddress(addr) {
 			continue
 		}
 
-		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
+		m := monitor.NewMonitor(chain, addr, false)
 		if !usage.QueryUser(getWarning(addr, m.Count()), "Not decaching") {
 			continue
 		}
@@ -63,7 +64,7 @@ func (opts *MonitorsOptions) HandleDecache() error {
 			}
 
 			// Visits every item in the cache related to this monitor and calls into `processorFunc`
-			err := m.Decache(opts.Globals.Chain, processorFunc)
+			err := m.Decache(chain, processorFunc)
 			if err != nil {
 				return err
 			}

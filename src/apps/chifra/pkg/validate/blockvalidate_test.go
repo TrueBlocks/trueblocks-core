@@ -157,11 +157,6 @@ func TestIsDateTimeString(t *testing.T) {
 		t.Error("Fails for exact first block date")
 	}
 
-	// TODO: Turn off go testing that requires ts.bin
-	// if !isBeforeFirstBlock(utils.GetTestChain(), "2015-07-30T15:25:59") {
-	// 	t.Error("Passes for too early date (before first block)")
-	// }
-
 	if IsDateTimeString("hello") {
 		t.Error("Passes for invalid date #1")
 	}

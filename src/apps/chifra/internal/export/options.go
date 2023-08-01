@@ -52,6 +52,7 @@ type ExportOptions struct {
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	Conn        *rpcClient.Options    `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -92,6 +93,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -256,16 +258,22 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Asset)
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(chain, opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetAddressesFromEns(chain, opts.Asset)
 	// EXISTING_CODE
 
 	return opts
@@ -276,7 +284,12 @@ func exportFinishParse(args []string) *ExportOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {
@@ -290,13 +303,14 @@ func exportFinishParse(args []string) *ExportOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Asset)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(chain, opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetAddressesFromEns(chain, opts.Asset)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

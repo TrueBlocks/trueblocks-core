@@ -19,8 +19,9 @@ import (
 // Deleted     | Error  | Undelete | Remove | Remove and Decache         |
 // ------------|--------|------------------------------------------------|
 func (opts *MonitorsOptions) HandleCrudCommands() error {
+	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
+		m := monitor.NewMonitor(chain, addr, false)
 		if !file.FileExists(m.Path()) {
 			return validate.Usage("No monitor was found for address " + addr + ".")
 
@@ -45,7 +46,7 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 	}
 
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
+		m := monitor.NewMonitor(chain, addr, false)
 		if opts.Undelete {
 			m.ReadMonitorHeader()
 			m.UnDelete()

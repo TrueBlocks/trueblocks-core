@@ -19,6 +19,7 @@ import (
 )
 
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
+	chain := opts.Globals.Chain
 	been_here := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -37,7 +38,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 				if !file.FileExists(path) {
 					// This is okay, if the user used chifra init without the --all option. Warn them and continue
 					msg := ""
-					path = strings.Replace(path, config.GetPathToIndex(opts.Globals.Chain), "$indexPath", 1)
+					path = strings.Replace(path, config.GetPathToIndex(chain), "$indexPath", 1)
 					if been_here < 3 {
 						msg = fmt.Sprintf("index file %s does not exist. Run 'chifra init --all' to create it.", path)
 					} else if been_here == 3 {
@@ -88,7 +89,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 		}
 
 		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+			chain,
 			opts.Globals.TestMode,
 			10, /* maxTests */
 			showAddresses,

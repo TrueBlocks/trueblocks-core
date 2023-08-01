@@ -15,7 +15,7 @@ import (
 )
 
 // GetCountUnclesInBlock returns the number of uncles in a block.
-func GetCountUnclesInBlock(chain string, bn uint64) (uint64, error) {
+func (options *Options) GetCountUnclesInBlock(chain string, bn uint64) (uint64, error) {
 	method := "eth_getUncleCountByBlockNumber"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
 
@@ -27,8 +27,8 @@ func GetCountUnclesInBlock(chain string, bn uint64) (uint64, error) {
 }
 
 // GetUncleHashesByNumber returns the uncle hashes in a block.
-func GetUncleHashesByNumber(chain string, bn uint64) ([]base.Hash, error) {
-	if count, err := GetCountUnclesInBlock(chain, bn); err != nil {
+func (options *Options) GetUncleHashesByNumber(chain string, bn uint64) ([]base.Hash, error) {
+	if count, err := options.GetCountUnclesInBlock(chain, bn); err != nil {
 		return nil, err
 	} else if count > 0 {
 		ret := make([]base.Hash, count)
@@ -53,8 +53,8 @@ func GetUncleHashesByNumber(chain string, bn uint64) ([]base.Hash, error) {
 }
 
 // GetUnclesByNumber returns the number of uncles in a block.
-func GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
-	if count, err := GetCountUnclesInBlock(chain, bn); err != nil {
+func (options *Options) GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
+	if count, err := options.GetCountUnclesInBlock(chain, bn); err != nil {
 		return nil, err
 	} else if count > 0 {
 		ret := make([]types.SimpleBlock[types.SimpleTransaction], count)

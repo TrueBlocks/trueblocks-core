@@ -25,6 +25,7 @@ type ExploreOptions struct {
 	Local   bool                  `json:"local,omitempty"`   // Open the local TrueBlocks explorer
 	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	Conn    *rpcClient.Options    `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -37,6 +38,7 @@ func (opts *ExploreOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -63,14 +65,19 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 			opts.Google = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
+				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "explore")
 				return opts
 			}
 		}
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.Terms, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, opts.Terms)
+	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -81,12 +88,17 @@ func exploreFinishParse(args []string) *ExploreOptions {
 	opts := GetOptions()
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
+	chain := opts.Globals.Chain
+	caches := []string{}
+	opts.Conn = rpcClient.NewConnection(chain, caches)
+
 	// EXISTING_CODE
-	opts.Terms, _ = rpcClient.GetAddressesFromEns(opts.Globals.Chain, args)
+	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 

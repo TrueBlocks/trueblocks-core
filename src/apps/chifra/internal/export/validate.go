@@ -10,12 +10,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *ExportOptions) validateExport() error {
+	chain := opts.Globals.Chain
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -72,7 +72,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS {
-		latest := rpcClient.GetLatestBlockNumber(opts.Globals.Chain)
+		latest := opts.Conn.GetLatestBlockNumber(chain)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
@@ -149,7 +149,7 @@ func (opts *ExportOptions) validateExport() error {
 			}
 		}
 
-		if !rpcClient.IsNodeArchive(opts.Globals.Chain) {
+		if !opts.Conn.IsNodeArchive(chain) {
 			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
 		}
 
@@ -172,7 +172,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+	if err := index.IndexIsInitialized(chain); err != nil {
 		if opts.Globals.IsApiMode() {
 			return err
 		} else {

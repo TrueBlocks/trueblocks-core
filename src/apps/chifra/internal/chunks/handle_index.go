@@ -21,6 +21,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 		return opts.HandleIndexBelongs(blockNums)
 	}
 
+	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		showIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
@@ -58,7 +59,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 		}
 
 		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+			chain,
 			opts.Globals.TestMode,
 			100, /* maxTests */
 			showIndex,
