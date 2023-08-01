@@ -37,10 +37,11 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
-	})
+	}
+	opts.Conn = settings.DefaultRpcOptions()
 	ledgers.Conn = opts.Conn
 
 	ctx := context.Background()

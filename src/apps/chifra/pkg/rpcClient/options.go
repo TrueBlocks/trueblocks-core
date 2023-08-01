@@ -23,18 +23,18 @@ func (options *Options) TestLog() {
 }
 
 func NewConnection(chain string, caches []string) *Options {
-	options := DefaultRpcOptions(&DefaultRpcOptionsSettings{
+	settings := DefaultRpcOptionsSettings{
 		Chain: chain,
-	})
-	return options
+	}
+	return settings.DefaultRpcOptions()
 }
 
-func NewReadOnlyConnection(chain string, caches []string) *Options {
-	options := DefaultRpcOptions(&DefaultRpcOptionsSettings{
+func NewReadOnlyConnection(chain string) *Options {
+	settings := DefaultRpcOptionsSettings{
 		Chain:         chain,
 		ReadonlyCache: true,
-	})
-	return options
+	}
+	return settings.DefaultRpcOptions()
 }
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns
@@ -69,7 +69,7 @@ type CacheStater interface {
 	CacheState() (bool, bool, bool)
 }
 
-func DefaultRpcOptions(settings *DefaultRpcOptionsSettings) *Options {
+func (settings *DefaultRpcOptionsSettings) DefaultRpcOptions() *Options {
 	readonlyCache := false
 	if settings != nil {
 		readonlyCache = settings.ReadonlyCache

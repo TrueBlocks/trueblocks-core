@@ -16,7 +16,7 @@ import (
 
 func (opts *BlocksOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewReadOnlyConnection(chain, []string{})
+	opts.Conn = rpcClient.NewReadOnlyConnection(chain)
 
 	toRemove := make([]cacheNew.Locator, 0)
 	for _, br := range opts.BlockIds {

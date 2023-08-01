@@ -16,10 +16,11 @@ import (
 
 func (opts *BlocksOptions) HandleUncles() error {
 	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
-	})
+	}
+	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {

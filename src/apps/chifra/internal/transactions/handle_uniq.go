@@ -13,10 +13,11 @@ import (
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
-	})
+	}
+	opts.Conn = settings.DefaultRpcOptions()
 
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
