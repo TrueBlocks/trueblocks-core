@@ -2,6 +2,7 @@ chifra export  0x9531c059098e3d194ff87febb587ab07b30b1306 --logs --last_block 10
 TEST[DATE|TIME] Addrs:  [0x9531c059098e3d194ff87febb587ab07b30b1306]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] LastBlock:  10272064
+TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
