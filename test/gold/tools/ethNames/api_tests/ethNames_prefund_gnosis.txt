@@ -2,77 +2,77 @@ names?prefund&chain=gnosis
 {
   "data": [
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000001",
       "name": "Prefund_0000",
+      "petname": "abnormally-able-ant",
       "source": "Genesis",
-      "petname": "abnormally-able-ant"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000002",
       "name": "Prefund_0001",
+      "petname": "abnormally-able-ape",
       "source": "Genesis",
-      "petname": "abnormally-able-ape"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000003",
       "name": "Prefund_0002",
+      "petname": "abnormally-able-asp",
       "source": "Genesis",
-      "petname": "abnormally-able-asp"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000004",
       "name": "Prefund_0003",
+      "petname": "abnormally-able-bat",
       "source": "Genesis",
-      "petname": "abnormally-able-bat"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000005",
       "name": "Prefund_0004",
+      "petname": "abnormally-able-bee",
       "source": "Genesis",
-      "petname": "abnormally-able-bee"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000006",
       "name": "Prefund_0005",
+      "petname": "abnormally-able-boa",
       "source": "Genesis",
-      "petname": "abnormally-able-boa"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000007",
       "name": "Prefund_0006",
+      "petname": "abnormally-able-bug",
       "source": "Genesis",
-      "petname": "abnormally-able-bug"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000008",
       "name": "Prefund_0007",
+      "petname": "abnormally-able-cat",
       "source": "Genesis",
-      "petname": "abnormally-able-cat"
+      "tags": "80-Prefund"
     },
     {
-      "tags": "80-Prefund",
       "address": "0x0000000000000000000000000000000000000009",
       "name": "Prefund_0008",
+      "petname": "abnormally-able-cod",
       "source": "Genesis",
-      "petname": "abnormally-able-cod"
+      "tags": "80-Prefund"
     }
   ],
   "meta": {
+    "chain": "gnosis",
+    "chainId": 100,
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 100,
     "networkId": 100,
-    "chain": "gnosis"
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "unripe": "0xdeadbeef"
   }
 }
