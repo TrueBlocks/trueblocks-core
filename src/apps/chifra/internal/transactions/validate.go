@@ -18,6 +18,10 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return opts.BadFlag
 	}
 
+	if len(opts.AccountFor) > 0 {
+		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--account_for")
+	}
+
 	if len(opts.Flow) > 0 {
 		if !opts.Uniq {
 			return validate.Usage("The {0} option is only available with the {1} option", "--flow", "--uniq")

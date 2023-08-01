@@ -23,7 +23,11 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.Neighbors {
-		return validate.Usage("The {0} option is currenlty disabled.", "--neighbors")
+		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--neighbors")
+	}
+
+	if opts.Accounting {
+		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 
 	if len(opts.Load) > 0 {
