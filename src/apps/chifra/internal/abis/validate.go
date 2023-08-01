@@ -16,6 +16,9 @@ func (opts *AbisOptions) validateAbis() error {
 	}
 
 	if opts.Clean {
+		if opts.Globals.IsApiMode() {
+			return validate.Usage("The {0} option is not available in API mode.", "--clean")
+		}
 		if len(opts.Encode) > 0 {
 			return validate.Usage("Please choose only one of {0}.", "--clean or --encode")
 		}
@@ -24,9 +27,6 @@ func (opts *AbisOptions) validateAbis() error {
 		}
 		if opts.Known {
 			return validate.Usage("Please choose only one of {0}.", "--clean or --known")
-		}
-		if len(opts.Addrs) == 0 && len(opts.Globals.File) == 0 {
-			return validate.Usage("Please specify an address for the {0} option.", "--clean")
 		}
 	}
 

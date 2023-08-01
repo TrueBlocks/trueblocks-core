@@ -1,6 +1,6 @@
 abis?clean&file=signatures.txt
 {
   "errors": [
-    "The --file option is not available in Api mode"
+    "The --clean option is not available in API mode."
   ]
 }

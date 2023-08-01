@@ -54,7 +54,8 @@ on       ,cmd  ,slow  ,traces ,tools/getTraces ,articulate_arrays     ,y    ,tra
 
 # These two fail because they don't articulate a given function correctly. One of them only runs against `cmd`.
 on       ,cmd  ,slow  ,traces ,tools/getTraces ,articulate            ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
-on       ,both ,fast  ,traces ,tools/getTraces ,articulated           ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
+# Weird change in value for an articulated thing
+delay    ,both ,fast  ,traces ,tools/getTraces ,articulated           ,y    ,transactions = 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 & fmt = json & articulate
 
 # Issue #2793: This fails for an unknown reason for multiple tools
 delay    ,both ,fast  ,traces ,tools/getTraces ,multi_articulate      ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json

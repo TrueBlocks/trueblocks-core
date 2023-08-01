@@ -233,6 +233,7 @@ void establishTestData(void) {
     doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
 
     cerr << bYellow << "Cleaning abi caches..." << cOff << endl;
+    doCommand("chifra abis --clean 2>/dev/null");
     doCommand("chifra abis --clean 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51 2>/dev/null");
     doCommand("chifra abis --clean 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 2>/dev/null");
     doCommand("chifra abis --clean 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 2>/dev/null");
