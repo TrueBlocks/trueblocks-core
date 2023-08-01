@@ -102,6 +102,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
@@ -130,6 +131,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {

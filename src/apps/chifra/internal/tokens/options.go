@@ -98,6 +98,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
@@ -121,6 +122,7 @@ func tokensFinishParse(args []string) *TokensOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	if len(args) > 0 {
 		dupMap := make(map[string]bool)
 		for index, arg := range args {

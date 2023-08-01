@@ -121,6 +121,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
 	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
 	// EXISTING_CODE
 
@@ -137,6 +138,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
 	opts.Transactions = args
 	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
 	// EXISTING_CODE

@@ -107,6 +107,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	// EXISTING_CODE
 
 	return opts
@@ -122,6 +123,7 @@ func whenFinishParse(args []string) *WhenOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	opts.Blocks = args
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS

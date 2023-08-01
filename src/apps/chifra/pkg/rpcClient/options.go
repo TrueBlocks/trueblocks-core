@@ -37,6 +37,9 @@ func NewReadOnlyConnection(chain string) *Options {
 	return settings.DefaultRpcOptions()
 }
 
+func (options *Options) EnableCaches(on, txs, traces bool) {
+}
+
 // CacheStore returns cache for the given chain. If readonly is true, it returns
 // a cache that will not write new items. If nil is returned, it means "no caching"
 func cacheStore(chain string, forceReadonly bool) *cacheNew.Store {

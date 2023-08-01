@@ -146,6 +146,7 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.CacheTxs, opts.CacheTraces)
 	// EXISTING_CODE
 
 	return opts
@@ -161,6 +162,7 @@ func blocksFinishParse(args []string) *BlocksOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.CacheTxs, opts.CacheTraces)
 	if !opts.Uniq && opts.List == 0 {
 		defFmt = "json"
 	}

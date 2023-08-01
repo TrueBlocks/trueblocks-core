@@ -270,6 +270,7 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(chain, opts.Emitter)
 	opts.Asset, _ = opts.Conn.GetAddressesFromEns(chain, opts.Asset)
@@ -288,6 +289,7 @@ func exportFinishParse(args []string) *ExportOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {

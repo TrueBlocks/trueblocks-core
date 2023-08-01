@@ -83,6 +83,7 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, true)
 	// EXISTING_CODE
 
 	return opts
@@ -98,6 +99,7 @@ func tracesFinishParse(args []string) *TracesOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, true)
 	opts.Transactions = args
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

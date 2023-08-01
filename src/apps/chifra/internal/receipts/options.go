@@ -75,6 +75,7 @@ func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
 	// EXISTING_CODE
 
 	return opts
@@ -90,6 +91,7 @@ func receiptsFinishParse(args []string) *ReceiptsOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
 	opts.Transactions = args
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

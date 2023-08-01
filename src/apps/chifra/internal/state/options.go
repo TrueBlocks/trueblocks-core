@@ -102,6 +102,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	if opts.Call != "" {
 		// The tests need single quotes
 		unquoted := strings.Trim(opts.Call, "'")
@@ -131,6 +132,7 @@ func stateFinishParse(args []string) *StateOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {
