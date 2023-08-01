@@ -67,8 +67,6 @@ string_q CName::getValueByName(const string_q& fieldName) const {
         return ret;
 
     // EXISTING_CODE
-    if (fieldName % "decimals" && decimals == 0)
-        return "";
     // EXISTING_CODE
 
     // Return field values
@@ -140,10 +138,6 @@ bool CName::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (CBaseNode::setValueByName(fieldNameIn, fieldValueIn))
-        return true;
-    if (fieldName % "address")
-        fieldValue = toLower(fieldValue);
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -218,9 +212,6 @@ bool CName::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
 //---------------------------------------------------------------------------------------------------
 void CName::finishParse() {
     // EXISTING_CODE
-    if (petname.empty() || !isPetname(petname, '-')) {
-        petname = addr_2_Petname(address, '-');
-    }
     // EXISTING_CODE
 }
 
@@ -354,19 +345,6 @@ string_q nextNameChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (nam) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'n':
-                if (fieldIn % "name") {
-                    string_q ret = substitute(nam->name, "\"", "");
-                    if (isTestMode() && (nam->isCustom || contains(nam->tags, "Individuals"))) {
-                        ret = "Name " + nam->address.substr(0, 10);
-                    }
-                    return ret;
-                }
-                break;
-            case 's':
-                if (fieldIn % "source")
-                    return substitute(nam->source, "\"", "");
-                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -391,50 +369,6 @@ string_q nextNameChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 bool CName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    string_q unused_decsr;
-    if (m_schema < getVersionNum(0, 6, 6)) {
-        string_q subtags, unused5;
-        bool unused2, unused3, unused4;
-        archive >> tags;
-        archive >> subtags;  // subtags has been removed and added to tags with ':' separator
-        archive >> name;
-        archive >> address;
-        archive >> symbol;
-        archive >> unused_decsr;  // used to be description
-        archive >> source;
-        archive >> unused5;  // used to be logo
-        // archive >> path;
-        // archive >> color;
-        archive >> unused2;  // used to be isContract;
-        archive >> unused3;  // used to be isPrivate;
-        archive >> unused4;  // used to be isShared;
-        // archive >> first Appearance;
-        // archive >> latest Appearance;
-        // archive >> last Export;
-        // archive >> nRecords;
-        // archive >> sizeInBytes;
-        if (!subtags.empty())
-            tags += (":" + subtags);
-        petname = addr_2_Petname(address, '-');
-        finishParse();
-        done = true;
-    } else if (m_schema < getVersionNum(0, 40, 3)) {
-        archive >> tags;
-        archive >> address;
-        archive >> name;
-        archive >> symbol;
-        archive >> source;
-        archive >> decimals;
-        archive >> unused_decsr;  // used to be description
-        archive >> isCustom;
-        archive >> isPrefund;
-        archive >> isContract;
-        archive >> isErc20;
-        archive >> isErc721;
-        petname = addr_2_Petname(address, '-');
-        finishParse();
-        done = true;
-    }
     // EXISTING_CODE
     return done;
 }
@@ -479,27 +413,5 @@ const char* STR_DISPLAY_NAME =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//---------------------------------------------------------------------------
-extern CArchive& operator>>(CArchive& archive, CNameMap& nameMap) {
-    uint64_t count;
-    archive >> count;
-    for (size_t i = 0; i < count; i++) {
-        ASSERT(i < array.capacity());
-        CName item;
-        item.Serialize(archive);
-        nameMap[item.address] = item;
-    }
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CNameMap& nameMap) {
-    uint64_t count = nameMap.size();
-    archive << count;
-    for (auto item : nameMap) {
-        item.second.SerializeC(archive);
-    }
-    return archive;
-}
 // EXISTING_CODE
 }  // namespace qblocks

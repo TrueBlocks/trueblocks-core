@@ -159,8 +159,6 @@ inline bool CName::operator==(const CName& it) const {
 //-------------------------------------------------------------------------
 inline bool operator<(const CName& v1, const CName& v2) {
     // EXISTING_CODE
-    if (v1.address == v2.address)
-        return v1.tags < v2.tags;
     // EXISTING_CODE
     // Default sort as defined in class definition
     return v1.address < v2.address;
@@ -180,8 +178,5 @@ extern const char* STR_DISPLAY_NAME;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t, CName> CNameMap;
-extern CArchive& operator>>(CArchive& archive, CNameMap& nameMap);
-extern CArchive& operator<<(CArchive& archive, const CNameMap& nameMap);
 // EXISTING_CODE
 }  // namespace qblocks
