@@ -85,7 +85,7 @@ on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,y
 on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_6           ,y    ,transactions = 0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964aa26609e20ad3 & articulate
 on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_7           ,n    ,transactions = 0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb & articulate & fmt = csv
 on       ,both ,fast  ,transactions ,tools/getTrans ,message                  ,y    ,transactions = 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 & articulate
-on       ,both ,fast  ,transactions ,tools/getTrans ,unparsable               ,y    ,transactions = 12596470.26 & articulate & fmt = json
+delay    ,both ,fast  ,transactions ,tools/getTrans ,unparsable               ,y    ,transactions = 12596470.26 & articulate & fmt = json
 
 on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1583               ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
 on       ,both ,slow  ,transactions ,tools/getTrans ,issue_1366               ,y    ,transactions = 0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe & fmt = json & traces & articulate
@@ -102,7 +102,7 @@ acct     ,both ,fast  ,transactions ,tools/getTrans ,oldbug_2162_in_ibt       ,y
 
 # These behave differently on local vs. remote testing - failed articulation - probably cache
 delay    ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable       ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
-on       ,both ,fast  ,transactions ,tools/getTrans ,revert_not_err           ,y    ,transactions = 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c & articulate & fmt = json & traces
+delay    ,both ,fast  ,transactions ,tools/getTrans ,revert_not_err           ,y    ,transactions = 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c & articulate & fmt = json & traces
 
 # This one is odd - it works on cmd line but not the server. Most likely because the server is not started from the same folder for testing remotely and cannot find the custom abi file
 delay    ,cmd  ,slow  ,transactions ,tools/getTrans ,articulate               ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json & traces
