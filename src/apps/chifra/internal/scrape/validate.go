@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -40,10 +39,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("Cannot test block scraper")
 	}
 
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-	meta, err := rpcOptions.GetMetaData(chain, opts.Globals.TestMode)
+	meta, err := opts.Conn.GetMetaData(chain, opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}

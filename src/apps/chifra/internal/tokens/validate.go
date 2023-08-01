@@ -18,10 +18,6 @@ func (opts *TokensOptions) validateTokens() error {
 
 	opts.testLog()
 
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
@@ -51,10 +47,6 @@ func (opts *TokensOptions) validateTokens() error {
 		return validate.Usage("You must specify at least two address")
 
 	} else {
-		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-			Chain: chain,
-		})
-
 		if opts.ByAcct {
 			if len(opts.Addrs) < 2 {
 				return validate.Usage("You must specify at least two addresses")
@@ -62,7 +54,7 @@ func (opts *TokensOptions) validateTokens() error {
 
 			// all but the last is assumed to be a token
 			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
-				err := rpcOptions.IsContractAt(chain, base.HexToAddress(addr), nil)
+				err := opts.Conn.IsContractAt(chain, base.HexToAddress(addr), nil)
 				if err != nil {
 					if errors.Is(err, rpcClient.ErrNotAContract) {
 						return validate.Usage("The value {0} is not a token contract.", addr)
@@ -73,7 +65,7 @@ func (opts *TokensOptions) validateTokens() error {
 		} else {
 			// the first is assumed to be a smart contract, the rest can be either non-existant, another smart contract or an EOA
 			addr := opts.Addrs[0]
-			err := rpcOptions.IsContractAt(chain, base.HexToAddress(addr), nil)
+			err := opts.Conn.IsContractAt(chain, base.HexToAddress(addr), nil)
 			if err != nil {
 				if err != nil {
 					if errors.Is(err, rpcClient.ErrNotAContract) {
@@ -112,13 +104,9 @@ func (opts *TokensOptions) validateTokens() error {
 			return err
 		}
 
-		latest := rpcOptions.GetLatestBlockNumber(chain)
+		latest := opts.Conn.GetLatestBlockNumber(chain)
 		// TODO: Should be configurable
-		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-			Chain: chain,
-		})
-
-		if bounds.First < (latest-250) && !rpcOptions.IsNodeArchive(chain) {
+		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive(chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}

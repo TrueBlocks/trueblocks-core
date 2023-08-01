@@ -18,10 +18,6 @@ func (opts *StateOptions) validateState() error {
 
 	opts.testLog()
 
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
@@ -61,10 +57,7 @@ func (opts *StateOptions) validateState() error {
 				contract = opts.ProxyFor
 			}
 
-			rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-				Chain: chain,
-			})
-			err := rpcOptions.IsContractAt(chain, base.HexToAddress(contract), nil)
+			err := opts.Conn.IsContractAt(chain, base.HexToAddress(contract), nil)
 			if err != nil {
 				if errors.Is(err, rpcClient.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")
@@ -110,12 +103,9 @@ func (opts *StateOptions) validateState() error {
 			return err
 		}
 
-		latest := rpcOptions.GetLatestBlockNumber(chain)
+		latest := opts.Conn.GetLatestBlockNumber(chain)
 		// TODO: Should be configurable
-		rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-			Chain: chain,
-		})
-		if bounds.First < (latest-250) && !rpcOptions.IsNodeArchive(chain) {
+		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive(chain) {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}

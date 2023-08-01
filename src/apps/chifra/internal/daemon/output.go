@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
@@ -82,10 +81,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	logger.InfoTable("Cache Path:        ", config.GetPathToCache(chain))
 	logger.InfoTable("Index Path:        ", config.GetPathToIndex(chain))
 
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
-	meta, err := rpcOptions.GetMetaData(chain, false)
+	meta, err := opts.Conn.GetMetaData(chain, false)
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
 		logger.InfoTable("Progress:", msg)

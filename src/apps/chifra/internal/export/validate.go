@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -18,10 +17,6 @@ import (
 func (opts *ExportOptions) validateExport() error {
 	chain := opts.Globals.Chain
 	opts.testLog()
-
-	rpcOptions := rpcClient.DefaultRpcOptions(&rpcClient.DefaultRpcOptionsSettings{
-		Chain: chain,
-	})
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
@@ -77,7 +72,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS {
-		latest := rpcOptions.GetLatestBlockNumber(chain)
+		latest := opts.Conn.GetLatestBlockNumber(chain)
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
@@ -154,7 +149,7 @@ func (opts *ExportOptions) validateExport() error {
 			}
 		}
 
-		if !rpcOptions.IsNodeArchive(chain) {
+		if !opts.Conn.IsNodeArchive(chain) {
 			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
 		}
 
