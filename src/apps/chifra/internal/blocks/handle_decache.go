@@ -121,7 +121,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	// }
 
 	// caches := []string{"blocks", "txs", "traces"}
-	// if cont, err := cache.DecacheItems(chain, "", processorFunc, caches, pairs); err != nil || !cont {
+	// if cont, err := cache.Decache Items(chain, "", processorFunc, caches, pairs); err != nil || !cont {
 	// 	return err
 	// }
 
