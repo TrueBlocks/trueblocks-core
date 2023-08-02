@@ -7,11 +7,9 @@ tokens?addrs=0xa9fe4601811213c340e850ea305481aff02f5b28%200x99c961738786e8f5f3fe
       "blockNumber": 11963059,
       "decimals": 18,
       "holder": "0x99c961738786e8f5f3fee109f4d49f5901826b8c",
-      "isContract": true,
-      "isErc20": true,
       "name": "WETH yVault",
       "symbol": "yvWETH",
-      "units": "xxx"
+      "units": "219996879142647489"
     }
   ],
   "meta": {
