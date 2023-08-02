@@ -271,8 +271,11 @@ func ResetOptions() {
 // CacheState returns booleans indicating which caches to enable
 func (opts *ExportOptions) CacheState() (bool, map[string]bool) {
 	caches := map[string]bool{
-		"txs":    true,
-		"traces": opts.CacheTraces,
+		"txs": true,
+		// TODO: Enabled neighbors and statements cache
+		"neigbors":   true,
+		"statements": true,
+		"traces":     opts.CacheTraces,
 	}
 	return opts.Globals.Cache, caches
 }

@@ -127,8 +127,7 @@ func ResetOptions() {
 // CacheState returns booleans indicating which caches to enable
 func (opts *ReceiptsOptions) CacheState() (bool, map[string]bool) {
 	caches := map[string]bool{
-		"txs":    true,
-		"traces": false,
+		"txs": true,
 	}
 	return opts.Globals.Cache, caches
 }

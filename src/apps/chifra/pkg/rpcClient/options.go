@@ -10,16 +10,15 @@ var NoOptions *Options = nil
 
 // Options carry additional context to rpcClient calls
 type Options struct {
-	Store                    *cacheNew.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
-	LatestBlockTimestamp     base.Timestamp
-	TransactionWriteDisabled bool // Disable caching transactions
-	TraceWriteDisabled       bool // Disable caching traces
+	Store                *cacheNew.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
+	LatestBlockTimestamp base.Timestamp
+	enabledMap           map[string]bool
 }
 
 func (options *Options) TestLog() {
-	logger.TestLog(!options.TraceWriteDisabled, "TraceWriteDisabled: ", options.TraceWriteDisabled)
-	logger.TestLog(!options.TransactionWriteDisabled, "TransactionWriteDisabled: ", options.TransactionWriteDisabled)
-	logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp", options.LatestBlockTimestamp)
+	logger.TestLog(options.HasStore() && options.enabledMap["txs"], "txs cache: ", options.enabledMap["txs"])
+	logger.TestLog(options.HasStore() && options.enabledMap["traces"], "traces cache: ", options.enabledMap["traces"])
+	logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }
 
 func NewConnection(chain string, caches []string) *Options {
@@ -90,9 +89,8 @@ func (settings *DefaultRpcOptionsSettings) DefaultRpcOptions() *Options {
 	}
 
 	return &Options{
-		Store:                    cacheStore(chain, !cacheEnabled || readonlyCache),
-		TransactionWriteDisabled: !enabledMap["txs"],
-		TraceWriteDisabled:       !enabledMap["traces"],
+		Store:      cacheStore(chain, !cacheEnabled || readonlyCache),
+		enabledMap: enabledMap,
 	}
 }
 

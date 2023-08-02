@@ -160,11 +160,8 @@ func ResetOptions() {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *WhenOptions) CacheState() (bool, map[string]bool) {
-	return false, map[string]bool{}
-	// caches := map[string]bool{
-	// 	"txs":    false,
-	// 	"traces": false,
-	// }
+	return false, map[string]bool{} // no caches
+	// caches := map[string]bool{} // only blocks
 	// return opts.Globals.Cache, caches
 }
 

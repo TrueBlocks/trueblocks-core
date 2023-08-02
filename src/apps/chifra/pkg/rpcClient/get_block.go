@@ -93,7 +93,7 @@ func (options *Options) GetBlockBodyByNumber(chain string, bn uint64) (types.Sim
 		tx := types.NewSimpleTransaction(raw, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
-		if options.HasStore() && !options.TransactionWriteDisabled {
+		if options.HasStore() && options.enabledMap["txs"] {
 			options.Store.Write(tx, writeOptions)
 		}
 	}
@@ -263,4 +263,3 @@ func (options *Options) GetTransactionHashByNumberAndID(chain string, bn, txId u
 		return tx.Hash().Hex(), nil
 	}
 }
-

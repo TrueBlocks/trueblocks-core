@@ -136,7 +136,7 @@ func ResetOptions() {
 func (opts *TracesOptions) CacheState() (bool, map[string]bool) {
 	caches := map[string]bool{
 		"txs":    true,
-		"traces": false,
+		"traces": true,
 	}
 	return opts.Globals.Cache, caches
 }

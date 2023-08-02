@@ -126,10 +126,9 @@ func ResetOptions() {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *LogsOptions) CacheState() (bool, map[string]bool) {
-	return false, map[string]bool{}
+	return false, map[string]bool{} // no caches
 	// caches := map[string]bool{
-	// 	"txs":    true,
-	// 	"traces": false,
+	// 	"txs": true,
 	// }
 	// return opts.Globals.Cache, caches
 }

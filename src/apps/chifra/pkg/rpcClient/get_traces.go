@@ -296,7 +296,7 @@ func (options *Options) GetTracesByTransactionHash(chain string, txHash string, 
 			ret = append(ret, trace)
 		}
 
-		if options.HasStore() && !options.TraceWriteDisabled && transaction != nil {
+		if options.HasStore() && options.enabledMap["traces"] && transaction != nil {
 			var writeOptions *cacheNew.WriteOptions
 			if !options.Store.ReadOnly() {
 				writeOptions = &cacheNew.WriteOptions{
