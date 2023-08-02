@@ -68,6 +68,7 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -82,6 +83,7 @@ func configFinishParse(args []string) *ConfigOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	defFmt = ""
 	for _, arg := range args {
 		if arg == "show" || arg == "edit" {

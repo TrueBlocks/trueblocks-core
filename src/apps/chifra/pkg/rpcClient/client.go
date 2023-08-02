@@ -29,7 +29,7 @@ var clientMutex sync.Mutex
 func getClient(chain string) (*ethclient.Client, error) {
 	provider, _ := config.GetRpcProvider(chain)
 	if provider == "https://" {
-		var noProvider string = `
+		var noProvider = `
 
   Warning: The RPC server ([{PROVIDER}]) was not available. Either start it, or edit the rpcProvider
   value in the file [{FILE}]. Quitting...

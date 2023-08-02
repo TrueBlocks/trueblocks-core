@@ -28,7 +28,7 @@ func (opts *AbisOptions) HandleClean() error {
 			logger.Info("Cleaning empty abis is not tested in test mode.")
 		} else {
 			filenameChan := make(chan cache.CacheFileInfo)
-			var nRoutines int = 1
+			var nRoutines = 1
 			go cache.WalkCacheFolder(context.Background(), chain, cache.Cache_Abis, nil, filenameChan)
 			for result := range filenameChan {
 				switch result.Type {

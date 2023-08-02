@@ -132,6 +132,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	// TODO: Do we know if an option is an address? If yes, we could automate this
 	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Belongs)
 	// EXISTING_CODE
@@ -148,6 +149,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(args) > 0 {
 		opts.Mode = args[0]
 		for i, arg := range args {

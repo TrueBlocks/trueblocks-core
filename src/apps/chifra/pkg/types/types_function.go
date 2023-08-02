@@ -233,14 +233,14 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	return
 }
 
-func (function *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, err error) {
-	if !function.IsMethod() {
+func (s *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, err error) {
+	if !s.IsMethod() {
 		err = fmt.Errorf("FunctionToAbiMethod called for an event")
 		return
 	}
 
-	removeUnknownTuples(function)
-	jsonAbi, err := json.Marshal([]any{function})
+	removeUnknownTuples(s)
+	jsonAbi, err := json.Marshal([]any{s})
 	if err != nil {
 		return
 	}
@@ -248,23 +248,23 @@ func (function *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, 
 	if err != nil {
 		return
 	}
-	found, ok := res.Methods[function.Name]
+	found, ok := res.Methods[s.Name]
 	if !ok {
-		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		err = fmt.Errorf("generating ABI method: method not found: %s", s.Name)
 		return
 	}
 	ethMethod = &found
 	return
 }
 
-func (function *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, err error) {
-	if function.IsMethod() {
+func (s *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, err error) {
+	if s.IsMethod() {
 		err = fmt.Errorf("functionToAbiEvent called for a method")
 		return
 	}
 
-	removeUnknownTuples(function)
-	jsonAbi, err := json.Marshal([]any{function})
+	removeUnknownTuples(s)
+	jsonAbi, err := json.Marshal([]any{s})
 	if err != nil {
 		return
 	}
@@ -272,9 +272,9 @@ func (function *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, er
 	if err != nil {
 		return
 	}
-	found, ok := res.Events[function.Name]
+	found, ok := res.Events[s.Name]
 	if !ok {
-		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		err = fmt.Errorf("generating ABI method: method not found: %s", s.Name)
 		return
 	}
 	ethMethod = &found

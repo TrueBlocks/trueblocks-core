@@ -105,6 +105,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -119,6 +120,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
 		// these options have been deprecated, so do nothing
 	} else if len(args) > 1 {

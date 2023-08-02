@@ -97,6 +97,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	// EXISTING_CODE
 
@@ -112,6 +113,7 @@ func abisFinishParse(args []string) *AbisOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	if opts.Globals.IsApiMode() {
 		defFmt = "json"
 	}

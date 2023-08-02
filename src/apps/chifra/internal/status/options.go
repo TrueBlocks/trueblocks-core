@@ -82,6 +82,7 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
 	}
@@ -100,6 +101,7 @@ func statusFinishParse(args []string) *StatusOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Modes = append(opts.Modes, args...)
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")

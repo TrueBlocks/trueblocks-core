@@ -78,6 +78,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -92,6 +93,7 @@ func initFinishParse(args []string) *InitOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(args) > 0 {
 		opts.BadFlag = validate.Usage("Invalid argument ({0}).", args[0])
 	}

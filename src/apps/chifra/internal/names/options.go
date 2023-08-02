@@ -137,6 +137,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, opts.Terms)
 	// EXISTING_CODE
 
@@ -152,6 +153,7 @@ func namesFinishParse(args []string) *NamesOptions {
 	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {

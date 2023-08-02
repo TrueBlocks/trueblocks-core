@@ -63,7 +63,7 @@ func GetState(chain string, tokenAddress base.Address, blockNumber string) (*Tok
 	return queryToken(chain, tokenAddress, blockNumber)
 }
 
-// GetTokenBalance returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
+// GetTokenBalanceAt returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
 func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
 	output, err := rpc.QueryBatch[string](
