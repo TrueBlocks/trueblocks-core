@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -65,11 +64,8 @@ func PinItem(chain string, dbName, path string, isRemote bool) (hash base.IpfsHa
 	return
 }
 
-func PinChunk(chain, path string, isRemote bool) (PinResult, error) {
-	bloomFile := cache.ToBloomPath(path)
-	indexFile := cache.ToIndexPath(path)
-
-	rng := base.RangeFromFilename(path)
+func PinChunk(chain, bloomFile, indexFile string, isRemote bool) (PinResult, error) {
+	rng := base.RangeFromFilename(bloomFile)
 	result := PinResult{
 		Range:  rng,
 		Local:  types.SimpleChunkRecord{Range: rng.String()},

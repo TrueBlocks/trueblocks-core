@@ -42,11 +42,6 @@ func IsValidTopic(val string) bool {
 	return ok
 }
 
-func IsZeroAddress(val string) bool {
-	v := strings.Replace(val, "0", "", -1)
-	return v == "x" || v == "X"
-}
-
 func ValidateAddresses(args []string) error {
 	for _, arg := range args {
 		if !base.IsValidAddress(arg) {

@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -22,11 +21,11 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		showAppearances := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-			if path != cache.ToBloomPath(path) {
+			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showAppearances")
 			}
 
-			path = cache.ToIndexPath(path)
+			path = index.ToIndexPath(path)
 			if !file.FileExists(path) {
 				// Bloom files exist, but index files don't. It's okay.
 				return true, nil

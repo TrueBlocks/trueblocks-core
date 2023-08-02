@@ -42,12 +42,12 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 		firstTs, _ := tslib.FromBnToTs(chain, fileRange.First)
 		latestTs, _ := tslib.FromBnToTs(chain, fileRange.Last)
 		return map[string]interface{}{
-			"bloomSizeBytes": file.FileSize(cache.ToBloomPath(path)),
+			"bloomSizeBytes": file.FileSize(index.ToBloomPath(path)),
 			"fileDate":       date,
 			"filename":       display,
 			"firstApp":       fileRange.First,
 			"firstTs":        firstTs,
-			"indexSizeBytes": file.FileSize(cache.ToIndexPath(path)),
+			"indexSizeBytes": file.FileSize(index.ToIndexPath(path)),
 			"itemType":       cT.CacheItemName(),
 			"latestApp":      fileRange.Last,
 			"latestTs":       latestTs,

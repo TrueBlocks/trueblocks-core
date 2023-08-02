@@ -10,7 +10,6 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -30,11 +29,11 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 			}
 		} else {
 			showAddresses = func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-				if path != cache.ToBloomPath(path) {
+				if path != index.ToBloomPath(path) {
 					return false, fmt.Errorf("should not happen in showAddresses")
 				}
 
-				path = cache.ToIndexPath(path)
+				path = index.ToIndexPath(path)
 				if !file.FileExists(path) {
 					// This is okay, if the user used chifra init without the --all option. Warn them and continue
 					msg := ""

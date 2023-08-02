@@ -100,8 +100,8 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				if workerArgs.ctx.Err() != nil {
 					// User hit control + c - clean up both peices for the current chunk
 					chunkPath := config.GetPathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
-					RemoveLocalFile(cache.ToIndexPath(chunkPath), "user canceled", progressChannel)
-					RemoveLocalFile(cache.ToBloomPath(chunkPath), "user canceled", progressChannel)
+					RemoveLocalFile(ToIndexPath(chunkPath), "user canceled", progressChannel)
+					RemoveLocalFile(ToBloomPath(chunkPath), "user canceled", progressChannel)
 					progressChannel <- &progress.ProgressMsg{
 						Payload: &chunk,
 						Event:   progress.Error,
@@ -250,7 +250,7 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 func writeBytesToDisc(chain string, chunkType cache.CacheType, res *jobResult) error {
 	fullPath := config.GetPathToIndex(chain) + "finalized/" + res.rng + ".bin"
 	if chunkType == cache.Index_Bloom {
-		fullPath = cache.ToBloomPath(fullPath)
+		fullPath = ToBloomPath(fullPath)
 	}
 	outputFile, err := os.OpenFile(fullPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
@@ -264,7 +264,7 @@ func writeBytesToDisc(chain string, chunkType cache.CacheType, res *jobResult) e
 			outputFile.Close()
 			os.Remove(outputFile.Name())
 			col := colors.Magenta
-			if fullPath == cache.ToIndexPath(fullPath) {
+			if fullPath == ToIndexPath(fullPath) {
 				col = colors.Yellow
 			}
 			logger.Warn("Failed download", col, res.rng, colors.Off, "(will retry)", strings.Repeat(" ", 30))

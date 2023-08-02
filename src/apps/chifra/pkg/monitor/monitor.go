@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // Header is the header of the Monitor file. Note that it's the same width as an index.AppearanceRecord
@@ -194,7 +193,8 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 				parts := strings.Split(line, "\t")
 				if len(parts) > 0 {
 					addr := strings.Trim(parts[0], " ")
-					if !addrMap[addr] && base.IsValidAddress(addr) && !validate.IsZeroAddress(addr) {
+					a := base.HexToAddress(addr)
+					if !addrMap[addr] && base.IsValidAddress(addr) && !a.IsZero() {
 						monitorChan <- NewMonitor(chain, addr, true /* create */)
 					}
 					addrMap[addr] = true
