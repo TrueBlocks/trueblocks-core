@@ -193,7 +193,8 @@ func (s *Store) Decache(locators []Locator, processor DecacheFunc) (err error) {
 	for _, locator := range locators {
 		stats, err := s.Stat(locator)
 		if err != nil {
-			return err
+			// we silently ignore this for folders as an example
+			continue
 		}
 		// If processor returns false, we don't want to remove this item from the cache
 		if !processor(stats) {

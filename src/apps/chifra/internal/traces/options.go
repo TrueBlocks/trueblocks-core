@@ -99,7 +99,7 @@ func tracesFinishParse(args []string) *TracesOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, false, true)
+	opts.Conn.EnableCaches(opts.Globals.Cache, true, true)
 	opts.Transactions = args
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
@@ -130,4 +130,15 @@ func ResetOptions() {
 }
 
 // EXISTING_CODE
+//
+
+// CacheState returns booleans indicating which caches to enable
+func (opts *TracesOptions) CacheState() (bool, map[string]bool) {
+	caches := map[string]bool{
+		"txs":    true,
+		"traces": false,
+	}
+	return opts.Globals.Cache, caches
+}
+
 // EXISTING_CODE

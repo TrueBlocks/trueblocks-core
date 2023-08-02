@@ -131,7 +131,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	opts.Conn = rpcClient.NewConnection(chain, caches)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {
@@ -185,4 +185,16 @@ func ResetOptions() {
 }
 
 // EXISTING_CODE
+//
+
+// CacheState returns booleans indicating which caches to enable
+func (opts *SlurpOptions) CacheState() (bool, map[string]bool) {
+	return false, map[string]bool{}
+	// caches := map[string]bool{
+	// 	"txs":    false,
+	// 	"traces": false,
+	// }
+	// return opts.Globals.Cache, caches
+}
+
 // EXISTING_CODE

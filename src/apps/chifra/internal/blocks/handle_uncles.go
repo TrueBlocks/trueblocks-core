@@ -16,11 +16,16 @@ import (
 
 func (opts *BlocksOptions) HandleUncles() error {
 	chain := opts.Globals.Chain
+
+	// TODO: Why does this have to dirty the caller?
 	settings := rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {

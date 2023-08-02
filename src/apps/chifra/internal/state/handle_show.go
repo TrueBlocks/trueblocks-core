@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/account"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
@@ -37,11 +38,21 @@ func (opts *StateOptions) HandleShow() error {
 
 	stateFields, outputFields, none := opts.PartsToFields()
 
+	// TODO: Why does this have to dirty the caller?
+	settings := rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+		Opts:  opts,
+	}
+	opts.Conn = settings.DefaultRpcOptions()
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
+	}
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {
 		for _, addressStr := range opts.Addrs {
 			address := base.HexToAddress(addressStr)
-			for _, br := range opts.BlockIds {  // TODO: use the regular way to do this
+			for _, br := range opts.BlockIds { // TODO: use the regular way to do this
 				blockNums, err := br.ResolveBlocks(chain)
 				if err != nil {
 					errorChan <- err

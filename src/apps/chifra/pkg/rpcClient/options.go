@@ -69,7 +69,7 @@ type DefaultRpcOptionsSettings struct {
 
 // CacheStater informs us if we should write txs and traces to the cache
 type CacheStater interface {
-	CacheState() (bool, bool, bool)
+	CacheState() (bool, map[string]bool)
 }
 
 func (settings *DefaultRpcOptionsSettings) DefaultRpcOptions() *Options {
@@ -80,20 +80,19 @@ func (settings *DefaultRpcOptionsSettings) DefaultRpcOptions() *Options {
 
 	var chain string
 	// Check if cache should write
-	var cacheWriteEnabled bool
-	var cacheTxWriteEnabled bool
-	var cacheTraceWriteEnabled bool
+	var cacheEnabled bool
+	enabledMap := make(map[string]bool)
 	if settings != nil {
 		chain = settings.Chain
 		if cs, ok := settings.Opts.(CacheStater); ok {
-			cacheWriteEnabled, cacheTxWriteEnabled, cacheTraceWriteEnabled = cs.CacheState()
+			cacheEnabled, enabledMap = cs.CacheState()
 		}
 	}
 
 	return &Options{
-		Store:                    cacheStore(chain, !cacheWriteEnabled || readonlyCache),
-		TransactionWriteDisabled: !cacheTxWriteEnabled,
-		TraceWriteDisabled:       !cacheTraceWriteEnabled,
+		Store:                    cacheStore(chain, !cacheEnabled || readonlyCache),
+		TransactionWriteDisabled: !enabledMap["txs"],
+		TraceWriteDisabled:       !enabledMap["traces"],
 	}
 }
 

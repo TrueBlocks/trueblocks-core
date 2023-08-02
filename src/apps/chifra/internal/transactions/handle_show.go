@@ -20,11 +20,15 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
+	// TODO: Why does this have to dirty the caller?
 	settings := rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
+	}
 
 	// TODO: Why does this have to dirty the caller?
 	// If the cache is writeable, fetch the latest block timestamp so that we never
