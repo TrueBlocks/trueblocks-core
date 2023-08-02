@@ -252,6 +252,7 @@ void establishTestData(void) {
     doCommand("chifra abis --clean 0x729d19f657bd0614b4985cf1d82531c67569197b 2>/dev/null");
     doCommand("chifra abis --clean 0x81f7564e413586f1f99fde55740ac52b43ca99c9 2>/dev/null");
     doCommand("chifra abis --clean 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 2>/dev/null");
+    doCommand("chifra abis --clean 0xdbd27635a534a3d3169ef0498beb56fb9c937489 2>/dev/null");
 
     // TODO: If the following lines are commented out, these tests cases fail:
     // getState_proxy_imp.txt, getState_proxy_imp.txt, getTrans_old_parsing_bug_1.txt
@@ -278,4 +279,5 @@ void establishTestData(void) {
     doCommand("chifra abis 0x729d19f657bd0614b4985cf1d82531c67569197b");
     doCommand("chifra abis 0x81f7564e413586f1f99fde55740ac52b43ca99c9");
     doCommand("chifra abis 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819");
+    doCommand("chifra abis 0xdbd27635a534a3d3169ef0498beb56fb9c937489");
 }
