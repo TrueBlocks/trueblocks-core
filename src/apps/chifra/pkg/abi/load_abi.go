@@ -98,19 +98,35 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 
 // PreloadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
 func PreloadKnownAbis(chain string, destination AbiInterfaceMap) (err error) {
-	// Check if cache file is fresh
-	useCache, err := cache.IsAbiCacheUpToDate(chain)
+	isUpToDate := func(chain string) (bool, error) {
+		testFn := path.Join(config.GetPathToCache(chain), "abis/known.bin")
+		testDir := path.Join(config.GetPathToRootConfig(), "abis")
+		if cacheFile, err := os.Stat(testFn); os.IsNotExist(err) {
+			return false, nil
+
+		} else if err != nil {
+			return false, err
+
+		} else {
+			if newestFile, err := file.GetNewestInDirectory(testDir); err != nil {
+				return false, err
+			} else {
+				return cacheFile.ModTime().Unix() >= newestFile.ModTime().Unix(), nil
+			}
+		}
+	}
+
+	useCache, err := isUpToDate(chain)
 	if err != nil {
 		return
 	}
-	// Use cache file
+
 	if useCache {
 		if loaded := LoadCache(chain, destination); loaded {
 			return
 		}
 	}
 
-	// Use known .json files and freshen binary cache
 	paths, err := getKnownAbiPaths()
 	if err != nil {
 		return
