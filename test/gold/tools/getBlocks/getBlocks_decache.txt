@@ -3,7 +3,6 @@ TEST[DATE|TIME] Blocks:  [1152642]
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] false Removed  1  items and  309  bytes. 001152642.bin
 INFO[DATE|TIME] 1 items totaling 309 bytes were removed from the cache.                                                             
 {
   "data": []

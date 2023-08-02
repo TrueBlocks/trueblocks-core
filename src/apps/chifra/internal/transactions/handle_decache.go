@@ -47,8 +47,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 		itemsSeen++
 		itemsRemoved++
 		bytesRemoved += info.Size()
-		logger.Info(!testMode && itemsRemoved%20 == 0, "Removed ", itemsRemoved, " items and ", bytesRemoved, " bytes.", info.Name())
-
+		logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", info.Name())
 		if opts.Globals.Verbose {
 			logger.Info(info.Name(), "was removed.")
 		}
