@@ -129,10 +129,10 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	// TODO: Do we know if an option is an address? If yes, we could automate this
 	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Belongs)
 	// EXISTING_CODE
@@ -146,10 +146,10 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(args) > 0 {
 		opts.Mode = args[0]
 		for i, arg := range args {
@@ -206,6 +206,12 @@ func ResetOptions() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultChunksOptions.Globals.Caps = capabilities
+}
+
+func (opts *ChunksOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

@@ -5,11 +5,14 @@
 package abisPkg
 
 import (
+	"context"
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -18,61 +21,63 @@ import (
 
 func (opts *AbisOptions) HandleClean() error {
 	chain := opts.Globals.Chain
-
-	if opts.Globals.IsApiMode() {
-		return fmt.Errorf("clean is not supported in API mode")
-	}
+	testMode := opts.Globals.TestMode
 
 	if len(opts.Addrs) == 0 {
-		// TODO: This code is not actually used
-		// filenameChan := make(chan cache.CacheFileInfo)
-		// var nRoutines int = 1
-		// go cache.WalkCacheFolder(context.Background(), chain, cache.Cache_Abis, nil, filenameChan)
-		// for result := range filenameChan {
-		// 	switch result.Type {
-		// 	case cache.Cache_Abis:
-		// 		skip := !cache.IsCacheType(result.Path, cache.Cache_Abis, true /* checkExt */)
-		// 		if !skip {
-		// 			if file.FileSize(result.Path) == 0 {
-		// 				logger.Info("Removing empty abi: "+strings.Replace(result.Path, config.GetPathToCache(chain)+"abis/", "", -1), file.FileSize(result.Path))
-		// 				// if err := cleanOneAbi(result.Path, ""); err != nil {
-		// 				// 	return err
-		// 				// }
-		// 			}
-		// 		}
-		// 	case cache.Cache_NotACache:
-		// 		nRoutines--
-		// 		if nRoutines == 0 {
-		// 			close(filenameChan)
-		// 		}
-		// 	}
-		// }
+		if testMode {
+			logger.Info("Cleaning empty abis is not tested in test mode.")
+		} else {
+			filenameChan := make(chan cache.CacheFileInfo)
+			var nRoutines = 1
+			go cache.WalkCacheFolder(context.Background(), chain, cache.Cache_Abis, nil, filenameChan)
+			for result := range filenameChan {
+				switch result.Type {
+				case cache.Cache_Abis:
+					path := result.Path
+					skip := !cache.IsCacheType(path, cache.Cache_Abis, true /* checkExt */)
+					if !skip {
+						size := file.FileSize(path)
+						if size <= int64(len(abi.AbiNotFound)+5) {
+							// Over time, the contents of an empty ABI file have taken on various shapes. We clean that up here before comparing.
+							clean := func(in string) string {
+								return strings.Replace(strings.Replace(in, " ", "", -1), "\"", "", -1)
+							}
+							contents := clean(file.AsciiFileToString(path))
+							empty := clean(abi.AbiNotFound)
+							if len(contents) == 0 || contents == empty {
+								if file.FileExists(path) {
+									_, fn := filepath.Split(path)
+									if err := os.Remove(path); err != nil {
+										msg := fmt.Sprintf("%sCould not remove abi file %s: %s.%s", colors.Red, fn, err, colors.Off)
+										logger.Warn(msg)
+									} else {
+										msg := fmt.Sprintf("%sAbi file %s removed: %d bytes.%s", colors.Green, fn, size, colors.Off)
+										logger.Warn(msg)
+									}
+								}
+							}
+						}
+					}
+				case cache.Cache_NotACache:
+					nRoutines--
+					if nRoutines == 0 {
+						close(filenameChan)
+					}
+				}
+			}
+		}
 	} else {
 		for _, addr := range opts.Addrs {
-			if err := cleanOneAbi(config.GetPathToCache(chain)+"abis/", addr); err != nil {
-				return err
+			path := config.GetPathToCache(chain) + "abis/" + addr + ".json"
+			if file.FileExists(path) {
+				if err := os.Remove(path); err != nil {
+					logger.Warn(colors.Red+"Could not remove abi for address", addr, ":", err, "."+colors.Off)
+				} else {
+					logger.Info(colors.Green+"Abi file for address", addr, "removed."+colors.Off)
+				}
 			}
 		}
 	}
 
-	return nil
-}
-
-func cleanOneAbi(abiFolder, addr string) error {
-	fn := abiFolder
-	if !strings.HasSuffix(fn, ".json") {
-		fn = path.Join(fn, addr+".json")
-	}
-
-	if !file.FileExists(fn) {
-		logger.Info(colors.Red, "Abi", addr, "not found", colors.Off)
-		return nil
-	}
-
-	if err := os.Remove(fn); err != nil {
-		return err
-	}
-
-	logger.Info(colors.Green, "Abi for", addr, "removed", colors.Off)
 	return nil
 }

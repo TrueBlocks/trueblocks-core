@@ -27,7 +27,7 @@ type ContractCall struct {
 func NewContractCall(chain string, callAddress base.Address, theCall string, showSuggestions bool) (*ContractCall, error) {
 	parsed, err := parser.ParseContractCall(theCall)
 	if err != nil {
-		err = fmt.Errorf("The value provided --call (%s) is invalid. See below.", theCall)
+		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
 		return nil, err
 	}
 

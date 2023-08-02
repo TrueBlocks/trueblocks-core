@@ -5,6 +5,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -12,6 +13,16 @@ import (
 func (opts *TracesOptions) HandleFilter() error {
 	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+
+	// TODO: Why does this have to dirty the caller?
+	settings := rpcClient.DefaultRpcOptionsSettings{
+		Chain: chain,
+		Opts:  opts,
+	}
+	opts.Conn = settings.DefaultRpcOptions()
+	if !opts.Conn.Store.ReadOnly() {
+		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {

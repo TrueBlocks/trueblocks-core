@@ -10,19 +10,18 @@ var NoOptions *Options = nil
 
 // Options carry additional context to rpcClient calls
 type Options struct {
-	Store                    *cacheNew.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
-	LatestBlockTimestamp     base.Timestamp
-	TransactionWriteDisabled bool // Disable caching transactions
-	TraceWriteDisabled       bool // Disable caching traces
+	Store                *cacheNew.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
+	LatestBlockTimestamp base.Timestamp
+	enabledMap           map[string]bool
 }
 
 func (options *Options) TestLog() {
-	logger.TestLog(!options.TraceWriteDisabled, "TraceWriteDisabled: ", options.TraceWriteDisabled)
-	logger.TestLog(!options.TransactionWriteDisabled, "TransactionWriteDisabled: ", options.TransactionWriteDisabled)
-	logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp", options.LatestBlockTimestamp)
+	logger.TestLog(options.HasStore() && options.enabledMap["txs"], "txs cache: ", options.enabledMap["txs"])
+	logger.TestLog(options.HasStore() && options.enabledMap["traces"], "traces cache: ", options.enabledMap["traces"])
+	logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }
 
-func NewConnection(chain string, caches []string) *Options {
+func NewConnection(chain string) *Options {
 	settings := DefaultRpcOptionsSettings{
 		Chain: chain,
 	}
@@ -37,7 +36,8 @@ func NewReadOnlyConnection(chain string) *Options {
 	return settings.DefaultRpcOptions()
 }
 
-func (options *Options) EnableCaches(on, txs, traces bool) {
+func (options *Options) EnableCaches(on bool, enabledMap map[string]bool) {
+	// options.enabledMap = enabledMap
 }
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns
@@ -69,7 +69,7 @@ type DefaultRpcOptionsSettings struct {
 
 // CacheStater informs us if we should write txs and traces to the cache
 type CacheStater interface {
-	CacheState() (bool, bool, bool)
+	CacheState() (bool, map[string]bool)
 }
 
 func (settings *DefaultRpcOptionsSettings) DefaultRpcOptions() *Options {
@@ -80,20 +80,18 @@ func (settings *DefaultRpcOptionsSettings) DefaultRpcOptions() *Options {
 
 	var chain string
 	// Check if cache should write
-	var cacheWriteEnabled bool
-	var cacheTxWriteEnabled bool
-	var cacheTraceWriteEnabled bool
+	var cacheEnabled bool
+	enabledMap := make(map[string]bool)
 	if settings != nil {
 		chain = settings.Chain
 		if cs, ok := settings.Opts.(CacheStater); ok {
-			cacheWriteEnabled, cacheTxWriteEnabled, cacheTraceWriteEnabled = cs.CacheState()
+			cacheEnabled, enabledMap = cs.CacheState()
 		}
 	}
 
 	return &Options{
-		Store:                    cacheStore(chain, !cacheWriteEnabled || readonlyCache),
-		TransactionWriteDisabled: !cacheTxWriteEnabled,
-		TraceWriteDisabled:       !cacheTraceWriteEnabled,
+		Store:      cacheStore(chain, !cacheEnabled || readonlyCache),
+		enabledMap: enabledMap,
 	}
 }
 

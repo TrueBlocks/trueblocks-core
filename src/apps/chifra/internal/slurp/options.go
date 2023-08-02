@@ -98,11 +98,10 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
@@ -127,11 +126,10 @@ func slurpFinishParse(args []string) *SlurpOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {
@@ -184,5 +182,22 @@ func ResetOptions() {
 	defaultSlurpOptions.Globals.Caps = capabilities
 }
 
+func (opts *SlurpOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		// TODO: Enabled slurps cache
+		"slurps": true,
+	}
+	// EXISTING_CODE
+	return
+}
+
 // EXISTING_CODE
+//
+
+// CacheState returns booleans indicating which caches to enable
+func (opts *SlurpOptions) CacheState() (bool, map[string]bool) {
+	return opts.Globals.Cache, opts.getCaches()
+}
+
 // EXISTING_CODE

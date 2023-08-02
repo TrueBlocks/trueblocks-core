@@ -47,8 +47,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 		itemsSeen++
 		itemsRemoved++
 		bytesRemoved += info.Size()
-		logger.Info(!testMode && itemsRemoved%20 == 0, "Removed ", itemsRemoved, " items and ", bytesRemoved, " bytes.", info.Name())
-
+		logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", info.Name())
 		if opts.Globals.Verbose {
 			logger.Info(info.Name(), "was removed.")
 		}
@@ -109,7 +108,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	// }
 
 	// caches := []string{"txs", "traces"}
-	// if cont, err := cache.DecacheItems(chain, "", processorFunc, caches, pairs); err != nil || !cont {
+	// if cont, err := cache.Decache Items(chain, "", processorFunc, caches, pairs); err != nil || !cont {
 	// 	return err
 	// }
 

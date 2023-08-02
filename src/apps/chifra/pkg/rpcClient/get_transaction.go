@@ -262,7 +262,7 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 		}
 	}
 	if tx != nil {
-		if options.HasStore() && !options.TransactionWriteDisabled {
+		if options.HasStore() && options.enabledMap["txs"] {
 			options.Store.Write(tx, writeOptions)
 		}
 		return tx, nil
@@ -286,7 +286,7 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
-	if options.HasStore() && !options.TransactionWriteDisabled {
+	if options.HasStore() && options.enabledMap["txs"] {
 		options.Store.Write(tx, writeOptions)
 	}
 
@@ -340,7 +340,7 @@ func (options *Options) GetTransactionByBlockAndId(chain string, bn base.Blknum,
 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
-	if options.HasStore() && !options.TransactionWriteDisabled {
+	if options.HasStore() && options.enabledMap["txs"] {
 		options.Store.Write(tx, writeOptions)
 	}
 

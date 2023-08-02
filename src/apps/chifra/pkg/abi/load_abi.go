@@ -224,7 +224,7 @@ func LoadAbi(chain string, address base.Address, destination AbiInterfaceMap) (e
 	}
 
 	// We didn't find the file. Check if the address is a contract
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 	if err := conn.IsContractAt(chain, address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
 		return err
 	} else if errors.Is(err, rpcClient.ErrNotAContract) {

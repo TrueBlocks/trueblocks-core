@@ -79,10 +79,10 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
 	}
@@ -98,10 +98,10 @@ func statusFinishParse(args []string) *StatusOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Modes = append(opts.Modes, args...)
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
@@ -134,6 +134,12 @@ func ResetOptions() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultStatusOptions.Globals.Caps = capabilities
+}
+
+func (opts *StatusOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

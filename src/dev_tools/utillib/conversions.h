@@ -47,7 +47,6 @@ using CTopicArray = vector<topic_t>;
 using CFourbyteArray = vector<fourbyte_t>;
 
 //-------------------------------------------------------------------------
-using CAddressWeiMap = map<address_t, wei_t>;
 using CStringBoolMap = map<string_q, bool>;
 using CUintBoolMap = map<uint32_t, bool>;
 using CAddressBoolMap = map<address_t, bool>;

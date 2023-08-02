@@ -72,7 +72,7 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 }
 
 func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 
 	dt, err := tslib.FromBnToDate(chain, bn)
 	if err != nil {
@@ -175,7 +175,7 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 }
 
 func (p *Point) resolvePoint(chain string) uint64 {
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 
 	var bn uint64
 	if p.Hash != "" {
@@ -201,7 +201,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 }
 
 func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 	txs := []types.RawAppearance{}
 
 	if id.StartType == BlockNumber {

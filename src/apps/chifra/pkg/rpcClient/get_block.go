@@ -93,7 +93,7 @@ func (options *Options) GetBlockBodyByNumber(chain string, bn uint64) (types.Sim
 		tx := types.NewSimpleTransaction(raw, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
-		if options.HasStore() && !options.TransactionWriteDisabled {
+		if options.HasStore() && options.enabledMap["txs"] {
 			options.Store.Write(tx, writeOptions)
 		}
 	}
@@ -144,7 +144,7 @@ func (options *Options) GetBlockHeaderByNumber(chain string, bn uint64) (block t
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
 func loadBlock[Tx string | types.SimpleTransaction](chain string, bn uint64, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
-	conn := NewConnection(chain, []string{})
+	conn := NewConnection(chain)
 
 	rawBlock, err = conn.getRawBlock(chain, bn, withTxs)
 	if err != nil {
@@ -263,4 +263,3 @@ func (options *Options) GetTransactionHashByNumberAndID(chain string, bn, txId u
 		return tx.Hash().Hex(), nil
 	}
 }
-

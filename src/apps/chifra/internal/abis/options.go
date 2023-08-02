@@ -94,10 +94,10 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	// EXISTING_CODE
 
@@ -110,10 +110,10 @@ func abisFinishParse(args []string) *AbisOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	if opts.Globals.IsApiMode() {
 		defFmt = "json"
 	}
@@ -142,6 +142,12 @@ func ResetOptions() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultAbisOptions.Globals.Caps = capabilities
+}
+
+func (opts *AbisOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

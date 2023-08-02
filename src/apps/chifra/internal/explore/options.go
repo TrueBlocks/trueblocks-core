@@ -73,10 +73,10 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, opts.Terms)
 	// EXISTING_CODE
 
@@ -89,10 +89,10 @@ func exploreFinishParse(args []string) *ExploreOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
+	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
@@ -122,6 +122,12 @@ func ResetOptions() {
 	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 	defaultExploreOptions.Globals.Caps = capabilities
+}
+
+func (opts *ExploreOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

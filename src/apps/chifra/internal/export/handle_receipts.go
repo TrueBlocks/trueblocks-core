@@ -30,12 +30,13 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
+
+	// TODO: Why does this have to dirty the caller?
 	settings := rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	// TODO: Why does this have to dirty the caller?
 	if !opts.Conn.Store.ReadOnly() {
 		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
 	}

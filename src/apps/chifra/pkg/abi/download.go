@@ -14,6 +14,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
+var AbiNotFound = `[{"name":"AbiNotFound","type":"function"}]`
+
 // DownloadAbi downloads the ABI for the given address and saves it to the cache.
 // TODO: This function should be easy to replace with "ABI providers" (different services like
 // Sourcify or custom ones configured by the user)
@@ -59,7 +61,7 @@ func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap
 		// remove empty ABIs with chifra abis --clean.
 		logger.Warn("provider responded with:", address.Hex(), data["message"])
 
-		reader := strings.NewReader("[{\"name\": \"AbiNotFound\",\"type\": \"function\"}]")
+		reader := strings.NewReader(AbiNotFound)
 		fromJson(reader, destination)
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {
 			return err

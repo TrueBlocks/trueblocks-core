@@ -1,6 +1,6 @@
 abis?addrs=0x713b73c3994442b533e6a083ec968e40606810ec&clean
 {
   "errors": [
-    "clean is not supported in API mode"
+    "The --clean option is not available in API mode."
   ]
 }

@@ -16,15 +16,13 @@ import (
 
 func (opts *BlocksOptions) HandleShowBlocks() error {
 	chain := opts.Globals.Chain
+
+	// TODO: Why does this have to dirty the caller?
 	settings := rpcClient.DefaultRpcOptionsSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-
-	// TODO: Why does this have to dirty the caller?
-	// If the cache is writeable, fetch the latest block timestamp so that we never
-	// cache pending blocks
 	if !opts.Conn.Store.ReadOnly() {
 		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
 	}
