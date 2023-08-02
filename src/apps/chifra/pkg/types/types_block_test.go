@@ -24,12 +24,12 @@ func TestBlockCache(t *testing.T) {
 			"0x62974c8152c87e14880c54007260e0d5fe9d182c2cd22c58797735a9ae88370a",
 		},
 	}
-	cache, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
+	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if err := cache.Write(expected, nil); err != nil {
+	if err := store.Write(expected, nil); err != nil {
 		t.Fatal(err)
 	}
 
@@ -37,7 +37,7 @@ func TestBlockCache(t *testing.T) {
 	readBack := &SimpleBlock[string]{
 		BlockNumber: expected.BlockNumber,
 	}
-	if err := cache.Read(readBack, nil); err != nil {
+	if err := store.Read(readBack, nil); err != nil {
 		t.Fatal(err)
 	}
 
