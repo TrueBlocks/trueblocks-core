@@ -2,6 +2,7 @@ chifra tokens  0xa9fe4601811213c340e850ea305481aff02f5b28 --parts all 12000000
 TEST[DATE|TIME] Addrs:  [0xa9fe4601811213c340e850ea305481aff02f5b28]
 TEST[DATE|TIME] Blocks:  [12000000]
 TEST[DATE|TIME] Parts:  [all]
+TEST[DATE|TIME] Caps:  cache
 TEST[DATE|TIME] Format:  txt
-blockNumber	address	name	symbol	decimals	totalsupply
-12000000	0xa9fe4601811213c340e850ea305481aff02f5b28	WETH yVault	yvWETH		10359.022508923948006858
+address	blockNumber	name	symbol	decimals	totalSupply
+0xa9fe4601811213c340e850ea305481aff02f5b28	12000000	WETH yVault	yvWETH	18	10359.022508923948006858
