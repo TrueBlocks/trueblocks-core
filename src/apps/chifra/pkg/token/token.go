@@ -5,7 +5,6 @@ import (
 	"errors"
 	"math/big"
 	"strconv"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -101,7 +100,16 @@ func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber str
 	}
 
 	balance = new(big.Int)
-	balance.SetString(strings.Replace(*output["balance"], "0x", "", -1), 16)
+	if output["balance"] == nil {
+		return balance, nil
+	}
+	balanceHex := *output["balance"]
+	if len(balanceHex) > 66 {
+		// Cut garbage off if hex is too long
+		balance.SetString(balanceHex[2:66], 16)
+	} else {
+		balance.SetString(balanceHex[2:], 16)
+	}
 	return balance, nil
 }
 

@@ -71,7 +71,7 @@ local   ,both ,fast  ,tokens ,tools/getTokens ,block_not_found               ,y 
 
 # Returns a weird (very large) totalSupply
 local   ,both ,slow  ,tokens ,tools/getTokens ,old_bug_2                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & parts = all & blocks = 12000000
-local   ,both ,slow  ,tokens ,tools/getTokens ,old_bug_1                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 0x99c961738786e8f5f3fee109f4d49f5901826b8c & blocks = 11963059
+on   ,both ,slow  ,tokens ,tools/getTokens ,old_bug_1                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 0x99c961738786e8f5f3fee109f4d49f5901826b8c & blocks = 11963059
 
 # Capabilities
 # chain & fmt & help & log_level = 4 & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
