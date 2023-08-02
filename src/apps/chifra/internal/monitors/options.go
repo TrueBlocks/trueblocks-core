@@ -98,8 +98,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
@@ -114,8 +113,7 @@ func monitorsFinishParse(args []string) *MonitorsOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, args)
@@ -143,6 +141,12 @@ func ResetOptions() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultMonitorsOptions.Globals.Caps = capabilities
+}
+
+func (opts *MonitorsOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

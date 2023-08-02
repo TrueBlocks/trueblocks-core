@@ -103,11 +103,10 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -119,11 +118,10 @@ func whenFinishParse(args []string) *WhenOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Blocks = args
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
@@ -155,14 +153,21 @@ func ResetOptions() {
 	defaultWhenOptions.Globals.Caps = capabilities
 }
 
+func (opts *WhenOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// TODO: Can we enable chaching here?
+	m = map[string]bool{}
+	// EXISTING_CODE
+	return
+}
+
 // EXISTING_CODE
 //
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *WhenOptions) CacheState() (bool, map[string]bool) {
-	return false, map[string]bool{} // no caches
-	// caches := map[string]bool{} // only blocks
-	// return opts.Globals.Cache, caches
+	return false, opts.getCaches() // no caches
+	// return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

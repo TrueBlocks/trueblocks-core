@@ -71,11 +71,10 @@ func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -87,11 +86,10 @@ func receiptsFinishParse(args []string) *ReceiptsOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Transactions = args
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
@@ -121,15 +119,21 @@ func ResetOptions() {
 	defaultReceiptsOptions.Globals.Caps = capabilities
 }
 
+func (opts *ReceiptsOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		"txs": true,
+	}
+	// EXISTING_CODE
+	return
+}
+
 // EXISTING_CODE
 //
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *ReceiptsOptions) CacheState() (bool, map[string]bool) {
-	caches := map[string]bool{
-		"txs": true,
-	}
-	return opts.Globals.Cache, caches
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

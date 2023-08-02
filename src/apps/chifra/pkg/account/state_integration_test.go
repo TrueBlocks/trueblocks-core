@@ -18,7 +18,7 @@ import (
 
 func TestGetState(t *testing.T) {
 	chain := utils.GetTestChain()
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 
 	type args struct {
 		chain       string

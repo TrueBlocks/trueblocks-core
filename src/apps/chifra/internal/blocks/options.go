@@ -142,11 +142,10 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.CacheTxs, opts.CacheTraces)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -158,11 +157,10 @@ func blocksFinishParse(args []string) *BlocksOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.CacheTxs, opts.CacheTraces)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	if !opts.Uniq && opts.List == 0 {
 		defFmt = "json"
 	}
@@ -195,16 +193,22 @@ func ResetOptions() {
 	defaultBlocksOptions.Globals.Caps = capabilities
 }
 
+func (opts *BlocksOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		"txs":    opts.CacheTxs,
+		"traces": opts.CacheTraces,
+	}
+	// EXISTING_CODE
+	return
+}
+
 // EXISTING_CODE
 //
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *BlocksOptions) CacheState() (bool, map[string]bool) {
-	caches := map[string]bool{
-		"txs":    opts.CacheTxs,
-		"traces": opts.CacheTraces,
-	}
-	return opts.Globals.Cache, caches
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

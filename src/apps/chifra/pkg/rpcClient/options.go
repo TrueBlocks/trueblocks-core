@@ -21,7 +21,7 @@ func (options *Options) TestLog() {
 	logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }
 
-func NewConnection(chain string, caches []string) *Options {
+func NewConnection(chain string) *Options {
 	settings := DefaultRpcOptionsSettings{
 		Chain: chain,
 	}
@@ -36,7 +36,7 @@ func NewReadOnlyConnection(chain string) *Options {
 	return settings.DefaultRpcOptions()
 }
 
-func (options *Options) EnableCaches(on, txs, traces bool) {
+func (options *Options) EnableCaches(on bool, enableMap map[string]bool) {
 }
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns

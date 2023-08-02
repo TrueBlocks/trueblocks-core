@@ -79,11 +79,10 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, false, true)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -95,11 +94,10 @@ func tracesFinishParse(args []string) *TracesOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, true)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Transactions = args
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
@@ -129,16 +127,22 @@ func ResetOptions() {
 	defaultTracesOptions.Globals.Caps = capabilities
 }
 
+func (opts *TracesOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		"txs":    true,
+		"traces": true,
+	}
+	// EXISTING_CODE
+	return
+}
+
 // EXISTING_CODE
 //
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *TracesOptions) CacheState() (bool, map[string]bool) {
-	caches := map[string]bool{
-		"txs":    true,
-		"traces": true,
-	}
-	return opts.Globals.Cache, caches
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

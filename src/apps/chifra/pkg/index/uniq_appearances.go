@@ -41,7 +41,7 @@ func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 
 // UniqFromTraces extracts addresses from traces
 func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 
 	for _, trace := range traces {
 		trace := trace

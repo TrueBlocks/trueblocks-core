@@ -102,8 +102,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -117,8 +116,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
@@ -157,6 +155,12 @@ func ResetOptions() {
 	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 	defaultScrapeOptions.Globals.Caps = capabilities
+}
+
+func (opts *ScrapeOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
 }
 
 // EXISTING_CODE

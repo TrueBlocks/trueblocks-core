@@ -98,11 +98,10 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	if opts.Call != "" {
 		// The tests need single quotes
 		unquoted := strings.Trim(opts.Call, "'")
@@ -128,11 +127,10 @@ func stateFinishParse(args []string) *StateOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {
@@ -190,16 +188,22 @@ func ResetOptions() {
 	defaultStateOptions.Globals.Caps = capabilities
 }
 
+func (opts *StateOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		// TODO: Enabled state cache
+		"state": true,
+	}
+	// EXISTING_CODE
+	return
+}
+
 // EXISTING_CODE
 //
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *StateOptions) CacheState() (bool, map[string]bool) {
-	caches := map[string]bool{
-		// TODO: Enabled state cache
-		"state": true,
-	}
-	return opts.Globals.Cache, caches
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

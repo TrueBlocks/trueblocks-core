@@ -17,7 +17,7 @@ import (
 func Test_Explore_Validate(t *testing.T) {
 	var opts ExploreOptions
 	chain := utils.GetTestChain()
-	opts.Conn = rpcClient.NewConnection(chain, []string{})
+	opts.Conn = rpcClient.NewConnection(chain)
 	opts.Terms = append(opts.Terms, "1001001.0")
 	opts.Globals.Chain = "mainnet"
 	err := opts.validateExplore()

@@ -24,7 +24,7 @@ import (
 // -----------------------------------------------------------------------------------------------
 func main() {
 	chain := "mainnet"
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 	slowWay(conn)
 	fastWay(conn)
 }

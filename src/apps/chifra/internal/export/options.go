@@ -196,11 +196,10 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(chain, opts.Emitter)
 	opts.Asset, _ = opts.Conn.GetAddressesFromEns(chain, opts.Asset)
@@ -215,11 +214,10 @@ func exportFinishParse(args []string) *ExportOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {
@@ -265,19 +263,25 @@ func ResetOptions() {
 	defaultExportOptions.Globals.Caps = capabilities
 }
 
-// EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *ExportOptions) CacheState() (bool, map[string]bool) {
-	caches := map[string]bool{
+func (opts *ExportOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
 		"txs": true,
 		// TODO: Enabled neighbors and statements cache
 		"neigbors":   true,
 		"statements": true,
 		"traces":     opts.CacheTraces,
 	}
-	return opts.Globals.Cache, caches
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+//
+
+// CacheState returns booleans indicating which caches to enable
+func (opts *ExportOptions) CacheState() (bool, map[string]bool) {
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

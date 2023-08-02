@@ -117,11 +117,10 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
 	// EXISTING_CODE
 
@@ -134,11 +133,10 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, true, opts.CacheTraces)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Transactions = args
 	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
 	// EXISTING_CODE
@@ -171,16 +169,22 @@ func ResetOptions() {
 	defaultTransactionsOptions.Globals.Caps = capabilities
 }
 
+func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		"txs":    true,
+		"traces": opts.CacheTraces,
+	}
+	// EXISTING_CODE
+	return
+}
+
 // EXISTING_CODE
 //
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *TransactionsOptions) CacheState() (bool, map[string]bool) {
-	caches := map[string]bool{
-		"txs":    true,
-		"traces": opts.CacheTraces,
-	}
-	return opts.Globals.Cache, caches
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

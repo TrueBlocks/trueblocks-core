@@ -94,11 +94,10 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	}
 	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
@@ -118,11 +117,10 @@ func tokensFinishParse(args []string) *TokensOptions {
 	opts.Globals.FinishParse(args)
 	defFmt := "txt"
 	chain := opts.Globals.Chain
-	caches := []string{}
-	opts.Conn = rpcClient.NewConnection(chain, caches)
+	opts.Conn = rpcClient.NewConnection(chain)
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, false, false)
+	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	if len(args) > 0 {
 		dupMap := make(map[string]bool)
 		for index, arg := range args {
@@ -174,16 +172,22 @@ func ResetOptions() {
 	defaultTokensOptions.Globals.Caps = capabilities
 }
 
+func (opts *TokensOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		// TODO: Enabled tokens cache
+		"tokens": false,
+	}
+	// EXISTING_CODE
+	return
+}
+
 // EXISTING_CODE
 //
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *TokensOptions) CacheState() (bool, map[string]bool) {
-	caches := map[string]bool{
-		// TODO: Enabled tokens cache
-		"tokens": false,
-	}
-	return opts.Globals.Cache, caches
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

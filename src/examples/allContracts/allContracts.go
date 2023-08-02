@@ -13,7 +13,7 @@ var bar = logger.NewBar("Visiting", true, int64(17000000))
 
 func main() {
 	chain := "mainnet"
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 	latest := conn.GetLatestBlockNumber(chain)
 	forEveryTrace(46000, latest, visitTrace)
 	bar.Finish(true)
@@ -28,7 +28,7 @@ func visitTrace(trace *types.SimpleTrace, data *any) error {
 
 func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) error) error {
 	chain := "mainnet"
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 	for blknum := from; blknum <= to; blknum++ {
 		if block, err := conn.GetBlockHeaderByNumber(chain, blknum); err != nil {
 			return err
