@@ -4,7 +4,6 @@ import (
 	"errors"
 	"math/big"
 	"strconv"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -88,9 +87,11 @@ func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber str
 		return nil, err
 	}
 
-	balance = new(big.Int)
-	balance.SetString(strings.Replace(*output["balance"], "0x", "", -1), 16)
-	return balance, nil
+	if output["balance"] == nil {
+		return big.NewInt(0), nil
+	}
+
+	return base.HexToWei(*output["balance"]), nil
 }
 
 func queryToken(chain string, address base.Address, blockNumber string) (token *Token, err error) {
@@ -179,8 +180,7 @@ func queryToken(chain string, address base.Address, blockNumber string) (token *
 		decimals = uint8(parsedDecimals)
 	}
 
-	totalSupplyRaw := big.NewInt(0)
-	totalSupplyRaw.SetString(*results["totalSupply"], 0)
+	totalSupplyRaw := base.HexToWei(*results["totalSupply"])
 	var totalSupply string
 	if len(totalSupplyRaw.Bits()) > 0 {
 		totalSupply = totalSupplyRaw.String()
