@@ -36,7 +36,8 @@ func NewReadOnlyConnection(chain string) *Options {
 	return settings.DefaultRpcOptions()
 }
 
-func (options *Options) EnableCaches(on bool, enableMap map[string]bool) {
+func (options *Options) EnableCaches(on bool, enabledMap map[string]bool) {
+	// options.enabledMap = enabledMap
 }
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns
