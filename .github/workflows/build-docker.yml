@@ -1,0 +1,31 @@
+# This workflow runs "publish.yml" workflow in trueblocks-docker repo.
+
+name: Trigger Docker Build
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  Trigger:
+    permissions:
+      actions: write
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Start trueblocks-docker publish workflow
+        uses: actions/github-script@v6
+        with:
+          # We need a token to authorize
+          github-token: ${{ secrets.PAT_DOCKER_TRIGGER }}
+          # We send REST API call to initialize the other workflow. We send it
+          # github.ref_name (which is same as tag in this case)
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'trueblocks',
+              repo: 'trueblocks-docker',
+              workflow_id: 'publish.yml',
+              ref: 'main',
+              inputs: {
+                tag: '${{ github.ref_name }}'
+              }
+            })
