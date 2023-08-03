@@ -2,7 +2,7 @@ package rpcClient
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -10,7 +10,7 @@ var NoOptions *Options = nil
 
 // Options carry additional context to rpcClient calls
 type Options struct {
-	Store                *cacheNew.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
+	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
 	LatestBlockTimestamp base.Timestamp
 	enabledMap           map[string]bool
 }
@@ -42,11 +42,11 @@ func (options *Options) EnableCaches(on bool, enabledMap map[string]bool) {
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns
 // a cache that will not write new items. If nil is returned, it means "no caching"
-func cacheStore(chain string, forceReadonly bool) *cacheNew.Store {
+func cacheStore(chain string, forceReadonly bool) *cache.Store {
 	// We call NewStore, but Storer implementation (Fs by default) should decide
 	// whether it has to return a new instance or reuse the existing one
-	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{
-		Location: cacheNew.FsCache,
+	store, err := cache.NewStore(&cache.StoreOptions{
+		Location: cache.FsCache,
 		Chain:    chain,
 		ReadOnly: forceReadonly,
 	})

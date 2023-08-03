@@ -12,7 +12,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -52,9 +52,9 @@ func (options *Options) GetBlockBodyByNumber(chain string, bn uint64) (types.Sim
 		return block, err
 	}
 
-	var writeOptions *cacheNew.WriteOptions
+	var writeOptions *cache.WriteOptions
 	if options.HasStoreWritable() {
-		writeOptions = &cacheNew.WriteOptions{
+		writeOptions = &cache.WriteOptions{
 			// Check if the block is final
 			Pending: block.Pending(options.LatestBlockTimestamp),
 		}
@@ -131,7 +131,7 @@ func (options *Options) GetBlockHeaderByNumber(chain string, bn uint64) (block t
 	}
 
 	if options.HasStoreWritable() {
-		writeOptions := &cacheNew.WriteOptions{
+		writeOptions := &cache.WriteOptions{
 			// Check if the block is final
 			Pending: block.Pending(options.LatestBlockTimestamp),
 		}

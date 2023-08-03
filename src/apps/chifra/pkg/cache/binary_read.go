@@ -1,4 +1,4 @@
-package cacheNew
+package cache
 
 import (
 	"encoding/binary"
@@ -21,13 +21,13 @@ func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 	case Unmarshaler:
 		err = v.UnmarshalCache(version, reader)
 	case *[]string:
-		err = ReadSlice(reader, v, version)
+		err = readSlice(reader, v, version)
 	case *[]big.Int:
-		err = ReadSlice(reader, v, version)
+		err = readSlice(reader, v, version)
 	case *string:
-		err = ReadString(reader, v)
+		err = readString(reader, v)
 	case *big.Int:
-		err = ReadBigInt(reader, v)
+		err = readBigInt(reader, v)
 	default:
 		// Reading []Unmarshaler is a bit more complex. The type switch won't work and
 		// we'll end up here. If value is a pointer to a slice, then it may contain Unmarshalers
@@ -35,7 +35,7 @@ func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 		if reflectedValue.Kind() == reflect.Pointer {
 			if reflectedValue.Elem().Kind() == reflect.Slice {
 				// It is what we want, so let's try to read. If we get an error, we'll ignore it and still
-				err = ReadSliceReflect(reader, reflect.TypeOf(value).Elem(), reflectedValue.Elem(), version)
+				err = readSliceReflect(reader, reflect.TypeOf(value).Elem(), reflectedValue.Elem(), version)
 				if err == nil {
 					return
 				}
@@ -47,9 +47,9 @@ func ReadValue(reader io.Reader, value any, version uint64) (err error) {
 	return
 }
 
-// ReadSlice reads binary representation of slice of T. ReadValue is called for each
+// readSlice reads binary representation of slice of T. ReadValue is called for each
 // item, so slice items can be of any type supported by ReadValue.
-func ReadSlice[T any](reader io.Reader, slice *[]T, version uint64) (err error) {
+func readSlice[T any](reader io.Reader, slice *[]T, version uint64) (err error) {
 	var itemCount uint64 = 0
 	if err = read(reader, &itemCount); err != nil {
 		return
@@ -68,8 +68,8 @@ func ReadSlice[T any](reader io.Reader, slice *[]T, version uint64) (err error) 
 	return nil
 }
 
-// ReadSliceReflect uses reflection to read a slice (typically of Unmarshaler)
-func ReadSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.Value, version uint64) (err error) {
+// readSliceReflect uses reflection to read a slice (typically of Unmarshaler)
+func readSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.Value, version uint64) (err error) {
 	var itemCount uint64 = 0
 	if err = read(reader, &itemCount); err != nil {
 		return
@@ -110,7 +110,7 @@ func ReadSliceReflect(reader io.Reader, slice reflect.Type, destPointer reflect.
 	return nil
 }
 
-func ReadString(reader io.Reader, str *string) (err error) {
+func readString(reader io.Reader, str *string) (err error) {
 	var size uint64
 	if err = read(reader, &size); err != nil {
 		return
@@ -124,7 +124,7 @@ func ReadString(reader io.Reader, str *string) (err error) {
 	return
 }
 
-func ReadBigInt(reader io.Reader, target *big.Int) (err error) {
+func readBigInt(reader io.Reader, target *big.Int) (err error) {
 	// we first need to learn how many bytes we should read
 	// (GobEncode that we use to write big.Int produces
 	// variable-length []byte)

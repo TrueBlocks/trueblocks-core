@@ -1,4 +1,4 @@
-package cacheNew
+package cache
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"path"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 

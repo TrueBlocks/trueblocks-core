@@ -5,20 +5,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (cache *AbiCache) ArticulateReceipt(chain string, receipt *types.SimpleReceipt) (err error) {
+func (abiCache *AbiCache) ArticulateReceipt(chain string, receipt *types.SimpleReceipt) (err error) {
 	for index := range receipt.Logs {
 		address := receipt.Logs[index].Address
-		if !cache.loadedMap[address] && !cache.skipMap[address] {
-			if err := abi.LoadAbi(chain, address, cache.abiMap); err != nil {
-				cache.skipMap[address] = true
+		if !abiCache.loadedMap[address] && !abiCache.skipMap[address] {
+			if err := abi.LoadAbi(chain, address, abiCache.abiMap); err != nil {
+				abiCache.skipMap[address] = true
 				return err
 			} else {
-				cache.loadedMap[address] = true
+				abiCache.loadedMap[address] = true
 			}
 		}
 
-		if !cache.skipMap[address] {
-			if err = cache.ArticulateLog(chain, &receipt.Logs[index]); err != nil {
+		if !abiCache.skipMap[address] {
+			if err = abiCache.ArticulateLog(chain, &receipt.Logs[index]); err != nil {
 				return err
 			}
 		}

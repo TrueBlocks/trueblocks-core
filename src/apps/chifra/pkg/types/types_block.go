@@ -16,7 +16,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 var PendingPeriod = (5 * time.Minute).Milliseconds()
@@ -216,31 +216,31 @@ func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
 }
 
 func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
-	if err = cacheNew.WriteValue(writer, s.GasLimit); err != nil {
+	if err = cache.WriteValue(writer, s.GasLimit); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.GasUsed); err != nil {
+	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Hash); err != nil {
+	if err = cache.WriteValue(writer, s.Hash); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.ParentHash); err != nil {
+	if err = cache.WriteValue(writer, s.ParentHash); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Miner); err != nil {
+	if err = cache.WriteValue(writer, s.Miner); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Difficulty); err != nil {
+	if err = cache.WriteValue(writer, s.Difficulty); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, &s.BaseFeePerGas); err != nil {
+	if err = cache.WriteValue(writer, &s.BaseFeePerGas); err != nil {
 		return err
 	}
 
@@ -256,11 +256,11 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 			txHashes = append(txHashes, tx.Hash.Hex())
 		}
 	}
-	if err = cacheNew.WriteValue(writer, txHashes); err != nil {
+	if err = cache.WriteValue(writer, txHashes); err != nil {
 		return err
 	}
 
-	if err = cacheNew.WriteValue(writer, s.Uncles); err != nil {
+	if err = cache.WriteValue(writer, s.Uncles); err != nil {
 		return err
 	}
 
@@ -268,41 +268,41 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if err = cacheNew.ReadValue(reader, &s.GasLimit, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasLimit, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Hash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Hash, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.ParentHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ParentHash, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Miner, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Miner, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Difficulty, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Difficulty, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
 		return err
 	}
 
 	s.Transactions = make([]string, 0)
-	if err = cacheNew.ReadValue(reader, &s.Transactions, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
 		return err
 	}
 
 	s.Uncles = make([]base.Hash, 0)
-	if err = cacheNew.ReadValue(reader, &s.Uncles, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Uncles, version); err != nil {
 		return err
 	}
 

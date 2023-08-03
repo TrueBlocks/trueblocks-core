@@ -1,4 +1,4 @@
-package cacheNew
+package cache
 
 import (
 	"io"

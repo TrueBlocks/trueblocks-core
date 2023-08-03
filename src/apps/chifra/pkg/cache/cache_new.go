@@ -1,9 +1,9 @@
-package cacheNew
+package cache
 
 import (
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 

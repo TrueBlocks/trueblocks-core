@@ -13,7 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -151,44 +151,44 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 //
 
 func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
-	if err = cacheNew.WriteValue(writer, s.Address); err != nil {
+	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
-	optArticulatedLog := &cacheNew.Optional[SimpleFunction]{
+	optArticulatedLog := &cache.Optional[SimpleFunction]{
 		Value: s.ArticulatedLog,
 	}
-	if err = cacheNew.WriteValue(writer, optArticulatedLog); err != nil {
+	if err = cache.WriteValue(writer, optArticulatedLog); err != nil {
 		return err
 	}
 
-	if err = cacheNew.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.CompressedLog); err != nil {
+	if err = cache.WriteValue(writer, s.CompressedLog); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Data); err != nil {
+	if err = cache.WriteValue(writer, s.Data); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.LogIndex); err != nil {
+	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
-		return err
-	}
-
-	if err = cacheNew.WriteValue(writer, s.Topics); err != nil {
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
-	if err = cacheNew.WriteValue(writer, &s.TransactionHash); err != nil {
+	if err = cache.WriteValue(writer, s.Topics); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.TransactionIndex); err != nil {
+
+	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
+		return err
+	}
+	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
@@ -196,46 +196,46 @@ func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if err = cacheNew.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
 	}
 
-	optArticulatedLog := &cacheNew.Optional[SimpleFunction]{
+	optArticulatedLog := &cache.Optional[SimpleFunction]{
 		Value: s.ArticulatedLog,
 	}
-	if err = cacheNew.ReadValue(reader, optArticulatedLog, version); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedLog, version); err != nil {
 		return err
 	}
 	s.ArticulatedLog = optArticulatedLog.Get()
 
-	if err = cacheNew.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.CompressedLog, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CompressedLog, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Data, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Data, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.LogIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.LogIndex, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
 		return err
 	}
 
 	s.Topics = make([]base.Hash, 0)
-	if err = cacheNew.ReadValue(reader, &s.Topics, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Topics, version); err != nil {
 		return err
 	}
 
-	if err = cacheNew.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
 		return err
 	}
 

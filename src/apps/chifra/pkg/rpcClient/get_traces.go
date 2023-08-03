@@ -9,7 +9,7 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -297,9 +297,9 @@ func (options *Options) GetTracesByTransactionHash(chain string, txHash string, 
 		}
 
 		if options.HasStore() && options.enabledMap["traces"] && transaction != nil {
-			var writeOptions *cacheNew.WriteOptions
+			var writeOptions *cache.WriteOptions
 			if !options.Store.ReadOnly() {
-				writeOptions = &cacheNew.WriteOptions{
+				writeOptions = &cache.WriteOptions{
 					// Check if the block is final
 					Pending: (&types.SimpleBlock[string]{Timestamp: transaction.Timestamp}).Pending(options.LatestBlockTimestamp),
 				}

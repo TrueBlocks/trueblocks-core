@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 func TestTraceCache(t *testing.T) {
@@ -34,7 +34,7 @@ func TestTraceCache(t *testing.T) {
 		},
 	}
 
-	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
+	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -95,7 +95,7 @@ func TestTraceCacheArticulated(t *testing.T) {
 		},
 	}
 
-	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
+	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
 	if err != nil {
 		t.Fatal(err)
 	}
