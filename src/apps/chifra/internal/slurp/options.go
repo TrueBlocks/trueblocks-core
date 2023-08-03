@@ -102,7 +102,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 
 	// EXISTING_CODE
 	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -141,7 +141,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {

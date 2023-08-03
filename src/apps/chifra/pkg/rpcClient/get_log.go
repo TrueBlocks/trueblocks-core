@@ -10,7 +10,7 @@ import (
 	"github.com/bykof/gostradamus"
 )
 
-func (options *Options) getSimpleLogs(chain string, filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
+func (options *Options) getSimpleLogs(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
 	p := struct {
 		FromBlock string   `json:"fromBlock"`
 		ToBlock   string   `json:"toBlock"`
@@ -30,7 +30,7 @@ func (options *Options) getSimpleLogs(chain string, filter types.SimpleLogFilter
 	method := "eth_getLogs"
 	params := rpc.Params{p}
 
-	if rawLogs, err := rpc.QuerySlice[types.RawLog](chain, method, params); err != nil {
+	if rawLogs, err := rpc.QuerySlice[types.RawLog](options.Chain, method, params); err != nil {
 		return []types.SimpleLog{}, err
 	} else {
 		curBlock := utils.NOPOS
@@ -40,7 +40,7 @@ func (options *Options) getSimpleLogs(chain string, filter types.SimpleLogFilter
 		for _, rawLog := range rawLogs {
 			bn := utils.MustParseUint(rawLog.BlockNumber)
 			if bn != curBlock {
-				curTs = options.GetBlockTimestamp(chain, &bn)
+				curTs = options.GetBlockTimestamp(&bn)
 				curDate = gostradamus.FromUnixTimestamp(curTs)
 				curBlock = bn
 			}
@@ -66,22 +66,22 @@ func (options *Options) getSimpleLogs(chain string, filter types.SimpleLogFilter
 }
 
 // GetLogsByFilter returns the logs given a filter
-func (options *Options) GetLogsByFilter(chain string, filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
-	return options.getSimpleLogs(chain, filter)
+func (options *Options) GetLogsByFilter(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
+	return options.getSimpleLogs(filter)
 }
 
 // GetLogsByNumber returns the logs of a block
-func (options *Options) GetLogsByNumber(chain string, bn uint64) ([]types.SimpleLog, error) {
+func (options *Options) GetLogsByNumber(bn uint64) ([]types.SimpleLog, error) {
 	filter := types.SimpleLogFilter{
 		FromBlock: bn,
 		ToBlock:   bn,
 	}
-	return options.getSimpleLogs(chain, filter)
+	return options.getSimpleLogs(filter)
 }
 
 // GetCountLogsInBlock returns the number of logs in a block
-func (options *Options) GetCountLogsInBlock(chain string, bn uint64) (uint64, error) {
-	if logs, err := options.GetLogsByNumber(chain, bn); err != nil {
+func (options *Options) GetCountLogsInBlock(bn uint64) (uint64, error) {
+	if logs, err := options.GetLogsByNumber(bn); err != nil {
 		return 0, err
 	} else {
 		return uint64(len(logs)), nil

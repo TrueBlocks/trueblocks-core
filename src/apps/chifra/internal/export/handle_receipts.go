@@ -37,9 +37,6 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {

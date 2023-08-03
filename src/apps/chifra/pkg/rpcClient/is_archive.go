@@ -8,7 +8,7 @@ import (
 )
 
 // IsNodeArchive returns true if the node is an archive node
-func (options *Options) IsNodeArchive(chain string) bool {
+func (options *Options) IsNodeArchive() bool {
 	// TODO: from C++ code
 	// const CToml* config = getGlobalConfig("blockScrape");
 	// if (!config->getConfigBool("requires", "archive", true))
@@ -18,13 +18,13 @@ func (options *Options) IsNodeArchive(chain string) bool {
 	// An archive node better have a balance at the end of block zero the same as
 	// the pre-allocation amount for that account. We use the largest allocation
 	// so as to ensure we get an actual balance
-	thePath := filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
-	largest, err := prefunds.GetLargestPrefund(chain, thePath)
+	thePath := filepath.Join(config.GetPathToChainConfig(options.Chain), "allocs.csv")
+	largest, err := prefunds.GetLargestPrefund(options.Chain, thePath)
 	if err != nil {
 		return false
 	}
 
-	bal, err := options.GetBalanceAt(chain, largest.Address, 0)
+	bal, err := options.GetBalanceAt(largest.Address, 0)
 	if err != nil {
 		return false
 	}

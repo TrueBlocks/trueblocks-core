@@ -18,7 +18,7 @@ func (opts *BlocksOptions) HandleList() error {
 	chain := opts.Globals.Chain
 
 	// Don't do this in the loop
-	meta, err := opts.Conn.GetMetaData(chain, opts.Globals.TestMode)
+	meta, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
@@ -37,14 +37,11 @@ func (opts *BlocksOptions) HandleList() error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for bn := start; bn > end; bn-- {
-			block, err := opts.Conn.GetBlockHeaderByNumber(chain, bn)
+			block, err := opts.Conn.GetBlockHeaderByNumber(bn)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {

@@ -138,7 +138,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 
 	// EXISTING_CODE
 	opts.Conn.EnableCaches(false, opts.getCaches())
-	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, opts.Terms)
+	opts.Terms, _ = opts.Conn.GetAddressesFromEns(opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -154,7 +154,7 @@ func namesFinishParse(args []string) *NamesOptions {
 
 	// EXISTING_CODE
 	opts.Conn.EnableCaches(false, opts.getCaches())
-	opts.Terms, _ = opts.Conn.GetAddressesFromEns(chain, args)
+	opts.Terms, _ = opts.Conn.GetAddressesFromEns(args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

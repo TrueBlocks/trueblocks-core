@@ -39,7 +39,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("Cannot test block scraper")
 	}
 
-	meta, err := opts.Conn.GetMetaData(chain, opts.Globals.TestMode)
+	meta, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}

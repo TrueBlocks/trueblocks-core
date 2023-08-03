@@ -36,7 +36,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					cancel()
 				}
 				// Let's try to download the file from somewhere
-				if err := opts.Conn.IsContractAt(chain, address, nil); err != nil {
+				if err := opts.Conn.IsContractAt(address, nil); err != nil {
 					if !errors.Is(err, rpcClient.ErrNotAContract) {
 						errorChan <- err
 						cancel()

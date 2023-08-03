@@ -24,9 +24,6 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
@@ -51,7 +48,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 					logger.Info("Processing block", fmt.Sprintf("%d", bn))
 				}
 				addrMap := make(index.AddressBooleanMap)
-				ts := opts.Conn.GetBlockTimestamp(chain, &bn)
+				ts := opts.Conn.GetBlockTimestamp(&bn)
 				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -82,7 +79,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 		}
 
 	} else {
-		if block, err := opts.Conn.GetBlockBodyByNumber(chain, bn); err != nil {
+		if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
 			return err
 		} else {
 			miner := block.Miner.Hex()
@@ -95,7 +92,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 			index.StreamAppearance(procFunc, opts.Flow, "miner", miner, bn, txid, utils.NOPOS, ts, addrMap)
 
-			if uncles, err := opts.Conn.GetUnclesByNumber(chain, bn); err != nil {
+			if uncles, err := opts.Conn.GetUnclesByNumber(bn); err != nil {
 				return err
 			} else {
 				for _, uncle := range uncles {
@@ -112,7 +109,7 @@ func (opts *BlocksOptions) ProcessBlockUniqs(chain string, procFunc index.UniqPr
 			}
 
 			for _, trans := range block.Transactions {
-				if trans.Traces, err = opts.Conn.GetTracesByTransactionID(chain, trans.BlockNumber, trans.TransactionIndex); err != nil {
+				if trans.Traces, err = opts.Conn.GetTracesByTransactionID(trans.BlockNumber, trans.TransactionIndex); err != nil {
 					return err
 				}
 				if err = index.UniqFromTransDetails(chain, procFunc, opts.Flow, &trans, ts, addrMap, opts.Conn); err != nil {

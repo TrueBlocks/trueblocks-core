@@ -121,7 +121,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 
 	// EXISTING_CODE
 	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
-	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
+	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(opts.AccountFor)
 	// EXISTING_CODE
 
 	return opts
@@ -138,7 +138,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	// EXISTING_CODE
 	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Transactions = args
-	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(chain, opts.AccountFor)
+	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(opts.AccountFor)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

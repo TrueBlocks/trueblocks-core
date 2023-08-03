@@ -208,7 +208,7 @@ func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				if trace.Result != nil && trace.Result.Address.IsZero() {
 					if trace.Error != "" {
 						// TODO: Why does this interface always accept nil and zero at the end?
-						receipt, err := options.GetReceipt(chain, rpcClient.ReceiptQuery{
+						receipt, err := options.GetReceipt(rpcClient.ReceiptQuery{
 							Bn:      uint64(bn),
 							Txid:    uint64(txid),
 							NeedsTs: false,

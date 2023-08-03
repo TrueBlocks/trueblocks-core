@@ -26,16 +26,6 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
-
-	// TODO: Why does this have to dirty the caller?
-	// If the cache is writeable, fetch the latest block timestamp so that we never
-	// cache pending blocks
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
@@ -54,7 +44,7 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
 				}
-				if tx, err := opts.Conn.GetTransactionByAppearance(chain, a, opts.Traces /* needsTraces */); err != nil {
+				if tx, err := opts.Conn.GetTransactionByAppearance(a, opts.Traces /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

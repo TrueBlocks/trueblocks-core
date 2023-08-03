@@ -32,8 +32,8 @@ func (m MetaData) Age(bn uint64) int64 {
 	return int64(m.Latest) - int64(bn) // Allows negative
 }
 
-func (options *Options) GetMetaData(chain string, testmode bool) (*MetaData, error) {
-	chainId, networkId, err := options.GetClientIDs(chain)
+func (options *Options) GetMetaData(testmode bool) (*MetaData, error) {
+	chainId, networkId, err := options.GetClientIDs()
 	if err != nil {
 		return nil, err
 	}
@@ -45,25 +45,25 @@ func (options *Options) GetMetaData(chain string, testmode bool) (*MetaData, err
 			Staging:   0xdeadbeef,
 			Finalized: 0xdeadbeef,
 			Latest:    0xdeadbeef,
-			Chain:     chain,
+			Chain:     options.Chain,
 			ChainId:   chainId,
 			NetworkId: networkId,
 		}, nil
 	}
 
 	var meta MetaData
-	meta.Chain = chain
+	meta.Chain = options.Chain
 	meta.ChainId = chainId
 	meta.NetworkId = networkId
-	meta.Latest = options.GetLatestBlockNumber(chain)
+	meta.Latest = options.GetLatestBlockNumber()
 
 	filenameChan := make(chan walk.CacheFileInfo)
 
 	var nRoutines = 4
-	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Bloom, nil, filenameChan)
-	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Staging, nil, filenameChan)
-	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Ripe, nil, filenameChan)
-	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Unripe, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), options.Chain, walk.Index_Bloom, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), options.Chain, walk.Index_Staging, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), options.Chain, walk.Index_Ripe, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), options.Chain, walk.Index_Unripe, nil, filenameChan)
 
 	for result := range filenameChan {
 		switch result.Type {

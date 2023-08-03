@@ -14,7 +14,7 @@ var bar = logger.NewBar("Visiting", true, int64(17000000))
 func main() {
 	chain := "mainnet"
 	conn := rpcClient.NewConnection(chain)
-	latest := conn.GetLatestBlockNumber(chain)
+	latest := conn.GetLatestBlockNumber()
 	forEveryTrace(46000, latest, visitTrace)
 	bar.Finish(true)
 }
@@ -30,12 +30,12 @@ func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) 
 	chain := "mainnet"
 	conn := rpcClient.NewConnection(chain)
 	for blknum := from; blknum <= to; blknum++ {
-		if block, err := conn.GetBlockHeaderByNumber(chain, blknum); err != nil {
+		if block, err := conn.GetBlockHeaderByNumber(blknum); err != nil {
 			return err
 		} else {
 			bar.Tick()
 			for _, txHash := range block.Transactions {
-				if traces, err := conn.GetTracesByTransactionHash(chain, txHash, nil); err != nil {
+				if traces, err := conn.GetTracesByTransactionHash(txHash, nil); err != nil {
 					return err
 				} else {
 					for _, trace := range traces {

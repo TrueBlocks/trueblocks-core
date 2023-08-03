@@ -25,7 +25,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 			return err
 		}
 		for _, bn := range blockNums {
-			rawBlock, err := opts.Conn.GetBlockBodyByNumber(chain, bn)
+			rawBlock, err := opts.Conn.GetBlockBodyByNumber(bn)
 			if err != nil {
 				return err
 			}

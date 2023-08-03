@@ -107,8 +107,8 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		unquoted := strings.Trim(opts.Call, "'")
 		opts.Call = unquoted
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetAddressFromEns(chain, opts.ProxyFor)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetAddressFromEns(opts.ProxyFor)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -142,14 +142,14 @@ func stateFinishParse(args []string) *StateOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetAddressFromEns(chain, opts.ProxyFor)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetAddressFromEns(opts.ProxyFor)
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
 	parts := strings.Split(opts.Call, "!")
 	if len(parts) > 0 {
-		val, _ := opts.Conn.GetAddressFromEns(chain, parts[0])
+		val, _ := opts.Conn.GetAddressFromEns(parts[0])
 		opts.Call = strings.Replace(opts.Call, parts[0], val, -1)
 	}
 	if len(opts.Blocks) == 0 {

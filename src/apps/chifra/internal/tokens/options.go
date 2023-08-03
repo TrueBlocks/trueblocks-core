@@ -98,7 +98,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 
 	// EXISTING_CODE
 	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -137,7 +137,7 @@ func tokensFinishParse(args []string) *TokensOptions {
 			}
 		}
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}

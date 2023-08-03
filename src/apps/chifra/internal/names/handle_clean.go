@@ -188,7 +188,7 @@ func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
 
 func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
 	conn := rpcClient.NewConnection(chain)
-	if err = conn.IsContractAt(chain, name.Address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
+	if err = conn.IsContractAt(name.Address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
 		return
 	}
 

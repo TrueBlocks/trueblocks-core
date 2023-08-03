@@ -16,8 +16,8 @@ import (
 var ErrNotAContract = errors.New("not a contract")
 
 // IsContractAt checks if an account is a contract
-func (options *Options) IsContractAt(chain string, address base.Address, block *types.SimpleNamedBlock) error {
-	if ec, err := getClient(chain); err != nil {
+func (options *Options) IsContractAt(address base.Address, block *types.SimpleNamedBlock) error {
+	if ec, err := getClient(options.Chain); err != nil {
 		return err
 	} else {
 		defer ec.Close()
@@ -42,7 +42,7 @@ func (options *Options) IsContractAt(chain string, address base.Address, block *
 var deployedCacheMutex sync.Mutex
 var deployedCache = make(map[base.Address]base.Blknum)
 
-func (options *Options) GetContractDeployBlock(chain string, address base.Address) (block base.Blknum, err error) {
+func (options *Options) GetContractDeployBlock(address base.Address) (block base.Blknum, err error) {
 	// TODO: Couldn't we wait here to lock until we need it? Doesn't this lock even when we only read the cache?
 	deployedCacheMutex.Lock()
 	defer deployedCacheMutex.Unlock()
@@ -52,13 +52,13 @@ func (options *Options) GetContractDeployBlock(chain string, address base.Addres
 		return
 	}
 
-	latest := options.GetLatestBlockNumber(chain)
-	if err = options.IsContractAt(chain, address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
+	latest := options.GetLatestBlockNumber()
+	if err = options.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
 		return
 	}
 
 	found := sort.Search(int(latest)+1, func(blockNumber int) bool {
-		err := options.IsContractAt(chain, address, &types.SimpleNamedBlock{BlockNumber: base.Blknum(blockNumber)})
+		err := options.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: base.Blknum(blockNumber)})
 		return err == nil
 	})
 
@@ -77,13 +77,13 @@ var locations = []string{
 }
 
 // GetProxyAt returns the proxy address for a contract if any
-func (options *Options) GetProxyAt(chain string, address base.Address, blockNumber base.Blknum) (base.Address, error) {
-	if ec, err := getClient(chain); err != nil {
+func (options *Options) GetProxyAt(address base.Address, blockNumber base.Blknum) (base.Address, error) {
+	if ec, err := getClient(options.Chain); err != nil {
 		return base.Address{}, err
 	} else {
 		defer ec.Close()
 
-		proxyAddr, err := rpc.Query[string](chain, "eth_call", rpc.Params{
+		proxyAddr, err := rpc.Query[string](options.Chain, "eth_call", rpc.Params{
 			map[string]any{
 				"to": address,
 				// implementation()
@@ -114,7 +114,7 @@ func (options *Options) GetProxyAt(chain string, address base.Address, blockNumb
 			}
 			proxy = base.BytesToAddress(value)
 			if !proxy.IsZero() && proxy.Hex() != address.Hex() {
-				err = options.IsContractAt(chain, proxy, &types.SimpleNamedBlock{BlockNumber: blockNumber})
+				err = options.IsContractAt(proxy, &types.SimpleNamedBlock{BlockNumber: blockNumber})
 				if errors.Is(err, ErrNotAContract) {
 					// Not a proxy
 					return base.Address{}, nil

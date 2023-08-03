@@ -148,7 +148,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		}
 
 		conn := rpcClient.NewConnection(chain)
-		m, _ := conn.GetMetaData(chain, opts.Globals.TestMode)
+		m, _ := conn.GetMetaData(opts.Globals.TestMode)
 		rng := base.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)
 		fileName := filepath.Join(config.GetPathToIndex(chain), "staging", f)

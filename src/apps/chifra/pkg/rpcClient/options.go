@@ -10,6 +10,7 @@ var NoOptions *Options = nil
 
 // Options carry additional context to rpcClient calls
 type Options struct {
+	Chain                string
 	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
 	LatestBlockTimestamp base.Timestamp
 	enabledMap           map[string]bool
@@ -89,10 +90,17 @@ func (settings *DefaultRpcOptionsSettings) DefaultRpcOptions() *Options {
 		}
 	}
 
-	return &Options{
-		Store:      cacheStore(chain, !cacheEnabled || readonlyCache),
+	store := cacheStore(chain, !cacheEnabled || readonlyCache)
+	ret := &Options{
+		Chain:      chain,
+		Store:      store,
 		enabledMap: enabledMap,
 	}
+	if !store.ReadOnly() {
+		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(nil)
+	}
+
+	return ret
 }
 
 // HasStore is a shorthand to check if Store is initialized. It will return

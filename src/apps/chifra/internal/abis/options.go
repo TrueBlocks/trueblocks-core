@@ -98,7 +98,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 
 	// EXISTING_CODE
 	opts.Conn.EnableCaches(false, opts.getCaches())
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -117,7 +117,7 @@ func abisFinishParse(args []string) *AbisOptions {
 	if opts.Globals.IsApiMode() {
 		defFmt = "json"
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, args)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

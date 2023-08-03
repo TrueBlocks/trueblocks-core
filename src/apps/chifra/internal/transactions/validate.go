@@ -66,7 +66,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			}
 		}
 
-		if opts.Traces && !opts.Conn.IsNodeTracing(chain, opts.Globals.TestMode) {
+		if opts.Traces && !opts.Conn.IsNodeTracing(opts.Globals.TestMode) {
 			return validate.Usage("Tracing is required for this program to work properly.")
 		}
 

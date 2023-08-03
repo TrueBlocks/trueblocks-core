@@ -25,9 +25,6 @@ func (opts *TracesOptions) HandleCounts() error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -43,7 +40,7 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 
 			for _, id := range txIds {
-				tx, err := opts.Conn.GetTransactionByNumberAndID(chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				tx, err := opts.Conn.GetTransactionByNumberAndID(uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -54,7 +51,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				}
 
 				txHash := tx.Hash().Hex()
-				cnt, err := opts.Conn.GetCountTracesInTransaction(chain, txHash)
+				cnt, err := opts.Conn.GetCountTracesInTransaction(txHash)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

@@ -270,9 +270,9 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 
 	// EXISTING_CODE
 	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
-	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(chain, opts.Emitter)
-	opts.Asset, _ = opts.Conn.GetAddressesFromEns(chain, opts.Asset)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetAddressesFromEns(opts.Asset)
 	// EXISTING_CODE
 
 	return opts
@@ -301,9 +301,9 @@ func exportFinishParse(args []string) *ExportOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
-	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(chain, opts.Emitter)
-	opts.Asset, _ = opts.Conn.GetAddressesFromEns(chain, opts.Asset)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetAddressesFromEns(opts.Asset)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

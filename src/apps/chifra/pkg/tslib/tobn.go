@@ -26,7 +26,7 @@ func FromDateToBn(chain, dateStr string) (uint64, error) {
 func FromNameToBn(chain, name string) (uint64, error) {
 	if name == "latest" {
 		conn := rpcClient.NewConnection(chain)
-		meta, err := conn.GetMetaData(chain, false)
+		meta, err := conn.GetMetaData(false)
 		if err != nil {
 			return 0, err
 		}
