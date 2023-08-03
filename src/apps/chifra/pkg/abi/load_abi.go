@@ -30,17 +30,6 @@ var knownAbiSubdirectories = []string{
 
 type AbiInterfaceMap = map[string]*types.SimpleFunction
 
-// LoadAbiFromJsonFile loads _standard_ JSON ABI, that is the one without encodings
-// and signatures. We compute these values.
-func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err error) {
-	f, err := os.OpenFile(filePath, os.O_RDONLY, 0)
-	if err != nil {
-		return
-	}
-
-	return fromJson(f, destination)
-}
-
 func fromJson(reader io.Reader, destination AbiInterfaceMap) (err error) {
 	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
