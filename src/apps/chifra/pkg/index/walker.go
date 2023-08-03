@@ -3,8 +3,8 @@ package index
 import (
 	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 type walkerFunc func(walker *CacheWalker, path string, first bool) (bool, error)
@@ -30,15 +30,15 @@ func (walker *CacheWalker) MaxTests() int {
 }
 
 func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
-	filenameChan := make(chan cache.CacheFileInfo)
+	filenameChan := make(chan walk.CacheFileInfo)
 
 	var nRoutines int = 1
-	go cache.WalkCacheFolder(context.Background(), walker.chain, cache.Index_Bloom, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), walker.chain, walk.Index_Bloom, nil, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
-		case cache.Index_Bloom:
+		case walk.Index_Bloom:
 			if walker.shouldDisplay(result, cnt, blockNums) {
 				ok, err := walker.visitFunc1(walker, result.Path, cnt == 0)
 				if err != nil {
@@ -50,7 +50,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 					return nil
 				}
 			}
-		case cache.Cache_NotACache:
+		case walk.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
@@ -72,8 +72,8 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 // eventuallity. If on of the files has a two block range, we need to generate 50,000 block numbers. If we
 // used the range on the command line instead we'd only have to intersect one range.
 
-func (walker *CacheWalker) shouldDisplay(result cache.CacheFileInfo, cnt int, blockNums []uint64) bool {
-	if !cache.IsCacheType(result.Path, result.Type, true /* checkExt */) {
+func (walker *CacheWalker) shouldDisplay(result walk.CacheFileInfo, cnt int, blockNums []uint64) bool {
+	if !walk.IsCacheType(result.Path, result.Type, true /* checkExt */) {
 		return false
 	}
 

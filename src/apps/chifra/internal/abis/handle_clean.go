@@ -12,11 +12,11 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *AbisOptions) HandleClean() error {
@@ -27,14 +27,14 @@ func (opts *AbisOptions) HandleClean() error {
 		if testMode {
 			logger.Info("Cleaning empty abis is not tested in test mode.")
 		} else {
-			filenameChan := make(chan cache.CacheFileInfo)
+			filenameChan := make(chan walk.CacheFileInfo)
 			var nRoutines = 1
-			go cache.WalkCacheFolder(context.Background(), chain, cache.Cache_Abis, nil, filenameChan)
+			go walk.WalkCacheFolder(context.Background(), chain, walk.Cache_Abis, nil, filenameChan)
 			for result := range filenameChan {
 				switch result.Type {
-				case cache.Cache_Abis:
+				case walk.Cache_Abis:
 					path := result.Path
-					skip := !cache.IsCacheType(path, cache.Cache_Abis, true /* checkExt */)
+					skip := !walk.IsCacheType(path, walk.Cache_Abis, true /* checkExt */)
 					if !skip {
 						size := file.FileSize(path)
 						if size <= int64(len(abi.AbiNotFound)+5) {
@@ -58,7 +58,7 @@ func (opts *AbisOptions) HandleClean() error {
 							}
 						}
 					}
-				case cache.Cache_NotACache:
+				case walk.Cache_NotACache:
 					nRoutines--
 					if nRoutines == 0 {
 						close(filenameChan)

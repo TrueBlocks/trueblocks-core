@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -66,7 +65,7 @@ func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {
 			return err
 		}
-		if err = cache.InsertAbi(chain, address, reader); err != nil {
+		if err = insertAbi(chain, address, reader); err != nil {
 			return err
 		}
 		return nil
@@ -79,7 +78,7 @@ func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap
 	}
 
 	// Write the body to file
-	if err = cache.InsertAbi(chain, address, reader); err != nil {
+	if err = insertAbi(chain, address, reader); err != nil {
 		return err
 	}
 	return nil

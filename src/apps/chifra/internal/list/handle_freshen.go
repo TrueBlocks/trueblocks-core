@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -26,6 +25,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
@@ -137,7 +137,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 		if !info.IsDir() {
 			fileName := bloomPath + "/" + info.Name()
-			if !cache.IsCacheType(fileName, cache.Index_Bloom, true /* checkExt */) {
+			if !walk.IsCacheType(fileName, walk.Index_Bloom, true /* checkExt */) {
 				continue // sometimes there are .gz files in this folder, for example
 			}
 			fileRange, err := base.RangeFromFilenameE(fileName)

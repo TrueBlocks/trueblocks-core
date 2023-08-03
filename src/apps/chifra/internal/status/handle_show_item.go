@@ -5,14 +5,14 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[string]any, error) {
+func (opts *StatusOptions) getCacheItem(cT walk.CacheType, path string) (map[string]any, error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
@@ -30,11 +30,11 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 	display := path
 
 	switch cT {
-	case cache.Index_Maps:
+	case walk.Index_Maps:
 		fallthrough
-	case cache.Index_Bloom:
+	case walk.Index_Bloom:
 		fallthrough
-	case cache.Index_Final:
+	case walk.Index_Final:
 		if testMode {
 			display = strings.Replace(display, config.GetPathToIndex(chain), "$indexPath/", 1)
 		}
@@ -48,15 +48,15 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 			"firstApp":       fileRange.First,
 			"firstTs":        firstTs,
 			"indexSizeBytes": file.FileSize(index.ToIndexPath(path)),
-			"itemType":       cT.CacheItemName(),
+			"itemType":       cacheItemName(cT),
 			"latestApp":      fileRange.Last,
 			"latestTs":       latestTs,
 		}, nil
-	case cache.Cache_Monitors:
+	case walk.Cache_Monitors:
 		fallthrough
-	case cache.Cache_Slurps:
+	case walk.Cache_Slurps:
 		fallthrough
-	case cache.Cache_Abis:
+	case walk.Cache_Abis:
 		address := ""
 		parts := strings.Split(path, "/")
 		for _, part := range parts {
@@ -74,10 +74,10 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 			"address":     address,
 			"fileDate":    date,
 			"filename":    display,
-			"itemType":    cT.CacheItemName(),
+			"itemType":    cacheItemName(cT),
 			"sizeInBytes": size,
 		}
-		if cT == cache.Cache_Monitors {
+		if cT == walk.Cache_Monitors {
 			ret["nRecords"] = size / index.AppRecordWidth // TODO: 8 bytes per record so we don't have to read the file
 		}
 		return ret, nil
@@ -88,8 +88,20 @@ func (opts *StatusOptions) getCacheItem(cT cache.CacheType, path string) (map[st
 		return map[string]interface{}{
 			"fileDate":    date,
 			"filename":    display,
-			"itemType":    cT.CacheItemName(),
+			"itemType":    cacheItemName(cT),
 			"sizeInBytes": size,
 		}, nil
 	}
+}
+
+func cacheItemName(ct walk.CacheType) string {
+	return cacheName(ct) + "Item"
+}
+
+func cacheName(ct walk.CacheType) string {
+	// TODO: Names of caches, names of folders, names of commands are all different. This is a mess.
+	ret := walk.CacheTypeToFolder[ct] + "Cache"
+	ret = strings.Replace(ret, "blooms", "bloom", -1)
+	ret = strings.Replace(ret, "finalized", "index", -1)
+	return ret
 }
