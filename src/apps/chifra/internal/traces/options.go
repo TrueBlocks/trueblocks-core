@@ -28,7 +28,7 @@ type TracesOptions struct {
 	Filter         string                   `json:"filter,omitempty"`         // Call the node's trace_filter routine with bang-separated filter
 	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
-	Conn           *rpcClient.Options       `json:"conn,omitempty"`           // The connection to the RPC server
+	Conn           *rpcClient.Connection    `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -42,7 +42,7 @@ func (opts *TracesOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -71,9 +71,7 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 			opts.Count = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "traces")
-				return opts
 			}
 		}
 	}

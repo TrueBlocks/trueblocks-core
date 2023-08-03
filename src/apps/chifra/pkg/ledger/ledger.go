@@ -28,7 +28,7 @@ type Ledger struct {
 	UseTraces   bool
 	AssetFilter *[]base.Address
 	Tx          *types.SimpleTransaction
-	Conn        *rpcClient.Options
+	Conn        *rpcClient.Connection
 }
 
 // NewLedger returns a new empty Ledger struct

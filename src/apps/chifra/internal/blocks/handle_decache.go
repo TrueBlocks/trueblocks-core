@@ -80,7 +80,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	// 		return err
 	// 	}
 	// 	for _, bn := range blockNums {
-	// 		rawBlock, err := rpcOptions.GetBlockBodyByNumber(chain, bn)
+	// 		rawBlock, err := conn.GetBlockBodyByNumber(chain, bn)
 	// 		if err != nil {
 	// 			return err
 	// 		}

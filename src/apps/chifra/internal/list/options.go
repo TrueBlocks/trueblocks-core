@@ -34,7 +34,7 @@ type ListOptions struct {
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
-	Conn        *rpcClient.Options    `json:"conn,omitempty"`        // The connection to the RPC server
+	Conn        *rpcClient.Connection `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -58,7 +58,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -105,9 +105,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "list")
-				return opts
 			}
 		}
 	}

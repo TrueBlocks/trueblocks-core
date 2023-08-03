@@ -109,7 +109,7 @@ func GetState(chain string, fields GetStateField, address base.Address, blockNum
 	// deployedChan := make(chan struct{ block base.Blknum; err error })
 	// if (mode & GetDeployed) != 0 {
 	// 	go func ()  {
-	// 		block, err := rpcOptions.GetContractDeployBlock(chain, address)
+	// 		block, err := conn.GetContractDeployBlock(chain, address)
 	// 		deployedChan <- struct{block uint64; err error}{
 	// 			block, err,
 	// 		}

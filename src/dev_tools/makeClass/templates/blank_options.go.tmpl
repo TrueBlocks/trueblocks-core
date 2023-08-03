@@ -32,7 +32,7 @@ var default[{PROPER}]Options = [{PROPER}]Options{[{GODEFS}]}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *[{PROPER}]Options) testLog() {
-[{TEST_LOGS}]	opts.Conn.TestLog()
+[{TEST_LOGS}]	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -50,9 +50,7 @@ func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]
 		switch key {
 [{REQUEST_OPTS}]		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "[{ROUTE}]")
-				return opts
 			}
 		}
 	}

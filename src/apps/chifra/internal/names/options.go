@@ -40,7 +40,7 @@ type NamesOptions struct {
 	Remove    bool                  `json:"remove,omitempty"`    // Remove a previously deleted name
 	Named     bool                  `json:"named,omitempty"`     // Please use the --all option instead
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
-	Conn      *rpcClient.Options    `json:"conn,omitempty"`      // The connection to the RPC server
+	Conn      *rpcClient.Connection `json:"conn,omitempty"`      // The connection to the RPC server
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
 	crudData *CrudData
@@ -69,7 +69,7 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Named, "Named: ", opts.Named)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -126,9 +126,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Named = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
-				return opts
 			}
 		}
 	}

@@ -32,7 +32,7 @@ type StateOptions struct {
 	Call     string                   `json:"call,omitempty"`     // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
 	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Options       `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpcClient.Connection    `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -49,7 +49,7 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -90,9 +90,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 			opts.ProxyFor = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
-				return opts
 			}
 		}
 	}

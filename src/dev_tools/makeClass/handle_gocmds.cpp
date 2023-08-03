@@ -532,7 +532,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     }
 
     ONE(os, "Globals", varWidth, "globals.GlobalOptions", typeWidth, "the global options");
-    ONE(os, "Conn", varWidth, "*rpcClient.Options", typeWidth, "the connection to the RPC server");
+    ONE(os, "Conn", varWidth, "*rpcClient.Connection", typeWidth, "the connection to the RPC server");
     ONE(os, "BadFlag", varWidth, "error", typeWidth, "an error flag if needed");
 
     return os.str();

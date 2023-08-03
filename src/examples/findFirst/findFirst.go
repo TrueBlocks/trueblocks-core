@@ -31,7 +31,7 @@ func main() {
 
 var chain = "mainnet"
 
-func slowWay(conn *rpcClient.Options) {
+func slowWay(conn *rpcClient.Connection) {
 	start := time.Now()
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 	for i := 40000; i < 60000; i++ {
@@ -51,7 +51,7 @@ func slowWay(conn *rpcClient.Options) {
 	}
 }
 
-func fastWay(conn *rpcClient.Options) {
+func fastWay(conn *rpcClient.Connection) {
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 
 	var TxIds []identifiers.Identifier

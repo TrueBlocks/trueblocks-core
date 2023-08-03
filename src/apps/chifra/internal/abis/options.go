@@ -29,7 +29,7 @@ type AbisOptions struct {
 	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no address is given
 	Sol     bool                  `json:"sol,omitempty"`     // Please use the `solc --abi` tool instead
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
-	Conn    *rpcClient.Options    `json:"conn,omitempty"`    // The connection to the RPC server
+	Conn    *rpcClient.Connection `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -45,7 +45,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -86,9 +86,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			opts.Sol = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
-				return opts
 			}
 		}
 	}

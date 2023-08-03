@@ -31,7 +31,7 @@ type TokensOptions struct {
 	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
 	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Options       `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpcClient.Connection    `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -47,7 +47,7 @@ func (opts *TokensOptions) testLog() {
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -86,9 +86,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 			opts.NoZero = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "tokens")
-				return opts
 			}
 		}
 	}

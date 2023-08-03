@@ -26,7 +26,7 @@ type LogsOptions struct {
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
-	Conn           *rpcClient.Options       `json:"conn,omitempty"`           // The connection to the RPC server
+	Conn           *rpcClient.Connection    `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -38,7 +38,7 @@ var defaultLogsOptions = LogsOptions{}
 func (opts *LogsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -63,9 +63,7 @@ func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 			opts.Articulate = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "logs")
-				return opts
 			}
 		}
 	}

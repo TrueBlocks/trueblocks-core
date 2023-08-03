@@ -17,7 +17,7 @@ import (
 
 type UniqProcFunc func(s *types.SimpleAppearance) error
 
-func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap, rpcOptions *rpcClient.Options) error {
+func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap, conn *rpcClient.Connection) error {
 	bn := trans.BlockNumber
 	txid := trans.TransactionIndex
 	traceid := utils.NOPOS
@@ -47,7 +47,7 @@ func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, tran
 		return err
 	}
 
-	if err := UniqFromTracesDetails(chain, procFunc, flow, trans.Traces, ts, addrMap, rpcOptions); err != nil {
+	if err := UniqFromTracesDetails(chain, procFunc, flow, trans.Traces, ts, addrMap, conn); err != nil {
 		return err
 	}
 
@@ -123,7 +123,7 @@ func traceReason(i uint64, trace *types.SimpleTrace, r string) string {
 }
 
 // UniqFromTracesDetails extracts addresses from traces
-func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap, options *rpcClient.Options) (err error) {
+func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap, conn *rpcClient.Connection) (err error) {
 	for _, trace := range traces {
 		trace := trace
 		traceid := trace.TraceIndex
@@ -208,7 +208,7 @@ func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				if trace.Result != nil && trace.Result.Address.IsZero() {
 					if trace.Error != "" {
 						// TODO: Why does this interface always accept nil and zero at the end?
-						receipt, err := options.GetReceipt(rpcClient.ReceiptQuery{
+						receipt, err := conn.GetReceipt(rpcClient.ReceiptQuery{
 							Bn:      uint64(bn),
 							Txid:    uint64(txid),
 							NeedsTs: false,

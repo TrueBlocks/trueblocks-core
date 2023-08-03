@@ -52,7 +52,7 @@ type ExportOptions struct {
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
-	Conn        *rpcClient.Options    `json:"conn,omitempty"`        // The connection to the RPC server
+	Conn        *rpcClient.Connection `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -93,7 +93,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -258,9 +258,7 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
-				return opts
 			}
 		}
 	}

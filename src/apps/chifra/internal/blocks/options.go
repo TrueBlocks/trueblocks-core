@@ -41,7 +41,7 @@ type BlocksOptions struct {
 	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
 	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
-	Conn        *rpcClient.Options       `json:"conn,omitempty"`        // The connection to the RPC server
+	Conn        *rpcClient.Connection    `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -70,7 +70,7 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -134,9 +134,7 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.ListCount = globals.ToUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
-				return opts
 			}
 		}
 	}

@@ -28,7 +28,7 @@ type ScrapeOptions struct {
 	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
-	Conn       *rpcClient.Options       `json:"conn,omitempty"`       // The connection to the RPC server
+	Conn       *rpcClient.Connection    `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -46,7 +46,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -94,9 +94,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.Settings.Allow_missing = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
-				return opts
 			}
 		}
 	}

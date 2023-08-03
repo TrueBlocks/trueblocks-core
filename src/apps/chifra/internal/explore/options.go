@@ -25,7 +25,7 @@ type ExploreOptions struct {
 	Local   bool                  `json:"local,omitempty"`   // Open the local TrueBlocks explorer
 	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
-	Conn    *rpcClient.Options    `json:"conn,omitempty"`    // The connection to the RPC server
+	Conn    *rpcClient.Connection `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -38,7 +38,7 @@ func (opts *ExploreOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -65,9 +65,7 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 			opts.Google = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "explore")
-				return opts
 			}
 		}
 	}

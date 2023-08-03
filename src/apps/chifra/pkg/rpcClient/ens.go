@@ -19,7 +19,7 @@ func lowerIfHex(addr string) string {
 
 // GetAddressesFromEns converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func (options *Options) GetAddressesFromEns(addrs []string) (out []string, found bool) {
+func (conn *Connection) GetAddressesFromEns(addrs []string) (out []string, found bool) {
 	// Note: we use ENS on mainnet always
 	if ec, err := getClient("mainnet"); err != nil {
 		return
@@ -40,7 +40,7 @@ func (options *Options) GetAddressesFromEns(addrs []string) (out []string, found
 
 // GetAddressFromEns converts a single string, if it contains .eth, into an address. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func (options *Options) GetAddressFromEns(addr string) (string, bool) {
+func (conn *Connection) GetAddressFromEns(addr string) (string, bool) {
 	if !strings.Contains(addr, ".eth") {
 		return lowerIfHex(addr), false
 	}

@@ -23,7 +23,7 @@ type ConfigOptions struct {
 	Mode    string                `json:"mode,omitempty"`    // Either show or edit the configuration
 	Paths   bool                  `json:"paths,omitempty"`   // Show the configuration paths for the system
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
-	Conn    *rpcClient.Options    `json:"conn,omitempty"`    // The connection to the RPC server
+	Conn    *rpcClient.Connection `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -35,7 +35,7 @@ var defaultConfigOptions = ConfigOptions{}
 func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -57,9 +57,7 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 			opts.Paths = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
-				return opts
 			}
 		}
 	}

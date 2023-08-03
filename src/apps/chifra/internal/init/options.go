@@ -25,7 +25,7 @@ type InitOptions struct {
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
 	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between downloads
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
-	Conn       *rpcClient.Options    `json:"conn,omitempty"`       // The connection to the RPC server
+	Conn       *rpcClient.Connection `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -39,7 +39,7 @@ func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -67,9 +67,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
-				return opts
 			}
 		}
 	}
