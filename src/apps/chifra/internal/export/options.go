@@ -262,12 +262,9 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(opts.Emitter)
 	opts.Asset, _ = opts.Conn.GetAddressesFromEns(opts.Asset)
@@ -278,14 +275,11 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 
 // exportFinishParse finishes the parsing for command line invocations. Returns a new ExportOptions.
 func exportFinishParse(args []string) *ExportOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {

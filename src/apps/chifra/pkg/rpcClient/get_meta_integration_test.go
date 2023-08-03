@@ -14,6 +14,6 @@ import (
 )
 
 func Test_GetMetaData(t *testing.T) {
-	conn := NewConnection(utils.GetTestChain())
+	conn := TempConnection(utils.GetTestChain())
 	conn.GetMetaData(false)
 }

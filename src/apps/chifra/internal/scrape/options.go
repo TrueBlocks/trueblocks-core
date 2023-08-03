@@ -98,12 +98,9 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -111,14 +108,11 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 
 // scrapeFinishParse finishes the parsing for command line invocations. Returns a new ScrapeOptions.
 func scrapeFinishParse(args []string) *ScrapeOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
 		// these options have been deprecated, so do nothing
 	} else if len(args) > 1 {

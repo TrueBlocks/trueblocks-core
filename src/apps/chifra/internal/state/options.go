@@ -94,12 +94,9 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	if opts.Call != "" {
 		// The tests need single quotes
 		unquoted := strings.Trim(opts.Call, "'")
@@ -121,14 +118,11 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 
 // stateFinishParse finishes the parsing for command line invocations. Returns a new StateOptions.
 func stateFinishParse(args []string) *StateOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	dupMap := make(map[string]bool)
 	for _, arg := range args {
 		if !dupMap[arg] {

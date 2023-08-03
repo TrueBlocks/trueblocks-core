@@ -17,7 +17,7 @@ import (
 func Test_Validate(t *testing.T) {
 	var opts = WhenOptions{}
 	chain := utils.GetTestChain()
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = rpcClient.TempConnection(chain)
 	opts.Blocks = append(opts.Blocks, "2014-01-01")
 	err := opts.validateWhen()
 	if err == nil {

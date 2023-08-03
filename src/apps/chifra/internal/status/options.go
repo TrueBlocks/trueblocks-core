@@ -75,12 +75,9 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
 	}
@@ -92,14 +89,11 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 
 // statusFinishParse finishes the parsing for command line invocations. Returns a new StatusOptions.
 func statusFinishParse(args []string) *StatusOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	opts.Modes = append(opts.Modes, args...)
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")

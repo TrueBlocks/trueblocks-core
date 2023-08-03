@@ -61,12 +61,9 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -74,14 +71,11 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 
 // configFinishParse finishes the parsing for command line invocations. Returns a new ConfigOptions.
 func configFinishParse(args []string) *ConfigOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	defFmt = ""
 	for _, arg := range args {
 		if arg == "show" || arg == "edit" {

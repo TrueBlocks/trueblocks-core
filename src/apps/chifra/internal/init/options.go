@@ -71,12 +71,9 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -84,14 +81,11 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 
 // initFinishParse finishes the parsing for command line invocations. Returns a new InitOptions.
 func initFinishParse(args []string) *InitOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(args) > 0 {
 		opts.BadFlag = validate.Usage("Invalid argument ({0}).", args[0])
 	}

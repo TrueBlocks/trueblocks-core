@@ -54,9 +54,7 @@ func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -66,11 +64,9 @@ func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]
 
 // [{LOWER}]FinishParse finishes the parsing for command line invocations. Returns a new [{PROPER}]Options.
 func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE

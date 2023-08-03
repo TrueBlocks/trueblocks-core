@@ -11,7 +11,7 @@ import (
 )
 
 func TestGetContractDeployBlock(t *testing.T) {
-	conn := NewConnection(utils.GetTestChain())
+	conn := TempConnection(utils.GetTestChain())
 
 	// Finding the first block
 	unchainedIndex := base.HexToAddress("0x0C316b7042b419d07d343F2f4F5Bd54FF731183d")
@@ -55,7 +55,7 @@ func TestGetProxy(t *testing.T) {
 
 	// 0x4Fabb145d64652a948d72533023f6E7A623C7C53
 	// 0x00000000441378008ea67f4284a57932b1c000a5
-	conn := NewConnection(utils.GetTestChain())
+	conn := TempConnection(utils.GetTestChain())
 
 	proxy, err := conn.GetProxyAt(base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"), base.Blknum(12983248))
 	if err != nil {

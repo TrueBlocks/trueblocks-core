@@ -113,12 +113,9 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(opts.AccountFor)
 	// EXISTING_CODE
 
@@ -127,14 +124,11 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 
 // transactionsFinishParse finishes the parsing for command line invocations. Returns a new TransactionsOptions.
 func transactionsFinishParse(args []string) *TransactionsOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Transactions = args
 	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(opts.AccountFor)
 	// EXISTING_CODE

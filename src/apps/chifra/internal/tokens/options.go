@@ -90,12 +90,9 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
@@ -111,14 +108,11 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 
 // tokensFinishParse finishes the parsing for command line invocations. Returns a new TokensOptions.
 func tokensFinishParse(args []string) *TokensOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	if len(args) > 0 {
 		dupMap := make(map[string]bool)
 		for index, arg := range args {

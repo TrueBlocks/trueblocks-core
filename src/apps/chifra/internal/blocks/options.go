@@ -138,12 +138,9 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -151,14 +148,11 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 
 // blocksFinishParse finishes the parsing for command line invocations. Returns a new BlocksOptions.
 func blocksFinishParse(args []string) *BlocksOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	if !opts.Uniq && opts.List == 0 {
 		defFmt = "json"
 	}

@@ -24,7 +24,7 @@ import (
 
 func (opts *ScrapeOptions) HandleScrape() error {
 	chain := opts.Globals.Chain
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 
 	progress, err := conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {

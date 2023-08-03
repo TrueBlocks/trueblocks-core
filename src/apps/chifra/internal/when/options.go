@@ -99,12 +99,9 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -112,14 +109,11 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 
 // whenFinishParse finishes the parsing for command line invocations. Returns a new WhenOptions.
 func whenFinishParse(args []string) *WhenOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Blocks = args
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS

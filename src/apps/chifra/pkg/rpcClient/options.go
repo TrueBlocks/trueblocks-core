@@ -25,7 +25,14 @@ func (conn *Connection) TestLog(enabled map[string]bool) {
 	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }
 
-func NewConnection(chain string) *Connection {
+func NewConnection(chain string, enabled bool, enabledMap map[string]bool) *Connection {
+	settings := DefaultRpcOptionsSettings{
+		Chain: chain,
+	}
+	return settings.DefaultRpcOptions()
+}
+
+func TempConnection(chain string) *Connection {
 	settings := DefaultRpcOptionsSettings{
 		Chain: chain,
 	}
@@ -38,10 +45,6 @@ func NewReadOnlyConnection(chain string) *Connection {
 		ReadonlyCache: true,
 	}
 	return settings.DefaultRpcOptions()
-}
-
-func (conn *Connection) EnableCaches(on bool, enabledMap map[string]bool) {
-	// options.enabledMap = enabledMap
 }
 
 // CacheStore returns cache for the given chain. If readonly is true, it returns

@@ -10,7 +10,7 @@ import (
 
 func main() {
 	chain := "mainnet"
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 	if block, err := conn.GetBlockHeaderByNumber(base.Blknum(3500000)); err != nil {
 		fmt.Println(err)
 	} else {

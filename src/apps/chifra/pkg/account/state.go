@@ -117,7 +117,7 @@ func GetState(chain string, fields GetStateField, address base.Address, blockNum
 	// 	}()
 	// }
 
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 	if (fields & Deployed) != 0 {
 		block, err := conn.GetContractDeployBlock(address)
 		if err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
@@ -153,7 +153,7 @@ func GetState(chain string, fields GetStateField, address base.Address, blockNum
 }
 
 func getTypeNonProxy(chain string, address base.Address, blockNumber base.Blknum) string {
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 	isContractErr := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: blockNumber})
 	if errors.Is(isContractErr, rpcClient.ErrNotAContract) {
 		return "EOA"
