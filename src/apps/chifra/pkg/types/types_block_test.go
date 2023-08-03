@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 func TestBlockCache(t *testing.T) {
@@ -24,7 +24,7 @@ func TestBlockCache(t *testing.T) {
 			"0x62974c8152c87e14880c54007260e0d5fe9d182c2cd22c58797735a9ae88370a",
 		},
 	}
-	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
+	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
 	if err != nil {
 		t.Fatal(err)
 	}

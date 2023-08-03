@@ -11,14 +11,15 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // HandleCheck looks at three different arrays: index files on disc, manifest on disc,
@@ -28,16 +29,16 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 
 	maxTestItems := 10
-	filenameChan := make(chan cache.CacheFileInfo)
+	filenameChan := make(chan walk.CacheFileInfo)
 
 	var nRoutines = 1
-	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Bloom, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
 		switch result.Type {
-		case cache.Index_Bloom:
-			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !cache.IsCacheType(result.Path, cache.Index_Bloom, true /* checkExt */)
+		case walk.Index_Bloom:
+			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !walk.IsCacheType(result.Path, walk.Index_Bloom, true /* checkExt */)
 			if !skip {
 				hit := false
 				for _, block := range blockNums {
@@ -51,7 +52,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 					fileNames = append(fileNames, result.Path)
 				}
 			}
-		case cache.Cache_NotACache:
+		case walk.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
@@ -157,7 +158,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	reports = append(reports, r2c)
 
 	// we only check the stage if it exists
-	stagePath := cache.ToStagingPath(config.GetPathToIndex(chain) + "staging")
+	stagePath := index.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if file.FileExists(stageFn) {
 		stage := simpleReportCheck{Reason: "Check staging folder"}

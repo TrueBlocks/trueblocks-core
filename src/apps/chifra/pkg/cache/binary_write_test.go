@@ -1,4 +1,4 @@
-package cacheNew
+package cache
 
 import (
 	"bytes"
@@ -137,7 +137,7 @@ func TestWriteBigInt(t *testing.T) {
 	if !ok {
 		t.Fatal("cannot set test value")
 	}
-	if err := WriteBigInt(buf, bigint); err != nil {
+	if err := writeBigInt(buf, bigint); err != nil {
 		t.Fatal(err)
 	}
 

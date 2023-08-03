@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -92,7 +91,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	// At this point, the two tables and the bloom filter are fully populated. We're ready to write to disc...
 
 	// First, we backup the existing chunk if there is one...
-	indexFn := cache.ToIndexPath(fileName)
+	indexFn := ToIndexPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
@@ -125,7 +124,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return nil, err
 			}
 
-			if _, err = bl.WriteBloom(chain, cache.ToBloomPath(indexFn)); err != nil {
+			if _, err = bl.WriteBloom(chain, ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
 
@@ -153,7 +152,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return &report, nil
 			}
 
-			result, err := pinning.PinChunk(chain, indexFn, remote)
+			result, err := pinning.PinChunk(chain, ToBloomPath(indexFn), ToIndexPath(indexFn), remote)
 			if err != nil {
 				return &report, err
 			}

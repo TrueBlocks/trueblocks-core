@@ -6,19 +6,19 @@ import (
 	goEthAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-func (cache *AbiCache) ArticulateTrace(chain string, trace *types.SimpleTrace) (err error) {
+func (abiCache *AbiCache) ArticulateTrace(chain string, trace *types.SimpleTrace) (err error) {
 	address := trace.Action.To
-	if !cache.loadedMap[address] && !cache.skipMap[address] {
-		if err := abi.LoadAbi(chain, address, cache.abiMap); err != nil {
-			cache.skipMap[address] = true
+	if !abiCache.loadedMap[address] && !abiCache.skipMap[address] {
+		if err := abi.LoadAbi(chain, address, abiCache.abiMap); err != nil {
+			abiCache.skipMap[address] = true
 			return err
 		} else {
-			cache.loadedMap[address] = true
+			abiCache.loadedMap[address] = true
 		}
 	}
 
-	if !cache.skipMap[address] {
-		if trace.ArticulatedTrace, err = articulateTrace(trace, cache.abiMap); err != nil {
+	if !abiCache.skipMap[address] {
+		if trace.ArticulatedTrace, err = articulateTrace(trace, abiCache.abiMap); err != nil {
 			return err
 		}
 	}

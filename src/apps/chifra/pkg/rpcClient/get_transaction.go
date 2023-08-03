@@ -6,7 +6,7 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -237,11 +237,11 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 		}
 	}
 
-	var writeOptions *cacheNew.WriteOptions
+	var writeOptions *cache.WriteOptions
 	var blockTs base.Timestamp
 	if options.HasStoreWritable() {
 		blockTs = options.GetBlockTimestamp(chain, &bn)
-		writeOptions = &cacheNew.WriteOptions{
+		writeOptions = &cache.WriteOptions{
 			// Check if the block is final
 			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(options.LatestBlockTimestamp),
 		}
@@ -320,9 +320,9 @@ func (options *Options) GetTransactionByBlockAndId(chain string, bn base.Blknum,
 	}
 	blockTs := options.GetBlockTimestamp(chain, &bn)
 
-	var writeOptions *cacheNew.WriteOptions
+	var writeOptions *cache.WriteOptions
 	if options.HasStoreWritable() {
-		writeOptions = &cacheNew.WriteOptions{
+		writeOptions = &cache.WriteOptions{
 			// Check if the block is final
 			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(options.LatestBlockTimestamp),
 		}

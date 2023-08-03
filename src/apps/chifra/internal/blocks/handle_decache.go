@@ -7,8 +7,8 @@ package blocksPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -18,7 +18,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
 	opts.Conn = rpcClient.NewReadOnlyConnection(chain)
 
-	toRemove := make([]cacheNew.Locator, 0)
+	toRemove := make([]cache.Locator, 0)
 	for _, br := range opts.BlockIds {
 		blockNums, err := br.ResolveBlocks(chain)
 		if err != nil {
@@ -121,14 +121,14 @@ func (opts *BlocksOptions) HandleDecache() error {
 	// }
 
 	// caches := []string{"blocks", "txs", "traces"}
-	// if cont, err := cache.Decache Items(chain, "", processorFunc, caches, pairs); err != nil || !cont {
+	// if cont, err := ca che.Decache Items(chain, "", processorFunc, caches, pairs); err != nil || !cont {
 	// 	return err
 	// }
 
 	// if itemsSeen == 0 {
-	// 	logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))
+	// 	logger.Info("No items matching the query were found in the c ache.", strings.Repeat(" ", 60))
 	// } else {
-	// 	logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.", strings.Repeat(" ", 60))
+	// 	logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the ca che.", strings.Repeat(" ", 60))
 	// }
 
 	// return nil

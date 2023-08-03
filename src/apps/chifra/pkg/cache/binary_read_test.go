@@ -1,4 +1,4 @@
-package cacheNew
+package cache
 
 import (
 	"bytes"
@@ -179,7 +179,7 @@ func TestReadBigInt(t *testing.T) {
 	}
 
 	result := big.NewInt(0)
-	if err := ReadBigInt(buf, result); err != nil {
+	if err := readBigInt(buf, result); err != nil {
 		t.Fatal(err)
 	}
 

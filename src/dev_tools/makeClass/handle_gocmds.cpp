@@ -20,7 +20,7 @@ extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
 extern string_q get_config_override(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
-extern string_q get_cache_package(const CCommandOption& cmd);
+extern string_q get_walk_package(const CCommandOption& cmd);
 extern string_q get_base_package(const string_q& fn);
 extern string_q get_index_package(const string_q& fn);
 extern string_q get_setopts(const CCommandOption& cmd);
@@ -152,7 +152,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
     replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
     replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
-    replaceAll(source, "[{CACHEPKG}]", get_cache_package(p));
+    replaceAll(source, "[{WALKPKG}]", get_walk_package(p));
     replaceAll(source, "[{BASEPKG}]", get_base_package(fn));
     replaceAll(source, "[{INDEXPKG}]", get_index_package(fn));
 
@@ -557,9 +557,9 @@ string_q get_config_package(const CCommandOption& cmd) {
     return "";
 }
 
-string_q get_cache_package(const CCommandOption& cmd) {
+string_q get_walk_package(const CCommandOption& cmd) {
     if (cmd.api_route == "status") {
-        return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache\"\n";
+        return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk\"\n";
     }
     return "";
 }

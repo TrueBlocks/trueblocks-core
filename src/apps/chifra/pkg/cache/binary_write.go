@@ -1,4 +1,4 @@
-package cacheNew
+package cache
 
 import (
 	"bytes"
@@ -25,18 +25,18 @@ func WriteValue(writer io.Writer, value any) (err error) {
 	// binary.Write takes care of slices of fixed-size types, e.g. []uint8,
 	// so we only have to support []string, []big.Int and []Marshaler
 	case []string:
-		err = WriteSlice(writer, v)
+		err = writeSlice(writer, v)
 	case []big.Int:
-		err = WriteSlice(writer, v)
+		err = writeSlice(writer, v)
 	case []Marshaler:
-		err = WriteSlice(writer, v)
+		err = writeSlice(writer, v)
 	case string:
-		err = WriteString(writer, &v)
+		err = writeString(writer, &v)
 	case *big.Int:
-		err = WriteBigInt(writer, v)
+		err = writeBigInt(writer, v)
 	default:
 		if rf := reflect.ValueOf(value); rf.Kind() == reflect.Slice {
-			return WriteSliceReflect(writer, &rf)
+			return writeSliceReflect(writer, &rf)
 		}
 
 		err = write(writer, value)
@@ -44,9 +44,9 @@ func WriteValue(writer io.Writer, value any) (err error) {
 	return err
 }
 
-// WriteSlice reads binary representation of slice of T. WriteValue is called for each
+// writeSlice reads binary representation of slice of T. WriteValue is called for each
 // item, so slice items can be of any type supported by WriteValue.
-func WriteSlice[T any](writer io.Writer, slice []T) (err error) {
+func writeSlice[T any](writer io.Writer, slice []T) (err error) {
 	buffer := new(bytes.Buffer)
 	sliceLen := uint64(len(slice))
 
@@ -65,7 +65,7 @@ func WriteSlice[T any](writer io.Writer, slice []T) (err error) {
 	return
 }
 
-func WriteSliceReflect(writer io.Writer, sliceValue *reflect.Value) (err error) {
+func writeSliceReflect(writer io.Writer, sliceValue *reflect.Value) (err error) {
 	buffer := new(bytes.Buffer)
 	sliceLen := sliceValue.Len()
 
@@ -93,19 +93,19 @@ func WriteSliceReflect(writer io.Writer, sliceValue *reflect.Value) (err error) 
 	return
 }
 
-func WriteString(writer io.Writer, str *string) (err error) {
+func writeString(writer io.Writer, str *string) (err error) {
 	if err = write(writer, uint64(len(*str))); err != nil {
 		return
 	}
 	return write(writer, []byte(*str))
 }
 
-func WriteBigInt(writer io.Writer, value *big.Int) (err error) {
+func writeBigInt(writer io.Writer, value *big.Int) (err error) {
 	data, err := value.GobEncode()
 	if err != nil {
 		return
 	}
-	// write length of data, so ReadBigInt knows how many bytes to read
+	// write length of data, so readBigInt knows how many bytes to read
 	if err = write(writer, uint64(len(data))); err != nil {
 		return err
 	}

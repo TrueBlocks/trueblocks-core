@@ -155,7 +155,6 @@ func ResetOptions() {
 
 func (opts *WhenOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
-	// TODO: Can we enable chaching here?
 	m = map[string]bool{}
 	// EXISTING_CODE
 	return
@@ -166,6 +165,7 @@ func (opts *WhenOptions) getCaches() (m map[string]bool) {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *WhenOptions) CacheState() (bool, map[string]bool) {
+	// TODO: Can we enable chaching here?
 	return false, opts.getCaches() // no caches
 	// return opts.Globals.Cache, opts.getCaches()
 }

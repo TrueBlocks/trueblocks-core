@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -83,17 +83,17 @@ func TestHexToAddress(t *testing.T) {
 
 func TestAddressCache(t *testing.T) {
 	buf := new(bytes.Buffer)
-	item := cacheNew.NewItem(buf)
+	item := cache.NewItem(buf)
 
 	addr := HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
 	if err := item.Encode(addr); err != nil {
 		t.Fatal(err)
 	}
-	result := buf.Bytes()[cacheNew.HeaderByteSize:]
+	result := buf.Bytes()[cache.HeaderByteSize:]
 	if !reflect.DeepEqual(result, addr.Bytes()) {
 		t.Fatalf("values are not same: got %x, expected %x", result, addr.Bytes())
 	}
-	readerItem := cacheNew.NewItem(buf)
+	readerItem := cache.NewItem(buf)
 	var readAddr Address
 	if err := readerItem.Decode(&readAddr); err != nil {
 		return
@@ -108,7 +108,7 @@ func TestAddressCache(t *testing.T) {
 	if err := item.Encode(zeroAddr); err != nil {
 		t.Fatal(err)
 	}
-	resultAddr := BytesToAddress(buf.Bytes()[cacheNew.HeaderByteSize:])
+	resultAddr := BytesToAddress(buf.Bytes()[cache.HeaderByteSize:])
 	if !resultAddr.IsZero() {
 		t.Fatalf("expected zero address, but got %s", resultAddr)
 	}

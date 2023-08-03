@@ -5,7 +5,6 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
@@ -14,10 +13,8 @@ import (
 // update the manifest by removing all chunks at or after the given path. Note that if this
 // function aborts due to error and the backup files still exist, the function will attempt
 // to restore the backup files before returning.
-func RemoveChunk(chain, path string) (err error) {
+func RemoveChunk(chain, bloomFn, indexFn string) (err error) {
 	manifestFn := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
-	indexFn := cache.ToIndexPath(path)
-	bloomFn := cache.ToBloomPath(path)
 
 	manifestBackup := manifestFn + ".backup"
 	indexBackup := indexFn + ".backup"
@@ -64,7 +61,7 @@ func RemoveChunk(chain, path string) (err error) {
 	var man *Manifest
 	man, err = ReadManifest(chain, FromCache)
 
-	removedRange, err1 := base.RangeFromFilenameE(path)
+	removedRange, err1 := base.RangeFromFilenameE(bloomFn)
 	if err1 != nil {
 		err = err1
 		return err

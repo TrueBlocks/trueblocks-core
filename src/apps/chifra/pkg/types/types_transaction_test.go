@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 func TestTransactionCache(t *testing.T) {
@@ -46,7 +46,7 @@ func TestTransactionCache(t *testing.T) {
 		Value:            *(big.NewInt(517)),
 	}
 
-	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
+	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -117,7 +117,7 @@ func TestTransactionCacheArticulated(t *testing.T) {
 		Value:            *(big.NewInt(0)),
 	}
 
-	store, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
+	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
 	if err != nil {
 		t.Fatal(err)
 	}

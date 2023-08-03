@@ -16,7 +16,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -195,57 +195,57 @@ func mustParseUint(input any) (result uint64) {
 
 func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	// Action is a pointer and it can be missing
-	optAction := &cacheNew.Optional[SimpleTraceAction]{
+	optAction := &cache.Optional[SimpleTraceAction]{
 		Value: s.Action,
 	}
-	if err = cacheNew.WriteValue(writer, optAction); err != nil {
+	if err = cache.WriteValue(writer, optAction); err != nil {
 		return err
 	}
 
-	optArticulatedTrace := &cacheNew.Optional[SimpleFunction]{
+	optArticulatedTrace := &cache.Optional[SimpleFunction]{
 		Value: s.ArticulatedTrace,
 	}
-	if err = cacheNew.WriteValue(writer, optArticulatedTrace); err != nil {
+	if err = cache.WriteValue(writer, optArticulatedTrace); err != nil {
 		return err
 	}
 
-	if err = cacheNew.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.CompressedTrace); err != nil {
+	if err = cache.WriteValue(writer, s.CompressedTrace); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Error); err != nil {
+	if err = cache.WriteValue(writer, s.Error); err != nil {
 		return err
 	}
 
 	// Result is a pointer and it can be missing
-	optResult := &cacheNew.Optional[SimpleTraceResult]{
+	optResult := &cache.Optional[SimpleTraceResult]{
 		Value: s.Result,
 	}
 
-	if err = cacheNew.WriteValue(writer, optResult); err != nil {
+	if err = cache.WriteValue(writer, optResult); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Subtraces); err != nil {
+	if err = cache.WriteValue(writer, s.Subtraces); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Timestamp); err != nil {
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.TraceAddress); err != nil {
+	if err = cache.WriteValue(writer, s.TraceAddress); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, &s.TransactionHash); err != nil {
+	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.TraceType); err != nil {
+	if err = cache.WriteValue(writer, s.TraceType); err != nil {
 		return err
 	}
 
@@ -253,61 +253,61 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	optAction := &cacheNew.Optional[SimpleTraceAction]{
+	optAction := &cache.Optional[SimpleTraceAction]{
 		Value: s.Action,
 	}
-	if err = cacheNew.ReadValue(reader, optAction, version); err != nil {
+	if err = cache.ReadValue(reader, optAction, version); err != nil {
 		return err
 	}
 	s.Action = optAction.Get()
 
 	// ArticulatedTrace can be missing
-	optArticulatedTrace := &cacheNew.Optional[SimpleFunction]{
+	optArticulatedTrace := &cache.Optional[SimpleFunction]{
 		Value: s.ArticulatedTrace,
 	}
-	if err = cacheNew.ReadValue(reader, optArticulatedTrace, version); err != nil {
+	if err = cache.ReadValue(reader, optArticulatedTrace, version); err != nil {
 		return err
 	}
 	s.ArticulatedTrace = optArticulatedTrace.Get()
 
-	if err = cacheNew.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.CompressedTrace, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CompressedTrace, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Error, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Error, version); err != nil {
 		return err
 	}
 
-	optResult := &cacheNew.Optional[SimpleTraceResult]{
+	optResult := &cache.Optional[SimpleTraceResult]{
 		Value: s.Result,
 	}
-	if err = cacheNew.ReadValue(reader, optResult, version); err != nil {
+	if err = cache.ReadValue(reader, optResult, version); err != nil {
 		return err
 	}
 	s.Result = optResult.Get()
 
-	if err = cacheNew.ReadValue(reader, &s.Subtraces, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Subtraces, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Timestamp, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
 		return err
 	}
 
-	if err = cacheNew.ReadValue(reader, &s.TraceAddress, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TraceAddress, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.TraceType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TraceType, version); err != nil {
 		return err
 	}
 
@@ -354,11 +354,11 @@ func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) 
 }
 
 func (s *SimpleTraceGroup) MarshalCache(writer io.Writer) (err error) {
-	return cacheNew.WriteValue(writer, s.Traces)
+	return cache.WriteValue(writer, s.Traces)
 }
 
 func (s *SimpleTraceGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cacheNew.ReadValue(reader, &s.Traces, version)
+	return cache.ReadValue(reader, &s.Traces, version)
 }
 
 // EXISTING_CODE

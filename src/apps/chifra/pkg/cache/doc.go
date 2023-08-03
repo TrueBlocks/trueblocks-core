@@ -1,2 +1,2 @@
-// Package cache implements the old caching code and can probably be removed
+// Package cache implements the new caching code
 package cache

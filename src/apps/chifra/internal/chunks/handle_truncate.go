@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -47,7 +46,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		latestChunk := uint64(0)
 		nChunksRemoved := 0
 		truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-			if path != cache.ToBloomPath(path) {
+			if path != index.ToBloomPath(path) {
 				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 			}
 
@@ -63,7 +62,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 
 			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 			if rng.Intersects(testRange) {
-				if err = manifest.RemoveChunk(chain, path); err != nil {
+				if err = manifest.RemoveChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err
 				}
 				nChunksRemoved++

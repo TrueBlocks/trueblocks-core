@@ -6,12 +6,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *StatusOptions) HandleShow() error {
@@ -23,39 +23,53 @@ func (opts *StatusOptions) HandleShow() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		now := time.Now()
 
-		filenameChan := make(chan cache.CacheFileInfo)
+		filenameChan := make(chan walk.CacheFileInfo)
 		var nRoutines int
 
-		counterMap := make(map[cache.CacheType]*simpleCacheItem)
+		counterMap := make(map[walk.CacheType]*simpleCacheItem)
 		nRoutines = len(opts.ModeTypes)
 		for _, mT := range opts.ModeTypes {
 			mT := mT
-			counterMap[mT] = NewSingleCacheStats(mT, now)
+			counterMap[mT] = &simpleCacheItem{
+				CacheItemType: cacheName(mT),
+				Items:         make([]any, 0),
+				LastCached:    now.Format("2006-01-02 15:04:05"),
+			}
 			var t CacheWalker
 			t.ctx, t.cancel = context.WithCancel(context.Background())
-			go cache.WalkCacheFolder(t.ctx, chain, mT, &t, filenameChan)
+			go walk.WalkCacheFolder(t.ctx, chain, mT, &t, filenameChan)
 		}
 
 		for result := range filenameChan {
 			cT := result.Type
 
 			switch cT {
-			case cache.Cache_NotACache:
+			case walk.Cache_NotACache:
 				nRoutines--
 				if nRoutines == 0 {
 					close(filenameChan)
 					logger.Progress(true, "                                           ")
 				}
 			default:
-				isIndexType := cache.IsIndexType(cT)
-				if testMode && isIndexType && (cT != cache.Index_Bloom && cT != cache.Index_Final) {
+				isIndex := func(cT walk.CacheType) bool {
+					m := map[walk.CacheType]bool{
+						walk.Index_Bloom:   true,
+						walk.Index_Final:   true,
+						walk.Index_Ripe:    true,
+						walk.Index_Staging: true,
+						walk.Index_Unripe:  true,
+						walk.Index_Maps:    true,
+					}
+					return m[cT]
+				}
+				if testMode && isIndex(cT) && (cT != walk.Index_Bloom && cT != walk.Index_Final) {
 					continue
 				}
 
-				if cache.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {
+				if walk.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {
 					if result.IsDir {
 						counterMap[cT].NFolders++
-						counterMap[cT].Path = cache.GetRootPathFromCacheType(chain, cT)
+						counterMap[cT].Path = walk.GetRootPathFromCacheType(chain, cT)
 					} else {
 						result.Data.(*CacheWalker).nSeen++
 						if result.Data.(*CacheWalker).nSeen >= opts.FirstRecord {
