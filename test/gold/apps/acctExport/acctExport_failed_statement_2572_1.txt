@@ -1,98 +1,181 @@
-chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --accounting --statements --ether --fmt json --first_block 15549161 --last_block 15549163 --asset 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 --max_records 10000
+chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --accounting --statements --ether --fmt json --last_block 15549163 --asset 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 --max_records 40
 TEST[DATE|TIME] Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
-TEST[DATE|TIME] MaxRecords:  10000
+TEST[DATE|TIME] MaxRecords:  40
 TEST[DATE|TIME] Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
-TEST[DATE|TIME] FirstBlock:  15549161
 TEST[DATE|TIME] LastBlock:  15549163
 TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  failed_statement_2572_1_out.file
 TEST[DATE|TIME] Format:  json
-{ "data": [
-TIME ~ CLOCK - <INFO>  : -------------flows-token-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: 
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         0xf5
-TIME ~ CLOCK - <INFO>  :    hash:                0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
-TIME ~ CLOCK - <INFO>  :    blockNumber:         15549162
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    83
-TIME ~ CLOCK - <INFO>  :    logIndex:            1774
-TIME ~ CLOCK - <INFO>  :    begBal:              2017044745122853478376
-TIME ~ CLOCK - <INFO>  :    amountIn:            2017000000000000000000
-TIME ~ CLOCK - <INFO>  :    totalIn:             2017000000000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           2017000000000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              2017044745122853478376
-TIME ~ CLOCK - <INFO>  :    begBalDiff:          2017044745122853478376
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          2017000000000000000000
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          4034044745122853478376
-TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : isPrevDiff: 1 isNextDiff: 1
-TIME ~ CLOCK - <INFO>  : ledger.blockNumber: 15549161 prevBlock: 15549161 transfer.blockNumber: 15549162 nextBlock: 15552509
-TIME ~ CLOCK - <INFO>  : -------------balances-token-----------------------------
-TIME ~ CLOCK - <INFO>  : Trial balance: regular-token
-TIME ~ CLOCK - <INFO>  :    blks:                [15549162] 1 1
-TIME ~ CLOCK - <INFO>  :    accountedFor:        0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
-TIME ~ CLOCK - <INFO>  :    assetAddr:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
-TIME ~ CLOCK - <INFO>  :    assetSymbol:         0xf5
-TIME ~ CLOCK - <INFO>  :    hash:                0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
-TIME ~ CLOCK - <INFO>  :    blockNumber:         15549162
-TIME ~ CLOCK - <INFO>  :    transactionIndex:    83
-TIME ~ CLOCK - <INFO>  :    logIndex:            1774
-TIME ~ CLOCK - <INFO>  :    begBal:              2017044745122853478376
-TIME ~ CLOCK - <INFO>  :    amountIn:            2017000000000000000000
-TIME ~ CLOCK - <INFO>  :    totalIn:             2017000000000000000000
-TIME ~ CLOCK - <INFO>  :    amountNet:           2017000000000000000000
-TIME ~ CLOCK - <INFO>  :    endBal:              2017044745122853478376
-TIME ~ CLOCK - <INFO>  :    endBalDiff:          2017000000000000000000
-TIME ~ CLOCK - <INFO>  :    endBalCalc:          4034044745122853478376
-TIME ~ CLOCK - <INFO>  :    trialBalance:        not balanced
-TIME ~ CLOCK - <INFO>  : --------------------------------------------------------
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : Calling 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000...: 
-TIME ~ CLOCK - <INFO>  : call to 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f at block 15000000 at four-byte 0xe6a43905 returned 0x0000000000000000000000000000000000000000000000000000000000000000
+{ "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] 010277683-00200:   10277683   10277683    10277711    same-diff false true
+INFO[DATE|TIME] 010277711-00064:   10277683   10277711    10277776
+INFO[DATE|TIME] 010277776-00094:   10277711   10277776    10277780
+INFO[DATE|TIME] 010277780-00102:   10277776   10277780    10367593
+INFO[DATE|TIME] 010367593-00194:   10277780   10367593    10367608
+INFO[DATE|TIME] 010367608-00023:   10367593   10367608    10958509
+INFO[DATE|TIME] 010958509-00072:   10367608   10958509    10958518
+INFO[DATE|TIME] 010958518-00077:   10958509   10958518    10972535
+INFO[DATE|TIME] 010972535-00102:   10958518   10972535    10972735
+INFO[DATE|TIME] 010972735-00084:   10972535   10972735    11472274
+INFO[DATE|TIME] 011472274-00222:   10972735   11472274    11947926
+INFO[DATE|TIME] 011947926-00077:   11472274   11947926    12110203
+INFO[DATE|TIME] 012110203-00088:   11947926   12110203    12517694
+INFO[DATE|TIME] 012517694-00073:   12110203   12517694    12655959
+INFO[DATE|TIME] 012655959-00195:   12517694   12655959    12697277
+INFO[DATE|TIME] 012697277-00188:   12655959   12697277    12697303
+INFO[DATE|TIME] 012697303-00099:   12697277   12697303    12697322
+INFO[DATE|TIME] 012697322-00281:   12697303   12697322    12697324
+INFO[DATE|TIME] 012697324-00088:   12697322   12697324    13193257
+INFO[DATE|TIME] 013193257-00227:   12697324   13193257    13269886
+INFO[DATE|TIME] 013269886-00045:   13193257   13269886    13269900
+INFO[DATE|TIME] 013269900-00177:   13269886   13269900    13269973
+INFO[DATE|TIME] 013269973-00178:   13269900   13269973    13772984
+INFO[DATE|TIME] 013772984-00129:   13269973   13772984    14359849
+INFO[DATE|TIME] 014359849-00140:   13772984   14359849    14359857
+INFO[DATE|TIME] 014359857-00202:   14359849   14359857    14359877
+INFO[DATE|TIME] 014359877-00153:   14359857   14359877    14360325
+INFO[DATE|TIME] 014360325-00141:   14359877   14360325    14360361
+INFO[DATE|TIME] 014360361-00080:   14360325   14360361    14366254
+INFO[DATE|TIME] 014366254-00017:   14360361   14366254    14436713
+INFO[DATE|TIME] 014436713-00058:   14366254   14436713    14436713    diff-same true false
+INFO[DATE|TIME] 014436713-00059:   14436713   14436713    14469880    same-diff false true
+INFO[DATE|TIME] 014469880-00033:   14436713   14469880    15549162
+INFO[DATE|TIME] 015549162-00083:   14469880   15549162    15549163
+TEST[DATE|TIME] Start of trial balance report
+WARN[DATE|TIME] Statement is not reconciled mdai.io at 15549162 83 1774
+TEST[DATE|TIME] A possible nullTransfer
+TEST[DATE|TIME]   nLogs:             1000
+TEST[DATE|TIME]     lotsOfLogs:      --> true
+TEST[DATE|TIME]   Sender.IsZero:     0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f false
+TEST[DATE|TIME]   or Sender == To:   false
+TEST[DATE|TIME]     mayBeAirdrop:    --> false
+TEST[DATE|TIME]   EndBal-BegBal:     0
+TEST[DATE|TIME]   MoneyMoved:        true
+TEST[DATE|TIME]     noBalanceChange: --> true
+TEST[DATE|TIME] Correcting token transfer for a null transfer
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         15549162
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              7.1023974137521753413e+24
+TEST[DATE|TIME] float1:              4.9318393831832324516e+21
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            1440.1112570636812698
+TEST[DATE|TIME] price:               1440.1112570636813
+TEST[DATE|TIME] source:              uniswap
+EROR[DATE|TIME] Failed to get price for mdai.io at 15549162 83
+EROR[DATE|TIME] Error returned from PriceUsd: no pair found for 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 and 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> TOKENS
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     14469880
+TEST[DATE|TIME] prevBlock:              14469880
+TEST[DATE|TIME] transfer.blockNumber:   15549162
+TEST[DATE|TIME] nextBlock:              15549163
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  diff-diff-token
+TEST[DATE|TIME]    accountedFor:        0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME]    sender:              0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f
+TEST[DATE|TIME]    recipient:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME]    assetAddr:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
+TEST[DATE|TIME]    assetSymbol:         mdai.io
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          14469880
+TEST[DATE|TIME]    hash:                0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
+TEST[DATE|TIME]    timestamp:           1663367531
+TEST[DATE|TIME]    blockNumber:         15549162
+TEST[DATE|TIME]    transactionIndex:    83
+TEST[DATE|TIME]    logIndex:            1774
+TEST[DATE|TIME]    priceSource:         not-priced
+TEST[DATE|TIME]    spotPrice:           0
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              2017044745122853478376
+TEST[DATE|TIME]    amountIn:            0
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        2017000000000000000000
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             2017000000000000000000
+TEST[DATE|TIME]    amountOut:           0
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       2017000000000000000000
+TEST[DATE|TIME]    selfDestructOut:     0
+TEST[DATE|TIME]    gasOut:              0
+TEST[DATE|TIME]    totalOut:            2017000000000000000000
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    endBal:              2017044745122853478376
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          2017044745122853478376
+TEST[DATE|TIME]    correctingReason:    null-transfer
+TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
+----
+Results in ./failed_statement_2572_1_out.file
 {
-  "blockNumber": 15549162,
-  "transactionIndex": 83,
-  "logIndex": 1774,
-  "transactionHash": "0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb",
-  "timestamp": 1663367531,
-  "date": "2022-09-16 22:32:11 UTC",
-  "assetAddr": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
-  "assetSymbol": "0xf5",
-  "decimals": 18,
-  "spotPrice": 0.00000,
-  "priceSource": "not-priced",
-  "accountedFor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-  "sender": "0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f",
-  "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
-  "begBal": "2017.044745122853478376",
-  "amountNet": "2017.0000000",
-  "endBal": "2017.044745122853478376",
-  "reconciliationType": "regular-token",
-  "reconciled": false,
-  "totalIn": "2017.0000000",
-  "amountIn": "2017.0000000",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "totalOut": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasOut": "",
-  "totalOutLessGas": "",
-  "falseAirdrop": "2017.00000",
-  "prevAppBlk": 15549161,
-  "prevBal": "2017.044745122853478376",
-  "begBalDiff": "",
-  "endBalDiff": "",
-  "endBalCalc": "2017.044745122853478376"
+  "data": [
+    {
+      "accountedFor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "amountIn": "0",
+      "amountNet": "0",
+      "amountOut": "0",
+      "assetAddr": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "assetSymbol": "mdai.io",
+      "begBal": "2017.044745122853478376",
+      "begBalDiff": "0",
+      "blockNumber": 15549162,
+      "correctingIn": "2017",
+      "correctingOut": "2017",
+      "correctingReason": "null-transfer",
+      "date": "2022-09-16 22:32:11 UTC",
+      "decimals": 18,
+      "endBal": "2017.044745122853478376",
+      "endBalCalc": "2017.044745122853478376",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 1774,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevAppBlk": 14469880,
+      "prevBal": "0",
+      "priceSource": "not-priced",
+      "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "reconciled": true,
+      "reconciliationType": "diff-diff-token",
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f",
+      "spotPrice": 0,
+      "timestamp": 1663367531,
+      "totalIn": "2017",
+      "totalOut": "2017",
+      "totalOutLessGas": "2017",
+      "transactionHash": "0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb",
+      "transactionIndex": 83
+    }
+  ]
 }
-] }
+

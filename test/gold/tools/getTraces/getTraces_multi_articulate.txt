@@ -1,6 +1,7 @@
 chifra traces  0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --articulate --fmt json
 TEST[DATE|TIME] Transactions:  [0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f]
 TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

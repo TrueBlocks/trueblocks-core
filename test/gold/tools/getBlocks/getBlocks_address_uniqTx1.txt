@@ -1,6 +1,7 @@
 chifra blocks  3982128 --uniq
 TEST[DATE|TIME] Blocks:  [3982128]
 TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Caps:  cache,raw
 TEST[DATE|TIME] Format:  txt
 address	blockNumber	transactionIndex	traceIndex	reason
 0x1e9939daaad6924ad004c2560e90804164900341	3982128	99999		miner

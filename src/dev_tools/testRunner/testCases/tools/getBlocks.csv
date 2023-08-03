@@ -67,7 +67,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_both        ,y    ,blo
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_uniq_uncles        ,y    ,blocks = 4012000-4012001 & uniq & uncles
 # See issue #3073
-local    ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles       ,y    ,blocks = 4012000-4012001 & cache & uncles
+on       ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles       ,y    ,blocks = 4012000-4012001 & cache & uncles
 on       ,both ,fast  ,blocks ,tools/getBlocks ,cache                 ,y    ,blocks = 1152642 & cache
 on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_uniq         ,y    ,blocks = 1152642 & cache & uniq
 on       ,both ,fast  ,blocks ,tools/getBlocks ,cached_uniq         ,y    ,blocks = 1152642 & uniq
@@ -102,8 +102,8 @@ delay    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner       ,y    ,blo
 delay    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle       ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448
 
 # These fail because they do not create value JSON
-file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file1             ,n    ,file = cmd_file1 & cache
-file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,file = cmd_file2 & cache
+on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file1             ,n    ,file = cmd_file1 & cache
+on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,file = cmd_file2 & cache
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blocks = 1001001-1001005 & fmt = csv & output = output_test_file
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append

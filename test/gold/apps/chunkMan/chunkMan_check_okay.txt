@@ -1,31 +1,80 @@
 chifra chunks  manifest --check
 TEST[DATE|TIME] Mode:  manifest
 TEST[DATE|TIME] Check:  true
-TEST[DATE|TIME] Format:  txt
+TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] Chain: mainnet
 INFO[DATE|TIME] Gateway: https://ipfs.unchainedindex.io/ipfs/
-SHOULD NOT PANICE
-INFO[DATE|TIME] CID: QmSuf5Pi2eLcwBQ5kj5Nc5cH1pZxSiJuRWidzVwmNwHK2e
-panic: interface conversion: io.Writer is *os.File, not *output.JsonWriter
-
-goroutine 1 [running]:
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output.StreamMany[...]({0x100cc35b0, 0xc0000440d0}, 0xc000308220, {0x0, 0x0, 0x0, 0x0, {0x100a26623, 0x4}, {0x100a2580b, ...}, ...})
-	/Users/jrush/Development/trueblocks-core/src/apps/chifra/pkg/output/stream.go:147 +0xa75
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks.(*ChunksOptions).HandleChunksCheck(0x10123c9a0, {0x0?, 0x0, 0x0})
-	/Users/jrush/Development/trueblocks-core/src/apps/chifra/internal/chunks/handle_check.go:184 +0x1571
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks.(*ChunksOptions).ChunksInternal(0x10123c9a0)
-	/Users/jrush/Development/trueblocks-core/src/apps/chifra/internal/chunks/output.go:82 +0x25a
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks.RunChunks(0x10091b420?, {0xc0004766c0?, 0x100a2c45b?, 0x8?})
-	/Users/jrush/Development/trueblocks-core/src/apps/chifra/internal/chunks/output.go:34 +0x6f
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file.RunWithFileSupport.func1(0x101240ae0?, {0xc0004766c0?, 0x1, 0x2})
-	/Users/jrush/Development/trueblocks-core/src/apps/chifra/pkg/file/commands.go:110 +0x18c
-github.com/spf13/cobra.(*Command).execute(0x101240ae0, {0xc0004766a0, 0x2, 0x2})
-	/Users/jrush/go/pkg/mod/github.com/spf13/cobra@v1.2.1/command.go:856 +0x67c
-github.com/spf13/cobra.(*Command).ExecuteC(0x10123fbe0)
-	/Users/jrush/go/pkg/mod/github.com/spf13/cobra@v1.2.1/command.go:974 +0x3bd
-github.com/spf13/cobra.(*Command).Execute(...)
-	/Users/jrush/go/pkg/mod/github.com/spf13/cobra@v1.2.1/command.go:902
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd.Execute()
-	/Users/jrush/Development/trueblocks-core/src/apps/chifra/cmd/root.go:25 +0x25
-main.main()
-	/Users/jrush/Development/trueblocks-core/src/apps/chifra/main.go:29 +0x25
+INFO[DATE|TIME] CID: QmcTSSv1B1Nuo16jRpiCRAaqYosMowb6t7pzT5A8PHYAVv
+{
+  "data": [
+    {
+      "checkedCnt": 7640,
+      "passedCnt": 7640,
+      "reason": "Filenames sequential",
+      "result": "passed",
+      "visitedCnt": 7640
+    },
+    {
+      "checkedCnt": 11,
+      "failedCnt": 2,
+      "msgStrings": [
+        "000000001-000590502: Magic number expected (0xdeadbeef) got (0xdeadbeef)",
+        "000590503-000864335: Header hash expected (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1) got (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1)"
+      ],
+      "passedCnt": 9,
+      "reason": "Internally consistent",
+      "result": "failed",
+      "visitedCnt": 11
+    },
+    {
+      "checkedCnt": 15264,
+      "passedCnt": 15264,
+      "reason": "Consistent hashes",
+      "result": "passed",
+      "visitedCnt": 15264
+    },
+    {
+      "checkedCnt": 11,
+      "passedCnt": 11,
+      "reason": "Check file sizes",
+      "result": "passed",
+      "visitedCnt": 11
+    },
+    {
+      "checkedCnt": 22,
+      "failedCnt": 2,
+      "msgStrings": [
+        "000864336-001076298: The chunk is in the Disc Files array but not the Cached Manifest array (testing)",
+        "001076299-001229769: The chunk is in the Disc Files array but not the Cached Manifest array (testing)"
+      ],
+      "passedCnt": 20,
+      "reason": "Disc Files to Cached Manifest",
+      "result": "failed",
+      "visitedCnt": 22
+    },
+    {
+      "checkedCnt": 22,
+      "failedCnt": 2,
+      "msgStrings": [
+        "000864336-001076298: The chunk is in the Disc Files array but not the Remote Manifest array (testing)",
+        "001076299-001229769: The chunk is in the Disc Files array but not the Remote Manifest array (testing)"
+      ],
+      "passedCnt": 20,
+      "reason": "Disc Files to Remote Manifest",
+      "result": "failed",
+      "visitedCnt": 22
+    },
+    {
+      "checkedCnt": 7632,
+      "failedCnt": 2,
+      "msgStrings": [
+        "000864336-001076298: The chunk is in the Remote Manifest array but not the Cached Manifest array (testing)",
+        "001076299-001229769: The chunk is in the Remote Manifest array but not the Cached Manifest array (testing)"
+      ],
+      "passedCnt": 7630,
+      "reason": "Remote Manifest to Cached Manifest",
+      "result": "failed",
+      "visitedCnt": 7632
+    }
+  ]
+}

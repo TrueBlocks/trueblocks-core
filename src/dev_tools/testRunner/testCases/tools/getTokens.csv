@@ -66,8 +66,12 @@ on      ,both ,slow  ,tokens ,tools/getTokens ,by_account_table_verbose_long ,y 
 on      ,both ,slow  ,tokens ,tools/getTokens ,by_account_table              ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf & by_acct & blocks = 4000000
 on      ,both ,slow  ,tokens ,tools/getTokens ,top_three_swarm1              ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 4285364 3510999 2510010 & by_acct
 
+on      ,both ,slow  ,tokens ,tools/getTokens ,balance_annually               ,y   ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0-4900000:annually
+on      ,both ,slow  ,tokens ,tools/getTokens ,balance_quarterly              ,y   ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0-2900000:quarterly
+on      ,both ,slow  ,tokens ,tools/getTokens ,balance_monthly                ,y   ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0-780000:monthly
+
 # See issue #3001 - non-existant block not identified as such
-local   ,both ,fast  ,tokens ,tools/getTokens ,block_not_found               ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
+delay   ,both ,fast  ,tokens ,tools/getTokens ,block_not_found               ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
 # Returns a weird (very large) totalSupply
 on   ,both ,slow  ,tokens ,tools/getTokens ,old_bug_2                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & parts = all & blocks = 12000000
