@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -146,7 +145,8 @@ func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				falseTxid := uint64(99999)
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
-				if validate.IsZeroAddress(author) {
+				a := base.HexToAddress(author)
+				if a.IsZero() {
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
 					falseTxid = uint64(99997)
 				}
@@ -157,7 +157,8 @@ func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				falseTxid := uint64(99998)
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
-				if validate.IsZeroAddress(author) {
+				a := base.HexToAddress(author)
+				if a.IsZero() {
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
 					falseTxid = uint64(99998) // do not change! it will break the index
 				}

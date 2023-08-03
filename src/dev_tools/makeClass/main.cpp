@@ -25,18 +25,6 @@ int main(int argc, const char* argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-
-        options.counter = CCounter();  // reset
-        LOG_INFO(cYellow, "handling generate...", cOff);
-        for (auto classDef : options.classDefs) {
-            CToml toml(classDef.input_path);
-            if (verbose)
-                cout << "Running class definition file '" << classDef.short_fn << "'" << endl;
-            options.handle_generate(toml, classDef, false);
-        }
-
-        LOG_INFO(cYellow, "makeClass --run", cOff, " processed ", options.counter.nVisited, " files (changed ",
-                 options.counter.nProcessed, ").", string_q(40, ' '));
     }
 
     return 0;

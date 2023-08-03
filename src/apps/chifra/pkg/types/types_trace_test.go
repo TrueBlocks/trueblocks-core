@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 func TestTraceCache(t *testing.T) {
@@ -34,12 +34,12 @@ func TestTraceCache(t *testing.T) {
 		},
 	}
 
-	cache, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
+	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if err := cache.Write(expected, nil); err != nil {
+	if err := store.Write(expected, nil); err != nil {
 		t.Fatal(err)
 	}
 
@@ -47,7 +47,7 @@ func TestTraceCache(t *testing.T) {
 		BlockNumber:      17432262,
 		TransactionIndex: 44,
 	}
-	if err := cache.Read(readBack, nil); err != nil {
+	if err := store.Read(readBack, nil); err != nil {
 		t.Fatal(err)
 	}
 
@@ -95,12 +95,12 @@ func TestTraceCacheArticulated(t *testing.T) {
 		},
 	}
 
-	cache, err := cacheNew.NewStore(&cacheNew.StoreOptions{Location: cacheNew.MemoryCache})
+	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if err := cache.Write(expected, nil); err != nil {
+	if err := store.Write(expected, nil); err != nil {
 		t.Fatal(err)
 	}
 
@@ -109,7 +109,7 @@ func TestTraceCacheArticulated(t *testing.T) {
 		BlockNumber:      17432262,
 		TransactionIndex: 44,
 	}
-	if err := cache.Read(readBack, nil); err != nil {
+	if err := store.Read(readBack, nil); err != nil {
 		t.Fatal(err)
 	}
 

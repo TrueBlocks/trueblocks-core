@@ -4,7 +4,7 @@ TEST[DATE|TIME] Blocks:  [6523977-6540000:2000]
 TEST[DATE|TIME] Call:  12065fe0()
 TEST[DATE|TIME] Caps:  cache,wei,ether
 TEST[DATE|TIME] Format:  txt
-Error: The value provided --call (12065fe0()) is invalid. See below.
+Error: the value provided --call (12065fe0()) is invalid
 Usage:
   chifra state [flags] <address> [address...] [block...]
 

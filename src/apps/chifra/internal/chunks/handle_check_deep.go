@@ -12,7 +12,6 @@ import (
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -56,7 +55,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			_, path := rng.RangeToFilename(chain)
-			bloomFilename := cache.ToBloomPath(path)
+			bloomFilename := index.ToBloomPath(path)
 			bl, err := bloom.NewChunkBloom(bloomFilename)
 			if err != nil {
 				return
@@ -64,7 +63,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 			defer bl.Close()
 
 			misses := 0
-			path = cache.ToIndexPath(path) // it may not exist if user did not do chifra init --all for example
+			path = index.ToIndexPath(path) // it may not exist if user did not do chifra init --all for example
 			if file.FileExists(path) {
 				indexChunk, err := index.NewChunkData(path)
 				if err != nil {

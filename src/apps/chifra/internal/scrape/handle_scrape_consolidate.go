@@ -147,7 +147,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
 
-		conn := rpcClient.NewConnection(chain, []string{})
+		conn := rpcClient.NewConnection(chain)
 		m, _ := conn.GetMetaData(chain, opts.Globals.TestMode)
 		rng := base.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)

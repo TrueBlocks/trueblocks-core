@@ -13,7 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // EXISTING_CODE
@@ -175,50 +175,50 @@ func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 		return zero.MarshalCache(writer)
 	}
 
-	if err = cacheNew.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.ContractAddress); err != nil {
+	if err = cache.WriteValue(writer, s.ContractAddress); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.CumulativeGasUsed); err != nil {
+	if err = cache.WriteValue(writer, s.CumulativeGasUsed); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.EffectiveGasPrice); err != nil {
+	if err = cache.WriteValue(writer, s.EffectiveGasPrice); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.From); err != nil {
+	if err = cache.WriteValue(writer, s.From); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.GasUsed); err != nil {
+	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.IsError); err != nil {
+	if err = cache.WriteValue(writer, s.IsError); err != nil {
 		return err
 	}
 
-	logs := make([]cacheNew.Marshaler, 0, len(s.Logs))
+	logs := make([]cache.Marshaler, 0, len(s.Logs))
 	for _, log := range s.Logs {
 		log := log
 		logs = append(logs, &log)
 	}
-	if err = cacheNew.WriteValue(writer, logs); err != nil {
+	if err = cache.WriteValue(writer, logs); err != nil {
 		return err
 	}
 
-	if err = cacheNew.WriteValue(writer, s.Status); err != nil {
+	if err = cache.WriteValue(writer, s.Status); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.To); err != nil {
+	if err = cache.WriteValue(writer, s.To); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, &s.TransactionHash); err != nil {
+	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
@@ -226,46 +226,46 @@ func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if err = cacheNew.ReadValue(reader, &s.BlockHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.ContractAddress, version); err != nil {
+	if err = cache.ReadValue(reader, &s.ContractAddress, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.CumulativeGasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.EffectiveGasPrice, version); err != nil {
+	if err = cache.ReadValue(reader, &s.EffectiveGasPrice, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.From, version); err != nil {
+	if err = cache.ReadValue(reader, &s.From, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.IsError, version); err != nil {
+	if err = cache.ReadValue(reader, &s.IsError, version); err != nil {
 		return err
 	}
 
 	s.Logs = make([]SimpleLog, 0)
-	if err = cacheNew.ReadValue(reader, &s.Logs, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Logs, version); err != nil {
 		return err
 	}
 
-	if err = cacheNew.ReadValue(reader, &s.Status, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Status, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.To, version); err != nil {
+	if err = cache.ReadValue(reader, &s.To, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.TransactionHash, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
 		return err
 	}
 

@@ -5,27 +5,27 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (cache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction) (err error) {
+func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction) (err error) {
 	address := tx.To
-	if !cache.loadedMap[address] && !cache.skipMap[address] {
-		if err := abi.LoadAbi(chain, address, cache.abiMap); err != nil {
-			cache.skipMap[address] = true
+	if !abiCache.loadedMap[address] && !abiCache.skipMap[address] {
+		if err := abi.LoadAbi(chain, address, abiCache.abiMap); err != nil {
+			abiCache.skipMap[address] = true
 			return err
 		} else {
-			cache.loadedMap[address] = true
+			abiCache.loadedMap[address] = true
 		}
 	}
 
 	if tx.Receipt != nil {
 		for index := range tx.Receipt.Logs {
-			if err = cache.ArticulateLog(chain, &tx.Receipt.Logs[index]); err != nil {
+			if err = abiCache.ArticulateLog(chain, &tx.Receipt.Logs[index]); err != nil {
 				return err
 			}
 		}
 	}
 
 	for index := range tx.Traces {
-		if err = cache.ArticulateTrace(chain, &tx.Traces[index]); err != nil {
+		if err = abiCache.ArticulateTrace(chain, &tx.Traces[index]); err != nil {
 			return err
 		}
 	}
@@ -35,7 +35,7 @@ func (cache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction) (
 	if len(tx.Input) >= 10 {
 		selector = tx.Input[:10]
 		inputData := tx.Input[10:]
-		found = cache.abiMap[selector]
+		found = abiCache.abiMap[selector]
 		if found != nil {
 			tx.ArticulatedTx = found.Clone()
 			var outputData string

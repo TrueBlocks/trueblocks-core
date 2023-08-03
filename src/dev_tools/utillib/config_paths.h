@@ -49,10 +49,6 @@ extern string_q getDefaultChain(void);
 #define cacheFolder_traces (cacheFolder + "traces/")
 #define cacheFolder_txs (cacheFolder + "txs/")
 
-//---------------------------------------------------------------------------
-#define cacheFolderBin_allocs (cacheFolder_names + "allocs.bin")
-#define cacheFolderBin_names (cacheFolder_names + "names.bin")
-
 //-------------------------------------------------------------------------
 #define indexFolder (getPathToIndex(""))
 #define indexFolder_staging (indexFolder + "staging/")
@@ -66,10 +62,7 @@ extern string_q getDefaultChain(void);
 #define indexFolderBin_ts (indexFolder + "ts.bin")
 
 //---------------------------------------------------------------------------
-#define chainConfigsTxt_allocs (chainConfigs + "allocs.csv")
 #define chainConfigsTxt_specials (chainConfigs + "specials.csv")
-#define chainConfigsTxt_names (chainConfigs + "names.tab")
-#define chainConfigsTxt_namesCustom (chainConfigs + "names_custom.tab")
 
 //---------------------------------------------------------------------------
 #define rootConfigToml_trueBlocks (rootConfigs + "trueBlocks.toml")

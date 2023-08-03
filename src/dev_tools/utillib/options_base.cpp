@@ -20,7 +20,6 @@
 #include "options_base.h"
 #include "colors.h"
 #include "filenames.h"
-#include "name.h"
 #include "rpcresult.h"
 #include "exportcontext.h"
 

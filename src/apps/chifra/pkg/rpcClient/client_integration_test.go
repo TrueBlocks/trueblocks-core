@@ -15,7 +15,7 @@ import (
 
 func Test_Client(t *testing.T) {
 	chain := utils.GetTestChain()
-	conn := NewConnection(chain, []string{})
+	conn := NewConnection(chain)
 
 	chainId, networkId, _ := conn.GetClientIDs(chain)
 	if chainId != networkId || chainId != 1 {
@@ -51,7 +51,7 @@ func Test_Client(t *testing.T) {
 
 func Test_TxFromNumberAndId(t *testing.T) {
 	chain := utils.GetTestChain()
-	conn := NewConnection(chain, []string{})
+	conn := NewConnection(chain)
 
 	txId := uint64(0)
 	_, err := conn.GetTransactionByNumberAndID(chain, uint64(1424623), txId)

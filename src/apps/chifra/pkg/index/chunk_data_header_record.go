@@ -10,7 +10,6 @@ import (
 	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
@@ -47,7 +46,7 @@ func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 }
 
 func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
-	fileName = cache.ToIndexPath(fileName)
+	fileName = ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
 		return IndexHeaderRecord{}, err
@@ -75,7 +74,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash base.Hash) ( /* cha
 	var err error
 
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
-	indexFn := cache.ToIndexPath(fileName)
+	indexFn := ToIndexPath(fileName)
 	if !file.FileExists(indexFn) {
 		return false, nil
 	}

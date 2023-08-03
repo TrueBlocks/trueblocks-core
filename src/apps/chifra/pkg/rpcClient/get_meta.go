@@ -8,8 +8,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 type MetaData struct {
@@ -57,27 +57,27 @@ func (options *Options) GetMetaData(chain string, testmode bool) (*MetaData, err
 	meta.NetworkId = networkId
 	meta.Latest = options.GetLatestBlockNumber(chain)
 
-	filenameChan := make(chan cache.CacheFileInfo)
+	filenameChan := make(chan walk.CacheFileInfo)
 
 	var nRoutines = 4
-	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Bloom, nil, filenameChan)
-	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Staging, nil, filenameChan)
-	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Ripe, nil, filenameChan)
-	go cache.WalkCacheFolder(context.Background(), chain, cache.Index_Unripe, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Bloom, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Staging, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Ripe, nil, filenameChan)
+	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Unripe, nil, filenameChan)
 
 	for result := range filenameChan {
 		switch result.Type {
-		case cache.Index_Bloom:
+		case walk.Index_Bloom:
 			fallthrough
-		case cache.Index_Final:
+		case walk.Index_Final:
 			meta.Finalized = utils.Max(meta.Finalized, result.Range.Last)
-		case cache.Index_Staging:
+		case walk.Index_Staging:
 			meta.Staging = utils.Max(meta.Staging, result.Range.Last)
-		case cache.Index_Ripe:
+		case walk.Index_Ripe:
 			meta.Ripe = utils.Max(meta.Ripe, result.Range.Last)
-		case cache.Index_Unripe:
+		case walk.Index_Unripe:
 			meta.Unripe = utils.Max(meta.Unripe, result.Range.Last)
-		case cache.Cache_NotACache:
+		case walk.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)

@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -23,7 +22,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		showBloom := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-			if path != cache.ToBloomPath(path) {
+			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showBloom")
 			}
 

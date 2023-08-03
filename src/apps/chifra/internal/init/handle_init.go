@@ -12,7 +12,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -20,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
@@ -66,7 +66,7 @@ func (opts *InitOptions) HandleInit() error {
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
 
-	getChunks := func(chunkType cache.CacheType) {
+	getChunks := func(chunkType walk.CacheType) {
 		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType, nCorrections)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
@@ -85,7 +85,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Set up a go routine to download the bloom filters...
 	go func() {
-		getChunks(cache.Index_Bloom)
+		getChunks(walk.Index_Bloom)
 		bloomsDoneChannel <- true
 	}()
 
@@ -93,7 +93,7 @@ func (opts *InitOptions) HandleInit() error {
 	// if opts.All {
 	// Set up another go routine to download the index chunks if the user told us to...
 	go func() {
-		getChunks(cache.Index_Final)
+		getChunks(walk.Index_Final)
 		indexDoneChannel <- true
 	}()
 
@@ -114,7 +114,7 @@ var nProcessed12 int
 var nStarted12 int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType cache.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType walk.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
 	chain := opts.Globals.Chain
 
 	failed := []manifest.ChunkRecord{}

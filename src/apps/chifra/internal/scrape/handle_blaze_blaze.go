@@ -123,7 +123,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 
 		chain := opts.Chain
-		conn := rpcClient.NewConnection(chain, []string{})
+		conn := rpcClient.NewConnection(chain)
 
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
 		if sd.traces, err = conn.GetTracesByNumber(chain, uint64(bn)); err != nil {

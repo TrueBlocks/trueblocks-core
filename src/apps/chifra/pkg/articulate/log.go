@@ -7,19 +7,19 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (cache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err error) {
+func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err error) {
 	address := log.Address
-	if !cache.loadedMap[address] && !cache.skipMap[address] {
-		if err = abi.LoadAbi(chain, address, cache.abiMap); err != nil {
-			cache.skipMap[address] = true
+	if !abiCache.loadedMap[address] && !abiCache.skipMap[address] {
+		if err = abi.LoadAbi(chain, address, abiCache.abiMap); err != nil {
+			abiCache.skipMap[address] = true
 			return err
 		} else {
-			cache.loadedMap[address] = true
+			abiCache.loadedMap[address] = true
 		}
 	}
 
-	if !cache.skipMap[address] {
-		if log.ArticulatedLog, err = articulateLog(log, cache.abiMap); err != nil {
+	if !abiCache.skipMap[address] {
+		if log.ArticulatedLog, err = articulateLog(log, abiCache.abiMap); err != nil {
 			return err
 		}
 	}

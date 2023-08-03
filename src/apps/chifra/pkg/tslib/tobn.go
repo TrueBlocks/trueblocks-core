@@ -25,7 +25,7 @@ func FromDateToBn(chain, dateStr string) (uint64, error) {
 // FromNameToBn returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
 func FromNameToBn(chain, name string) (uint64, error) {
 	if name == "latest" {
-		conn := rpcClient.NewConnection(chain, []string{})
+		conn := rpcClient.NewConnection(chain)
 		meta, err := conn.GetMetaData(chain, false)
 		if err != nil {
 			return 0, err

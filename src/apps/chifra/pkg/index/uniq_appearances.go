@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -41,7 +40,7 @@ func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 
 // UniqFromTraces extracts addresses from traces
 func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
-	conn := rpcClient.NewConnection(chain, []string{})
+	conn := rpcClient.NewConnection(chain)
 
 	for _, trace := range traces {
 		trace := trace
@@ -60,7 +59,8 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
 				author := trace.Action.Author.Hex()
-				if validate.IsZeroAddress(author) {
+				a := base.HexToAddress(author)
+				if a.IsZero() {
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
@@ -74,7 +74,8 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 
 			} else if trace.Action.RewardType == "uncle" {
 				author := trace.Action.Author.Hex()
-				if validate.IsZeroAddress(author) {
+				a := base.HexToAddress(author)
+				if a.IsZero() {
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.

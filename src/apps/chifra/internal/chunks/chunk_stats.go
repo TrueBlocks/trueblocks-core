@@ -3,7 +3,6 @@ package chunksPkg
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
@@ -26,8 +25,8 @@ func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
 		NAddrs:  uint64(chunk.Data.Header.AddressCount),
 		NApps:   uint64(chunk.Data.Header.AppearanceCount),
 		NBlooms: uint64(chunk.Bloom.Count),
-		BloomSz: uint64(file.FileSize(cache.ToBloomPath(path))),
-		ChunkSz: uint64(file.FileSize(cache.ToIndexPath(path))),
+		BloomSz: uint64(file.FileSize(index.ToBloomPath(path))),
+		ChunkSz: uint64(file.FileSize(index.ToIndexPath(path))),
 		RecWid:  4 + bloom.BLOOM_WIDTH_IN_BYTES,
 	}
 

@@ -17,7 +17,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
@@ -233,14 +233,14 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	return
 }
 
-func (function *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, err error) {
-	if !function.IsMethod() {
+func (s *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, err error) {
+	if !s.IsMethod() {
 		err = fmt.Errorf("FunctionToAbiMethod called for an event")
 		return
 	}
 
-	removeUnknownTuples(function)
-	jsonAbi, err := json.Marshal([]any{function})
+	removeUnknownTuples(s)
+	jsonAbi, err := json.Marshal([]any{s})
 	if err != nil {
 		return
 	}
@@ -248,23 +248,23 @@ func (function *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, 
 	if err != nil {
 		return
 	}
-	found, ok := res.Methods[function.Name]
+	found, ok := res.Methods[s.Name]
 	if !ok {
-		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		err = fmt.Errorf("generating ABI method: method not found: %s", s.Name)
 		return
 	}
 	ethMethod = &found
 	return
 }
 
-func (function *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, err error) {
-	if function.IsMethod() {
+func (s *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, err error) {
+	if s.IsMethod() {
 		err = fmt.Errorf("functionToAbiEvent called for a method")
 		return
 	}
 
-	removeUnknownTuples(function)
-	jsonAbi, err := json.Marshal([]any{function})
+	removeUnknownTuples(s)
+	jsonAbi, err := json.Marshal([]any{s})
 	if err != nil {
 		return
 	}
@@ -272,9 +272,9 @@ func (function *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, er
 	if err != nil {
 		return
 	}
-	found, ok := res.Events[function.Name]
+	found, ok := res.Events[s.Name]
 	if !ok {
-		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		err = fmt.Errorf("generating ABI method: method not found: %s", s.Name)
 		return
 	}
 	ethMethod = &found
@@ -370,48 +370,48 @@ func (s *SimpleFunction) Pack(callArguments []any) (packed []byte, err error) {
 }
 
 func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
-	if err = cacheNew.WriteValue(writer, s.Anonymous); err != nil {
+	if err = cache.WriteValue(writer, s.Anonymous); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Constant); err != nil {
+	if err = cache.WriteValue(writer, s.Constant); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Encoding); err != nil {
+	if err = cache.WriteValue(writer, s.Encoding); err != nil {
 		return err
 	}
 
-	inputs := make([]cacheNew.Marshaler, 0, len(s.Inputs))
+	inputs := make([]cache.Marshaler, 0, len(s.Inputs))
 	for _, input := range s.Inputs {
 		input := input
 		inputs = append(inputs, &input)
 	}
-	if err = cacheNew.WriteValue(writer, inputs); err != nil {
+	if err = cache.WriteValue(writer, inputs); err != nil {
 		return err
 	}
 
-	if err = cacheNew.WriteValue(writer, s.Message); err != nil {
+	if err = cache.WriteValue(writer, s.Message); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Name); err != nil {
+	if err = cache.WriteValue(writer, s.Name); err != nil {
 		return err
 	}
 
-	outputs := make([]cacheNew.Marshaler, 0, len(s.Outputs))
+	outputs := make([]cache.Marshaler, 0, len(s.Outputs))
 	for _, output := range s.Outputs {
 		output := output
 		outputs = append(outputs, &output)
 	}
-	if err = cacheNew.WriteValue(writer, outputs); err != nil {
+	if err = cache.WriteValue(writer, outputs); err != nil {
 		return err
 	}
 
-	if err = cacheNew.WriteValue(writer, s.Signature); err != nil {
+	if err = cache.WriteValue(writer, s.Signature); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.StateMutability); err != nil {
+	if err = cache.WriteValue(writer, s.StateMutability); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.FunctionType); err != nil {
+	if err = cache.WriteValue(writer, s.FunctionType); err != nil {
 		return err
 	}
 
@@ -419,40 +419,40 @@ func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if err = cacheNew.ReadValue(reader, &s.Anonymous, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Anonymous, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Constant, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Constant, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Encoding, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Encoding, version); err != nil {
 		return err
 	}
 
 	s.Inputs = make([]SimpleParameter, 0)
-	if err = cacheNew.ReadValue(reader, &s.Inputs, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Inputs, version); err != nil {
 		return err
 	}
 
-	if err = cacheNew.ReadValue(reader, &s.Message, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Message, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Name, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
 		return err
 	}
 
 	s.Outputs = make([]SimpleParameter, 0)
-	if err = cacheNew.ReadValue(reader, &s.Outputs, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
 		return err
 	}
 
-	if err = cacheNew.ReadValue(reader, &s.Signature, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.StateMutability, version); err != nil {
+	if err = cache.ReadValue(reader, &s.StateMutability, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.FunctionType, version); err != nil {
+	if err = cache.ReadValue(reader, &s.FunctionType, version); err != nil {
 		return err
 	}
 

@@ -16,7 +16,6 @@
 #include "config_paths.h"
 #include "colors.h"
 #include "filenames.h"
-#include "name.h"
 #include "rpcresult.h"
 #include "exportcontext.h"
 #include "logging.h"

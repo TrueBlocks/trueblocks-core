@@ -13,7 +13,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -100,16 +100,16 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 //
 
 func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
-	if err = cacheNew.WriteValue(writer, s.Address); err != nil {
+	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Code); err != nil {
+	if err = cache.WriteValue(writer, s.Code); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.GasUsed); err != nil {
+	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
-	if err = cacheNew.WriteValue(writer, s.Output); err != nil {
+	if err = cache.WriteValue(writer, s.Output); err != nil {
 		return err
 	}
 
@@ -117,16 +117,16 @@ func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if err = cacheNew.ReadValue(reader, &s.Address, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Code, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Code, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.GasUsed, version); err != nil {
+	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
 		return err
 	}
-	if err = cacheNew.ReadValue(reader, &s.Output, version); err != nil {
+	if err = cache.ReadValue(reader, &s.Output, version); err != nil {
 		return err
 	}
 

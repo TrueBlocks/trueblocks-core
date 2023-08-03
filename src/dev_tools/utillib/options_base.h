@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "version.h"
-#include "name.h"
 #include "filenames.h"
 #include "toml.h"
 #include "exportcontext.h"
@@ -25,7 +24,6 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------------
-typedef bool (*NAMEFUNC)(CName& name, void* data);
 typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
 typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
 typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);

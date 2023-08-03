@@ -1,6 +1,6 @@
 abis?clean
 {
   "errors": [
-    "Please specify an address for the --clean option."
+    "The --clean option is not available in API mode."
   ]
 }

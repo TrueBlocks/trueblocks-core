@@ -8,8 +8,8 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cacheNew/locations"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -20,7 +20,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
 	opts.Conn = rpcClient.NewReadOnlyConnection(chain)
 
-	toRemove := make([]cacheNew.Locator, 0)
+	toRemove := make([]cache.Locator, 0)
 	for _, rng := range opts.TransactionIds {
 		txIds, err := rng.ResolveTxs(chain)
 		if err != nil && !errors.Is(err, ethereum.NotFound) {
@@ -47,8 +47,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 		itemsSeen++
 		itemsRemoved++
 		bytesRemoved += info.Size()
-		logger.Info(!testMode && itemsRemoved%20 == 0, "Removed ", itemsRemoved, " items and ", bytesRemoved, " bytes.", info.Name())
-
+		logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", info.Name())
 		if opts.Globals.Verbose {
 			logger.Info(info.Name(), "was removed.")
 		}
@@ -109,14 +108,14 @@ func (opts *TransactionsOptions) HandleDecache() error {
 	// }
 
 	// caches := []string{"txs", "traces"}
-	// if cont, err := cache.DecacheItems(chain, "", processorFunc, caches, pairs); err != nil || !cont {
+	// if cont, err := ca che.Decache Items(chain, "", processorFunc, caches, pairs); err != nil || !cont {
 	// 	return err
 	// }
 
 	// if itemsSeen == 0 {
-	// 	logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))
+	// 	logger.Info("No items matching the query were found in the cac he.", strings.Repeat(" ", 60))
 	// } else {
-	// 	logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.", strings.Repeat(" ", 60))
+	// 	logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the ca che.", strings.Repeat(" ", 60))
 	// }
 
 	// return nil
