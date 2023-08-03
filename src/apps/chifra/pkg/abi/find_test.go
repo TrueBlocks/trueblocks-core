@@ -95,7 +95,7 @@ func init() {
 		panic(err)
 	}
 
-	helperLoadAbisFromJson(&testAbi, &abis)
+	testHelperLoadAbisFromJson(&testAbi, &abis)
 
 	packTestAbi, err = abi.JSON(strings.NewReader(packTestAbiSource))
 	if err != nil {
@@ -103,7 +103,7 @@ func init() {
 	}
 }
 
-func helperLoadAbisFromJson(parsedAbi *abi.ABI, destination *map[string]*types.SimpleFunction) {
+func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, destination *map[string]*types.SimpleFunction) {
 	*destination = make(AbiInterfaceMap, len(parsedAbi.Methods))
 	for _, method := range parsedAbi.Methods {
 		method := method
@@ -268,7 +268,7 @@ func Test_findAbiFunctionMisleading(t *testing.T) {
 		t.Fatal(err)
 	}
 	abis := make(map[string]*types.SimpleFunction)
-	helperLoadAbisFromJson(&parsedAbi, &abis)
+	testHelperLoadAbisFromJson(&parsedAbi, &abis)
 
 	call := &parser.FunctionContractCall{
 		Name: "transfer",
