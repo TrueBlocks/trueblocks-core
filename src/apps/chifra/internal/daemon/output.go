@@ -58,6 +58,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra daemon"
 	// EXISTING_CODE
@@ -92,9 +93,15 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		logger.InfoTable("Progress:          ", msg)
 	}
 
-	go opts.HandleScraper()
-	go opts.HandleMonitor()
-	go opts.HandleGrpc()
+	go func() {
+		_ = opts.HandleScraper()
+	}()
+	go func() {
+		_ = opts.HandleMonitor()
+	}()
+	go func() {
+		_ = opts.HandleGrpc()
+	}()
 
 	// Start listening to the web sockets
 	RunWebsocketPool()

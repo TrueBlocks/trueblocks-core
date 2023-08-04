@@ -84,15 +84,15 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash base.Hash) ( /* cha
 		defer func() {
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, indexFn)
-				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+				_ = os.Rename(backupFn, indexFn)
+				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
 		if fp, err := os.OpenFile(indexFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
-			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header, err := readIndexHeader(fp)
 			if err != nil {
 				return false, err
@@ -104,12 +104,12 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash base.Hash) ( /* cha
 
 			// We want to write the slice
 			// TODO: I do not like this code
-			fp.Seek(int64(unsafe.Sizeof(header.Magic)), io.SeekStart)
+			_, _ = fp.Seek(int64(unsafe.Sizeof(header.Magic)), io.SeekStart)
 			err = binary.Write(fp, binary.LittleEndian, headerHash)
 			if err != nil {
 				return false, err
 			}
-			fp.Sync() // probably redundant
+			_ = fp.Sync() // probably redundant
 
 			// Success. Remove the backup so it doesn't replace the orignal
 			os.Remove(backupFn)

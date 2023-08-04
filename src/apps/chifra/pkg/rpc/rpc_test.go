@@ -22,7 +22,7 @@ func TestFromRpcCounter(t *testing.T) {
 			t.Fatal(err)
 		}
 		ids = append(ids, payload.ID)
-		w.Write([]byte("{}"))
+		_, _ = w.Write([]byte("{}"))
 	}))
 	defer server.Close()
 

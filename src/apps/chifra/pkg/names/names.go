@@ -105,12 +105,12 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 
 	if parts&Regular != 0 {
 		namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
-		loadRegularMap(chain, namesPath, terms, parts, &namesMap)
+		_ = loadRegularMap(chain, namesPath, terms, parts, &namesMap)
 	}
 
 	// Load the custom names (note that these may overwrite the prefund and regular names)
 	if parts&Custom != 0 {
-		loadCustomMap(chain, terms, parts, &namesMap)
+		_ = loadCustomMap(chain, terms, parts, &namesMap)
 	}
 
 	return namesMap, nil
@@ -282,7 +282,9 @@ func WriteDatabase(chain string, kind Parts, database Database, names map[base.A
 		if err = file.Lock(db); err != nil {
 			return err
 		}
-		defer file.Unlock(db)
+		defer func() {
+			_ = file.Unlock(db)
+		}()
 	}
 
 	writer := NewNameWriter(db)

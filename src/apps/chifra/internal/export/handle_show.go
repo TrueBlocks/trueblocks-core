@@ -103,7 +103,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					&opts.Asset,
 				)
 				if opts.Accounting {
-					ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
+					_ = ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
 				}
 
 				for _, app := range apps {

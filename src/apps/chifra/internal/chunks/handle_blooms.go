@@ -27,7 +27,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 			}
 
 			var bl bloom.ChunkBloom
-			bl.ReadBloom(path)
+			_ = bl.ReadBloom(path)
 			nInserted := 0
 			for _, bl := range bl.Blooms {
 				nInserted += int(bl.NInserted)

@@ -218,7 +218,7 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 
 			// Closed inside the invocation
 			writeWg.Add(1)
-			writePool.Invoke(result)
+			_ = writePool.Invoke(result)
 		}
 
 		// Close the opening wg when all writes are finished or the user canceled
@@ -227,7 +227,7 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 
 	for _, chunk := range chunksToDownload {
 		downloadWg.Add(1)
-		downloadPool.Invoke(chunk)
+		_ = downloadPool.Invoke(chunk)
 	}
 	downloadWg.Wait()
 

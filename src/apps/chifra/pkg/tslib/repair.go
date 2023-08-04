@@ -32,8 +32,8 @@ func Repair(chain string, bn uint64) error {
 			DeCache(chain)
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, tsFn)
-				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+				_ = os.Rename(backupFn, tsFn)
+				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
@@ -46,7 +46,7 @@ func Repair(chain string, bn uint64) error {
 
 			recordSize := int64(unsafe.Sizeof(uint32(0))) * 2
 			pos := (recordSize * int64(bn))
-			fp.Seek(pos, io.SeekStart)
+			_, _ = fp.Seek(pos, io.SeekStart)
 
 			conn := rpcClient.TempConnection(chain)
 			block, _ := conn.GetBlockHeaderByNumber(bn)
@@ -55,7 +55,7 @@ func Repair(chain string, bn uint64) error {
 			if err != nil {
 				return err
 			}
-			fp.Sync() // probably redundant
+			_ = fp.Sync() // probably redundant
 
 			os.Remove(backupFn)
 			return nil

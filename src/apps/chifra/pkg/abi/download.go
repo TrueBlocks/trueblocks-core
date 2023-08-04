@@ -61,7 +61,7 @@ func DownloadAbi(chain string, address base.Address, destination *FunctionSyncMa
 		logger.Warn("provider responded with:", address.Hex(), data["message"])
 
 		reader := strings.NewReader(AbiNotFound)
-		fromJson(reader, destination)
+		_ = fromJson(reader, destination)
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {
 			return err
 		}
@@ -72,7 +72,7 @@ func DownloadAbi(chain string, address base.Address, destination *FunctionSyncMa
 	}
 
 	reader := strings.NewReader(data["result"])
-	fromJson(reader, destination)
+	_ = fromJson(reader, destination)
 	if _, err = reader.Seek(0, io.SeekStart); err != nil {
 		return err
 	}

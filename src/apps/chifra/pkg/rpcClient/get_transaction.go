@@ -263,7 +263,7 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 	}
 	if tx != nil {
 		if conn.HasStore() && conn.enabledMap["txs"] {
-			conn.Store.Write(tx, writeOptions)
+			_ = conn.Store.Write(tx, writeOptions)
 		}
 		return tx, nil
 	}
@@ -287,7 +287,7 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
 	if conn.HasStore() && conn.enabledMap["txs"] {
-		conn.Store.Write(tx, writeOptions)
+		_ = conn.Store.Write(tx, writeOptions)
 	}
 
 	if fetchTraces {
@@ -341,7 +341,7 @@ func (conn *Connection) GetTransactionByBlockAndId(bn base.Blknum, txid uint64) 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
 	if conn.HasStore() && conn.enabledMap["txs"] {
-		conn.Store.Write(tx, writeOptions)
+		_ = conn.Store.Write(tx, writeOptions)
 	}
 
 	return

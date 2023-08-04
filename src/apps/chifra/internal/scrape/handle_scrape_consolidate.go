@@ -46,8 +46,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		if stageRange.Last < newRangeLast {
 			newRange := base.FileRange{First: stageRange.First, Last: newRangeLast}
 			newFilename := filepath.Join(stageFolder, newRange.String()+".txt")
-			os.Rename(stageFn, newFilename)
-			os.Remove(stageFn) // seems redundant, but may not be on some operating systems
+			_ = os.Rename(stageFn, newFilename)
+			_ = os.Remove(stageFn) // seems redundant, but may not be on some operating systems
 		}
 		return true, nil
 	}
@@ -59,7 +59,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		// Then, if they are not at least sequential, clean up and try again...
 		allowMissing := scrapeCfg.AllowMissing(chain)
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
-			index.CleanTemporaryFolders(config.GetPathToCache(chain), false)
+			_ = index.CleanTemporaryFolders(config.GetPathToCache(chain), false)
 			return true, err
 		}
 	}
@@ -87,8 +87,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 		if backupFn != "" && file.FileExists(backupFn) {
 			// If the backup file exists, something failed, so we replace the original file.
 			// logger.Info("Replacing backed up staging file")
-			os.Rename(backupFn, stageFn)
-			os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+			_ = os.Rename(backupFn, stageFn)
+			_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 		}
 	}()
 

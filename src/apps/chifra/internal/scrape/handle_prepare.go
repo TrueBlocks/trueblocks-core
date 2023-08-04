@@ -25,7 +25,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting
-	index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
+	_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
 
 	bloomPath := config.GetPathToIndex(chain) + "blooms/000000000-000000000.bloom"
 	if file.FileExists(bloomPath) {
@@ -53,7 +53,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 		Bn: uint32(0),
 		Ts: uint32(opts.Conn.GetBlockTimestamp(utils.PointerOf(uint64(0)))),
 	})
-	tslib.Append(chain, array)
+	_ = tslib.Append(chain, array)
 
 	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
 	indexPath := index.ToIndexPath(bloomPath)

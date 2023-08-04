@@ -60,7 +60,7 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 		fmt.Fprintf(os.Stderr, "%s", err)
 	} else {
 		go func() {
-			cmd.Start()
+			_ = cmd.Start()
 			scanner := bufio.NewScanner(stdout)
 			buf := make([]byte, 1024*1024)
 			scanner.Buffer(buf, 1024*1024)
@@ -72,7 +72,7 @@ func (opts *GlobalOptions) PassItOn(path, chain, cmdLine string, envIn []string)
 		}()
 	}
 	wg.Wait()
-	cmd.Wait()
+	_ = cmd.Wait()
 	return nil
 }
 

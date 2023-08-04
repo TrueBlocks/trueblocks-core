@@ -110,7 +110,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
 			mon, _ := monitor.NewStagedMonitor(chain, addr)
-			mon.ReadMonitorHeader()
+			_ = mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
 				updater.FirstBlock = uint64(mon.LastScanned)
 			}
@@ -326,7 +326,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		mon.Close()
 		// Note that result.AppRecords may be nil here (because, for example, this
 		// monitor had a false positive), but we do still want to update the header.
-		mon.WriteMonHeader(mon.Deleted, lastScanned, false /* force */)
+		_ = mon.WriteMonHeader(mon.Deleted, lastScanned, false /* force */)
 		if result.AppRecords != nil {
 			nWritten := len(*result.AppRecords)
 			if nWritten > 0 {

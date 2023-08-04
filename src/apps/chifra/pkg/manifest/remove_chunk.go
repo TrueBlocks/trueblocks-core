@@ -24,16 +24,16 @@ func RemoveChunk(chain, bloomFn, indexFn string) (err error) {
 		if err != nil {
 			// If the backup files still exist when the function ends, something went wrong, reset everything
 			if file.FileExists(manifestBackup) {
-				file.Copy(manifestFn, manifestBackup)
-				os.Remove(manifestBackup)
+				_, _ = file.Copy(manifestFn, manifestBackup)
+				_ = os.Remove(manifestBackup)
 			}
 			if file.FileExists(indexBackup) {
-				file.Copy(indexFn, indexBackup)
-				os.Remove(indexBackup)
+				_, _ = file.Copy(indexFn, indexBackup)
+				_ = os.Remove(indexBackup)
 			}
 			if file.FileExists(bloomBackup) {
-				file.Copy(bloomFn, bloomBackup)
-				os.Remove(bloomBackup)
+				_, _ = file.Copy(bloomFn, bloomBackup)
+				_ = os.Remove(bloomBackup)
 			}
 		}
 	}()
