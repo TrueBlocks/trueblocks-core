@@ -18,8 +18,8 @@ import (
 )
 
 func (opts *BlocksOptions) HandleLogs() error {
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 
 	// TODO: Why does this have to dirty the caller?
 	settings := rpcClient.DefaultRpcOptionsSettings{
@@ -27,9 +27,6 @@ func (opts *BlocksOptions) HandleLogs() error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
@@ -64,7 +61,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 					errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
 				}
 
-				logs, err := opts.Conn.GetLogsByFilter(chain, logFilter)
+				logs, err := opts.Conn.GetLogsByFilter(logFilter)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

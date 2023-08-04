@@ -17,8 +17,8 @@ import (
 )
 
 func (opts *TracesOptions) HandleShowTraces() error {
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 
 	// TODO: Why does this have to dirty the caller?
 	settings := rpcClient.DefaultRpcOptionsSettings{
@@ -26,9 +26,6 @@ func (opts *TracesOptions) HandleShowTraces() error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
@@ -45,10 +42,10 @@ func (opts *TracesOptions) HandleShowTraces() error {
 
 			// Timestamp is not part of the raw trace data so we need to get it separately
 			// TxIds don't span blocks, so we can use the first one outside the loop to find timestamp
-			ts := opts.Conn.GetBlockTimestamp(chain, utils.PointerOf(uint64(txIds[0].BlockNumber)))
+			ts := opts.Conn.GetBlockTimestamp(utils.PointerOf(uint64(txIds[0].BlockNumber)))
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
-				traces, err := opts.Conn.GetTracesByTransactionID(chain, uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				traces, err := opts.Conn.GetTracesByTransactionID(uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

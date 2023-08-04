@@ -40,7 +40,7 @@ func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 
 // UniqFromTraces extracts addresses from traces
 func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBooleanMap) (err error) {
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 
 	for _, trace := range traces {
 		trace := trace
@@ -131,7 +131,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 				if trace.Result != nil && trace.Result.Address.IsZero() {
 					if trace.Error != "" {
 						// TODO: Why does this interface always accept nil and zero at the end?
-						receipt, err := conn.GetReceipt(chain, rpcClient.ReceiptQuery{
+						receipt, err := conn.GetReceipt(rpcClient.ReceiptQuery{
 							Bn:      uint64(bn),
 							Txid:    uint64(txid),
 							NeedsTs: false,

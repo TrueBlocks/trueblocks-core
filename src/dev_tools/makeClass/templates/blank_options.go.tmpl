@@ -32,7 +32,7 @@ var default[{PROPER}]Options = [{PROPER}]Options{[{GODEFS}]}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *[{PROPER}]Options) testLog() {
-[{TEST_LOGS}]	opts.Conn.TestLog()
+[{TEST_LOGS}]	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -50,15 +50,11 @@ func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]
 		switch key {
 [{REQUEST_OPTS}]		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "[{ROUTE}]")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -68,11 +64,9 @@ func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]
 
 // [{LOWER}]FinishParse finishes the parsing for command line invocations. Returns a new [{PROPER}]Options.
 func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE

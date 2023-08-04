@@ -15,8 +15,8 @@ import (
 )
 
 func (opts *ReceiptsOptions) HandleShowReceipts() error {
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
@@ -26,9 +26,6 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
@@ -47,7 +44,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
 				}
-				if tx, err := opts.Conn.GetTransactionByAppearance(chain, a, false /* needsTraces */); err != nil {
+				if tx, err := opts.Conn.GetTransactionByAppearance(a, false /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil || tx.Receipt == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

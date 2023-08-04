@@ -23,9 +23,6 @@ func (opts *BlocksOptions) HandleTraces() error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
@@ -42,7 +39,7 @@ func (opts *BlocksOptions) HandleTraces() error {
 
 			for _, bn := range blockNums {
 				var traces []types.SimpleTrace
-				traces, err = opts.Conn.GetTracesByNumber(chain, bn)
+				traces, err = opts.Conn.GetTracesByNumber(bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

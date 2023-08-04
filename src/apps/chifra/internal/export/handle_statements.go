@@ -25,8 +25,8 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	// 	opts.Articulate = true
 	// }
 
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := monitor.NewFilter(
 		chain,
@@ -43,9 +43,6 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {

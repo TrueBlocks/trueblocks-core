@@ -25,9 +25,6 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ledgers := ledger.NewLedger(
 		chain,

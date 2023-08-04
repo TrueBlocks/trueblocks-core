@@ -26,8 +26,8 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	}
 
 	ledgers := &ledger.Ledger{}
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := monitor.NewFilter(
 		chain,
@@ -44,9 +44,6 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ledgers.Conn = opts.Conn
 
@@ -58,7 +55,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				BlockNumber:      uint32(app.BlockNumber),
 				TransactionIndex: uint32(app.TransactionIndex),
 			}
-			if tx, err := opts.Conn.GetTransactionByAppearance(chain, &raw, false); err != nil {
+			if tx, err := opts.Conn.GetTransactionByAppearance(&raw, false); err != nil {
 				errorChan <- err
 				return nil
 			} else {

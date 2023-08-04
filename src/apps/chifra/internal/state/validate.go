@@ -57,7 +57,7 @@ func (opts *StateOptions) validateState() error {
 				contract = opts.ProxyFor
 			}
 
-			err := opts.Conn.IsContractAt(chain, base.HexToAddress(contract), nil)
+			err := opts.Conn.IsContractAt(base.HexToAddress(contract), nil)
 			if err != nil {
 				if errors.Is(err, rpcClient.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")
@@ -103,9 +103,9 @@ func (opts *StateOptions) validateState() error {
 			return err
 		}
 
-		latest := opts.Conn.GetLatestBlockNumber(chain)
+		latest := opts.Conn.GetLatestBlockNumber()
 		// TODO: Should be configurable
-		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive(chain) {
+		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive() {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}

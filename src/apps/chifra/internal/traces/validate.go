@@ -26,7 +26,7 @@ func (opts *TracesOptions) validateTraces() error {
 			return validate.Usage("Please supply one or more transaction identifiers or filters.")
 		}
 
-		if !opts.Conn.IsNodeTracing(chain, opts.Globals.TestMode) {
+		if !opts.Conn.IsNodeTracing(opts.Globals.TestMode) {
 			return validate.Usage("Tracing is required for this program to work properly.")
 		}
 

@@ -81,7 +81,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	logger.InfoTable("Cache Path:        ", config.GetPathToCache(chain))
 	logger.InfoTable("Index Path:        ", config.GetPathToIndex(chain))
 
-	meta, err := opts.Conn.GetMetaData(chain, false)
+	meta, err := opts.Conn.GetMetaData(false)
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
 		logger.InfoTable("Progress:", msg)

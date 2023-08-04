@@ -26,13 +26,13 @@ type ReceiptQuery struct {
 
 // GetReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
-	if options.HasStore() {
+func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
+	if conn.HasStore() {
 		tx := &types.SimpleTransaction{
 			BlockNumber:      query.Bn,
 			TransactionIndex: query.Txid,
 		}
-		if err := options.Store.Read(tx, nil); err == nil {
+		if err := conn.Store.Read(tx, nil); err == nil {
 			// success
 			if tx.Receipt == nil {
 				return receipt, nil
@@ -41,13 +41,13 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt ty
 		}
 	}
 
-	rawReceipt, tx, err := getRawTransactionReceipt(chain, query.Bn, query.Txid)
+	rawReceipt, tx, err := conn.getRawTransactionReceipt(query.Bn, query.Txid)
 	if err != nil {
 		return
 	}
 
 	if query.NeedsTs && query.Ts == 0 {
-		query.Ts = options.GetBlockTimestamp(chain, &query.Bn)
+		query.Ts = conn.GetBlockTimestamp(&query.Bn)
 	}
 
 	logs := []types.SimpleLog{}
@@ -95,7 +95,7 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt ty
 	// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
 	londonBlock := uint64(12965000)
 	// TODO: chain specific
-	if tx != nil && chain == "mainnet" {
+	if tx != nil && conn.Chain == "mainnet" {
 		if receipt.BlockNumber < londonBlock {
 			gasPrice := query.GasPrice
 			if gasPrice == 0 {
@@ -112,15 +112,14 @@ func (options *Options) GetReceipt(chain string, query ReceiptQuery) (receipt ty
 }
 
 // getRawTransactionReceipt fetches raw transaction given blockNumber and transactionIndex
-func getRawTransactionReceipt(chain string, bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
-	conn := NewConnection(chain)
-	if fetched, err := conn.GetTransactionByNumberAndID(chain, bn, txid); err != nil {
+func (conn *Connection) getRawTransactionReceipt(bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
+	if fetched, err := conn.GetTransactionByNumberAndID(bn, txid); err != nil {
 		return nil, nil, err
 
 	} else {
 		method := "eth_getTransactionReceipt"
 		params := rpc.Params{fetched.Hash().Hex()}
-		if receipt, err := rpc.Query[types.RawReceipt](chain, method, params); err != nil {
+		if receipt, err := rpc.Query[types.RawReceipt](conn.Chain, method, params); err != nil {
 			return nil, nil, err
 		} else {
 			return receipt, &fetched, nil

@@ -31,7 +31,7 @@ type MonitorsOptions struct {
 	Watch    bool                  `json:"watch,omitempty"`    // Continually scan for new blocks and extract data for monitored addresses
 	Sleep    float64               `json:"sleep,omitempty"`    // Seconds to sleep between monitor passes
 	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Options    `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpcClient.Connection `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -50,7 +50,7 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -90,19 +90,14 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -110,15 +105,12 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 
 // monitorsFinishParse finishes the parsing for command line invocations. Returns a new MonitorsOptions.
 func monitorsFinishParse(args []string) *MonitorsOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, args)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

@@ -18,7 +18,7 @@ var (
 	notAHash = base.Hash{}
 )
 
-func getRawTransaction(chain string, blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid uint64) (raw *types.RawTransaction, err error) {
+func (conn *Connection) getRawTransaction(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid uint64) (raw *types.RawTransaction, err error) {
 	method := "eth_getTransactionByBlockNumberAndIndex"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", txid)}
 	if txHash != notAHash {
@@ -29,7 +29,7 @@ func getRawTransaction(chain string, blkHash base.Hash, txHash base.Hash, bn bas
 		params = rpc.Params{blkHash.Hex(), fmt.Sprintf("0x%x", txid)}
 	}
 
-	if trans, err := rpc.Query[types.RawTransaction](chain, method, params); err != nil {
+	if trans, err := rpc.Query[types.RawTransaction](conn.Chain, method, params); err != nil {
 		return &types.RawTransaction{}, err
 	} else {
 		if trans.AccessList == nil {
@@ -39,9 +39,9 @@ func getRawTransaction(chain string, blkHash base.Hash, txHash base.Hash, bn bas
 	}
 }
 
-func (options *Options) GetAppearanceFromHash(chain string, hash string) (types.RawAppearance, error) {
+func (conn *Connection) GetAppearanceFromHash(hash string) (types.RawAppearance, error) {
 	var ret types.RawAppearance
-	if rawTx, err := getRawTransaction(chain, notAHash, base.HexToHash(hash), notAnInt, notAnInt); err != nil {
+	if rawTx, err := conn.getRawTransaction(notAHash, base.HexToHash(hash), notAnInt, notAnInt); err != nil {
 		return ret, err
 	} else {
 		ret.BlockNumber = uint32(utils.MustParseUint(rawTx.BlockNumber))
@@ -50,17 +50,17 @@ func (options *Options) GetAppearanceFromHash(chain string, hash string) (types.
 	}
 }
 
-func (options *Options) GetPrefundTxByApp(chain string, appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
+func (conn *Connection) GetPrefundTxByApp(appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
 	// TODO: performance - This loads and then drops the file every time it's called. Quite slow.
 	// TODO: performance - in the old C++ we stored these values in a pre fundAddrMap so that given a txid in block zero
 	// TODO: performance - we knew which address was granted allocation at that transaction.
-	prefundPath := prefunds.GetPrefundPath(chain)
-	if prefundMap, err := prefunds.LoadPrefundMap(chain, prefundPath); err != nil {
+	prefundPath := prefunds.GetPrefundPath(conn.Chain)
+	if prefundMap, err := prefunds.LoadPrefundMap(conn.Chain, prefundPath); err != nil {
 		return nil, err
 	} else {
 		var blockHash base.Hash
 		var ts int64
-		if block, err := options.GetBlockHeaderByNumber(chain, uint64(0)); err != nil {
+		if block, err := conn.GetBlockHeaderByNumber(uint64(0)); err != nil {
 			return nil, err
 		} else {
 			blockHash = block.Hash
@@ -134,11 +134,11 @@ func getBlockReward(bn uint64) *big.Int {
 
 // TODO: This is not cross-chain correct
 
-func (options *Options) GetRewardTxByTypeAndApp(chain string, rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
-	if block, err := options.GetBlockBodyByNumber(chain, uint64(appearance.BlockNumber)); err != nil {
+func (conn *Connection) GetRewardTxByTypeAndApp(rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
+	if block, err := conn.GetBlockBodyByNumber(uint64(appearance.BlockNumber)); err != nil {
 		return nil, err
 	} else {
-		if uncles, err := options.GetUnclesByNumber(chain, uint64(appearance.BlockNumber)); err != nil {
+		if uncles, err := conn.GetUnclesByNumber(uint64(appearance.BlockNumber)); err != nil {
 			return nil, err
 		} else {
 			var blockReward = big.NewInt(0)
@@ -180,7 +180,7 @@ func (options *Options) GetRewardTxByTypeAndApp(chain string, rt RewardType, app
 				if block.Miner.Hex() == appearance.Address {
 					sender = base.BlockRewardSender // if it's both, it's the block reward
 					// The uncle miner may also have been the miner of the block
-					if minerTx, err := options.GetRewardTxByTypeAndApp(chain, BLOCK_REWARD, appearance); err != nil {
+					if minerTx, err := conn.GetRewardTxByTypeAndApp(BLOCK_REWARD, appearance); err != nil {
 						return nil, err
 					} else {
 						blockReward = &minerTx.Rewards.Block
@@ -214,20 +214,20 @@ func (options *Options) GetRewardTxByTypeAndApp(chain string, rt RewardType, app
 	}
 }
 
-func (options *Options) GetTransactionByAppearance(chain string, appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
+func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
-	if options.HasStore() {
+	if conn.HasStore() {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
 
-		if err := options.Store.Read(tx, nil); err == nil {
+		if err := conn.Store.Read(tx, nil); err == nil {
 			// success
 			if fetchTraces {
-				traces, err := options.GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx)
+				traces, err := conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)
 				if err != nil {
 					return nil, err
 				}
@@ -239,37 +239,37 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 
 	var writeOptions *cache.WriteOptions
 	var blockTs base.Timestamp
-	if options.HasStoreWritable() {
-		blockTs = options.GetBlockTimestamp(chain, &bn)
+	if conn.HasStoreWritable() {
+		blockTs = conn.GetBlockTimestamp(&bn)
 		writeOptions = &cache.WriteOptions{
 			// Check if the block is final
-			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(options.LatestBlockTimestamp),
+			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(conn.LatestBlockTimestamp),
 		}
 	}
 
 	tx = nil
 	if bn == 0 {
-		if tx, err = options.GetPrefundTxByApp(chain, appearance); err != nil {
+		if tx, err = conn.GetPrefundTxByApp(appearance); err != nil {
 			return nil, err
 		}
 	} else if txid == 99999 || txid == 99997 || txid == 99996 {
-		if tx, err = options.GetRewardTxByTypeAndApp(chain, BLOCK_REWARD, appearance); err != nil {
+		if tx, err = conn.GetRewardTxByTypeAndApp(BLOCK_REWARD, appearance); err != nil {
 			return nil, err
 		}
 	} else if txid == 99998 {
-		if tx, err = options.GetRewardTxByTypeAndApp(chain, UNCLE_REWARD, appearance); err != nil {
+		if tx, err = conn.GetRewardTxByTypeAndApp(UNCLE_REWARD, appearance); err != nil {
 			return nil, err
 		}
 	}
 	if tx != nil {
-		if options.HasStore() && options.enabledMap["txs"] {
-			options.Store.Write(tx, writeOptions)
+		if conn.HasStore() && conn.enabledMap["txs"] {
+			conn.Store.Write(tx, writeOptions)
 		}
 		return tx, nil
 	}
 
-	blockTs = options.GetBlockTimestamp(chain, &bn)
-	receipt, err := options.GetReceipt(chain, ReceiptQuery{
+	blockTs = conn.GetBlockTimestamp(&bn)
+	receipt, err := conn.GetReceipt(ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
 		NeedsTs: true,
@@ -279,19 +279,19 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 		return
 	}
 
-	rawTx, err := getRawTransaction(chain, notAHash, notAHash, bn, txid)
+	rawTx, err := conn.getRawTransaction(notAHash, notAHash, bn, txid)
 	if err != nil {
 		return
 	}
 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
-	if options.HasStore() && options.enabledMap["txs"] {
-		options.Store.Write(tx, writeOptions)
+	if conn.HasStore() && conn.enabledMap["txs"] {
+		conn.Store.Write(tx, writeOptions)
 	}
 
 	if fetchTraces {
-		traces, err := options.GetTracesByTransactionHash(chain, tx.Hash.Hex(), tx)
+		traces, err := conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)
 		if err != nil {
 			return nil, err
 		}
@@ -301,34 +301,34 @@ func (options *Options) GetTransactionByAppearance(chain string, appearance *typ
 	return
 }
 
-func (options *Options) GetTransactionByBlockAndId(chain string, bn base.Blknum, txid uint64) (tx *types.SimpleTransaction, err error) {
-	if options.HasStore() {
+func (conn *Connection) GetTransactionByBlockAndId(bn base.Blknum, txid uint64) (tx *types.SimpleTransaction, err error) {
+	if conn.HasStore() {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
 
-		if err := options.Store.Read(tx, nil); err == nil {
+		if err := conn.Store.Read(tx, nil); err == nil {
 			// success
 			return tx, nil
 		}
 	}
 
-	rawTx, err := getRawTransaction(chain, notAHash, notAHash, bn, txid)
+	rawTx, err := conn.getRawTransaction(notAHash, notAHash, bn, txid)
 	if err != nil {
 		return
 	}
-	blockTs := options.GetBlockTimestamp(chain, &bn)
+	blockTs := conn.GetBlockTimestamp(&bn)
 
 	var writeOptions *cache.WriteOptions
-	if options.HasStoreWritable() {
+	if conn.HasStoreWritable() {
 		writeOptions = &cache.WriteOptions{
 			// Check if the block is final
-			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(options.LatestBlockTimestamp),
+			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(conn.LatestBlockTimestamp),
 		}
 	}
 
-	receipt, err := options.GetReceipt(chain, ReceiptQuery{
+	receipt, err := conn.GetReceipt(ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
 		NeedsTs: true,
@@ -340,8 +340,8 @@ func (options *Options) GetTransactionByBlockAndId(chain string, bn base.Blknum,
 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
-	if options.HasStore() && options.enabledMap["txs"] {
-		options.Store.Write(tx, writeOptions)
+	if conn.HasStore() && conn.enabledMap["txs"] {
+		conn.Store.Write(tx, writeOptions)
 	}
 
 	return

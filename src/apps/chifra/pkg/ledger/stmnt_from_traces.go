@@ -8,13 +8,12 @@ import (
 )
 
 func (l *Ledger) GetStatementsFromTraces(trans *types.SimpleTransaction, s *types.SimpleStatement) (statements []*types.SimpleStatement) {
-	chain := l.Chain
 	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
 	ret.ClearInternal()
 
-	if traces, err := l.Conn.GetTracesByTransactionHash(chain, trans.Hash.Hex(), trans); err != nil {
+	if traces, err := l.Conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		logger.Error(err)
 
 	} else {

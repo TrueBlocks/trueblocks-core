@@ -91,11 +91,11 @@ on       ,both ,slow  ,blocks ,tools/getBlocks ,terse_no_raw          ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw         ,y    ,blocks = 4001001 & hashes & raw
 
 on       ,both ,fast  ,blocks ,tools/getBlocks ,artic_not_logs        ,y    ,blocks = 4012000-4012001 & articulate
-on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
+delay    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_traces_art       ,y    ,blocks = 4012000-4012001 & traces & articulate
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_uncles_art       ,y    ,blocks = 4012000-4012001 & uncles & articulate
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_hashes_art       ,y    ,blocks = 4012000-4012001 & hashes & articulate
-on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
+delay    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
 
 # We should support reconcilations for chifra blocks
 delay    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner       ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0

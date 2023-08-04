@@ -31,6 +31,7 @@ func articulateTrace(trace *types.SimpleTrace, abiMap *abi.FunctionSyncMap) (art
 	if len(input) < 10 {
 		return
 	}
+
 	encoding := input[:10]
 	articulated = abiMap.Get(encoding)
 

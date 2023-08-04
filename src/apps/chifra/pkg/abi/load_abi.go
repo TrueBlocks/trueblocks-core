@@ -28,17 +28,6 @@ var knownAbiSubdirectories = []string{
 	"known-000", "known-005", "known-010", "known-015",
 }
 
-// LoadAbiFromJsonFile loads _standard_ JSON ABI, that is the one without encodings
-// and signatures. We compute these values.
-func LoadAbiFromJsonFile(filePath string, destination *FunctionSyncMap) (err error) {
-	f, err := os.OpenFile(filePath, os.O_RDONLY, 0)
-	if err != nil {
-		return
-	}
-
-	return fromJson(f, destination)
-}
-
 func fromJson(reader io.Reader, destination *FunctionSyncMap) (err error) {
 	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
@@ -644,8 +633,8 @@ func save(chain string, filePath string, content io.Reader) (err error) {
 	return
 }
 
-// PreloadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
-func PreloadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
+// LoadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
+func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
 	isUpToDate := func(chain string) (bool, error) {
 		testFn := path.Join(config.GetPathToCache(chain), "abis/known.bin")
 		testDir := path.Join(config.GetPathToRootConfig(), "abis")
@@ -813,10 +802,6 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(chain string, address base.Address, destination *FunctionSyncMap) (err error) {
-	if err = PreloadKnownAbis(chain, destination); err != nil {
-		return
-	}
-
 	// If there was no error, the abi was loaded...
 	err = LoadAbiFromAddress(chain, address, destination)
 	if err == nil {
@@ -829,8 +814,8 @@ func LoadAbi(chain string, address base.Address, destination *FunctionSyncMap) (
 	}
 
 	// We didn't find the file. Check if the address is a contract
-	conn := rpcClient.NewConnection(chain)
-	if err := conn.IsContractAt(chain, address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
+	conn := rpcClient.TempConnection(chain)
+	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
 		return err
 	} else if errors.Is(err, rpcClient.ErrNotAContract) {
 		return nil

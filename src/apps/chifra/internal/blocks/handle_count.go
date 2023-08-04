@@ -24,9 +24,6 @@ func (opts *BlocksOptions) HandleCounts() error {
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -43,7 +40,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 
 			for _, bn := range blockNums {
 				var block types.SimpleBlock[string]
-				if block, err = opts.Conn.GetBlockHeaderByNumber(chain, bn); err != nil {
+				if block, err = opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue
@@ -59,7 +56,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Uncles {
-					if blockCount.UnclesCnt, err = opts.Conn.GetCountUnclesInBlock(chain, bn); err != nil {
+					if blockCount.UnclesCnt, err = opts.Conn.GetCountUnclesInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -70,7 +67,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Traces {
-					if blockCount.TracesCnt, err = opts.Conn.GetCountTracesInBlock(chain, bn); err != nil {
+					if blockCount.TracesCnt, err = opts.Conn.GetCountTracesInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -81,7 +78,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = opts.Conn.GetCountLogsInBlock(chain, bn); err != nil {
+					if blockCount.LogsCnt, err = opts.Conn.GetCountLogsInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -98,7 +95,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					}
 
 					addrMap := make(index.AddressBooleanMap)
-					ts := opts.Conn.GetBlockTimestamp(chain, &bn)
+					ts := opts.Conn.GetBlockTimestamp(&bn)
 					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {

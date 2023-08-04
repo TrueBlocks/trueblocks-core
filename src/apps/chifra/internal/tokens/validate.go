@@ -54,7 +54,7 @@ func (opts *TokensOptions) validateTokens() error {
 
 			// all but the last is assumed to be a token
 			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
-				err := opts.Conn.IsContractAt(chain, base.HexToAddress(addr), nil)
+				err := opts.Conn.IsContractAt(base.HexToAddress(addr), nil)
 				if err != nil {
 					if errors.Is(err, rpcClient.ErrNotAContract) {
 						return validate.Usage("The value {0} is not a token contract.", addr)
@@ -65,7 +65,7 @@ func (opts *TokensOptions) validateTokens() error {
 		} else {
 			// the first is assumed to be a smart contract, the rest can be either non-existant, another smart contract or an EOA
 			addr := opts.Addrs[0]
-			err := opts.Conn.IsContractAt(chain, base.HexToAddress(addr), nil)
+			err := opts.Conn.IsContractAt(base.HexToAddress(addr), nil)
 			if err != nil {
 				if err != nil {
 					if errors.Is(err, rpcClient.ErrNotAContract) {
@@ -104,9 +104,9 @@ func (opts *TokensOptions) validateTokens() error {
 			return err
 		}
 
-		latest := opts.Conn.GetLatestBlockNumber(chain)
+		latest := opts.Conn.GetLatestBlockNumber()
 		// TODO: Should be configurable
-		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive(chain) {
+		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive() {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}
