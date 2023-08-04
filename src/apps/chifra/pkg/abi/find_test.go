@@ -85,7 +85,7 @@ const packTestAbiSource = `
 ]`
 
 var testAbi abi.ABI
-var abis map[string]*types.SimpleFunction
+var abis FunctionSyncMap
 var packTestAbi abi.ABI
 
 func init() {
@@ -103,12 +103,11 @@ func init() {
 	}
 }
 
-func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, destination *map[string]*types.SimpleFunction) {
-	*destination = make(AbiInterfaceMap, len(parsedAbi.Methods))
+func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, destination *FunctionSyncMap) {
 	for _, method := range parsedAbi.Methods {
 		method := method
 		encoding := "0x" + strings.ToLower(base.Bytes2Hex(method.ID))
-		(*destination)[encoding] = types.FunctionFromAbiMethod(&method)
+		destination.Set(encoding, types.FunctionFromAbiMethod(&method))
 	}
 }
 
@@ -122,7 +121,7 @@ func Test_findAbiFunction(t *testing.T) {
 		},
 	}
 
-	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, abis)
+	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -142,7 +141,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, abis)
+	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -166,7 +165,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, abis)
+	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -192,7 +191,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		},
 	}
 
-	result, hints, err := FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err := FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -214,7 +213,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -240,7 +239,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Arguments: []*parser.ContractCallArgument{},
 	}
 
-	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, abis)
+	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abis)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -267,7 +266,7 @@ func Test_findAbiFunctionMisleading(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	abis := make(map[string]*types.SimpleFunction)
+
 	testHelperLoadAbisFromJson(&parsedAbi, &abis)
 
 	call := &parser.FunctionContractCall{
@@ -286,7 +285,7 @@ func Test_findAbiFunctionMisleading(t *testing.T) {
 		},
 	}
 
-	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, abis)
+	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
 	if err != nil {
 		t.Fatal(err)
 	}

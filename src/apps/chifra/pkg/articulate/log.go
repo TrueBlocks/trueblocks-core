@@ -9,17 +9,17 @@ import (
 
 func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err error) {
 	address := log.Address
-	if !abiCache.loadedMap[address] && !abiCache.skipMap[address] {
-		if err = abi.LoadAbi(chain, address, abiCache.abiMap); err != nil {
-			abiCache.skipMap[address] = true
+	if !abiCache.loadedMap.Get(address) && !abiCache.skipMap.Get(address) {
+		if err = abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
+			abiCache.skipMap.Set(address, true)
 			return err
 		} else {
-			abiCache.loadedMap[address] = true
+			abiCache.loadedMap.Set(address, true)
 		}
 	}
 
-	if !abiCache.skipMap[address] {
-		if log.ArticulatedLog, err = abiCache.articulateLog(log); err != nil {
+	if !abiCache.skipMap.Get(address) {
+		if log.ArticulatedLog, err = articulateLog(log, &abiCache.abiMap); err != nil {
 			return err
 		}
 	}
@@ -27,7 +27,7 @@ func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err
 	return nil
 }
 
-func (abiCache *AbiCache) articulateLog(log *types.SimpleLog) (articulated *types.SimpleFunction, err error) {
+func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (articulated *types.SimpleFunction, err error) {
 	if len(log.Topics) < 1 {
 		return
 	}
@@ -38,7 +38,7 @@ func (abiCache *AbiCache) articulateLog(log *types.SimpleLog) (articulated *type
 	// If we couldn't, then try to find the event in `abiMap`
 	if articulated == nil {
 		selector := "0x" + hex.EncodeToString(log.Topics[0].Bytes())
-		if found := abiCache.abiMap[selector]; found != nil {
+		if found := abiMap.Get(selector); found != nil {
 			articulated = found.Clone()
 		} else {
 			// If articulated is still nil, we don't have ABI for this event
