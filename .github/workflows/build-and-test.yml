@@ -27,6 +27,9 @@ jobs:
 
           # Optional: working directory, useful for monorepos
           working-directory: ${{ env.CHIFRA_PATH }}
+
+          # Optional: set location of the config file (if it is not in the root directory)
+          args: --timeout=5m
   Build:
     needs: golangci
     runs-on: ubuntu-20.04
@@ -55,7 +58,7 @@ jobs:
           cmake ../src
           cd other/install
           make
-          cd -
+          cd ../../../
           cd ${{ env.CHIFRA_PATH }}
           go test ./...
   RemoteTests:
