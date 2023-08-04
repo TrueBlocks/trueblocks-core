@@ -1,7 +1,24 @@
 name: BuildAndTest
 on: [pull_request, workflow_dispatch]
 jobs:
+  golangci:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.20
+      - uses: actions/checkout@v3
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
+          version: v1.29
+
+          # Optional: working directory, useful for monorepos
+          working-directory: src/apps/chifra
   Build:
+    needs: golangci
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout TrueBlocks repo
@@ -10,7 +27,7 @@ jobs:
         uses: actions/setup-go@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          go-version: "^1.18"
+          go-version: "^1.20"
       - name: Install prerequistes
         run: |
           sudo apt-get update
