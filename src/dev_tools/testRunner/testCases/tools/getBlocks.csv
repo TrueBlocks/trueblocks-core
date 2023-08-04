@@ -97,8 +97,8 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,with_hashes_art       ,y    ,blo
 
 # These two test cases fail in an odd way. They vacilate between two articulations. This is possibly because the
 # abiCache.abiMap is unordered and since we started using IterateOverMap it is now getting filled on alternative orderings.
-delay    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
-delay    ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
+maporder ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
+maporder ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
 
 # We should support reconcilations for chifra blocks
 delay    ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner       ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0

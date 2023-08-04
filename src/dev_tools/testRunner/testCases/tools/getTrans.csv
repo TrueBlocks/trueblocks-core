@@ -72,16 +72,17 @@ on       ,both ,fast  ,transactions ,tools/getTrans ,bad_hash                 ,y
 
 on       ,cmd  ,medi  ,transactions ,tools/getTrans ,articulate_arrays        ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & traces & articulate & fmt = json
 
-on       ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_1        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
-on       ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
+# probably because of ordering on abiMap
+maporder ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_1        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
+maporder ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2        ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 
 on       ,both ,slow  ,transactions ,tools/getTrans ,articulate_proxy         ,y    ,transactions = 11476466.96 & articulate & fmt = json
 
-on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_1           ,y    ,transactions = 0x028dcd16e00f95a1526186f30b105fd69c89e3d25d42ff8708c9f638b1bfabdd & articulate
-on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_2           ,y    ,transactions = 0x178e2bcd2d2eb05002d4f7b3ae5f47731bddba6c8ef940738a696ae2bd4a0b39 & articulate
-on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_3           ,y    ,transactions = 0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaab3c57f6f8f28 & articulate
-on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_4           ,y    ,transactions = 0x8cd78c1a30f526ca92673f9970701d2be1cdba53384dc31ba05037cabf851993 & articulate
-on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,y    ,transactions = 0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da & articulate
+maporder ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_1           ,y    ,transactions = 0x028dcd16e00f95a1526186f30b105fd69c89e3d25d42ff8708c9f638b1bfabdd & articulate
+maporder ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_2           ,y    ,transactions = 0x178e2bcd2d2eb05002d4f7b3ae5f47731bddba6c8ef940738a696ae2bd4a0b39 & articulate
+maporder ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_3           ,y    ,transactions = 0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaab3c57f6f8f28 & articulate
+maporder ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_4           ,y    ,transactions = 0x8cd78c1a30f526ca92673f9970701d2be1cdba53384dc31ba05037cabf851993 & articulate
+maporder ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,y    ,transactions = 0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da & articulate
 on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_6           ,y    ,transactions = 0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964aa26609e20ad3 & articulate
 on       ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_7           ,n    ,transactions = 0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb & articulate & fmt = csv
 on       ,both ,fast  ,transactions ,tools/getTrans ,message                  ,y    ,transactions = 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 & articulate

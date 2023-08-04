@@ -33,8 +33,8 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_txt         ,n    ,find = 0x
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_junk        ,y    ,find = 0x1aa3a008 & fmt = junk
 
 # These fail almost certainly because of abiMap not being ordered
-delay   ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
-delay   ,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
+maporder,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
+maporder,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
 
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_trueclasses   ,y    ,addrs = truebit & classes & fmt = json
 

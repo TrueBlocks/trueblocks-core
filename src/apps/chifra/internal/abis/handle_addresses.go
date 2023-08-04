@@ -54,11 +54,11 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 			}
 		}
 
-		names := result.Names()
+		names := result.Keys()
 		sort.Strings(names)
 
 		for _, name := range names {
-			function := result.Get(name)
+			function := result.GetValue(name)
 			modelChan <- function
 		}
 	}

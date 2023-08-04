@@ -107,7 +107,7 @@ func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, destination *FunctionSyncMap
 	for _, method := range parsedAbi.Methods {
 		method := method
 		encoding := "0x" + strings.ToLower(base.Bytes2Hex(method.ID))
-		destination.Set(encoding, types.FunctionFromAbiMethod(&method))
+		destination.SetValue(encoding, types.FunctionFromAbiMethod(&method))
 	}
 }
 

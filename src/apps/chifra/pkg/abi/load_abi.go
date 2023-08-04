@@ -38,13 +38,13 @@ func fromJson(reader io.Reader, destination *FunctionSyncMap) (err error) {
 	for _, method := range loadedAbi.Methods {
 		method := method
 		function := types.FunctionFromAbiMethod(&method)
-		destination.Set(function.Encoding, function)
+		destination.SetValue(function.Encoding, function)
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
 		ethEvent := ethEvent
 		event := types.FunctionFromAbiEvent(&ethEvent)
-		destination.Set(event.Encoding, event)
+		destination.SetValue(event.Encoding, event)
 	}
 
 	return
@@ -406,7 +406,7 @@ func LoadCache(chain string, destination *FunctionSyncMap) (loaded bool) {
 	for _, function := range functions {
 		function := function
 		function.Normalize()
-		destination.Set(function.Encoding, &function)
+		destination.SetValue(function.Encoding, &function)
 	}
 
 	return true
@@ -676,7 +676,7 @@ func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
 		}
 	}
 
-	toCache := destination.Functions()
+	toCache := destination.Values()
 	return SetAbis(chain, toCache)
 }
 
@@ -733,7 +733,7 @@ func LoadAbiFromAddress(chain string, address base.Address, destination *Functio
 		for _, loadedAbi := range loadedAbis {
 			loadedAbi := loadedAbi
 			loadedAbi.Normalize()
-			destination.Set(loadedAbi.Encoding, &loadedAbi)
+			destination.SetValue(loadedAbi.Encoding, &loadedAbi)
 		}
 
 		return nil
