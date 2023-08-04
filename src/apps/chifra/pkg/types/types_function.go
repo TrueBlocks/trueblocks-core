@@ -336,8 +336,6 @@ func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 	return s.abiEvent, nil
 }
 
-// TODO: I feel like we might be able to remove stateMutability since we don't really use it.
-
 // Normalize sets StateMutability from `payable` field. It is only useful when
 // reading ABIs generated before Solidity 0.5.0, which use `payable` field:
 // https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces

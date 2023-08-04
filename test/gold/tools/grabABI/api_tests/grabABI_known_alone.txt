@@ -6787,7 +6787,6 @@ abis?known
       "encoding": "0x9791c097",
       "name": "valid",
       "signature": "valid(string)",
-      "stateMutability": "pure",
       "type": "function"
     },
     {
