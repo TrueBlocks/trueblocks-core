@@ -55,8 +55,8 @@ func getClient(chain string) (*ethclient.Client, error) {
 }
 
 // GetLatestBlockNumber returns the block number at the front of the chain (i.e. latest)
-func (options *Options) GetLatestBlockNumber(chain string) uint64 {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetLatestBlockNumber() uint64 {
+	if ec, err := getClient(conn.Chain); err != nil {
 		logger.Error("Could not connect to RPC client: %w", err)
 		return 0
 	} else {
@@ -73,8 +73,8 @@ func (options *Options) GetLatestBlockNumber(chain string) uint64 {
 }
 
 // GetClientIDs returns both chainId and networkId from the node
-func (options *Options) GetClientIDs(chain string) (uint64, uint64, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetClientIDs() (uint64, uint64, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return 0, 0, err
 	} else {
 		defer ec.Close()
@@ -93,14 +93,13 @@ func (options *Options) GetClientIDs(chain string) (uint64, uint64, error) {
 	}
 }
 
-// TODO: C++ code used to cache version info
-
 // GetClientVersion returns the version of the client
-func (options *Options) GetClientVersion(chain string) (version string, err error) {
+func (conn *Connection) GetClientVersion() (version string, err error) {
+	// TODO: C++ code used to cache version info
 	method := "web3_clientVersion"
 	params := rpc.Params{}
 
-	if version, err := rpc.Query[string](chain, method, params); err != nil {
+	if version, err := rpc.Query[string](conn.Chain, method, params); err != nil {
 		return "", err
 	} else {
 		return *version, nil
@@ -108,8 +107,8 @@ func (options *Options) GetClientVersion(chain string) (version string, err erro
 }
 
 // GetTransactionHashFromHashStr returns a transaction's hash if it's a valid transaction, an empty string otherwise
-func (options *Options) GetTransactionHashFromHashStr(chain, hash string) (string, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetTransactionHashFromHashStr(hash string) (string, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
@@ -124,8 +123,8 @@ func (options *Options) GetTransactionHashFromHashStr(chain, hash string) (strin
 }
 
 // GetBlockHashFromHashStr returns a block's hash if it's a valid block
-func (options *Options) GetBlockHashFromHashStr(chain, hash string) (string, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetBlockHashFromHashStr(hash string) (string, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
@@ -140,8 +139,8 @@ func (options *Options) GetBlockHashFromHashStr(chain, hash string) (string, err
 }
 
 // GetTransactionHashByHashAndID returns a transaction's hash if it's a valid transaction
-func (options *Options) GetTransactionHashByHashAndID(chain, hash string, txId uint64) (string, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId uint64) (string, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
@@ -156,8 +155,8 @@ func (options *Options) GetTransactionHashByHashAndID(chain, hash string, txId u
 }
 
 // GetTransactionByNumberAndID returns an actual transaction
-func (options *Options) GetTransactionByNumberAndID(chain string, bn, txId uint64) (ethTypes.Transaction, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetTransactionByNumberAndID(bn, txId uint64) (ethTypes.Transaction, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return ethTypes.Transaction{}, err
 	} else {
 		defer ec.Close()
@@ -177,8 +176,8 @@ func (options *Options) GetTransactionByNumberAndID(chain string, bn, txId uint6
 }
 
 // GetCountTransactionsInBlock returns the number of transactions in a block
-func (options *Options) GetCountTransactionsInBlock(chain string, bn uint64) (uint64, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetCountTransactionsInBlock(bn uint64) (uint64, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return 0, err
 	} else {
 		defer ec.Close()
@@ -194,8 +193,8 @@ func (options *Options) GetCountTransactionsInBlock(chain string, bn uint64) (ui
 }
 
 // GetBlockNumberByHash returns a block's hash if it's a valid block
-func (options *Options) GetBlockNumberByHash(chain, hash string) (base.Blknum, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return 0, err
 	} else {
 		defer ec.Close()
@@ -210,8 +209,8 @@ func (options *Options) GetBlockNumberByHash(chain, hash string) (base.Blknum, e
 }
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
-func (options *Options) GetBlockHashByNumber(chain string, bn uint64) (string, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetBlockHashByNumber(bn uint64) (string, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return "", err
 	} else {
 		defer ec.Close()
@@ -226,8 +225,8 @@ func (options *Options) GetBlockHashByNumber(chain string, bn uint64) (string, e
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func (options *Options) GetBalanceAt(chain string, addr base.Address, bn uint64) (*big.Int, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*big.Int, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		var zero big.Int
 		return &zero, err
 	} else {
@@ -237,8 +236,8 @@ func (options *Options) GetBalanceAt(chain string, addr base.Address, bn uint64)
 }
 
 // GetCodeAt returns a code (if any) for an address at a block
-func (options *Options) GetCodeAt(chain string, addr base.Address, bn uint64) ([]byte, error) {
-	if ec, err := getClient(chain); err != nil {
+func (conn *Connection) GetCodeAt(addr base.Address, bn uint64) ([]byte, error) {
+	if ec, err := getClient(conn.Chain); err != nil {
 		return []byte{}, err
 	} else {
 		defer ec.Close()

@@ -39,14 +39,11 @@ func (opts *StateOptions) HandleShow() error {
 	stateFields, outputFields, none := opts.PartsToFields()
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {

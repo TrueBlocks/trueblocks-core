@@ -645,8 +645,8 @@ func save(chain string, filePath string, content io.Reader) (err error) {
 	return
 }
 
-// PreloadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
-func PreloadKnownAbis(chain string, destination AbiInterfaceMap) (err error) {
+// LoadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
+func LoadKnownAbis(chain string, destination AbiInterfaceMap) (err error) {
 	isUpToDate := func(chain string) (bool, error) {
 		testFn := path.Join(config.GetPathToCache(chain), "abis/known.bin")
 		testDir := path.Join(config.GetPathToRootConfig(), "abis")
@@ -817,7 +817,7 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(chain string, address base.Address, destination AbiInterfaceMap) (err error) {
-	if err = PreloadKnownAbis(chain, destination); err != nil {
+	if err = LoadKnownAbis(chain, destination); err != nil {
 		return
 	}
 
@@ -833,8 +833,8 @@ func LoadAbi(chain string, address base.Address, destination AbiInterfaceMap) (e
 	}
 
 	// We didn't find the file. Check if the address is a contract
-	conn := rpcClient.NewConnection(chain)
-	if err := conn.IsContractAt(chain, address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
+	conn := rpcClient.TempConnection(chain)
+	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
 		return err
 	} else if errors.Is(err, rpcClient.ErrNotAContract) {
 		return nil

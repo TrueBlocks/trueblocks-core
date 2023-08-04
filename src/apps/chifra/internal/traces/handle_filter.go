@@ -15,18 +15,15 @@ func (opts *TracesOptions) HandleFilter() error {
 	chain := opts.Globals.Chain
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		traces, err := opts.Conn.GetTracesByFilter(chain, opts.Filter)
+		traces, err := opts.Conn.GetTracesByFilter(opts.Filter)
 		if err != nil {
 			errorChan <- err
 			cancel()
@@ -37,7 +34,7 @@ func (opts *TracesOptions) HandleFilter() error {
 		}
 
 		for index := range traces {
-			traces[index].Timestamp = opts.Conn.GetBlockTimestamp(chain, utils.PointerOf(uint64(traces[index].BlockNumber)))
+			traces[index].Timestamp = opts.Conn.GetBlockTimestamp(utils.PointerOf(uint64(traces[index].BlockNumber)))
 			if opts.Articulate {
 				if err = abiCache.ArticulateTrace(chain, &traces[index]); err != nil {
 					errorChan <- err // continue even with an error

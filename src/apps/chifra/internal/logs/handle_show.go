@@ -21,14 +21,11 @@ func (opts *LogsOptions) HandleShowLogs() error {
 	nErrors := 0
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
@@ -47,7 +44,7 @@ func (opts *LogsOptions) HandleShowLogs() error {
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
 				}
-				if tx, err := opts.Conn.GetTransactionByAppearance(chain, a, false /* needsTraces */); err != nil {
+				if tx, err := opts.Conn.GetTransactionByAppearance(a, false /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
 				} else if tx == nil || tx.Receipt == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.String())

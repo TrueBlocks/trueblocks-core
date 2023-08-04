@@ -31,7 +31,7 @@ type TokensOptions struct {
 	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
 	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Options       `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpcClient.Connection    `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -47,7 +47,7 @@ func (opts *TokensOptions) testLog() {
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -86,19 +86,14 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 			opts.NoZero = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "tokens")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -113,14 +108,11 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 
 // tokensFinishParse finishes the parsing for command line invocations. Returns a new TokensOptions.
 func tokensFinishParse(args []string) *TokensOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	if len(args) > 0 {
 		dupMap := make(map[string]bool)
 		for index, arg := range args {
@@ -137,7 +129,7 @@ func tokensFinishParse(args []string) *TokensOptions {
 			}
 		}
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}

@@ -24,9 +24,9 @@ import (
 
 func (opts *ScrapeOptions) HandleScrape() error {
 	chain := opts.Globals.Chain
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 
-	progress, err := conn.GetMetaData(chain, opts.Globals.TestMode)
+	progress, err := conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 	origBlockCnt := opts.BlockCnt
 	for {
-		progress, err = conn.GetMetaData(chain, opts.Globals.TestMode)
+		progress, err = conn.GetMetaData(opts.Globals.TestMode)
 		if err != nil {
 			return err
 		}

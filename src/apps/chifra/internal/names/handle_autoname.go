@@ -57,7 +57,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 // readContractAndClean will read contract data and call `cleanName` for the given address
 func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err error) {
 	chain := opts.Globals.Chain
-	converted, ok := opts.Conn.GetAddressesFromEns(chain, []string{opts.Autoname})
+	converted, ok := opts.Conn.GetAddressesFromEns([]string{opts.Autoname})
 	term := opts.Autoname
 	if ok {
 		term = converted[0]

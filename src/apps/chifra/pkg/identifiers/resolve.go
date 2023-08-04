@@ -72,7 +72,7 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 }
 
 func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 
 	dt, err := tslib.FromBnToDate(chain, bn)
 	if err != nil {
@@ -109,7 +109,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(conn.GetBlockTimestamp(chain, utils.PointerOf(uint64(0))))
+	firstDate := gostradamus.FromUnixTimestamp(conn.GetBlockTimestamp(utils.PointerOf(uint64(0))))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -175,11 +175,11 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 }
 
 func (p *Point) resolvePoint(chain string) uint64 {
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 
 	var bn uint64
 	if p.Hash != "" {
-		bn, _ = conn.GetBlockNumberByHash(chain, p.Hash)
+		bn, _ = conn.GetBlockNumberByHash(p.Hash)
 	} else if p.Date != "" {
 		bn, _ = tslib.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {
@@ -188,8 +188,8 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		var err error
 		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
-			latest := conn.GetLatestBlockNumber(chain)
-			tsFuture := conn.GetBlockTimestamp(chain, &latest)
+			latest := conn.GetLatestBlockNumber()
+			tsFuture := conn.GetBlockTimestamp(&latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
@@ -201,12 +201,12 @@ func (p *Point) resolvePoint(chain string) uint64 {
 }
 
 func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
-	conn := rpcClient.NewConnection(chain)
+	conn := rpcClient.TempConnection(chain)
 	txs := []types.RawAppearance{}
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			cnt, err := conn.GetCountTransactionsInBlock(chain, uint64(id.Start.Number))
+			cnt, err := conn.GetCountTransactionsInBlock(uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
@@ -228,7 +228,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			cnt, err := conn.GetCountTransactionsInBlock(chain, uint64(id.Start.resolvePoint(chain)))
+			cnt, err := conn.GetCountTransactionsInBlock(uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}
@@ -244,7 +244,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		app, err := conn.GetAppearanceFromHash(chain, id.Start.Hash)
+		app, err := conn.GetAppearanceFromHash(id.Start.Hash)
 		return append(txs, app), err
 	}
 

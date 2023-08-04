@@ -26,7 +26,7 @@ type DaemonOptions struct {
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
 	Grpc    bool                  `json:"grpc,omitempty"`    // Run gRPC server to serve names
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
-	Conn    *rpcClient.Options    `json:"conn,omitempty"`    // The connection to the RPC server
+	Conn    *rpcClient.Connection `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -44,7 +44,7 @@ func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
 	logger.TestLog(opts.Grpc, "Grpc: ", opts.Grpc)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -72,18 +72,13 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 			opts.Grpc = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "daemon")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -91,14 +86,11 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 
 // daemonFinishParse finishes the parsing for command line invocations. Returns a new DaemonOptions.
 func daemonFinishParse(args []string) *DaemonOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

@@ -158,12 +158,12 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
-	meta, err := opts.Conn.GetMetaData(chain, false)
+	meta, err := opts.Conn.GetMetaData(false)
 	if err != nil {
 		return nil, err
 	}
 
-	vers, err := opts.Conn.GetClientVersion(chain)
+	vers, err := opts.Conn.GetClientVersion()
 	if err != nil {
 		return nil, err
 	}
@@ -180,8 +180,8 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		Progress:      ToProgress(chain, meta),
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
-		IsArchive:     opts.Conn.IsNodeArchive(chain),
-		IsTracing:     opts.Conn.IsNodeTracing(chain, testMode),
+		IsArchive:     opts.Conn.IsNodeArchive(),
+		IsTracing:     opts.Conn.IsNodeTracing(testMode),
 		HasEsKey:      config.HasEsKeys(chain),
 		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,

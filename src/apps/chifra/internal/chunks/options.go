@@ -39,7 +39,7 @@ type ChunksOptions struct {
 	Deep       bool                     `json:"deep,omitempty"`       // If true, dig more deeply during checking (manifest only)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
-	Conn       *rpcClient.Options       `json:"conn,omitempty"`       // The connection to the RPC server
+	Conn       *rpcClient.Connection    `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -66,7 +66,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -121,20 +121,15 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	// TODO: Do we know if an option is an address? If yes, we could automate this
-	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Belongs)
+	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(opts.Belongs)
 	// EXISTING_CODE
 
 	return opts
@@ -142,14 +137,11 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 
 // chunksFinishParse finishes the parsing for command line invocations. Returns a new ChunksOptions.
 func chunksFinishParse(args []string) *ChunksOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(false, opts.getCaches())
 	if len(args) > 0 {
 		opts.Mode = args[0]
 		for i, arg := range args {
@@ -162,7 +154,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 			}
 		}
 	}
-	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(chain, opts.Belongs)
+	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(opts.Belongs)
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}

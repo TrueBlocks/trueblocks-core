@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
@@ -170,8 +171,7 @@ func (opts *GlobalOptions) toCmdLine() string {
 	return options
 }
 
-func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOptions {
-	opts := &GlobalOptions{}
+func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpcClient.Connection {
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
 	opts.Writer = w
 
@@ -227,17 +227,10 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return opts
-
-	// The 'help' command is a special case for cobra, so doesn't need to be handled here
-	// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
+	return rpcClient.NewConnection(opts.Chain, opts.Cache, caches)
 }
 
-func (opts *GlobalOptions) FinishParse(args []string) {
-	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
-		logger.Error("Could not establish ts file:", err)
-	}
-
+func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpcClient.Connection {
 	if (len(opts.Format) == 0 || opts.Format == "none") && len(opts.OutputFn) > 0 {
 		parts := strings.Split(opts.OutputFn, ".")
 		if len(parts) > 0 {
@@ -247,4 +240,14 @@ func (opts *GlobalOptions) FinishParse(args []string) {
 			}
 		}
 	}
+
+	if len(opts.Chain) == 0 {
+		opts.Chain = config.GetDefaultChain()
+	}
+
+	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
+		logger.Error("Could not establish ts file:", err)
+	}
+
+	return rpcClient.NewConnection(opts.Chain, opts.Cache, caches)
 }

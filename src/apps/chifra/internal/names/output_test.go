@@ -144,7 +144,7 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 	setEnvs(expected)
 	opts = &NamesOptions{}
 	chain := utils.GetTestChain()
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = rpcClient.TempConnection(chain)
 	result, err = opts.getCrudDataEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -167,7 +167,7 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 	}
 	setEnvs(expected)
 	opts = &NamesOptions{}
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = rpcClient.TempConnection(chain)
 	_, err = opts.getCrudDataEnv()
 	if err == nil {
 		t.Fatal("error expected")

@@ -15,11 +15,11 @@ import (
 )
 
 // GetCountUnclesInBlock returns the number of uncles in a block.
-func (options *Options) GetCountUnclesInBlock(chain string, bn uint64) (uint64, error) {
+func (conn *Connection) GetCountUnclesInBlock(bn uint64) (uint64, error) {
 	method := "eth_getUncleCountByBlockNumber"
 	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
 
-	if count, err := rpc.Query[string](chain, method, params); err != nil {
+	if count, err := rpc.Query[string](conn.Chain, method, params); err != nil {
 		return 0, err
 	} else {
 		return strconv.ParseUint(fmt.Sprint(*count), 0, 64)
@@ -27,8 +27,8 @@ func (options *Options) GetCountUnclesInBlock(chain string, bn uint64) (uint64, 
 }
 
 // GetUncleHashesByNumber returns the uncle hashes in a block.
-func (options *Options) GetUncleHashesByNumber(chain string, bn uint64) ([]base.Hash, error) {
-	if count, err := options.GetCountUnclesInBlock(chain, bn); err != nil {
+func (conn *Connection) GetUncleHashesByNumber(bn uint64) ([]base.Hash, error) {
+	if count, err := conn.GetCountUnclesInBlock(bn); err != nil {
 		return nil, err
 	} else if count > 0 {
 		ret := make([]base.Hash, count)
@@ -38,7 +38,7 @@ func (options *Options) GetUncleHashesByNumber(chain string, bn uint64) ([]base.
 				fmt.Sprintf("0x%x", bn),
 				fmt.Sprintf("0x%x", i),
 			}
-			if rawUncle, err := rpc.Query[types.RawBlock](chain, method, params); err != nil {
+			if rawUncle, err := rpc.Query[types.RawBlock](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {
 				for _, uncle := range rawUncle.Uncles {
@@ -53,8 +53,8 @@ func (options *Options) GetUncleHashesByNumber(chain string, bn uint64) ([]base.
 }
 
 // GetUnclesByNumber returns the number of uncles in a block.
-func (options *Options) GetUnclesByNumber(chain string, bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
-	if count, err := options.GetCountUnclesInBlock(chain, bn); err != nil {
+func (conn *Connection) GetUnclesByNumber(bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
+	if count, err := conn.GetCountUnclesInBlock(bn); err != nil {
 		return nil, err
 	} else if count > 0 {
 		ret := make([]types.SimpleBlock[types.SimpleTransaction], count)
@@ -65,7 +65,7 @@ func (options *Options) GetUnclesByNumber(chain string, bn uint64) ([]types.Simp
 				fmt.Sprintf("0x%x", i),
 			}
 
-			if rawUncle, err := rpc.Query[types.RawBlock](chain, method, params); err != nil {
+			if rawUncle, err := rpc.Query[types.RawBlock](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {
 				// TODO: expand other fields if we ever need them (probably not)

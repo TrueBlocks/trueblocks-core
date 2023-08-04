@@ -31,14 +31,11 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 	}
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx := context.Background()
 	prev := base.Timestamp(0)

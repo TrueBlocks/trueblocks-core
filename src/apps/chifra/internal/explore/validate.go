@@ -128,7 +128,7 @@ func (t ExploreType) String() string {
 
 func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
 	if isBlockHash(arg) {
-		return opts.Conn.GetBlockHashFromHashStr(chain, arg)
+		return opts.Conn.GetBlockHashFromHashStr(arg)
 	}
 
 	blockNum, err := strconv.ParseUint(arg, 10, 64)
@@ -136,7 +136,7 @@ func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(ar
 		return "", nil
 	}
 
-	return opts.Conn.GetBlockHashByNumber(chain, blockNum)
+	return opts.Conn.GetBlockHashByNumber(blockNum)
 }
 
 // idToTxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
@@ -146,7 +146,7 @@ func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg s
 	// simple case first
 	if !strings.Contains(arg, ".") {
 		// We know it's a hash, but we want to know if it's a legitimate tx on chain
-		return opts.Conn.GetTransactionHashFromHashStr(chain, arg)
+		return opts.Conn.GetTransactionHashFromHashStr(arg)
 	}
 
 	parts := strings.Split(arg, ".")
@@ -159,7 +159,7 @@ func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg s
 		if err != nil {
 			return "", nil
 		}
-		return opts.Conn.GetTransactionHashByHashAndID(chain, parts[0], txId)
+		return opts.Conn.GetTransactionHashByHashAndID(parts[0], txId)
 	}
 
 	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
@@ -171,5 +171,5 @@ func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg s
 		return "", nil
 	}
 
-	return opts.Conn.GetTransactionHashByNumberAndID(chain, blockNum, txId)
+	return opts.Conn.GetTransactionHashByNumberAndID(blockNum, txId)
 }

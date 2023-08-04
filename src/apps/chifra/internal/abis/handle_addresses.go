@@ -19,7 +19,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 
 	result := make(abi.AbiInterfaceMap)
 	if opts.Known {
-		if err = abi.PreloadKnownAbis(chain, result); err != nil {
+		if err = abi.LoadKnownAbis(chain, result); err != nil {
 			return
 		}
 	}
@@ -36,7 +36,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					cancel()
 				}
 				// Let's try to download the file from somewhere
-				if err := opts.Conn.IsContractAt(chain, address, nil); err != nil {
+				if err := opts.Conn.IsContractAt(address, nil); err != nil {
 					if !errors.Is(err, rpcClient.ErrNotAContract) {
 						errorChan <- err
 						cancel()

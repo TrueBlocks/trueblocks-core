@@ -34,7 +34,7 @@ type WhenOptions struct {
 	Update     bool                     `json:"update,omitempty"`     // With --timestamps only, bring the timestamp database forward to the latest block
 	Deep       bool                     `json:"deep,omitempty"`       // With --timestamps --check only, verifies timestamps from on chain (slow)
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
-	Conn       *rpcClient.Options       `json:"conn,omitempty"`       // The connection to the RPC server
+	Conn       *rpcClient.Connection    `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -55,7 +55,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -95,18 +95,13 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			opts.Deep = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
-				opts.Conn = &rpcClient.Options{}
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	// EXISTING_CODE
 
 	return opts
@@ -114,14 +109,11 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 
 // whenFinishParse finishes the parsing for command line invocations. Returns a new WhenOptions.
 func whenFinishParse(args []string) *WhenOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
 	defFmt := "txt"
-	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewConnection(chain)
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Conn.EnableCaches(opts.Globals.Cache, opts.getCaches())
 	opts.Blocks = args
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS

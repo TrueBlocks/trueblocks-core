@@ -38,14 +38,11 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	)
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {

@@ -76,7 +76,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.LastBlock != utils.NOPOS {
-		latest := opts.Conn.GetLatestBlockNumber(chain)
+		latest := opts.Conn.GetLatestBlockNumber()
 		if opts.LastBlock > latest {
 			msg := fmt.Sprintf("latest block (%d) must be before the chain's latest block (%d).", opts.LastBlock, latest)
 			return validate.Usage(msg)
@@ -153,7 +153,7 @@ func (opts *ExportOptions) validateExport() error {
 			}
 		}
 
-		if !opts.Conn.IsNodeArchive(chain) {
+		if !opts.Conn.IsNodeArchive() {
 			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
 		}
 

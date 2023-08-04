@@ -21,14 +21,11 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 	chain := opts.Globals.Chain
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
@@ -44,7 +41,7 @@ func (opts *WhenOptions) HandleShowBlocks() error {
 			}
 
 			for _, bn := range blockNums {
-				block, err := opts.Conn.GetBlockHeaderByNumber(chain, bn)
+				block, err := opts.Conn.GetBlockHeaderByNumber(bn)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

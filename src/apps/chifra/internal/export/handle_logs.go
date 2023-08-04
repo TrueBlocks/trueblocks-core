@@ -33,14 +33,11 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	)
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
@@ -162,11 +159,16 @@ func (opts *ExportOptions) matchesEmitter(log *types.SimpleLog) bool {
 }
 
 func (opts *ExportOptions) matchesTopic(log *types.SimpleLog) bool {
+	if len(log.Topics) == 0 {
+		return false
+	}
+
 	for _, t := range opts.Topics {
 		if t == log.Topics[0].Hex() {
 			return true
 		}
 	}
+
 	return len(opts.Topics) == 0
 }
 

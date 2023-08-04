@@ -20,14 +20,11 @@ func (opts *TransactionsOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
@@ -64,7 +61,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 					errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
 				}
 
-				logs, err := opts.Conn.GetLogsByFilter(chain, logFilter)
+				logs, err := opts.Conn.GetLogsByFilter(logFilter)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

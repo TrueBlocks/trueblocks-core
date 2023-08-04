@@ -33,14 +33,11 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	)
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
@@ -49,7 +46,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 				errorChan <- err
 				continue
 			} else {
-				prevBalance, _ := opts.Conn.GetBalanceAt(chain, mon.Address, filter.GetOuterBounds().First)
+				prevBalance, _ := opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 				for index, item := range items {
 					item := item
 					item.PriorBalance = *prevBalance
@@ -86,8 +83,6 @@ func (opts *ExportOptions) readBalances(
 	filter *monitor.AppearanceFilter,
 	errorChan chan error,
 ) ([]*types.SimpleTokenBalance, error) {
-	chain := opts.Globals.Chain
-
 	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
@@ -97,7 +92,7 @@ func (opts *ExportOptions) readBalances(
 
 		// This is called concurrently, once for each appearance
 		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTokenBalance) error {
-			if b, err := opts.Conn.GetBalanceAt(chain, mon.Address, uint64(app.BlockNumber)); err != nil {
+			if b, err := opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
 				return err
 			} else {
 				value.Address = base.FAKE_ETH_ADDRESS

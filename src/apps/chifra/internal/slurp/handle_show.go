@@ -36,14 +36,11 @@ func (opts *SlurpOptions) HandleShowSlurps() error {
 	logger.Info("Processing", opts.Addrs, "--types:", opts.Types, opts.Blocks)
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawEtherscan], errorChan chan error) {

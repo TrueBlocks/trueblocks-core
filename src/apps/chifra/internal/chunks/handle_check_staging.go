@@ -29,7 +29,7 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 	}
 
 	fileRange := base.RangeFromFilename(stageFn)
-	meta, err := opts.Conn.GetMetaData(chain, opts.Globals.TestMode)
+	meta, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}

@@ -110,7 +110,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--big_range", "--logs")
 			}
 
-			if opts.Traces && !opts.Conn.IsNodeTracing(chain, opts.Globals.TestMode) {
+			if opts.Traces && !opts.Conn.IsNodeTracing(opts.Globals.TestMode) {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}

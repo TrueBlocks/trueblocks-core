@@ -25,7 +25,7 @@ func (opts *WhenOptions) HandleTimestampsCheck() error {
 	// For display only
 	skip := uint64(500)
 	if opts.Deep {
-		m, _ := opts.Conn.GetMetaData(chain, opts.Globals.TestMode)
+		m, _ := opts.Conn.GetMetaData(opts.Globals.TestMode)
 		skip = m.Latest / 500
 	}
 	scanBar := progress.NewScanBar(cnt /* wanted */, (cnt / skip) /* freq */, cnt /* max */, (2. / 3.))
@@ -77,7 +77,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 	expected := types.SimpleBlock[string]{BlockNumber: bn, Timestamp: onDisc.Timestamp}
 	if opts.Deep {
 		// If we're going deep, we need to query the node
-		expected, _ = opts.Conn.GetBlockHeaderByNumber(chain, bn)
+		expected, _ = opts.Conn.GetBlockHeaderByNumber(bn)
 	}
 
 	if prev.Timestamp != utils.NOPOSI {

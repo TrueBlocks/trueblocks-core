@@ -25,7 +25,7 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 		return err
 	}
 
-	meta, err := opts.Conn.GetMetaData(chain, false)
+	meta, err := opts.Conn.GetMetaData(false)
 	if err != nil {
 		return err
 	}
@@ -39,7 +39,7 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 
 	logger.Info("Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
 	for bn := cnt; bn < meta.Latest; bn++ {
-		block, _ := opts.Conn.GetBlockHeaderByNumber(chain, bn)
+		block, _ := opts.Conn.GetBlockHeaderByNumber(bn)
 		record := tslib.TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 		timestamps = append(timestamps, record)
 		logger.Progress(true, "Adding block", bn, "to timestamp array")

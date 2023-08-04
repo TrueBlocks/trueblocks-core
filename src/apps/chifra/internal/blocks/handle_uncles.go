@@ -18,14 +18,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 	chain := opts.Globals.Chain
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
-	if !opts.Conn.Store.ReadOnly() {
-		opts.Conn.LatestBlockTimestamp = opts.Conn.GetBlockTimestamp(chain, nil)
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
@@ -46,11 +43,11 @@ func (opts *BlocksOptions) HandleUncles() error {
 				var err error
 				if !opts.Hashes {
 					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = opts.Conn.GetBlockBodyByNumber(chain, bn)
+					b, err = opts.Conn.GetBlockBodyByNumber(bn)
 					block = &b
 				} else {
 					var b types.SimpleBlock[string]
-					b, err = opts.Conn.GetBlockHeaderByNumber(chain, bn)
+					b, err = opts.Conn.GetBlockHeaderByNumber(bn)
 					block = &b
 				}
 
