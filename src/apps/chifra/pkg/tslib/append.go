@@ -16,8 +16,8 @@ func Append(chain string, tsArray []TimestampRecord) error {
 		DeCache(chain)
 		defer func() {
 			if file.FileExists(backupFn) {
-				os.Rename(backupFn, tsFn)
-				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+				_ = os.Rename(backupFn, tsFn)
+				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 

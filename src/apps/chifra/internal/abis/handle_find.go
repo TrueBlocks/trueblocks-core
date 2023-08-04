@@ -74,7 +74,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		defer func() {
 			sigsFile.Close()
 		}()
-		sigsFile.Seek(0, io.SeekStart)
+		_, _ = sigsFile.Seek(0, io.SeekStart)
 		sigsScanner := bufio.NewScanner(sigsFile)
 		sigsScanner.Split(bufio.ScanLines)
 
@@ -88,7 +88,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 			s := sigsScanner.Text()
 			hitsSignature := opts.hitsHint(s)
 
-			funcsFile.Seek(0, io.SeekStart)
+			_, _ = funcsFile.Seek(0, io.SeekStart)
 			funcsScanner := bufio.NewScanner(funcsFile)
 			funcsScanner.Split(bufio.ScanLines)
 

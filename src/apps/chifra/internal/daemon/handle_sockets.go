@@ -47,13 +47,14 @@ func (c *Connection) write() {
 		c.connection.Close()
 	}()
 
-	//lint:ignore S1000 this is a common pattern for a websocket connection
+	// this is a common pattern for a websocket connection
+	//nolint:staticcheck,gosimple
 	for {
 		select {
 		case message, ok := <-c.send:
 			if !ok {
 				c.Log("Connection closed")
-				c.connection.WriteMessage(websocket.CloseMessage, []byte{})
+				_ = c.connection.WriteMessage(websocket.CloseMessage, []byte{})
 				return
 			}
 

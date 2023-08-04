@@ -37,8 +37,8 @@ func Truncate(chain string, maxBn uint64) error {
 			DeCache(chain)
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, tsFn)
-				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+				_ = os.Rename(backupFn, tsFn)
+				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 		if fp, err := os.OpenFile(tsFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
@@ -46,12 +46,12 @@ func Truncate(chain string, maxBn uint64) error {
 				fp.Close()
 			}()
 
-			fp.Seek(0, io.SeekStart)
+			_, _ = fp.Seek(0, io.SeekStart)
 			err = binary.Write(fp, binary.LittleEndian, truncated)
 			if err != nil {
 				return err
 			}
-			fp.Sync()
+			_ = fp.Sync()
 
 			os.Remove(backupFn)
 			return nil

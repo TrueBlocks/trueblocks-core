@@ -55,7 +55,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 		return true
 	}
 
-	opts.Conn.Store.Decache(toRemove, processorFunc)
+	_ = opts.Conn.Store.Decache(toRemove, processorFunc)
 
 	if itemsSeen == 0 {
 		logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))

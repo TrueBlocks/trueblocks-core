@@ -23,7 +23,7 @@ func (opts *MonitorsOptions) HandleList() error {
 	monitorMap, monArray := monitor.GetMonitorMap(chain)
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monArray); i++ {
-			monArray[i].ReadMonitorHeader()
+			_ = monArray[i].ReadMonitorHeader()
 			monArray[i].Close()
 		}
 	}

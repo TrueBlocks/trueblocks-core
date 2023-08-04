@@ -148,7 +148,9 @@ func (m *Manifest) SaveManifest(chain string) error {
 	if err != nil {
 		return fmt.Errorf("locking file: %s", err)
 	}
-	defer file.Unlock(w)
+	defer func() {
+		_ = file.Unlock(w)
+	}()
 
 	if outputBytes, err := json.MarshalIndent(m, "", "  "); err != nil {
 		return err

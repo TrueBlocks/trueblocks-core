@@ -19,7 +19,7 @@ import (
 func (opts *ExportOptions) HandleCount(monitorArray []monitor.Monitor) error {
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monitorArray); i++ {
-			monitorArray[i].ReadMonitorHeader()
+			_ = monitorArray[i].ReadMonitorHeader()
 			monitorArray[i].Close()
 		}
 	}

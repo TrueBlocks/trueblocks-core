@@ -141,14 +141,14 @@ func (mon *Monitor) Close() {
 
 // IsDeleted returns true if the monitor has been deleted but not removed
 func (mon *Monitor) IsDeleted() bool {
-	mon.ReadMonitorHeader()
+	_ = mon.ReadMonitorHeader()
 	return mon.Header.Deleted
 }
 
 // Delete marks the file's delete flag, but does not physically remove the file
 func (mon *Monitor) Delete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteMonHeader(true, mon.LastScanned, false /* force */)
+	_ = mon.WriteMonHeader(true, mon.LastScanned, false /* force */)
 	mon.Deleted = true
 	return
 }
@@ -156,7 +156,7 @@ func (mon *Monitor) Delete() (prev bool) {
 // UnDelete unmarks the file's delete flag
 func (mon *Monitor) UnDelete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteMonHeader(false, mon.LastScanned, false /* force */)
+	_ = mon.WriteMonHeader(false, mon.LastScanned, false /* force */)
 	mon.Deleted = false
 	return
 }
@@ -221,7 +221,7 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 
 	logger.Info("Building address list from current monitors")
 	path = config.GetPathToCache(chain) + "monitors"
-	filepath.Walk(path, walkFunc)
+	_ = filepath.Walk(path, walkFunc)
 }
 
 var monitorMutex sync.Mutex

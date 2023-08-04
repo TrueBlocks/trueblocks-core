@@ -49,7 +49,7 @@ func (opts *NamesOptions) HandleClean() error {
 	}
 
 	if opts.Globals.IsApiMode() {
-		output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 			modelChan <- &types.SimpleMessage{
 				Msg: message,
 			}

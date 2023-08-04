@@ -288,7 +288,7 @@ func RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
 	}
 	marshalled, _ := json.MarshalIndent(ErrorResponse{Errors: []string{err.Error()}}, "", "  ")
 	w.WriteHeader(httpStatus)
-	w.Write(marshalled)
+	_, _ = w.Write(marshalled)
 }
 
 // Route A structure to hold the API's routes

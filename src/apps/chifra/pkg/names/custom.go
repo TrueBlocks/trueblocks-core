@@ -219,7 +219,9 @@ func writeCustomNames(output *os.File) (err error) {
 	if err = file.Lock(output); err != nil {
 		return
 	}
-	defer file.Unlock(output)
+	defer func() {
+		_ = file.Unlock(output)
+	}()
 
 	writer := NewNameWriter(output)
 	for _, name := range loadedCustomNames {

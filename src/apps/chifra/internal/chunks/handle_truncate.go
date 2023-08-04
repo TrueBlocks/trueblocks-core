@@ -34,7 +34,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	}
 
 	indexPath := config.GetPathToIndex(chain)
-	index.CleanTemporaryFolders(indexPath, true)
+	_ = index.CleanTemporaryFolders(indexPath, true)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -114,7 +114,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				}
 				return nil
 			}
-			filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
+			_ = filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
 
 			// All that's left to do is report on what happened.
 			fin := "."

@@ -97,15 +97,15 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 		defer func() {
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, indexFn)
-				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+				_ = os.Rename(backupFn, indexFn)
+				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
 		if fp, err := os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
 			// defer fp.Close() // Note -- we don't defer because we want to close the file and possibly pin it below...
 
-			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := IndexHeaderRecord{
 				Magic:           file.MagicNumber,
 				Hash:            base.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
@@ -116,11 +116,11 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return nil, err
 			}
 
-			if binary.Write(fp, binary.LittleEndian, addressTable); err != nil {
+			if err = binary.Write(fp, binary.LittleEndian, addressTable); err != nil {
 				return nil, err
 			}
 
-			if binary.Write(fp, binary.LittleEndian, appearanceTable); err != nil {
+			if err = binary.Write(fp, binary.LittleEndian, appearanceTable); err != nil {
 				return nil, err
 			}
 
