@@ -1,5 +1,4 @@
 all:
-	@cd ~/Development/trueblocks-core/build && make sdk
 	@cd typescript && make
 	@cd python && make
 
