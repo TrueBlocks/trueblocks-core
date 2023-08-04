@@ -151,4 +151,4 @@ extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
 
 //---------------------------------------------------------------------------------------------------
-#define sdkPath string_q("/Users/jrush/Development/trueblocks-sdk/")
+#define sdkPath string_q("../sdk/")

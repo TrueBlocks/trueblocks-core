@@ -47,3 +47,5 @@ py-ext/dist/
 *.pyc
 *.pyo
 *.egg-info
+node_modules/
+sdk/typescript/dist
