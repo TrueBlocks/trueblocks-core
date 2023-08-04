@@ -28,13 +28,16 @@ func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err
 }
 
 func articulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
+	if len(log.Topics) < 1 {
+		return
+	}
+
 	// Try to articulate the log using some common events
 	articulated = findCommonEvent(log)
 
 	// If we couldn't, then try to find the event in `abiMap`
 	if articulated == nil {
 		selector := "0x" + hex.EncodeToString(log.Topics[0].Bytes())
-
 		if found := abiMap[selector]; found != nil {
 			articulated = found.Clone()
 		} else {
@@ -47,7 +50,11 @@ func articulateLog(log *types.SimpleLog, abiMap abi.AbiInterfaceMap) (articulate
 	if err != nil {
 		return
 	}
-	data := log.Data[2:]
+	data := log.Data
+	if len(log.Data) > 1 {
+		data = log.Data[2:]
+	}
+
 	if err = ArticulateArguments(
 		abiEvent.Inputs,
 		data,

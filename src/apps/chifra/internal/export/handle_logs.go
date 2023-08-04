@@ -162,11 +162,16 @@ func (opts *ExportOptions) matchesEmitter(log *types.SimpleLog) bool {
 }
 
 func (opts *ExportOptions) matchesTopic(log *types.SimpleLog) bool {
+	if len(log.Topics) == 0 {
+		return false
+	}
+
 	for _, t := range opts.Topics {
 		if t == log.Topics[0].Hex() {
 			return true
 		}
 	}
+
 	return len(opts.Topics) == 0
 }
 
