@@ -28,20 +28,7 @@ var knownAbiSubdirectories = []string{
 	"known-000", "known-005", "known-010", "known-015",
 }
 
-type AbiInterfaceMap = map[string]*types.SimpleFunction
-
-// LoadAbiFromJsonFile loads _standard_ JSON ABI, that is the one without encodings
-// and signatures. We compute these values.
-func LoadAbiFromJsonFile(filePath string, destination AbiInterfaceMap) (err error) {
-	f, err := os.OpenFile(filePath, os.O_RDONLY, 0)
-	if err != nil {
-		return
-	}
-
-	return fromJson(f, destination)
-}
-
-func fromJson(reader io.Reader, destination AbiInterfaceMap) (err error) {
+func fromJson(reader io.Reader, destination *FunctionSyncMap) (err error) {
 	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
 	if err != nil {
@@ -51,13 +38,13 @@ func fromJson(reader io.Reader, destination AbiInterfaceMap) (err error) {
 	for _, method := range loadedAbi.Methods {
 		method := method
 		function := types.FunctionFromAbiMethod(&method)
-		destination[function.Encoding] = function
+		destination.Set(function.Encoding, function)
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
 		ethEvent := ethEvent
 		event := types.FunctionFromAbiEvent(&ethEvent)
-		destination[event.Encoding] = event
+		destination.Set(event.Encoding, event)
 	}
 
 	return
@@ -65,7 +52,7 @@ func fromJson(reader io.Reader, destination AbiInterfaceMap) (err error) {
 
 // LoadAbiFromKnownFile loads data from _known_ ABI file, which has encodings and
 // signatures.
-func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err error) {
+func LoadAbiFromKnownFile(filePath string, destination *FunctionSyncMap) (err error) {
 	f, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
 		return
@@ -76,7 +63,7 @@ func LoadAbiFromKnownFile(filePath string, destination AbiInterfaceMap) (err err
 }
 
 // LoadKnownAbiByName finds known ABI by name
-func LoadKnownAbiByName(name string, destination AbiInterfaceMap) (err error) {
+func LoadKnownAbiByName(name string, destination *FunctionSyncMap) (err error) {
 	var filePath string
 	if filePath = findKnownAbi(name); filePath == "" {
 		err = fmt.Errorf("known abi file not found: %s", name)
@@ -409,7 +396,7 @@ func getAbis(chain string) ([]types.SimpleFunction, error) {
 }
 
 // LoadCache loads binary cache of known ABIs
-func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
+func LoadCache(chain string, destination *FunctionSyncMap) (loaded bool) {
 	functions, cacheErr := getAbis(chain)
 	// We can ignore cache error
 	if cacheErr != nil {
@@ -419,8 +406,9 @@ func LoadCache(chain string, destination AbiInterfaceMap) (loaded bool) {
 	for _, function := range functions {
 		function := function
 		function.Normalize()
-		destination[function.Encoding] = &function
+		destination.Set(function.Encoding, &function)
 	}
+
 	return true
 }
 
@@ -688,11 +676,7 @@ func LoadKnownAbis(chain string, destination AbiInterfaceMap) (err error) {
 		}
 	}
 
-	toCache := make([]types.SimpleFunction, 0, len(destination))
-	for _, function := range destination {
-		function := function
-		toCache = append(toCache, *function)
-	}
+	toCache := destination.Functions()
 	return SetAbis(chain, toCache)
 }
 
@@ -736,7 +720,7 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 }
 
 // LoadAbiFromAddress loads ABI from local file or cache
-func LoadAbiFromAddress(chain string, address base.Address, destination AbiInterfaceMap) (err error) {
+func LoadAbiFromAddress(chain string, address base.Address, destination *FunctionSyncMap) (err error) {
 	localFileName := address.Hex() + ".json"
 	localFile, err := os.OpenFile(localFileName, os.O_RDONLY, 0)
 	if os.IsNotExist(err) {
@@ -749,8 +733,9 @@ func LoadAbiFromAddress(chain string, address base.Address, destination AbiInter
 		for _, loadedAbi := range loadedAbis {
 			loadedAbi := loadedAbi
 			loadedAbi.Normalize()
-			destination[loadedAbi.Encoding] = &loadedAbi
+			destination.Set(loadedAbi.Encoding, &loadedAbi)
 		}
+
 		return nil
 	}
 	if err != nil {
@@ -817,10 +802,6 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(chain string, address base.Address, destination AbiInterfaceMap) (err error) {
-	if err = LoadKnownAbis(chain, destination); err != nil {
-		return
-	}
-
 	// If there was no error, the abi was loaded...
 	err = LoadAbiFromAddress(chain, address, destination)
 	if err == nil {

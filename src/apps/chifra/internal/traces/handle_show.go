@@ -17,8 +17,8 @@ import (
 )
 
 func (opts *TracesOptions) HandleShowTraces() error {
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 
 	// TODO: Why does this have to dirty the caller?
 	settings := rpcClient.ConnectionSettings{

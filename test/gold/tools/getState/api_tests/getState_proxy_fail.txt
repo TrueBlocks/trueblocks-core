@@ -1,17 +1,6 @@
 state?call='0x0902f1ac()'&addrs=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B&blocks=10092000
 {
-  "data": [],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  },
   "errors": [
-    "-32000: execution reverted"
+    "No ABI found for function 0x0902f1ac()"
   ]
 }

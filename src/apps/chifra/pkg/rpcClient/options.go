@@ -105,7 +105,7 @@ type CacheStater interface {
 }
 
 // HasStore is a shorthand to check if Store is initialized. It will return
-// false for nil pointer to Connection
+// false for nil pointer to Options
 func (conn *Connection) HasStore() bool {
 	if conn == nil {
 		return false

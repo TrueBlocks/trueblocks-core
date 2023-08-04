@@ -25,8 +25,8 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	// 	opts.Articulate = true
 	// }
 
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := monitor.NewFilter(
 		chain,
