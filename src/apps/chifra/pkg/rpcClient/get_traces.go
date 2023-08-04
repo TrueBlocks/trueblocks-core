@@ -306,7 +306,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			}
 			traceGroup := types.NewSimpleTraceGroup(transaction)
 			traceGroup.Traces = ret
-			conn.Store.Write(traceGroup, writeOptions)
+			_ = conn.Store.Write(traceGroup, writeOptions)
 		}
 
 		return ret, nil

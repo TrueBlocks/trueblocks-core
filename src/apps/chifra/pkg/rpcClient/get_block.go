@@ -94,12 +94,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		block.Transactions = append(block.Transactions, *tx)
 
 		if conn.HasStore() && conn.enabledMap["txs"] {
-			conn.Store.Write(tx, writeOptions)
+			_ = conn.Store.Write(tx, writeOptions)
 		}
 	}
 
 	if conn.HasStore() {
-		conn.Store.Write(&block, writeOptions)
+		_ = conn.Store.Write(&block, writeOptions)
 	}
 	return block, nil
 }
@@ -135,7 +135,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 			// Check if the block is final
 			Pending: block.Pending(conn.LatestBlockTimestamp),
 		}
-		conn.Store.Write(&block, writeOptions)
+		_ = conn.Store.Write(&block, writeOptions)
 	}
 
 	return block, nil

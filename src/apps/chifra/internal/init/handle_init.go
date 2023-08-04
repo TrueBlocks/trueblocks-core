@@ -30,7 +30,7 @@ func (opts *InitOptions) HandleInit() error {
 	// TODO: BOGUS - IF THE SCRAPER IS RUNNING, THIS WILL CAUSE PROBLEMS
 	// Make sure that the temporary scraper folders are empty, so that, when the
 	// scraper starts, it starts on the correct block.
-	index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
+	_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
 
 	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {

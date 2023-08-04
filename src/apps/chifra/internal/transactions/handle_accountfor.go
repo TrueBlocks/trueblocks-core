@@ -37,7 +37,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		opts.Traces,
 		nil,
 	)
-	ledgers.SetContextsFromIds(chain, opts.TransactionIds)
+	_ = ledgers.SetContextsFromIds(chain, opts.TransactionIds)
 	ledgers.Conn = opts.Conn
 
 	ctx, cancel := context.WithCancel(context.Background())

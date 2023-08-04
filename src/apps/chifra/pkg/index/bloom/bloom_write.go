@@ -22,15 +22,15 @@ func (bl *ChunkBloom) WriteBloom(chain, bloomFn string) ( /* changed */ bool, er
 		defer func() {
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, bloomFn)
-				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+				_ = os.Rename(backupFn, bloomFn)
+				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
 		if fp, err := os.OpenFile(bloomFn, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 			defer fp.Close() // defers are last in, first out
 
-			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			bl.Header.Magic = file.SmallMagicNumber
 			bl.Header.Hash = base.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion)))
 			if err = binary.Write(fp, binary.LittleEndian, bl.Header); err != nil {

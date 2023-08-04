@@ -47,7 +47,7 @@ func TestCrudIntegration(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	tempFile.Seek(0, 0)
+	_, _ = tempFile.Seek(0, 0)
 	r := csv.NewReader(tempFile)
 	r.Comma = '\t'
 

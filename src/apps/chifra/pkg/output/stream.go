@@ -83,9 +83,9 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	outputWriter := csv.NewWriter(w)
 	outputWriter.Comma = rune(separator)
 	if !options.NoHeader { // notice double negative
-		outputWriter.Write(model.Order)
+		_ = outputWriter.Write(model.Order)
 	}
-	outputWriter.Write(strs)
+	_ = outputWriter.Write(strs)
 	// This Flushes for each printed item, but in the exchange the user gets
 	// the data printed as it comes
 	outputWriter.Flush()

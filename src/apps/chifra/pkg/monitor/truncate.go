@@ -34,7 +34,7 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 			mon.Close()
 			return false, err
 		}
-		mon.WriteMonHeader(mon.Deleted, lastScanned, true /* force */)
+		_ = mon.WriteMonHeader(mon.Deleted, lastScanned, true /* force */)
 		mon.Close()
 
 		return len(apps)-len(keep) > 0, nil

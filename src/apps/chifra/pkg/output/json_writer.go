@@ -151,7 +151,7 @@ func (w *JsonWriter) GetCurrentPrefix() (prefix string) {
 // Indent writes indentation string
 func (w *JsonWriter) Indent() {
 	prefix := w.GetCurrentPrefix()
-	w.writeRaw([]byte(prefix))
+	_, _ = w.writeRaw([]byte(prefix))
 }
 
 // Write writes bytes p, adding indentation and comma before if needed.
@@ -199,7 +199,7 @@ func (w *JsonWriter) WriteError(err error) {
 // WriteCompoundItem makes it easier to write an object or array.
 func (w *JsonWriter) WriteCompoundItem(key string, obj any) (n int, err error) {
 	if w.state.position == positionEmpty {
-		w.openRoot()
+		_, _ = w.openRoot()
 	}
 	prefix := w.GetPrefixForLevel(w.indentLevel)
 	marshalled, err := json.MarshalIndent(obj, prefix, w.indentString)
@@ -215,19 +215,19 @@ func (w *JsonWriter) Close() error {
 		if !w.ShouldWriteNewline {
 			return
 		}
-		w.writeNewline()
+		_, _ = w.writeNewline()
 	}()
 	// If we didn't write anything, but there is default key, we need
 	// to write it
 	if w.state.position == positionEmpty && w.DefaultField.Key != "" {
-		w.openRoot()
+		_, _ = w.openRoot()
 	}
 	// CloseField if in field
 	if w.state.position == positionInArray {
-		w.CloseField(FieldArray)
+		_, _ = w.CloseField(FieldArray)
 	}
 	if w.state.position == positionInObject {
-		w.CloseField(FieldObject)
+		_, _ = w.CloseField(FieldObject)
 	}
 	// Print meta, if any
 	if w.ShouldWriteMeta {
@@ -235,18 +235,18 @@ func (w *JsonWriter) Close() error {
 		if err != nil {
 			w.WriteError(err)
 		}
-		w.WriteCompoundItem("meta", meta)
+		_, _ = w.WriteCompoundItem("meta", meta)
 	}
 	// Print errors, if any
 	if len(w.errs) > 0 {
-		w.writeErrors()
+		_, _ = w.writeErrors()
 	}
 	// Print closing bracket
 	if w.state.position == positionEmpty && w.DefaultField.Key == "" {
 		_, err := w.writeRaw([]byte("{}"))
 		return err
 	}
-	w.CloseField(FieldObject)
+	_, _ = w.CloseField(FieldObject)
 	return nil
 }
 
@@ -267,7 +267,7 @@ func (w *JsonWriter) OpenField(key string, fieldType FieldType) (n int, err erro
 		}
 	}
 
-	w.writeNewline()
+	_, _ = w.writeNewline()
 	w.Indent()
 
 	bracket := "["
@@ -305,7 +305,7 @@ func (w *JsonWriter) CloseField(fieldType FieldType) (n int, err error) {
 	}
 	w.indentLevel = w.indentLevel + indentMod
 	if w.state.children > 0 {
-		w.writeNewline()
+		_, _ = w.writeNewline()
 		w.Indent()
 	}
 	n, err = w.writeRaw([]byte(bracket))

@@ -345,7 +345,7 @@ func StreamAppearance(procFunc UniqProcFunc, flow string, reason string, address
 		}
 
 		if procFunc != nil {
-			procFunc(s)
+			_ = procFunc(s)
 		}
 	}
 }

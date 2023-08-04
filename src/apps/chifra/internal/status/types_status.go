@@ -232,7 +232,7 @@ func (s *simpleStatus) toTemplate(w io.Writer, testMode bool, format string) boo
 		return false
 	}
 
-	t.Execute(w, s)
+	_ = t.Execute(w, s)
 	return true
 }
 

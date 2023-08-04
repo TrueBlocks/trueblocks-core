@@ -28,7 +28,7 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32, force bool)
 		mon.LastScanned = lastScanned
 	}
 
-	f.Seek(0, io.SeekStart)
+	_, _ = f.Seek(0, io.SeekStart)
 	err = binary.Write(f, binary.LittleEndian, mon.Header)
 	return
 }
@@ -77,7 +77,7 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool)
 		return 0, err
 	}
 
-	f.Seek(index.AppRecordWidth, io.SeekStart)
+	_, _ = f.Seek(index.AppRecordWidth, io.SeekStart)
 
 	b := make([]byte, 4)
 	for _, app := range apps {
@@ -96,6 +96,6 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool)
 	}
 
 	f.Close() // do not defer this, we need to close it so the fileSize is right
-	mon.Reload(false /* create */)
+	_, _ = mon.Reload(false /* create */)
 	return mon.Count(), nil
 }

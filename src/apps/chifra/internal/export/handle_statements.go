@@ -130,7 +130,7 @@ func (opts *ExportOptions) readStatements(
 					TransactionIndex: uint32(tx.TransactionIndex),
 				})
 			}
-			ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
+			_ = ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
 		}
 
 		// we need them sorted for the following to work

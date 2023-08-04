@@ -83,18 +83,24 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 
 	opts.BlockWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
-		go opts.BlazeProcessBlocks(meta, blockChannel, appearanceChannel, tsChannel)
+		go func() {
+			_ = opts.BlazeProcessBlocks(meta, blockChannel, appearanceChannel, tsChannel)
+		}()
 	}
 
 	// TODO: These go routines may fail. Question -- how does one respond to an error inside a go routine?
 	opts.AppearanceWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
-		go opts.BlazeProcessAppearances(meta, appearanceChannel)
+		go func() {
+			_ = opts.BlazeProcessAppearances(meta, appearanceChannel)
+		}()
 	}
 
 	opts.TsWg.Add(int(opts.NChannels))
 	for i := 0; i < int(opts.NChannels); i++ {
-		go opts.BlazeProcessTimestamps(tsChannel)
+		go func() {
+			_ = opts.BlazeProcessTimestamps(tsChannel)
+		}()
 	}
 
 	for _, block := range blocks {
