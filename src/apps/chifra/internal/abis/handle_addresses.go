@@ -17,7 +17,7 @@ import (
 func (opts *AbisOptions) HandleAddresses() (err error) {
 	chain := opts.Globals.Chain
 
-	result := make(abi.AbiInterfaceMap)
+	result := abi.NewFunctionSyncMap12()
 	if opts.Known {
 		if err = abi.PreloadKnownAbis(chain, result); err != nil {
 			return
@@ -54,15 +54,12 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 			}
 		}
 
-		keys := make([]string, 0, len(result))
-		for k := range result {
-			keys = append(keys, k)
-		}
-		// We sort by the four-byte and/or event signature
-		sort.Strings(keys)
+		names := result.Names()
+		sort.Strings(names)
 
-		for _, k := range keys {
-			modelChan <- result[k]
+		for _, name := range names {
+			function := result.Get(name)
+			modelChan <- function
 		}
 	}
 

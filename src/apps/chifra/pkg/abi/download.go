@@ -18,7 +18,7 @@ var AbiNotFound = `[{"name":"AbiNotFound","type":"function"}]`
 // DownloadAbi downloads the ABI for the given address and saves it to the cache.
 // TODO: This function should be easy to replace with "ABI providers" (different services like
 // Sourcify or custom ones configured by the user)
-func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap) error {
+func DownloadAbi(chain string, address base.Address, destination *FunctionSyncMap12) error {
 	if address.IsZero() {
 		return errors.New("address is 0x0")
 	}

@@ -16,21 +16,21 @@ const (
 
 // FindAbiFunction returns either the function to call or a list of suggestions (functions
 // with the same name, but different argument count)
-func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.ContractCallArgument, abis AbiInterfaceMap) (fn *types.SimpleFunction, suggestions []types.SimpleFunction, err error) {
-	for _, function := range abis {
+func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.ContractCallArgument, abiMap *FunctionSyncMap12) (fn *types.SimpleFunction, suggestions []types.SimpleFunction, err error) {
+	functions := abiMap.Functions()
+	for _, function := range functions {
 		function := function
-		// first we check if names match (or selectors, depending on mode)
-		if mode == FindByName && function.Name != identifier {
+
+		if (mode == FindByName && function.Name != identifier) ||
+			(mode == FindBySelector && function.Encoding != strings.ToLower(identifier)) {
 			continue
 		}
-		if mode == FindBySelector && function.Encoding != strings.ToLower(identifier) {
-			continue
-		}
+
 		// now we will compare arguments
 		if arguments != nil {
 			// we start with argument count
 			if len(function.Inputs) != len(arguments) {
-				suggestions = append(suggestions, *function)
+				suggestions = append(suggestions, function)
 				continue
 			}
 			// now we check if the argument types are compatible
@@ -64,19 +64,22 @@ func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.Contr
 						break
 					}
 				}
+
 				// we use strings.Contains here, because all integers are parsed into argument.Number
 				if strings.Contains(input.InternalType, "int") && argument.Number == nil {
 					break
 				}
+
 				compatible = true
 			}
+
 			if !compatible {
-				suggestions = append(suggestions, *function)
+				suggestions = append(suggestions, function)
 				continue
 			}
 		}
 
-		return function, nil, nil
+		return &function, nil, nil
 	}
 
 	return nil, suggestions, nil

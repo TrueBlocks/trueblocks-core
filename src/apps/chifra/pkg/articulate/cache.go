@@ -6,14 +6,14 @@ import (
 )
 
 type AbiCache struct {
-	abiMap    abi.AbiInterfaceMap
+	abiMap    abi.FunctionSyncMap12
 	loadedMap map[base.Address]bool
 	skipMap   map[base.Address]bool
 }
 
 func NewAbiCache() *AbiCache {
 	return &AbiCache{
-		abiMap:    make(abi.AbiInterfaceMap),
+		abiMap:    abi.FunctionSyncMap12{},
 		loadedMap: make(map[base.Address]bool),
 		skipMap:   make(map[base.Address]bool),
 	}

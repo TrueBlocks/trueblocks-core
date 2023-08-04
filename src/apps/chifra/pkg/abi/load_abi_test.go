@@ -6,17 +6,17 @@ import (
 
 func TestLoadAbiFromFile(t *testing.T) {
 	inputFile := "../../../../other/install/abis/known-015/moloch.json"
-	abi := make(AbiInterfaceMap)
+	abi := NewFunctionSyncMap12()
 	err := LoadAbiFromJsonFile(inputFile, abi)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if count := len(abi); count != 69 {
+	if count := abi.Count(); count != 69 {
 		t.Fatal("item count mismatch:", count)
 	}
 
-	sample := abi["0x502d145f"]
+	sample := abi.Get("0x502d145f")
 	if encoding := sample.Encoding; encoding != "0x502d145f" {
 		t.Fatal("wrong encoding", encoding)
 	}

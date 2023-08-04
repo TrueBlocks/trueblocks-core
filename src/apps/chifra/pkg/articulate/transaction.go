@@ -8,7 +8,7 @@ import (
 func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction) (err error) {
 	address := tx.To
 	if !abiCache.loadedMap[address] && !abiCache.skipMap[address] {
-		if err := abi.LoadAbi(chain, address, abiCache.abiMap); err != nil {
+		if err := abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
 			abiCache.skipMap[address] = true
 			return err
 		} else {
@@ -35,7 +35,7 @@ func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction
 	if len(tx.Input) >= 10 {
 		selector = tx.Input[:10]
 		inputData := tx.Input[10:]
-		found = abiCache.abiMap[selector]
+		found = abiCache.abiMap.Get(selector)
 		if found != nil {
 			tx.ArticulatedTx = found.Clone()
 			var outputData string
