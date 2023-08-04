@@ -6,7 +6,7 @@ import (
 
 func TestLoadAbiFromFile(t *testing.T) {
 	inputFile := "../../../../other/install/abis/known-015/moloch.json"
-	abi := NewFunctionSyncMap12()
+	abi := NewFunctionSyncMap()
 	err := LoadAbiFromJsonFile(inputFile, abi)
 	if err != nil {
 		t.Fatal(err)

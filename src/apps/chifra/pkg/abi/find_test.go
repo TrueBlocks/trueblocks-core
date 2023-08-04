@@ -85,7 +85,7 @@ const packTestAbiSource = `
 ]`
 
 var testAbi abi.ABI
-var abis FunctionSyncMap12
+var abis FunctionSyncMap
 var packTestAbi abi.ABI
 
 func init() {
@@ -103,7 +103,7 @@ func init() {
 	}
 }
 
-func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, destination *FunctionSyncMap12) {
+func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, destination *FunctionSyncMap) {
 	for _, method := range parsedAbi.Methods {
 		method := method
 		encoding := "0x" + strings.ToLower(base.Bytes2Hex(method.ID))

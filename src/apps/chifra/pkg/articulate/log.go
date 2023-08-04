@@ -9,16 +9,16 @@ import (
 
 func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err error) {
 	address := log.Address
-	if !abiCache.loadedMap[address] && !abiCache.skipMap[address] {
+	if !abiCache.loadedMap.Get(address) && !abiCache.skipMap.Get(address) {
 		if err = abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
-			abiCache.skipMap[address] = true
+			abiCache.skipMap.Set(address, true)
 			return err
 		} else {
-			abiCache.loadedMap[address] = true
+			abiCache.loadedMap.Set(address, true)
 		}
 	}
 
-	if !abiCache.skipMap[address] {
+	if !abiCache.skipMap.Get(address) {
 		if log.ArticulatedLog, err = articulateLog(log, &abiCache.abiMap); err != nil {
 			return err
 		}
@@ -27,7 +27,7 @@ func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err
 	return nil
 }
 
-func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap12) (articulated *types.SimpleFunction, err error) {
+func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (articulated *types.SimpleFunction, err error) {
 	if len(log.Topics) < 1 {
 		return
 	}

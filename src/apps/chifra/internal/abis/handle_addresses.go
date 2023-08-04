@@ -17,7 +17,7 @@ import (
 func (opts *AbisOptions) HandleAddresses() (err error) {
 	chain := opts.Globals.Chain
 
-	result := abi.NewFunctionSyncMap12()
+	result := abi.NewFunctionSyncMap()
 	if opts.Known {
 		if err = abi.PreloadKnownAbis(chain, result); err != nil {
 			return

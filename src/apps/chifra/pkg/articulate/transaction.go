@@ -7,12 +7,12 @@ import (
 
 func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction) (err error) {
 	address := tx.To
-	if !abiCache.loadedMap[address] && !abiCache.skipMap[address] {
+	if !abiCache.loadedMap.Get(address) && !abiCache.skipMap.Get(address) {
 		if err := abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
-			abiCache.skipMap[address] = true
+			abiCache.skipMap.Set(address, true)
 			return err
 		} else {
-			abiCache.loadedMap[address] = true
+			abiCache.loadedMap.Set(address, true)
 		}
 	}
 

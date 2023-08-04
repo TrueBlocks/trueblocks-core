@@ -31,7 +31,7 @@ func NewContractCall(chain string, callAddress base.Address, theCall string, sho
 		return nil, err
 	}
 
-	abiMap := abi.NewFunctionSyncMap12()
+	abiMap := abi.NewFunctionSyncMap()
 	if err = abi.LoadAbi(chain, callAddress, abiMap); err != nil {
 		return nil, err
 	}
