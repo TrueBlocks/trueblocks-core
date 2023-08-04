@@ -26,8 +26,8 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	}
 
 	ledgers := &ledger.Ledger{}
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := monitor.NewFilter(
 		chain,

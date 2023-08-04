@@ -18,7 +18,7 @@ func (abiCache *AbiCache) ArticulateTrace(chain string, trace *types.SimpleTrace
 	}
 
 	if !abiCache.skipMap[address] {
-		if trace.ArticulatedTrace, err = articulateTrace(trace, abiCache.abiMap); err != nil {
+		if trace.ArticulatedTrace, err = abiCache.articulateTrace(trace); err != nil {
 			return err
 		}
 	}
@@ -26,13 +26,14 @@ func (abiCache *AbiCache) ArticulateTrace(chain string, trace *types.SimpleTrace
 	return nil
 }
 
-func articulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
+func (abiCache *AbiCache) articulateTrace(trace *types.SimpleTrace) (articulated *types.SimpleFunction, err error) {
 	input := trace.Action.Input
 	if len(input) < 10 {
 		return
 	}
+
 	encoding := input[:10]
-	articulated = abiMap[encoding]
+	articulated = abiCache.abiMap[encoding]
 
 	if trace.Result == nil || articulated == nil {
 		return

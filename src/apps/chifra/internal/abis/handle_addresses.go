@@ -19,7 +19,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 
 	result := make(abi.AbiInterfaceMap)
 	if opts.Known {
-		if err = abi.PreloadKnownAbis(chain, result); err != nil {
+		if err = abi.LoadKnownAbis(chain, result); err != nil {
 			return
 		}
 	}

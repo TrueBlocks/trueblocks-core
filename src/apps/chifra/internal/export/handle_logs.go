@@ -20,8 +20,8 @@ import (
 )
 
 func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
-	abiCache := articulate.NewAbiCache()
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := monitor.NewFilter(
 		chain,
