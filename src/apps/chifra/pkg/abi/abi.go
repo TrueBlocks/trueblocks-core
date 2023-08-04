@@ -28,35 +28,35 @@ func NewFunctionSyncMap() *FunctionSyncMap {
 	return &FunctionSyncMap{}
 }
 
-func (abiMap *FunctionSyncMap) Count() int64 {
+func (f *FunctionSyncMap) Count() int64 {
 	var cnt atomic.Int64
 	countFunc := func(k any, b any) bool {
 		cnt.Add(1)
 		return true
 	}
-	abiMap.Range(countFunc)
+	f.Range(countFunc)
 	return cnt.Load()
 }
 
-func (abiMap *FunctionSyncMap) Keys() []string {
-	ret := make([]string, 0, abiMap.Count())
+func (f *FunctionSyncMap) Keys() []string {
+	ret := make([]string, 0, f.Count())
 	visit := func(k any, b any) bool {
 		name, _ := k.(string)
 		ret = append(ret, name)
 		return true
 	}
-	abiMap.Range(visit)
+	f.Range(visit)
 	return ret
 }
 
-func (abiMap *FunctionSyncMap) Values() []types.SimpleFunction {
-	ret := make([]types.SimpleFunction, 0, abiMap.Count())
+func (f *FunctionSyncMap) Values() []types.SimpleFunction {
+	ret := make([]types.SimpleFunction, 0, f.Count())
 	visit := func(k any, b any) bool {
 		function, _ := b.(*types.SimpleFunction)
 		ret = append(ret, *function)
 		return true
 	}
-	abiMap.Range(visit)
+	f.Range(visit)
 	return ret
 }
 
@@ -64,12 +64,12 @@ type AddressSyncMap struct {
 	sync.Map
 }
 
-func (f *AddressSyncMap) SetValue(addr base.Address, set bool) {
-	f.Store(addr, set)
+func (a *AddressSyncMap) SetValue(addr base.Address, set bool) {
+	a.Store(addr, set)
 }
 
-func (f *AddressSyncMap) GetValue(addr base.Address) bool {
-	if set, ok := f.Load(addr); !ok {
+func (a *AddressSyncMap) GetValue(addr base.Address) bool {
+	if set, ok := a.Load(addr); !ok {
 		return false
 	} else {
 		return set.(bool)
@@ -80,34 +80,34 @@ func NewAddressSyncMap() *AddressSyncMap {
 	return &AddressSyncMap{}
 }
 
-func (abiMap *AddressSyncMap) Count() int64 {
+func (a *AddressSyncMap) Count() int64 {
 	var cnt atomic.Int64
 	countFunc := func(k any, b any) bool {
 		cnt.Add(1)
 		return true
 	}
-	abiMap.Range(countFunc)
+	a.Range(countFunc)
 	return cnt.Load()
 }
 
-func (abiMap *AddressSyncMap) Keys() []base.Address {
-	ret := make([]base.Address, 0, abiMap.Count())
+func (a *AddressSyncMap) Keys() []base.Address {
+	ret := make([]base.Address, 0, a.Count())
 	visit := func(k any, b any) bool {
 		addr, _ := k.(base.Address)
 		ret = append(ret, addr)
 		return true
 	}
-	abiMap.Range(visit)
+	a.Range(visit)
 	return ret
 }
 
-func (abiMap *AddressSyncMap) Values() []bool {
-	ret := make([]bool, 0, abiMap.Count())
+func (a *AddressSyncMap) Values() []bool {
+	ret := make([]bool, 0, a.Count())
 	visit := func(k any, b any) bool {
 		set, _ := b.(bool)
 		ret = append(ret, set)
 		return true
 	}
-	abiMap.Range(visit)
+	a.Range(visit)
 	return ret
 }
