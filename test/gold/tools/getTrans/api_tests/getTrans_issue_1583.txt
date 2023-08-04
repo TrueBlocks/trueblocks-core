@@ -5,11 +5,20 @@ transactions?transactions=0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6
       "articulatedTx": {
         "inputs": {
           "_donations": [
-            "0x6b175474e89094c44da98b954eedeac495271d0f",
-            "0x00000000000000000000000041eb63d55b1b0000"
+            {
+              "amount": "4750000000000000000",
+              "dest": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f",
+              "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+            },
+            {
+              "amount": "250000000000000000",
+              "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+              "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+            }
           ]
         },
-        "name": "donate"
+        "name": "donate",
+        "stateMutability": "payable"
       },
       "blockHash": "0x9e3bfcd31fe2aba667980cee5f9a9a834ab7309c04c1387fac457a30b777a0b3",
       "blockNumber": 10279310,

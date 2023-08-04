@@ -2,6 +2,7 @@ package articulate
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type AbiCache struct {
@@ -18,7 +19,7 @@ func NewAbiCache(chain string, loadKnown bool) *AbiCache {
 	}
 
 	if loadKnown {
-		if err := abi.LoadKnownAbis(chain, ret.abiMap); err != nil {
+		if err := abi.LoadKnownAbis(chain, &ret.abiMap); err != nil {
 			// report error, but continue processing
 			logger.Error("error preloading known abis", "error", err)
 		}
