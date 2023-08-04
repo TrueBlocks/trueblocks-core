@@ -19,13 +19,10 @@ var approvalTopic = base.HexToHash(
 )
 
 func ParseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
-	if log.Topics[0] != TransferTopic {
-		return nil
-	}
-	if len(log.Topics) < 3 {
-		// TODO: This happens (sometimes) because the ABI says that the data is not index, but it is
-		// TODO: or visa versa. In either case, we get the same topic0. We need to attempt both with
-		// TODO: and without indexed parameters. See issues/1366.
+	if len(log.Topics) < 3 || log.Topics[0] != TransferTopic {
+		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
+		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
+		// TODO: attempt both with and without indexed parameters. See issues/1366.
 		return nil
 	}
 
@@ -54,13 +51,10 @@ func ParseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 }
 
 func ParseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
-	if log.Topics[0] != ensTransferTopic {
-		return nil
-	}
-	if len(log.Topics) < 2 {
-		// TODO: This happens (sometimes) because the ABI says that the data is not index, but it is
-		// TODO: or visa versa. In either case, we get the same topic0. We need to attempt both with
-		// TODO: and without indexed parameters. See issues/1366.
+	if len(log.Topics) < 2 || log.Topics[0] != ensTransferTopic {
+		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
+		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
+		// TODO: attempt both with and without indexed parameters. See issues/1366.
 		return nil
 	}
 
@@ -84,13 +78,10 @@ func ParseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction
 }
 
 func ParseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
-	if log.Topics[0] != approvalTopic {
-		return nil
-	}
-	if len(log.Topics) < 3 {
-		// TODO: This happens (sometimes) because the ABI says that the data is not index, but it is
-		// TODO: or visa versa. In either case, we get the same topic0. We need to attempt both with
-		// TODO: and without indexed parameters. See issues/1366.
+	if len(log.Topics) < 3 || log.Topics[0] != approvalTopic {
+		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
+		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
+		// TODO: attempt both with and without indexed parameters. See issues/1366.
 		return nil
 	}
 
