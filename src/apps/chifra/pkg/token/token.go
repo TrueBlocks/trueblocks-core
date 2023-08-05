@@ -26,21 +26,9 @@ const tokenStateSymbol tokenStateSelector = "0x95d89b41"
 const tokenStateName tokenStateSelector = "0x06fdde03"
 const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
-// Token type wraps information about ERC-20 token or ERC-721 NFT. Call
-// Token.IsErcXXX to check the token type.
-// TODO: This is a type and should be auto-generated
-type Token struct {
-	Address     base.Address
-	Decimals    uint64
-	Name        string
-	Symbol      string
-	TotalSupply big.Int
-	Type        types.TokenType
-}
-
 // GetTokenState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
+func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) (token *types.SimpleToken, err error) {
 	results, err := rpc.QueryBatch[string](
 		chain,
 		[]rpc.BatchPayload{
@@ -140,7 +128,7 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 		tokenType = types.TokenErc721
 	}
 
-	token = &Token{
+	token = &types.SimpleToken{
 		Address:     tokenAddress,
 		Decimals:    decimals,
 		Name:        name,
