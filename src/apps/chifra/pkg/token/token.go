@@ -5,7 +5,6 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -105,8 +104,8 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 		return
 	}
 
-	name, _ := articulate.ArticulateEncodedStringOrBytes32(*results["name"])
-	symbol, _ := articulate.ArticulateEncodedStringOrBytes32(*results["symbol"])
+	name, _ := decode.ArticulateEncodedStringOrBytes32(*results["name"])
+	symbol, _ := decode.ArticulateEncodedStringOrBytes32(*results["symbol"])
 
 	var decimals uint64 = 0
 	rawDecimals := *results["decimals"]
