@@ -18,56 +18,52 @@ import (
 
 // EXISTING_CODE
 
-type RawTokenBalance struct {
+type RawToken struct {
 	Address          string `json:"address"`
 	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
 	Decimals         string `json:"decimals"`
 	Diff             string `json:"diff"`
 	Holder           string `json:"holder"`
-	IsContract       string `json:"isContract"`
-	IsErc20          string `json:"isErc20"`
-	IsErc721         string `json:"isErc721"`
 	Name             string `json:"name"`
 	PriorBalance     string `json:"priorBalance"`
 	Symbol           string `json:"symbol"`
 	Timestamp        string `json:"timestamp"`
 	TotalSupply      string `json:"totalSupply"`
 	TransactionIndex string `json:"transactionIndex"`
+	Type             string `json:"tokenType"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-type SimpleTokenBalance struct {
-	Address          base.Address     `json:"address"`
-	Balance          big.Int          `json:"balance"`
-	BlockNumber      base.Blknum      `json:"blockNumber"`
-	Decimals         uint64           `json:"decimals"`
-	Diff             big.Int          `json:"diff,omitempty"`
-	Holder           base.Address     `json:"holder"`
-	IsContract       bool             `json:"isContract,omitempty"`
-	IsErc20          bool             `json:"isErc20,omitempty"`
-	IsErc721         bool             `json:"isErc721,omitempty"`
-	Name             string           `json:"name"`
-	PriorBalance     big.Int          `json:"priorBalance,omitempty"`
-	Symbol           string           `json:"symbol"`
-	Timestamp        base.Timestamp   `json:"timestamp"`
-	TotalSupply      big.Int          `json:"totalSupply"`
-	TransactionIndex base.Blknum      `json:"transactionIndex,omitempty"`
-	raw              *RawTokenBalance `json:"-"`
+type SimpleToken struct {
+	Address          base.Address   `json:"address"`
+	Balance          big.Int        `json:"balance"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	Decimals         uint64         `json:"decimals"`
+	Diff             big.Int        `json:"diff,omitempty"`
+	Holder           base.Address   `json:"holder"`
+	Name             string         `json:"name"`
+	PriorBalance     big.Int        `json:"priorBalance,omitempty"`
+	Symbol           string         `json:"symbol"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	TotalSupply      big.Int        `json:"totalSupply"`
+	TransactionIndex base.Blknum    `json:"transactionIndex,omitempty"`
+	Type             TokenType      `json:"tokenType"`
+	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleTokenBalance) Raw() *RawTokenBalance {
+func (s *SimpleToken) Raw() *RawToken {
 	return s.raw
 }
 
-func (s *SimpleTokenBalance) SetRaw(raw *RawTokenBalance) {
+func (s *SimpleToken) SetRaw(raw *RawToken) {
 	s.raw = raw
 }
 
-func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleToken) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -131,8 +127,6 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 		case "version":
 			model["version"] = ""
 		}
-		// 		"isContract":  s.IsContract,
-		// 		"isErc20":     s.IsErc20,
 	}
 	// EXISTING_CODE
 
@@ -145,8 +139,33 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 // EXISTING_CODE
 //
 
-func (s *SimpleTokenBalance) Date() string {
+func (s *SimpleToken) IsErc20() bool {
+	// TODO TOKEN
+	return s.Type.IsErc20()
+}
+
+func (s *SimpleToken) IsErc721() bool {
+	// TODO TOKEN
+	return s.Type.IsErc721()
+}
+
+func (s *SimpleToken) Date() string {
 	return utils.FormattedDate(s.Timestamp)
+}
+
+type TokenType int
+
+const (
+	TokenErc20 TokenType = iota
+	TokenErc721
+)
+
+func (t TokenType) IsErc20() bool {
+	return t == TokenErc20
+}
+
+func (t TokenType) IsErc721() bool {
+	return t == TokenErc721
 }
 
 // EXISTING_CODE
