@@ -204,11 +204,8 @@ func cleanName(chain string, name *types.SimpleName) (modified bool, err error) 
 		return
 	}
 
-	tokenState, err := token.GetState(chain, name.Address, "latest")
-	if _, ok := err.(token.ErrNodeConnection); ok {
-		return
-	}
-	// It's not a token
+	// If this address is not a token, we're done
+	tokenState, err := token.GetTokenState(chain, name.Address, "latest")
 	if err != nil {
 		err = nil
 	}
@@ -303,7 +300,7 @@ func cleanContract(token *token.Token, address base.Address, name *types.SimpleN
 }
 
 func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
-	if !name.IsErc20 && token.IsErc20() {
+	if !name.IsErc20 && token.Type.IsErc20() {
 		name.IsErc20 = true
 		modified = true
 	}
@@ -314,7 +311,7 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.IsErc20() && (name.Tags == "" ||
+	if token.Type.IsErc20() && (name.Tags == "" ||
 		strings.Contains(name.Tags, "token") ||
 		strings.Contains(name.Tags, "30-contracts") ||
 		strings.Contains(name.Tags, "55-defi") ||
@@ -370,17 +367,17 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.IsErc721() && !name.IsErc721 {
+	if token.Type.IsErc721() && !name.IsErc721 {
 		name.IsErc721 = true
 		modified = true
 	}
 
-	if !token.IsErc721() && name.IsErc721 {
+	if !token.Type.IsErc721() && name.IsErc721 {
 		name.IsErc721 = false
 		modified = true
 	}
 
-	if token.IsErc721() && name.IsErc721 && name.Tags == "" {
+	if token.Type.IsErc721() && name.IsErc721 && name.Tags == "" {
 		name.Tags = "50-Tokens:ERC721"
 		modified = true
 	}
@@ -439,69 +436,69 @@ func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) 
 //     return val == "T" || val == "true";
 // }
 
-//     bool isAirdrop = containsI(account.name, "airdrop");
-//     if (account.tags == "60-Airdrops")
-//         account.tags = "";
+//     bool isAirdrop = containsI(ac count.name, "airdrop");
+//     if (ac count.tags == "60-Airdrops")
+//         ac count.tags = "";
 
 //     if (!isContract) {
-//         bool isEmpty = account.tags.empty();
-//         bool isContract = contains(account.tags, "Contracts");
-//         bool isToken = contains(account.tags, "Tokens");
-//         account.tags = !isEmpty && !isContract && !isToken ? account.tags : "90-Individuals:Other";
+//         bool isEmpty = ac count.tags.empty();
+//         bool isContract = contains(ac count.tags, "Contracts");
+//         bool isToken = contains(ac count.tags, "Tokens");
+//         ac count.tags = !isEmpty && !isContract && !isToken ? ac count.tags : "90-Individuals:Other";
 //         if (wasContract) {
 //             // This used to be a contract and now is not, so it must be a self destruct
-//             account.isContract = true;
-//             account.tags = "37-SelfDestructed";
+//             ac count.isContract = true;
+//             ac count.tags = "37-SelfDestructed";
 //         }
 
 //     } else {
 //         // This is a contract...
-//         account.isContract = true;
+//         ac count.isContract = true;
 
-//         string_q name = getToken State(account.address, "name", opts->abi_spec, latestBlock);
-//         string_q symbol = getToken State(account.address, "symbol", opts->abi_spec, latestBlock);
-//         uint64_t decimals = str_2_Uint(getToken State(account.address, "decimals", opts->abi_spec, latestBlock));
+//         string_q name = getToken State(ac count.address, "name", opts->abi_spec, latestBlock);
+//         string_q symbol = getToken State(ac count.address, "symbol", opts->abi_spec, latestBlock);
+//         uint64_t decimals = str_2_Uint(getToken State(ac count.address, "decimals", opts->abi_spec, latestBlock));
 //         if (!name.empty() || !symbol.empty() || decimals > 0) {
-//             account.isErc20 = true;
-//             account.source =
-//                 (account.source.empty() || account.source == "TrueBlocks.io" || account.source == "EtherScan.io")
+//             ac count.isErc20 = true;
+//             ac count.source =
+//                 (ac count.source.empty() || ac count.source == "TrueBlocks.io" || ac count.source == "EtherScan.io")
 //                     ? "On chain"
-//                     : account.source;
+//                     : ac count.source;
 //             // Use the values from on-chain if we can...
-//             account.name = (!name.empty() ? name : account.name);
-//             account.symbol = (!symbol.empty() ? symbol : account.symbol);
-//             account.decimals = decimals ? decimals : (account.decimals ? account.decimals : 18);
-//             account.isErc721 = isErc721(account.address, opts->abi_spec, latestBlock);
-//             if (account.isErc721) {
-//                 account.tags = "50-Tokens:ERC721";
+//             ac count.name = (!name.empty() ? name : ac count.name);
+//             ac count.symbol = (!symbol.empty() ? symbol : ac count.symbol);
+//             ac count.decimals = decimals ? decimals : (ac count.decimals ? ac count.decimals : 18);
+//             ac count.isErc721 = isErc721(ac count.address, opts->abi_spec, latestBlock);
+//             if (ac count.isErc721) {
+//                 ac count.tags = "50-Tokens:ERC721";
 
 //             } else {
 //                 // This is an ERC20, so if we've not tagged it specifically, make it thus
-//                 if (account.tags.empty() || containsI(account.tags, "token") ||
-//                     containsI(account.tags, "30-contracts") || containsI(account.tags, "55-defi") || isAirdrop) {
-//                     account.tags = "50-Tokens:ERC20";
+//                 if (ac count.tags.empty() || containsI(ac count.tags, "token") ||
+//                     containsI(ac count.tags, "30-contracts") || containsI(ac count.tags, "55-defi") || isAirdrop) {
+//                     ac count.tags = "50-Tokens:ERC20";
 //                 }
 //             }
 
 //         } else {
-//             account.isErc20 = false;
-//             account.isErc721 = false;
+//             ac count.isErc20 = false;
+//             ac count.isErc721 = false;
 //         }
-//         if (account.tags.empty())
-//             account.tags = "30-Contracts";
+//         if (ac count.tags.empty())
+//             ac count.tags = "30-Contracts";
 //     }
 
-//     if (isAirdrop && !containsI(account.name, "Airdrop")) {
-//         replaceAll(account.name, " airdrop", "");
-//         replaceAll(account.name, " Airdrop", "");
-//         account.name = account.name + " Airdrop";
+//     if (isAirdrop && !containsI(ac count.name, "Airdrop")) {
+//         replaceAll(ac count.name, " airdrop", "");
+//         replaceAll(ac count.name, " Airdrop", "");
+//         ac count.name = ac count.name + " Airdrop";
 //     }
 
 //     // Clean up name and symbol
-//     account.name = trim(substitute(account.name, "  ", " "));
-//     account.symbol = trim(substitute(account.symbol, "  ", " "));
+//     ac count.name = trim(substitute(ac count.name, "  ", " "));
+//     ac count.symbol = trim(substitute(ac count.symbol, "  ", " "));
 
-//     return !account.name.empty();
+//     return !ac count.name.empty();
 // }
 
 // 1) There are five files:

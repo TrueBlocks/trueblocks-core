@@ -5,6 +5,7 @@ import (
 	"math/big"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -14,7 +15,7 @@ import (
 
 // GetStatementFromLog returns a statement from a given log
 func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleStatement, err error) {
-	if len(log.Topics) < 3 || log.Topics[0] != token.TransferTopic {
+	if len(log.Topics) < 3 || log.Topics[0] != articulate.TransferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
 		// TODO: attempt both with and without indexed parameters. See issues/1366.

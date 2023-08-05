@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -47,14 +46,13 @@ func (opts *TokensOptions) HandleParts() error {
 				}
 
 				for _, bn := range blockNums {
-					if state, err := token.GetState(chain, addr, fmt.Sprintf("0x%x", bn)); err != nil {
+					if state, err := token.GetTokenState(chain, addr, fmt.Sprintf("0x%x", bn)); err != nil {
 						errorChan <- err
 					} else {
-						ts, _ := new(big.Int).SetString(state.TotalSupply, 10)
 						s := &types.SimpleToken{
 							Address:     state.Address,
 							BlockNumber: bn,
-							TotalSupply: *ts,
+							TotalSupply: state.TotalSupply,
 							Decimals:    uint64(state.Decimals),
 						}
 						modelChan <- s
