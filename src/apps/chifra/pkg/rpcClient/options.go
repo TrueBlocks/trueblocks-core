@@ -27,21 +27,21 @@ func (conn *Connection) TestLog(enabledMap map[string]bool) {
 }
 
 func NewConnection(chain string, enabled bool, enabledMap map[string]bool) *Connection {
-	settings := DefaultRpcOptionsSettings{
+	settings := ConnectionSettings{
 		Chain: chain,
 	}
 	return settings.DefaultRpcOptions()
 }
 
 func TempConnection(chain string) *Connection {
-	settings := DefaultRpcOptionsSettings{
+	settings := ConnectionSettings{
 		Chain: chain,
 	}
 	return settings.DefaultRpcOptions()
 }
 
 func NewReadOnlyConnection(chain string) *Connection {
-	settings := DefaultRpcOptionsSettings{
+	settings := ConnectionSettings{
 		Chain:         chain,
 		ReadonlyCache: true,
 	}
@@ -72,15 +72,15 @@ type CacheStater interface {
 	CacheState() (bool, map[string]bool)
 }
 
-// DefaultRpcOptionsSettings allows every command has its own options type, we have to
+// ConnectionSettings allows every command has its own options type, we have to
 // accept any here, but will use interfaces to read the needed information
-type DefaultRpcOptionsSettings struct {
+type ConnectionSettings struct {
 	Chain         string
 	ReadonlyCache bool
 	Opts          any
 }
 
-func (settings DefaultRpcOptionsSettings) DefaultRpcOptions() *Connection {
+func (settings ConnectionSettings) DefaultRpcOptions() *Connection {
 	readonlyCache := settings.ReadonlyCache
 
 	var chain string

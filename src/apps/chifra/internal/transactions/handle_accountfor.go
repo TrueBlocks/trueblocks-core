@@ -20,7 +20,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	noZero := false // opts.Globals.NoZero
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}

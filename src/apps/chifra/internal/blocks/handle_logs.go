@@ -22,7 +22,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
