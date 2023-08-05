@@ -32,7 +32,7 @@ func (opts *TokensOptions) HandleShow() error {
 	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		for _, address := range opts.Addrs[1:] {
 			addr := base.HexToAddress(address)
 			for _, br := range opts.BlockIds {
@@ -50,7 +50,7 @@ func (opts *TokensOptions) HandleShow() error {
 					if bal, err := token.GetTokenBalanceAt(chain, tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
 						errorChan <- err
 					} else {
-						s := &types.SimpleTokenBalance{
+						s := &types.SimpleToken{
 							Holder:      addr,
 							Address:     tokenAddr,
 							Balance:     *bal,

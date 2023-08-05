@@ -33,11 +33,11 @@ func TestGetState_Erc20(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.IsErc20() || token.Type != TokenErc20 {
+	if !token.Type.IsErc20() {
 		t.Fatal("token reported as non-ERC20")
 	}
 
-	if token.IsErc721() || token.Type == TokenErc721 {
+	if token.Type.IsErc721() {
 		t.Fatal("token reported as ERC721")
 	}
 
@@ -69,11 +69,11 @@ func TestGetState_Erc721(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.IsErc721() || token.Type != TokenErc721 {
+	if !token.Type.IsErc721() {
 		t.Fatal("token reported as non-ERC721")
 	}
 
-	if token.IsErc20() || token.Type == TokenErc20 {
+	if token.Type.IsErc20() {
 		t.Fatal("token reported as ERC20")
 	}
 
@@ -105,11 +105,11 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.IsErc20() || token.Type != TokenErc20 {
+	if !token.Type.IsErc20() {
 		t.Fatal("token reported as non-ERC20")
 	}
 
-	if token.IsErc721() || token.Type == TokenErc721 {
+	if token.Type.IsErc721() {
 		t.Fatal("token reported as ERC721")
 	}
 
@@ -138,11 +138,11 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.IsErc20() || token.Type != TokenErc20 {
+	if !token.Type.IsErc20() {
 		t.Fatal("token reported as non-ERC20")
 	}
 
-	if token.IsErc721() || token.Type == TokenErc721 {
+	if token.Type.IsErc721() {
 		t.Fatal("token reported as ERC721")
 	}
 
@@ -171,11 +171,11 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if token.IsErc20() || token.Type == TokenErc20 {
+	if token.Type.IsErc20() {
 		t.Fatal("token reported as ERC20")
 	}
 
-	if !token.IsErc721() || token.Type != TokenErc721 {
+	if !token.Type.IsErc721() {
 		t.Fatal("token reported as non-ERC721")
 	}
 

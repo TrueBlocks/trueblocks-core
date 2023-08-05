@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // erc721SupportsInterfaceData is the data needed to call the ERC-721 supportsInterface function
@@ -25,13 +26,6 @@ const tokenStateSymbol tokenStateSelector = "0x95d89b41"
 const tokenStateName tokenStateSelector = "0x06fdde03"
 const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
-type TokenType int
-
-const (
-	TokenErc20 TokenType = iota
-	TokenErc721
-)
-
 // Token type wraps information about ERC-20 token or ERC-721 NFT. Call
 // Token.IsErcXXX to check the token type.
 // TODO: This is a type and should be auto-generated
@@ -41,7 +35,7 @@ type Token struct {
 	Name        string
 	Symbol      string
 	TotalSupply big.Int
-	Type        TokenType
+	Type        types.TokenType
 }
 
 // GetTokenState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
@@ -140,10 +134,10 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 		return nil, errors.New("address is not token")
 	}
 
-	tokenType := TokenErc20
+	tokenType := types.TokenErc20
 	erc721, erc721Err := articulate.ArticulateBoolean(*results["erc721"])
 	if erc721Err == nil && erc721 {
-		tokenType = TokenErc721
+		tokenType = types.TokenErc721
 	}
 
 	token = &Token{
@@ -187,12 +181,4 @@ func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber str
 	}
 
 	return base.HexToWei(*output["balance"]), nil
-}
-
-func (t *Token) IsErc20() bool {
-	return t.Type == TokenErc20
-}
-
-func (t *Token) IsErc721() bool {
-	return t.Type == TokenErc721
 }

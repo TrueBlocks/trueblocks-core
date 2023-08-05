@@ -300,7 +300,7 @@ func cleanContract(token *token.Token, address base.Address, name *types.SimpleN
 }
 
 func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
-	if !name.IsErc20 && token.IsErc20() {
+	if !name.IsErc20 && token.Type.IsErc20() {
 		name.IsErc20 = true
 		modified = true
 	}
@@ -311,7 +311,7 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.IsErc20() && (name.Tags == "" ||
+	if token.Type.IsErc20() && (name.Tags == "" ||
 		strings.Contains(name.Tags, "token") ||
 		strings.Contains(name.Tags, "30-contracts") ||
 		strings.Contains(name.Tags, "55-defi") ||
@@ -367,17 +367,17 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.IsErc721() && !name.IsErc721 {
+	if token.Type.IsErc721() && !name.IsErc721 {
 		name.IsErc721 = true
 		modified = true
 	}
 
-	if !token.IsErc721() && name.IsErc721 {
+	if !token.Type.IsErc721() && name.IsErc721 {
 		name.IsErc721 = false
 		modified = true
 	}
 
-	if token.IsErc721() && name.IsErc721 && name.Tags == "" {
+	if token.Type.IsErc721() && name.IsErc721 && name.Tags == "" {
 		name.Tags = "50-Tokens:ERC721"
 		modified = true
 	}

@@ -18,7 +18,7 @@ import (
 
 // EXISTING_CODE
 
-type RawTokenBalance struct {
+type RawToken struct {
 	Address          string `json:"address"`
 	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
@@ -35,33 +35,33 @@ type RawTokenBalance struct {
 	// EXISTING_CODE
 }
 
-type SimpleTokenBalance struct {
-	Address          base.Address     `json:"address"`
-	Balance          big.Int          `json:"balance"`
-	BlockNumber      base.Blknum      `json:"blockNumber"`
-	Decimals         uint64           `json:"decimals"`
-	Diff             big.Int          `json:"diff,omitempty"`
-	Holder           base.Address     `json:"holder"`
-	Name             string           `json:"name"`
-	PriorBalance     big.Int          `json:"priorBalance,omitempty"`
-	Symbol           string           `json:"symbol"`
-	Timestamp        base.Timestamp   `json:"timestamp"`
-	TotalSupply      big.Int          `json:"totalSupply"`
-	TransactionIndex base.Blknum      `json:"transactionIndex,omitempty"`
-	raw              *RawTokenBalance `json:"-"`
+type SimpleToken struct {
+	Address          base.Address   `json:"address"`
+	Balance          big.Int        `json:"balance"`
+	BlockNumber      base.Blknum    `json:"blockNumber"`
+	Decimals         uint64         `json:"decimals"`
+	Diff             big.Int        `json:"diff,omitempty"`
+	Holder           base.Address   `json:"holder"`
+	Name             string         `json:"name"`
+	PriorBalance     big.Int        `json:"priorBalance,omitempty"`
+	Symbol           string         `json:"symbol"`
+	Timestamp        base.Timestamp `json:"timestamp"`
+	TotalSupply      big.Int        `json:"totalSupply"`
+	TransactionIndex base.Blknum    `json:"transactionIndex,omitempty"`
+	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *SimpleTokenBalance) Raw() *RawTokenBalance {
+func (s *SimpleToken) Raw() *RawToken {
 	return s.raw
 }
 
-func (s *SimpleTokenBalance) SetRaw(raw *RawTokenBalance) {
+func (s *SimpleToken) SetRaw(raw *RawToken) {
 	s.raw = raw
 }
 
-func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleToken) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -151,18 +151,33 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 // EXISTING_CODE
 //
 
-func (s *SimpleTokenBalance) IsErc721() bool {
+func (s *SimpleToken) IsErc721() bool {
 	// TODO TOKEN
 	return true
 }
 
-func (s *SimpleTokenBalance) IsErc20() bool {
+func (s *SimpleToken) IsErc20() bool {
 	// TODO TOKEN
 	return true
 }
 
-func (s *SimpleTokenBalance) Date() string {
+func (s *SimpleToken) Date() string {
 	return utils.FormattedDate(s.Timestamp)
+}
+
+type TokenType int
+
+const (
+	TokenErc20 TokenType = iota
+	TokenErc721
+)
+
+func (t TokenType) IsErc20() bool {
+	return t == TokenErc20
+}
+
+func (t TokenType) IsErc721() bool {
+	return t == TokenErc721
 }
 
 // EXISTING_CODE
