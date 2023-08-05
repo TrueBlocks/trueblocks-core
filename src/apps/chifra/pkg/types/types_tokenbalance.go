@@ -25,9 +25,6 @@ type RawTokenBalance struct {
 	Decimals         string `json:"decimals"`
 	Diff             string `json:"diff"`
 	Holder           string `json:"holder"`
-	IsContract       string `json:"isContract"`
-	IsErc20          string `json:"isErc20"`
-	IsErc721         string `json:"isErc721"`
 	Name             string `json:"name"`
 	PriorBalance     string `json:"priorBalance"`
 	Symbol           string `json:"symbol"`
@@ -45,9 +42,6 @@ type SimpleTokenBalance struct {
 	Decimals         uint64           `json:"decimals"`
 	Diff             big.Int          `json:"diff,omitempty"`
 	Holder           base.Address     `json:"holder"`
-	IsContract       bool             `json:"isContract,omitempty"`
-	IsErc20          bool             `json:"isErc20,omitempty"`
-	IsErc721         bool             `json:"isErc721,omitempty"`
 	Name             string           `json:"name"`
 	PriorBalance     big.Int          `json:"priorBalance,omitempty"`
 	Symbol           string           `json:"symbol"`
@@ -156,6 +150,16 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 
 // EXISTING_CODE
 //
+
+func (s *SimpleTokenBalance) IsErc721() bool {
+	// TODO TOKEN
+	return true
+}
+
+func (s *SimpleTokenBalance) IsErc20() bool {
+	// TODO TOKEN
+	return true
+}
 
 func (s *SimpleTokenBalance) Date() string {
 	return utils.FormattedDate(s.Timestamp)

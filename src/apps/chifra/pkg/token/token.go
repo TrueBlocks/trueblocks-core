@@ -10,20 +10,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
-// Erc721SupportsInterfaceData is the data needed to call the ERC-721 supportsInterface function
+// erc721SupportsInterfaceData is the data needed to call the ERC-721 supportsInterface function
 // 0x01ffc9a7: supportsInterface -- eips.ethereum.org/EIPS/eip-165
 // 0x80ac58cd: ERC-721 interface ID -- eips.ethereum.org/EIPS/eip-721
-const Erc721SupportsInterfaceData = "0x01ffc9a780ac58cd00000000000000000000000000000000000000000000000000000000"
+const erc721SupportsInterfaceData = "0x01ffc9a780ac58cd00000000000000000000000000000000000000000000000000000000"
 
 type tokenStateSelector = string
 
 // TODO: If we used encoding we could use the function signature instead of the selector.
 
-const TokenStateTotalSupply tokenStateSelector = "0x18160ddd"
-const TokenStateDecimals tokenStateSelector = "0x313ce567"
-const TokenStateSymbol tokenStateSelector = "0x95d89b41"
-const TokenStateName tokenStateSelector = "0x06fdde03"
-const TokenStateBalanceOf tokenStateSelector = "0x70a08231"
+const tokenStateTotalSupply tokenStateSelector = "0x18160ddd"
+const tokenStateDecimals tokenStateSelector = "0x313ce567"
+const tokenStateSymbol tokenStateSelector = "0x95d89b41"
+const tokenStateName tokenStateSelector = "0x06fdde03"
+const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
 type TokenType int
 
@@ -57,7 +57,7 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 					Params: rpc.Params{
 						map[string]any{
 							"to":   tokenAddress,
-							"data": TokenStateName,
+							"data": tokenStateName,
 						},
 						blockNumber,
 					},
@@ -70,7 +70,7 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 					Params: rpc.Params{
 						map[string]any{
 							"to":   tokenAddress,
-							"data": TokenStateSymbol,
+							"data": tokenStateSymbol,
 						},
 						blockNumber,
 					},
@@ -83,7 +83,7 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 					Params: rpc.Params{
 						map[string]any{
 							"to":   tokenAddress,
-							"data": TokenStateDecimals,
+							"data": tokenStateDecimals,
 						},
 						blockNumber,
 					},
@@ -96,7 +96,7 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 					Params: rpc.Params{
 						map[string]any{
 							"to":   tokenAddress,
-							"data": TokenStateTotalSupply,
+							"data": tokenStateTotalSupply,
 						},
 						blockNumber,
 					},
@@ -110,7 +110,7 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 					Params: rpc.Params{
 						map[string]any{
 							"to":   tokenAddress,
-							"data": Erc721SupportsInterfaceData,
+							"data": erc721SupportsInterfaceData,
 						},
 						blockNumber,
 					},
@@ -170,7 +170,7 @@ func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber str
 				Params: rpc.Params{
 					map[string]any{
 						"to":   token.Hex(),
-						"data": TokenStateBalanceOf + holder.Pad32(),
+						"data": tokenStateBalanceOf + holder.Pad32(),
 					},
 					blockNumber,
 				},
@@ -196,9 +196,3 @@ func (t *Token) IsErc20() bool {
 func (t *Token) IsErc721() bool {
 	return t.Type == TokenErc721
 }
-
-// TODO: DUPLICATED
-
-var TransferTopic = base.HexToHash(
-	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-)

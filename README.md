@@ -129,23 +129,30 @@ The TrueBlocks [documentation repo](https://github.com/TrueBlocks/trueblocks-doc
 
 ### Linting
 
-We recently added linting to our automated build process. This will force contributors (including ourselves) to properly lint thier submissions.
+Our build process requires the code you submit to be linted.
 
-In order to properly lint your submission, you may need to install various linters. See this page for more information.
+In order to that, you must install the GoLang linters. [See this page for more information](https://golangci-lint.run/usage/install/).
 
-To install the main linter, run this command:
+To install the primary linter (called `golangci-lint`), run this command:
 
 ```[shell]
 curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.53.3
 ```
 
-Run `golangci-lint --version` to verify that it is installed correctly. You should see something like this:
+Verify the installation with `golangci-lint --version`. You should see something like this:
 
 ```[shell]
 golangci-lint has version 1.50.1 built from <commit> on <date>
 ```
 
-Next, install all the default linters listed on this page https://golangci-lint.run/usage/linters/. You are very welcome to install additional linters for your own purposes. If you do, and you think they're useful, please let us know and we'll add them to our build process.
+Next, run `golangci-lint linters`. Your system should have [at least the default list](https://golangci-lint.run/usage/linters/) to properly lint your submission.
+
+```[shell]
+> golangci-lint linters
+
+
+```
+You are encouraged to use additional linters. If you do, and you think they're useful, please suggest that we add it to our build process.
 
 ## Contributing
 

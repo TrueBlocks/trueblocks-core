@@ -55,8 +55,7 @@ func (opts *TokensOptions) HandleShow() error {
 							Address:     tokenAddr,
 							Balance:     *bal,
 							BlockNumber: bn,
-							IsContract:  true,
-							IsErc20:     true,
+							// IsErc20:     true, TODO TOKEN: Should assign type
 						}
 						modelChan <- s
 					}
