@@ -6,20 +6,20 @@ import (
 )
 
 type AbiCache struct {
-	abiMap    abi.FunctionSyncMap
+	AbiMap    abi.FunctionSyncMap
 	loadedMap abi.AddressSyncMap
 	skipMap   abi.AddressSyncMap
 }
 
 func NewAbiCache(chain string, loadKnown bool) *AbiCache {
 	ret := &AbiCache{
-		abiMap:    abi.FunctionSyncMap{},
+		AbiMap:    abi.FunctionSyncMap{},
 		loadedMap: abi.AddressSyncMap{},
 		skipMap:   abi.AddressSyncMap{},
 	}
 
 	if loadKnown {
-		if err := abi.LoadKnownAbis(chain, &ret.abiMap); err != nil {
+		if err := abi.LoadKnownAbis(chain, &ret.AbiMap); err != nil {
 			// report error, but continue processing
 			logger.Error("error preloading known abis", "error", err)
 		}

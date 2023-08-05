@@ -9,7 +9,7 @@ import (
 func (abiCache *AbiCache) ArticulateTrace(chain string, trace *types.SimpleTrace) (err error) {
 	address := trace.Action.To
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
-		if err := abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
+		if err := abi.LoadAbi(chain, address, &abiCache.AbiMap); err != nil {
 			abiCache.skipMap.SetValue(address, true)
 			return err
 		} else {
@@ -18,7 +18,7 @@ func (abiCache *AbiCache) ArticulateTrace(chain string, trace *types.SimpleTrace
 	}
 
 	if !abiCache.skipMap.GetValue(address) {
-		if trace.ArticulatedTrace, err = articulateTrace(trace, &abiCache.abiMap); err != nil {
+		if trace.ArticulatedTrace, err = articulateTrace(trace, &abiCache.AbiMap); err != nil {
 			return err
 		}
 	}

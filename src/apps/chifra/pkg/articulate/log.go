@@ -10,7 +10,7 @@ import (
 func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err error) {
 	address := log.Address
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
-		if err = abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
+		if err = abi.LoadAbi(chain, address, &abiCache.AbiMap); err != nil {
 			abiCache.skipMap.SetValue(address, true)
 			return err
 		} else {
@@ -19,7 +19,7 @@ func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err
 	}
 
 	if !abiCache.skipMap.GetValue(address) {
-		if log.ArticulatedLog, err = articulateLog(log, &abiCache.abiMap); err != nil {
+		if log.ArticulatedLog, err = articulateLog(log, &abiCache.AbiMap); err != nil {
 			return err
 		}
 	}

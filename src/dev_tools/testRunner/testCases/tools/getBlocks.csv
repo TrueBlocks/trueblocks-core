@@ -96,7 +96,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,with_uncles_art       ,y    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_hashes_art       ,y    ,blocks = 4012000-4012001 & hashes & articulate
 
 # These two test cases fail in an odd way. They vacilate between two articulations. This is possibly because the
-# abiCache.abiMap is unordered and since we started using IterateOverMap it is now getting filled on alternative orderings.
+# abiCache.AbiMap is unordered and since we started using IterateOverMap it is now getting filled on alternative orderings.
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
 on       ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
 
