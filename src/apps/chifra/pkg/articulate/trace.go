@@ -8,17 +8,17 @@ import (
 
 func (abiCache *AbiCache) ArticulateTrace(chain string, trace *types.SimpleTrace) (err error) {
 	address := trace.Action.To
-	if !abiCache.loadedMap.Get(address) && !abiCache.skipMap.Get(address) {
-		if err := abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
-			abiCache.skipMap.Set(address, true)
+	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
+		if err := abi.LoadAbi(chain, address, &abiCache.AbiMap); err != nil {
+			abiCache.skipMap.SetValue(address, true)
 			return err
 		} else {
-			abiCache.loadedMap.Set(address, true)
+			abiCache.loadedMap.SetValue(address, true)
 		}
 	}
 
-	if !abiCache.skipMap.Get(address) {
-		if trace.ArticulatedTrace, err = articulateTrace(trace, &abiCache.abiMap); err != nil {
+	if !abiCache.skipMap.GetValue(address) {
+		if trace.ArticulatedTrace, err = articulateTrace(trace, &abiCache.AbiMap); err != nil {
 			return err
 		}
 	}
@@ -33,7 +33,7 @@ func articulateTrace(trace *types.SimpleTrace, abiMap *abi.FunctionSyncMap) (art
 	}
 
 	encoding := input[:10]
-	articulated = abiMap.Get(encoding)
+	articulated = abiMap.GetValue(encoding)
 
 	if trace.Result == nil || articulated == nil {
 		return
