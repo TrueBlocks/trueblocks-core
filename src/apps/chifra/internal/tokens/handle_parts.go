@@ -77,7 +77,7 @@ func (opts *TokensOptions) HandleParts() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-// func (opts *TokensOptions) PartsToFields() (stateFields account.GetStateField, outputFields []string, none bool) {
+// func (opts *TokensOptions) PartsToFields() (stateFields account.StatePart, outputFields []string, none bool) {
 // 	balanceOutputField := "balance"
 // 	if opts.Globals.Ether {
 // 		balanceOutputField = "ether"

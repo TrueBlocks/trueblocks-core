@@ -16,9 +16,10 @@ type Connection struct {
 	enabledMap           map[string]bool
 }
 
-func (conn *Connection) TestLog(enabled map[string]bool) {
+// TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
+func (conn *Connection) TestLog(enabledMap map[string]bool) {
 	if conn.HasStoreWritable() {
-		for k, v := range enabled {
+		for k, v := range enabledMap {
 			logger.TestLog(v, "Cache-"+strings.ToTitle(k)+": ", v)
 		}
 	}
