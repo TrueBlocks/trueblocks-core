@@ -88,14 +88,6 @@ func sanitizeByte(character byte) (replacement []byte, replaced int) {
 	return []byte{character}, 0
 }
 
-func SanitizeString(str string) (sanitized string) {
-	for _, character := range str {
-		sanitizedByte, _ := sanitizeByte(byte(character))
-		sanitized += string(sanitizedByte)
-	}
-	return
-}
-
 // ArticulateEncodedString translates EVM string into Go string
 func ArticulateEncodedString(hex string) (result string, err error) {
 	if len(hex) < 2 {

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
@@ -175,7 +176,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 	case abi.StringTy:
 		strValue, ok := value.(string)
 		if ok {
-			return SanitizeString(strValue), nil
+			return decode.SanitizeString(strValue), nil
 		}
 		fallthrough
 	case abi.IntTy, abi.UintTy:
