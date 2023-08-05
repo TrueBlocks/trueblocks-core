@@ -50,7 +50,6 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra config"
 	// EXISTING_CODE

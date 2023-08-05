@@ -50,7 +50,6 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra logs"
 	// EXISTING_CODE

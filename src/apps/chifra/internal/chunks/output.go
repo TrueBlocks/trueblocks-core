@@ -54,7 +54,6 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra chunks"
 	// EXISTING_CODE

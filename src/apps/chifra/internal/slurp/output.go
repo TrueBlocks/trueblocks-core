@@ -50,7 +50,6 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra slurp"
 	// EXISTING_CODE

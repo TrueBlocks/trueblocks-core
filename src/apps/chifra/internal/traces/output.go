@@ -50,7 +50,6 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra traces"
 	// EXISTING_CODE

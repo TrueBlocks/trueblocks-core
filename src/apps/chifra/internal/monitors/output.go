@@ -70,7 +70,6 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra monitors"
 	// EXISTING_CODE

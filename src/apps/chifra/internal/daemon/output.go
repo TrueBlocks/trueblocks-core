@@ -56,7 +56,6 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra daemon"
 	// EXISTING_CODE
@@ -100,6 +99,9 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	go func() {
 		_ = opts.HandleGrpc()
 	}()
+
+	// do not remove, this fixes a lint warning that happens in the boilerplate because of the Fatal just below
+	timer.Report(msg)
 
 	// Start listening to the web sockets
 	RunWebsocketPool()

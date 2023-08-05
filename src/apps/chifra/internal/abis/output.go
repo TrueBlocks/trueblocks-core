@@ -50,7 +50,6 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra abis"
 	// EXISTING_CODE

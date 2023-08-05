@@ -87,13 +87,13 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 	wanted := extraOptions["parts"].([]string)
 	if len(wanted) == 1 {
 		if wanted[0] == "all" {
-			if verbose {
+			if verbose && false {
 				wanted = []string{"address", "blockNumber", "date", "name", "symbol", "decimals", "totalSupply"}
 			} else {
 				wanted = []string{"address", "blockNumber", "name", "symbol", "decimals", "totalSupply"}
 			}
 		} else if wanted[0] == "all_held" {
-			if verbose {
+			if verbose && false {
 				wanted = []string{
 					"blockNumber", "date", "holder", "address", "name", "symbol", "decimals", "balance", "units",
 				}
@@ -107,7 +107,7 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 
 	order = wanted
 	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
-		if verbose {
+		if verbose && false {
 			order = append([]string{"address", "blockNumber", "date"}, wanted...)
 		} else {
 			order = append([]string{"address", "blockNumber"}, wanted...)

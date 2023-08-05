@@ -51,7 +51,6 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra export"
 	// EXISTING_CODE

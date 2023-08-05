@@ -48,7 +48,7 @@ func (c *Connection) write() {
 	}()
 
 	// this is a common pattern for a websocket connection
-	//nolint:staticcheck,gosimple
+	//nolint:staticcheck
 	for {
 		select {
 		case message, ok := <-c.send:

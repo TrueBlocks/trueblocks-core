@@ -50,7 +50,6 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra status"
 	// EXISTING_CODE

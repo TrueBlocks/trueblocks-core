@@ -52,7 +52,6 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra scrape"
 	// EXISTING_CODE
