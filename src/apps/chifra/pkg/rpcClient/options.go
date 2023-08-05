@@ -26,7 +26,15 @@ func (conn *Connection) TestLog(enabledMap map[string]bool) {
 	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }
 
-func NewConnection(chain string, enabled bool, enabledMap map[string]bool) *Connection {
+// ConnectionSettings allows every command has its own options type, we have to
+// accept any here, but will use interfaces to read the needed information
+type ConnectionSettings struct {
+	Chain         string
+	ReadonlyCache bool
+	Opts          any
+}
+
+func NewConnection(chain string, cacheEnabled bool, enabledMap map[string]bool) *Connection {
 	settings := ConnectionSettings{
 		Chain: chain,
 	}
@@ -48,38 +56,7 @@ func NewReadOnlyConnection(chain string) *Connection {
 	return settings.DefaultRpcOptions()
 }
 
-// CacheStore returns cache for the given chain. If readonly is true, it returns
-// a cache that will not write new items. If nil is returned, it means "no caching"
-//
-// We call NewStore, but Storer implementation (Fs by default) should decide
-// whether it has to return a new instance or reuse the existing one
-func cacheStore(chain string, forceReadonly bool) *cache.Store {
-	if store, err := cache.NewStore(&cache.StoreOptions{
-		Location: cache.FsCache,
-		Chain:    chain,
-		ReadOnly: forceReadonly,
-	}); err != nil {
-		// If there was an error, we won't use the cache
-		logger.Warn("Cannot initialize cache:", err)
-		return nil
-	} else {
-		return store
-	}
-}
-
-// CacheStater informs us if we should write txs and traces to the cache
-type CacheStater interface {
-	CacheState() (bool, map[string]bool)
-}
-
-// ConnectionSettings allows every command has its own options type, we have to
-// accept any here, but will use interfaces to read the needed information
-type ConnectionSettings struct {
-	Chain         string
-	ReadonlyCache bool
-	Opts          any
-}
-
+// DefaultRpcOptions builds the store and enables the caches and returns the RPC connection
 func (settings ConnectionSettings) DefaultRpcOptions() *Connection {
 	readonlyCache := settings.ReadonlyCache
 
@@ -104,12 +81,37 @@ func (settings ConnectionSettings) DefaultRpcOptions() *Connection {
 	return ret
 }
 
+// cacheStore returns a cache for the given chain. If readonly is true, it returns
+// a cache that will not write new items. If nil is returned, it means "no caching"
+//
+// We call NewStore, but Storer implementation (Fs by default) should decide
+// whether it has to return a new instance or reuse the existing one
+func cacheStore(chain string, forceReadonly bool) *cache.Store {
+	if store, err := cache.NewStore(&cache.StoreOptions{
+		Location: cache.FsCache,
+		Chain:    chain,
+		ReadOnly: forceReadonly,
+	}); err != nil {
+		// If there was an error, we won't use the cache
+		logger.Warn("Cannot initialize cache:", err)
+		return nil
+	} else {
+		return store
+	}
+}
+
+// CacheStater informs us if we should write txs and traces to the cache
+type CacheStater interface {
+	CacheState() (bool, map[string]bool)
+}
+
 // HasStore is a shorthand to check if Store is initialized. It will return
-// false for nil pointer to Options
+// false for nil pointer to Connection
 func (conn *Connection) HasStore() bool {
 	if conn == nil {
 		return false
 	}
+
 	return conn.Store != nil
 }
 
@@ -117,5 +119,6 @@ func (conn *Connection) HasStoreWritable() bool {
 	if !conn.HasStore() {
 		return false
 	}
+
 	return !conn.Store.ReadOnly()
 }
