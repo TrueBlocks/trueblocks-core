@@ -104,8 +104,8 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 		return
 	}
 
-	name, _ := decode.ArticulateEncodedStringOrBytes32(*results["name"])
-	symbol, _ := decode.ArticulateEncodedStringOrBytes32(*results["symbol"])
+	name, _ := decode.ArticulateEncodedStringOrBytes32New(*results["name"])
+	symbol, _ := decode.ArticulateEncodedStringOrBytes32New(*results["symbol"])
 
 	var decimals uint64 = 0
 	rawDecimals := *results["decimals"]

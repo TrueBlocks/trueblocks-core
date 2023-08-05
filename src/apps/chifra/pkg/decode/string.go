@@ -138,9 +138,9 @@ func ArticulateBytes32String(hex string) (result string) {
 	return
 }
 
-// ArticulateEncodedStringOrBytes32 tries to read string from either EVM string
+// ArticulateEncodedStringOrBytes32New tries to read string from either EVM string
 // value or bytes32 hex
-func ArticulateEncodedStringOrBytes32(hex string) (string, error) {
+func ArticulateEncodedStringOrBytes32New(hex string) (string, error) {
 	if len(hex) < 2 {
 		return "", nil
 	}
