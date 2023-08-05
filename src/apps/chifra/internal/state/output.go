@@ -50,6 +50,7 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra state"
 	// EXISTING_CODE

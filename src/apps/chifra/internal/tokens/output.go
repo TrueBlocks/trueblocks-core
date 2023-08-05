@@ -50,6 +50,7 @@ func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra tokens"
 	// EXISTING_CODE

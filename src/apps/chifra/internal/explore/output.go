@@ -54,6 +54,7 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra explore"
 	// EXISTING_CODE

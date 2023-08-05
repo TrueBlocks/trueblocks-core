@@ -50,6 +50,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra transactions"
 	// EXISTING_CODE

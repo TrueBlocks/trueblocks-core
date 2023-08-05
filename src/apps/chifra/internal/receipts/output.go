@@ -50,6 +50,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra receipts"
 	// EXISTING_CODE

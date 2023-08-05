@@ -56,6 +56,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra daemon"
 	// EXISTING_CODE

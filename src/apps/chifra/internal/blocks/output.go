@@ -50,6 +50,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra blocks"
 	// EXISTING_CODE

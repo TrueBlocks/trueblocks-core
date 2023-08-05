@@ -60,6 +60,7 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra names"
 	// EXISTING_CODE
