@@ -11,10 +11,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type GetStateField int
+type StatePart int
 
 const (
-	Balance GetStateField = 1 << iota
+	Balance StatePart = 1 << iota
 	Nonce
 	Code
 	Deployed
@@ -22,12 +22,12 @@ const (
 	Type
 )
 
-type GetStateFilters struct {
+type StateFilters struct {
 	Balance func(address base.Address, balance *big.Int) bool
 }
 
 // GetState returns account state
-func (conn *Connection) GetState(fields GetStateField, address base.Address, blockNumber base.Blknum, filters GetStateFilters) (state *types.SimpleEthState, err error) {
+func (conn *Connection) GetState(fields StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.SimpleEthState, err error) {
 	state = &types.SimpleEthState{
 		Address:     address,
 		BlockNumber: blockNumber,
@@ -158,7 +158,7 @@ func (conn *Connection) getTypeNonProxy(address base.Address, blockNumber base.B
 	return "Contract"
 }
 
-func PartsToFields(parts []string, asEther bool) (stateFields GetStateField, outputFields []string, none bool) {
+func PartsToFields(parts []string, asEther bool) (stateFields StatePart, outputFields []string, none bool) {
 	balanceOutputField := "balance"
 	if asEther {
 		balanceOutputField = "ether"

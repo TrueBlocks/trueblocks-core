@@ -40,7 +40,7 @@ type Token struct {
 	Name        string
 	Symbol      string
 	Decimals    uint8
-	TotalSupply string // uint256 in Solidity
+	TotalSupply big.Int
 	Type        TokenType
 }
 
@@ -180,11 +180,7 @@ func queryToken(chain string, address base.Address, blockNumber string) (token *
 		decimals = uint8(parsedDecimals)
 	}
 
-	totalSupplyRaw := base.HexToWei(*results["totalSupply"])
-	var totalSupply string
-	if len(totalSupplyRaw.Bits()) > 0 {
-		totalSupply = totalSupplyRaw.String()
-	}
+	totalSupply := base.HexToWei(*results["totalSupply"])
 
 	// According to ERC-20, name, symbol and decimals are optional, but such a token
 	// would be of no use to us
@@ -204,7 +200,7 @@ func queryToken(chain string, address base.Address, blockNumber string) (token *
 		Name:        name,
 		Symbol:      symbol,
 		Decimals:    decimals,
-		TotalSupply: totalSupply,
+		TotalSupply: *totalSupply,
 	}
 
 	return

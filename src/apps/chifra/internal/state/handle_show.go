@@ -15,9 +15,9 @@ import (
 func (opts *StateOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	previousBalance := make(map[base.Address]*big.Int, len(opts.Addrs))
-	var filters rpcClient.GetStateFilters
+	var filters rpcClient.StateFilters
 	if opts.Changes || opts.NoZero {
-		filters = rpcClient.GetStateFilters{
+		filters = rpcClient.StateFilters{
 			Balance: func(address base.Address, balance *big.Int) bool {
 				if opts.Changes {
 					previous := previousBalance[address]

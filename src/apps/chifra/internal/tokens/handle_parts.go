@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -50,11 +49,10 @@ func (opts *TokensOptions) HandleParts() error {
 					if state, err := token.GetState(chain, addr, fmt.Sprintf("0x%x", bn)); err != nil {
 						errorChan <- err
 					} else {
-						ts, _ := new(big.Int).SetString(state.TotalSupply, 10)
 						s := &types.SimpleTokenBalance{
 							Address:     state.Address,
 							BlockNumber: bn,
-							TotalSupply: *ts,
+							TotalSupply: state.TotalSupply,
 							Decimals:    uint64(state.Decimals),
 						}
 						modelChan <- s
@@ -79,7 +77,7 @@ func (opts *TokensOptions) HandleParts() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-// func (opts *TokensOptions) PartsToFields() (stateFields account.GetStateField, outputFields []string, none bool) {
+// func (opts *TokensOptions) PartsToFields() (stateFields account.StatePart, outputFields []string, none bool) {
 // 	balanceOutputField := "balance"
 // 	if opts.Globals.Ether {
 // 		balanceOutputField = "ether"
