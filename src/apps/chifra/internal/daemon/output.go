@@ -23,8 +23,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-//lint:file-ignore SA4017 timer value below is auto generated, but not used
-//lint:file-ignore SA4006 timer was auto generated but not used
+//nolint:SA4017 # timer value below is auto generated, but not used
+//nolint:SA4006 # timer was auto generated but not used
 // EXISTING_CODE
 
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
