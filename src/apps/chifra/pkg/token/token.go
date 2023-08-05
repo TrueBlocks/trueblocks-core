@@ -7,6 +7,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -123,7 +124,7 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 	}
 
 	tokenType := types.TokenErc20
-	erc721, erc721Err := articulate.ArticulateBoolean(*results["erc721"])
+	erc721, erc721Err := decode.DecodeBool(*results["erc721"])
 	if erc721Err == nil && erc721 {
 		tokenType = types.TokenErc721
 	}

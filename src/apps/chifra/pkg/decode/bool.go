@@ -1,12 +1,12 @@
-package articulate
+package decode
 
 import (
 	"encoding/hex"
 	"errors"
 )
 
-// ArticulateBoolean translates EVM hex into Go boolean
-func ArticulateBoolean(hexStr string) (result bool, err error) {
+// DecodeBool translates EVM hex into Go boolean
+func DecodeBool(hexStr string) (result bool, err error) {
 	// 0x + 64 characters
 	if len(hexStr) < 66 {
 		err = errors.New("hex string too short")
