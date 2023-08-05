@@ -68,13 +68,13 @@ func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (articulat
 }
 
 func findCommonEvent(log *types.SimpleLog) (articulated *types.SimpleFunction) {
-	if articulated = ParseTransferEvent(log); articulated != nil {
+	if articulated = parseTransferEvent(log); articulated != nil {
 		return
 	}
-	if articulated = ParseEnsTransferEvent(log); articulated != nil {
+	if articulated = parseEnsTransferEvent(log); articulated != nil {
 		return
 	}
-	if articulated = ParseApprovalEvent(log); articulated != nil {
+	if articulated = parseApprovalEvent(log); articulated != nil {
 		return
 	}
 	return

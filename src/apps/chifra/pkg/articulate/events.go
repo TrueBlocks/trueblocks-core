@@ -18,7 +18,7 @@ var approvalTopic = base.HexToHash(
 	"0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
 )
 
-func ParseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
+func parseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	if len(log.Topics) < 3 || log.Topics[0] != TransferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
@@ -50,7 +50,7 @@ func ParseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	return
 }
 
-func ParseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
+func parseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	if len(log.Topics) < 2 || log.Topics[0] != ensTransferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
@@ -77,7 +77,7 @@ func ParseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction
 	return
 }
 
-func ParseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
+func parseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	if len(log.Topics) < 3 || log.Topics[0] != approvalTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
