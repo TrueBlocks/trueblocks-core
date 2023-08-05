@@ -11,14 +11,21 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+// StatePart is a bit mask for querying various parts an address's state
 type StatePart int
 
 const (
+	// The balance of the address
 	Balance StatePart = 1 << iota
+	// The nonce of the address
 	Nonce
+	// The code of the address if the address is a smart contract
 	Code
+	// The block number when the smart contract was deployed
 	Deployed
+	// If an address is proxied, the address of the proxy (note that the proxy may in some cases not be visible and therefore this value will be empty)
 	Proxy
+	// Either EOA or Contract
 	Type
 )
 
@@ -27,7 +34,7 @@ type StateFilters struct {
 }
 
 // GetState returns account state
-func (conn *Connection) GetState(fields StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.SimpleEthState, err error) {
+func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.SimpleEthState, err error) {
 	state = &types.SimpleEthState{
 		Address:     address,
 		BlockNumber: blockNumber,
@@ -47,7 +54,7 @@ func (conn *Connection) GetState(fields StatePart, address base.Address, blockNu
 		},
 	}
 
-	if (fields & Nonce) != 0 {
+	if (fieldBits & Nonce) != 0 {
 		rpcPayload = append(rpcPayload, rpc.BatchPayload{
 			Key: "nonce",
 			Payload: &rpc.Payload{
@@ -60,7 +67,7 @@ func (conn *Connection) GetState(fields StatePart, address base.Address, blockNu
 		})
 	}
 
-	if (fields & Code) != 0 {
+	if (fieldBits & Code) != 0 {
 		rpcPayload = append(rpcPayload, rpc.BatchPayload{
 			Key: "code",
 			Payload: &rpc.Payload{
@@ -88,17 +95,17 @@ func (conn *Connection) GetState(fields StatePart, address base.Address, blockNu
 		}
 	}
 
-	if (fields & Balance) != 0 {
+	if (fieldBits & Balance) != 0 {
 		state.Balance = *balance
 	}
-	if value, ok := queryResults["nonce"]; ok && (fields&Nonce) != 0 {
+	if value, ok := queryResults["nonce"]; ok && (fieldBits&Nonce) != 0 {
 		nonce, err := strconv.ParseUint(*value, 0, 64)
 		if err != nil {
 			return nil, err
 		}
 		state.Nonce = nonce
 	}
-	if value, ok := queryResults["code"]; ok && (fields&Code) != 0 {
+	if value, ok := queryResults["code"]; ok && (fieldBits&Code) != 0 {
 		code := *value
 		if code != "0x" {
 			state.Code = code
@@ -116,7 +123,7 @@ func (conn *Connection) GetState(fields StatePart, address base.Address, blockNu
 	// 	}()
 	// }
 
-	if (fields & Deployed) != 0 {
+	if (fieldBits & Deployed) != 0 {
 		block, err := conn.GetContractDeployBlock(address)
 		if err != nil && !errors.Is(err, ErrNotAContract) {
 			return nil, err
@@ -129,17 +136,17 @@ func (conn *Connection) GetState(fields StatePart, address base.Address, blockNu
 
 	var proxy base.Address
 
-	if (fields&Proxy) != 0 || (fields&Type) != 0 {
+	if (fieldBits&Proxy) != 0 || (fieldBits&Type) != 0 {
 		proxy, err = conn.GetProxyAt(address, blockNumber)
 		if err != nil {
 			return
 		}
-		if (fields & Proxy) != 0 {
+		if (fieldBits & Proxy) != 0 {
 			state.Proxy = proxy
 		}
 	}
 
-	if (fields & Type) != 0 {
+	if (fieldBits & Type) != 0 {
 		if !proxy.IsZero() {
 			state.Accttype = "Proxy"
 		} else {
@@ -158,6 +165,7 @@ func (conn *Connection) getTypeNonProxy(address base.Address, blockNumber base.B
 	return "Contract"
 }
 
+// PartsToFields converts a string array of part names to a bit mask of parts and returns the corresponding output field names or none if no valid parts are present
 func PartsToFields(parts []string, asEther bool) (stateFields StatePart, outputFields []string, none bool) {
 	balanceOutputField := "balance"
 	if asEther {

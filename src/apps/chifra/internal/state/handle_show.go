@@ -14,6 +14,13 @@ import (
 
 func (opts *StateOptions) HandleShow() error {
 	chain := opts.Globals.Chain
+	// TODO: Why does this have to dirty the caller?
+	settings := rpcClient.ConnectionSettings{
+		Chain: chain,
+		Opts:  opts,
+	}
+	opts.Conn = settings.DefaultRpcOptions()
+
 	previousBalance := make(map[base.Address]*big.Int, len(opts.Addrs))
 	var filters rpcClient.StateFilters
 	if opts.Changes || opts.NoZero {
@@ -30,19 +37,13 @@ func (opts *StateOptions) HandleShow() error {
 				if opts.NoZero {
 					return len(balance.Bytes()) > 0
 				}
+
 				return true
 			},
 		}
 	}
 
 	stateFields, outputFields, none := rpcClient.PartsToFields(opts.Parts, opts.Globals.Ether)
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {
@@ -77,7 +78,7 @@ func (opts *StateOptions) HandleShow() error {
 					if err != nil {
 						errorChan <- err
 					}
-					// `state` can be nil if it was skipped by a filter
+					// state may be nil if it was skipped by a filter for example
 					if state != nil {
 						modelChan <- state
 					}
@@ -86,7 +87,8 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(map[string]interface{}{
+	extra := map[string]interface{}{
 		"fields": outputFields,
-	}))
+	}
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

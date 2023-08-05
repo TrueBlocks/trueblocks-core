@@ -18,8 +18,8 @@
 - [The unchained index](#the-unchained-index)
 - [Docker version](#docker-version)
 - [Documentation](#documentation)
-- [Contributing](#contributing)
   - [Linting](#linting)
+- [Contributing](#contributing)
 - [Contact](#contact)
 - [List of Contributors](#list-of-contributors)
 
@@ -127,6 +127,26 @@ Our [official docker version](https://github.com/TrueBlocks/trueblocks-docker) i
 
 The TrueBlocks [documentation repo](https://github.com/TrueBlocks/trueblocks-docs) builds the TrueBlocks website. See our website for the [best available documentation](https://trueblocks.io/).
 
+### Linting
+
+We recently added linting to our automated build process. This will force contributors (including ourselves) to properly lint thier submissions.
+
+In order to properly lint your submission, you may need to install various linters. See this page for more information.
+
+To install the main linter, run this command:
+
+```[shell]
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.53.3
+```
+
+Run `golangci-lint --version` to verify that it is installed correctly. You should see something like this:
+
+```[shell]
+golangci-lint has version 1.50.1 built from <commit> on <date>
+```
+
+Next, install all the default linters listed on this page https://golangci-lint.run/usage/linters/. You are very welcome to install additional linters for your own purposes. If you do, and you think they're useful, please let us know and we'll add them to our build process.
+
 ## Contributing
 
 A chart showing the number of stars on our repo over time.
@@ -140,10 +160,6 @@ We love contributors. Please see information about our [workflow](https://github
 3. Make changes to your local branch and commit them to your forked repo: `git commit -m '<commit_message>'`
 4. Push back to the original branch: `git push origin TrueBlocks/trueblocks-core`
 5. Create the pull request.
-
-### Linting
-
-In the near future, we will be adding a linting step to our workflow. Before submitting a PR, please first install [staticcheck](https://staticcheck.dev/) with `go install honnef.co/go/tools/cmd/staticcheck@latest` and then run `staticcheck --checks all,-ST1003` (from the `./src/apps/chifra` folder) before submitting.
 
 ## Contact
 

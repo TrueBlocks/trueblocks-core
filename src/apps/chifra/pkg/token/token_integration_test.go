@@ -53,6 +53,7 @@ func TestGetState_Erc20(t *testing.T) {
 		t.Fatal("wrong decimals:", token.Decimals)
 	}
 
+	// TODO: Renable this test
 	// v, _ := big.NewInt(0).SetString("9118918230822796234900723527", 10)
 	// if token.TotalSupply.Cmp(v) != 0 {
 	// 	t.Fatal("wrong total supply:", token.TotalSupply)
@@ -88,6 +89,7 @@ func TestGetState_Erc721(t *testing.T) {
 		t.Fatal("NFT should not have decimals set:", token.Decimals)
 	}
 
+	// TODO: Renable this test
 	// v, _ := big.NewInt(0).SetString("10000", 10)
 	// if token.TotalSupply.Cmp(v) != 0 {
 	// 	t.Fatal("wrong total supply:", token.TotalSupply)
@@ -123,6 +125,7 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal("wrong decimals:", token.Decimals)
 	}
 
+	// TODO: Renable this test
 	// v, _ := big.NewInt(0).SetString("7069797008171168928213", 10)
 	// if token.TotalSupply.Cmp(v) != 0 {
 	// 	t.Fatal("wrong total supply:", token.TotalSupply)
@@ -155,6 +158,7 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal("wrong decimals:", token.Decimals)
 	}
 
+	// TODO: Renable this test
 	// v, _ = big.NewInt(0).SetString("210000000000000000000000000", 10)
 	// if token.TotalSupply.Cmp(v) != 0 {
 	// 	t.Fatal("wrong total supply:", token.TotalSupply)
@@ -187,6 +191,7 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal("wrong decimals:", token.Decimals)
 	}
 
+	// TODO: Renable this test
 	// v, _ = big.NewInt(0).SetString("", 10)
 	// if token.TotalSupply.Cmp(v) != 0 {
 	// 	t.Fatal("wrong total supply:", token.TotalSupply)
