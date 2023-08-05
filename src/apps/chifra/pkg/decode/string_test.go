@@ -54,7 +54,7 @@ func TestArticulateStringNew(t *testing.T) {
 	}
 }
 
-func TestArticulateEncodedString(t *testing.T) {
+func TestArticulateEncodedStringNew(t *testing.T) {
 	type args struct {
 		hex string
 	}
@@ -82,13 +82,13 @@ func TestArticulateEncodedString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotResult, err := ArticulateEncodedString(tt.args.hex)
+			gotResult, err := ArticulateEncodedStringNew(tt.args.hex)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("ArticulateEncodedString() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("ArticulateEncodedStringNew() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if gotResult != tt.wantResult {
-				t.Errorf("ArticulateEncodedString() = %v, want %v", gotResult, tt.wantResult)
+				t.Errorf("ArticulateEncodedStringNew() = %v, want %v", gotResult, tt.wantResult)
 			}
 		})
 	}

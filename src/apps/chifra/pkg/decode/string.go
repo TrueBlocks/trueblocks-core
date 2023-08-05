@@ -96,8 +96,8 @@ func SanitizeString(str string) (sanitized string) {
 	return
 }
 
-// ArticulateEncodedString translates EVM string into Go string
-func ArticulateEncodedString(hex string) (result string, err error) {
+// ArticulateEncodedStringNew translates EVM string into Go string
+func ArticulateEncodedStringNew(hex string) (result string, err error) {
 	if len(hex) < 2 {
 		result = ""
 		return
@@ -145,7 +145,7 @@ func ArticulateEncodedStringOrBytes32New(hex string) (string, error) {
 		return "", nil
 	}
 	if len(hex[2:]) > 64 {
-		return ArticulateEncodedString(hex)
+		return ArticulateEncodedStringNew(hex)
 	}
 
 	return ArticulateBytes32String(hex), nil

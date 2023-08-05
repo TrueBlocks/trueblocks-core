@@ -1,26 +1,8 @@
 package articulate
 
 import (
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/accounts/abi"
 )
-
-var AbiStringType abi.Type
-var abiStringArguments abi.Arguments
-
-func init() {
-	var err error
-
-	AbiStringType, err = abi.NewType("string", "", nil)
-	if err != nil {
-		panic(err)
-	}
-	abiStringArguments = abi.Arguments{
-		{Type: AbiStringType},
-	}
-}
 
 func articulateBytes(byteValue []byte) (strResult string, success bool) {
 	hasPrintableCharacters := false
@@ -76,21 +58,6 @@ func sanitizeByte(character byte) (replacement []byte, replaced int) {
 		return []byte("[t]"), 1
 	}
 	return []byte{character}, 0
-}
-
-// ArticulateEncodedString translates EVM string into Go string
-func ArticulateEncodedString(hex string) (result string, err error) {
-	if len(hex) < 2 {
-		result = ""
-		return
-	}
-	byteValue := base.Hex2Bytes(hex[2:])
-	unpacked, err := abiStringArguments.Unpack(byteValue)
-	if err != nil {
-		return
-	}
-	result = fmt.Sprint(unpacked[0])
-	return
 }
 
 // ArticulateBytes32String turns bytes32 encoded string into Go string
