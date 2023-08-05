@@ -22,16 +22,6 @@ func init() {
 	}
 }
 
-// ArticulateString tries to convert hex into a string of printable characters
-// (ASCII only). If it was successful, then `success` is true.
-func ArticulateString(hex string) (strResult string, success bool) {
-	if len(hex) < 2 {
-		return "", false
-	}
-	byteValue := base.Hex2Bytes(hex[2:])
-	return articulateBytes(byteValue)
-}
-
 func articulateBytes(byteValue []byte) (strResult string, success bool) {
 	hasPrintableCharacters := false
 	result := make([]byte, 0, len(byteValue))

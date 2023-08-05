@@ -4,27 +4,27 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/accounts/abi"
+	goAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-var AbiStringType abi.Type
-var abiStringArguments abi.Arguments
+// TODO: Why can't we just use the call package to call into the token directly? Answer: this code was built before the call package
+var AbiStringType goAbi.Type
+var abiStringArguments goAbi.Arguments
 
 func init() {
 	var err error
-
-	AbiStringType, err = abi.NewType("string", "", nil)
+	AbiStringType, err = goAbi.NewType("string", "", nil)
 	if err != nil {
 		panic(err)
 	}
-	abiStringArguments = abi.Arguments{
+	abiStringArguments = goAbi.Arguments{
 		{Type: AbiStringType},
 	}
 }
 
-// ArticulateString tries to convert hex into a string of printable characters
+// ArticulateStringNew tries to convert hex into a string of printable characters
 // (ASCII only). If it was successful, then `success` is true.
-func ArticulateString(hex string) (strResult string, success bool) {
+func ArticulateStringNew(hex string) (strResult string, success bool) {
 	if len(hex) < 2 {
 		return "", false
 	}

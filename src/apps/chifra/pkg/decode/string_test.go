@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func Test_toPrintable(t *testing.T) {
+func TestArticulateStringNew(t *testing.T) {
 	type args struct {
 		hex string
 	}
@@ -43,12 +43,12 @@ func Test_toPrintable(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotResult, gotPureStr := ArticulateString(tt.args.hex)
+			gotResult, gotPureStr := ArticulateStringNew(tt.args.hex)
 			if gotResult != tt.wantResult {
-				t.Errorf("ArticulateString() gotResult = %v, want %v", gotResult, tt.wantResult)
+				t.Errorf("ArticulateStringNew() gotResult = %v, want %v", gotResult, tt.wantResult)
 			}
 			if gotPureStr != tt.wantSuccess {
-				t.Errorf("ArticulateString() gotSuccess = %v, want %v", gotPureStr, tt.wantSuccess)
+				t.Errorf("ArticulateStringNew() gotSuccess = %v, want %v", gotPureStr, tt.wantSuccess)
 			}
 		})
 	}

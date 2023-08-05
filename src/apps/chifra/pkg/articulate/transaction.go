@@ -2,6 +2,7 @@ package articulate
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -49,11 +50,8 @@ func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction
 	}
 
 	if found == nil && len(tx.Input) > 0 {
-		if message, ok := ArticulateString(tx.Input); ok {
+		if message, ok := decode.ArticulateStringNew(tx.Input); ok {
 			tx.Message = message
-			// } else if len(selector) > 0 {
-			// 	// don't report this error
-			// 	errorChan <- fmt.Errorf("method/event not found: %s", selector)
 		}
 	}
 
