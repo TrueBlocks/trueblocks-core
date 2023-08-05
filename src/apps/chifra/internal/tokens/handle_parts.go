@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
@@ -16,10 +15,6 @@ import (
 )
 
 func (opts *TokensOptions) HandleParts() error {
-	if len(opts.Parts) == 0 {
-		logger.Fatal("Implementation error. Should not happen")
-	}
-
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
@@ -46,7 +41,7 @@ func (opts *TokensOptions) HandleParts() error {
 				}
 
 				for _, bn := range blockNums {
-					if state, err := token.GetState(chain, addr, fmt.Sprintf("0x%x", bn)); err != nil {
+					if state, err := token.GetTokenState(chain, addr, fmt.Sprintf("0x%x", bn)); err != nil {
 						errorChan <- err
 					} else {
 						s := &types.SimpleTokenBalance{
@@ -62,8 +57,8 @@ func (opts *TokensOptions) HandleParts() error {
 		}
 	}
 
-	parts := names.Custom | names.Prefund | names.Regular
-	namesMap, err := names.LoadNamesMap(chain, parts, nil)
+	nameTypes := names.Custom | names.Prefund | names.Regular
+	namesMap, err := names.LoadNamesMap(chain, nameTypes, nil)
 	if err != nil {
 		return err
 	}

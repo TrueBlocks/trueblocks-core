@@ -204,11 +204,8 @@ func cleanName(chain string, name *types.SimpleName) (modified bool, err error) 
 		return
 	}
 
-	tokenState, err := token.GetState(chain, name.Address, "latest")
-	if _, ok := err.(token.ErrNodeConnection); ok {
-		return
-	}
-	// It's not a token
+	// If this address is not a token, we're done
+	tokenState, err := token.GetTokenState(chain, name.Address, "latest")
 	if err != nil {
 		err = nil
 	}

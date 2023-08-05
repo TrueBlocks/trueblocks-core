@@ -87,17 +87,31 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 	wanted := extraOptions["parts"].([]string)
 	if len(wanted) == 1 {
 		if wanted[0] == "all" {
-			wanted = []string{"address", "blockNumber", "name", "symbol", "decimals", "totalSupply"}
+			if verbose {
+				wanted = []string{"address", "blockNumber", "date", "name", "symbol", "decimals", "totalSupply"}
+			} else {
+				wanted = []string{"address", "blockNumber", "name", "symbol", "decimals", "totalSupply"}
+			}
 		} else if wanted[0] == "all_held" {
-			wanted = []string{
-				"blockNumber", "holder", "address", "name", "symbol", "decimals", "balance", "units",
+			if verbose {
+				wanted = []string{
+					"blockNumber", "date", "holder", "address", "name", "symbol", "decimals", "balance", "units",
+				}
+			} else {
+				wanted = []string{
+					"blockNumber", "holder", "address", "name", "symbol", "decimals", "balance", "units",
+				}
 			}
 		}
 	}
 
 	order = wanted
 	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
-		order = append([]string{"address", "blockNumber"}, wanted...)
+		if verbose {
+			order = append([]string{"address", "blockNumber", "date"}, wanted...)
+		} else {
+			order = append([]string{"address", "blockNumber"}, wanted...)
+		}
 	}
 
 	for _, part := range order {
@@ -131,8 +145,6 @@ func (s *SimpleTokenBalance) Model(verbose bool, format string, extraOptions map
 		case "version":
 			model["version"] = ""
 		}
-		// 		"isContract":  s.IsContract,
-		// 		"isErc20":     s.IsErc20,
 	}
 	// EXISTING_CODE
 

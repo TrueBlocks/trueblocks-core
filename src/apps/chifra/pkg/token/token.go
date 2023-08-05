@@ -15,15 +15,15 @@ import (
 // 0x80ac58cd: ERC-721 interface ID -- eips.ethereum.org/EIPS/eip-721
 const Erc721SupportsInterfaceData = "0x01ffc9a780ac58cd00000000000000000000000000000000000000000000000000000000"
 
-type TokenStateSelector = string
+type tokenStateSelector = string
 
 // TODO: If we used encoding we could use the function signature instead of the selector.
 
-const TokenStateTotalSupply TokenStateSelector = "0x18160ddd"
-const TokenStateDecimals TokenStateSelector = "0x313ce567"
-const TokenStateSymbol TokenStateSelector = "0x95d89b41"
-const TokenStateName TokenStateSelector = "0x06fdde03"
-const TokenStateBalanceOf TokenStateSelector = "0x70a08231"
+const TokenStateTotalSupply tokenStateSelector = "0x18160ddd"
+const TokenStateDecimals tokenStateSelector = "0x313ce567"
+const TokenStateSymbol tokenStateSelector = "0x95d89b41"
+const TokenStateName tokenStateSelector = "0x06fdde03"
+const TokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
 type TokenType int
 
@@ -37,30 +37,125 @@ const (
 // TODO: This is a type and should be auto-generated
 type Token struct {
 	Address     base.Address
+	Decimals    uint64
 	Name        string
 	Symbol      string
-	Decimals    uint8
 	TotalSupply big.Int
 	Type        TokenType
 }
 
-type ErrNodeConnection struct {
-	err error
-}
-
-func NewErrNodeConnection(err error) (e ErrNodeConnection) {
-	e.err = err
-	return
-}
-
-func (e ErrNodeConnection) Error() string {
-	return e.err.Error()
-}
-
-// GetState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
+// GetTokenState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetState(chain string, tokenAddress base.Address, blockNumber string) (*Token, error) {
-	return queryToken(chain, tokenAddress, blockNumber)
+func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
+	results, err := rpc.QueryBatch[string](
+		chain,
+		[]rpc.BatchPayload{
+			{
+				Key: "name",
+				Payload: &rpc.Payload{
+					Method: "eth_call",
+					Params: rpc.Params{
+						map[string]any{
+							"to":   tokenAddress,
+							"data": TokenStateName,
+						},
+						blockNumber,
+					},
+				},
+			},
+			{
+				Key: "symbol",
+				Payload: &rpc.Payload{
+					Method: "eth_call",
+					Params: rpc.Params{
+						map[string]any{
+							"to":   tokenAddress,
+							"data": TokenStateSymbol,
+						},
+						blockNumber,
+					},
+				},
+			},
+			{
+				Key: "decimals",
+				Payload: &rpc.Payload{
+					Method: "eth_call",
+					Params: rpc.Params{
+						map[string]any{
+							"to":   tokenAddress,
+							"data": TokenStateDecimals,
+						},
+						blockNumber,
+					},
+				},
+			},
+			{
+				Key: "totalSupply",
+				Payload: &rpc.Payload{
+					Method: "eth_call",
+					Params: rpc.Params{
+						map[string]any{
+							"to":   tokenAddress,
+							"data": TokenStateTotalSupply,
+						},
+						blockNumber,
+					},
+				},
+			},
+			// Supports interface: ERC 721
+			{
+				Key: "erc721",
+				Payload: &rpc.Payload{
+					Method: "eth_call",
+					Params: rpc.Params{
+						map[string]any{
+							"to":   tokenAddress,
+							"data": Erc721SupportsInterfaceData,
+						},
+						blockNumber,
+					},
+				},
+			},
+		},
+	)
+	if err != nil {
+		return
+	}
+
+	name, _ := articulate.ArticulateEncodedStringOrBytes32(*results["name"])
+	symbol, _ := articulate.ArticulateEncodedStringOrBytes32(*results["symbol"])
+
+	var decimals uint64 = 0
+	rawDecimals := *results["decimals"]
+	parsedDecimals, parseErr := strconv.ParseUint(rawDecimals, 0, 8)
+	if parseErr == nil {
+		decimals = uint64(parsedDecimals)
+	}
+
+	totalSupply := base.HexToWei(*results["totalSupply"])
+
+	// According to ERC-20, name, symbol and decimals are optional, but such a token
+	// would be of no use to us
+	if name == "" && symbol == "" && decimals == 0 {
+		return nil, errors.New("address is not token")
+	}
+
+	tokenType := TokenErc20
+	erc721, erc721Err := articulate.ArticulateBoolean(*results["erc721"])
+	if erc721Err == nil && erc721 {
+		tokenType = TokenErc721
+	}
+
+	token = &Token{
+		Address:     tokenAddress,
+		Decimals:    decimals,
+		Name:        name,
+		Symbol:      symbol,
+		TotalSupply: *totalSupply,
+		Type:        tokenType,
+	}
+
+	return
 }
 
 // GetTokenBalanceAt returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
@@ -92,118 +187,6 @@ func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber str
 	}
 
 	return base.HexToWei(*output["balance"]), nil
-}
-
-func queryToken(chain string, address base.Address, blockNumber string) (token *Token, err error) {
-	results, err := rpc.QueryBatch[string](
-		chain,
-		[]rpc.BatchPayload{
-			{
-				Key: "name",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   address,
-							"data": TokenStateName,
-						},
-						blockNumber,
-					},
-				},
-			},
-			{
-				Key: "symbol",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   address,
-							"data": TokenStateSymbol,
-						},
-						blockNumber,
-					},
-				},
-			},
-			{
-				Key: "decimals",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   address,
-							"data": TokenStateDecimals,
-						},
-						blockNumber,
-					},
-				},
-			},
-			{
-				Key: "totalSupply",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   address,
-							"data": TokenStateTotalSupply,
-						},
-						blockNumber,
-					},
-				},
-			},
-			// Supports interface: ERC 721
-			{
-				Key: "erc721",
-				Payload: &rpc.Payload{
-					Method: "eth_call",
-					Params: rpc.Params{
-						map[string]any{
-							"to":   address,
-							"data": Erc721SupportsInterfaceData,
-						},
-						blockNumber,
-					},
-				},
-			},
-		},
-	)
-	if err != nil {
-		return
-	}
-
-	name, _ := articulate.ArticulateEncodedStringOrBytes32(*results["name"])
-	symbol, _ := articulate.ArticulateEncodedStringOrBytes32(*results["symbol"])
-
-	var decimals uint8 = 0
-	rawDecimals := *results["decimals"]
-	parsedDecimals, parseErr := strconv.ParseUint(rawDecimals, 0, 8)
-	if parseErr == nil {
-		decimals = uint8(parsedDecimals)
-	}
-
-	totalSupply := base.HexToWei(*results["totalSupply"])
-
-	// According to ERC-20, name, symbol and decimals are optional, but such a token
-	// would be of no use to us
-	if name == "" && symbol == "" && decimals == 0 {
-		return nil, errors.New("address is not token")
-	}
-
-	tokenType := TokenErc20
-	erc721, erc721Err := articulate.ArticulateBoolean(*results["erc721"])
-	if erc721Err == nil && erc721 {
-		tokenType = TokenErc721
-	}
-
-	token = &Token{
-		Address:     address,
-		Type:        tokenType,
-		Name:        name,
-		Symbol:      symbol,
-		Decimals:    decimals,
-		TotalSupply: *totalSupply,
-	}
-
-	return
 }
 
 func (t *Token) IsErc20() bool {

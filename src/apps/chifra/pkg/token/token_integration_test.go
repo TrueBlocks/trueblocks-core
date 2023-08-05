@@ -28,7 +28,7 @@ func TestGetState_Erc20(t *testing.T) {
 	blockNumber := "0xd59f80" // 14000000
 	chain := utils.GetTestChain()
 
-	token, err := GetState(chain, tokenAddress, blockNumber)
+	token, err := GetTokenState(chain, tokenAddress, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -63,7 +63,7 @@ func TestGetState_Erc721(t *testing.T) {
 	blockNumber := "0xd59f80" // 14000000
 	chain := utils.GetTestChain()
 
-	token, err := GetState(chain, nftAddress, blockNumber)
+	token, err := GetTokenState(chain, nftAddress, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -98,7 +98,7 @@ func TestGetState_NonStandard(t *testing.T) {
 	blockNumber := "0x1036640" // 17000000
 	chain := utils.GetTestChain()
 
-	token, err := GetState(chain, nonStandard1, blockNumber)
+	token, err := GetTokenState(chain, nonStandard1, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -130,7 +130,7 @@ func TestGetState_NonStandard(t *testing.T) {
 
 	// Non-standard 2
 
-	token, err = GetState(chain, nonStandard2, blockNumber)
+	token, err = GetTokenState(chain, nonStandard2, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -162,7 +162,7 @@ func TestGetState_NonStandard(t *testing.T) {
 
 	// 3
 	nonStandard3 := base.HexToAddress("0xc4e0f3ec24972c75df7c716922096f4270b7bb4e")
-	token, err = GetState(chain, nonStandard3, blockNumber)
+	token, err = GetTokenState(chain, nonStandard3, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
