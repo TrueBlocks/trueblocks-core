@@ -33,10 +33,10 @@ Flags:
   -m, --emitter strings      for the --logs option only, filter logs to show only those logs emitted by the given address(es)
   -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
   -A, --account_for string   reconcile the transaction as per the provided address
-  -D, --decache              removes a transactions and any traces in the transaction from the cache
   -H, --ether                specify value in ether
   -w, --raw                  report JSON data from the source with minimal processing
   -o, --cache                force the results of the query into the cache
+  -D, --decache              removes related items from the cache
   -x, --fmt string           export format, one of [none|json*|txt|csv]
   -v, --verbose              enable verbose output
   -h, --help                 display this help screen
@@ -46,6 +46,7 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.
+  - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 ```
 
 Data models produced by this tool:

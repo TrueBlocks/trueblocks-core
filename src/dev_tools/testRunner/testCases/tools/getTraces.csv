@@ -90,7 +90,7 @@ on       ,both ,fast  ,traces ,tools/getTraces ,redir_output          ,y    ,tra
 on       ,both ,fast  ,traces ,tools/getTraces ,redir_output_append   ,n    ,transactions = 3657480.9 & fmt = json & output = output_test_file & no_header & append
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on       ,both ,fast  ,traces ,tools/getTraces ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on       ,both ,fast  ,traces ,tools/getTraces ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
 on       ,both ,fast  ,traces ,tools/getTraces ,caps_disallowed_1   ,y    ,transactions = 12.0 & ether
 on       ,both ,fast  ,traces ,tools/getTraces ,caps_disallowed_2   ,y    ,transactions = 12.0 & wei

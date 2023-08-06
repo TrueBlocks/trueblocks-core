@@ -99,6 +99,10 @@ func (c Capability) HasKey(key string) bool {
 		return true
 	}
 
+	if key == "decache" {
+		return c.Has(Caching)
+	}
+
 	for _, cap := range AllCaps {
 		if key == cap.Text() {
 			return c.Has(cap)

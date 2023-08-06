@@ -78,8 +78,8 @@ on   ,both ,slow  ,tokens ,tools/getTokens ,old_bug_2                     ,y    
 on   ,both ,slow  ,tokens ,tools/getTokens ,old_bug_1                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 0x99c961738786e8f5f3fee109f4d49f5901826b8c & blocks = 11963059
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on      ,both ,fast  ,tokens ,tools/getTokens ,caps_allowed                  ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on      ,both ,fast  ,tokens ,tools/getTokens ,caps_allowed                  ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & fail_on_purpose
 on      ,both ,fast  ,tokens ,tools/getTokens ,caps_disallowed_1             ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,tokens ,tools/getTokens ,caps_disallowed_2             ,y    ,addrs = trueblocks.eth & ether
 on      ,both ,fast  ,tokens ,tools/getTokens ,caps_disallowed_3             ,y    ,addrs = trueblocks.eth & wei

@@ -51,7 +51,8 @@ Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-  - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.`
+  - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.
+  - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra transactions
@@ -74,7 +75,6 @@ One of [ from | to ]`)
 	transactionsCmd.Flags().StringSliceVarP(&transactionsPkg.GetOptions().Topic, "topic", "B", nil, "for the --logs option only, filter logs to show only those with this topic(s)")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.GetOptions().AccountFor, "account_for", "A", "", "reconcile the transaction as per the provided address")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "", false, "force the transaction's traces into the cache (hidden)")
-	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Decache, "decache", "D", false, "removes a transactions and any traces in the transaction from the cache")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Source, "source", "s", false, "find the source of the funds sent to the receiver (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		transactionsCmd.Flags().MarkHidden("cache_traces")

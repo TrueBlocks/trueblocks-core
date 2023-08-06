@@ -49,8 +49,7 @@ const longMonitors = `Purpose:
 const notesMonitors = `
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
-  - If no address is presented to the --clean command, all monitors will be cleaned.
-  - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).`
+  - If no address is presented to the --clean command, all monitors will be cleaned.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra monitors
@@ -63,7 +62,6 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Undelete, "undelete", "", false, "undelete a previously deleted monitor")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Remove, "remove", "", false, "remove a previously deleted monitor")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Clean, "clean", "C", false, "clean (i.e. remove duplicate appearances) from monitors")
-	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Decache, "decache", "D", false, "removes a monitor and all associated data from the cache")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().List, "list", "l", false, "list monitors in the cache (--verbose for more detail)")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Watch, "watch", "w", false, "continually scan for new blocks and extract data for monitored addresses")
 	monitorsCmd.Flags().Float64VarP(&monitorsPkg.GetOptions().Sleep, "sleep", "s", 14, "seconds to sleep between monitor passes")

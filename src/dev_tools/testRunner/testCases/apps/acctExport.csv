@@ -55,12 +55,13 @@ on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_3      ,n    
 on      ,both ,fast  ,list     ,apps/acctExport ,130_list_fb_lb_fr_mr     ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 3 & max_records = 10
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
 on       ,both ,fast  ,list     ,apps/acctExport ,caps_allowed_l         ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_1_l    ,y    ,addrs = trueblocks.eth & cache
 on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_2_l    ,y    ,addrs = trueblocks.eth & raw
 on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_3_l    ,y    ,addrs = trueblocks.eth & ether
 on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l    ,y    ,addrs = trueblocks.eth & wei
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_l    ,y    ,addrs = trueblocks.eth & decache
 
 # Not tested for chifra list
 # chifra list --silent
@@ -99,12 +100,13 @@ on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2_v         ,n    
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
 on       ,both ,fast  ,monitors ,apps/acctExport ,caps_allowed_m         ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_1_m    ,y    ,addrs = trueblocks.eth & cache
 on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_2_m    ,y    ,addrs = trueblocks.eth & raw
 on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_3_m    ,y    ,addrs = trueblocks.eth & ether
 on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_4_m    ,y    ,addrs = trueblocks.eth & wei
+on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_m    ,y    ,addrs = trueblocks.eth & decache
 
 # Not tested for chifra monitors...
 # chifra monitors --watch
@@ -279,6 +281,6 @@ delay   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    
 # chifra export --unripe
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on       ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e         ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & ether & wei & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on       ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e         ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & wei & fail_on_purpose
 on       ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_1_e    ,y    ,addrs = trueblocks.eth & raw

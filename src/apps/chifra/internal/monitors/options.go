@@ -26,7 +26,6 @@ type MonitorsOptions struct {
 	Undelete bool                  `json:"undelete,omitempty"` // Undelete a previously deleted monitor
 	Remove   bool                  `json:"remove,omitempty"`   // Remove a previously deleted monitor
 	Clean    bool                  `json:"clean,omitempty"`    // Clean (i.e. remove duplicate appearances) from monitors
-	Decache  bool                  `json:"decache,omitempty"`  // Removes a monitor and all associated data from the cache
 	List     bool                  `json:"list,omitempty"`     // List monitors in the cache (--verbose for more detail)
 	Watch    bool                  `json:"watch,omitempty"`    // Continually scan for new blocks and extract data for monitored addresses
 	Sleep    float64               `json:"sleep,omitempty"`    // Seconds to sleep between monitor passes
@@ -46,7 +45,6 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
-	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
@@ -80,8 +78,6 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			opts.Remove = true
 		case "clean":
 			opts.Clean = true
-		case "decache":
-			opts.Decache = true
 		case "list":
 			opts.List = true
 		case "watch":

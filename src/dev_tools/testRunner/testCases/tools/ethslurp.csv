@@ -30,7 +30,7 @@ on      ,both ,fast  ,slurp ,tools/ethslurp ,redir_output         ,y    ,addrs =
 on      ,both ,fast  ,slurp ,tools/ethslurp ,redir_output_append  ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = ext & blocks = 3730590-3730700 & output = output_test_file & no_header & append
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_allowed           ,y    ,addrs=trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_allowed           ,y    ,addrs=trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
 on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_1      ,y    ,addrs=trueblocks.eth & ether
 on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_2      ,y    ,addrs=trueblocks.eth & wei

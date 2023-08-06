@@ -273,7 +273,7 @@ func (opts *ExportOptions) getCaches() (m map[string]bool) {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *ExportOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
+	return opts.Globals.Cache1, opts.getCaches()
 }
 
 // EXISTING_CODE

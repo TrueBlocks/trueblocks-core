@@ -151,6 +151,6 @@ on       ,cmd  ,fast  ,transactions ,tools/getTrans ,mulit_line_mulit_txs     ,n
 on       ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on       ,both ,fast  ,transactions ,tools/getTrans ,caps_allowed             ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on       ,both ,fast  ,transactions ,tools/getTrans ,caps_allowed             ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei & fail_on_purpose
 on       ,both ,fast  ,transactions ,tools/getTrans ,caps_disallowed_1        ,y    ,transactions = 12.0 & fail_on_purpose

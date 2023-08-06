@@ -33,7 +33,6 @@ type TransactionsOptions struct {
 	Topic          []string                 `json:"topic,omitempty"`          // For the --logs option only, filter logs to show only those with this topic(s)
 	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	CacheTraces    bool                     `json:"cacheTraces,omitempty"`    // Force the transaction's traces into the cache
-	Decache        bool                     `json:"decache,omitempty"`        // Removes a transactions and any traces in the transaction from the cache
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	Conn           *rpcClient.Connection    `json:"conn,omitempty"`           // The connection to the RPC server
@@ -56,7 +55,6 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.Source, "Source: ", opts.Source)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -103,8 +101,6 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 			opts.AccountFor = value[0]
 		case "cacheTraces":
 			opts.CacheTraces = true
-		case "decache":
-			opts.Decache = true
 		case "source":
 			opts.Source = true
 		default:
@@ -176,7 +172,7 @@ func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *TransactionsOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
+	return opts.Globals.Cache1, opts.getCaches()
 }
 
 // EXISTING_CODE

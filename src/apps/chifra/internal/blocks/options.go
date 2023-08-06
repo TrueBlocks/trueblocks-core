@@ -37,7 +37,6 @@ type BlocksOptions struct {
 	Count       bool                     `json:"count,omitempty"`       // Display the number of the lists of appearances for --addrs or --uniq
 	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block's transactions to the cache (slow)
 	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block's traces to the cache (slower)
-	Decache     bool                     `json:"decache,omitempty"`     // Removes a block and any transactions or traces in the block from the cache
 	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
 	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
@@ -67,7 +66,6 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.CacheTxs, "CacheTxs: ", opts.CacheTxs)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
 	opts.Conn.TestLog(opts.getCaches())
@@ -126,8 +124,6 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.CacheTxs = true
 		case "cacheTraces":
 			opts.CacheTraces = true
-		case "decache":
-			opts.Decache = true
 		case "list":
 			opts.List = globals.ToUint64(value[0])
 		case "listCount":
@@ -200,7 +196,7 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *BlocksOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
+	return opts.Globals.Cache1, opts.getCaches()
 }
 
 // EXISTING_CODE
