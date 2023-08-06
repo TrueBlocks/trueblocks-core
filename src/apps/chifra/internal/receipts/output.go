@@ -54,7 +54,11 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	msg := "chifra receipts"
 	// EXISTING_CODE
 	handled = true
-	err = opts.HandleShowReceipts()
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else {
+		err = opts.HandleShowReceipts()
+	}
 	// EXISTING_CODE
 	timer.Report(msg)
 

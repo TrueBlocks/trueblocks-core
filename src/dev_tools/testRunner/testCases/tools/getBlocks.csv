@@ -69,9 +69,9 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,no_uniq_uncles        ,y    ,blo
 # See issue #3073
 local    ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles       ,y    ,blocks = 4012000-4012001 & cache & uncles
 on       ,both ,fast  ,blocks ,tools/getBlocks ,cache                 ,y    ,blocks = 1152642 & cache
-on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_uniq         ,y    ,blocks = 1152642 & cache & uniq
-on       ,both ,fast  ,blocks ,tools/getBlocks ,cached_uniq         ,y    ,blocks = 1152642 & uniq
-on       ,both ,fast  ,blocks ,tools/getBlocks ,decache         ,y    ,blocks = 1152642 & decache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_uniq            ,y    ,blocks = 1152642 & cache & uniq
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cached_uniq           ,y    ,blocks = 1152642 & uniq
+on       ,both ,fast  ,blocks ,tools/getBlocks ,decache               ,y    ,blocks = 1152642 & decache
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_hashes       ,y    ,blocks = 4012000-4012001 & traces & hashes
 on       ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_uniq         ,y    ,blocks = 4012000-4012001 & traces & uniq
 on       ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs     ,y    ,blocks = 4012000-4012001 & big_range = 100
@@ -108,8 +108,12 @@ file_cmd ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,fil
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blocks = 1001001-1001005 & fmt = csv & output = output_test_file
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append
 
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_and_decache     ,y    ,blocks = 12 & cache & decache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_one             ,y    ,blocks = 12 & cache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,decache_one           ,y    ,blocks = 12 & decache
+
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed           ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1      ,y    ,blocks = 3000000 & ether
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_2      ,y    ,blocks = 3000000 & wei
+on       ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed          ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
+on       ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1     ,y    ,blocks = 3000000 & ether
+on       ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_2     ,y    ,blocks = 3000000 & wei

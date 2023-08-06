@@ -58,7 +58,9 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	if opts.Appearances {
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else if opts.Appearances {
 		err = opts.HandleShowAppearances()
 	} else {
 		err = opts.HandleShowSlurps()

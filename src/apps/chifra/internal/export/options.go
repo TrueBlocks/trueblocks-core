@@ -163,7 +163,7 @@ func (opts *ExportOptions) toCmdLine() string {
 	options += " " + strings.Join(opts.Topics, " ")
 	options += " " + strings.Join(opts.Fourbytes, " ")
 	// EXISTING_CODE
-	if opts.Globals.Cache1 {
+	if opts.Globals.Cache {
 		options += " --cache"
 	}
 	// EXISTING_CODE
@@ -343,7 +343,7 @@ func (opts *ExportOptions) getCaches() (m map[string]bool) {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *ExportOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache1, opts.getCaches()
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

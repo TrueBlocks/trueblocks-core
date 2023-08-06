@@ -189,7 +189,7 @@ func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *SlurpOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache1, opts.getCaches()
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

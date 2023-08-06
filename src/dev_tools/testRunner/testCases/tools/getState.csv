@@ -103,6 +103,10 @@ on      ,cmd  ,fast  ,state ,tools/getState ,from_file                      ,y  
 on      ,both ,fast  ,state ,tools/getState ,redir_output                   ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 2000000 & fmt = txt & output = output_test_file
 on      ,both ,fast  ,state ,tools/getState ,redir_output_append            ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & blocks = 2000001 & fmt = txt & output = output_test_file & no_header & append
 
+on      ,both ,fast  ,state ,tools/getState ,cache_and_decache              ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 & blocks = 12000000 & cache & decache
+on      ,both ,fast  ,state ,tools/getState ,cache_one                      ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 & blocks = 12000000 & cache
+on      ,both ,fast  ,state ,tools/getState ,decache_one                    ,y    ,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 & blocks = 12000000 & decache
+
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
 on      ,both ,fast  ,state ,tools/getState ,caps_allowed                   ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & wei & fail_on_purpose

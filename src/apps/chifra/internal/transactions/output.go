@@ -58,7 +58,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 	}
 
 	handled = true
-	if opts.Globals.Decache1 {
+	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 
 	} else if opts.Logs {

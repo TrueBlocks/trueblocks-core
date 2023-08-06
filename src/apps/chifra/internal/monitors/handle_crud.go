@@ -13,11 +13,11 @@ import (
 
 // HandleCrudCommands handles the chifra monitors delete, undelete, remove and decache commands.
 //
-// [State]     | Delete | Undelete | Remove | Decache                    |
-// ------------|--------|------------------------------------------------|
-// Not Deleted | Delete	| Error    | Error  | Delete, Remove and Decache |
-// Deleted     | Error  | Undelete | Remove | Remove and Decache         |
-// ------------|--------|------------------------------------------------|
+// [State]     | Delete | Undelete | Remove |
+// ------------|--------|-------------------|
+// Not Deleted | Delete	| Error    | Error  |
+// Deleted     | Error  | Undelete | Remove |
+// ------------|--------|-------------------|
 func (opts *MonitorsOptions) HandleCrudCommands() error {
 	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {

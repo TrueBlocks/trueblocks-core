@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package monitorsPkg
+package exportPkg
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ import (
 )
 
 // HandleDecache handles the command chifra monitors --decache
-func (opts *MonitorsOptions) HandleDecache() error {
+func (opts *ExportOptions) HandleDecache() error {
 	if opts.Globals.TestMode {
 		logger.Warn("Decache option not tested.")
 		return nil
