@@ -1,0 +1,6 @@
+list?addrs=trueblocks.eth&decache
+{
+  "errors": [
+    "Invalid key (decache) in list route."
+  ]
+}

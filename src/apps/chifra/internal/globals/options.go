@@ -20,15 +20,16 @@ import (
 )
 
 type GlobalOptions struct {
-	Wei     bool            `json:"wei,omitempty"`
-	Ether   bool            `json:"ether,omitempty"`
-	Help    bool            `json:"help,omitempty"`
-	File    string          `json:"file,omitempty"`
-	Version bool            `json:"version,omitempty"`
-	Noop    bool            `json:"noop,omitempty"`
-	NoColor bool            `json:"noColor,omitempty"`
-	Cache   bool            `json:"cache,omitempty"`
-	Caps    caps.Capability `json:"-"`
+	Wei      bool            `json:"wei,omitempty"`
+	Ether    bool            `json:"ether,omitempty"`
+	Help     bool            `json:"help,omitempty"`
+	File     string          `json:"file,omitempty"`
+	Version  bool            `json:"version,omitempty"`
+	Noop     bool            `json:"noop,omitempty"`
+	NoColor  bool            `json:"noColor,omitempty"`
+	Cache1   bool            `json:"cache,omitempty"`
+	Decache1 bool            `json:"decache,omitempty"`
+	Caps     caps.Capability `json:"-"`
 	output.OutputOptions
 }
 
@@ -46,7 +47,8 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.NoColor, "NoColor: ", opts.NoColor)
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
-	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.Cache1, "Cache: ", opts.Cache1)
+	logger.TestLog(opts.Decache1, "Decache: ", opts.Decache1)
 	logger.TestLog(opts.Caps != caps.Default, "Caps: ", opts.Caps.Show())
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
@@ -62,6 +64,7 @@ func SetDefaults(opts *GlobalOptions) {
 	}
 }
 
+// TODO: These options should be in a data file
 func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	opts.TestMode = file.IsTestMode()
 	opts.Caps = c
@@ -80,7 +83,8 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	}
 
 	if opts.Caps.Has(caps.Caching) {
-		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
+		cmd.Flags().BoolVarP(&opts.Cache1, "cache", "o", false, "force the results of the query into the cache")
+		cmd.Flags().BoolVarP(&opts.Decache1, "decache", "D", false, "removes related items from the cache")
 	}
 
 	if opts.Caps.Has(caps.Fmt) {
@@ -227,7 +231,7 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return rpcClient.NewConnection(opts.Chain, opts.Cache, caches)
+	return rpcClient.NewConnection(opts.Chain, opts.Cache1, caches)
 }
 
 func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpcClient.Connection {
@@ -249,5 +253,5 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return rpcClient.NewConnection(opts.Chain, opts.Cache, caches)
+	return rpcClient.NewConnection(opts.Chain, opts.Cache1, caches)
 }

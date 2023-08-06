@@ -27,7 +27,6 @@ type AbisOptions struct {
 	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
 	Encode  string                `json:"encode,omitempty"`  // Generate the 32-byte encoding for a given cannonical function or event signature
 	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no address is given
-	Sol     bool                  `json:"sol,omitempty"`     // Please use the `solc --abi` tool instead
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	Conn    *rpcClient.Connection `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -82,8 +81,6 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			opts.Encode = value[0]
 		case "clean":
 			opts.Clean = true
-		case "sol":
-			opts.Sol = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")

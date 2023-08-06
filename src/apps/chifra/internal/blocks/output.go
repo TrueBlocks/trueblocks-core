@@ -58,7 +58,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	if opts.Decache {
+	if opts.Globals.Decache1 {
 		err = opts.HandleDecache()
 
 	} else if opts.Count {

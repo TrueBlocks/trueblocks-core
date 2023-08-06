@@ -42,7 +42,7 @@ on       ,both ,fast  ,logs  ,tools/getLogs ,redir_output        ,y    ,transact
 on       ,both ,fast  ,logs  ,tools/getLogs ,redir_output_append ,y    ,transactions = 3657480.11 3657480.10 & output = output_test_file & no_header & append
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on       ,both ,fast  ,logs  ,tools/getLogs ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on       ,both ,fast  ,logs  ,tools/getLogs ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
 on       ,both ,fast  ,logs  ,tools/getLogs ,caps_disallowed_1   ,y    ,transactions = 12.0 & ether
 on       ,both ,fast  ,logs  ,tools/getLogs ,caps_disallowed_2   ,y    ,transactions = 12.0 & wei

@@ -35,10 +35,6 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("The {0} option requires at least one {1}.", "--match_case", "term")
 	}
 
-	if opts.Named {
-		return validate.Usage("The --named option has been deprecated. Use --all instead.")
-	}
-
 	if opts.Prefund && (opts.Clean || len(opts.Autoname) > 0 || opts.anyCrud()) {
 		return validate.Usage("You may not use the {0} option when editing names.", "--prefund")
 	}

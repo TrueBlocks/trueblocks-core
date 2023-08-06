@@ -35,9 +35,9 @@ Flags:
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
   -U, --count             display the number of the lists of appearances for --addrs or --uniq
-  -D, --decache           removes a block and any transactions or traces in the block from the cache
   -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
+  -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose output
   -h, --help              display this help screen
@@ -50,6 +50,7 @@ Notes:
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
   - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.
+  - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
 ```
 
 Data models produced by this tool:

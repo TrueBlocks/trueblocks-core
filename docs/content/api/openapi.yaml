@@ -563,14 +563,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: decache
-          description: removes a monitor and all associated data from the cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: list
           description: list monitors in the cache (--verbose for more detail)
           required: false
@@ -747,14 +739,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: named
-          description: please use the --all option instead
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: delete
           description: delete the item, but do not remove it
           required: false
@@ -1048,14 +1032,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: decache
-          description: removes a block and any transactions or traces in the block from the cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1180,14 +1156,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: decache
-          description: removes a transactions and any traces in the transaction from the cache
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data

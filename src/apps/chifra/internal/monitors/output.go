@@ -92,7 +92,7 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 		wg.Wait()
 
 	} else {
-		if opts.Decache {
+		if opts.Globals.Decache1 {
 			err = opts.HandleDecache()
 		} else {
 			err = opts.HandleCrudCommands()

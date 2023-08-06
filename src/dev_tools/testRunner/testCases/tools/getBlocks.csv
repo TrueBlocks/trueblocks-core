@@ -109,7 +109,7 @@ on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blo
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed           ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed           ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
 on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1      ,y    ,blocks = 3000000 & ether
 on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_2      ,y    ,blocks = 3000000 & wei

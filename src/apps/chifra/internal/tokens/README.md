@@ -33,6 +33,7 @@ Flags:
   -c, --changes         only report a balance when it changes from one block to the next
   -z, --no_zero         suppress the display of zero balance accounts
   -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose output
   -h, --help            display this help screen
