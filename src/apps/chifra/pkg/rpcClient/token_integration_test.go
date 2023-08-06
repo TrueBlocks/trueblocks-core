@@ -8,6 +8,7 @@
 package rpcClient
 
 import (
+	"math/big"
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -34,11 +35,11 @@ func TestGetState_Erc20(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.Type.IsErc20() {
+	if !token.TokenType.IsErc20() {
 		t.Fatal("token reported as non-ERC20")
 	}
 
-	if token.Type.IsErc721() {
+	if token.TokenType.IsErc721() {
 		t.Fatal("token reported as ERC721")
 	}
 
@@ -54,11 +55,10 @@ func TestGetState_Erc20(t *testing.T) {
 		t.Fatal("wrong decimals:", token.Decimals)
 	}
 
-	// TODO TOKEN
-	// v, _ := big.NewInt(0).SetString("9118918230822796234900723527", 10)
-	// if token.TotalSupply.Cmp(v) != 0 {
-	// 	t.Fatal("wrong total supply:", token.TotalSupply)
-	// }
+	v, _ := big.NewInt(0).SetString("9118918230822796234900723527", 10)
+	if token.TotalSupply.Cmp(v) != 0 {
+		t.Fatal("wrong total supply:", token.TotalSupply)
+	}
 }
 
 func TestGetState_Erc721(t *testing.T) {
@@ -71,11 +71,11 @@ func TestGetState_Erc721(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.Type.IsErc721() {
+	if !token.TokenType.IsErc721() {
 		t.Fatal("token reported as non-ERC721")
 	}
 
-	if token.Type.IsErc20() {
+	if token.TokenType.IsErc20() {
 		t.Fatal("token reported as ERC20")
 	}
 
@@ -91,11 +91,10 @@ func TestGetState_Erc721(t *testing.T) {
 		t.Fatal("NFT should not have decimals set:", token.Decimals)
 	}
 
-	// TODO TOKEN
-	// v, _ := big.NewInt(0).SetString("10000", 10)
-	// if token.TotalSupply.Cmp(v) != 0 {
-	// 	t.Fatal("wrong total supply:", token.TotalSupply)
-	// }
+	v, _ := big.NewInt(0).SetString("10000", 10)
+	if token.TotalSupply.Cmp(v) != 0 {
+		t.Fatal("wrong total supply:", token.TotalSupply)
+	}
 }
 
 func TestGetState_NonStandard(t *testing.T) {
@@ -108,11 +107,11 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.Type.IsErc20() {
+	if !token.TokenType.IsErc20() {
 		t.Fatal("token reported as non-ERC20")
 	}
 
-	if token.Type.IsErc721() {
+	if token.TokenType.IsErc721() {
 		t.Fatal("token reported as ERC721")
 	}
 
@@ -128,11 +127,10 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal("wrong decimals:", token.Decimals)
 	}
 
-	// TODO TOKEN
-	// v, _ := big.NewInt(0).SetString("7069797008171168928213", 10)
-	// if token.TotalSupply.Cmp(v) != 0 {
-	// 	t.Fatal("wrong total supply:", token.TotalSupply)
-	// }
+	v, _ := big.NewInt(0).SetString("7069797008171168928213", 10)
+	if token.TotalSupply.Cmp(v) != 0 {
+		t.Fatal("wrong total supply:", token.TotalSupply)
+	}
 
 	// Non-standard 2
 
@@ -141,11 +139,11 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !token.Type.IsErc20() {
+	if !token.TokenType.IsErc20() {
 		t.Fatal("token reported as non-ERC20")
 	}
 
-	if token.Type.IsErc721() {
+	if token.TokenType.IsErc721() {
 		t.Fatal("token reported as ERC721")
 	}
 
@@ -161,11 +159,10 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal("wrong decimals:", token.Decimals)
 	}
 
-	// TODO TOKEN
-	// v, _ = big.NewInt(0).SetString("210000000000000000000000000", 10)
-	// if token.TotalSupply.Cmp(v) != 0 {
-	// 	t.Fatal("wrong total supply:", token.TotalSupply)
-	// }
+	v, _ = big.NewInt(0).SetString("210000000000000000000000000", 10)
+	if token.TotalSupply.Cmp(v) != 0 {
+		t.Fatal("wrong total supply:", token.TotalSupply)
+	}
 
 	// 3
 	nonStandard3 := base.HexToAddress("0xc4e0f3ec24972c75df7c716922096f4270b7bb4e")
@@ -174,11 +171,11 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if token.Type.IsErc20() {
+	if token.TokenType.IsErc20() {
 		t.Fatal("token reported as ERC20")
 	}
 
-	if !token.Type.IsErc721() {
+	if !token.TokenType.IsErc721() {
 		t.Fatal("token reported as non-ERC721")
 	}
 
@@ -194,9 +191,8 @@ func TestGetState_NonStandard(t *testing.T) {
 		t.Fatal("wrong decimals:", token.Decimals)
 	}
 
-	// TODO TOKEN
-	// v, _ = big.NewInt(0).SetString("", 10)
-	// if token.TotalSupply.Cmp(v) != 0 {
-	// 	t.Fatal("wrong total supply:", token.TotalSupply)
-	// }
+	v, _ = big.NewInt(0).SetString("0", 10)
+	if token.TotalSupply.Cmp(v) != 0 {
+		t.Fatal("wrong total supply:", token.TotalSupply)
+	}
 }

@@ -49,7 +49,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [tokenbalance](/data-model/chainstate/#tokenbalance)
+- [token](/data-model/chainstate/#token)
 
 Links:
 

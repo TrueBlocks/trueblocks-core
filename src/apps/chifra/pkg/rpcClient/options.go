@@ -31,12 +31,16 @@ func (conn *Connection) TestLog(enabledMap map[string]bool) {
 type ConnectionSettings struct {
 	Chain         string
 	ReadonlyCache bool
+	CacheEnabled  bool
+	EnabledMap    map[string]bool
 	Opts          any
 }
 
 func NewConnection(chain string, cacheEnabled bool, enabledMap map[string]bool) *Connection {
 	settings := ConnectionSettings{
 		Chain: chain,
+		// CacheEnabled: cacheEnabled,
+		// EnabledMap:   enabledMap,
 	}
 	return settings.DefaultRpcOptions()
 }
@@ -58,23 +62,18 @@ func NewReadOnlyConnection(chain string) *Connection {
 
 // DefaultRpcOptions builds the store and enables the caches and returns the RPC connection
 func (settings ConnectionSettings) DefaultRpcOptions() *Connection {
-	readonlyCache := settings.ReadonlyCache
-
-	var chain string
-	var cacheEnabled bool
-	enabledMap := make(map[string]bool)
-	chain = settings.Chain
 	if cs, ok := settings.Opts.(CacheStater); ok {
-		cacheEnabled, enabledMap = cs.CacheState()
+		settings.CacheEnabled, settings.EnabledMap = cs.CacheState()
+	}
+	store := cacheStore(settings.Chain, !settings.CacheEnabled || settings.ReadonlyCache)
+
+	ret := &Connection{
+		Chain:      settings.Chain,
+		Store:      store,
+		enabledMap: settings.EnabledMap,
 	}
 
-	store := cacheStore(chain, !cacheEnabled || readonlyCache)
-	ret := &Connection{
-		Chain:      chain,
-		Store:      store,
-		enabledMap: enabledMap,
-	}
-	if !store.ReadOnly() {
+	if store != nil && !store.ReadOnly() {
 		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(nil)
 	}
 
