@@ -34,7 +34,7 @@ func (opts *TransactionsOptions) HandleDecache() error {
 			toRemove = append(toRemove, tx)
 			toRemove = append(toRemove, &types.SimpleTraceGroup{
 				BlockNumber:      tx.BlockNumber,
-				TransactionIndex: int(tx.TransactionIndex),
+				TransactionIndex: tx.TransactionIndex,
 			})
 		}
 	}

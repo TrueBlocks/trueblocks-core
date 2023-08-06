@@ -7,6 +7,7 @@ package blocksPkg
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -18,43 +19,20 @@ func (opts *BlocksOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
 	opts.Conn = rpcClient.NewReadOnlyConnection(chain)
 
-	toRemove := make([]cache.Locator, 0)
-	for _, br := range opts.BlockIds {
-		blockNums, err := br.ResolveBlocks(chain)
-		if err != nil {
-			return err
-		}
-		for _, bn := range blockNums {
-			rawBlock, err := opts.Conn.GetBlockBodyByNumber(bn)
-			if err != nil {
-				return err
-			}
-			toRemove = append(toRemove, &types.SimpleBlock[string]{
-				BlockNumber: bn,
-			})
-			for _, tx := range rawBlock.Transactions {
-				txToRemove := &types.SimpleTransaction{
-					BlockNumber:      bn,
-					TransactionIndex: tx.TransactionIndex,
-				}
-				toRemove = append(toRemove, txToRemove)
-				toRemove = append(toRemove, &types.SimpleTraceGroup{
-					BlockNumber:      tx.BlockNumber,
-					TransactionIndex: int(tx.TransactionIndex),
-				})
-			}
-		}
+	toRemove, err := opts.LocationsFromIdentifiers()
+	if err != nil {
+		return err
 	}
 
 	testMode := opts.Globals.TestMode
 	itemsSeen := int64(0)
-	itemsRemoved := int64(0)
-	bytesRemoved := 0
+	itemsProcessed := int64(0)
+	bytesProcessed := 0
 	processorFunc := func(info *locations.ItemInfo) bool {
 		itemsSeen++
-		itemsRemoved++
-		bytesRemoved += info.Size()
-		logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", info.Name())
+		itemsProcessed++
+		bytesProcessed += info.Size()
+		logger.Progress(!testMode && itemsProcessed%20 == 0, "Removed", itemsProcessed, "items and", bytesProcessed, "bytes.", info.Name())
 		if opts.Globals.Verbose {
 			logger.Info(info.Name(), "was removed.")
 		}
@@ -63,15 +41,42 @@ func (opts *BlocksOptions) HandleDecache() error {
 	}
 
 	_ = opts.Conn.Store.Decache(toRemove, processorFunc)
-
-	if itemsSeen == 0 {
-		logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))
-	} else {
-		logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.", strings.Repeat(" ", 60))
-	}
+	logger.Info(itemsProcessed, "items totaling", bytesProcessed, "bytes were removed from the cache.", strings.Repeat(" ", 60))
 
 	return nil
 }
 
 // TODO: We could use a Modeler that only delivers a message (i.e. SimpleModeler). Use it here and
 // TODO: in monitors --decache to report some data in case the standard error is redirected.
+
+func (opts *BlocksOptions) LocationsFromIdentifiers() ([]cache.Locator, error) {
+	chain := opts.Globals.Chain
+	toRemove := make([]cache.Locator, 0)
+	for _, br := range opts.BlockIds {
+		blockNums, err := br.ResolveBlocks(chain)
+		if err != nil {
+			return nil, err
+		}
+		for _, bn := range blockNums {
+			rawBlock, err := opts.Conn.GetBlockHeaderByNumber(bn)
+			if err != nil {
+				return nil, err
+			}
+			toRemove = append(toRemove, &types.SimpleBlock[string]{
+				BlockNumber: bn,
+			})
+			for index := range rawBlock.Transactions {
+				txToRemove := &types.SimpleTransaction{
+					BlockNumber:      bn,
+					TransactionIndex: uint64(index),
+				}
+				toRemove = append(toRemove, txToRemove)
+				toRemove = append(toRemove, &types.SimpleTraceGroup{
+					BlockNumber:      bn,
+					TransactionIndex: base.Txnum(index),
+				})
+			}
+		}
+	}
+	return toRemove, nil
+}

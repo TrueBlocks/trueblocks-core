@@ -321,14 +321,14 @@ type SimpleTraceGroup struct {
 	Traces []SimpleTrace
 	// Details for cache locator
 	BlockNumber      base.Blknum
-	TransactionIndex int
+	TransactionIndex base.Txnum
 }
 
 func NewSimpleTraceGroup(tx *SimpleTransaction) *SimpleTraceGroup {
 	return &SimpleTraceGroup{
 		Traces:           make([]SimpleTrace, 0, len(tx.Traces)),
 		BlockNumber:      tx.Receipt.BlockNumber,
-		TransactionIndex: int(tx.TransactionIndex),
+		TransactionIndex: tx.TransactionIndex,
 	}
 }
 

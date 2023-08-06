@@ -98,7 +98,7 @@ func (conn *Connection) GetTracesByTransactionID(bn, txid uint64) ([]types.Simpl
 	if conn.HasStore() {
 		traceGroup := &types.SimpleTraceGroup{
 			BlockNumber:      bn,
-			TransactionIndex: int(txid),
+			TransactionIndex: txid,
 		}
 
 		if err := conn.Store.Read(traceGroup, nil); err == nil {

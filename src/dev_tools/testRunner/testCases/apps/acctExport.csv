@@ -274,8 +274,11 @@ local   ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    
 local   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
 on      ,both ,fast  ,export   ,apps/acctExport ,cache_and_decache        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & cache & decache
-on      ,both ,fast  ,export   ,apps/acctExport ,cache_one                ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 = 46147.0 & cache
-on      ,both ,fast  ,export   ,apps/acctExport ,decache_one              ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 = 46147.0 & decache
+on      ,both ,fast  ,export   ,apps/acctExport ,cache_one                ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & cache
+on      ,both ,fast  ,export   ,apps/acctExport ,decache_one              ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & decache
+
+# This fail because it doesn't report an error in API mode but it does in cmd line mode
+local   ,both ,fast  ,export   ,apps/acctExport ,bug_no_api_error_msg     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 41740.0 & decache
 
 # Not tested for chifra export
 # chifra export --cache
