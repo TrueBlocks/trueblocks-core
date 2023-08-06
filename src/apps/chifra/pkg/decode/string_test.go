@@ -94,7 +94,7 @@ func TestArticulateEncodedStringNew(t *testing.T) {
 	}
 }
 
-func TestArticulateBytes32String(t *testing.T) {
+func TestArticulateBytes32StringNew(t *testing.T) {
 	type args struct {
 		hex string
 	}
@@ -113,8 +113,8 @@ func TestArticulateBytes32String(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := ArticulateBytes32String(tt.args.hex); got != tt.want {
-				t.Errorf("ArticulateBytes32String() = %v, want %v", got, tt.want)
+			if got := ArticulateBytes32StringNew(tt.args.hex); got != tt.want {
+				t.Errorf("ArticulateBytes32StringNew() = %v, want %v", got, tt.want)
 			}
 		})
 	}

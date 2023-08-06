@@ -111,8 +111,8 @@ func ArticulateEncodedStringNew(hex string) (result string, err error) {
 	return
 }
 
-// ArticulateBytes32String turns bytes32 encoded string into Go string
-func ArticulateBytes32String(hex string) (result string) {
+// ArticulateBytes32StringNew turns bytes32 encoded string into Go string
+func ArticulateBytes32StringNew(hex string) (result string) {
 	if len(hex) < 2 {
 		return
 	}
@@ -140,13 +140,13 @@ func ArticulateBytes32String(hex string) (result string) {
 
 // ArticulateEncodedStringOrBytes32New tries to read string from either EVM string
 // value or bytes32 hex
-func ArticulateEncodedStringOrBytes32New(hex string) (string, error) {
-	if len(hex) < 2 {
+func ArticulateEncodedStringOrBytes32New(hexStr string) (string, error) {
+	if len(hexStr) < 2 {
 		return "", nil
 	}
-	if len(hex[2:]) > 64 {
-		return ArticulateEncodedStringNew(hex)
+	if len(hexStr[2:]) > 64 {
+		return ArticulateEncodedStringNew(hexStr)
 	}
 
-	return ArticulateBytes32String(hex), nil
+	return ArticulateBytes32StringNew(hexStr), nil
 }
