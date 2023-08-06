@@ -18,7 +18,7 @@
 - [The unchained index](#the-unchained-index)
 - [Docker version](#docker-version)
 - [Documentation](#documentation)
-  - [Linting](#linting)
+- [Linting](#linting)
 - [Contributing](#contributing)
 - [Contact](#contact)
 - [List of Contributors](#list-of-contributors)
@@ -127,7 +127,7 @@ Our [official docker version](https://github.com/TrueBlocks/trueblocks-docker) i
 
 The TrueBlocks [documentation repo](https://github.com/TrueBlocks/trueblocks-docs) builds the TrueBlocks website. See our website for the [best available documentation](https://trueblocks.io/).
 
-### Linting
+## Linting
 
 Our build process requires the code you submit to be linted.
 
