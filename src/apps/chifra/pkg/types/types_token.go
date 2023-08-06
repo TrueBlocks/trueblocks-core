@@ -154,12 +154,10 @@ func (s *SimpleToken) Model(verbose bool, format string, extraOptions map[string
 //
 
 func (s *SimpleToken) IsErc20() bool {
-	// TODO TOKEN
 	return s.TokenType.IsErc20()
 }
 
 func (s *SimpleToken) IsErc721() bool {
-	// TODO TOKEN
 	return s.TokenType.IsErc721()
 }
 
