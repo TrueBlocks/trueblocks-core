@@ -1,6 +1,6 @@
 chifra traces  .whatever
 TEST[DATE|TIME] Transactions:  [.whatever]
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
 Error: The given value '.whatever' is not a valid identifier.
 Usage:

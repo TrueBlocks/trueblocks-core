@@ -94,6 +94,9 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
+		opts.Parts = append(opts.Parts, "all")
+	}
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -130,6 +133,9 @@ func tokensFinishParse(args []string) *TokensOptions {
 		}
 	}
 	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
+		opts.Parts = append(opts.Parts, "all")
+	}
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}

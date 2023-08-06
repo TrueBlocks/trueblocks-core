@@ -2,7 +2,7 @@ chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059c --logs --max_
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059c]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] MaxRecords:  10
-TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  json
 Error: Invalid fourbyte: 0xa9059c
 Usage:

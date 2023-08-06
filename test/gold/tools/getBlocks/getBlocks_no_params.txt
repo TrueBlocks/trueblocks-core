@@ -1,5 +1,5 @@
 chifra blocks  
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 Error: Please supply either a block identifier or the --list_count option.
 Usage:

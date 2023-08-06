@@ -1,7 +1,7 @@
 chifra when  12345 54321 2016-12-01 2016-12-01T01 --timestamps
 TEST[DATE|TIME] Blocks:  [12345 54321 2016-12-01 2016-12-01T01]
 TEST[DATE|TIME] Timestamps:  true
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 Error: --timestamp option not tested in testMode
 Usage:

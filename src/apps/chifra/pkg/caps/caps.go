@@ -60,7 +60,7 @@ func (c Capability) Remove(cap Capability) Capability {
 func (c Capability) Text() string {
 	switch c {
 	case Caching:
-		return "cache, decache"
+		return "cache,decache"
 	case Fmt:
 		return "fmt"
 	case Raw:

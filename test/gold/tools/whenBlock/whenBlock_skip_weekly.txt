@@ -1,6 +1,6 @@
 chifra when  --fmt txt 1065497-1856235:weekly
 TEST[DATE|TIME] Blocks:  [1065497-1856235:weekly]
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 blockNumber	timestamp	date	name
 1035159	1456012800	2016-02-21 00:00:00 UTC	

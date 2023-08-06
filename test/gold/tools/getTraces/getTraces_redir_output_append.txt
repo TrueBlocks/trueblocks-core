@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [3657480.9]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 ----

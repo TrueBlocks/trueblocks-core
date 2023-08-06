@@ -1,6 +1,6 @@
 chifra traces  0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 --fmt json
 TEST[DATE|TIME] Transactions:  [0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328]
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

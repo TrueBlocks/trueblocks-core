@@ -1,7 +1,7 @@
 chifra blocks  3 469 --uncles
 TEST[DATE|TIME] Blocks:  [3 469]
 TEST[DATE|TIME] Uncles:  true
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

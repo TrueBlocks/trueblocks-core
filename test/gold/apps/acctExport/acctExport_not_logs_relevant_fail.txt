@@ -1,7 +1,7 @@
 chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --relevant
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Relevant:  true
-TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: The --relevant option is only available with the --logs option.
 Usage:

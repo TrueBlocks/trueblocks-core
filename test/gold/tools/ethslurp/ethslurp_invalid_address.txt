@@ -1,7 +1,7 @@
 chifra slurp  0x63c8c29af409bd31ec7ddeea58f
 TEST[DATE|TIME] Blocks:  [0x63c8c29af409bd31ec7ddeea58f]
 TEST[DATE|TIME] Types:  [ext]
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
 Error: Please specify at least one valid Ethereum address.
 Usage:

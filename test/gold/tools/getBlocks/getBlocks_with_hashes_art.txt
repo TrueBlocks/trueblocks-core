@@ -2,7 +2,7 @@ chifra blocks  4012000-4012001 --hashes --articulate
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Hashes:  true
 TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 Error: The --articulate option is available only with the --logs option.
 Usage:

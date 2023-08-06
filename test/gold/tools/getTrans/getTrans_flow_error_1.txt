@@ -1,7 +1,7 @@
 chifra transactions  4102000.0 --fmt txt --flow to
 TEST[DATE|TIME] Transactions:  [4102000.0]
 TEST[DATE|TIME] Flow:  to
-TEST[DATE|TIME] Caps:  cache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: The --flow option is only available with the --uniq option
 Usage:

@@ -1,7 +1,8 @@
 chifra tokens  21321321312321 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
 TEST[DATE|TIME] Addrs:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
 TEST[DATE|TIME] Blocks:  [21321321312321]
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Parts:  [all]
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 Error: The given value '21321321312321' is not a valid identifier.
 Usage:

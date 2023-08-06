@@ -1,7 +1,7 @@
 chifra transactions  9004225.10 --logs --fmt json
 TEST[DATE|TIME] Transactions:  [9004225.10]
 TEST[DATE|TIME] Logs:  true
-TEST[DATE|TIME] Caps:  cache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
