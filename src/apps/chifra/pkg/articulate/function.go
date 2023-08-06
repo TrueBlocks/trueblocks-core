@@ -228,7 +228,7 @@ func articulateFixedBytes(abiType *abi.Type, data any) string {
 	hashLike, ok := data.([32]byte)
 	if ok && abiType.Size == 32 {
 		hash := base.BytesToHash(hashLike[:])
-		articulated, ok := decode.ArticulateStringNew(hash.Hex())
+		articulated, ok := decode.ArticulateString(hash.Hex())
 		if ok {
 			return articulated
 		}

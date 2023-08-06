@@ -22,9 +22,9 @@ func init() {
 	}
 }
 
-// ArticulateStringNew tries to convert hex into a string of printable characters
+// ArticulateString tries to convert hex into a string of printable characters
 // (ASCII only). If it was successful, then `success` is true.
-func ArticulateStringNew(hex string) (strResult string, success bool) {
+func ArticulateString(hex string) (strResult string, success bool) {
 	if len(hex) < 2 {
 		return "", false
 	}
@@ -96,13 +96,13 @@ func SanitizeString(str string) (sanitized string) {
 	return
 }
 
-// ArticulateEncodedStringNew translates EVM string into Go string
-func ArticulateEncodedStringNew(hex string) (result string, err error) {
-	if len(hex) < 2 {
+// articulateEncodedString translates EVM string into Go string
+func articulateEncodedString(hexStr string) (result string, err error) {
+	if len(hexStr) < 2 {
 		result = ""
 		return
 	}
-	byteValue := base.Hex2Bytes(hex[2:])
+	byteValue := base.Hex2Bytes(hexStr[2:])
 	unpacked, err := abiStringArguments.Unpack(byteValue)
 	if err != nil {
 		return
@@ -111,12 +111,12 @@ func ArticulateEncodedStringNew(hex string) (result string, err error) {
 	return
 }
 
-// ArticulateBytes32StringNew turns bytes32 encoded string into Go string
-func ArticulateBytes32StringNew(hex string) (result string) {
-	if len(hex) < 2 {
+// articulateBytes32String turns bytes32 encoded string into Go string
+func articulateBytes32String(hexStr string) (result string) {
+	if len(hexStr) < 2 {
 		return
 	}
-	input := base.Hex2Bytes(hex[2:])
+	input := base.Hex2Bytes(hexStr[2:])
 	if len(input) == 0 {
 		return ""
 	}
@@ -138,15 +138,15 @@ func ArticulateBytes32StringNew(hex string) (result string) {
 	return
 }
 
-// ArticulateEncodedStringOrBytes32New tries to read string from either EVM string
+// ArticulateStringOrBytes tries to read string from either EVM string
 // value or bytes32 hex
-func ArticulateEncodedStringOrBytes32New(hexStr string) (string, error) {
+func ArticulateStringOrBytes(hexStr string) (string, error) {
 	if len(hexStr) < 2 {
 		return "", nil
 	}
 	if len(hexStr[2:]) > 64 {
-		return ArticulateEncodedStringNew(hexStr)
+		return articulateEncodedString(hexStr)
 	}
 
-	return ArticulateBytes32StringNew(hexStr), nil
+	return articulateBytes32String(hexStr), nil
 }

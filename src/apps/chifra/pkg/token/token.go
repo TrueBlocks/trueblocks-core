@@ -104,8 +104,8 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 		return
 	}
 
-	name, _ := decode.ArticulateEncodedStringOrBytes32New(*results["name"])
-	symbol, _ := decode.ArticulateEncodedStringOrBytes32New(*results["symbol"])
+	name, _ := decode.ArticulateStringOrBytes(*results["name"])
+	symbol, _ := decode.ArticulateStringOrBytes(*results["symbol"])
 
 	var decimals uint64 = 0
 	rawDecimals := *results["decimals"]
@@ -123,7 +123,7 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 	}
 
 	tokenType := types.TokenErc20
-	erc721, erc721Err := decode.DecodeBool(*results["erc721"])
+	erc721, erc721Err := decode.ArticulateBool(*results["erc721"])
 	if erc721Err == nil && erc721 {
 		tokenType = types.TokenErc721
 	}

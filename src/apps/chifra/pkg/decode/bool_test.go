@@ -43,13 +43,13 @@ func TestDecodeBool(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotResult, err := DecodeBool(tt.args.hexStr)
+			gotResult, err := ArticulateBool(tt.args.hexStr)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("DecodeBool() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("ArticulateBool() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if gotResult != tt.wantResult {
-				t.Errorf("DecodeBool() = %v, want %v", gotResult, tt.wantResult)
+				t.Errorf("ArticulateBool() = %v, want %v", gotResult, tt.wantResult)
 			}
 		})
 	}

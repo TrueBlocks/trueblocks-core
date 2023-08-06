@@ -50,7 +50,7 @@ func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction
 	}
 
 	if found == nil && len(tx.Input) > 0 {
-		if message, ok := decode.ArticulateStringNew(tx.Input); ok {
+		if message, ok := decode.ArticulateString(tx.Input); ok {
 			tx.Message = message
 		}
 	}
