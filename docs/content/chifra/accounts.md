@@ -167,7 +167,7 @@ Data models produced by this tool:
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [tokenbalance](/data-model/chainstate/#tokenbalance)
+- [token](/data-model/chainstate/#token)
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 

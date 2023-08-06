@@ -134,7 +134,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 		Name:        name,
 		Symbol:      symbol,
 		TotalSupply: *totalSupply,
-		Type:        tokenType,
+		TokenType:   tokenType,
 	}
 
 	return

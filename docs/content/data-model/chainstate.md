@@ -70,9 +70,7 @@ TokenBalances consist of the following fields:
 | name             | the name of the token contract, if available                          | string    |
 | symbol           | the symbol of the token contract                                      | string    |
 | decimals         | the number of decimals for the token contract                         | uint64    |
-| isContract       | `true` if the address is a smart contract, `false` otherwise          | bool      |
-| isErc20          | `true` if the address is an ERC20, `false` otherwise                  | bool      |
-| isErc721         | `true` if the address is an ERC720, `false` otherwise                 | bool      |
+| type             | the type of token (ERC20 or ERC721) or none                           | TokenType |
 
 ## EthCall
 
@@ -105,7 +103,6 @@ This documentation mentions the following basic data types.
 | --------- | ----------------------------------- | -------------- |
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
 | blknum    | an alias for a uint64               |                |
-| bool      | either `true`, `false`, `1`, or `0` |                |
 | int256    | a signed big number                 | as a string    |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |

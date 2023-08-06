@@ -482,7 +482,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#reconciliation">Reconciliation</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#transfer">Transfer</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/chainstate/#tokenbalance">Tokenbalance</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#reconciliation">Reconciliation</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#transfer">Transfer</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1638,7 +1638,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: On-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block. Produces <a href="/data-model/chainstate/#tokenbalance">Tokenbalance</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
+                    description: On-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block. Produces <a href="/data-model/chainstate/#token">Token</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
                     type: array
                     items:
                       $ref: "#/components/schemas/tokenBalance"
@@ -3401,15 +3401,10 @@ components:
           format: uint64
           example: 18
           description: "the number of decimals for the token contract"
-        isContract:
-          type: boolean
-          description: "`true` if the address is a smart contract, `false` otherwise"
-        isErc20:
-          type: boolean
-          description: "`true` if the address is an ERC20, `false` otherwise"
-        isErc721:
-          type: boolean
-          description: "`true` if the address is an ERC720, `false` otherwise"
+        type:
+          type: TokenType
+          example: "ERC721"
+          description: "the type of token (ERC20 or ERC721) or none"
     ethCall:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract (deprecated)"
       type: object

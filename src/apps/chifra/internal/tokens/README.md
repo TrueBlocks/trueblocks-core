@@ -48,7 +48,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [tokenbalance](/data-model/chainstate/#tokenbalance)
+- [token](/data-model/chainstate/#token)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options
