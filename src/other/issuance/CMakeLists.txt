@@ -1,5 +1,4 @@
-# minimum cmake version supported
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.5)
 
 # application project
 project (issuance)
