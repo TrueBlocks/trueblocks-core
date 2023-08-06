@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
@@ -25,14 +24,14 @@ func (opts *TokensOptions) HandleShow() error {
 	tokenAddr := base.HexToAddress(opts.Addrs[0])
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		for _, address := range opts.Addrs[1:] {
 			addr := base.HexToAddress(address)
 			for _, br := range opts.BlockIds {
@@ -47,16 +46,15 @@ func (opts *TokensOptions) HandleShow() error {
 				}
 
 				for _, bn := range blockNums {
-					if bal, err := token.GetTokenBalanceAt(chain, tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
+					if bal, err := opts.Conn.GetTokenBalanceAt(tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
 						errorChan <- err
 					} else {
-						s := &types.SimpleTokenBalance{
+						s := &types.SimpleToken{
 							Holder:      addr,
 							Address:     tokenAddr,
 							Balance:     *bal,
 							BlockNumber: bn,
-							IsContract:  true,
-							IsErc20:     true,
+							// IsErc20:     true, TODO TOKEN: Should assign type
 						}
 						modelChan <- s
 					}

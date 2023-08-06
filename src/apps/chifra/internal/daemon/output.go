@@ -23,8 +23,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-//lint:file-ignore SA4017 timer value below is auto generated, but not used
-//lint:file-ignore SA4006 timer was auto generated but not used
 // EXISTING_CODE
 
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
@@ -58,7 +56,6 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		return err, true
 	}
 
-	//nolint:staticcheck
 	timer := logger.NewTimer()
 	msg := "chifra daemon"
 	// EXISTING_CODE
@@ -102,6 +99,9 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	go func() {
 		_ = opts.HandleGrpc()
 	}()
+
+	// do not remove, this fixes a lint warning that happens in the boilerplate because of the Fatal just below
+	timer.Report(msg)
 
 	// Start listening to the web sockets
 	RunWebsocketPool()

@@ -8,16 +8,16 @@ import (
 func (abiCache *AbiCache) ArticulateReceipt(chain string, receipt *types.SimpleReceipt) (err error) {
 	for index := range receipt.Logs {
 		address := receipt.Logs[index].Address
-		if !abiCache.loadedMap.Get(address) && !abiCache.skipMap.Get(address) {
-			if err := abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
-				abiCache.skipMap.Set(address, true)
+		if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
+			if err := abi.LoadAbi(chain, address, &abiCache.AbiMap); err != nil {
+				abiCache.skipMap.SetValue(address, true)
 				return err
 			} else {
-				abiCache.loadedMap.Set(address, true)
+				abiCache.loadedMap.SetValue(address, true)
 			}
 		}
 
-		if !abiCache.skipMap.Get(address) {
+		if !abiCache.skipMap.GetValue(address) {
 			if err = abiCache.ArticulateLog(chain, &receipt.Logs[index]); err != nil {
 				return err
 			}

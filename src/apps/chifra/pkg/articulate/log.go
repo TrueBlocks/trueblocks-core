@@ -9,17 +9,17 @@ import (
 
 func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err error) {
 	address := log.Address
-	if !abiCache.loadedMap.Get(address) && !abiCache.skipMap.Get(address) {
-		if err = abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
-			abiCache.skipMap.Set(address, true)
+	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
+		if err = abi.LoadAbi(chain, address, &abiCache.AbiMap); err != nil {
+			abiCache.skipMap.SetValue(address, true)
 			return err
 		} else {
-			abiCache.loadedMap.Set(address, true)
+			abiCache.loadedMap.SetValue(address, true)
 		}
 	}
 
-	if !abiCache.skipMap.Get(address) {
-		if log.ArticulatedLog, err = articulateLog(log, &abiCache.abiMap); err != nil {
+	if !abiCache.skipMap.GetValue(address) {
+		if log.ArticulatedLog, err = articulateLog(log, &abiCache.AbiMap); err != nil {
 			return err
 		}
 	}
@@ -38,7 +38,7 @@ func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (articulat
 	// If we couldn't, then try to find the event in `abiMap`
 	if articulated == nil {
 		selector := "0x" + hex.EncodeToString(log.Topics[0].Bytes())
-		if found := abiMap.Get(selector); found != nil {
+		if found := abiMap.GetValue(selector); found != nil {
 			articulated = found.Clone()
 		} else {
 			// If articulated is still nil, we don't have ABI for this event
@@ -68,13 +68,13 @@ func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (articulat
 }
 
 func findCommonEvent(log *types.SimpleLog) (articulated *types.SimpleFunction) {
-	if articulated = ParseTransferEvent(log); articulated != nil {
+	if articulated = parseTransferEvent(log); articulated != nil {
 		return
 	}
-	if articulated = ParseEnsTransferEvent(log); articulated != nil {
+	if articulated = parseEnsTransferEvent(log); articulated != nil {
 		return
 	}
-	if articulated = ParseApprovalEvent(log); articulated != nil {
+	if articulated = parseApprovalEvent(log); articulated != nil {
 		return
 	}
 	return

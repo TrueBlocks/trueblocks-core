@@ -1,7 +1,7 @@
 //go:build integration
 // +build integration
 
-package account
+package rpcClient
 
 import (
 	"math/big"
@@ -11,21 +11,20 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestGetState(t *testing.T) {
 	chain := utils.GetTestChain()
-	conn := rpcClient.TempConnection(chain)
+	conn := TempConnection(chain)
 
 	type args struct {
 		chain       string
-		mode        GetStateField
+		mode        StatePart
 		address     base.Address
 		blockNumber base.Blknum
-		filters     GetStateFilters
+		filters     StateFilters
 	}
 	tests := []struct {
 		name      string
@@ -36,7 +35,7 @@ func TestGetState(t *testing.T) {
 		{
 			name: "balance only",
 			args: args{
-				chain:       "mainnet",
+				chain:       chain,
 				mode:        Balance,
 				address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				blockNumber: uint64(15531843),
@@ -51,7 +50,7 @@ func TestGetState(t *testing.T) {
 		{
 			name: "balance and nonce and code",
 			args: args{
-				chain:       "mainnet",
+				chain:       chain,
 				mode:        Balance | Nonce | Code,
 				address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				blockNumber: uint64(15531843),
@@ -83,7 +82,7 @@ func TestGetState(t *testing.T) {
 		{
 			name: "deployed only",
 			args: args{
-				chain:       "mainnet",
+				chain:       chain,
 				mode:        Deployed,
 				address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				blockNumber: uint64(15531843),
@@ -97,7 +96,7 @@ func TestGetState(t *testing.T) {
 		{
 			name: "proxy and type",
 			args: args{
-				chain:       "mainnet",
+				chain:       chain,
 				mode:        Proxy | Type,
 				address:     base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"),
 				blockNumber: uint64(15531843),
@@ -113,11 +112,11 @@ func TestGetState(t *testing.T) {
 		{
 			name: "balance filter",
 			args: args{
-				chain:       "mainnet",
+				chain:       chain,
 				mode:        Balance,
 				address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				blockNumber: uint64(15531843),
-				filters: GetStateFilters{
+				filters: StateFilters{
 					Balance: func(address base.Address, balance *big.Int) bool {
 						return balance == big.NewInt(0)
 					},
@@ -126,9 +125,10 @@ func TestGetState(t *testing.T) {
 			wantState: nil,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotState, err := GetState(tt.args.chain, tt.args.mode, tt.args.address, tt.args.blockNumber, tt.args.filters)
+			gotState, err := conn.GetState(tt.args.mode, tt.args.address, tt.args.blockNumber, tt.args.filters)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetState() error = %v, wantErr %v", err, tt.wantErr)
 				return

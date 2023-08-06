@@ -33,14 +33,14 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	)
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.DefaultRpcOptionsSettings{
+	settings := rpcClient.ConnectionSettings{
 		Chain: chain,
 		Opts:  opts,
 	}
 	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawTokenBalance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		for _, mon := range monitorArray {
 			if items, err := opts.readBalances(&mon, filter, errorChan); err != nil {
 				errorChan <- err
@@ -82,8 +82,8 @@ func (opts *ExportOptions) readBalances(
 	mon *monitor.Monitor,
 	filter *monitor.AppearanceFilter,
 	errorChan chan error,
-) ([]*types.SimpleTokenBalance, error) {
-	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTokenBalance](mon, filter); err != nil {
+) ([]*types.SimpleToken, error) {
+	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleToken](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
@@ -91,7 +91,7 @@ func (opts *ExportOptions) readBalances(
 		var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
 
 		// This is called concurrently, once for each appearance
-		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTokenBalance) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
 			if b, err := opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
 				return err
 			} else {
@@ -118,7 +118,7 @@ func (opts *ExportOptions) readBalances(
 		}
 
 		// Sort the items back into an ordered array by block number
-		items := make([]*types.SimpleTokenBalance, 0, len(txMap))
+		items := make([]*types.SimpleToken, 0, len(txMap))
 		for _, tx := range txMap {
 			items = append(items, tx)
 		}

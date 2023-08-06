@@ -7,6 +7,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -16,20 +17,14 @@ import (
 
 func (opts *AbisOptions) HandleAddresses() (err error) {
 	chain := opts.Globals.Chain
-
-	result := abi.NewFunctionSyncMap()
-	if opts.Known {
-		if err = abi.LoadKnownAbis(chain, result); err != nil {
-			return
-		}
-	}
+	abiCache := articulate.NewAbiCache(chain, opts.Known)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := base.HexToAddress(addr)
-			if err = abi.LoadAbiFromAddress(chain, address, result); err != nil {
+			if err = abi.LoadAbiFromAddress(chain, address, &abiCache.AbiMap); err != nil {
 				if !os.IsNotExist(err) {
 					// The error was not due to a missing file...
 					errorChan <- err
@@ -47,18 +42,18 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 					}
 				} else {
 					// It's okay to not find the ABI. We report an error, but do not stop processing
-					if err = abi.DownloadAbi(chain, address, result); err != nil {
+					if err = abi.DownloadAbi(chain, address, &abiCache.AbiMap); err != nil {
 						errorChan <- err
 					}
 				}
 			}
 		}
 
-		names := result.Names()
+		names := abiCache.AbiMap.Keys()
 		sort.Strings(names)
 
 		for _, name := range names {
-			function := result.Get(name)
+			function := abiCache.AbiMap.GetValue(name)
 			modelChan <- function
 		}
 	}

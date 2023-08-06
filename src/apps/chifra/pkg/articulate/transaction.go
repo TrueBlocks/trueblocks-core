@@ -2,17 +2,18 @@ package articulate
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction) (err error) {
 	address := tx.To
-	if !abiCache.loadedMap.Get(address) && !abiCache.skipMap.Get(address) {
-		if err := abi.LoadAbi(chain, address, &abiCache.abiMap); err != nil {
-			abiCache.skipMap.Set(address, true)
+	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
+		if err := abi.LoadAbi(chain, address, &abiCache.AbiMap); err != nil {
+			abiCache.skipMap.SetValue(address, true)
 			return err
 		} else {
-			abiCache.loadedMap.Set(address, true)
+			abiCache.loadedMap.SetValue(address, true)
 		}
 	}
 
@@ -35,7 +36,7 @@ func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction
 	if len(tx.Input) >= 10 {
 		selector = tx.Input[:10]
 		inputData := tx.Input[10:]
-		found = abiCache.abiMap.Get(selector)
+		found = abiCache.AbiMap.GetValue(selector)
 		if found != nil {
 			tx.ArticulatedTx = found.Clone()
 			var outputData string
@@ -49,11 +50,8 @@ func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction
 	}
 
 	if found == nil && len(tx.Input) > 0 {
-		if message, ok := ArticulateString(tx.Input); ok {
+		if message, ok := decode.ArticulateString(tx.Input); ok {
 			tx.Message = message
-			// } else if len(selector) > 0 {
-			// 	// don't report this error
-			// 	errorChan <- fmt.Errorf("method/event not found: %s", selector)
 		}
 	}
 

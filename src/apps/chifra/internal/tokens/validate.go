@@ -1,4 +1,3 @@
-// return usage("Use either --parts or provide at least one token and one other account.");
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
