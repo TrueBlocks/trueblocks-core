@@ -1,4 +1,4 @@
-package token
+package rpcClient
 
 import (
 	"errors"
@@ -28,9 +28,9 @@ const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
 // GetTokenState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) (token *types.SimpleToken, err error) {
+func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber string) (token *types.SimpleToken, err error) {
 	results, err := rpc.QueryBatch[string](
-		chain,
+		conn.Chain,
 		[]rpc.BatchPayload{
 			{
 				Key: "name",
@@ -142,9 +142,9 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 
 // GetTokenBalanceAt returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
+func (conn *Connection) GetTokenBalanceAt(token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
 	output, err := rpc.QueryBatch[string](
-		chain,
+		conn.Chain,
 		[]rpc.BatchPayload{{
 			Key: "balance",
 			Payload: &rpc.Payload{

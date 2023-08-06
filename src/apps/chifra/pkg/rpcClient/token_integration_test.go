@@ -5,7 +5,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package token
+package rpcClient
 
 import (
 	"testing"
@@ -27,8 +27,9 @@ var nonStandard2 = base.HexToAddress("0x461733c17b0755ca5649b6db08b3e213fcf22546
 func TestGetState_Erc20(t *testing.T) {
 	blockNumber := "0xd59f80" // 14000000
 	chain := utils.GetTestChain()
+	conn := TempConnection(chain)
 
-	token, err := GetTokenState(chain, tokenAddress, blockNumber)
+	token, err := conn.GetTokenState(tokenAddress, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -63,8 +64,9 @@ func TestGetState_Erc20(t *testing.T) {
 func TestGetState_Erc721(t *testing.T) {
 	blockNumber := "0xd59f80" // 14000000
 	chain := utils.GetTestChain()
+	conn := TempConnection(chain)
 
-	token, err := GetTokenState(chain, nftAddress, blockNumber)
+	token, err := conn.GetTokenState(nftAddress, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -99,8 +101,9 @@ func TestGetState_Erc721(t *testing.T) {
 func TestGetState_NonStandard(t *testing.T) {
 	blockNumber := "0x1036640" // 17000000
 	chain := utils.GetTestChain()
+	conn := TempConnection(chain)
 
-	token, err := GetTokenState(chain, nonStandard1, blockNumber)
+	token, err := conn.GetTokenState(nonStandard1, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -133,7 +136,7 @@ func TestGetState_NonStandard(t *testing.T) {
 
 	// Non-standard 2
 
-	token, err = GetTokenState(chain, nonStandard2, blockNumber)
+	token, err = conn.GetTokenState(nonStandard2, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -166,7 +169,7 @@ func TestGetState_NonStandard(t *testing.T) {
 
 	// 3
 	nonStandard3 := base.HexToAddress("0xc4e0f3ec24972c75df7c716922096f4270b7bb4e")
-	token, err = GetTokenState(chain, nonStandard3, blockNumber)
+	token, err = conn.GetTokenState(nonStandard3, blockNumber)
 	if err != nil {
 		t.Fatal(err)
 	}

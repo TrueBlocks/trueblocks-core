@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -38,17 +37,17 @@ func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleState
 	ctx := l.Contexts[key]
 
 	pBal := new(big.Int)
-	if pBal, err = token.GetTokenBalanceAt(l.Chain, log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
+	if pBal, err = l.Conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 		return nil, err
 	}
 
 	bBal := new(big.Int)
-	if bBal, err = token.GetTokenBalanceAt(l.Chain, log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
+	if bBal, err = l.Conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 		return nil, err
 	}
 
 	eBal := new(big.Int)
-	if eBal, err = token.GetTokenBalanceAt(l.Chain, log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+	if eBal, err = l.Conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 		return nil, err
 	}
 

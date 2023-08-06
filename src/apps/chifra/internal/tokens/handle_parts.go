@@ -9,7 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
@@ -41,7 +40,7 @@ func (opts *TokensOptions) HandleParts() error {
 				}
 
 				for _, bn := range blockNums {
-					if state, err := token.GetTokenState(chain, addr, fmt.Sprintf("0x%x", bn)); err != nil {
+					if state, err := opts.Conn.GetTokenState(addr, fmt.Sprintf("0x%x", bn)); err != nil {
 						errorChan <- err
 					} else {
 						s := &types.SimpleToken{

@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -205,7 +204,7 @@ func cleanName(chain string, name *types.SimpleName) (modified bool, err error) 
 	}
 
 	// If this address is not a token, we're done
-	tokenState, err := token.GetTokenState(chain, name.Address, "latest")
+	tokenState, err := conn.GetTokenState(name.Address, "latest")
 	if err != nil {
 		err = nil
 	}
