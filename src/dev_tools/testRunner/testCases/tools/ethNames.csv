@@ -90,3 +90,4 @@ on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_1      ,y    ,terms
 on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_2      ,y    ,terms = find_nothing & raw
 on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_3      ,y    ,terms = find_nothing & ether
 on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_4      ,y    ,terms = find_nothing & wei
+on      ,both ,fast  ,names ,tools/ethNames ,caps_disallowed_5      ,y    ,terms = find_nothing & decache

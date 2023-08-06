@@ -93,6 +93,7 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 
 	} else {
 		if opts.Globals.Decache1 {
+			// TODO DECACHE
 			err = opts.HandleDecache()
 		} else {
 			err = opts.HandleCrudCommands()
