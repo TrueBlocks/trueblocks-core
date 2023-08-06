@@ -1,23 +1,23 @@
-package articulate
+package decode
 
 import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/accounts/abi"
+	goAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-var AbiStringType abi.Type
-var abiStringArguments abi.Arguments
+// TODO: Why can't we just use the call package to call into the token directly? Answer: this code was built before the call package
+var AbiStringType goAbi.Type
+var abiStringArguments goAbi.Arguments
 
 func init() {
 	var err error
-
-	AbiStringType, err = abi.NewType("string", "", nil)
+	AbiStringType, err = goAbi.NewType("string", "", nil)
 	if err != nil {
 		panic(err)
 	}
-	abiStringArguments = abi.Arguments{
+	abiStringArguments = goAbi.Arguments{
 		{Type: AbiStringType},
 	}
 }
@@ -96,13 +96,13 @@ func SanitizeString(str string) (sanitized string) {
 	return
 }
 
-// ArticulateEncodedString translates EVM string into Go string
-func ArticulateEncodedString(hex string) (result string, err error) {
-	if len(hex) < 2 {
+// articulateEncodedString translates EVM string into Go string
+func articulateEncodedString(hexStr string) (result string, err error) {
+	if len(hexStr) < 2 {
 		result = ""
 		return
 	}
-	byteValue := base.Hex2Bytes(hex[2:])
+	byteValue := base.Hex2Bytes(hexStr[2:])
 	unpacked, err := abiStringArguments.Unpack(byteValue)
 	if err != nil {
 		return
@@ -111,12 +111,12 @@ func ArticulateEncodedString(hex string) (result string, err error) {
 	return
 }
 
-// ArticulateBytes32String turns bytes32 encoded string into Go string
-func ArticulateBytes32String(hex string) (result string) {
-	if len(hex) < 2 {
+// articulateBytes32String turns bytes32 encoded string into Go string
+func articulateBytes32String(hexStr string) (result string) {
+	if len(hexStr) < 2 {
 		return
 	}
-	input := base.Hex2Bytes(hex[2:])
+	input := base.Hex2Bytes(hexStr[2:])
 	if len(input) == 0 {
 		return ""
 	}
@@ -138,15 +138,15 @@ func ArticulateBytes32String(hex string) (result string) {
 	return
 }
 
-// ArticulateEncodedStringOrBytes32 tries to read string from either EVM string
+// ArticulateStringOrBytes tries to read string from either EVM string
 // value or bytes32 hex
-func ArticulateEncodedStringOrBytes32(hex string) (string, error) {
-	if len(hex) < 2 {
+func ArticulateStringOrBytes(hexStr string) (string, error) {
+	if len(hexStr) < 2 {
 		return "", nil
 	}
-	if len(hex[2:]) > 64 {
-		return ArticulateEncodedString(hex)
+	if len(hexStr[2:]) > 64 {
+		return articulateEncodedString(hexStr)
 	}
 
-	return ArticulateBytes32String(hex), nil
+	return articulateBytes32String(hexStr), nil
 }

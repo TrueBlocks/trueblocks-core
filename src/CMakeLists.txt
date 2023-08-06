@@ -1,8 +1,4 @@
-# ---------------------------------------------------------------------------------------
-# This file belongs to the QuickBlocks project from QuickBlocks.io
-# ---------------------------------------------------------------------------------------
-# Minimum cmake version supported
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required (VERSION 3.5)
 
 # ----------------------------------------------------------------------------------------
 # C++17 required

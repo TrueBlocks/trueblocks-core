@@ -1,12 +1,12 @@
-package token
+package rpcClient
 
 import (
 	"errors"
 	"math/big"
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -26,23 +26,11 @@ const tokenStateSymbol tokenStateSelector = "0x95d89b41"
 const tokenStateName tokenStateSelector = "0x06fdde03"
 const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
-// Token type wraps information about ERC-20 token or ERC-721 NFT. Call
-// Token.IsErcXXX to check the token type.
-// TODO: This is a type and should be auto-generated
-type Token struct {
-	Address     base.Address
-	Decimals    uint64
-	Name        string
-	Symbol      string
-	TotalSupply big.Int
-	Type        types.TokenType
-}
-
 // GetTokenState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) (token *Token, err error) {
+func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber string) (token *types.SimpleToken, err error) {
 	results, err := rpc.QueryBatch[string](
-		chain,
+		conn.Chain,
 		[]rpc.BatchPayload{
 			{
 				Key: "name",
@@ -116,8 +104,8 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 		return
 	}
 
-	name, _ := articulate.ArticulateEncodedStringOrBytes32(*results["name"])
-	symbol, _ := articulate.ArticulateEncodedStringOrBytes32(*results["symbol"])
+	name, _ := decode.ArticulateStringOrBytes(*results["name"])
+	symbol, _ := decode.ArticulateStringOrBytes(*results["symbol"])
 
 	var decimals uint64 = 0
 	rawDecimals := *results["decimals"]
@@ -135,12 +123,12 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 	}
 
 	tokenType := types.TokenErc20
-	erc721, erc721Err := articulate.ArticulateBoolean(*results["erc721"])
+	erc721, erc721Err := decode.ArticulateBool(*results["erc721"])
 	if erc721Err == nil && erc721 {
 		tokenType = types.TokenErc721
 	}
 
-	token = &Token{
+	token = &types.SimpleToken{
 		Address:     tokenAddress,
 		Decimals:    decimals,
 		Name:        name,
@@ -154,9 +142,9 @@ func GetTokenState(chain string, tokenAddress base.Address, blockNumber string) 
 
 // GetTokenBalanceAt returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func GetTokenBalanceAt(chain string, token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
+func (conn *Connection) GetTokenBalanceAt(token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
 	output, err := rpc.QueryBatch[string](
-		chain,
+		conn.Chain,
 		[]rpc.BatchPayload{{
 			Key: "balance",
 			Payload: &rpc.Payload{

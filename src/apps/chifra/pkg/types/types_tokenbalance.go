@@ -31,6 +31,7 @@ type RawToken struct {
 	Timestamp        string `json:"timestamp"`
 	TotalSupply      string `json:"totalSupply"`
 	TransactionIndex string `json:"transactionIndex"`
+	Type             string `json:"tokenType"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -48,6 +49,7 @@ type SimpleToken struct {
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TotalSupply      big.Int        `json:"totalSupply"`
 	TransactionIndex base.Blknum    `json:"transactionIndex,omitempty"`
+	Type             TokenType      `json:"tokenType"`
 	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -151,14 +153,14 @@ func (s *SimpleToken) Model(verbose bool, format string, extraOptions map[string
 // EXISTING_CODE
 //
 
-func (s *SimpleToken) IsErc721() bool {
-	// TODO TOKEN
-	return true
-}
-
 func (s *SimpleToken) IsErc20() bool {
 	// TODO TOKEN
-	return true
+	return s.Type.IsErc20()
+}
+
+func (s *SimpleToken) IsErc721() bool {
+	// TODO TOKEN
+	return s.Type.IsErc721()
 }
 
 func (s *SimpleToken) Date() string {
