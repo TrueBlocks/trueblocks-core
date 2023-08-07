@@ -3,7 +3,11 @@ TEST[DATE|TIME] Blocks:  [12]
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] 1 items totaling 161 bytes were removed from the cache.                                                             
+INFO[DATE|TIME] 
 {
-  "data": []
+  "data": [
+    {
+      "msg": "One item totaling 161 bytes was removed from the cache."
+    }
+  ]
 }
