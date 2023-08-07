@@ -82,7 +82,7 @@ func (opts *ExploreOptions) validateExplore() error {
 		if valid {
 			blockHash, err := opts.idToBlockHash(chain, arg, validate.IsBlockHash)
 			if err == nil {
-				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
+				urls = append(urls, ExploreUrl{blockHash.Hex(), ExploreBlock})
 				continue
 			}
 			// An error here is not okay because we have a valid hash but it's not a valid on-chain
@@ -126,17 +126,18 @@ func (t ExploreType) String() string {
 	}
 }
 
-func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (base.Hash, error) {
 	if isBlockHash(arg) {
 		return opts.Conn.GetBlockHashByHash(arg)
 	}
 
 	blockNum, err := strconv.ParseUint(arg, 10, 64)
 	if err != nil {
-		return "", nil
+		return base.Hash{}, nil
 	}
 
-	return opts.Conn.GetBlockHashByNumber(blockNum)
+	blkHash, err := opts.Conn.GetBlockHashByNumber(blockNum)
+	return blkHash, err
 }
 
 // idToTxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)

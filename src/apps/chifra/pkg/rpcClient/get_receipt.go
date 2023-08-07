@@ -14,22 +14,26 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-type ReceiptQuery struct {
-	Bn       uint64
-	Txid     uint64
-	TxHash   *base.Hash
-	GasPrice uint64
-	NeedsTs  bool
-	Ts       base.Timestamp
+func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested base.Timestamp) (receipt types.SimpleReceipt, err error) {
+	receipt, err = conn.GetReceiptNoTimestamp(bn, txid) // note that the logs do not yet have timestamp...
+
+	if suggested == 0 {
+		suggested = conn.GetBlockTimestamp(&bn)
+	}
+	for index := 0; index < len(receipt.Logs); index++ {
+		receipt.Logs[index].Timestamp = suggested
+		receipt.Logs[index].Date = utils.FormattedDate(suggested)
+	}
+	return receipt, err
 }
 
-// GetReceipt fetches receipt from the RPC. If txGasPrice is provided, it will be used for
+// GetReceiptNoTimestamp fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
-func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleReceipt, err error) {
+func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (receipt types.SimpleReceipt, err error) {
 	if conn.HasStore() {
 		tx := &types.SimpleTransaction{
-			BlockNumber:      query.Bn,
-			TransactionIndex: query.Txid,
+			BlockNumber:      bn,
+			TransactionIndex: txid,
 		}
 		if err := conn.Store.Read(tx, nil); err == nil {
 			// success
@@ -40,13 +44,9 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 		}
 	}
 
-	rawReceipt, txHash, err := conn.getReceiptRaw(query.Bn, query.Txid)
+	rawReceipt, txHash, err := conn.getReceiptRaw(bn, txid)
 	if err != nil {
 		return
-	}
-
-	if query.NeedsTs && query.Ts == 0 {
-		query.Ts = conn.GetBlockTimestamp(&query.Bn)
 	}
 
 	logs := []types.SimpleLog{}
@@ -59,8 +59,6 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 			BlockHash:        base.HexToHash(rawLog.BlockHash),
 			TransactionIndex: utils.MustParseUint(rawLog.TransactionIndex),
 			TransactionHash:  txHash,
-			Timestamp:        query.Ts,
-			Date:             utils.FormattedDate(query.Ts),
 			Data:             string(rawLog.Data),
 		}
 		for _, topic := range rawLog.Topics {

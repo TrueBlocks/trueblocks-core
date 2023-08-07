@@ -70,14 +70,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 
 		// Get the receipt
 		var receipt types.SimpleReceipt
-		receipt, err = conn.GetReceipt(ReceiptQuery{
-			Bn:       uint64(bn),
-			Txid:     uint64(raw.TxIndex()),
-			TxHash:   raw.TxHash(),
-			GasPrice: raw.TxGasPrice(),
-			NeedsTs:  true,
-			Ts:       ts,
-		})
+		receipt, err = conn.GetReceipt(bn, utils.MustParseUint(raw.TransactionIndex), ts)
 		if err != nil {
 			return block, err
 		}
@@ -160,18 +153,18 @@ func (conn *Connection) GetBlockTimestamp(bn *uint64) base.Timestamp {
 }
 
 // GetBlockHashByHash returns a block's hash if it's a valid block
-func (conn *Connection) GetBlockHashByHash(hash string) (string, error) {
+func (conn *Connection) GetBlockHashByHash(hash string) (base.Hash, error) {
 	if ec, err := conn.getClient(); err != nil {
-		return "", err
+		return base.Hash{}, err
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+		ethBlock, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
 		if err != nil {
-			return "", err
+			return base.Hash{}, err
 		}
 
-		return block.Hash().Hex(), nil
+		return base.HexToHash(ethBlock.Hash().Hex()), nil
 	}
 }
 
@@ -182,58 +175,28 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+		ethBlock, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
 		if err != nil {
 			return 0, err
 		}
 
-		return block.NumberU64(), nil
+		return ethBlock.NumberU64(), nil
 	}
 }
 
 // GetBlockHashByNumber returns a block's hash if it's a valid block
-func (conn *Connection) GetBlockHashByNumber(bn uint64) (string, error) {
+func (conn *Connection) GetBlockHashByNumber(bn uint64) (base.Hash, error) {
 	if ec, err := conn.getClient(); err != nil {
-		return "", err
+		return base.Hash{}, err
 	} else {
 		defer ec.Close()
 
-		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
+		ethBlock, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
 		if err != nil {
-			return "", err
+			return base.Hash{}, err
 		}
 
-		return block.Hash().Hex(), nil
-	}
-}
-
-func (conn *Connection) getBlockReward(bn uint64) *big.Int {
-	if bn == 0 {
-		return big.NewInt(0)
-	} else if bn < byzantiumBlock {
-		return big.NewInt(5000000000000000000)
-	} else if bn < constantinopleBlock {
-		return big.NewInt(3000000000000000000)
-	} else {
-		return big.NewInt(2000000000000000000)
-	}
-}
-
-func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, error) {
-	method := "eth_getBlockByNumber"
-	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
-
-	if block, err := rpc.Query[types.RawBlock](conn.Chain, method, params); err != nil {
-		return &types.RawBlock{}, err
-	} else {
-		if bn == 0 {
-			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(utils.PointerOf(uint64(0))))
-		} else if utils.MustParseUint(block.Timestamp) == 0 {
-			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
-		}
-
-		return block, nil
+		return base.HexToHash(ethBlock.Hash().Hex()), nil
 	}
 }
 
@@ -287,4 +250,35 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 		Uncles:      uncles,
 	}
 	return
+}
+
+// getBlockRaw returns the raw block as received from the node
+func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, error) {
+	method := "eth_getBlockByNumber"
+	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
+
+	if block, err := rpc.Query[types.RawBlock](conn.Chain, method, params); err != nil {
+		return &types.RawBlock{}, err
+	} else {
+		if bn == 0 {
+			// The RPC does not return a timestamp for the zero block, so we make one
+			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(utils.PointerOf(uint64(0))))
+		} else if utils.MustParseUint(block.Timestamp) == 0 {
+			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
+		}
+
+		return block, nil
+	}
+}
+
+func (conn *Connection) getBlockReward(bn uint64) *big.Int {
+	if bn == 0 {
+		return big.NewInt(0)
+	} else if bn < byzantiumBlock {
+		return big.NewInt(5000000000000000000)
+	} else if bn < constantinopleBlock {
+		return big.NewInt(3000000000000000000)
+	} else {
+		return big.NewInt(2000000000000000000)
+	}
 }

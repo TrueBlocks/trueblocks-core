@@ -31,14 +31,9 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 	if err != nil {
 		return
 	}
-	blockTs := conn.GetBlockTimestamp(&bn)
 
-	receipt, err := conn.GetReceipt(ReceiptQuery{
-		Bn:      bn,
-		Txid:    txid,
-		NeedsTs: true,
-		Ts:      blockTs,
-	})
+	blockTs := conn.GetBlockTimestamp(&bn)
+	receipt, err := conn.GetReceipt(bn, txid, blockTs)
 	if err != nil {
 		return
 	}
@@ -98,12 +93,7 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 		return tx, nil
 	}
 
-	receipt, err := conn.GetReceipt(ReceiptQuery{
-		Bn:      bn,
-		Txid:    txid,
-		NeedsTs: true,
-		Ts:      blockTs,
-	})
+	receipt, err := conn.GetReceipt(bn, txid, blockTs)
 	if err != nil {
 		return
 	}
