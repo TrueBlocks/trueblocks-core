@@ -75,6 +75,6 @@ traces?transactions=0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb6
     "chain": "mainnet"
   },
   "errors": [
-    "transaction at 0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3.0 returned an error: not found"
+    "transaction at 0.0 returned an error: not found"
   ]
 }

@@ -7,6 +7,7 @@ package tracesPkg
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -52,7 +53,7 @@ func (opts *TracesOptions) HandleShowTraces() error {
 				// Decide on the concrete type of block.Transactions and set values
 				traces, err := opts.Conn.GetTracesByTransactionID(uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
-					errorChan <- err
+					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", fmt.Sprintf("%d.%d", id.BlockNumber, id.TransactionIndex), err)
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}

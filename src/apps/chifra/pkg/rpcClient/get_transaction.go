@@ -150,12 +150,12 @@ func (conn *Connection) GetTransactionHashByNumberAndID(bn, txId uint64) (base.H
 
 		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
 		if err != nil {
-			return base.Hash{}, fmt.Errorf("error at block %s: %w", fmt.Sprintf("%d", bn), err)
+			return base.Hash{}, err
 		}
 
 		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
 		if err != nil {
-			return base.Hash{}, fmt.Errorf("transaction at %s returned an error: %w", fmt.Sprintf("%s.%d", block.Hash(), txId), err)
+			return base.Hash{}, err
 		}
 
 		return base.HexToHash(tx.Hash().Hex()), nil
