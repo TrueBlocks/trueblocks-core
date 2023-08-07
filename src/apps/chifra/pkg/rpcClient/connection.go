@@ -86,9 +86,9 @@ type CacheStater interface {
 	CacheState() (bool, map[string]bool)
 }
 
-// HasStore is a shorthand to check if Store is initialized. It will return
+// StoreReadable is a shorthand to check if Store is initialized. It will return
 // false for nil pointer to Connection
-func (conn *Connection) HasStore() bool {
+func (conn *Connection) StoreReadable() bool {
 	if conn == nil {
 		return false
 	}
@@ -96,8 +96,8 @@ func (conn *Connection) HasStore() bool {
 	return conn.Store != nil
 }
 
-func (conn *Connection) HasStoreWritable() bool {
-	if !conn.HasStore() {
+func (conn *Connection) StoreWritable() bool {
+	if !conn.StoreReadable() {
 		return false
 	}
 
@@ -106,7 +106,7 @@ func (conn *Connection) HasStoreWritable() bool {
 
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
 func (conn *Connection) TestLog(enabledMap map[string]bool) {
-	if conn.HasStoreWritable() {
+	if conn.StoreWritable() {
 		for k, v := range enabledMap {
 			logger.TestLog(v, "Cache-"+strings.ToTitle(k)+": ", v)
 		}
@@ -114,8 +114,8 @@ func (conn *Connection) TestLog(enabledMap map[string]bool) {
 	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }
 
-// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
-func (conn *Connection) IsFinal(blockTimestamp base.Timestamp) bool {
+func isFinal(latestTs, blockTs base.Timestamp) bool {
+	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
 	var pendingPeriod = int64(5 * 60)
-	return (conn.LatestBlockTimestamp - blockTimestamp) >= pendingPeriod
+	return (latestTs - blockTs) >= pendingPeriod
 }

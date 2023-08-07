@@ -30,7 +30,7 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 // GetReceiptNoTimestamp fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
 func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (receipt types.SimpleReceipt, err error) {
-	if conn.HasStore() {
+	if conn.StoreReadable() {
 		tx := &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,

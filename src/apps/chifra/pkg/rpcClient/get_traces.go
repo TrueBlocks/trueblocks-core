@@ -84,7 +84,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 
 // GetTracesByTransactionID returns a slice of traces in a given transaction
 func (conn *Connection) GetTracesByTransactionID(bn, txid uint64) ([]types.SimpleTrace, error) {
-	if conn.HasStore() {
+	if conn.StoreReadable() {
 		traceGroup := &types.SimpleTraceGroup{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
@@ -104,7 +104,7 @@ func (conn *Connection) GetTracesByTransactionID(bn, txid uint64) ([]types.Simpl
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
 func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *types.SimpleTransaction) ([]types.SimpleTrace, error) {
-	if conn.HasStore() && transaction != nil {
+	if conn.StoreReadable() && transaction != nil {
 		traceGroup := &types.SimpleTraceGroup{
 			Traces:           make([]types.SimpleTrace, 0, len(transaction.Traces)),
 			BlockNumber:      transaction.BlockNumber,
@@ -193,7 +193,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			ret = append(ret, trace)
 		}
 
-		if conn.HasStoreWritable() && conn.enabledMap["traces"] && transaction != nil && conn.IsFinal(transaction.Timestamp) {
+		if conn.StoreWritable() && conn.enabledMap["traces"] && transaction != nil && isFinal(conn.LatestBlockTimestamp, transaction.Timestamp) {
 			traceGroup := &types.SimpleTraceGroup{
 				Traces:           ret,
 				BlockNumber:      transaction.BlockNumber,

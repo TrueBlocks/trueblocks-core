@@ -62,6 +62,7 @@ type StoreOptions struct {
 }
 
 func (s *StoreOptions) location() (loc Storer, err error) {
+	// TODO: s can never be nil, we would have cored already
 	if s == nil {
 		loc, err = locations.FileSystem()
 		return
@@ -79,6 +80,7 @@ func (s *StoreOptions) location() (loc Storer, err error) {
 }
 
 func (s *StoreOptions) rootDir() (dir string) {
+	// TODO: s is never nil, we would have cored already
 	if s != nil && s.Location == MemoryCache {
 		return "memory"
 	}

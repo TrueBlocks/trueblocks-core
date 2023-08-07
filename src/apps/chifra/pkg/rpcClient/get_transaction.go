@@ -15,7 +15,7 @@ import (
 )
 
 func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64) (tx *types.SimpleTransaction, err error) {
-	if conn.HasStore() {
+	if conn.StoreReadable() {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
@@ -39,7 +39,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 	}
 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
-	if conn.HasStoreWritable() && conn.enabledMap["txs"] && conn.IsFinal(blockTs) {
+	if conn.StoreWritable() && conn.enabledMap["txs"] && isFinal(conn.LatestBlockTimestamp, blockTs) {
 		_ = conn.Store.Write(tx, nil)
 	}
 
@@ -50,7 +50,7 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
 
-	if conn.HasStore() {
+	if conn.StoreReadable() {
 		tx = &types.SimpleTransaction{
 			BlockNumber:      bn,
 			TransactionIndex: txid,
@@ -87,7 +87,7 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 	blockTs := conn.GetBlockTimestamp(&bn)
 	if tx != nil {
 		tx.Timestamp = blockTs
-		if conn.HasStoreWritable() && conn.enabledMap["txs"] && conn.IsFinal(blockTs) {
+		if conn.StoreWritable() && conn.enabledMap["txs"] && isFinal(conn.LatestBlockTimestamp, blockTs) {
 			_ = conn.Store.Write(tx, nil)
 		}
 		return tx, nil
@@ -105,7 +105,7 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
-	if conn.HasStore() && conn.enabledMap["txs"] && conn.IsFinal(blockTs) {
+	if conn.StoreWritable() && conn.enabledMap["txs"] && isFinal(conn.LatestBlockTimestamp, blockTs) {
 		_ = conn.Store.Write(tx, nil)
 	}
 

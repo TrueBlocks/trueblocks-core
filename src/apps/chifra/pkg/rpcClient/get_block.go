@@ -23,7 +23,7 @@ import (
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
 func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types.SimpleTransaction], error) {
-	if conn.HasStore() {
+	if conn.StoreReadable() {
 		// We only cache blocks with transaction hashes
 		cachedBlock := types.SimpleBlock[string]{BlockNumber: bn}
 		if err := conn.Store.Read(&cachedBlock, nil); err == nil {
@@ -78,12 +78,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		tx := types.NewSimpleTransaction(raw, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
-		if conn.HasStore() && conn.enabledMap["txs"] && conn.IsFinal(tx.Timestamp) {
+		if conn.StoreWritable() && conn.enabledMap["txs"] && isFinal(conn.LatestBlockTimestamp, tx.Timestamp) {
 			_ = conn.Store.Write(tx, nil)
 		}
 	}
 
-	if conn.HasStore() && conn.IsFinal(block.Timestamp) {
+	if conn.StoreWritable() && isFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
 
@@ -92,7 +92,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
 func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlock[string], err error) {
-	if conn.HasStore() {
+	if conn.StoreReadable() {
 		block.BlockNumber = bn
 		if err := conn.Store.Read(&block, nil); err == nil {
 			return block, nil
@@ -115,7 +115,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 		block.Transactions = append(block.Transactions, fmt.Sprint(txHash))
 	}
 
-	if conn.HasStoreWritable() && conn.IsFinal(block.Timestamp) {
+	if conn.StoreWritable() && isFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
 
