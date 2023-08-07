@@ -8,7 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -23,13 +22,6 @@ func (opts *SlurpOptions) HandleShowAppearances() error {
 
 	chain := opts.Globals.Chain
 	logger.Info("Processing", opts.Addrs, "--types:", opts.Types, opts.Blocks)
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.Settings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.GetRpcConnection()
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {

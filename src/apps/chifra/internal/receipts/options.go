@@ -121,11 +121,4 @@ func (opts *ReceiptsOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *ReceiptsOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
-}
-
 // EXISTING_CODE

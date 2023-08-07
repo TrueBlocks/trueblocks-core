@@ -6,20 +6,12 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.Settings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.GetRpcConnection()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {

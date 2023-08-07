@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -31,13 +30,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.Settings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.GetRpcConnection()
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {

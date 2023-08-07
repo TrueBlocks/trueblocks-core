@@ -190,11 +190,5 @@ func (opts *StateOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *StateOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
-}
-
+// PATH: recons/0549/93ab/0f2b1acc0fdc65405ee203b4271bebe6/010277776.00094.bin
 // EXISTING_CODE

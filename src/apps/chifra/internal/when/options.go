@@ -155,11 +155,4 @@ func (opts *WhenOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *WhenOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
-}
-
 // EXISTING_CODE

@@ -193,11 +193,4 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *BlocksOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
-}
-
 // EXISTING_CODE

@@ -26,9 +26,9 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--neighbors")
 	}
 
-	if opts.Accounting {
-		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
-	}
+//	if opts.Accounting {
+//		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
+//	}
 
 	if len(opts.Load) > 0 {
 		// See https://pkg.go.dev/plugin

@@ -130,11 +130,4 @@ func (opts *TracesOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *TracesOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
-}
-
 // EXISTING_CODE

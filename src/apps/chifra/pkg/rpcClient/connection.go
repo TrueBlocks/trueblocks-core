@@ -1,6 +1,7 @@
 package rpcClient
 
 import (
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -23,14 +24,13 @@ type Settings struct {
 	ReadonlyCache bool
 	CacheEnabled  bool
 	EnabledMap    map[string]bool
-	Opts          any
 }
 
 func NewConnection(chain string, cacheEnabled bool, enabledMap map[string]bool) *Connection {
 	settings := Settings{
-		Chain: chain,
-		// CacheEnabled: cacheEnabled,
-		// EnabledMap:   enabledMap,
+		Chain:        chain,
+		CacheEnabled: cacheEnabled,
+		EnabledMap:   enabledMap,
 	}
 	return settings.GetRpcConnection()
 }
@@ -52,9 +52,6 @@ func NewReadOnlyConnection(chain string) *Connection {
 
 // GetRpcConnection builds the store and enables the caches and returns the RPC connection
 func (settings Settings) GetRpcConnection() *Connection {
-	if cs, ok := settings.Opts.(CacheStater); ok {
-		settings.CacheEnabled, settings.EnabledMap = cs.CacheState()
-	}
 	forceReadonly := !settings.CacheEnabled || settings.ReadonlyCache
 
 	var store *cache.Store
@@ -81,16 +78,11 @@ func (settings Settings) GetRpcConnection() *Connection {
 	return ret
 }
 
-// CacheStater informs us if we should write txs and traces to the cache
-type CacheStater interface {
-	CacheState() (bool, map[string]bool)
-}
-
 // StoreReadable is a shorthand to check if Store is initialized. It will return
 // false for nil pointer to Connection
 func (conn *Connection) StoreReadable() bool {
 	if conn == nil {
-		return false
+		logger.Fatal("Implementation error in StoreReadable.")
 	}
 
 	return conn.Store != nil
@@ -100,16 +92,20 @@ func (conn *Connection) StoreWritable() bool {
 	if !conn.StoreReadable() {
 		return false
 	}
-
 	return !conn.Store.ReadOnly()
 }
 
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
 func (conn *Connection) TestLog(enabledMap map[string]bool) {
 	if conn.StoreWritable() {
+		enabled := []string{}
 		for k, v := range enabledMap {
-			logger.TestLog(v, "Cache-"+strings.ToTitle(k)+": ", v)
+			if v {
+				enabled = append(enabled, k)
+			}
 		}
+		sort.Strings(enabled)
+		logger.TestLog(len(enabled) > 0, "Enabled: ", strings.Join(enabled, ", "))
 	}
 	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }

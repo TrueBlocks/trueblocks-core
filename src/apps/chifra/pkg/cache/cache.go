@@ -5,6 +5,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type StoreLocation uint
@@ -62,9 +63,9 @@ type StoreOptions struct {
 }
 
 func (s *StoreOptions) location() (loc Storer, err error) {
-	// TODO: s can never be nil, we would have cored already
 	if s == nil {
-		loc, err = locations.FileSystem()
+		// TODO: s can never be nil, we would have cored already
+		logger.Fatal("Implementation error in location.")
 		return
 	}
 	switch s.Location {
@@ -80,19 +81,22 @@ func (s *StoreOptions) location() (loc Storer, err error) {
 }
 
 func (s *StoreOptions) rootDir() (dir string) {
-	// TODO: s is never nil, we would have cored already
 	if s != nil && s.Location == MemoryCache {
 		return "memory"
 	}
 
 	if s == nil {
+		// TODO: s is never nil, we would have cored already
+		logger.Fatal("Implementation error in location.")
 		dir = config.GetPathToCache(config.GetDefaultChain())
 	} else if s.RootDir == "" {
 		dir = config.GetPathToCache(s.Chain)
 	}
+
 	if dir != "" {
 		// TODO: v1 suffix
 		return dir + "/v1"
 	}
+
 	return s.RootDir
 }
