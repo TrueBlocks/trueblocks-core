@@ -16,9 +16,9 @@ type Connection struct {
 	enabledMap           map[string]bool
 }
 
-// ConnectionSettings allows every command has its own options type, we have to
+// Settings allows every command has its own options type, we have to
 // accept any here, but will use interfaces to read the needed information
-type ConnectionSettings struct {
+type Settings struct {
 	Chain         string
 	ReadonlyCache bool
 	CacheEnabled  bool
@@ -27,54 +27,46 @@ type ConnectionSettings struct {
 }
 
 func NewConnection(chain string, cacheEnabled bool, enabledMap map[string]bool) *Connection {
-	settings := ConnectionSettings{
+	settings := Settings{
 		Chain: chain,
 		// CacheEnabled: cacheEnabled,
 		// EnabledMap:   enabledMap,
 	}
-	return settings.DefaultRpcOptions()
+	return settings.GetRpcConnection()
 }
 
 func TempConnection(chain string) *Connection {
-	settings := ConnectionSettings{
+	settings := Settings{
 		Chain: chain,
 	}
-	return settings.DefaultRpcOptions()
+	return settings.GetRpcConnection()
 }
 
 func NewReadOnlyConnection(chain string) *Connection {
-	settings := ConnectionSettings{
+	settings := Settings{
 		Chain:         chain,
 		ReadonlyCache: true,
 	}
-	return settings.DefaultRpcOptions()
+	return settings.GetRpcConnection()
 }
 
-// cacheStore returns a cache for the given chain. If readonly is true, it returns
-// a cache that will not write new items. If nil is returned, it means "no caching"
-//
-// We call NewStore, but Storer implementation (Fs by default) should decide
-// whether it has to return a new instance or reuse the existing one
-func cacheStore(chain string, forceReadonly bool) *cache.Store {
-	if store, err := cache.NewStore(&cache.StoreOptions{
+// GetRpcConnection builds the store and enables the caches and returns the RPC connection
+func (settings Settings) GetRpcConnection() *Connection {
+	if cs, ok := settings.Opts.(CacheStater); ok {
+		settings.CacheEnabled, settings.EnabledMap = cs.CacheState()
+	}
+	forceReadonly := !settings.CacheEnabled || settings.ReadonlyCache
+
+	var store *cache.Store
+	var err error
+	if store, err = cache.NewStore(&cache.StoreOptions{
 		Location: cache.FsCache,
-		Chain:    chain,
+		Chain:    settings.Chain,
 		ReadOnly: forceReadonly,
 	}); err != nil {
 		// If there was an error, we won't use the cache
 		logger.Warn("Cannot initialize cache:", err)
-		return nil
-	} else {
-		return store
 	}
-}
-
-// DefaultRpcOptions builds the store and enables the caches and returns the RPC connection
-func (settings ConnectionSettings) DefaultRpcOptions() *Connection {
-	if cs, ok := settings.Opts.(CacheStater); ok {
-		settings.CacheEnabled, settings.EnabledMap = cs.CacheState()
-	}
-	store := cacheStore(settings.Chain, !settings.CacheEnabled || settings.ReadonlyCache)
 
 	ret := &Connection{
 		Chain:      settings.Chain,
@@ -120,4 +112,10 @@ func (conn *Connection) TestLog(enabledMap map[string]bool) {
 		}
 	}
 	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
+}
+
+// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
+func (conn *Connection) IsFinal(blockTimestamp base.Timestamp) bool {
+	var pendingPeriod = int64(5 * 60)
+	return (conn.LatestBlockTimestamp - blockTimestamp) >= pendingPeriod
 }

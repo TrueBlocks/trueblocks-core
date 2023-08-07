@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
-	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
 type ReceiptQuery struct {
@@ -41,7 +40,7 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 		}
 	}
 
-	rawReceipt, tx, err := conn.getReceiptRaw(query.Bn, query.Txid)
+	rawReceipt, txHash, err := conn.getReceiptRaw(query.Bn, query.Txid)
 	if err != nil {
 		return
 	}
@@ -59,7 +58,7 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 			BlockNumber:      utils.MustParseUint(rawLog.BlockNumber),
 			BlockHash:        base.HexToHash(rawLog.BlockHash),
 			TransactionIndex: utils.MustParseUint(rawLog.TransactionIndex),
-			TransactionHash:  base.HexToHash(tx.Hash().Hex()),
+			TransactionHash:  base.HexToHash(txHash),
 			Timestamp:        query.Ts,
 			Date:             utils.FormattedDate(query.Ts),
 			Data:             string(rawLog.Data),
@@ -81,6 +80,7 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 		BlockNumber:       utils.MustParseUint(rawReceipt.BlockNumber),
 		ContractAddress:   base.HexToAddress(rawReceipt.ContractAddress),
 		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
+		EffectiveGasPrice: utils.MustParseUint(rawReceipt.EffectiveGasPrice),
 		GasUsed:           utils.MustParseUint(rawReceipt.GasUsed),
 		Logs:              logs,
 		Status:            uint32(utils.MustParseUint(rawReceipt.Status)),
@@ -93,36 +93,36 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 	// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
 	// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
 	// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
-	londonBlock := uint64(12965000)
-	// TODO: chain specific
-	if tx != nil && conn.Chain == "mainnet" {
-		if receipt.BlockNumber < londonBlock {
-			gasPrice := query.GasPrice
-			if gasPrice == 0 {
-				bn := tx.GasPrice()
-				if bn != nil {
-					gasPrice = bn.Uint64()
-				}
-			}
-			// TODO: This is very likely untested simply because our test cases are early blocks
-			receipt.EffectiveGasPrice = gasPrice
-		}
-	}
+	// londonBlock := uint64(12965000)
+	// // TODO: chain specific
+	// if tx != nil && conn.Chain == "mainnet" {
+	// 	if receipt.BlockNumber < londonBlock {
+	// 		gasPrice := query.GasPrice
+	// 		if gasPrice == 0 {
+	// 			bn := tx.GasPrice()
+	// 			if bn != nil {
+	// 				gasPrice = bn.Uint64()
+	// 			}
+	// 		}
+	// 		// TODO: This is very likely untested simply because our test cases are early blocks
+	// 		receipt.EffectiveGasPrice = gasPrice
+	// 	}
+	// }
 	return
 }
 
 // getReceiptRaw fetches raw transaction given blockNumber and transactionIndex
-func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
-	if fetched, err := conn.GetTransactionByNumberAndID(bn, txid); err != nil {
-		return nil, nil, err
+func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.RawReceipt, hash string, err error) {
+	if txHash, err := conn.GetEtherumTxHash(bn, txid); err != nil {
+		return nil, "", err
 
 	} else {
 		method := "eth_getTransactionReceipt"
-		params := rpc.Params{fetched.Hash().Hex()}
+		params := rpc.Params{txHash}
 		if receipt, err := rpc.Query[types.RawReceipt](conn.Chain, method, params); err != nil {
-			return nil, nil, err
+			return nil, "", err
 		} else {
-			return receipt, &fetched, nil
+			return receipt, txHash, nil
 		}
 	}
 }

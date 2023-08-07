@@ -20,11 +20,11 @@ func (opts *TracesOptions) HandleCounts() error {
 	chain := opts.Globals.Chain
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
+	settings := rpcClient.Settings{
 		Chain: chain,
 		Opts:  opts,
 	}
-	opts.Conn = settings.DefaultRpcOptions()
+	opts.Conn = settings.GetRpcConnection()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -40,7 +40,7 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 
 			for _, id := range txIds {
-				tx, err := opts.Conn.GetTransactionByNumberAndID(uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				txHash, err := opts.Conn.GetEtherumTxHash(uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -50,7 +50,6 @@ func (opts *TracesOptions) HandleCounts() error {
 					return
 				}
 
-				txHash := tx.Hash().Hex()
 				cnt, err := opts.Conn.GetTracesCountInTransaction(txHash)
 				if err != nil {
 					errorChan <- err

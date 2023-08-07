@@ -18,11 +18,11 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 	testMode := opts.Globals.TestMode
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
+	settings := rpcClient.Settings{
 		Chain: chain,
 		Opts:  opts,
 	}
-	opts.Conn = settings.DefaultRpcOptions()
+	opts.Conn = settings.GetRpcConnection()
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {

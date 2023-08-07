@@ -9,7 +9,6 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -194,20 +193,13 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			ret = append(ret, trace)
 		}
 
-		if conn.HasStore() && conn.enabledMap["traces"] && transaction != nil {
-			var writeOptions *cache.WriteOptions
-			if !conn.Store.ReadOnly() {
-				writeOptions = &cache.WriteOptions{
-					// Check if the block is final
-					Pending: (&types.SimpleBlock[string]{Timestamp: transaction.Timestamp}).Pending(conn.LatestBlockTimestamp),
-				}
-			}
+		if conn.HasStoreWritable() && conn.enabledMap["traces"] && transaction != nil && conn.IsFinal(transaction.Timestamp) {
 			traceGroup := &types.SimpleTraceGroup{
 				Traces:           ret,
 				BlockNumber:      transaction.BlockNumber,
 				TransactionIndex: transaction.TransactionIndex,
 			}
-			_ = conn.Store.Write(traceGroup, writeOptions)
+			_ = conn.Store.Write(traceGroup, nil)
 		}
 
 		return ret, nil

@@ -15,11 +15,11 @@ import (
 func (opts *StateOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
+	settings := rpcClient.Settings{
 		Chain: chain,
 		Opts:  opts,
 	}
-	opts.Conn = settings.DefaultRpcOptions()
+	opts.Conn = settings.GetRpcConnection()
 
 	previousBalance := make(map[base.Address]*big.Int, len(opts.Addrs))
 	var filters rpcClient.StateFilters

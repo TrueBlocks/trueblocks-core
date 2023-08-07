@@ -39,11 +39,11 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	)
 
 	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
+	settings := rpcClient.Settings{
 		Chain: chain,
 		Opts:  opts,
 	}
-	opts.Conn = settings.DefaultRpcOptions()
+	opts.Conn = settings.GetRpcConnection()
 
 	ledgers.Conn = opts.Conn
 

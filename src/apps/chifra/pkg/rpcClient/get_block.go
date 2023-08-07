@@ -12,7 +12,6 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -53,14 +52,6 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		return block, err
 	}
 
-	var writeOptions *cache.WriteOptions
-	if conn.HasStoreWritable() {
-		writeOptions = &cache.WriteOptions{
-			// Check if the block is final
-			Pending: block.Pending(conn.LatestBlockTimestamp),
-		}
-	}
-
 	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
 	for _, uncle := range rawBlock.Uncles {
 		block.Uncles = append(block.Uncles, base.HexToHash(uncle))
@@ -94,14 +85,15 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		tx := types.NewSimpleTransaction(raw, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
-		if conn.HasStore() && conn.enabledMap["txs"] {
-			_ = conn.Store.Write(tx, writeOptions)
+		if conn.HasStore() && conn.enabledMap["txs"] && conn.IsFinal(tx.Timestamp) {
+			_ = conn.Store.Write(tx, nil)
 		}
 	}
 
-	if conn.HasStore() {
-		_ = conn.Store.Write(&block, writeOptions)
+	if conn.HasStore() && conn.IsFinal(block.Timestamp) {
+		_ = conn.Store.Write(&block, nil)
 	}
+
 	return block, nil
 }
 
@@ -126,16 +118,12 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 	}
 
 	block.Transactions = make([]string, 0, len(rawBlock.Transactions))
-	for _, rawTx := range rawBlock.Transactions {
-		block.Transactions = append(block.Transactions, fmt.Sprint(rawTx))
+	for _, txHash := range rawBlock.Transactions {
+		block.Transactions = append(block.Transactions, fmt.Sprint(txHash))
 	}
 
-	if conn.HasStoreWritable() {
-		writeOptions := &cache.WriteOptions{
-			// Check if the block is final
-			Pending: block.Pending(conn.LatestBlockTimestamp),
-		}
-		_ = conn.Store.Write(&block, writeOptions)
+	if conn.HasStoreWritable() && conn.IsFinal(block.Timestamp) {
+		_ = conn.Store.Write(&block, nil)
 	}
 
 	return block, nil

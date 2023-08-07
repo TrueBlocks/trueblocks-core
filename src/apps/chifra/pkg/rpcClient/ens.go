@@ -7,6 +7,7 @@ package rpcClient
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	ensGo "github.com/wealdtech/go-ens/v3"
 )
 
@@ -26,7 +27,7 @@ func (conn *Connection) GetEnsAddresses(addrs []string) (out []string, found boo
 					found = true
 				}
 			}
-			out = append(out, lowerIfHex(term))
+			out = append(out, utils.LowerIfHex(term))
 		}
 		return
 	}
@@ -36,7 +37,7 @@ func (conn *Connection) GetEnsAddresses(addrs []string) (out []string, found boo
 // chain parameter, but ignore it choosing to look at mainnet ENS only
 func (conn *Connection) GetEnsAddress(addr string) (string, bool) {
 	if !strings.Contains(addr, ".eth") {
-		return lowerIfHex(addr), false
+		return utils.LowerIfHex(addr), false
 	}
 
 	// Note: we use ENS on mainnet always
@@ -46,15 +47,8 @@ func (conn *Connection) GetEnsAddress(addr string) (string, bool) {
 	} else {
 		defer ec.Close()
 		if val, err := ensGo.Resolve(ec, addr); err == nil && len(val) > 0 {
-			return lowerIfHex(val.Hex()), true
+			return utils.LowerIfHex(val.Hex()), true
 		}
-		return lowerIfHex(addr), false
+		return utils.LowerIfHex(addr), false
 	}
-}
-
-func lowerIfHex(addr string) string {
-	if !strings.HasPrefix(addr, "0x") {
-		return addr
-	}
-	return strings.ToLower(addr)
 }

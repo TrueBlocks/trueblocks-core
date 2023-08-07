@@ -52,7 +52,7 @@ func Test_TxFromNumberAndId(t *testing.T) {
 	conn := TempConnection(utils.GetTestChain())
 
 	txId := uint64(0)
-	_, err := conn.GetTransactionByNumberAndID(uint64(1424623), txId)
+	_, err := conn.GetEtherumTxHash(uint64(1424623), txId)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -7,13 +7,11 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
-	ethTypes "github.com/ethereum/go-ethereum/core/types"
 )
 
 func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64) (tx *types.SimpleTransaction, err error) {
@@ -46,16 +44,8 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 	}
 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
-
-	if conn.HasStore() && conn.enabledMap["txs"] {
-		var writeOptions *cache.WriteOptions
-		if conn.HasStoreWritable() {
-			writeOptions = &cache.WriteOptions{
-				// Check if the block is final
-				Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(conn.LatestBlockTimestamp),
-			}
-		}
-		_ = conn.Store.Write(tx, writeOptions)
+	if conn.HasStoreWritable() && conn.enabledMap["txs"] && conn.IsFinal(blockTs) {
+		_ = conn.Store.Write(tx, nil)
 	}
 
 	return
@@ -84,16 +74,6 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 		}
 	}
 
-	var writeOptions *cache.WriteOptions
-	var blockTs base.Timestamp
-	if conn.HasStoreWritable() {
-		blockTs = conn.GetBlockTimestamp(&bn)
-		writeOptions = &cache.WriteOptions{
-			// Check if the block is final
-			Pending: (&types.SimpleBlock[string]{Timestamp: blockTs}).Pending(conn.LatestBlockTimestamp),
-		}
-	}
-
 	tx = nil
 	if bn == 0 {
 		if tx, err = conn.GetTransactionPrefundByApp(appearance); err != nil {
@@ -108,14 +88,16 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 			return nil, err
 		}
 	}
+
+	blockTs := conn.GetBlockTimestamp(&bn)
 	if tx != nil {
-		if conn.HasStore() && conn.enabledMap["txs"] {
-			_ = conn.Store.Write(tx, writeOptions)
+		tx.Timestamp = blockTs
+		if conn.HasStoreWritable() && conn.enabledMap["txs"] && conn.IsFinal(blockTs) {
+			_ = conn.Store.Write(tx, nil)
 		}
 		return tx, nil
 	}
 
-	blockTs = conn.GetBlockTimestamp(&bn)
 	receipt, err := conn.GetReceipt(ReceiptQuery{
 		Bn:      bn,
 		Txid:    txid,
@@ -133,8 +115,8 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 
 	tx = types.NewSimpleTransaction(rawTx, &receipt, blockTs)
 
-	if conn.HasStore() && conn.enabledMap["txs"] {
-		_ = conn.Store.Write(tx, writeOptions)
+	if conn.HasStore() && conn.enabledMap["txs"] && conn.IsFinal(blockTs) {
+		_ = conn.Store.Write(tx, nil)
 	}
 
 	if fetchTraces {
@@ -212,24 +194,24 @@ func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId uint64) 
 	}
 }
 
-// GetTransactionByNumberAndID returns an actual transaction
-func (conn *Connection) GetTransactionByNumberAndID(bn, txId uint64) (ethTypes.Transaction, error) {
+// GetEtherumTxHash returns an actual transaction
+func (conn *Connection) GetEtherumTxHash(bn, txId uint64) (string, error) {
 	if ec, err := conn.getClient(); err != nil {
-		return ethTypes.Transaction{}, err
+		return "", err
 	} else {
 		defer ec.Close()
 
 		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
 		if err != nil {
-			return ethTypes.Transaction{}, err
+			return "", err
 		}
 
 		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
 		if err != nil {
-			return ethTypes.Transaction{}, err
+			return "", err
 		}
 
-		return *tx, nil
+		return tx.Hash().Hex(), nil
 	}
 }
 
