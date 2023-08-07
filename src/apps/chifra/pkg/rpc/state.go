@@ -1,4 +1,4 @@
-package rpcClient
+package rpc
 
 import (
 	"context"
@@ -7,7 +7,6 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -42,12 +41,12 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 		Deployed:    utils.NOPOS,
 	}
 
-	rpcPayload := []rpc.BatchPayload{
+	rpcPayload := []BatchPayload{
 		{
 			Key: "balance",
-			Payload: &rpc.Payload{
+			Payload: &Payload{
 				Method: "eth_getBalance",
-				Params: rpc.Params{
+				Params: Params{
 					address,
 					blockNumber,
 				},
@@ -56,11 +55,11 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	}
 
 	if (fieldBits & Nonce) != 0 {
-		rpcPayload = append(rpcPayload, rpc.BatchPayload{
+		rpcPayload = append(rpcPayload, BatchPayload{
 			Key: "nonce",
-			Payload: &rpc.Payload{
+			Payload: &Payload{
 				Method: "eth_getTransactionCount",
-				Params: rpc.Params{
+				Params: Params{
 					address,
 					blockNumber,
 				},
@@ -69,11 +68,11 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	}
 
 	if (fieldBits & Code) != 0 {
-		rpcPayload = append(rpcPayload, rpc.BatchPayload{
+		rpcPayload = append(rpcPayload, BatchPayload{
 			Key: "code",
-			Payload: &rpc.Payload{
+			Payload: &Payload{
 				Method: "eth_getCode",
-				Params: rpc.Params{
+				Params: Params{
 					address,
 					blockNumber,
 				},
@@ -81,7 +80,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 		})
 	}
 
-	queryResults, err := rpc.QueryBatch[string](conn.Chain, rpcPayload)
+	queryResults, err := QueryBatch[string](conn.Chain, rpcPayload)
 	if err != nil {
 		return
 	}

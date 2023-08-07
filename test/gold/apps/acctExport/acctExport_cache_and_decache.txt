@@ -1,5 +1,5 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10278000 --cache --decache
-TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+chifra export  0x04fe1f0c597fbc65700f4fba6f87501edc20e665 --first_block 10277780 --last_block 10278000 --cache --decache
+TEST[DATE|TIME] Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
 TEST[DATE|TIME] FirstBlock:  10277780
 TEST[DATE|TIME] LastBlock:  10278000
 TEST[DATE|TIME] Enabled:  neigbors, statements, txs

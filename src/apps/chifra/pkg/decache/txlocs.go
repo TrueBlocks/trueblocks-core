@@ -5,12 +5,12 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
-func TransactionLocationsFromIds(conn *rpcClient.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
+func TransactionLocationsFromIds(conn *rpc.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
 	locations := make([]cache.Locator, 0)
 	for _, rng := range ids {
 		txIds, err := rng.ResolveTxs(conn.Chain)

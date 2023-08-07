@@ -14,7 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
@@ -175,7 +175,7 @@ func (opts *GlobalOptions) toCmdLine() string {
 	return options
 }
 
-func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpcClient.Connection {
+func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpc.Connection {
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
 	opts.Writer = w
 
@@ -235,10 +235,10 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return rpcClient.NewConnection(opts.Chain, opts.Cache, caches)
+	return rpc.NewConnection(opts.Chain, opts.Cache, caches)
 }
 
-func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpcClient.Connection {
+func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpc.Connection {
 	if (len(opts.Format) == 0 || opts.Format == "none") && len(opts.OutputFn) > 0 {
 		parts := strings.Split(opts.OutputFn, ".")
 		if len(parts) > 0 {
@@ -257,5 +257,5 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return rpcClient.NewConnection(opts.Chain, opts.Cache, caches)
+	return rpc.NewConnection(opts.Chain, opts.Cache, caches)
 }

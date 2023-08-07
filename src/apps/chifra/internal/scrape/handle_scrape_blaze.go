@@ -15,13 +15,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blazeOpts *BlazeOptions) error {
+func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *BlazeOptions) error {
 	chain := opts.Globals.Chain
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
@@ -48,7 +48,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blaze
 // TODO: Protect against overwriting files on disc
 
 func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uint64) error {
-	conn := rpcClient.TempConnection(chain)
+	conn := rpc.TempConnection(chain)
 
 	sort.Slice(tsArray, func(i, j int) bool {
 		return tsArray[i].Bn < tsArray[j].Bn

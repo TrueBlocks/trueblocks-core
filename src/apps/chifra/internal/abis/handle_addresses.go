@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -32,7 +32,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 				}
 				// Let's try to download the file from somewhere
 				if err := opts.Conn.IsContractAt(address, nil); err != nil {
-					if !errors.Is(err, rpcClient.ErrNotAContract) {
+					if !errors.Is(err, rpc.ErrNotAContract) {
 						errorChan <- err
 						cancel()
 					} else {

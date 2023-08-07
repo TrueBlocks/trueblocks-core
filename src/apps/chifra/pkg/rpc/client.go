@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package rpcClient
+package rpc
 
 import (
 	"context"
@@ -12,7 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -20,9 +19,9 @@ import (
 func (conn *Connection) GetClientVersion() (version string, err error) {
 	// TODO: C++ code used to cache version info
 	method := "web3_clientVersion"
-	params := rpc.Params{}
+	params := Params{}
 
-	if version, err := rpc.Query[string](conn.Chain, method, params); err != nil {
+	if version, err := Query[string](conn.Chain, method, params); err != nil {
 		return "", err
 	} else {
 		return *version, nil

@@ -2,13 +2,12 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package rpcClient
+package rpc
 
 import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -98,8 +97,8 @@ func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.Ra
 
 	} else {
 		method := "eth_getTransactionReceipt"
-		params := rpc.Params{txHash}
-		if receipt, err := rpc.Query[types.RawReceipt](conn.Chain, method, params); err != nil {
+		params := Params{txHash}
+		if receipt, err := Query[types.RawReceipt](conn.Chain, method, params); err != nil {
 			return nil, base.Hash{}, err
 		} else {
 			return receipt, txHash, nil

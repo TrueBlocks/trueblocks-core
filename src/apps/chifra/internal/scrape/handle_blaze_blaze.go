@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -59,7 +59,7 @@ func (opts *BlazeOptions) String() string {
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
-func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err error) {
+func (opts *BlazeOptions) HandleBlaze(meta *rpc.MetaData) (ok bool, err error) {
 	blocks := []int{}
 	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCount); block++ {
 		blocks = append(blocks, block)
@@ -70,7 +70,7 @@ func (opts *BlazeOptions) HandleBlaze(meta *rpcClient.MetaData) (ok bool, err er
 // TODO: We could, if we wished, use getLogs with a block range to retrieve all of the logs in the range
 // TODO: with a single query. See closed issue #1829
 
-func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (ok bool, err error) {
+func (opts *BlazeOptions) HandleBlaze1(meta *rpc.MetaData, blocks []int) (ok bool, err error) {
 	//
 	// We build a pipeline that takes block numbers in through the blockChannel which queries the chain
 	// and sends the results through the appearanceChannel and the timestampChannel. The appearanceChannel
@@ -120,7 +120,7 @@ func (opts *BlazeOptions) HandleBlaze1(meta *rpcClient.MetaData, blocks []int) (
 }
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
-func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
+func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
 	defer opts.BlockWg.Done()
 	for bn := range blockChannel {
 
@@ -129,7 +129,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		}
 
 		chain := opts.Chain
-		conn := rpcClient.TempConnection(chain)
+		conn := rpc.TempConnection(chain)
 
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
 		if sd.traces, err = conn.GetTracesByBlockNumber(uint64(bn)); err != nil {
@@ -159,7 +159,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 var blazeMutex sync.Mutex
 
 // BlazeProcessAppearances processes ScrapedData objects shoved down the appearanceChannel
-func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpcClient.MetaData, appearanceChannel chan ScrapedData) (err error) {
+func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpc.MetaData, appearanceChannel chan ScrapedData) (err error) {
 	defer opts.AppearanceWg.Done()
 
 	for sData := range appearanceChannel {
@@ -198,7 +198,7 @@ func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampR
 
 var writeMutex sync.Mutex
 
-func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpcClient.MetaData, bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
+func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpc.MetaData, bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {

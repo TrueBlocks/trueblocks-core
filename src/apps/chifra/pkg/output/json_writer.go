@@ -7,7 +7,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 type FieldType int
@@ -54,7 +54,7 @@ type JsonWriter struct {
 	// errors to output
 	errs []string
 	// function to get meta data
-	GetMeta func() (*rpcClient.MetaData, error)
+	GetMeta func() (*rpc.MetaData, error)
 	// flag indicating if we should output `meta` object as
 	// well
 	ShouldWriteMeta bool
@@ -68,8 +68,8 @@ func NewJsonWriter(w io.Writer) *JsonWriter {
 	return &JsonWriter{
 		outputWriter: w,
 		indentString: "  ",
-		GetMeta: func() (*rpcClient.MetaData, error) {
-			return &rpcClient.MetaData{}, nil
+		GetMeta: func() (*rpc.MetaData, error) {
+			return &rpc.MetaData{}, nil
 		},
 	}
 }

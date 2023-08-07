@@ -21,7 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -148,7 +148,7 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 // EXISTING_CODE
 //
 
-func ToProgress(chain string, meta *rpcClient.MetaData) string {
+func ToProgress(chain string, meta *rpc.MetaData) string {
 	nTs, _ := tslib.NTimestamps(chain)
 	format := "%d, %d, %d, %d ts: %d"
 	return fmt.Sprintf(format, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)

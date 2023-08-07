@@ -6,10 +6,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
-func Decache(conn *rpcClient.Connection, locs []cache.Locator, testMode, verbose bool) (string, error) {
+func Decache(conn *rpc.Connection, locs []cache.Locator, testMode, verbose bool) (string, error) {
 	itemsSeen := int64(0)
 	itemsProcessed := int64(0)
 	bytesProcessed := 0

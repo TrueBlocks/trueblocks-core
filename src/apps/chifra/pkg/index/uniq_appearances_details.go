@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -17,7 +17,7 @@ import (
 
 type UniqProcFunc func(s *types.SimpleAppearance) error
 
-func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap, conn *rpcClient.Connection) error {
+func UniqFromTransDetails(chain string, procFunc UniqProcFunc, flow string, trans *types.SimpleTransaction, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) error {
 	bn := trans.BlockNumber
 	txid := trans.TransactionIndex
 	traceid := utils.NOPOS
@@ -123,7 +123,7 @@ func traceReason(i uint64, trace *types.SimpleTrace, r string) string {
 }
 
 // UniqFromTracesDetails extracts addresses from traces
-func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap, conn *rpcClient.Connection) (err error) {
+func UniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) (err error) {
 	for _, trace := range traces {
 		trace := trace
 		traceid := trace.TraceIndex

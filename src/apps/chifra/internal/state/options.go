@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -32,7 +32,7 @@ type StateOptions struct {
 	Call     string                   `json:"call,omitempty"`     // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
 	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Connection    `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpc.Connection          `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE

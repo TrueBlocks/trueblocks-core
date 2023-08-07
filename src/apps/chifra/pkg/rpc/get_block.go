@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package rpcClient
+package rpc
 
 import (
 	"context"
@@ -13,7 +13,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
@@ -255,9 +254,9 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 // getBlockRaw returns the raw block as received from the node
 func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, error) {
 	method := "eth_getBlockByNumber"
-	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
+	params := Params{fmt.Sprintf("0x%x", bn), withTxs}
 
-	if block, err := rpc.Query[types.RawBlock](conn.Chain, method, params); err != nil {
+	if block, err := Query[types.RawBlock](conn.Chain, method, params); err != nil {
 		return &types.RawBlock{}, err
 	} else {
 		if bn == 0 {

@@ -10,14 +10,14 @@ package whenPkg
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Test_Validate(t *testing.T) {
 	var opts = WhenOptions{}
 	chain := utils.GetTestChain()
-	opts.Conn = rpcClient.TempConnection(chain)
+	opts.Conn = rpc.TempConnection(chain)
 	opts.Blocks = append(opts.Blocks, "2014-01-01")
 	err := opts.validateWhen()
 	if err == nil {

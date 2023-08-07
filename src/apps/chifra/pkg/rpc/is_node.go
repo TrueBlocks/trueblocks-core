@@ -1,4 +1,4 @@
-package rpcClient
+package rpc
 
 import (
 	"path/filepath"

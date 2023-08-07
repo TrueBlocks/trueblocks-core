@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -40,7 +40,7 @@ type BlocksOptions struct {
 	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
 	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
-	Conn        *rpcClient.Connection    `json:"conn,omitempty"`        // The connection to the RPC server
+	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE

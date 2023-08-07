@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -26,7 +26,7 @@ type StatusOptions struct {
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
-	Conn        *rpcClient.Connection `json:"conn,omitempty"`        // The connection to the RPC server
+	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	ModeTypes []walk.CacheType `json:"-"`

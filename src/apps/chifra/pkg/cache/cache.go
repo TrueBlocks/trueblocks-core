@@ -88,7 +88,6 @@ func (s *StoreOptions) rootDir() (dir string) {
 	if s == nil {
 		// TODO: s is never nil, we would have cored already
 		logger.Fatal("Implementation error in location.")
-		dir = config.GetPathToCache(config.GetDefaultChain())
 	} else if s.RootDir == "" {
 		dir = config.GetPathToCache(s.Chain)
 	}

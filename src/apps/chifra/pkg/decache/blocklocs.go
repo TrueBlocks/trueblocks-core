@@ -4,11 +4,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func BlockLocationsFromIds(conn *rpcClient.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
+func BlockLocationsFromIds(conn *rpc.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
 	locations := make([]cache.Locator, 0)
 	for _, br := range ids {
 		blockNums, err := br.ResolveBlocks(conn.Chain)

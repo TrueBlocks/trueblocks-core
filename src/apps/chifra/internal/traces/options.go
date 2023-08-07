@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -28,7 +28,7 @@ type TracesOptions struct {
 	Filter         string                   `json:"filter,omitempty"`         // Call the node's trace_filter routine with bang-separated filter
 	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
-	Conn           *rpcClient.Connection    `json:"conn,omitempty"`           // The connection to the RPC server
+	Conn           *rpc.Connection          `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE

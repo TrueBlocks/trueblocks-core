@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
@@ -56,7 +56,7 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 	if contractCall, err := call.NewContractCall(unchainedChain, unchained.GetUnchainedIndexAddress(), theCall, false); err != nil {
 		return "", err
 	} else {
-		conn := rpcClient.TempConnection(unchainedChain)
+		conn := rpc.TempConnection(unchainedChain)
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
 		if result, err := call.CallContract(unchainedChain, contractCall); err != nil {
 			return "", err

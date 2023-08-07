@@ -30,6 +30,27 @@ type eip1474Error struct {
 	Message string `json:"message"`
 }
 
+// Query returns a single result for given method and params.
+func Query[T any](chain string, method string, params Params) (*T, error) {
+	var response rpcResponse[T]
+
+	payload := Payload{
+		Method: method,
+		Params: params,
+	}
+
+	provider, _ := config.GetRpcProvider(chain)
+	err := fromRpc(provider, &payload, &response)
+	if err != nil {
+		return nil, err
+	}
+	if response.Error != nil {
+		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
+	}
+
+	return &response.Result, err
+}
+
 var rpcCounter uint32
 
 // fromRpc Returns all traces for a given block.
@@ -46,33 +67,6 @@ func fromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
 		Method:  payload.Method,
 		Params:  payload.Params,
 		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
-	}
-
-	plBytes, err := json.Marshal(payloadToSend)
-	if err != nil {
-		return err
-	}
-
-	return sendRpcRequest(rpcProvider, plBytes, ret)
-}
-
-func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
-	type rpcPayload struct {
-		Jsonrpc string `json:"jsonrpc"`
-		Method  string `json:"method"`
-		Params  `json:"params"`
-		ID      int `json:"id"`
-	}
-
-	payloadToSend := make([]rpcPayload, 0, len(payloads))
-
-	for _, payload := range payloads {
-		payloadToSend = append(payloadToSend, rpcPayload{
-			Jsonrpc: "2.0",
-			Method:  payload.Method,
-			Params:  payload.Params,
-			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
-		})
 	}
 
 	plBytes, err := json.Marshal(payloadToSend)
@@ -103,27 +97,6 @@ func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
 	}
 
 	return json.Unmarshal(theBytes, result)
-}
-
-// Query returns a single result for given method and params.
-func Query[T any](chain string, method string, params Params) (*T, error) {
-	var response rpcResponse[T]
-
-	payload := Payload{
-		Method: method,
-		Params: params,
-	}
-
-	provider, _ := config.GetRpcProvider(chain)
-	err := fromRpc(provider, &payload, &response)
-	if err != nil {
-		return nil, err
-	}
-	if response.Error != nil {
-		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
-	}
-
-	return &response.Result, err
 }
 
 // QuerySlice returns a slice of results for given method and params.
@@ -173,4 +146,31 @@ func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T
 		results[key] = &response[index].Result
 	}
 	return results, err
+}
+
+func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
+	type rpcPayload struct {
+		Jsonrpc string `json:"jsonrpc"`
+		Method  string `json:"method"`
+		Params  `json:"params"`
+		ID      int `json:"id"`
+	}
+
+	payloadToSend := make([]rpcPayload, 0, len(payloads))
+
+	for _, payload := range payloads {
+		payloadToSend = append(payloadToSend, rpcPayload{
+			Jsonrpc: "2.0",
+			Method:  payload.Method,
+			Params:  payload.Params,
+			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
+		})
+	}
+
+	plBytes, err := json.Marshal(payloadToSend)
+	if err != nil {
+		return err
+	}
+
+	return sendRpcRequest(rpcProvider, plBytes, ret)
 }

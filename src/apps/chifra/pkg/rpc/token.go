@@ -1,4 +1,4 @@
-package rpcClient
+package rpc
 
 import (
 	"errors"
@@ -7,7 +7,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -29,14 +28,14 @@ const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 // GetTokenState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
 func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber string) (token *types.SimpleToken, err error) {
-	results, err := rpc.QueryBatch[string](
+	results, err := QueryBatch[string](
 		conn.Chain,
-		[]rpc.BatchPayload{
+		[]BatchPayload{
 			{
 				Key: "name",
-				Payload: &rpc.Payload{
+				Payload: &Payload{
 					Method: "eth_call",
-					Params: rpc.Params{
+					Params: Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": tokenStateName,
@@ -47,9 +46,9 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 			},
 			{
 				Key: "symbol",
-				Payload: &rpc.Payload{
+				Payload: &Payload{
 					Method: "eth_call",
-					Params: rpc.Params{
+					Params: Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": tokenStateSymbol,
@@ -60,9 +59,9 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 			},
 			{
 				Key: "decimals",
-				Payload: &rpc.Payload{
+				Payload: &Payload{
 					Method: "eth_call",
-					Params: rpc.Params{
+					Params: Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": tokenStateDecimals,
@@ -73,9 +72,9 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 			},
 			{
 				Key: "totalSupply",
-				Payload: &rpc.Payload{
+				Payload: &Payload{
 					Method: "eth_call",
-					Params: rpc.Params{
+					Params: Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": tokenStateTotalSupply,
@@ -87,9 +86,9 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 			// Supports interface: ERC 721
 			{
 				Key: "erc721",
-				Payload: &rpc.Payload{
+				Payload: &Payload{
 					Method: "eth_call",
-					Params: rpc.Params{
+					Params: Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": erc721SupportsInterfaceData,
@@ -143,13 +142,13 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 // GetTokenBalanceAt returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
 func (conn *Connection) GetTokenBalanceAt(token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
-	output, err := rpc.QueryBatch[string](
+	output, err := QueryBatch[string](
 		conn.Chain,
-		[]rpc.BatchPayload{{
+		[]BatchPayload{{
 			Key: "balance",
-			Payload: &rpc.Payload{
+			Payload: &Payload{
 				Method: "eth_call",
-				Params: rpc.Params{
+				Params: Params{
 					map[string]any{
 						"to":   token.Hex(),
 						"data": tokenStateBalanceOf + holder.Pad32(),

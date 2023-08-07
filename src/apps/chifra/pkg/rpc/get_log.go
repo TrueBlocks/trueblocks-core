@@ -1,10 +1,9 @@
-package rpcClient
+package rpc
 
 import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
@@ -51,9 +50,9 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 	}
 
 	method := "eth_getLogs"
-	params := rpc.Params{p}
+	params := Params{p}
 
-	if rawLogs, err := rpc.QuerySlice[types.RawLog](conn.Chain, method, params); err != nil {
+	if rawLogs, err := QuerySlice[types.RawLog](conn.Chain, method, params); err != nil {
 		return []types.SimpleLog{}, err
 	} else {
 		curBlock := utils.NOPOS

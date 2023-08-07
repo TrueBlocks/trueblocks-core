@@ -2,14 +2,13 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package rpcClient
+package rpc
 
 import (
 	"fmt"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
@@ -18,9 +17,9 @@ import (
 // GetTracesByBlockNumber returns a slice of traces in the given block
 func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, error) {
 	method := "trace_block"
-	params := rpc.Params{fmt.Sprintf("0x%x", bn)}
+	params := Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawTraces, err := rpc.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
 		return []types.SimpleTrace{}, err
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
@@ -116,10 +115,10 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 	}
 
 	method := "trace_transaction"
-	params := rpc.Params{txHash}
+	params := Params{txHash}
 
 	var ret []types.SimpleTrace
-	if rawTraces, err := rpc.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, fmt.Errorf("transaction at %s returned an error: %w", txHash, ethereum.NotFound)
 
 	} else {
@@ -208,13 +207,14 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 
 // GetTracesByFilter returns a slice of traces in a given transaction's hash
 func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, error) {
-	method := "trace_filter"
 	var f types.SimpleTraceFilter
 	ff := f.ParseBangString(filter)
-	params := rpc.Params{ff}
+
+	method := "trace_filter"
+	params := Params{ff}
 
 	var ret []types.SimpleTrace
-	if rawTraces, err := rpc.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}

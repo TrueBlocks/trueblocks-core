@@ -1,7 +1,7 @@
 //go:build integration
 // +build integration
 
-package rpcClient
+package rpc
 
 import (
 	"math/big"

@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -21,7 +21,7 @@ import (
 // HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns
 // true if the processing should continue, false otherwise. Currently, the only thing to do
 // is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
-func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
+func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
 	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting

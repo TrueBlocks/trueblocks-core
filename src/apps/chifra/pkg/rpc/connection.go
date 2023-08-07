@@ -1,4 +1,4 @@
-package rpcClient
+package rpc
 
 import (
 	"sort"
@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// Connection carries additional context to rpcClient calls
+// Connection carries additional context to rpc calls
 type Connection struct {
 	Chain                string
 	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode

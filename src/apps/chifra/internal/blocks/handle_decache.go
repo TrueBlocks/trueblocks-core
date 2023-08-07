@@ -9,13 +9,13 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *BlocksOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewReadOnlyConnection(chain)
+	opts.Conn = rpc.NewReadOnlyConnection(chain)
 
 	itemsToRemove, err := decache.BlockLocationsFromIds(opts.Conn, opts.BlockIds)
 	if err != nil {

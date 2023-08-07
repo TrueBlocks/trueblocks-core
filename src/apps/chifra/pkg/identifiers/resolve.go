@@ -9,7 +9,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -72,7 +72,7 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 }
 
 func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
-	conn := rpcClient.TempConnection(chain)
+	conn := rpc.TempConnection(chain)
 
 	dt, err := tslib.FromBnToDate(chain, bn)
 	if err != nil {
@@ -175,7 +175,7 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 }
 
 func (p *Point) resolvePoint(chain string) uint64 {
-	conn := rpcClient.TempConnection(chain)
+	conn := rpc.TempConnection(chain)
 
 	var bn uint64
 	if p.Hash != "" {
@@ -201,7 +201,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 }
 
 func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
-	conn := rpcClient.TempConnection(chain)
+	conn := rpc.TempConnection(chain)
 	txs := []types.RawAppearance{}
 
 	if id.StartType == BlockNumber {
