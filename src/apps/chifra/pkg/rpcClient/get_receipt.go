@@ -58,7 +58,7 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 			BlockNumber:      utils.MustParseUint(rawLog.BlockNumber),
 			BlockHash:        base.HexToHash(rawLog.BlockHash),
 			TransactionIndex: utils.MustParseUint(rawLog.TransactionIndex),
-			TransactionHash:  base.HexToHash(txHash),
+			TransactionHash:  txHash,
 			Timestamp:        query.Ts,
 			Date:             utils.FormattedDate(query.Ts),
 			Data:             string(rawLog.Data),
@@ -90,37 +90,19 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 	}
 	receipt.SetRaw(rawReceipt)
 
-	// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
-	// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
-	// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
-	// londonBlock := uint64(12965000)
-	// // TODO: chain specific
-	// if tx != nil && conn.Chain == "mainnet" {
-	// 	if receipt.BlockNumber < londonBlock {
-	// 		gasPrice := query.GasPrice
-	// 		if gasPrice == 0 {
-	// 			bn := tx.GasPrice()
-	// 			if bn != nil {
-	// 				gasPrice = bn.Uint64()
-	// 			}
-	// 		}
-	// 		// TODO: This is very likely untested simply because our test cases are early blocks
-	// 		receipt.EffectiveGasPrice = gasPrice
-	// 	}
-	// }
 	return
 }
 
 // getReceiptRaw fetches raw transaction given blockNumber and transactionIndex
-func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.RawReceipt, hash string, err error) {
-	if txHash, err := conn.GetEtherumTxHash(bn, txid); err != nil {
-		return nil, "", err
+func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.RawReceipt, hash base.Hash, err error) {
+	if txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid); err != nil {
+		return nil, base.Hash{}, err
 
 	} else {
 		method := "eth_getTransactionReceipt"
 		params := rpc.Params{txHash}
 		if receipt, err := rpc.Query[types.RawReceipt](conn.Chain, method, params); err != nil {
-			return nil, "", err
+			return nil, base.Hash{}, err
 		} else {
 			return receipt, txHash, nil
 		}

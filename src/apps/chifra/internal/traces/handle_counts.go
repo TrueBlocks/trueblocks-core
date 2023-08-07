@@ -8,7 +8,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -40,7 +39,7 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 
 			for _, id := range txIds {
-				txHash, err := opts.Conn.GetEtherumTxHash(uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				txHash, err := opts.Conn.GetTransactionHashByNumberAndID(uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -50,7 +49,7 @@ func (opts *TracesOptions) HandleCounts() error {
 					return
 				}
 
-				cnt, err := opts.Conn.GetTracesCountInTransaction(txHash)
+				cnt, err := opts.Conn.GetTracesCountInTransaction(txHash.Hex())
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -73,7 +72,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				counter := simpleTraceCount{
 					BlockNumber:      uint64(id.BlockNumber),
 					TransactionIndex: uint64(id.TransactionIndex),
-					TransactionHash:  base.HexToHash(txHash),
+					TransactionHash:  txHash,
 					Timestamp:        ts,
 					TracesCnt:        cnt,
 				}

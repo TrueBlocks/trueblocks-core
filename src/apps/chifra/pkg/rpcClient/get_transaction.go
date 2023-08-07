@@ -194,27 +194,6 @@ func (conn *Connection) GetTransactionHashByHashAndID(hash string, txId uint64) 
 	}
 }
 
-// GetEtherumTxHash returns an actual transaction
-func (conn *Connection) GetEtherumTxHash(bn, txId uint64) (string, error) {
-	if ec, err := conn.getClient(); err != nil {
-		return "", err
-	} else {
-		defer ec.Close()
-
-		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
-		if err != nil {
-			return "", err
-		}
-
-		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
-		if err != nil {
-			return "", err
-		}
-
-		return tx.Hash().Hex(), nil
-	}
-}
-
 func (conn *Connection) GetTransactionPrefundByApp(appearance *types.RawAppearance) (tx *types.SimpleTransaction, err error) {
 	// TODO: performance - This loads and then drops the file every time it's called. Quite slow.
 	// TODO: performance - in the old C++ we stored these values in a pre fundAddrMap so that given a txid in block zero
