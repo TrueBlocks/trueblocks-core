@@ -57,7 +57,7 @@ func TestGetProxy(t *testing.T) {
 	// 0x00000000441378008ea67f4284a57932b1c000a5
 	conn := TempConnection(utils.GetTestChain())
 
-	proxy, err := conn.GetProxyAt(base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"), base.Blknum(12983248))
+	proxy, err := conn.GetContractProxyAt(base.HexToAddress("0x4Fabb145d64652a948d72533023f6E7A623C7C53"), base.Blknum(12983248))
 	if err != nil {
 		t.Fatal(err)
 	}

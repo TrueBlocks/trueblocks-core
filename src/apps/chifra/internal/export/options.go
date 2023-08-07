@@ -265,9 +265,9 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
-	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(opts.Emitter)
-	opts.Asset, _ = opts.Conn.GetAddressesFromEns(opts.Asset)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
 	// EXISTING_CODE
 
 	return opts
@@ -293,9 +293,9 @@ func exportFinishParse(args []string) *ExportOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
-	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(opts.Emitter)
-	opts.Asset, _ = opts.Conn.GetAddressesFromEns(opts.Asset)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
@@ -328,8 +328,8 @@ func ResetOptions() {
 func (opts *ExportOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"txs": true,
 		// TODO: Enabled neighbors and statements cache
+		"txs":        true,
 		"neigbors":   true,
 		"statements": true,
 		"traces":     opts.CacheTraces,

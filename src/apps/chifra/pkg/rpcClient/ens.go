@@ -10,18 +10,12 @@ import (
 	ensGo "github.com/wealdtech/go-ens/v3"
 )
 
-func lowerIfHex(addr string) string {
-	if !strings.HasPrefix(addr, "0x") {
-		return addr
-	}
-	return strings.ToLower(addr)
-}
-
-// GetAddressesFromEns converts an array of strings, if they contains .eth, into addresses. Note, we take
+// GetEnsAddresses converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func (conn *Connection) GetAddressesFromEns(addrs []string) (out []string, found bool) {
+func (conn *Connection) GetEnsAddresses(addrs []string) (out []string, found bool) {
 	// Note: we use ENS on mainnet always
-	if ec, err := getClient("mainnet"); err != nil {
+	tc := TempConnection("mainnet")
+	if ec, err := tc.getClient(); err != nil {
 		return
 	} else {
 		defer ec.Close()
@@ -38,15 +32,16 @@ func (conn *Connection) GetAddressesFromEns(addrs []string) (out []string, found
 	}
 }
 
-// GetAddressFromEns converts a single string, if it contains .eth, into an address. Note, we take
+// GetEnsAddress converts a single string, if it contains .eth, into an address. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func (conn *Connection) GetAddressFromEns(addr string) (string, bool) {
+func (conn *Connection) GetEnsAddress(addr string) (string, bool) {
 	if !strings.Contains(addr, ".eth") {
 		return lowerIfHex(addr), false
 	}
 
 	// Note: we use ENS on mainnet always
-	if ec, err := getClient("mainnet"); err != nil {
+	tc := TempConnection("mainnet")
+	if ec, err := tc.getClient(); err != nil {
 		return "", false
 	} else {
 		defer ec.Close()
@@ -55,4 +50,11 @@ func (conn *Connection) GetAddressFromEns(addr string) (string, bool) {
 		}
 		return lowerIfHex(addr), false
 	}
+}
+
+func lowerIfHex(addr string) string {
+	if !strings.HasPrefix(addr, "0x") {
+		return addr
+	}
+	return strings.ToLower(addr)
 }

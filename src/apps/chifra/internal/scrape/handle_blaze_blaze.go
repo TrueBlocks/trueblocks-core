@@ -132,7 +132,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpcClient.MetaData, blockChan
 		conn := rpcClient.TempConnection(chain)
 
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
-		if sd.traces, err = conn.GetTracesByNumber(uint64(bn)); err != nil {
+		if sd.traces, err = conn.GetTracesByBlockNumber(uint64(bn)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
 		}

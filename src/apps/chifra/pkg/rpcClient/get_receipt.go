@@ -41,7 +41,7 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 		}
 	}
 
-	rawReceipt, tx, err := conn.getRawTransactionReceipt(query.Bn, query.Txid)
+	rawReceipt, tx, err := conn.getReceiptRaw(query.Bn, query.Txid)
 	if err != nil {
 		return
 	}
@@ -111,8 +111,8 @@ func (conn *Connection) GetReceipt(query ReceiptQuery) (receipt types.SimpleRece
 	return
 }
 
-// getRawTransactionReceipt fetches raw transaction given blockNumber and transactionIndex
-func (conn *Connection) getRawTransactionReceipt(bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
+// getReceiptRaw fetches raw transaction given blockNumber and transactionIndex
+func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.RawReceipt, tx *ethTypes.Transaction, err error) {
 	if fetched, err := conn.GetTransactionByNumberAndID(bn, txid); err != nil {
 		return nil, nil, err
 

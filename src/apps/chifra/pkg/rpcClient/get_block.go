@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -32,7 +33,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 			result.Transactions = make([]types.SimpleTransaction, 0, len(cachedBlock.Transactions))
 			success := true
 			for index := range cachedBlock.Transactions {
-				tx, err := conn.GetTransactionByBlockAndId(cachedBlock.BlockNumber, uint64(index))
+				tx, err := conn.GetTransactionByNumberAndId(cachedBlock.BlockNumber, uint64(index))
 				if err != nil {
 					success = false
 					break
@@ -109,7 +110,6 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 	if conn.HasStore() {
 		block.BlockNumber = bn
 		if err := conn.Store.Read(&block, nil); err == nil {
-			// Success
 			return block, nil
 		}
 	}
@@ -141,10 +141,118 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 	return block, nil
 }
 
+// GetBlockTimestamp returns the timestamp associated with a given block
+func (conn *Connection) GetBlockTimestamp(bn *uint64) base.Timestamp {
+	if ec, err := conn.getClient(); err != nil {
+		logger.Error("Could not connect to RPC client", err)
+		return 0
+	} else {
+		defer ec.Close()
+
+		var blockNumber *big.Int
+		if bn != nil {
+			blockNumber = big.NewInt(int64(*bn))
+		}
+
+		r, err := ec.HeaderByNumber(context.Background(), blockNumber)
+		if err != nil {
+			logger.Error("Could not connect to RPC client", err)
+			return 0
+		}
+
+		ts := base.Timestamp(r.Time)
+		if ts == 0 {
+			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
+			// TODO: Chain specific
+			return conn.GetBlockTimestamp(utils.PointerOf(uint64(1))) - 13
+		}
+
+		return ts
+	}
+}
+
+// GetBlockHashByHash returns a block's hash if it's a valid block
+func (conn *Connection) GetBlockHashByHash(hash string) (string, error) {
+	if ec, err := conn.getClient(); err != nil {
+		return "", err
+	} else {
+		defer ec.Close()
+
+		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+		if err != nil {
+			return "", err
+		}
+
+		return block.Hash().Hex(), nil
+	}
+}
+
+// GetBlockNumberByHash returns a block's hash if it's a valid block
+func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
+	if ec, err := conn.getClient(); err != nil {
+		return 0, err
+	} else {
+		defer ec.Close()
+
+		block, err := ec.BlockByHash(context.Background(), common.HexToHash(hash))
+		if err != nil {
+			return 0, err
+		}
+
+		return block.NumberU64(), nil
+	}
+}
+
+// GetBlockHashByNumber returns a block's hash if it's a valid block
+func (conn *Connection) GetBlockHashByNumber(bn uint64) (string, error) {
+	if ec, err := conn.getClient(); err != nil {
+		return "", err
+	} else {
+		defer ec.Close()
+
+		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
+		if err != nil {
+			return "", err
+		}
+
+		return block.Hash().Hex(), nil
+	}
+}
+
+func (conn *Connection) getBlockReward(bn uint64) *big.Int {
+	if bn == 0 {
+		return big.NewInt(0)
+	} else if bn < byzantiumBlock {
+		return big.NewInt(5000000000000000000)
+	} else if bn < constantinopleBlock {
+		return big.NewInt(3000000000000000000)
+	} else {
+		return big.NewInt(2000000000000000000)
+	}
+}
+
+func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, error) {
+	method := "eth_getBlockByNumber"
+	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
+
+	if block, err := rpc.Query[types.RawBlock](conn.Chain, method, params); err != nil {
+		return &types.RawBlock{}, err
+	} else {
+		if bn == 0 {
+			// The RPC does not return a timestamp for the zero block, so we make one
+			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(utils.PointerOf(uint64(0))))
+		} else if utils.MustParseUint(block.Timestamp) == 0 {
+			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
+		}
+
+		return block, nil
+	}
+}
+
 // loadBlock fetches block from RPC, but it does not try to fill Transactions field. This is delegated to
 // more specialized functions and makes loadBlock generic.
 func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64, withTxs bool) (block types.SimpleBlock[Tx], rawBlock *types.RawBlock, err error) {
-	rawBlock, err = conn.getRawBlock(bn, withTxs)
+	rawBlock, err = conn.getBlockRaw(bn, withTxs)
 	if err != nil {
 		return
 	}
@@ -191,73 +299,4 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 		Uncles:      uncles,
 	}
 	return
-}
-
-func (conn *Connection) getRawBlock(bn uint64, withTxs bool) (*types.RawBlock, error) {
-	method := "eth_getBlockByNumber"
-	params := rpc.Params{fmt.Sprintf("0x%x", bn), withTxs}
-
-	if block, err := rpc.Query[types.RawBlock](conn.Chain, method, params); err != nil {
-		return &types.RawBlock{}, err
-	} else {
-		if bn == 0 {
-			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(utils.PointerOf(uint64(0))))
-		} else if utils.MustParseUint(block.Timestamp) == 0 {
-			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
-		}
-
-		return block, nil
-	}
-}
-
-// GetBlockTimestamp returns the timestamp associated with a given block
-func (conn *Connection) GetBlockTimestamp(bn *uint64) base.Timestamp {
-	if ec, err := getClient(conn.Chain); err != nil {
-		logger.Error("Could not connect to RPC client", err)
-		return 0
-	} else {
-		defer ec.Close()
-
-		var blockNumber *big.Int
-		if bn != nil {
-			blockNumber = big.NewInt(int64(*bn))
-		}
-
-		r, err := ec.HeaderByNumber(context.Background(), blockNumber)
-		if err != nil {
-			logger.Error("Could not connect to RPC client", err)
-			return 0
-		}
-
-		ts := base.Timestamp(r.Time)
-		if ts == 0 {
-			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
-			// TODO: Chain specific
-			return conn.GetBlockTimestamp(utils.PointerOf(uint64(1))) - 13
-		}
-
-		return ts
-	}
-}
-
-// GetTransactionHashByNumberAndID returns a transaction's hash if it's a valid transaction
-func (conn *Connection) GetTransactionHashByNumberAndID(bn, txId uint64) (string, error) {
-	if ec, err := getClient(conn.Chain); err != nil {
-		return "", err
-	} else {
-		defer ec.Close()
-
-		block, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
-		if err != nil {
-			return "", fmt.Errorf("error at block %s: %w", fmt.Sprintf("%d", bn), err)
-		}
-
-		tx, err := ec.TransactionInBlock(context.Background(), block.Hash(), uint(txId))
-		if err != nil {
-			return "", fmt.Errorf("transaction at %s returned an error: %w", fmt.Sprintf("%s.%d", block.Hash(), txId), err)
-		}
-
-		return tx.Hash().Hex(), nil
-	}
 }

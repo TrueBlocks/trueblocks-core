@@ -17,7 +17,7 @@ var ErrNotAContract = errors.New("not a contract")
 
 // IsContractAt checks if an account is a contract
 func (conn *Connection) IsContractAt(address base.Address, block *types.SimpleNamedBlock) error {
-	if ec, err := getClient(conn.Chain); err != nil {
+	if ec, err := conn.getClient(); err != nil {
 		return err
 	} else {
 		defer ec.Close()
@@ -39,32 +39,14 @@ func (conn *Connection) IsContractAt(address base.Address, block *types.SimpleNa
 	}
 }
 
-var deployedCacheMutex sync.Mutex
-var deployedCache = make(map[base.Address]base.Blknum)
-
-func (conn *Connection) GetContractDeployBlock(address base.Address) (block base.Blknum, err error) {
-	// TODO: Couldn't we wait here to lock until we need it? Doesn't this lock even when we only read the cache?
-	deployedCacheMutex.Lock()
-	defer deployedCacheMutex.Unlock()
-
-	if cached, ok := deployedCache[address]; ok {
-		block = cached
-		return
+// GetContractCodeAt returns a code (if any) for an address at a block
+func (conn *Connection) GetContractCodeAt(addr base.Address, bn uint64) ([]byte, error) {
+	if ec, err := conn.getClient(); err != nil {
+		return []byte{}, err
+	} else {
+		defer ec.Close()
+		return ec.CodeAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(bn))
 	}
-
-	latest := conn.GetLatestBlockNumber()
-	if err = conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
-		return
-	}
-
-	found := sort.Search(int(latest)+1, func(blockNumber int) bool {
-		err := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: base.Blknum(blockNumber)})
-		return err == nil
-	})
-
-	block = base.Blknum(found)
-	deployedCache[address] = block
-	return
 }
 
 // We check a bunch of different locations for the proxy
@@ -76,9 +58,9 @@ var locations = []string{
 	"0x",
 }
 
-// GetProxyAt returns the proxy address for a contract if any
-func (conn *Connection) GetProxyAt(address base.Address, blockNumber base.Blknum) (base.Address, error) {
-	if ec, err := getClient(conn.Chain); err != nil {
+// GetContractProxyAt returns the proxy address for a contract if any
+func (conn *Connection) GetContractProxyAt(address base.Address, blockNumber base.Blknum) (base.Address, error) {
+	if ec, err := conn.getClient(); err != nil {
 		return base.Address{}, err
 	} else {
 		defer ec.Close()
@@ -126,4 +108,33 @@ func (conn *Connection) GetProxyAt(address base.Address, blockNumber base.Blknum
 
 		return proxy, err
 	}
+}
+
+// TODO: We could use a SyncMap here
+var deployedCacheMutex sync.Mutex
+var deployedCache = make(map[base.Address]base.Blknum)
+
+func (conn *Connection) GetContractDeployBlock(address base.Address) (block base.Blknum, err error) {
+	// TODO: Couldn't we wait here to lock until we need it? Doesn't this lock even when we only read the cache?
+	deployedCacheMutex.Lock()
+	defer deployedCacheMutex.Unlock()
+
+	if cached, ok := deployedCache[address]; ok {
+		block = cached
+		return
+	}
+
+	latest := conn.GetLatestBlockNumber()
+	if err = conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
+		return
+	}
+
+	found := sort.Search(int(latest)+1, func(blockNumber int) bool {
+		err := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: base.Blknum(blockNumber)})
+		return err == nil
+	})
+
+	block = base.Blknum(found)
+	deployedCache[address] = block
+	return
 }

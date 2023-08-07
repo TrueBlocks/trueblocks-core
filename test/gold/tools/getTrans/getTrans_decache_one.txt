@@ -3,4 +3,5 @@ TEST[DATE|TIME] Transactions:  [46147.0]
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] 1 items totaling 403 bytes were removed from the cache.                                                             
+INFO[DATE|TIME] 
+One item totaling 403 bytes was removed from the cache.

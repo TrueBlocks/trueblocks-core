@@ -72,7 +72,7 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Terms, _ = opts.Conn.GetAddressesFromEns(opts.Terms)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -85,7 +85,7 @@ func exploreFinishParse(args []string) *ExploreOptions {
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Terms, _ = opts.Conn.GetAddressesFromEns(args)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

@@ -93,7 +93,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
 		opts.Parts = append(opts.Parts, "all")
 	}
@@ -132,7 +132,7 @@ func tokensFinishParse(args []string) *TokensOptions {
 			}
 		}
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
 		opts.Parts = append(opts.Parts, "all")
 	}
@@ -173,8 +173,7 @@ func ResetOptions() {
 func (opts *TokensOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		// TODO: Enabled tokens cache
-		"tokens": false,
+		"tokens": true,
 	}
 	// EXISTING_CODE
 	return

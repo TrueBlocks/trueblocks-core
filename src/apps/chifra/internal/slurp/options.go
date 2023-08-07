@@ -97,7 +97,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -133,7 +133,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -177,8 +177,7 @@ func ResetOptions() {
 func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		// TODO: Enabled slurps cache
-		"slurps": true,
+		"txs": true,
 	}
 	// EXISTING_CODE
 	return

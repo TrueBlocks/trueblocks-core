@@ -1,6 +1,10 @@
 transactions?transactions=46147.0&decache
 {
-  "data": [],
+  "data": [
+    {
+      "msg": "One item totaling 403 bytes was removed from the cache."
+    }
+  ],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",

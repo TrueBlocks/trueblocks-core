@@ -113,11 +113,9 @@ func ResetOptions() {
 
 func (opts *LogsOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
-	// TODO: Can we enable chaching here?
-	// caches := map[string]bool{
-	// 	"txs": true,
-	// }
-	m = map[string]bool{}
+	m = map[string]bool{
+		"txs": true,
+	}
 	// EXISTING_CODE
 	return
 }
@@ -127,8 +125,7 @@ func (opts *LogsOptions) getCaches() (m map[string]bool) {
 
 // CacheState returns booleans indicating which caches to enable
 func (opts *LogsOptions) CacheState() (bool, map[string]bool) {
-	return false, opts.getCaches() // no caches
-	// return opts.Globals.Cache, opts.getCaches()
+	return opts.Globals.Cache, opts.getCaches()
 }
 
 // EXISTING_CODE

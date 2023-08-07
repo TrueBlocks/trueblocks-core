@@ -51,7 +51,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				}
 
 				txHash := tx.Hash().Hex()
-				cnt, err := opts.Conn.GetCountTracesInTransaction(txHash)
+				cnt, err := opts.Conn.GetTracesCountInTransaction(txHash)
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

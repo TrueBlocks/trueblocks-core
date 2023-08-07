@@ -16,16 +16,6 @@ type Connection struct {
 	enabledMap           map[string]bool
 }
 
-// TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
-func (conn *Connection) TestLog(enabledMap map[string]bool) {
-	if conn.HasStoreWritable() {
-		for k, v := range enabledMap {
-			logger.TestLog(v, "Cache-"+strings.ToTitle(k)+": ", v)
-		}
-	}
-	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
-}
-
 // ConnectionSettings allows every command has its own options type, we have to
 // accept any here, but will use interfaces to read the needed information
 type ConnectionSettings struct {
@@ -60,6 +50,25 @@ func NewReadOnlyConnection(chain string) *Connection {
 	return settings.DefaultRpcOptions()
 }
 
+// cacheStore returns a cache for the given chain. If readonly is true, it returns
+// a cache that will not write new items. If nil is returned, it means "no caching"
+//
+// We call NewStore, but Storer implementation (Fs by default) should decide
+// whether it has to return a new instance or reuse the existing one
+func cacheStore(chain string, forceReadonly bool) *cache.Store {
+	if store, err := cache.NewStore(&cache.StoreOptions{
+		Location: cache.FsCache,
+		Chain:    chain,
+		ReadOnly: forceReadonly,
+	}); err != nil {
+		// If there was an error, we won't use the cache
+		logger.Warn("Cannot initialize cache:", err)
+		return nil
+	} else {
+		return store
+	}
+}
+
 // DefaultRpcOptions builds the store and enables the caches and returns the RPC connection
 func (settings ConnectionSettings) DefaultRpcOptions() *Connection {
 	if cs, ok := settings.Opts.(CacheStater); ok {
@@ -78,25 +87,6 @@ func (settings ConnectionSettings) DefaultRpcOptions() *Connection {
 	}
 
 	return ret
-}
-
-// cacheStore returns a cache for the given chain. If readonly is true, it returns
-// a cache that will not write new items. If nil is returned, it means "no caching"
-//
-// We call NewStore, but Storer implementation (Fs by default) should decide
-// whether it has to return a new instance or reuse the existing one
-func cacheStore(chain string, forceReadonly bool) *cache.Store {
-	if store, err := cache.NewStore(&cache.StoreOptions{
-		Location: cache.FsCache,
-		Chain:    chain,
-		ReadOnly: forceReadonly,
-	}); err != nil {
-		// If there was an error, we won't use the cache
-		logger.Warn("Cannot initialize cache:", err)
-		return nil
-	} else {
-		return store
-	}
 }
 
 // CacheStater informs us if we should write txs and traces to the cache
@@ -120,4 +110,14 @@ func (conn *Connection) HasStoreWritable() bool {
 	}
 
 	return !conn.Store.ReadOnly()
+}
+
+// TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
+func (conn *Connection) TestLog(enabledMap map[string]bool) {
+	if conn.HasStoreWritable() {
+		for k, v := range enabledMap {
+			logger.TestLog(v, "Cache-"+strings.ToTitle(k)+": ", v)
+		}
+	}
+	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }

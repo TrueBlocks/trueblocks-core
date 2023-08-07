@@ -43,7 +43,7 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	stateFields, outputFields, none := rpcClient.PartsToFields(opts.Parts, opts.Globals.Ether)
+	stateFields, outputFields, none := opts.Conn.GetFieldsFromParts(opts.Parts, opts.Globals.Ether)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {

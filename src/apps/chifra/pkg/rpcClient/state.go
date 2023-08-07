@@ -1,6 +1,7 @@
 package rpcClient
 
 import (
+	"context"
 	"errors"
 	"math/big"
 	"strconv"
@@ -137,7 +138,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	var proxy base.Address
 
 	if (fieldBits&Proxy) != 0 || (fieldBits&Type) != 0 {
-		proxy, err = conn.GetProxyAt(address, blockNumber)
+		proxy, err = conn.GetContractProxyAt(address, blockNumber)
 		if err != nil {
 			return
 		}
@@ -157,16 +158,19 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	return
 }
 
-func (conn *Connection) getTypeNonProxy(address base.Address, blockNumber base.Blknum) string {
-	isContractErr := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: blockNumber})
-	if errors.Is(isContractErr, ErrNotAContract) {
-		return "EOA"
+// GetBalanceAt returns a balance for an address at a block
+func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*big.Int, error) {
+	if ec, err := conn.getClient(); err != nil {
+		var zero big.Int
+		return &zero, err
+	} else {
+		defer ec.Close()
+		return ec.BalanceAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(bn))
 	}
-	return "Contract"
 }
 
-// PartsToFields converts a string array of part names to a bit mask of parts and returns the corresponding output field names or none if no valid parts are present
-func PartsToFields(parts []string, asEther bool) (stateFields StatePart, outputFields []string, none bool) {
+// GetFieldsFromParts converts a string array of part names to a bit mask of parts and returns the corresponding output field names or none if no valid parts are present
+func (conn *Connection) GetFieldsFromParts(parts []string, asEther bool) (stateFields StatePart, outputFields []string, none bool) {
 	balanceOutputField := "balance"
 	if asEther {
 		balanceOutputField = "ether"
@@ -226,4 +230,12 @@ func PartsToFields(parts []string, asEther bool) (stateFields StatePart, outputF
 	}
 
 	return
+}
+
+func (conn *Connection) getTypeNonProxy(address base.Address, blockNumber base.Blknum) string {
+	isContractErr := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: blockNumber})
+	if errors.Is(isContractErr, ErrNotAContract) {
+		return "EOA"
+	}
+	return "Contract"
 }

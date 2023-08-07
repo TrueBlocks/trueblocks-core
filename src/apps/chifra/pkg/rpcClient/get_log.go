@@ -10,7 +10,30 @@ import (
 	"github.com/bykof/gostradamus"
 )
 
-func (conn *Connection) getSimpleLogs(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
+// GetLogsByFilter returns the logs given a filter
+func (conn *Connection) GetLogsByFilter(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
+	return conn.getLogsSimple(filter)
+}
+
+// GetLogsByNumber returns the logs of a block
+func (conn *Connection) GetLogsByNumber(bn uint64) ([]types.SimpleLog, error) {
+	filter := types.SimpleLogFilter{
+		FromBlock: bn,
+		ToBlock:   bn,
+	}
+	return conn.getLogsSimple(filter)
+}
+
+// GetLogsCountInBlock returns the number of logs in a block
+func (conn *Connection) GetLogsCountInBlock(bn uint64) (uint64, error) {
+	if logs, err := conn.GetLogsByNumber(bn); err != nil {
+		return 0, err
+	} else {
+		return uint64(len(logs)), nil
+	}
+}
+
+func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
 	p := struct {
 		FromBlock string   `json:"fromBlock"`
 		ToBlock   string   `json:"toBlock"`
@@ -62,29 +85,6 @@ func (conn *Connection) getSimpleLogs(filter types.SimpleLogFilter) ([]types.Sim
 			ret = append(ret, log)
 		}
 		return ret, nil
-	}
-}
-
-// GetLogsByFilter returns the logs given a filter
-func (conn *Connection) GetLogsByFilter(filter types.SimpleLogFilter) ([]types.SimpleLog, error) {
-	return conn.getSimpleLogs(filter)
-}
-
-// GetLogsByNumber returns the logs of a block
-func (conn *Connection) GetLogsByNumber(bn uint64) ([]types.SimpleLog, error) {
-	filter := types.SimpleLogFilter{
-		FromBlock: bn,
-		ToBlock:   bn,
-	}
-	return conn.getSimpleLogs(filter)
-}
-
-// GetCountLogsInBlock returns the number of logs in a block
-func (conn *Connection) GetCountLogsInBlock(bn uint64) (uint64, error) {
-	if logs, err := conn.GetLogsByNumber(bn); err != nil {
-		return 0, err
-	} else {
-		return uint64(len(logs)), nil
 	}
 }
 

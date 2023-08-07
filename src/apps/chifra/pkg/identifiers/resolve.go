@@ -206,7 +206,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			cnt, err := conn.GetCountTransactionsInBlock(uint64(id.Start.Number))
+			cnt, err := conn.GetTransactionCountInBlock(uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
@@ -228,7 +228,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			cnt, err := conn.GetCountTransactionsInBlock(uint64(id.Start.resolvePoint(chain)))
+			cnt, err := conn.GetTransactionCountInBlock(uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}
@@ -244,7 +244,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		app, err := conn.GetAppearanceFromHash(id.Start.Hash)
+		app, err := conn.GetTransactionAppByHash(id.Start.Hash)
 		return append(txs, app), err
 	}
 

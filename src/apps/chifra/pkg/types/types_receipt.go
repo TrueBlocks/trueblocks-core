@@ -120,7 +120,11 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 			}
 			model["logs"] = logs
 		} else {
-			model["logs"] = s.Logs
+			if s.Logs == nil {
+				model["logs"] = []SimpleLog{}
+			} else {
+				model["logs"] = s.Logs
+			}
 		}
 
 		if verbose {

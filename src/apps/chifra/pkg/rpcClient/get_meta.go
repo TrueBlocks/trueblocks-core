@@ -23,15 +23,6 @@ type MetaData struct {
 	Chain     string `json:"chain,omitempty"`
 }
 
-func (m MetaData) String() string {
-	ret, _ := json.MarshalIndent(m, "", "  ")
-	return string(ret)
-}
-
-func (m MetaData) Age(bn uint64) int64 {
-	return int64(m.Latest) - int64(bn) // Allows negative
-}
-
 func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 	chainId, networkId, err := conn.GetClientIDs()
 	if err != nil {
@@ -92,4 +83,13 @@ func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 	meta.Unripe = utils.Max(meta.Ripe, meta.Unripe)
 
 	return &meta, nil
+}
+
+func (m MetaData) String() string {
+	ret, _ := json.MarshalIndent(m, "", "  ")
+	return string(ret)
+}
+
+func (m MetaData) Age(bn uint64) int64 {
+	return int64(m.Latest) - int64(bn) // Allows negative
 }

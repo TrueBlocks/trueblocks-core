@@ -128,7 +128,7 @@ func (t ExploreType) String() string {
 
 func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
 	if isBlockHash(arg) {
-		return opts.Conn.GetBlockHashFromHashStr(arg)
+		return opts.Conn.GetBlockHashByHash(arg)
 	}
 
 	blockNum, err := strconv.ParseUint(arg, 10, 64)
@@ -146,7 +146,7 @@ func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg s
 	// simple case first
 	if !strings.Contains(arg, ".") {
 		// We know it's a hash, but we want to know if it's a legitimate tx on chain
-		return opts.Conn.GetTransactionHashFromHashStr(arg)
+		return opts.Conn.GetTransactionHashByHash(arg)
 	}
 
 	parts := strings.Split(arg, ".")
@@ -171,5 +171,6 @@ func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg s
 		return "", nil
 	}
 
-	return opts.Conn.GetTransactionHashByNumberAndID(blockNum, txId)
+	hash, err := opts.Conn.GetTransactionHashByNumberAndID(blockNum, txId)
+	return hash.Hex(), err
 }

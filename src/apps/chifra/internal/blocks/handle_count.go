@@ -56,7 +56,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Uncles {
-					if blockCount.UnclesCnt, err = opts.Conn.GetCountUnclesInBlock(bn); err != nil {
+					if blockCount.UnclesCnt, err = opts.Conn.GetUnclesCountInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -67,7 +67,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Traces {
-					if blockCount.TracesCnt, err = opts.Conn.GetCountTracesInBlock(bn); err != nil {
+					if blockCount.TracesCnt, err = opts.Conn.GetTracesCountInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -78,7 +78,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = opts.Conn.GetCountLogsInBlock(bn); err != nil {
+					if blockCount.LogsCnt, err = opts.Conn.GetLogsCountInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue

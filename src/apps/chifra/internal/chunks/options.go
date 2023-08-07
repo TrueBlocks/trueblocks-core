@@ -129,7 +129,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 
 	// EXISTING_CODE
 	// TODO: Do we know if an option is an address? If yes, we could automate this
-	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(opts.Belongs)
+	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 	// EXISTING_CODE
 
 	return opts
@@ -154,7 +154,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 			}
 		}
 	}
-	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(opts.Belongs)
+	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}

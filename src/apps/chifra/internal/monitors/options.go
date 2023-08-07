@@ -93,7 +93,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -106,7 +106,7 @@ func monitorsFinishParse(args []string) *MonitorsOptions {
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(args)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
