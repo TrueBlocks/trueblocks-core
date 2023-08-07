@@ -152,6 +152,8 @@ file_cmd ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_v                ,n
 on       ,both ,fast  ,transactions ,tools/getTrans ,cache_and_decache        ,y    ,transactions = 46147.0 & cache & decache
 on       ,both ,fast  ,transactions ,tools/getTrans ,cache_one                ,y    ,transactions = 46147.0 & cache
 on       ,both ,fast  ,transactions ,tools/getTrans ,decache_one              ,y    ,transactions = 46147.0 & decache
+on       ,both ,fast  ,transactions ,tools/getTrans ,cache_traces             ,y    ,transactions = 46147.0 & cache & cache_traces
+on       ,both ,fast  ,transactions ,tools/getTrans ,decache_traces           ,y    ,transactions = 46147.0 & decache
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei

@@ -1,6 +1,7 @@
-chifra transactions  46147.0 --cache
+chifra transactions  46147.0 --cache --cache_traces
 TEST[DATE|TIME] Transactions:  [46147.0]
-TEST[DATE|TIME] Enabled:  txs
+TEST[DATE|TIME] CacheTraces:  true
+TEST[DATE|TIME] Enabled:  traces, txs
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt

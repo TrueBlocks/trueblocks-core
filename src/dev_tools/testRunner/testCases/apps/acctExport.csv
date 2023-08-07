@@ -276,6 +276,12 @@ local   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,cache_and_decache        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & cache & decache
 on      ,both ,fast  ,export   ,apps/acctExport ,cache_one                ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & cache
 on      ,both ,fast  ,export   ,apps/acctExport ,decache_one              ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & decache
+on      ,both ,fast  ,export   ,apps/acctExport ,cache_traces             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & cache & cache_traces
+on      ,both ,fast  ,export   ,apps/acctExport ,decache_traces           ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & decache
+delay   ,both ,fast  ,export   ,apps/acctExport ,cache_neighbors          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & neighbors & cache & cache_traces
+delay   ,both ,fast  ,export   ,apps/acctExport ,decache_neighbors        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & neighbors & decache
+delay   ,both ,fast  ,export   ,apps/acctExport ,cache_accounting         ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & accounting & cache & cache_traces
+delay   ,both ,fast  ,export   ,apps/acctExport ,decache_accounting       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & accounting & decache
 
 # This fail because it doesn't report an error in API mode but it does in cmd line mode
 local   ,both ,fast  ,export   ,apps/acctExport ,bug_no_api_error_msg     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 41740.0 & decache

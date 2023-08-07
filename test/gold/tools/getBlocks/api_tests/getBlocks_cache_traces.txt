@@ -1,9 +1,4 @@
-chifra blocks  12 --cache
-TEST[DATE|TIME] Blocks:  [12]
-TEST[DATE|TIME] Enabled:  blocks
-TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
-TEST[DATE|TIME] Format:  json
+blocks?blocks=12&cache&cacheTxs&cacheTraces
 {
   "data": [
     {
@@ -19,5 +14,15 @@ TEST[DATE|TIME] Format:  json
       "transactions": [],
       "uncles": []
     }
-  ]
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }

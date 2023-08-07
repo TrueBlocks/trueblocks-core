@@ -2,6 +2,7 @@ chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] FirstBlock:  10277780
 TEST[DATE|TIME] LastBlock:  10278000
+TEST[DATE|TIME] Enabled:  neigbors, statements, txs
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache,wei,ether
