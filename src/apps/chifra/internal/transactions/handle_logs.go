@@ -25,20 +25,21 @@ func (opts *TransactionsOptions) HandleLogs() error {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
+	emitters := []base.Address{}
+	for _, e := range opts.Emitter {
+		emitters = append(emitters, base.HexToAddress(e))
+	}
+	topics := []base.Hash{}
+	for _, t := range opts.Topic {
+		topics = append(topics, base.HexToHash(t))
+	}
+	logFilter := types.SimpleLogFilter{
+		Emitters: emitters,
+		Topics:   topics,
+	}
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		emitters := []base.Address{}
-		for _, e := range opts.Emitter {
-			emitters = append(emitters, base.HexToAddress(e))
-		}
-		topics := []base.Hash{}
-		for _, t := range opts.Topic {
-			topics = append(topics, base.HexToHash(t))
-		}
-		logFilter := types.SimpleLogFilter{
-			Emitters: emitters,
-			Topics:   topics,
-		}
 		if opts.Globals.TestMode {
 			errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
 		}
@@ -104,7 +105,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 				if item.BlockNumber != 0 {
 					for _, log := range item.Receipt.Logs {
 						log := log
-						if opts.shouldShow(logFilter, &log) {
+						if logFilter.PassesFilter(&log) {
 							modelChan <- &log
 						}
 					}
@@ -119,29 +120,4 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		"addresses": opts.Uniq,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
-}
-
-func (opts *TransactionsOptions) shouldShow(filter types.SimpleLogFilter, log *types.SimpleLog) bool {
-	foundEmitter := false
-	for _, e := range filter.Emitters {
-		if e == log.Address {
-			foundEmitter = true
-			break
-		}
-	}
-
-	foundTopic := false
-	for _, t := range filter.Topics {
-		for _, lt := range log.Topics {
-			if t == lt {
-				foundTopic = true
-				break
-			}
-		}
-	}
-
-	passesEmitter := len(filter.Emitters) == 0 || foundEmitter
-	passesTopic := len(filter.Topics) == 0 || foundTopic
-
-	return passesEmitter && passesTopic
 }
