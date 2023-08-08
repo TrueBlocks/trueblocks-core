@@ -1,8 +1,8 @@
 package logger
 
 import (
+	"fmt"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -33,5 +33,5 @@ func (t Timer) Report(msg string) {
 		Info(msg, "start", t.start)
 		Info(msg, "stop", time.Now())
 	}
-	Info(msg+" timer:", since.Milliseconds(), "ms", strings.Repeat(" ", 80))
+	fmt.Println("INFO", msg+" timer:", since.Milliseconds(), "ms")
 }

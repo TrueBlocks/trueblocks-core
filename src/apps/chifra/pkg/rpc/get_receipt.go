@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -97,8 +98,8 @@ func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.Ra
 
 	} else {
 		method := "eth_getTransactionReceipt"
-		params := Params{txHash}
-		if receipt, err := Query[types.RawReceipt](conn.Chain, method, params); err != nil {
+		params := query.Params{txHash}
+		if receipt, err := query.Query[types.RawReceipt](conn.Chain, method, params); err != nil {
 			return nil, base.Hash{}, err
 		} else {
 			return receipt, txHash, nil

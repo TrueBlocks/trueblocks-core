@@ -8,6 +8,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
@@ -359,16 +360,16 @@ var (
 
 func (conn *Connection) getTransactionRaw(blkHash base.Hash, txHash base.Hash, bn base.Blknum, txid uint64) (raw *types.RawTransaction, err error) {
 	method := "eth_getTransactionByBlockNumberAndIndex"
-	params := Params{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", txid)}
+	params := query.Params{fmt.Sprintf("0x%x", bn), fmt.Sprintf("0x%x", txid)}
 	if txHash != notAHash {
 		method = "eth_getTransactionByHash"
-		params = Params{txHash.Hex()}
+		params = query.Params{txHash.Hex()}
 	} else if blkHash != notAHash {
 		method = "eth_getTransactionByBlockHashAndIndex"
-		params = Params{blkHash.Hex(), fmt.Sprintf("0x%x", txid)}
+		params = query.Params{blkHash.Hex(), fmt.Sprintf("0x%x", txid)}
 	}
 
-	if trans, err := Query[types.RawTransaction](conn.Chain, method, params); err != nil {
+	if trans, err := query.Query[types.RawTransaction](conn.Chain, method, params); err != nil {
 		return &types.RawTransaction{}, err
 	} else {
 		if trans.AccessList == nil {

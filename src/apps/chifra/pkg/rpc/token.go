@@ -7,6 +7,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -28,14 +29,14 @@ const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 // GetTokenState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
 func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber string) (token *types.SimpleToken, err error) {
-	results, err := QueryBatch[string](
+	results, err := query.QueryBatch[string](
 		conn.Chain,
-		[]BatchPayload{
+		[]query.BatchPayload{
 			{
 				Key: "name",
-				Payload: &Payload{
+				Payload: &query.Payload{
 					Method: "eth_call",
-					Params: Params{
+					Params: query.Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": tokenStateName,
@@ -46,9 +47,9 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 			},
 			{
 				Key: "symbol",
-				Payload: &Payload{
+				Payload: &query.Payload{
 					Method: "eth_call",
-					Params: Params{
+					Params: query.Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": tokenStateSymbol,
@@ -59,9 +60,9 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 			},
 			{
 				Key: "decimals",
-				Payload: &Payload{
+				Payload: &query.Payload{
 					Method: "eth_call",
-					Params: Params{
+					Params: query.Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": tokenStateDecimals,
@@ -72,9 +73,9 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 			},
 			{
 				Key: "totalSupply",
-				Payload: &Payload{
+				Payload: &query.Payload{
 					Method: "eth_call",
-					Params: Params{
+					Params: query.Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": tokenStateTotalSupply,
@@ -86,9 +87,9 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 			// Supports interface: ERC 721
 			{
 				Key: "erc721",
-				Payload: &Payload{
+				Payload: &query.Payload{
 					Method: "eth_call",
-					Params: Params{
+					Params: query.Params{
 						map[string]any{
 							"to":   tokenAddress,
 							"data": erc721SupportsInterfaceData,
@@ -142,13 +143,13 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 // GetTokenBalanceAt returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
 func (conn *Connection) GetTokenBalanceAt(token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
-	output, err := QueryBatch[string](
+	output, err := query.QueryBatch[string](
 		conn.Chain,
-		[]BatchPayload{{
+		[]query.BatchPayload{{
 			Key: "balance",
-			Payload: &Payload{
+			Payload: &query.Payload{
 				Method: "eth_call",
-				Params: Params{
+				Params: query.Params{
 					map[string]any{
 						"to":   token.Hex(),
 						"data": tokenStateBalanceOf + holder.Pad32(),

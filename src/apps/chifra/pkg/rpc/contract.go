@@ -8,6 +8,7 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -64,7 +65,7 @@ func (conn *Connection) GetContractProxyAt(address base.Address, blockNumber bas
 	} else {
 		defer ec.Close()
 
-		proxyAddr, err := Query[string](conn.Chain, "eth_call", Params{
+		proxyAddr, err := query.Query[string](conn.Chain, "eth_call", query.Params{
 			map[string]any{
 				"to": address,
 				// implementation()

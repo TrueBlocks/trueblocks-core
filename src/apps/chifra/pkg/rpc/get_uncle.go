@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -21,12 +22,12 @@ func (conn *Connection) GetUnclesByNumber(bn uint64) ([]types.SimpleBlock[types.
 		ret := make([]types.SimpleBlock[types.SimpleTransaction], count)
 		for i := uint64(0); i < count; i++ {
 			method := "eth_getUncleByBlockNumberAndIndex"
-			params := Params{
+			params := query.Params{
 				fmt.Sprintf("0x%x", bn),
 				fmt.Sprintf("0x%x", i),
 			}
 
-			if rawUncle, err := Query[types.RawBlock](conn.Chain, method, params); err != nil {
+			if rawUncle, err := query.Query[types.RawBlock](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {
 				// TODO: expand other fields if we ever need them (probably not)
@@ -58,11 +59,11 @@ func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) 
 		ret := make([]base.Hash, count)
 		for i := uint64(0); i < count; i++ {
 			method := "eth_getUncleByBlockNumberAndIndex"
-			params := Params{
+			params := query.Params{
 				fmt.Sprintf("0x%x", bn),
 				fmt.Sprintf("0x%x", i),
 			}
-			if rawUncle, err := Query[types.RawBlock](conn.Chain, method, params); err != nil {
+			if rawUncle, err := query.Query[types.RawBlock](conn.Chain, method, params); err != nil {
 				return ret, err
 			} else {
 				for _, uncle := range rawUncle.Uncles {
@@ -79,9 +80,9 @@ func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) 
 // GetUnclesCountInBlock returns the number of uncles in a block.
 func (conn *Connection) GetUnclesCountInBlock(bn uint64) (uint64, error) {
 	method := "eth_getUncleCountByBlockNumber"
-	params := Params{fmt.Sprintf("0x%x", bn)}
+	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if count, err := Query[string](conn.Chain, method, params); err != nil {
+	if count, err := query.Query[string](conn.Chain, method, params); err != nil {
 		return 0, err
 	} else {
 		return strconv.ParseUint(fmt.Sprint(*count), 0, 64)

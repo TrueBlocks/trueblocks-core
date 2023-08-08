@@ -17,9 +17,9 @@ type Connection struct {
 	enabledMap           map[string]bool
 }
 
-// Settings allows every command has its own options type, we have to
+// settings allows every command has its own options type, we have to
 // accept any here, but will use interfaces to read the needed information
-type Settings struct {
+type settings struct {
 	Chain         string
 	ReadonlyCache bool
 	CacheEnabled  bool
@@ -27,7 +27,7 @@ type Settings struct {
 }
 
 func NewConnection(chain string, cacheEnabled bool, enabledMap map[string]bool) *Connection {
-	settings := Settings{
+	settings := settings{
 		Chain:        chain,
 		CacheEnabled: cacheEnabled,
 		EnabledMap:   enabledMap,
@@ -36,14 +36,14 @@ func NewConnection(chain string, cacheEnabled bool, enabledMap map[string]bool) 
 }
 
 func TempConnection(chain string) *Connection {
-	settings := Settings{
+	settings := settings{
 		Chain: chain,
 	}
 	return settings.GetRpcConnection()
 }
 
 func NewReadOnlyConnection(chain string) *Connection {
-	settings := Settings{
+	settings := settings{
 		Chain:         chain,
 		ReadonlyCache: true,
 	}
@@ -51,7 +51,7 @@ func NewReadOnlyConnection(chain string) *Connection {
 }
 
 // GetRpcConnection builds the store and enables the caches and returns the RPC connection
-func (settings Settings) GetRpcConnection() *Connection {
+func (settings settings) GetRpcConnection() *Connection {
 	forceReadonly := !settings.CacheEnabled || settings.ReadonlyCache
 
 	var store *cache.Store

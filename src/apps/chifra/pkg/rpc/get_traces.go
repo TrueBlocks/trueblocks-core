@@ -9,6 +9,7 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
@@ -17,9 +18,9 @@ import (
 // GetTracesByBlockNumber returns a slice of traces in the given block
 func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, error) {
 	method := "trace_block"
-	params := Params{fmt.Sprintf("0x%x", bn)}
+	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawTraces, err := QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
 		return []types.SimpleTrace{}, err
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
@@ -115,10 +116,10 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 	}
 
 	method := "trace_transaction"
-	params := Params{txHash}
+	params := query.Params{txHash}
 
 	var ret []types.SimpleTrace
-	if rawTraces, err := QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, fmt.Errorf("transaction at %s returned an error: %w", txHash, ethereum.NotFound)
 
 	} else {
@@ -211,10 +212,10 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 	ff := f.ParseBangString(filter)
 
 	method := "trace_filter"
-	params := Params{ff}
+	params := query.Params{ff}
 
 	var ret []types.SimpleTrace
-	if rawTraces, err := QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
