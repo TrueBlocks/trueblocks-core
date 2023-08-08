@@ -90,8 +90,6 @@ class COptions : public CStatementOptions {
     bool setDisplayFormatting(void);
     bool loadMonitors(void);
 
-    bool handle_traversers(void);
-
     bool articulateAll(CTransaction& trans);
 
     void writePerformanceData(void);

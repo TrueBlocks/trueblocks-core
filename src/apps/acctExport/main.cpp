@@ -26,27 +26,21 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         CTraverserArray traversers;
-        if (options.load.empty()) {
-            // clang-format off
-            options.className =
-(options.statements
-                  ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
-GETRUNTIME_CLASS(CTransaction)->m_ClassName);
-            // clang-format on
+        // clang-format off
+        options.className = (options.statements
+            ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
+            : GETRUNTIME_CLASS(CTransaction)->m_ClassName);
+        // clang-format on
 
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], options.className);
+        if (once)
+            cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
-            if (traversers.empty()) {
-                CTransactionTraverser tt;
-                traversers.push_back(tt);
-            }
-
-            forEveryAppearance(traversers, options.ledgerManager.appArray, &options);
-
-        } else {
-            options.handle_traversers();
+        if (traversers.empty()) {
+            CTransactionTraverser tt;
+            traversers.push_back(tt);
         }
+
+        forEveryAppearance(traversers, options.ledgerManager.appArray, &options);
 
         if (shouldQuit())
             break;
@@ -90,7 +84,6 @@ bool pre_Func(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 bool post_Func(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
     end_Log(trav, data);
     return true;
 }

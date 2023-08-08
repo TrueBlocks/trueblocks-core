@@ -121,11 +121,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--flow") {
             return flag_required("flow");
 
-        } else if (startsWith(arg, "-O:") || startsWith(arg, "--load:")) {
-            load = substitute(substitute(arg, "-O:", ""), "--load:", "");
-        } else if (arg == "-O" || arg == "--load") {
-            return flag_required("load");
-
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))
                 return false;
@@ -201,33 +196,8 @@ bool COptions::parseArguments(string_q& command) {
     CMonitor m;
     cleanFolder(m.getPathToMonitor("", true));
 
-    if (load.empty()) {
-        if (!loadMonitors())
-            return false;
-
-    } else {
-        string_q fileName = cacheFolder_objs + load;
-        LOG_INFO("Trying to load dynamic library ", fileName);
-
-        if (!fileExists(fileName)) {
-            replace(fileName, "/objs/", "/objs/lib");
-            fileName = fileName + ".so";
-            LOG_INFO("Trying to load dynamic library ", fileName);
-        }
-
-        if (!fileExists(fileName)) {
-            fileName = substitute(fileName, ".so", ".dylib");
-            LOG_INFO("Trying to load dynamic library ", fileName);
-        }
-
-        if (fileExists(fileName)) {
-            LOG_INFO(bYellow, "Found dynamic library ", fileName, cOff);
-            load = fileName;
-
-        } else {
-            return usage("Could not load dynamic traverser for " + fileName + ".");
-        }
-    }
+    if (!loadMonitors())
+        return false;
 
     return true;
 }
