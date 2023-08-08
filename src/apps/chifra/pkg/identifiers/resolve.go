@@ -109,7 +109,7 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(conn.GetBlockTimestamp(utils.PointerOf(uint64(0))))
+	firstDate := gostradamus.FromUnixTimestamp(conn.GetBlockTimestamp(uint64(0)))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -189,7 +189,7 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
 			latest := conn.GetLatestBlockNumber()
-			tsFuture := conn.GetBlockTimestamp(&latest)
+			tsFuture := conn.GetBlockTimestamp(latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks

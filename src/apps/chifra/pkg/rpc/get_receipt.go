@@ -18,7 +18,7 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 	receipt, err = conn.GetReceiptNoTimestamp(bn, txid) // note that the logs do not yet have timestamp...
 
 	if suggested == 0 {
-		suggested = conn.GetBlockTimestamp(&bn)
+		suggested = conn.GetBlockTimestamp(bn)
 	}
 	for index := 0; index < len(receipt.Logs); index++ {
 		receipt.Logs[index].Timestamp = suggested

@@ -78,14 +78,14 @@ func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uin
 		if cnt >= len(tsArray) {
 			ts = tslib.TimestampRecord{
 				Bn: uint32(bn),
-				Ts: uint32(conn.GetBlockTimestamp(&bn)),
+				Ts: uint32(conn.GetBlockTimestamp(bn)),
 			}
 		} else {
 			ts = tsArray[cnt]
 			if tsArray[cnt].Bn != uint32(bn) {
 				ts = tslib.TimestampRecord{
 					Bn: uint32(bn),
-					Ts: uint32(conn.GetBlockTimestamp(&bn)),
+					Ts: uint32(conn.GetBlockTimestamp(bn)),
 				}
 				cnt-- // set it back
 			}

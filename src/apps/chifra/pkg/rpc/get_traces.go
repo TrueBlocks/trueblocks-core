@@ -24,7 +24,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 		return []types.SimpleTrace{}, err
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
-		curTs := conn.GetBlockTimestamp(&bn)
+		curTs := conn.GetBlockTimestamp(bn)
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
@@ -70,7 +70,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				curTs = conn.GetBlockTimestamp(&trace.BlockNumber)
+				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
 				idx = 0
 			}
 			trace.TraceIndex = idx
@@ -219,7 +219,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
-		curTs := conn.GetBlockTimestamp(utils.PointerOf(utils.MustParseUint(f.FromBlock)))
+		curTs := conn.GetBlockTimestamp(utils.MustParseUint(f.FromBlock))
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
@@ -278,7 +278,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				curTs = conn.GetBlockTimestamp(utils.PointerOf(trace.BlockNumber))
+				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
 				idx = 0
 			}
 			trace.TraceIndex = idx

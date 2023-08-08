@@ -29,7 +29,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 
 			for _, app := range txIds {
 				bn := uint64(app.BlockNumber)
-				ts := opts.Conn.GetBlockTimestamp(&bn)
+				ts := opts.Conn.GetBlockTimestamp(bn)
 				addrMap := make(index.AddressBooleanMap)
 
 				if trans, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {

@@ -63,7 +63,7 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 		for _, rawLog := range rawLogs {
 			bn := utils.MustParseUint(rawLog.BlockNumber)
 			if bn != curBlock {
-				curTs = conn.GetBlockTimestamp(&bn)
+				curTs = conn.GetBlockTimestamp(bn)
 				curDate = gostradamus.FromUnixTimestamp(curTs)
 				curBlock = bn
 			}

@@ -235,7 +235,7 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return rpc.NewConnection(opts.Chain, opts.Cache, caches)
+	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }
 
 func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpc.Connection {
@@ -257,5 +257,5 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return rpc.NewConnection(opts.Chain, opts.Cache, caches)
+	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }

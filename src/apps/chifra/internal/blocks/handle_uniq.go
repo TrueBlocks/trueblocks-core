@@ -40,7 +40,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 					logger.Info("Processing block", fmt.Sprintf("%d", bn))
 				}
 				addrMap := make(index.AddressBooleanMap)
-				ts := opts.Conn.GetBlockTimestamp(&bn)
+				ts := opts.Conn.GetBlockTimestamp(bn)
 				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {

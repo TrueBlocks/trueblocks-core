@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -38,7 +37,7 @@ func (opts *TracesOptions) HandleShowTraces() error {
 			// TxIds don't span blocks, so we can use the first one outside the loop to find timestamp
 			ts := base.Timestamp(0)
 			if len(txIds) > 0 {
-				ts = opts.Conn.GetBlockTimestamp(utils.PointerOf(uint64(txIds[0].BlockNumber)))
+				ts = opts.Conn.GetBlockTimestamp(uint64(txIds[0].BlockNumber))
 			}
 
 			for _, id := range txIds {

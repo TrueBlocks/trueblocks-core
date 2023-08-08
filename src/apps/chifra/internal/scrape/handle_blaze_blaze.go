@@ -147,7 +147,7 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel ch
 
 		ts := tslib.TimestampRecord{
 			Bn: uint32(bn),
-			Ts: uint32(conn.GetBlockTimestamp(utils.PointerOf(uint64(bn)))),
+			Ts: uint32(conn.GetBlockTimestamp(uint64(bn))),
 		}
 
 		tsChannel <- ts

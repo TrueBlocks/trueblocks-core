@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Connection carries additional context to rpc calls
@@ -72,7 +73,7 @@ func (settings settings) GetRpcConnection() *Connection {
 	}
 
 	if store != nil && !store.ReadOnly() {
-		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(nil)
+		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(utils.NOPOS)
 	}
 
 	return ret

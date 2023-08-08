@@ -32,7 +32,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 		return
 	}
 
-	blockTs := conn.GetBlockTimestamp(&bn)
+	blockTs := conn.GetBlockTimestamp(bn)
 	receipt, err := conn.GetReceipt(bn, txid, blockTs)
 	if err != nil {
 		return
@@ -84,7 +84,7 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 		}
 	}
 
-	blockTs := conn.GetBlockTimestamp(&bn)
+	blockTs := conn.GetBlockTimestamp(bn)
 	if tx != nil {
 		tx.Timestamp = blockTs
 		if conn.StoreWritable() && conn.enabledMap["txs"] && isFinal(conn.LatestBlockTimestamp, blockTs) {

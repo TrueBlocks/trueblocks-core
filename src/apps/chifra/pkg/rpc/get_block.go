@@ -123,7 +123,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 }
 
 // GetBlockTimestamp returns the timestamp associated with a given block
-func (conn *Connection) GetBlockTimestamp(bn *uint64) base.Timestamp {
+func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
 	if ec, err := conn.getClient(); err != nil {
 		logger.Error("Could not connect to RPC client", err)
 		return 0
@@ -131,10 +131,9 @@ func (conn *Connection) GetBlockTimestamp(bn *uint64) base.Timestamp {
 		defer ec.Close()
 
 		var blockNumber *big.Int
-		if bn != nil {
-			blockNumber = big.NewInt(int64(*bn))
+		if bn != utils.NOPOS {
+			blockNumber = big.NewInt(int64(bn))
 		}
-
 		r, err := ec.HeaderByNumber(context.Background(), blockNumber)
 		if err != nil {
 			logger.Error("Could not connect to RPC client", err)
@@ -145,7 +144,7 @@ func (conn *Connection) GetBlockTimestamp(bn *uint64) base.Timestamp {
 		if ts == 0 {
 			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
 			// TODO: Chain specific
-			return conn.GetBlockTimestamp(utils.PointerOf(uint64(1))) - 13
+			return conn.GetBlockTimestamp(1) - 13
 		}
 
 		return ts
@@ -262,7 +261,7 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 	} else {
 		if bn == 0 {
 			// The RPC does not return a timestamp for the zero block, so we make one
-			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(utils.PointerOf(uint64(0))))
+			block.Timestamp = fmt.Sprintf("0x%x", conn.GetBlockTimestamp(uint64(0)))
 		} else if utils.MustParseUint(block.Timestamp) == 0 {
 			return &types.RawBlock{}, fmt.Errorf("block at %s returned an error: %w", fmt.Sprintf("%d", bn), ethereum.NotFound)
 		}
