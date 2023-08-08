@@ -16,16 +16,12 @@
 bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    if (!opt->fourByteFilter(trav->trans.input)) {
-        return true;
-    }
-
     if (opt->accounting) {
         opt->ledgerManager.getPrevNext(trav->index, trav->trans);
         if (!opt->ledgerManager.getStatements(trav->trans)) {
             return false;  // user quit
         }
-        if (!opt->relevant && !opt->ledgerManager.isFilterOn()) {
+        if (!opt->ledgerManager.isFilterOn()) {
             // only cache the reconciliation if it's a full set
             if (trav->trans.isReconciled(opt->ledgerManager.accountedFor)) {
                 trav->trans.cacheConditional(opt->ledgerManager.accountedFor);
@@ -49,11 +45,6 @@ bool acct_Display(CTraverser* trav, void* data) {
         }
 
     } else {
-        if (opt->relevant) {
-            for (auto& log : trav->trans.receipt.logs) {
-                log.m_showing = opt->isRelevant(log);
-            }
-        }
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << trav->trans;
         opt->firstOut = false;

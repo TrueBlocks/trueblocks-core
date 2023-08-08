@@ -29,41 +29,13 @@ int main(int argc, const char* argv[]) {
         if (options.load.empty()) {
             // clang-format off
             options.className =
-            (options.traces
-                ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                : (options.receipts
-                ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                  : (options.statements
+(options.statements
                   ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
-                    : (options.neighbors
-                    ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
-                      : (options.logs
-                      ? GETRUNTIME_CLASS(CLog)->m_ClassName
-                        : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
+GETRUNTIME_CLASS(CTransaction)->m_ClassName);
             // clang-format on
 
             if (once)
                 cout << exportPreamble(expContext().fmtMap["header"], options.className);
-
-            if (options.receipts) {
-                CReceiptTraverser rt;
-                traversers.push_back(rt);
-            }
-
-            if (options.neighbors) {
-                CNeighborTraverser nt;
-                traversers.push_back(nt);
-            }
-
-            if (options.logs) {
-                CLogTraverser lt;
-                traversers.push_back(lt);
-            }
-
-            if (options.traces) {
-                CTraceTraverser tt;
-                traversers.push_back(tt);
-            }
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
@@ -119,9 +91,6 @@ bool pre_Func(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 bool post_Func(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
-
-    opt->reportNeighbors();
-
     end_Log(trav, data);
     return true;
 }
@@ -223,12 +192,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     trav->trans.timestamp = bn_2_Timestamp(trav->app->blk);
     trav->block.timestamp = bn_2_Timestamp(trav->app->blk);
 
-    if (opt->traces && trav->trans.traces.size() == 0) {
-        dirty = true;
-        loadTraces(trav->trans, trav->app->blk, trav->app->txid, opt->cache_traces,
-                   (opt->skip_ddos && excludeTrace(&trav->trans, opt->max_traces)));
-    }
-
     dirty |= opt->articulateAll(trav->trans);
 
     // TODO(tjayrush): This could be in post_Func so that other functions can also make it dirty
@@ -239,8 +202,6 @@ bool loadTx_Func(CTraverser* trav, void* data) {
             writeTransToBinary(trav->trans, txFilename);
         }
     }
-
-    opt->markNeighbors(trav->trans);
 
     return true;
 }

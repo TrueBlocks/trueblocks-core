@@ -39,8 +39,6 @@ bool COptions::handle_traversers(void) {
         trav->curMonitor = &monitor;
         curMonitor = &monitor;
         monitor.readAppearances(visitOnLoad, this);
-        if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
-            sort(monitor.apps.begin(), monitor.apps.end(), sortMonitoredAppearanceReverse);
         trav->traverse(monitor.apps, this);
     }
 

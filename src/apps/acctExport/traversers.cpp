@@ -14,41 +14,6 @@
 #include "options.h"
 
 //--------------------------------------------------------------------------
-CReceiptTraverser::CReceiptTraverser(void) : CTraverser("receipts") {
-    filterFunc = filterByRange;
-    preFunc = pre_Func;
-    postFunc = post_Func;
-    dataFunc = loadTx_Func;
-    displayFunc = receipts_Display;
-}
-
-//--------------------------------------------------------------------------
-CLogTraverser::CLogTraverser(void) : CTraverser("logs") {
-    filterFunc = filterByRange;
-    postFunc = post_Func;
-    dataFunc = loadTx_Func;
-    displayFunc = logs_Display;
-    counterFunc = logs_Count;
-}
-
-//--------------------------------------------------------------------------
-CTraceTraverser::CTraceTraverser(void) : CTraverser("traces") {
-    filterFunc = filterByRange;
-    preFunc = pre_Func;
-    postFunc = post_Func;
-    dataFunc = loadTx_Func;
-    displayFunc = traces_Display;
-    counterFunc = traces_Count;
-}
-
-//--------------------------------------------------------------------------
-CNeighborTraverser::CNeighborTraverser(void) : CTraverser("neighbors") {
-    filterFunc = filterByRange;
-    preFunc = neighbors_Pre;
-    postFunc = post_Func;
-}
-
-//--------------------------------------------------------------------------
 CTransactionTraverser::CTransactionTraverser(void) : CTraverser("txs") {
     filterFunc = filterByRange;
     preFunc = acct_PreFunc;

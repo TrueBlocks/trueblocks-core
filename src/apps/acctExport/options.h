@@ -54,11 +54,6 @@ class CIndexArchiveWithNeighborMaps : public CIndexArchive {
 class COptions : public CStatementOptions {
   public:
     // BEG_CODE_DECLARE
-    CFourbyteArray fourbytes;
-    bool receipts;
-    bool logs;
-    bool traces;
-    bool neighbors;
     bool accounting;
     bool statements;
     bool articulate;
@@ -66,33 +61,17 @@ class COptions : public CStatementOptions {
     bool cache_traces;
     uint64_t first_record;
     uint64_t max_records;
-    bool relevant;
     string_q flow;
-    bool factory;
-    string_q load;
-    bool reversed;
     // END_CODE_DECLARE
 
-    bool skip_ddos{true};
-    uint64_t max_traces{250};
     CMonitorArray allMonitors;
     const CMonitor* curMonitor;
 
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
 
-    // neighbor maps
-    CAddressUintMap toAddrMap;
-    CAddressUintMap fromAddrMap;
-    CAddressUintMap emitterAddrMap;
-    CAddressUintMap creationMap;
-    CAddressUintMap toTraceAddrMap;
-    CAddressUintMap fromTraceAddrMap;
-
     // abiMap allows fast access to abis
     CAddressUintMap abiMap;
-
-    CLogFilter logFilter;
 
     CScrapeStatistics stats;
 
@@ -113,15 +92,7 @@ class COptions : public CStatementOptions {
 
     bool handle_traversers(void);
 
-    void addNeighbor(CAddressUintMap& map, const address_t& addr);
-    void markNeighbors(const CTransaction& trans);
     bool articulateAll(CTransaction& trans);
-    bool reportNeighbors(void);
-
-    bool isEmitter(const address_t& test) const;
-    bool wasEmittedBy(const address_t& test) const;
-    bool isRelevant(const CLog& log) const;
-    bool fourByteFilter(const string_q& input) const;
 
     void writePerformanceData(void);
 
