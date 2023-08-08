@@ -147,8 +147,10 @@ func ResetOptions() {
 
 func (opts *WhenOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
-	m = map[string]bool{
-		"blocks": true,
+	if !opts.Timestamps {
+		m = map[string]bool{
+			"blocks": true,
+		}
 	}
 	// EXISTING_CODE
 	return

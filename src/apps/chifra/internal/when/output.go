@@ -87,7 +87,7 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 		}
 
 	} else {
-		err = opts.HandleShowBlocks()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

@@ -16,7 +16,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *WhenOptions) HandleShowBlocks() error {
+func (opts *WhenOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
