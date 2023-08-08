@@ -38,7 +38,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 				return
 			} else if !opts.NoZero || cnt > 0 {
 				showProgress := !opts.Globals.TestMode
-				var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
+				bar := logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
 				allNeighbors := make([]index.Reason, 0)
 				iterFunc := func(app types.SimpleAppearance, unused *bool) error {
 					if neighbors, err := index.GetNeighbors(&app); err != nil {

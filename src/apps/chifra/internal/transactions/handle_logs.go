@@ -49,7 +49,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 			cancel()
 		} else {
 			showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
-			var bar = logger.NewBar("", showProgress, int64(len(txMap)))
+			bar := logger.NewBar("", showProgress, int64(len(txMap)))
 
 			iterCtx, iterCancel := context.WithCancel(context.Background())
 			defer iterCancel()

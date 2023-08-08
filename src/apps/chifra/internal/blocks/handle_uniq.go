@@ -35,7 +35,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 			}
 
 			showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
-			var bar = logger.NewBar("", showProgress, int64(len(blockNums)))
+			bar := logger.NewBar("", showProgress, int64(len(blockNums)))
 			for _, bn := range blockNums {
 				bar.Tick()
 				addrMap := make(index.AddressBooleanMap)

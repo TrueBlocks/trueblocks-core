@@ -80,7 +80,7 @@ func (opts *ExportOptions) readBalances(
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
 		showProgress := !opts.Globals.TestMode
-		var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
+		bar := logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
 
 		// This is called concurrently, once for each appearance
 		iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
