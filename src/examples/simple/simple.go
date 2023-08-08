@@ -5,12 +5,12 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 func main() {
 	chain := "mainnet"
-	conn := rpcClient.TempConnection(chain)
+	conn := rpc.TempConnection(chain)
 	if block, err := conn.GetBlockHeaderByNumber(base.Blknum(3500000)); err != nil {
 		fmt.Println(err)
 	} else {

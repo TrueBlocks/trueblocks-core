@@ -1,6 +1,10 @@
 blocks?blocks=1152642&decache
 {
-  "data": [],
+  "data": [
+    {
+      "msg": "One item totaling 309 bytes was removed from the cache."
+    }
+  ],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",

@@ -50,7 +50,7 @@ Flags:
   -c, --uncles            display uncle blocks (if any) instead of the requested block
   -t, --traces            export the traces from the block as opposed to the block data
   -u, --uniq              display a list of uniq address appearances per transaction
-  -f, --flow string       for the uniq option only, export only from or to (including trace from or to)
+  -f, --flow string       for the --uniq option only, export only from or to (including trace from or to)
                           One of [ from | to | reward ]
   -l, --logs              display only the logs found in the block(s)
   -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es)
@@ -58,9 +58,9 @@ Flags:
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
   -U, --count             display the number of the lists of appearances for --addrs or --uniq
-  -D, --decache           removes a block and any transactions or traces in the block from the cache
   -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
+  -D, --decache           removes related items from the cache
   -x, --fmt string        export format, one of [none|json*|txt|csv]
   -v, --verbose           enable verbose output
   -h, --help              display this help screen
@@ -73,6 +73,7 @@ Notes:
   - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
   - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.
+  - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
 ```
 
 Data models produced by this tool:
@@ -126,10 +127,10 @@ Flags:
   -m, --emitter strings      for the --logs option only, filter logs to show only those logs emitted by the given address(es)
   -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
   -A, --account_for string   reconcile the transaction as per the provided address
-  -D, --decache              removes a transactions and any traces in the transaction from the cache
   -H, --ether                specify value in ether
   -w, --raw                  report JSON data from the source with minimal processing
   -o, --cache                force the results of the query into the cache
+  -D, --decache              removes related items from the cache
   -x, --fmt string           export format, one of [none|json*|txt|csv]
   -v, --verbose              enable verbose output
   -h, --help                 display this help screen
@@ -139,6 +140,7 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.
+  - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 ```
 
 Data models produced by this tool:
@@ -179,6 +181,7 @@ Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
   -w, --raw          report JSON data from the source with minimal processing
   -o, --cache        force the results of the query into the cache
+  -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose output
   -h, --help         display this help screen
@@ -221,6 +224,7 @@ Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
   -w, --raw          report JSON data from the source with minimal processing
   -o, --cache        force the results of the query into the cache
+  -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose output
   -h, --help         display this help screen
@@ -270,6 +274,7 @@ Flags:
   -U, --count           show the number of traces for the transaction only (fast)
   -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose output
   -h, --help            display this help screen
@@ -328,6 +333,7 @@ Flags:
   -u, --update       with --timestamps only, bring the timestamp database forward to the latest block
   -d, --deep         with --timestamps --check only, verifies timestamps from on chain (slow)
   -o, --cache        force the results of the query into the cache
+  -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose output
   -h, --help         display this help screen

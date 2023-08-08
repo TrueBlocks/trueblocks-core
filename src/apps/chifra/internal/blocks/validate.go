@@ -34,10 +34,6 @@ func (opts *BlocksOptions) validateBlocks() error {
 		}
 	}
 
-	if opts.Globals.Cache && (opts.List > 0 || opts.ListCount > 0) {
-		return validate.Usage("You may not use the {0} option with the {1} options.", "--cache", "--list")
-	}
-
 	if opts.ListCount == 0 {
 		err := validate.ValidateIdentifiers(
 			chain,

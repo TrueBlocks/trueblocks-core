@@ -1,4 +1,4 @@
-logs?transactions=12.0&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&cache&raw&failOnPurpose
+logs?transactions=12.0&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&cache&decache&raw&failOnPurpose
 {
   "errors": [
     "Invalid key (failOnPurpose) in logs route."

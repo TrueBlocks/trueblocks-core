@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -59,7 +59,7 @@ func (opts *StateOptions) validateState() error {
 
 			err := opts.Conn.IsContractAt(base.HexToAddress(contract), nil)
 			if err != nil {
-				if errors.Is(err, rpcClient.ErrNotAContract) {
+				if errors.Is(err, rpc.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")
 				}
 				return err

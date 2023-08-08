@@ -5,8 +5,8 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
@@ -14,16 +14,11 @@ import (
 func (opts *TransactionsOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
 
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
-
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		var bar = logger.NewOverflowBar("", !opts.Globals.TestMode, 250)
 		procFunc := func(s *types.SimpleAppearance) error {
+			bar.Tick()
 			modelChan <- s
 			return nil
 		}
@@ -37,7 +32,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 
 			for _, app := range txIds {
 				bn := uint64(app.BlockNumber)
-				ts := opts.Conn.GetBlockTimestamp(&bn)
+				ts := opts.Conn.GetBlockTimestamp(bn)
 				addrMap := make(index.AddressBooleanMap)
 
 				if trans, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
@@ -49,6 +44,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				}
 			}
 		}
+		bar.Finish(true)
 	}
 
 	extra := map[string]interface{}{

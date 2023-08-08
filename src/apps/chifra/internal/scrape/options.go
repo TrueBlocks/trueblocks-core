@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -28,7 +28,7 @@ type ScrapeOptions struct {
 	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
-	Conn       *rpcClient.Connection    `json:"conn,omitempty"`       // The connection to the RPC server
+	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE

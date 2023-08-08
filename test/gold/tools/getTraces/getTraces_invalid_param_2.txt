@@ -1,6 +1,6 @@
 chifra traces  .whatever
 TEST[DATE|TIME] Transactions:  [.whatever]
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
 Error: The given value '.whatever' is not a valid identifier.
 Usage:
@@ -15,6 +15,7 @@ Flags:
   -U, --count           show the number of traces for the transaction only (fast)
   -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose output
   -h, --help            display this help screen

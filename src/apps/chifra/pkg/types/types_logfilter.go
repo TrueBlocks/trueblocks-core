@@ -58,4 +58,29 @@ func (s *SimpleLogFilter) Model(verbose bool, format string, extraOptions map[st
 }
 
 // EXISTING_CODE
+func (filter *SimpleLogFilter) PassesFilter(log *SimpleLog) bool {
+	foundEmitter := false
+	for _, e := range filter.Emitters {
+		if e == log.Address {
+			foundEmitter = true
+			break
+		}
+	}
+
+	foundTopic := false
+	for _, t := range filter.Topics {
+		for _, lt := range log.Topics {
+			if t == lt {
+				foundTopic = true
+				break
+			}
+		}
+	}
+
+	passesEmitter := len(filter.Emitters) == 0 || foundEmitter
+	passesTopic := len(filter.Topics) == 0 || foundTopic
+
+	return passesEmitter && passesTopic
+}
+
 // EXISTING_CODE

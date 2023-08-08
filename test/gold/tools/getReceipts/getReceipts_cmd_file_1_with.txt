@@ -2,7 +2,7 @@ chifra receipts  --file cmd_file.1 --verbose --fmt txt 5644782.0
 TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file.1
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

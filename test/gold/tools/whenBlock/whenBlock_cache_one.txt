@@ -1,0 +1,8 @@
+chifra when  12 --cache
+TEST[DATE|TIME] Blocks:  [12]
+TEST[DATE|TIME] Enabled:  blocks
+TEST[DATE|TIME] Cache:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+blockNumber	timestamp	date	name
+12	1438270144	2015-07-30 15:29:04 UTC	

@@ -120,7 +120,11 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 	}
 
 	if format == "json" {
-		model["traceAddress"] = s.TraceAddress
+		if s.TraceAddress == nil {
+			model["traceAddress"] = []uint64{}
+		} else {
+			model["traceAddress"] = s.TraceAddress
+		}
 		if len(s.Error) > 0 {
 			model["error"] = s.Error
 		}
@@ -321,15 +325,7 @@ type SimpleTraceGroup struct {
 	Traces []SimpleTrace
 	// Details for cache locator
 	BlockNumber      base.Blknum
-	TransactionIndex int
-}
-
-func NewSimpleTraceGroup(tx *SimpleTransaction) *SimpleTraceGroup {
-	return &SimpleTraceGroup{
-		Traces:           make([]SimpleTrace, 0, len(tx.Traces)),
-		BlockNumber:      tx.Receipt.BlockNumber,
-		TransactionIndex: int(tx.TransactionIndex),
-	}
+	TransactionIndex base.Txnum
 }
 
 func (s *SimpleTraceGroup) CacheName() string {

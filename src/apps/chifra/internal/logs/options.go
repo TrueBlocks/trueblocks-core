@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -26,7 +26,7 @@ type LogsOptions struct {
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
-	Conn           *rpcClient.Connection    `json:"conn,omitempty"`           // The connection to the RPC server
+	Conn           *rpc.Connection          `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -113,22 +113,12 @@ func ResetOptions() {
 
 func (opts *LogsOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
-	// TODO: Can we enable chaching here?
-	// caches := map[string]bool{
-	// 	"txs": true,
-	// }
-	m = map[string]bool{}
+	m = map[string]bool{
+		"txs": true,
+	}
 	// EXISTING_CODE
 	return
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *LogsOptions) CacheState() (bool, map[string]bool) {
-	return false, opts.getCaches() // no caches
-	// return opts.Globals.Cache, opts.getCaches()
-}
-
 // EXISTING_CODE

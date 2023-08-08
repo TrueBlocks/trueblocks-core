@@ -9,14 +9,11 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleList() error {
-	chain := opts.Globals.Chain
-
 	// Don't do this in the loop
 	meta, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
@@ -30,13 +27,6 @@ func (opts *BlocksOptions) HandleList() error {
 	if start < opts.ListCount {
 		end = 0
 	}
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {

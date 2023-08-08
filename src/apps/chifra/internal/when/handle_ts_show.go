@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -29,13 +28,6 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 	if err != nil {
 		return err
 	}
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx := context.Background()
 	prev := base.Timestamp(0)

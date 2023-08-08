@@ -138,7 +138,6 @@ func (opts *NamesOptions) anyBase() bool {
 		opts.MatchCase ||
 		opts.All ||
 		opts.Prefund ||
-		opts.Named ||
 		opts.Clean
 }
 

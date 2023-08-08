@@ -8,9 +8,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
@@ -18,13 +16,6 @@ import (
 
 func (opts *TracesOptions) HandleCounts() error {
 	chain := opts.Globals.Chain
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -40,7 +31,7 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 
 			for _, id := range txIds {
-				tx, err := opts.Conn.GetTransactionByNumberAndID(uint64(id.BlockNumber), uint64(id.TransactionIndex))
+				txHash, err := opts.Conn.GetTransactionHashByNumberAndID(uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -50,8 +41,7 @@ func (opts *TracesOptions) HandleCounts() error {
 					return
 				}
 
-				txHash := tx.Hash().Hex()
-				cnt, err := opts.Conn.GetCountTracesInTransaction(txHash)
+				cnt, err := opts.Conn.GetTracesCountInTransaction(txHash.Hex())
 				if err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -74,7 +64,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				counter := simpleTraceCount{
 					BlockNumber:      uint64(id.BlockNumber),
 					TransactionIndex: uint64(id.TransactionIndex),
-					TransactionHash:  base.HexToHash(txHash),
+					TransactionHash:  txHash,
 					Timestamp:        ts,
 					TracesCnt:        cnt,
 				}

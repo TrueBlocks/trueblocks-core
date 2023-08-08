@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -39,7 +39,7 @@ type ChunksOptions struct {
 	Deep       bool                     `json:"deep,omitempty"`       // If true, dig more deeply during checking (manifest only)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
-	Conn       *rpcClient.Connection    `json:"conn,omitempty"`       // The connection to the RPC server
+	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -129,7 +129,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 
 	// EXISTING_CODE
 	// TODO: Do we know if an option is an address? If yes, we could automate this
-	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(opts.Belongs)
+	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 	// EXISTING_CODE
 
 	return opts
@@ -154,7 +154,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 			}
 		}
 	}
-	opts.Belongs, _ = opts.Conn.GetAddressesFromEns(opts.Belongs)
+	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}

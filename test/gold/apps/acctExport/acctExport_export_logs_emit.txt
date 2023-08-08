@@ -4,7 +4,7 @@ TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 TEST[DATE|TIME] FirstBlock:  1429283
 TEST[DATE|TIME] LastBlock:  1429468
-TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  csv
 blockNumber,transactionIndex,logIndex,blockHash,transactionHash,timestamp,date,address,topic0,topic1,topic2,topic3,data
 1429283,0,0,0x50aa1470da0b6724beeb0a97dc0718837b4eace08208f8ca2f6a438412641189,0x971ad6b05925bd67ad1019d57f48662190ae44a82157a228cdd57bf42facca98,1461988055,2016-04-30 03:47:35 UTC,0xbb9bc244d798123fde783fcc1c72d3bb8c189413,0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925,0x000000000000000000000000ac039da3add6efb42d47b6ea21f7feca82091236,0x000000000000000000000000fbb1b73c4f0bda4f67dca266ce6ef42f520fbb98,,0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff

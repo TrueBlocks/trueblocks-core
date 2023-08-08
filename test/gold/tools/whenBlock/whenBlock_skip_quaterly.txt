@@ -1,6 +1,6 @@
 chifra when  --fmt txt 768414-1856235:quarterly
 TEST[DATE|TIME] Blocks:  [768414-1856235:quarterly]
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 blockNumber	timestamp	date	name
 778482	1451606392	2015-12-31 23:59:52 UTC	

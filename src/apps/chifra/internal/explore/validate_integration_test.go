@@ -10,14 +10,14 @@ package explorePkg
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Test_Explore_Validate(t *testing.T) {
 	var opts ExploreOptions
 	chain := utils.GetTestChain()
-	opts.Conn = rpcClient.TempConnection(chain)
+	opts.Conn = rpc.TempConnection(chain)
 	opts.Terms = append(opts.Terms, "1001001.0")
 	opts.Globals.Chain = "mainnet"
 	err := opts.validateExplore()

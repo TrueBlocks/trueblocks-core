@@ -13,13 +13,10 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
-
-var PendingPeriod = (5 * time.Minute).Milliseconds()
 
 // EXISTING_CODE
 
@@ -322,11 +319,6 @@ func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
 	target.Timestamp = s.Timestamp
 	target.Uncles = s.Uncles
 	target.raw = s.raw
-}
-
-func (s *SimpleBlock[Tx]) Pending(latestTimestamp int64) bool {
-	// TODO: This should be 28 blocks like we use in scraper and it should be less after 1559
-	return (latestTimestamp - s.Timestamp) <= PendingPeriod
 }
 
 // EXISTING_CODE

@@ -70,12 +70,16 @@ on      ,both ,slow  ,tokens ,tools/getTokens ,top_three_swarm1              ,y 
 local   ,both ,fast  ,tokens ,tools/getTokens ,block_not_found               ,y    ,addrs = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
 # Returns a weird (very large) totalSupply
-on   ,both ,slow  ,tokens ,tools/getTokens ,old_bug_2                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & parts = all & blocks = 12000000
-on   ,both ,slow  ,tokens ,tools/getTokens ,old_bug_1                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 0x99c961738786e8f5f3fee109f4d49f5901826b8c & blocks = 11963059
+on      ,both ,slow  ,tokens ,tools/getTokens ,old_bug_2                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & parts = all & blocks = 12000000
+on      ,both ,slow  ,tokens ,tools/getTokens ,old_bug_1                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 0x99c961738786e8f5f3fee109f4d49f5901826b8c & blocks = 11963059
+
+on      ,both ,fast  ,tokens ,tools/getTokens ,cache_and_decache             ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & blocks = 12000000 & cache & decache
+on      ,both ,fast  ,tokens ,tools/getTokens ,cache_one                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & blocks = 12000000 & cache
+on      ,both ,fast  ,tokens ,tools/getTokens ,decache_one                   ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & blocks = 12000000 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on      ,both ,fast  ,tokens ,tools/getTokens ,caps_allowed                  ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on      ,both ,fast  ,tokens ,tools/getTokens ,caps_allowed                  ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & fail_on_purpose
 on      ,both ,fast  ,tokens ,tools/getTokens ,caps_disallowed_1             ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,tokens ,tools/getTokens ,caps_disallowed_2             ,y    ,addrs = trueblocks.eth & ether
 on      ,both ,fast  ,tokens ,tools/getTokens ,caps_disallowed_3             ,y    ,addrs = trueblocks.eth & wei

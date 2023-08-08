@@ -1,0 +1,6 @@
+names?terms=find_nothing&decache
+{
+  "errors": [
+    "Invalid key (decache) in names route."
+  ]
+}

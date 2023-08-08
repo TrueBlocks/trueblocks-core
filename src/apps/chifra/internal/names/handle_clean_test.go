@@ -110,7 +110,7 @@ func Test_cleanToken(t *testing.T) {
 			args: args{
 				name: &types.SimpleName{},
 				token: &types.SimpleToken{
-					Type: types.TokenErc20,
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -125,7 +125,7 @@ func Test_cleanToken(t *testing.T) {
 			args: args{
 				name: &types.SimpleName{},
 				token: &types.SimpleToken{
-					Type: types.TokenErc721,
+					TokenType: types.TokenErc721,
 				},
 			},
 			wantModified: true,
@@ -142,7 +142,7 @@ func Test_cleanToken(t *testing.T) {
 					Tags: "60-Airdrops",
 				},
 				token: &types.SimpleToken{
-					Type: types.TokenErc20,
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -159,7 +159,7 @@ func Test_cleanToken(t *testing.T) {
 					Tags: "token",
 				},
 				token: &types.SimpleToken{
-					Type: types.TokenErc20,
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -176,7 +176,7 @@ func Test_cleanToken(t *testing.T) {
 					Tags: "30-contracts",
 				},
 				token: &types.SimpleToken{
-					Type: types.TokenErc20,
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -193,7 +193,7 @@ func Test_cleanToken(t *testing.T) {
 					Tags: "55-defi",
 				},
 				token: &types.SimpleToken{
-					Type: types.TokenErc20,
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -208,8 +208,8 @@ func Test_cleanToken(t *testing.T) {
 			args: args{
 				name: &types.SimpleName{},
 				token: &types.SimpleToken{
-					Name: "TrueBlocksCoin",
-					Type: types.TokenErc20,
+					Name:      "TrueBlocksCoin",
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -225,8 +225,8 @@ func Test_cleanToken(t *testing.T) {
 			args: args{
 				name: &types.SimpleName{},
 				token: &types.SimpleToken{
-					Symbol: "TBC",
-					Type:   types.TokenErc20,
+					Symbol:    "TBC",
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -242,8 +242,8 @@ func Test_cleanToken(t *testing.T) {
 			args: args{
 				name: &types.SimpleName{},
 				token: &types.SimpleToken{
-					Decimals: 18,
-					Type:     types.TokenErc20,
+					Decimals:  18,
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,

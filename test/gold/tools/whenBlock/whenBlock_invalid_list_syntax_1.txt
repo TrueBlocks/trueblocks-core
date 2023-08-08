@@ -1,6 +1,6 @@
 chifra when  --list --fmt json
 TEST[DATE|TIME] List:  true
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  json
 {
   "data": [

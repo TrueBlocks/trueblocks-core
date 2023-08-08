@@ -15,14 +15,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 const asciiAppearanceSize = 59
 
 // HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
-func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (bool, error) {
+func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, blazeOpts *BlazeOptions) (bool, error) {
 	chain := blazeOpts.Chain
 
 	// Get a sorted list of files in the ripe folder
@@ -147,7 +147,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpcClient.MetaD
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
 
-		conn := rpcClient.TempConnection(chain)
+		conn := rpc.TempConnection(chain)
 		m, _ := conn.GetMetaData(opts.Globals.TestMode)
 		rng := base.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)

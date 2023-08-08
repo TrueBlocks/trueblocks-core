@@ -32,6 +32,7 @@ Flags:
   -u, --update       with --timestamps only, bring the timestamp database forward to the latest block
   -d, --deep         with --timestamps --check only, verifies timestamps from on chain (slow)
   -o, --cache        force the results of the query into the cache
+  -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose output
   -h, --help         display this help screen

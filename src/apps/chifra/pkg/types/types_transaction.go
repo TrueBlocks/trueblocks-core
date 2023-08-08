@@ -347,19 +347,6 @@ func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
 	return
 }
 
-func (r *RawTransaction) TxIndex() uint64 {
-	return utils.MustParseUint(r.TransactionIndex)
-}
-
-func (r *RawTransaction) TxGasPrice() uint64 {
-	return utils.MustParseUint(r.GasPrice)
-}
-
-func (r *RawTransaction) TxHash() *base.Hash {
-	hash := base.HexToHash(r.Hash)
-	return &hash
-}
-
 // NewSimpleTransaction builds SimpleTransaction using data from raw and receipt. Receipt can be nil.
 // Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
 func NewSimpleTransaction(raw *RawTransaction, receipt *SimpleReceipt, timestamp base.Timestamp) (s *SimpleTransaction) {

@@ -1,8 +1,6 @@
 chifra slurp  0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
 TEST[DATE|TIME] Addrs:  [0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5]
 TEST[DATE|TIME] Types:  [ext]
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] Processing [0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5] --types: [ext] []
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlist&address=0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5&page=1&offset=100
 EROR[DATE|TIME] zero transactions reported, 0 fetched

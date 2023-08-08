@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -28,7 +28,7 @@ type BlocksOptions struct {
 	Uncles      bool                     `json:"uncles,omitempty"`      // Display uncle blocks (if any) instead of the requested block
 	Traces      bool                     `json:"traces,omitempty"`      // Export the traces from the block as opposed to the block data
 	Uniq        bool                     `json:"uniq,omitempty"`        // Display a list of uniq address appearances per transaction
-	Flow        string                   `json:"flow,omitempty"`        // For the uniq option only, export only from or to (including trace from or to)
+	Flow        string                   `json:"flow,omitempty"`        // For the --uniq option only, export only from or to (including trace from or to)
 	Logs        bool                     `json:"logs,omitempty"`        // Display only the logs found in the block(s)
 	Emitter     []string                 `json:"emitter,omitempty"`     // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic       []string                 `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
@@ -37,11 +37,10 @@ type BlocksOptions struct {
 	Count       bool                     `json:"count,omitempty"`       // Display the number of the lists of appearances for --addrs or --uniq
 	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block's transactions to the cache (slow)
 	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block's traces to the cache (slower)
-	Decache     bool                     `json:"decache,omitempty"`     // Removes a block and any transactions or traces in the block from the cache
 	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
 	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
-	Conn        *rpcClient.Connection    `json:"conn,omitempty"`        // The connection to the RPC server
+	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -67,7 +66,6 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.CacheTxs, "CacheTxs: ", opts.CacheTxs)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
 	opts.Conn.TestLog(opts.getCaches())
@@ -126,8 +124,6 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.CacheTxs = true
 		case "cacheTraces":
 			opts.CacheTraces = true
-		case "decache":
-			opts.Decache = true
 		case "list":
 			opts.List = globals.ToUint64(value[0])
 		case "listCount":
@@ -188,6 +184,7 @@ func ResetOptions() {
 func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
+		"blocks": true,
 		"txs":    opts.CacheTxs,
 		"traces": opts.CacheTraces,
 	}
@@ -196,11 +193,4 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *BlocksOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache, opts.getCaches()
-}
-
 // EXISTING_CODE

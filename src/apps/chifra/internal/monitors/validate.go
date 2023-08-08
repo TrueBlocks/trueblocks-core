@@ -71,7 +71,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				return validate.Usage("You must provide at least one Ethereum address for this command.")
 			}
 
-			if !opts.Clean && !opts.Delete && !opts.Undelete && !opts.Remove && !opts.Decache {
+			if !opts.Clean && !opts.Delete && !opts.Undelete && !opts.Remove {
 				return validate.Usage("Please provide either --clean or one of the CRUD commands.")
 			}
 
@@ -84,10 +84,6 @@ func (opts *MonitorsOptions) validateMonitors() error {
 						return err
 					}
 				}
-			}
-
-			if opts.Globals.IsApiMode() && opts.Decache {
-				return validate.Usage("The {0} option is not available in API mode.", "--decache")
 			}
 		}
 	}

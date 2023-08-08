@@ -1,7 +1,8 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 21321321312321
 TEST[DATE|TIME] Addrs:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
 TEST[DATE|TIME] Blocks:  [21321321312321]
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Parts:  [all]
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 Error: The given value '21321321312321' is not a valid identifier.
 Usage:
@@ -18,6 +19,7 @@ Flags:
   -c, --changes         only report a balance when it changes from one block to the next
   -z, --no_zero         suppress the display of zero balance accounts
   -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose output
   -h, --help            display this help screen

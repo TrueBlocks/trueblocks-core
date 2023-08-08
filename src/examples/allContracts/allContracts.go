@@ -5,7 +5,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -13,7 +13,7 @@ var bar = logger.NewBar("Visiting", true, int64(17000000))
 
 func main() {
 	chain := "mainnet"
-	conn := rpcClient.TempConnection(chain)
+	conn := rpc.TempConnection(chain)
 	latest := conn.GetLatestBlockNumber()
 	forEveryTrace(46000, latest, visitTrace)
 	bar.Finish(true)
@@ -28,7 +28,7 @@ func visitTrace(trace *types.SimpleTrace, data *any) error {
 
 func forEveryTrace(from, to base.Blknum, visitor func(*types.SimpleTrace, *any) error) error {
 	chain := "mainnet"
-	conn := rpcClient.TempConnection(chain)
+	conn := rpc.TempConnection(chain)
 	for blknum := from; blknum <= to; blknum++ {
 		if block, err := conn.GetBlockHeaderByNumber(blknum); err != nil {
 			return err

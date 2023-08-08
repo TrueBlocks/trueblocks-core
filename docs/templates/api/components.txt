@@ -1208,15 +1208,10 @@ components:
           format: uint64
           example: 18
           description: "the number of decimals for the token contract"
-        isContract:
-          type: boolean
-          description: "`true` if the address is a smart contract, `false` otherwise"
-        isErc20:
-          type: boolean
-          description: "`true` if the address is an ERC20, `false` otherwise"
-        isErc721:
-          type: boolean
-          description: "`true` if the address is an ERC720, `false` otherwise"
+        type:
+          type: TokenType
+          example: "ERC721"
+          description: "the type of token (ERC20 or ERC721) or none"
     ethCall:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract (deprecated)"
       type: object

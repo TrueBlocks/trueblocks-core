@@ -50,6 +50,10 @@ func (opts *GlobalOptions) Validate() error {
 		fmt.Println("{ \"outputFilename\": \"--output_filename--\" }")
 	}
 
+	if opts.Cache && opts.Decache {
+		return validate.Usage("The {0} and {1} options are mutually exclusive.", "--cache", "--decache")
+	}
+
 	return nil
 }
 

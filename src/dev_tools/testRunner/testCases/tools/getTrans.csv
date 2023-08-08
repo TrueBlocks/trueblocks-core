@@ -119,7 +119,7 @@ acct     ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile1          ,y
 # fails because it uses the cache
 acct     ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile2          ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & cache
 acct     ,both ,fast  ,transactions ,tools/getTrans ,pricing_maker            ,y    ,transactions = 5218355.232 & account_for = 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad & fmt = json
-acct    ,both ,fast  ,transactions ,tools/getTrans ,pricing_premaker         ,y    ,transactions = 1433233.8 & account_for = 0xea674fdde714fd979de3edf0f56aa9716b898ec8 & fmt = json
+acct     ,both ,fast  ,transactions ,tools/getTrans ,pricing_premaker         ,y    ,transactions = 1433233.8 & account_for = 0xea674fdde714fd979de3edf0f56aa9716b898ec8 & fmt = json
 acct     ,both ,fast  ,transactions ,tools/getTrans ,reconcile                ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & articulate
 # Does not reconcile
 acct     ,both ,fast  ,transactions ,tools/getTrans ,reconcile_intern_trace   ,y    ,transactions = 10681057.170 10607241.278 & account_for = 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json & traces
@@ -149,7 +149,13 @@ acct     ,both ,fast  ,transactions ,tools/getTrans ,failed_recon_2           ,y
 file_cmd ,cmd  ,fast  ,transactions ,tools/getTrans ,mulit_line_mulit_txs     ,n    ,file = cmd_file_1 & fmt = json
 file_cmd ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
 
+on       ,both ,fast  ,transactions ,tools/getTrans ,cache_and_decache        ,y    ,transactions = 46147.0 & cache & decache
+on       ,both ,fast  ,transactions ,tools/getTrans ,cache_one                ,y    ,transactions = 46147.0 & cache
+on       ,both ,fast  ,transactions ,tools/getTrans ,decache_one              ,y    ,transactions = 46147.0 & decache
+on       ,both ,fast  ,transactions ,tools/getTrans ,cache_traces             ,y    ,transactions = 46147.0 & cache & cache_traces
+on       ,both ,fast  ,transactions ,tools/getTrans ,decache_traces           ,y    ,transactions = 46147.0 & decache
+
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
-on       ,both ,fast  ,transactions ,tools/getTrans ,caps_allowed             ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on       ,both ,fast  ,transactions ,tools/getTrans ,caps_allowed             ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei & fail_on_purpose
 on       ,both ,fast  ,transactions ,tools/getTrans ,caps_disallowed_1        ,y    ,transactions = 12.0 & fail_on_purpose

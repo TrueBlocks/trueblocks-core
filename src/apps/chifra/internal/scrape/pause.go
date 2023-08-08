@@ -4,10 +4,10 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
-func (opts *ScrapeOptions) Pause(progressThen *rpcClient.MetaData) {
+func (opts *ScrapeOptions) Pause(progressThen *rpc.MetaData) {
 	// we always pause at least a quarter of a second to allow the node to 'rest'
 	time.Sleep(250 * time.Millisecond)
 	isDefaultSleep := opts.Sleep >= 13 && opts.Sleep <= 14

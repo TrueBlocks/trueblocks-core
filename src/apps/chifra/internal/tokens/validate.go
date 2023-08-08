@@ -8,7 +8,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -55,7 +55,7 @@ func (opts *TokensOptions) validateTokens() error {
 			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
 				err := opts.Conn.IsContractAt(base.HexToAddress(addr), nil)
 				if err != nil {
-					if errors.Is(err, rpcClient.ErrNotAContract) {
+					if errors.Is(err, rpc.ErrNotAContract) {
 						return validate.Usage("The value {0} is not a token contract.", addr)
 					}
 					return err
@@ -67,7 +67,7 @@ func (opts *TokensOptions) validateTokens() error {
 			err := opts.Conn.IsContractAt(base.HexToAddress(addr), nil)
 			if err != nil {
 				if err != nil {
-					if errors.Is(err, rpcClient.ErrNotAContract) {
+					if errors.Is(err, rpc.ErrNotAContract) {
 						return validate.Usage("The value {0} is not a token contract.", addr)
 					}
 					return err

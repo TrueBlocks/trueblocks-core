@@ -4,7 +4,7 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Factory:  true
 TEST[DATE|TIME] LastBlock:  1603174
 TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex	timestamp	date	address	error	action::callType	action::from	action::to	action::value	action::ether	action::gas	result::gasUsed	action::input	result::output
 1600495	9	1464444793	Date	false	creation	0xNewAddr	0xed059bc543141c8c93031d545079b3da0233b27f	0x0	0	0	2192168	823600		

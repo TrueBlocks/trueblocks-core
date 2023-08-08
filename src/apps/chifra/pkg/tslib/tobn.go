@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
@@ -25,7 +25,7 @@ func FromDateToBn(chain, dateStr string) (uint64, error) {
 // FromNameToBn returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
 func FromNameToBn(chain, name string) (uint64, error) {
 	if name == "latest" {
-		conn := rpcClient.TempConnection(chain)
+		conn := rpc.TempConnection(chain)
 		meta, err := conn.GetMetaData(false)
 		if err != nil {
 			return 0, err

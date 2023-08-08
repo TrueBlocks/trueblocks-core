@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -26,12 +26,11 @@ type MonitorsOptions struct {
 	Undelete bool                  `json:"undelete,omitempty"` // Undelete a previously deleted monitor
 	Remove   bool                  `json:"remove,omitempty"`   // Remove a previously deleted monitor
 	Clean    bool                  `json:"clean,omitempty"`    // Clean (i.e. remove duplicate appearances) from monitors
-	Decache  bool                  `json:"decache,omitempty"`  // Removes a monitor and all associated data from the cache
 	List     bool                  `json:"list,omitempty"`     // List monitors in the cache (--verbose for more detail)
 	Watch    bool                  `json:"watch,omitempty"`    // Continually scan for new blocks and extract data for monitored addresses
 	Sleep    float64               `json:"sleep,omitempty"`    // Seconds to sleep between monitor passes
 	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Connection `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpc.Connection       `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -46,7 +45,6 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
-	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
@@ -80,8 +78,6 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			opts.Remove = true
 		case "clean":
 			opts.Clean = true
-		case "decache":
-			opts.Decache = true
 		case "list":
 			opts.List = true
 		case "watch":
@@ -97,7 +93,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -110,7 +106,7 @@ func monitorsFinishParse(args []string) *MonitorsOptions {
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(args)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

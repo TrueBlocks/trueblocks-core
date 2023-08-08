@@ -66,8 +66,13 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			}
 		}
 
-		if opts.Traces && !opts.Conn.IsNodeTracing(opts.Globals.TestMode) {
-			return validate.Usage("Tracing is required for this program to work properly.")
+		if opts.Traces {
+			if !opts.Conn.IsNodeTracing(opts.Globals.TestMode) {
+				return validate.Usage("Tracing is required for this program to work properly.")
+			}
+			if opts.Uniq {
+				return validate.Usage("The {0} option is not available with the {1} option", "--uniq", "--traces")
+			}
 		}
 
 		if !validate.CanArticulate(opts.Articulate) {

@@ -37,20 +37,19 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10478,apps,Accounts,export,acctExport,n6,,,false,false,false,false,--,note,,If provided&#44; --max_records dominates&#44; also&#44; if provided&#44; --first_record overrides --first_block.
 10479,apps,Accounts,export,acctExport,n7,,,false,false,false,false,--,note,,The --first_record and --max_record options are zero-based (as are the block options).
 10479,apps,Accounts,export,acctExport,n8,,,false,false,false,false,--,note,,The _block and _record options are ignored when used with the --count option.
+10480,apps,Accounts,export,acctExport,n9,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; txs&#44; traces&#44; recons) for the given address(es).
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to process
 11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
 11093,apps,Accounts,monitors,acctExport,undelete,,,false,false,true,true,gocmd,switch,<boolean>,undelete a previously deleted monitor
 11091,apps,Accounts,monitors,acctExport,remove,,,false,false,true,true,gocmd,switch,<boolean>,remove a previously deleted monitor
 11085,apps,Accounts,monitors,acctExport,clean,C,,false,false,true,true,gocmd,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
-11092,apps,Accounts,monitors,acctExport,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a monitor and all associated data from the cache
 11093,apps,Accounts,monitors,acctExport,list,l,,false,false,true,true,gocmd,switch,<boolean>,list monitors in the cache (--verbose for more detail)
 11294,apps,Accounts,monitors,acctExport,watch,w,,false,false,true,true,gocmd,switch,<boolean>,continually scan for new blocks and extract data for monitored addresses
 11296,apps,Accounts,monitors,acctExport,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between monitor passes
 11095,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
 11097,apps,Accounts,monitors,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 11099,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
-11100,apps,Accounts,monitors,acctExport,n3,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; txs&#44; traces&#44; recons) for the given address(es).
 
 12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to list
 12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
@@ -84,7 +83,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12320,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
 12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,gocmd,switch,<boolean>,undelete a previously deleted name
 12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,gocmd,switch,<boolean>,remove a previously deleted name
-12340,tools,Accounts,names,ethNames,named,n,,false,false,true,true,gocmd,switch,<boolean>,please use the --all option instead
 12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
 12350,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12355,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
@@ -95,7 +93,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13865,tools,Accounts,abis,grabABI,hint,n,,false,false,true,true,gocmd,flag,list<string>,for the --find option only&#44; provide hints to speed up the search
 13865,tools,Accounts,abis,grabABI,encode,e,,false,false,true,true,gocmd,flag,<string>,generate the 32-byte encoding for a given cannonical function or event signature
 13865,tools,Accounts,abis,grabABI,clean,C,,false,false,true,true,gocmd,flag,<boolean>,remove an abi file for an address or all zero-length files if no address is given
-13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,gocmd,deprecated,<boolean>,please use the `solc --abi` tool instead
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,n1,,,false,false,false,false,--,note,,Search for either four byte signatures or event signatures with the --find option.
 
@@ -104,7 +101,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,gocmd,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,traces,t,,false,false,true,true,gocmd,switch,<boolean>,export the traces from the block as opposed to the block data
 12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,gocmd,switch,<boolean>,display a list of uniq address appearances per transaction
-12565,tools,ChainData,blocks,getBlocks,flow,f,,false,false,true,true,gocmd,flag,enum[from|to|reward],for the uniq option only&#44; export only from or to (including trace from or to)
+12565,tools,ChainData,blocks,getBlocks,flow,f,,false,false,true,true,gocmd,flag,enum[from|to|reward],for the --uniq option only&#44; export only from or to (including trace from or to)
 12570,tools,ChainData,blocks,getBlocks,logs,l,,false,false,true,true,gocmd,switch,<boolean>,display only the logs found in the block(s)
 12972,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 12974,tools,ChainData,blocks,getBlocks,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
@@ -113,7 +110,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,gocmd,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,header,switch,<boolean>,force a write of the block's transactions to the cache (slow)
 12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,header,switch,<boolean>,force a write of the block's traces to the cache (slower)
-12581,tools,ChainData,blocks,getBlocks,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a block and any transactions or traces in the block from the cache
 12582,tools,ChainData,blocks,getBlocks,list,L,0,false,false,false,false,gocmd,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,false,gocmd,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
@@ -124,6 +120,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12624,tools,ChainData,blocks,getBlocks,n5,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter and/or a --topic.
 12625,tools,ChainData,blocks,getBlocks,n6,,,false,false,false,false,--,note,,Multiple topics match on topic0&#44; topic1&#44; and so on&#44; not on different topic0's.
 12627,tools,ChainData,blocks,getBlocks,n7,,,false,false,false,false,--,note,,For the --logs option&#44; large block ranges may crash the node&#44; use --big_range to specify a larger range.
+12628,tools,ChainData,blocks,getBlocks,n8,,,false,false,false,false,--,note,,The --decache option removes the block(s)&#44; all transactions in those block(s)&#44; and all traces in those transactions from the cache.
 
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
@@ -135,13 +132,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13615,tools,ChainData,transactions,getTrans,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,gocmd,flag,<address>,reconcile the transaction as per the provided address
 13629,tools,ChainData,transactions,getTrans,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force the transaction's traces into the cache
-13621,tools,ChainData,transactions,getTrans,decache,D,,false,false,true,true,gocmd,switch,<boolean>,removes a transactions and any traces in the transaction from the cache
 13622,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
 13623,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13626,tools,ChainData,transactions,getTrans,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13628,tools,ChainData,transactions,getTrans,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 13630,tools,ChainData,transactions,getTrans,n4,,,false,false,false,false,--,note,,The --traces option&#44; when used with --account_for&#44; will descend into traces to complete reconciliations.
+13631,tools,ChainData,transactions,getTrans,n5,,,false,false,false,false,--,note,,The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 
 13000,tools,ChainData,receipts,getReceipts,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13020,tools,ChainData,receipts,getReceipts,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found

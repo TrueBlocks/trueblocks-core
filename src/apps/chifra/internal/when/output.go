@@ -57,7 +57,10 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	// TODO: This should use StreamMany for all cases
 	handled = true
 
-	if opts.List {
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+
+	} else if opts.List {
 		err = opts.HandleList()
 
 	} else if opts.Timestamps {
@@ -84,7 +87,7 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 		}
 
 	} else {
-		err = opts.HandleShowBlocks()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

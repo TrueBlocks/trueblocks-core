@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 func helperReportStringMismatch(t *testing.T, expected, result string) {
@@ -294,8 +294,8 @@ func TestJsonWriter_CloseApiResponse(t *testing.T) {
 	b := make([]byte, 0, 1024)
 	buf := bytes.NewBuffer(b)
 	w := NewJsonWriter(buf)
-	w.GetMeta = func() (*rpcClient.MetaData, error) {
-		return &rpcClient.MetaData{}, nil
+	w.GetMeta = func() (*rpc.MetaData, error) {
+		return &rpc.MetaData{}, nil
 	}
 	w.ShouldWriteMeta = true
 

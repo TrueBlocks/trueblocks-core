@@ -2,7 +2,7 @@ chifra transactions  0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717
 TEST[DATE|TIME] Transactions:  [0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe]
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Traces:  true
-TEST[DATE|TIME] Caps:  cache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

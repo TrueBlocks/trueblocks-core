@@ -58,7 +58,9 @@ func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	if len(opts.Parts) > 0 {
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else if len(opts.Parts) > 0 {
 		err = opts.HandleParts()
 	} else {
 		err = opts.HandleShow()

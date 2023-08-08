@@ -1,2 +1,2 @@
-// Package rpc provides access to the RPC server
+// Package rpc provides access to the RPC client
 package rpc

@@ -1,7 +1,7 @@
 chifra blocks  4012000-4012001 --logs
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Logs:  true
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

@@ -8,7 +8,6 @@ import (
 	"context"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -16,13 +15,6 @@ import (
 func (opts *WhenOptions) HandleTimestampCount() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {

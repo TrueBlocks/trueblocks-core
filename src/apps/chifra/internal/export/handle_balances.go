@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -31,13 +30,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
@@ -88,7 +80,7 @@ func (opts *ExportOptions) readBalances(
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
 		showProgress := !opts.Globals.TestMode
-		var bar = logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
+		bar := logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
 
 		// This is called concurrently, once for each appearance
 		iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {

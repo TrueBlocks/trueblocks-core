@@ -1,4 +1,4 @@
-export?addrs=trueblocks.eth&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&cache&ether&wei&failOnPurpose
+export?addrs=trueblocks.eth&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&cache&decache&ether&wei&failOnPurpose
 {
   "errors": [
     "Invalid key (failOnPurpose) in export route."

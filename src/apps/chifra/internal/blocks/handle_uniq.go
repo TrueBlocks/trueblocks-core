@@ -3,13 +3,11 @@ package blocksPkg
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
@@ -17,13 +15,6 @@ import (
 
 func (opts *BlocksOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
@@ -43,12 +34,12 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 				return
 			}
 
+			showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
+			bar := logger.NewBar("", showProgress, int64(len(blockNums)))
 			for _, bn := range blockNums {
-				if !opts.Globals.TestMode {
-					logger.Info("Processing block", fmt.Sprintf("%d", bn))
-				}
+				bar.Tick()
 				addrMap := make(index.AddressBooleanMap)
-				ts := opts.Conn.GetBlockTimestamp(&bn)
+				ts := opts.Conn.GetBlockTimestamp(bn)
 				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
@@ -58,6 +49,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 					return
 				}
 			}
+			bar.Finish(true /* newLine */)
 		}
 	}
 

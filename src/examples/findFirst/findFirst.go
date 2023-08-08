@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -24,14 +24,14 @@ import (
 // -----------------------------------------------------------------------------------------------
 func main() {
 	chain := "mainnet"
-	conn := rpcClient.TempConnection(chain)
+	conn := rpc.TempConnection(chain)
 	slowWay(conn)
 	fastWay(conn)
 }
 
 var chain = "mainnet"
 
-func slowWay(conn *rpcClient.Connection) {
+func slowWay(conn *rpc.Connection) {
 	start := time.Now()
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 	for i := 40000; i < 60000; i++ {
@@ -51,7 +51,7 @@ func slowWay(conn *rpcClient.Connection) {
 	}
 }
 
-func fastWay(conn *rpcClient.Connection) {
+func fastWay(conn *rpc.Connection) {
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 
 	var TxIds []identifiers.Identifier

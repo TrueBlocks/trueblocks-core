@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -186,12 +186,12 @@ func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
 }
 
 func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
-	conn := rpcClient.TempConnection(chain)
-	if err = conn.IsContractAt(name.Address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
+	conn := rpc.TempConnection(chain)
+	if err = conn.IsContractAt(name.Address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
 		return
 	}
 
-	isContract := !errors.Is(err, rpcClient.ErrNotAContract)
+	isContract := !errors.Is(err, rpc.ErrNotAContract)
 	wasContract := name.IsContract && !isContract
 	modified = cleanCommon(name)
 
@@ -299,7 +299,7 @@ func cleanContract(token *types.SimpleToken, address base.Address, name *types.S
 }
 
 func cleanToken(name *types.SimpleName, token *types.SimpleToken) (modified bool) {
-	if !name.IsErc20 && token.Type.IsErc20() {
+	if !name.IsErc20 && token.TokenType.IsErc20() {
 		name.IsErc20 = true
 		modified = true
 	}
@@ -310,7 +310,7 @@ func cleanToken(name *types.SimpleName, token *types.SimpleToken) (modified bool
 		modified = true
 	}
 
-	if token.Type.IsErc20() && (name.Tags == "" ||
+	if token.TokenType.IsErc20() && (name.Tags == "" ||
 		strings.Contains(name.Tags, "token") ||
 		strings.Contains(name.Tags, "30-contracts") ||
 		strings.Contains(name.Tags, "55-defi") ||
@@ -366,17 +366,17 @@ func cleanToken(name *types.SimpleName, token *types.SimpleToken) (modified bool
 		modified = true
 	}
 
-	if token.Type.IsErc721() && !name.IsErc721 {
+	if token.TokenType.IsErc721() && !name.IsErc721 {
 		name.IsErc721 = true
 		modified = true
 	}
 
-	if !token.Type.IsErc721() && name.IsErc721 {
+	if !token.TokenType.IsErc721() && name.IsErc721 {
 		name.IsErc721 = false
 		modified = true
 	}
 
-	if token.Type.IsErc721() && name.IsErc721 && name.Tags == "" {
+	if token.TokenType.IsErc721() && name.IsErc721 && name.Tags == "" {
 		name.Tags = "50-Tokens:ERC721"
 		modified = true
 	}
