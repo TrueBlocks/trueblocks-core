@@ -37,6 +37,6 @@ TEST[DATE|TIME] Format:  json
     }
   ],
   "errors": [
-    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[] FromBlock:9004225 ToBlock:9004225 Topics:[] raw:\u003cnil\u003e}"
+    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[] FromBlock:0 ToBlock:0 Topics:[] raw:\u003cnil\u003e}"
   ]
 }

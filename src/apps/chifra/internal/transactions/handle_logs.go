@@ -6,6 +6,7 @@ package transactionsPkg
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"sort"
 
@@ -37,6 +38,9 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		logFilter := types.SimpleLogFilter{
 			Emitters: emitters,
 			Topics:   topics,
+		}
+		if opts.Globals.TestMode {
+			errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
 		}
 
 		if txMap, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
@@ -100,69 +104,13 @@ func (opts *TransactionsOptions) HandleLogs() error {
 				if item.BlockNumber != 0 {
 					for _, log := range item.Receipt.Logs {
 						log := log
-						if opts.PassesFilter(logFilter, &log) {
+						if opts.shouldShow(logFilter, &log) {
 							modelChan <- &log
 						}
 					}
 				}
 			}
 		}
-
-		/*
-			for _, ids := range opts.TransactionIds {
-				txIds, err := ids.ResolveTxs(chain)
-				if err != nil {
-					errorChan <- err
-					if errors.Is(err, ethereum.NotFound) {
-						continue
-					}
-					cancel()
-					return
-				}
-
-				// Timestamp is not part of the raw trace data so we need to get it separately
-				// TxIds don't span blocks, so we can use the first one outside the loop to find timestamp
-				for _, id := range txIds {
-					emitters := []base.Address{}
-					for _, e := range opts.Emitter {
-						emitters = append(emitters, base.HexToAddress(e))
-					}
-					topics := []base.Hash{}
-					for _, t := range opts.Topic {
-						topics = append(topics, base.HexToHash(t))
-					}
-					logFilter := types.SimpleLogFilter{
-						FromBlock: uint64(id.BlockNumber),
-						ToBlock:   uint64(id.BlockNumber),
-						Emitters:  emitters,
-						Topics:    topics,
-					}
-
-					if opts.Globals.TestMode {
-						errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
-					}
-
-					logs, err := opts.Conn.GetLogsByFilter(logFilter)
-					if err != nil {
-						errorChan <- err
-						if errors.Is(err, ethereum.NotFound) {
-							continue
-						}
-						cancel()
-						return
-					}
-
-					for _, log := range logs {
-						// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
-						log := log
-						if !opts.shouldShow(&id, &log) {
-							continue
-						}
-						modelChan <- &log
-					}
-				}
-			}
-		*/
 	}
 
 	extra := map[string]interface{}{
@@ -173,49 +121,27 @@ func (opts *TransactionsOptions) HandleLogs() error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *TransactionsOptions) shouldShow(app *types.RawAppearance, log *types.SimpleLog) bool {
-	if log.BlockNumber != uint64(app.BlockNumber) || log.TransactionIndex != uint64(app.TransactionIndex) {
-		return false
-	}
-
-	if len(opts.Emitter) == 0 {
-		return true
-	}
-
-	for _, e := range opts.Emitter {
-		if e == log.Address.Hex() {
-			return true
+func (opts *TransactionsOptions) shouldShow(filter types.SimpleLogFilter, log *types.SimpleLog) bool {
+	foundEmitter := false
+	for _, e := range filter.Emitters {
+		if e == log.Address {
+			foundEmitter = true
+			break
 		}
 	}
-	return false
-}
 
-func (opts *TransactionsOptions) PassesFilter(filter types.SimpleLogFilter, log *types.SimpleLog) bool {
-	if len(filter.Emitters) > 0 {
-		found := false
-		for _, e := range filter.Emitters {
-			if e == log.Address {
-				found = true
+	foundTopic := false
+	for _, t := range filter.Topics {
+		for _, lt := range log.Topics {
+			if t == lt {
+				foundTopic = true
 				break
 			}
 		}
-		if !found {
-			return false
-		}
 	}
-	if len(filter.Topics) > 0 {
-		found := false
-		for _, t := range filter.Topics {
-			for _, lt := range log.Topics {
-				if t == lt {
-					found = true
-					break
-				}
-			}
-		}
-		if !found {
-			return false
-		}
-	}
-	return true
+
+	passesEmitter := len(filter.Emitters) == 0 || foundEmitter
+	passesTopic := len(filter.Topics) == 0 || foundTopic
+
+	return passesEmitter && passesTopic
 }

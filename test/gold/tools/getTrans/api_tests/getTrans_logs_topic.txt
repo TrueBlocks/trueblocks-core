@@ -29,6 +29,6 @@ transactions?transactions=9004225.10&logs&fmt=json&topic=0xddf252ad1be2c89b69c2b
     "chain": "mainnet"
   },
   "errors": [
-    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[] FromBlock:9004225 ToBlock:9004225 Topics:[0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef] raw:<nil>}"
+    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[] FromBlock:0 ToBlock:0 Topics:[0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef] raw:<nil>}"
   ]
 }
