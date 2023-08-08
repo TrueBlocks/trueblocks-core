@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
@@ -15,7 +16,9 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		var bar = logger.NewOverflowBar("", true, 250)
 		procFunc := func(s *types.SimpleAppearance) error {
+			bar.Tick()
 			modelChan <- s
 			return nil
 		}
@@ -41,6 +44,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				}
 			}
 		}
+		bar.Finish(true)
 	}
 
 	extra := map[string]interface{}{

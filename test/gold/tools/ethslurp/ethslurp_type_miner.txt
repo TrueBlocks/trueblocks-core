@@ -4,8 +4,6 @@ TEST[DATE|TIME] Blocks:  [0-1000]
 TEST[DATE|TIME] Types:  [miner]
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] Processing [0x05a56e2d52c817161883f50c441c3228cfe54d9f] --types: [miner] [0-1000]
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=getminedblocks&blocktype=blocks&address=0x05a56e2d52c817161883f50c441c3228cfe54d9f&page=1&offset=100
 {
   "data": [
     {

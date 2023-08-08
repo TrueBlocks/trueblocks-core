@@ -3,7 +3,6 @@ package blocksPkg
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -35,10 +34,10 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 				return
 			}
 
+			showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
+			var bar = logger.NewBar("", showProgress, int64(len(blockNums)))
 			for _, bn := range blockNums {
-				if !opts.Globals.TestMode {
-					logger.Info("Processing block", fmt.Sprintf("%d", bn))
-				}
+				bar.Tick()
 				addrMap := make(index.AddressBooleanMap)
 				ts := opts.Conn.GetBlockTimestamp(bn)
 				if err := opts.ProcessBlockUniqs(chain, procFunc, bn, addrMap, ts); err != nil {
@@ -50,6 +49,7 @@ func (opts *BlocksOptions) HandleUniq() (err error) {
 					return
 				}
 			}
+			bar.Finish(true /* newLine */)
 		}
 	}
 

@@ -3,7 +3,10 @@ package logger
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var perfTiming bool
@@ -34,7 +37,10 @@ func (t Timer) Report(msg string) {
 		Info(msg, "stop", time.Now())
 	}
 
-	nItems := 0
-
-	fmt.Printf("PERF,%s,%dms,%d\n", msg, since.Milliseconds(), nItems)
+	name := os.Getenv("TB_TIMER_NAME")
+	if len(name) > 0 {
+		msg = strings.Replace(msg, "chifra ", "", -1) + "_" + name
+	}
+	// nItems := 0
+	fmt.Printf("PERF,%s,%dms\n", msg, utils.Max(1, since.Milliseconds()))
 }
