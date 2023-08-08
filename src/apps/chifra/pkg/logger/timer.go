@@ -33,5 +33,8 @@ func (t Timer) Report(msg string) {
 		Info(msg, "start", t.start)
 		Info(msg, "stop", time.Now())
 	}
-	fmt.Println("INFO", msg+" timer:", since.Milliseconds(), "ms")
+
+	nItems := 0
+
+	fmt.Printf("PERF,%s,%dms,%d\n", msg, since.Milliseconds(), nItems)
 }
