@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -51,7 +51,7 @@ type ExportOptions struct {
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
-	Conn        *rpcClient.Connection `json:"conn,omitempty"`        // The connection to the RPC server
+	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -195,9 +195,9 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
-	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(opts.Emitter)
-	opts.Asset, _ = opts.Conn.GetAddressesFromEns(opts.Asset)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
 	// EXISTING_CODE
 
 	return opts
@@ -223,9 +223,9 @@ func exportFinishParse(args []string) *ExportOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
-	opts.Emitter, _ = opts.Conn.GetAddressesFromEns(opts.Emitter)
-	opts.Asset, _ = opts.Conn.GetAddressesFromEns(opts.Asset)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
@@ -258,8 +258,8 @@ func ResetOptions() {
 func (opts *ExportOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"txs": true,
 		// TODO: Enabled neighbors and statements cache
+		"txs":        true,
 		"neigbors":   true,
 		"statements": true,
 		"traces":     opts.CacheTraces,
@@ -269,11 +269,4 @@ func (opts *ExportOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *ExportOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache1, opts.getCaches()
-}
-
 // EXISTING_CODE

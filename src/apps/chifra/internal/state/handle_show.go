@@ -7,24 +7,18 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *StateOptions) HandleShow() error {
 	chain := opts.Globals.Chain
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	previousBalance := make(map[base.Address]*big.Int, len(opts.Addrs))
-	var filters rpcClient.StateFilters
+	var filters rpc.StateFilters
 	if opts.Changes || opts.NoZero {
-		filters = rpcClient.StateFilters{
+		filters = rpc.StateFilters{
 			Balance: func(address base.Address, balance *big.Int) bool {
 				if opts.Changes {
 					previous := previousBalance[address]
@@ -43,7 +37,7 @@ func (opts *StateOptions) HandleShow() error {
 		}
 	}
 
-	stateFields, outputFields, none := rpcClient.PartsToFields(opts.Parts, opts.Globals.Ether)
+	stateFields, outputFields, none := opts.Conn.GetFieldsFromParts(opts.Parts, opts.Globals.Ether)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {

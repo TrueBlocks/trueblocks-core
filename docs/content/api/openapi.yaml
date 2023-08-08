@@ -963,7 +963,7 @@ paths:
             type: boolean
         - name: flow
           description: >
-            for the uniq option only, export only from or to (including trace from or to)
+            for the --uniq option only, export only from or to (including trace from or to)
           required: false
           style: form
           in: query

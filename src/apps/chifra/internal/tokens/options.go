@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -31,7 +31,7 @@ type TokensOptions struct {
 	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
 	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Connection    `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpc.Connection          `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -93,7 +93,10 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
+		opts.Parts = append(opts.Parts, "all")
+	}
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -129,7 +132,10 @@ func tokensFinishParse(args []string) *TokensOptions {
 			}
 		}
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
+		opts.Parts = append(opts.Parts, "all")
+	}
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -167,19 +173,11 @@ func ResetOptions() {
 func (opts *TokensOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		// TODO: Enabled tokens cache
-		"tokens": false,
+		"tokens": true,
 	}
 	// EXISTING_CODE
 	return
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *TokensOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache1, opts.getCaches()
-}
-
 // EXISTING_CODE

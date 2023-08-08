@@ -1,6 +1,6 @@
 chifra tokens  
 TEST[DATE|TIME] Blocks:  [17000000]
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 Error: You must specify at least two address
 Usage:

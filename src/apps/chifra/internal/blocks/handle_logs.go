@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
@@ -20,13 +19,18 @@ import (
 func (opts *BlocksOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
+	emitters := []base.Address{}
+	for _, e := range opts.Emitter {
+		emitters = append(emitters, base.HexToAddress(e))
 	}
-	opts.Conn = settings.DefaultRpcOptions()
+	topics := []base.Hash{}
+	for _, t := range opts.Topic {
+		topics = append(topics, base.HexToHash(t))
+	}
+	logFilter := types.SimpleLogFilter{
+		Emitters: emitters,
+		Topics:   topics,
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
@@ -42,20 +46,8 @@ func (opts *BlocksOptions) HandleLogs() error {
 			}
 
 			for _, bn := range blockNums {
-				emitters := []base.Address{}
-				for _, e := range opts.Emitter {
-					emitters = append(emitters, base.HexToAddress(e))
-				}
-				topics := []base.Hash{}
-				for _, t := range opts.Topic {
-					topics = append(topics, base.HexToHash(t))
-				}
-				logFilter := types.SimpleLogFilter{
-					FromBlock: bn,
-					ToBlock:   bn,
-					Emitters:  emitters,
-					Topics:    topics,
-				}
+				logFilter.FromBlock = bn
+				logFilter.ToBlock = bn
 
 				if opts.Globals.TestMode {
 					errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
@@ -79,7 +71,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 							errorChan <- err // continue even on error
 						}
 					}
-					if !opts.shouldShow(&log) {
+					if !logFilter.PassesFilter(&log) {
 						continue
 					}
 					modelChan <- &log
@@ -97,17 +89,4 @@ func (opts *BlocksOptions) HandleLogs() error {
 		"articulate": opts.Articulate,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
-}
-
-func (opts *BlocksOptions) shouldShow(log *types.SimpleLog) bool {
-	if len(opts.Emitter) == 0 {
-		return true
-	}
-
-	for _, e := range opts.Emitter {
-		if e == log.Address.Hex() {
-			return true
-		}
-	}
-	return false
 }

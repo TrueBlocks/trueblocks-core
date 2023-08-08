@@ -7,25 +7,18 @@ package tracesPkg
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TracesOptions) HandleShowTraces() error {
+func (opts *TracesOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
@@ -42,12 +35,16 @@ func (opts *TracesOptions) HandleShowTraces() error {
 
 			// Timestamp is not part of the raw trace data so we need to get it separately
 			// TxIds don't span blocks, so we can use the first one outside the loop to find timestamp
-			ts := opts.Conn.GetBlockTimestamp(utils.PointerOf(uint64(txIds[0].BlockNumber)))
+			ts := base.Timestamp(0)
+			if len(txIds) > 0 {
+				ts = opts.Conn.GetBlockTimestamp(uint64(txIds[0].BlockNumber))
+			}
+
 			for _, id := range txIds {
 				// Decide on the concrete type of block.Transactions and set values
 				traces, err := opts.Conn.GetTracesByTransactionID(uint64(id.BlockNumber), uint64(id.TransactionIndex))
 				if err != nil {
-					errorChan <- err
+					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", fmt.Sprintf("%d.%d", id.BlockNumber, id.TransactionIndex), err)
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}
@@ -56,7 +53,6 @@ func (opts *TracesOptions) HandleShowTraces() error {
 				}
 
 				for index := range traces {
-					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					traces[index].Timestamp = ts
 					if opts.Articulate {
 						if err = abiCache.ArticulateTrace(chain, &traces[index]); err != nil {

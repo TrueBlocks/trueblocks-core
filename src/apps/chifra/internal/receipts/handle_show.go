@@ -9,23 +9,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ReceiptsOptions) HandleShowReceipts() error {
+func (opts *ReceiptsOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
@@ -34,7 +26,7 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 			cancel()
 		} else {
 			showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
-			var bar = logger.NewBar("", showProgress, int64(len(txMap)))
+			bar := logger.NewBar("", showProgress, int64(len(txMap)))
 
 			iterCtx, iterCancel := context.WithCancel(context.Background())
 			defer iterCancel()

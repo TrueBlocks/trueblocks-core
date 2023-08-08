@@ -10,20 +10,12 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleCounts() error {
 	chain := opts.Globals.Chain
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -56,7 +48,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Uncles {
-					if blockCount.UnclesCnt, err = opts.Conn.GetCountUnclesInBlock(bn); err != nil {
+					if blockCount.UnclesCnt, err = opts.Conn.GetUnclesCountInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -67,7 +59,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Traces {
-					if blockCount.TracesCnt, err = opts.Conn.GetCountTracesInBlock(bn); err != nil {
+					if blockCount.TracesCnt, err = opts.Conn.GetTracesCountInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -78,7 +70,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = opts.Conn.GetCountLogsInBlock(bn); err != nil {
+					if blockCount.LogsCnt, err = opts.Conn.GetLogsCountInBlock(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -95,7 +87,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					}
 
 					addrMap := make(index.AddressBooleanMap)
-					ts := opts.Conn.GetBlockTimestamp(&bn)
+					ts := opts.Conn.GetBlockTimestamp(bn)
 					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {

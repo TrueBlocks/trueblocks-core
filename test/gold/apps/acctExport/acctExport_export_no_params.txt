@@ -1,5 +1,5 @@
 chifra export  
-TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: Please specify at least one valid Ethereum address.
 Usage:

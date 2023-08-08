@@ -3,7 +3,7 @@ TEST[DATE|TIME] Blocks:  [1001005 1001100 1010101]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 ----
 Results in ./output_test_file

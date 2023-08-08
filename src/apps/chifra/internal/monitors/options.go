@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -30,7 +30,7 @@ type MonitorsOptions struct {
 	Watch    bool                  `json:"watch,omitempty"`    // Continually scan for new blocks and extract data for monitored addresses
 	Sleep    float64               `json:"sleep,omitempty"`    // Seconds to sleep between monitor passes
 	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Connection `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpc.Connection       `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -93,7 +93,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	// EXISTING_CODE
 
 	return opts
@@ -106,7 +106,7 @@ func monitorsFinishParse(args []string) *MonitorsOptions {
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(args)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

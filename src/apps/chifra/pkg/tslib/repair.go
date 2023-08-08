@@ -11,7 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 // Repair repairs a single timestamp
@@ -48,7 +48,7 @@ func Repair(chain string, bn uint64) error {
 			pos := (recordSize * int64(bn))
 			_, _ = fp.Seek(pos, io.SeekStart)
 
-			conn := rpcClient.TempConnection(chain)
+			conn := rpc.TempConnection(chain)
 			block, _ := conn.GetBlockHeaderByNumber(bn)
 			record := TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 			err = binary.Write(fp, binary.LittleEndian, &record)

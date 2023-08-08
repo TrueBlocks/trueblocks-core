@@ -39,7 +39,7 @@ transactions?transactions=0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e
       "nonce": 215,
       "receipt": {
         "contractAddress": "0x0",
-        "effectiveGasPrice": 0,
+        "effectiveGasPrice": 45826195333,
         "gasUsed": 388323,
         "logs": [
           {

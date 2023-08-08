@@ -5,21 +5,12 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *TracesOptions) HandleFilter() error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
-
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
-	}
-	opts.Conn = settings.DefaultRpcOptions()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
@@ -34,7 +25,7 @@ func (opts *TracesOptions) HandleFilter() error {
 		}
 
 		for index := range traces {
-			traces[index].Timestamp = opts.Conn.GetBlockTimestamp(utils.PointerOf(uint64(traces[index].BlockNumber)))
+			traces[index].Timestamp = opts.Conn.GetBlockTimestamp(uint64(traces[index].BlockNumber))
 			if opts.Articulate {
 				if err = abiCache.ArticulateTrace(chain, &traces[index]); err != nil {
 					errorChan <- err // continue even with an error

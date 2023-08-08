@@ -2,10 +2,8 @@ chifra slurp  0x00a3819199113fc6a6e6ba1298afde7377e2009b --types nfts 0-8500000 
 TEST[DATE|TIME] Addrs:  [0x00a3819199113fc6a6e6ba1298afde7377e2009b]
 TEST[DATE|TIME] Blocks:  [0-8500000]
 TEST[DATE|TIME] Types:  [nfts]
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] Processing [0x00a3819199113fc6a6e6ba1298afde7377e2009b] --types: [nfts] [0-8500000]
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=tokennfttx&address=0x00a3819199113fc6a6e6ba1298afde7377e2009b&page=1&offset=100
 {
   "data": [
     {

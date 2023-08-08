@@ -1,8 +1,9 @@
 chifra blocks  1152642 --cache --uniq
 TEST[DATE|TIME] Blocks:  [1152642]
 TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Enabled:  blocks
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
 address	blockNumber	transactionIndex	traceIndex	reason
 0x2a65aca4d5fc5b5c859090a6c34d164135398226	1152642	99999		miner

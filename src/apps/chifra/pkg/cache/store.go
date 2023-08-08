@@ -72,21 +72,8 @@ func (s *Store) resolvePath(value Locator) (resolved string, err error) {
 	return
 }
 
-// WriteOptions passes additional context to Write
-type WriteOptions struct {
-	// Pending indicates that the resource can change over time
-	Pending bool
-}
-
-// ShouldProceed can cancel writing the data if it returns false
-func (w *WriteOptions) ShouldProceed() bool {
-	if w == nil {
-		return true
-	}
-
-	// Currently we only store immutable data
-	return !w.Pending
-}
+// WriteOptions passes additional context to Write if needed
+type WriteOptions interface{}
 
 // Write saves value to a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
@@ -95,11 +82,6 @@ func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
 	if s.readOnly {
 		err = ErrReadOnly
 		printErr("write", err)
-		return
-	}
-	if !options.ShouldProceed() {
-		err = ErrCanceled
-		printErr("write ShouldProceed", err)
 		return
 	}
 

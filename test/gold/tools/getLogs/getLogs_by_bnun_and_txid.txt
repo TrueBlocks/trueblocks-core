@@ -1,6 +1,6 @@
 chifra logs  4000000.5 --fmt json
 TEST[DATE|TIME] Transactions:  [4000000.5]
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

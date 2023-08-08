@@ -58,7 +58,9 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	if opts.Call != "" {
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else if opts.Call != "" {
 		err = opts.HandleCall()
 	} else {
 		err = opts.HandleShow()

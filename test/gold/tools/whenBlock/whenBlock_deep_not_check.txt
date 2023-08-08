@@ -2,7 +2,7 @@ chifra when  1301000 --timestamps --deep
 TEST[DATE|TIME] Blocks:  [1301000]
 TEST[DATE|TIME] Timestamps:  true
 TEST[DATE|TIME] Deep:  true
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 Error: The --deep option is only available with the --timestamps --check option.
 Usage:

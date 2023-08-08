@@ -1,7 +1,7 @@
 chifra transactions  11476466.96 --articulate --fmt json
 TEST[DATE|TIME] Transactions:  [11476466.96]
 TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Caps:  cache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

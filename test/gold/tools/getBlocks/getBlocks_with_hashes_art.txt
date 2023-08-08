@@ -2,7 +2,7 @@ chifra blocks  4012000-4012001 --hashes --articulate
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Hashes:  true
 TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 Error: The --articulate option is available only with the --logs option.
 Usage:
@@ -16,7 +16,7 @@ Flags:
   -c, --uncles            display uncle blocks (if any) instead of the requested block
   -t, --traces            export the traces from the block as opposed to the block data
   -u, --uniq              display a list of uniq address appearances per transaction
-  -f, --flow string       for the uniq option only, export only from or to (including trace from or to)
+  -f, --flow string       for the --uniq option only, export only from or to (including trace from or to)
                           One of [ from | to | reward ]
   -l, --logs              display only the logs found in the block(s)
   -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es)

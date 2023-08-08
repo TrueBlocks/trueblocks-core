@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [9004225.10]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0xbbbbca6a901c926f240b89eacb641d8aec7aeafd]
 TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
-TEST[DATE|TIME] Caps:  cache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -25,6 +25,6 @@ TEST[DATE|TIME] Format:  json
     }
   ],
   "errors": [
-    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[0xbbbbca6a901c926f240b89eacb641d8aec7aeafd] FromBlock:9004225 ToBlock:9004225 Topics:[0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef] raw:\u003cnil\u003e}"
+    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[0xbbbbca6a901c926f240b89eacb641d8aec7aeafd] FromBlock:0 ToBlock:0 Topics:[0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef] raw:\u003cnil\u003e}"
   ]
 }

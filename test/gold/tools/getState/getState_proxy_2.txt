@@ -2,7 +2,7 @@ chifra state  --parts all 0x7cfb89D6DF1b89A678Dcaf42B9c262593e881E22 --fmt json 
 TEST[DATE|TIME] Addrs:  [0x7cfb89d6df1b89a678dcaf42b9c262593e881e22]
 TEST[DATE|TIME] Blocks:  [14000000]
 TEST[DATE|TIME] Parts:  [all]
-TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

@@ -10,7 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -150,7 +150,7 @@ func CallContract(chain string, call *ContractCall) (results *types.SimpleCallRe
 		encodedArguments = packedHex[10:]
 	}
 
-	rawReturn, err := rpc.Query[string](chain, "eth_call", rpc.Params{
+	rawReturn, err := query.Query[string](chain, "eth_call", query.Params{
 		map[string]any{
 			"to":   call.Address.Hex(),
 			"data": packedHex,

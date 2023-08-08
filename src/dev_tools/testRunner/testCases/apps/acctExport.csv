@@ -56,12 +56,12 @@ on      ,both ,fast  ,list     ,apps/acctExport ,130_list_fb_lb_fr_mr     ,n    
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on       ,both ,fast  ,list     ,apps/acctExport ,caps_allowed_l         ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
-on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_1_l    ,y    ,addrs = trueblocks.eth & cache
-on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_2_l    ,y    ,addrs = trueblocks.eth & raw
-on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_3_l    ,y    ,addrs = trueblocks.eth & ether
-on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l    ,y    ,addrs = trueblocks.eth & wei
-on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_l    ,y    ,addrs = trueblocks.eth & decache
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_allowed_l           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_1_l      ,y    ,addrs = trueblocks.eth & cache
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_2_l      ,y    ,addrs = trueblocks.eth & raw
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_3_l      ,y    ,addrs = trueblocks.eth & ether
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l      ,y    ,addrs = trueblocks.eth & wei
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_l      ,y    ,addrs = trueblocks.eth & decache
 
 # Not tested for chifra list
 # chifra list --silent
@@ -101,12 +101,12 @@ on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on       ,both ,fast  ,monitors ,apps/acctExport ,caps_allowed_m         ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
-on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_1_m    ,y    ,addrs = trueblocks.eth & cache
-on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_2_m    ,y    ,addrs = trueblocks.eth & raw
-on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_3_m    ,y    ,addrs = trueblocks.eth & ether
-on       ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_4_m    ,y    ,addrs = trueblocks.eth & wei
-on       ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_m    ,y    ,addrs = trueblocks.eth & decache
+on      ,both ,fast  ,monitors ,apps/acctExport ,caps_allowed_m           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_1_m      ,y    ,addrs = trueblocks.eth & cache
+on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_2_m      ,y    ,addrs = trueblocks.eth & raw
+on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_3_m      ,y    ,addrs = trueblocks.eth & ether
+on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_4_m      ,y    ,addrs = trueblocks.eth & wei
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_m      ,y    ,addrs = trueblocks.eth & decache
 
 # Not tested for chifra monitors...
 # chifra monitors --watch
@@ -275,6 +275,19 @@ on      ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    
 # correctly reports an error, but should report a not found error instead, it reports a not an integer error. first_block/last_block should accept hashes
 delay   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 
+delay   ,both ,fast  ,export   ,apps/acctExport ,cache_and_decache        ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache & decache
+delay   ,both ,fast  ,export   ,apps/acctExport ,cache_one                ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache
+delay   ,both ,fast  ,export   ,apps/acctExport ,decache_one              ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & decache
+delay   ,both ,fast  ,export   ,apps/acctExport ,cache_traces             ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache & cache_traces
+delay   ,both ,fast  ,export   ,apps/acctExport ,decache_traces           ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & decache
+delay   ,both ,fast  ,export   ,apps/acctExport ,cache_neighbors          ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & neighbors & cache & cache_traces
+delay   ,both ,fast  ,export   ,apps/acctExport ,decache_neighbors        ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & neighbors & decache
+delay   ,both ,fast  ,export   ,apps/acctExport ,cache_accounting         ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & accounting & cache & cache_traces
+delay   ,both ,fast  ,export   ,apps/acctExport ,decache_accounting       ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & accounting & decache
+
+# This fail because it doesn't report an error in API mode but it does in cmd line mode
+local   ,both ,fast  ,export   ,apps/acctExport ,bug_no_api_error_msg     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 41740.0 & decache
+
 # Not tested for chifra export
 # chifra export --cache
 # chifra export --cache_traces
@@ -282,5 +295,6 @@ delay   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on       ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e         ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & wei & fail_on_purpose
-on       ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_1_e    ,y    ,addrs = trueblocks.eth & raw
+on      ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & wei & fail_on_purpose
+on      ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_1_e      ,y    ,addrs = trueblocks.eth & raw
+

@@ -1,6 +1,6 @@
 chifra when  --verbose
 TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 Error: Please supply one or more block identifiers or one or more dates.
 Usage:

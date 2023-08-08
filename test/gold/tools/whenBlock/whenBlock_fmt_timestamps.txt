@@ -1,6 +1,6 @@
 chifra when  --timestamps
 TEST[DATE|TIME] Timestamps:  true
-TEST[DATE|TIME] Caps:  cache
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 Error: --timestamp option not tested in testMode
 Usage:

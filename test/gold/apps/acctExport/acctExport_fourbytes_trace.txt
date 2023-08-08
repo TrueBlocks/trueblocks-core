@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Fourbytes:  [0xa9059cbb]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] MaxRecords:  10
-TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

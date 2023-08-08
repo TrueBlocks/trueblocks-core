@@ -7,7 +7,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/spf13/cobra"
 )
 
@@ -105,9 +105,9 @@ func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions)
 	if enabledForCmds[cmdName] && opts.Format == "json" && !ok {
 		jw := output.NewDefaultJsonWriter(w, false)
 		jw.ShouldWriteMeta = true
-		jw.GetMeta = func() (*rpcClient.MetaData, error) {
+		jw.GetMeta = func() (*rpc.MetaData, error) {
 			chain := opts.Chain
-			conn := rpcClient.TempConnection(chain)
+			conn := rpc.TempConnection(chain)
 			return conn.GetMetaData(opts.OutputOptions.TestMode)
 		}
 		opts.Writer = jw

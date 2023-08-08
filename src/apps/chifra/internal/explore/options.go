@@ -15,7 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -25,7 +25,7 @@ type ExploreOptions struct {
 	Local   bool                  `json:"local,omitempty"`   // Open the local TrueBlocks explorer
 	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
-	Conn    *rpcClient.Connection `json:"conn,omitempty"`    // The connection to the RPC server
+	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -72,7 +72,7 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Terms, _ = opts.Conn.GetAddressesFromEns(opts.Terms)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -85,7 +85,7 @@ func exploreFinishParse(args []string) *ExploreOptions {
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Terms, _ = opts.Conn.GetAddressesFromEns(args)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(args)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

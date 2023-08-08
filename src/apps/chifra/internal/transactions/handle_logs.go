@@ -8,76 +8,107 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *TransactionsOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	testMode := opts.Globals.TestMode
+	nErrors := 0
 
-	// TODO: Why does this have to dirty the caller?
-	settings := rpcClient.ConnectionSettings{
-		Chain: chain,
-		Opts:  opts,
+	emitters := []base.Address{}
+	for _, e := range opts.Emitter {
+		emitters = append(emitters, base.HexToAddress(e))
 	}
-	opts.Conn = settings.DefaultRpcOptions()
+	topics := []base.Hash{}
+	for _, t := range opts.Topic {
+		topics = append(topics, base.HexToHash(t))
+	}
+	logFilter := types.SimpleLogFilter{
+		Emitters: emitters,
+		Topics:   topics,
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		for _, ids := range opts.TransactionIds {
-			txIds, err := ids.ResolveTxs(chain)
-			if err != nil {
-				errorChan <- err
-				if errors.Is(err, ethereum.NotFound) {
-					continue
+		if opts.Globals.TestMode {
+			errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
+		}
+
+		if txMap, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+			errorChan <- err
+			cancel()
+		} else {
+			showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
+			bar := logger.NewBar("", showProgress, int64(len(txMap)))
+
+			iterCtx, iterCancel := context.WithCancel(context.Background())
+			defer iterCancel()
+
+			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+				a := &types.RawAppearance{
+					BlockNumber:      uint32(app.BlockNumber),
+					TransactionIndex: uint32(app.TransactionIndex),
 				}
-				cancel()
-				return
+				if tx, err := opts.Conn.GetTransactionByAppearance(a, opts.Traces /* needsTraces */); err != nil {
+					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+				} else if tx == nil {
+					return fmt.Errorf("transaction at %s has no logs", app.String())
+				} else {
+					if opts.Articulate && tx.ArticulatedTx == nil {
+						if err = abiCache.ArticulateTx(chain, tx); err != nil {
+							errorChan <- err // continue even with an error
+						}
+					}
+					*value = *tx
+					bar.Tick()
+					return nil
+				}
 			}
 
-			// Timestamp is not part of the raw trace data so we need to get it separately
-			// TxIds don't span blocks, so we can use the first one outside the loop to find timestamp
-			for _, id := range txIds {
-				emitters := []base.Address{}
-				for _, e := range opts.Emitter {
-					emitters = append(emitters, base.HexToAddress(e))
-				}
-				topics := []base.Hash{}
-				for _, t := range opts.Topic {
-					topics = append(topics, base.HexToHash(t))
-				}
-				logFilter := types.SimpleLogFilter{
-					FromBlock: uint64(id.BlockNumber),
-					ToBlock:   uint64(id.BlockNumber),
-					Emitters:  emitters,
-					Topics:    topics,
-				}
-
-				if opts.Globals.TestMode {
-					errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
-				}
-
-				logs, err := opts.Conn.GetLogsByFilter(logFilter)
-				if err != nil {
+			iterErrorChan := make(chan error)
+			go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+			for err := range iterErrorChan {
+				// TODO: I don't really want to quit looping here. Just report the error and keep going.
+				iterCancel()
+				if !testMode || nErrors == 0 {
 					errorChan <- err
-					if errors.Is(err, ethereum.NotFound) {
-						continue
-					}
-					cancel()
-					return
+					// Reporting more than one error causes tests to fail because they
+					// appear concurrently so sort differently
+					nErrors++
 				}
+			}
+			bar.Finish(true)
 
-				for _, log := range logs {
-					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
-					log := log
-					if !opts.shouldShow(&id, &log) {
-						continue
+			items := make([]types.SimpleTransaction, 0, len(txMap))
+			for _, tx := range txMap {
+				items = append(items, *tx)
+			}
+			sort.Slice(items, func(i, j int) bool {
+				if items[i].BlockNumber == items[j].BlockNumber {
+					return items[i].TransactionIndex < items[j].TransactionIndex
+				}
+				return items[i].BlockNumber < items[j].BlockNumber
+			})
+
+			for _, item := range items {
+				item := item
+				if item.BlockNumber != 0 {
+					for _, log := range item.Receipt.Logs {
+						log := log
+						if logFilter.PassesFilter(&log) {
+							modelChan <- &log
+						}
 					}
-					modelChan <- &log
 				}
 			}
 		}
@@ -89,21 +120,4 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		"addresses": opts.Uniq,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
-}
-
-func (opts *TransactionsOptions) shouldShow(app *types.RawAppearance, log *types.SimpleLog) bool {
-	if log.BlockNumber != uint64(app.BlockNumber) || log.TransactionIndex != uint64(app.TransactionIndex) {
-		return false
-	}
-
-	if len(opts.Emitter) == 0 {
-		return true
-	}
-
-	for _, e := range opts.Emitter {
-		if e == log.Address.Hex() {
-			return true
-		}
-	}
-	return false
 }

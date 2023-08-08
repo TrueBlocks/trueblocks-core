@@ -1,5 +1,5 @@
 chifra transactions  
-TEST[DATE|TIME] Caps:  cache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt
 Error: Please supply one or more transaction identifiers.
 Usage:

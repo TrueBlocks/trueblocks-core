@@ -67,23 +67,3 @@ func TestStoreWrite(t *testing.T) {
 		t.Fatal("wrong value:", result.Value)
 	}
 }
-
-func TestStoreWriteCancelPending(t *testing.T) {
-	value := &testStoreData{
-		Id:    "1",
-		Value: "trueblocks",
-	}
-	opts := &StoreOptions{
-		Location: MemoryCache,
-	}
-	cacheStore, err := NewStore(opts)
-	if err != nil {
-		panic(err)
-	}
-
-	// Write
-	err = cacheStore.Write(value, &WriteOptions{Pending: true})
-	if err != ErrCanceled {
-		t.Fatal("expected ErrCanceled, but got", err)
-	}
-}

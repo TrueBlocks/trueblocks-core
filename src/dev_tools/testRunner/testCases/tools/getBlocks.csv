@@ -111,8 +111,16 @@ on       ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,fil
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blocks = 1001001-1001005 & fmt = csv & output = output_test_file
 on       ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append
 
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_and_decache     ,y    ,blocks = 12 & cache & decache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_one             ,y    ,blocks = 12 & cache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,decache_one           ,y    ,blocks = 12 & decache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_txs             ,y    ,blocks = 12 & cache & cache_txs
+on       ,both ,fast  ,blocks ,tools/getBlocks ,decache_txs           ,y    ,blocks = 12 & decache
+on       ,both ,fast  ,blocks ,tools/getBlocks ,cache_traces          ,y    ,blocks = 12 & cache & cache_txs & cache_traces
+on       ,both ,fast  ,blocks ,tools/getBlocks ,decache_traces        ,y    ,blocks = 12 & decache
+
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed           ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1      ,y    ,blocks = 3000000 & ether
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_2      ,y    ,blocks = 3000000 & wei
+on       ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed          ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
+on       ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1     ,y    ,blocks = 3000000 & ether
+on       ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_2     ,y    ,blocks = 3000000 & wei

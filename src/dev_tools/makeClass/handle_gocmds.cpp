@@ -135,7 +135,7 @@ bool COptions::handle_gocmds_docfile(const CCommandOption& p) {
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
     string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/options.go");
     establishFolder(fn);
-    bool hasRpc = contains(asciiFileToString(fn), "rpcClient.");
+    bool hasRpc = contains(asciiFileToString(fn), "rpc.");
 
     string_q source = asciiFileToString(getPathToTemplates("blank_options.go.tmpl"));
     if (isFullyPorted(p.api_route)) {
@@ -532,7 +532,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     }
 
     ONE(os, "Globals", varWidth, "globals.GlobalOptions", typeWidth, "the global options");
-    ONE(os, "Conn", varWidth, "*rpcClient.Connection", typeWidth, "the connection to the RPC server");
+    ONE(os, "Conn", varWidth, "*rpc.Connection", typeWidth, "the connection to the RPC server");
     ONE(os, "BadFlag", varWidth, "error", typeWidth, "an error flag if needed");
 
     return os.str();
@@ -680,7 +680,7 @@ string_q clean_go_positionals(const string_q& in, bool hasRpc) {
     if (!contains(ret, "identifiers."))
         replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers\"\n", "");
     if (!hasRpc)
-        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient\"\n", "");
+        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc\"\n", "");
     return ret;
 }
 

@@ -5,7 +5,7 @@ TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] LastBlock:  8860511
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  accounting_tokens_1_out.file
-TEST[DATE|TIME] Caps:  cache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] 000000000-00002:          0          0      202249

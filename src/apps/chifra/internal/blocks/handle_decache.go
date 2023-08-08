@@ -5,73 +5,35 @@
 package blocksPkg
 
 import (
-	"strings"
+	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *BlocksOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
-	opts.Conn = rpcClient.NewReadOnlyConnection(chain)
+	opts.Conn = rpc.NewReadOnlyConnection(chain)
 
-	toRemove := make([]cache.Locator, 0)
-	for _, br := range opts.BlockIds {
-		blockNums, err := br.ResolveBlocks(chain)
-		if err != nil {
-			return err
-		}
-		for _, bn := range blockNums {
-			rawBlock, err := opts.Conn.GetBlockBodyByNumber(bn)
-			if err != nil {
-				return err
+	itemsToRemove, err := decache.BlockLocationsFromIds(opts.Conn, opts.BlockIds)
+	if err != nil {
+		return err
+	}
+
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, opts.Globals.TestMode, opts.Globals.Verbose); err != nil {
+			errorChan <- err
+		} else {
+			s := types.SimpleMessage{
+				Msg: msg,
 			}
-			toRemove = append(toRemove, &types.SimpleBlock[string]{
-				BlockNumber: bn,
-			})
-			for _, tx := range rawBlock.Transactions {
-				txToRemove := &types.SimpleTransaction{
-					BlockNumber:      bn,
-					TransactionIndex: tx.TransactionIndex,
-				}
-				toRemove = append(toRemove, txToRemove)
-				toRemove = append(toRemove, &types.SimpleTraceGroup{
-					BlockNumber:      tx.BlockNumber,
-					TransactionIndex: int(tx.TransactionIndex),
-				})
-			}
+			modelChan <- &s
 		}
 	}
 
-	testMode := opts.Globals.TestMode
-	itemsSeen := int64(0)
-	itemsRemoved := int64(0)
-	bytesRemoved := 0
-	processorFunc := func(info *locations.ItemInfo) bool {
-		itemsSeen++
-		itemsRemoved++
-		bytesRemoved += info.Size()
-		logger.Progress(!testMode && itemsRemoved%20 == 0, "Removed", itemsRemoved, "items and", bytesRemoved, "bytes.", info.Name())
-		if opts.Globals.Verbose {
-			logger.Info(info.Name(), "was removed.")
-		}
-
-		return true
-	}
-
-	_ = opts.Conn.Store.Decache(toRemove, processorFunc)
-
-	if itemsSeen == 0 {
-		logger.Info("No items matching the query were found in the cache.", strings.Repeat(" ", 60))
-	} else {
-		logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.", strings.Repeat(" ", 60))
-	}
-
-	return nil
+	opts.Globals.NoHeader = true
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
-
-// TODO: We could use a Modeler that only delivers a message (i.e. SimpleModeler). Use it here and
-// TODO: in monitors --decache to report some data in case the standard error is redirected.

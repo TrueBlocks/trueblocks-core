@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -35,7 +35,7 @@ type TransactionsOptions struct {
 	CacheTraces    bool                     `json:"cacheTraces,omitempty"`    // Force the transaction's traces into the cache
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
-	Conn           *rpcClient.Connection    `json:"conn,omitempty"`           // The connection to the RPC server
+	Conn           *rpc.Connection          `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -112,7 +112,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(opts.AccountFor)
+	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
 	// EXISTING_CODE
 
 	return opts
@@ -126,7 +126,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.AccountFor, _ = opts.Conn.GetAddressFromEns(opts.AccountFor)
+	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
@@ -168,11 +168,4 @@ func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *TransactionsOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache1, opts.getCaches()
-}
-
 // EXISTING_CODE

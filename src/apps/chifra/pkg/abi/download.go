@@ -6,12 +6,19 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
+
+var perfTiming bool
+
+func init() {
+	perfTiming = os.Getenv("TB_TIMER_ON") == "true"
+}
 
 var AbiNotFound = `[{"name":"AbiNotFound","type":"function"}]`
 
@@ -58,7 +65,9 @@ func DownloadAbi(chain string, address base.Address, destination *FunctionSyncMa
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
-		logger.Warn("provider responded with:", address.Hex(), data["message"])
+		if !perfTiming {
+			logger.Warn("provider responded with:", address.Hex(), data["message"])
+		}
 
 		reader := strings.NewReader(AbiNotFound)
 		_ = fromJson(reader, destination)

@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -814,10 +814,10 @@ func LoadAbi(chain string, address base.Address, destination *FunctionSyncMap) (
 	}
 
 	// We didn't find the file. Check if the address is a contract
-	conn := rpcClient.TempConnection(chain)
-	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpcClient.ErrNotAContract) {
+	conn := rpc.TempConnection(chain)
+	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
 		return err
-	} else if errors.Is(err, rpcClient.ErrNotAContract) {
+	} else if errors.Is(err, rpc.ErrNotAContract) {
 		return nil
 	}
 

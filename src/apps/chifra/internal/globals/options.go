@@ -14,22 +14,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
 
 type GlobalOptions struct {
-	Wei      bool            `json:"wei,omitempty"`
-	Ether    bool            `json:"ether,omitempty"`
-	Help     bool            `json:"help,omitempty"`
-	File     string          `json:"file,omitempty"`
-	Version  bool            `json:"version,omitempty"`
-	Noop     bool            `json:"noop,omitempty"`
-	NoColor  bool            `json:"noColor,omitempty"`
-	Cache1   bool            `json:"cache,omitempty"`
-	Decache1 bool            `json:"decache,omitempty"`
-	Caps     caps.Capability `json:"-"`
+	Wei     bool            `json:"wei,omitempty"`
+	Ether   bool            `json:"ether,omitempty"`
+	Help    bool            `json:"help,omitempty"`
+	File    string          `json:"file,omitempty"`
+	Version bool            `json:"version,omitempty"`
+	Noop    bool            `json:"noop,omitempty"`
+	NoColor bool            `json:"noColor,omitempty"`
+	Cache   bool            `json:"cache,omitempty"`
+	Decache bool            `json:"decache,omitempty"`
+	Caps    caps.Capability `json:"-"`
 	output.OutputOptions
 }
 
@@ -47,8 +47,8 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.NoColor, "NoColor: ", opts.NoColor)
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
-	logger.TestLog(opts.Cache1, "Cache: ", opts.Cache1)
-	logger.TestLog(opts.Decache1, "Decache: ", opts.Decache1)
+	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
 	logger.TestLog(opts.Caps != caps.Default, "Caps: ", opts.Caps.Show())
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
@@ -83,8 +83,8 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	}
 
 	if opts.Caps.Has(caps.Caching) {
-		cmd.Flags().BoolVarP(&opts.Cache1, "cache", "o", false, "force the results of the query into the cache")
-		cmd.Flags().BoolVarP(&opts.Decache1, "decache", "D", false, "removes related items from the cache")
+		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
+		cmd.Flags().BoolVarP(&opts.Decache, "decache", "D", false, "removes related items from the cache")
 	}
 
 	if opts.Caps.Has(caps.Fmt) {
@@ -175,38 +175,42 @@ func (opts *GlobalOptions) toCmdLine() string {
 	return options
 }
 
-func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpcClient.Connection {
+func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpc.Connection {
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
 	opts.Writer = w
 
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "fmt":
-			opts.Format = value[0]
-		case "verbose":
-			opts.Verbose = true
-		case "raw":
-			opts.ShowRaw = true
-		case "version":
-			opts.Version = true
-		case "noop":
-			// do nothing
-		case "nocolor":
-			opts.NoColor = true
-		case "noHeader":
-			opts.NoHeader = true
+		case "append":
+			opts.Append = true
+		case "cache":
+			opts.Cache = true
 		case "chain":
 			opts.Chain = value[0]
-		case "wei":
-			opts.Wei = true
+		case "decache":
+			opts.Decache = true
 		case "ether":
 			opts.Ether = true
 		case "file":
 			opts.File = value[0]
+		case "fmt":
+			opts.Format = value[0]
+		case "nocolor":
+			opts.NoColor = true
+		case "noHeader":
+			opts.NoHeader = true
+		case "noop":
+			// do nothing
 		case "output":
 			opts.OutputFn = value[0]
-		case "append":
-			opts.Append = true
+		case "raw":
+			opts.ShowRaw = true
+		case "verbose":
+			opts.Verbose = true
+		case "version":
+			opts.Version = true
+		case "wei":
+			opts.Wei = true
 		}
 	}
 
@@ -231,10 +235,10 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return rpcClient.NewConnection(opts.Chain, opts.Cache1, caches)
+	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }
 
-func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpcClient.Connection {
+func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpc.Connection {
 	if (len(opts.Format) == 0 || opts.Format == "none") && len(opts.OutputFn) > 0 {
 		parts := strings.Split(opts.OutputFn, ".")
 		if len(parts) > 0 {
@@ -253,5 +257,5 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return rpcClient.NewConnection(opts.Chain, opts.Cache1, caches)
+	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }

@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -32,7 +32,7 @@ type StateOptions struct {
 	Call     string                   `json:"call,omitempty"`     // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
 	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
 	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
-	Conn     *rpcClient.Connection    `json:"conn,omitempty"`     // The connection to the RPC server
+	Conn     *rpc.Connection          `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -102,8 +102,8 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		unquoted := strings.Trim(opts.Call, "'")
 		opts.Call = unquoted
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetAddressFromEns(opts.ProxyFor)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -134,14 +134,14 @@ func stateFinishParse(args []string) *StateOptions {
 		}
 		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetAddressesFromEns(opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetAddressFromEns(opts.ProxyFor)
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
 	parts := strings.Split(opts.Call, "!")
 	if len(parts) > 0 {
-		val, _ := opts.Conn.GetAddressFromEns(parts[0])
+		val, _ := opts.Conn.GetEnsAddress(parts[0])
 		opts.Call = strings.Replace(opts.Call, parts[0], val, -1)
 	}
 	if len(opts.Blocks) == 0 {
@@ -183,7 +183,6 @@ func ResetOptions() {
 func (opts *StateOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		// TODO: Enabled state cache
 		"state": true,
 	}
 	// EXISTING_CODE
@@ -191,11 +190,5 @@ func (opts *StateOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-//
-
-// CacheState returns booleans indicating which caches to enable
-func (opts *StateOptions) CacheState() (bool, map[string]bool) {
-	return opts.Globals.Cache1, opts.getCaches()
-}
-
+// PATH: recons/0549/93ab/0f2b1acc0fdc65405ee203b4271bebe6/010277776.00094.bin
 // EXISTING_CODE

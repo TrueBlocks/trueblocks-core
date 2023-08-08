@@ -60,7 +60,7 @@ func (c Capability) Remove(cap Capability) Capability {
 func (c Capability) Text() string {
 	switch c {
 	case Caching:
-		return "cache"
+		return "cache,decache"
 	case Fmt:
 		return "fmt"
 	case Raw:
@@ -99,7 +99,7 @@ func (c Capability) HasKey(key string) bool {
 		return true
 	}
 
-	if key == "decache" {
+	if key == "cache" || key == "decache" {
 		return c.Has(Caching)
 	}
 
