@@ -1,8 +1,9 @@
 chifra blocks  4012000-4012001 --cache --uncles
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Uncles:  true
+TEST[DATE|TIME] Enabled:  blocks
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

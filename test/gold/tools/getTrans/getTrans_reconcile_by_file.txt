@@ -5,7 +5,7 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] File:  cmd_file_3
 TEST[DATE|TIME] OutputFn:  output_test_file2
 TEST[DATE|TIME] Append:  true
-TEST[DATE|TIME] Caps:  cache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 Error: The --account_for option requires a license key. Please contact us in our discord.
 Usage:
