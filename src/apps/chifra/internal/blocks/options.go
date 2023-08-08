@@ -28,7 +28,7 @@ type BlocksOptions struct {
 	Uncles      bool                     `json:"uncles,omitempty"`      // Display uncle blocks (if any) instead of the requested block
 	Traces      bool                     `json:"traces,omitempty"`      // Export the traces from the block as opposed to the block data
 	Uniq        bool                     `json:"uniq,omitempty"`        // Display a list of uniq address appearances per transaction
-	Flow        string                   `json:"flow,omitempty"`        // For the uniq option only, export only from or to (including trace from or to)
+	Flow        string                   `json:"flow,omitempty"`        // For the --uniq option only, export only from or to (including trace from or to)
 	Logs        bool                     `json:"logs,omitempty"`        // Display only the logs found in the block(s)
 	Emitter     []string                 `json:"emitter,omitempty"`     // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic       []string                 `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)

@@ -80,7 +80,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		err = opts.HandleUniq()
 
 	} else {
-		err = opts.HandleShowBlocks()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

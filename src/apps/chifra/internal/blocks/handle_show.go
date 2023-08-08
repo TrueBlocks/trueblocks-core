@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *BlocksOptions) HandleShowBlocks() error {
+func (opts *BlocksOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 
 	ctx, cancel := context.WithCancel(context.Background())
