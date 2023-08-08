@@ -1,0 +1,114 @@
+INFO ================================================================================
+INFO transactions 15000000.* 
+INFO chifra transactions timer: 2868 ms
+INFO chifra transactions timer: 135 ms
+INFO chifra transactions timer: 2868 ms
+INFO chifra transactions timer: 135 ms
+INFO ================================================================================
+INFO transactions 15000000.* --raw
+INFO chifra transactions timer: 2444 ms
+INFO chifra transactions timer: 2661 ms
+INFO chifra transactions timer: 2444 ms
+INFO chifra transactions timer: 2661 ms
+INFO ================================================================================
+INFO transactions 15000000.* --articulate
+INFO chifra transactions timer: 5570 ms
+INFO chifra transactions timer: 136 ms
+INFO chifra transactions timer: 5570 ms
+INFO chifra transactions timer: 136 ms
+INFO ================================================================================
+INFO transactions 15000000.* --uniq
+INFO chifra transactions timer: 45688 ms
+INFO chifra transactions timer: 110 ms
+INFO chifra transactions timer: 45688 ms
+INFO chifra transactions timer: 110 ms
+INFO ================================================================================
+INFO transactions 15000000.* --uniq --flow from
+INFO chifra transactions timer: 44389 ms
+INFO chifra transactions timer: 128 ms
+INFO chifra transactions timer: 44389 ms
+INFO chifra transactions timer: 128 ms
+INFO ================================================================================
+INFO transactions 15000000.* --logs
+INFO chifra transactions timer: 2583 ms
+INFO chifra transactions timer: 111 ms
+INFO chifra transactions timer: 2583 ms
+INFO chifra transactions timer: 111 ms
+INFO ================================================================================
+INFO transactions 15000000.* --logs --topic 0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31
+INFO chifra transactions timer: 2786 ms
+INFO chifra transactions timer: 103 ms
+INFO chifra transactions timer: 2786 ms
+INFO chifra transactions timer: 103 ms
+INFO ================================================================================
+INFO transactions 15000000.* --logs --emitter 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+INFO chifra transactions timer: 3122 ms
+INFO chifra transactions timer: 136 ms
+INFO chifra transactions timer: 3122 ms
+INFO chifra transactions timer: 136 ms
+INFO ================================================================================
+INFO receipts 15000000.* 
+INFO chifra receipts timer: 2381 ms
+INFO chifra receipts timer: 104 ms
+INFO chifra receipts timer: 2381 ms
+INFO chifra receipts timer: 104 ms
+INFO ================================================================================
+INFO receipts 15000000.* --raw
+INFO chifra receipts timer: 2527 ms
+INFO chifra receipts timer: 2583 ms
+INFO chifra receipts timer: 2527 ms
+INFO chifra receipts timer: 2583 ms
+INFO ================================================================================
+INFO receipts 15000000.* --articulate
+INFO chifra receipts timer: 4252 ms
+INFO chifra receipts timer: 71 ms
+INFO chifra receipts timer: 4252 ms
+INFO chifra receipts timer: 71 ms
+INFO ================================================================================
+INFO logs 15000000.* 
+INFO chifra logs timer: 2801 ms
+INFO chifra logs timer: 134 ms
+INFO chifra logs timer: 2801 ms
+INFO chifra logs timer: 134 ms
+INFO ================================================================================
+INFO logs 15000000.* --raw
+INFO chifra logs timer: 2311 ms
+INFO chifra logs timer: 2607 ms
+INFO chifra logs timer: 2311 ms
+INFO chifra logs timer: 2607 ms
+INFO ================================================================================
+INFO logs 15000000.* --articulate
+INFO chifra logs timer: 5065 ms
+INFO chifra logs timer: 121 ms
+INFO chifra logs timer: 5065 ms
+INFO chifra logs timer: 121 ms
+INFO ================================================================================
+INFO blocks 15000000-15000300 --hashes
+INFO chifra blocks timer: 2441 ms
+INFO chifra blocks timer: 66 ms
+INFO chifra blocks timer: 2441 ms
+INFO chifra blocks timer: 66 ms
+INFO ================================================================================
+INFO blocks 2010010 
+INFO chifra blocks timer: 15 ms
+INFO chifra blocks timer: 21 ms
+INFO chifra blocks timer: 15 ms
+INFO chifra blocks timer: 21 ms
+INFO ================================================================================
+INFO blocks 15000000-15000300 --hashes --cache_txs
+INFO chifra blocks timer: 2521 ms
+INFO chifra blocks timer: 64 ms
+INFO chifra blocks timer: 2521 ms
+INFO chifra blocks timer: 64 ms
+INFO ================================================================================
+INFO blocks 2010010 --cache_txs
+INFO chifra blocks timer: 37 ms
+INFO chifra blocks timer: 0 ms
+INFO chifra blocks timer: 37 ms
+INFO chifra blocks timer: 0 ms
+INFO ================================================================================
+INFO when 2000000-3000000:1000 
+INFO chifra when timer: 4204 ms
+INFO chifra when timer: 105 ms
+INFO chifra when timer: 4204 ms
+INFO chifra when timer: 105 ms

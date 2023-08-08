@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+CMD=$1
+shift
+
+IDS=$1
+shift
+
+echo "---> Running $CMD $IDS $@" >&2
+
+export TB_TIMER_ON=true
+echo "INFO ================================================================================"
+echo "INFO $CMD $IDS $@"
+rm -fR ~/Data/trueblocks/v0.70.0/cache/mainnet && \
+   chifra $CMD $IDS $@ --cache --fmt json >one/$CMD && \
+   cat one/$CMD | grep INFO && \
+   chifra $CMD $IDS $@ --fmt json >two/$CMD && \
+   cat two/$CMD | grep INFO && \
+   sleep 1 && \
+   export TB_TIMER_ON=false && \
+   chifra $CMD $IDS --decache  && \
+   diff one/$CMD two/$CMD
+echo "--------------------------------------------------------------------------------"
