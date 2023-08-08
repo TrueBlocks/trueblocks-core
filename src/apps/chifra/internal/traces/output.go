@@ -65,7 +65,7 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 	} else if len(opts.Filter) > 0 {
 		err = opts.HandleFilter()
 	} else {
-		err = opts.HandleShowTraces()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

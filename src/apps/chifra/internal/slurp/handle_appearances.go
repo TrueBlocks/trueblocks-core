@@ -11,7 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *SlurpOptions) HandleShowAppearances() error {
+func (opts *SlurpOptions) HandleAppearances() error {
 	paginator := Paginator{
 		page:    1,
 		perPage: int(opts.PerPage),

@@ -61,7 +61,7 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else {
-		err = opts.HandleShowLogs()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

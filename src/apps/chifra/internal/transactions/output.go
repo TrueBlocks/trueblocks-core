@@ -74,7 +74,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 		err = opts.HandleAccounting()
 
 	} else {
-		err = opts.HandleShowTxs()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

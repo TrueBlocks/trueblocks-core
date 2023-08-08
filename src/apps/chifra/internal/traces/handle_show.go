@@ -16,7 +16,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *TracesOptions) HandleShowTraces() error {
+func (opts *TracesOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 

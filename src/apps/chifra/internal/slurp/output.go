@@ -61,9 +61,9 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Appearances {
-		err = opts.HandleShowAppearances()
+		err = opts.HandleAppearances()
 	} else {
-		err = opts.HandleShowSlurps()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

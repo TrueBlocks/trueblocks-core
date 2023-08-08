@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *TransactionsOptions) HandleShowTxs() (err error) {
+func (opts *TransactionsOptions) HandleShow() (err error) {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode

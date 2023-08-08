@@ -22,7 +22,7 @@ type Paginator struct {
 	perPage int
 }
 
-func (opts *SlurpOptions) HandleShowSlurps() error {
+func (opts *SlurpOptions) HandleShow() error {
 	paginator := Paginator{
 		page:    1,
 		perPage: int(opts.PerPage),

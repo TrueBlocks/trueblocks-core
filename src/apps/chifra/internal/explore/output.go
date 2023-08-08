@@ -17,8 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -62,19 +60,7 @@ func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
 	}
 
 	handled = true
-	if opts.Globals.IsApiMode() {
-		err = validate.Usage("Cannot use explore route in API mode.")
-	} else {
-		for _, url := range urls {
-			ret := url.getUrl(opts)
-			if !opts.Globals.TestMode {
-				logger.Info("Opening", ret)
-				utils.OpenBrowser(ret)
-			} else {
-				logger.Info("Not opening", ret, "in test mode")
-			}
-		}
-	}
+	err = opts.HandleExplore()
 	// EXISTING_CODE
 	timer.Report(msg)
 
