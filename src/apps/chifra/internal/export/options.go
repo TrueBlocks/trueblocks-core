@@ -132,26 +132,11 @@ func (opts *ExportOptions) toCmdLine() string {
 	if opts.MaxRecords != 250 {
 		options += (" --max_records " + fmt.Sprintf("%d", opts.MaxRecords))
 	}
-	if opts.Relevant {
-		options += " --relevant"
-	}
-	for _, emitter := range opts.Emitter {
-		options += " --emitter " + emitter
-	}
-	for _, topic := range opts.Topic {
-		options += " --topic " + topic
-	}
 	for _, asset := range opts.Asset {
 		options += " --asset " + asset
 	}
 	if len(opts.Flow) > 0 {
 		options += " --flow " + opts.Flow
-	}
-	if opts.Factory {
-		options += " --factory"
-	}
-	if opts.Reversed {
-		options += " --reversed"
 	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
