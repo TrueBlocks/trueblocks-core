@@ -1,5 +1,6 @@
 chifra traces  --fmt json --filter 4370000!4370002!!!1!2
 TEST[DATE|TIME] Filter:  4370000!4370002!!!1!2
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] map[after:1 count:2 fromBlock:0x42ae50 toBlock:0x42ae52]
 {
@@ -9,7 +10,6 @@ INFO[DATE|TIME] map[after:1 count:2 fromBlock:0x42ae50 toBlock:0x42ae52]
         "callType": "call",
         "from": "0x51836a753e344257b361519e948ffcaf5fb8d521",
         "gas": 69000,
-        "input": "0x",
         "to": "0x4afe1b1857dd0ff16a4cc46f8be92ab1165e6458",
         "value": "44800000000000000"
       },

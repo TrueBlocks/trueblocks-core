@@ -1,6 +1,7 @@
 chifra blocks  3982128-3982133 --uniq --fmt json
 TEST[DATE|TIME] Blocks:  [3982128-3982133]
 TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [

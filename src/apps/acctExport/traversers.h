@@ -21,26 +21,6 @@ extern void start_Log(CTraverser* trav, void* data);
 extern bool prog_Log(CTraverser* trav, void* data);
 extern void end_Log(CTraverser* trav, void* data);
 
-extern bool receipts_Display(CTraverser* trav, void* data);
-class CReceiptTraverser : public CTraverser {
-  public:
-    CReceiptTraverser(void);
-};
-
-extern bool logs_Display(CTraverser* trav, void* data);
-extern size_t logs_Count(CTraverser* trav, void* data);
-class CLogTraverser : public CTraverser {
-  public:
-    CLogTraverser(void);
-};
-
-extern bool traces_Display(CTraverser* trav, void* data);
-extern size_t traces_Count(CTraverser* trav, void* data);
-class CTraceTraverser : public CTraverser {
-  public:
-    CTraceTraverser(void);
-};
-
 extern bool acct_Display(CTraverser* trav, void* data);
 extern bool acct_PreFunc(CTraverser* trav, void* data);
 class CTransactionTraverser : public CTraverser {
@@ -48,11 +28,4 @@ class CTransactionTraverser : public CTraverser {
     CTransactionTraverser(void);
     ~CTransactionTraverser(void) {
     }
-};
-
-extern bool neighbors_Pre(CTraverser* trav, void* data);
-extern size_t neighbors_Count(CTraverser* trav, void* data);
-class CNeighborTraverser : public CTraverser {
-  public:
-    CNeighborTraverser(void);
 };

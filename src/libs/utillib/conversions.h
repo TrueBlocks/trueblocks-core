@@ -45,7 +45,6 @@ using CBigUintArray = vector<biguint_t>;
 using CBigIntArray = vector<bigint_t>;
 using CAddressArray = vector<address_t>;
 using CTopicArray = vector<topic_t>;
-using CFourbyteArray = vector<fourbyte_t>;
 
 //-------------------------------------------------------------------------
 using CAddressWeiMap = map<address_t, wei_t>;
