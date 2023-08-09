@@ -1,6 +1,6 @@
 chifra traces  --fmt json --filter 0x42ae50!4370002!!0xc42209accc14029c1012fb5680d95fbd6036e2a0
 TEST[DATE|TIME] Filter:  0x42ae50!4370002!!0xc42209accc14029c1012fb5680d95fbd6036e2a0
-TEST[DATE|TIME] Caps:  cache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] map[fromBlock:0x42ae50 toAddress:[0xc42209accc14029c1012fb5680d95fbd6036e2a0] toBlock:0x42ae52]
 {
