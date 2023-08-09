@@ -27,10 +27,11 @@ func (opts *SlurpOptions) HandleShow() error {
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
+				paginator.Page = 1
 				done := false
 				var bar = logger.NewOverflowBar("", !opts.Globals.TestMode, 250)
 				for !done {
-					txs, nFetched, err := opts.Conn.GetTransactionsFromEtherscan(addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(addr, tt, &paginator)
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
