@@ -6,7 +6,6 @@ traces?fmt=json&filter=4370000!4370002!!!1!2
         "callType": "call",
         "from": "0x51836a753e344257b361519e948ffcaf5fb8d521",
         "gas": 69000,
-        "input": "0x",
         "to": "0x4afe1b1857dd0ff16a4cc46f8be92ab1165e6458",
         "value": "44800000000000000"
       },

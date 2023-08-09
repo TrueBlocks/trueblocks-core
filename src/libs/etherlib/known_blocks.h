@@ -22,6 +22,5 @@ extern blknum_t hardForkBlock(const string_q& block);
 #define byzantiumBlock() hardForkBlock("byzantium")
 #define constantinopleBlock() hardForkBlock("constantinople")
 #define londonBlock() hardForkBlock("london")
-extern bool isDdos(blknum_t bn);
 
 }  // namespace qblocks

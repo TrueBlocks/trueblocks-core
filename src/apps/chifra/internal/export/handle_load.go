@@ -6,13 +6,13 @@ package exportPkg
 
 //++++++++++++++++++++++++++++++++
 // bool COptions::h andle_traversers(void) {
-// CDynamicTraverser lib(load);
-// if (!lib.is_valid())
+// CDynamic Traverser lib(load);
+// if (!lib.is _valid())
 //     return usage("Dynamic library " + load + " was found but is not valid.");
 // if (!loadNames())
 //     return usage("Could not load names database.");
 
-// auto libFactory = lib.get_function<CTraverser*(uint32_t)>("makeTraverser");
+// auto libFactory = lib.get _function<CTraverser*(uint32_t)>("makeTraverser");
 // if (!libFactory) {
 //     LOG_ERR("Could not instantiate traverser. Quitting.");
 //     return false;
@@ -37,35 +37,35 @@ package exportPkg
 // }
 //     return true;
 // }
-// class CDynamicTraverser {
+// class CDynamic Traverser {
 //   private:
-//     void* m_handle;
-//     string_q m_path;
+//     void* m _handle;
+//     string_q m _path;
 //   public:
-//     explicit CDynamicTraverser(const string_q& lib_path) {
-//         m_handle = ::dlopen(lib_path.c_str(), RTLD_LAZY);
-//         m_path = lib_path;
-//         if (m_handle == nullptr)
-//             LOG_ERR("Failed to load shared object " + lib_path + ": " + string_q(::dlerror()));
+//     explicit CDynamic Traverser(const string_q& lib _path) {
+//         m _handle = ::dlopen(lib _path.c_str(), RTLD_LAZY);
+//         m _path = lib _path;
+//         if (m _handle == nullptr)
+//             LOG_ERR("Failed to load shared object " + lib _path + ": " + string_q(::dlerror()));
 //     }
-//     ~CDynamicTraverser() {
-//         if (m_handle != nullptr) {
-//             if (::dlclose(m_handle))  // returns non-zero on failure
+//     ~CDynamic Traverser() {
+//         if (m _handle != nullptr) {
+//             if (::dl close(m _handle))  // returns non-zero on failure
 //                 LOG_ERR("Failed to unload the shared object: " + string_q(::dlerror()));
 //         }
 //     }
-//     template <typename FunctionSignature>
-//     FunctionSignature* get_function(const string_q& func_name) {
-//         void* func_ptr = ::dlsym(m_handle, func_name.c_str());
+//     template <typename Function Signature>
+//     Function Signature* get _function(const string_q& func_name) {
+//         void* func_ptr = ::dlsym(m _handle, func_name.c_str());
 //         if (func_ptr == nullptr)
 //             LOG_ERR("Failed to get [func_name:" + func_name + "]: " + ::dlerror());
-//         return reinterpret_cast<FunctionSignature*>(func_ptr);
+//         return reinterpret_cast<Function Signature*>(func_ptr);
 //     }
-//     bool is_valid(void) const {
-//         return m_handle != nullptr;
+//     bool is _valid(void) const {
+//         return m _handle != nullptr;
 //     }
 //   private:
-//     CDynamicTraverser(void) = delete;
-//     CDynamicTraverser(const CDynamicTraverser&) = delete;
-//     CDynamicTraverser& operator=(const CDynamicTraverser&) = delete;
+//     CDynamic Traverser(void) = delete;
+//     CDynamic Traverser(const CDynamic Traverser&) = delete;
+//     CDynamic Traverser& operator=(const CDynamic Traverser&) = delete;
 // };

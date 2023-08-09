@@ -13,7 +13,6 @@
 #include <string>
 #include "node.h"
 #include "filenames.h"
-#include "logfilter.h"
 
 namespace qblocks {
 
