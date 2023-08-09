@@ -45,11 +45,10 @@ TOPIC1="0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c"
 # ./test_cache.1 logs         $TRANS1 --raw                    | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
 # # ./test_cache.1 logs         $TRANS1 --articulate             | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
 
-# ./test_cache.1 traces       $TRANS2 --noop                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+./test_cache.1 traces       $TRANS2 --noop                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
 
-TB_TIMER_NAME=chifra_list TB_TIMER_ON=true chifra list $ADDR4 2>/dev/null | grep PERF | tee -a results
-./test_cache.1 slurp          $ADDR4 --parts all --noop        | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
-./test_cache.1 slurp          $ADDR4 --parts all --appearances | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 slurp          $ADDR4 --parts all --noop        | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 slurp          $ADDR4 --parts all --appearances | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
 
 # ./test_cache.1 when         $TRANS3 --noop                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
 

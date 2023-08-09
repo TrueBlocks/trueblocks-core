@@ -12,153 +12,194 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-var m = map[string]string{
-	"ext":    "txlist",
-	"int":    "txlistinternal",
-	"token":  "tokentx",
-	"nfts":   "tokennfttx",
-	"1155":   "token1155tx",
-	"miner":  "getminedblocks&blocktype=blocks",
-	"uncles": "getminedblocks&blocktype=uncles",
-}
-var ss = map[string]string{
-	"ext":    "asc",
-	"int":    "asc",
-	"token":  "asc",
-	"nfts":   "asc",
-	"1155":   "asc",
-	"miner":  "asc",
-	"uncles": "asc",
-}
-
-func getEtherscanUrl(addr string, requestType string, paginator *Paginator) string {
-	if ss[requestType] == "" || m[requestType] == "" {
-		logger.Fatal("Should not happen in getEtherscanUrl", requestType)
-	}
-
-	const str = "https://api.etherscan.io/api?module=account&sort=[{SORT}]&action=[{CMD}]&address=[{ADDRESS}]&page=[{PAGE}]&offset=[{PER_PAGE}]"
-	ret := strings.Replace(str, "[{SORT}]", ss[requestType], -1)
-	ret = strings.Replace(ret, "[{CMD}]", m[requestType], -1)
-	ret = strings.Replace(ret, "[{ADDRESS}]", addr, -1)
-	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.Page), -1)
-	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage), -1)
-	paginator.Page++
-	return ret
-}
 
 type Paginator struct {
 	Page    int
 	PerPage int
 }
 
-func (conn *Connection) GetTransactionsFromEtherscan(addr, requestType string, paginator *Paginator) ([]types.SimpleEtherscan, int, error) {
-	url := getEtherscanUrl(addr, requestType, paginator)
-
-	var ret []types.SimpleEtherscan
-
-	key := config.GetRootConfig().Keys["etherscan"].ApiKey
-	if key == "" {
-		return ret, 0, errors.New("cannot read Etherscan API key")
+func (conn *Connection) GetESTransactionByAddress(addr, requestType string, paginator *Paginator) ([]types.SimpleEtherscan, int, error) {
+	url, err := getEtherscanUrl(addr, requestType, paginator)
+	if err != nil {
+		return []types.SimpleEtherscan{}, 0, err
 	}
-	url += "&apikey=" + key
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return ret, 0, err
+		return []types.SimpleEtherscan{}, 0, err
 	}
 	defer resp.Body.Close()
 
 	// Check server response
 	if resp.StatusCode != http.StatusOK {
-		return ret, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
+		return []types.SimpleEtherscan{}, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
 	}
 
 	decoder := json.NewDecoder(resp.Body)
-	fromEs := etherscanResponse{}
+	fromEs := struct {
+		Message string               `json:"message"`
+		Result  []types.RawEtherscan `json:"result"`
+		Status  string               `json:"status"`
+	}{}
 	if err = decoder.Decode(&fromEs); err != nil {
-		return ret, 0, err
+		return []types.SimpleEtherscan{}, 0, err
 	}
-	resp.Body.Close()
 
 	if fromEs.Message == "NOTOK" {
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
 		logger.Warn("provider responded with:", url, fromEs.Message)
-		return ret, 0, nil
+		return []types.SimpleEtherscan{}, 0, nil
+		// } else if fromEs.Message != "OK" {
+		// 	logger.Warn("URL:", url)
+		// 	logger.Warn("provider responded with:", url, fromEs.Message)
 	}
 
-	for _, esTx := range fromEs.Result {
-		rawTx := types.RawEtherscan{
-			BlockHash:        esTx.BlockHash,
-			BlockNumber:      esTx.BlockNumber,
-			From:             esTx.From,
-			Gas:              esTx.Gas,
-			GasPrice:         esTx.GasPrice,
-			Hash:             esTx.Hash,
-			Input:            esTx.Input,
-			To:               esTx.To,
-			TransactionIndex: esTx.TransactionIndex,
-			Value:            esTx.Value,
-		}
+	return conn.responseToTransactions(addr, requestType, fromEs.Result)
+}
 
-		transaction := types.SimpleEtherscan{
-			Hash:             base.HexToHash(rawTx.Hash),
-			BlockHash:        base.HexToHash(rawTx.BlockHash),
-			BlockNumber:      mustParseUint(rawTx.BlockNumber),
-			TransactionIndex: mustParseUint(rawTx.TransactionIndex),
-			Timestamp:        mustParseInt(esTx.Timestamp),
-			From:             base.HexToAddress(rawTx.From),
-			To:               base.HexToAddress(rawTx.To),
-			Gas:              mustParseUint(rawTx.Gas),
-			GasPrice:         mustParseUint(rawTx.GasPrice),
-			GasUsed:          mustParseUint(esTx.GasUsed),
-			Input:            rawTx.Input,
-		}
-		transaction.GasCost = transaction.GasPrice * transaction.GasUsed
-		transaction.IsError = esTx.TxReceiptStatus == "0"
-		transaction.HasToken = requestType == "nfts" || requestType == "token" || requestType == "1155"
-		transaction.Value.SetString(rawTx.Value, 0)
-		transaction.ContractAddress = base.HexToAddress(esTx.ContractAddress)
-		if requestType == "int" {
-			// Markers to help us remove these since Etherscan doesn't send them and we don't want to make another RPC call
-			transaction.BlockHash = base.HexToHash("0xdeadbeef")
-			transaction.TransactionIndex = 80809
-		} else if requestType == "miner" {
-			transaction.BlockHash = base.HexToHash("0xdeadbeef")
-			transaction.TransactionIndex = 99999
-			transaction.From = base.BlockRewardSender
-			transaction.Value.SetString("5000000000000000000", 0)
-			transaction.To = base.HexToAddress(addr)
-		} else if requestType == "uncles" {
-			transaction.BlockHash = base.HexToHash("0xdeadbeef")
-			transaction.TransactionIndex = 99998
-			transaction.From = base.UncleRewardSender
-			transaction.Value.SetString("3750000000000000000", 0)
-			transaction.To = base.HexToAddress(addr)
-		}
-		transaction.SetRaw(&rawTx)
+// func (conn *Connection) getESTransactionByHash(txHash base.Hash) (types.SimpleEtherscan, error) {
+// 	url, err := getEtherscanUrl(txHash.Hex(), "byHash", &Paginator{Page: 1, PerPage: 10})
+// 	if err != nil {
+// 		return types.SimpleEtherscan{}, err
+// 	}
 
-		ret = append(ret, transaction)
+// 	resp, err := http.Get(url)
+// 	if err != nil {
+// 		return types.SimpleEtherscan{}, err
+// 	}
+// 	defer resp.Body.Close()
+
+// 	// Check server response
+// 	if resp.StatusCode != http.StatusOK {
+// 		return types.SimpleEtherscan{}, fmt.Errorf("etherscan API error: %s", resp.Status)
+// 	}
+
+// 	decoder := json.NewDecoder(resp.Body)
+// 	fromEs := struct {
+// 		JsonRpc string             `json:"jsonrpc"`
+// 		Id      int                `json:"id"`
+// 		Result  types.RawEtherscan `json:"result"`
+// 	}{}
+// 	if err = decoder.Decode(&fromEs); err != nil {
+// 		return types.SimpleEtherscan{}, err
+// 	}
+
+// 	return conn.rawToSimple("", "byHash", &fromEs.Result)
+// }
+
+// responseToTransaction converts one RawEtherscan to SimpleEtherscan.
+func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawEtherscan) (types.SimpleEtherscan, error) {
+	s := types.SimpleEtherscan{
+		Hash:             base.HexToHash(rawTx.Hash),
+		BlockHash:        base.HexToHash(rawTx.BlockHash),
+		BlockNumber:      utils.MustParseUint(rawTx.BlockNumber),
+		TransactionIndex: utils.MustParseUint(rawTx.TransactionIndex),
+		Timestamp:        mustParseInt(rawTx.Timestamp),
+		From:             base.HexToAddress(rawTx.From),
+		To:               base.HexToAddress(rawTx.To),
+		Gas:              utils.MustParseUint(rawTx.Gas),
+		GasPrice:         utils.MustParseUint(rawTx.GasPrice),
+		GasUsed:          utils.MustParseUint(rawTx.GasUsed),
+		Input:            rawTx.Input,
 	}
 
+	s.GasCost = s.GasPrice * s.GasUsed
+	s.IsError = rawTx.TxReceiptStatus == "0"
+	s.HasToken = requestType == "nfts" || requestType == "token" || requestType == "1155"
+	s.Value.SetString(rawTx.Value, 0)
+	s.ContractAddress = base.HexToAddress(rawTx.ContractAddress)
+
+	if requestType == "int" {
+		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't want to make another RPC call
+		// We tried (see commented code), but EtherScan balks with a weird message
+		s.TransactionIndex = 80809
+		// s.BlockHash = base.HexToHash("0xdeadbeef")
+		// got, err := conn.GetESTransactionByHash(s.Hash)
+		// if err != nil {
+		// 	logger.Warn("error getting transaction from etherscan:", err)
+		// 	s.TransactionIndex = 80809
+		// } else {
+		// 	s.TransactionIndex = utils.MustParseUint(got.TransactionIndex)
+		// }
+	} else if requestType == "miner" {
+		s.BlockHash = base.HexToHash("0xdeadbeef")
+		s.TransactionIndex = 99999
+		s.From = base.BlockRewardSender
+		s.Value.SetString("5000000000000000000", 0)
+		s.To = base.HexToAddress(addr)
+
+	} else if requestType == "uncles" {
+		s.BlockHash = base.HexToHash("0xdeadbeef")
+		s.TransactionIndex = 99998
+		s.From = base.UncleRewardSender
+		s.Value.SetString("3750000000000000000", 0)
+		s.To = base.HexToAddress(addr)
+	}
+	s.SetRaw(rawTx)
+	return s, nil
+}
+
+// responseToTransactions converts RawEtherscans to SimpleEtherscan. It also returns the number of results.
+func (conn *Connection) responseToTransactions(addr, requestType string, rawTxs []types.RawEtherscan) ([]types.SimpleEtherscan, int, error) {
+	var ret []types.SimpleEtherscan
+	for _, rawTx := range rawTxs {
+		rawTx := rawTx
+		if transaction, err := conn.rawToSimple(addr, requestType, &rawTx); err != nil {
+			return nil, 0, err
+		} else {
+			ret = append(ret, transaction)
+		}
+	}
 	return ret, len(ret), nil
 }
 
-func mustParseUint(input any) (result uint64) {
-	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
-	return
+func getEtherscanUrl(value string, requestType string, paginator *Paginator) (string, error) {
+	var actions = map[string]string{
+		"ext":    "txlist",
+		"int":    "txlistinternal",
+		"token":  "tokentx",
+		"nfts":   "tokennfttx",
+		"1155":   "token1155tx",
+		"miner":  "getminedblocks&blocktype=blocks",
+		"uncles": "getminedblocks&blocktype=uncles",
+		"byHash": "eth_getTransactionByHash",
+	}
+
+	if actions[requestType] == "" {
+		logger.Fatal("Should not happen in getEtherscanUrl", requestType)
+	}
+
+	key := config.GetRootConfig().Keys["etherscan"].ApiKey
+	if key == "" {
+		return "", errors.New("cannot read Etherscan API key")
+	}
+
+	module := "account"
+	tt := "address"
+	if requestType == "byHash" {
+		module = "proxy"
+		tt = "txhash"
+	}
+
+	const str = "https://api.etherscan.io/api?module=[{MODULE}]&sort=asc&action=[{ACTION}]&[{TT}]=[{VALUE}]&page=[{PAGE}]&offset=[{PER_PAGE}]"
+	ret := strings.Replace(str, "[{MODULE}]", module, -1)
+	ret = strings.Replace(ret, "[{TT}]", tt, -1)
+	ret = strings.Replace(ret, "[{ACTION}]", actions[requestType], -1)
+	ret = strings.Replace(ret, "[{VALUE}]", value, -1)
+	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.Page), -1)
+	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage), -1)
+	ret = ret + "&apikey=" + key
+
+	paginator.Page++
+
+	return ret, nil
 }
 
 func mustParseInt(input any) (result int64) {
 	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
 	return
-}
-
-type etherscanResponse struct {
-	Message string               `json:"message"`
-	Result  []types.RawEtherscan `json:"result"`
-	Status  string               `json:"status"`
 }
