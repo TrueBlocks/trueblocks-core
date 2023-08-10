@@ -94,12 +94,12 @@ func (conn *Connection) GetTracesByTransactionID(bn, txid uint64) ([]types.Simpl
 		}
 	}
 
-	txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid)
+	tx, err := conn.GetTransactionByNumberAndId(bn, txid)
 	if err != nil {
 		return []types.SimpleTrace{}, err
 	}
 
-	return conn.GetTracesByTransactionHash(txHash.Hex(), nil)
+	return conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash

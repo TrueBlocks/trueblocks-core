@@ -26,8 +26,8 @@ func (opts *StateOptions) HandleShow() error {
 					if balance.Text(10) == previous.Text(10) {
 						return false
 					}
+					previousBalance[address] = balance
 				}
-				previousBalance[address] = balance
 
 				if opts.NoZero {
 					return len(balance.Bytes()) > 0

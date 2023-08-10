@@ -91,7 +91,7 @@ on      ,both ,fast  ,traces ,tools/getTraces ,redir_output_append ,n    ,transa
 
 on      ,both ,fast  ,traces ,tools/getTraces ,cache_and_decache   ,y    ,transactions = 46147.0 & cache & decache
 on      ,both ,fast  ,traces ,tools/getTraces ,cache_one           ,y    ,transactions = 46147.0 & cache
-broken  ,both ,fast  ,traces ,tools/getTraces ,decache_one         ,y    ,transactions = 46147.0 & decache
+on      ,both ,fast  ,traces ,tools/getTraces ,decache_one         ,y    ,transactions = 46147.0 & decache
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
