@@ -6,6 +6,7 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -22,11 +23,11 @@ func (opts *StateOptions) HandleShow() error {
 			Balance: func(address base.Address, balance *big.Int) bool {
 				if opts.Changes {
 					previous := previousBalance[address]
-					if balance == previous {
+					if balance.Text(10) == previous.Text(10) {
 						return false
 					}
-					previousBalance[address] = balance
 				}
+				previousBalance[address] = balance
 
 				if opts.NoZero {
 					return len(balance.Bytes()) > 0
@@ -39,6 +40,7 @@ func (opts *StateOptions) HandleShow() error {
 
 	stateFields, outputFields, none := opts.Conn.GetFieldsFromParts(opts.Parts, opts.Globals.Ether)
 
+	cnt := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {
 		for _, addressStr := range opts.Addrs {
@@ -60,24 +62,32 @@ func (opts *StateOptions) HandleShow() error {
 							Address:     address,
 							BlockNumber: bn,
 						}
+						cnt++
 						return
 					}
 
-					state, err := opts.Conn.GetState(
-						stateFields,
-						address,
-						bn,
-						filters,
-					)
+					if br.StartType == identifiers.BlockHash {
+						block, _ := opts.Conn.GetBlockHeaderByNumber(bn)
+						if base.HexToHash(br.Orig) != block.Hash {
+							errorChan <- errors.New("block hash " + br.Orig + " not found")
+							continue
+						}
+					}
+
+					state, err := opts.Conn.GetState(stateFields, address, bn, filters)
 					if err != nil {
 						errorChan <- err
 					}
 					// state may be nil if it was skipped by a filter for example
 					if state != nil {
+						cnt++
 						modelChan <- state
 					}
 				}
 			}
+		}
+		if cnt == 0 {
+			errorChan <- errors.New("no state results were reported")
 		}
 	}
 
