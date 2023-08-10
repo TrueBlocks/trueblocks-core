@@ -1,6 +1,7 @@
 chifra transactions  0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd --fmt json --account_for 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Transactions:  [0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd]
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
@@ -31,7 +32,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x15069300bf5ed3e653ce309b17d173a8c7589f7f
 TEST[DATE|TIME]    recipient:           0xf55f8aa8f3d777f1ab3a4ae9e269c8d7b73078de
@@ -75,7 +76,6 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
-WARN[DATE|TIME] Statement is not reconciled This token holders can claim reward token. Please Visit https://abronz.com and claim rewards. at 15687451 133 2652
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             1000
 TEST[DATE|TIME]     lotsOfLogs:      --> true
@@ -103,8 +103,6 @@ TEST[DATE|TIME] float2:              1
 TEST[DATE|TIME] bigPrice:            1366.484440928374434
 TEST[DATE|TIME] price:               1366.4844409283744
 TEST[DATE|TIME] source:              uniswap
-EROR[DATE|TIME] Failed to get price for This token holders can claim reward token. Please Visit https://abronz.com and claim rewards. at 15687451 133
-EROR[DATE|TIME] Error returned from PriceUsd: no pair found for 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 and 0xf55f8aa8f3d777f1ab3a4ae9e269c8d7b73078de
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
@@ -116,7 +114,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    reconciliationType:  diff-diff-token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x15069300bf5ed3e653ce309b17d173a8c7589f7f
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -193,7 +191,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "uniswap",
       "recipient": "0xf55f8aa8f3d777f1ab3a4ae9e269c8d7b73078de",
       "reconciled": true,
-      "reconciliationType": "regular-eth",
+      "reconciliationType": "diff-diff-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x15069300bf5ed3e653ce309b17d173a8c7589f7f",
@@ -237,7 +235,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "not-priced",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "regular-token",
+      "reconciliationType": "diff-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x15069300bf5ed3e653ce309b17d173a8c7589f7f",

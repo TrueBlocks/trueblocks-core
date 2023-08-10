@@ -1,6 +1,7 @@
 chifra transactions  5218355.232 --account_for 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad --fmt json
 TEST[DATE|TIME] Transactions:  [5218355.232]
 TEST[DATE|TIME] AccountFor:  0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 5218355 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)

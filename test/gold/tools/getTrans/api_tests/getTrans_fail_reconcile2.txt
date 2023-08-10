@@ -1,6 +1,59 @@
 transactions?transactions=0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63&accountFor=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&cache
 {
-  "errors": [
-    "The --cache option is not available with the --account_for option"
-  ]
+  "data": [
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "0",
+      "amountOut": "0",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetSymbol": "WEI",
+      "begBal": "31419034761192445316",
+      "begBalDiff": "0",
+      "blockNumber": 12697303,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2021-06-24 14:14:25 UTC",
+      "decimals": 18,
+      "endBal": "31419034761192445316",
+      "endBalCalc": "31419034761192445316",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevAppBlk": 12697302,
+      "prevBal": "31419034761192445316",
+      "priceSource": "uniswap",
+      "recipient": "0xe592427a0aece92de3edee1f18e0157c05861564",
+      "reconciled": true,
+      "reconciliationType": "diff-diff-eth",
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "spotPrice": 1962.1264596544079,
+      "timestamp": 1624544065,
+      "totalIn": "0",
+      "totalOut": "0",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63",
+      "transactionIndex": 99
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }
