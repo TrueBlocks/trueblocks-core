@@ -65,7 +65,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 
 	handled = true
 	if opts.Globals.Decache {
-		err = opts.HandleDecache(monitorArray) // TODO DECACHE monitorArray)
+		err = opts.HandleDecache() // TODO DECACHE monitorArray)
 	} else if opts.Count {
 		err = opts.HandleCount(monitorArray)
 	} else if opts.Receipts {
