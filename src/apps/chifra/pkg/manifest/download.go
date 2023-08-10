@@ -53,6 +53,7 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 
 	unchainedChain := "mainnet" // the unchained index is on mainnet
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
+
 	if contractCall, err := call.NewContractCall(unchainedChain, unchained.GetUnchainedIndexAddress(), theCall, false); err != nil {
 		return "", err
 	} else {

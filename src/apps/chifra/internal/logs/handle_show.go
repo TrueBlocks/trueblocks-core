@@ -43,7 +43,7 @@ func (opts *LogsOptions) HandleShow() error {
 				} else {
 					for index := range tx.Receipt.Logs {
 						if opts.Articulate {
-							if err = abiCache.ArticulateLog(chain, &tx.Receipt.Logs[index]); err != nil {
+							if err = abiCache.ArticulateLog(&tx.Receipt.Logs[index]); err != nil {
 								errorChan <- err // continue even with an error
 							}
 						}

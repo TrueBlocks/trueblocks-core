@@ -7,10 +7,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (abiCache *AbiCache) ArticulateLog(chain string, log *types.SimpleLog) (err error) {
+func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) (err error) {
 	address := log.Address
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
-		if err = abi.LoadAbi(chain, address, &abiCache.AbiMap); err != nil {
+		if err = abi.LoadAbi(abiCache.Chain, address, &abiCache.AbiMap); err != nil {
 			abiCache.skipMap.SetValue(address, true)
 			return err
 		} else {
@@ -55,7 +55,7 @@ func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (articulat
 		data = log.Data[2:]
 	}
 
-	if err = ArticulateArguments(
+	if err = articulateArguments(
 		abiEvent.Inputs,
 		data,
 		log.Topics,

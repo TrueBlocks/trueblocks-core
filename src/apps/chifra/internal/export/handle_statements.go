@@ -127,7 +127,7 @@ func (opts *ExportOptions) readStatements(
 		// we need them sorted for the following to work
 		for _, tx := range txArray {
 			if opts.Articulate {
-				if err := abiCache.ArticulateTx(chain, tx); err != nil {
+				if err := abiCache.ArticulateTransaction(tx); err != nil {
 					errorChan <- fmt.Errorf("error articulating tx: %v", err)
 				}
 			}

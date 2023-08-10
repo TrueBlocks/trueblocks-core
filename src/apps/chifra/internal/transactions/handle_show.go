@@ -42,7 +42,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 					return fmt.Errorf("transaction at %s has no logs", app.String())
 				} else {
 					if opts.Articulate && tx.ArticulatedTx == nil {
-						if err = abiCache.ArticulateTx(chain, tx); err != nil {
+						if err = abiCache.ArticulateTransaction(tx); err != nil {
 							errorChan <- err // continue even with an error
 						}
 					}

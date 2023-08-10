@@ -57,7 +57,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				}
 				if matches {
 					if opts.Articulate {
-						if err = abiCache.ArticulateTx(chain, tx); err != nil {
+						if err = abiCache.ArticulateTransaction(tx); err != nil {
 							errorChan <- err // continue even on error
 						}
 					}

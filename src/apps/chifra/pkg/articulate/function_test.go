@@ -49,7 +49,7 @@ func TestArticulateArguments(t *testing.T) {
 
 	abiMethod := abi.Methods["transfer"]
 	f := types.FunctionFromAbiMethod(&abiMethod)
-	if err = ArticulateArguments(abiMethod.Inputs, input[10:], nil, f.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, input[10:], nil, f.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -81,7 +81,7 @@ func TestArticulateArgumentsMixedIndexed(t *testing.T) {
 	abiEvent := abi.Events["AuctionStarted"]
 	result := types.FunctionFromAbiEvent(&abiEvent)
 
-	if err = ArticulateArguments(abiEvent.Inputs, txData[2:], txTopics, result.Inputs); err != nil {
+	if err = articulateArguments(abiEvent.Inputs, txData[2:], txTopics, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -120,7 +120,8 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573" {
@@ -135,7 +136,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -150,7 +151,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -165,7 +166,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -180,7 +181,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -195,7 +196,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -218,7 +219,7 @@ func TestArticulateArgumentsSlice(t *testing.T) {
 	abiMethod := abi.Methods["startAuctionsAndBid"]
 	result := types.FunctionFromAbiMethod(&abiMethod)
 
-	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -255,7 +256,7 @@ func TestArticulateArgumentsComplex(t *testing.T) {
 	abiMethod := abi.Methods["operate"]
 	result := types.FunctionFromAbiMethod(&abiMethod)
 
-	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -292,7 +293,7 @@ func TestArticulateArgumentsTupleWrongType(t *testing.T) {
 	abiMethod := abi.Methods["operate"]
 	result := types.FunctionFromAbiMethod(&abiMethod)
 
-	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -412,7 +413,8 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 		t.Fatal(err)
 	}
 	txData := base.Bytes2Hex(rawPayload)
-	if err = ArticulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
+
+	if err = articulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -468,7 +470,8 @@ func TestArticulateAnonymousArguments(t *testing.T) {
 
 	abiMethod := abi.Methods["peek"]
 	f := types.FunctionFromAbiMethod(&abiMethod)
-	if err = ArticulateArguments(abiMethod.Outputs, output[2:], nil, f.Outputs); err != nil {
+
+	if err = articulateArguments(abiMethod.Outputs, output[2:], nil, f.Outputs); err != nil {
 		t.Fatal(err)
 	}
 

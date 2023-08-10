@@ -80,7 +80,6 @@ func (opts *ExportOptions) readLogs(
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
-		chain := opts.Globals.Chain
 		if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
@@ -94,7 +93,7 @@ func (opts *ExportOptions) readLogs(
 					if log.ContainsAny(addrArray) {
 						if opts.matchesFilter(&log) {
 							if opts.Articulate {
-								if err := abiCache.ArticulateLog(chain, &log); err != nil {
+								if err := abiCache.ArticulateLog(&log); err != nil {
 									errorChan <- fmt.Errorf("error articulating log: %v", err)
 								}
 							}

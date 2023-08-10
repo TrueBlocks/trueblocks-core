@@ -67,7 +67,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 					log := log
 					if opts.Articulate {
-						if err := abiCache.ArticulateLog(chain, &log); err != nil {
+						if err := abiCache.ArticulateLog(&log); err != nil {
 							errorChan <- err // continue even on error
 						}
 					}

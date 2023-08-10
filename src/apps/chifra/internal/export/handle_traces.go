@@ -74,7 +74,6 @@ func (opts *ExportOptions) readTraces(
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
-		chain := opts.Globals.Chain
 		if err := opts.readTransactions(mon, txMap, true /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
@@ -88,7 +87,7 @@ func (opts *ExportOptions) readTraces(
 				isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
 				if !opts.Factory || isCreate {
 					if opts.Articulate {
-						if err := abiCache.ArticulateTrace(chain, &trace); err != nil {
+						if err := abiCache.ArticulateTrace(&trace); err != nil {
 							errorChan <- fmt.Errorf("error articulating trace: %v", err)
 						}
 					}

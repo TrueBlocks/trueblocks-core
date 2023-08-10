@@ -6,10 +6,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction) (err error) {
+func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) (err error) {
 	address := tx.To
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
-		if err := abi.LoadAbi(chain, address, &abiCache.AbiMap); err != nil {
+		if err := abi.LoadAbi(abiCache.Chain, address, &abiCache.AbiMap); err != nil {
 			abiCache.skipMap.SetValue(address, true)
 			return err
 		} else {
@@ -19,14 +19,14 @@ func (abiCache *AbiCache) ArticulateTx(chain string, tx *types.SimpleTransaction
 
 	if tx.Receipt != nil {
 		for index := range tx.Receipt.Logs {
-			if err = abiCache.ArticulateLog(chain, &tx.Receipt.Logs[index]); err != nil {
+			if err = abiCache.ArticulateLog(&tx.Receipt.Logs[index]); err != nil {
 				return err
 			}
 		}
 	}
 
 	for index := range tx.Traces {
-		if err = abiCache.ArticulateTrace(chain, &tx.Traces[index]); err != nil {
+		if err = abiCache.ArticulateTrace(&tx.Traces[index]); err != nil {
 			return err
 		}
 	}

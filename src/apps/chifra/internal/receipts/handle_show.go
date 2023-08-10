@@ -42,7 +42,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 					return fmt.Errorf("transaction at %s has no logs", app.String())
 				} else {
 					if opts.Articulate {
-						if err = abiCache.ArticulateReceipt(chain, tx.Receipt); err != nil {
+						if err = abiCache.ArticulateReceipt(tx.Receipt); err != nil {
 							errorChan <- err // continue even with an error
 						}
 					}

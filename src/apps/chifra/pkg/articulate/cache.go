@@ -6,6 +6,7 @@ import (
 )
 
 type AbiCache struct {
+	Chain     string
 	AbiMap    abi.FunctionSyncMap
 	loadedMap abi.AddressSyncMap
 	skipMap   abi.AddressSyncMap
@@ -13,6 +14,7 @@ type AbiCache struct {
 
 func NewAbiCache(chain string, loadKnown bool) *AbiCache {
 	ret := &AbiCache{
+		Chain:     chain,
 		AbiMap:    abi.FunctionSyncMap{},
 		loadedMap: abi.AddressSyncMap{},
 		skipMap:   abi.AddressSyncMap{},
