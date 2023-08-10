@@ -4,7 +4,7 @@ TEST[DATE|TIME] Neighbors:  true
 TEST[DATE|TIME] Count:  true
 TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  txt
-Error: The --neighbors option requires a license key. Please contact us in our discord.
+Error: The --count option is not available with --logs, --traces, or --neighbors.
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 
