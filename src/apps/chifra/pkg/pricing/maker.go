@@ -33,7 +33,7 @@ func PriceUsdMaker(chain string, testMode bool, statement *types.SimpleStatement
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err := contractCall.Call(chain)
+	result, err := contractCall.Call()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

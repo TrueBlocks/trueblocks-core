@@ -59,7 +59,7 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 	} else {
 		conn := rpc.TempConnection(unchainedChain)
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
-		if result, err := contractCall.Call(unchainedChain); err != nil {
+		if result, err := contractCall.Call(); err != nil {
 			return "", err
 		} else {
 			return result.Outputs["val_0"], nil

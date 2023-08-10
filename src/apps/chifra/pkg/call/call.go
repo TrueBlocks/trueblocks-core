@@ -130,7 +130,7 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call(chain string) (results *types.SimpleCallResult, err error) {
+func (call *ContractCall) Call() (results *types.SimpleCallResult, err error) {
 	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
 	if err != nil {
 		return
@@ -152,7 +152,7 @@ func (call *ContractCall) Call(chain string) (results *types.SimpleCallResult, e
 		encodedArguments = packedHex[10:]
 	}
 
-	rawReturn, err := query.Query[string](chain, "eth_call", query.Params{
+	rawReturn, err := query.Query[string](call.Chain, "eth_call", query.Params{
 		map[string]any{
 			"to":   call.Address.Hex(),
 			"data": packedHex,
@@ -166,7 +166,7 @@ func (call *ContractCall) Call(chain string) (results *types.SimpleCallResult, e
 	rr := *rawReturn
 	function := call.Method.Clone()
 	if len(rr) > 2 {
-		abiCache := articulate.NewAbiCache(chain, true)
+		abiCache := articulate.NewAbiCache(call.Chain, true)
 		err = abiCache.ArticulateFunction(function, "", rr[2:])
 		if err != nil {
 			return nil, err

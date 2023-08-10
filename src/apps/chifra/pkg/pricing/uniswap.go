@@ -52,7 +52,7 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 
-	result, err := contractCall.Call(chain)
+	result, err := contractCall.Call()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
@@ -67,7 +67,7 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 		return 0.0, "not-priced", err
 	}
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err = contractCall.Call(chain)
+	result, err = contractCall.Call()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
