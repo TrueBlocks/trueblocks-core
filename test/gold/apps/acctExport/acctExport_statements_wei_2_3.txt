@@ -5,6 +5,7 @@ TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] FirstBlock:  15700073
 TEST[DATE|TIME] LastBlock:  15700075
 TEST[DATE|TIME] OutputFn:  statements_wei_2_3_out.file
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] 015700073-00007:   15700072   15700073    15700073    diff-same true false

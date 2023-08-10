@@ -1,6 +1,7 @@
 chifra transactions  0x70c443f1b6e376226a087c2e4512324f135c6ecb2daf6e82e9ea70b597c053fa --fmt json --account_for 0x127ac03acfad15f7a49dd037e52d5507260e1425
 TEST[DATE|TIME] Transactions:  [0x70c443f1b6e376226a087c2e4512324f135c6ecb2daf6e82e9ea70b597c053fa]
 TEST[DATE|TIME] AccountFor:  0x127ac03acfad15f7a49dd037e52d5507260e1425
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 4634215 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
@@ -27,7 +28,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
 TEST[DATE|TIME]    accountedFor:        0x127ac03acfad15f7a49dd037e52d5507260e1425
 TEST[DATE|TIME]    sender:              0x47284536f60ca404106c399176d4f3ee8fa6fd57
 TEST[DATE|TIME]    recipient:           0x52903256dd18d85c2dc4a6c999907c9793ea61e3
@@ -71,7 +72,6 @@ TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
-WARN[DATE|TIME] Statement is not reconciled INSP at 4634215 43 509
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             500
 TEST[DATE|TIME]     lotsOfLogs:      --> true
@@ -94,7 +94,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  regular-token
+TEST[DATE|TIME]    reconciliationType:  diff-diff-token
 TEST[DATE|TIME]    accountedFor:        0x127ac03acfad15f7a49dd037e52d5507260e1425
 TEST[DATE|TIME]    sender:              0x0
 TEST[DATE|TIME]    recipient:           0x127ac03acfad15f7a49dd037e52d5507260e1425
@@ -171,7 +171,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "maker",
       "recipient": "0x52903256dd18d85c2dc4a6c999907c9793ea61e3",
       "reconciled": true,
-      "reconciliationType": "regular-eth",
+      "reconciliationType": "diff-diff-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x47284536f60ca404106c399176d4f3ee8fa6fd57",
@@ -215,7 +215,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x127ac03acfad15f7a49dd037e52d5507260e1425",
       "reconciled": true,
-      "reconciliationType": "regular-token",
+      "reconciliationType": "diff-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0",

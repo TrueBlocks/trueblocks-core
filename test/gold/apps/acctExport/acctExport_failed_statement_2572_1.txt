@@ -7,6 +7,7 @@ TEST[DATE|TIME] Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
 TEST[DATE|TIME] LastBlock:  15549163
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  failed_statement_2572_1_out.file
+TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] 010277683-00200:   10277683   10277683    10277711    same-diff false true
@@ -44,7 +45,6 @@ INFO[DATE|TIME] 014436713-00059:   14436713   14436713    14469880    same-diff 
 INFO[DATE|TIME] 014469880-00033:   14436713   14469880    15549162
 INFO[DATE|TIME] 015549162-00083:   14469880   15549162    15549163
 TEST[DATE|TIME] Start of trial balance report
-WARN[DATE|TIME] Statement is not reconciled mdai.io at 15549162 83 1774
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             1000
 TEST[DATE|TIME]     lotsOfLogs:      --> true
@@ -72,8 +72,6 @@ TEST[DATE|TIME] float2:              1
 TEST[DATE|TIME] bigPrice:            1440.1112570636812698
 TEST[DATE|TIME] price:               1440.1112570636813
 TEST[DATE|TIME] source:              uniswap
-EROR[DATE|TIME] Failed to get price for mdai.io at 15549162 83
-EROR[DATE|TIME] Error returned from PriceUsd: no pair found for 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 and 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================

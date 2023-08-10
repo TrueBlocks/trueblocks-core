@@ -1,6 +1,7 @@
 chifra transactions  0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508 --account_for 0xf503017d7baf7fbc0fff7492b751025c6a78179b --fmt json
 TEST[DATE|TIME] Transactions:  [0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508]
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Needs correction for eth
