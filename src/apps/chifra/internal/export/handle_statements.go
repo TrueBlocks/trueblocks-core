@@ -113,7 +113,6 @@ func (opts *ExportOptions) readStatements(
 			opts.Traces,
 			&opts.Asset,
 		)
-		ledgers.Conn = opts.Conn
 		if opts.Accounting {
 			apps := make([]types.SimpleAppearance, 0, len(txMap))
 			for _, tx := range txArray {
@@ -134,7 +133,7 @@ func (opts *ExportOptions) readStatements(
 			}
 
 			ledgers.Tx = tx // we need this below
-			if stmts := ledgers.GetStatementsFromTransaction(tx); len(stmts) > 0 {
+			if stmts := ledgers.GetStatementsFromTransaction(opts.Conn, tx); len(stmts) > 0 {
 				for _, statement := range stmts {
 					statement := statement
 					items = append(items, statement)

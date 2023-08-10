@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"io"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -148,7 +149,29 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 }
 
 // EXISTING_CODE
-//
+func (s *SimpleLog) getHaystack() string {
+	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))
+	for _, topic := range s.Topics {
+		haystack = append(haystack, topic.Hex()[2:]...)
+	}
+	haystack = append(haystack, s.Data[2:]...)
+	return string(haystack)
+}
+
+func (s *SimpleLog) ContainsAny(addrArray []base.Address) bool {
+	haystack := s.getHaystack()
+	for _, addr := range addrArray {
+		if strings.Contains(string(haystack), addr.Hex()[2:]) {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *SimpleLog) ContainsAddress(addr base.Address) bool {
+	haystack := s.getHaystack()
+	return strings.Contains(string(haystack), addr.Hex()[2:])
+}
 
 func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
 	if err = cache.WriteValue(writer, s.Address); err != nil {

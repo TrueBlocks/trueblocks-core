@@ -5,7 +5,10 @@
 package transactionsPkg
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -18,8 +21,9 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return opts.BadFlag
 	}
 
-	if len(opts.AccountFor) > 0 {
-		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--account_for")
+	key := config.GetRootConfig().Keys["trueblocks"].License
+	if len(opts.AccountFor) > 0 && !strings.Contains(key, "+accounting") {
+		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 
 	if len(opts.Flow) > 0 {

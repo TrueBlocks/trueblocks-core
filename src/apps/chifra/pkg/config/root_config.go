@@ -38,9 +38,10 @@ type chainGroup struct {
 }
 
 type keyGroup struct {
-	ApiKey string `toml:"apiKey"`
-	Secret string `toml:"secret"`
-	Jwt    string `toml:"jwt"`
+	License string `toml:"license"`
+	ApiKey  string `toml:"apiKey"`
+	Secret  string `toml:"secret"`
+	Jwt     string `toml:"jwt"`
 }
 
 // TODO: This needs to be documented
