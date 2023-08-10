@@ -43,7 +43,7 @@ func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) (er
 			if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
 				outputData = tx.Traces[0].Result.Output[2:]
 			}
-			if err = ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
+			if err = abiCache.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
 				return err
 			}
 		}

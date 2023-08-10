@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
+func (abiCache *AbiCache) ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return

@@ -1,4 +1,4 @@
-export?addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665&firstBlock=10277780&lastBlock=10278000&decache
+export?addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665&firstBlock=10277780&lastBlock=10278000&neighbors&decache
 {
   "data": [
     {
