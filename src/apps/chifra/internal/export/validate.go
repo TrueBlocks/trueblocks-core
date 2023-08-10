@@ -6,8 +6,10 @@ package exportPkg
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -22,11 +24,11 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
-	if opts.Neighbors {
+	key := config.GetRootConfig().Keys["trueblocks"].License
+	if opts.Neighbors && !strings.Contains(key, "+neighbors") {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--neighbors")
 	}
-
-	if opts.Accounting {
+	if opts.Accounting && !strings.Contains(key, "+accounting") {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 

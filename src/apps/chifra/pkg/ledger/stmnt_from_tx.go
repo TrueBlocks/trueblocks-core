@@ -5,11 +5,12 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // GetStatementsFromTransaction returns a statement from a given transaction
-func (l *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (statements []*types.SimpleStatement) {
+func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types.SimpleTransaction) (statements []*types.SimpleStatement) {
 	// make room for our results
 	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
@@ -19,12 +20,12 @@ func (l *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (s
 	if l.AssetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
 		// TODO: performance - This greatly increases the number of times we call into eth_getBalance which is quite slow
-		prevBal, _ := l.Conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
+		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
 			prevBal = new(big.Int)
 		}
-		begBal, _ := l.Conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
-		endBal, _ := l.Conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
+		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
+		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
 
 		ret := types.SimpleStatement{
 			AccountedFor:     l.AccountFor,
@@ -93,7 +94,7 @@ func (l *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (s
 			if !l.UseTraces {
 				logger.TestLog(!l.UseTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
 			}
-			if traceStatements := l.GetStatementsFromTraces(trans, &ret); len(traceStatements) == 0 {
+			if traceStatements := l.GetStatementsFromTraces(conn, trans, &ret); len(traceStatements) == 0 {
 				logger.Warn(l.TestMode, "Error getting statement from traces")
 			} else {
 				statements = append(statements, traceStatements...)
@@ -103,8 +104,9 @@ func (l *Ledger) GetStatementsFromTransaction(trans *types.SimpleTransaction) (s
 
 	if trans.Receipt != nil {
 		for _, log := range trans.Receipt.Logs {
-			if l.AssetOfInterest(log.Address) {
-				if statement, err := l.GetStatementFromLog(&log); statement != nil {
+			log := log
+			if l.AssetOfInterest(log.Address) && log.ContainsAddress(l.AccountFor) {
+				if statement, err := l.GetStatementFromLog(conn, &log); statement != nil {
 					if statement.Sender == l.AccountFor || statement.Recipient == l.AccountFor {
 						add := !l.NoZero || statement.MoneyMoved()
 						if add {

@@ -9,11 +9,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // GetStatementFromLog returns a statement from a given log
-func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleStatement, err error) {
+func (l *Ledger) GetStatementFromLog(conn *rpc.Connection, log *types.SimpleLog) (r *types.SimpleStatement, err error) {
 	if len(log.Topics) < 3 || log.Topics[0] != articulate.TransferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
@@ -37,17 +38,17 @@ func (l *Ledger) GetStatementFromLog(log *types.SimpleLog) (r *types.SimpleState
 	ctx := l.Contexts[key]
 
 	pBal := new(big.Int)
-	if pBal, err = l.Conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
+	if pBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 		return nil, err
 	}
 
 	bBal := new(big.Int)
-	if bBal, err = l.Conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
+	if bBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 		return nil, err
 	}
 
 	eBal := new(big.Int)
-	if eBal, err = l.Conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
+	if eBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 		return nil, err
 	}
 

@@ -4,16 +4,17 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (l *Ledger) GetStatementsFromTraces(trans *types.SimpleTransaction, s *types.SimpleStatement) (statements []*types.SimpleStatement) {
+func (l *Ledger) GetStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) (statements []*types.SimpleStatement) {
 	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
 	ret.ClearInternal()
 
-	if traces, err := l.Conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+	if traces, err := conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		logger.Error(err)
 
 	} else {

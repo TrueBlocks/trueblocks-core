@@ -8,7 +8,6 @@ import (
 	"context"
 	"fmt"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -31,10 +30,16 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
+	addrArray := make([]base.Address, 0, len(monitorArray))
+	for _, mon := range monitorArray {
+		addrArray = append(addrArray, mon.Address)
+	}
+
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if items, err := opts.readLogs(monitorArray, &mon, filter, errorChan, abiCache); err != nil {
+			mon := mon
+			if items, err := opts.readLogs(addrArray, &mon, filter, errorChan, abiCache); err != nil {
 				errorChan <- err
 				continue
 			} else {
@@ -65,7 +70,7 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 }
 
 func (opts *ExportOptions) readLogs(
-	monitorArray []monitor.Monitor,
+	addrArray []base.Address,
 	mon *monitor.Monitor,
 	filter *monitor.AppearanceFilter,
 	errorChan chan error,
@@ -86,7 +91,7 @@ func (opts *ExportOptions) readLogs(
 			if tx.Receipt != nil {
 				for _, log := range tx.Receipt.Logs {
 					log := log
-					if opts.isRelevant(monitorArray, log) {
+					if log.ContainsAny(addrArray) {
 						if opts.matchesFilter(&log) {
 							if opts.Articulate {
 								if err := abiCache.ArticulateLog(chain, &log); err != nil {
@@ -117,24 +122,6 @@ func (opts *ExportOptions) readLogs(
 		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 		return nil, nil
 	}
-}
-
-func (opts *ExportOptions) isRelevant(monitorArray []monitor.Monitor, log types.SimpleLog) bool {
-	if !opts.Relevant {
-		return true
-	}
-
-	haystack := ""
-	for _, topic := range log.Topics {
-		haystack += strings.Replace(topic.Hex(), "0x", "", -1)
-	}
-	haystack += log.Data
-	for _, mon := range monitorArray {
-		if strings.Contains(strings.ToLower(haystack), mon.Address.Hex()[2:]) {
-			return true
-		}
-	}
-	return false
 }
 
 func (opts *ExportOptions) matchesFilter(log *types.SimpleLog) bool {

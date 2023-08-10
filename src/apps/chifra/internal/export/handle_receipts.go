@@ -30,10 +30,16 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
+	addrArray := make([]base.Address, 0, len(monitorArray))
+	for _, mon := range monitorArray {
+		addrArray = append(addrArray, mon.Address)
+	}
+
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if items, err := opts.readReceipts(monitorArray, &mon, filter, errorChan, abiCache); err != nil {
+			mon := mon
+			if items, err := opts.readReceipts(addrArray, &mon, filter, errorChan, abiCache); err != nil {
 				errorChan <- err
 				continue
 			} else {
@@ -64,7 +70,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 }
 
 func (opts *ExportOptions) readReceipts(
-	monitorArray []monitor.Monitor,
+	addrArray []base.Address,
 	mon *monitor.Monitor,
 	filter *monitor.AppearanceFilter,
 	errorChan chan error,
@@ -88,7 +94,7 @@ func (opts *ExportOptions) readReceipts(
 			filteredLogs := make([]types.SimpleLog, 0, len(tx.Receipt.Logs))
 			for _, log := range tx.Receipt.Logs {
 				log := log
-				if opts.isRelevant(monitorArray, log) {
+				if log.ContainsAny(addrArray) {
 					if opts.matchesFilter(&log) {
 						if opts.Articulate {
 							if err := abiCache.ArticulateLog(chain, &log); err != nil {
