@@ -151,6 +151,7 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 // EXISTING_CODE
 func (s *SimpleLog) getHaystack() string {
 	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))
+	haystack = append(haystack, s.Address.Hex()[2:]...)
 	for _, topic := range s.Topics {
 		haystack = append(haystack, topic.Hex()[2:]...)
 	}
