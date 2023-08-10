@@ -1,6 +1,10 @@
 package identifiers
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
 
 type ResolvedId struct {
 	BlockNumber      uint64
@@ -12,19 +16,22 @@ func (r *ResolvedId) String() string {
 	return r.Original
 }
 
-func AsMap[T any](chain string, ids []Identifier) (map[ResolvedId]*T, error) {
-	ret := make(map[ResolvedId]*T)
+// AsMap takes command line identifiers for blocks or transactions and returns a map of appearances to allocated
+// pointers to SimpleTransactions. The map is keyed by the appearance and the value is the allocated pointer.
+// We don't know what type of identifier we have until we try to resolve it.
+func AsMap(chain string, ids []Identifier) (map[ResolvedId]*types.SimpleTransaction, int, error) {
+	ret := make(map[ResolvedId]*types.SimpleTransaction)
 	for index, rng := range ids {
 		if rawIds, err := rng.ResolveTxs(chain); err != nil {
 			if blockIds, err := rng.ResolveBlocks(chain); err != nil {
-				return nil, err
+				return nil, 0, err
 			} else {
 				for _, raw := range blockIds {
 					s := ResolvedId{
 						BlockNumber: uint64(raw),
 						Original:    strings.Replace(ids[index].Orig, "-", ".", -1),
 					}
-					ret[s] = new(T)
+					ret[s] = new(types.SimpleTransaction)
 				}
 			}
 		} else {
@@ -34,10 +41,10 @@ func AsMap[T any](chain string, ids []Identifier) (map[ResolvedId]*T, error) {
 					TransactionIndex: uint64(raw.TransactionIndex),
 					Original:         strings.Replace(ids[index].Orig, "-", ".", -1),
 				}
-				ret[s] = new(T)
+				ret[s] = new(types.SimpleTransaction)
 			}
 		}
 	}
 
-	return ret, nil
+	return ret, len(ret), nil
 }

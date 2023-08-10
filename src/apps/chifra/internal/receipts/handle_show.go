@@ -21,7 +21,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
-		if txMap, err := identifiers.AsMap[types.SimpleReceipt](chain, opts.TransactionIds); err != nil {
+		if txMap, _, err := identifiers.AsMap(chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 		} else {
@@ -31,7 +31,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 			iterCtx, iterCancel := context.WithCancel(context.Background())
 			defer iterCancel()
 
-			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleReceipt) error {
+			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
 				a := &types.RawAppearance{
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
@@ -46,7 +46,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 							errorChan <- err // continue even with an error
 						}
 					}
-					*value = *tx.Receipt
+					*value = *tx
 					bar.Tick()
 					return nil
 				}
@@ -67,8 +67,10 @@ func (opts *ReceiptsOptions) HandleShow() error {
 			bar.Finish(true)
 
 			items := make([]types.SimpleReceipt, 0, len(txMap))
-			for _, receipt := range txMap {
-				items = append(items, *receipt)
+			for _, tx := range txMap {
+				if tx.Receipt != nil {
+					items = append(items, *tx.Receipt)
+				}
 			}
 			sort.Slice(items, func(i, j int) bool {
 				if items[i].BlockNumber == items[j].BlockNumber {

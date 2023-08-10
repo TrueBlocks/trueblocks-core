@@ -25,7 +25,7 @@ func (opts *TracesOptions) HandleShow() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		if txMap, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if txMap, _, err := identifiers.AsMap(chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 		} else {
