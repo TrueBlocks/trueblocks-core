@@ -42,10 +42,7 @@ func (opts *StateOptions) HandleCall() error {
 
 			for _, bn := range blockNums {
 				contractCall.BlockNumber = bn
-				results, err := call.CallContract(
-					chain,
-					contractCall,
-				)
+				results, err := contractCall.Call(chain)
 				if err != nil {
 					errorChan <- err
 					return

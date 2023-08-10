@@ -17,6 +17,7 @@ import (
 type ContractCall struct {
 	encoded string
 
+	Chain       string
 	Address     base.Address
 	Method      *types.SimpleFunction
 	Arguments   []any
@@ -92,6 +93,7 @@ func NewContractCall(chain string, callAddress base.Address, theCall string, sho
 	}
 
 	contactCall := &ContractCall{
+		Chain:     chain,
 		Address:   callAddress,
 		Method:    function,
 		Arguments: args,
@@ -124,11 +126,11 @@ func convertArguments(callArguments []*parser.ContractCallArgument, function *ty
 	return
 }
 
-func (c *ContractCall) forceEncoding(encoding string) {
-	c.encoded = encoding
+func (call *ContractCall) forceEncoding(encoding string) {
+	call.encoded = encoding
 }
 
-func CallContract(chain string, call *ContractCall) (results *types.SimpleCallResult, err error) {
+func (call *ContractCall) Call(chain string) (results *types.SimpleCallResult, err error) {
 	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
 	if err != nil {
 		return
@@ -164,7 +166,8 @@ func CallContract(chain string, call *ContractCall) (results *types.SimpleCallRe
 	rr := *rawReturn
 	function := call.Method.Clone()
 	if len(rr) > 2 {
-		err = articulate.ArticulateFunction(function, "", rr[2:])
+		abiCache := articulate.NewAbiCache(chain, true)
+		err = abiCache.ArticulateFunction(function, "", rr[2:])
 		if err != nil {
 			return nil, err
 		}
