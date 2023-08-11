@@ -17,10 +17,10 @@ func (r *ResolvedId) String() string {
 }
 
 // AsMap takes command line identifiers for blocks or transactions and returns a map of appearances to allocated
-// pointers to SimpleTransactions. The map is keyed by the appearance and the value is the allocated pointer.
-// We don't know what type of identifier we have until we try to resolve it.
-func AsMap(chain string, ids []Identifier) (map[ResolvedId]*types.SimpleTransaction, int, error) {
-	ret := make(map[ResolvedId]*types.SimpleTransaction)
+// pointers to SimpleTransactions or SimpleBlock[string]. The map is keyed by the appearance and the value is
+// the allocated pointer. We don't know what type of identifier we have until we try to resolve it.
+func AsMap[T types.SimpleTransaction | types.SimpleBlock[string]](chain string, ids []Identifier) (map[ResolvedId]*T, int, error) {
+	ret := make(map[ResolvedId]*T)
 	for index, rng := range ids {
 		if rawIds, err := rng.ResolveTxs(chain); err != nil {
 			if blockIds, err := rng.ResolveBlocks(chain); err != nil {
@@ -31,7 +31,7 @@ func AsMap(chain string, ids []Identifier) (map[ResolvedId]*types.SimpleTransact
 						BlockNumber: uint64(raw),
 						Original:    strings.Replace(ids[index].Orig, "-", ".", -1),
 					}
-					ret[s] = new(types.SimpleTransaction)
+					ret[s] = new(T)
 				}
 			}
 		} else {
@@ -41,7 +41,7 @@ func AsMap(chain string, ids []Identifier) (map[ResolvedId]*types.SimpleTransact
 					TransactionIndex: uint64(raw.TransactionIndex),
 					Original:         strings.Replace(ids[index].Orig, "-", ".", -1),
 				}
-				ret[s] = new(types.SimpleTransaction)
+				ret[s] = new(T)
 			}
 		}
 	}

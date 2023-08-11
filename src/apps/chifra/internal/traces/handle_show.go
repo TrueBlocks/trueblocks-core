@@ -25,74 +25,78 @@ func (opts *TracesOptions) HandleShow() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		if txMap, _, err := identifiers.AsMap(chain, opts.TransactionIds); err != nil {
+		var err error
+		var txMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		if txMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
-		} else {
-			showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
-			bar := logger.NewBar("", showProgress, int64(len(txMap)))
+		}
 
-			iterCtx, iterCancel := context.WithCancel(context.Background())
-			defer iterCancel()
+		bar := logger.NewBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, int64(len(txMap)))
 
-			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
-				a := &types.RawAppearance{
-					BlockNumber:      uint32(app.BlockNumber),
-					TransactionIndex: uint32(app.TransactionIndex),
-				}
-				if tx, err := opts.Conn.GetTransactionByAppearance(a, true); err != nil {
-					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
-					return nil
-				} else if tx == nil || len(tx.Traces) == 0 {
-					errorChan <- fmt.Errorf("transaction at %s has no traces", app.String())
-					return nil
-				} else {
-					for index := range tx.Traces {
-						if opts.Articulate {
-							if err = abiCache.ArticulateTrace(&tx.Traces[index]); err != nil {
-								errorChan <- err // continue even with an error
-							}
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
+
+		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+			a := &types.RawAppearance{
+				BlockNumber:      uint32(app.BlockNumber),
+				TransactionIndex: uint32(app.TransactionIndex),
+			}
+
+			if tx, err := opts.Conn.GetTransactionByAppearance(a, true); err != nil {
+				errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+				return nil
+
+			} else if tx == nil || len(tx.Traces) == 0 {
+				errorChan <- fmt.Errorf("transaction at %s has no traces", app.String())
+				return nil
+
+			} else {
+				for index := range tx.Traces {
+					if opts.Articulate {
+						if err = abiCache.ArticulateTrace(&tx.Traces[index]); err != nil {
+							errorChan <- err // continue even with an error
 						}
 					}
-					*value = *tx
-					bar.Tick()
-					return nil
 				}
+				*value = *tx
+				bar.Tick()
+				return nil
 			}
+		}
 
-			iterErrorChan := make(chan error)
-			go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
-			for err := range iterErrorChan {
-				// TODO: I don't really want to quit looping here. Just report the error and keep going.
-				// iterCancel()
-				if !testMode || nErrors == 0 {
-					errorChan <- err
-					// Reporting more than one error causes tests to fail because they
-					// appear concurrently so sort differently
-					nErrors++
-				}
+		iterErrorChan := make(chan error)
+		go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+		for err := range iterErrorChan {
+			// TODO: I don't really want to quit looping here. Just report the error and keep going.
+			// iterCancel()
+			if !testMode || nErrors == 0 {
+				errorChan <- err
+				// Reporting more than one error causes tests to fail because they
+				// appear concurrently so sort differently
+				nErrors++
 			}
-			bar.Finish(true)
+		}
+		bar.Finish(true)
 
-			items := make([]types.SimpleTrace, 0, len(txMap))
-			for _, receipt := range txMap {
-				items = append(items, receipt.Traces...)
+		items := make([]types.SimpleTrace, 0, len(txMap))
+		for _, receipt := range txMap {
+			items = append(items, receipt.Traces...)
+		}
+		sort.Slice(items, func(i, j int) bool {
+			if items[i].BlockNumber == items[j].BlockNumber {
+				if items[i].TransactionIndex == items[j].TransactionIndex {
+					return items[i].TraceIndex < items[j].TraceIndex
+				}
+				return items[i].TransactionIndex < items[j].TransactionIndex
 			}
-			sort.Slice(items, func(i, j int) bool {
-				if items[i].BlockNumber == items[j].BlockNumber {
-					if items[i].TransactionIndex == items[j].TransactionIndex {
-						return items[i].TraceIndex < items[j].TraceIndex
-					}
-					return items[i].TransactionIndex < items[j].TransactionIndex
-				}
-				return items[i].BlockNumber < items[j].BlockNumber
-			})
+			return items[i].BlockNumber < items[j].BlockNumber
+		})
 
-			for _, item := range items {
-				item := item
-				if item.BlockNumber != 0 {
-					modelChan <- &item
-				}
+		for _, item := range items {
+			item := item
+			if item.BlockNumber != 0 {
+				modelChan <- &item
 			}
 		}
 	}

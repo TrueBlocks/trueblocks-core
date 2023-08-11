@@ -43,7 +43,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		var err error
 		var txMap map[identifiers.ResolvedId]*types.SimpleTransaction
 
-		if txMap, _, err = identifiers.AsMap(chain, opts.TransactionIds); err != nil {
+		if txMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 		}

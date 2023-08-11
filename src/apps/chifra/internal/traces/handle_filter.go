@@ -1,43 +1,128 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
 package tracesPkg
 
 import (
 	"context"
+	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *TracesOptions) HandleFilter() error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	nErrors := 0
+	traceFilter := types.SimpleTraceFilter{}
+	_, br := traceFilter.ParseBangString(opts.Filter)
+
+	ids := make([]identifiers.Identifier, 0)
+	validate.ValidateIdentifiersWithBounds(chain, []string{fmt.Sprintf("%d-%d", br.First, br.Last)}, validate.ValidBlockIdWithRangeAndDate, 1, &ids)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		traces, err := opts.Conn.GetTracesByFilter(opts.Filter)
-		if err != nil {
+		var err error
+		var txMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		if txMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, ids); err != nil {
 			errorChan <- err
 			cancel()
-			return
-		}
-		if len(traces) == 0 {
-			return
 		}
 
-		for index := range traces {
-			traces[index].Timestamp = opts.Conn.GetBlockTimestamp(uint64(traces[index].BlockNumber))
-			if opts.Articulate {
-				if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
-					errorChan <- err // continue even with an error
-				}
+		bar := logger.NewBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, int64(len(txMap)))
+
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
+
+		nProcessed := 0
+
+		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+			a := &types.RawAppearance{
+				BlockNumber: uint32(app.BlockNumber),
 			}
-			modelChan <- &traces[index]
+
+			if block, err := opts.Conn.GetBlockBodyByNumber(uint64(a.BlockNumber)); err != nil {
+				errorChan <- fmt.Errorf("block at %s returned an error: %w", app.String(), err)
+				return nil
+			} else {
+				for _, tx := range block.Transactions {
+					if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
+						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.String(), err)
+						return nil
+
+					} else if len(traces) == 0 {
+						errorChan <- fmt.Errorf("block at %s has no traces", app.String())
+						return nil
+
+					} else {
+						tr := make([]types.SimpleTrace, 0, len(traces))
+						for index := range traces {
+							if traceFilter.PassesAddressFilter(&traces[index]) {
+								if opts.Articulate {
+									if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
+										errorChan <- err // continue even with an error
+									}
+								}
+								tr = append(tr, traces[index])
+							}
+							nProcessed++
+						}
+						value.Traces = tr
+					}
+				}
+				bar.Tick()
+				return nil
+			}
+		}
+
+		iterErrorChan := make(chan error)
+		go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+		for err := range iterErrorChan {
+			// TODO: I don't really want to quit looping here. Just report the error and keep going.
+			// iterCancel()
+			if !opts.Globals.TestMode || nErrors == 0 {
+				errorChan <- err
+				// Reporting more than one error causes tests to fail because they
+				// appear concurrently so sort differently
+				nErrors++
+			}
+		}
+		bar.Finish(true)
+
+		items := make([]types.SimpleTrace, 0, len(txMap))
+		for _, tx := range txMap {
+			items = append(items, tx.Traces...)
+		}
+		sort.Slice(items, func(i, j int) bool {
+			if items[i].BlockNumber == items[j].BlockNumber {
+				if items[i].TransactionIndex == items[j].TransactionIndex {
+					return items[i].TraceIndex < items[j].TraceIndex
+				}
+				return items[i].TransactionIndex < items[j].TransactionIndex
+			}
+			return items[i].BlockNumber < items[j].BlockNumber
+		})
+
+		for _, item := range items {
+			item := item
+			if item.BlockNumber != 0 {
+				modelChan <- &item
+			}
 		}
 	}
 
 	extra := map[string]interface{}{
 		"articulate": opts.Articulate,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 

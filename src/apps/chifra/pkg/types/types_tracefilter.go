@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -38,6 +39,7 @@ type SimpleTraceFilter struct {
 	ToBlock     string          `json:"toBlock,omitempty"`
 	raw         *RawTraceFilter `json:"-"`
 	// EXISTING_CODE
+	Seen uint64 `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -78,15 +80,79 @@ func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[
 // EXISTING_CODE
 //
 
-func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]any) {
+func (s *SimpleTraceFilter) PassesAddressFilter(trace *SimpleTrace) bool {
+	passesTo := len(s.ToAddress) == 0
+	if !passesTo {
+		for _, addr := range s.ToAddress {
+			if trace.Action.To == addr {
+				passesTo = true
+				break
+			}
+		}
+	}
+	if !passesTo {
+		return false
+	}
+
+	passesFrom := len(s.FromAddress) == 0
+	if !passesFrom {
+		for _, addr := range s.FromAddress {
+			if trace.Action.From == addr {
+				passesFrom = true
+				break
+			}
+		}
+	}
+	if !passesFrom {
+		return false
+	}
+	return true
+}
+
+func (s *SimpleTraceFilter) PassesFilter(trace *SimpleTrace, index int) bool {
+	fromBlock := mustParseUint(s.FromBlock)
+	if trace.BlockNumber < fromBlock {
+		fmt.Println("block number too low", trace.BlockNumber, fromBlock)
+		return false
+	}
+
+	toBlock := mustParseUint(s.ToBlock)
+	if trace.BlockNumber > toBlock {
+		fmt.Println("block number too high", trace.BlockNumber, toBlock)
+		return false
+	}
+
+	if !(s.After == 0 || uint64(index) >= s.After) {
+		fmt.Println("index too low", index, s.After)
+		return false
+	}
+
+	if s.Seen > s.Count {
+		fmt.Println("count too high", s.Seen, s.Count)
+		return false
+	}
+
+	if !s.PassesAddressFilter(trace) {
+		return false
+	}
+
+	fmt.Println("passed")
+	s.Seen++
+	return true
+}
+
+func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]any, br base.BlockRange) {
+	br = base.BlockRange{First: 0, Last: utils.NOPOS}
 	ret = make(map[string]any)
 	parts := strings.Split(filter, "!")
 	if len(parts) > 0 && mustParseUint(parts[0]) > 0 {
-		s.FromBlock = fmt.Sprintf("0x%x", mustParseUint(parts[0]))
+		br.First = mustParseUint(parts[0])
+		s.FromBlock = fmt.Sprintf("0x%x", br.First)
 		ret["fromBlock"] = s.FromBlock
 	}
 	if len(parts) > 1 && mustParseUint(parts[1]) > 0 {
-		s.ToBlock = fmt.Sprintf("0x%x", mustParseUint(parts[1]))
+		br.Last = mustParseUint(parts[1])
+		s.ToBlock = fmt.Sprintf("0x%x", br.Last)
 		ret["toBlock"] = s.ToBlock
 	}
 	if len(parts) > 2 && len(parts[2]) > 0 {
@@ -105,7 +171,7 @@ func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]any) 
 		s.Count = mustParseUint(parts[5])
 		ret["count"] = s.Count
 	}
-	return ret
+	return ret, br
 }
 
 // EXISTING_CODE
