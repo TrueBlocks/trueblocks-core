@@ -6,14 +6,16 @@ package blocksPkg
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *BlocksOptions) HandleLogs() error {
@@ -32,61 +34,88 @@ func (opts *BlocksOptions) HandleLogs() error {
 		Topics:   topics,
 	}
 
+	nErrors := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(chain)
-			if err != nil {
-				errorChan <- err
-				if errors.Is(err, ethereum.NotFound) {
-					continue
-				}
-				cancel()
-				return
+		var err error
+		var txMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		if txMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds); err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		bar := logger.NewBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, int64(len(txMap)))
+
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
+
+		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+			if value.Receipt == nil {
+				value.Receipt = &types.SimpleReceipt{}
 			}
 
-			for _, bn := range blockNums {
-				logFilter.FromBlock = bn
-				logFilter.ToBlock = bn
+			if logs, err := opts.Conn.GetLogsByNumber(app.BlockNumber); err != nil {
+				errorChan <- fmt.Errorf("block at %d returned an error: %w", app.BlockNumber, err)
+				return nil
 
-				if opts.Globals.TestMode {
-					errorChan <- errors.New("TESTING_ONLY_filter" + fmt.Sprintf("%+v", logFilter))
-				}
+			} else if len(logs) == 0 {
+				errorChan <- fmt.Errorf("block at %d has no logs", app.BlockNumber)
+				return nil
 
-				logs, err := opts.Conn.GetLogsByFilter(logFilter)
-				if err != nil {
-					errorChan <- err
-					if errors.Is(err, ethereum.NotFound) {
-						continue
-					}
-					cancel()
-					return
-				}
-
-				for _, log := range logs {
-					// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
-					log := log
+			} else {
+				l := make([]types.SimpleLog, 0, len(logs))
+				for index := range logs {
 					if opts.Articulate {
-						if err := abiCache.ArticulateLog(&log); err != nil {
-							errorChan <- err // continue even on error
+						if err = abiCache.ArticulateLog(&logs[index]); err != nil {
+							errorChan <- err // continue even with an error
 						}
 					}
-					if !logFilter.PassesFilter(&log) {
-						continue
-					}
-					modelChan <- &log
+					l = append(l, logs[index])
 				}
+				bar.Tick()
+				value.Receipt.Logs = append(value.Receipt.Logs, l...)
 			}
+			return nil
+		}
+
+		iterErrorChan := make(chan error)
+		go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+		for err := range iterErrorChan {
+			// TODO: I don't really want to quit looping here. Just report the error and keep going.
+			// iterCancel()
+			if !opts.Globals.TestMode || nErrors == 0 {
+				errorChan <- err
+				// Reporting more than one error causes tests to fail because they
+				// appear concurrently so sort differently
+				nErrors++
+			}
+		}
+		bar.Finish(true)
+
+		items := make([]types.SimpleLog, 0, len(txMap))
+		for _, tx := range txMap {
+			tx := tx
+			items = append(items, tx.Receipt.Logs...)
+		}
+		sort.Slice(items, func(i, j int) bool {
+			if items[i].BlockNumber == items[j].BlockNumber {
+				return items[i].TransactionIndex < items[j].TransactionIndex
+			}
+			return items[i].BlockNumber < items[j].BlockNumber
+		})
+
+		for _, item := range items {
+			item := item
+			if !logFilter.PassesFilter(&item) {
+				continue
+			}
+			modelChan <- &item
 		}
 	}
 
 	extra := map[string]interface{}{
-		"count":      opts.Count,
-		"uncles":     opts.Uncles,
-		"logs":       opts.Logs,
-		"traces":     opts.Traces,
-		"addresses":  opts.Uniq,
 		"articulate": opts.Articulate,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

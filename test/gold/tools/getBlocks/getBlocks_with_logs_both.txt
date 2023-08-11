@@ -39,8 +39,5 @@ TEST[DATE|TIME] Format:  json
       "transactionHash": "0x98e9e199e1ae61cbd2272902d798b0e49aaebfc1d7e835a5a97a00d3c7e4ac82",
       "transactionIndex": 35
     }
-  ],
-  "errors": [
-    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0] FromBlock:4012000 ToBlock:4012000 Topics:[0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef] raw:\u003cnil\u003e}"
   ]
 }
