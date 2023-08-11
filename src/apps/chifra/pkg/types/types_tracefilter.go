@@ -56,21 +56,21 @@ func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[
 
 	// EXISTING_CODE
 	model = map[string]interface{}{
-		"after":     s.After,
-		"count":     s.Count,
-		"fromBlock": s.FromBlock,
-		"toBlock":   s.ToBlock,
-		"from":      s.FromAddress,
-		"to":        s.ToAddress,
+		"after":       s.After,
+		"count":       s.Count,
+		"fromAddress": s.FromAddress,
+		"fromBlock":   s.FromBlock,
+		"toAddress":   s.ToAddress,
+		"toBlock":     s.ToBlock,
 	}
 
 	order = []string{
 		"fromBlock",
 		"toBlock",
+		"fromAddress",
+		"toAddress",
 		"after",
 		"count",
-		"from",
-		"to",
 	}
 	// EXISTING_CODE
 
@@ -83,28 +83,24 @@ func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[
 // EXISTING_CODE
 //
 
-func (s *SimpleTraceFilter) Passes(trace *SimpleTrace, pos uint64, cnt uint64) (bool, string) {
+func (s *SimpleTraceFilter) PassesBasic(trace *SimpleTrace, nTested uint64, nPassed uint64) (bool, string) {
 	if s.FromBlock != 0 && trace.BlockNumber < s.FromBlock {
-		return false, fmt.Sprintf("block number (%d) less than fromBlock (%d)", trace.BlockNumber, s.FromBlock)
+		reason := fmt.Sprintf("block number (%d) less than fromBlock (%d)", trace.BlockNumber, s.FromBlock)
+		return false, reason
 	}
 	if s.ToBlock != 0 && trace.BlockNumber > s.ToBlock {
-		return false, fmt.Sprintf("block number (%d) greater than toBlock (%d)", trace.BlockNumber, s.ToBlock)
+		reason := fmt.Sprintf("block number (%d) greater than toBlock (%d)", trace.BlockNumber, s.ToBlock)
+		return false, reason
 	}
 	if !s.FromAddress.IsZero() && trace.Action.From.Hex() != s.FromAddress.Hex() {
-		return false, fmt.Sprintf("from address (%s) doesn't match (%s)", trace.Action.From.Hex(), s.FromAddress.Hex())
+		reason := fmt.Sprintf("from address (%s) doesn't match (%s)", trace.Action.From.Hex(), s.FromAddress.Hex())
+		return false, reason
 	}
 	if !s.ToAddress.IsZero() && trace.Action.To.Hex() != s.ToAddress.Hex() {
-		return false, fmt.Sprintf("to address (%s) doesn't match (%s)", trace.Action.To.Hex(), s.ToAddress.Hex())
+		reason := fmt.Sprintf("to address (%s) doesn't match (%s)", trace.Action.To.Hex(), s.ToAddress.Hex())
+		return false, reason
 	}
-	if pos <= s.After {
-		return false, fmt.Sprintf("position (%d) less than after (%d)", pos, s.After)
-	}
-
-	msg := ""
-	if cnt > s.Count {
-		msg = fmt.Sprintf("nseen (%d) exceeded count (%d)", cnt, s.Count)
-	}
-	return cnt < s.Count, msg
+	return true, ""
 }
 
 func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]interface{}, br base.BlockRange) {

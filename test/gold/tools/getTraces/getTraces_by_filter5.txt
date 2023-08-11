@@ -1,8 +1,10 @@
-chifra traces  --fmt json --filter 4370000!4370002
+chifra traces  --fmt json --filter 4370000!4370002 --cache
 TEST[DATE|TIME] Filter:  4370000!4370002
+TEST[DATE|TIME] Enabled:  traces, txs
+TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] map[fromBlock:0x42ae50 toBlock:0x42ae52]
+INFO[DATE|TIME] map[after:0 count:18446744073709551615 fromAddress:0x0 fromBlock:4370000 toAddress:0x0 toBlock:4370002] {4370000 4370002}
 {
   "data": [
     {
@@ -8352,21 +8354,6 @@ INFO[DATE|TIME] map[fromBlock:0x42ae50 toBlock:0x42ae52]
       "transactionHash": "0x1fcb1196d8a3bff0bcf13309d2d2bb1a23ae1ac13f5674c801be0ff9254d5ab5",
       "transactionIndex": 96,
       "type": "call"
-    },
-    {
-      "action": {
-        "to": "0x0",
-        "value": "3000000000000000000"
-      },
-      "blockHash": "0xb1fcff633029ee18ab6482b58ff8b6e95dd7c82a954c852157152a7a6d32785e",
-      "blockNumber": 4370000,
-      "result": null,
-      "subtraces": 0,
-      "timestamp": 1508131331,
-      "traceAddress": [],
-      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "transactionIndex": 0,
-      "type": "reward"
     },
     {
       "action": {
@@ -16990,21 +16977,6 @@ INFO[DATE|TIME] map[fromBlock:0x42ae50 toBlock:0x42ae52]
     },
     {
       "action": {
-        "to": "0x0",
-        "value": "3000000000000000000"
-      },
-      "blockHash": "0x40996e904604226a5c252f496238d4c70270e0a05c4cb5588987b32fe1c4a7f2",
-      "blockNumber": 4370001,
-      "result": null,
-      "subtraces": 0,
-      "timestamp": 1508131362,
-      "traceAddress": [],
-      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "transactionIndex": 0,
-      "type": "reward"
-    },
-    {
-      "action": {
         "callType": "call",
         "from": "0x93753c8b85ee18d97e1e584fbe746e2214e15ff2",
         "gas": 96680,
@@ -20409,21 +20381,6 @@ INFO[DATE|TIME] map[fromBlock:0x42ae50 toBlock:0x42ae52]
       "transactionHash": "0x0140f519d28db26720c04aa79812ae03eefc3307a318c7906a5483df22d54c5b",
       "transactionIndex": 58,
       "type": "call"
-    },
-    {
-      "action": {
-        "to": "0x0",
-        "value": "3000000000000000000"
-      },
-      "blockHash": "0xba986765117223ab785285b0cbd13c1c9cd06521db23fa5d4afeedab8d8a2cbe",
-      "blockNumber": 4370002,
-      "result": null,
-      "subtraces": 0,
-      "timestamp": 1508131367,
-      "traceAddress": [],
-      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "transactionIndex": 0,
-      "type": "reward"
     }
   ]
 }

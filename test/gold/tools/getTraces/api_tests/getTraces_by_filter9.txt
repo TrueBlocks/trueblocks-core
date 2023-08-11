@@ -8333,21 +8333,6 @@ traces?fmt=json&filter=4370000!4370002!!!1!
     },
     {
       "action": {
-        "to": "0x0",
-        "value": "3000000000000000000"
-      },
-      "blockHash": "0xb1fcff633029ee18ab6482b58ff8b6e95dd7c82a954c852157152a7a6d32785e",
-      "blockNumber": 4370000,
-      "result": null,
-      "subtraces": 0,
-      "timestamp": 1508131331,
-      "traceAddress": [],
-      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "transactionIndex": 0,
-      "type": "reward"
-    },
-    {
-      "action": {
         "callType": "call",
         "from": "0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111",
         "gas": 76618,
@@ -16968,21 +16953,6 @@ traces?fmt=json&filter=4370000!4370002!!!1!
     },
     {
       "action": {
-        "to": "0x0",
-        "value": "3000000000000000000"
-      },
-      "blockHash": "0x40996e904604226a5c252f496238d4c70270e0a05c4cb5588987b32fe1c4a7f2",
-      "blockNumber": 4370001,
-      "result": null,
-      "subtraces": 0,
-      "timestamp": 1508131362,
-      "traceAddress": [],
-      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "transactionIndex": 0,
-      "type": "reward"
-    },
-    {
-      "action": {
         "callType": "call",
         "from": "0x93753c8b85ee18d97e1e584fbe746e2214e15ff2",
         "gas": 96680,
@@ -20387,21 +20357,6 @@ traces?fmt=json&filter=4370000!4370002!!!1!
       "transactionHash": "0x0140f519d28db26720c04aa79812ae03eefc3307a318c7906a5483df22d54c5b",
       "transactionIndex": 58,
       "type": "call"
-    },
-    {
-      "action": {
-        "to": "0x0",
-        "value": "3000000000000000000"
-      },
-      "blockHash": "0xba986765117223ab785285b0cbd13c1c9cd06521db23fa5d4afeedab8d8a2cbe",
-      "blockNumber": 4370002,
-      "result": null,
-      "subtraces": 0,
-      "timestamp": 1508131367,
-      "traceAddress": [],
-      "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "transactionIndex": 0,
-      "type": "reward"
     }
   ],
   "meta": {

@@ -10,7 +10,6 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -27,7 +26,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	_, br := traceFilter.ParseBangString(opts.Filter)
 
 	ids := make([]identifiers.Identifier, 0)
-	if _, err := validate.ValidateIdentifiersWithBounds(chain, []string{fmt.Sprintf("%d-%d", br.First, br.Last)}, validate.ValidBlockIdWithRangeAndDate, 1, &ids); err != nil {
+	if _, err := validate.ValidateIdentifiersWithBounds(chain, []string{fmt.Sprintf("%d-%d", br.First, br.Last+1)}, validate.ValidBlockIdWithRangeAndDate, 1, &ids); err != nil {
 		return err
 	}
 
@@ -72,9 +71,11 @@ func (opts *TracesOptions) HandleFilter() error {
 									errorChan <- err // continue even with an error
 								}
 							}
+							traces[index].TraceIndex = uint64(index)
 							tr = append(tr, traces[index])
 						}
-						value.Traces = tr
+						// fmt.Println(tx.TransactionIndex, len(traces), len(tr))
+						value.Traces = append(value.Traces, tr...)
 					}
 				}
 				bar.Tick()
@@ -98,7 +99,10 @@ func (opts *TracesOptions) HandleFilter() error {
 
 		items := make([]types.SimpleTrace, 0, len(txMap))
 		for _, tx := range txMap {
+			tx := tx
 			items = append(items, tx.Traces...)
+			// fmt.Println(tx.TransactionIndex, len(tx.Traces), len(items))
+			// fmt.Println()
 		}
 		sort.Slice(items, func(i, j int) bool {
 			if items[i].BlockNumber == items[j].BlockNumber {
@@ -110,23 +114,21 @@ func (opts *TracesOptions) HandleFilter() error {
 			return items[i].BlockNumber < items[j].BlockNumber
 		})
 
+		// logger.Info(traceFilter)
 		nPassed := uint64(0)
-		nSeen := uint64(0)
-		for _, item := range items {
+		nShown := uint64(0)
+		for nTested, item := range items {
 			item := item
-			nSeen++
-			if nSeen > traceFilter.After { // && uint64(index) < traceFilter.Count {
-				ok, _ := traceFilter.Passes(&item, utils.NOPOS, 0)
-				// logger.Info(item.BlockNumber, item.TransactionIndex, item.TraceIndex, ok, msg)
-				if ok {
-					nPassed++
-					item.Action.From = base.HexToAddress(fmt.Sprintf("0x%x", nPassed))
-					item.Action.To = base.HexToAddress(fmt.Sprintf("0x%x", nSeen))
+			ok, _ := traceFilter.PassesBasic(&item, uint64(nTested), nPassed)
+			if ok {
+				if (traceFilter.After == 0 || nPassed >= traceFilter.After) && (traceFilter.Count == 0 || uint64(nShown) < traceFilter.Count) {
 					modelChan <- &item
+					nShown++
 				}
-			}
-			if nPassed > traceFilter.Count {
-				break
+				nPassed++
+				// logger.Info(colors.Green, reason, colors.Off)
+				// } else {
+				// 	logger.Info(colors.Red, reason, colors.Off)
 			}
 		}
 	}
