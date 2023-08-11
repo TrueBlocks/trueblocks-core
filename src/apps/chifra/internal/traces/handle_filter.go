@@ -26,7 +26,9 @@ func (opts *TracesOptions) HandleFilter() error {
 	_, br := traceFilter.ParseBangString(opts.Filter)
 
 	ids := make([]identifiers.Identifier, 0)
-	validate.ValidateIdentifiersWithBounds(chain, []string{fmt.Sprintf("%d-%d", br.First, br.Last)}, validate.ValidBlockIdWithRangeAndDate, 1, &ids)
+	if _, err := validate.ValidateIdentifiersWithBounds(chain, []string{fmt.Sprintf("%d-%d", br.First, br.Last)}, validate.ValidBlockIdWithRangeAndDate, 1, &ids); err != nil {
+		return err
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
