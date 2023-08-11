@@ -74,7 +74,6 @@ func (opts *TracesOptions) HandleFilter() error {
 							traces[index].TraceIndex = uint64(index)
 							tr = append(tr, traces[index])
 						}
-						// fmt.Println(tx.TransactionIndex, len(traces), len(tr))
 						value.Traces = append(value.Traces, tr...)
 					}
 				}
@@ -101,8 +100,6 @@ func (opts *TracesOptions) HandleFilter() error {
 		for _, tx := range txMap {
 			tx := tx
 			items = append(items, tx.Traces...)
-			// fmt.Println(tx.TransactionIndex, len(tx.Traces), len(items))
-			// fmt.Println()
 		}
 		sort.Slice(items, func(i, j int) bool {
 			if items[i].BlockNumber == items[j].BlockNumber {
@@ -114,7 +111,6 @@ func (opts *TracesOptions) HandleFilter() error {
 			return items[i].BlockNumber < items[j].BlockNumber
 		})
 
-		// logger.Info(traceFilter)
 		nPassed := uint64(0)
 		nShown := uint64(0)
 		for nTested, item := range items {
@@ -126,9 +122,6 @@ func (opts *TracesOptions) HandleFilter() error {
 					nShown++
 				}
 				nPassed++
-				// logger.Info(colors.Green, reason, colors.Off)
-				// } else {
-				// 	logger.Info(colors.Red, reason, colors.Off)
 			}
 		}
 	}
