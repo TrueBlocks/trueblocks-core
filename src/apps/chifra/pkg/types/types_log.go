@@ -10,7 +10,9 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -264,6 +266,45 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 	}
 
 	return
+}
+
+// SimpleLogGroup stores logs in the cache as an array, so we need
+// a data type reflecting this.
+type SimpleLogGroup struct {
+	// The actual logs being cached
+	Logs []SimpleLog
+	// Details for cache locator
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+}
+
+func (s *SimpleLogGroup) CacheName() string {
+	return "Log"
+}
+
+func (s *SimpleLogGroup) CacheId() string {
+	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
+	extension = "bin"
+
+	id := s.CacheId()
+
+	parts := make([]string, 3)
+	parts[0] = id[:2]
+	parts[1] = id[2:4]
+	parts[2] = id[4:6]
+	directory = filepath.Join("logs", filepath.Join(parts...))
+	return
+}
+
+func (s *SimpleLogGroup) MarshalCache(writer io.Writer) (err error) {
+	return cache.WriteValue(writer, s.Logs)
+}
+
+func (s *SimpleLogGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Logs, version)
 }
 
 // EXISTING_CODE

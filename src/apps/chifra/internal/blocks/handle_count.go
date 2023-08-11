@@ -70,7 +70,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = opts.Conn.GetLogsCountInBlock(bn); err != nil {
+					if blockCount.LogsCnt, err = opts.Conn.GetLogsCountInBlock(bn, block.Timestamp); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue

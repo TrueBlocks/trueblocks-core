@@ -188,6 +188,9 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 		"txs":    opts.CacheTxs,
 		"traces": opts.CacheTraces,
 	}
+	if opts.Logs {
+		m["logs"] = true
+	}
 	// EXISTING_CODE
 	return
 }

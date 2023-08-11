@@ -54,7 +54,8 @@ func (opts *BlocksOptions) HandleLogs() error {
 				value.Receipt = &types.SimpleReceipt{}
 			}
 
-			if logs, err := opts.Conn.GetLogsByNumber(app.BlockNumber); err != nil {
+			ts := opts.Conn.GetBlockTimestamp(app.BlockNumber)
+			if logs, err := opts.Conn.GetLogsByNumber(app.BlockNumber, ts); err != nil {
 				errorChan <- fmt.Errorf("block at %d returned an error: %w", app.BlockNumber, err)
 				return nil
 
