@@ -31,15 +31,14 @@ type RawTraceFilter struct {
 }
 
 type SimpleTraceFilter struct {
-	After       uint64          `json:"after,omitempty"`
 	Count       uint64          `json:"count,omitempty"`
-	FromAddress []base.Address  `json:"fromAddress,omitempty"`
-	FromBlock   string          `json:"fromBlock,omitempty"`
-	ToAddress   []base.Address  `json:"toAddress,omitempty"`
-	ToBlock     string          `json:"toBlock,omitempty"`
+	After       uint64          `json:"after,omitempty"`
+	FromAddress base.Address    `json:"fromAddress,omitempty"`
+	ToAddress   base.Address    `json:"toAddress,omitempty"`
+	FromBlock   base.Blknum     `json:"fromBlock,omitempty"`
+	ToBlock     base.Blknum     `json:"toBlock,omitempty"`
 	raw         *RawTraceFilter `json:"-"`
 	// EXISTING_CODE
-	Seen uint64 `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -61,6 +60,8 @@ func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[
 		"count":     s.Count,
 		"fromBlock": s.FromBlock,
 		"toBlock":   s.ToBlock,
+		"from":      s.FromAddress,
+		"to":        s.ToAddress,
 	}
 
 	order = []string{
@@ -68,6 +69,8 @@ func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[
 		"toBlock",
 		"after",
 		"count",
+		"from",
+		"to",
 	}
 	// EXISTING_CODE
 
@@ -80,98 +83,57 @@ func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[
 // EXISTING_CODE
 //
 
-func (s *SimpleTraceFilter) PassesAddressFilter(trace *SimpleTrace) bool {
-	passesTo := len(s.ToAddress) == 0
-	if !passesTo {
-		for _, addr := range s.ToAddress {
-			if trace.Action.To == addr {
-				passesTo = true
-				break
-			}
-		}
+func (s *SimpleTraceFilter) Passes(trace *SimpleTrace, pos uint64, cnt uint64) (bool, string) {
+	if s.FromBlock != 0 && trace.BlockNumber < s.FromBlock {
+		return false, fmt.Sprintf("block number (%d) less than fromBlock (%d)", trace.BlockNumber, s.FromBlock)
 	}
-	if !passesTo {
-		return false
+	if s.ToBlock != 0 && trace.BlockNumber > s.ToBlock {
+		return false, fmt.Sprintf("block number (%d) greater than toBlock (%d)", trace.BlockNumber, s.ToBlock)
+	}
+	if !s.FromAddress.IsZero() && trace.Action.From.Hex() != s.FromAddress.Hex() {
+		return false, fmt.Sprintf("from address (%s) doesn't match (%s)", trace.Action.From.Hex(), s.FromAddress.Hex())
+	}
+	if !s.ToAddress.IsZero() && trace.Action.To.Hex() != s.ToAddress.Hex() {
+		return false, fmt.Sprintf("to address (%s) doesn't match (%s)", trace.Action.To.Hex(), s.ToAddress.Hex())
+	}
+	if pos <= s.After {
+		return false, fmt.Sprintf("position (%d) less than after (%d)", pos, s.After)
 	}
 
-	passesFrom := len(s.FromAddress) == 0
-	if !passesFrom {
-		for _, addr := range s.FromAddress {
-			if trace.Action.From == addr {
-				passesFrom = true
-				break
-			}
-		}
+	msg := ""
+	if cnt > s.Count {
+		msg = fmt.Sprintf("nseen (%d) exceeded count (%d)", cnt, s.Count)
 	}
-	if !passesFrom {
-		return false
-	}
-	return true
+	return cnt < s.Count, msg
 }
 
-func (s *SimpleTraceFilter) PassesFilter(trace *SimpleTrace, index int) bool {
-	fromBlock := mustParseUint(s.FromBlock)
-	if trace.BlockNumber < fromBlock {
-		fmt.Println("block number too low", trace.BlockNumber, fromBlock)
-		return false
-	}
-
-	toBlock := mustParseUint(s.ToBlock)
-	if trace.BlockNumber > toBlock {
-		fmt.Println("block number too high", trace.BlockNumber, toBlock)
-		return false
-	}
-
-	if !(s.After == 0 || uint64(index) >= s.After) {
-		fmt.Println("index too low", index, s.After)
-		return false
-	}
-
-	if s.Seen > s.Count {
-		fmt.Println("count too high", s.Seen, s.Count)
-		return false
-	}
-
-	if !s.PassesAddressFilter(trace) {
-		return false
-	}
-
-	fmt.Println("passed")
-	s.Seen++
-	return true
-}
-
-func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]any, br base.BlockRange) {
-	br = base.BlockRange{First: 0, Last: utils.NOPOS}
-	ret = make(map[string]any)
+func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]interface{}, br base.BlockRange) {
 	parts := strings.Split(filter, "!")
-	if len(parts) > 0 && mustParseUint(parts[0]) > 0 {
-		br.First = mustParseUint(parts[0])
-		s.FromBlock = fmt.Sprintf("0x%x", br.First)
-		ret["fromBlock"] = s.FromBlock
+	for {
+		if len(parts) >= 6 {
+			break
+		}
+		parts = append(parts, "")
 	}
-	if len(parts) > 1 && mustParseUint(parts[1]) > 0 {
-		br.Last = mustParseUint(parts[1])
-		s.ToBlock = fmt.Sprintf("0x%x", br.Last)
-		ret["toBlock"] = s.ToBlock
+
+	// ret = make(map[string]any)
+	s.FromBlock = mustParseUint(parts[0])
+	s.ToBlock = mustParseUint(parts[1])
+	if s.ToBlock < s.FromBlock || s.ToBlock < 1 {
+		s.ToBlock = utils.NOPOS
 	}
-	if len(parts) > 2 && len(parts[2]) > 0 {
-		s.FromAddress = append(s.FromAddress, base.HexToAddress(parts[2]))
-		ret["fromAddress"] = s.FromAddress
+	if base.IsValidAddress(parts[2]) {
+		s.FromAddress = base.HexToAddress(parts[2])
 	}
-	if len(parts) > 3 && len(parts[3]) > 0 {
-		s.ToAddress = append(s.ToAddress, base.HexToAddress(parts[3]))
-		ret["toAddress"] = s.ToAddress
+	if base.IsValidAddress(parts[3]) {
+		s.ToAddress = base.HexToAddress(parts[3])
 	}
-	if len(parts) > 4 && mustParseUint(parts[4]) > 0 {
-		s.After = mustParseUint(parts[4])
-		ret["after"] = s.After
+	s.After = mustParseUint(parts[4])
+	s.Count = mustParseUint(parts[5])
+	if s.Count == 0 {
+		s.Count = utils.NOPOS
 	}
-	if len(parts) > 5 && mustParseUint(parts[5]) > 0 {
-		s.Count = mustParseUint(parts[5])
-		ret["count"] = s.Count
-	}
-	return ret, br
+	return s.Model(false, "", nil).Data, base.BlockRange{First: s.FromBlock, Last: s.ToBlock}
 }
 
 // EXISTING_CODE

@@ -10,6 +10,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -44,8 +45,6 @@ func (opts *TracesOptions) HandleFilter() error {
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
 
-		nProcessed := 0
-
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
 			a := &types.RawAppearance{
 				BlockNumber: uint32(app.BlockNumber),
@@ -56,6 +55,7 @@ func (opts *TracesOptions) HandleFilter() error {
 				return nil
 			} else {
 				for _, tx := range block.Transactions {
+					tx := tx
 					if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
 						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.String(), err)
 						return nil
@@ -67,15 +67,12 @@ func (opts *TracesOptions) HandleFilter() error {
 					} else {
 						tr := make([]types.SimpleTrace, 0, len(traces))
 						for index := range traces {
-							if traceFilter.PassesAddressFilter(&traces[index]) {
-								if opts.Articulate {
-									if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
-										errorChan <- err // continue even with an error
-									}
+							if opts.Articulate {
+								if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
+									errorChan <- err // continue even with an error
 								}
-								tr = append(tr, traces[index])
 							}
-							nProcessed++
+							tr = append(tr, traces[index])
 						}
 						value.Traces = tr
 					}
@@ -113,10 +110,23 @@ func (opts *TracesOptions) HandleFilter() error {
 			return items[i].BlockNumber < items[j].BlockNumber
 		})
 
+		nPassed := uint64(0)
+		nSeen := uint64(0)
 		for _, item := range items {
 			item := item
-			if item.BlockNumber != 0 {
-				modelChan <- &item
+			nSeen++
+			if nSeen > traceFilter.After { // && uint64(index) < traceFilter.Count {
+				ok, _ := traceFilter.Passes(&item, utils.NOPOS, 0)
+				// logger.Info(item.BlockNumber, item.TransactionIndex, item.TraceIndex, ok, msg)
+				if ok {
+					nPassed++
+					item.Action.From = base.HexToAddress(fmt.Sprintf("0x%x", nPassed))
+					item.Action.To = base.HexToAddress(fmt.Sprintf("0x%x", nSeen))
+					modelChan <- &item
+				}
+			}
+			if nPassed > traceFilter.Count {
+				break
 			}
 		}
 	}
