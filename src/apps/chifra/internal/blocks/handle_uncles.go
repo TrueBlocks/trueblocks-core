@@ -30,30 +30,21 @@ func (opts *BlocksOptions) HandleUncles() error {
 			}
 
 			for _, bn := range blockNums {
-				// Decide on the concrete type of block.Transactions and set values
-				var block types.Modeler[types.RawBlock]
-				var err error
-				if !opts.Hashes {
-					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = opts.Conn.GetBlockBodyByNumber(bn)
-					block = &b
-				} else {
-					var b types.SimpleBlock[string]
-					b, err = opts.Conn.GetBlockHeaderByNumber(bn)
-					block = &b
-				}
-
-				if err != nil {
+				if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
 					errorChan <- err
 					if errors.Is(err, ethereum.NotFound) {
 						continue
 					}
 					cancel()
 					return
+				} else {
+					for _, uncle := range uncles {
+						uncle := uncle
+						if uncle.BlockNumber > 0 {
+							modelChan <- &uncle
+						}
+					}
 				}
-
-				b := block
-				modelChan <- b
 			}
 		}
 	}

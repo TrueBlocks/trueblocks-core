@@ -184,12 +184,10 @@ func ResetOptions() {
 func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"blocks": true,
-		"txs":    opts.CacheTxs,
-		"traces": opts.CacheTraces,
-	}
-	if opts.Logs {
-		m["logs"] = true
+		"blocks": !opts.Uncles,
+		"txs":    opts.CacheTxs || opts.Uniq,
+		"traces": opts.CacheTraces || opts.Uniq,
+		"logs":   opts.Logs,
 	}
 	// EXISTING_CODE
 	return

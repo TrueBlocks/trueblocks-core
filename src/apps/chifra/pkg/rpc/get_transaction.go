@@ -260,7 +260,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt RewardType, appearan
 	if block, err := conn.GetBlockBodyByNumber(uint64(appearance.BlockNumber)); err != nil {
 		return nil, err
 	} else {
-		if uncles, err := conn.GetUnclesByNumber(uint64(appearance.BlockNumber)); err != nil {
+		if uncles, err := conn.GetUncleBodiesByNumber(uint64(appearance.BlockNumber)); err != nil {
 			return nil, err
 		} else {
 			var blockReward = big.NewInt(0)

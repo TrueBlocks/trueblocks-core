@@ -16,10 +16,14 @@ func (r *ResolvedId) String() string {
 	return r.Original
 }
 
+type mappedType interface {
+	types.SimpleTransaction | types.SimpleBlock[string] | types.SimpleAppearance
+}
+
 // AsMap takes command line identifiers for blocks or transactions and returns a map of appearances to allocated
 // pointers to SimpleTransactions or SimpleBlock[string]. The map is keyed by the appearance and the value is
 // the allocated pointer. We don't know what type of identifier we have until we try to resolve it.
-func AsMap[T types.SimpleTransaction | types.SimpleBlock[string]](chain string, ids []Identifier) (map[ResolvedId]*T, int, error) {
+func AsMap[T mappedType](chain string, ids []Identifier) (map[ResolvedId]*T, int, error) {
 	ret := make(map[ResolvedId]*T)
 	for index, rng := range ids {
 		if rawIds, err := rng.ResolveTxs(chain); err != nil {

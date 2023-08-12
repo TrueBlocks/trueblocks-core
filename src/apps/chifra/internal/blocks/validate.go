@@ -110,6 +110,15 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 		}
+
+		if opts.Articulate {
+			if opts.Uncles {
+				return validate.Usage("The {0} option is not available{1}.", "--articulate", " with the --uncles option")
+			}
+			if opts.List != 0 {
+				return validate.Usage("The {0} option is not available{1}.", "--articulate", " with the --list option")
+			}
+		}
 	}
 
 	return opts.Globals.Validate()

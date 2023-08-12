@@ -47,7 +47,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			}
 			streamAppearance(procFunc, flow, "miner", miner, bn, txid, utils.NOPOS, ts, addrMap)
 
-			if uncles, err := conn.GetUnclesByNumber(bn); err != nil {
+			if uncles, err := conn.GetUncleBodiesByNumber(bn); err != nil {
 				return err
 			} else {
 				for _, uncle := range uncles {
