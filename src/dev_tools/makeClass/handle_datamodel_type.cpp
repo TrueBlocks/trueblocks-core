@@ -100,7 +100,6 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         rawStr += os.str();
     }
 
-    string_q cacheStr;
     string_q fieldStr;
     for (const CMember& field : model.fieldArray) {
         if (skipField(model, field, false))
@@ -118,9 +117,29 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         fieldStr += os.str();
     }
 
+    string_q cacheStr;
+    if (!modelIn.cache_type.empty()) {
+        cacheStr = modelIn.cache_type;
+        // for (const CMember& field : model.fieldArray) {
+            // if (skipField(model, field, false))
+            //     continue;
+
+            // string_q spec = specialCase(model, field, type_2_GoType(field), false);
+            // string_q simpType = padRight(spec, maxSimpTypeWid);
+            // string_q jName = jsonName(model, field, false);
+            // string_q oe = (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "");
+
+            // ostringstream os;
+            // os << "\t" << padRight(field.name, maxSimpNameWid) << " " << simpType;
+            // os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jName), "[{OE}]", oe);
+            // os << endl;
+            // fieldStr += os.str();
+        // }
+    }
+
     replaceAll(contents, "[{RAWFIELDS}]", rawStr);
     replaceAll(contents, "[{FIELDS}]", fieldStr);
-    replaceAll(contents, "[{CACHE]}", cacheStr);
+    replaceAll(contents, "[{CACHE_CODE}]", cacheStr);
 
     // hackathon!
     replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx string | SimpleTransaction] struct {");

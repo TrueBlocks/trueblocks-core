@@ -54,6 +54,7 @@ class CClassDefinition : public CBaseNode {
     string_q doc_producer;
     string_q cpp_output;
     string_q go_output;
+    string_q cache_type;
     bool disabled;
 
   public:
@@ -149,6 +150,7 @@ inline void CClassDefinition::initialize(void) {
     doc_producer = "";
     cpp_output = "";
     go_output = "";
+    cache_type = "";
     disabled = false;
 
     // EXISTING_CODE
@@ -188,6 +190,7 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     doc_producer = cl.doc_producer;
     cpp_output = cl.cpp_output;
     go_output = cl.go_output;
+    cache_type = cl.cache_type;
     disabled = cl.disabled;
 
     // EXISTING_CODE
