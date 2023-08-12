@@ -33,7 +33,7 @@ func (opts *BlocksOptions) HandleShow() error {
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
 
-		bar := logger.NewOverflowBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, 125)
+		bar := logger.NewExpandingBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, 125)
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[types.SimpleTransaction]) error {
 			if block, err := opts.Conn.GetBlockBodyByNumber(app.BlockNumber); err != nil {
 				errorChan <- err

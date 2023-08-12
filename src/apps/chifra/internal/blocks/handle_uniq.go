@@ -35,7 +35,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 		defer iterCancel()
 
 		apps := make([]types.SimpleAppearance, 0, len(appMap))
-		bar := logger.NewOverflowBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, 125)
+		bar := logger.NewExpandingBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, 125)
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleAppearance) error {
 			procFunc := func(s *types.SimpleAppearance) error {
 				bar.Tick()

@@ -317,6 +317,7 @@ func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
 	target.Miner = s.Miner
 	target.ParentHash = s.ParentHash
 	target.Timestamp = s.Timestamp
+	// TODO: This copy of an array possibly doesn't do what we expect
 	target.Uncles = s.Uncles
 	target.raw = s.raw
 }

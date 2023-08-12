@@ -29,7 +29,7 @@ func (opts *SlurpOptions) HandleShow() error {
 			for _, tt := range opts.Types {
 				paginator.Page = 1
 				done := false
-				var bar = logger.NewOverflowBar("", !opts.Globals.TestMode, 250)
+				var bar = logger.NewExpandingBar("", !opts.Globals.TestMode, 250)
 				for !done {
 					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(addr, tt, &paginator)
 					done = nFetched < paginator.PerPage
