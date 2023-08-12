@@ -17,15 +17,15 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *BlocksOptions) HandleUncles() error {
+func (opts *BlocksOptions) HandleHashes() error {
 	chain := opts.Globals.Chain
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[types.SimpleTransaction]
-		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
+		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[string]
+		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
@@ -33,10 +33,9 @@ func (opts *BlocksOptions) HandleUncles() error {
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
 
-		uncles := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(appMap))
 		bar := logger.NewOverflowBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, 125)
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[types.SimpleTransaction]) error {
-			if uncs, err := opts.Conn.GetUncleBodiesByNumber(app.BlockNumber); err != nil {
+		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
+			if block, err := opts.Conn.GetBlockHeaderByNumber(app.BlockNumber); err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
 					errorChan <- errors.New("uncles not found")
@@ -44,13 +43,8 @@ func (opts *BlocksOptions) HandleUncles() error {
 				cancel()
 				return nil
 			} else {
-				for _, uncle := range uncs {
-					uncle := uncle
-					bar.Tick()
-					if uncle.BlockNumber > 0 {
-						uncles = append(uncles, uncle)
-					}
-				}
+				bar.Tick()
+				*value = block
 			}
 			return nil
 		}
@@ -65,16 +59,20 @@ func (opts *BlocksOptions) HandleUncles() error {
 		}
 		bar.Finish(true)
 
-		sort.Slice(uncles, func(i, j int) bool {
-			if uncles[i].BlockNumber == uncles[j].BlockNumber {
-				return uncles[i].Hash.Hex() < uncles[j].Hash.Hex()
+		items := make([]*types.SimpleBlock[string], 0, len(appMap))
+		for _, item := range appMap {
+			items = append(items, item)
+		}
+		sort.Slice(items, func(i, j int) bool {
+			if items[i].BlockNumber == items[j].BlockNumber {
+				return items[i].Hash.Hex() < items[j].Hash.Hex()
 			}
-			return uncles[i].BlockNumber < uncles[j].BlockNumber
+			return items[i].BlockNumber < items[j].BlockNumber
 		})
 
-		for _, item := range uncles {
+		for _, item := range items {
 			item := item
-			modelChan <- &item
+			modelChan <- item
 		}
 	}
 
