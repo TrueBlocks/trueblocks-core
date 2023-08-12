@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (l *Ledger) GetStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) (statements []*types.SimpleStatement) {
+func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) (statements []*types.SimpleStatement) {
 	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
@@ -83,7 +83,7 @@ func (l *Ledger) GetStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 		}
 	}
 
-	if l.TrialBalance("ETH TRACES", &ret) {
+	if l.trialBalance("ETH TRACES", &ret) {
 		if ret.MoneyMoved() {
 			statements = append(statements, &ret)
 		} else {

@@ -13,8 +13,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// GetStatementFromLog returns a statement from a given log
-func (l *Ledger) GetStatementFromLog(conn *rpc.Connection, log *types.SimpleLog) (r *types.SimpleStatement, err error) {
+// getStatementFromLog returns a statement from a given log
+func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog) (r *types.SimpleStatement, err error) {
 	if len(log.Topics) < 3 || log.Topics[0] != articulate.TransferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
@@ -34,7 +34,7 @@ func (l *Ledger) GetStatementFromLog(conn *rpc.Connection, log *types.SimpleLog)
 		}
 	}
 
-	key := l.CtxKey(log.BlockNumber, log.TransactionIndex)
+	key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
 	ctx := l.Contexts[key]
 
 	pBal := new(big.Int)
@@ -90,7 +90,7 @@ func (l *Ledger) GetStatementFromLog(conn *rpc.Connection, log *types.SimpleLog)
 	}
 
 	if ofInterst {
-		if !l.TrialBalance("TOKENS", &ret) {
+		if !l.trialBalance("TOKENS", &ret) {
 			logger.Warn(colors.Yellow+"Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "does not reconcile"+colors.Off)
 		} else {
 			logger.Progress(true, colors.Green+"Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "reconciled"+colors.Off)

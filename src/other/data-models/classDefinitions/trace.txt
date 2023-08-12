@@ -8,3 +8,4 @@ doc_descr = trace data as returned from the RPC (with slight enhancements)
 doc_route = 207-trace
 doc_producer = traces, export, blocks
 go_output = src/apps/chifra/pkg/types
+cachable = true

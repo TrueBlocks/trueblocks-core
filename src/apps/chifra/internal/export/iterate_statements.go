@@ -83,12 +83,6 @@ func (opts *ExportOptions) readStatements(
 
 	// we need them sorted for the following to work
 	for _, tx := range txArray {
-		if opts.Articulate {
-			if err := abiCache.ArticulateTransaction(tx); err != nil {
-				errorChan <- fmt.Errorf("error articulating tx: %v", err)
-			}
-		}
-
 		ledgers.Tx = tx // we need this below
 		if stmts := ledgers.GetStatementsFromTransaction(opts.Conn, tx); len(stmts) > 0 {
 			for _, statement := range stmts {

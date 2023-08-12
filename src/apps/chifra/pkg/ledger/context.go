@@ -23,6 +23,18 @@ type LedgerContext struct {
 	ReconType  string
 }
 
+func (c *LedgerContext) Prev() base.Blknum {
+	return c.PrevBlock
+}
+
+func (c *LedgerContext) Cur() base.Blknum {
+	return c.CurBlock
+}
+
+func (c *LedgerContext) Next() base.Blknum {
+	return c.NextBlock
+}
+
 func NewLedgerContext(prev, cur, next base.Blknum) *LedgerContext {
 	c := &LedgerContext{
 		PrevBlock:  prev,
@@ -54,7 +66,7 @@ func (c *LedgerContext) getReconType() (reconType string) {
 	}
 }
 
-func (l *Ledger) CtxKey(bn, txid uint64) string {
+func (l *Ledger) ctxKey(bn, txid uint64) string {
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
 	return fmt.Sprintf("%09d-%05d", bn, txid)
 }
@@ -85,7 +97,7 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 			continue
 		}
 
-		key := l.CtxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
+		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
 		l.Contexts[key] = *NewLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
 	}
 
@@ -129,7 +141,7 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 
 			next := apps[i].BlockNumber + 1
 
-			key := l.CtxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
+			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
 			l.Contexts[key] = *NewLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
 		}
 	}

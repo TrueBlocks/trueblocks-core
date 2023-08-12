@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"math/big"
 	"strings"
 
@@ -378,5 +379,69 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 
 	return s.Reconciled()
 }
+
+type Ledgerer interface {
+	Prev() base.Blknum
+	Cur() base.Blknum
+	Next() base.Blknum
+}
+
+func (r *SimpleStatement) Report(ctx Ledgerer, msg string) {
+	logger.TestLog(true, "===================================================")
+	logger.TestLog(true, fmt.Sprintf("====> %s", msg))
+	logger.TestLog(true, "===================================================")
+	logger.TestLog(true, "ledger.blockNumber:    ", ctx.Prev())
+	logger.TestLog(true, "prevBlock:             ", ctx.Prev())
+	logger.TestLog(true, "transfer.blockNumber:  ", r.BlockNumber)
+	logger.TestLog(true, "nextBlock:             ", ctx.Next())
+	logger.TestLog(true, "isPrevDiff:            ", ctx.Prev() != r.BlockNumber)
+	logger.TestLog(true, "isNextDiff:            ", ctx.Next() != r.BlockNumber)
+	logger.TestLog(true, "---------------------------------------------------")
+	logger.TestLog(true, "Trial balance:")
+	logger.TestLog(true, "   reconciliationType: ", r.ReconciliationType)
+	logger.TestLog(true, "   accountedFor:       ", r.AccountedFor)
+	logger.TestLog(true, "   sender:             ", r.Sender)
+	logger.TestLog(true, "   recipient:          ", r.Recipient)
+	logger.TestLog(true, "   assetAddr:          ", r.AssetAddr)
+	logger.TestLog(true, "   assetSymbol:        ", r.AssetSymbol)
+	logger.TestLog(true, "   decimals:           ", r.Decimals)
+	logger.TestLog(true, "   prevAppBlk:         ", r.PrevAppBlk)
+	logger.TestLog(true, "   hash:               ", r.TransactionHash)
+	logger.TestLog(true, "   timestamp:          ", r.Timestamp)
+	logger.TestLog(true, "   blockNumber:        ", r.BlockNumber)
+	logger.TestLog(true, "   transactionIndex:   ", r.TransactionIndex)
+	logger.TestLog(true, "   logIndex:           ", r.LogIndex)
+	logger.TestLog(true, "   priceSource:        ", r.PriceSource)
+	logger.TestLog(true, "   spotPrice:          ", r.SpotPrice)
+	logger.TestLog(true, "   prevBal:            ", r.PrevBal.Text(10))
+	logger.TestLog(true, "   begBal:             ", r.BegBal.Text(10))
+	logger.TestLog(true, "   amountIn:           ", r.AmountIn.Text(10))
+	logger.TestLog(true, "   internalIn:         ", r.InternalIn.Text(10))
+	logger.TestLog(true, "   minerBaseRewardIn:  ", r.MinerBaseRewardIn.Text(10))
+	logger.TestLog(true, "   minerNephewRewardIn:", r.MinerNephewRewardIn.Text(10))
+	logger.TestLog(true, "   minerTxFeeIn:       ", r.MinerTxFeeIn.Text(10))
+	logger.TestLog(true, "   minerUncleRewardIn: ", r.MinerUncleRewardIn.Text(10))
+	logger.TestLog(true, "   correctingIn:       ", r.CorrectingIn.Text(10))
+	logger.TestLog(true, "   prefundIn:          ", r.PrefundIn.Text(10))
+	logger.TestLog(true, "   selfDestructIn:     ", r.SelfDestructIn.Text(10))
+	logger.TestLog(true, "   totalIn:            ", r.TotalIn().Text(10))
+	logger.TestLog(true, "   amountOut:          ", r.AmountOut.Text(10))
+	logger.TestLog(true, "   internalOut:        ", r.InternalOut.Text(10))
+	logger.TestLog(true, "   correctingOut:      ", r.CorrectingOut.Text(10))
+	logger.TestLog(true, "   selfDestructOut:    ", r.SelfDestructOut.Text(10))
+	logger.TestLog(true, "   gasOut:             ", r.GasOut.Text(10))
+	logger.TestLog(true, "   totalOut:           ", r.TotalOut().Text(10))
+	logger.TestLog(true, "   amountNet:          ", r.AmountNet().Text(10))
+	logger.TestLog(true, "   endBal:             ", r.EndBal.Text(10))
+	logger.TestLog(true, "   begBalDiff:         ", r.BegBalDiff().Text(10))
+	logger.TestLog(true, "   endBalDiff:         ", r.EndBalDiff().Text(10))
+	logger.TestLog(true, "   endBalCalc:         ", r.EndBalCalc().Text(10))
+	logger.TestLog(true, "   correctingReason:   ", r.CorrectingReason)
+	logger.TestLog(true, "   moneyMoved:         ", r.MoneyMoved())
+	logger.TestLog(true, "   trialBalance:       ", r.Reconciled())
+	logger.TestLog(true, "---------------------------------------------------")
+}
+
+// PATH: recons/0549/93ab/0f2b1acc0fdc65405ee203b4271bebe6/010277776.00094.bin
 
 // EXISTING_CODE

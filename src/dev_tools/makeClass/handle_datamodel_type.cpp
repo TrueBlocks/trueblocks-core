@@ -100,6 +100,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         rawStr += os.str();
     }
 
+    string_q cacheStr;
     string_q fieldStr;
     for (const CMember& field : model.fieldArray) {
         if (skipField(model, field, false))
@@ -119,6 +120,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     replaceAll(contents, "[{RAWFIELDS}]", rawStr);
     replaceAll(contents, "[{FIELDS}]", fieldStr);
+    replaceAll(contents, "[{CACHE]}", cacheStr);
 
     // hackathon!
     replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx string | SimpleTransaction] struct {");
