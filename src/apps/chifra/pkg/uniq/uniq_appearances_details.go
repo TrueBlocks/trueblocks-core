@@ -64,7 +64,7 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			}
 
 			for _, trans := range block.Transactions {
-				if trans.Traces, err = conn.GetTracesByTransactionID(trans.BlockNumber, trans.TransactionIndex); err != nil {
+				if trans.Traces, err = conn.GetTracesByTransactionId(trans.BlockNumber, trans.TransactionIndex); err != nil {
 					return err
 				}
 				if err = GetUniqAddressesInTransaction(chain, procFunc, flow, &trans, ts, addrMap, conn); err != nil {
