@@ -96,7 +96,7 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 	}
 }
 
-// object
+// marshal
 
 // EXISTING_CODE
 //

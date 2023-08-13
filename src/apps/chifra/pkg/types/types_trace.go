@@ -191,13 +191,10 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 	}
 }
 
-// object,array
+// cacheable_as_group
 
 // EXISTING_CODE
-func mustParseUint(input any) (result uint64) {
-	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
-	return
-}
+//
 
 func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	// Action is a pointer and it can be missing
@@ -357,6 +354,11 @@ func (s *SimpleTraceGroup) MarshalCache(writer io.Writer) (err error) {
 
 func (s *SimpleTraceGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.Traces, version)
+}
+
+func mustParseUint(input any) (result uint64) {
+	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
+	return
 }
 
 // EXISTING_CODE

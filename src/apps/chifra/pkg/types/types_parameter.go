@@ -89,33 +89,10 @@ func (s *SimpleParameter) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-// object
+// marshal
 
 // EXISTING_CODE
 //
-
-// DisplayName returns parameter name if defined, or a default name "val_" + index
-func (s *SimpleParameter) DisplayName(index int) string {
-	if s.Name != "" {
-		return s.Name
-	}
-	return "val_" + fmt.Sprint(index)
-}
-
-func parametersToMap(params []SimpleParameter) (result map[string]any) {
-	// This produces `null` in JSON instead of an empty object (`{}`)
-	if len(params) == 0 {
-		return nil
-	}
-	result = make(map[string]any)
-	for index, param := range params {
-		if param.Value == "0x" || param.Value == "0x0" {
-			continue
-		}
-		result[param.DisplayName(index)] = param.Value
-	}
-	return
-}
 
 func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
 	if err = cache.WriteValue(writer, s.Components); err != nil {
@@ -180,6 +157,29 @@ func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err 
 		return fmt.Errorf("cannot unmarshal Value: %w", err)
 	}
 
+	return
+}
+
+// DisplayName returns parameter name if defined, or a default name "val_" + index
+func (s *SimpleParameter) DisplayName(index int) string {
+	if s.Name != "" {
+		return s.Name
+	}
+	return "val_" + fmt.Sprint(index)
+}
+
+func parametersToMap(params []SimpleParameter) (result map[string]any) {
+	// This produces `null` in JSON instead of an empty object (`{}`)
+	if len(params) == 0 {
+		return nil
+	}
+	result = make(map[string]any)
+	for index, param := range params {
+		if param.Value == "0x" || param.Value == "0x0" {
+			continue
+		}
+		result[param.DisplayName(index)] = param.Value
+	}
 	return
 }
 

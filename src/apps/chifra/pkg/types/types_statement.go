@@ -174,7 +174,7 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-// object
+// cacheable_as_group
 
 // EXISTING_CODE
 //

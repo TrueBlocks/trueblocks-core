@@ -150,32 +150,48 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	}
 }
 
-// object,array
+// cacheable_as_group
 
 // EXISTING_CODE
-func (s *SimpleLog) getHaystack() string {
-	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))
-	haystack = append(haystack, s.Address.Hex()[2:]...)
-	for _, topic := range s.Topics {
-		haystack = append(haystack, topic.Hex()[2:]...)
-	}
-	haystack = append(haystack, s.Data[2:]...)
-	return string(haystack)
+//
+
+// SimpleLogGroup stores logs in the cache as an array, so we need
+// a data type reflecting this.
+type SimpleLogGroup struct {
+	// The actual logs being cached
+	Logs []SimpleLog
+	// Details for cache locator
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
 }
 
-func (s *SimpleLog) ContainsAny(addrArray []base.Address) bool {
-	haystack := s.getHaystack()
-	for _, addr := range addrArray {
-		if strings.Contains(string(haystack), addr.Hex()[2:]) {
-			return true
-		}
-	}
-	return false
+func (s *SimpleLogGroup) CacheName() string {
+	return "Log"
 }
 
-func (s *SimpleLog) ContainsAddress(addr base.Address) bool {
-	haystack := s.getHaystack()
-	return strings.Contains(string(haystack), addr.Hex()[2:])
+func (s *SimpleLogGroup) CacheId() string {
+	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
+	extension = "bin"
+
+	id := s.CacheId()
+
+	parts := make([]string, 3)
+	parts[0] = id[:2]
+	parts[1] = id[2:4]
+	parts[2] = id[4:6]
+	directory = filepath.Join("logs", filepath.Join(parts...))
+	return
+}
+
+func (s *SimpleLogGroup) MarshalCache(writer io.Writer) (err error) {
+	return cache.WriteValue(writer, s.Logs)
+}
+
+func (s *SimpleLogGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Logs, version)
 }
 
 func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
@@ -270,43 +286,29 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 	return
 }
 
-// SimpleLogGroup stores logs in the cache as an array, so we need
-// a data type reflecting this.
-type SimpleLogGroup struct {
-	// The actual logs being cached
-	Logs []SimpleLog
-	// Details for cache locator
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
+func (s *SimpleLog) getHaystack() string {
+	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))
+	haystack = append(haystack, s.Address.Hex()[2:]...)
+	for _, topic := range s.Topics {
+		haystack = append(haystack, topic.Hex()[2:]...)
+	}
+	haystack = append(haystack, s.Data[2:]...)
+	return string(haystack)
 }
 
-func (s *SimpleLogGroup) CacheName() string {
-	return "Log"
+func (s *SimpleLog) ContainsAny(addrArray []base.Address) bool {
+	haystack := s.getHaystack()
+	for _, addr := range addrArray {
+		if strings.Contains(string(haystack), addr.Hex()[2:]) {
+			return true
+		}
+	}
+	return false
 }
 
-func (s *SimpleLogGroup) CacheId() string {
-	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
-}
-
-func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
-	extension = "bin"
-
-	id := s.CacheId()
-
-	parts := make([]string, 3)
-	parts[0] = id[:2]
-	parts[1] = id[2:4]
-	parts[2] = id[4:6]
-	directory = filepath.Join("logs", filepath.Join(parts...))
-	return
-}
-
-func (s *SimpleLogGroup) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.Logs)
-}
-
-func (s *SimpleLogGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Logs, version)
+func (s *SimpleLog) ContainsAddress(addr base.Address) bool {
+	haystack := s.getHaystack()
+	return strings.Contains(string(haystack), addr.Hex()[2:])
 }
 
 // EXISTING_CODE

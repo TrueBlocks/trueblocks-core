@@ -90,7 +90,7 @@ func (s *SimpleSlurp) Model(verbose bool, format string, extraOptions map[string
 	}
 }
 
-// object,array
+// cacheable_as_group
 
 // EXISTING_CODE
 // EXISTING_CODE

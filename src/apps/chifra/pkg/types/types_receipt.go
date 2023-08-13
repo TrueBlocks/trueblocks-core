@@ -162,18 +162,10 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 	}
 }
 
-// object
+// marshal
 
 // EXISTING_CODE
 //
-
-func (s *SimpleReceipt) IsDefault() bool {
-	a := s.ContractAddress.IsZero()
-	b := s.EffectiveGasPrice == 0
-	c := s.GasUsed == 0
-	d := len(s.Logs) == 0
-	return a && b && c && d
-}
 
 func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 	if s == nil {
@@ -276,6 +268,14 @@ func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err er
 	}
 
 	return
+}
+
+func (s *SimpleReceipt) IsDefault() bool {
+	a := s.ContractAddress.IsZero()
+	b := s.EffectiveGasPrice == 0
+	c := s.GasUsed == 0
+	d := len(s.Logs) == 0
+	return a && b && c && d
 }
 
 // EXISTING_CODE

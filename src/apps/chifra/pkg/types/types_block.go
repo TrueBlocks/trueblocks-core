@@ -21,29 +21,29 @@ import (
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string `json:"author"`
-	BaseFeePerGas    string `json:"baseFeePerGas"`
-	BlockNumber      string `json:"number"`
-	Difficulty       string `json:"difficulty"`
-	ExtraData        string `json:"extraData"`
-	GasLimit         string `json:"gasLimit"`
-	GasUsed          string `json:"gasUsed"`
-	Hash             string `json:"hash"`
-	LogsBloom        string `json:"logsBloom"`
-	Miner            string `json:"miner"`
-	MixHash          string `json:"mixHash"`
-	Nonce            string `json:"nonce"`
-	ParentHash       string `json:"parentHash"`
-	ReceiptsRoot     string `json:"receiptsRoot"`
-	Sha3Uncles       string `json:"sha3Uncles"`
-	Size             string `json:"size"`
-	StateRoot        string `json:"stateRoot"`
-	Timestamp        string `json:"timestamp"`
-	TotalDifficulty  string `json:"totalDifficulty"`
-	Transactions     []any  `json:"transactions"`
-	TransactionsRoot string `json:"transactionsRoot"`
+	Author           string   `json:"author"`
+	BaseFeePerGas    string   `json:"baseFeePerGas"`
+	BlockNumber      string   `json:"number"`
+	Difficulty       string   `json:"difficulty"`
+	ExtraData        string   `json:"extraData"`
+	GasLimit         string   `json:"gasLimit"`
+	GasUsed          string   `json:"gasUsed"`
+	Hash             string   `json:"hash"`
+	LogsBloom        string   `json:"logsBloom"`
+	Miner            string   `json:"miner"`
+	MixHash          string   `json:"mixHash"`
+	Nonce            string   `json:"nonce"`
+	ParentHash       string   `json:"parentHash"`
+	ReceiptsRoot     string   `json:"receiptsRoot"`
+	Sha3Uncles       string   `json:"sha3Uncles"`
+	Size             string   `json:"size"`
+	StateRoot        string   `json:"stateRoot"`
+	Timestamp        string   `json:"timestamp"`
+	TotalDifficulty  string   `json:"totalDifficulty"`
+	Transactions     []any    `json:"transactions"`
+	TransactionsRoot string   `json:"transactionsRoot"`
+	Uncles           []string `json:"uncles"`
 	// EXISTING_CODE
-	Uncles []string `json:"uncles"`
 	// EXISTING_CODE
 }
 
@@ -58,12 +58,12 @@ type SimpleBlock[Tx string | SimpleTransaction] struct {
 	ParentHash    base.Hash      `json:"parentHash"`
 	Timestamp     base.Timestamp `json:"timestamp"`
 	Transactions  []Tx           `json:"transactions"`
+	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
 	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
 	// and upgrading cache items, this exists. We can remove it once we do so.
 	UnusedBool bool        `json:"-"`
-	Uncles     []base.Hash `json:"uncles,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -188,7 +188,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-// object
+// cacheable
 
 // EXISTING_CODE
 //

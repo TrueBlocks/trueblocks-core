@@ -128,10 +128,100 @@ func (s *SimpleFunction) Model(verbose bool, format string, extraOptions map[str
 	}
 }
 
-// object
+// marshal
 
 // EXISTING_CODE
 //
+
+func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
+	if err = cache.WriteValue(writer, s.Anonymous); err != nil {
+		return err
+	}
+	if err = cache.WriteValue(writer, s.Constant); err != nil {
+		return err
+	}
+	if err = cache.WriteValue(writer, s.Encoding); err != nil {
+		return err
+	}
+
+	inputs := make([]cache.Marshaler, 0, len(s.Inputs))
+	for _, input := range s.Inputs {
+		input := input
+		inputs = append(inputs, &input)
+	}
+	if err = cache.WriteValue(writer, inputs); err != nil {
+		return err
+	}
+
+	if err = cache.WriteValue(writer, s.Message); err != nil {
+		return err
+	}
+	if err = cache.WriteValue(writer, s.Name); err != nil {
+		return err
+	}
+
+	outputs := make([]cache.Marshaler, 0, len(s.Outputs))
+	for _, output := range s.Outputs {
+		output := output
+		outputs = append(outputs, &output)
+	}
+	if err = cache.WriteValue(writer, outputs); err != nil {
+		return err
+	}
+
+	if err = cache.WriteValue(writer, s.Signature); err != nil {
+		return err
+	}
+	if err = cache.WriteValue(writer, s.StateMutability); err != nil {
+		return err
+	}
+	if err = cache.WriteValue(writer, s.FunctionType); err != nil {
+		return err
+	}
+
+	return
+}
+
+func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	if err = cache.ReadValue(reader, &s.Anonymous, version); err != nil {
+		return err
+	}
+	if err = cache.ReadValue(reader, &s.Constant, version); err != nil {
+		return err
+	}
+	if err = cache.ReadValue(reader, &s.Encoding, version); err != nil {
+		return err
+	}
+
+	s.Inputs = make([]SimpleParameter, 0)
+	if err = cache.ReadValue(reader, &s.Inputs, version); err != nil {
+		return err
+	}
+
+	if err = cache.ReadValue(reader, &s.Message, version); err != nil {
+		return err
+	}
+	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+		return err
+	}
+
+	s.Outputs = make([]SimpleParameter, 0)
+	if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
+		return err
+	}
+
+	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {
+		return err
+	}
+	if err = cache.ReadValue(reader, &s.StateMutability, version); err != nil {
+		return err
+	}
+	if err = cache.ReadValue(reader, &s.FunctionType, version); err != nil {
+		return err
+	}
+
+	return
+}
 
 func (s *SimpleFunction) Clone() *SimpleFunction {
 	shallowCopy := *s
@@ -365,96 +455,6 @@ func (s *SimpleFunction) Pack(callArguments []any) (packed []byte, err error) {
 	}
 	packed = abiMethod.ID
 	packed = append(packed, packedArgs...)
-
-	return
-}
-
-func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
-	if err = cache.WriteValue(writer, s.Anonymous); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Constant); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Encoding); err != nil {
-		return err
-	}
-
-	inputs := make([]cache.Marshaler, 0, len(s.Inputs))
-	for _, input := range s.Inputs {
-		input := input
-		inputs = append(inputs, &input)
-	}
-	if err = cache.WriteValue(writer, inputs); err != nil {
-		return err
-	}
-
-	if err = cache.WriteValue(writer, s.Message); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Name); err != nil {
-		return err
-	}
-
-	outputs := make([]cache.Marshaler, 0, len(s.Outputs))
-	for _, output := range s.Outputs {
-		output := output
-		outputs = append(outputs, &output)
-	}
-	if err = cache.WriteValue(writer, outputs); err != nil {
-		return err
-	}
-
-	if err = cache.WriteValue(writer, s.Signature); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.StateMutability); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.FunctionType); err != nil {
-		return err
-	}
-
-	return
-}
-
-func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if err = cache.ReadValue(reader, &s.Anonymous, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.Constant, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.Encoding, version); err != nil {
-		return err
-	}
-
-	s.Inputs = make([]SimpleParameter, 0)
-	if err = cache.ReadValue(reader, &s.Inputs, version); err != nil {
-		return err
-	}
-
-	if err = cache.ReadValue(reader, &s.Message, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
-		return err
-	}
-
-	s.Outputs = make([]SimpleParameter, 0)
-	if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
-		return err
-	}
-
-	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.StateMutability, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.FunctionType, version); err != nil {
-		return err
-	}
 
 	return
 }

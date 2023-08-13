@@ -317,115 +317,10 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	}
 }
 
-// object
+// cacheable
 
 // EXISTING_CODE
 //
-
-// NewRawTransactionFromMap is useful when we get a map of transaction properties, e.g.
-// from a call to eth_getBlockByHash [0x..., true]
-func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
-	r = &RawTransaction{}
-
-	// TODO: I wonder why we make copies here
-	r.BlockHash = fmt.Sprint(input["blockHash"])
-	r.BlockNumber = fmt.Sprint(input["blockNumber"])
-	// Missing in block query
-	if _, ok := input["chainId"]; ok {
-		r.ChainId = fmt.Sprint(input["chainId"])
-	}
-	r.From = fmt.Sprint(input["from"])
-	r.Gas = fmt.Sprint(input["gas"])
-	r.GasPrice = fmt.Sprint(input["gasPrice"])
-	r.Hash = fmt.Sprint(input["hash"])
-	r.Input = fmt.Sprint(input["input"])
-	r.MaxFeePerGas = fmt.Sprint(input["maxFeePerGas"])
-	r.MaxPriorityFeePerGas = fmt.Sprint(input["maxPriorityFeePerGas"])
-	r.Nonce = fmt.Sprint(input["nonce"])
-	r.To = fmt.Sprint(input["to"])
-	r.TransactionIndex = fmt.Sprint(input["transactionIndex"])
-	r.Value = fmt.Sprint(input["value"])
-
-	return
-}
-
-// NewSimpleTransaction builds SimpleTransaction using data from raw and receipt. Receipt can be nil.
-// Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
-func NewSimpleTransaction(raw *RawTransaction, receipt *SimpleReceipt, timestamp base.Timestamp) (s *SimpleTransaction) {
-	hasToken := isTokenFunction(raw.Input)
-	s = &SimpleTransaction{}
-
-	// TODO: use RawTransaction methods
-	s.Hash = base.HexToHash(raw.Hash)
-	s.BlockHash = base.HexToHash(raw.BlockHash)
-	s.BlockNumber = utils.MustParseUint(raw.BlockNumber)
-	s.TransactionIndex = utils.MustParseUint(raw.TransactionIndex)
-	s.Nonce = utils.MustParseUint(raw.Nonce)
-	s.Timestamp = timestamp
-	s.From = base.HexToAddress(raw.From)
-	s.To = base.HexToAddress(raw.To)
-	s.Value.SetString(raw.Value, 0)
-	s.Gas = utils.MustParseUint(raw.Gas)
-	s.GasPrice = utils.MustParseUint(raw.GasPrice)
-	s.MaxFeePerGas = utils.MustParseUint(raw.MaxFeePerGas)
-	s.MaxPriorityFeePerGas = utils.MustParseUint(raw.MaxPriorityFeePerGas)
-	s.Input = raw.Input
-
-	s.HasToken = hasToken
-	if receipt != nil {
-		s.GasUsed = receipt.GasUsed
-		s.IsError = receipt.IsError
-		s.Receipt = receipt
-
-		s.SetGasCost(receipt)
-	}
-	s.SetRaw(raw)
-
-	return
-}
-
-func isTokenFunction(needle string) bool {
-	var tokenRelated = map[string]bool{
-		"0x095ea7b3": true, // approve(address spender, uint256 value)
-		"0xa9059cbb": true, // transfer(address from, uint256 to);
-		"0x23b872dd": true, // transferFrom(address from, address to, uint256 value)
-		"0xb3e1c718": true, // _safeMint(address, uint256)
-		"0x6a4f832b": true, // _safeMint(address, uint256, bytes)
-		"0xa1448194": true, // safeMint(address, uint256)
-		"0x8832e6e3": true, // safeMint(address, uint256, bytes)
-		"0x4e6ec247": true, // _mint(address, uint256)
-		"0x4cd4edcb": true, // _mint(address, uint256, bytes, bytes)
-		"0x40c10f19": true, // mint(address, uint256)
-		"0xcfa84fc1": true, // mint(uint256, address[], uint256[])
-		"0x278d9c41": true, // mintEventToManyUsers(uint256, address[])
-		"0x78b27221": true, // mintFungible(uint256, address[], uint256[])
-		"0xf9419088": true, // mintNonFungible(uint256, address[])
-		"0xf190ac5f": true, // mintToAddresses(address[], uint256)
-		"0xa140ae23": true, // mintToken(uint256, address)
-		"0xf980f3dc": true, // mintUserToManyEvents(uint256[], address)
-		"0x14004ef3": true, // multimint(address[], uint256[])
-		"0x6a627842": true, // mint(address)
-		"0xa0712d68": true, // mint(uint256)
-		"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": true, // Transfer(address from, address to, uint256 value)
-		"0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": true, // Approval(address owner, address spender, uint256 value)
-		"0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266": true, // Transfer(bytes32 node, address owner)
-		"0x30385c845b448a36257a6a1716e6ad2e1bc2cbe333cde1e69fe849ad6511adfe": true, // Minted(address,uint256)
-	}
-
-	if len(needle) < 10 {
-		return false
-	}
-
-	return tokenRelated[needle] || tokenRelated[needle[:10]]
-}
-
-func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
-	if receipt == nil {
-		return 0
-	}
-	s.GasCost = s.GasPrice * receipt.GasUsed
-	return s.GasCost
-}
 
 func (s *SimpleTransaction) CacheName() string {
 	return "Transaction"
@@ -593,6 +488,111 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 	s.Receipt = optReceipt.Get()
 
 	return
+}
+
+// NewRawTransactionFromMap is useful when we get a map of transaction properties, e.g.
+// from a call to eth_getBlockByHash [0x..., true]
+func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
+	r = &RawTransaction{}
+
+	// TODO: I wonder why we make copies here
+	r.BlockHash = fmt.Sprint(input["blockHash"])
+	r.BlockNumber = fmt.Sprint(input["blockNumber"])
+	// Missing in block query
+	if _, ok := input["chainId"]; ok {
+		r.ChainId = fmt.Sprint(input["chainId"])
+	}
+	r.From = fmt.Sprint(input["from"])
+	r.Gas = fmt.Sprint(input["gas"])
+	r.GasPrice = fmt.Sprint(input["gasPrice"])
+	r.Hash = fmt.Sprint(input["hash"])
+	r.Input = fmt.Sprint(input["input"])
+	r.MaxFeePerGas = fmt.Sprint(input["maxFeePerGas"])
+	r.MaxPriorityFeePerGas = fmt.Sprint(input["maxPriorityFeePerGas"])
+	r.Nonce = fmt.Sprint(input["nonce"])
+	r.To = fmt.Sprint(input["to"])
+	r.TransactionIndex = fmt.Sprint(input["transactionIndex"])
+	r.Value = fmt.Sprint(input["value"])
+
+	return
+}
+
+// NewSimpleTransaction builds SimpleTransaction using data from raw and receipt. Receipt can be nil.
+// Transaction timestamp and HasToken flag will be set to timestamp and hasToken.
+func NewSimpleTransaction(raw *RawTransaction, receipt *SimpleReceipt, timestamp base.Timestamp) (s *SimpleTransaction) {
+	hasToken := isTokenFunction(raw.Input)
+	s = &SimpleTransaction{}
+
+	// TODO: use RawTransaction methods
+	s.Hash = base.HexToHash(raw.Hash)
+	s.BlockHash = base.HexToHash(raw.BlockHash)
+	s.BlockNumber = utils.MustParseUint(raw.BlockNumber)
+	s.TransactionIndex = utils.MustParseUint(raw.TransactionIndex)
+	s.Nonce = utils.MustParseUint(raw.Nonce)
+	s.Timestamp = timestamp
+	s.From = base.HexToAddress(raw.From)
+	s.To = base.HexToAddress(raw.To)
+	s.Value.SetString(raw.Value, 0)
+	s.Gas = utils.MustParseUint(raw.Gas)
+	s.GasPrice = utils.MustParseUint(raw.GasPrice)
+	s.MaxFeePerGas = utils.MustParseUint(raw.MaxFeePerGas)
+	s.MaxPriorityFeePerGas = utils.MustParseUint(raw.MaxPriorityFeePerGas)
+	s.Input = raw.Input
+
+	s.HasToken = hasToken
+	if receipt != nil {
+		s.GasUsed = receipt.GasUsed
+		s.IsError = receipt.IsError
+		s.Receipt = receipt
+
+		s.SetGasCost(receipt)
+	}
+	s.SetRaw(raw)
+
+	return
+}
+
+func isTokenFunction(needle string) bool {
+	var tokenRelated = map[string]bool{
+		"0x095ea7b3": true, // approve(address spender, uint256 value)
+		"0xa9059cbb": true, // transfer(address from, uint256 to);
+		"0x23b872dd": true, // transferFrom(address from, address to, uint256 value)
+		"0xb3e1c718": true, // _safeMint(address, uint256)
+		"0x6a4f832b": true, // _safeMint(address, uint256, bytes)
+		"0xa1448194": true, // safeMint(address, uint256)
+		"0x8832e6e3": true, // safeMint(address, uint256, bytes)
+		"0x4e6ec247": true, // _mint(address, uint256)
+		"0x4cd4edcb": true, // _mint(address, uint256, bytes, bytes)
+		"0x40c10f19": true, // mint(address, uint256)
+		"0xcfa84fc1": true, // mint(uint256, address[], uint256[])
+		"0x278d9c41": true, // mintEventToManyUsers(uint256, address[])
+		"0x78b27221": true, // mintFungible(uint256, address[], uint256[])
+		"0xf9419088": true, // mintNonFungible(uint256, address[])
+		"0xf190ac5f": true, // mintToAddresses(address[], uint256)
+		"0xa140ae23": true, // mintToken(uint256, address)
+		"0xf980f3dc": true, // mintUserToManyEvents(uint256[], address)
+		"0x14004ef3": true, // multimint(address[], uint256[])
+		"0x6a627842": true, // mint(address)
+		"0xa0712d68": true, // mint(uint256)
+		"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": true, // Transfer(address from, address to, uint256 value)
+		"0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": true, // Approval(address owner, address spender, uint256 value)
+		"0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266": true, // Transfer(bytes32 node, address owner)
+		"0x30385c845b448a36257a6a1716e6ad2e1bc2cbe333cde1e69fe849ad6511adfe": true, // Minted(address,uint256)
+	}
+
+	if len(needle) < 10 {
+		return false
+	}
+
+	return tokenRelated[needle] || tokenRelated[needle[:10]]
+}
+
+func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
+	if receipt == nil {
+		return 0
+	}
+	s.GasCost = s.GasPrice * receipt.GasUsed
+	return s.GasCost
 }
 
 // EXISTING_CODE
