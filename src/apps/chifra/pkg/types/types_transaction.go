@@ -317,6 +317,8 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 	}
 }
 
+// object
+
 // EXISTING_CODE
 //
 

@@ -191,6 +191,8 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 	}
 }
 
+// object,array
+
 // EXISTING_CODE
 func mustParseUint(input any) (result uint64) {
 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)

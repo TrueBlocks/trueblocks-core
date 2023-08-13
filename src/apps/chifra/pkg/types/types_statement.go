@@ -174,6 +174,8 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
+// object
+
 // EXISTING_CODE
 //
 

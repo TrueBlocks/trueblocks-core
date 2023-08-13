@@ -128,6 +128,8 @@ func (s *SimpleFunction) Model(verbose bool, format string, extraOptions map[str
 	}
 }
 
+// object
+
 // EXISTING_CODE
 //
 

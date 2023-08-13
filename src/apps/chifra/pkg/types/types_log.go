@@ -150,6 +150,8 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	}
 }
 
+// object,array
+
 // EXISTING_CODE
 func (s *SimpleLog) getHaystack() string {
 	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))

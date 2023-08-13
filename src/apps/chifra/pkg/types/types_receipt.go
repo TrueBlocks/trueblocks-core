@@ -162,6 +162,8 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 	}
 }
 
+// object
+
 // EXISTING_CODE
 //
 

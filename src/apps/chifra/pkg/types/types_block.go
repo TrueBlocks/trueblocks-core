@@ -188,6 +188,8 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
+// object
+
 // EXISTING_CODE
 //
 

@@ -7,3 +7,4 @@ doc_descr = an input or output parameter to a Solidity function or event
 doc_route = 502-parameter
 doc_producer = abis, export
 go_output = src/apps/chifra/pkg/types
+cache_type = object
