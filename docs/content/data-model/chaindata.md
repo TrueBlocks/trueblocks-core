@@ -64,29 +64,29 @@ The following commands produce and manage Transactions:
 
 Transactions consist of the following fields:
 
-| Field            | Description                                                                                           | Type                                                     |
-| ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| hash             | the hash of the transaction                                                                           | hash                                                     |
-| blockHash        | the hash of the block containing this transaction                                                     | hash                                                     |
-| blockNumber      | the number of the block                                                                               | blknum                                                   |
-| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                                   |
-| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                                   |
-| timestamp        | the Unix timestamp of the object                                                                      | timestamp                                                |
-| from             | address from which the transaction was sent                                                           | address                                                  |
-| to               | address to which the transaction was sent                                                             | address                                                  |
-| value            | the amount of wei sent with this transactions                                                         | wei                                                      |
-| gas              | the maximum number of gas allowed for this transaction                                                | gas                                                      |
-| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                                      |
-| input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                                    |
-| receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)                |
-| statements       | array of reconciliations                                                                              | [Reconciliation[]](/data-model/accounts/#reconciliation) |
-| articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)                  |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string                                                   |
-| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                                    |
-| finalized        | flag indicating the system considers this data final                                                  | bool                                                     |
-| extraData        |                                                                                                       | string                                                   |
-| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                                    |
-| date             |                                                                                                       | datetime                                                 |
+| Field            | Description                                                                                           | Type                                      |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| hash             | the hash of the transaction                                                                           | hash                                      |
+| blockHash        | the hash of the block containing this transaction                                                     | hash                                      |
+| blockNumber      | the number of the block                                                                               | blknum                                    |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                    |
+| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                    |
+| timestamp        | the Unix timestamp of the object                                                                      | timestamp                                 |
+| from             | address from which the transaction was sent                                                           | address                                   |
+| to               | address to which the transaction was sent                                                             | address                                   |
+| value            | the amount of wei sent with this transactions                                                         | wei                                       |
+| gas              | the maximum number of gas allowed for this transaction                                                | gas                                       |
+| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                       |
+| input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                     |
+| receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt) |
+| statements       | array of reconciliations                                                                              | Reconciliation                            |
+| articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)   |
+| compressedTx     | truncated, more readable version of the articulation                                                  | string                                    |
+| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                     |
+| finalized        | flag indicating the system considers this data final                                                  | bool                                      |
+| extraData        |                                                                                                       | string                                    |
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                     |
+| date             |                                                                                                       | datetime                                  |
 
 ## Transfer
 

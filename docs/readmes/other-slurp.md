@@ -43,7 +43,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [etherscan](/data-model/other/#etherscan)
+- [slurp](/data-model/other/#slurp)
 
 Links:
 

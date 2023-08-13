@@ -8,3 +8,4 @@ doc_descr = an appearance (`<blockNumber,transactionIndex>`) of an address anywh
 doc_route = 101-appearance
 doc_producer = list, export, blocks, chunks
 go_output =
+cache_type = object

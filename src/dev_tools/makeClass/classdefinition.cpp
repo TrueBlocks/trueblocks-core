@@ -471,7 +471,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << doc_producer;
     archive << cpp_output;
     archive << go_output;
-    archive << cache_type;
+    // archive << cache_type;
     archive << disabled;
     // EXISTING_CODE
     // EXISTING_CODE

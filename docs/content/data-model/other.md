@@ -77,17 +77,17 @@ Parameters consist of the following fields:
 | internalType | for composite types, the internal type of the parameter     | string                                      |
 | components   | for composite types, the parameters making up the composite | [Parameter[]](/data-model/other/#parameter) |
 
-## Etherscan
+## Slurp
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 THIS SHOULD BE ETHERSCAN DATA RELATED, BUT IT'S NOT TIED IN, SO IT DOESN'T DO ANYTHING
 The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
 
-The following commands produce and manage Etherscans:
+The following commands produce and manage Slurps:
 
 - [chifra slurp](/chifra/other/#chifra-slurp)
 
-Etherscans consist of the following fields:
+Slurps consist of the following fields:
 
 | Field            | Description                                                                                           | Type                                    |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------- |
