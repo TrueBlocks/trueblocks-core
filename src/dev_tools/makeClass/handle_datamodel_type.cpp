@@ -119,21 +119,21 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q cacheStr;
     if (!modelIn.cache_type.empty()) {
-        cacheStr = modelIn.cache_type;
+        cacheStr = "\n// " + modelIn.cache_type + "\n";
         // for (const CMember& field : model.fieldArray) {
-            // if (skipField(model, field, false))
-            //     continue;
+        // if (skipField(model, field, false))
+        //     continue;
 
-            // string_q spec = specialCase(model, field, type_2_GoType(field), false);
-            // string_q simpType = padRight(spec, maxSimpTypeWid);
-            // string_q jName = jsonName(model, field, false);
-            // string_q oe = (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "");
+        // string_q spec = specialCase(model, field, type_2_GoType(field), false);
+        // string_q simpType = padRight(spec, maxSimpTypeWid);
+        // string_q jName = jsonName(model, field, false);
+        // string_q oe = (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "");
 
-            // ostringstream os;
-            // os << "\t" << padRight(field.name, maxSimpNameWid) << " " << simpType;
-            // os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jName), "[{OE}]", oe);
-            // os << endl;
-            // fieldStr += os.str();
+        // ostringstream os;
+        // os << "\t" << padRight(field.name, maxSimpNameWid) << " " << simpType;
+        // os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jName), "[{OE}]", oe);
+        // os << endl;
+        // fieldStr += os.str();
         // }
     }
 

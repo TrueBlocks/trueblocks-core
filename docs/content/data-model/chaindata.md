@@ -60,7 +60,6 @@ This is a very powerful way to understand the story behind a smart contract.
 The following commands produce and manage Transactions:
 
 - [chifra transactions](/chifra/chaindata/#chifra-transactions)
-- [chifra slurp](/chifra/other/#chifra-slurp)
 - [chifra export](/chifra/accounts/#chifra-export)
 
 Transactions consist of the following fields:

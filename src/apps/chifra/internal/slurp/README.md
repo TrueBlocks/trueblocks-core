@@ -43,7 +43,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [transaction](/data-model/chaindata/#transaction)
+- [etherscan](/data-model/other/#etherscan)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options

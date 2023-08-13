@@ -1,0 +1,9 @@
+[settings]
+class = CEtherscan
+fields = etherscan.csv
+doc_group = 05-Other
+doc_descr = transaction data as returned from by Etherscan
+doc_route = 503-etherscan
+doc_producer = slurp
+go_output = src/apps/chifra/pkg/types
+cache_type = object,array

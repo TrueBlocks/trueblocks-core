@@ -1680,6 +1680,87 @@ components:
           items:
             $ref: "#/components/schemas/parameter"
           description: "for composite types, the parameters making up the composite"
+    etherscan:
+      description: "transaction data as returned from by Etherscan"
+      type: object
+      properties:
+        hash:
+          type: string
+          format: hash
+          example: "0xf128...1e98"
+          description: "the hash of the transaction"
+        blockHash:
+          type: string
+          format: hash
+          example: "0xc421...fb04"
+          description: "the hash of the block containing this transaction"
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        nonce:
+          type: number
+          format: uint64
+          example: 232
+          description: "sequence number of the transactions sent by the sender"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the Unix timestamp of the object"
+        from:
+          type: string
+          format: address
+          description: "address from which the transaction was sent"
+        to:
+          type: string
+          format: address
+          description: "address to which the transaction was sent"
+        value:
+          type: string
+          format: wei
+          example: "0"
+          description: "the amount of wei sent with this transactions"
+        gas:
+          type: string
+          format: gas
+          example: "158660"
+          description: "the maximum number of gas allowed for this transaction"
+        gasPrice:
+          type: string
+          format: gas
+          example: "63525836552"
+          description: "the number of wei per unit of gas the sender is willing to spend"
+        gasCost:
+          type: string
+          format: gas
+          example: "63525836552"
+          description: "the number of wei per unit of gas the sender is willing to spend"
+        input:
+          type: string
+          format: bytes
+          example: "0x3d18b912"
+          description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
+        hasToken:
+          type: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        articulatedTx:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+        compressedTx:
+          type: string
+          example: "0x3d18b912( )"
+          description: "truncated, more readable version of the articulation"
+        isError:
+          type: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
     response:
       required:
         - result
