@@ -1,5 +1,4 @@
 [settings]
 class = CKey
 fields = key.csv
-cpp_output = src/dev_tools/utillib/
 go_output =

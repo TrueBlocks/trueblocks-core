@@ -105,9 +105,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "contained_by") {
                 return contained_by;
             }
-            if (fieldName % "cpp_output") {
-                return cpp_output;
-            }
             break;
         case 'd':
             if (fieldName % "display_str") {
@@ -136,9 +133,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'e':
-            if (fieldName % "eq_str") {
-                return eq_str;
-            }
             if (fieldName % "extraArray" || fieldName % "extraArrayCnt") {
                 size_t cnt = extraArray.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -176,11 +170,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                 return go_output;
             }
             break;
-        case 'h':
-            if (fieldName % "head_includes") {
-                return head_includes;
-            }
-            break;
         case 'i':
             if (fieldName % "input_path") {
                 return input_path;
@@ -189,12 +178,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
         case 's':
             if (fieldName % "short_fn") {
                 return short_fn;
-            }
-            if (fieldName % "src_includes") {
-                return src_includes;
-            }
-            if (fieldName % "sort_str") {
-                return sort_str;
             }
             break;
         default:
@@ -274,10 +257,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 contained_by = fieldValue;
                 return true;
             }
-            if (fieldName % "cpp_output") {
-                cpp_output = fieldValue;
-                return true;
-            }
             break;
         case 'd':
             if (fieldName % "display_str") {
@@ -314,10 +293,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             break;
         case 'e':
-            if (fieldName % "eq_str") {
-                eq_str = fieldValue;
-                return true;
-            }
             if (fieldName % "extraArray") {
                 CMember obj;
                 string_q str = fieldValue;
@@ -349,12 +324,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
-        case 'h':
-            if (fieldName % "head_includes") {
-                head_includes = fieldValue;
-                return true;
-            }
-            break;
         case 'i':
             if (fieldName % "input_path") {
                 input_path = fieldValue;
@@ -364,14 +333,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
         case 's':
             if (fieldName % "short_fn") {
                 short_fn = fieldValue;
-                return true;
-            }
-            if (fieldName % "src_includes") {
-                src_includes = fieldValue;
-                return true;
-            }
-            if (fieldName % "sort_str") {
-                sort_str = fieldValue;
                 return true;
             }
             break;
@@ -412,11 +373,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> base_upper;
     archive >> base_base;
     archive >> go_model;
-    archive >> head_includes;
-    archive >> src_includes;
     archive >> display_str;
-    archive >> sort_str;
-    archive >> eq_str;
     // archive >> fieldArray;
     // archive >> extraArray;
     archive >> contained_by;
@@ -426,7 +383,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> doc_route;
     archive >> doc_alias;
     archive >> doc_producer;
-    archive >> cpp_output;
     archive >> go_output;
     // archive >> cache_type;
     archive >> disabled;
@@ -455,11 +411,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << base_upper;
     archive << base_base;
     archive << go_model;
-    archive << head_includes;
-    archive << src_includes;
     archive << display_str;
-    archive << sort_str;
-    archive << eq_str;
     // archive << fieldArray;
     // archive << extraArray;
     archive << contained_by;
@@ -469,7 +421,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << doc_route;
     archive << doc_alias;
     archive << doc_producer;
-    archive << cpp_output;
     archive << go_output;
     // archive << cache_type;
     archive << disabled;
@@ -534,11 +485,7 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "base_upper", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "base_base", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "go_model", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "head_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "src_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
     ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
@@ -550,7 +497,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "doc_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_alias", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_producer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "cpp_output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "go_output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "cache_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "disabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -697,38 +643,15 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
     //------------------------------------------------------------------------------------------------
     class_name = toml.getConfigStr("settings", "class", "");
     base_class = toml.getConfigStr("settings", "base_class", "CBaseNode");
-    head_includes = toml.getConfigStr("settings", "includes", "");
-    src_includes = toml.getConfigStr("settings", "cpp_includes", "");
     contained_by = toml.getConfigStr("settings", "contained_by", "");
     doc_producer = toml.getConfigStr("settings", "doc_producer", "");
-    sort_str = toml.getConfigStr("settings", "sort", "");
-    eq_str = toml.getConfigStr("settings", "equals", "");
-
-    if (contains(sort_str, ";")) {
-        LOG_ERR("makeClass: do not include semicolon in sort string ", sort_str);
-        exit(0);
-    }
-    if (contains(eq_str, ";")) {
-        LOG_ERR("makeClass: do not include semicolon in equals string ", eq_str);
-        exit(0);
-    }
-
     doc_group = toml.getConfigStr("settings", "doc_group", "");
     doc_descr = toml.getConfigStr("settings", "doc_descr", "");
     doc_route = toml.getConfigStr("settings", "doc_route", "");
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
     doc_order = trim(nextTokenClear(doc_group, '-')) + trim(nextTokenClear(doc_route, '-'));
-
-    cpp_output = substitute(toml.getConfigStr("settings", "cpp_output", ""), "src/", "./");
     go_output = substitute(toml.getConfigStr("settings", "go_output", ""), "src/", "./");
     cache_type = toml.getConfigStr("settings", "cache_type", "");
-    if (cpp_output.empty()) {
-        disabled = true;
-    } else {
-        if (!endsWith(cpp_output, "/")) {
-            cpp_output += "/";
-        }
-    }
     if (!go_output.empty()) {
         string_q def = class_name;
         replace(def, "C", "");
@@ -774,9 +697,8 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
                 continue;
             }
 
-            bool isGoOnly = contains(line, "goonly");
             bool isRawOnly = contains(line, "rawonly");
-            line = substitute(substitute(line, "goonly", "true"), "rawonly", "true");
+            line = substitute(line, "rawonly", "true");
 
             CMember tmp;
             tmp.parseCSV(fields, line);
@@ -784,10 +706,6 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
                 tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
             } else if (tmp.memberFlags & IS_OBJECT) {
                 tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
-            }
-
-            if (isGoOnly) {
-                tmp.memberFlags |= IS_GOONLY;
             }
 
             if (isRawOnly) {

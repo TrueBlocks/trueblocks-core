@@ -21,4 +21,4 @@ timestamp        ,timestamp   ,           ,       ,      ,        ,          ,  
 baseFeePerGas    ,wei         ,           ,       ,      ,        ,          ,        ,         ,  9 ,   6 ,120911        ,the base fee for this block
 transactions     ,Transaction ,           ,true   ,true  ,        ,          ,        ,         ,  8 ,     ,              ,a possibly empty array of transactions or transaction hashes
 transactionsRoot ,hash        ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
-uncles           ,hash        ,           ,       ,true  ,true    ,true      ,goonly  ,true     , 11 ,     ,              ,
+uncles           ,hash        ,           ,       ,true  ,true    ,true      ,        ,true     , 11 ,     ,              ,

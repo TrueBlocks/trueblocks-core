@@ -41,8 +41,6 @@ class CClassDefinition : public CBaseNode {
     string_q head_includes;
     string_q src_includes;
     string_q display_str;
-    string_q sort_str;
-    string_q eq_str;
     CMemberArray fieldArray;
     CMemberArray extraArray;
     string_q contained_by;
@@ -52,7 +50,6 @@ class CClassDefinition : public CBaseNode {
     string_q doc_route;
     string_q doc_alias;
     string_q doc_producer;
-    string_q cpp_output;
     string_q go_output;
     string_q cache_type;
     bool disabled;
@@ -68,7 +65,6 @@ class CClassDefinition : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    string_q ouputPath(const string_q& t) const;
     void ReadSettings(const CToml& toml);
     // EXISTING_CODE
     bool operator==(const CClassDefinition& it) const;
@@ -137,8 +133,6 @@ inline void CClassDefinition::initialize(void) {
     head_includes = "";
     src_includes = "";
     display_str = "";
-    sort_str = "";
-    eq_str = "";
     fieldArray.clear();
     extraArray.clear();
     contained_by = "";
@@ -148,7 +142,6 @@ inline void CClassDefinition::initialize(void) {
     doc_route = "";
     doc_alias = "";
     doc_producer = "";
-    cpp_output = "";
     go_output = "";
     cache_type = "";
     disabled = false;
@@ -177,8 +170,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     head_includes = cl.head_includes;
     src_includes = cl.src_includes;
     display_str = cl.display_str;
-    sort_str = cl.sort_str;
-    eq_str = cl.eq_str;
     fieldArray = cl.fieldArray;
     extraArray = cl.extraArray;
     contained_by = cl.contained_by;
@@ -188,7 +179,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     doc_route = cl.doc_route;
     doc_alias = cl.doc_alias;
     doc_producer = cl.doc_producer;
-    cpp_output = cl.cpp_output;
     go_output = cl.go_output;
     cache_type = cl.cache_type;
     disabled = cl.disabled;
