@@ -1,10 +1,10 @@
 [settings]
 class = CLog
 fields = log.csv
+contained_by = Receipt
 doc_group = 02-Chain Data
 doc_descr = log data as returned from the RPC (with slight enhancements)
 doc_route = 205-log
 doc_producer = logs, export, blocks
 go_output = src/apps/chifra/pkg/types
-cache_type = object,array
-cache_type = object
+cache_type = marshal,array

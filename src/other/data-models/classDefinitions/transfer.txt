@@ -1,10 +1,6 @@
 [settings]
 class = CTransfer
 fields = transfer.csv
-includes = utillib.h|log.h
-equals = compare(it) == 0
-sort = v1.compare(v2) < 0
-cpp_includes = etherlib.h
 doc_group = 02-Chain Data
 doc_descr = the representation of a token transfer
 doc_route = 203-transfer
