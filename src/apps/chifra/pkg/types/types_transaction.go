@@ -75,7 +75,6 @@ type SimpleTransaction struct {
 	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
 	CompressedTx         string          `json:"compressedTx"`
-	Date                 string          `json:"date"`
 	Encoding             string          `json:"encoding"`
 	Ether                string          `json:"ether"`
 	EtherGasPrice        base.Gas        `json:"etherGasPrice"`
@@ -130,6 +129,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"timestamp":        s.Timestamp,
+		"date":             utils.FormattedDate(s.Timestamp),
 		"to":               to,
 		"transactionIndex": s.TransactionIndex,
 		"value":            s.Value.String(),
@@ -151,11 +151,6 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		"encoding",
 	}
 
-	if s.Date == "" {
-		model["date"] = utils.FormattedDate(s.Timestamp)
-	} else {
-		model["date"] = s.Date
-	}
 	model["gasCost"] = s.SetGasCost(s.Receipt)
 
 	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
@@ -315,6 +310,10 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleTransaction) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // cacheable

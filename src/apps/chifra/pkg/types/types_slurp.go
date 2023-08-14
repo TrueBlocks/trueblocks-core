@@ -9,7 +9,10 @@
 package types
 
 // EXISTING_CODE
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+)
 
 // EXISTING_CODE
 
@@ -18,7 +21,6 @@ type RawSlurp struct {
 	BlockNumber       string `json:"blockNumber"`
 	ContractAddress   string `json:"contractAddress"`
 	CumulativeGasUsed string `json:"cumulativeGasUsed"`
-	Date              string `json:"date"`
 	Ether             string `json:"ether"`
 	From              string `json:"from"`
 	FunctionName      string `json:"functionName"`
@@ -47,7 +49,6 @@ type SimpleSlurp struct {
 	CompressedTx      string          `json:"compressedTx"`
 	ContractAddress   base.Address    `json:"contractAddress"`
 	CumulativeGasUsed string          `json:"cumulativeGasUsed"`
-	Date              string          `json:"date"`
 	Ether             string          `json:"ether"`
 	From              base.Address    `json:"from"`
 	FunctionName      string          `json:"functionName"`
@@ -90,6 +91,9 @@ func (s *SimpleSlurp) Model(verbose bool, format string, extraOptions map[string
 		Data:  model,
 		Order: order,
 	}
+}
+func (s *SimpleSlurp) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // cacheable_as_group

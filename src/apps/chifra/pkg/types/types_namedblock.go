@@ -11,13 +11,13 @@ package types
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
 type RawNamedBlock struct {
 	BlockNumber string `json:"blockNumber"`
-	Date        string `json:"date"`
 	Name        string `json:"name"`
 	Timestamp   string `json:"timestamp"`
 	// EXISTING_CODE
@@ -26,7 +26,6 @@ type RawNamedBlock struct {
 
 type SimpleNamedBlock struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
-	Date        string         `json:"date"`
 	Name        string         `json:"name,omitempty"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	raw         *RawNamedBlock `json:"-"`
@@ -73,6 +72,9 @@ func (s *SimpleNamedBlock) Model(verbose bool, format string, extraOptions map[s
 		Data:  model,
 		Order: order,
 	}
+}
+func (s *SimpleNamedBlock) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // EXISTING_CODE

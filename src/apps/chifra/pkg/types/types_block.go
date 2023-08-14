@@ -16,6 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -24,7 +25,6 @@ type RawBlock struct {
 	Author           string   `json:"author"`
 	BaseFeePerGas    string   `json:"baseFeePerGas"`
 	BlockNumber      string   `json:"number"`
-	Date             string   `json:"date"`
 	Difficulty       string   `json:"difficulty"`
 	ExtraData        string   `json:"extraData"`
 	GasLimit         string   `json:"gasLimit"`
@@ -51,7 +51,6 @@ type RawBlock struct {
 type SimpleBlock[Tx string | SimpleTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
-	Date          string         `json:"date"`
 	Difficulty    uint64         `json:"difficulty"`
 	GasLimit      base.Gas       `json:"gasLimit"`
 	GasUsed       base.Gas       `json:"gasUsed"`
@@ -63,9 +62,6 @@ type SimpleBlock[Tx string | SimpleTransaction] struct {
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
-	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
-	// and upgrading cache items, this exists. We can remove it once we do so.
-	UnusedBool bool        `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -188,6 +184,9 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 		Data:  model,
 		Order: order,
 	}
+}
+func (s *SimpleBlock[Tx]) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // cacheable

@@ -42,7 +42,6 @@ type SimpleLog struct {
 	BlockNumber      base.Blknum     `json:"blockNumber"`
 	CompressedLog    string          `json:"compressedLog,omitempty"`
 	Data             string          `json:"data,omitempty"`
-	Date             string          `json:"date,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
 	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
 	Topics           []base.Hash     `json:"topics,omitempty"`
@@ -148,6 +147,9 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 		Data:  model,
 		Order: order,
 	}
+}
+func (s *SimpleLog) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // cacheable_as_group

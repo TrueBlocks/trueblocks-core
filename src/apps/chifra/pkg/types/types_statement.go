@@ -174,14 +174,14 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
+func (s *SimpleStatement) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
 // cacheable_as_group
 
 // EXISTING_CODE
 //
-
-func (s *SimpleStatement) Date() string {
-	return utils.FormattedDate(s.Timestamp)
-}
 
 func (s *SimpleStatement) TotalIn() *big.Int {
 	vals := []big.Int{

@@ -85,7 +85,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     string_q rawStr;
     const char* STR_JSON_TAG = " `json:\"[{NAME}][{OE}]\"`";
     for (const CMember& field : model.fieldArray) {
-        if (skipField(model, field, true) || field.name == "date") {
+        if (skipField(model, field, true) || field.name % "date") {
             continue;
         }
 
@@ -107,8 +107,9 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q fieldStr;
     for (const CMember& field : model.fieldArray) {
-        if (skipField(model, field, false))
+        if (skipField(model, field, false) || field.name % "date") {
             continue;
+        }
 
         string_q spec = specialCase(model, field, type_2_GoType(field), false);
         string_q simpType = padRight(spec, maxSimpTypeWid);
@@ -132,11 +133,13 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     replaceAll(contents, "[{CACHE_CODE}]", cacheStr);
     if (hasTimestamp) {
         const char* STR_DATE_CODE =
-            "func (self *Simple{CLASS_NAME}) Date() string {\n"
-            "\treturn return utils.FormattedDate(s.Timestamp)\n"
+            "func (s *Simple[{CLASS_NAME}]) Date() string {\n"
+            "\treturn utils.FormattedDate(s.Timestamp)\n"
             "}\n\n";
         string_q dateCode = STR_DATE_CODE;
-        replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
+        replaceAll(dateCode, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
+        replaceAll(dateCode, "Simple", (isInternal ? "simple" : "Simple"));
+        replaceAll(contents, "[{DATE_CODE}]", dateCode);
     } else {
         replaceAll(contents, "[{DATE_CODE}]", "");
     }

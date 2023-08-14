@@ -20,7 +20,6 @@ import (
 type simpleBlockCount struct {
 	AddressCnt      uint64         `json:"addressCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
-	Date            string         `json:"date"`
 	LogsCnt         uint64         `json:"logsCnt,omitempty"`
 	Timestamp       base.Timestamp `json:"timestamp"`
 	TracesCnt       uint64         `json:"tracesCnt,omitempty"`
@@ -99,6 +98,10 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *simpleBlockCount) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // EXISTING_CODE
