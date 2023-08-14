@@ -13,10 +13,15 @@
 #include "utillib.h"
 #include "options.h"
 
-string_q type_2_GoType(const CMember& field);
-string_q specialCase(const CClassDefinition& model, const CMember& field, const string_q& type, bool isRaw);
-string_q jsonName(const CClassDefinition& model, const CMember& field, bool raw);
-bool skipField(const CClassDefinition& model, const CMember& field, bool raw);
+extern string_q type_2_GoType(const CMember& field);
+extern string_q specialCase(const CClassDefinition& model, const CMember& field, const string_q& type, bool isRaw);
+extern string_q jsonName(const CClassDefinition& model, const CMember& field, bool raw);
+extern string_q get_cache_code(const CClassDefinition& modelIn);
+extern string_q get_id_code(const string_q& cacheBy);
+extern string_q get_marshal_fields(const CClassDefinition& modelIn);
+extern string_q get_unmarshal_fields(const CClassDefinition& modelIn);
+extern string_q type_2_TypeName(const string_q& type, bool raw);
+extern bool skipField(const CClassDefinition& model, const CMember& field, bool raw);
 
 //------------------------------------------------------------------------------------------------------------
 void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
@@ -119,6 +124,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     replaceAll(contents, "[{RAWFIELDS}]", rawStr);
     replaceAll(contents, "[{FIELDS}]", fieldStr);
+    replaceAll(contents, "[{CACHE_CODE}]", get_cache_code(modelIn));
 
     // hackathon!
     replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx string | SimpleTransaction] struct {");
@@ -298,4 +304,321 @@ string_q jsonName(const CClassDefinition& model, const CMember& field, bool raw)
     }
 
     return name;
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool isCommented(const CClassDefinition& model) {
+    return false;
+    // string_q modelName = type_2_ModelName(model.go_model, false);
+    // return modelName != "Function" && modelName != "TraceResult" && modelName != "Slurp" && modelName != "Statement"
+    // &&
+    //        modelName != "TraceAction" && modelName != "Parameter" && modelName != "Trace";
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q get_cache_code(const CClassDefinition& modelIn) {
+    if (modelIn.cache_type.empty()) {
+        return "";
+    }
+
+    bool isCacheable = modelIn.cache_type == "cacheable";
+    bool isGroupable = modelIn.cache_as == "group";
+    bool isMarshalable = modelIn.cache_type == "cacheable" || modelIn.cache_type == "marshal_only";
+    bool hasAddress = contains(modelIn.cache_by, "addr");
+    bool commented = isCommented(modelIn);
+
+    ostringstream os;
+    os << endl;
+    os << "//- " << modelIn.cache_type << (isCacheable ? " by " + modelIn.cache_by : "")
+       << (isGroupable ? " as " + modelIn.cache_as : "");
+    os << endl;
+
+    string_q modelName = type_2_ModelName(modelIn.go_model, false);
+    string_q groupName = type_2_ModelName(modelIn.go_model, false) + "Group";
+
+    if (isGroupable) {
+        const char* STR_GROUP_STRUCT =
+            "type Simple[{GROUP_NAME}] struct {\n"
+            "\tBlockNumber      base.Blknum\n"
+            "\tTransactionIndex base.Txnum\n"
+            "[{ADDRESS}]"
+            "\t[{Proper}][]Simple[{CLASS_NAME}]\n"
+            "}\n";
+
+        string_q structCode = STR_GROUP_STRUCT;
+        replaceAll(structCode, "[{GROUP_NAME}]", groupName);
+        replaceAll(structCode, "[{CLASS_NAME}]", modelName);
+        replaceAll(structCode, "[{ADDRESS}]", hasAddress ? "\tAddress          base.Address\n" : "");
+        replaceAll(structCode, "[{Proper}]", padRight(modelIn.base_proper + "s", 17));
+        os << structCode << endl;
+    }
+
+    if (isCacheable) {
+        const char* STR_CACHE_NAME =
+            "func (s *Simple[{CLASS_NAME}]) CacheName() string {\n"
+            "\treturn \"[{Proper}]\"\n"
+            "}\n";
+
+        string_q nameCode = STR_CACHE_NAME;
+        if (isGroupable) {
+            replaceAll(nameCode, "[{CLASS_NAME}]", groupName);
+        } else {
+            replaceAll(nameCode, "[{CLASS_NAME}]", modelName);
+        }
+        replaceAll(nameCode, "[{Proper}]", modelIn.base_proper);
+        os << nameCode << endl;
+
+        const char* STR_CACHE_ID =
+            "func (s *Simple[{CLASS_NAME}]) CacheId() string {\n"
+            "\treturn [{CACHE_ID}]\n"
+            "}\n";
+
+        string_q idCode = STR_CACHE_ID;
+        if (isGroupable) {
+            replaceAll(idCode, "[{CLASS_NAME}]", groupName);
+        } else {
+            replaceAll(idCode, "[{CLASS_NAME}]", modelName);
+        }
+        replaceAll(idCode, "[{Proper}]", modelIn.base_proper);
+        replaceAll(idCode, "[{CACHE_ID}]", get_id_code(modelIn.cache_by));
+        os << idCode << endl;
+
+        const char* STR_CACHE_LOCATION =
+            "func (s *Simple[{CLASS_NAME}]) CacheLocation() (directory string, extension string) {\n"
+            "\tpaddedId := s.CacheId()\n"
+            "\tparts := make([]string, 3)\n"
+            "\tparts[0] = paddedId[:2]\n"
+            "\tparts[1] = paddedId[2:4]\n"
+            "\tparts[2] = paddedId[4:6]\n"
+            "\n"
+            "\tsubFolder := strings.ToLower(s.CacheName()) + \"s\"\n"
+            "\tdirectory = filepath.Join(subFolder, filepath.Join(parts...))\n"
+            "\textension = \"bin\"\n"
+            "\n"
+            "\treturn\n"
+            "}\n";
+        string_q locCode = STR_CACHE_LOCATION;
+        if (isGroupable) {
+            replaceAll(locCode, "[{CLASS_NAME}]", groupName);
+        } else {
+            replaceAll(locCode, "[{CLASS_NAME}]", modelName);
+        }
+        os << locCode << endl;
+    }
+
+    if (isMarshalable) {
+        if (isGroupable) {
+            const char* STR_MARSHAL_GROUP =
+                "func (s *Simple[{CLASS_NAME}]) MarshalCache(writer io.Writer) (err error) {\n"
+                "\treturn cache.WriteValue(writer, s.[{Proper}]s)\n"
+                "}\n";
+
+            string_q marshalGroupCode = STR_MARSHAL_GROUP;
+            replaceAll(marshalGroupCode, "[{CLASS_NAME}]", groupName);
+            replaceAll(marshalGroupCode, "[{Proper}]", modelIn.base_proper);
+            os << marshalGroupCode << endl;
+
+            const char* STR_UNMARSHAL_GROUP =
+                "func (s *Simple[{CLASS_NAME}]) UnmarshalCache(version uint64, reader io.Reader) (err error) {\n"
+                "\treturn cache.ReadValue(reader, &s.[{Proper}]s, version)\n"
+                "}\n";
+
+            string_q unmarshalGroupCode = STR_UNMARSHAL_GROUP;
+            replaceAll(unmarshalGroupCode, "[{CLASS_NAME}]", groupName);
+            replaceAll(unmarshalGroupCode, "[{Proper}]", modelIn.base_proper);
+            os << unmarshalGroupCode << endl;
+        }
+
+        const char* STR_CACHE_MARSHAL =
+            "func (s *Simple[{MODEL_NAME}]) MarshalCache_new(writer io.Writer) (err error) {\n"
+            "[{FIELDS}]"
+            "\treturn nil\n"
+            "}\n";
+
+        string_q marshalCode = STR_CACHE_MARSHAL;
+        if (!commented) {
+            replaceAll(marshalCode, "_new", "");
+        }
+
+        if (isGroupable) {
+            replaceAll(marshalCode, "[{CLASS_NAME}]", groupName);
+        } else {
+            replaceAll(marshalCode, "[{CLASS_NAME}]", modelName);
+        }
+        replaceAll(marshalCode, "[{MODEL_NAME}]", modelName);
+        replaceAll(marshalCode, "[{FIELDS}]", get_marshal_fields(modelIn));
+        os << marshalCode << endl;
+
+        const char* STR_CACHE_UNMARSHAL =
+            "func (s *Simple[{MODEL_NAME}]) UnmarshalCache_new(version uint64, reader io.Reader) (err error) {\n"
+            "[{FIELDS}]"
+            "\treturn nil\n"
+            "}\n";
+
+        string_q unmarshalCode = STR_CACHE_UNMARSHAL;
+        if (!commented) {
+            replaceAll(unmarshalCode, "_new", "");
+        }
+        if (isGroupable) {
+            replaceAll(unmarshalCode, "[{CLASS_NAME}]", groupName);
+        } else {
+            replaceAll(unmarshalCode, "[{CLASS_NAME}]", modelName);
+        }
+        replaceAll(unmarshalCode, "[{MODEL_NAME}]", modelName);
+        replaceAll(unmarshalCode, "[{FIELDS}]", get_unmarshal_fields(modelIn));
+        os << unmarshalCode << endl;
+    }
+
+    return os.str();
+}
+
+string_q get_id_code(const string_q& cacheBy) {
+    if (cacheBy == "block") {
+        return "fmt.Sprintf(\"%09d\", s.BlockNumber)";
+    } else if (cacheBy == "tx") {
+        return "fmt.Sprintf(\"%09d-%05d\", s.BlockNumber, s.TransactionIndex)";
+    } else if (cacheBy == "addr_and_tx") {
+        return "fmt.Sprintf(\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)";
+    } else {
+        return "unkown-cache-by-type: " + cacheBy;
+    }
+}
+
+bool isArray(const CMember& field) {
+    if (field.name == "TraceAddress") {
+        return false;
+    }
+    return (field.memberFlags & IS_ARRAY);
+}
+
+string_q specialCacheCase2(const string_q& modelName, const CMember& field) {
+    if (field.name == "value" && modelName == "Parameter") {
+        return "\t// Value\n"
+               "\tvar value string\n"
+               "\tif err = cache.ReadValue(reader, &value, version); err != nil {\n"
+               "\t\treturn err\n"
+               "\t}\n"
+               "\tif err = json.Unmarshal([]byte(value), &s.Value); err != nil {\n"
+               "\t\treturn fmt.Errorf(\"cannot unmarshal Value: %w\", err)\n"
+               "\t}\n";
+    }
+    return "";
+}
+
+string_q specialCacheCase1(const string_q& modelName, const CMember& field) {
+    if (field.name == "value" && modelName == "Parameter") {
+        return "\t// Value\n"
+               "\tvalue, err := json.Marshal(s.Value)\n"
+               "\tif err != nil {\n"
+               "\t\treturn fmt.Errorf(\"cannot marshal Value: %w\", err)\n"
+               "\t}\n"
+               "\tif err = cache.WriteValue(writer, value); err != nil {\n"
+               "\t\treturn err\n"
+               "\t}\n";
+    }
+    return "";
+}
+
+string_q get_marshal_fields(const CClassDefinition& modelIn) {
+    CClassDefinition model = modelIn;
+    // CClassDefinition modelOrig = modelIn;
+    sort(model.fieldArray.begin(), model.fieldArray.end());
+
+    bool commented = isCommented(modelIn);
+
+    ostringstream os;
+    for (auto field : model.fieldArray) {
+        if (field.name == "raw" || skipField(model, field, false))
+            continue;
+
+        string_q modelName = type_2_ModelName(modelIn.go_model, false);
+        string_q spec = specialCacheCase1(modelName, field);
+        if (spec != "") {
+            os << spec << endl;
+            continue;
+        }
+
+        string_q type = type_2_TypeName(field.type, false);
+        string_q name = "s." + firstUpper(field.name);
+        if (name == "s.LogsBloom") {
+            continue;
+        }
+        string_q goType = type_2_GoType(field);
+        if (goType == "big.Int" || goType == "base.Wei" || goType == "base.Hash") {
+            if (name != "s.CumulativeGasUsed") {
+                name = "&" + name;
+            }
+        }
+        if (name == "s.Type") {
+            name = "s." + modelIn.base_name + "Type";
+        }
+
+        os << "\t" << (commented ? "// " : "") << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
+        if (isArray(field)) {
+            const char* STR_ARRAY_CODE =
+                "\t[C][{LOWER}] := make([]cache.Marshaler, 0, len([{FIELD_NAME}]))\n"
+                "\t[C]for _, [{SINGULAR}] := range [{FIELD_NAME}] {\n"
+                "\t[C]\t[{SINGULAR}] := [{SINGULAR}]\n"
+                "\t[C]\t[{LOWER}] = append([{LOWER}], &[{SINGULAR}])\n"
+                "\t[C]}\n"
+                "\t[C]if err = cache.WriteValue(writer, [{LOWER}]); err != nil {\n"
+                "\t[C]\treturn err\n"
+                "\t[C]}\n";
+            string_q arrayCode = STR_ARRAY_CODE;
+            replaceAll(arrayCode, "[{FIELD_NAME}]", name);
+            replaceAll(arrayCode, "[{LOWER}]", substitute(substitute(toLower(name), "&", ""), "s.", ""));
+            replaceAll(arrayCode, "[{SINGULAR}]",
+                       substitute(substitute(toLower(name).substr(0, name.length() - 1), "&", ""), "s.", ""));
+            replaceAll(arrayCode, "[C]", commented ? "// " : "");
+            os << arrayCode << endl;
+        } else {
+            os << "\t" << (commented ? "// " : "") << "if err = cache.WriteValue(writer, " << name << "); err != nil {"
+               << endl;
+            os << "\t" << (commented ? "// " : "") << "\treturn err" << endl;
+            os << "\t" << (commented ? "// " : "") << "}" << endl;
+        }
+        os << endl;
+    }
+    return os.str();
+}
+
+string_q get_unmarshal_fields(const CClassDefinition& modelIn) {
+    CClassDefinition model = modelIn;
+    // CClassDefinition modelOrig = modelIn;
+    sort(model.fieldArray.begin(), model.fieldArray.end());
+
+    bool commented = isCommented(modelIn);
+
+    ostringstream os;
+    for (auto field : model.fieldArray) {
+        if (field.name == "raw" || skipField(model, field, false))
+            continue;
+
+        string_q modelName = type_2_ModelName(modelIn.go_model, false);
+        string_q spec = specialCacheCase2(modelName, field);
+        if (spec != "") {
+            os << spec << endl;
+            continue;
+        }
+
+        string_q type = type_2_TypeName(field.type, false);
+        string_q name = "s." + firstUpper(field.name);
+        if (name == "s.LogsBloom") {
+            continue;
+        }
+        if (name == "s.Type") {
+            name = "s." + modelIn.base_name + "Type";
+        }
+
+        os << "\t" << (commented ? "// " : "") << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
+        if (isArray(field)) {
+            os << "\t" << (commented ? "// " : "") << name << " = make([]Simple" << type << ", 0)" << endl;
+        }
+        os << "\t" << (commented ? "// " : "") << "if err = cache.ReadValue(reader, &" << name
+           << ", version); err != nil {" << endl;
+        os << "\t" << (commented ? "// " : "") << "\treturn err" << endl;
+        os << "\t" << (commented ? "// " : "") << "}" << endl;
+        os << endl;
+    }
+    return os.str();
 }

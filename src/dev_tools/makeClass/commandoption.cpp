@@ -644,7 +644,6 @@ bool CCommandOption::finishCleanup(void) {
     isAlias = option_type == "alias";
     isErr = option_type == "error";
     isConfig = generate == "config";
-    isGoOnly = generate == "gocmd";
     isDeprecated = option_type == "deprecated";
 
     real_type = data_type;

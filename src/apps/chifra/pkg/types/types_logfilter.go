@@ -67,18 +67,17 @@ func (filter *SimpleLogFilter) PassesFilter(log *SimpleLog) bool {
 		}
 	}
 
-	foundTopic := false
+	topicsFound := 0
 	for _, t := range filter.Topics {
 		for _, lt := range log.Topics {
 			if t == lt {
-				foundTopic = true
-				break
+				topicsFound++
 			}
 		}
 	}
 
 	passesEmitter := len(filter.Emitters) == 0 || foundEmitter
-	passesTopic := len(filter.Topics) == 0 || foundTopic
+	passesTopic := len(filter.Topics) == 0 || topicsFound >= len(filter.Topics)
 
 	return passesEmitter && passesTopic
 }

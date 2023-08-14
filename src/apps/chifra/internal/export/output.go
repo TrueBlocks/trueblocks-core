@@ -73,7 +73,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 
 	handled = true
 	if opts.Globals.Decache {
-		err = opts.HandleDecache() // TODO DECACHE monitorArray)
+		err = opts.HandleDecache(monitorArray) // TODO DECACHE monitorArray)
 	} else if opts.Count {
 		err = opts.HandleCount(monitorArray)
 	} else if opts.Receipts {
@@ -90,6 +90,8 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 		err = opts.HandleBalances(monitorArray)
 	} else if opts.Neighbors {
 		err = opts.HandleNeighbors(monitorArray)
+	} else if opts.Accounting {
+		err = opts.HandleAccounting(monitorArray)
 	} else {
 		err = opts.HandleShow(monitorArray)
 	}

@@ -43,7 +43,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [transaction](/data-model/chaindata/#transaction)
+- [slurp](/data-model/other/#slurp)
 
 Links:
 

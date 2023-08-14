@@ -18,24 +18,6 @@ traces?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860e
       "transactionHash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
       "transactionIndex": 1,
       "type": "call"
-    },
-    {
-      "action": {
-        "callType": "call",
-        "from": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
-        "gas": 69000,
-        "to": "0xd77ba7ef37f87d5246f35de898133e09c92ecaca",
-        "value": "2148415350000000000"
-      },
-      "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
-      "blockNumber": 1001001,
-      "result": {},
-      "subtraces": 0,
-      "timestamp": 1455421883,
-      "traceAddress": [],
-      "transactionHash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
-      "transactionIndex": 1,
-      "type": "call"
     }
   ],
   "meta": {
@@ -49,6 +31,6 @@ traces?transactions=0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860e
     "chain": "mainnet"
   },
   "errors": [
-    "transaction at 1001001.5 returned an error: not found"
+    "transaction at 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 returned an error: not found"
   ]
 }

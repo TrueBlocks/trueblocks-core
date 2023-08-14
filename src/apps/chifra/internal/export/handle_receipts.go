@@ -6,8 +6,6 @@ package exportPkg
 
 import (
 	"context"
-	"fmt"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -67,60 +65,4 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
-}
-
-func (opts *ExportOptions) readReceipts(
-	addrArray []base.Address,
-	mon *monitor.Monitor,
-	filter *monitor.AppearanceFilter,
-	errorChan chan error,
-	abiCache *articulate.AbiCache,
-) ([]*types.SimpleReceipt, error) {
-	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
-		errorChan <- err
-		return nil, err
-	} else if !opts.NoZero || cnt > 0 {
-		chain := opts.Globals.Chain
-		if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil { // calls IterateOverMap
-			return nil, err
-		}
-
-		// Sort the items back into an ordered array by block number
-		items := make([]*types.SimpleReceipt, 0, len(txMap))
-		for _, tx := range txMap {
-			if tx.Receipt == nil {
-				continue
-			}
-			filteredLogs := make([]types.SimpleLog, 0, len(tx.Receipt.Logs))
-			for _, log := range tx.Receipt.Logs {
-				log := log
-				if log.ContainsAny(addrArray) {
-					if opts.matchesFilter(&log) {
-						if opts.Articulate {
-							if err := abiCache.ArticulateLog(chain, &log); err != nil {
-								errorChan <- fmt.Errorf("error articulating log: %v", err)
-							}
-						}
-						filteredLogs = append(filteredLogs, log)
-					}
-				}
-			}
-			tx.Receipt.Logs = filteredLogs
-			items = append(items, tx.Receipt)
-		}
-		sort.Slice(items, func(i, j int) bool {
-			itemI := items[i]
-			itemJ := items[j]
-			if itemI.BlockNumber == itemJ.BlockNumber {
-				return itemI.TransactionIndex < itemJ.TransactionIndex
-			}
-			return itemI.BlockNumber < itemJ.BlockNumber
-		})
-
-		// Return the array of items
-		return items, nil
-	} else {
-		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-		return nil, nil
-	}
 }

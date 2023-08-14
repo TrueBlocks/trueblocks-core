@@ -16,17 +16,40 @@ func (conn *Connection) GetLogsByFilter(filter types.SimpleLogFilter) ([]types.S
 }
 
 // GetLogsByNumber returns the logs of a block
-func (conn *Connection) GetLogsByNumber(bn uint64) ([]types.SimpleLog, error) {
+func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.SimpleLog, error) {
+	if conn.StoreReadable() {
+		logGroup := &types.SimpleLogGroup{
+			BlockNumber:      bn,
+			TransactionIndex: utils.NOPOS,
+		}
+		if err := conn.Store.Read(logGroup, nil); err == nil {
+			return logGroup.Logs, nil
+		}
+	}
+
 	filter := types.SimpleLogFilter{
 		FromBlock: bn,
 		ToBlock:   bn,
 	}
-	return conn.getLogsSimple(filter)
+
+	if logs, err := conn.getLogsSimple(filter); err != nil {
+		return logs, err
+	} else {
+		if conn.StoreWritable() && conn.enabledMap["logs"] && isFinal(conn.LatestBlockTimestamp, ts) {
+			logGroup := &types.SimpleLogGroup{
+				Logs:             logs,
+				BlockNumber:      bn,
+				TransactionIndex: utils.NOPOS,
+			}
+			_ = conn.Store.Write(logGroup, nil)
+		}
+		return logs, err
+	}
 }
 
 // GetLogsCountInBlock returns the number of logs in a block
-func (conn *Connection) GetLogsCountInBlock(bn uint64) (uint64, error) {
-	if logs, err := conn.GetLogsByNumber(bn); err != nil {
+func (conn *Connection) GetLogsCountInBlock(bn base.Blknum, ts base.Timestamp) (uint64, error) {
+	if logs, err := conn.GetLogsByNumber(bn, ts); err != nil {
 		return 0, err
 	} else {
 		return uint64(len(logs)), nil

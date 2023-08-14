@@ -54,12 +54,15 @@ func slowWay(conn *rpc.Connection) {
 func fastWay(conn *rpc.Connection) {
 	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
 
-	var TxIds []identifiers.Identifier
-	if err := validate.ValidateIdentifiers(chain, []string{"40000-60000"}, validate.ValidBlockIdWithRange, 1, &TxIds); err != nil {
+	var BlockIds []identifiers.Identifier
+	if err := validate.ValidateIdentifiers(chain, []string{"40000-60000"}, validate.ValidBlockIdWithRange, 1, &BlockIds); err != nil {
 		fmt.Println(err)
 	}
 
-	if theMap, err := identifiers.AsMap[bool](chain, TxIds); err != nil {
+	var theMap map[identifiers.ResolvedId]*types.SimpleBlock[string]
+	var err error
+
+	if theMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, BlockIds); err != nil {
 		fmt.Println(err)
 	} else {
 		ctx, cancel := context.WithCancel(context.Background())
@@ -67,7 +70,7 @@ func fastWay(conn *rpc.Connection) {
 
 		var firstBlock types.SimpleBlock[string]
 		firstBlock.BlockNumber = utils.NOPOS
-		iterateFunc := func(key identifiers.ResolvedId, value *bool) error {
+		iterateFunc := func(key identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
 			if theBlock, err := conn.GetBlockHeaderByNumber(base.Blknum(key.BlockNumber)); err != nil {
 				return err
 			} else {

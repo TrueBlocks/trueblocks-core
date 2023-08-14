@@ -41,8 +41,5 @@ transactions?transactions=9004225.10&logs&fmt=json
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  },
-  "errors": [
-    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[] FromBlock:0 ToBlock:0 Topics:[] raw:<nil>}"
-  ]
+  }
 }

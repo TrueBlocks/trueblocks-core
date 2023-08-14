@@ -21,7 +21,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
-		if txMap, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if txMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 		} else {
@@ -42,7 +42,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 					return fmt.Errorf("transaction at %s has no logs", app.String())
 				} else {
 					if opts.Articulate && tx.ArticulatedTx == nil {
-						if err = abiCache.ArticulateTx(chain, tx); err != nil {
+						if err = abiCache.ArticulateTransaction(tx); err != nil {
 							errorChan <- err // continue even with an error
 						}
 					}

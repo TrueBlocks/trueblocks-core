@@ -8,9 +8,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -70,7 +70,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 				}
 
 				if opts.Logs {
-					if blockCount.LogsCnt, err = opts.Conn.GetLogsCountInBlock(bn); err != nil {
+					if blockCount.LogsCnt, err = opts.Conn.GetLogsCountInBlock(bn, block.Timestamp); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue
@@ -86,9 +86,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 						return nil
 					}
 
-					addrMap := make(index.AddressBooleanMap)
-					ts := opts.Conn.GetBlockTimestamp(bn)
-					if err := opts.ProcessBlockUniqs(chain, countFunc, bn, addrMap, ts); err != nil {
+					if err := uniq.GetUniqAddressesInBlock(chain, opts.Flow, opts.Conn, countFunc, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							continue

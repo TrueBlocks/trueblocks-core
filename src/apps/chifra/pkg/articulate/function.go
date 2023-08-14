@@ -13,20 +13,20 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
+func (abiCache *AbiCache) ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
 	}
 
 	if len(inputData) > 0 {
-		if err = ArticulateArguments(abiMethod.Inputs, inputData, nil, function.Inputs); err != nil {
+		if err = articulateArguments(abiMethod.Inputs, inputData, nil, function.Inputs); err != nil {
 			return fmt.Errorf("error processing inputs of %s: %w", abiMethod.Sig, err)
 		}
 	}
 
 	if len(outputData) > 0 {
-		if err = ArticulateArguments(abiMethod.Outputs, outputData, nil, function.Outputs); err != nil {
+		if err = articulateArguments(abiMethod.Outputs, outputData, nil, function.Outputs); err != nil {
 			return fmt.Errorf("error processing output of %s: %w", abiMethod.Sig, err)
 		}
 	}
@@ -34,7 +34,7 @@ func ArticulateFunction(function *types.SimpleFunction, inputData string, output
 	return
 }
 
-func ArticulateArguments(args abi.Arguments, data string, topics []base.Hash, destination []types.SimpleParameter) (err error) {
+func articulateArguments(args abi.Arguments, data string, topics []base.Hash, destination []types.SimpleParameter) (err error) {
 	dataBytes, err := hex.DecodeString(data)
 	if err != nil {
 		return

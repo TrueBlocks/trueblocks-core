@@ -69,7 +69,6 @@ class CCommandOption : public CBaseNode {
     bool isDouble;
     bool isAddress;
     bool isConfig;
-    bool isGoOnly;
     bool isDeprecated;
     bool isNote;
     bool isAlias;
@@ -174,7 +173,6 @@ inline void CCommandOption::initialize(void) {
     isDouble = false;
     isAddress = false;
     isConfig = false;
-    isGoOnly = false;
     isDeprecated = false;
     isNote = false;
     isAlias = false;
@@ -224,7 +222,6 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isDouble = co.isDouble;
     isAddress = co.isAddress;
     isConfig = co.isConfig;
-    isGoOnly = co.isGoOnly;
     isDeprecated = co.isDeprecated;
     isNote = co.isNote;
     isAlias = co.isAlias;
