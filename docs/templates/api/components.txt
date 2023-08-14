@@ -32,7 +32,8 @@ components:
           description: "the timestamp for this appearance"
         date:
           type: string
-          description: "the date represented by the timestamp"
+          format: datetime
+          description: "a calculated field -- the date for this appearance"
     monitor:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object

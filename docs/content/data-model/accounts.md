@@ -58,7 +58,7 @@ Appearances consist of the following fields:
 | reason           | the location in the data where the appearance was found | string    |
 | name             | the name of the address, if found                       | string    |
 | timestamp        | the timestamp for this appearance                       | timestamp |
-| date             | the date represented by the timestamp                   | string    |
+| date             | a calculated field -- the date for this appearance      | datetime  |
 
 ## Monitor
 
