@@ -21,4 +21,4 @@ result::gasUsed  ,string      ,           ,       ,      ,        ,          ,tr
 action::input    ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,  12 ,              ,
 result::output   ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,  14 ,              ,
 timestamp        ,timestamp   ,           ,       ,      ,        ,          ,true    ,         ,  3 ,  15 ,              ,the timestamp of the block
-date             ,datetime    ,           ,       ,      ,        ,          ,true    ,         ,  4 ,  16 ,              ,the timestamp of the block
+date             ,datetime    ,           ,       ,      ,        ,          ,true    ,         ,  4 ,  16 ,              ,a calculated value - the date of the block

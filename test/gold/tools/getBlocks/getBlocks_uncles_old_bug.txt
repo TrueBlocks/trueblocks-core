@@ -8,6 +8,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 1,
+      "date": "2015-07-30 15:26:58 UTC",
       "difficulty": 0,
       "gasLimit": 0,
       "gasUsed": 0,
@@ -21,6 +22,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 466,
+      "date": "2015-07-30 15:45:49 UTC",
       "difficulty": 0,
       "gasLimit": 0,
       "gasUsed": 0,
@@ -34,6 +36,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 466,
+      "date": "2015-07-30 15:45:49 UTC",
       "difficulty": 0,
       "gasLimit": 0,
       "gasUsed": 0,

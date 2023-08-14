@@ -7,4 +7,6 @@ doc_descr = a statement, including all inflows and outflows, for a single transf
 doc_route = 108-statement
 doc_producer = export, transactions
 go_output = src/apps/chifra/pkg/types
-cache_type = cacheable_as_group
+cache_type = cacheable
+cache_by = addr_and_tx
+cache_as = group

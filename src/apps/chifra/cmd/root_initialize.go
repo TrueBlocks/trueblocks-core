@@ -184,6 +184,26 @@ func VerifyMigrations() {
 		logger.Fatal(msg)
 	}
 
+	items = []string{
+		"blocks",
+		"objs",
+		"recons",
+		"slurps",
+		"traces",
+		"txs",
+	}
+	for _, item := range items {
+		itemPath := filepath.Join(config.GetPathToCache(""), item)
+		if _, err := os.Stat(itemPath); err == nil {
+			msg := strings.Replace(shouldNotExist, "{0}", "{"+itemPath+"}", -1)
+			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+			msg = strings.Replace(msg, "{1}", "{v0.85.0}", -1)
+			msg = strings.Replace(msg, "{", colors.Green, -1)
+			msg = strings.Replace(msg, "}", colors.Off, -1)
+			logger.Fatal(msg)
+		}
+	}
+
 	// We need at least this version...
 	requiredVersion := "v0.40.0-beta"
 	if !config.IsAtLeastVersion(requiredVersion) {

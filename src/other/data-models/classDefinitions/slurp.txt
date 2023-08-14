@@ -6,4 +6,6 @@ doc_descr = transaction data as returned from by Etherscan
 doc_route = 503-slurp
 doc_producer = slurp
 go_output = src/apps/chifra/pkg/types
-cache_type = cacheable_as_group
+cache_type = cacheable
+cache_by = addr_and_tx
+cache_as = group

@@ -229,7 +229,7 @@ Traces consist of the following fields:
 | blockHash        | the hash of the block containing this trace               | hash                                              |
 | blockNumber      | the number of the block                                   | blknum                                            |
 | timestamp        | the timestamp of the block                                | timestamp                                         |
-| date             | the timestamp of the block                                | datetime                                          |
+| date             | a calculated value - the date of the block                | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
 | traceAddress     | a particular trace's address in the trace tree            | string[]                                          |
@@ -404,7 +404,7 @@ Timestamps consist of the following fields:
 | blockNumber | the number of the block                     | blknum    |
 | timestamp   | the Unix timestamp of the block             | timestamp |
 | date        | a calculated field -- the date of the block | datetime  |
-| diff        | the number of seconds since the last block  | timestamp |
+| diff        | the number of seconds since the last block  | int64     |
 
 ## TimestampCount
 
@@ -436,6 +436,7 @@ This documentation mentions the following basic data types.
 | gas       | an unsigned big number              | as a string    |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | int256    | a signed big number                 | as a string    |
+| int64     | a 64-bit signed integer             |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint32    | a 32-bit unsigned integer           |                |

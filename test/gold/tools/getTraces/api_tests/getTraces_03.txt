@@ -11,6 +11,7 @@ traces?transactions=0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef21
       },
       "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
       "blockNumber": 3068185,
+      "date": "2017-01-26 16:46:30 UTC",
       "result": {
         "gasUsed": 10626
       },
@@ -32,6 +33,7 @@ traces?transactions=0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef21
       },
       "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
       "blockNumber": 3068185,
+      "date": "2017-01-26 16:46:30 UTC",
       "result": {
         "gasUsed": 387,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -55,6 +57,7 @@ traces?transactions=0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef21
       },
       "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
       "blockNumber": 3068185,
+      "date": "2017-01-26 16:46:30 UTC",
       "result": {},
       "subtraces": 0,
       "timestamp": 1485449190,

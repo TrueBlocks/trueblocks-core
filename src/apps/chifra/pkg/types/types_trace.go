@@ -14,6 +14,7 @@ import (
 	"io"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -77,6 +78,7 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 		"result":           s.Result,
 		"subtraces":        s.Subtraces,
 		"timestamp":        s.Timestamp,
+		"date":             s.Date(),
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
 		// "traceIndex":       s.TraceIndex,
@@ -87,6 +89,7 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 		"transactionIndex",
 		// "traceIndex",
 		"timestamp",
+		"date",
 		"error",
 		"action::callType",
 		"action::from",
@@ -195,140 +198,14 @@ func (s *SimpleTrace) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// cacheable_as_group
-
 // EXISTING_CODE
 //
 
-func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
-	// Action is a pointer and it can be missing
-	optAction := &cache.Optional[SimpleTraceAction]{
-		Value: s.Action,
-	}
-	if err = cache.WriteValue(writer, optAction); err != nil {
-		return err
-	}
-
-	optArticulatedTrace := &cache.Optional[SimpleFunction]{
-		Value: s.ArticulatedTrace,
-	}
-	if err = cache.WriteValue(writer, optArticulatedTrace); err != nil {
-		return err
-	}
-
-	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.CompressedTrace); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Error); err != nil {
-		return err
-	}
-
-	// Result is a pointer and it can be missing
-	optResult := &cache.Optional[SimpleTraceResult]{
-		Value: s.Result,
-	}
-
-	if err = cache.WriteValue(writer, optResult); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Subtraces); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.TraceAddress); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.TraceType); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	optAction := &cache.Optional[SimpleTraceAction]{
-		Value: s.Action,
-	}
-	if err = cache.ReadValue(reader, optAction, version); err != nil {
-		return err
-	}
-	s.Action = optAction.Get()
-
-	// ArticulatedTrace can be missing
-	optArticulatedTrace := &cache.Optional[SimpleFunction]{
-		Value: s.ArticulatedTrace,
-	}
-	if err = cache.ReadValue(reader, optArticulatedTrace, version); err != nil {
-		return err
-	}
-	s.ArticulatedTrace = optArticulatedTrace.Get()
-
-	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.CompressedTrace, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.Error, version); err != nil {
-		return err
-	}
-
-	optResult := &cache.Optional[SimpleTraceResult]{
-		Value: s.Result,
-	}
-	if err = cache.ReadValue(reader, optResult, version); err != nil {
-		return err
-	}
-	s.Result = optResult.Get()
-
-	if err = cache.ReadValue(reader, &s.Subtraces, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
-		return err
-	}
-
-	if err = cache.ReadValue(reader, &s.TraceAddress, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.TraceType, version); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// SimpleTraceGroup stores traces in the cache as an array, so we need
-// a data type reflecting this.
+//- cacheable by tx as group
 type SimpleTraceGroup struct {
-	// The actual traces being cached
-	Traces []SimpleTrace
-	// Details for cache locator
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
+	Traces           []SimpleTrace
 }
 
 func (s *SimpleTraceGroup) CacheName() string {
@@ -340,15 +217,16 @@ func (s *SimpleTraceGroup) CacheId() string {
 }
 
 func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
 	extension = "bin"
 
-	id := s.CacheId()
-
-	parts := make([]string, 3)
-	parts[0] = id[:2]
-	parts[1] = id[2:4]
-	parts[2] = id[4:6]
-	directory = filepath.Join("traces", filepath.Join(parts...))
 	return
 }
 
@@ -358,6 +236,165 @@ func (s *SimpleTraceGroup) MarshalCache(writer io.Writer) (err error) {
 
 func (s *SimpleTraceGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	return cache.ReadValue(reader, &s.Traces, version)
+}
+
+func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
+	// Action
+	optAction := &cache.Optional[SimpleTraceAction]{
+		Value: s.Action,
+	}
+	if err = cache.WriteValue(writer, optAction); err != nil {
+		return err
+	}
+
+	// ArticulatedTrace
+	optArticulatedTrace := &cache.Optional[SimpleFunction]{
+		Value: s.ArticulatedTrace,
+	}
+	if err = cache.WriteValue(writer, optArticulatedTrace); err != nil {
+		return err
+	}
+
+	// BlockHash
+	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
+	// CompressedTrace
+	if err = cache.WriteValue(writer, s.CompressedTrace); err != nil {
+		return err
+	}
+
+	// Error
+	if err = cache.WriteValue(writer, s.Error); err != nil {
+		return err
+	}
+
+	// Result
+	optResult := &cache.Optional[SimpleTraceResult]{
+		Value: s.Result,
+	}
+	if err = cache.WriteValue(writer, optResult); err != nil {
+		return err
+	}
+
+	// Subtraces
+	if err = cache.WriteValue(writer, s.Subtraces); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+
+	// TraceAddress
+	if err = cache.WriteValue(writer, s.TraceAddress); err != nil {
+		return err
+	}
+
+	// TransactionHash
+	if err = cache.WriteValue(writer, s.TransactionHash); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+
+	// TraceType
+	if err = cache.WriteValue(writer, s.TraceType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Action
+	optAction := &cache.Optional[SimpleTraceAction]{
+		Value: s.Action,
+	}
+	if err = cache.ReadValue(reader, optAction, version); err != nil {
+		return err
+	}
+	s.Action = optAction.Get()
+
+	// ArticulatedTrace
+	optArticulatedTrace := &cache.Optional[SimpleFunction]{
+		Value: s.ArticulatedTrace,
+	}
+	if err = cache.ReadValue(reader, optArticulatedTrace, version); err != nil {
+		return err
+	}
+	s.ArticulatedTrace = optArticulatedTrace.Get()
+
+	// BlockHash
+	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+
+	// CompressedTrace
+	if err = cache.ReadValue(reader, &s.CompressedTrace, version); err != nil {
+		return err
+	}
+
+	// Error
+	if err = cache.ReadValue(reader, &s.Error, version); err != nil {
+		return err
+	}
+
+	// Result
+	optResult := &cache.Optional[SimpleTraceResult]{
+		Value: s.Result,
+	}
+	if err = cache.ReadValue(reader, optResult, version); err != nil {
+		return err
+	}
+	s.Result = optResult.Get()
+
+	// Subtraces
+	if err = cache.ReadValue(reader, &s.Subtraces, version); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+
+	// TraceAddress
+	if err = cache.ReadValue(reader, &s.TraceAddress, version); err != nil {
+		return err
+	}
+
+	// TransactionHash
+	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+		return err
+	}
+
+	// TraceType
+	if err = cache.ReadValue(reader, &s.TraceType, version); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func mustParseUint(input any) (result uint64) {

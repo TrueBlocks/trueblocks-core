@@ -8,7 +8,7 @@ blockNumber          ,blknum         ,           ,       ,      ,        ,      
 transactionIndex     ,blknum         ,           ,       ,      ,        ,          ,        ,         ,  4 ,   2 ,305           ,the zero-indexed position of the transaction in the block
 nonce                ,uint64         ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,232           ,sequence number of the transactions sent by the sender
 timestamp            ,timestamp      ,           ,       ,      ,        ,          ,        ,         ,  6 ,   4 ,1438335038    ,the Unix timestamp of the object
-date                 ,datetime       ,           ,       ,      ,        ,          ,true    ,true     ,  7 ,   3 ,              ,
+date                 ,datetime       ,           ,       ,      ,        ,          ,        ,         ,  7 ,   3 ,              ,
 from                 ,address        ,           ,       ,      ,        ,          ,        ,         ,  8 ,   5 ,              ,address from which the transaction was sent
 to                   ,address        ,           ,       ,      ,        ,          ,        ,         ,  9 ,   6 ,              ,address to which the transaction was sent
 value                ,wei            ,           ,       ,      ,        ,          ,        ,         , 10 ,     ,0             ,the amount of wei sent with this transactions

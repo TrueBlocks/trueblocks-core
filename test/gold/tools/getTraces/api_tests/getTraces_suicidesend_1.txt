@@ -11,6 +11,7 @@ traces?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd
       },
       "blockHash": "0x86a0d17255a65e6bd660dd7e8f747350c15bcc3d270b12ec9bd9ab16d189a3b3",
       "blockNumber": 2608034,
+      "date": "2016-11-11 16:03:57 UTC",
       "result": {
         "address": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
         "gasUsed": 5021
@@ -30,6 +31,7 @@ traces?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd
       },
       "blockHash": "0x86a0d17255a65e6bd660dd7e8f747350c15bcc3d270b12ec9bd9ab16d189a3b3",
       "blockNumber": 2608034,
+      "date": "2016-11-11 16:03:57 UTC",
       "result": null,
       "subtraces": 0,
       "timestamp": 1478880237,

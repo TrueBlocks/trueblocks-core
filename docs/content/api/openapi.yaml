@@ -2335,6 +2335,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the first appearance of this address"
+        firstDate:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the first appearance"
         latestApp:
           type: RawAppearance
           description: "the block number and transaction id of the latest appearance of this address"
@@ -2342,6 +2346,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the latest appearance of this address"
+        latestDate:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the latest appearance"
     statement:
       description: "a statement, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
       type: object
@@ -2879,7 +2887,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the timestamp of the block"
+          description: "a calculated value - the date of the block"
         transactionHash:
           type: string
           format: hash
@@ -3120,9 +3128,8 @@ components:
           format: datetime
           description: "a calculated field -- the date of the block"
         diff:
-          type: number
-          format: timestamp
-          example: 12
+          type: int64
+          example: "12"
           description: "the number of seconds since the last block"
     timestampCount:
       description: "the number of timestamps in the timestamps database"

@@ -11,6 +11,7 @@ traces?transactions=4348290.92&fmt=json
       },
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
+      "date": "2017-10-08 17:50:40 UTC",
       "result": {
         "gasUsed": 48838
       },
@@ -32,6 +33,7 @@ traces?transactions=4348290.92&fmt=json
       },
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
+      "date": "2017-10-08 17:50:40 UTC",
       "result": {
         "gasUsed": 28693,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -55,6 +57,7 @@ traces?transactions=4348290.92&fmt=json
       },
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
+      "date": "2017-10-08 17:50:40 UTC",
       "result": {},
       "subtraces": 0,
       "timestamp": 1507485040,

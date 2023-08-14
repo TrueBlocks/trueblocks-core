@@ -51,7 +51,7 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 	if verbose {
 		model["timestamp"] = s.Timestamp
 		order = append(order, "timestamp")
-		model["date"] = utils.FormattedDate(s.Timestamp)
+		model["date"] = s.Date()
 		order = append(order, "date")
 	}
 

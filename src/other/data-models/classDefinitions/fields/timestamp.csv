@@ -2,4 +2,4 @@ name        ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,
 blockNumber ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,   4370000 ,the number of the block
 timestamp   ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,1508131331 ,the Unix timestamp of the block
 date        ,datetime  ,           ,       ,      ,        ,          ,        ,         ,  3 ,     ,           ,a calculated field -- the date of the block
-diff        ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,        12 ,the number of seconds since the last block
+diff        ,int64     ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,        12 ,the number of seconds since the last block

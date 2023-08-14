@@ -90,6 +90,12 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'c':
+            if (fieldName % "cache_as") {
+                return cache_as;
+            }
+            if (fieldName % "cache_by") {
+                return cache_by;
+            }
             if (fieldName % "cache_type") {
                 return cache_type;
             }
@@ -237,6 +243,14 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             break;
         case 'c':
+            if (fieldName % "cache_as") {
+                cache_as = fieldValue;
+                return true;
+            }
+            if (fieldName % "cache_by") {
+                cache_by = fieldValue;
+                return true;
+            }
             if (fieldName % "cache_type") {
                 cache_type = fieldValue;
                 return true;
@@ -384,7 +398,9 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> doc_alias;
     archive >> doc_producer;
     archive >> go_output;
-    // archive >> cache_type;
+    archive >> cache_as;
+    archive >> cache_by;
+    archive >> cache_type;
     archive >> disabled;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -422,7 +438,9 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << doc_alias;
     archive << doc_producer;
     archive << go_output;
-    // archive << cache_type;
+    archive << cache_as;
+    archive << cache_by;
+    archive << cache_type;
     archive << disabled;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -498,6 +516,8 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "doc_alias", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_producer", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "go_output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "cache_as", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "cache_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "cache_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "disabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
@@ -651,7 +671,10 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
     doc_alias = toml.getConfigStr("settings", "doc_alias", "");
     doc_order = trim(nextTokenClear(doc_group, '-')) + trim(nextTokenClear(doc_route, '-'));
     go_output = substitute(toml.getConfigStr("settings", "go_output", ""), "src/", "./");
+    cache_as = toml.getConfigStr("settings", "cache_as", "");
+    cache_by = toml.getConfigStr("settings", "cache_by", "");
     cache_type = toml.getConfigStr("settings", "cache_type", "");
+
     if (!go_output.empty()) {
         string_q def = class_name;
         replace(def, "C", "");

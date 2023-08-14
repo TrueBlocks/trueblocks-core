@@ -71,7 +71,7 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 		"blockNumber":      s.BlockNumber,
 		"logIndex":         s.LogIndex,
 		"timestamp":        s.Timestamp,
-		"date":             utils.FormattedDate(s.Timestamp),
+		"date":             s.Date(),
 		"transactionIndex": s.TransactionIndex,
 		"transactionHash":  s.TransactionHash,
 	}
@@ -153,19 +153,14 @@ func (s *SimpleLog) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// cacheable_as_group
-
 // EXISTING_CODE
 //
 
-// SimpleLogGroup stores logs in the cache as an array, so we need
-// a data type reflecting this.
+// - cacheable by tx as group
 type SimpleLogGroup struct {
-	// The actual logs being cached
-	Logs []SimpleLog
-	// Details for cache locator
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
+	Logs             []SimpleLog
 }
 
 func (s *SimpleLogGroup) CacheName() string {
@@ -177,15 +172,16 @@ func (s *SimpleLogGroup) CacheId() string {
 }
 
 func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
 	extension = "bin"
 
-	id := s.CacheId()
-
-	parts := make([]string, 3)
-	parts[0] = id[:2]
-	parts[1] = id[2:4]
-	parts[2] = id[4:6]
-	directory = filepath.Join("logs", filepath.Join(parts...))
 	return
 }
 
@@ -198,10 +194,12 @@ func (s *SimpleLogGroup) UnmarshalCache(version uint64, reader io.Reader) (err e
 }
 
 func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
+	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
+	// ArticulatedLog
 	optArticulatedLog := &cache.Optional[SimpleFunction]{
 		Value: s.ArticulatedLog,
 	}
@@ -209,44 +207,61 @@ func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// BlockHash
 	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
+
+	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
+
+	// CompressedLog
 	if err = cache.WriteValue(writer, s.CompressedLog); err != nil {
 		return err
 	}
+
+	// Data
 	if err = cache.WriteValue(writer, s.Data); err != nil {
 		return err
 	}
+
+	// LogIndex
 	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
 		return err
 	}
+
+	// Timestamp
 	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
+	// Topics
 	if err = cache.WriteValue(writer, s.Topics); err != nil {
 		return err
 	}
 
+	// TransactionHash
 	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
+
+	// TransactionIndex
 	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
-	return
+	return nil
 }
 
 func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
 	}
 
+	// ArticulatedLog
 	optArticulatedLog := &cache.Optional[SimpleFunction]{
 		Value: s.ArticulatedLog,
 	}
@@ -255,38 +270,53 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 	}
 	s.ArticulatedLog = optArticulatedLog.Get()
 
+	// BlockHash
 	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
 	}
+
+	// BlockNumber
 	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
+
+	// CompressedLog
 	if err = cache.ReadValue(reader, &s.CompressedLog, version); err != nil {
 		return err
 	}
+
+	// Data
 	if err = cache.ReadValue(reader, &s.Data, version); err != nil {
 		return err
 	}
+
+	// LogIndex
 	if err = cache.ReadValue(reader, &s.LogIndex, version); err != nil {
 		return err
 	}
+
+	// Timestamp
 	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
 		return err
 	}
 
+	// Topics
 	s.Topics = make([]base.Hash, 0)
 	if err = cache.ReadValue(reader, &s.Topics, version); err != nil {
 		return err
 	}
 
+	// TransactionHash
 	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
 		return err
 	}
+
+	// TransactionIndex
 	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
 		return err
 	}
 
-	return
+	return nil
 }
 
 func (s *SimpleLog) getHaystack() string {

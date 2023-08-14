@@ -126,49 +126,69 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 	}
 }
 
-// marshal
-
-// EXISTING_CODE
-//
-
-// MarshalCache writes the object to the cache.
+//- marshal_only
 func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
+	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
+
+	// Author
 	if err = cache.WriteValue(writer, s.Author); err != nil {
 		return err
 	}
+
+	// Balance
 	if err = cache.WriteValue(writer, &s.Balance); err != nil {
 		return err
 	}
+
+	// CallType
 	if err = cache.WriteValue(writer, s.CallType); err != nil {
 		return err
 	}
+
+	// From
 	if err = cache.WriteValue(writer, s.From); err != nil {
 		return err
 	}
+
+	// Gas
 	if err = cache.WriteValue(writer, s.Gas); err != nil {
 		return err
 	}
+
+	// Init
 	if err = cache.WriteValue(writer, s.Init); err != nil {
 		return err
 	}
+
+	// Input
 	if err = cache.WriteValue(writer, s.Input); err != nil {
 		return err
 	}
+
+	// RefundAddress
 	if err = cache.WriteValue(writer, s.RefundAddress); err != nil {
 		return err
 	}
+
+	// RewardType
 	if err = cache.WriteValue(writer, s.RewardType); err != nil {
 		return err
 	}
+
+	// SelfDestructed
 	if err = cache.WriteValue(writer, s.SelfDestructed); err != nil {
 		return err
 	}
+
+	// To
 	if err = cache.WriteValue(writer, s.To); err != nil {
 		return err
 	}
+
+	// Value
 	if err = cache.WriteValue(writer, &s.Value); err != nil {
 		return err
 	}
@@ -177,47 +197,73 @@ func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleTraceAction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
 	}
+
+	// Author
 	if err = cache.ReadValue(reader, &s.Author, version); err != nil {
 		return err
 	}
+
+	// Balance
 	if err = cache.ReadValue(reader, &s.Balance, version); err != nil {
 		return err
 	}
+
+	// CallType
 	if err = cache.ReadValue(reader, &s.CallType, version); err != nil {
 		return err
 	}
+
+	// From
 	if err = cache.ReadValue(reader, &s.From, version); err != nil {
 		return err
 	}
+
+	// Gas
 	if err = cache.ReadValue(reader, &s.Gas, version); err != nil {
 		return err
 	}
+
+	// Init
 	if err = cache.ReadValue(reader, &s.Init, version); err != nil {
 		return err
 	}
+
+	// Input
 	if err = cache.ReadValue(reader, &s.Input, version); err != nil {
 		return err
 	}
+
+	// RefundAddress
 	if err = cache.ReadValue(reader, &s.RefundAddress, version); err != nil {
 		return err
 	}
+
+	// RewardType
 	if err = cache.ReadValue(reader, &s.RewardType, version); err != nil {
 		return err
 	}
+
+	// SelfDestructed
 	if err = cache.ReadValue(reader, &s.SelfDestructed, version); err != nil {
 		return err
 	}
+
+	// To
 	if err = cache.ReadValue(reader, &s.To, version); err != nil {
 		return err
 	}
+
+	// Value
 	if err = cache.ReadValue(reader, &s.Value, version); err != nil {
 		return err
 	}
 
-	return
+	return nil
 }
 
+// EXISTING_CODE
 // EXISTING_CODE

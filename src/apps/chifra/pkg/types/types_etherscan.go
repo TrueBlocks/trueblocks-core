@@ -95,10 +95,10 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 
 	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
-		"date":        utils.FormattedDate(s.Timestamp),
 		"ether":       s.Ether,
 		"from":        s.From,
 		"timestamp":   s.Timestamp,
+		"date":        s.Date(),
 		"to":          s.To,
 		"value":       s.Value.String(),
 	}
@@ -179,6 +179,10 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleEtherscan) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // object,array

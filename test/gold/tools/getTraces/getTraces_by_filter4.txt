@@ -15,6 +15,7 @@ INFO[DATE|TIME] map[after:1 count:18446744073709551615 fromAddress:0x0 fromBlock
       },
       "blockHash": "0xd41acd1affdddd519190f912bed89e3db49d015b269e50e901c64e816f2ebd74",
       "blockNumber": 3068200,
+      "date": "2017-01-26 16:49:01 UTC",
       "result": {},
       "subtraces": 0,
       "timestamp": 1485449341,

@@ -15,6 +15,7 @@ INFO[DATE|TIME] map[after:0 count:1 fromAddress:0x0 fromBlock:3068100 toAddress:
       },
       "blockHash": "0x86df301bcdd8248d982dbf039f09faf792684e1aeee99d5b58b77d620008b80f",
       "blockNumber": 3068183,
+      "date": "2017-01-26 16:45:52 UTC",
       "result": {},
       "subtraces": 0,
       "timestamp": 1485449152,

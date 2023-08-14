@@ -10,7 +10,7 @@ compressedLog       ,string    ,           ,       ,      ,true    ,true      , 
 transactionHash     ,hash      ,           ,       ,      ,true    ,          ,        ,         ,4   ,4    ,                         ,the hash of the transction
 transactionIndex    ,uint64    ,           ,       ,      ,true    ,          ,        ,         ,2   ,2    ,305                      ,the zero-indexed position of the transaction in the block
 timestamp           ,timestamp ,           ,       ,      ,true    ,true      ,        ,         ,5   ,5    ,                         ,the timestamp of the block this log appears in
-date                ,datetime  ,           ,       ,      ,true    ,true      ,        ,         ,6   ,6    ,                         ,a calculated field -- the date of the block this log appears in
+date                ,datetime  ,           ,       ,      ,        ,          ,        ,         ,6   ,6    ,                         ,a calculated field -- the date of the block this log appears in
 type                ,string    ,           ,       ,      ,true    ,          ,        ,         ,    ,     ,                         ,
 unused              ,bool      ,           ,       ,      ,true    ,true      ,        ,         ,    ,     ,                         ,
 topic0              ,topic     ,           ,       ,      ,true    ,          ,true    ,true     ,    ,8    ,                         ,

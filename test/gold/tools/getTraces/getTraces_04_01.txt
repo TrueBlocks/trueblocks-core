@@ -15,6 +15,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d",
       "blockNumber": 2229051,
+      "date": "2016-09-09 18:22:48 UTC",
       "error": "invalid jump destination",
       "result": null,
       "subtraces": 0,

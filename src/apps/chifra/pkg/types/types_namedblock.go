@@ -48,8 +48,8 @@ func (s *SimpleNamedBlock) Model(verbose bool, format string, extraOptions map[s
 	// EXISTING_CODE
 	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
-		"date":        s.Date,
 		"timestamp":   s.Timestamp,
+		"date":        s.Date(),
 	}
 
 	order = []string{

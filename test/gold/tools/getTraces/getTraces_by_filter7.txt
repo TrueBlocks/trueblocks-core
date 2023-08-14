@@ -16,6 +16,7 @@ INFO[DATE|TIME] map[after:0 count:18446744073709551615 fromAddress:0x0 fromBlock
       },
       "blockHash": "0x40996e904604226a5c252f496238d4c70270e0a05c4cb5588987b32fe1c4a7f2",
       "blockNumber": 4370001,
+      "date": "2017-10-16 05:22:42 UTC",
       "result": {
         "gasUsed": 29002,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
