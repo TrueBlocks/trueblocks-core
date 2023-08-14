@@ -22,7 +22,6 @@ type RawToken struct {
 	Address          string `json:"address"`
 	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
-	Date             string `json:"date"`
 	Decimals         string `json:"decimals"`
 	Diff             string `json:"diff"`
 	Holder           string `json:"holder"`
@@ -41,7 +40,6 @@ type SimpleToken struct {
 	Address          base.Address   `json:"address"`
 	Balance          big.Int        `json:"balance"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
-	Date             string         `json:"date"`
 	Decimals         uint64         `json:"decimals"`
 	Diff             big.Int        `json:"diff,omitempty"`
 	Holder           base.Address   `json:"holder"`
@@ -152,6 +150,10 @@ func (s *SimpleToken) Model(verbose bool, format string, extraOptions map[string
 	}
 }
 
+func (s *SimpleToken) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
 // EXISTING_CODE
 //
 
@@ -161,10 +163,6 @@ func (s *SimpleToken) IsErc20() bool {
 
 func (s *SimpleToken) IsErc721() bool {
 	return s.TokenType.IsErc721()
-}
-
-func (s *SimpleToken) Date() string {
-	return utils.FormattedDate(s.Timestamp)
 }
 
 type TokenType int

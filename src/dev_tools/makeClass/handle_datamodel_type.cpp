@@ -46,9 +46,12 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     }
 
     size_t maxRawNameWid = 0, maxSimpNameWid = 0, maxRawTypeWid = 0, maxSimpTypeWid = 0, maxModelWid = 0;
-
+    bool hasTimestamp = false;
     for (size_t i = 0; i < model.fieldArray.size(); i++) {
         CMember* field = &model.fieldArray[i];
+        if (field->name == "timestamp") {
+            hasTimestamp = true;
+        }
 
         if (field->name != "raw") {
             field->name = firstUpper(field->name);
@@ -82,12 +85,14 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     string_q rawStr;
     const char* STR_JSON_TAG = " `json:\"[{NAME}][{OE}]\"`";
     for (const CMember& field : model.fieldArray) {
-        if (skipField(model, field, true))
+        if (skipField(model, field, true) || field.name == "date") {
             continue;
+        }
 
         string_q spec = specialCase(model, field, type_2_GoType(field), true);
-        if (spec.empty())
+        if (spec.empty()) {
             continue;
+        }
 
         string_q rawType = padRight(spec, maxRawTypeWid);
         string_q jName = jsonName(model, field, true);
@@ -120,26 +125,21 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     string_q cacheStr;
     if (!modelIn.cache_type.empty()) {
         cacheStr = "\n// " + modelIn.cache_type + "\n";
-        // for (const CMember& field : model.fieldArray) {
-        // if (skipField(model, field, false))
-        //     continue;
-
-        // string_q spec = specialCase(model, field, type_2_GoType(field), false);
-        // string_q simpType = padRight(spec, maxSimpTypeWid);
-        // string_q jName = jsonName(model, field, false);
-        // string_q oe = (field.memberFlags & IS_OMITEMPTY ? ",omitempty" : "");
-
-        // ostringstream os;
-        // os << "\t" << padRight(field.name, maxSimpNameWid) << " " << simpType;
-        // os << substitute(substitute(STR_JSON_TAG, "[{NAME}]", jName), "[{OE}]", oe);
-        // os << endl;
-        // fieldStr += os.str();
-        // }
     }
 
     replaceAll(contents, "[{RAWFIELDS}]", rawStr);
     replaceAll(contents, "[{FIELDS}]", fieldStr);
     replaceAll(contents, "[{CACHE_CODE}]", cacheStr);
+    if (hasTimestamp) {
+        const char* STR_DATE_CODE =
+            "func (self *Simple{CLASS_NAME}) Date() string {\n"
+            "\treturn return utils.FormattedDate(s.Timestamp)\n"
+            "}\n\n";
+        string_q dateCode = STR_DATE_CODE;
+        replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
+    } else {
+        replaceAll(contents, "[{DATE_CODE}]", "");
+    }
 
     // hackathon!
     replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx string | SimpleTransaction] struct {");
