@@ -73,6 +73,7 @@ func (s *SimpleNamedBlock) Model(verbose bool, format string, extraOptions map[s
 		Order: order,
 	}
 }
+
 func (s *SimpleNamedBlock) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }

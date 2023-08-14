@@ -148,6 +148,7 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 		Order: order,
 	}
 }
+
 func (s *SimpleLog) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }

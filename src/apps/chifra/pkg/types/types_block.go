@@ -185,6 +185,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 		Order: order,
 	}
 }
+
 func (s *SimpleBlock[Tx]) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }

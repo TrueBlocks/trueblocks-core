@@ -133,6 +133,7 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     replaceAll(contents, "[{CACHE_CODE}]", cacheStr);
     if (hasTimestamp) {
         const char* STR_DATE_CODE =
+            "\n"
             "func (s *Simple[{CLASS_NAME}]) Date() string {\n"
             "\treturn utils.FormattedDate(s.Timestamp)\n"
             "}\n\n";

@@ -3464,10 +3464,10 @@ components:
           format: blkrange
           example: "013142464-013145212"
           description: "the block range (inclusive) covered by this chunk"
-        date:
+        rangeEnd:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the last block in this range"
+          description: "the date of the last block in this range"
         nAddrs:
           type: number
           format: uint64

@@ -92,6 +92,7 @@ func (s *SimpleSlurp) Model(verbose bool, format string, extraOptions map[string
 		Order: order,
 	}
 }
+
 func (s *SimpleSlurp) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
