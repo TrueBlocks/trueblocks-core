@@ -17,7 +17,7 @@ type ProgressBar struct {
 	graph     string // the actual progress bar to be printed
 	ch        string // the fill value for progress bar
 	enabled   bool   // enable progress bar
-	overflow  bool   // the bar doesn't know how many object there will be, so grows
+	expanding bool   // the bar doesn't know how many object there will be, so grows
 	startTime time.Time
 }
 
@@ -25,7 +25,7 @@ func NewBar(prefix string, enabled bool, total int64) (bar *ProgressBar) {
 	return NewBarWithGraphic(prefix, enabled, false, total, ".")
 }
 
-func NewOverflowBar(prefix string, enabled bool, total int64) (bar *ProgressBar) {
+func NewExpandingBar(prefix string, enabled bool, total int64) (bar *ProgressBar) {
 	return NewBarWithGraphic(prefix, enabled, true, total, ".")
 }
 
@@ -46,7 +46,7 @@ func NewBarWithGraphic(prefix string, enabled bool, of bool, total int64, ch str
 	bar.cur = 0
 	bar.total = total
 	bar.ch = ch
-	bar.overflow = of
+	bar.expanding = of
 	bar.percent = int64(float32(bar.cur) * 100 / float32(bar.total))
 	for i := 0; i < int(bar.percent); i += 2 {
 		bar.graph += bar.ch // initial progress position
@@ -57,7 +57,7 @@ func NewBarWithGraphic(prefix string, enabled bool, of bool, total int64, ch str
 
 func (bar *ProgressBar) Tick() {
 	atomic.AddInt64(&bar.cur, 1)
-	if bar.overflow && bar.cur >= bar.total {
+	if bar.expanding && bar.cur >= bar.total {
 		bar.total = bar.total * 2 // grow by 50% but at least 100
 		bar.cur = bar.cur / 2
 		bar.percent = int64(float32(bar.cur) * 100 / float32(bar.total))
@@ -71,7 +71,7 @@ func (bar *ProgressBar) Tick() {
 
 func (bar *ProgressBar) Finish(newLine bool) time.Duration {
 	if bar.enabled {
-		if bar.overflow {
+		if bar.expanding {
 			bar.total = (bar.total / 2) + bar.cur
 			bar.cur = bar.total
 			bar.percent = 100
@@ -111,7 +111,7 @@ func (bar *ProgressBar) display() {
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}
 	ofMarker := ""
-	if bar.overflow {
+	if bar.expanding {
 		ofMarker = "?"
 	}
 	fmt.Fprintf(os.Stderr, "\r%s[%s] [%s%-50s%s]%3d%% %5d/% 5d %s\r",

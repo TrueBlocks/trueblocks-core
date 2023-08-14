@@ -41,7 +41,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 			}
 
 			for _, app := range txIds {
-				if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, chain, &app); err != nil {
+				if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, &app); err != nil {
 					errorChan <- err
 				} else {
 					for _, statement := range statements {

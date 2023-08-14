@@ -79,6 +79,9 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	} else if opts.Uniq {
 		err = opts.HandleUniq()
 
+	} else if opts.Hashes {
+		err = opts.HandleHashes()
+
 	} else {
 		err = opts.HandleShow()
 	}

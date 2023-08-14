@@ -7,7 +7,7 @@ INFO[DATE|TIME]
 {
   "data": [
     {
-      "msg": "One item totaling 309 bytes was removed from the cache."
+      "msg": "5 items totaling 1913 bytes were removed from the cache."
     }
   ]
 }

@@ -89,6 +89,99 @@ func (s *SimpleParameter) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
+//- marshal_only
+func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
+	// Components
+	components := make([]cache.Marshaler, 0, len(s.Components))
+	for _, component := range s.Components {
+		component := component
+		components = append(components, &component)
+	}
+	if err = cache.WriteValue(writer, components); err != nil {
+		return err
+	}
+
+	// Indexed
+	if err = cache.WriteValue(writer, s.Indexed); err != nil {
+		return err
+	}
+
+	// InternalType
+	if err = cache.WriteValue(writer, s.InternalType); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.WriteValue(writer, s.Name); err != nil {
+		return err
+	}
+
+	// StrDefault
+	if err = cache.WriteValue(writer, s.StrDefault); err != nil {
+		return err
+	}
+
+	// ParameterType
+	if err = cache.WriteValue(writer, s.ParameterType); err != nil {
+		return err
+	}
+
+	// Value
+	value, err := json.Marshal(s.Value)
+	if err != nil {
+		return fmt.Errorf("cannot marshal Value: %w", err)
+	}
+	if err = cache.WriteValue(writer, value); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Components
+	s.Components = make([]SimpleParameter, 0)
+	if err = cache.ReadValue(reader, &s.Components, version); err != nil {
+		return err
+	}
+
+	// Indexed
+	if err = cache.ReadValue(reader, &s.Indexed, version); err != nil {
+		return err
+	}
+
+	// InternalType
+	if err = cache.ReadValue(reader, &s.InternalType, version); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+		return err
+	}
+
+	// StrDefault
+	if err = cache.ReadValue(reader, &s.StrDefault, version); err != nil {
+		return err
+	}
+
+	// ParameterType
+	if err = cache.ReadValue(reader, &s.ParameterType, version); err != nil {
+		return err
+	}
+
+	// Value
+	var value string
+	if err = cache.ReadValue(reader, &value, version); err != nil {
+		return err
+	}
+	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {
+		return fmt.Errorf("cannot unmarshal Value: %w", err)
+	}
+
+	return nil
+}
+
 // EXISTING_CODE
 //
 
@@ -112,72 +205,6 @@ func parametersToMap(params []SimpleParameter) (result map[string]any) {
 		}
 		result[param.DisplayName(index)] = param.Value
 	}
-	return
-}
-
-func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
-	if err = cache.WriteValue(writer, s.Components); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Indexed); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.InternalType); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Name); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.StrDefault); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.ParameterType); err != nil {
-		return err
-	}
-
-	// s.Value can be anything, so we'll just marshal it into a string
-	value, err := json.Marshal(s.Value)
-	if err != nil {
-		return fmt.Errorf("cannot marshal Value: %w", err)
-	}
-	if err = cache.WriteValue(writer, value); err != nil {
-		return err
-	}
-
-	return
-}
-
-func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	s.Components = make([]SimpleParameter, 0)
-	if err = cache.ReadValue(reader, &s.Components, version); err != nil {
-		return err
-	}
-
-	if err = cache.ReadValue(reader, &s.Indexed, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.InternalType, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.StrDefault, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.ParameterType, version); err != nil {
-		return err
-	}
-
-	// s.Value can be anything, so we store it as a marshaled string
-	var value string
-	if err = cache.ReadValue(reader, &value, version); err != nil {
-		return err
-	}
-	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {
-		return fmt.Errorf("cannot unmarshal Value: %w", err)
-	}
-
 	return
 }
 

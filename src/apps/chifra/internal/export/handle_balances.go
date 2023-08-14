@@ -6,17 +6,13 @@ package exportPkg
 
 import (
 	"context"
-	"fmt"
 	"math/big"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error {
@@ -68,60 +64,4 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
-}
-
-func (opts *ExportOptions) readBalances(
-	mon *monitor.Monitor,
-	filter *monitor.AppearanceFilter,
-	errorChan chan error,
-) ([]*types.SimpleToken, error) {
-	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleToken](mon, filter); err != nil {
-		errorChan <- err
-		return nil, err
-	} else if !opts.NoZero || cnt > 0 {
-		showProgress := !opts.Globals.TestMode
-		bar := logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
-
-		// This is called concurrently, once for each appearance
-		iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
-			if b, err := opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
-				return err
-			} else {
-				value.Address = base.FAKE_ETH_ADDRESS
-				value.Holder = mon.Address
-				value.BlockNumber = uint64(app.BlockNumber)
-				value.TransactionIndex = uint64(app.TransactionIndex)
-				value.Balance = *b
-				value.Timestamp = app.Timestamp
-				bar.Tick()
-				return nil
-			}
-		}
-
-		// Set up and interate over the map calling iterFunc for each appearance
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-		errChan := make(chan error)
-		go utils.IterateOverMap(ctx, errChan, txMap, iterFunc)
-		if stepErr := <-errChan; stepErr != nil {
-			return nil, stepErr
-		} else {
-			bar.Finish(true)
-		}
-
-		// Sort the items back into an ordered array by block number
-		items := make([]*types.SimpleToken, 0, len(txMap))
-		for _, tx := range txMap {
-			items = append(items, tx)
-		}
-		sort.Slice(items, func(i, j int) bool {
-			return items[i].BlockNumber < items[j].BlockNumber
-		})
-
-		// Return the array of items
-		return items, nil
-	} else {
-		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-		return nil, nil
-	}
 }

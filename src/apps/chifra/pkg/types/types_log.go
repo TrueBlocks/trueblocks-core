@@ -10,7 +10,9 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -149,6 +151,171 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 }
 
 // EXISTING_CODE
+//
+
+//- cacheable by tx as group
+type SimpleLogGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Logs             []SimpleLog
+}
+
+func (s *SimpleLogGroup) CacheName() string {
+	return "Log"
+}
+
+func (s *SimpleLogGroup) CacheId() string {
+	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
+	extension = "bin"
+
+	return
+}
+
+func (s *SimpleLogGroup) MarshalCache(writer io.Writer) (err error) {
+	return cache.WriteValue(writer, s.Logs)
+}
+
+func (s *SimpleLogGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Logs, version)
+}
+
+func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
+	// Address
+	if err = cache.WriteValue(writer, s.Address); err != nil {
+		return err
+	}
+
+	// ArticulatedLog
+	optArticulatedLog := &cache.Optional[SimpleFunction]{
+		Value: s.ArticulatedLog,
+	}
+	if err = cache.WriteValue(writer, optArticulatedLog); err != nil {
+		return err
+	}
+
+	// BlockHash
+	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
+	// CompressedLog
+	if err = cache.WriteValue(writer, s.CompressedLog); err != nil {
+		return err
+	}
+
+	// Data
+	if err = cache.WriteValue(writer, s.Data); err != nil {
+		return err
+	}
+
+	// LogIndex
+	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+
+	// Topics
+	if err = cache.WriteValue(writer, s.Topics); err != nil {
+		return err
+	}
+
+	// TransactionHash
+	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Address
+	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
+		return err
+	}
+
+	// ArticulatedLog
+	optArticulatedLog := &cache.Optional[SimpleFunction]{
+		Value: s.ArticulatedLog,
+	}
+	if err = cache.ReadValue(reader, optArticulatedLog, version); err != nil {
+		return err
+	}
+	s.ArticulatedLog = optArticulatedLog.Get()
+
+	// BlockHash
+	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+
+	// CompressedLog
+	if err = cache.ReadValue(reader, &s.CompressedLog, version); err != nil {
+		return err
+	}
+
+	// Data
+	if err = cache.ReadValue(reader, &s.Data, version); err != nil {
+		return err
+	}
+
+	// LogIndex
+	if err = cache.ReadValue(reader, &s.LogIndex, version); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+
+	// Topics
+	s.Topics = make([]base.Hash, 0)
+	if err = cache.ReadValue(reader, &s.Topics, version); err != nil {
+		return err
+	}
+
+	// TransactionHash
+	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (s *SimpleLog) getHaystack() string {
 	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))
 	haystack = append(haystack, s.Address.Hex()[2:]...)
@@ -172,98 +339,6 @@ func (s *SimpleLog) ContainsAny(addrArray []base.Address) bool {
 func (s *SimpleLog) ContainsAddress(addr base.Address) bool {
 	haystack := s.getHaystack()
 	return strings.Contains(string(haystack), addr.Hex()[2:])
-}
-
-func (s *SimpleLog) MarshalCache(writer io.Writer) (err error) {
-	if err = cache.WriteValue(writer, s.Address); err != nil {
-		return err
-	}
-
-	optArticulatedLog := &cache.Optional[SimpleFunction]{
-		Value: s.ArticulatedLog,
-	}
-	if err = cache.WriteValue(writer, optArticulatedLog); err != nil {
-		return err
-	}
-
-	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.CompressedLog); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Data); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
-		return err
-	}
-
-	if err = cache.WriteValue(writer, s.Topics); err != nil {
-		return err
-	}
-
-	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
-		return err
-	}
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
-		return err
-	}
-
-	return
-}
-
-func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error) {
-	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
-		return err
-	}
-
-	optArticulatedLog := &cache.Optional[SimpleFunction]{
-		Value: s.ArticulatedLog,
-	}
-	if err = cache.ReadValue(reader, optArticulatedLog, version); err != nil {
-		return err
-	}
-	s.ArticulatedLog = optArticulatedLog.Get()
-
-	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.CompressedLog, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.Data, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.LogIndex, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
-		return err
-	}
-
-	s.Topics = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Topics, version); err != nil {
-		return err
-	}
-
-	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
-		return err
-	}
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
-		return err
-	}
-
-	return
 }
 
 // EXISTING_CODE

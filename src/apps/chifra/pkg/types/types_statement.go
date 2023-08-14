@@ -10,10 +10,14 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
+	"io"
 	"math/big"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -171,6 +175,382 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 		Data:  model,
 		Order: order,
 	}
+}
+
+//- cacheable by addr_and_tx as group
+type SimpleStatementGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Address          base.Address
+	Statements       []SimpleStatement
+}
+
+func (s *SimpleStatementGroup) CacheName() string {
+	return "Statement"
+}
+
+func (s *SimpleStatementGroup) CacheId() string {
+	return fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleStatementGroup) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
+	extension = "bin"
+
+	return
+}
+
+func (s *SimpleStatementGroup) MarshalCache(writer io.Writer) (err error) {
+	return cache.WriteValue(writer, s.Statements)
+}
+
+func (s *SimpleStatementGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Statements, version)
+}
+
+func (s *SimpleStatement) MarshalCache(writer io.Writer) (err error) {
+	// AccountedFor
+	if err = cache.WriteValue(writer, s.AccountedFor); err != nil {
+		return err
+	}
+
+	// AmountIn
+	if err = cache.WriteValue(writer, &s.AmountIn); err != nil {
+		return err
+	}
+
+	// AmountOut
+	if err = cache.WriteValue(writer, &s.AmountOut); err != nil {
+		return err
+	}
+
+	// AssetAddr
+	if err = cache.WriteValue(writer, s.AssetAddr); err != nil {
+		return err
+	}
+
+	// AssetSymbol
+	if err = cache.WriteValue(writer, s.AssetSymbol); err != nil {
+		return err
+	}
+
+	// BegBal
+	if err = cache.WriteValue(writer, &s.BegBal); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
+	// CorrectingIn
+	if err = cache.WriteValue(writer, &s.CorrectingIn); err != nil {
+		return err
+	}
+
+	// CorrectingOut
+	if err = cache.WriteValue(writer, &s.CorrectingOut); err != nil {
+		return err
+	}
+
+	// CorrectingReason
+	if err = cache.WriteValue(writer, s.CorrectingReason); err != nil {
+		return err
+	}
+
+	// Decimals
+	if err = cache.WriteValue(writer, s.Decimals); err != nil {
+		return err
+	}
+
+	// EndBal
+	if err = cache.WriteValue(writer, &s.EndBal); err != nil {
+		return err
+	}
+
+	// GasOut
+	if err = cache.WriteValue(writer, &s.GasOut); err != nil {
+		return err
+	}
+
+	// InternalIn
+	if err = cache.WriteValue(writer, &s.InternalIn); err != nil {
+		return err
+	}
+
+	// InternalOut
+	if err = cache.WriteValue(writer, &s.InternalOut); err != nil {
+		return err
+	}
+
+	// LogIndex
+	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
+		return err
+	}
+
+	// MinerBaseRewardIn
+	if err = cache.WriteValue(writer, &s.MinerBaseRewardIn); err != nil {
+		return err
+	}
+
+	// MinerNephewRewardIn
+	if err = cache.WriteValue(writer, &s.MinerNephewRewardIn); err != nil {
+		return err
+	}
+
+	// MinerTxFeeIn
+	if err = cache.WriteValue(writer, &s.MinerTxFeeIn); err != nil {
+		return err
+	}
+
+	// MinerUncleRewardIn
+	if err = cache.WriteValue(writer, &s.MinerUncleRewardIn); err != nil {
+		return err
+	}
+
+	// PrefundIn
+	if err = cache.WriteValue(writer, &s.PrefundIn); err != nil {
+		return err
+	}
+
+	// PrevAppBlk
+	if err = cache.WriteValue(writer, s.PrevAppBlk); err != nil {
+		return err
+	}
+
+	// PrevBal
+	if err = cache.WriteValue(writer, &s.PrevBal); err != nil {
+		return err
+	}
+
+	// PriceSource
+	if err = cache.WriteValue(writer, s.PriceSource); err != nil {
+		return err
+	}
+
+	// Recipient
+	if err = cache.WriteValue(writer, s.Recipient); err != nil {
+		return err
+	}
+
+	// ReconciliationType
+	if err = cache.WriteValue(writer, s.ReconciliationType); err != nil {
+		return err
+	}
+
+	// SelfDestructIn
+	if err = cache.WriteValue(writer, &s.SelfDestructIn); err != nil {
+		return err
+	}
+
+	// SelfDestructOut
+	if err = cache.WriteValue(writer, &s.SelfDestructOut); err != nil {
+		return err
+	}
+
+	// Sender
+	if err = cache.WriteValue(writer, s.Sender); err != nil {
+		return err
+	}
+
+	// SpotPrice
+	if err = cache.WriteValue(writer, s.SpotPrice); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+
+	// TransactionHash
+	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// AccountedFor
+	if err = cache.ReadValue(reader, &s.AccountedFor, version); err != nil {
+		return err
+	}
+
+	// AmountIn
+	if err = cache.ReadValue(reader, &s.AmountIn, version); err != nil {
+		return err
+	}
+
+	// AmountOut
+	if err = cache.ReadValue(reader, &s.AmountOut, version); err != nil {
+		return err
+	}
+
+	// AssetAddr
+	if err = cache.ReadValue(reader, &s.AssetAddr, version); err != nil {
+		return err
+	}
+
+	// AssetSymbol
+	if err = cache.ReadValue(reader, &s.AssetSymbol, version); err != nil {
+		return err
+	}
+
+	// BegBal
+	if err = cache.ReadValue(reader, &s.BegBal, version); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+
+	// CorrectingIn
+	if err = cache.ReadValue(reader, &s.CorrectingIn, version); err != nil {
+		return err
+	}
+
+	// CorrectingOut
+	if err = cache.ReadValue(reader, &s.CorrectingOut, version); err != nil {
+		return err
+	}
+
+	// CorrectingReason
+	if err = cache.ReadValue(reader, &s.CorrectingReason, version); err != nil {
+		return err
+	}
+
+	// Decimals
+	if err = cache.ReadValue(reader, &s.Decimals, version); err != nil {
+		return err
+	}
+
+	// EndBal
+	if err = cache.ReadValue(reader, &s.EndBal, version); err != nil {
+		return err
+	}
+
+	// GasOut
+	if err = cache.ReadValue(reader, &s.GasOut, version); err != nil {
+		return err
+	}
+
+	// InternalIn
+	if err = cache.ReadValue(reader, &s.InternalIn, version); err != nil {
+		return err
+	}
+
+	// InternalOut
+	if err = cache.ReadValue(reader, &s.InternalOut, version); err != nil {
+		return err
+	}
+
+	// LogIndex
+	if err = cache.ReadValue(reader, &s.LogIndex, version); err != nil {
+		return err
+	}
+
+	// MinerBaseRewardIn
+	if err = cache.ReadValue(reader, &s.MinerBaseRewardIn, version); err != nil {
+		return err
+	}
+
+	// MinerNephewRewardIn
+	if err = cache.ReadValue(reader, &s.MinerNephewRewardIn, version); err != nil {
+		return err
+	}
+
+	// MinerTxFeeIn
+	if err = cache.ReadValue(reader, &s.MinerTxFeeIn, version); err != nil {
+		return err
+	}
+
+	// MinerUncleRewardIn
+	if err = cache.ReadValue(reader, &s.MinerUncleRewardIn, version); err != nil {
+		return err
+	}
+
+	// PrefundIn
+	if err = cache.ReadValue(reader, &s.PrefundIn, version); err != nil {
+		return err
+	}
+
+	// PrevAppBlk
+	if err = cache.ReadValue(reader, &s.PrevAppBlk, version); err != nil {
+		return err
+	}
+
+	// PrevBal
+	if err = cache.ReadValue(reader, &s.PrevBal, version); err != nil {
+		return err
+	}
+
+	// PriceSource
+	if err = cache.ReadValue(reader, &s.PriceSource, version); err != nil {
+		return err
+	}
+
+	// Recipient
+	if err = cache.ReadValue(reader, &s.Recipient, version); err != nil {
+		return err
+	}
+
+	// ReconciliationType
+	if err = cache.ReadValue(reader, &s.ReconciliationType, version); err != nil {
+		return err
+	}
+
+	// SelfDestructIn
+	if err = cache.ReadValue(reader, &s.SelfDestructIn, version); err != nil {
+		return err
+	}
+
+	// SelfDestructOut
+	if err = cache.ReadValue(reader, &s.SelfDestructOut, version); err != nil {
+		return err
+	}
+
+	// Sender
+	if err = cache.ReadValue(reader, &s.Sender, version); err != nil {
+		return err
+	}
+
+	// SpotPrice
+	if err = cache.ReadValue(reader, &s.SpotPrice, version); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+
+	// TransactionHash
+	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // EXISTING_CODE
@@ -378,5 +758,69 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 
 	return s.Reconciled()
 }
+
+type Ledgerer interface {
+	Prev() base.Blknum
+	Cur() base.Blknum
+	Next() base.Blknum
+}
+
+func (r *SimpleStatement) Report(ctx Ledgerer, msg string) {
+	logger.TestLog(true, "===================================================")
+	logger.TestLog(true, fmt.Sprintf("====> %s", msg))
+	logger.TestLog(true, "===================================================")
+	logger.TestLog(true, "ledger.blockNumber:    ", ctx.Prev())
+	logger.TestLog(true, "prevBlock:             ", ctx.Prev())
+	logger.TestLog(true, "transfer.blockNumber:  ", r.BlockNumber)
+	logger.TestLog(true, "nextBlock:             ", ctx.Next())
+	logger.TestLog(true, "isPrevDiff:            ", ctx.Prev() != r.BlockNumber)
+	logger.TestLog(true, "isNextDiff:            ", ctx.Next() != r.BlockNumber)
+	logger.TestLog(true, "---------------------------------------------------")
+	logger.TestLog(true, "Trial balance:")
+	logger.TestLog(true, "   reconciliationType: ", r.ReconciliationType)
+	logger.TestLog(true, "   accountedFor:       ", r.AccountedFor)
+	logger.TestLog(true, "   sender:             ", r.Sender)
+	logger.TestLog(true, "   recipient:          ", r.Recipient)
+	logger.TestLog(true, "   assetAddr:          ", r.AssetAddr)
+	logger.TestLog(true, "   assetSymbol:        ", r.AssetSymbol)
+	logger.TestLog(true, "   decimals:           ", r.Decimals)
+	logger.TestLog(true, "   prevAppBlk:         ", r.PrevAppBlk)
+	logger.TestLog(true, "   hash:               ", r.TransactionHash)
+	logger.TestLog(true, "   timestamp:          ", r.Timestamp)
+	logger.TestLog(true, "   blockNumber:        ", r.BlockNumber)
+	logger.TestLog(true, "   transactionIndex:   ", r.TransactionIndex)
+	logger.TestLog(true, "   logIndex:           ", r.LogIndex)
+	logger.TestLog(true, "   priceSource:        ", r.PriceSource)
+	logger.TestLog(true, "   spotPrice:          ", r.SpotPrice)
+	logger.TestLog(true, "   prevBal:            ", r.PrevBal.Text(10))
+	logger.TestLog(true, "   begBal:             ", r.BegBal.Text(10))
+	logger.TestLog(true, "   amountIn:           ", r.AmountIn.Text(10))
+	logger.TestLog(true, "   internalIn:         ", r.InternalIn.Text(10))
+	logger.TestLog(true, "   minerBaseRewardIn:  ", r.MinerBaseRewardIn.Text(10))
+	logger.TestLog(true, "   minerNephewRewardIn:", r.MinerNephewRewardIn.Text(10))
+	logger.TestLog(true, "   minerTxFeeIn:       ", r.MinerTxFeeIn.Text(10))
+	logger.TestLog(true, "   minerUncleRewardIn: ", r.MinerUncleRewardIn.Text(10))
+	logger.TestLog(true, "   correctingIn:       ", r.CorrectingIn.Text(10))
+	logger.TestLog(true, "   prefundIn:          ", r.PrefundIn.Text(10))
+	logger.TestLog(true, "   selfDestructIn:     ", r.SelfDestructIn.Text(10))
+	logger.TestLog(true, "   totalIn:            ", r.TotalIn().Text(10))
+	logger.TestLog(true, "   amountOut:          ", r.AmountOut.Text(10))
+	logger.TestLog(true, "   internalOut:        ", r.InternalOut.Text(10))
+	logger.TestLog(true, "   correctingOut:      ", r.CorrectingOut.Text(10))
+	logger.TestLog(true, "   selfDestructOut:    ", r.SelfDestructOut.Text(10))
+	logger.TestLog(true, "   gasOut:             ", r.GasOut.Text(10))
+	logger.TestLog(true, "   totalOut:           ", r.TotalOut().Text(10))
+	logger.TestLog(true, "   amountNet:          ", r.AmountNet().Text(10))
+	logger.TestLog(true, "   endBal:             ", r.EndBal.Text(10))
+	logger.TestLog(true, "   begBalDiff:         ", r.BegBalDiff().Text(10))
+	logger.TestLog(true, "   endBalDiff:         ", r.EndBalDiff().Text(10))
+	logger.TestLog(true, "   endBalCalc:         ", r.EndBalCalc().Text(10))
+	logger.TestLog(true, "   correctingReason:   ", r.CorrectingReason)
+	logger.TestLog(true, "   moneyMoved:         ", r.MoneyMoved())
+	logger.TestLog(true, "   trialBalance:       ", r.Reconciled())
+	logger.TestLog(true, "---------------------------------------------------")
+}
+
+// PATH: recons/0549/93ab/0f2b1acc0fdc65405ee203b4271bebe6/010277776.00094.bin
 
 // EXISTING_CODE

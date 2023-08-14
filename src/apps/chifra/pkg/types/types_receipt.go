@@ -162,48 +162,49 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 	}
 }
 
-// EXISTING_CODE
-//
-
-func (s *SimpleReceipt) IsDefault() bool {
-	a := s.ContractAddress.IsZero()
-	b := s.EffectiveGasPrice == 0
-	c := s.GasUsed == 0
-	d := len(s.Logs) == 0
-	return a && b && c && d
-}
-
+//- marshal_only
 func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
-	if s == nil {
-		zero := SimpleReceipt{}
-		return zero.MarshalCache(writer)
-	}
-
+	// BlockHash
 	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
+
+	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
+
+	// ContractAddress
 	if err = cache.WriteValue(writer, s.ContractAddress); err != nil {
 		return err
 	}
+
+	// CumulativeGasUsed
 	if err = cache.WriteValue(writer, s.CumulativeGasUsed); err != nil {
 		return err
 	}
+
+	// EffectiveGasPrice
 	if err = cache.WriteValue(writer, s.EffectiveGasPrice); err != nil {
 		return err
 	}
+
+	// From
 	if err = cache.WriteValue(writer, s.From); err != nil {
 		return err
 	}
+
+	// GasUsed
 	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
+
+	// IsError
 	if err = cache.WriteValue(writer, s.IsError); err != nil {
 		return err
 	}
 
+	// Logs
 	logs := make([]cache.Marshaler, 0, len(s.Logs))
 	for _, log := range s.Logs {
 		log := log
@@ -213,67 +214,108 @@ func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Status
 	if err = cache.WriteValue(writer, s.Status); err != nil {
 		return err
 	}
+
+	// To
 	if err = cache.WriteValue(writer, s.To); err != nil {
 		return err
 	}
+
+	// TransactionHash
 	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
+
+	// TransactionIndex
 	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
-	return
+	return nil
 }
 
 func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// BlockHash
 	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
 	}
+
+	// BlockNumber
 	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
+
+	// ContractAddress
 	if err = cache.ReadValue(reader, &s.ContractAddress, version); err != nil {
 		return err
 	}
+
+	// CumulativeGasUsed
 	if err = cache.ReadValue(reader, &s.CumulativeGasUsed, version); err != nil {
 		return err
 	}
+
+	// EffectiveGasPrice
 	if err = cache.ReadValue(reader, &s.EffectiveGasPrice, version); err != nil {
 		return err
 	}
+
+	// From
 	if err = cache.ReadValue(reader, &s.From, version); err != nil {
 		return err
 	}
+
+	// GasUsed
 	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
 		return err
 	}
+
+	// IsError
 	if err = cache.ReadValue(reader, &s.IsError, version); err != nil {
 		return err
 	}
 
+	// Logs
 	s.Logs = make([]SimpleLog, 0)
 	if err = cache.ReadValue(reader, &s.Logs, version); err != nil {
 		return err
 	}
 
+	// Status
 	if err = cache.ReadValue(reader, &s.Status, version); err != nil {
 		return err
 	}
+
+	// To
 	if err = cache.ReadValue(reader, &s.To, version); err != nil {
 		return err
 	}
+
+	// TransactionHash
 	if err = cache.ReadValue(reader, &s.TransactionHash, version); err != nil {
 		return err
 	}
+
+	// TransactionIndex
 	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
 		return err
 	}
 
-	return
+	return nil
+}
+
+// EXISTING_CODE
+//
+
+func (s *SimpleReceipt) IsDefault() bool {
+	a := s.ContractAddress.IsZero()
+	b := s.EffectiveGasPrice == 0
+	c := s.GasUsed == 0
+	d := len(s.Logs) == 0
+	return a && b && c && d
 }
 
 // EXISTING_CODE

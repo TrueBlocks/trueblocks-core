@@ -12,7 +12,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -155,7 +154,7 @@ func (gr *NameReader) Read() (types.SimpleName, error) {
 		Tags:       record[gr.header["tags"]],
 		Address:    base.HexToAddress(strings.ToLower(record[gr.header["address"]])),
 		Name:       record[gr.header["name"]],
-		Decimals:   globals.ToUint64(record[gr.header["decimals"]]),
+		Decimals:   utils.MustParseUint(record[gr.header["decimals"]]),
 		Symbol:     record[gr.header["symbol"]],
 		Source:     record[gr.header["source"]],
 		Petname:    record[gr.header["petname"]],

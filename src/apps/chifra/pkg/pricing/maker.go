@@ -26,13 +26,14 @@ func PriceUsdMaker(chain string, testMode bool, statement *types.SimpleStatement
 	msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Uniswap V2. Falling back to Maker (%s)", statement.BlockNumber, uniswapFactoryV2_deployed, makerMedianizer)
 	logger.TestLog(true, msg)
 	theCall := "peek()"
+
 	contractCall, err := call.NewContractCall(chain, makerMedianizer, theCall, false)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err := call.CallContract(chain, contractCall)
+	result, err := contractCall.Call()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

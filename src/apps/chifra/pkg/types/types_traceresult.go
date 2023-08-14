@@ -96,19 +96,24 @@ func (s *SimpleTraceResult) Model(verbose bool, format string, extraOptions map[
 	}
 }
 
-// EXISTING_CODE
-//
-
+//- marshal_only
 func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
+	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
+
+	// Code
 	if err = cache.WriteValue(writer, s.Code); err != nil {
 		return err
 	}
+
+	// GasUsed
 	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
+
+	// Output
 	if err = cache.WriteValue(writer, s.Output); err != nil {
 		return err
 	}
@@ -117,20 +122,28 @@ func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err
 	}
+
+	// Code
 	if err = cache.ReadValue(reader, &s.Code, version); err != nil {
 		return err
 	}
+
+	// GasUsed
 	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
 		return err
 	}
+
+	// Output
 	if err = cache.ReadValue(reader, &s.Output, version); err != nil {
 		return err
 	}
 
-	return
+	return nil
 }
 
+// EXISTING_CODE
 // EXISTING_CODE

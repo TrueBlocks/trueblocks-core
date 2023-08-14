@@ -23,7 +23,7 @@ List of types that support the Modeler interface
 | ./pkg/types         | types_chain.go           | SimpleChain           | chain             | x       | x      |
 | ./pkg/types         | types_chunkrecord.go     | SimpleChunkRecord     | chunkRecord       |         | x      |
 | ./pkg/types         | types_ethcall.go         | SimpleEthCall         | ethCall           | x       | x      |
-| ./pkg/types         | types_etherscan.go       | SimpleEtherscan       | <--- missing ---> |         |        |
+| ./pkg/types         | types_slurp.go           | SimpleSlurp           | slurp             |         | x      |
 | ./pkg/types         | types_ethstate.go        | SimpleEthState        | ethState          | x       | x      |
 | ./pkg/types         | types_function.go        | SimpleFunction        | function          | x       | x      |
 | ./pkg/types         | types_log.go             | SimpleLog             | log               | x       | x      |

@@ -68,7 +68,6 @@ class COptions : public COptionsBase {
     bool handle_readmes(void);
     bool handle_gocmds(void);
     bool handle_format(void);
-    bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);
     bool handle_datamodel(void);
 
     bool handle_sdk(void);
@@ -95,9 +94,6 @@ class COptions : public COptionsBase {
 extern bool listClasses(const string_q& path, void* data);
 extern bool formatCppFiles(const string_q& path, void* data);
 extern bool formatGoFiles(const string_q& path, void* data);
-extern string_q getCaseGetCode(const CMemberArray& fields);
-extern string_q getCaseSetCode(const CMemberArray& fields);
-extern string_q convertTypes(const string_q& inStr);
 extern string_q splitIfTooWide(const string_q& in);
 extern void expandTabbys(string_q& strOut);
 

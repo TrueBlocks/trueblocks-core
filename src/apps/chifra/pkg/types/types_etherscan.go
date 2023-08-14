@@ -1,5 +1,14 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
+// EXISTING_CODE
 import (
 	"strings"
 
@@ -8,63 +17,77 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+// EXISTING_CODE
+
 type RawEtherscan struct {
 	BlockHash         string `json:"blockHash"`
 	BlockNumber       string `json:"blockNumber"`
 	ContractAddress   string `json:"contractAddress"`
 	CumulativeGasUsed string `json:"cumulativeGasUsed"`
+	Ether             string `json:"ether"`
 	From              string `json:"from"`
 	FunctionName      string `json:"functionName"`
 	Gas               string `json:"gas"`
+	GasCost           string `json:"gasCost"`
 	GasPrice          string `json:"gasPrice"`
 	GasUsed           string `json:"gasUsed"`
 	HasToken          string `json:"hasToken"`
 	Hash              string `json:"hash"`
 	Input             string `json:"input"`
-	IsError           string `json:"isError"`
 	MethodId          string `json:"methodId"`
 	Nonce             string `json:"nonce"`
 	Timestamp         string `json:"timestamp"`
 	To                string `json:"to"`
 	TransactionIndex  string `json:"transactionIndex"`
-	TxReceiptStatus   string `json:"txreceipt_status"`
+	TxReceiptStatus   string `json:"txReceiptStatus"`
 	Value             string `json:"value"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 type SimpleEtherscan struct {
-	BlockHash        base.Hash      `json:"blockHash"`
-	BlockNumber      uint64         `json:"blockNumber"`
-	ContractAddress  base.Address   `json:"contractAddress"`
-	Date             string         `json:"date"`
-	Ether            string         `json:"ether"`
-	From             base.Address   `json:"from"`
-	Gas              base.Gas       `json:"gas"`
-	GasPrice         base.Gas       `json:"gasPrice"`
-	GasUsed          base.Gas       `json:"gasUsed"`
-	GasCost          base.Gas       `json:"gasCost"`
-	HasToken         bool           `json:"hasToken"`
-	Hash             base.Hash      `json:"hash"`
-	Input            string         `json:"input"`
-	IsError          bool           `json:"isError"`
-	Timestamp        base.Timestamp `json:"timestamp"`
-	To               base.Address   `json:"to"`
-	TransactionIndex uint64         `json:"transactionIndex"`
-	Value            base.Wei       `json:"value"`
-	raw              *RawEtherscan  `json:"-"`
+	ArticulatedTx     *SimpleFunction `json:"articulatedTx"`
+	BlockHash         base.Hash       `json:"blockHash"`
+	BlockNumber       base.Blknum     `json:"blockNumber"`
+	CompressedTx      string          `json:"compressedTx"`
+	ContractAddress   base.Address    `json:"contractAddress"`
+	CumulativeGasUsed string          `json:"cumulativeGasUsed"`
+	Ether             string          `json:"ether"`
+	From              base.Address    `json:"from"`
+	FunctionName      string          `json:"functionName"`
+	Gas               base.Gas        `json:"gas"`
+	GasCost           base.Gas        `json:"gasCost"`
+	GasPrice          base.Gas        `json:"gasPrice"`
+	GasUsed           base.Gas        `json:"gasUsed"`
+	HasToken          bool            `json:"hasToken"`
+	Hash              base.Hash       `json:"hash"`
+	Input             string          `json:"input"`
+	IsError           bool            `json:"isError"`
+	MethodId          string          `json:"methodId"`
+	Nonce             uint64          `json:"nonce"`
+	Timestamp         base.Timestamp  `json:"timestamp"`
+	To                base.Address    `json:"to"`
+	TransactionIndex  base.Blknum     `json:"transactionIndex"`
+	TxReceiptStatus   string          `json:"txReceiptStatus"`
+	Value             base.Wei        `json:"value"`
+	raw               *RawEtherscan   `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 func (s *SimpleEtherscan) Raw() *RawEtherscan {
 	return s.raw
 }
 
-func (s *SimpleEtherscan) SetRaw(r *RawEtherscan) {
-	s.raw = r
+func (s *SimpleEtherscan) SetRaw(raw *RawEtherscan) {
+	s.raw = raw
 }
 
 func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
+	// EXISTING_CODE
 	to := hexutil.Encode(s.To.Bytes())
 	if to == "0x0000000000000000000000000000000000000000" {
 		to = "0x0" // weird special case to preserve what RPC does
@@ -72,14 +95,13 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 
 	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
-		"date":        s.Date,
+		"date":        utils.FormattedDate(s.Timestamp),
 		"ether":       s.Ether,
 		"from":        s.From,
 		"timestamp":   s.Timestamp,
 		"to":          s.To,
 		"value":       s.Value.String(),
 	}
-	model["date"] = utils.FormattedDate(s.Timestamp)
 
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
 		model["from"] = s.From.Hex()
@@ -151,13 +173,20 @@ func (s *SimpleEtherscan) Model(verbose bool, format string, extraOptions map[st
 		model["input"] = s.Input
 	}
 
+	// EXISTING_CODE
+
 	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
+// object,array
+
+// EXISTING_CODE
 func (s *SimpleEtherscan) SetGasCost() base.Gas {
 	s.GasCost = s.GasPrice * s.GasUsed
 	return s.GasCost
 }
+
+// EXISTING_CODE

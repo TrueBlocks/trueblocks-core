@@ -11,10 +11,8 @@ import (
 )
 
 func (opts *ExportOptions) readTransactions(mon *monitor.Monitor, theMap map[types.SimpleAppearance]*types.SimpleTransaction, readTraces bool) error {
-	showProgress := !opts.Globals.TestMode
-	bar := logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
+	bar := logger.NewBar(mon.Address.Hex(), !opts.Globals.TestMode, mon.Count())
 
-	// This is called concurrently, once for each appearance
 	iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 		raw := types.RawAppearance{
 			Address:          app.Address.Hex(),

@@ -5,44 +5,32 @@
 package exportPkg
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 )
 
 // HandleDecache handles the command chifra monitors --decache
-func (opts *ExportOptions) HandleDecache() error {
-	if opts.Globals.TestMode {
-		logger.Warn("Decache option not tested.")
-		return nil
-	}
-
+func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
-	for _, addr := range opts.Addrs {
-		if !base.IsValidAddress(addr) {
-			continue
-		}
 
-		m := monitor.NewMonitor(chain, addr, false)
-		if !usage.QueryUser(getWarning(addr, m.Count()), "Not decaching") {
-			continue
-		}
-
-		if !file.FileExists(m.Path()) {
-			msg := "No monitor was found for address " + addr + "."
-			logger.Warn(msg)
-			continue
-
-		} else {
-			logger.Info("Decaching", addr)
-
+	ctx := context.Background()
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		for _, mon := range monitorArray {
+			mon := mon
+			if !opts.Globals.IsApiMode() && !usage.QueryUser(getWarning(mon.Address.Hex(), mon.Count()), "Not decaching") {
+				continue
+			}
+			logger.Info("Decaching", mon.Address.Hex())
 			itemsRemoved := int64(0)
 			bytesRemoved := int64(0)
 			processorFunc := func(fileName string) bool {
@@ -59,30 +47,33 @@ func (opts *ExportOptions) HandleDecache() error {
 						logger.Info("Empty folder", path, "was removed.")
 					}
 				}
-
 				return true
 			}
 
 			// Visits every item in the cache related to this monitor and calls into `processorFunc`
-			err := m.Decache(chain, processorFunc)
-			if err != nil {
-				return err
-			}
-			logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.", strings.Repeat(" ", 60))
-
-			// We've visited them all, so delete the monitor itself
-			m.Delete()
-			logger.Info(("Monitor " + addr + " was deleted but not removed."))
-			wasRemoved, err := m.Remove()
-			if !wasRemoved || err != nil {
-				logger.Info(("Monitor for " + addr + " was not removed (" + err.Error() + ")"))
+			if err := mon.Decache(chain, processorFunc); err != nil {
+				errorChan <- err
 			} else {
-				logger.Info(("Monitor for " + addr + " was permanently removed."))
+				logger.Info(itemsRemoved, "items totaling", bytesRemoved, "bytes were removed from the cache.", strings.Repeat(" ", 60))
+
+				// We've visited them all, so delete the monitor itself
+				mon.Delete()
+				msg := fmt.Sprintf("Monitor %s was deleted but not removed.", mon.Address.Hex())
+				if wasRemoved, err := mon.Remove(); !wasRemoved || err != nil {
+					msg += fmt.Sprintf(" Monitor for %s was not removed (%s).", mon.Address.Hex(), err.Error())
+				} else {
+					msg += fmt.Sprintf(" Monitor for %s  was permanently removed.", mon.Address.Hex())
+				}
+				s := types.SimpleMessage{
+					Msg: msg,
+				}
+				modelChan <- &s
 			}
 		}
 	}
 
-	return nil
+	opts.Globals.NoHeader = true
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
 func getWarning(addr string, count int64) string {

@@ -82,8 +82,8 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 	}
 }
 
-// GetTracesByTransactionID returns a slice of traces in a given transaction
-func (conn *Connection) GetTracesByTransactionID(bn, txid uint64) ([]types.SimpleTrace, error) {
+// GetTracesByTransactionId returns a slice of traces in a given transaction
+func (conn *Connection) GetTracesByTransactionId(bn, txid uint64) ([]types.SimpleTrace, error) {
 	if conn.StoreReadable() {
 		traceGroup := &types.SimpleTraceGroup{
 			BlockNumber:      bn,
@@ -94,12 +94,12 @@ func (conn *Connection) GetTracesByTransactionID(bn, txid uint64) ([]types.Simpl
 		}
 	}
 
-	txHash, err := conn.GetTransactionHashByNumberAndID(bn, txid)
+	tx, err := conn.GetTransactionByNumberAndId(bn, txid)
 	if err != nil {
 		return []types.SimpleTrace{}, err
 	}
 
-	return conn.GetTracesByTransactionHash(txHash.Hex(), nil)
+	return conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)
 }
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
@@ -209,7 +209,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 // GetTracesByFilter returns a slice of traces in a given transaction's hash
 func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, error) {
 	var f types.SimpleTraceFilter
-	ff := f.ParseBangString(filter)
+	ff, _ := f.ParseBangString(filter)
 
 	method := "trace_filter"
 	params := query.Params{ff}

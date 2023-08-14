@@ -2,12 +2,6 @@ blocks?blocks=1152642&uniq
 {
   "data": [
     {
-      "address": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
-      "blockNumber": 1152642,
-      "reason": "miner",
-      "transactionIndex": 99999
-    },
-    {
       "address": "0x151255dd9e38e44db38ea06ec66d0d113d6cbe37",
       "blockNumber": 1152642,
       "reason": "from",
@@ -30,6 +24,12 @@ blocks?blocks=1152642&uniq
       "blockNumber": 1152642,
       "reason": "to",
       "transactionIndex": 1
+    },
+    {
+      "address": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
+      "blockNumber": 1152642,
+      "reason": "miner",
+      "transactionIndex": 99999
     }
   ],
   "meta": {

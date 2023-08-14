@@ -7,54 +7,74 @@ package blocksPkg
 import (
 	"context"
 	"errors"
+	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleUncles() error {
 	chain := opts.Globals.Chain
+	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
-		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(chain)
-			if err != nil {
+		var err error
+		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[types.SimpleTransaction]
+		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
+
+		uncles := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(appMap))
+		bar := logger.NewExpandingBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, 125)
+		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[types.SimpleTransaction]) error {
+			if uncs, err := opts.Conn.GetUncleBodiesByNumber(app.BlockNumber); err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
-					continue
+					errorChan <- errors.New("uncles not found")
 				}
 				cancel()
-				return
-			}
-
-			for _, bn := range blockNums {
-				// Decide on the concrete type of block.Transactions and set values
-				var block types.Modeler[types.RawBlock]
-				var err error
-				if !opts.Hashes {
-					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = opts.Conn.GetBlockBodyByNumber(bn)
-					block = &b
-				} else {
-					var b types.SimpleBlock[string]
-					b, err = opts.Conn.GetBlockHeaderByNumber(bn)
-					block = &b
-				}
-
-				if err != nil {
-					errorChan <- err
-					if errors.Is(err, ethereum.NotFound) {
-						continue
+				return nil
+			} else {
+				for _, uncle := range uncs {
+					uncle := uncle
+					bar.Tick()
+					if uncle.BlockNumber > 0 {
+						uncles = append(uncles, uncle)
 					}
-					cancel()
-					return
 				}
-
-				b := block
-				modelChan <- b
 			}
+			return nil
+		}
+
+		iterErrorChan := make(chan error)
+		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+		for err := range iterErrorChan {
+			if !opts.Globals.TestMode || nErrors == 0 {
+				errorChan <- err
+				nErrors++
+			}
+		}
+		bar.Finish(true)
+
+		sort.Slice(uncles, func(i, j int) bool {
+			if uncles[i].BlockNumber == uncles[j].BlockNumber {
+				return uncles[i].Hash.Hex() < uncles[j].Hash.Hex()
+			}
+			return uncles[i].BlockNumber < uncles[j].BlockNumber
+		})
+
+		for _, item := range uncles {
+			item := item
+			modelChan <- &item
 		}
 	}
 
@@ -64,5 +84,6 @@ func (opts *BlocksOptions) HandleUncles() error {
 		"uncles":     opts.Uncles,
 		"articulate": opts.Articulate,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

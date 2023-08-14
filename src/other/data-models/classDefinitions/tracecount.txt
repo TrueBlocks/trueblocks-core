@@ -1,11 +1,8 @@
 [settings]
 class = CTraceCount
 fields = tracecount.csv
-includes = etherlib.h
 doc_group = 02-Chain Data
 doc_descr = counts the number of traces in a transaction
 doc_route = 210-traceCount
 doc_producer = traces
-
-cpp_output =
 go_output = src/apps/chifra/internal/traces

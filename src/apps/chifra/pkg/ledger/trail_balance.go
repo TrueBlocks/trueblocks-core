@@ -9,9 +9,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TrialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
-func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
-	key := l.CtxKey(r.BlockNumber, r.TransactionIndex)
+// trialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
+func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
+	key := l.ctxKey(r.BlockNumber, r.TransactionIndex)
 	ctx := l.Contexts[key]
 
 	r.ReconciliationType = ctx.ReconType
@@ -50,7 +50,7 @@ func (l *Ledger) TrialBalance(msg string, r *types.SimpleStatement) bool {
 	}
 
 	if l.TestMode {
-		Report(r, ctx, msg)
+		r.Report(&ctx, msg)
 		logger.TestLog(l.TestMode, "End of trial balance report")
 	}
 

@@ -131,6 +131,11 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel ch
 		chain := opts.Chain
 		conn := rpc.TempConnection(chain)
 
+		ts := tslib.TimestampRecord{
+			Bn: uint32(bn),
+			Ts: uint32(conn.GetBlockTimestamp(uint64(bn))),
+		}
+
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
 		if sd.traces, err = conn.GetTracesByBlockNumber(uint64(bn)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
@@ -138,18 +143,12 @@ func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel ch
 		}
 
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
-		if sd.logs, err = conn.GetLogsByNumber(uint64(bn)); err != nil {
+		if sd.logs, err = conn.GetLogsByNumber(uint64(bn), base.Timestamp(ts.Ts)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
 		}
 
 		appearanceChannel <- sd
-
-		ts := tslib.TimestampRecord{
-			Bn: uint32(bn),
-			Ts: uint32(conn.GetBlockTimestamp(uint64(bn))),
-		}
-
 		tsChannel <- ts
 	}
 

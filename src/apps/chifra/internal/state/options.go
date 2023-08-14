@@ -190,5 +190,4 @@ func (opts *StateOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-// PATH: recons/0549/93ab/0f2b1acc0fdc65405ee203b4271bebe6/010277776.00094.bin
 // EXISTING_CODE

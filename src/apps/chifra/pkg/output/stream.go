@@ -98,8 +98,8 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	return nil
 }
 
-// StreamRaw outputs raw `Raw` to `w`
-func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
+// streamRaw outputs raw `Raw` to `w`
+func streamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
 	jw, ok := w.(*JsonWriter)
 	if !ok {
 		// This should never happen
@@ -163,7 +163,7 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			// If the output is JSON and we are printing another item, put `,` in front of it
 			var err error
 			if options.ShowRaw {
-				err = StreamRaw(options.Writer, model.Raw())
+				err = streamRaw(options.Writer, model.Raw())
 			} else {
 				modelValue := model.Model(options.Verbose, options.Format, options.Extra)
 				if customFormat {

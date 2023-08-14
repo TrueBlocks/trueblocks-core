@@ -32,7 +32,6 @@ namespace qblocks {
 #define IS_OMITEMPTY (1 << 8)
 #define IS_NOADDFLD (1 << 9)
 #define IS_RAWONLY (1 << 10)
-#define IS_GOONLY (1 << 11)
 class CMember;
 typedef vector<CMember> CMemberArray;
 // EXISTING_CODE

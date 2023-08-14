@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -21,29 +22,29 @@ import (
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string `json:"author"`
-	BaseFeePerGas    string `json:"baseFeePerGas"`
-	BlockNumber      string `json:"number"`
-	Difficulty       string `json:"difficulty"`
-	ExtraData        string `json:"extraData"`
-	GasLimit         string `json:"gasLimit"`
-	GasUsed          string `json:"gasUsed"`
-	Hash             string `json:"hash"`
-	LogsBloom        string `json:"logsBloom"`
-	Miner            string `json:"miner"`
-	MixHash          string `json:"mixHash"`
-	Nonce            string `json:"nonce"`
-	ParentHash       string `json:"parentHash"`
-	ReceiptsRoot     string `json:"receiptsRoot"`
-	Sha3Uncles       string `json:"sha3Uncles"`
-	Size             string `json:"size"`
-	StateRoot        string `json:"stateRoot"`
-	Timestamp        string `json:"timestamp"`
-	TotalDifficulty  string `json:"totalDifficulty"`
-	Transactions     []any  `json:"transactions"`
-	TransactionsRoot string `json:"transactionsRoot"`
+	Author           string   `json:"author"`
+	BaseFeePerGas    string   `json:"baseFeePerGas"`
+	BlockNumber      string   `json:"number"`
+	Difficulty       string   `json:"difficulty"`
+	ExtraData        string   `json:"extraData"`
+	GasLimit         string   `json:"gasLimit"`
+	GasUsed          string   `json:"gasUsed"`
+	Hash             string   `json:"hash"`
+	LogsBloom        string   `json:"logsBloom"`
+	Miner            string   `json:"miner"`
+	MixHash          string   `json:"mixHash"`
+	Nonce            string   `json:"nonce"`
+	ParentHash       string   `json:"parentHash"`
+	ReceiptsRoot     string   `json:"receiptsRoot"`
+	Sha3Uncles       string   `json:"sha3Uncles"`
+	Size             string   `json:"size"`
+	StateRoot        string   `json:"stateRoot"`
+	Timestamp        string   `json:"timestamp"`
+	TotalDifficulty  string   `json:"totalDifficulty"`
+	Transactions     []any    `json:"transactions"`
+	TransactionsRoot string   `json:"transactionsRoot"`
+	Uncles           []string `json:"uncles"`
 	// EXISTING_CODE
-	Uncles []string `json:"uncles"`
 	// EXISTING_CODE
 }
 
@@ -58,12 +59,9 @@ type SimpleBlock[Tx string | SimpleTransaction] struct {
 	ParentHash    base.Hash      `json:"parentHash"`
 	Timestamp     base.Timestamp `json:"timestamp"`
 	Transactions  []Tx           `json:"transactions"`
+	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
-	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
-	// and upgrading cache items, this exists. We can remove it once we do so.
-	UnusedBool bool        `json:"-"`
-	Uncles     []base.Hash `json:"uncles,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -191,6 +189,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 // EXISTING_CODE
 //
 
+//- cacheable by block
 func (s *SimpleBlock[Tx]) CacheName() string {
 	return "Block"
 }
@@ -200,49 +199,66 @@ func (s *SimpleBlock[Tx]) CacheId() string {
 }
 
 func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
 	extension = "bin"
 
-	paddedBn := s.CacheId()
-
-	parts := make([]string, 3)
-	parts[0] = paddedBn[:2]
-	parts[1] = paddedBn[2:4]
-	parts[2] = paddedBn[4:6]
-	directory = filepath.Join("blocks", filepath.Join(parts...))
 	return
 }
 
 func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
+	// GasLimit
 	if err = cache.WriteValue(writer, s.GasLimit); err != nil {
 		return err
 	}
+
+	// GasUsed
 	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
+
+	// Hash
 	if err = cache.WriteValue(writer, s.Hash); err != nil {
 		return err
 	}
+
+	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
+
+	// ParentHash
 	if err = cache.WriteValue(writer, s.ParentHash); err != nil {
 		return err
 	}
+
+	// Miner
 	if err = cache.WriteValue(writer, s.Miner); err != nil {
 		return err
 	}
+
+	// Difficulty
 	if err = cache.WriteValue(writer, s.Difficulty); err != nil {
 		return err
 	}
+
+	// Timestamp
 	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
+
+	// BaseFeePerGas
 	if err = cache.WriteValue(writer, &s.BaseFeePerGas); err != nil {
 		return err
 	}
 
-	// We only cache transaction hashes (not transaction structs), so if
-	// s.Transactions is []SimpleTransaction, we have to extract them
+	// Transactions
 	var txHashes []string
 	switch v := any(s.Transactions).(type) {
 	case []string:
@@ -257,53 +273,73 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Uncles
 	if err = cache.WriteValue(writer, s.Uncles); err != nil {
 		return err
 	}
 
-	return
+	return nil
 }
 
 func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// GasLimit
 	if err = cache.ReadValue(reader, &s.GasLimit, version); err != nil {
 		return err
 	}
+
+	// GasUsed
 	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
 		return err
 	}
+
+	// Hash
 	if err = cache.ReadValue(reader, &s.Hash, version); err != nil {
 		return err
 	}
+
+	// BlockNumber
 	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
+
+	// ParentHash
 	if err = cache.ReadValue(reader, &s.ParentHash, version); err != nil {
 		return err
 	}
+
+	// Miner
 	if err = cache.ReadValue(reader, &s.Miner, version); err != nil {
 		return err
 	}
+
+	// Difficulty
 	if err = cache.ReadValue(reader, &s.Difficulty, version); err != nil {
 		return err
 	}
+
+	// Timestamp
 	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
 		return err
 	}
+
+	// BaseFeePerGas
 	if err = cache.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
 		return err
 	}
 
+	// Transactions
 	s.Transactions = make([]string, 0)
 	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
 		return err
 	}
 
+	// Uncles
 	s.Uncles = make([]base.Hash, 0)
 	if err = cache.ReadValue(reader, &s.Uncles, version); err != nil {
 		return err
 	}
 
-	return
+	return nil
 }
 
 // Dup duplicates all fields but Transactions into target
@@ -317,6 +353,7 @@ func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
 	target.Miner = s.Miner
 	target.ParentHash = s.ParentHash
 	target.Timestamp = s.Timestamp
+	// TODO: This copy of an array possibly doesn't do what we expect
 	target.Uncles = s.Uncles
 	target.raw = s.raw
 }

@@ -14,8 +14,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// GetUnclesByNumber returns the number of uncles in a block.
-func (conn *Connection) GetUnclesByNumber(bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
+// GetUncleBodiesByNumber returns the number of uncles in a block.
+func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
 	} else if count > 0 {

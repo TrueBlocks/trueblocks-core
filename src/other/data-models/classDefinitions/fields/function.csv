@@ -9,5 +9,3 @@ encoding        ,string    ,           ,       ,      ,        ,          ,     
 message         ,string    ,           ,       ,      ,true    ,true      ,        ,         ,    ,    ,        ,
 inputs          ,Parameter ,           ,true   ,true  ,        ,          ,        ,         ,5   ,    ,        ,the input parameters to the function&#44; if any
 outputs         ,Parameter ,           ,true   ,true  ,        ,          ,        ,         ,6   ,    ,        ,the output parameters to the function&#44; if any
-inputsDict      ,Value     ,           ,       ,      ,true    ,          ,        ,         ,    ,     ,        ,
-outputsDict     ,Value     ,           ,       ,      ,true    ,          ,        ,         ,    ,     ,        ,
