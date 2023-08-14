@@ -181,7 +181,7 @@ func (s *SimpleStatement) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-//- cacheable by addr_and_tx as group
+// - cacheable by addr_and_tx as group
 type SimpleStatementGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum

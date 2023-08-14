@@ -196,13 +196,13 @@ The following commands produce and manage LogFilters:
 
 LogFilters consist of the following fields:
 
-| Field     | Description                                                            | Type          |
-| --------- | ---------------------------------------------------------------------- | ------------- |
-| fromBlock | the first block in the block range to query with eth_getLogs           | blknum        |
-| toBlock   | the last block in the range to query with eth_getLogs                  | blknum        |
-| blockHash | an alternative to blocks specification, the hash of the block to query | hash          |
-| emitters  | one or more emitting addresses from which logs were emitted            | Address       |
-| topics    | one or more topics which logs represent                                | topic[]       |
+| Field     | Description                                                            | Type    |
+| --------- | ---------------------------------------------------------------------- | ------- |
+| fromBlock | the first block in the block range to query with eth_getLogs           | blknum  |
+| toBlock   | the last block in the range to query with eth_getLogs                  | blknum  |
+| blockHash | an alternative to blocks specification, the hash of the block to query | hash    |
+| emitters  | one or more emitting addresses from which logs were emitted            | Address |
+| topics    | one or more topics which logs represent                                | topic[] |
 
 ## Trace
 
@@ -333,14 +333,14 @@ The following commands produce and manage TraceFilters:
 
 TraceFilters consist of the following fields:
 
-| Field       | Description                                                    | Type          |
-| ----------- | -------------------------------------------------------------- | ------------- |
-| fromBlock   | The first block to include in the queried list of traces.      | string        |
-| toBlock     | The last block to include in the queried list of traces.       | string        |
-| fromAddress | If included, only traces `from` this address will be included. | Address       |
-| toAddress   | If included, only traces `to` this address will be included.   | Address       |
-| after       | Only traces after this many traces are included.               | uint64        |
-| count       | Only this many traces are included.                            | uint64        |
+| Field       | Description                                                    | Type    |
+| ----------- | -------------------------------------------------------------- | ------- |
+| fromBlock   | The first block to include in the queried list of traces.      | string  |
+| toBlock     | The last block to include in the queried list of traces.       | string  |
+| fromAddress | If included, only traces `from` this address will be included. | Address |
+| toAddress   | If included, only traces `to` this address will be included.   | Address |
+| after       | Only traces after this many traces are included.               | uint64  |
+| count       | Only this many traces are included.                            | uint64  |
 
 ## BlockCount
 
