@@ -1,8 +1,9 @@
 name            ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
 blockNumber     ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  1 ,   1 ,1001001 ,the block's block number
 timestamp       ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  2 ,   2 ,     10 ,the timestamp of the block
-transactionsCnt ,uint64    ,           ,       ,      ,        ,          ,        ,         ,  3 ,   3 ,    239 ,the number transactions in the block
-unclesCnt       ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  4 ,   4 ,      2 ,the number of uncles in the block
-logsCnt         ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  5 ,   5 ,    581 ,the number of logs in the block
-tracesCnt       ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  6 ,   6 ,   1295 ,the number of traces in the block
-addressCnt      ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  7 ,   7 ,    318 ,the number of address appearances in the block per transaction
+date            ,datetime  ,           ,       ,      ,        ,          ,        ,         ,  3 ,   3 ,     10 ,a calculated field -- the date of the block
+transactionsCnt ,uint64    ,           ,       ,      ,        ,          ,        ,         ,  4 ,   4 ,    239 ,the number transactions in the block
+unclesCnt       ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  5 ,   5 ,      2 ,the number of uncles in the block
+logsCnt         ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  6 ,   6 ,    581 ,the number of logs in the block
+tracesCnt       ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  7 ,   7 ,   1295 ,the number of traces in the block
+addressCnt      ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  8 ,   8 ,    318 ,the number of address appearances in the block per transaction

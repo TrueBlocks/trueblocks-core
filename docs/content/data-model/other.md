@@ -97,6 +97,7 @@ Slurps consist of the following fields:
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                  |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64                                  |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                               |
+| date             | a calculated field -- the date of the object                                                          | datetime                                |
 | from             | address from which the transaction was sent                                                           | address                                 |
 | to               | address to which the transaction was sent                                                             | address                                 |
 | value            | the amount of wei sent with this transactions                                                         | wei                                     |
@@ -119,6 +120,7 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64               |                |
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | bytes     | an arbitrarily long string of bytes |                |
+| datetime  | a JSON formatted date               | as a string    |
 | gas       | an unsigned big number              | as a string    |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | string    | a normal character string           |                |

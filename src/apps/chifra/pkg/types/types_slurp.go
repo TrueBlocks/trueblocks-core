@@ -18,6 +18,7 @@ type RawSlurp struct {
 	BlockNumber       string `json:"blockNumber"`
 	ContractAddress   string `json:"contractAddress"`
 	CumulativeGasUsed string `json:"cumulativeGasUsed"`
+	Date              string `json:"date"`
 	Ether             string `json:"ether"`
 	From              string `json:"from"`
 	FunctionName      string `json:"functionName"`
@@ -46,6 +47,7 @@ type SimpleSlurp struct {
 	CompressedTx      string          `json:"compressedTx"`
 	ContractAddress   base.Address    `json:"contractAddress"`
 	CumulativeGasUsed string          `json:"cumulativeGasUsed"`
+	Date              string          `json:"date"`
 	Ether             string          `json:"ether"`
 	From              base.Address    `json:"from"`
 	FunctionName      string          `json:"functionName"`

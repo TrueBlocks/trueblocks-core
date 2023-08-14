@@ -22,6 +22,7 @@ type RawToken struct {
 	Address          string `json:"address"`
 	Balance          string `json:"balance"`
 	BlockNumber      string `json:"blockNumber"`
+	Date             string `json:"date"`
 	Decimals         string `json:"decimals"`
 	Diff             string `json:"diff"`
 	Holder           string `json:"holder"`
@@ -40,6 +41,7 @@ type SimpleToken struct {
 	Address          base.Address   `json:"address"`
 	Balance          big.Int        `json:"balance"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
+	Date             string         `json:"date"`
 	Decimals         uint64         `json:"decimals"`
 	Diff             big.Int        `json:"diff,omitempty"`
 	Holder           base.Address   `json:"holder"`

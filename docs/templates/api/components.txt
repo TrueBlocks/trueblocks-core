@@ -398,6 +398,10 @@ components:
           format: timestamp
           example: 1438335038
           description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the object"
         transactions:
           type: array
           items:
@@ -450,6 +454,9 @@ components:
           format: timestamp
           example: 1438335038
           description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
         from:
           type: string
           format: address
@@ -507,9 +514,6 @@ components:
         isError:
           type: boolean
           description: "`true` if the transaction ended in error, `false` otherwise"
-        date:
-          type: string
-          format: datetime
     transfer:
       description: "the representation of a token transfer"
       type: object
@@ -643,7 +647,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the date of the block this log appears in"
+          description: "a calculated field -- the date of the block this log appears in"
         address:
           type: string
           format: address
@@ -711,6 +715,10 @@ components:
         timestamp:
           type: number
           format: timestamp
+          description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
           description: "the timestamp of the block"
         transactionHash:
           type: string
@@ -828,6 +836,11 @@ components:
           format: timestamp
           example: 10
           description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          example: "10"
+          description: "a calculated field -- the date of the block"
         tracesCnt:
           type: number
           format: uint64
@@ -875,6 +888,11 @@ components:
           format: timestamp
           example: 10
           description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          example: "10"
+          description: "a calculated field -- the date of the block"
         transactionsCnt:
           type: number
           format: uint64
@@ -937,6 +955,10 @@ components:
           format: timestamp
           example: 1508131331
           description: "the Unix timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the block"
         diff:
           type: number
           format: timestamp
@@ -995,6 +1017,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the block"
         totalSupply:
           type: string
           format: int256
@@ -1280,7 +1306,8 @@ components:
           description: "the block range (inclusive) covered by this chunk"
         date:
           type: string
-          description: "the date of the last block in this range"
+          format: datetime
+          description: "a calculated field -- the date of the last block in this range"
         nAddrs:
           type: number
           format: uint64
@@ -1541,6 +1568,10 @@ components:
           format: timestamp
           example: 1438335038
           description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the object"
         from:
           type: string
           format: address

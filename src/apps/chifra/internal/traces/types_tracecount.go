@@ -18,6 +18,7 @@ import (
 
 type simpleTraceCount struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
+	Date             string         `json:"date"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TracesCnt        uint64         `json:"tracesCnt"`
 	TransactionHash  base.Hash      `json:"transactionHash"`

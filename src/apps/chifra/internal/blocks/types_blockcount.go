@@ -20,6 +20,7 @@ import (
 type simpleBlockCount struct {
 	AddressCnt      uint64         `json:"addressCnt,omitempty"`
 	BlockNumber     base.Blknum    `json:"blockNumber"`
+	Date            string         `json:"date"`
 	LogsCnt         uint64         `json:"logsCnt,omitempty"`
 	Timestamp       base.Timestamp `json:"timestamp"`
 	TracesCnt       uint64         `json:"tracesCnt,omitempty"`

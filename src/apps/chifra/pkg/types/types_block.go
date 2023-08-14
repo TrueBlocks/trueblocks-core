@@ -24,6 +24,7 @@ type RawBlock struct {
 	Author           string   `json:"author"`
 	BaseFeePerGas    string   `json:"baseFeePerGas"`
 	BlockNumber      string   `json:"number"`
+	Date             string   `json:"date"`
 	Difficulty       string   `json:"difficulty"`
 	ExtraData        string   `json:"extraData"`
 	GasLimit         string   `json:"gasLimit"`
@@ -50,6 +51,7 @@ type RawBlock struct {
 type SimpleBlock[Tx string | SimpleTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
+	Date          string         `json:"date"`
 	Difficulty    uint64         `json:"difficulty"`
 	GasLimit      base.Gas       `json:"gasLimit"`
 	GasUsed       base.Gas       `json:"gasUsed"`

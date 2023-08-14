@@ -188,21 +188,21 @@ The following commands produce and manage ChunkStats:
 
 ChunkStats consist of the following fields:
 
-| Field         | Description                                       | Type     |
-| ------------- | ------------------------------------------------- | -------- |
-| range         | the block range (inclusive) covered by this chunk | blkrange |
-| date          | the date of the last block in this range          | string   |
-| nAddrs        | the number of addresses in the chunk              | uint64   |
-| nApps         | the number of appearances in the chunk            | uint64   |
-| nBlocks       | the number of blocks in the chunk                 | uint64   |
-| nBlooms       | the number of bloom filters in the chunk's bloom  | uint64   |
-| recWid        | the record width of a single bloom filter         | uint64   |
-| bloomSz       | the size of the bloom filters on disc in bytes    | uint64   |
-| chunkSz       | the size of the chunks on disc in bytes           | uint64   |
-| addrsPerBlock | the average number of addresses per block         | double   |
-| appsPerBlock  | the average number of appearances per block       | double   |
-| appsPerAddr   | the average number of appearances per address     | double   |
-| ratio         | the ratio of appearances to addresses             | double   |
+| Field         | Description                                                    | Type     |
+| ------------- | -------------------------------------------------------------- | -------- |
+| range         | the block range (inclusive) covered by this chunk              | blkrange |
+| date          | a calculated field -- the date of the last block in this range | datetime |
+| nAddrs        | the number of addresses in the chunk                           | uint64   |
+| nApps         | the number of appearances in the chunk                         | uint64   |
+| nBlocks       | the number of blocks in the chunk                              | uint64   |
+| nBlooms       | the number of bloom filters in the chunk's bloom               | uint64   |
+| recWid        | the record width of a single bloom filter                      | uint64   |
+| bloomSz       | the size of the bloom filters on disc in bytes                 | uint64   |
+| chunkSz       | the size of the chunks on disc in bytes                        | uint64   |
+| addrsPerBlock | the average number of addresses per block                      | double   |
+| appsPerBlock  | the average number of appearances per block                    | double   |
+| appsPerAddr   | the average number of appearances per address                  | double   |
+| ratio         | the ratio of appearances to addresses                          | double   |
 
 ## MonitorClean
 
@@ -319,6 +319,7 @@ This documentation mentions the following basic data types.
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
 | blkrange  | a pair of nine-digit block numbers  | zero padded    |
 | bool      | either `true`, `false`, `1`, or `0` |                |
+| datetime  | a JSON formatted date               | as a string    |
 | double    | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | int64     | a 64-bit signed integer             |                |

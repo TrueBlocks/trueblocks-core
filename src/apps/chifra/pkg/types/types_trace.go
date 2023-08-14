@@ -27,6 +27,7 @@ type RawTrace struct {
 	Action           RawTraceAction  `json:"action"`
 	BlockHash        string          `json:"blockHash"`
 	BlockNumber      base.Blknum     `json:"blockNumber"`
+	Date             string          `json:"date"`
 	Error            string          `json:"error"`
 	Result           *RawTraceResult `json:"result"`
 	Subtraces        uint64          `json:"subtraces"`
@@ -44,6 +45,7 @@ type SimpleTrace struct {
 	BlockHash        base.Hash          `json:"blockHash"`
 	BlockNumber      base.Blknum        `json:"blockNumber"`
 	CompressedTrace  string             `json:"compressedTrace,omitempty"`
+	Date             string             `json:"date"`
 	Error            string             `json:"error,omitempty"`
 	Result           *SimpleTraceResult `json:"result"`
 	Subtraces        uint64             `json:"subtraces"`

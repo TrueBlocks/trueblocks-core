@@ -61,6 +61,7 @@ TokenBalances consist of the following fields:
 | blockNumber      | the block at which the report is made                                 | blknum    |
 | transactionIndex | the transaction index (if applicable) at which the report is made     | blknum    |
 | timestamp        | the timestamp of the block                                            | timestamp |
+| date             | a calculated field -- the date of the block                           | datetime  |
 | totalSupply      | the total supply of the token contract                                | int256    |
 | address          | the address of the token contract                                     | address   |
 | holder           | the holder address for which we are reporting                         | address   |
@@ -103,6 +104,7 @@ This documentation mentions the following basic data types.
 | --------- | ----------------------------------- | -------------- |
 | address   | an '0x'-prefixed 20-byte hex string | lowercase      |
 | blknum    | an alias for a uint64               |                |
+| datetime  | a JSON formatted date               | as a string    |
 | int256    | a signed big number                 | as a string    |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |

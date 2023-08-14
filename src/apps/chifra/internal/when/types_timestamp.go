@@ -18,6 +18,7 @@ import (
 
 type simpleTimestamp struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
+	Date        string         `json:"date"`
 	Diff        base.Timestamp `json:"diff"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	// EXISTING_CODE
