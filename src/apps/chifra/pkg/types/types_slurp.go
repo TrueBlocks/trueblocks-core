@@ -143,7 +143,10 @@ func (s *SimpleSlurpGroup) UnmarshalCache(version uint64, reader io.Reader) (err
 
 func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 	// ArticulatedTx
-	if err = cache.WriteValue(writer, s.ArticulatedTx); err != nil {
+	optArticulatedTx := &cache.Optional[SimpleFunction]{
+		Value: s.ArticulatedTx,
+	}
+	if err = cache.WriteValue(writer, optArticulatedTx); err != nil {
 		return err
 	}
 
@@ -267,9 +270,13 @@ func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 
 func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// ArticulatedTx
-	if err = cache.ReadValue(reader, &s.ArticulatedTx, version); err != nil {
+	optArticulatedTx := &cache.Optional[SimpleFunction]{
+		Value: s.ArticulatedTx,
+	}
+	if err = cache.ReadValue(reader, optArticulatedTx, version); err != nil {
 		return err
 	}
+	s.ArticulatedTx = optArticulatedTx.Get()
 
 	// BlockHash
 	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {

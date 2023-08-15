@@ -153,10 +153,7 @@ func (s *SimpleLog) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// EXISTING_CODE
-//
-
-// - cacheable by tx as group
+//- cacheable by tx as group
 type SimpleLogGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
@@ -318,6 +315,9 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 
 	return nil
 }
+
+// EXISTING_CODE
+//
 
 func (s *SimpleLog) getHaystack() string {
 	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))
