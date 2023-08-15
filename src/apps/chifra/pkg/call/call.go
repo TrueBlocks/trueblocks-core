@@ -10,22 +10,21 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type ContractCall struct {
-	encoded string
-
-	Chain       string
+	Conn        *rpc.Connection
 	Address     base.Address
 	Method      *types.SimpleFunction
 	Arguments   []any
 	BlockNumber uint64
-	ShowLogs    bool
+	encoded     string
 }
 
-func NewContractCall(chain string, callAddress base.Address, theCall string, showSuggestions bool) (*ContractCall, error) {
+func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string, showSuggestions bool) (*ContractCall, error) {
 	parsed, err := parser.ParseContractCall(theCall)
 	if err != nil {
 		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
@@ -33,7 +32,7 @@ func NewContractCall(chain string, callAddress base.Address, theCall string, sho
 	}
 
 	abiMap := abi.NewFunctionSyncMap()
-	if err = abi.LoadAbi(chain, callAddress, abiMap); err != nil {
+	if err = abi.LoadAbi(conn.Chain, callAddress, abiMap); err != nil {
 		return nil, err
 	}
 
@@ -93,7 +92,7 @@ func NewContractCall(chain string, callAddress base.Address, theCall string, sho
 	}
 
 	contactCall := &ContractCall{
-		Chain:     chain,
+		Conn:      conn,
 		Address:   callAddress,
 		Method:    function,
 		Arguments: args,
@@ -130,7 +129,7 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call() (results *types.SimpleState, err error) {
+func (call *ContractCall) Call12() (results *types.SimpleState, err error) {
 	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
 	if err != nil {
 		return
@@ -152,7 +151,7 @@ func (call *ContractCall) Call() (results *types.SimpleState, err error) {
 		encodedArguments = packedHex[10:]
 	}
 
-	rawReturn, err := query.Query[string](call.Chain, "eth_call", query.Params{
+	rawReturn, err := query.Query[string](call.Conn.Chain, "eth_call", query.Params{
 		map[string]any{
 			"to":   call.Address.Hex(),
 			"data": packedHex,
@@ -166,7 +165,7 @@ func (call *ContractCall) Call() (results *types.SimpleState, err error) {
 	rr := *rawReturn
 	function := call.Method.Clone()
 	if len(rr) > 2 {
-		abiCache := articulate.NewAbiCache(call.Chain, true)
+		abiCache := articulate.NewAbiCache(call.Conn.Chain, true)
 		err = abiCache.ArticulateFunction(function, "", rr[2:])
 		if err != nil {
 			return nil, err
@@ -186,12 +185,6 @@ func (call *ContractCall) Call() (results *types.SimpleState, err error) {
 
 	for index, output := range function.Outputs {
 		results.Outputs[output.DisplayName(index)] = fmt.Sprint(output.Value)
-	}
-
-	if call.ShowLogs {
-		msg := fmt.Sprintf("call to %s at block %d at four-byte %s returned %v",
-			call.Address.Hex(), call.BlockNumber, call.Method.Encoding, results.Outputs)
-		logger.TestLog(true, msg)
 	}
 
 	return results, nil

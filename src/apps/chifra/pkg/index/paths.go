@@ -2,6 +2,16 @@ package index
 
 import "strings"
 
+func isCacheType(path string, folder, extension string) bool {
+	if !strings.Contains(path, folder) {
+		return false
+	}
+	if !strings.HasSuffix(path, extension) {
+		return false
+	}
+	return true
+}
+
 // ToBloomPath returns a path pointing to the bloom filter given either a path to itself or its associated index data
 func ToBloomPath(pathIn string) string {
 	if isCacheType(pathIn, "blooms", "bloom") {
@@ -38,14 +48,4 @@ func ToStagingPath(pathIn string) string {
 	ret = strings.Replace(ret, "/finalized/", "/staging/", -1)
 	ret = strings.Replace(ret, "/blooms/", "/staging/", -1)
 	return ret
-}
-
-func isCacheType(path string, folder, extension string) bool {
-	if !strings.Contains(path, folder) {
-		return false
-	}
-	if !strings.HasSuffix(path, extension) {
-		return false
-	}
-	return true
 }

@@ -47,13 +47,13 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	}
 
 	theCall1 := fmt.Sprintf("getPair(%s, %s)", first.Hex(), second.Hex())
-	contractCall, err := call.NewContractCall(conn.Chain, uniswapFactoryV2, theCall1, false)
+	contractCall, err := call.NewContractCall(conn, uniswapFactoryV2, theCall1, false)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 
-	result, err := contractCall.Call()
+	result, err := contractCall.Call12()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
@@ -63,12 +63,12 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		return 0.0, "not-priced", fmt.Errorf(msg)
 	}
 	theCall2 := "getReserves()"
-	contractCall, err = call.NewContractCall(conn.Chain, pairAddress, theCall2, false)
+	contractCall, err = call.NewContractCall(conn, pairAddress, theCall2, false)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err = contractCall.Call()
+	result, err = contractCall.Call12()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

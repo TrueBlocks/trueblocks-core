@@ -28,13 +28,13 @@ func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 	logger.TestLog(true, msg)
 	theCall := "peek()"
 
-	contractCall, err := call.NewContractCall(conn.Chain, makerMedianizer, theCall, false)
+	contractCall, err := call.NewContractCall(conn, makerMedianizer, theCall, false)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err := contractCall.Call()
+	result, err := contractCall.Call12()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

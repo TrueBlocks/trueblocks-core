@@ -23,7 +23,7 @@ func (opts *StateOptions) HandleCall() error {
 		callAddress = base.HexToAddress(opts.ProxyFor)
 	}
 
-	contractCall, err := call.NewContractCall(chain, callAddress, opts.Call, !isApiMode)
+	contractCall, err := call.NewContractCall(opts.Conn, callAddress, opts.Call, !isApiMode)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func (opts *StateOptions) HandleCall() error {
 
 			for _, bn := range blockNums {
 				contractCall.BlockNumber = bn
-				results, err := contractCall.Call()
+				results, err := contractCall.Call12()
 				if opts.Globals.Verbose || testMode {
 					msg := fmt.Sprintf("call to %s at block %d at four-byte %s returned %v",
 						contractCall.Address.Hex(), contractCall.BlockNumber, contractCall.Method.Encoding, results.Outputs)

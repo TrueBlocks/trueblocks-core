@@ -83,8 +83,12 @@ func (opts *StatusOptions) HandleShow() error {
 								result.TsRange.First, _ = tslib.FromBnToTs(chain, result.FileRange.First)
 								result.TsRange.Last, _ = tslib.FromBnToTs(chain, result.FileRange.Last)
 								cI, _ := walk.GetCacheItem(chain, testMode, cT, &result)
-								cI["bloomSizeBytes"] = file.FileSize(index.ToBloomPath(result.Path))
-								cI["indexSizeBytes"] = file.FileSize(index.ToIndexPath(result.Path))
+								if isIndex(cT) {
+									bP := index.ToBloomPath(result.Path)
+									cI["bloomSizeBytes"] = file.FileSize(bP)
+									iP := index.ToIndexPath(result.Path)
+									cI["indexSizeBytes"] = file.FileSize(iP)
+								}
 								counterMap[cT].Items = append(counterMap[cT].Items, cI)
 							}
 						}

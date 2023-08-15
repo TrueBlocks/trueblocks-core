@@ -53,13 +53,13 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 
 	unchainedChain := "mainnet" // the unchained index is on mainnet
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
+	conn := rpc.TempConnection(unchainedChain)
 
-	if contractCall, err := call.NewContractCall(unchainedChain, unchained.GetUnchainedIndexAddress(), theCall, false); err != nil {
+	if contractCall, err := call.NewContractCall(conn, unchained.GetUnchainedIndexAddress(), theCall, false); err != nil {
 		return "", err
 	} else {
-		conn := rpc.TempConnection(unchainedChain)
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
-		if result, err := contractCall.Call(); err != nil {
+		if result, err := contractCall.Call12(); err != nil {
 			return "", err
 		} else {
 			return result.Outputs["val_0"], nil
