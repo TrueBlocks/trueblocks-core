@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
@@ -56,7 +55,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			_, path := rng.RangeToFilename(chain)
-			bloomFilename := walk.ToBloomPath(path)
+			bloomFilename := index.ToBloomPath(path)
 			bl, err := bloom.NewChunkBloom(bloomFilename)
 			if err != nil {
 				return
@@ -64,7 +63,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 			defer bl.Close()
 
 			misses := 0
-			path = walk.ToIndexPath(path) // it may not exist if user did not do chifra init --all for example
+			path = index.ToIndexPath(path) // it may not exist if user did not do chifra init --all for example
 			if file.FileExists(path) {
 				indexChunk, err := index.NewChunkData(path)
 				if err != nil {

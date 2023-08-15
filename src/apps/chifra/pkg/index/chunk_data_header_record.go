@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // IndexHeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
@@ -47,7 +46,7 @@ func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 }
 
 func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
-	fileName = walk.ToIndexPath(fileName)
+	fileName = ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
 		return IndexHeaderRecord{}, err
@@ -75,7 +74,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash base.Hash) ( /* cha
 	var err error
 
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
-	indexFn := walk.ToIndexPath(fileName)
+	indexFn := ToIndexPath(fileName)
 	if !file.FileExists(indexFn) {
 		return false, nil
 	}

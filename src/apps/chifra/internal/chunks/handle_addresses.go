@@ -30,11 +30,11 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 			}
 		} else {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-				if path != walk.ToBloomPath(path) {
+				if path != index.ToBloomPath(path) {
 					return false, fmt.Errorf("should not happen in showAddresses")
 				}
 
-				path = walk.ToIndexPath(path)
+				path = index.ToIndexPath(path)
 				if !file.FileExists(path) {
 					// This is okay, if the user used chifra init without the --all option. Warn them and continue
 					msg := ""

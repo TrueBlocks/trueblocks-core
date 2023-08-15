@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -82,6 +83,8 @@ func (opts *StatusOptions) HandleShow() error {
 								result.TsRange.First, _ = tslib.FromBnToTs(chain, result.FileRange.First)
 								result.TsRange.Last, _ = tslib.FromBnToTs(chain, result.FileRange.Last)
 								cI, _ := walk.GetCacheItem(chain, testMode, cT, &result)
+								cI["bloomSizeBytes"] = file.FileSize(index.ToBloomPath(result.Path))
+								cI["indexSizeBytes"] = file.FileSize(index.ToIndexPath(result.Path))
 								counterMap[cT].Items = append(counterMap[cT].Items, cI)
 							}
 						}

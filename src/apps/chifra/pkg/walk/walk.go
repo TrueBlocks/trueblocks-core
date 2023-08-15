@@ -322,15 +322,15 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			display = strings.Replace(cacheInfo.Path, config.GetPathToIndex(chain), "$indexPath/", 1)
 		}
 		return map[string]interface{}{
-			"bloomSizeBytes": file.FileSize(ToBloomPath(cacheInfo.Path)),
-			"fileDate":       date,
-			"filename":       display,
-			"firstApp":       cacheInfo.FileRange.First,
-			"firstTs":        cacheInfo.TsRange.First,
-			"indexSizeBytes": file.FileSize(ToIndexPath(cacheInfo.Path)),
-			"itemType":       cacheItemName(cT),
-			"latestApp":      cacheInfo.FileRange.Last,
-			"latestTs":       cacheInfo.TsRange.Last,
+			// "bloomSizeBytes": file.FileSize(index.ToBloomPath(cacheInfo.Path)),
+			"fileDate": date,
+			"filename": display,
+			"firstApp": cacheInfo.FileRange.First,
+			"firstTs":  cacheInfo.TsRange.First,
+			// "indexSizeBytes": file.FileSize(index.ToIndexPath(cacheInfo.Path)),
+			"itemType":  cacheItemName(cT),
+			"latestApp": cacheInfo.FileRange.Last,
+			"latestTs":  cacheInfo.TsRange.Last,
 		}, nil
 	case Cache_Monitors:
 		fallthrough

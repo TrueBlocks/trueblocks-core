@@ -47,11 +47,11 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 // HandleAddresses and HandleAppearances. It is called once for each chunk in the index and
 // depends on the values of opts.Globals.Verbose and opts.Belongs.
 func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[types.RawModeler], walker *walk.CacheWalker, path string, first bool) (bool, error) {
-	if path != walk.ToBloomPath(path) {
+	if path != index.ToBloomPath(path) {
 		return false, fmt.Errorf("should not happen in showAddressesBelongs")
 	}
 
-	path = walk.ToIndexPath(path)
+	path = index.ToIndexPath(path)
 	if !file.FileExists(path) {
 		// Bloom files exist, but index files don't. It's okay.
 		return true, nil

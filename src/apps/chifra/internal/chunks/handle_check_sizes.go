@@ -9,8 +9,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // CheckSizes compares the file on disc to the file size suggested in the manifest
@@ -37,7 +37,7 @@ func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []uint64, ca
 
 	// We will check both the index and the bloom even though `--check` is only available for index
 	for _, fileName := range fileNames {
-		indexFn := walk.ToIndexPath(fileName)
+		indexFn := index.ToIndexPath(fileName)
 		rng := base.RangeFromFilename(indexFn)
 		if !rng.LaterThan(maxInManifest) {
 			okay := true // the test passes only if both pass unless there's only one
@@ -50,7 +50,7 @@ func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []uint64, ca
 			}
 
 			if okay {
-				bloomFn := walk.ToBloomPath(fileName)
+				bloomFn := index.ToBloomPath(fileName)
 				if file.FileExists(bloomFn) {
 					bloomSize := file.FileSize(bloomFn)
 					if bloomSize != bloomSizeInMan[rng] {

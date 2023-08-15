@@ -22,11 +22,11 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		showAppearances := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-			if path != walk.ToBloomPath(path) {
+			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showAppearances")
 			}
 
-			path = walk.ToIndexPath(path)
+			path = index.ToIndexPath(path)
 			if !file.FileExists(path) {
 				// Bloom files exist, but index files don't. It's okay.
 				return true, nil

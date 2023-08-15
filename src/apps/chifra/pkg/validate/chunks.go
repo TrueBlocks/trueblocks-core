@@ -6,9 +6,9 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 type ChunkSizes struct {
@@ -30,12 +30,12 @@ const (
 
 // IsValidChunk validates the bloom file's header and the index if told to do so. Note that in all cases, it resolves both.
 func IsValidChunk(path string, ch ChunkSizes, indexRequired bool) (ErrorType, ErrorType, error) {
-	if path != walk.ToBloomPath(path) {
+	if path != index.ToBloomPath(path) {
 		logger.Fatal("should not happen ==> only process bloom folder paths in IsValidChunk")
 	}
 
 	var err error
-	indexPath := walk.ToIndexPath(path)
+	indexPath := index.ToIndexPath(path)
 
 	// Resolve the status of the Bloom file first
 	bloom := FILE_MISSING
@@ -86,7 +86,7 @@ func checkHeader(path string) (ErrorType, error) {
 	}
 	defer ff.Close()
 
-	if path == walk.ToBloomPath(path) {
+	if path == index.ToBloomPath(path) {
 		var magic uint16
 		err = binary.Read(ff, binary.LittleEndian, &magic)
 		if err != nil {
@@ -107,7 +107,7 @@ func checkHeader(path string) (ErrorType, error) {
 
 		return OKAY, nil
 
-	} else if path == walk.ToIndexPath(path) {
+	} else if path == index.ToIndexPath(path) {
 		var magic uint32
 		err = binary.Read(ff, binary.LittleEndian, &magic)
 		if err != nil {

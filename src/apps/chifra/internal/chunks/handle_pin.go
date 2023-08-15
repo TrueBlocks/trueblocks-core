@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -56,11 +57,11 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					return true, nil
 				}
 
-				if path != walk.ToBloomPath(path) {
+				if path != index.ToBloomPath(path) {
 					return false, fmt.Errorf("should not happen in pinChunk")
 				}
 
-				result, err := pinning.PinChunk(chain, walk.ToBloomPath(path), walk.ToIndexPath(path), opts.Remote)
+				result, err := pinning.PinChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path), opts.Remote)
 				if err != nil {
 					return false, err
 				}
