@@ -139,7 +139,7 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 	}
 }
 
-//- marshal_only
+// --> marshal_only
 func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 	// BlockHash
 	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {

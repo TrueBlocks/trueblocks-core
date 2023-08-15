@@ -1497,11 +1497,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chainstate/#callresult">Callresult</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
+                    description: Produces <a href="/data-model/chainstate/#state">State</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/callResult"
+                        - $ref: "#/components/schemas/state"
                         - $ref: "#/components/schemas/ethCall"
                 example:
                   {
@@ -3144,7 +3144,7 @@ components:
           type: number
           format: uint64
           description: "the number of timestamps in the timestamps database"
-    callResult:
+    state:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
       type: object
       properties:
@@ -3260,11 +3260,6 @@ components:
         bytes:
           type: string
           description: "the bytes data following the encoding of the call"
-        callResult:
-          type: object
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the result of the call to the contract"
         compressedResult:
           type: string
           description: "the compressed version of the result of the call to the contract"

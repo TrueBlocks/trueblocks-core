@@ -198,7 +198,7 @@ func (s *SimpleTrace) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-//- cacheable by tx as group
+// --> cacheable by tx as group
 type SimpleTraceGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum

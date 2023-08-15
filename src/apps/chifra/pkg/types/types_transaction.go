@@ -310,7 +310,7 @@ func (s *SimpleTransaction) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-//- cacheable by tx
+// --> cacheable by tx
 func (s *SimpleTransaction) CacheName() string {
 	return "Transaction"
 }

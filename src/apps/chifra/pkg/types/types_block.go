@@ -195,7 +195,7 @@ func (s *SimpleBlock[Tx]) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-//- cacheable by block
+// --> cacheable by block
 func (s *SimpleBlock[Tx]) CacheName() string {
 	return "Block"
 }

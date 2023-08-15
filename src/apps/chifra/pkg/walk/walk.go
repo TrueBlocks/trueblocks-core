@@ -113,6 +113,14 @@ var cacheTypeToExt = map[CacheType]string{
 
 func (ct CacheType) String() string {
 	return cacheTypeToName[ct]
+	/*
+		207: func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
+		171: func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
+		206: func (s *SimpleSlurpGroup) CacheLocation() (directory string, extension string) {
+		200: func (s *SimpleStatementGroup) CacheLocation() (directory string, extension string) {
+		216: func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) {
+		322: func (s *SimpleTransaction) CacheLocation() (directory string, extension string) {
+	*/
 }
 
 func IsCacheType(path string, cT CacheType, checkExt bool) bool {

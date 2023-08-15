@@ -57,7 +57,7 @@ func (opts *ExportOptions) readStatements(
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	ledgers := ledger.NewLedger(
-		chain,
+		opts.Conn,
 		mon.Address,
 		opts.FirstBlock,
 		opts.LastBlock,

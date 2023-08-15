@@ -19,7 +19,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	noZero := false // opts.Globals.NoZero
 
 	ledgers := ledger.NewLedger(
-		chain,
+		opts.Conn,
 		base.HexToAddress(opts.AccountFor),
 		0,
 		utils.NOPOS,

@@ -153,7 +153,7 @@ func (s *SimpleLog) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-//- cacheable by block as group
+// --> cacheable by block as group
 type SimpleLogGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum

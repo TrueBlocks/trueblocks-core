@@ -3,6 +3,7 @@ package ledger
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -24,12 +25,13 @@ type Ledger struct {
 	UseTraces   bool
 	AssetFilter *[]base.Address
 	Tx          *types.SimpleTransaction
+	Conn        *rpc.Connection
 }
 
 // NewLedger returns a new empty Ledger struct
-func NewLedger(chain string, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces bool, assetFilters *[]string) *Ledger {
+func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
-		Chain:      chain,
+		Conn:       conn,
 		AccountFor: acctFor,
 		FirstBlock: fb,
 		LastBlock:  lb,
@@ -48,7 +50,7 @@ func NewLedger(chain string, acctFor base.Address, fb, lb base.Blknum, asEther, 
 	}
 
 	parts := names.Custom | names.Prefund | names.Regular
-	l.Names, _ = names.LoadNamesMap(chain, parts, []string{})
+	l.Names, _ = names.LoadNamesMap(conn.Chain, parts, []string{})
 
 	return l
 }

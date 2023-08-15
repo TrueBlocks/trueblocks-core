@@ -6,6 +6,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -17,7 +18,7 @@ var (
 )
 
 // PriceUsdUniswap returns the price of the given asset in USD as of the given block number.
-func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
+func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
 	multiplier := float64(1.0)
 	var first base.Address
 	var second base.Address
@@ -29,7 +30,7 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 		temp := *statement
 		temp.AssetAddr = base.FAKE_ETH_ADDRESS
 		temp.AssetSymbol = "WEI"
-		multiplier, _, err = PriceUsdUniswap(chain, testMode, &temp)
+		multiplier, _, err = PriceUsdUniswap(conn, testMode, &temp)
 		if err != nil {
 			return 0.0, "not-priced", err
 		}
@@ -46,7 +47,7 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 	}
 
 	theCall1 := fmt.Sprintf("getPair(%s, %s)", first.Hex(), second.Hex())
-	contractCall, err := call.NewContractCall(chain, uniswapFactoryV2, theCall1, false)
+	contractCall, err := call.NewContractCall(conn.Chain, uniswapFactoryV2, theCall1, false)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
@@ -62,7 +63,7 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 		return 0.0, "not-priced", fmt.Errorf(msg)
 	}
 	theCall2 := "getReserves()"
-	contractCall, err = call.NewContractCall(chain, pairAddress, theCall2, false)
+	contractCall, err = call.NewContractCall(conn.Chain, pairAddress, theCall2, false)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

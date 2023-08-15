@@ -202,7 +202,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (name % "Action") {
         ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
 
-    } else if (modelName % "CallResult" && name % "Outputs") {
+    } else if (modelName % "State" && name % "Outputs") {
         ret = isRaw ? "[]string" : "map[string]string";
 
     } else if (name % "Components" || name % "Inputs" || name % "Outputs") {
@@ -211,7 +211,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (startsWith(modelName, "Trace") && name % "Result") {
         ret = isRaw ? "*RawTraceResult" : "*SimpleTraceResult";
 
-    } else if (startsWith(name, "Articulated") || name % "CallResult") {
+    } else if (startsWith(name, "Articulated") || name % "State") {
         ret = isRaw ? "" : "*SimpleFunction";
 
     } else if (name % "Uncles") {
@@ -347,7 +347,7 @@ string_q get_cache_code(const CClassDefinition& modelIn) {
 
     ostringstream os;
     os << endl;
-    os << "//- " << modelIn.cache_type << (isCacheable ? " by " + modelIn.cache_by : "")
+    os << "// --> " << modelIn.cache_type << (isCacheable ? " by " + modelIn.cache_by : "")
        << (isGroupable ? " as " + modelIn.cache_as : "");
     os << endl;
 
@@ -501,10 +501,13 @@ string_q get_id_code(const string_q& cacheBy) {
         return "fmt.Sprintf(\"%09d\", s.BlockNumber)";
     } else if (cacheBy == "tx") {
         return "fmt.Sprintf(\"%09d-%05d\", s.BlockNumber, s.TransactionIndex)";
-    } else if (cacheBy == "addr_and_tx") {
+    } else if (cacheBy == "address_and_tx") {
         return "fmt.Sprintf(\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)";
+    } else if (cacheBy == "address_and_block") {
+        return "fmt.Sprintf(\"%s-%09d\", s.Address.Hex()[2:], s.BlockNumber)";
     } else {
-        return "unkown-cache-by-type: " + cacheBy;
+        cerr << bRed << "Unknown cache_by value: " << cacheBy << cOff << endl;
+        exit(0);
     }
 }
 

@@ -82,7 +82,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				return
 			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
-					chain,
+					opts.Conn,
 					mon.Address,
 					opts.FirstBlock,
 					opts.LastBlock,

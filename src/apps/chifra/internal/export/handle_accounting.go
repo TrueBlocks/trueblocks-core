@@ -82,7 +82,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 				return
 			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
-					chain,
+					opts.Conn,
 					mon.Address,
 					opts.FirstBlock,
 					opts.LastBlock,

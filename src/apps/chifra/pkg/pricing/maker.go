@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -16,7 +17,7 @@ var (
 	makerDeployment = base.Blknum(3684349)
 )
 
-func PriceUsdMaker(chain string, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
+func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
 	if statement.BlockNumber <= makerDeployment {
 		msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Maker. No fallback pricing method", statement.BlockNumber, makerDeployment)
 		logger.TestLog(true, msg)
@@ -27,7 +28,7 @@ func PriceUsdMaker(chain string, testMode bool, statement *types.SimpleStatement
 	logger.TestLog(true, msg)
 	theCall := "peek()"
 
-	contractCall, err := call.NewContractCall(chain, makerMedianizer, theCall, false)
+	contractCall, err := call.NewContractCall(conn.Chain, makerMedianizer, theCall, false)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

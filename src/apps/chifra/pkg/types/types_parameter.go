@@ -89,7 +89,7 @@ func (s *SimpleParameter) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-//- marshal_only
+// --> marshal_only
 func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
 	// Components
 	components := make([]cache.Marshaler, 0, len(s.Components))

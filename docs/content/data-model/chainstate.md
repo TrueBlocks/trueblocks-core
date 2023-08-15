@@ -22,17 +22,17 @@ are specific to the particular smart contract.
 
 Each data structure is created by one or more tools which are detailed below.
 
-## CallResult
+## State
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
 contract. This is the decoded `output` value of the smart contract call.
 
-The following commands produce and manage CallResults:
+The following commands produce and manage States:
 
 - [chifra state](/chifra/chainstate/#chifra-state)
 
-CallResults consist of the following fields:
+States consist of the following fields:
 
 | Field            | Description                                       | Type    |
 | ---------------- | ------------------------------------------------- | ------- |
@@ -85,16 +85,15 @@ The following commands produce and manage EthCalls:
 
 EthCalls consist of the following fields:
 
-| Field            | Description                                                                      | Type                                    |
-| ---------------- | -------------------------------------------------------------------------------- | --------------------------------------- |
-| blockNumber      | the block number at which this call was made                                     | blknum                                  |
-| address          | the address of contract being called                                             | address                                 |
-| signature        | the canonical signature of the interface                                         | string                                  |
-| encoding         | the encoding for the function call                                               | string                                  |
-| bytes            | the bytes data following the encoding of the call                                | string                                  |
-| callResult       | the result of the call to the contract                                           | [Function](/data-model/other/#function) |
-| compressedResult | the compressed version of the result of the call to the contract                 | string                                  |
-| deployed         | the block number at which this smart contract was deployed (if a smart contract) | blknum                                  |
+| Field            | Description                                                                      | Type    |
+| ---------------- | -------------------------------------------------------------------------------- | ------- |
+| blockNumber      | the block number at which this call was made                                     | blknum  |
+| address          | the address of contract being called                                             | address |
+| signature        | the canonical signature of the interface                                         | string  |
+| encoding         | the encoding for the function call                                               | string  |
+| bytes            | the bytes data following the encoding of the call                                | string  |
+| compressedResult | the compressed version of the result of the call to the contract                 | string  |
+| deployed         | the block number at which this smart contract was deployed (if a smart contract) | blknum  |
 
 ## Base types
 

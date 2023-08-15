@@ -3,9 +3,11 @@ package statePkg
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
@@ -25,10 +27,9 @@ func (opts *StateOptions) HandleCall() error {
 	if err != nil {
 		return err
 	}
-	contractCall.ShowLogs = opts.Globals.Verbose || testMode
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawCallResult], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawState], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {
@@ -43,6 +44,11 @@ func (opts *StateOptions) HandleCall() error {
 			for _, bn := range blockNums {
 				contractCall.BlockNumber = bn
 				results, err := contractCall.Call()
+				if opts.Globals.Verbose || testMode {
+					msg := fmt.Sprintf("call to %s at block %d at four-byte %s returned %v",
+						contractCall.Address.Hex(), contractCall.BlockNumber, contractCall.Method.Encoding, results.Outputs)
+					logger.TestLog(true, msg)
+				}
 				if err != nil {
 					errorChan <- err
 					return
