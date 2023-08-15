@@ -1709,12 +1709,15 @@ paths:
                 - index
                 - blooms
                 - blocks
-                - txs
+                - transactions
                 - traces
+                - logs
+                - statements
+                - state
+                - tokens
                 - monitors
                 - names
                 - abis
-                - recons
                 - slurps
                 - staging
                 - unripe

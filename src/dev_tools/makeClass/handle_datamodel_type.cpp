@@ -567,7 +567,6 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
         if (field.name == "raw" || skipField(model, field, false))
             continue;
 
-        cerr << modelName << " " << field.name << endl;
         if (modelName == "Transaction" && (field.name == "traces" || field.name == "compressedTx")) {
             continue;
         }

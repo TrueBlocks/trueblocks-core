@@ -26,7 +26,7 @@ Each data structure is created by one or more tools which are detailed below.
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 The [chifra config](/chifra/admin/#chifra-config) tool reports on the state (and size) of the
 various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`,
-`monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `txs`. In general practice, these caches
+`monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `transactions`. In general practice, these caches
 may take up a few GB of hard drive space, however, for very popular smart contract the size of the
 caches may grow rather large. Keep an eye on it.
 
