@@ -189,7 +189,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	if !opts.Globals.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := index.ToStagingPath(config.GetPathToIndex(chain) + "staging")
+		stagePath := walk.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
@@ -233,7 +233,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		wg.Done()
 	}()
 
-	bloomFilename := index.ToBloomPath(fileName)
+	bloomFilename := walk.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
@@ -269,7 +269,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		return
 	}
 
-	indexFilename := index.ToIndexPath(fileName)
+	indexFilename := walk.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
 		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {

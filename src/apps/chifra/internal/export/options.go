@@ -259,10 +259,9 @@ func (opts *ExportOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
 		// TODO: Enabled neighbors and statements cache
-		"txs":        true,
-		"neigbors":   true,
-		"statements": true,
-		"traces":     opts.CacheTraces,
+		"transactions": true,
+		"statements":   true,
+		"traces":       opts.CacheTraces,
 	}
 	// EXISTING_CODE
 	return

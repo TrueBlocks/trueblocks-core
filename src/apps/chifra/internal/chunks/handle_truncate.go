@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
@@ -45,8 +46,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		// of the last chunks remaining.
 		latestChunk := uint64(0)
 		nChunksRemoved := 0
-		truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-			if path != index.ToBloomPath(path) {
+		truncateIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			if path != walk.ToBloomPath(path) {
 				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 			}
 
@@ -62,7 +63,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 
 			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 			if rng.Intersects(testRange) {
-				if err = manifest.RemoveChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
+				if err = manifest.RemoveChunk(chain, walk.ToBloomPath(path), walk.ToIndexPath(path)); err != nil {
 					return false, err
 				}
 				nChunksRemoved++
@@ -80,7 +81,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			return true, nil
 		}
 
-		walker := index.NewCacheWalker(
+		walker := walk.NewCacheWalker(
 			chain,
 			opts.Globals.TestMode,
 			100, /* maxTests */

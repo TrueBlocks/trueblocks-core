@@ -1,0 +1,113 @@
+status?modes=blocks&maxRecords=100&chains
+{
+  "data": [
+    {
+      "cachePath": "--paths--",
+      "caches": [
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "blocksCache"
+        }
+      ],
+      "chainConfig": "--paths--",
+      "chains": [
+        {
+          "apiProvider": "http://localhost:8080",
+          "chain": "mainnet",
+          "chainId": 1,
+          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
+          "localExplorer": "http://localhost:1234",
+          "remoteExplorer": "https://etherscan.io",
+          "rpcProvider": "http://localhost:23456",
+          "symbol": "ETH"
+        },
+        {
+          "apiProvider": "http://localhost:8080",
+          "chain": "goerli",
+          "chainId": 5,
+          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
+          "localExplorer": "http://localhost:1234",
+          "remoteExplorer": "https://goerli.etherscan.io",
+          "rpcProvider": "https://goerli-light.eth.linkpool.io",
+          "symbol": "ETH"
+        },
+        {
+          "apiProvider": "http://localhost:8080",
+          "chain": "optimism",
+          "chainId": 10,
+          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
+          "localExplorer": "http://localhost:1234",
+          "remoteExplorer": "https://optimistic.etherscan.io",
+          "rpcProvider": "https://mainnet.optimism.io",
+          "symbol": "OPT"
+        },
+        {
+          "apiProvider": "http://localhost:8080",
+          "chain": "gnosis",
+          "chainId": 100,
+          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
+          "localExplorer": "http://localhost:1234",
+          "remoteExplorer": "https://gnosisscan.io/",
+          "rpcProvider": "http://localhost:36963",
+          "symbol": "XDAI"
+        },
+        {
+          "apiProvider": "http://localhost:8080",
+          "chain": "polygon",
+          "chainId": 80001,
+          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
+          "localExplorer": "http://localhost:1234",
+          "remoteExplorer": "https://mumbai.polygonscan.com",
+          "rpcProvider": "https://rpc-mumbai.maticvigil.com",
+          "symbol": "MATIC"
+        },
+        {
+          "apiProvider": "http://localhost:8080",
+          "chain": "urbit",
+          "chainId": 80001,
+          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
+          "localExplorer": "http://localhost:1234",
+          "remoteExplorer": "https://mumbai.polygonscan.com",
+          "rpcProvider": "https://rpc.uvm.network",
+          "symbol": "URBT"
+        },
+        {
+          "apiProvider": "http://localhost:8080",
+          "chain": "sepolia",
+          "chainId": 11155111,
+          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
+          "localExplorer": "http://localhost:1234",
+          "remoteExplorer": "https://sepolia.otterscan.io/",
+          "rpcProvider": "http://localhost:30305",
+          "symbol": "ETH"
+        }
+      ],
+      "clientVersion": "Client version",
+      "hasEsKey": true,
+      "hasPinKey": false,
+      "indexPath": "--paths--",
+      "isApi": true,
+      "isArchive": true,
+      "isTesting": true,
+      "isTracing": true,
+      "rootConfig": "--paths--",
+      "rpcProvider": "--providers--",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

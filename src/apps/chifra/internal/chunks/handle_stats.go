@@ -8,17 +8,17 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showFinalizedStats := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-			if path != index.ToBloomPath(path) {
+		showFinalizedStats := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			if path != walk.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showFinalizedStats")
 			}
 
@@ -32,7 +32,7 @@ func (opts *ChunksOptions) HandleStats(blockNums []uint64) error {
 			return true, nil
 		}
 
-		walker := index.NewCacheWalker(
+		walker := walk.NewCacheWalker(
 			chain,
 			opts.Globals.TestMode,
 			100, /* maxTests */

@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -42,7 +41,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 			if !skip {
 				hit := false
 				for _, block := range blockNums {
-					h := result.Range.IntersectsB(block)
+					h := result.FileRange.IntersectsB(block)
 					hit = hit || h
 					if hit {
 						break
@@ -158,7 +157,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	reports = append(reports, r2c)
 
 	// we only check the stage if it exists
-	stagePath := index.ToStagingPath(config.GetPathToIndex(chain) + "staging")
+	stagePath := walk.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if file.FileExists(stageFn) {
 		stage := simpleReportCheck{Reason: "Check staging folder"}

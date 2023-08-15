@@ -47,6 +47,15 @@ status?modes=all&maxRecords=100
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
+          "type": "abisCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
           "type": "monitorsCache"
         },
         {
@@ -65,7 +74,16 @@ status?modes=all&maxRecords=100
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "abisCache"
+          "type": "blocksCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "logsCache"
         },
         {
           "items": [],
@@ -83,7 +101,25 @@ status?modes=all&maxRecords=100
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "blocksCache"
+          "type": "stateCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "statementsCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "tokensCache"
         },
         {
           "items": [],
@@ -101,7 +137,7 @@ status?modes=all&maxRecords=100
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "txsCache"
+          "type": "transactionsCache"
         }
       ],
       "chainConfig": "--paths--",

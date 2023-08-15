@@ -63,20 +63,7 @@ status?modes=some&verbose&maxRecords=2
           "type": "monitorsCache"
         },
         {
-          "items": [
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "namesCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "namesCacheItem",
-              "sizeInBytes": 123456789
-            }
-          ],
+          "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,

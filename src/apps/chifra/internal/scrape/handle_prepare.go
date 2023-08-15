@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -55,7 +56,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *
 	_ = tslib.Append(chain, array)
 
 	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
-	indexPath := index.ToIndexPath(bloomPath)
+	indexPath := walk.ToIndexPath(bloomPath)
 	if report, err := index.WriteChunk(chain, indexPath, appMap, len(prefunds), opts.Pin, opts.Remote); err != nil {
 		return false, err
 	} else if report == nil {

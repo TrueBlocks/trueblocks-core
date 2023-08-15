@@ -1,10 +1,9 @@
-package index
+package walk
 
 import (
 	"context"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 type walkerFunc func(walker *CacheWalker, path string, first bool) (bool, error)
@@ -30,15 +29,15 @@ func (walker *CacheWalker) MaxTests() int {
 }
 
 func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
-	filenameChan := make(chan walk.CacheFileInfo)
+	filenameChan := make(chan CacheFileInfo)
 
 	var nRoutines int = 1
-	go walk.WalkCacheFolder(context.Background(), walker.chain, walk.Index_Bloom, nil, filenameChan)
+	go WalkCacheFolder(context.Background(), walker.chain, Index_Bloom, nil, filenameChan)
 
 	cnt := 0
 	for result := range filenameChan {
 		switch result.Type {
-		case walk.Index_Bloom:
+		case Index_Bloom:
 			if walker.shouldDisplay(result, cnt, blockNums) {
 				ok, err := walker.visitFunc1(walker, result.Path, cnt == 0)
 				if err != nil {
@@ -50,7 +49,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 					return nil
 				}
 			}
-		case walk.Cache_NotACache:
+		case Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
@@ -72,8 +71,8 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 // eventuallity. If on of the files has a two block range, we need to generate 50,000 block numbers. If we
 // used the range on the command line instead we'd only have to intersect one range.
 
-func (walker *CacheWalker) shouldDisplay(result walk.CacheFileInfo, cnt int, blockNums []uint64) bool {
-	if !walk.IsCacheType(result.Path, result.Type, true /* checkExt */) {
+func (walker *CacheWalker) shouldDisplay(result CacheFileInfo, cnt int, blockNums []uint64) bool {
+	if !IsCacheType(result.Path, result.Type, true /* checkExt */) {
 		return false
 	}
 
@@ -87,7 +86,7 @@ func (walker *CacheWalker) shouldDisplay(result walk.CacheFileInfo, cnt int, blo
 
 	hit := false
 	for _, bn := range blockNums {
-		h := result.Range.IntersectsB(bn)
+		h := result.FileRange.IntersectsB(bn)
 		hit = hit || h
 		if hit {
 			break

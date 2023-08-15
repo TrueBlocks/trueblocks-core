@@ -61,13 +61,13 @@ func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 		case walk.Index_Bloom:
 			fallthrough
 		case walk.Index_Final:
-			meta.Finalized = utils.Max(meta.Finalized, result.Range.Last)
+			meta.Finalized = utils.Max(meta.Finalized, result.FileRange.Last)
 		case walk.Index_Staging:
-			meta.Staging = utils.Max(meta.Staging, result.Range.Last)
+			meta.Staging = utils.Max(meta.Staging, result.FileRange.Last)
 		case walk.Index_Ripe:
-			meta.Ripe = utils.Max(meta.Ripe, result.Range.Last)
+			meta.Ripe = utils.Max(meta.Ripe, result.FileRange.Last)
 		case walk.Index_Unripe:
-			meta.Unripe = utils.Max(meta.Unripe, result.Range.Last)
+			meta.Unripe = utils.Max(meta.Unripe, result.FileRange.Last)
 		case walk.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {

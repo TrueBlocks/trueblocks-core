@@ -114,7 +114,7 @@ func ResetOptions() {
 func (opts *LogsOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"txs": true,
+		"transactions": true,
 	}
 	// EXISTING_CODE
 	return

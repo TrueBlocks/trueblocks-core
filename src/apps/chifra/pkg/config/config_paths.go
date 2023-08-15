@@ -111,15 +111,8 @@ func EstablishCachePaths(cachePath string) {
 		"monitors",
 		"monitors/staging",
 		"names",
-		// "objs",
-		// "prices",
 		"tmp",
-		"v1/balances",
-		"v1/blocks",
-		"v1/slurps",
-		"v1/statements",
-		"v1/traces",
-		"v1/transactions",
+		"v1",
 	}
 
 	if err := file.EstablishFolders(cachePath, folders); err != nil {

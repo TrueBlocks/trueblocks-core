@@ -122,8 +122,8 @@ func ResetOptions() {
 func (opts *TracesOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"txs":    true,
-		"traces": true,
+		"transactions": true,
+		"traces":       true,
 	}
 	// EXISTING_CODE
 	return

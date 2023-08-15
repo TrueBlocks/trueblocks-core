@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
@@ -25,8 +26,8 @@ func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
 		NAddrs:   uint64(chunk.Data.Header.AddressCount),
 		NApps:    uint64(chunk.Data.Header.AppearanceCount),
 		NBlooms:  uint64(chunk.Bloom.Count),
-		BloomSz:  uint64(file.FileSize(index.ToBloomPath(path))),
-		ChunkSz:  uint64(file.FileSize(index.ToIndexPath(path))),
+		BloomSz:  uint64(file.FileSize(walk.ToBloomPath(path))),
+		ChunkSz:  uint64(file.FileSize(walk.ToIndexPath(path))),
 		RecWid:   4 + bloom.BLOOM_WIDTH_IN_BYTES,
 	}
 

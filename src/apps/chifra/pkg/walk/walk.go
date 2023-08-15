@@ -6,12 +6,15 @@ package walk
 
 import (
 	"context"
+	"fmt"
 	"io/fs"
+	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -20,14 +23,19 @@ type CacheType uint
 const (
 	Cache_NotACache CacheType = iota
 	Cache_Abis
-	Cache_Blocks
 	Cache_Monitors
 	Cache_Names
-	Cache_Recons
-	Cache_Slurps
 	Cache_Tmp
+
+	Cache_Blocks
+	Cache_Logs
+	Cache_Slurps
+	Cache_State
+	Cache_Statements
+	Cache_Tokens
 	Cache_Traces
 	Cache_Transactions
+
 	Index_Bloom
 	Index_Final
 	Index_Ripe
@@ -39,12 +47,15 @@ const (
 var cacheTypeToName = map[CacheType]string{
 	Cache_NotACache:    "unknown",
 	Cache_Abis:         "abis",
-	Cache_Blocks:       "blocks",
 	Cache_Monitors:     "monitors",
 	Cache_Names:        "names",
-	Cache_Recons:       "reconciliations",
-	Cache_Slurps:       "slurps",
 	Cache_Tmp:          "tmp",
+	Cache_Blocks:       "blocks",
+	Cache_Logs:         "logs",
+	Cache_Slurps:       "slurps",
+	Cache_State:        "state",
+	Cache_Statements:   "statements",
+	Cache_Tokens:       "tokens",
 	Cache_Traces:       "traces",
 	Cache_Transactions: "transactions",
 	Index_Bloom:        "bloom",
@@ -59,14 +70,17 @@ var cacheTypeToName = map[CacheType]string{
 var CacheTypeToFolder = map[CacheType]string{
 	Cache_NotACache:    "unknown",
 	Cache_Abis:         "abis",
-	Cache_Blocks:       "blocks",
 	Cache_Monitors:     "monitors",
 	Cache_Names:        "names",
-	Cache_Recons:       "recons",
-	Cache_Slurps:       "slurps",
 	Cache_Tmp:          "tmp",
+	Cache_Blocks:       "blocks",
+	Cache_Logs:         "logs",
+	Cache_Slurps:       "slurps",
+	Cache_State:        "state",
+	Cache_Statements:   "statements",
+	Cache_Tokens:       "tokens",
 	Cache_Traces:       "traces",
-	Cache_Transactions: "txs",
+	Cache_Transactions: "transactions",
 	Index_Bloom:        "blooms",
 	Index_Final:        "finalized",
 	Index_Ripe:         "ripe",
@@ -78,12 +92,15 @@ var CacheTypeToFolder = map[CacheType]string{
 var cacheTypeToExt = map[CacheType]string{
 	Cache_NotACache:    "unknown",
 	Cache_Abis:         "json",
-	Cache_Blocks:       "bin",
 	Cache_Monitors:     "mon.bin",
 	Cache_Names:        "bin",
-	Cache_Recons:       "bin",
-	Cache_Slurps:       "bin",
 	Cache_Tmp:          "",
+	Cache_Blocks:       "bin",
+	Cache_Logs:         "bin",
+	Cache_Slurps:       "bin",
+	Cache_State:        "bin",
+	Cache_Statements:   "bin",
+	Cache_Tokens:       "bin",
 	Cache_Traces:       "bin",
 	Cache_Transactions: "bin",
 	Index_Bloom:        "bloom",
@@ -112,22 +129,30 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	switch cacheType {
 	case Cache_Abis:
 		fallthrough
-	case Cache_Blocks:
-		fallthrough
 	case Cache_Monitors:
 		fallthrough
 	case Cache_Names:
 		fallthrough
-	case Cache_Recons:
+	case Cache_Tmp:
+		return filepath.Join(config.GetPathToCache(chain), CacheTypeToFolder[cacheType]) + "/"
+
+	case Cache_Blocks:
+		fallthrough
+	case Cache_Logs:
 		fallthrough
 	case Cache_Slurps:
 		fallthrough
-	case Cache_Tmp:
+	case Cache_State:
+		fallthrough
+	case Cache_Statements:
+		fallthrough
+	case Cache_Tokens:
 		fallthrough
 	case Cache_Traces:
 		fallthrough
 	case Cache_Transactions:
-		return filepath.Join(config.GetPathToCache(chain), CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.GetPathToCache(chain), "v1", CacheTypeToFolder[cacheType]) + "/"
+
 	case Index_Bloom:
 		fallthrough
 	case Index_Final:
@@ -175,7 +200,7 @@ func walkFolder(ctx context.Context, path string, cacheType CacheType, data inte
 		} else {
 			// TODO: This does not need to be part of walker. It could be in the caller and sent through the data pointer
 			rng := base.RangeFromFilename(path)
-			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, Range: rng, Data: data}
+			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, FileRange: rng, Data: data}
 		}
 
 		select {
@@ -188,10 +213,227 @@ func walkFolder(ctx context.Context, path string, cacheType CacheType, data inte
 	})
 }
 
+func CacheTypesFromStringSlice(strs []string) []CacheType {
+	haveit := map[string]bool{} // removes dups
+	var types []CacheType
+	for _, str := range strs {
+		if !haveit[str] {
+			haveit[str] = true
+			switch str {
+			case "abis":
+				types = append(types, Cache_Abis)
+			case "monitors":
+				types = append(types, Cache_Monitors)
+			case "names":
+				types = append(types, Cache_Names)
+			case "tmp":
+				types = append(types, Cache_Tmp)
+
+			case "blocks":
+				types = append(types, Cache_Blocks)
+			case "logs":
+				types = append(types, Cache_Logs)
+			case "slurps":
+				types = append(types, Cache_Slurps)
+			case "state":
+				types = append(types, Cache_State)
+			case "statements":
+				types = append(types, Cache_Statements)
+			case "tokens":
+				types = append(types, Cache_Tokens)
+			case "traces":
+				types = append(types, Cache_Traces)
+			case "transactions":
+				types = append(types, Cache_Transactions)
+
+			case "blooms":
+				types = append(types, Index_Bloom)
+			case "index":
+				fallthrough
+			case "finalized":
+				types = append(types, Index_Final)
+			case "ripe":
+				types = append(types, Index_Ripe)
+			case "staging":
+				types = append(types, Index_Staging)
+			case "unripe":
+				types = append(types, Index_Unripe)
+			case "maps":
+				types = append(types, Index_Maps)
+			case "some":
+				types = append(types, Index_Final)
+				types = append(types, Cache_Monitors)
+				types = append(types, Cache_Names)
+				types = append(types, Cache_Abis)
+				types = append(types, Cache_Slurps)
+			case "all":
+				types = append(types, Index_Bloom)
+				types = append(types, Index_Final)
+				types = append(types, Index_Staging)
+				types = append(types, Index_Unripe)
+				types = append(types, Cache_Abis)
+				types = append(types, Cache_Monitors)
+				types = append(types, Cache_Names)
+				types = append(types, Cache_Blocks)
+				types = append(types, Cache_Logs)
+				types = append(types, Cache_Slurps)
+				types = append(types, Cache_State)
+				types = append(types, Cache_Statements)
+				types = append(types, Cache_Tokens)
+				types = append(types, Cache_Traces)
+				types = append(types, Cache_Transactions)
+			}
+		}
+	}
+	return types
+}
+
+func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFileInfo) (map[string]any, error) {
+	date := "--fileDate--"
+	info, err := os.Stat(cacheInfo.Path)
+	if !testMode && err == nil {
+		date = info.ModTime().Format("2006-01-02 15:04:05")
+	}
+
+	size := file.FileSize(cacheInfo.Path)
+	if testMode {
+		size = 123456789
+	}
+
+	display := cacheInfo.Path
+	display = strings.Replace(display, config.GetPathToCache(chain), "./", -1)
+	display = strings.Replace(display, config.GetPathToIndex(chain), "./", -1)
+
+	switch cT {
+	case Index_Maps:
+		fallthrough
+	case Index_Bloom:
+		fallthrough
+	case Index_Final:
+		if testMode {
+			display = strings.Replace(cacheInfo.Path, config.GetPathToIndex(chain), "$indexPath/", 1)
+		}
+		return map[string]interface{}{
+			"bloomSizeBytes": file.FileSize(ToBloomPath(cacheInfo.Path)),
+			"fileDate":       date,
+			"filename":       display,
+			"firstApp":       cacheInfo.FileRange.First,
+			"firstTs":        cacheInfo.TsRange.First,
+			"indexSizeBytes": file.FileSize(ToIndexPath(cacheInfo.Path)),
+			"itemType":       cacheItemName(cT),
+			"latestApp":      cacheInfo.FileRange.Last,
+			"latestTs":       cacheInfo.TsRange.Last,
+		}, nil
+	case Cache_Monitors:
+		fallthrough
+	case Cache_Slurps:
+		fallthrough
+	case Cache_Abis:
+		address := ""
+		parts := strings.Split(cacheInfo.Path, "/")
+		for _, part := range parts {
+			if strings.HasPrefix(part, "0x") {
+				address = part
+				break
+			}
+		}
+		if testMode {
+			display = strings.Replace(cacheInfo.Path, config.GetPathToCache(chain), "$cachePath/", 1)
+			display = strings.Replace(display, address, "--address--", -1)
+			address = "--address--"
+		}
+		ret := map[string]interface{}{
+			"address":     address,
+			"fileDate":    date,
+			"filename":    display,
+			"itemType":    cacheItemName(cT),
+			"sizeInBytes": size,
+		}
+		if cT == Cache_Monitors {
+			ret["nRecords"] = size / 8 // index.AppRecordWidth - FAST
+		}
+		return ret, nil
+	default:
+		if testMode {
+			display = "$cachePath/data-model/file.bin"
+		}
+		return map[string]interface{}{
+			"fileDate":    date,
+			"filename":    display,
+			"itemType":    cacheItemName(cT),
+			"sizeInBytes": size,
+		}, nil
+	}
+}
+
+// GetDecachePath returns the path and the basePath for a given cache item depending on type
+func GetDecachePath(chain string, typ CacheType, address base.Address, blockNum, txid uint32) (basePath, path string) {
+	blkStr := fmt.Sprintf("%09d", blockNum)
+	txStr := fmt.Sprintf("%05d", txid)
+	part1 := blkStr[0:2]
+	part2 := blkStr[2:4]
+	part3 := blkStr[4:6]
+	part4 := blkStr
+	part5 := ""
+
+	cachePath := config.GetPathToCache(chain)
+	switch typ {
+	case Cache_Abis:
+		basePath = fmt.Sprintf("%s%s/", cachePath, typ)
+		path = fmt.Sprintf("%s%s/%s.json", cachePath, typ, address.Hex())
+	case Cache_Logs:
+		fallthrough
+	case Cache_Blocks:
+		basePath = fmt.Sprintf("%s%s/%s/%s/%s/", cachePath, typ, part1, part2, part3)
+		path = fmt.Sprintf("%s%s/%s/%s/%s/%s%s.bin", cachePath, typ, part1, part2, part3, part4, part5)
+	case Cache_Transactions:
+		fallthrough
+	case Cache_Traces:
+		part5 = "-" + txStr
+		basePath = fmt.Sprintf("%s%s/%s/%s/", cachePath, typ, part1, part2)
+		path = fmt.Sprintf("%s%s/%s/%s/%s/%s%s.bin", cachePath, typ, part1, part2, part3, part4, part5)
+	case Cache_Slurps:
+		fallthrough
+	case Cache_State:
+		fallthrough
+	case Cache_Statements:
+		fallthrough
+	case Cache_Tokens:
+		if !address.IsZero() {
+			addr := address.Hex()
+			addr = addr[2:]
+			part1 := addr[0:4]
+			part2 := addr[4:8]
+			part3 := addr[8:]
+			part4 := blkStr
+			part5 := txStr
+			basePath = fmt.Sprintf("%s%s/%s/%s/", cachePath, typ, part1, part2)
+			path = fmt.Sprintf("%s%s/%s/%s/%s/%s.%s.bin", cachePath, typ, part1, part2, part3, part4, part5)
+		}
+	default:
+		fmt.Println("Unknown type in deleteIfPresent: ", typ)
+		os.Exit(1)
+	}
+	return basePath, path
+}
+
+func cacheItemName(ct CacheType) string {
+	return CacheName(ct) + "Item"
+}
+
+func CacheName(ct CacheType) string {
+	// TODO: Names of caches, names of folders, names of commands are all different. This is a mess.
+	ret := CacheTypeToFolder[ct] + "Cache"
+	ret = strings.Replace(ret, "blooms", "bloom", -1)
+	ret = strings.Replace(ret, "finalized", "index", -1)
+	return ret
+}
+
 type CacheFileInfo struct {
-	Type  CacheType
-	Path  string
-	Range base.FileRange
-	IsDir bool
-	Data  interface{}
+	Type      CacheType
+	FileRange base.FileRange
+	TsRange   base.TimestampRange
+	Path      string
+	IsDir     bool
+	Data      interface{}
 }

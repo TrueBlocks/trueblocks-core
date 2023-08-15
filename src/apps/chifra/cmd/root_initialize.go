@@ -89,6 +89,26 @@ const backVersion string = `
 
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
+	// Allow status and config routes to aide user in migrating...
+	isStatus := false
+	isConfigPaths := false
+	for _, arg := range os.Args {
+		if arg == "status" {
+			isStatus = true
+		} else if arg == "config" {
+			isConfigPaths = true
+		} else if arg == "help" {
+			return
+		} else if isStatus {
+			isStatus = false // only chifra status with no options is okay
+		} else if isConfigPaths && arg != "--paths" {
+			isConfigPaths = false // only chifra config --paths is okay
+		}
+	}
+	if isStatus || isConfigPaths {
+		return
+	}
+
 	user, _ := user.Current()
 
 	// The old $HOME/.quickBlocks folder should not exist...

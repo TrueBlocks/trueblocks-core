@@ -61,7 +61,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 // 	report.VisitedCnt++
 // 	report.CheckedCnt++
 // 	var bl bloom.ChunkBloom
-// 	bPath := index.ToBloomPath(fileName)
+// 	bPath := walk.ToBloomPath(fileName)
 // 	bl.ReadBloom(bPath)
 // 	versioned, err := bl.ReadBloom Header()
 // 	if err != nil {

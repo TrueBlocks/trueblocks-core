@@ -18,6 +18,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // The Chunk data structure consists of three parts. A FileRange, a ChunkData structure, and a ChunkBloom that
@@ -39,12 +40,12 @@ func NewChunk(path string) (chunk Chunk, err error) {
 		return
 	}
 
-	chunk.Bloom, err = bloom.NewChunkBloom(ToBloomPath(path))
+	chunk.Bloom, err = bloom.NewChunkBloom(walk.ToBloomPath(path))
 	if err != nil {
 		return
 	}
 
-	chunk.Data, err = NewChunkData(ToIndexPath(path))
+	chunk.Data, err = NewChunkData(walk.ToIndexPath(path))
 	return
 }
 

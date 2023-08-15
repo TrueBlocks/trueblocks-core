@@ -23,6 +23,10 @@ type FileRange struct {
 }
 type BlockRange FileRange  // sugar
 type RecordRange FileRange // sugar
+type TimestampRange struct {
+	First Timestamp
+	Last  Timestamp
+}
 
 var NotARange = FileRange{First: utils.NOPOS, Last: utils.NOPOS}
 

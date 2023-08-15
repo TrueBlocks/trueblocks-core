@@ -85,7 +85,7 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
 	}
-	opts.ModeTypes = getCacheTypes(opts.Modes)
+	opts.ModeTypes = walk.CacheTypesFromStringSlice(opts.Modes)
 	// EXISTING_CODE
 
 	return opts
@@ -102,7 +102,7 @@ func statusFinishParse(args []string) *StatusOptions {
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
 	}
-	opts.ModeTypes = getCacheTypes(opts.Modes)
+	opts.ModeTypes = walk.CacheTypesFromStringSlice(opts.Modes)
 	if len(opts.Modes) > 0 {
 		defFmt = "json"
 	}
@@ -139,72 +139,4 @@ func (opts *StatusOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-func getCacheTypes(strs []string) []walk.CacheType {
-	haveit := map[string]bool{} // removes dups
-	var types []walk.CacheType
-	for _, str := range strs {
-		if !haveit[str] {
-			haveit[str] = true
-			switch str {
-			case "abis":
-				types = append(types, walk.Cache_Abis)
-			case "blocks":
-				types = append(types, walk.Cache_Blocks)
-			case "monitors":
-				types = append(types, walk.Cache_Monitors)
-			case "names":
-				types = append(types, walk.Cache_Names)
-			case "recons":
-				types = append(types, walk.Cache_Recons)
-			case "slurps":
-				types = append(types, walk.Cache_Slurps)
-			case "tmp":
-				types = append(types, walk.Cache_Tmp)
-			case "traces":
-				types = append(types, walk.Cache_Traces)
-			case "txs":
-				types = append(types, walk.Cache_Transactions)
-			case "blooms":
-				types = append(types, walk.Index_Bloom)
-			case "index":
-				fallthrough
-			case "finalized":
-				types = append(types, walk.Index_Final)
-			case "ripe":
-				types = append(types, walk.Index_Ripe)
-			case "staging":
-				types = append(types, walk.Index_Staging)
-			case "unripe":
-				types = append(types, walk.Index_Unripe)
-			case "maps":
-				types = append(types, walk.Index_Maps)
-			case "some":
-				types = append(types, walk.Index_Final)
-				types = append(types, walk.Cache_Monitors)
-				types = append(types, walk.Cache_Names)
-				types = append(types, walk.Cache_Abis)
-				types = append(types, walk.Cache_Slurps)
-			case "all":
-				types = append(types, walk.Index_Bloom)
-				types = append(types, walk.Index_Final)
-				types = append(types, walk.Index_Staging)
-				types = append(types, walk.Index_Unripe)
-				types = append(types, walk.Cache_Monitors)
-				types = append(types, walk.Cache_Names)
-				types = append(types, walk.Cache_Abis)
-				types = append(types, walk.Cache_Slurps)
-				types = append(types, walk.Cache_Blocks)
-				types = append(types, walk.Cache_Traces)
-				types = append(types, walk.Cache_Transactions)
-			}
-		}
-	}
-	/*
-		all:     abis|monitors|names|slurps|blocks|traces|txs|recons|tmp|blooms|index|finalized|staging|ripe|unripe|maps
-		cmd:     abis|monitors|names|slurps|blocks|traces|txs|index|some|all
-		missing: recons|tmp|blooms|finalized|staging|ripe|unripe|maps
-	*/
-	return types
-}
-
 // EXISTING_CODE

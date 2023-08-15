@@ -112,7 +112,7 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 		order = append(order, "caches")
 	}
 
-	if verbose && !testMode {
+	if extraOptions["chains"] == true {
 		var chains []types.SimpleChain
 		chainArray := config.GetChainArray()
 		for _, chain := range chainArray {
