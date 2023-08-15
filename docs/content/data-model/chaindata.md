@@ -45,7 +45,6 @@ Blocks consist of the following fields:
 | date          | a calculated field -- the date of the object                  | datetime                                            |
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | wei                                                 |
-| finalized     | flag indicating the system considers this data final          | bool                                                |
 | uncles        |                                                               | Hash                                                |
 
 ## Transaction
@@ -83,11 +82,9 @@ Transactions consist of the following fields:
 | receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt) |
 | statements       | array of reconciliations                                                                              | Reconciliation                            |
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)   |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string                                    |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                     |
-| finalized        | flag indicating the system considers this data final                                                  | bool                                      |
-| extraData        |                                                                                                       | string                                    |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                     |
+| compressedTx     | truncated, more readable version of the articulation                                                  | string                                    |
 
 ## Transfer
 

@@ -22,7 +22,7 @@ func (opts *SlurpOptions) HandleShow() error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawEtherscan], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawSlurp], errorChan chan error) {
 		totalFetched := 0
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {

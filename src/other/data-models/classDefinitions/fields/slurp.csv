@@ -11,12 +11,11 @@ to                   ,address        ,           ,       ,      ,        ,      
 value                ,wei            ,           ,       ,      ,        ,          ,        ,         , 10 ,     ,0             ,the amount of wei sent with this transactions
 gas                  ,gas            ,           ,       ,      ,        ,          ,        ,         , 11 ,     ,158660        ,the maximum number of gas allowed for this transaction
 gasPrice             ,gas            ,           ,       ,      ,        ,          ,        ,         , 12 ,     ,63525836552   ,the number of wei per unit of gas the sender is willing to spend
-gasCost              ,gas            ,           ,       ,      ,        ,          ,        ,         , 13 ,     ,63525836552   ,the number of wei per unit of gas the sender is willing to spend
-input                ,bytes          ,           ,       ,      ,        ,          ,        ,         , 14 ,     ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-hasToken             ,bool           ,           ,       ,      ,        ,          ,        ,         , 15 ,     ,              ,`true` if the transaction is token related&#44; `false` otherwise
-articulatedTx        ,Function       ,           ,true   ,      ,        ,          ,        ,         , 16 ,     ,              ,
-compressedTx         ,string         ,           ,       ,      ,        ,          ,        ,         , 17 ,     ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
-isError              ,bool           ,           ,       ,      ,        ,          ,        ,         , 18 ,     ,              ,`true` if the transaction ended in error&#44; `false` otherwise
+input                ,bytes          ,           ,       ,      ,        ,          ,        ,         , 13 ,     ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
+hasToken             ,bool           ,           ,       ,      ,        ,          ,        ,         , 14 ,     ,              ,`true` if the transaction is token related&#44; `false` otherwise
+articulatedTx        ,Function       ,           ,true   ,      ,        ,          ,        ,         , 15 ,     ,              ,
+compressedTx         ,string         ,           ,       ,      ,        ,          ,        ,         , 16 ,     ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
+isError              ,bool           ,           ,       ,      ,        ,          ,        ,         , 17 ,     ,              ,`true` if the transaction ended in error&#44; `false` otherwise
 functionName         ,string         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
 methodId             ,string         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
 gasUsed              ,gas            ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,

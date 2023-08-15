@@ -198,9 +198,6 @@ func (s *SimpleTrace) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// EXISTING_CODE
-//
-
 //- cacheable by tx as group
 type SimpleTraceGroup struct {
 	BlockNumber      base.Blknum
@@ -299,7 +296,7 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// TransactionHash
-	if err = cache.WriteValue(writer, s.TransactionHash); err != nil {
+	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
 
@@ -375,6 +372,7 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	}
 
 	// TraceAddress
+	s.TraceAddress = make([]uint64, 0)
 	if err = cache.ReadValue(reader, &s.TraceAddress, version); err != nil {
 		return err
 	}
@@ -396,6 +394,9 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 
 	return nil
 }
+
+// EXISTING_CODE
+//
 
 func mustParseUint(input any) (result uint64) {
 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)

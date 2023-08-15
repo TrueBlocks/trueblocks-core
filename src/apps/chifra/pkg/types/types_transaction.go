@@ -65,9 +65,6 @@ type RawTransaction struct {
 	TransactionType      string        `json:"type"`
 	Value                string        `json:"value"`
 	// EXISTING_CODE
-	// R string `json:"r"`
-	// S string `json:"s"`
-	// V string `json:"v"`
 	// EXISTING_CODE
 }
 
@@ -76,9 +73,6 @@ type SimpleTransaction struct {
 	BlockHash            base.Hash       `json:"blockHash"`
 	BlockNumber          base.Blknum     `json:"blockNumber"`
 	CompressedTx         string          `json:"compressedTx"`
-	Encoding             string          `json:"encoding"`
-	Ether                string          `json:"ether"`
-	EtherGasPrice        base.Gas        `json:"etherGasPrice"`
 	From                 base.Address    `json:"from"`
 	Gas                  base.Gas        `json:"gas"`
 	GasPrice             base.Gas        `json:"gasPrice"`
@@ -98,7 +92,6 @@ type SimpleTransaction struct {
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
-	GasCost    base.Gas           `json:"gasCost"`
 	Message    string             `json:"-"`
 	Rewards    *Rewards           `json:"-"`
 	Statements *[]SimpleStatement `json:"statements"`
@@ -152,7 +145,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		"encoding",
 	}
 
-	model["gasCost"] = s.SetGasCost(s.Receipt)
+	model["gasCost"] = s.GasCost()
 
 	// TODO: Shouldn't this use the SimpleFunction model - the answer is yes?
 	var articulatedTx map[string]interface{}
@@ -317,10 +310,7 @@ func (s *SimpleTransaction) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// EXISTING_CODE
-//
-
-// - cacheable by tx
+//- cacheable by tx
 func (s *SimpleTransaction) CacheName() string {
 	return "Transaction"
 }
@@ -352,11 +342,6 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// Hash
-	if err = cache.WriteValue(writer, &s.Hash); err != nil {
-		return err
-	}
-
 	// BlockHash
 	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
@@ -367,33 +352,8 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// TranactionIndex
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
-		return err
-	}
-
-	// Nonce
-	if err = cache.WriteValue(writer, s.Nonce); err != nil {
-		return err
-	}
-
-	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
-		return err
-	}
-
 	// From
 	if err = cache.WriteValue(writer, s.From); err != nil {
-		return err
-	}
-
-	// To
-	if err = cache.WriteValue(writer, s.To); err != nil {
-		return err
-	}
-
-	// Value
-	if err = cache.WriteValue(writer, &s.Value); err != nil {
 		return err
 	}
 
@@ -412,18 +372,13 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// GasCost
-	if err = cache.WriteValue(writer, s.GasCost); err != nil {
+	// HasToken
+	if err = cache.WriteValue(writer, s.HasToken); err != nil {
 		return err
 	}
 
-	// MaxFeePerGas
-	if err = cache.WriteValue(writer, s.MaxFeePerGas); err != nil {
-		return err
-	}
-
-	// MaxPriorityFeePerGas
-	if err = cache.WriteValue(writer, s.MaxPriorityFeePerGas); err != nil {
+	// Hash
+	if err = cache.WriteValue(writer, &s.Hash); err != nil {
 		return err
 	}
 
@@ -437,8 +392,18 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// HasToken
-	if err = cache.WriteValue(writer, s.HasToken); err != nil {
+	// MaxFeePerGas
+	if err = cache.WriteValue(writer, s.MaxFeePerGas); err != nil {
+		return err
+	}
+
+	// MaxPriorityFeePerGas
+	if err = cache.WriteValue(writer, s.MaxPriorityFeePerGas); err != nil {
+		return err
+	}
+
+	// Nonce
+	if err = cache.WriteValue(writer, s.Nonce); err != nil {
 		return err
 	}
 
@@ -447,6 +412,26 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 		Value: s.Receipt,
 	}
 	if err = cache.WriteValue(writer, optReceipt); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+
+	// To
+	if err = cache.WriteValue(writer, s.To); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+
+	// Value
+	if err = cache.WriteValue(writer, &s.Value); err != nil {
 		return err
 	}
 
@@ -463,11 +448,6 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 	}
 	s.ArticulatedTx = optArticulatedTx.Get()
 
-	// Hash
-	if err = cache.ReadValue(reader, &s.Hash, version); err != nil {
-		return err
-	}
-
 	// BlockHash
 	if err = cache.ReadValue(reader, &s.BlockHash, version); err != nil {
 		return err
@@ -478,33 +458,8 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 		return err
 	}
 
-	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
-		return err
-	}
-
-	// Nonce
-	if err = cache.ReadValue(reader, &s.Nonce, version); err != nil {
-		return err
-	}
-
-	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
-		return err
-	}
-
 	// From
 	if err = cache.ReadValue(reader, &s.From, version); err != nil {
-		return err
-	}
-
-	// To
-	if err = cache.ReadValue(reader, &s.To, version); err != nil {
-		return err
-	}
-
-	// Value
-	if err = cache.ReadValue(reader, &s.Value, version); err != nil {
 		return err
 	}
 
@@ -523,18 +478,13 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 		return err
 	}
 
-	// GasCost
-	if err = cache.ReadValue(reader, &s.GasCost, version); err != nil {
+	// HasToken
+	if err = cache.ReadValue(reader, &s.HasToken, version); err != nil {
 		return err
 	}
 
-	// MaxFeePerGas
-	if err = cache.ReadValue(reader, &s.MaxFeePerGas, version); err != nil {
-		return err
-	}
-
-	// MaxPriorityFeePerGas
-	if err = cache.ReadValue(reader, &s.MaxPriorityFeePerGas, version); err != nil {
+	// Hash
+	if err = cache.ReadValue(reader, &s.Hash, version); err != nil {
 		return err
 	}
 
@@ -548,8 +498,18 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 		return err
 	}
 
-	// HasToken
-	if err = cache.ReadValue(reader, &s.HasToken, version); err != nil {
+	// MaxFeePerGas
+	if err = cache.ReadValue(reader, &s.MaxFeePerGas, version); err != nil {
+		return err
+	}
+
+	// MaxPriorityFeePerGas
+	if err = cache.ReadValue(reader, &s.MaxPriorityFeePerGas, version); err != nil {
+		return err
+	}
+
+	// Nonce
+	if err = cache.ReadValue(reader, &s.Nonce, version); err != nil {
 		return err
 	}
 
@@ -562,8 +522,31 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 	}
 	s.Receipt = optReceipt.Get()
 
+	// Timestamp
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+
+	// To
+	if err = cache.ReadValue(reader, &s.To, version); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = cache.ReadValue(reader, &s.TransactionIndex, version); err != nil {
+		return err
+	}
+
+	// Value
+	if err = cache.ReadValue(reader, &s.Value, version); err != nil {
+		return err
+	}
+
 	return nil
 }
+
+// EXISTING_CODE
+//
 
 // NewRawTransactionFromMap is useful when we get a map of transaction properties, e.g.
 // from a call to eth_getBlockByHash [0x..., true]
@@ -619,8 +602,6 @@ func NewSimpleTransaction(raw *RawTransaction, receipt *SimpleReceipt, timestamp
 		s.GasUsed = receipt.GasUsed
 		s.IsError = receipt.IsError
 		s.Receipt = receipt
-
-		s.SetGasCost(receipt)
 	}
 	s.SetRaw(raw)
 
@@ -662,12 +643,11 @@ func isTokenFunction(needle string) bool {
 	return tokenRelated[needle] || tokenRelated[needle[:10]]
 }
 
-func (s *SimpleTransaction) SetGasCost(receipt *SimpleReceipt) base.Gas {
-	if receipt == nil {
+func (s *SimpleTransaction) GasCost() base.Gas {
+	if s.Receipt == nil {
 		return 0
 	}
-	s.GasCost = s.GasPrice * receipt.GasUsed
-	return s.GasCost
+	return s.GasPrice * s.Receipt.GasUsed
 }
 
 // EXISTING_CODE

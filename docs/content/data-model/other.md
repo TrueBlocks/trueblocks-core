@@ -103,7 +103,6 @@ Slurps consist of the following fields:
 | value            | the amount of wei sent with this transactions                                                         | wei                                     |
 | gas              | the maximum number of gas allowed for this transaction                                                | gas                                     |
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                     |
-| gasCost          | the number of wei per unit of gas the sender is willing to spend                                      | gas                                     |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                   |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                    |
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function) |

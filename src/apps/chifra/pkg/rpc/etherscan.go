@@ -20,31 +20,31 @@ type Paginator struct {
 	PerPage int
 }
 
-func (conn *Connection) GetESTransactionByAddress(addr, requestType string, paginator *Paginator) ([]types.SimpleEtherscan, int, error) {
+func (conn *Connection) GetESTransactionByAddress(addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	url, err := getEtherscanUrl(addr, requestType, paginator)
 	if err != nil {
-		return []types.SimpleEtherscan{}, 0, err
+		return []types.SimpleSlurp{}, 0, err
 	}
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return []types.SimpleEtherscan{}, 0, err
+		return []types.SimpleSlurp{}, 0, err
 	}
 	defer resp.Body.Close()
 
 	// Check server response
 	if resp.StatusCode != http.StatusOK {
-		return []types.SimpleEtherscan{}, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
+		return []types.SimpleSlurp{}, 0, fmt.Errorf("etherscan API error: %s", resp.Status)
 	}
 
 	decoder := json.NewDecoder(resp.Body)
 	fromEs := struct {
-		Message string               `json:"message"`
-		Result  []types.RawEtherscan `json:"result"`
-		Status  string               `json:"status"`
+		Message string           `json:"message"`
+		Result  []types.RawSlurp `json:"result"`
+		Status  string           `json:"status"`
 	}{}
 	if err = decoder.Decode(&fromEs); err != nil {
-		return []types.SimpleEtherscan{}, 0, err
+		return []types.SimpleSlurp{}, 0, err
 	}
 
 	if fromEs.Message == "NOTOK" {
@@ -52,7 +52,7 @@ func (conn *Connection) GetESTransactionByAddress(addr, requestType string, pagi
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
 		logger.Warn("provider responded with:", url, fromEs.Message)
-		return []types.SimpleEtherscan{}, 0, nil
+		return []types.SimpleSlurp{}, 0, nil
 		// } else if fromEs.Message != "OK" {
 		// 	logger.Warn("URL:", url)
 		// 	logger.Warn("provider responded with:", url, fromEs.Message)
@@ -61,39 +61,39 @@ func (conn *Connection) GetESTransactionByAddress(addr, requestType string, pagi
 	return conn.responseToTransactions(addr, requestType, fromEs.Result)
 }
 
-// func (conn *Connection) getESTransactionByHash(txHash base.Hash) (types.SimpleEtherscan, error) {
+// func (conn *Connection) getESTransactionByHash(txHash base.Hash) (types.SimpleSlurp, error) {
 // 	url, err := getEtherscanUrl(txHash.Hex(), "byHash", &Paginator{Page: 1, PerPage: 10})
 // 	if err != nil {
-// 		return types.SimpleEtherscan{}, err
+// 		return types.SimpleSlurp{}, err
 // 	}
 
 // 	resp, err := http.Get(url)
 // 	if err != nil {
-// 		return types.SimpleEtherscan{}, err
+// 		return types.SimpleSlurp{}, err
 // 	}
 // 	defer resp.Body.Close()
 
 // 	// Check server response
 // 	if resp.StatusCode != http.StatusOK {
-// 		return types.SimpleEtherscan{}, fmt.Errorf("etherscan API error: %s", resp.Status)
+// 		return types.SimpleSlurp{}, fmt.Errorf("etherscan API error: %s", resp.Status)
 // 	}
 
 // 	decoder := json.NewDecoder(resp.Body)
 // 	fromEs := struct {
 // 		JsonRpc string             `json:"jsonrpc"`
 // 		Id      int                `json:"id"`
-// 		Result  types.RawEtherscan `json:"result"`
+// 		Result  types.RawSlurp `json:"result"`
 // 	}{}
 // 	if err = decoder.Decode(&fromEs); err != nil {
-// 		return types.SimpleEtherscan{}, err
+// 		return types.SimpleSlurp{}, err
 // 	}
 
 // 	return conn.rawToSimple("", "byHash", &fromEs.Result)
 // }
 
-// responseToTransaction converts one RawEtherscan to SimpleEtherscan.
-func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawEtherscan) (types.SimpleEtherscan, error) {
-	s := types.SimpleEtherscan{
+// responseToTransaction converts one RawEtherscan to SimpleSlurp.
+func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
+	s := types.SimpleSlurp{
 		Hash:             base.HexToHash(rawTx.Hash),
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      utils.MustParseUint(rawTx.BlockNumber),
@@ -107,7 +107,6 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawEt
 		Input:            rawTx.Input,
 	}
 
-	s.GasCost = s.GasPrice * s.GasUsed
 	s.IsError = rawTx.TxReceiptStatus == "0"
 	s.HasToken = requestType == "nfts" || requestType == "token" || requestType == "1155"
 	s.Value.SetString(rawTx.Value, 0)
@@ -143,9 +142,9 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawEt
 	return s, nil
 }
 
-// responseToTransactions converts RawEtherscans to SimpleEtherscan. It also returns the number of results.
-func (conn *Connection) responseToTransactions(addr, requestType string, rawTxs []types.RawEtherscan) ([]types.SimpleEtherscan, int, error) {
-	var ret []types.SimpleEtherscan
+// responseToTransactions converts RawEtherscans to SimpleSlurp. It also returns the number of results.
+func (conn *Connection) responseToTransactions(addr, requestType string, rawTxs []types.RawSlurp) ([]types.SimpleSlurp, int, error) {
+	var ret []types.SimpleSlurp
 	for _, rawTx := range rawTxs {
 		rawTx := rawTx
 		if transaction, err := conn.rawToSimple(addr, requestType, &rawTx); err != nil {

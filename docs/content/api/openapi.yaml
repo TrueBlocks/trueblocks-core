@@ -2580,10 +2580,6 @@ components:
           format: wei
           example: "120911"
           description: "the base fee for this block"
-        finalized:
-          type: boolean
-          example: true
-          description: "flag indicating the system considers this data final"
         uncles:
           type: array
           items:
@@ -2666,22 +2662,16 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/function"
+        hasToken:
+          type: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        isError:
+          type: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
         compressedTx:
           type: string
           example: "0x3d18b912( )"
           description: "truncated, more readable version of the articulation"
-        hasToken:
-          type: boolean
-          description: "`true` if the transaction is token related, `false` otherwise"
-        finalized:
-          type: boolean
-          example: true
-          description: "flag indicating the system considers this data final"
-        extraData:
-          type: string
-        isError:
-          type: boolean
-          description: "`true` if the transaction ended in error, `false` otherwise"
     transfer:
       description: "the representation of a token transfer"
       type: object
@@ -3762,11 +3752,6 @@ components:
           example: "158660"
           description: "the maximum number of gas allowed for this transaction"
         gasPrice:
-          type: string
-          format: gas
-          example: "63525836552"
-          description: "the number of wei per unit of gas the sender is willing to spend"
-        gasCost:
           type: string
           format: gas
           example: "63525836552"

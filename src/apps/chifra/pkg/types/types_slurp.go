@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
@@ -31,7 +32,6 @@ type RawSlurp struct {
 	From              string `json:"from"`
 	FunctionName      string `json:"functionName"`
 	Gas               string `json:"gas"`
-	GasCost           string `json:"gasCost"`
 	GasPrice          string `json:"gasPrice"`
 	GasUsed           string `json:"gasUsed"`
 	HasToken          string `json:"hasToken"`
@@ -59,7 +59,6 @@ type SimpleSlurp struct {
 	From              base.Address    `json:"from"`
 	FunctionName      string          `json:"functionName"`
 	Gas               base.Gas        `json:"gas"`
-	GasCost           base.Gas        `json:"gasCost"`
 	GasPrice          base.Gas        `json:"gasPrice"`
 	GasUsed           base.Gas        `json:"gasUsed"`
 	HasToken          bool            `json:"hasToken"`
@@ -91,6 +90,91 @@ func (s *SimpleSlurp) Model(verbose bool, format string, extraOptions map[string
 	var order = []string{}
 
 	// EXISTING_CODE
+	to := hexutil.Encode(s.To.Bytes())
+	if to == "0x0000000000000000000000000000000000000000" {
+		to = "0x0" // weird special case to preserve what RPC does
+	}
+
+	model = map[string]interface{}{
+		"blockNumber": s.BlockNumber,
+		"ether":       s.Ether,
+		"from":        s.From,
+		"timestamp":   s.Timestamp,
+		"date":        s.Date(),
+		"to":          s.To,
+		"value":       s.Value.String(),
+	}
+
+	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
+		model["from"] = s.From.Hex()
+		s.Input = ""
+		order = []string{
+			"blockNumber",
+			"timestamp",
+			"date",
+			"from",
+			"to",
+			"value",
+			"ether",
+		}
+
+	} else {
+		order = []string{
+			"blockNumber",
+			"transactionIndex",
+			"timestamp",
+			"date",
+			"from",
+			"to",
+			"hasToken",
+			"isError",
+			"hash",
+			"gasPrice",
+			"gasUsed",
+			"gasCost",
+			"value",
+			"ether",
+			"input",
+		}
+
+		model["gas"] = s.Gas
+		model["gasCost"] = s.GasCost()
+		model["gasPrice"] = s.GasPrice
+		model["gasUsed"] = s.GasUsed
+		model["hash"] = s.Hash
+	}
+
+	if s.HasToken {
+		model["hasToken"] = s.HasToken
+	}
+	if s.IsError {
+		model["isError"] = s.IsError
+	}
+	model["ether"] = utils.FormattedValue(s.Value, true, 18)
+	if s.BlockHash != base.HexToHash("0xdeadbeef") && !s.BlockHash.IsZero() {
+		model["blockHash"] = s.BlockHash
+	}
+	if s.TransactionIndex != 80809 {
+		model["transactionIndex"] = s.TransactionIndex
+	}
+
+	if format == "json" {
+		a := s.ContractAddress.Hex()
+		if strings.HasPrefix(a, "0x") && len(a) == 42 {
+			model["contractAddress"] = a
+		}
+		if len(s.Input) > 2 && s.Input != "deprecated" {
+			model["input"] = s.Input
+		}
+	} else {
+		model["hasToken"] = s.HasToken
+		model["isError"] = s.IsError
+		if s.Input == "deprecated" {
+			s.Input = "0x"
+		}
+		model["input"] = s.Input
+	}
+
 	// EXISTING_CODE
 
 	return Model{
@@ -192,11 +276,6 @@ func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 
 	// Gas
 	if err = cache.WriteValue(writer, s.Gas); err != nil {
-		return err
-	}
-
-	// GasCost
-	if err = cache.WriteValue(writer, s.GasCost); err != nil {
 		return err
 	}
 
@@ -323,11 +402,6 @@ func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err erro
 		return err
 	}
 
-	// GasCost
-	if err = cache.ReadValue(reader, &s.GasCost, version); err != nil {
-		return err
-	}
-
 	// GasPrice
 	if err = cache.ReadValue(reader, &s.GasPrice, version); err != nil {
 		return err
@@ -397,4 +471,10 @@ func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err erro
 }
 
 // EXISTING_CODE
+//
+
+func (s *SimpleSlurp) GasCost() base.Gas {
+	return s.GasPrice * s.GasUsed
+}
+
 // EXISTING_CODE
