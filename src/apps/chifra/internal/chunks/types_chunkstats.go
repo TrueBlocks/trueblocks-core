@@ -21,12 +21,12 @@ type simpleChunkStats struct {
 	AppsPerBlock  float64 `json:"appsPerBlock"`
 	BloomSz       uint64  `json:"bloomSz"`
 	ChunkSz       uint64  `json:"chunkSz"`
-	Date          string  `json:"date"`
 	NAddrs        uint64  `json:"nAddrs"`
 	NApps         uint64  `json:"nApps"`
 	NBlocks       uint64  `json:"nBlocks"`
 	NBlooms       uint64  `json:"nBlooms"`
 	Range         string  `json:"range"`
+	RangeEnd      string  `json:"rangeEnd"`
 	Ratio         float64 `json:"ratio"`
 	RecWid        uint64  `json:"recWid"`
 	// EXISTING_CODE
@@ -55,11 +55,11 @@ func (s *simpleChunkStats) Model(verbose bool, format string, extraOptions map[s
 		"nBlooms":       s.NBlooms,
 		"ratio":         s.Ratio,
 		"recWid":        s.RecWid,
-		"date":          s.Date,
+		"rangeEnd":      s.RangeEnd,
 	}
 	order = []string{
 		"range",
-		"date",
+		"rangeEnd",
 		"nAddrs",
 		"nApps",
 		"nBlocks",

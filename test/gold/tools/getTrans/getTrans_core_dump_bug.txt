@@ -78,6 +78,7 @@ TEST[DATE|TIME] Format:  json
           },
           "blockHash": "0xf41643281a0a58e45254b6a7e3a53db51deeef05a80ebcbb1c1314a754aefbf9",
           "blockNumber": 3691662,
+          "date": "2017-05-12 01:17:33 UTC",
           "result": {
             "gasUsed": 2991
           },

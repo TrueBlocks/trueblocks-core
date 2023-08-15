@@ -4,6 +4,7 @@ blocks?blocks=2222222%202332332
     {
       "baseFeePerGas": 0,
       "blockNumber": 2222222,
+      "date": "2016-09-08 15:22:45 UTC",
       "difficulty": 67778199271167,
       "gasLimit": 4704588,
       "gasUsed": 1306412,
@@ -400,6 +401,7 @@ blocks?blocks=2222222%202332332
     {
       "baseFeePerGas": 0,
       "blockNumber": 2332332,
+      "date": "2016-09-26 21:07:02 UTC",
       "difficulty": 74071927411516,
       "gasLimit": 1500000,
       "gasUsed": 368200,

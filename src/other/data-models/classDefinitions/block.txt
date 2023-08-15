@@ -7,5 +7,5 @@ doc_route = 201-block
 doc_producer = blocks, when
 go_output = src/apps/chifra/pkg/types
 go_model = Block[Tx]
-# cache_type = cacheable
-# cache_by = block
+cache_type = cacheable
+cache_by = block

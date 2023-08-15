@@ -94,37 +94,14 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 			order = append(order, "isError")
 		}
 
-		if extraOptions["articulate"] == true {
+		if s.Logs == nil {
+			model["logs"] = []SimpleLog{}
+		} else {
 			logs := make([]map[string]any, 0, len(s.Logs))
 			for _, log := range s.Logs {
-				logModel := map[string]any{
-					"address":  log.Address.Hex(),
-					"logIndex": log.LogIndex,
-					"topics":   log.Topics,
-				}
-				if len(log.Data) > 2 {
-					logModel["data"] = log.Data
-				}
-
-				if log.ArticulatedLog != nil {
-					articulatedLog := map[string]any{
-						"name": log.ArticulatedLog.Name,
-					}
-					inputModels := parametersToMap(log.ArticulatedLog.Inputs)
-					if inputModels != nil {
-						articulatedLog["inputs"] = inputModels
-					}
-					logModel["articulatedLog"] = articulatedLog
-				}
-				logs = append(logs, logModel)
+				logs = append(logs, log.Model(verbose, format, extraOptions).Data)
 			}
 			model["logs"] = logs
-		} else {
-			if s.Logs == nil {
-				model["logs"] = []SimpleLog{}
-			} else {
-				model["logs"] = s.Logs
-			}
 		}
 
 		if verbose {

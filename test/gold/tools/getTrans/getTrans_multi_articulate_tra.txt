@@ -7,6 +7,24 @@ TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
+      "articulatedTx": {
+        "inputs": {
+          "_financePeriod": "0",
+          "_id": "commonsstackorg",
+          "_members": [
+            "0x7944fc7bd79b25e6ffe24921d88a1f36f22be843"
+          ],
+          "_tokenName": "Commons Stack Org Membership",
+          "_tokenSymbol": "CSOM",
+          "_useAgentAsVault": false,
+          "_votingSettings": [
+            "500000000000000000",
+            "150000000000000000",
+            "86400"
+          ]
+        },
+        "name": "newTokenAndInstance"
+      },
       "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
       "blockNumber": 8658677,
       "date": "2019-10-01 20:38:02 UTC",
@@ -1639,6 +1657,14 @@ TEST[DATE|TIME] Format:  json
           },
           {
             "address": "0x546aa2eae2514494eeadb7bbb35243348983c59d",
+            "articulatedLog": {
+              "inputs": {
+                "owner": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+                "resolver": "0x1da022710df5002339274aadee8d58218e9d6ab5",
+                "subnode": "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47"
+              },
+              "name": "ClaimSubdomain"
+            },
             "data": "0x",
             "date": "2019-10-01 20:38:02 UTC",
             "logIndex": 110,
@@ -1665,6 +1691,24 @@ TEST[DATE|TIME] Format:  json
             "to": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_financePeriod": "0",
+              "_id": "commonsstackorg",
+              "_members": [
+                "0x7944fc7bd79b25e6ffe24921d88a1f36f22be843"
+              ],
+              "_tokenName": "Commons Stack Org Membership",
+              "_tokenSymbol": "CSOM",
+              "_useAgentAsVault": false,
+              "_votingSettings": [
+                "500000000000000000",
+                "150000000000000000",
+                "86400"
+              ]
+            },
+            "name": "newTokenAndInstance"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -1685,6 +1729,19 @@ TEST[DATE|TIME] Format:  json
             "input": "0x5b7b72c10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000001c436f6d6d6f6e7320537461636b204f7267204d656d6265727368697000000000000000000000000000000000000000000000000000000000000000000000000443534f4d00000000000000000000000000000000000000000000000000000000",
             "to": "0x909d05f384d0663ed4be59863815ab43b4f347ec",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_decimalUnits": "0",
+              "_snapshotBlock": "0",
+              "_tokenName": "Commons Stack Org Membership",
+              "_tokenSymbol": "CSOM",
+              "_transfersEnabled": true
+            },
+            "name": "createCloneToken",
+            "outputs": {
+              "val_0": "0x04d702ebd0a77503b154865fe3e8da97255b931b"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -1734,6 +1791,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_newController": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c"
+            },
+            "name": "changeController"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -1757,6 +1820,15 @@ TEST[DATE|TIME] Format:  json
             "input": "0x2168744400000000000000000000000067430642c0c3b5e6538049b9e9ee719f2a4bee7c",
             "to": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_root": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c"
+            },
+            "name": "newDAO",
+            "outputs": {
+              "val_0": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -1806,6 +1878,13 @@ TEST[DATE|TIME] Format:  json
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_admin": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+              "_tru": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            },
+            "name": "initialize"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -1829,6 +1908,13 @@ TEST[DATE|TIME] Format:  json
             "input": "0x485cc95500000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9000000000000000000000000b9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_baseAcl": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
+              "_permissionsCreator": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            },
+            "name": "initialize"
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -1881,6 +1967,16 @@ TEST[DATE|TIME] Format:  json
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -1908,6 +2004,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -1938,6 +2044,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "sender": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            },
+            "name": "initialize"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -1963,6 +2075,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -1991,6 +2113,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2021,6 +2153,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_permissionsCreator": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            },
+            "name": "initialize"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2048,6 +2186,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
           },
+          "articulatedTrace": {
+            "name": "acl",
+            "outputs": {
+              "ret_0": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2072,6 +2216,12 @@ TEST[DATE|TIME] Format:  json
             "input": "0xde287359",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "name": "acl",
+            "outputs": {
+              "val_0": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2099,6 +2249,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "value": "0"
           },
+          "articulatedTrace": {
+            "name": "CREATE_PERMISSIONS_ROLE",
+            "outputs": {
+              "val_0": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2123,6 +2279,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2149,6 +2315,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2177,6 +2353,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
             "value": "0"
           },
+          "articulatedTrace": {
+            "name": "CREATE_PERMISSIONS_ROLE",
+            "outputs": {
+              "val_0": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2203,6 +2385,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
           },
+          "articulatedTrace": {
+            "name": "APP_MANAGER_ROLE",
+            "outputs": {
+              "val_0": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2227,6 +2415,12 @@ TEST[DATE|TIME] Format:  json
             "input": "0x8ea8dc9d",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "name": "APP_MANAGER_ROLE",
+            "outputs": {
+              "val_0": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2254,6 +2448,14 @@ TEST[DATE|TIME] Format:  json
             "to": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+              "_entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "_role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            },
+            "name": "grantPermission"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2277,6 +2479,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2303,6 +2515,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2331,6 +2553,14 @@ TEST[DATE|TIME] Format:  json
             "to": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_app": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+              "_entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "_role": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
+            },
+            "name": "grantPermission"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2356,6 +2586,15 @@ TEST[DATE|TIME] Format:  json
             "to": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "_entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "_manager": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+              "_role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            },
+            "name": "createPermission"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2379,6 +2618,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2405,6 +2654,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2433,6 +2692,15 @@ TEST[DATE|TIME] Format:  json
             "to": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_app": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "_entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "_manager": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
+              "_role": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
+            },
+            "name": "createPermission"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2457,6 +2725,17 @@ TEST[DATE|TIME] Format:  json
             "input": "0xfdef9106000000000000000000000000b9da44c051c6cc9e04b7e0f95e95d69c6a6d803100000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "what": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a",
+              "where": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+              "who": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "ret_0": true
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2485,6 +2764,17 @@ TEST[DATE|TIME] Format:  json
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_what": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a",
+              "_where": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+              "_who": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "val_0": true
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2512,6 +2802,17 @@ TEST[DATE|TIME] Format:  json
             "input": "0xfdef9106000000000000000000000000b9da44c051c6cc9e04b7e0f95e95d69c6a6d803100000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000",
             "to": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "what": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a",
+              "where": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+              "who": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "ret_0": true
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2542,6 +2843,16 @@ TEST[DATE|TIME] Format:  json
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2571,6 +2882,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2603,6 +2924,17 @@ TEST[DATE|TIME] Format:  json
             "to": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_what": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a",
+              "_where": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+              "_who": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "val_0": true
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2633,6 +2965,15 @@ TEST[DATE|TIME] Format:  json
             "to": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_dao": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
+            },
+            "name": "newEVMScriptRegistry",
+            "outputs": {
+              "reg": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2657,6 +2998,18 @@ TEST[DATE|TIME] Format:  json
             "input": "0xc050a7a6ddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61000000000000000000000000bf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb0000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000048129fc1c00000000000000000000000000000000000000000000000000000000",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appBase": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb",
+              "_appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "_initializePayload": "0x8129fc1c",
+              "_setDefault": true
+            },
+            "name": "newPinnedAppInstance",
+            "outputs": {
+              "appProxy": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2683,6 +3036,18 @@ TEST[DATE|TIME] Format:  json
             "input": "0xc050a7a6ddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61000000000000000000000000bf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb0000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000048129fc1c00000000000000000000000000000000000000000000000000000000",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appBase": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb",
+              "_appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "_initializePayload": "0x8129fc1c",
+              "_setDefault": true
+            },
+            "name": "newPinnedAppInstance",
+            "outputs": {
+              "appProxy": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2711,6 +3076,18 @@ TEST[DATE|TIME] Format:  json
             "to": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "how": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "what": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0",
+              "where": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "who": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "ret_0": true
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2738,6 +3115,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2768,6 +3155,16 @@ TEST[DATE|TIME] Format:  json
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2797,6 +3194,18 @@ TEST[DATE|TIME] Format:  json
             "input": "0xfdef9106000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286b6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000040f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
             "to": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_how": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "_what": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0",
+              "_where": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "_who": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "val_0": true
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2854,6 +3263,16 @@ TEST[DATE|TIME] Format:  json
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2882,6 +3301,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2913,6 +3342,9 @@ TEST[DATE|TIME] Format:  json
             "to": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb",
             "value": "0"
           },
+          "articulatedTrace": {
+            "name": "initialize"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -2940,6 +3372,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -2969,6 +3411,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -3000,6 +3452,18 @@ TEST[DATE|TIME] Format:  json
             "to": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "how": "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "what": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0",
+              "where": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "who": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "ret_0": true
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -3027,6 +3491,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -3056,6 +3530,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -3087,6 +3571,18 @@ TEST[DATE|TIME] Format:  json
             "to": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_how": "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
+              "_what": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0",
+              "_where": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+              "_who": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "val_0": true
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -3116,6 +3612,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
           },
+          "articulatedTrace": {
+            "name": "acl",
+            "outputs": {
+              "ret_0": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -3141,6 +3643,12 @@ TEST[DATE|TIME] Format:  json
             "input": "0xde287359",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "name": "acl",
+            "outputs": {
+              "val_0": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -3169,6 +3677,12 @@ TEST[DATE|TIME] Format:  json
             "to": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
             "value": "0"
           },
+          "articulatedTrace": {
+            "name": "REGISTRY_ADD_EXECUTOR_ROLE",
+            "outputs": {
+              "val_0": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+            }
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -3194,6 +3708,12 @@ TEST[DATE|TIME] Format:  json
             "input": "0x19f3d10f",
             "to": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "name": "REGISTRY_ADD_EXECUTOR_ROLE",
+            "outputs": {
+              "val_0": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -3222,6 +3742,15 @@ TEST[DATE|TIME] Format:  json
             "to": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "_entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "_manager": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "_role": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+            },
+            "name": "createPermission"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -3246,6 +3775,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "ret_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -3273,6 +3812,16 @@ TEST[DATE|TIME] Format:  json
             "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
             "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "_appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
+              "_namespace": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
+            },
+            "name": "getApp",
+            "outputs": {
+              "val_0": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
@@ -3302,6 +3851,15 @@ TEST[DATE|TIME] Format:  json
             "to": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
             "value": "0"
           },
+          "articulatedTrace": {
+            "inputs": {
+              "_app": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+              "_entity": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "_manager": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
+              "_role": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
+            },
+            "name": "createPermission"
+          },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,
           "result": {
@@ -3327,6 +3885,17 @@ TEST[DATE|TIME] Format:  json
             "input": "0xfdef9106000000000000000000000000cafa04538aa18ec7ce451bd0e55874c75b80657f00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000",
             "to": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "value": "0"
+          },
+          "articulatedTrace": {
+            "inputs": {
+              "what": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a",
+              "where": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+              "who": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
+            },
+            "name": "hasPermission",
+            "outputs": {
+              "ret_0": true
+            }
           },
           "blockHash": "0xc06e16bba70cb977ebe78cbdee84b50c8ddffcb33bb5e34fbd6aea619dcb96be",
           "blockNumber": 8658677,

@@ -38,7 +38,7 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 	}
 
 	// default to first
-	return gostradamus.Parse(specials[0].Date, gostradamus.Iso8601)
+	return FromBnToDate(chain, specials[0].BlockNumber)
 }
 
 // FromTsToDate returns a date given a Linux timestamp (not chain-specific)

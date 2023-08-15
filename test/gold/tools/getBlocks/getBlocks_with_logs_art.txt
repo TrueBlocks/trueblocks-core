@@ -242,7 +242,7 @@ TEST[DATE|TIME] Format:  json
       "address": "0x4038e930ad78c53dc885a6b3a7d9db0d317c8662",
       "articulatedLog": {
         "inputs": {
-          "from": "0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
+          "sender": "0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
           "value": "9670000000000000000"
         },
         "name": "Deposit"
@@ -719,8 +719,5 @@ TEST[DATE|TIME] Format:  json
       "transactionHash": "0xcc0bc2b2135f6b405432af5223c797ddecc3e0e75d6e1716e2d6ac61ff8883e3",
       "transactionIndex": 53
     }
-  ],
-  "errors": [
-    "TESTING_ONLY_filter{BlockHash:0x0000000000000000000000000000000000000000000000000000000000000000 Emitters:[] FromBlock:4012000 ToBlock:4012000 Topics:[] raw:\u003cnil\u003e}"
   ]
 }

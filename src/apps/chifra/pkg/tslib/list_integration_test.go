@@ -46,8 +46,5 @@ func TestGetSpecials2(t *testing.T) {
 		if item.Timestamp == 0 {
 			t.Error("Special block ", item.Name, " with zero timestamp")
 		}
-		if item.Date == "" {
-			t.Error("Special block ", item.Name, " with zero timestamp")
-		}
 	}
 }

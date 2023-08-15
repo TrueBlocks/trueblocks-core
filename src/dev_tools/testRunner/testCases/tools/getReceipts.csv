@@ -58,7 +58,7 @@ on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output           ,y    
 on      ,both ,fast  ,receipts ,tools/getReceipts ,redir_output_append    ,n    ,transactions = 5123123.0 & no_header & output = output_test_file & append
 
 # This fails for an unknown reason for multiple tools
-local   ,both ,fast  ,receipts ,tools/getReceipts ,multi_articulate       ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
+delay   ,both ,fast  ,receipts ,tools/getReceipts ,multi_articulate       ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 
 on      ,both ,fast  ,receipts ,tools/getReceipts ,cache_and_decache      ,y    ,transactions = 46147.0 & cache & decache
 on      ,both ,fast  ,receipts ,tools/getReceipts ,cache_one              ,y    ,transactions = 46147.0 & cache

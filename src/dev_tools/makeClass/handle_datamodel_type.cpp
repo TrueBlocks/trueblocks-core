@@ -50,10 +50,13 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
         model.fieldArray.push_back(raw);
     }
 
+    bool hasTimestamp = false;
     size_t maxRawNameWid = 0, maxSimpNameWid = 0, maxRawTypeWid = 0, maxSimpTypeWid = 0, maxModelWid = 0;
-
     for (size_t i = 0; i < model.fieldArray.size(); i++) {
         CMember* field = &model.fieldArray[i];
+        if (field->name == "timestamp") {
+            hasTimestamp = true;
+        }
 
         if (field->name != "raw") {
             field->name = firstUpper(field->name);
@@ -87,12 +90,14 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     string_q rawStr;
     const char* STR_JSON_TAG = " `json:\"[{NAME}][{OE}]\"`";
     for (const CMember& field : model.fieldArray) {
-        if (skipField(model, field, true))
+        if (skipField(model, field, true)) {
             continue;
+        }
 
         string_q spec = specialCase(model, field, type_2_GoType(field), true);
-        if (spec.empty())
+        if (spec.empty()) {
             continue;
+        }
 
         string_q rawType = padRight(spec, maxRawTypeWid);
         string_q jName = jsonName(model, field, true);
@@ -107,8 +112,9 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
 
     string_q fieldStr;
     for (const CMember& field : model.fieldArray) {
-        if (skipField(model, field, false))
+        if (skipField(model, field, false)) {
             continue;
+        }
 
         string_q spec = specialCase(model, field, type_2_GoType(field), false);
         string_q simpType = padRight(spec, maxSimpTypeWid);
@@ -125,7 +131,20 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     replaceAll(contents, "[{RAWFIELDS}]", rawStr);
     replaceAll(contents, "[{FIELDS}]", fieldStr);
     replaceAll(contents, "[{CACHE_CODE}]", get_cache_code(modelIn));
-
+    if (hasTimestamp) {
+        const char* STR_DATE_CODE =
+            "\n"
+            "func (s *Simple[{CLASS_NAME}]) Date() string {\n"
+            "\treturn utils.FormattedDate(s.Timestamp)\n"
+            "}\n"
+            "\n";
+        string_q dateCode = STR_DATE_CODE;
+        replaceAll(dateCode, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
+        replaceAll(dateCode, "Simple", isInternal ? "simple" : "Simple");
+        replaceAll(contents, "[{DATE_CODE}]", dateCode);
+    } else {
+        replaceAll(contents, "[{DATE_CODE}]", "");
+    }
     // hackathon!
     replaceAll(contents, "type SimpleBlock[Tx] struct {", "type SimpleBlock[Tx string | SimpleTransaction] struct {");
 
@@ -252,6 +271,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 
 //------------------------------------------------------------------------------------------------------------
 bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
+    if (field.name % "date") {
+        return true;
+    }
     bool noGo =
         (field.memberFlags & IS_MINIMAL) && (field.memberFlags & IS_NOWRITE) && (field.memberFlags & IS_NOADDFLD);
     if (noGo) {
@@ -282,8 +304,8 @@ bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
            (model.base_name == "Trace" && raw && field.name == "Timestamp") ||
            (model.base_name == "Log" && raw && field.name == "Date") ||
            (model.base_name == "Log" && raw && field.name == "Timestamp") || field.name == "Topic0" ||
-           field.name == "Topic1" || field.name == "Topic2" || field.name == "Topic3" || field.name == "LogType" ||
-           field.name == "Unused" || (model.base_name == "Block" && field.name == "Finalized");
+           field.name == "Topic1" || field.name == "Topic2" || field.name == "Topic3" || field.name == "Unused" ||
+           (model.base_name == "Block" && field.name == "Finalized");
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -309,10 +331,6 @@ string_q jsonName(const CClassDefinition& model, const CMember& field, bool raw)
 //------------------------------------------------------------------------------------------------------------
 bool isCommented(const CClassDefinition& model) {
     return false;
-    // string_q modelName = type_2_ModelName(model.go_model, false);
-    // return modelName != "Function" && modelName != "TraceResult" && modelName != "Slurp" && modelName != "Statement"
-    // &&
-    //        modelName != "TraceAction" && modelName != "Parameter" && modelName != "Trace";
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -466,6 +484,12 @@ string_q get_cache_code(const CClassDefinition& modelIn) {
         }
         replaceAll(unmarshalCode, "[{MODEL_NAME}]", modelName);
         replaceAll(unmarshalCode, "[{FIELDS}]", get_unmarshal_fields(modelIn));
+        replaceAll(unmarshalCode, "SimpleTopic", "base.Hash");
+        replaceAll(unmarshalCode, "SimpleString", "uint64");
+        replaceAll(unmarshalCode, "]SimpleTransaction", "]string");
+        replaceAll(unmarshalCode, "SimpleHash", "base.Hash");
+        replaceAll(unmarshalCode, "func (s *SimpleBlock[Tx]) UnmarshalCache",
+                   "func (s *SimpleBlock[string]) UnmarshalCache");
         os << unmarshalCode << endl;
     }
 
@@ -485,10 +509,20 @@ string_q get_id_code(const string_q& cacheBy) {
 }
 
 bool isArray(const CMember& field) {
-    if (field.name == "TraceAddress") {
+    return (field.memberFlags & IS_ARRAY);
+}
+
+bool isObject(const CMember& field) {
+    // cerr << field.name << " " << field.type << " " << (field.memberFlags & IS_ARRAY) << " "
+    //      << (field.memberFlags & IS_POINTER) << " " << (field.memberFlags & IS_OBJECT) << endl;
+    if (containsI(field.type, "topic") || containsI(field.name, "traceaddress") || containsI(field.name, "uncles")) {
         return false;
     }
-    return (field.memberFlags & IS_ARRAY);
+    return (field.memberFlags & IS_OBJECT);
+}
+
+bool isObjectArray(const CMember& field) {
+    return isArray(field) && isObject(field);
 }
 
 string_q specialCacheCase2(const string_q& modelName, const CMember& field) {
@@ -528,10 +562,16 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
 
     ostringstream os;
     for (auto field : model.fieldArray) {
+        string_q modelName = type_2_ModelName(modelIn.go_model, false);
+
         if (field.name == "raw" || skipField(model, field, false))
             continue;
 
-        string_q modelName = type_2_ModelName(modelIn.go_model, false);
+        cerr << modelName << " " << field.name << endl;
+        if (modelName == "Transaction" && (field.name == "traces" || field.name == "compressedTx")) {
+            continue;
+        }
+
         string_q spec = specialCacheCase1(modelName, field);
         if (spec != "") {
             os << spec << endl;
@@ -554,7 +594,23 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
         }
 
         os << "\t" << (commented ? "// " : "") << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
-        if (isArray(field)) {
+        if (field.name % "transactions") {
+            const char* STR_HACK =
+                "\tvar txHashes []string\n"
+                "\tswitch v := any(s.Transactions).(type) {\n"
+                "\tcase []string:\n"
+                "\t\ttxHashes = v\n"
+                "\tcase []SimpleTransaction:\n"
+                "\t\ttxHashes = make([]string, 0, len(s.Transactions))\n"
+                "\t\tfor _, tx := range v {\n"
+                "\t\t\ttxHashes = append(txHashes, tx.Hash.Hex())\n"
+                "\t\t}\n"
+                "\t}\n"
+                "\tif err = cache.WriteValue(writer, txHashes); err != nil {\n"
+                "\t\treturn err\n"
+                "\t}\n";
+            os << STR_HACK << endl;
+        } else if (isObjectArray(field)) {
             const char* STR_ARRAY_CODE =
                 "\t[C][{LOWER}] := make([]cache.Marshaler, 0, len([{FIELD_NAME}]))\n"
                 "\t[C]for _, [{SINGULAR}] := range [{FIELD_NAME}] {\n"
@@ -571,6 +627,19 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
                        substitute(substitute(toLower(name).substr(0, name.length() - 1), "&", ""), "s.", ""));
             replaceAll(arrayCode, "[C]", commented ? "// " : "");
             os << arrayCode << endl;
+        } else if (isObject(field)) {
+            const char* STR_OPT_CODE =
+                "\t[C]opt[{FIELD_NAME}] := &cache.Optional[Simple[{FIELD_TYPE}]]{\n"
+                "\t[C]\tValue: s.[{FIELD_NAME}],\n"
+                "\t[C]}\n"
+                "\t[C]if err = cache.WriteValue(writer, opt[{FIELD_NAME}]); err != nil {\n"
+                "\t[C]\treturn err\n"
+                "\t[C]}\n";
+            string_q optCode = STR_OPT_CODE;
+            replaceAll(optCode, "[{FIELD_NAME}]", substitute(name, "s.", ""));
+            replaceAll(optCode, "[{FIELD_TYPE}]", type);
+            replaceAll(optCode, "[C]", commented ? "// " : "");
+            os << optCode << endl;
         } else {
             os << "\t" << (commented ? "// " : "") << "if err = cache.WriteValue(writer, " << name << "); err != nil {"
                << endl;
@@ -595,6 +664,12 @@ string_q get_unmarshal_fields(const CClassDefinition& modelIn) {
             continue;
 
         string_q modelName = type_2_ModelName(modelIn.go_model, false);
+
+        // cerr << modelName << " " << field.name << endl;
+        if (modelName == "Transaction" && (field.name == "traces" || field.name == "compressedTx")) {
+            continue;
+        }
+
         string_q spec = specialCacheCase2(modelName, field);
         if (spec != "") {
             os << spec << endl;
@@ -613,12 +688,32 @@ string_q get_unmarshal_fields(const CClassDefinition& modelIn) {
         os << "\t" << (commented ? "// " : "") << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
         if (isArray(field)) {
             os << "\t" << (commented ? "// " : "") << name << " = make([]Simple" << type << ", 0)" << endl;
+            os << "\t" << (commented ? "// " : "") << "if err = cache.ReadValue(reader, &" << name
+               << ", version); err != nil {" << endl;
+            os << "\t" << (commented ? "// " : "") << "\treturn err" << endl;
+            os << "\t" << (commented ? "// " : "") << "}" << endl;
+            os << endl;
+        } else if (isObject(field)) {
+            const char* STR_OPT_CODE =
+                "\topt[{FIELD_NAME}] := &cache.Optional[Simple[{FIELD_TYPE}]]{\n"
+                "\t\tValue: s.[{FIELD_NAME}],\n"
+                "\t}\n"
+                "\tif err = cache.ReadValue(reader, opt[{FIELD_NAME}], version); err != nil {\n"
+                "\t\treturn err\n"
+                "\t}\n"
+                "\ts.[{FIELD_NAME}] = opt[{FIELD_NAME}].Get()\n";
+            string_q optCode = STR_OPT_CODE;
+            replaceAll(optCode, "[{FIELD_NAME}]", substitute(name, "s.", ""));
+            replaceAll(optCode, "[{FIELD_TYPE}]", type);
+            replaceAll(optCode, "[C]", commented ? "// " : "");
+            os << optCode << endl;
+        } else {
+            os << "\t" << (commented ? "// " : "") << "if err = cache.ReadValue(reader, &" << name
+               << ", version); err != nil {" << endl;
+            os << "\t" << (commented ? "// " : "") << "\treturn err" << endl;
+            os << "\t" << (commented ? "// " : "") << "}" << endl;
+            os << endl;
         }
-        os << "\t" << (commented ? "// " : "") << "if err = cache.ReadValue(reader, &" << name
-           << ", version); err != nil {" << endl;
-        os << "\t" << (commented ? "// " : "") << "\treturn err" << endl;
-        os << "\t" << (commented ? "// " : "") << "}" << endl;
-        os << endl;
     }
     return os.str();
 }

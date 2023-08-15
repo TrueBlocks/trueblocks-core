@@ -4,6 +4,7 @@ blocks?blocks=stateclear
     {
       "baseFeePerGas": 0,
       "blockNumber": 2717576,
+      "date": "2016-11-29 19:38:29 UTC",
       "difficulty": 71421066479733,
       "gasLimit": 3296773,
       "gasUsed": 1226267,

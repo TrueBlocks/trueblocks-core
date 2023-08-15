@@ -123,6 +123,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 1152642,
+      "date": "2016-03-15 06:16:42 UTC",
       "difficulty": 17542881926868,
       "gasLimit": 4712388,
       "gasUsed": 42000,
@@ -187,6 +188,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 1166008,
+      "date": "2016-03-17 11:26:30 UTC",
       "difficulty": 17892132636370,
       "gasLimit": 4712388,
       "gasUsed": 567000,
@@ -876,6 +878,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 1289438,
+      "date": "2016-04-06 22:14:45 UTC",
       "difficulty": 25439949491768,
       "gasLimit": 4712388,
       "gasUsed": 241566,
@@ -917,6 +920,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 1399675,
+      "date": "2016-04-25 06:02:38 UTC",
       "difficulty": 30027571242885,
       "gasLimit": 4712388,
       "gasUsed": 0,
@@ -929,6 +933,7 @@ Results in ./cmd_file1_out.file
     },
     {
       "blockNumber": 1909113,
+      "date": "2016-07-18 18:17:23 UTC",
       "hash": "0x005ae48cbf04826bacbbffd44b79a5995eb9bda46ffda5609dbad7bd3c083902",
       "parentHash": "0x5e26bd3cb18e0775d13d460868d328642bf51f4d989a3a13a0f43c6401edb8ad",
       "timestamp": 1468865843,
@@ -937,6 +942,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 2017468,
+      "date": "2016-08-05 18:34:23 UTC",
       "difficulty": 53448351719689,
       "gasLimit": 4700000,
       "gasUsed": 0,
@@ -949,6 +955,7 @@ Results in ./cmd_file1_out.file
     },
     {
       "blockNumber": 2127401,
+      "date": "2016-08-23 22:20:47 UTC",
       "hash": "0x3f5f0299a7ca6c2f3aa5b6bec2e6c75ca3f3785e15c1f2af85ad78e95ea3ee96",
       "parentHash": "0xd6f07877d475d957c7d2154db7b2b6e769ec4428be56e0690a7ead297aa7cd39",
       "timestamp": 1471990847,
@@ -981,6 +988,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 2263030,
+      "date": "2016-09-15 09:04:54 UTC",
       "difficulty": 73061282707179,
       "gasLimit": 4712388,
       "gasUsed": 21000,
@@ -1020,6 +1028,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 2268412,
+      "date": "2016-09-16 06:32:26 UTC",
       "difficulty": 72381051935584,
       "gasLimit": 4703174,
       "gasUsed": 21000,
@@ -1059,6 +1068,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 2360712,
+      "date": "2016-10-01 13:48:39 UTC",
       "difficulty": 76779916678771,
       "gasLimit": 1498537,
       "gasUsed": 126000,
@@ -1223,6 +1233,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 2513942,
+      "date": "2016-10-26 23:08:12 UTC",
       "difficulty": 106947037494033,
       "gasLimit": 1996159,
       "gasUsed": 0,
@@ -1236,6 +1247,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 2558337,
+      "date": "2016-11-03 10:39:31 UTC",
       "difficulty": 61116427441017,
       "gasLimit": 2001952,
       "gasUsed": 21000,
@@ -1275,6 +1287,7 @@ Results in ./cmd_file1_out.file
     {
       "baseFeePerGas": 0,
       "blockNumber": 2728501,
+      "date": "2016-12-01 15:00:56 UTC",
       "difficulty": 70209084255676,
       "gasLimit": 3263330,
       "gasUsed": 0,

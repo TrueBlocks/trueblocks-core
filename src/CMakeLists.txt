@@ -59,11 +59,11 @@ endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set(BASE_LIBS acct ether util ${CURL_LIBRARIES})
+set(BASE_LIBS util ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Base included paths
-set(BASE_INCLUDE "${CMAKE_SOURCE_DIR}/libs/utillib" "${CMAKE_SOURCE_DIR}/libs/etherlib" "${CMAKE_SOURCE_DIR}/libs/acctlib")
+set(BASE_INCLUDE "${CMAKE_SOURCE_DIR}/dev_tools/utillib")
 
 # ----------------------------------------------------------------------------------------
 set(BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
@@ -120,7 +120,6 @@ add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTO
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
-add_subdirectory(libs)
 add_subdirectory(dev_tools)
 add_subdirectory(apps)
 add_subdirectory(examples)

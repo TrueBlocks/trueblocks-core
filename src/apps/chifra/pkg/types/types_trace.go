@@ -78,6 +78,7 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 		"result":           s.Result,
 		"subtraces":        s.Subtraces,
 		"timestamp":        s.Timestamp,
+		"date":             s.Date(),
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
 		// "traceIndex":       s.TraceIndex,
@@ -88,6 +89,7 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 		"transactionIndex",
 		// "traceIndex",
 		"timestamp",
+		"date",
 		"error",
 		"action::callType",
 		"action::from",
@@ -192,8 +194,9 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 	}
 }
 
-// EXISTING_CODE
-//
+func (s *SimpleTrace) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
 
 //- cacheable by tx as group
 type SimpleTraceGroup struct {
@@ -293,7 +296,7 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// TransactionHash
-	if err = cache.WriteValue(writer, s.TransactionHash); err != nil {
+	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
 
@@ -369,6 +372,7 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	}
 
 	// TraceAddress
+	s.TraceAddress = make([]uint64, 0)
 	if err = cache.ReadValue(reader, &s.TraceAddress, version); err != nil {
 		return err
 	}
@@ -390,6 +394,9 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 
 	return nil
 }
+
+// EXISTING_CODE
+//
 
 func mustParseUint(input any) (result uint64) {
 	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)

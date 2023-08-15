@@ -14,6 +14,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
       "blockNumber": 3068185,
+      "date": "2017-01-26 16:46:30 UTC",
       "result": {
         "gasUsed": 10626
       },
@@ -35,6 +36,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
       "blockNumber": 3068185,
+      "date": "2017-01-26 16:46:30 UTC",
       "result": {
         "gasUsed": 387,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -58,6 +60,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
       "blockNumber": 3068185,
+      "date": "2017-01-26 16:46:30 UTC",
       "result": {},
       "subtraces": 0,
       "timestamp": 1485449190,

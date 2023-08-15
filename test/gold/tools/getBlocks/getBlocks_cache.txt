@@ -9,6 +9,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 1152642,
+      "date": "2016-03-15 06:16:42 UTC",
       "difficulty": 17542881926868,
       "gasLimit": 4712388,
       "gasUsed": 42000,

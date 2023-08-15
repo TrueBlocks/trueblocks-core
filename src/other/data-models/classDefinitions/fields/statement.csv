@@ -4,7 +4,7 @@ transactionIndex    ,blknum    ,           ,       ,      ,        ,          , 
 logIndex            ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  3 ,   3 ,2             ,the zero-indexed position the log in the block&#44; if applicable
 transactionHash     ,hash      ,           ,       ,      ,        ,          ,        ,         ,  4 ,   4 ,              ,the hash of the transaction that triggered this reconciliation
 timestamp           ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  5 ,   5 ,1438335038    ,the Unix timestamp of the object
-date                ,datetime  ,           ,       ,      ,true    ,          ,true    ,true     ,  6 ,   6 ,              ,a calculated field -- the date of this transaction
+date                ,datetime  ,           ,       ,      ,        ,          ,        ,         ,  6 ,   6 ,              ,a calculated field -- the date of this transaction
 
 assetAddr           ,address   ,           ,       ,      ,        ,          ,        ,         ,  7 ,   7 ,0x6b17...1d0f ,0xeeee...eeee for ETH reconciliations&#44; the token address otherwise
 assetSymbol         ,string    ,           ,       ,      ,        ,          ,        ,         ,  8 ,   8 ,              ,either ETH&#44; WEI&#44; or the symbol of the asset being reconciled as extracted from the chain

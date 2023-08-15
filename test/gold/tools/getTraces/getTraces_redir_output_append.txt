@@ -21,6 +21,7 @@ Results in ./output_test_file
       },
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
+      "date": "2017-05-06 00:43:39 UTC",
       "result": {
         "gasUsed": 14456,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -46,6 +47,7 @@ Results in ./output_test_file
       },
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
+      "date": "2017-05-06 00:43:39 UTC",
       "result": {
         "gasUsed": 9416
       },
@@ -66,6 +68,7 @@ Results in ./output_test_file
       },
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
+      "date": "2017-05-06 00:43:39 UTC",
       "result": {},
       "subtraces": 0,
       "timestamp": 1494031419,

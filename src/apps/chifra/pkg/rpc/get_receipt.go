@@ -22,7 +22,6 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 	}
 	for index := 0; index < len(receipt.Logs); index++ {
 		receipt.Logs[index].Timestamp = suggested
-		receipt.Logs[index].Date = utils.FormattedDate(suggested)
 	}
 	return receipt, err
 }

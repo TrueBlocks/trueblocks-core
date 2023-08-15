@@ -17,6 +17,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -109,6 +110,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				"blockNumber": s.BlockNumber,
 				"parentHash":  s.ParentHash,
 				"timestamp":   s.Timestamp,
+				"date":        s.Date(),
 				"tx_hashes":   txHashes,
 			},
 			Order: []string{
@@ -116,6 +118,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				"blockNumber",
 				"parentHash",
 				"timestamp",
+				"date",
 				"tx_hashes",
 			},
 		}
@@ -130,12 +133,14 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 		"miner":         s.Miner.Hex(),
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
+		"date":          s.Date(),
 		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
 	}
 
 	order = []string{
 		"blockNumber",
 		"timestamp",
+		"date",
 		"hash",
 		"parentHash",
 		"miner",
@@ -186,8 +191,9 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-// EXISTING_CODE
-//
+func (s *SimpleBlock[Tx]) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
 
 //- cacheable by block
 func (s *SimpleBlock[Tx]) CacheName() string {
@@ -213,6 +219,21 @@ func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
 }
 
 func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
+	// BaseFeePerGas
+	if err = cache.WriteValue(writer, &s.BaseFeePerGas); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
+	// Difficulty
+	if err = cache.WriteValue(writer, s.Difficulty); err != nil {
+		return err
+	}
+
 	// GasLimit
 	if err = cache.WriteValue(writer, s.GasLimit); err != nil {
 		return err
@@ -224,17 +245,7 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// Hash
-	if err = cache.WriteValue(writer, s.Hash); err != nil {
-		return err
-	}
-
-	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
-		return err
-	}
-
-	// ParentHash
-	if err = cache.WriteValue(writer, s.ParentHash); err != nil {
+	if err = cache.WriteValue(writer, &s.Hash); err != nil {
 		return err
 	}
 
@@ -243,18 +254,13 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// Difficulty
-	if err = cache.WriteValue(writer, s.Difficulty); err != nil {
+	// ParentHash
+	if err = cache.WriteValue(writer, &s.ParentHash); err != nil {
 		return err
 	}
 
 	// Timestamp
 	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
-		return err
-	}
-
-	// BaseFeePerGas
-	if err = cache.WriteValue(writer, &s.BaseFeePerGas); err != nil {
 		return err
 	}
 
@@ -282,6 +288,21 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 }
 
 func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// BaseFeePerGas
+	if err = cache.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+
+	// Difficulty
+	if err = cache.ReadValue(reader, &s.Difficulty, version); err != nil {
+		return err
+	}
+
 	// GasLimit
 	if err = cache.ReadValue(reader, &s.GasLimit, version); err != nil {
 		return err
@@ -297,8 +318,8 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 		return err
 	}
 
-	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+	// Miner
+	if err = cache.ReadValue(reader, &s.Miner, version); err != nil {
 		return err
 	}
 
@@ -307,23 +328,8 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 		return err
 	}
 
-	// Miner
-	if err = cache.ReadValue(reader, &s.Miner, version); err != nil {
-		return err
-	}
-
-	// Difficulty
-	if err = cache.ReadValue(reader, &s.Difficulty, version); err != nil {
-		return err
-	}
-
 	// Timestamp
 	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
-		return err
-	}
-
-	// BaseFeePerGas
-	if err = cache.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
 		return err
 	}
 
@@ -341,6 +347,9 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 
 	return nil
 }
+
+// EXISTING_CODE
+//
 
 // Dup duplicates all fields but Transactions into target
 func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
