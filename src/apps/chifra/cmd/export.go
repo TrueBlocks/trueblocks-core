@@ -58,7 +58,7 @@ Notes:
   - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
   - The --first_record and --max_record options are zero-based (as are the block options).
   - The _block and _record options are ignored when used with the --count option.
-  - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).`
+  - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra export

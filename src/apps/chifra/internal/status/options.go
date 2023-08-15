@@ -25,6 +25,7 @@ type StatusOptions struct {
 	Modes       []string              `json:"modes,omitempty"`       // The (optional) name of the binary cache to report on, terse otherwise
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
+	Chains      bool                  `json:"chains,omitempty"`      // Include a list of chain configurations in the output
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
@@ -42,6 +43,7 @@ func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
+	logger.TestLog(opts.Chains, "Chains: ", opts.Chains)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -69,6 +71,8 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			opts.FirstRecord = globals.ToUint64(value[0])
 		case "maxRecords":
 			opts.MaxRecords = globals.ToUint64(value[0])
+		case "chains":
+			opts.Chains = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")

@@ -1739,6 +1739,14 @@ paths:
           schema:
             type: number
             format: uint64
+        - name: chains
+          description: include a list of chain configurations in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
