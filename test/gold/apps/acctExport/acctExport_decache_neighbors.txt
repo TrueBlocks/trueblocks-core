@@ -8,6 +8,7 @@ TEST[DATE|TIME] Caps:  cache,decache,wei,ether
 TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] Decaching 0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 INFO[DATE|TIME] Decaching blocks for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 on mainnet                                                             
+INFO[DATE|TIME] Decaching results for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 on mainnet                                                             
 INFO[DATE|TIME] Decaching logs for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 on mainnet                                                             
 INFO[DATE|TIME] Decaching slurps for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 on mainnet                                                             
 INFO[DATE|TIME] Decaching state for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 on mainnet                                                             

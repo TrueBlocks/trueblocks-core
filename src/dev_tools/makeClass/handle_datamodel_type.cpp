@@ -202,7 +202,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (name % "Action") {
         ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
 
-    } else if ((modelName % "State" || modelName % "CallResult") && name % "Outputs") {
+    } else if ((modelName % "State" || modelName % "Result") && name % "Outputs") {
         ret = isRaw ? "[]string" : "map[string]string";
 
     } else if (name % "Components" || name % "Inputs" || name % "Outputs") {

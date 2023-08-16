@@ -43,7 +43,7 @@ func (opts *ExportOptions) validateExport() error {
 
 	if opts.Count {
 		if opts.Logs || opts.Traces || opts.Neighbors {
-			return validate.Usage("The {0} option is not available with {1}.", "--count", "--logs, --traces, or --neighbors")
+			return validate.Usage("The {0} option is not available{1}.", "--count", " with --logs, --traces, or --neighbors")
 		}
 	}
 
@@ -151,7 +151,7 @@ func (opts *ExportOptions) validateExport() error {
 
 		} else {
 			if len(opts.Flow) > 0 {
-				return validate.Usage("The {0} option is only available with {1} option.", "--flow", "--statements")
+				return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--statements")
 			}
 		}
 

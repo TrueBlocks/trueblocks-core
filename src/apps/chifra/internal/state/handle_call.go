@@ -2,15 +2,16 @@ package statePkg
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *StateOptions) HandleCall() error {
@@ -30,33 +31,65 @@ func (opts *StateOptions) HandleCall() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
-		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(chain)
+		var err error
+		var txMap map[identifiers.ResolvedId]*types.SimpleResult
+		if txMap, _, err = identifiers.AsMap[types.SimpleResult](chain, opts.BlockIds); err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		bar := logger.NewBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, int64(len(txMap)))
+
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
+
+		nErrors := 0
+		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleResult) error {
+			contractCall.BlockNumber = app.BlockNumber
+			results, err := contractCall.Call12()
 			if err != nil {
 				errorChan <- err
-				if errors.Is(err, ethereum.NotFound) {
-					continue
-				}
 				cancel()
-				return
-			}
-
-			for _, bn := range blockNums {
-				contractCall.BlockNumber = bn
-				results, err := contractCall.Call12()
-				if opts.Globals.Verbose || testMode {
+			} else {
+				if testMode {
 					msg := fmt.Sprintf("call to %s at block %d at four-byte %s returned %v",
 						contractCall.Address.Hex(), contractCall.BlockNumber, contractCall.Method.Encoding, results.Outputs)
 					logger.TestLog(true, msg)
 				}
-				if err != nil {
-					errorChan <- err
-					return
-				}
+				bar.Tick()
+				*value = *results
+			}
+			return nil
+		}
 
-				modelChan <- results
+		iterErrorChan := make(chan error)
+		go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+		for err := range iterErrorChan {
+			// TODO: I don't really want to quit looping here. Just report the error and keep going.
+			// iterCancel()
+			if !opts.Globals.TestMode || nErrors == 0 {
+				errorChan <- err
+				// Reporting more than one error causes tests to fail because they
+				// appear concurrently so sort differently
+				nErrors++
 			}
 		}
+		bar.Finish(true)
+
+		items := make([]types.SimpleResult, 0, len(txMap))
+		for _, v := range txMap {
+			v := v
+			items = append(items, *v)
+		}
+		sort.Slice(items, func(i, j int) bool {
+			return items[i].BlockNumber < items[j].BlockNumber
+		})
+
+		for _, item := range items {
+			item := item
+			modelChan <- &item
+		}
+
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(nil))

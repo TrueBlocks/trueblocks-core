@@ -184,8 +184,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,gocmd,flag,list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>,control which state to export
 13160,tools,ChainState,state,getState,changes,c,,false,false,true,true,gocmd,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,ChainState,state,getState,no_zero,z,,false,false,true,true,gocmd,switch,<boolean>,suppress the display of zero balance accounts
-13190,tools,ChainState,state,getState,call,a,,false,false,true,true,gocmd,flag,<string>,call a smart contract with a solidity syntax&#44; a four-byte and parameters&#44; or encoded call data
-13190,tools,ChainState,state,getState,proxy_for,r,,false,false,true,true,gocmd,flag,<address>,for the --call option only&#44; redirects calls to this implementation
+13190,tools,ChainState,state,getState,call,l,,false,false,true,true,gocmd,flag,<string>,call a smart contract with a solidity syntax&#44; a four-byte and parameters&#44; or encoded call data
+13192,tools,ChainState,state,getState,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,for the --call option only&#44; articulate the retrieved data if ABIs can be found
+13194,tools,ChainState,state,getState,proxy_for,r,,false,false,true,true,gocmd,flag,<address>,for the --call option only&#44; redirects calls to this implementation
 13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
 13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.

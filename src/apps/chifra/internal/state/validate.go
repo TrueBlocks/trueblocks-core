@@ -65,6 +65,10 @@ func (opts *StateOptions) validateState() error {
 				return err
 			}
 		} else {
+			if opts.Articulate {
+				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call")
+			}
+
 			if len(opts.ProxyFor) > 0 {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
 			}

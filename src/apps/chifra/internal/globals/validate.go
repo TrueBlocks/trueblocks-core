@@ -15,7 +15,7 @@ import (
 func (opts *GlobalOptions) Validate() error {
 	if len(opts.File) > 0 {
 		if opts.IsApiMode() {
-			return validate.Usage("The {0} option is not available in {1} mode", "--file", "Api")
+			return validate.Usage("The {0} option is not available{1}.", "--file", " in api mode")
 		}
 		if !file.FileExists(opts.File) {
 			return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
@@ -27,7 +27,7 @@ func (opts *GlobalOptions) Validate() error {
 	}
 
 	if len(opts.OutputFn) > 0 && opts.IsApiMode() {
-		return validate.Usage("The {0} option is not available in Api Mode.", "--output")
+		return validate.Usage("The {0} option is not available{1}.", "--output", " in api mode")
 	}
 
 	// TODO: Can we re-enable this? It doesn't work in Sepolia under docker. Returns a really weird message.

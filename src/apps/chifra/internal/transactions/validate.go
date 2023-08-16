@@ -63,7 +63,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 
 		if len(opts.AccountFor) > 0 {
 			if opts.Uniq {
-				return validate.Usage("The {0} option is not available with the {1} option", "--uniq", "--account_for")
+				return validate.Usage("The {0} option is not available{1}.", "--uniq", " with the --account_for option")
 			}
 			if !base.IsValidAddress(opts.AccountFor) {
 				return validate.Usage("Invalid reconcilation address {0}.", opts.AccountFor)
@@ -75,7 +75,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 			if opts.Uniq {
-				return validate.Usage("The {0} option is not available with the {1} option", "--uniq", "--traces")
+				return validate.Usage("The {0} option is not available{1}.", "--uniq", " with the --traces option")
 			}
 		}
 
