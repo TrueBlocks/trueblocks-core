@@ -96,7 +96,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,n1,,,false,false,false,false,--,note,,Search for either four byte signatures or event signatures with the --find option.
 
-12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more block identifiers
+12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,gocmd,positional,list<blknum>,a space-separated list of one or more block identifiers
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,gocmd,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
 12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,gocmd,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,traces,t,,false,false,true,true,gocmd,switch,<boolean>,export the traces from the block as opposed to the block data
@@ -108,8 +108,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,gocmd,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,gocmd,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
-12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,header,switch,<boolean>,force a write of the block's transactions to the cache (slow)
-12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,header,switch,<boolean>,force a write of the block's traces to the cache (slower)
+12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,gocmd,switch,<boolean>,force a write of the block's transactions to the cache (slow)
+12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force a write of the block's traces to the cache (slower)
 12582,tools,ChainData,blocks,getBlocks,list,L,0,false,false,false,false,gocmd,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,false,gocmd,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
@@ -278,7 +278,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11940,apps,Admin,init,init,n3,,,false,false,false,false,--,note,,You may re-run the tool as often as you wish. It will repair or freshen the index.
 
 12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,gocmd,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier
-12002,apps,Other,explore,fireStorm,local,l,,false,false,true,true,gocmd,switch,<boolean>,open the local TrueBlocks explorer
+12002,apps,Other,explore,fireStorm,gocmd,l,,false,false,true,true,gocmd,switch,<boolean>,open the local TrueBlocks explorer
 12003,apps,Other,explore,fireStorm,google,g,,false,false,true,true,gocmd,switch,<boolean>,search google excluding popular blockchain explorers
 12002,apps,Other,explore,fireStorm,,,,false,false,true,true,--,description,,Open a local or remote explorer for one or more addresses&#44; blocks&#44; or transactions.
 
@@ -292,20 +292,20 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12224,tools,Other,slurp,ethslurp,n2,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 
-11660,dev_tools,,,makeClass,files,,,true,false,true,true,local,positional,list<path>,one or more class definition files
-11740,dev_tools,,,makeClass,all,a,,false,false,true,true,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
-11780,dev_tools,,,makeClass,options,o,,false,false,true,true,local,switch,<boolean>,export options code (check validity in the process)
-11780,dev_tools,,,makeClass,gocmds,g,,false,false,true,true,local,switch,<boolean>,export go command code
-11780,dev_tools,,,makeClass,readmes,m,,false,false,true,true,local,switch,<boolean>,create readme files for each tool and app
-11782,dev_tools,,,makeClass,format,f,,false,false,true,true,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
-11787,dev_tools,,,makeClass,sdk,s,,false,false,true,true,header,switch,<boolean>,create typescript sdk
-11781,dev_tools,,,makeClass,openapi,A,,false,false,true,true,header,switch,<boolean>,export openapi.yaml file for API documentation
+11660,dev_tools,,,makeClass,files,,,true,false,true,true,gocmd,positional,list<path>,one or more class definition files
+11740,dev_tools,,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder
+11780,dev_tools,,,makeClass,options,o,,false,false,true,true,gocmd,switch,<boolean>,export options code (check validity in the process)
+11780,dev_tools,,,makeClass,gocmds,g,,false,false,true,true,gocmd,switch,<boolean>,export go command code
+11780,dev_tools,,,makeClass,readmes,m,,false,false,true,true,gocmd,switch,<boolean>,create readme files for each tool and app
+11782,dev_tools,,,makeClass,format,f,,false,false,true,true,gocmd,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
+11787,dev_tools,,,makeClass,sdk,s,,false,false,true,true,gocmd,switch,<boolean>,create typescript sdk
+11781,dev_tools,,,makeClass,openapi,A,,false,false,true,true,gocmd,switch,<boolean>,export openapi.yaml file for API documentation
 11824,dev_tools,,,makeClass,,,,false,false,true,true,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,,makeClass,n1,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
 11830,dev_tools,,,makeClass,n2,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
 
-11880,dev_tools,,,testRunner,mode,m,,false,false,true,true,local,flag,enum[cmd*|api|both],determine which set of tests to run
-11900,dev_tools,,,testRunner,filter,f,,false,false,true,true,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
-11930,dev_tools,,,testRunner,skip,s,1,false,false,true,true,header,flag,<uint64>,run only every 'skip' test (faster)
-11960,dev_tools,,,testRunner,report,r,,false,false,true,true,header,switch,<boolean>,display performance report to screen
+11880,dev_tools,,,testRunner,mode,m,,false,false,true,true,gocmd,flag,enum[cmd*|api|both],determine which set of tests to run
+11900,dev_tools,,,testRunner,filter,f,,false,false,true,true,gocmd,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
+11930,dev_tools,,,testRunner,skip,s,1,false,false,true,true,gocmd,flag,<uint64>,run only every 'skip' test (faster)
+11960,dev_tools,,,testRunner,report,r,,false,false,true,true,gocmd,switch,<boolean>,display performance report to screen
 11980,dev_tools,,,testRunner,,,,false,false,true,true,--,description,,Run TrueBlocks' test cases with options.
