@@ -129,7 +129,7 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call12() (results *types.SimpleState, err error) {
+func (call *ContractCall) Call12() (results *types.SimpleCallResult, err error) {
 	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
 	if err != nil {
 		return
@@ -172,7 +172,7 @@ func (call *ContractCall) Call12() (results *types.SimpleState, err error) {
 		}
 	}
 
-	results = &types.SimpleState{
+	results = &types.SimpleCallResult{
 		BlockNumber:      call.BlockNumber,
 		Address:          call.Address,
 		Name:             call.Method.Name,

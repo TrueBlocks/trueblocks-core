@@ -89,6 +89,7 @@ void COptions::verifyGoEnumValidators(void) {
             e = "[" + e + "]";
             if (!hasValidator(p.api_route, e)) {
                 LOG_WARN("\t", bRed, p.api_route, " has no enum validator for ", e, cOff);
+                exit(0);
             }
         }
         if (p.generate == "deprecated") {

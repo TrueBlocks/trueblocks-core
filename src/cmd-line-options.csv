@@ -236,7 +236,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10770,apps,Admin,config,config,paths,a,,false,false,true,true,gocmd,switch,<boolean>,show the configuration paths for the system
 10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
 
-20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
+20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|callresults|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
 20815,apps,Admin,status,cacheStatus,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 20820,apps,Admin,status,cacheStatus,max_records,e,10000,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 20820,apps,Admin,status,cacheStatus,chains,a,,false,false,true,true,gocmd,switch,<boolean>,include a list of chain configurations in the output

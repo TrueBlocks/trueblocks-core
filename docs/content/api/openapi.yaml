@@ -1497,10 +1497,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chainstate/#state">State</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
+                    description: Produces <a href="/data-model/chainstate/#callresult">Callresult</a>, <a href="/data-model/chainstate/#state">State</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/callResult"
                         - $ref: "#/components/schemas/state"
                         - $ref: "#/components/schemas/ethCall"
                 example:
@@ -1713,6 +1714,7 @@ paths:
                 - traces
                 - logs
                 - statements
+                - callresults
                 - state
                 - tokens
                 - monitors
@@ -3144,6 +3146,35 @@ components:
           type: number
           format: uint64
           description: "the number of timestamps in the timestamps database"
+    callResult:
+      description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number at which this call was made"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of contract being called"
+        name:
+          type: string
+          description: "the name of the function call"
+        encoding:
+          type: string
+          description: "the encoding for the function call"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encodedArguments:
+          type: string
+          description: "the bytes data following the encoding of the call"
+        outputs:
+          type: Outputs
+          description: "the result of the call to the contract"
     state:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
       type: object

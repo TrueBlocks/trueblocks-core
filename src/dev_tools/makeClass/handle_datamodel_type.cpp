@@ -202,7 +202,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (name % "Action") {
         ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
 
-    } else if (modelName % "State" && name % "Outputs") {
+    } else if ((modelName % "State" || modelName % "CallResult") && name % "Outputs") {
         ret = isRaw ? "[]string" : "map[string]string";
 
     } else if (name % "Components" || name % "Inputs" || name % "Outputs") {
@@ -383,7 +383,8 @@ string_q get_cache_code(const CClassDefinition& modelIn) {
         } else {
             replaceAll(nameCode, "[{CLASS_NAME}]", modelName);
         }
-        replaceAll(nameCode, "[{Proper}]", modelIn.base_proper);
+        string_q x = modelName;
+        replaceAll(nameCode, "[{Proper}]", nextTokenClear(x, '['));
         os << nameCode << endl;
 
         const char* STR_CACHE_ID =
