@@ -114,26 +114,37 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 
 	if extraOptions["chains"] == true {
 		var chains []types.SimpleChain
-		chainArray := config.GetChainArray()
-		for _, chain := range chainArray {
+		if extraOptions["testMode"] == true {
 			ch := types.SimpleChain{
-				Chain:          chain.Chain,
-				ChainId:        mustParseUint(chain.ChainId),
-				LocalExplorer:  chain.LocalExplorer,
-				RemoteExplorer: chain.RemoteExplorer,
-				RpcProvider:    chain.RpcProvider,
-				ApiProvider:    chain.ApiProvider,
-				IpfsGateway:    chain.IpfsGateway,
-				Symbol:         chain.Symbol,
+				Chain:         "testChain",
+				ChainId:       12345,
+				LocalExplorer: "http://localhost:8080",
+				RpcProvider:   "http://localhost:8545",
+				Symbol:        "ETH",
 			}
 			chains = append(chains, ch)
-		}
-		sort.Slice(chains, func(i, j int) bool {
-			if chains[i].ChainId == chains[j].ChainId {
-				return chains[i].Chain < chains[j].Chain
+		} else {
+			chainArray := config.GetChainArray()
+			for _, chain := range chainArray {
+				ch := types.SimpleChain{
+					Chain:          chain.Chain,
+					ChainId:        mustParseUint(chain.ChainId),
+					LocalExplorer:  chain.LocalExplorer,
+					RemoteExplorer: chain.RemoteExplorer,
+					RpcProvider:    chain.RpcProvider,
+					ApiProvider:    chain.ApiProvider,
+					IpfsGateway:    chain.IpfsGateway,
+					Symbol:         chain.Symbol,
+				}
+				chains = append(chains, ch)
 			}
-			return chains[i].ChainId < chains[j].ChainId
-		})
+			sort.Slice(chains, func(i, j int) bool {
+				if chains[i].ChainId == chains[j].ChainId {
+					return chains[i].Chain < chains[j].Chain
+				}
+				return chains[i].ChainId < chains[j].ChainId
+			})
+		}
 		model["chains"] = chains
 		order = append(order, "chains")
 	}
