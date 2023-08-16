@@ -129,10 +129,10 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call12() (results *types.SimpleCallResult, err error) {
+func (call *ContractCall) Call12() (results *types.SimpleResult, err error) {
 	blockTs := base.Timestamp(0)
 	if call.Conn.StoreReadable() {
-		results = &types.SimpleCallResult{
+		results = &types.SimpleResult{
 			Address:     call.Address,
 			BlockNumber: call.BlockNumber,
 		}
@@ -186,7 +186,7 @@ func (call *ContractCall) Call12() (results *types.SimpleCallResult, err error) 
 		}
 	}
 
-	results = &types.SimpleCallResult{
+	results = &types.SimpleResult{
 		BlockNumber:      call.BlockNumber,
 		Address:          call.Address,
 		Name:             call.Method.Name,
@@ -200,7 +200,7 @@ func (call *ContractCall) Call12() (results *types.SimpleCallResult, err error) 
 		results.Outputs[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	if call.Conn.StoreWritable() && call.Conn.EnabledMap["callresults"] && isFinal(call.Conn.LatestBlockTimestamp, blockTs) {
+	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && isFinal(call.Conn.LatestBlockTimestamp, blockTs) {
 		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber)
 		_ = call.Conn.Store.Write(results, nil) // ; err != nil {
 		// logger.Warn("Failed to write call results to the database", err) // report but don't fail

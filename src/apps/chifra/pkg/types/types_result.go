@@ -21,7 +21,7 @@ import (
 
 // EXISTING_CODE
 
-type RawCallResult struct {
+type RawResult struct {
 	Address          string   `json:"address"`
 	BlockNumber      string   `json:"blockNumber"`
 	EncodedArguments string   `json:"encodedArguments"`
@@ -33,7 +33,7 @@ type RawCallResult struct {
 	// EXISTING_CODE
 }
 
-type SimpleCallResult struct {
+type SimpleResult struct {
 	Address          base.Address      `json:"address"`
 	BlockNumber      base.Blknum       `json:"blockNumber"`
 	EncodedArguments string            `json:"encodedArguments"`
@@ -41,21 +41,21 @@ type SimpleCallResult struct {
 	Name             string            `json:"name"`
 	Outputs          map[string]string `json:"outputs"`
 	Signature        string            `json:"signature"`
-	raw              *RawCallResult    `json:"-"`
+	raw              *RawResult        `json:"-"`
 	// EXISTING_CODE
 	RawReturn string
 	// EXISTING_CODE
 }
 
-func (s *SimpleCallResult) Raw() *RawCallResult {
+func (s *SimpleResult) Raw() *RawResult {
 	return s.raw
 }
 
-func (s *SimpleCallResult) SetRaw(raw *RawCallResult) {
+func (s *SimpleResult) SetRaw(raw *RawResult) {
 	s.raw = raw
 }
 
-func (s *SimpleCallResult) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleResult) Model(verbose bool, format string, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -102,15 +102,15 @@ func (s *SimpleCallResult) Model(verbose bool, format string, extraOptions map[s
 //
 
 // --> cacheable by address_and_block
-func (s *SimpleCallResult) CacheName() string {
-	return "CallResult"
+func (s *SimpleResult) CacheName() string {
+	return "Result"
 }
 
-func (s *SimpleCallResult) CacheId() string {
+func (s *SimpleResult) CacheId() string {
 	return fmt.Sprintf("%s-%09d", s.Address.Hex()[2:], s.BlockNumber)
 }
 
-func (s *SimpleCallResult) CacheLocation() (directory string, extension string) {
+func (s *SimpleResult) CacheLocation() (directory string, extension string) {
 	paddedId := s.CacheId()
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -124,7 +124,7 @@ func (s *SimpleCallResult) CacheLocation() (directory string, extension string) 
 	return
 }
 
-func (s *SimpleCallResult) MarshalCache(writer io.Writer) (err error) {
+func (s *SimpleResult) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
 		return err
@@ -168,7 +168,7 @@ func (s *SimpleCallResult) MarshalCache(writer io.Writer) (err error) {
 	return nil
 }
 
-func (s *SimpleCallResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err error) {
 	// Address
 	if err = cache.ReadValue(reader, &s.Address, version); err != nil {
 		return err

@@ -29,7 +29,7 @@ func (opts *StateOptions) HandleCall() error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawCallResult], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
 		for _, br := range opts.BlockIds {
 			blockNums, err := br.ResolveBlocks(chain)
 			if err != nil {

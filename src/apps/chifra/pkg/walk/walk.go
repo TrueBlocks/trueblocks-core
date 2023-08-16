@@ -28,7 +28,7 @@ const (
 	Cache_Tmp
 
 	Cache_Blocks
-	Cache_CallResults
+	Cache_Results
 	Cache_Logs
 	Cache_Slurps
 	Cache_State
@@ -52,7 +52,7 @@ var cacheTypeToName = map[CacheType]string{
 	Cache_Names:        "names",
 	Cache_Tmp:          "tmp",
 	Cache_Blocks:       "blocks",
-	Cache_CallResults:  "callresults",
+	Cache_Results:      "results",
 	Cache_Logs:         "logs",
 	Cache_Slurps:       "slurps",
 	Cache_State:        "state",
@@ -76,7 +76,7 @@ var CacheTypeToFolder = map[CacheType]string{
 	Cache_Names:        "names",
 	Cache_Tmp:          "tmp",
 	Cache_Blocks:       "blocks",
-	Cache_CallResults:  "callresults",
+	Cache_Results:      "results",
 	Cache_Logs:         "logs",
 	Cache_Slurps:       "slurps",
 	Cache_State:        "state",
@@ -99,7 +99,7 @@ var cacheTypeToExt = map[CacheType]string{
 	Cache_Names:        "bin",
 	Cache_Tmp:          "",
 	Cache_Blocks:       "bin",
-	Cache_CallResults:  "bin",
+	Cache_Results:      "bin",
 	Cache_Logs:         "bin",
 	Cache_Slurps:       "bin",
 	Cache_State:        "bin",
@@ -150,7 +150,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 
 	case Cache_Blocks:
 		fallthrough
-	case Cache_CallResults:
+	case Cache_Results:
 		fallthrough
 	case Cache_Logs:
 		fallthrough
@@ -245,8 +245,8 @@ func CacheTypesFromStringSlice(strs []string) []CacheType {
 
 			case "blocks":
 				types = append(types, Cache_Blocks)
-			case "callresults":
-				types = append(types, Cache_CallResults)
+			case "results":
+				types = append(types, Cache_Results)
 			case "logs":
 				types = append(types, Cache_Logs)
 			case "slurps":
@@ -291,7 +291,7 @@ func CacheTypesFromStringSlice(strs []string) []CacheType {
 				types = append(types, Cache_Monitors)
 				types = append(types, Cache_Names)
 				types = append(types, Cache_Blocks)
-				types = append(types, Cache_CallResults)
+				types = append(types, Cache_Results)
 				types = append(types, Cache_Logs)
 				types = append(types, Cache_Slurps)
 				types = append(types, Cache_State)
@@ -409,7 +409,7 @@ func GetDecachePath(chain string, typ CacheType, address base.Address, blockNum,
 		part5 = "-" + txStr
 		basePath = fmt.Sprintf("%s%s/%s/%s/", cachePath, typ, part1, part2)
 		path = fmt.Sprintf("%s%s/%s/%s/%s/%s%s.bin", cachePath, typ, part1, part2, part3, part4, part5)
-	case Cache_CallResults:
+	case Cache_Results:
 		fallthrough
 	case Cache_Slurps:
 		fallthrough

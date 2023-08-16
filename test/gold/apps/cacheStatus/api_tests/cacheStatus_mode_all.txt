@@ -174,7 +174,7 @@ status?modes=all&verbose&maxRecords=2
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "callresultsCache"
+          "type": "resultsCache"
         },
         {
           "items": [],

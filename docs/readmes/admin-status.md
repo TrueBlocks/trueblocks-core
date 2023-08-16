@@ -10,7 +10,7 @@ Usage:
 
 Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
-	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | callresults | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
+	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
 
 Flags:
   -c, --first_record uint   the first record to process

@@ -35,7 +35,7 @@ func (mon *Monitor) Decache(chain string, processor func(string) bool) error {
 		// TODO: This should use go routines
 		caches := []walk.CacheType{
 			walk.Cache_Blocks,
-			walk.Cache_CallResults,
+			walk.Cache_Results,
 			walk.Cache_Logs,
 			walk.Cache_Slurps,
 			walk.Cache_State,
@@ -87,7 +87,7 @@ func DecacheItems(
 				}
 
 				switch cache {
-				case walk.Cache_CallResults:
+				case walk.Cache_Results:
 					fallthrough
 				case walk.Cache_Slurps:
 					fallthrough

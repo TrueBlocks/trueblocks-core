@@ -1497,7 +1497,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chainstate/#callresult">Callresult</a>, <a href="/data-model/chainstate/#state">State</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
+                    description: Produces <a href="/data-model/chainstate/#result">Result</a>, <a href="/data-model/chainstate/#state">State</a>, and/or <a href="/data-model/chainstate/#ethcall">Ethcall</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-state">chifra state</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -1714,7 +1714,7 @@ paths:
                 - traces
                 - logs
                 - statements
-                - callresults
+                - results
                 - state
                 - tokens
                 - monitors
