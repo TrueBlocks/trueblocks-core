@@ -15,7 +15,7 @@ type Connection struct {
 	Chain                string
 	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
 	LatestBlockTimestamp base.Timestamp
-	enabledMap           map[string]bool
+	EnabledMap           map[string]bool
 }
 
 // settings allows every command has its own options type, we have to
@@ -69,7 +69,7 @@ func (settings settings) GetRpcConnection() *Connection {
 	ret := &Connection{
 		Chain:      settings.Chain,
 		Store:      store,
-		enabledMap: settings.EnabledMap,
+		EnabledMap: settings.EnabledMap,
 	}
 
 	if store != nil && !store.ReadOnly() {

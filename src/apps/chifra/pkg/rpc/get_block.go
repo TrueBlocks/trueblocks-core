@@ -78,7 +78,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		tx := types.NewSimpleTransaction(raw, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
-		if conn.StoreWritable() && conn.enabledMap["transactions"] && isFinal(conn.LatestBlockTimestamp, tx.Timestamp) {
+		if conn.StoreWritable() && conn.EnabledMap["transactions"] && isFinal(conn.LatestBlockTimestamp, tx.Timestamp) {
 			_ = conn.Store.Write(tx, nil)
 		}
 	}

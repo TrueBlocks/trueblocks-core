@@ -98,6 +98,9 @@ func (s *SimpleCallResult) Model(verbose bool, format string, extraOptions map[s
 	}
 }
 
+// EXISTING_CODE
+//
+
 // --> cacheable by address_and_block
 func (s *SimpleCallResult) CacheName() string {
 	return "CallResult"
@@ -148,7 +151,12 @@ func (s *SimpleCallResult) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// Outputs
-	if err = cache.WriteValue(writer, s.Outputs); err != nil {
+	str := make([]string, len(s.Outputs)*2)
+	for i, v := range s.Outputs {
+		str = append(str, i)
+		str = append(str, v)
+	}
+	if err = cache.WriteValue(writer, strings.Join(str, "|")); err != nil {
 		return err
 	}
 
@@ -187,9 +195,20 @@ func (s *SimpleCallResult) UnmarshalCache(version uint64, reader io.Reader) (err
 	}
 
 	// Outputs
-	if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
+	var str string
+	if err = cache.ReadValue(reader, &str, version); err != nil {
 		return err
 	}
+	arr := strings.Split(str, "|")
+	s.Outputs = make(map[string]string)
+	for i := 0; i < len(arr); i += 2 {
+		if len(arr[i]) > 0 {
+			s.Outputs[arr[i]] = arr[i+1]
+		}
+	}
+	// if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
+	// 	return err
+	// }
 
 	// Signature
 	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {
@@ -199,5 +218,4 @@ func (s *SimpleCallResult) UnmarshalCache(version uint64, reader io.Reader) (err
 	return nil
 }
 
-// EXISTING_CODE
 // EXISTING_CODE

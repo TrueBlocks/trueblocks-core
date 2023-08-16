@@ -34,7 +34,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 	if logs, err := conn.getLogsSimple(filter); err != nil {
 		return logs, err
 	} else {
-		if conn.StoreWritable() && conn.enabledMap["logs"] && isFinal(conn.LatestBlockTimestamp, ts) {
+		if conn.StoreWritable() && conn.EnabledMap["logs"] && isFinal(conn.LatestBlockTimestamp, ts) {
 			logGroup := &types.SimpleLogGroup{
 				Logs:             logs,
 				BlockNumber:      bn,

@@ -183,7 +183,8 @@ func ResetOptions() {
 func (opts *StateOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"state": true,
+		"state":       true,
+		"callresults": len(opts.Call) > 0,
 	}
 	// EXISTING_CODE
 	return

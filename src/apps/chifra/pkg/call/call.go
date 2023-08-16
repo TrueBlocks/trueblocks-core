@@ -130,6 +130,19 @@ func (call *ContractCall) forceEncoding(encoding string) {
 }
 
 func (call *ContractCall) Call12() (results *types.SimpleCallResult, err error) {
+	blockTs := base.Timestamp(0)
+	if call.Conn.StoreReadable() {
+		results = &types.SimpleCallResult{
+			Address:     call.Address,
+			BlockNumber: call.BlockNumber,
+		}
+		if err := call.Conn.Store.Read(results, nil); err == nil {
+			// logger.Info("Read from the database...", results.Address, results.BlockNumber)
+			return results, nil
+		}
+		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)
+	}
+
 	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
 	if err != nil {
 		return
@@ -162,8 +175,9 @@ func (call *ContractCall) Call12() (results *types.SimpleCallResult, err error) 
 		return nil, err
 	}
 
-	rr := *rawReturn
 	function := call.Method.Clone()
+
+	rr := *rawReturn
 	if len(rr) > 2 {
 		abiCache := articulate.NewAbiCache(call.Conn.Chain, true)
 		err = abiCache.ArticulateFunction(function, "", rr[2:])
@@ -182,10 +196,22 @@ func (call *ContractCall) Call12() (results *types.SimpleCallResult, err error) 
 		RawReturn:        *rawReturn,
 	}
 	results.Outputs = make(map[string]string)
-
 	for index, output := range function.Outputs {
 		results.Outputs[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
+	if call.Conn.StoreWritable() && call.Conn.EnabledMap["callresults"] && isFinal(call.Conn.LatestBlockTimestamp, blockTs) {
+		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber)
+		_ = call.Conn.Store.Write(results, nil) // ; err != nil {
+		// logger.Warn("Failed to write call results to the database", err) // report but don't fail
+		// }
+	}
+
 	return results, nil
+}
+
+func isFinal(latestTs, blockTs base.Timestamp) bool {
+	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
+	var pendingPeriod = int64(5 * 60)
+	return (latestTs - blockTs) >= pendingPeriod
 }
