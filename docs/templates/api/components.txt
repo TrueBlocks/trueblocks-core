@@ -982,6 +982,14 @@ components:
           format: blknum
           example: 10021
           description: "the block number at which this call was made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block for this call"
+        date:
+          type: string
+          format: datetime
+          description: "the date of the block for this call (calculated)"
         address:
           type: string
           format: address

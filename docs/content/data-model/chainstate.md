@@ -34,15 +34,17 @@ The following commands produce and manage Results:
 
 Results consist of the following fields:
 
-| Field            | Description                                       | Type    |
-| ---------------- | ------------------------------------------------- | ------- |
-| blockNumber      | the block number at which this call was made      | blknum  |
-| address          | the address of contract being called              | address |
-| name             | the name of the function call                     | string  |
-| encoding         | the encoding for the function call                | string  |
-| signature        | the canonical signature of the interface          | string  |
-| encodedArguments | the bytes data following the encoding of the call | string  |
-| outputs          | the result of the call to the contract            | Outputs |
+| Field            | Description                                       | Type      |
+| ---------------- | ------------------------------------------------- | --------- |
+| blockNumber      | the block number at which this call was made      | blknum    |
+| timestamp        | the timestamp of the block for this call          | timestamp |
+| date             | the date of the block for this call (calculated)  | datetime  |
+| address          | the address of contract being called              | address   |
+| name             | the name of the function call                     | string    |
+| encoding         | the encoding for the function call                | string    |
+| signature        | the canonical signature of the interface          | string    |
+| encodedArguments | the bytes data following the encoding of the call | string    |
+| outputs          | the result of the call to the contract            | Outputs   |
 
 ## TokenBalance
 

@@ -502,12 +502,15 @@ string_q get_id_code(const string_q& cacheBy) {
         return "fmt.Sprintf(\"%09d\", s.BlockNumber)";
     } else if (cacheBy == "tx") {
         return "fmt.Sprintf(\"%09d-%05d\", s.BlockNumber, s.TransactionIndex)";
-    } else if (cacheBy == "address_and_tx") {
+    } else if (cacheBy == "address,tx") {
         return "fmt.Sprintf(\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)";
-    } else if (cacheBy == "address_and_block") {
-        return "fmt.Sprintf(\"%s-%09d\", s.Address.Hex()[2:], s.BlockNumber)";
+    } else if (cacheBy == "address,block,fourbyte") {
+        const char* STR_THE_CODE =
+            "fmt.Sprintf(\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding, s.BlockNumber)\n"
+            "\t// TODO: The above creates a very large number of files for a large contract.";
+        return STR_THE_CODE;
     } else {
-        cerr << bRed << "Unknown cache_by value: " << cacheBy << cOff << endl;
+        cerr << bRed << "Unknown cache_by value: " << cacheBy << ". Quiting..." << cOff << endl;
         exit(0);
     }
 }

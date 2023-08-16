@@ -77,7 +77,7 @@ on      ,both ,fast  ,state ,tools/getState ,fail_art_not_call              ,y  
 on      ,both ,fast  ,state ,tools/getState ,contract_call_fail3            ,y    ,call = & addrs = 0xa4f29fc548856180f6b1e319ee4d86715875cce4 & blocks = 6523977-6540000:2000
 
 # This started failing when we went to sync.Map for the abiMap and at the same time started using IterateOverMap. Possibly ordering changes in the map?
-on      ,both ,fast  ,state ,tools/getState ,proxy_imp                      ,n    ,call = '0xbb82aa5e()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000 & fmt = csv
+art     ,both ,fast  ,state ,tools/getState ,proxy_imp                      ,n    ,call = '0xbb82aa5e()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & blocks = 10092000 & fmt = csv
 
 on      ,both ,fast  ,state ,tools/getState ,not_call_and_parts             ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & parts = some
 on      ,both ,fast  ,state ,tools/getState ,not_call_and_changes           ,y    ,call = '0x0902f1ac()' & addrs = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B & changes

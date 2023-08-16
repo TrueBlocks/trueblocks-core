@@ -53,7 +53,7 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 
-	result, err := contractCall.Call12()
+	result, err := contractCall.Call()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
@@ -68,7 +68,7 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		return 0.0, "not-priced", err
 	}
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err = contractCall.Call12()
+	result, err = contractCall.Call()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

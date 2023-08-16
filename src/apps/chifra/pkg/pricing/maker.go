@@ -34,7 +34,7 @@ func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err := contractCall.Call12()
+	result, err := contractCall.Call()
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

@@ -1,8 +1,10 @@
-name             ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example       ,description
-blockNumber      ,blknum   ,           ,       ,      ,        ,          ,        ,         ,1   ,     ,10021         ,the block number at which this call was made
-address          ,address  ,           ,       ,      ,        ,          ,        ,         ,2   ,     ,0xa1e4...63b4 ,the address of contract being called
-name             ,string   ,           ,       ,      ,        ,          ,        ,         ,3   ,     ,              ,the name of the function call
-encoding         ,string   ,           ,       ,      ,        ,          ,        ,         ,4   ,     ,              ,the encoding for the function call
-signature        ,string   ,           ,       ,      ,        ,          ,        ,         ,5   ,     ,              ,the canonical signature of the interface
-encodedArguments ,string   ,           ,       ,      ,        ,          ,        ,         ,6   ,     ,              ,the bytes data following the encoding of the call
-outputs          ,Outputs  ,           ,       ,      ,        ,          ,        ,         ,7   ,     ,              ,the result of the call to the contract
+name             ,type      ,strDefault ,object ,array ,doc ,disp ,example       ,description
+blockNumber      ,blknum    ,           ,       ,      ,  1 ,     ,10021         ,the block number at which this call was made
+timestamp        ,timestamp ,           ,       ,      ,  2 ,     ,              ,the timestamp of the block for this call
+date             ,datetime  ,           ,       ,      ,  3 ,     ,              ,the date of the block for this call (calculated)
+address          ,address   ,           ,       ,      ,  4 ,     ,0xa1e4...63b4 ,the address of contract being called
+name             ,string    ,           ,       ,      ,  5 ,     ,              ,the name of the function call
+encoding         ,string    ,           ,       ,      ,  6 ,     ,              ,the encoding for the function call
+signature        ,string    ,           ,       ,      ,  7 ,     ,              ,the canonical signature of the interface
+encodedArguments ,string    ,           ,       ,      ,  8 ,     ,              ,the bytes data following the encoding of the call
+outputs          ,Outputs   ,           ,       ,      ,  9 ,     ,              ,the result of the call to the contract

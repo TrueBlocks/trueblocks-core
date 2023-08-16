@@ -17,6 +17,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -29,6 +30,7 @@ type RawResult struct {
 	Name             string   `json:"name"`
 	Outputs          []string `json:"outputs"`
 	Signature        string   `json:"signature"`
+	Timestamp        string   `json:"timestamp"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -41,6 +43,7 @@ type SimpleResult struct {
 	Name             string            `json:"name"`
 	Outputs          map[string]string `json:"outputs"`
 	Signature        string            `json:"signature"`
+	Timestamp        base.Timestamp    `json:"timestamp"`
 	raw              *RawResult        `json:"-"`
 	// EXISTING_CODE
 	RawReturn string
@@ -98,16 +101,18 @@ func (s *SimpleResult) Model(verbose bool, format string, extraOptions map[strin
 	}
 }
 
-// EXISTING_CODE
-//
+func (s *SimpleResult) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
 
-// --> cacheable by address_and_block
+// --> cacheable by address,block,fourbyte
 func (s *SimpleResult) CacheName() string {
 	return "Result"
 }
 
 func (s *SimpleResult) CacheId() string {
-	return fmt.Sprintf("%s-%09d", s.Address.Hex()[2:], s.BlockNumber)
+	return fmt.Sprintf("%s-%s-%09d", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber)
+	// TODO: The above creates a very large number of files for a large contract.
 }
 
 func (s *SimpleResult) CacheLocation() (directory string, extension string) {
@@ -165,6 +170,11 @@ func (s *SimpleResult) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Timestamp
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -215,7 +225,13 @@ func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err err
 		return err
 	}
 
+	// Timestamp
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+
 	return nil
 }
 
+// EXISTING_CODE
 // EXISTING_CODE

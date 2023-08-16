@@ -119,16 +119,19 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call12() (results *types.SimpleResult, err error) {
+func (call *ContractCall) Call() (results *types.SimpleResult, err error) {
 	blockTs := base.Timestamp(0)
 	if call.Conn.StoreReadable() {
 		results = &types.SimpleResult{
 			Address:     call.Address,
 			BlockNumber: call.BlockNumber,
+			Encoding:    call.Method.Encoding,
 		}
 		if err := call.Conn.Store.Read(results, nil); err == nil {
-			// logger.Info("Read from the database...", results.Address, results.BlockNumber)
+			// logger.Info("cache read:", results.Address, results.BlockNumber, call.Method.Encoding)
 			return results, nil
+			// } else {
+			// 	logger.Info("no cache read:", results.Address, results.BlockNumber, call.Method.Encoding, err)
 		}
 		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)
 	}
@@ -178,6 +181,7 @@ func (call *ContractCall) Call12() (results *types.SimpleResult, err error) {
 
 	results = &types.SimpleResult{
 		BlockNumber:      call.BlockNumber,
+		Timestamp:        blockTs,
 		Address:          call.Address,
 		Name:             call.Method.Name,
 		Encoding:         call.Method.Encoding,
@@ -191,10 +195,13 @@ func (call *ContractCall) Call12() (results *types.SimpleResult, err error) {
 	}
 
 	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && isFinal(call.Conn.LatestBlockTimestamp, blockTs) {
-		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber)
-		_ = call.Conn.Store.Write(results, nil) // ; err != nil {
-		// logger.Warn("Failed to write call results to the database", err) // report but don't fail
+		_ = call.Conn.Store.Write(results, nil)
+		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
+		// if err := call.Conn.Store.Write(results, nil); err != nil {
+		// 	logger.Warn("Failed to write call results to the database", err) // report but don't fail
 		// }
+		// } else if !isFin {
+		// 	logger.Info("Not caching result (not ripe)...", results.Address, results.BlockNumber, call.Method.Encoding)
 	}
 
 	return results, nil

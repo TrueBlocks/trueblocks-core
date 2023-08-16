@@ -8,5 +8,5 @@ doc_route = 108-statement
 doc_producer = export, transactions
 go_output = src/apps/chifra/pkg/types
 cache_type = cacheable
-cache_by = address_and_tx
+cache_by = address,tx
 cache_as = group

@@ -7,5 +7,4 @@ doc_route = 301-result
 doc_producer = state
 # go_output = src/apps/chifra/pkg/types
 # cache_type = cacheable
-# cache_by = address_block_and_fourbyte
-# cache_as = group
+# cache_by = address,block,fourbyte

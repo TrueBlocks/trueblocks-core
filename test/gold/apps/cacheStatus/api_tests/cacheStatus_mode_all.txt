@@ -168,7 +168,20 @@ status?modes=all&verbose&maxRecords=2
           "type": "blocksCache"
         },
         {
-          "items": [],
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "resultsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "resultsCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
