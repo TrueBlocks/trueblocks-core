@@ -17,73 +17,13 @@ status?modes=blocks&maxRecords=100&chains
       "chainConfig": "--paths--",
       "chains": [
         {
-          "apiProvider": "http://localhost:8080",
-          "chain": "mainnet",
-          "chainId": 1,
-          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
-          "localExplorer": "http://localhost:1234",
-          "remoteExplorer": "https://etherscan.io",
-          "rpcProvider": "http://localhost:23456",
-          "symbol": "ETH"
-        },
-        {
-          "apiProvider": "http://localhost:8080",
-          "chain": "goerli",
-          "chainId": 5,
-          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
-          "localExplorer": "http://localhost:1234",
-          "remoteExplorer": "https://goerli.etherscan.io",
-          "rpcProvider": "https://goerli-light.eth.linkpool.io",
-          "symbol": "ETH"
-        },
-        {
-          "apiProvider": "http://localhost:8080",
-          "chain": "optimism",
-          "chainId": 10,
-          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
-          "localExplorer": "http://localhost:1234",
-          "remoteExplorer": "https://optimistic.etherscan.io",
-          "rpcProvider": "https://mainnet.optimism.io",
-          "symbol": "OPT"
-        },
-        {
-          "apiProvider": "http://localhost:8080",
-          "chain": "gnosis",
-          "chainId": 100,
-          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
-          "localExplorer": "http://localhost:1234",
-          "remoteExplorer": "https://gnosisscan.io/",
-          "rpcProvider": "http://localhost:36963",
-          "symbol": "XDAI"
-        },
-        {
-          "apiProvider": "http://localhost:8080",
-          "chain": "polygon",
-          "chainId": 80001,
-          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
-          "localExplorer": "http://localhost:1234",
-          "remoteExplorer": "https://mumbai.polygonscan.com",
-          "rpcProvider": "https://rpc-mumbai.maticvigil.com",
-          "symbol": "MATIC"
-        },
-        {
-          "apiProvider": "http://localhost:8080",
-          "chain": "urbit",
-          "chainId": 80001,
-          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
-          "localExplorer": "http://localhost:1234",
-          "remoteExplorer": "https://mumbai.polygonscan.com",
-          "rpcProvider": "https://rpc.uvm.network",
-          "symbol": "URBT"
-        },
-        {
-          "apiProvider": "http://localhost:8080",
-          "chain": "sepolia",
-          "chainId": 11155111,
-          "ipfsGateway": "https://ipfs.unchainedindex.io/ipfs/",
-          "localExplorer": "http://localhost:1234",
-          "remoteExplorer": "https://sepolia.otterscan.io/",
-          "rpcProvider": "http://localhost:30305",
+          "apiProvider": "",
+          "chain": "testChain",
+          "chainId": 12345,
+          "ipfsGateway": "",
+          "localExplorer": "http://localhost:8080",
+          "remoteExplorer": "",
+          "rpcProvider": "http://localhost:8545",
           "symbol": "ETH"
         }
       ],
