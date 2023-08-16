@@ -2,7 +2,6 @@ package statePkg
 
 import (
 	"context"
-	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -16,17 +15,11 @@ import (
 
 func (opts *StateOptions) HandleCall() error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	isApiMode := opts.Globals.IsApiMode()
 
 	callAddress := base.HexToAddress(opts.Addrs[0])
 	if opts.ProxyFor != "" {
 		callAddress = base.HexToAddress(opts.ProxyFor)
-	}
-
-	contractCall, err := call.NewContractCall(opts.Conn, callAddress, opts.Call, !isApiMode)
-	if err != nil {
-		return err
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -45,17 +38,16 @@ func (opts *StateOptions) HandleCall() error {
 
 		nErrors := 0
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleResult) error {
+			contractCall, err := call.NewContractCall(opts.Conn, callAddress, opts.Call, !isApiMode)
+			if err != nil {
+				return err
+			}
 			contractCall.BlockNumber = app.BlockNumber
 			results, err := contractCall.Call12()
 			if err != nil {
 				errorChan <- err
 				cancel()
 			} else {
-				if testMode {
-					msg := fmt.Sprintf("call to %s at block %d at four-byte %s returned %v",
-						contractCall.Address.Hex(), contractCall.BlockNumber, contractCall.Method.Encoding, results.Outputs)
-					logger.TestLog(true, msg)
-				}
 				bar.Tick()
 				*value = *results
 			}
