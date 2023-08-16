@@ -8,12 +8,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
+
+var ErrAbiNotFound = errors.New("abi not found ")
 
 type ContractCall struct {
 	Conn        *rpc.Connection
@@ -24,27 +25,26 @@ type ContractCall struct {
 	encoded     string
 }
 
-func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string, showSuggestions bool) (*ContractCall, error) {
+func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string) (*ContractCall, []string, error) {
 	parsed, err := parser.ParseContractCall(theCall)
 	if err != nil {
 		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
-		return nil, err
+		return nil, []string{}, err
 	}
 
 	abiMap := abi.NewFunctionSyncMap()
 	if err = abi.LoadAbi(conn.Chain, callAddress, abiMap); err != nil {
-		return nil, err
+		return nil, []string{}, err
 	}
 
 	var function *types.SimpleFunction
 	var callArguments []*parser.ContractCallArgument
-	var suggestions []types.SimpleFunction
-
+	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
 		selector := parsed.Encoded[:10]
 		function, _, err = abi.FindAbiFunction(abi.FindBySelector, selector, nil, abiMap)
 		if err != nil {
-			return nil, err
+			return nil, []string{}, err
 		}
 
 	} else {
@@ -65,29 +65,19 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 
 		function, suggestions, err = abi.FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
 		if err != nil {
-			return nil, err
+			return nil, suggestions, err
 		}
 	}
 
 	if function == nil {
-		message := fmt.Sprintf("No ABI found for function %s", theCall)
-		if showSuggestions {
-			logger.Error(message)
-			if len(suggestions) > 0 {
-				logger.Info("Did you mean:")
-				for index, suggestion := range suggestions {
-					logger.Info(index+1, "-", suggestion.Signature)
-				}
-			}
-		}
-		return nil, errors.New(message)
+		return nil, suggestions, ErrAbiNotFound
 	}
 
 	var args []any
 	if parsed.Encoded == "" {
 		args, err = convertArguments(callArguments, function)
 		if err != nil {
-			return nil, err
+			return nil, suggestions, err
 		}
 	}
 
@@ -101,7 +91,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 		contactCall.forceEncoding(parsed.Encoded)
 	}
 
-	return contactCall, nil
+	return contactCall, suggestions, nil
 }
 
 func convertArguments(callArguments []*parser.ContractCallArgument, function *types.SimpleFunction) (args []any, err error) {

@@ -14,9 +14,9 @@ const (
 	FindBySelector
 )
 
-// FindAbiFunction returns either the function to call or a list of suggestions (functions
-// with the same name, but different argument count)
-func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.ContractCallArgument, abiMap *FunctionSyncMap) (fn *types.SimpleFunction, suggestions []types.SimpleFunction, err error) {
+// FindAbiFunction returns either the function to call or a list of suggestions (function
+// signatures with the same name, but different argument count)
+func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.ContractCallArgument, abiMap *FunctionSyncMap) (fn *types.SimpleFunction, suggestions []string, err error) {
 	functions := abiMap.Values()
 	for _, function := range functions {
 		function := function
@@ -30,7 +30,7 @@ func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.Contr
 		if arguments != nil {
 			// we start with argument count
 			if len(function.Inputs) != len(arguments) {
-				suggestions = append(suggestions, function)
+				suggestions = append(suggestions, function.Signature)
 				continue
 			}
 			// now we check if the argument types are compatible
@@ -74,7 +74,7 @@ func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.Contr
 			}
 
 			if !compatible {
-				suggestions = append(suggestions, function)
+				suggestions = append(suggestions, function.Signature)
 				continue
 			}
 		}

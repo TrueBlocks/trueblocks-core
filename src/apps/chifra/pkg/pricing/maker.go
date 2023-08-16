@@ -28,7 +28,7 @@ func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 	logger.TestLog(true, msg)
 	theCall := "peek()"
 
-	contractCall, err := call.NewContractCall(conn, makerMedianizer, theCall, false)
+	contractCall, _, err := call.NewContractCall(conn, makerMedianizer, theCall)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

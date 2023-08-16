@@ -6,9 +6,11 @@ package statePkg
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -64,6 +66,28 @@ func (opts *StateOptions) validateState() error {
 				}
 				return err
 			}
+
+			// Before we do anythinng, let's just make sure we have a valid four-byte
+			callAddress := base.HexToAddress(opts.Addrs[0])
+			if opts.ProxyFor != "" {
+				callAddress = base.HexToAddress(opts.ProxyFor)
+			}
+			if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
+				message := fmt.Sprintf("the --call value provided (%s) was not found: %s", opts.Call, err)
+				if len(suggestions) > 0 {
+					if len(suggestions) > 0 {
+						message += " Suggestions: "
+						for index, suggestion := range suggestions {
+							if index > 0 {
+								message += " "
+							}
+							message += fmt.Sprintf("%d: %s.", index+1, suggestion)
+						}
+					}
+				}
+				return errors.New(message)
+			}
+
 		} else {
 			if opts.Articulate {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call")

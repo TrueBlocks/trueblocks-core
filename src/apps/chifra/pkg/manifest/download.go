@@ -55,7 +55,7 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
 	conn := rpc.TempConnection(unchainedChain)
 
-	if contractCall, err := call.NewContractCall(conn, unchained.GetUnchainedIndexAddress(), theCall, false); err != nil {
+	if contractCall, _, err := call.NewContractCall(conn, unchained.GetUnchainedIndexAddress(), theCall); err != nil {
 		return "", err
 	} else {
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()

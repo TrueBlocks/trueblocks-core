@@ -15,7 +15,6 @@ import (
 
 func (opts *StateOptions) HandleCall() error {
 	chain := opts.Globals.Chain
-	isApiMode := opts.Globals.IsApiMode()
 
 	callAddress := base.HexToAddress(opts.Addrs[0])
 	if opts.ProxyFor != "" {
@@ -38,18 +37,19 @@ func (opts *StateOptions) HandleCall() error {
 
 		nErrors := 0
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleResult) error {
-			contractCall, err := call.NewContractCall(opts.Conn, callAddress, opts.Call, !isApiMode)
-			if err != nil {
-				return err
-			}
-			contractCall.BlockNumber = app.BlockNumber
-			results, err := contractCall.Call12()
-			if err != nil {
+			if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
 				errorChan <- err
 				cancel()
 			} else {
-				bar.Tick()
-				*value = *results
+				contractCall.BlockNumber = app.BlockNumber
+				results, err := contractCall.Call12()
+				if err != nil {
+					errorChan <- err
+					cancel()
+				} else {
+					bar.Tick()
+					*value = *results
+				}
 			}
 			return nil
 		}
