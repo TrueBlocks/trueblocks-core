@@ -176,7 +176,9 @@ func (call *ContractCall) Call12(artFunc func(string, *types.SimpleFunction) err
 	// articulate it if possible
 	if rawBytes != nil {
 		str := *rawBytes
-		artFunc(str, function)
+		if err = artFunc(str, function); err != nil {
+			return nil, err
+		}
 	}
 
 	results = &types.SimpleResult{
