@@ -197,7 +197,7 @@ func (call *ContractCall) Call12(artFunc func(string, *types.SimpleFunction) err
 		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && isFinal(call.Conn.LatestBlockTimestamp, blockTs) {
+	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && base.IsFinal(call.Conn.LatestBlockTimestamp, blockTs) {
 		_ = call.Conn.Store.Write(results, nil)
 		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
 		// if err := call.Conn.Store.Write(results, nil); err != nil {
@@ -208,10 +208,4 @@ func (call *ContractCall) Call12(artFunc func(string, *types.SimpleFunction) err
 	}
 
 	return results, nil
-}
-
-func isFinal(latestTs, blockTs base.Timestamp) bool {
-	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
-	var pendingPeriod = int64(5 * 60)
-	return (latestTs - blockTs) >= pendingPeriod
 }

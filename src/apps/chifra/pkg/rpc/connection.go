@@ -110,9 +110,3 @@ func (conn *Connection) TestLog(enabledMap map[string]bool) {
 	}
 	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
 }
-
-func isFinal(latestTs, blockTs base.Timestamp) bool {
-	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
-	var pendingPeriod = int64(5 * 60)
-	return (latestTs - blockTs) >= pendingPeriod
-}

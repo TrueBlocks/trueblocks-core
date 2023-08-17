@@ -19,6 +19,10 @@ func (opts *ExportOptions) readStatements(
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleStatement, error) {
 
+	if !opts.Accounting {
+		log.Fatal("Accounting is not enabled. Implementation error.")
+	}
+
 	var cnt int
 	var err error
 	var txMap map[types.SimpleAppearance]*types.SimpleTransaction
@@ -67,10 +71,6 @@ func (opts *ExportOptions) readStatements(
 		opts.Traces,
 		&opts.Asset,
 	)
-
-	if !opts.Accounting {
-		log.Fatal("Accounting is not enabled. Implementation error.")
-	}
 
 	apps := make([]types.SimpleAppearance, 0, len(txMap))
 	for _, tx := range txArray {

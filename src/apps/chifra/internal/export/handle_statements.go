@@ -16,11 +16,6 @@ import (
 )
 
 func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) error {
-	// if opts.Accounting {
-	// 	// TODO: BOGUS - RECONSIDER THIS
-	// 	opts.Articulate = true
-	// }
-
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
