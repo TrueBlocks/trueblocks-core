@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
@@ -119,7 +119,11 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call() (results *types.SimpleResult, err error) {
+func (call *ContractCall) Call12(artFunc func(string, *types.SimpleFunction) error) (results *types.SimpleResult, err error) {
+	if artFunc == nil {
+		logger.Fatal("Implementation error: artFunc is nil")
+	}
+
 	blockTs := base.Timestamp(0)
 	if call.Conn.StoreReadable() {
 		results = &types.SimpleResult{
@@ -169,12 +173,10 @@ func (call *ContractCall) Call() (results *types.SimpleResult, err error) {
 	}
 
 	function := call.Method.Clone()
-
-	if rawBytes != nil && len(*rawBytes) > 2 {
-		abiCache := articulate.NewAbiCache(call.Conn.Chain, true)
-		if err = abiCache.ArticulateFunction(function, "", (*rawBytes)[2:]); err != nil {
-			return nil, err
-		}
+	// articulate it if possible
+	if rawBytes != nil {
+		str := *rawBytes
+		artFunc(str, function)
 	}
 
 	results = &types.SimpleResult{

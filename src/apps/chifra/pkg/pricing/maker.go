@@ -5,6 +5,7 @@ import (
 	"math/big"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -34,7 +35,11 @@ func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err := contractCall.Call()
+	abiCache := articulate.NewAbiCache(conn.Chain, true)
+	artFunc := func(str string, function *types.SimpleFunction) error {
+		return abiCache.ArticulateFunction(function, "", str[2:])
+	}
+	result, err := contractCall.Call12(artFunc)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

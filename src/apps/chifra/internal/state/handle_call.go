@@ -4,6 +4,7 @@ import (
 	"context"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
@@ -15,6 +16,10 @@ import (
 
 func (opts *StateOptions) HandleCall() error {
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, true) // do not change to opts.Articulate, we need known values always
+	artFunc := func(str string, function *types.SimpleFunction) error {
+		return abiCache.ArticulateFunction(function, "", str[2:])
+	}
 
 	callAddress := base.HexToAddress(opts.Addrs[0])
 	if opts.ProxyFor != "" {
@@ -42,7 +47,7 @@ func (opts *StateOptions) HandleCall() error {
 				cancel()
 			} else {
 				contractCall.BlockNumber = app.BlockNumber
-				results, err := contractCall.Call()
+				results, err := contractCall.Call12(artFunc)
 				if err != nil {
 					errorChan <- err
 					cancel()
