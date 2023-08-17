@@ -57,7 +57,7 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
-	pairAddress := base.HexToAddress(result.Outputs["val_0"])
+	pairAddress := base.HexToAddress(result.Values["val_0"])
 	if pairAddress.IsZero() {
 		msg := fmt.Sprintf("no pair found for %s and %s", first.Hex(), second.Hex())
 		return 0.0, "not-priced", fmt.Errorf(msg)
@@ -73,16 +73,16 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		return 0.0, "not-priced", err
 	}
 	reserve0 := new(big.Float)
-	if result.Outputs != nil && result.Outputs["_reserve0"] == "" {
+	if result.Values != nil && result.Values["_reserve0"] == "" {
 		reserve0.SetString("1")
 	} else {
-		reserve0.SetString(result.Outputs["_reserve0"])
+		reserve0.SetString(result.Values["_reserve0"])
 	}
 	reserve1 := new(big.Float)
-	if result.Outputs != nil && result.Outputs["_reserve1"] == "" {
+	if result.Values != nil && result.Values["_reserve1"] == "" {
 		reserve0.SetString("1")
 	} else {
-		reserve1.SetString(result.Outputs["_reserve1"])
+		reserve1.SetString(result.Values["_reserve1"])
 	}
 	bigPrice := new(big.Float)
 	bigPrice.Quo(reserve0, reserve1)

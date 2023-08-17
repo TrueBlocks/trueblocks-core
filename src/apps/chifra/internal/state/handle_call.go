@@ -84,5 +84,9 @@ func (opts *StateOptions) HandleCall() error {
 
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(nil))
+	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
+	}
+
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

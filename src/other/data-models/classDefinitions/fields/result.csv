@@ -7,4 +7,4 @@ name             ,string    ,           ,       ,      ,  5 ,     ,             
 encoding         ,string    ,           ,       ,      ,  6 ,     ,              ,the encoding for the function call
 signature        ,string    ,           ,       ,      ,  7 ,     ,              ,the canonical signature of the interface
 encodedArguments ,string    ,           ,       ,      ,  8 ,     ,              ,the bytes data following the encoding of the call
-outputs          ,Outputs   ,           ,       ,      ,  9 ,     ,              ,the result of the call to the contract
+articulatedOut   ,Function  ,           ,true   ,      ,  9 ,     ,              ,the result of the call articulated as other models

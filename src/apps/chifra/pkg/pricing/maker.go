@@ -44,7 +44,7 @@ func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 
 	// TODO: Since Dawid fixed the articulate code, we should use the value at results["val_1"] instead of this
 	//       hacky string manipulation
-	rawHex := strings.TrimPrefix(string(result.RawReturn), "0x")
+	rawHex := strings.TrimPrefix(string(result.ReturnedBytes), "0x")
 	rawHex = rawHex[:64]
 	int0 := new(big.Int)
 	int0.SetString(rawHex, 16)

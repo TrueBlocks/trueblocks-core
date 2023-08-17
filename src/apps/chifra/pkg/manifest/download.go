@@ -62,7 +62,7 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 		if result, err := contractCall.Call(); err != nil {
 			return "", err
 		} else {
-			return result.Outputs["val_0"], nil
+			return result.Values["val_0"], nil
 		}
 	}
 }

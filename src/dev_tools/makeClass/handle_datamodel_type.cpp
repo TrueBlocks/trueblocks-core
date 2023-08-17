@@ -202,7 +202,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (name % "Action") {
         ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
 
-    } else if ((modelName % "State" || modelName % "Result") && name % "Outputs") {
+    } else if ((modelName % "State" || modelName % "Result") && name % "Values") {
         ret = isRaw ? "[]string" : "map[string]string";
 
     } else if (name % "Components" || name % "Inputs" || name % "Outputs") {
@@ -506,7 +506,7 @@ string_q get_id_code(const string_q& cacheBy) {
         return "fmt.Sprintf(\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)";
     } else if (cacheBy == "address,block,fourbyte") {
         const char* STR_THE_CODE =
-            "fmt.Sprintf(\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding, s.BlockNumber)\n"
+            "fmt.Sprintf(\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber)\n"
             "\t// TODO: The above creates a very large number of files for a large contract.";
         return STR_THE_CODE;
     } else {
@@ -520,11 +520,10 @@ bool isArray(const CMember& field) {
 }
 
 bool isObject(const CMember& field) {
-    // cerr << field.name << " " << field.type << " " << (field.memberFlags & IS_ARRAY) << " "
-    //      << (field.memberFlags & IS_POINTER) << " " << (field.memberFlags & IS_OBJECT) << endl;
     if (containsI(field.type, "topic") || containsI(field.name, "traceaddress") || containsI(field.name, "uncles")) {
         return false;
     }
+
     return (field.memberFlags & IS_OBJECT);
 }
 
@@ -616,6 +615,7 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
                 "\t\treturn err\n"
                 "\t}\n";
             os << STR_HACK << endl;
+
         } else if (isObjectArray(field)) {
             const char* STR_ARRAY_CODE =
                 "\t[C][{LOWER}] := make([]cache.Marshaler, 0, len([{FIELD_NAME}]))\n"
@@ -633,6 +633,7 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
                        substitute(substitute(toLower(name).substr(0, name.length() - 1), "&", ""), "s.", ""));
             replaceAll(arrayCode, "[C]", commented ? "// " : "");
             os << arrayCode << endl;
+
         } else if (isObject(field)) {
             const char* STR_OPT_CODE =
                 "\t[C]opt[{FIELD_NAME}] := &cache.Optional[Simple[{FIELD_TYPE}]]{\n"
@@ -646,6 +647,7 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
             replaceAll(optCode, "[{FIELD_TYPE}]", type);
             replaceAll(optCode, "[C]", commented ? "// " : "");
             os << optCode << endl;
+
         } else {
             os << "\t" << (commented ? "// " : "") << "if err = cache.WriteValue(writer, " << name << "); err != nil {"
                << endl;

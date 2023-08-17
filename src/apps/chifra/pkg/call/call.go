@@ -157,7 +157,7 @@ func (call *ContractCall) Call() (results *types.SimpleResult, err error) {
 		encodedArguments = packedHex[10:]
 	}
 
-	rawReturn, err := query.Query[string](call.Conn.Chain, "eth_call", query.Params{
+	rawBytes, err := query.Query[string](call.Conn.Chain, "eth_call", query.Params{
 		map[string]any{
 			"to":   call.Address.Hex(),
 			"data": packedHex,
@@ -170,11 +170,9 @@ func (call *ContractCall) Call() (results *types.SimpleResult, err error) {
 
 	function := call.Method.Clone()
 
-	rr := *rawReturn
-	if len(rr) > 2 {
+	if rawBytes != nil && len(*rawBytes) > 2 {
 		abiCache := articulate.NewAbiCache(call.Conn.Chain, true)
-		err = abiCache.ArticulateFunction(function, "", rr[2:])
-		if err != nil {
+		if err = abiCache.ArticulateFunction(function, "", (*rawBytes)[2:]); err != nil {
 			return nil, err
 		}
 	}
@@ -187,11 +185,12 @@ func (call *ContractCall) Call() (results *types.SimpleResult, err error) {
 		Encoding:         call.Method.Encoding,
 		Signature:        call.Method.Signature,
 		EncodedArguments: encodedArguments,
-		RawReturn:        *rawReturn,
+		ReturnedBytes:    *rawBytes,
+		ArticulatedOut:   function,
 	}
-	results.Outputs = make(map[string]string)
+	results.Values = make(map[string]string)
 	for index, output := range function.Outputs {
-		results.Outputs[output.DisplayName(index)] = fmt.Sprint(output.Value)
+		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
 	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && isFinal(call.Conn.LatestBlockTimestamp, blockTs) {

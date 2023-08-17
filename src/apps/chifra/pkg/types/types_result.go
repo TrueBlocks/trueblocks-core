@@ -23,30 +23,30 @@ import (
 // EXISTING_CODE
 
 type RawResult struct {
-	Address          string   `json:"address"`
-	BlockNumber      string   `json:"blockNumber"`
-	EncodedArguments string   `json:"encodedArguments"`
-	Encoding         string   `json:"encoding"`
-	Name             string   `json:"name"`
-	Outputs          []string `json:"outputs"`
-	Signature        string   `json:"signature"`
-	Timestamp        string   `json:"timestamp"`
+	Address          string `json:"address"`
+	BlockNumber      string `json:"blockNumber"`
+	EncodedArguments string `json:"encodedArguments"`
+	Encoding         string `json:"encoding"`
+	Name             string `json:"name"`
+	Signature        string `json:"signature"`
+	Timestamp        string `json:"timestamp"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleResult struct {
-	Address          base.Address      `json:"address"`
-	BlockNumber      base.Blknum       `json:"blockNumber"`
-	EncodedArguments string            `json:"encodedArguments"`
-	Encoding         string            `json:"encoding"`
-	Name             string            `json:"name"`
-	Outputs          map[string]string `json:"outputs"`
-	Signature        string            `json:"signature"`
-	Timestamp        base.Timestamp    `json:"timestamp"`
-	raw              *RawResult        `json:"-"`
+	Address          base.Address    `json:"address"`
+	ArticulatedOut   *SimpleFunction `json:"articulatedOut"`
+	BlockNumber      base.Blknum     `json:"blockNumber"`
+	EncodedArguments string          `json:"encodedArguments"`
+	Encoding         string          `json:"encoding"`
+	Name             string          `json:"name"`
+	Signature        string          `json:"signature"`
+	Timestamp        base.Timestamp  `json:"timestamp"`
+	raw              *RawResult      `json:"-"`
 	// EXISTING_CODE
-	RawReturn string
+	Values        map[string]string `json:"values"`
+	ReturnedBytes string
 	// EXISTING_CODE
 }
 
@@ -67,7 +67,7 @@ func (s *SimpleResult) Model(verbose bool, format string, extraOptions map[strin
 		"name":      s.Name,
 		"signature": s.Signature,
 		"encoding":  s.Encoding,
-		"outputs":   s.Outputs,
+		"outputs":   s.Values,
 	}
 	model = map[string]any{
 		"blockNumber": s.BlockNumber,
@@ -77,14 +77,6 @@ func (s *SimpleResult) Model(verbose bool, format string, extraOptions map[strin
 		"callResult":  callResult,
 	}
 
-	if format == "json" {
-		return Model{
-			Data: model,
-		}
-	}
-
-	model["signature"] = s.Signature
-	model["compressedResult"] = makeCompressed(s.Outputs)
 	order = []string{
 		"blockNumber",
 		"address",
@@ -92,6 +84,33 @@ func (s *SimpleResult) Model(verbose bool, format string, extraOptions map[strin
 		"encoding",
 		"bytes",
 		"compressedResult",
+	}
+
+	isArticulated := extraOptions["articulate"] == true && s.ArticulatedOut != nil
+	var articulatedOut map[string]interface{}
+	if isArticulated {
+		articulatedOut = map[string]interface{}{
+			"name": s.ArticulatedOut.Name,
+		}
+		// inputModels := parametersToMap(s.ArticulatedOut.Inputs)
+		// if inputModels != nil {
+		// 	articulatedOut["inputs"] = inputModels
+		// }
+		outputModels := parametersToMap(s.ArticulatedOut.Outputs)
+		if outputModels != nil {
+			articulatedOut["outputs"] = outputModels
+		}
+		if format == "json" {
+			model["callResult"] = articulatedOut
+		} else {
+			model["compressedShit"] = makeCompressed(articulatedOut)
+			order = append(order, "compressedShit")
+		}
+	}
+
+	if format != "json" {
+		model["signature"] = s.Signature
+		model["compressedResult"] = makeCompressed(s.Values)
 	}
 	// EXISTING_CODE
 
@@ -135,6 +154,14 @@ func (s *SimpleResult) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// ArticulatedOut
+	optArticulatedOut := &cache.Optional[SimpleFunction]{
+		Value: s.ArticulatedOut,
+	}
+	if err = cache.WriteValue(writer, optArticulatedOut); err != nil {
+		return err
+	}
+
 	// BlockNumber
 	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
@@ -152,16 +179,6 @@ func (s *SimpleResult) MarshalCache(writer io.Writer) (err error) {
 
 	// Name
 	if err = cache.WriteValue(writer, s.Name); err != nil {
-		return err
-	}
-
-	// Outputs
-	str := make([]string, len(s.Outputs)*2)
-	for i, v := range s.Outputs {
-		str = append(str, i)
-		str = append(str, v)
-	}
-	if err = cache.WriteValue(writer, strings.Join(str, "|")); err != nil {
 		return err
 	}
 
@@ -184,6 +201,15 @@ func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err err
 		return err
 	}
 
+	// ArticulatedOut
+	optArticulatedOut := &cache.Optional[SimpleFunction]{
+		Value: s.ArticulatedOut,
+	}
+	if err = cache.ReadValue(reader, optArticulatedOut, version); err != nil {
+		return err
+	}
+	s.ArticulatedOut = optArticulatedOut.Get()
+
 	// BlockNumber
 	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
@@ -203,22 +229,6 @@ func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err err
 	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
 		return err
 	}
-
-	// Outputs
-	var str string
-	if err = cache.ReadValue(reader, &str, version); err != nil {
-		return err
-	}
-	arr := strings.Split(str, "|")
-	s.Outputs = make(map[string]string)
-	for i := 0; i < len(arr); i += 2 {
-		if len(arr[i]) > 0 {
-			s.Outputs[arr[i]] = arr[i+1]
-		}
-	}
-	// if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
-	// 	return err
-	// }
 
 	// Signature
 	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {

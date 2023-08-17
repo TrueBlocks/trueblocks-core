@@ -3188,9 +3188,11 @@ components:
         encodedArguments:
           type: string
           description: "the bytes data following the encoding of the call"
-        outputs:
-          type: Outputs
-          description: "the result of the call to the contract"
+        articulatedOut:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call articulated as other models"
     tokenBalance:
       description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
       type: object
