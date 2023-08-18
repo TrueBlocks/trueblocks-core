@@ -51,12 +51,10 @@ func (opts *ExportOptions) readStatements(
 	}
 
 	sort.Slice(txArray, func(i, j int) bool {
-		itemI := txArray[i]
-		itemJ := txArray[j]
-		if itemI.BlockNumber == itemJ.BlockNumber {
-			return itemI.TransactionIndex < itemJ.TransactionIndex
+		if txArray[i].BlockNumber == txArray[j].BlockNumber {
+			return txArray[i].TransactionIndex < txArray[j].TransactionIndex
 		}
-		return itemI.BlockNumber < itemJ.BlockNumber
+		return txArray[i].BlockNumber < txArray[j].BlockNumber
 	})
 
 	// Sort the items back into an ordered array by block number

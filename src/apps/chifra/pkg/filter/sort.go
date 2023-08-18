@@ -15,9 +15,9 @@ const (
 )
 
 func (f *AppearanceFilter) Sort(fromDisc []index.AppearanceRecord) {
-	if f.SortBy == Sorted || f.SortBy == Reversed {
+	if f.sortBy == Sorted || f.sortBy == Reversed {
 		sort.Slice(fromDisc, func(i, j int) bool {
-			if f.SortBy == Reversed {
+			if f.sortBy == Reversed {
 				i, j = j, i
 			}
 			si := (uint64(fromDisc[i].BlockNumber) << 32) + uint64(fromDisc[i].TransactionId)

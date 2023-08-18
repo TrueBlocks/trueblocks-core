@@ -12,13 +12,13 @@ import (
 )
 
 type AppearanceFilter struct {
-	ExportRange base.BlockRange
 	OuterBounds base.BlockRange
-	SortBy      AppearanceSort
+	sortBy      AppearanceSort
 	Reversed    bool
+	exportRange base.BlockRange
 	recordRange base.RecordRange
 	EnableRr    bool
-	Seen        int64
+	nSeen       int64
 	nExported   uint64
 	currentBn   uint32
 	currentTs   int64
@@ -30,12 +30,12 @@ func NewFilter(reversed bool, exportRange base.BlockRange, recordRange base.Reco
 		sortBy = Reversed
 	}
 	return &AppearanceFilter{
-		ExportRange: exportRange,
+		exportRange: exportRange,
 		recordRange: recordRange,
 		OuterBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
-		SortBy:      sortBy,
+		sortBy:      sortBy,
 		Reversed:    reversed,
-		Seen:        -1,
+		nSeen:       -1,
 		EnableRr:    true,
 	}
 }
@@ -49,7 +49,7 @@ func NewEmptyFilter() *AppearanceFilter {
 }
 
 func (f *AppearanceFilter) SetSort(sortBy AppearanceSort) {
-	f.SortBy = sortBy
+	f.sortBy = sortBy
 }
 
 func (f *AppearanceFilter) Reset() {
@@ -64,7 +64,7 @@ func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
 // BlockRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
 func (f *AppearanceFilter) BlockRangeFilter(app *index.AppearanceRecord) (passed, finished bool) {
 	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
-	if !appRange.Intersects(base.FileRange(f.ExportRange)) {
+	if !appRange.Intersects(base.FileRange(f.exportRange)) {
 		return false, false
 	}
 
@@ -77,9 +77,9 @@ func (f *AppearanceFilter) BlockRangeFilter(app *index.AppearanceRecord) (passed
 
 // RecordCountFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
 func (f *AppearanceFilter) RecordCountFilter() (passed, finished bool) {
-	f.Seen++
+	f.nSeen++
 
-	if f.Seen < int64(f.recordRange.First) { // --first_record
+	if f.nSeen < int64(f.recordRange.First) { // --first_record
 		logger.Progress(true, "Skipping:", f.nExported, f.recordRange.First)
 		return false, false
 	}
