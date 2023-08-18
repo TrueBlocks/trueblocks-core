@@ -68,6 +68,9 @@ func (opts *ExportOptions) readBalances(
 		items = append(items, tx)
 	}
 	sort.Slice(items, func(i, j int) bool {
+		if opts.Reversed {
+			i, j = j, i
+		}
 		return items[i].BlockNumber < items[j].BlockNumber
 	})
 

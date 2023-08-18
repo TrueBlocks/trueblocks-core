@@ -6,6 +6,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -32,7 +33,9 @@ func (opts *ExportOptions) readReceipts(
 		return nil, nil
 	}
 
-	if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil {
+	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
+	bar := logger.NewBar(mon.Address.Hex(), !silent, mon.Count())
+	if err := readTransactions(opts.Conn, txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 		return nil, err
 	}
 
@@ -57,6 +60,9 @@ func (opts *ExportOptions) readReceipts(
 		items = append(items, tx.Receipt)
 	}
 	sort.Slice(items, func(i, j int) bool {
+		if opts.Reversed {
+			i, j = j, i
+		}
 		itemI := items[i]
 		itemJ := items[j]
 		if itemI.BlockNumber == itemJ.BlockNumber {

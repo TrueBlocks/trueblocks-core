@@ -7,6 +7,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -37,7 +38,9 @@ func (opts *ExportOptions) readStatements(
 		return nil, nil
 	}
 
-	if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil { // calls IterateOverMap
+	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
+	bar := logger.NewBar(mon.Address.Hex(), !silent, mon.Count())
+	if err := readTransactions(opts.Conn, txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 		return nil, err
 	}
 
@@ -47,6 +50,9 @@ func (opts *ExportOptions) readStatements(
 	}
 
 	sort.Slice(txArray, func(i, j int) bool {
+		if opts.Reversed {
+			i, j = j, i
+		}
 		itemI := txArray[i]
 		itemJ := txArray[j]
 		if itemI.BlockNumber == itemJ.BlockNumber {
@@ -93,6 +99,9 @@ func (opts *ExportOptions) readStatements(
 	}
 
 	sort.Slice(items, func(i, j int) bool {
+		if opts.Reversed {
+			i, j = j, i
+		}
 		itemI := items[i]
 		itemJ := items[j]
 		if itemI.BlockNumber == itemJ.BlockNumber {

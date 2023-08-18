@@ -72,6 +72,9 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 					items = append(items, app)
 				}
 				sort.Slice(items, func(i, j int) bool {
+					if opts.Reversed {
+						i, j = j, i
+					}
 					if items[i].BlockNumber == items[j].BlockNumber {
 						if items[i].TransactionIndex == items[j].TransactionIndex {
 							return items[i].Address.Hex() < items[j].Address.Hex()
