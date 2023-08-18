@@ -70,6 +70,9 @@ func (opts *BlocksOptions) HandleUniq() error {
 		}
 		sort.Slice(items, func(i, j int) bool {
 			if items[i].BlockNumber == items[j].BlockNumber {
+				if items[i].TransactionIndex == items[j].TransactionIndex {
+					return items[i].Reason < items[j].Reason
+				}
 				return items[i].TransactionIndex < items[j].TransactionIndex
 			}
 			return items[i].BlockNumber < items[j].BlockNumber

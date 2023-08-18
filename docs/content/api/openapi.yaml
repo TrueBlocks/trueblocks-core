@@ -2912,6 +2912,11 @@ components:
           format: blknum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
+        traceIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "a field used to sort traces (not part of RPC data)"
         traceAddress:
           type: array
           items:
