@@ -76,7 +76,9 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					})
 					for _, item := range items {
 						item := item
-						modelChan <- item
+						if len(item.Hash.Hex()) > 0 {
+							modelChan <- item
+						}
 					}
 				}
 
