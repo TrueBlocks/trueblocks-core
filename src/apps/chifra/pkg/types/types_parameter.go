@@ -179,7 +179,14 @@ func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err 
 		return fmt.Errorf("cannot unmarshal Value: %w", err)
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleParameter) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

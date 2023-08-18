@@ -467,7 +467,14 @@ func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err erro
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleSlurp) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

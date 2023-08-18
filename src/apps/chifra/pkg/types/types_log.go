@@ -313,7 +313,14 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleLog) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

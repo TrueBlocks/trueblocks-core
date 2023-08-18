@@ -262,7 +262,14 @@ func (s *SimpleTraceAction) UnmarshalCache(version uint64, reader io.Reader) (er
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleTraceAction) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

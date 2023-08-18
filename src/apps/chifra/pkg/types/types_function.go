@@ -246,7 +246,14 @@ func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err e
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleFunction) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

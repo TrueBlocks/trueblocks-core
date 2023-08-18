@@ -11,6 +11,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var discardWriter = io.Writer(nil)
+
+func init() {
+	if os.Getenv("TB_DISCARD_WRITER") == "true" {
+		discardWriter = io.Discard
+	}
+}
+
 var enabledForCmds = map[string]bool{}
 var enabledForCmdsMutex sync.RWMutex
 
@@ -28,6 +36,8 @@ func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptio
 		outputWriter = os.Stdout
 		if opts.OutputFn != "" {
 			outputWriter = opts.GetOutputFileWriter()
+		} else if discardWriter != nil {
+			outputWriter = discardWriter
 		}
 
 		// If we need to output JSON, init JsonWriter...

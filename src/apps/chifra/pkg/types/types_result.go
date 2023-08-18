@@ -240,7 +240,18 @@ func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err err
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleResult) FinishUnmarshal() {
+	// EXISTING_CODE
+	s.Values = make(map[string]string)
+	for index, output := range s.ArticulatedOut.Outputs {
+		s.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
+	}
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

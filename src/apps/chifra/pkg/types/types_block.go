@@ -345,7 +345,14 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleBlock[Tx]) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

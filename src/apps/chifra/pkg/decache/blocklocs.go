@@ -6,9 +6,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func BlockLocationsFromIds(conn *rpc.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
+func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, logs, trace bool) ([]cache.Locator, error) {
 	locations := make([]cache.Locator, 0)
 	for _, br := range ids {
 		blockNums, err := br.ResolveBlocks(conn.Chain)
@@ -16,23 +17,31 @@ func BlockLocationsFromIds(conn *rpc.Connection, ids []identifiers.Identifier) (
 			return nil, err
 		}
 		for _, bn := range blockNums {
-			rawBlock, err := conn.GetBlockHeaderByNumber(bn)
-			if err != nil {
-				return nil, err
-			}
-			locations = append(locations, &types.SimpleBlock[string]{
-				BlockNumber: bn,
-			})
-			for index := range rawBlock.Transactions {
-				txToRemove := &types.SimpleTransaction{
+			if logs {
+				logGroup := &types.SimpleLogGroup{
 					BlockNumber:      bn,
-					TransactionIndex: uint64(index),
+					TransactionIndex: utils.NOPOS,
 				}
-				locations = append(locations, txToRemove)
-				locations = append(locations, &types.SimpleTraceGroup{
-					BlockNumber:      bn,
-					TransactionIndex: base.Txnum(index),
+				locations = append(locations, logGroup)
+			} else {
+				rawBlock, err := conn.GetBlockHeaderByNumber(bn)
+				if err != nil {
+					return nil, err
+				}
+				locations = append(locations, &types.SimpleBlock[string]{
+					BlockNumber: bn,
 				})
+				for index := range rawBlock.Transactions {
+					txToRemove := &types.SimpleTransaction{
+						BlockNumber:      bn,
+						TransactionIndex: uint64(index),
+					}
+					locations = append(locations, txToRemove)
+					locations = append(locations, &types.SimpleTraceGroup{
+						BlockNumber:      bn,
+						TransactionIndex: base.Txnum(index),
+					})
+				}
 			}
 		}
 	}

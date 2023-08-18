@@ -9,32 +9,24 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
-func Decache(conn *rpc.Connection, locs []cache.Locator, testMode, verbose bool) (string, error) {
+func Decache(conn *rpc.Connection, locs []cache.Locator, silent bool, reason string) (string, error) {
 	itemsSeen := int64(0)
 	itemsProcessed := int64(0)
 	bytesProcessed := 0
+
+	bar := logger.NewBar("Decaching "+reason, !silent, int64(len(locs)))
 	processorFunc := func(info *locations.ItemInfo) bool {
 		itemsSeen++
 		itemsProcessed++
 		bytesProcessed += info.Size()
-		logger.Progress(!testMode && itemsProcessed%20 == 0, "Removed", itemsProcessed, "items and", bytesProcessed, "bytes.", info.Name())
-		if verbose {
-			logger.Info(info.Name(), "was removed.")
-		}
-
+		bar.Tick()
 		return true
 	}
 
 	if err := conn.Store.Decache(locs, processorFunc); err != nil {
+		bar.Finish(true)
 		return "", err
 	}
-	logger.Info("")
-
-	if itemsProcessed == 0 {
-		return "No items were removed from the cache.", nil
-	} else if itemsProcessed == 1 {
-		return fmt.Sprintf("One item totaling %d bytes was removed from the cache.", bytesProcessed), nil
-	} else {
-		return fmt.Sprintf("%d items totaling %d bytes were removed from the cache.", itemsProcessed, bytesProcessed), nil
-	}
+	bar.Finish(true)
+	return fmt.Sprintf("%d items totaling %d bytes were removed from the cache.", itemsProcessed, bytesProcessed), nil
 }

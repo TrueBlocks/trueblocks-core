@@ -329,11 +329,6 @@ string_q jsonName(const CClassDefinition& model, const CMember& field, bool raw)
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool isCommented(const CClassDefinition& model) {
-    return false;
-}
-
-//------------------------------------------------------------------------------------------------------------
 string_q get_cache_code(const CClassDefinition& modelIn) {
     if (modelIn.cache_type.empty()) {
         return "";
@@ -343,7 +338,6 @@ string_q get_cache_code(const CClassDefinition& modelIn) {
     bool isGroupable = modelIn.cache_as == "group";
     bool isMarshalable = modelIn.cache_type == "cacheable" || modelIn.cache_type == "marshal_only";
     bool hasAddress = contains(modelIn.cache_by, "addr");
-    bool commented = isCommented(modelIn);
 
     ostringstream os;
     os << endl;
@@ -449,15 +443,12 @@ string_q get_cache_code(const CClassDefinition& modelIn) {
         }
 
         const char* STR_CACHE_MARSHAL =
-            "func (s *Simple[{MODEL_NAME}]) MarshalCache_new(writer io.Writer) (err error) {\n"
+            "func (s *Simple[{MODEL_NAME}]) MarshalCache(writer io.Writer) (err error) {\n"
             "[{FIELDS}]"
             "\treturn nil\n"
             "}\n";
 
         string_q marshalCode = STR_CACHE_MARSHAL;
-        if (!commented) {
-            replaceAll(marshalCode, "_new", "");
-        }
 
         if (isGroupable) {
             replaceAll(marshalCode, "[{CLASS_NAME}]", groupName);
@@ -469,15 +460,20 @@ string_q get_cache_code(const CClassDefinition& modelIn) {
         os << marshalCode << endl;
 
         const char* STR_CACHE_UNMARSHAL =
-            "func (s *Simple[{MODEL_NAME}]) UnmarshalCache_new(version uint64, reader io.Reader) (err error) {\n"
+            "func (s *Simple[{MODEL_NAME}]) UnmarshalCache(version uint64, reader io.Reader) (err error) {\n"
             "[{FIELDS}]"
+            "\ts.FinishUnmarshal()\n"
+            "\n"
             "\treturn nil\n"
-            "}\n";
+            "}\n"
+            "\n"
+            "func (s *Simple[{MODEL_NAME}]) FinishUnmarshal() {\n"
+            "\t// EXISTING_CODE\n"
+            "\t// EXISTING_CODE\n"
+            "}\n"
+            "\n";
 
         string_q unmarshalCode = STR_CACHE_UNMARSHAL;
-        if (!commented) {
-            replaceAll(unmarshalCode, "_new", "");
-        }
         if (isGroupable) {
             replaceAll(unmarshalCode, "[{CLASS_NAME}]", groupName);
         } else {
@@ -564,8 +560,6 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
     // CClassDefinition modelOrig = modelIn;
     sort(model.fieldArray.begin(), model.fieldArray.end());
 
-    bool commented = isCommented(modelIn);
-
     ostringstream os;
     for (auto field : model.fieldArray) {
         string_q modelName = type_2_ModelName(modelIn.go_model, false);
@@ -598,7 +592,8 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
             name = "s." + modelIn.base_name + "Type";
         }
 
-        os << "\t" << (commented ? "// " : "") << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
+        os << "\t"
+           << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
         if (field.name % "transactions") {
             const char* STR_HACK =
                 "\tvar txHashes []string\n"
@@ -618,41 +613,41 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
 
         } else if (isObjectArray(field)) {
             const char* STR_ARRAY_CODE =
-                "\t[C][{LOWER}] := make([]cache.Marshaler, 0, len([{FIELD_NAME}]))\n"
-                "\t[C]for _, [{SINGULAR}] := range [{FIELD_NAME}] {\n"
-                "\t[C]\t[{SINGULAR}] := [{SINGULAR}]\n"
-                "\t[C]\t[{LOWER}] = append([{LOWER}], &[{SINGULAR}])\n"
-                "\t[C]}\n"
-                "\t[C]if err = cache.WriteValue(writer, [{LOWER}]); err != nil {\n"
-                "\t[C]\treturn err\n"
-                "\t[C]}\n";
+                "\t[{LOWER}] := make([]cache.Marshaler, 0, len([{FIELD_NAME}]))\n"
+                "\tfor _, [{SINGULAR}] := range [{FIELD_NAME}] {\n"
+                "\t\t[{SINGULAR}] := [{SINGULAR}]\n"
+                "\t\t[{LOWER}] = append([{LOWER}], &[{SINGULAR}])\n"
+                "\t}\n"
+                "\tif err = cache.WriteValue(writer, [{LOWER}]); err != nil {\n"
+                "\t\treturn err\n"
+                "\t}\n";
             string_q arrayCode = STR_ARRAY_CODE;
             replaceAll(arrayCode, "[{FIELD_NAME}]", name);
             replaceAll(arrayCode, "[{LOWER}]", substitute(substitute(toLower(name), "&", ""), "s.", ""));
             replaceAll(arrayCode, "[{SINGULAR}]",
                        substitute(substitute(toLower(name).substr(0, name.length() - 1), "&", ""), "s.", ""));
-            replaceAll(arrayCode, "[C]", commented ? "// " : "");
             os << arrayCode << endl;
 
         } else if (isObject(field)) {
             const char* STR_OPT_CODE =
-                "\t[C]opt[{FIELD_NAME}] := &cache.Optional[Simple[{FIELD_TYPE}]]{\n"
-                "\t[C]\tValue: s.[{FIELD_NAME}],\n"
-                "\t[C]}\n"
-                "\t[C]if err = cache.WriteValue(writer, opt[{FIELD_NAME}]); err != nil {\n"
-                "\t[C]\treturn err\n"
-                "\t[C]}\n";
+                "\topt[{FIELD_NAME}] := &cache.Optional[Simple[{FIELD_TYPE}]]{\n"
+                "\t\tValue: s.[{FIELD_NAME}],\n"
+                "\t}\n"
+                "\tif err = cache.WriteValue(writer, opt[{FIELD_NAME}]); err != nil {\n"
+                "\t\treturn err\n"
+                "\t}\n";
             string_q optCode = STR_OPT_CODE;
             replaceAll(optCode, "[{FIELD_NAME}]", substitute(name, "s.", ""));
             replaceAll(optCode, "[{FIELD_TYPE}]", type);
-            replaceAll(optCode, "[C]", commented ? "// " : "");
             os << optCode << endl;
 
         } else {
-            os << "\t" << (commented ? "// " : "") << "if err = cache.WriteValue(writer, " << name << "); err != nil {"
-               << endl;
-            os << "\t" << (commented ? "// " : "") << "\treturn err" << endl;
-            os << "\t" << (commented ? "// " : "") << "}" << endl;
+            os << "\t"
+               << "if err = cache.WriteValue(writer, " << name << "); err != nil {" << endl;
+            os << "\t"
+               << "\treturn err" << endl;
+            os << "\t"
+               << "}" << endl;
         }
         os << endl;
     }
@@ -661,10 +656,7 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
 
 string_q get_unmarshal_fields(const CClassDefinition& modelIn) {
     CClassDefinition model = modelIn;
-    // CClassDefinition modelOrig = modelIn;
     sort(model.fieldArray.begin(), model.fieldArray.end());
-
-    bool commented = isCommented(modelIn);
 
     ostringstream os;
     for (auto field : model.fieldArray) {
@@ -693,13 +685,16 @@ string_q get_unmarshal_fields(const CClassDefinition& modelIn) {
             name = "s." + modelIn.base_name + "Type";
         }
 
-        os << "\t" << (commented ? "// " : "") << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
+        os << "\t"
+           << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
         if (isArray(field)) {
-            os << "\t" << (commented ? "// " : "") << name << " = make([]Simple" << type << ", 0)" << endl;
-            os << "\t" << (commented ? "// " : "") << "if err = cache.ReadValue(reader, &" << name
-               << ", version); err != nil {" << endl;
-            os << "\t" << (commented ? "// " : "") << "\treturn err" << endl;
-            os << "\t" << (commented ? "// " : "") << "}" << endl;
+            os << "\t" << name << " = make([]Simple" << type << ", 0)" << endl;
+            os << "\t"
+               << "if err = cache.ReadValue(reader, &" << name << ", version); err != nil {" << endl;
+            os << "\t"
+               << "\treturn err" << endl;
+            os << "\t"
+               << "}" << endl;
             os << endl;
         } else if (isObject(field)) {
             const char* STR_OPT_CODE =
@@ -713,13 +708,14 @@ string_q get_unmarshal_fields(const CClassDefinition& modelIn) {
             string_q optCode = STR_OPT_CODE;
             replaceAll(optCode, "[{FIELD_NAME}]", substitute(name, "s.", ""));
             replaceAll(optCode, "[{FIELD_TYPE}]", type);
-            replaceAll(optCode, "[C]", commented ? "// " : "");
             os << optCode << endl;
         } else {
-            os << "\t" << (commented ? "// " : "") << "if err = cache.ReadValue(reader, &" << name
-               << ", version); err != nil {" << endl;
-            os << "\t" << (commented ? "// " : "") << "\treturn err" << endl;
-            os << "\t" << (commented ? "// " : "") << "}" << endl;
+            os << "\t"
+               << "if err = cache.ReadValue(reader, &" << name << ", version); err != nil {" << endl;
+            os << "\t"
+               << "\treturn err" << endl;
+            os << "\t"
+               << "}" << endl;
             os << endl;
         }
     }

@@ -281,7 +281,14 @@ func (s *SimpleReceipt) UnmarshalCache(version uint64, reader io.Reader) (err er
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleReceipt) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

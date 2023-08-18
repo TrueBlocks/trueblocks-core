@@ -258,7 +258,7 @@ func ResetOptions() {
 func (opts *ExportOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		// TODO: Enabled neighbors and statements cache
+		// TODO: Enabled neighbors cache
 		"transactions": true,
 		"statements":   true,
 		"traces":       opts.CacheTraces,

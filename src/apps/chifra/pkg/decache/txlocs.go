@@ -10,7 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-func TransactionLocationsFromIds(conn *rpc.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
+func LocationsFromTransactionIds(conn *rpc.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {
 	locations := make([]cache.Locator, 0)
 	for _, rng := range ids {
 		txIds, err := rng.ResolveTxs(conn.Chain)
