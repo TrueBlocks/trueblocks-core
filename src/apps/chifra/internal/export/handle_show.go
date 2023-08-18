@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -22,7 +23,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
-	filter := monitor.NewFilter(
+	filter := filter.NewFilter(
 		chain,
 		true,
 		opts.Reversed,
@@ -76,7 +77,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					})
 					for _, item := range items {
 						item := item
-						if !item.Hash.IsZero() {
+						if !item.BlockHash.IsZero() {
 							modelChan <- item
 						}
 					}

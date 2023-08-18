@@ -6,6 +6,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -14,7 +15,7 @@ import (
 func (opts *ExportOptions) readReceipts(
 	addrArray []base.Address,
 	mon *monitor.Monitor,
-	filter *monitor.AppearanceFilter,
+	filter *filter.AppearanceFilter,
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleReceipt, error) {

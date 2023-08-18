@@ -82,7 +82,7 @@ func (opts *TracesOptions) HandleCounts() error {
 		})
 		for _, item := range items {
 			item := item
-			if item.BlockNumber != 0 {
+			if !item.BlockHash.IsZero() {
 				counter := simpleTraceCount{
 					BlockNumber:      uint64(item.BlockNumber),
 					TransactionIndex: uint64(item.TransactionIndex),

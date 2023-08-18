@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -22,7 +23,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
-	filter := monitor.NewFilter(
+	filter := filter.NewFilter(
 		chain,
 		opts.Globals.Verbose,
 		opts.Reversed,
@@ -67,7 +68,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 func (opts *ExportOptions) readTraces(
 	monitorArray []monitor.Monitor,
 	mon *monitor.Monitor,
-	filter *monitor.AppearanceFilter,
+	filter *filter.AppearanceFilter,
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleTrace, error) {

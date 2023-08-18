@@ -11,6 +11,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -63,7 +64,7 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 }
 
 // ReadAppearancesToMap reads all appearances from the monitor and returns a map of the appearances to the given type.
-func ReadAppearancesToMap[T any](mon *Monitor, filter *AppearanceFilter) (theMap map[types.SimpleAppearance]*T, cnt int, err error) {
+func ReadAppearancesToMap[T any](mon *Monitor, filter *filter.AppearanceFilter) (theMap map[types.SimpleAppearance]*T, cnt int, err error) {
 	if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 		return nil, 0, err
 	} else if cnt == 0 {

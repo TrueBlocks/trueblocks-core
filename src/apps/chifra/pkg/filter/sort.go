@@ -1,4 +1,4 @@
-package monitor
+package filter
 
 import (
 	"sort"
@@ -15,15 +15,14 @@ const (
 )
 
 func (f *AppearanceFilter) Sort(fromDisc []index.AppearanceRecord) {
-	if f.sortBy == Sorted || f.sortBy == Reversed {
+	if f.SortBy == Sorted || f.SortBy == Reversed {
 		sort.Slice(fromDisc, func(i, j int) bool {
+			if f.SortBy == Reversed {
+				i, j = j, i
+			}
 			si := (uint64(fromDisc[i].BlockNumber) << 32) + uint64(fromDisc[i].TransactionId)
 			sj := (uint64(fromDisc[j].BlockNumber) << 32) + uint64(fromDisc[j].TransactionId)
-			if f.sortBy == Reversed {
-				return sj < si
-			} else {
-				return si < sj
-			}
+			return si < sj
 		})
 	}
 }

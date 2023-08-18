@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -34,7 +35,7 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 				continue
 			}
 
-			if apps, cnt, err := mon.ReadAndFilterAppearances(monitor.NewEmptyFilter(chain)); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(chain)); err != nil {
 				errorChan <- err
 				continue
 

@@ -79,7 +79,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 			for _, item := range items {
 				item := item
-				if item.BlockNumber != 0 {
+				if !item.BlockHash.IsZero() {
 					modelChan <- &item
 				}
 			}

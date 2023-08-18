@@ -99,7 +99,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 
 		for _, item := range items {
 			item := item
-			if item.BlockNumber != 0 {
+			if !item.BlockHash.IsZero() {
 				for _, log := range item.Receipt.Logs {
 					log := log
 					if logFilter.PassesFilter(&log) {

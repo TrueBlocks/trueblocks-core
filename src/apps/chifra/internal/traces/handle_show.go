@@ -95,7 +95,7 @@ func (opts *TracesOptions) HandleShow() error {
 
 		for _, item := range items {
 			item := item
-			if item.BlockNumber != 0 {
+			if !item.BlockHash.IsZero() {
 				modelChan <- &item
 			}
 		}
