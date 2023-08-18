@@ -3,4 +3,4 @@ TEST[DATE|TIME] Transactions:  [46147.0]
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
-2 items totaling 790 bytes were removed from the cache.
+2 items totaling 782 bytes were removed from the cache.

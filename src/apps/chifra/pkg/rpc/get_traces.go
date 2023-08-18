@@ -220,9 +220,10 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(utils.MustParseUint(f.FromBlock))
+		var idx uint64
 
 		// TODO: This could be loadTrace in the same way loadBlocks works
-		for index, rawTrace := range rawTraces {
+		for _, rawTrace := range rawTraces {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			rawTrace := rawTrace
 
@@ -271,16 +272,17 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 				Timestamp:        curTs,
 				Action:           &action,
 				Result:           result,
-				TraceIndex:       uint64(index),
 			}
-
 			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != uint64(curApp.TransactionIndex) {
 				curApp = types.SimpleAppearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
 				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
+				idx = 0
 			}
+			trace.TraceIndex = idx
+			idx++
 
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)

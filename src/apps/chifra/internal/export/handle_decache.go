@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -57,16 +58,30 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 						errorChan <- err
 
 					} else {
+						logger.Info(msg)
+
 						// remove the ABI if we can find it
 						abiPath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], mon.Address.Hex()+".json")
 						if file.FileExists(abiPath) {
 							os.Remove(abiPath)
-							msg += " Abi " + abiPath + " file removed."
+							logger.Info("Abi " + abiPath + " file removed.")
 						}
-						s := types.SimpleMessage{
+
+						// delete the monitor
+						if mon.IsOpen() {
+							mon.Close()
+						}
+						mon.Delete()
+						msg := fmt.Sprintf("Monitor %s was deleted but not removed.", mon.Address.Hex())
+						if wasRemoved, err := mon.Remove(); !wasRemoved || err != nil {
+							msg += fmt.Sprintf(" Monitor for %s was not removed (%s).", mon.Address.Hex(), err.Error())
+						} else {
+							msg += fmt.Sprintf(" Monitor for %s  was permanently removed.", mon.Address.Hex())
+						}
+
+						modelChan <- &types.SimpleMessage{
 							Msg: msg,
 						}
-						modelChan <- &s
 					}
 				}
 			}

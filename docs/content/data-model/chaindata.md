@@ -230,7 +230,6 @@ Traces consist of the following fields:
 | date             | a calculated value - the date of the block                | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
-| traceIndex       | a field used to sort traces (not part of RPC data)        | blknum                                            |
 | traceAddress     | a particular trace's address in the trace tree            | string[]                                          |
 | subtraces        | the number of children traces that the trace hash         | uint64                                            |
 | type             | the type of the trace                                     | string                                            |

@@ -86,7 +86,7 @@ func (opts *TracesOptions) HandleShow() error {
 		sort.Slice(items, func(i, j int) bool {
 			if items[i].BlockNumber == items[j].BlockNumber {
 				if items[i].TransactionIndex == items[j].TransactionIndex {
-					return items[i].TraceIndex < items[j].TraceIndex
+					return items[i].GetSortString() < items[j].GetSortString()
 				}
 				return items[i].TransactionIndex < items[j].TransactionIndex
 			}
