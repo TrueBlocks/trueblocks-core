@@ -8,7 +8,6 @@ import (
 	"context"
 	"fmt"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -41,21 +40,24 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 			} else if !opts.NoZero || cnt > 0 {
 				silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
 				bar := logger.NewBar(mon.Address.Hex(), !silent, mon.Count())
-				if err := readTransactions(opts.Conn, txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+				if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 					errorChan <- err
 					return
 				}
 
-				items := make([]*types.SimpleTransaction, 0, len(txMap))
-				for _, tx := range txMap {
-					matches := len(opts.Fourbytes) == 0 // either there is no four bytes...
-					for _, fb := range opts.Fourbytes {
-						if strings.HasPrefix(tx.Input, fb) {
-							matches = true
-							break
+				noSort := false // potential future option, but not so much performance improvement
+				if noSort && !opts.Reversed {
+					for _, tx := range txMap {
+						if opts.Articulate {
+							if err = abiCache.ArticulateTransaction(tx); err != nil {
+								errorChan <- err // continue even on error
+							}
 						}
+						modelChan <- tx
 					}
-					if matches {
+				} else {
+					items := make([]*types.SimpleTransaction, 0, len(txMap))
+					for _, tx := range txMap {
 						if opts.Articulate {
 							if err = abiCache.ArticulateTransaction(tx); err != nil {
 								errorChan <- err // continue even on error
@@ -63,19 +65,19 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						}
 						items = append(items, tx)
 					}
-				}
-				sort.Slice(items, func(i, j int) bool {
-					if opts.Reversed {
-						i, j = j, i
+					sort.Slice(items, func(i, j int) bool {
+						if opts.Reversed {
+							i, j = j, i
+						}
+						if items[i].BlockNumber == items[j].BlockNumber {
+							return items[i].TransactionIndex < items[j].TransactionIndex
+						}
+						return items[i].BlockNumber < items[j].BlockNumber
+					})
+					for _, item := range items {
+						item := item
+						modelChan <- item
 					}
-					if items[i].BlockNumber == items[j].BlockNumber {
-						return items[i].TransactionIndex < items[j].TransactionIndex
-					}
-					return items[i].BlockNumber < items[j].BlockNumber
-				})
-				for _, item := range items {
-					item := item
-					modelChan <- item
 				}
 
 			} else {

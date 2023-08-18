@@ -77,7 +77,7 @@ func (opts *ExportOptions) readTraces(
 	} else if !opts.NoZero || cnt > 0 {
 		silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
 		bar := logger.NewBar(mon.Address.Hex(), !silent, mon.Count())
-		if err := readTransactions(opts.Conn, txMap, opts.Fourbytes, bar, true /* readTraces */); err != nil { // calls IterateOverMap
+		if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, true /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
 

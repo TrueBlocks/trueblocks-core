@@ -1,17 +1,15 @@
-package exportPkg
+package rpc
 
 import (
 	"context"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func readTransactions(
-	conn *rpc.Connection,
+func (conn *Connection) ReadTransactions(
 	theMap map[types.SimpleAppearance]*types.SimpleTransaction,
 	fourBytes []string,
 	bar *logger.ProgressBar,
