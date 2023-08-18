@@ -8,48 +8,38 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type AppearanceFilter struct {
-	Chain       string
 	ExportRange base.BlockRange
-	RecordRange base.RecordRange
 	OuterBounds base.BlockRange
 	SortBy      AppearanceSort
 	Reversed    bool
-	Logging     bool
-	ReadTs      bool
+	recordRange base.RecordRange
 	nSeen       int64
 	nExported   uint64
 	currentBn   uint32
 	currentTs   int64
 }
 
-func NewFilter(chain string, readTs, reversed, logging bool, exportRange base.BlockRange, recordRange base.RecordRange) *AppearanceFilter {
+func NewFilter(reversed bool, exportRange base.BlockRange, recordRange base.RecordRange) *AppearanceFilter {
 	sortBy := Sorted
 	if reversed {
 		sortBy = Reversed
 	}
 	return &AppearanceFilter{
-		Chain:       chain,
 		ExportRange: exportRange,
-		RecordRange: recordRange,
+		recordRange: recordRange,
 		OuterBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
 		SortBy:      sortBy,
 		Reversed:    reversed,
-		Logging:     logging,
-		ReadTs:      readTs,
 		nSeen:       -1,
 	}
 }
 
 func NewEmptyFilter(chain string) *AppearanceFilter {
 	return NewFilter(
-		chain,
-		false,
-		false,
 		false,
 		base.BlockRange{First: 0, Last: utils.NOPOS},
 		base.RecordRange{First: 0, Last: utils.NOPOS},
@@ -69,28 +59,26 @@ func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
 	return f.OuterBounds
 }
 
-func (f *AppearanceFilter) GetTimestamp(chain string, bn uint32) int64 {
-	if bn != f.currentBn || bn == 0 {
-		f.currentTs, _ = tslib.FromBnToTs(chain, uint64(bn))
-	}
-	f.currentBn = bn
-	return f.currentTs
-}
-
-func (f *AppearanceFilter) Passes(address base.Address, app *index.AppearanceRecord, previous *index.AppearanceRecord) (passed, finished bool) {
+// BlockRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
+func (f *AppearanceFilter) BlockRangeFilter(address base.Address, app *index.AppearanceRecord, previous *index.AppearanceRecord) (passed, finished bool) {
 	f.nSeen++
 	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
-	if !appRange.Intersects(base.FileRange(f.ExportRange)) {
+	if !appRange.Intersects(base.FileRange(f.ExportRange)) { // --first_block, --last_block
 		return false, false
 	}
 
-	if f.nSeen < int64(f.RecordRange.First) {
-		logger.Progress(true, "Skipping:", f.nExported, f.RecordRange.First)
+	return f.RecordRangeFilter(address, app, previous)
+}
+
+// RecordRangeFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
+func (f *AppearanceFilter) RecordRangeFilter(address base.Address, app *index.AppearanceRecord, previous *index.AppearanceRecord) (passed, finished bool) {
+	if f.nSeen < int64(f.recordRange.First) { // --first_record
+		logger.Progress(true, "Skipping:", f.nExported, f.recordRange.First)
 		return false, false
 	}
 
-	if f.nExported >= f.RecordRange.Last {
-		logger.Progress(true, "Quitting:", f.nExported, f.RecordRange.First)
+	if f.nExported >= f.recordRange.Last { // --max_records
+		logger.Progress(true, "Quitting:", f.nExported, f.recordRange.First)
 		return false, true
 	}
 

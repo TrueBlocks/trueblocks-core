@@ -8,7 +8,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -58,11 +57,11 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 
 	prev := fromDisc[0]
 	apps = make([]types.SimpleAppearance, 0, len(fromDisc))
-	for i, app := range fromDisc {
+	for _, app := range fromDisc {
 		app := app
-		if passed, finished := filt.Passes(mon.Address, &app, &prev); finished {
+		if passes, finished := filt.BlockRangeFilter(mon.Address, &app, &prev); finished {
 			return apps, len(apps), nil
-		} else if passed {
+		} else if passes {
 			if len(apps) == 0 {
 				filt.OuterBounds.First = uint64(prev.BlockNumber)
 			}
@@ -73,12 +72,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 				TransactionIndex: uint32(app.TransactionId),
 				Timestamp:        utils.NOPOSI,
 			}
-			if filt.ReadTs {
-				s.Timestamp = filt.GetTimestamp(filt.Chain, app.BlockNumber)
-			}
 			apps = append(apps, s)
-		} else {
-			logger.Progress(filt.Logging && i%100 == 0, "Skipping:", app)
 		}
 		prev = app
 	}

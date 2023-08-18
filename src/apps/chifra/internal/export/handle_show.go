@@ -24,10 +24,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
-		chain,
-		true,
 		opts.Reversed,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)

@@ -15,12 +15,8 @@ import (
 
 func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
-		chain,
-		false, // we will get timestamps by hand below since we're only getting two
 		false,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)

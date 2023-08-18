@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -21,17 +22,21 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
-		chain,
-		opts.Globals.Verbose,
 		opts.Reversed,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		currentBn := uint32(0)
 		visitAppearance := func(app *types.SimpleAppearance) error {
+			if opts.Globals.Verbose {
+				if app.BlockNumber == 0 || app.BlockNumber != currentBn {
+					app.Timestamp, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+				}
+				currentBn = app.BlockNumber
+			}
 			modelChan <- app
 			return nil
 		}

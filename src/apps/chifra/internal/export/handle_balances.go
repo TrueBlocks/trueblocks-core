@@ -6,6 +6,7 @@ package exportPkg
 
 import (
 	"context"
+	"fmt"
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -13,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -20,32 +22,50 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
-		chain,
-		true,
 		opts.Reversed,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
+		currentBn := uint64(0)
+		prevBalance := big.NewInt(0)
+		visitToken := func(index int, item *types.SimpleToken) error {
+			item.PriorBalance = *prevBalance
+			if item.BlockNumber == 0 || item.BlockNumber != currentBn {
+				item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
+			}
+			currentBn = item.BlockNumber
+
+			if index == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
+				item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
+				modelChan <- item
+				prevBalance = &item.Balance
+			}
+
+			return nil
+		}
+
 		for _, mon := range monitorArray {
 			if items, err := opts.readBalances(&mon, filter, errorChan); err != nil {
 				errorChan <- err
-				continue
-			} else {
-				prevBalance, _ := opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
+				continue // on error
+			} else if !opts.NoZero || len(items) > 0 {
+				prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 				for index, item := range items {
 					item := item
-					item.PriorBalance = *prevBalance
-					if opts.Globals.Verbose || index == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 {
-						item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
-						modelChan <- item
-						prevBalance = &item.Balance
+					if err := visitToken(index, item); err != nil {
+						errorChan <- err
+						return
 					}
 				}
+
+			} else {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
 			}
+			prevBalance = big.NewInt(0)
 		}
 	}
 

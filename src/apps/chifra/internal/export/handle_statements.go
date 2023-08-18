@@ -21,10 +21,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
-		chain,
-		true, // TODO: Should we use Verbose here?
 		opts.Reversed,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
