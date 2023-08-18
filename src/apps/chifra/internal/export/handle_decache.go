@@ -54,35 +54,22 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 						continue
 					}
 
-					if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, mon.Address.Hex()); err != nil {
+					if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, cache); err != nil {
 						errorChan <- err
 
 					} else {
 						logger.Info(msg)
-
-						// remove the ABI if we can find it
-						abiPath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], mon.Address.Hex()+".json")
-						if file.FileExists(abiPath) {
-							os.Remove(abiPath)
-							logger.Info("Abi " + abiPath + " file removed.")
-						}
-
-						// delete the monitor
-						if mon.IsOpen() {
-							mon.Close()
-						}
-						mon.Delete()
-						msg := fmt.Sprintf("Monitor %s was deleted but not removed.", mon.Address.Hex())
-						if wasRemoved, err := mon.Remove(); !wasRemoved || err != nil {
-							msg += fmt.Sprintf(" Monitor for %s was not removed (%s).", mon.Address.Hex(), err.Error())
-						} else {
-							msg += fmt.Sprintf(" Monitor for %s  was permanently removed.", mon.Address.Hex())
-						}
-
-						modelChan <- &types.SimpleMessage{
-							Msg: msg,
-						}
 					}
+				}
+
+				abiPath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], mon.Address.Hex()+".json")
+				if file.FileExists(abiPath) {
+					os.Remove(abiPath)
+					logger.Info("Abi " + abiPath + " file removed.")
+				}
+
+				modelChan <- &types.SimpleMessage{
+					Msg: opts.RemoveMonitor(mon),
 				}
 			}
 		}
@@ -98,4 +85,14 @@ func getWarning(addr string, count int64) string {
 		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
 	}
 	return strings.Replace(warning, "{1}", "", -1)
+}
+
+func (opts *ExportOptions) RemoveMonitor(mon monitor.Monitor) string {
+	mon.Close()
+	mon.Delete()
+	if wasRemoved, err := mon.Remove(); !wasRemoved || err != nil {
+		return fmt.Sprintf("Monitor for %s was not removed (%s).", mon.Address.Hex(), err.Error())
+	} else {
+		return fmt.Sprintf("Monitor for %s was permanently removed.", mon.Address.Hex())
+	}
 }

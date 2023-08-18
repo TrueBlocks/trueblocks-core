@@ -2,13 +2,7 @@ export?addrs=meriam.eth&decache
 {
   "data": [
     {
-      "msg": "Monitor 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 was deleted but not removed. Monitor for 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6  was permanently removed."
-    },
-    {
-      "msg": "Monitor 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 was deleted but not removed. Monitor for 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6  was permanently removed."
-    },
-    {
-      "msg": "Monitor 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 was deleted but not removed. Monitor for 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6  was permanently removed."
+      "msg": "Monitor for 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 was permanently removed."
     }
   ],
   "meta": {

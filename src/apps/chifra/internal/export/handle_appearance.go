@@ -20,7 +20,6 @@ import (
 
 func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
@@ -30,17 +29,6 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		currentBn := uint32(0)
-		visitAppearance := func(app *types.SimpleAppearance) error {
-			if opts.Globals.Verbose {
-				if app.BlockNumber == 0 || app.BlockNumber != currentBn {
-					app.Timestamp, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
-				}
-				currentBn = app.BlockNumber
-			}
-			modelChan <- app
-			return nil
-		}
-
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 				errorChan <- err
@@ -48,10 +36,13 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 			} else if !opts.NoZero || cnt > 0 {
 				for _, app := range apps {
 					app := app
-					if err := visitAppearance(&app); err != nil {
-						errorChan <- err
-						return
+					if opts.Globals.Verbose {
+						if app.BlockNumber == 0 || app.BlockNumber != currentBn {
+							app.Timestamp, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+						}
+						currentBn = app.BlockNumber
 					}
+					modelChan <- &app
 				}
 			} else {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
@@ -61,9 +52,8 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	}
 
 	extra := map[string]interface{}{
-		"articulate": opts.Articulate,
-		"testMode":   testMode,
-		"export":     true,
+		// "articulate": opts.Articulate,
+		"export": true,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

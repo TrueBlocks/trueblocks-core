@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // func LocationsFromAddressEncodingAndBlockIds(conn *rpc.Connection, address base.Address, encoding string, ids []identifiers.Identifier) ([]cache.Locator, error) {
@@ -42,7 +43,7 @@ func (opts *StateOptions) HandleDecache() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, "state"); err != nil {
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_State); err != nil {
 			errorChan <- err
 		} else {
 			s := types.SimpleMessage{

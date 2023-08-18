@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *TracesOptions) HandleDecache() error {
@@ -22,7 +23,7 @@ func (opts *TracesOptions) HandleDecache() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, "traces"); err != nil {
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Traces); err != nil {
 			errorChan <- err
 		} else {
 			s := types.SimpleMessage{
