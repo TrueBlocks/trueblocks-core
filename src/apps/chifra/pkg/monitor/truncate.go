@@ -12,7 +12,7 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 		return false, err
 	}
 
-	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(chain)); err != nil {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
 		return false, err
 	} else if cnt == 0 {
 		return false, nil

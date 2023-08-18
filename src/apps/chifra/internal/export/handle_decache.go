@@ -24,7 +24,6 @@ import (
 
 // HandleDecache handles the command chifra monitors --decache
 func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
 	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
 
 	ctx := context.Background()
@@ -35,7 +34,7 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 				continue
 			}
 
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(chain)); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
 				errorChan <- err
 				continue
 

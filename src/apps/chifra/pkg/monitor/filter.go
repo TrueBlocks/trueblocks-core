@@ -44,13 +44,16 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 	filt.Reset()
 
 	if mon.Count() == 0 {
+		mon.Close()
 		return nil, 0, nil
 	}
 
 	fromDisc := make([]index.AppearanceRecord, mon.Count())
 	if err := readAppearances(&fromDisc); err != nil {
+		mon.Close()
 		return nil, 0, err
 	} else if len(fromDisc) == 0 {
+		mon.Close()
 		return nil, 0, nil
 	}
 	filt.Sort(fromDisc)
@@ -59,7 +62,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 	apps = make([]types.SimpleAppearance, 0, len(fromDisc))
 	for _, app := range fromDisc {
 		app := app
-		if passes, finished := filt.BlockRangeFilter(mon.Address, &app, &prev); finished {
+		if passes, finished := filt.BlockRangeFilter(&app); finished {
 			return apps, len(apps), nil
 		} else if passes {
 			if len(apps) == 0 {

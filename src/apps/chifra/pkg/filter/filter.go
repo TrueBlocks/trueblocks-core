@@ -17,7 +17,8 @@ type AppearanceFilter struct {
 	SortBy      AppearanceSort
 	Reversed    bool
 	recordRange base.RecordRange
-	nSeen       int64
+	EnableRr    bool
+	Seen        int64
 	nExported   uint64
 	currentBn   uint32
 	currentTs   int64
@@ -34,11 +35,12 @@ func NewFilter(reversed bool, exportRange base.BlockRange, recordRange base.Reco
 		OuterBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
 		SortBy:      sortBy,
 		Reversed:    reversed,
-		nSeen:       -1,
+		Seen:        -1,
+		EnableRr:    true,
 	}
 }
 
-func NewEmptyFilter(chain string) *AppearanceFilter {
+func NewEmptyFilter() *AppearanceFilter {
 	return NewFilter(
 		false,
 		base.BlockRange{First: 0, Last: utils.NOPOS},
@@ -60,19 +62,24 @@ func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
 }
 
 // BlockRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) BlockRangeFilter(address base.Address, app *index.AppearanceRecord, previous *index.AppearanceRecord) (passed, finished bool) {
-	f.nSeen++
-	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)}
-	if !appRange.Intersects(base.FileRange(f.ExportRange)) { // --first_block, --last_block
+func (f *AppearanceFilter) BlockRangeFilter(app *index.AppearanceRecord) (passed, finished bool) {
+	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
+	if !appRange.Intersects(base.FileRange(f.ExportRange)) {
 		return false, false
 	}
 
-	return f.RecordRangeFilter(address, app, previous)
+	if f.EnableRr {
+		return f.RecordCountFilter()
+	}
+
+	return true, false
 }
 
-// RecordRangeFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
-func (f *AppearanceFilter) RecordRangeFilter(address base.Address, app *index.AppearanceRecord, previous *index.AppearanceRecord) (passed, finished bool) {
-	if f.nSeen < int64(f.recordRange.First) { // --first_record
+// RecordCountFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
+func (f *AppearanceFilter) RecordCountFilter() (passed, finished bool) {
+	f.Seen++
+
+	if f.Seen < int64(f.recordRange.First) { // --first_record
 		logger.Progress(true, "Skipping:", f.nExported, f.recordRange.First)
 		return false, false
 	}

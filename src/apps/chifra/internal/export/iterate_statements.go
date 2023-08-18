@@ -51,9 +51,6 @@ func (opts *ExportOptions) readStatements(
 	}
 
 	sort.Slice(txArray, func(i, j int) bool {
-		if opts.Reversed {
-			i, j = j, i
-		}
 		itemI := txArray[i]
 		itemJ := txArray[j]
 		if itemI.BlockNumber == itemJ.BlockNumber {

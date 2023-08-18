@@ -26,6 +26,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
+	filter.EnableRr = false
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
@@ -33,17 +34,17 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		prevBalance := big.NewInt(0)
 		visitToken := func(index int, item *types.SimpleToken) error {
 			item.PriorBalance = *prevBalance
-			if item.BlockNumber == 0 || item.BlockNumber != currentBn {
-				item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
-			}
-			currentBn = item.BlockNumber
-
-			if index == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-				item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
-				modelChan <- item
+			if passes, finished := filter.RecordCountFilter(); passes && !finished {
+				if item.BlockNumber == 0 || item.BlockNumber != currentBn {
+					item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
+				}
+				currentBn = item.BlockNumber
+				if index == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
+					item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
+					modelChan <- item
+				}
 				prevBalance = &item.Balance
 			}
-
 			return nil
 		}
 
