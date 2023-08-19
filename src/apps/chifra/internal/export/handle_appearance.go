@@ -52,7 +52,6 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	}
 
 	extra := map[string]interface{}{
-		// "articulate": opts.Articulate,
 		"export": true,
 	}
 
