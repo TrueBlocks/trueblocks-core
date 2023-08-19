@@ -119,6 +119,10 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option is not available{1}.", "--articulate", " with the --list option")
 			}
 		}
+
+		if opts.Globals.Cache && opts.Uncles {
+			return validate.Usage("The {0} option is currently not available{1}.", "--cache", " with the --uncles option")
+		}
 	}
 
 	return opts.Globals.Validate()
