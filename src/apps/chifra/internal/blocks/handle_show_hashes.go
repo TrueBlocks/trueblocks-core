@@ -33,7 +33,12 @@ func (opts *BlocksOptions) HandleHashes() error {
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
 
-		bar := logger.NewExpandingBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, 125)
+		bar := logger.NewBar(logger.BarOptions{
+			Type:    logger.Expanding,
+			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Total:   int64(len(appMap)),
+		})
+
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
 			if block, err := opts.Conn.GetBlockHeaderByNumber(app.BlockNumber); err != nil {
 				errorChan <- err

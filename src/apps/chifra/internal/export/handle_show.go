@@ -36,8 +36,11 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
-				bar := logger.NewBar(mon.Address.Hex(), !silent, mon.Count())
+				bar := logger.NewBar(logger.BarOptions{
+					Prefix:  mon.Address.Hex(),
+					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Total:   mon.Count(),
+				})
 				if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 					errorChan <- err
 					return

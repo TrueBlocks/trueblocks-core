@@ -33,7 +33,12 @@ var chain = "mainnet"
 
 func slowWay(conn *rpc.Connection) {
 	start := time.Now()
-	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  "Getting stuff",
+		Enabled: true,
+		Start:   40000,
+		Total:   60000,
+	})
 	for i := 40000; i < 60000; i++ {
 		if block, err := conn.GetBlockHeaderByNumber(base.Blknum(i)); err != nil {
 			fmt.Println(err)
@@ -52,7 +57,13 @@ func slowWay(conn *rpc.Connection) {
 }
 
 func fastWay(conn *rpc.Connection) {
-	bar := logger.NewBarWithStart("Getting stuff", true, 40000, 60000)
+	bar := logger.NewBar(logger.BarOptions{
+		Type:    logger.Fixed,
+		Prefix:  "Getting stuff",
+		Enabled: true,
+		Start:   40000,
+		Total:   60000,
+	})
 
 	var BlockIds []identifiers.Identifier
 	if err := validate.ValidateIdentifiers(chain, []string{"40000-60000"}, validate.ValidBlockIdWithRange, 1, &BlockIds); err != nil {

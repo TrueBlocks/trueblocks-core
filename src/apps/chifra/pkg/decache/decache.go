@@ -17,7 +17,12 @@ func Decache(conn *rpc.Connection, locs []cache.Locator, silent bool, cT walk.Ca
 	bytesProcessed := 0
 
 	cacheName := strings.ToLower(cT.String())
-	bar := logger.NewBar("Decaching "+cacheName, !silent, int64(len(locs)))
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  "Decaching " + cacheName,
+		Enabled: !silent, // from opts.Globals.TestMode || len(opts.Globals.File) > 0 because we don't have opts here
+		Total:   int64(len(locs)),
+	})
+
 	processorFunc := func(info *locations.ItemInfo) bool {
 		itemsSeen++
 		itemsProcessed++

@@ -16,7 +16,11 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
-		var bar = logger.NewExpandingBar("", !opts.Globals.TestMode, 250)
+		bar := logger.NewBar(logger.BarOptions{
+			Type:    logger.Expanding,
+			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Total:   250, // estimate since we have no idea how many there are
+		})
 		procFunc := func(s *types.SimpleAppearance) error {
 			bar.Tick()
 			modelChan <- s

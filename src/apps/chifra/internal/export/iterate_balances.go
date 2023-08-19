@@ -34,7 +34,12 @@ func (opts *ExportOptions) readBalances(
 		return nil, nil
 	}
 
-	bar := logger.NewBar(mon.Address.Hex(), !opts.Globals.TestMode, mon.Count())
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  mon.Address.Hex(),
+		Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+		Total:   mon.Count(),
+	})
+
 	iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
 		var balance *big.Int
 		if balance, err = opts.Conn.GetBalanceByAppearance(mon.Address, &app); err != nil {
