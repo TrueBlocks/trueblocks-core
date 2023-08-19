@@ -112,9 +112,6 @@ func (bar *ProgressBar) display() {
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}
 	ofMarker := ""
-	// if bar.Type == Expanding {
-	// 	ofMarker = "?"
-	// }
 	fmt.Fprintf(os.Stderr, "\r%s[%s] [%s%-50s%s]%3d%% %5d/% 5d %s\r",
 		severityToLabel[progress],
 		timeDatePart,

@@ -116,6 +116,7 @@ func tokensFinishParse(args []string) *TokensOptions {
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
+	// The first argument in the list is the token, so not a dup...
 	if len(args) > 0 {
 		dupMap := make(map[string]bool)
 		for index, arg := range args {

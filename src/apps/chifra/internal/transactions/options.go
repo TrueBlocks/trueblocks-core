@@ -110,9 +110,9 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
 
 	// EXISTING_CODE
-	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
 	// EXISTING_CODE
 
 	return opts
@@ -123,10 +123,10 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
 
 	// EXISTING_CODE
 	opts.Transactions = args
-	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

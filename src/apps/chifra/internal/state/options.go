@@ -99,6 +99,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	if opts.Call != "" {
@@ -107,7 +108,6 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		opts.Call = unquoted
 	}
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -125,6 +125,7 @@ func stateFinishParse(args []string) *StateOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	dupMap := make(map[string]bool)
@@ -139,7 +140,6 @@ func stateFinishParse(args []string) *StateOptions {
 		dupMap[arg] = true
 	}
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)

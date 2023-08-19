@@ -66,7 +66,6 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_emitter     ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_both        ,y    ,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
 
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_uniq_uncles        ,y    ,blocks = 4012000-4012001 & uniq & uncles
-# See issue #3073
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles       ,y    ,blocks = 4012000-4012001 & cache & uncles
 on      ,both ,fast  ,blocks ,tools/getBlocks ,cache                 ,y    ,blocks = 1152642 & cache
 on      ,both ,fast  ,blocks ,tools/getBlocks ,cache_uniq            ,y    ,blocks = 1152642 & cache & uniq
