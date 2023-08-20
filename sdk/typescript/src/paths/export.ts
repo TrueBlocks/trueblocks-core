@@ -39,7 +39,10 @@ export function getExport(
     noHeader?: boolean,
     fmt?: string,
     verbose?: boolean,
-[{OTHER}]  },
+    ether?: boolean,
+    raw?: boolean,
+    cache?: boolean,
+  },
   options?: RequestInit,
 ) {
   return ApiCallers.fetch<Appearance[] | AppearanceCount[] | Function[] | Log[] | Monitor[] | Parameter[] | Receipt[] | Statement[] | Token[] | Trace[] | TraceAction[] | TraceResult[] | Transaction[] | Transfer[]>(

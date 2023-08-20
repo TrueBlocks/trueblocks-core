@@ -18,7 +18,10 @@ export function getSlurp(
     noHeader?: boolean,
     fmt?: string,
     verbose?: boolean,
-[{OTHER}]  },
+    ether?: boolean,
+    raw?: boolean,
+    cache?: boolean,
+  },
   options?: RequestInit,
 ) {
   return ApiCallers.fetch<Slurp[]>(

@@ -21,7 +21,10 @@ export function getTransactions(
     noHeader?: boolean,
     fmt?: string,
     verbose?: boolean,
-[{OTHER}]  },
+    ether?: boolean,
+    raw?: boolean,
+    cache?: boolean,
+  },
   options?: RequestInit,
 ) {
   return ApiCallers.fetch<Statement[] | Transaction[] | Transfer[]>(

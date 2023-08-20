@@ -16,7 +16,10 @@ export function getTraces(
     noHeader?: boolean,
     fmt?: string,
     verbose?: boolean,
-[{OTHER}]  },
+    ether?: boolean,
+    raw?: boolean,
+    cache?: boolean,
+  },
   options?: RequestInit,
 ) {
   return ApiCallers.fetch<Trace[] | TraceAction[] | TraceCount[] | TraceFilter[] | TraceResult[]>(

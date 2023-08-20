@@ -24,7 +24,10 @@ export function getBlocks(
     noHeader?: boolean,
     fmt?: string,
     verbose?: boolean,
-[{OTHER}]  },
+    ether?: boolean,
+    raw?: boolean,
+    cache?: boolean,
+  },
   options?: RequestInit,
 ) {
   return ApiCallers.fetch<Appearance[] | Block[] | BlockCount[] | Log[] | LogFilter[] | Trace[] | TraceAction[] | TraceResult[]>(

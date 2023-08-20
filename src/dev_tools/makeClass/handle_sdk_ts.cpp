@@ -141,6 +141,13 @@ bool COptions::handle_sdk_ts_types(CStringArray& typesOut) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+string_q getGlobalParams(void) {
+    return "    ether?: boolean,\n"
+           "    raw?: boolean,\n"
+           "    cache?: boolean,\n";
+}
+
+//------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
     for (auto ep : endpointArray) {
         CCommandOptionArray members;
@@ -212,6 +219,7 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
                 replaceAll(out, "[{RETTYPE}]", trim(rets.str(), '\n'));
                 replaceAll(out, "[{TYPES}]", trim(tts.str(), '\n'));
                 replaceAll(out, "[{PARAMS}]", pp.str());
+                replaceAll(out, "[{OTHER}]", getGlobalParams());
             } else {
                 const char* STR_TOOL_NOT_AVAIL =
                     "//\n"
