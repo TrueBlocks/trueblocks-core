@@ -55,6 +55,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,has_accessList           ,y 
 
 on      ,both ,fast  ,transactions ,tools/getTrans ,logs                     ,y    ,transactions = 9004225.10 & logs & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,logs_emitter             ,y    ,transactions = 9004225.10 & logs & fmt = json & emitter = 0xbbbbca6a901c926f240b89eacb641d8aec7aeafd
+on      ,both ,fast  ,transactions ,tools/getTrans ,logs_emitter_w_ens       ,y    ,transactions = 17900008.54 & logs & emitter = giveth.eth
 on      ,both ,fast  ,transactions ,tools/getTrans ,logs_topic               ,y    ,transactions = 9004225.10 & logs & fmt = json & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 on      ,both ,fast  ,transactions ,tools/getTrans ,logs_both                ,y    ,transactions = 9004225.10 & logs & fmt = json & emitter = 0xbbbbca6a901c926f240b89eacb641d8aec7aeafd & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 on      ,both ,fast  ,transactions ,tools/getTrans ,logs_fail1               ,y    ,transactions = 9004225.10 & logs & fmt = json & emitter = 0xbbbbca6a901c926f240b89eacb641d8aec7aeaf

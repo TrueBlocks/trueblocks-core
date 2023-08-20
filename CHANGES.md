@@ -289,6 +289,35 @@ The follow existing data models were either added, removed, or modified by havin
 
 ## Issues Closed (8)
 
+#2124 chifra scrape should be able to index from a given block
+#2128 Interesting use of Waku (formerly Whisper)
+#2089 Interesting
+#1891 chifra export --first_block is slower than it needs to be in chifra export
+#1629 chifra export user comments on acctExport Traversers
+#3009 reth is not being detected as an archive node
+#3007 chifra cmd - automate cleanup of command line args
+#3010 chifra traces - we could implement the same thing Sourcify does with the init code (which we get from traces).
+#3020 chifra state crashes with null pointer
+#3024 Checklist for caching
+#3034 Function names
+#3041 Improve articulation calling code across multiple tools.
+#3038 Make sure to document the fact that topic and relevant filters now work on most data types in chifra export
+#3047 Reading from cache should happen even without --cache option
+#3045 Caching and non-final blocks near the head
+#3134 We could probably use the `errcheck` default exclusion for the linter to avoid the `_ =` markers in the code
+#3065 Better interface for all RPC queries
+#3073 It appears --cache option does not actually work in API mode
+#3075 Decache should be global just like cache and it should be available to any command that allows caching
+#3130 chifra blocks could easily have an --articulate options (and should)
+#3136 chifra tokens should have a --no_zero and a --diff
+#3140 --decache does not report anything in API mode
+#3078 chifra blocks does not cache maxGasPer...
+#3082 Cache issues
+#3115 chifra status does not properly report on new cache locations
+#3096 `--decache` should be turned on wherever `cache` is enabled.
+#3153 Remove `log_level` and `wei` throughout (anything else?)
+#3153 chifra blocks --uncles does not cache
+#3157 progress reporting
 #3144 Pending testing seconds against millseconds
 #3126 Access to Topic[0] even when len(log.Topics) == 0
 #3128 Concurrent access to map core dumps

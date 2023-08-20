@@ -219,9 +219,9 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 void establishTestData(void) {
     cleanFolder(cacheFolder_tmp);
 
-    // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
-    // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
-    // TODO(tjayrush): and re-run. You will see the tests that fail.
+    // TODO: This code is a hack to make test cases pass. We should fix the underlyign reason
+    // TODO: these tests fail. To reproduce, delete the entire cache, comment the lines below
+    // TODO: and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
     doCommand("chifra blocks --uniq 0 2>/dev/null");
