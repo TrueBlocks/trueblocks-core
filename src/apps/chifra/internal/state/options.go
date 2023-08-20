@@ -107,7 +107,6 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		unquoted := strings.Trim(opts.Call, "'")
 		opts.Call = unquoted
 	}
-	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -116,30 +115,39 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		}
 	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 
 	return opts
 }
 
 // stateFinishParse finishes the parsing for command line invocations. Returns a new StateOptions.
 func stateFinishParse(args []string) *StateOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
-	dupMap := make(map[string]bool)
 	for _, arg := range args {
-		if !dupMap[arg] {
-			if base.IsValidAddress(arg) {
-				opts.Addrs = append(opts.Addrs, arg)
-			} else {
-				opts.Blocks = append(opts.Blocks, arg)
-			}
+		if base.IsValidAddress(arg) {
+			opts.Addrs = append(opts.Addrs, arg)
+		} else {
+			opts.Blocks = append(opts.Blocks, arg)
 		}
-		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
@@ -156,6 +164,7 @@ func stateFinishParse(args []string) *StateOptions {
 		}
 	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

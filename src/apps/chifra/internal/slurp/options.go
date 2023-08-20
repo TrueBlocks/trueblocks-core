@@ -97,7 +97,6 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -111,29 +110,38 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 		opts.Types = []string{"ext"}
 	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 
 	return opts
 }
 
 // slurpFinishParse finishes the parsing for command line invocations. Returns a new SlurpOptions.
 func slurpFinishParse(args []string) *SlurpOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	dupMap := make(map[string]bool)
 	for _, arg := range args {
-		if !dupMap[arg] {
-			if base.IsValidAddress(arg) {
-				opts.Addrs = append(opts.Addrs, arg)
-			} else {
-				opts.Blocks = append(opts.Blocks, arg)
-			}
+		if base.IsValidAddress(arg) {
+			opts.Addrs = append(opts.Addrs, arg)
+		} else {
+			opts.Blocks = append(opts.Blocks, arg)
 		}
-		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
@@ -147,6 +155,7 @@ func slurpFinishParse(args []string) *SlurpOptions {
 		opts.Types = []string{"ext"}
 	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

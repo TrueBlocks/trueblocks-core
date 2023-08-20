@@ -195,38 +195,47 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
+	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
-	// EXISTING_CODE
 
 	return opts
 }
 
 // exportFinishParse finishes the parsing for command line invocations. Returns a new ExportOptions.
 func exportFinishParse(args []string) *ExportOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	dupMap := make(map[string]bool)
 	for _, arg := range args {
-		if !dupMap[arg] {
-			if validate.IsValidTopic(arg) {
-				opts.Topics = append(opts.Topics, arg)
-			} else if validate.IsValidFourByte(arg) {
-				opts.Fourbytes = append(opts.Fourbytes, arg)
-			} else {
-				opts.Addrs = append(opts.Addrs, arg)
-			}
+		if validate.IsValidTopic(arg) {
+			opts.Topics = append(opts.Topics, arg)
+		} else if validate.IsValidFourByte(arg) {
+			opts.Fourbytes = append(opts.Fourbytes, arg)
+		} else {
+			opts.Addrs = append(opts.Addrs, arg)
 		}
-		dupMap[arg] = true
 	}
+	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
-	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

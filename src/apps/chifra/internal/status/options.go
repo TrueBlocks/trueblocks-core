@@ -93,6 +93,19 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 
 // statusFinishParse finishes the parsing for command line invocations. Returns a new StatusOptions.
 func statusFinishParse(args []string) *StatusOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())

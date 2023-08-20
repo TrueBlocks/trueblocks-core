@@ -1,5 +1,4 @@
 chifra abis  truebit aragon --fmt json
-TEST[DATE|TIME] Addrs:  [truebit aragon]
 TEST[DATE|TIME] Format:  json
 Error: Please specify at least one valid Ethereum address.
 Usage:

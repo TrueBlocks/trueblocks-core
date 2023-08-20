@@ -93,7 +93,6 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
 		opts.Parts = append(opts.Parts, "all")
 	}
@@ -105,35 +104,49 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 		}
 	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 
 	return opts
 }
 
 // tokensFinishParse finishes the parsing for command line invocations. Returns a new TokensOptions.
 func tokensFinishParse(args []string) *TokensOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	// The first argument in the list is the token, so not a dup...
 	if len(args) > 0 {
-		dupMap := make(map[string]bool)
-		for index, arg := range args {
-			if !dupMap[arg] {
-				if base.IsValidAddress(arg) {
-					opts.Addrs = append(opts.Addrs, arg)
-				} else {
-					opts.Blocks = append(opts.Blocks, arg)
-				}
-			}
-			if index > 0 {
-				// the first item is the token, so never dupped
-				dupMap[arg] = true
+		// The first argument in the list is the token, so not a dup...
+		cnt := dedup[args[0]]
+		if cnt > 1 {
+			// The first token was present more than once, which is okay for
+			// tokens who happen to own themselves, so add it back in.
+			args = append(args, args[0])
+		}
+
+		// we need to separate blocks from addresses
+		for _, arg := range args {
+			if base.IsValidAddress(arg) {
+				opts.Addrs = append(opts.Addrs, arg)
+			} else {
+				opts.Blocks = append(opts.Blocks, arg)
 			}
 		}
 	}
-	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {
 		opts.Parts = append(opts.Parts, "all")
 	}
@@ -145,6 +158,7 @@ func tokensFinishParse(args []string) *TokensOptions {
 		}
 	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

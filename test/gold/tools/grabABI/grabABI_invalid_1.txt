@@ -1,5 +1,4 @@
 chifra abis  0x00001
-TEST[DATE|TIME] Addrs:  [0x00001]
 TEST[DATE|TIME] Format:  txt
 Error: Please specify at least one valid Ethereum address.
 Usage:

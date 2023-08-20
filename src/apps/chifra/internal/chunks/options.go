@@ -128,15 +128,27 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	// TODO: Do we know if an option is an address? If yes, we could automate this
-	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 	// EXISTING_CODE
+	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 
 	return opts
 }
 
 // chunksFinishParse finishes the parsing for command line invocations. Returns a new ChunksOptions.
 func chunksFinishParse(args []string) *ChunksOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
@@ -154,7 +166,6 @@ func chunksFinishParse(args []string) *ChunksOptions {
 			}
 		}
 	}
-	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}
@@ -172,9 +183,9 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		}
 		return def
 	}
-
 	defFmt = getDef(defFmt)
 	// EXISTING_CODE
+	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

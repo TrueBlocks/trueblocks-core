@@ -54,6 +54,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,deprecated_reconcile  ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,deprecated_trace      ,y    ,blocks = 2222222 & trace
 on      ,both ,fast  ,blocks ,tools/getBlocks ,block_list            ,y    ,list = 100
 on      ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_e1  ,y    ,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
+on      ,both ,fast  ,blocks ,tools/getBlocks ,logs_emitter_w_ens    ,y    ,blocks = 17900008 & logs & emitter = giveth.eth
 on      ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_e2  ,y    ,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b7
 on      ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_t1  ,y    ,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 on      ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_t2  ,y    ,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a

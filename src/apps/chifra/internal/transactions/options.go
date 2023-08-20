@@ -114,12 +114,26 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 
 	return opts
 }
 
 // transactionsFinishParse finishes the parsing for command line invocations. Returns a new TransactionsOptions.
 func transactionsFinishParse(args []string) *TransactionsOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
@@ -128,6 +142,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	// EXISTING_CODE
 	opts.Transactions = args
 	// EXISTING_CODE
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

@@ -30,6 +30,8 @@ on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_csv                       ,n 
 on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_json                      ,y    ,addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = json & blocks = 2000000
 on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_api                       ,y    ,addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = api & blocks = 2000000
 on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_junk                      ,y    ,addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = junk & blocks = 2000000
+on      ,both ,slow  ,tokens ,tools/getTokens ,dup_with_token                ,y    ,addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & blocks = 4150000
+on      ,both ,slow  ,tokens ,tools/getTokens ,dup_with_addr                 ,y    ,addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 & blocks = 4150000
 
 on      ,both ,slow  ,tokens ,tools/getTokens ,redir_output                  ,y    ,addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & blocks = 2000000 & fmt = txt & output = output_test_file
 on      ,both ,slow  ,tokens ,tools/getTokens ,redir_output_append           ,n    ,addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & blocks = 2000002 & fmt = txt & output = output_test_file & no_header & append

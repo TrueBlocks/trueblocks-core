@@ -19,7 +19,8 @@ extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
 extern string_q get_config_override(const CCommandOption& cmd);
-extern string_q get_ens_convert(const CCommandOption& cmd);
+extern string_q get_ens_convert1(const CCommandOption& cmd);
+extern string_q get_ens_convert2(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
 extern string_q get_walk_package(const CCommandOption& cmd);
 extern string_q get_base_package(const string_q& fn);
@@ -153,7 +154,8 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
     replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
-    replaceAll(source, "[{ENS_CONVERT1}]", get_ens_convert(p));
+    replaceAll(source, "[{ENS_CONVERT1}]", get_ens_convert1(p));
+    replaceAll(source, "[{ENS_CONVERT2}]", get_ens_convert2(p));
     replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
     replaceAll(source, "[{WALKPKG}]", get_walk_package(p));
     replaceAll(source, "[{BASEPKG}]", get_base_package(fn));
@@ -541,7 +543,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     return os.str();
 }
 
-string_q get_ens_convert(const CCommandOption& cmd) {
+string_q get_ens_convert1(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         // if (p.isAddressList) {
@@ -550,6 +552,17 @@ string_q get_ens_convert(const CCommandOption& cmd) {
         // } else
         if (p.isAddress) {
             const char* STR_ENS_CONVERT = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddress(opts.[{VARIABLE}])";
+            os << p.Format(STR_ENS_CONVERT) << endl;
+        }
+    }
+    return os.str();
+}
+
+string_q get_ens_convert2(const CCommandOption& cmd) {
+    ostringstream os;
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
+        if (p.isAddressList) {
+            const char* STR_ENS_CONVERT = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddresses(opts.[{VARIABLE}])";
             os << p.Format(STR_ENS_CONVERT) << endl;
         }
     }

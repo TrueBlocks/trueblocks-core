@@ -137,12 +137,26 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 
 // namesFinishParse finishes the parsing for command line invocations. Returns a new NamesOptions.
 func namesFinishParse(args []string) *NamesOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	opts.Terms, _ = opts.Conn.GetEnsAddresses(args)
+	opts.Terms = append(opts.Terms, args...)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt

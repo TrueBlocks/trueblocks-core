@@ -58,24 +58,24 @@ func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]
 [{ENS_CONVERT1}]
 	// EXISTING_CODE
 	// EXISTING_CODE
-
+[{ENS_CONVERT2}]
 	return opts
 }
 
 // [{LOWER}]FinishParse finishes the parsing for command line invocations. Returns a new [{PROPER}]Options.
 func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
-	// // remove duplicates from args if any (not needed in api mode because the server does it).
-	// if len(args) == 0 {
-	// 	tmp := []string{}
-	// 	dedup := map[string]bool{}
-	// 	for _, arg := range args {
-	// 		if _, value := dedup[arg]; !value {
-	// 			dedup[arg] = true
-	// 			tmp = append(tmp, arg)
-	// 		}
-	// 	}
-	// 	args = tmp
-	// }
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
 
 	defFmt := "txt"
 	opts := GetOptions()
@@ -83,7 +83,7 @@ func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
 [{ENS_CONVERT1}]
 	// EXISTING_CODE
 	// EXISTING_CODE
-[{CONFIG_OVERRIDE}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+[{ENS_CONVERT2}][{CONFIG_OVERRIDE}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
 
