@@ -304,6 +304,7 @@ const char* STR_PATH_FILE =
     "    ether?: boolean,\n"
     "    dollars?: boolean,\n"
     "    raw?: boolean,\n"
+    "    cache?: boolean,\n"
     "  },\n"
     "  options?: RequestInit,\n"
     ") {\n"
