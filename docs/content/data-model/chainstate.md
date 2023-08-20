@@ -46,17 +46,18 @@ Results consist of the following fields:
 | encodedArguments | the bytes data following the encoding of the call  | string                                  |
 | articulatedOut   | the result of the call articulated as other models | [Function](/data-model/other/#function) |
 
-## TokenBalance
+## Token
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The data model displays the token balance records for the `chifra tokens` tool.
+The `token` data model represents the name, decmials, token symbol, and optionally the totalSupply
+of an ERC-20 token.
 
-The following commands produce and manage TokenBalances:
+The following commands produce and manage Tokens:
 
 - [chifra tokens](/chifra/chainstate/#chifra-tokens)
 - [chifra export](/chifra/accounts/#chifra-export)
 
-TokenBalances consist of the following fields:
+Tokens consist of the following fields:
 
 | Field            | Description                                                           | Type      |
 | ---------------- | --------------------------------------------------------------------- | --------- |

@@ -496,7 +496,7 @@ components:
         statements:
           type: array
           items:
-            $ref: "#/components/schemas/reconciliation"
+            $ref: "#/components/schemas/statement"
           description: "array of reconciliations"
         articulatedTx:
           type: object
@@ -1012,7 +1012,7 @@ components:
           items:
             $ref: "#/components/schemas/function"
           description: "the result of the call articulated as other models"
-    tokenBalance:
+    token:
       description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
       type: object
       properties:
@@ -1439,7 +1439,7 @@ components:
           items:
             type: string
           description: "an array of messages explaining failed checks"
-    pinReport:
+    chunkPinReport:
       description: "a JSON object containing the results of pinning the Unchained Index"
       type: object
       properties:
