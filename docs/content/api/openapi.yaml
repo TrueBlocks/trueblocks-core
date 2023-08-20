@@ -474,6 +474,22 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1031,6 +1047,22 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: raw
+          description: report raw data direclty from the source
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1155,6 +1187,30 @@ paths:
           explode: true
           schema:
             type: string
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: raw
+          description: report raw data direclty from the source
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1199,6 +1255,22 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: raw
+          description: report raw data direclty from the source
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1234,6 +1306,22 @@ paths:
               format: tx_id
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: raw
+          description: report raw data direclty from the source
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
           required: false
           style: form
           in: query
@@ -1293,6 +1381,22 @@ paths:
             type: string
         - name: count
           description: show the number of traces for the transaction only (fast)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: raw
+          description: report raw data direclty from the source
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
           required: false
           style: form
           in: query
@@ -1381,6 +1485,14 @@ paths:
             type: boolean
         - name: deep
           description: with --timestamps --check only, verifies timestamps from on chain (slow)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
           required: false
           style: form
           in: query
@@ -1498,6 +1610,22 @@ paths:
           explode: true
           schema:
             type: string
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1600,6 +1728,14 @@ paths:
             type: boolean
         - name: noZero
           description: suppress the display of zero balance accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
           required: false
           style: form
           in: query
@@ -2142,6 +2278,22 @@ paths:
           schema:
             type: number
             format: double
+        - name: raw
+          description: report raw data direclty from the source
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data

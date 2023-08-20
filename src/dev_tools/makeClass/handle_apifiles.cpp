@@ -134,12 +134,12 @@ bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q getSchema(const CCommandOption& cmd) {
+string_q getSchema(const string_q& data_type, const CCommandOption* cmd = NULL) {
     string_q lead = "            ";
 
-    if (contains(cmd.data_type, "list") && contains(cmd.data_type, "enum")) {
+    if (contains(data_type, "list") && contains(data_type, "enum")) {
         ostringstream os;
-        forEveryEnum(visitEnumItem, cmd.data_type, &os);
+        forEveryEnum(visitEnumItem, data_type, &os);
         string_q str_array_enum =
             "~type: array\n"
             "~items:\n"
@@ -149,8 +149,8 @@ string_q getSchema(const CCommandOption& cmd) {
         return substitute(str_array_enum, "~", lead);
     }
 
-    if (contains(cmd.data_type, "list")) {
-        string_q type = substitute(substitute(cmd.data_type, "list<", ""), ">", "");
+    if (contains(data_type, "list")) {
+        string_q type = substitute(substitute(data_type, "list<", ""), ">", "");
         replace(type, "addr", "address_t");
         if (endsWith(type, "_t"))
             replaceReverse(type, "_t", "");
@@ -162,29 +162,29 @@ string_q getSchema(const CCommandOption& cmd) {
         return ret;
     }
 
-    if (contains(cmd.data_type, "boolean")) {
+    if (contains(data_type, "boolean")) {
         string_q ret;
         ret += lead + "type: boolean";
         return ret;
     }
 
-    if (contains(cmd.data_type, "uint") || contains(cmd.data_type, "double") || contains(cmd.data_type, "blknum")) {
+    if (contains(data_type, "uint") || contains(data_type, "double") || contains(data_type, "blknum")) {
         string_q ret;
         ret += lead + "type: number\n";
-        ret += lead + "format: " + substitute(substitute(cmd.data_type, ">", ""), "<", "");
+        ret += lead + "format: " + substitute(substitute(data_type, ">", ""), "<", "");
         return ret;
     }
 
-    if (contains(cmd.data_type, "datetime")) {
+    if (contains(data_type, "datetime")) {
         string_q ret;
         ret += lead + "type: " + "string\n";
         ret += lead + "format: date";
         return ret;
     }
 
-    if (contains(cmd.data_type, "enum")) {
+    if (cmd && contains(data_type, "enum")) {
         ostringstream os;
-        forEveryEnum(visitEnumItem, cmd.data_type, &os);
+        forEveryEnum(visitEnumItem, cmd->data_type, &os);
 
         string_q ret;
         ret += lead + "type: string\n";
@@ -194,6 +194,28 @@ string_q getSchema(const CCommandOption& cmd) {
     }
 
     return lead + "type: " + "string";
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q getGlobalFeature(const CCommandOption& cmd, const string_q& feature) {
+    if (feature == "raw") {
+        if (cmd.api_route == "blocks" || cmd.api_route == "logs" || cmd.api_route == "receipts" ||
+            cmd.api_route == "slurp" || cmd.api_route == "traces" || cmd.api_route == "transactions") {
+            return "raw|report raw data direclty from the source|boolean";
+        }
+    } else if (feature == "cache") {
+        if (cmd.api_route == "blocks" || cmd.api_route == "export" || cmd.api_route == "logs" ||
+            cmd.api_route == "receipts" || cmd.api_route == "slurp" || cmd.api_route == "state" ||
+            cmd.api_route == "tokens" || cmd.api_route == "traces" || cmd.api_route == "transactions" ||
+            cmd.api_route == "when") {
+            return "cache|force the results of the query into the cache|boolean";
+        }
+    } else if (feature == "ether") {
+        if (cmd.api_route == "export" || cmd.api_route == "state" || cmd.api_route == "transactions") {
+            return "ether|export values in ether|boolean";
+        }
+    }
+    return "";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -227,7 +249,7 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
             replace(yp, "[{NAME}]", toCamelCase(member.longName));
             replace(yp, "[{DESCR}]", prepareDescr(member.swagger_descr));
             replace(yp, "[{REQ}]", member.is_required ? "true" : "false");
-            replace(yp, "[{SCHEMA}]", getSchema(member));
+            replace(yp, "[{SCHEMA}]", getSchema(member.data_type, &member));
             if (needsTwoAddrs) {
                 replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
             }
@@ -237,6 +259,26 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
             fieldCnt++;
         }
     }
+
+    CStringArray globals;
+    globals.push_back("ether");
+    globals.push_back("raw");
+    globals.push_back("cache");
+    for (auto global : globals) {
+        string_q g = getGlobalFeature(cmd, global);
+        if (g.empty())
+            continue;
+        CStringArray parts;
+        explode(parts, g, '|');
+        string_q yp = STR_PARAM_YAML;
+        replace(yp, "[{NAME}]", toCamelCase(parts[0]));
+        replace(yp, "[{DESCR}]", prepareDescr(parts[1]));
+        replace(yp, "[{REQ}]", "false");
+        replace(yp, "[{SCHEMA}]", getSchema(parts[2]));
+        memberStream << yp << endl;
+        fieldCnt++;
+    }
+
     if (fieldCnt == 0) {
         cerr << bRed << "The " << cmd.api_route << " data model has zero documented fields." << cOff << endl;
         exit(0);
