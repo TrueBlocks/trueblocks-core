@@ -5,13 +5,13 @@ status?modes=monitors&fmt=json&verbose&maxRecords=2
       "cachePath": "--paths--",
       "caches": [
         {
-          "type": "monitorsCache",
           "items": [
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
+              "nRecords": 15432098,
               "sizeInBytes": 123456789
             },
             {
@@ -19,6 +19,7 @@ status?modes=monitors&fmt=json&verbose&maxRecords=2
               "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
+              "nRecords": 15432098,
               "sizeInBytes": 123456789
             }
           ],
@@ -26,30 +27,11 @@ status?modes=monitors&fmt=json&verbose&maxRecords=2
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
-          "sizeInBytes": 789
+          "sizeInBytes": 789,
+          "type": "monitorsCache"
         }
       ],
-       "chains": [
-        {
-          "chain": "mainnet",
-          "chainId": 1,
-          "symbol": "ETH",
-          "rpcProvider": "--provider-mainnet--",
-          "apiProvider": "--provider-mainnet--",
-          "remoteExplorer": "--explorer-mainnet--",
-          "localExplorer": "--explorer-mainnet--"
-        },
-        {
-          "chain": "gnosis",
-          "chainId": 100,
-          "symbol": "XDAI",
-          "rpcProvider": "--provider-gnosis--",
-          "apiProvider": "--provider-gnosis--",
-          "remoteExplorer": "--explorer-gnosis--",
-          "localExplorer": "--explorer-gnosis--"
-        }
-      ],
-     "chainConfig": "--paths--",
+      "chainConfig": "--paths--",
       "clientVersion": "Client version",
       "hasEsKey": true,
       "hasPinKey": false,

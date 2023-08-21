@@ -1,6 +1,6 @@
 num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizable,is_visible,is_visible_docs,generate,option_type,data_type,description
 
-10200,apps,Accounts,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
+10200,apps,Accounts,export,acctExport,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to export
 10205,apps,Accounts,export,acctExport,topics,,,false,false,true,true,gocmd,positional,list<topic>,filter by one or more log topics (only for --logs option)
 10207,apps,Accounts,export,acctExport,fourbytes,,,false,false,true,true,gocmd,positional,list<fourbyte>,filter by one or more fourbytes (only for transactions and trace options)
 10210,apps,Accounts,export,acctExport,appearances,p,,false,false,true,true,gocmd,switch,<boolean>,export a list of appearances
@@ -8,36 +8,37 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,gocmd,switch,<boolean>,export logs instead of transactional data
 10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,gocmd,switch,<boolean>,export traces instead of transactional data
 10216,apps,Accounts,export,acctExport,neighbors,n,,false,false,true,true,gocmd,switch,<boolean>,export the neighbors of the given address
-10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,attach accounting records to the exported data (applies to transactions export only)
-10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,for the accounting options only&#44; export only statements
+10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,gocmd,switch,<boolean>,attach accounting records to the exported data (applies to transactions export only)
+10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,gocmd,switch,<boolean>,for the accounting options only&#44; export only statements
 10290,apps,Accounts,export,acctExport,balances,b,,false,false,true,true,gocmd,switch,<boolean>,traverse the transaction history and show each change in ETH balances
-10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
-10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,force the transaction's traces into the cache
+10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
+10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,gocmd,switch,<boolean>,force the transaction's traces into the cache
 10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records
-10336,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<uint64>,the first record to process
-10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,header,flag,<uint64>,the maximum number of records to process
+10336,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
+10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 10340,apps,Accounts,export,acctExport,relevant,N,,false,false,true,true,gocmd,switch,<boolean>,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
 10342,apps,Accounts,export,acctExport,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for log export only&#44; export only logs if emitted by one of these address(es)
 10344,apps,Accounts,export,acctExport,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
-10346,apps,Accounts,export,acctExport,asset,P,,false,false,true,true,local,flag,list<addr>,for the accounting options only&#44; export statements only for this asset
-10346,apps,Accounts,export,acctExport,flow,f,,false,false,true,true,header,flag,enum[in|out|zero],for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
+10346,apps,Accounts,export,acctExport,asset,P,,false,false,true,true,gocmd,flag,list<addr>,for the accounting options only&#44; export statements only for this asset
+10346,apps,Accounts,export,acctExport,flow,f,,false,false,true,true,gocmd,flag,enum[in|out|zero],for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
 10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,true,gocmd,switch,<boolean>,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,gocmd,switch,<boolean>,export transactions labeled upripe (i.e. less than 28 blocks old)
 10092,apps,Accounts,export,acctExport,load,O,,false,false,false,false,gocmd,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,E,,false,false,true,true,gocmd,switch,<boolean>,produce results in reverse chronological order
 10097,apps,Accounts,export,acctExport,no_zero,z,,false,false,true,true,gocmd,switch,<boolean>,for the --count option only&#44; suppress the display of zero appearance accounts
-10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,true,true,local,flag,<blknum>,first block to process (inclusive)
-10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,true,true,local,flag,<blknum>,last block to process (inclusive)
+10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to process (inclusive)
+10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to process (inclusive)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 10470,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
 10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
 10474,apps,Accounts,export,acctExport,n4,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
 10476,apps,Accounts,export,acctExport,n5,,,false,false,false,false,--,note,,Neighbors include every address that appears in any transaction in which the export address also appears.
-10478,apps,Accounts,export,acctExport,n6,,,false,false,false,false,--,note,,If provided&#44; --max_records dominates&#44; also&#44; if provided&#44; --first_record overrides --first_block.
+10478,apps,Accounts,export,acctExport,n6,,,false,false,false,false,--,note,,If present&#44; --first_/--last_block are applied&#44; followed by user-supplied filters such as asset or topic&#44; followed by --first_/--max_record if present.
 10479,apps,Accounts,export,acctExport,n7,,,false,false,false,false,--,note,,The --first_record and --max_record options are zero-based (as are the block options).
-10479,apps,Accounts,export,acctExport,n8,,,false,false,false,false,--,note,,The _block and _record options are ignored when used with the --count option.
-10480,apps,Accounts,export,acctExport,n9,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; txs&#44; traces&#44; recons) for the given address(es).
+10479,apps,Accounts,export,acctExport,n8,,,false,false,false,false,--,note,,The _block and _record filters are ignored when used with the --count option.
+10480,apps,Accounts,export,acctExport,n9,,,false,false,false,false,--,note,,If the --reversed option is present&#44; the appearance list is reversed prior to all processing (including filtering).
+10480,apps,Accounts,export,acctExport,n10,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; transactions&#44; traces&#44; etc.) for the given address(es).
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to process
 11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
@@ -96,7 +97,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,n1,,,false,false,false,false,--,note,,Search for either four byte signatures or event signatures with the --find option.
 
-12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more block identifiers
+12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,gocmd,positional,list<blknum>,a space-separated list of one or more block identifiers
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,gocmd,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
 12520,tools,ChainData,blocks,getBlocks,uncles,c,,false,false,true,true,gocmd,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,traces,t,,false,false,true,true,gocmd,switch,<boolean>,export the traces from the block as opposed to the block data
@@ -108,8 +109,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,gocmd,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,gocmd,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
-12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,header,switch,<boolean>,force a write of the block's transactions to the cache (slow)
-12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,header,switch,<boolean>,force a write of the block's traces to the cache (slower)
+12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,gocmd,switch,<boolean>,force a write of the block's transactions to the cache (slow)
+12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force a write of the block's traces to the cache (slower)
 12582,tools,ChainData,blocks,getBlocks,list,L,0,false,false,false,false,gocmd,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,0,false,false,false,false,gocmd,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
@@ -184,8 +185,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,gocmd,flag,list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>,control which state to export
 13160,tools,ChainState,state,getState,changes,c,,false,false,true,true,gocmd,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,ChainState,state,getState,no_zero,z,,false,false,true,true,gocmd,switch,<boolean>,suppress the display of zero balance accounts
-13190,tools,ChainState,state,getState,call,a,,false,false,true,true,gocmd,flag,<string>,call a smart contract with a solidity syntax&#44; a four-byte and parameters&#44; or encoded call data
-13190,tools,ChainState,state,getState,proxy_for,r,,false,false,true,true,gocmd,flag,<address>,for the --call option only&#44; redirects calls to this implementation
+13190,tools,ChainState,state,getState,call,l,,false,false,true,true,gocmd,flag,<string>,call a smart contract with a solidity syntax&#44; a four-byte and parameters&#44; or encoded call data
+13192,tools,ChainState,state,getState,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,for the --call option only&#44; articulate the retrieved data if ABIs can be found
+13194,tools,ChainState,state,getState,proxy_for,r,,false,false,true,true,gocmd,flag,<address>,for the --call option only&#44; redirects calls to this implementation
 13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
 13222,tools,ChainState,state,getState,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13224,tools,ChainState,state,getState,n2,,,false,false,false,false,--,note,,`Blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
@@ -236,9 +238,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10770,apps,Admin,config,config,paths,a,,false,false,true,true,gocmd,switch,<boolean>,show the configuration paths for the system
 10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
 
-20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[index|blooms|blocks|txs|traces|monitors|names|abis|recons|slurps|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
+20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
 20815,apps,Admin,status,cacheStatus,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 20820,apps,Admin,status,cacheStatus,max_records,e,10000,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
+20820,apps,Admin,status,cacheStatus,chains,a,,false,false,true,true,gocmd,switch,<boolean>,include a list of chain configurations in the output
 20825,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the state of the internal binary caches.
 20830,apps,Admin,status,cacheStatus,n1,,,false,false,false,false,--,note,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
 20835,apps,Admin,status,cacheStatus,n2,,,false,false,false,false,--,note,,If no mode is supplied&#44; a terse report is generated.
@@ -290,20 +293,20 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12224,tools,Other,slurp,ethslurp,n2,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 
-11660,dev_tools,,,makeClass,files,,,true,false,true,true,local,positional,list<path>,one or more class definition files
-11740,dev_tools,,,makeClass,all,a,,false,false,true,true,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
-11780,dev_tools,,,makeClass,options,o,,false,false,true,true,local,switch,<boolean>,export options code (check validity in the process)
-11780,dev_tools,,,makeClass,gocmds,g,,false,false,true,true,local,switch,<boolean>,export go command code
-11780,dev_tools,,,makeClass,readmes,m,,false,false,true,true,local,switch,<boolean>,create readme files for each tool and app
-11782,dev_tools,,,makeClass,format,f,,false,false,true,true,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
-11787,dev_tools,,,makeClass,sdk,s,,false,false,true,true,header,switch,<boolean>,create typescript sdk
-11781,dev_tools,,,makeClass,openapi,A,,false,false,true,true,header,switch,<boolean>,export openapi.yaml file for API documentation
+11660,dev_tools,,,makeClass,files,,,true,false,true,true,gocmd,positional,list<path>,one or more class definition files
+11740,dev_tools,,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder
+11780,dev_tools,,,makeClass,options,o,,false,false,true,true,gocmd,switch,<boolean>,export options code (check validity in the process)
+11780,dev_tools,,,makeClass,gocmds,g,,false,false,true,true,gocmd,switch,<boolean>,export go command code
+11780,dev_tools,,,makeClass,readmes,m,,false,false,true,true,gocmd,switch,<boolean>,create readme files for each tool and app
+11782,dev_tools,,,makeClass,format,f,,false,false,true,true,gocmd,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
+11787,dev_tools,,,makeClass,sdk,s,,false,false,true,true,gocmd,switch,<boolean>,create typescript sdk
+11781,dev_tools,,,makeClass,openapi,A,,false,false,true,true,gocmd,switch,<boolean>,export openapi.yaml file for API documentation
 11824,dev_tools,,,makeClass,,,,false,false,true,true,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,,makeClass,n1,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
 11830,dev_tools,,,makeClass,n2,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
 
-11880,dev_tools,,,testRunner,mode,m,,false,false,true,true,local,flag,enum[cmd*|api|both],determine which set of tests to run
-11900,dev_tools,,,testRunner,filter,f,,false,false,true,true,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
-11930,dev_tools,,,testRunner,skip,s,1,false,false,true,true,header,flag,<uint64>,run only every 'skip' test (faster)
-11960,dev_tools,,,testRunner,report,r,,false,false,true,true,header,switch,<boolean>,display performance report to screen
+11880,dev_tools,,,testRunner,mode,m,,false,false,true,true,gocmd,flag,enum[cmd*|api|both],determine which set of tests to run
+11900,dev_tools,,,testRunner,filter,f,,false,false,true,true,gocmd,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
+11930,dev_tools,,,testRunner,skip,s,1,false,false,true,true,gocmd,flag,<uint64>,run only every 'skip' test (faster)
+11960,dev_tools,,,testRunner,report,r,,false,false,true,true,gocmd,switch,<boolean>,display performance report to screen
 11980,dev_tools,,,testRunner,,,,false,false,true,true,--,description,,Run TrueBlocks' test cases with options.

@@ -11,6 +11,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -21,11 +23,8 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
-	filter := monitor.NewFilter(
-		chain,
-		opts.Globals.Verbose,
+	filter := filter.NewFilter(
 		opts.Reversed,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
@@ -66,7 +65,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 func (opts *ExportOptions) readTraces(
 	monitorArray []monitor.Monitor,
 	mon *monitor.Monitor,
-	filter *monitor.AppearanceFilter,
+	filter *filter.AppearanceFilter,
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleTrace, error) {
@@ -74,7 +73,12 @@ func (opts *ExportOptions) readTraces(
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
-		if err := opts.readTransactions(mon, txMap, true /* readTraces */); err != nil { // calls IterateOverMap
+		bar := logger.NewBar(logger.BarOptions{
+			Prefix:  mon.Address.Hex(),
+			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Total:   mon.Count(),
+		})
+		if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, true /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
 
@@ -96,6 +100,9 @@ func (opts *ExportOptions) readTraces(
 			}
 		}
 		sort.Slice(items, func(i, j int) bool {
+			if opts.Reversed {
+				i, j = j, i
+			}
 			itemI := items[i]
 			itemJ := items[j]
 			if itemI.BlockNumber == itemJ.BlockNumber {

@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -17,7 +19,7 @@ var (
 )
 
 // PriceUsdUniswap returns the price of the given asset in USD as of the given block number.
-func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
+func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
 	multiplier := float64(1.0)
 	var first base.Address
 	var second base.Address
@@ -29,7 +31,7 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 		temp := *statement
 		temp.AssetAddr = base.FAKE_ETH_ADDRESS
 		temp.AssetSymbol = "WEI"
-		multiplier, _, err = PriceUsdUniswap(chain, testMode, &temp)
+		multiplier, _, err = PriceUsdUniswap(conn, testMode, &temp)
 		if err != nil {
 			return 0.0, "not-priced", err
 		}
@@ -46,42 +48,46 @@ func PriceUsdUniswap(chain string, testMode bool, statement *types.SimpleStateme
 	}
 
 	theCall1 := fmt.Sprintf("getPair(%s, %s)", first.Hex(), second.Hex())
-	contractCall, err := call.NewContractCall(chain, uniswapFactoryV2, theCall1, false)
+	contractCall, _, err := call.NewContractCall(conn, uniswapFactoryV2, theCall1)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 
-	result, err := contractCall.Call()
+	abiCache := articulate.NewAbiCache(conn.Chain, true)
+	artFunc := func(str string, function *types.SimpleFunction) error {
+		return abiCache.ArticulateFunction(function, "", str[2:])
+	}
+	result, err := contractCall.Call12(artFunc)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
-	pairAddress := base.HexToAddress(result.Outputs["val_0"])
+	pairAddress := base.HexToAddress(result.Values["val_0"])
 	if pairAddress.IsZero() {
 		msg := fmt.Sprintf("no pair found for %s and %s", first.Hex(), second.Hex())
 		return 0.0, "not-priced", fmt.Errorf(msg)
 	}
 	theCall2 := "getReserves()"
-	contractCall, err = call.NewContractCall(chain, pairAddress, theCall2, false)
+	contractCall, _, err = call.NewContractCall(conn, pairAddress, theCall2)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
 	contractCall.BlockNumber = statement.BlockNumber
-	result, err = contractCall.Call()
+	result, err = contractCall.Call12(artFunc)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}
 	reserve0 := new(big.Float)
-	if result.Outputs != nil && result.Outputs["_reserve0"] == "" {
+	if result.Values != nil && result.Values["_reserve0"] == "" {
 		reserve0.SetString("1")
 	} else {
-		reserve0.SetString(result.Outputs["_reserve0"])
+		reserve0.SetString(result.Values["_reserve0"])
 	}
 	reserve1 := new(big.Float)
-	if result.Outputs != nil && result.Outputs["_reserve1"] == "" {
+	if result.Values != nil && result.Values["_reserve1"] == "" {
 		reserve0.SetString("1")
 	} else {
-		reserve1.SetString(result.Outputs["_reserve1"])
+		reserve1.SetString(result.Values["_reserve1"])
 	}
 	bigPrice := new(big.Float)
 	bigPrice.Quo(reserve0, reserve1)

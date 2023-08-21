@@ -9,7 +9,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var bar = logger.NewBar("Visiting", true, int64(17000000))
+var bar = logger.NewBar(logger.BarOptions{
+	Prefix:  "Visiting",
+	Enabled: true,
+	Total:   int64(17000000),
+})
 
 func main() {
 	chain := "mainnet"

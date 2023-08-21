@@ -30,7 +30,10 @@ func (opts *TracesOptions) HandleCounts() error {
 			cancel()
 		}
 
-		bar := logger.NewBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, int64(len(txMap)))
+		bar := logger.NewBar(logger.BarOptions{
+			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Total:   int64(len(txMap)),
+		})
 
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
@@ -82,7 +85,7 @@ func (opts *TracesOptions) HandleCounts() error {
 		})
 		for _, item := range items {
 			item := item
-			if item.BlockNumber != 0 {
+			if !item.BlockHash.IsZero() {
 				counter := simpleTraceCount{
 					BlockNumber:      uint64(item.BlockNumber),
 					TransactionIndex: uint64(item.TransactionIndex),

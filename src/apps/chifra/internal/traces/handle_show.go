@@ -32,7 +32,10 @@ func (opts *TracesOptions) HandleShow() error {
 			cancel()
 		}
 
-		bar := logger.NewBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, int64(len(txMap)))
+		bar := logger.NewBar(logger.BarOptions{
+			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Total:   int64(len(txMap)),
+		})
 
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
@@ -86,7 +89,7 @@ func (opts *TracesOptions) HandleShow() error {
 		sort.Slice(items, func(i, j int) bool {
 			if items[i].BlockNumber == items[j].BlockNumber {
 				if items[i].TransactionIndex == items[j].TransactionIndex {
-					return items[i].TraceIndex < items[j].TraceIndex
+					return items[i].GetSortString() < items[j].GetSortString()
 				}
 				return items[i].TransactionIndex < items[j].TransactionIndex
 			}
@@ -95,7 +98,7 @@ func (opts *TracesOptions) HandleShow() error {
 
 		for _, item := range items {
 			item := item
-			if item.BlockNumber != 0 {
+			if !item.BlockHash.IsZero() {
 				modelChan <- &item
 			}
 		}

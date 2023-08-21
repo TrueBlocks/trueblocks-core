@@ -138,22 +138,37 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 
 	return opts
 }
 
 // blocksFinishParse finishes the parsing for command line invocations. Returns a new BlocksOptions.
 func blocksFinishParse(args []string) *BlocksOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
+	opts.Blocks = args
 	if !opts.Uniq && opts.List == 0 {
 		defFmt = "json"
 	}
-	opts.Blocks = args
 	// EXISTING_CODE
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
@@ -184,10 +199,10 @@ func ResetOptions() {
 func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"blocks": !opts.Uncles,
-		"txs":    opts.CacheTxs || opts.Uniq,
-		"traces": opts.CacheTraces || opts.Uniq,
-		"logs":   opts.Logs,
+		"blocks":       !opts.Uncles,
+		"transactions": opts.CacheTxs || opts.Uniq,
+		"traces":       opts.CacheTraces || opts.Uniq,
+		"logs":         opts.Logs,
 	}
 	// EXISTING_CODE
 	return

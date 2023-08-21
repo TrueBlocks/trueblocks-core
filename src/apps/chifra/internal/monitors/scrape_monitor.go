@@ -248,7 +248,7 @@ func establishExportPaths(chain string) {
 	folders := []string{
 		"apps",
 		"logs",
-		"txs",
+		"transactions",
 		"neighbors",
 		"statements",
 		"raw",
@@ -306,5 +306,5 @@ func GetOutputFolder(cmdLine, def string) string {
 	} else if strings.Contains(cmdLine, "--accounting") {
 		return "accounting"
 	}
-	return "txs"
+	return "transactions"
 }

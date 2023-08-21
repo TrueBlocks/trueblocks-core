@@ -155,8 +155,8 @@ func Test_findAbiFunction(t *testing.T) {
 	}
 
 	hint := hints[0]
-	if hint.Name != "setShouldReject" {
-		t.Fatal("wrong hint:", hint.Name)
+	if hint != "setShouldReject(bool)" {
+		t.Fatal("wrong hint:", hint)
 	}
 
 	// Expect no match
@@ -227,8 +227,8 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 	}
 
 	hint := hints[0]
-	if hint.Name != "setShouldReject" {
-		t.Fatal("wrong hint:", hint.Name)
+	if hint != "setShouldReject(bool)" {
+		t.Fatal("wrong hint:", hint)
 	}
 
 	// Expect no match

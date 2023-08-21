@@ -9,22 +9,21 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *WhenOptions) HandleDecache() error {
-	chain := opts.Globals.Chain
-	opts.Conn = rpc.NewReadOnlyConnection(chain)
+	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
 
-	itemsToRemove, err := decache.BlockLocationsFromIds(opts.Conn, opts.BlockIds)
+	itemsToRemove, err := decache.LocationsFromBlockIds(opts.Conn, opts.BlockIds, false, false)
 	if err != nil {
 		return err
 	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, opts.Globals.TestMode, opts.Globals.Verbose); err != nil {
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Blocks); err != nil {
 			errorChan <- err
 		} else {
 			s := types.SimpleMessage{

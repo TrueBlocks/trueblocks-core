@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // HandleIndexBelongs displays the resolved records in a chunk given a single address
@@ -22,11 +23,11 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showAddressesBelongs := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+		showAddressesBelongs := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			return opts.handleResolvedRecords(modelChan, walker, path, first)
 		}
 
-		walker := index.NewCacheWalker(
+		walker := walk.NewCacheWalker(
 			chain,
 			opts.Globals.TestMode,
 			10000, /* maxTests */
@@ -45,7 +46,7 @@ func (opts *ChunksOptions) HandleIndexBelongs(blockNums []uint64) error {
 // handleResolvedRecords is a helper function for HandleIndexBelongs and verbose versions of
 // HandleAddresses and HandleAppearances. It is called once for each chunk in the index and
 // depends on the values of opts.Globals.Verbose and opts.Belongs.
-func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[types.RawModeler], walker *index.CacheWalker, path string, first bool) (bool, error) {
+func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[types.RawModeler], walker *walk.CacheWalker, path string, first bool) (bool, error) {
 	if path != index.ToBloomPath(path) {
 		return false, fmt.Errorf("should not happen in showAddressesBelongs")
 	}

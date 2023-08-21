@@ -89,7 +89,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 				return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 			}
 			if opts.Articulate && !opts.Logs {
-				return validate.Usage("The {0} option is available only with {1}.", "--articulate", "the --logs option")
+				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--logs")
 			}
 			if opts.Uniq && !opts.Count {
 				if opts.Traces {
@@ -118,6 +118,11 @@ func (opts *BlocksOptions) validateBlocks() error {
 			if opts.List != 0 {
 				return validate.Usage("The {0} option is not available{1}.", "--articulate", " with the --list option")
 			}
+		}
+
+		// We cannot cache uncles because they are identical to the cannonical blocks of the same number and would be incorrectly retreived.
+		if opts.Globals.Cache && opts.Uncles {
+			return validate.Usage("The {0} option is currently not available{1}.", "--cache", " with the --uncles option")
 		}
 	}
 

@@ -2,39 +2,37 @@ chunks?mode=manifest&check
 {
   "data": [
     {
-      "checkedCnt": 1000,
+      "checkedCnt": 7640,
+      "passedCnt": 7640,
       "reason": "Filenames sequential",
-      "result": "passed"
+      "result": "passed",
+      "visitedCnt": 7640
     },
     {
       "checkedCnt": 11,
+      "failedCnt": 2,
       "msgStrings": [
         "000000001-000590502: Magic number expected (0xdeadbeef) got (0xdeadbeef)",
         "000590503-000864335: Header hash expected (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1) got (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1)"
       ],
-      "passedCnt": 11,
+      "passedCnt": 9,
       "reason": "Internally consistent",
+      "result": "failed",
       "visitedCnt": 11
     },
     {
-      "checkedCnt": 2000,
+      "checkedCnt": 15264,
+      "passedCnt": 15264,
       "reason": "Consistent hashes",
-      "result": "passed"
+      "result": "passed",
+      "visitedCnt": 15264
     },
     {
-      "checkedCnt": 1000,
+      "checkedCnt": 11,
+      "passedCnt": 11,
       "reason": "Check file sizes",
-      "result": "passed"
-    },
-    {
-      "checkedCnt": 1000,
-      "msgStrings": [
-        "000864336-001076298: The chunk is in the Remote Manifest array but not the Cached Manifest array (testing)",
-        "001076299-001229769: The chunk is in the Remote Manifest array but not the Cached Manifest array (testing)"
-      ],
-      "passedCnt": 1000,
-      "reason": "Remote Manifest to Cached Manifest",
-      "visitedCnt": 1000
+      "result": "passed",
+      "visitedCnt": 11
     },
     {
       "checkedCnt": 22,
@@ -45,7 +43,7 @@ chunks?mode=manifest&check
       ],
       "passedCnt": 20,
       "reason": "Disc Files to Cached Manifest",
-      "result": "",
+      "result": "failed",
       "visitedCnt": 22
     },
     {
@@ -57,8 +55,20 @@ chunks?mode=manifest&check
       ],
       "passedCnt": 20,
       "reason": "Disc Files to Remote Manifest",
-      "result": "",
+      "result": "failed",
       "visitedCnt": 22
+    },
+    {
+      "checkedCnt": 7632,
+      "failedCnt": 2,
+      "msgStrings": [
+        "000864336-001076298: The chunk is in the Remote Manifest array but not the Cached Manifest array (testing)",
+        "001076299-001229769: The chunk is in the Remote Manifest array but not the Cached Manifest array (testing)"
+      ],
+      "passedCnt": 7630,
+      "reason": "Remote Manifest to Cached Manifest",
+      "result": "failed",
+      "visitedCnt": 7632
     }
   ],
   "meta": {

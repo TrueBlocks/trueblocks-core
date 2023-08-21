@@ -23,17 +23,18 @@ import (
 
 // StateOptions provides all command options for the chifra state command.
 type StateOptions struct {
-	Addrs    []string                 `json:"addrs,omitempty"`    // One or more addresses (0x...) from which to retrieve balances
-	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of one or more blocks at which to report balances, defaults to 'latest'
-	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
-	Parts    []string                 `json:"parts,omitempty"`    // Control which state to export
-	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
-	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
-	Call     string                   `json:"call,omitempty"`     // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
-	ProxyFor string                   `json:"proxyFor,omitempty"` // For the --call option only, redirects calls to this implementation
-	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
-	Conn     *rpc.Connection          `json:"conn,omitempty"`     // The connection to the RPC server
-	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
+	Addrs      []string                 `json:"addrs,omitempty"`      // One or more addresses (0x...) from which to retrieve balances
+	Blocks     []string                 `json:"blocks,omitempty"`     // An optional list of one or more blocks at which to report balances, defaults to 'latest'
+	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
+	Parts      []string                 `json:"parts,omitempty"`      // Control which state to export
+	Changes    bool                     `json:"changes,omitempty"`    // Only report a balance when it changes from one block to the next
+	NoZero     bool                     `json:"noZero,omitempty"`     // Suppress the display of zero balance accounts
+	Call       string                   `json:"call,omitempty"`       // Call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+	Articulate bool                     `json:"articulate,omitempty"` // For the --call option only, articulate the retrieved data if ABIs can be found
+	ProxyFor   string                   `json:"proxyFor,omitempty"`   // For the --call option only, redirects calls to this implementation
+	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
+	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -48,6 +49,7 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
+	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -86,6 +88,8 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 			opts.NoZero = true
 		case "call":
 			opts.Call = value[0]
+		case "articulate":
+			opts.Articulate = true
 		case "proxyFor":
 			opts.ProxyFor = value[0]
 		default:
@@ -95,6 +99,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	if opts.Call != "" {
@@ -102,8 +107,6 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		unquoted := strings.Trim(opts.Call, "'")
 		opts.Call = unquoted
 	}
-	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -112,30 +115,39 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 		}
 	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 
 	return opts
 }
 
 // stateFinishParse finishes the parsing for command line invocations. Returns a new StateOptions.
 func stateFinishParse(args []string) *StateOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
-	dupMap := make(map[string]bool)
 	for _, arg := range args {
-		if !dupMap[arg] {
-			if base.IsValidAddress(arg) {
-				opts.Addrs = append(opts.Addrs, arg)
-			} else {
-				opts.Blocks = append(opts.Blocks, arg)
-			}
+		if base.IsValidAddress(arg) {
+			opts.Addrs = append(opts.Addrs, arg)
+		} else {
+			opts.Blocks = append(opts.Blocks, arg)
 		}
-		dupMap[arg] = true
 	}
-	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
 	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
 	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
@@ -152,6 +164,7 @@ func stateFinishParse(args []string) *StateOptions {
 		}
 	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
@@ -183,7 +196,8 @@ func ResetOptions() {
 func (opts *StateOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"state": true,
+		"state":   true,
+		"results": len(opts.Call) > 0,
 	}
 	// EXISTING_CODE
 	return

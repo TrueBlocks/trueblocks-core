@@ -18,7 +18,7 @@ func (opts *DaemonOptions) validateDaemon() error {
 	}
 
 	if opts.Globals.IsApiMode() {
-		return validate.Usage("The {0} option is not available in {1}.", "daemon", "api mode")
+		return validate.Usage("The {0} option is not available{1}.", "daemon", " in api mode")
 	}
 
 	err := validate.ValidateEnum("scrape", opts.Scrape, "[off|blooms|index]")

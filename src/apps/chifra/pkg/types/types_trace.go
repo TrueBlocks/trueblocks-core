@@ -55,7 +55,8 @@ type SimpleTrace struct {
 	TraceType        string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`
 	// EXISTING_CODE
-	TraceIndex uint64 `json:"-"`
+	TraceIndex base.Blknum `json:"-"`
+	sortString string      `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -78,16 +79,16 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 		"result":           s.Result,
 		"subtraces":        s.Subtraces,
 		"timestamp":        s.Timestamp,
+		"date":             s.Date(),
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
-		// "traceIndex":       s.TraceIndex,
 	}
 
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
-		// "traceIndex",
 		"timestamp",
+		"date",
 		"error",
 		"action::callType",
 		"action::from",
@@ -192,10 +193,11 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 	}
 }
 
-// EXISTING_CODE
-//
+func (s *SimpleTrace) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
 
-//- cacheable by tx as group
+// --> cacheable by tx as group
 type SimpleTraceGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
@@ -293,7 +295,7 @@ func (s *SimpleTrace) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// TransactionHash
-	if err = cache.WriteValue(writer, s.TransactionHash); err != nil {
+	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
 
@@ -369,6 +371,7 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	}
 
 	// TraceAddress
+	s.TraceAddress = make([]uint64, 0)
 	if err = cache.ReadValue(reader, &s.TraceAddress, version); err != nil {
 		return err
 	}
@@ -388,7 +391,33 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleTrace) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// EXISTING_CODE
+//
+
+func (s *SimpleTrace) GetSortString() string {
+	if len(s.sortString) > 0 {
+		return s.sortString
+	}
+
+	s.sortString = ""
+	s.sortString += fmt.Sprintf("%03d", s.TraceIndex)
+	if s.TraceAddress != nil {
+		for _, v := range s.TraceAddress {
+			s.sortString += fmt.Sprintf("%03d", v)
+		}
+	}
+
+	return s.sortString
 }
 
 func mustParseUint(input any) (result uint64) {

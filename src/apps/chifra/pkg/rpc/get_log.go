@@ -4,10 +4,10 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/bykof/gostradamus"
 )
 
 // GetLogsByFilter returns the logs given a filter
@@ -35,13 +35,15 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 	if logs, err := conn.getLogsSimple(filter); err != nil {
 		return logs, err
 	} else {
-		if conn.StoreWritable() && conn.enabledMap["logs"] && isFinal(conn.LatestBlockTimestamp, ts) {
+		if conn.StoreWritable() && conn.EnabledMap["logs"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
 			logGroup := &types.SimpleLogGroup{
 				Logs:             logs,
 				BlockNumber:      bn,
 				TransactionIndex: utils.NOPOS,
 			}
-			_ = conn.Store.Write(logGroup, nil)
+			if err = conn.Store.Write(logGroup, nil); err != nil {
+				logger.Warn("Failed to write logs to cache", err)
+			}
 		}
 		return logs, err
 	}
@@ -81,13 +83,11 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 	} else {
 		curBlock := utils.NOPOS
 		curTs := utils.NOPOSI
-		curDate := gostradamus.FromUnixTimestamp(0)
 		var ret []types.SimpleLog
 		for _, rawLog := range rawLogs {
 			bn := utils.MustParseUint(rawLog.BlockNumber)
 			if bn != curBlock {
 				curTs = conn.GetBlockTimestamp(bn)
-				curDate = gostradamus.FromUnixTimestamp(curTs)
 				curBlock = bn
 			}
 			log := types.SimpleLog{
@@ -97,7 +97,6 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 				Data:             rawLog.Data,
 				LogIndex:         utils.MustParseUint(rawLog.LogIndex),
 				Timestamp:        curTs,
-				Date:             curDate.String(),
 				TransactionHash:  base.HexToHash(rawLog.TransactionHash),
 				TransactionIndex: utils.MustParseUint(rawLog.TransactionIndex),
 			}

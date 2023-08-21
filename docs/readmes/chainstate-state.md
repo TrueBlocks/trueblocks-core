@@ -24,7 +24,8 @@ Flags:
                            One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
   -c, --changes            only report a balance when it changes from one block to the next
   -z, --no_zero            suppress the display of zero balance accounts
-  -a, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+  -l, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+  -a, --articulate         for the --call option only, articulate the retrieved data if ABIs can be found
   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
   -H, --ether              specify value in ether
   -o, --cache              force the results of the query into the cache
@@ -45,7 +46,7 @@ Notes:
 
 Data models produced by this tool:
 
-- [callresult](/data-model/chainstate/#callresult)
+- [result](/data-model/chainstate/#result)
 - [ethcall](/data-model/chainstate/#ethcall)
 
 Links:

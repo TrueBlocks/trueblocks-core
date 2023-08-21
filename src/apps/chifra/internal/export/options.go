@@ -9,7 +9,6 @@ package exportPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -101,60 +100,6 @@ func (opts *ExportOptions) testLog() {
 func (opts *ExportOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *ExportOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *ExportOptions) toCmdLine() string {
-	options := ""
-	if opts.Accounting {
-		options += " --accounting"
-	}
-	if opts.Statements {
-		options += " --statements"
-	}
-	if opts.Articulate {
-		options += " --articulate"
-	}
-	if opts.CacheTraces {
-		options += " --cache_traces"
-	}
-	if opts.FirstRecord != 0 {
-		options += (" --first_record " + fmt.Sprintf("%d", opts.FirstRecord))
-	}
-	if opts.MaxRecords != 250 {
-		options += (" --max_records " + fmt.Sprintf("%d", opts.MaxRecords))
-	}
-	for _, asset := range opts.Asset {
-		options += " --asset " + asset
-	}
-	if len(opts.Flow) > 0 {
-		options += " --flow " + opts.Flow
-	}
-	if opts.FirstBlock != 0 {
-		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
-	}
-	if opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS {
-		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
-	}
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += " " + strings.Join(opts.Topics, " ")
-	options += " " + strings.Join(opts.Fourbytes, " ")
-	// EXISTING_CODE
-	if opts.Globals.Cache {
-		options += " --cache"
-	}
-	// EXISTING_CODE
-	//lint:ignore S1025 following line make code-generation easier
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // exportFinishParseApi finishes the parsing for server invocations. Returns a new ExportOptions.
@@ -250,38 +195,47 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
+	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
-	// EXISTING_CODE
 
 	return opts
 }
 
 // exportFinishParse finishes the parsing for command line invocations. Returns a new ExportOptions.
 func exportFinishParse(args []string) *ExportOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 
 	// EXISTING_CODE
-	dupMap := make(map[string]bool)
 	for _, arg := range args {
-		if !dupMap[arg] {
-			if validate.IsValidTopic(arg) {
-				opts.Topics = append(opts.Topics, arg)
-			} else if validate.IsValidFourByte(arg) {
-				opts.Fourbytes = append(opts.Fourbytes, arg)
-			} else {
-				opts.Addrs = append(opts.Addrs, arg)
-			}
+		if validate.IsValidTopic(arg) {
+			opts.Topics = append(opts.Topics, arg)
+		} else if validate.IsValidFourByte(arg) {
+			opts.Fourbytes = append(opts.Fourbytes, arg)
+		} else {
+			opts.Addrs = append(opts.Addrs, arg)
 		}
-		dupMap[arg] = true
 	}
+	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
-	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
@@ -313,11 +267,10 @@ func ResetOptions() {
 func (opts *ExportOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		// TODO: Enabled neighbors and statements cache
-		"txs":        true,
-		"neigbors":   true,
-		"statements": true,
-		"traces":     opts.CacheTraces,
+		// TODO: Enabled neighbors cache
+		"transactions": true,
+		"statements":   true,
+		"traces":       opts.CacheTraces,
 	}
 	// EXISTING_CODE
 	return

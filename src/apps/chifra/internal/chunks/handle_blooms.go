@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
@@ -21,7 +22,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showBloom := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+		showBloom := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showBloom")
 			}
@@ -56,7 +57,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 			return true, nil
 		}
 
-		walker := index.NewCacheWalker(
+		walker := walk.NewCacheWalker(
 			chain,
 			opts.Globals.TestMode,
 			10, /* maxTests */

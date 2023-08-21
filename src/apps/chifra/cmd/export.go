@@ -55,10 +55,11 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
-  - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.
+  - If present, --first_/--last_block are applied, followed by user-supplied filters such as asset or topic, followed by --first_/--max_record if present.
   - The --first_record and --max_record options are zero-based (as are the block options).
-  - The _block and _record options are ignored when used with the --count option.
-  - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).`
+  - The _block and _record filters are ignored when used with the --count option.
+  - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
+  - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra export

@@ -7,11 +7,12 @@ package exportPkg
 import (
 	"context"
 	"fmt"
-	"strings"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -19,95 +20,63 @@ import (
 )
 
 func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
-	if opts.Accounting {
-		// TODO: BOGUS - RECONSIDER THIS
-		opts.Articulate = true
-	}
-
-	ledgers := &ledger.Ledger{}
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
-	filter := monitor.NewFilter(
-		chain,
-		true,
+	filter := filter.NewFilter(
 		opts.Reversed,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
-		visitAppearance := func(app *types.SimpleAppearance) error {
-			raw := types.RawAppearance{
-				Address:          app.Address.Hex(),
-				BlockNumber:      uint32(app.BlockNumber),
-				TransactionIndex: uint32(app.TransactionIndex),
-			}
-			if tx, err := opts.Conn.GetTransactionByAppearance(&raw, false); err != nil {
+		for _, mon := range monitorArray {
+			if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
-				return nil
-			} else {
-				matches := len(opts.Fourbytes) == 0 // either there is no four bytes...
-				for _, fb := range opts.Fourbytes {
-					if strings.HasPrefix(tx.Input, fb) {
-						matches = true
-					}
+				return
+			} else if !opts.NoZero || cnt > 0 {
+				bar := logger.NewBar(logger.BarOptions{
+					Prefix:  mon.Address.Hex(),
+					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Total:   mon.Count(),
+				})
+				if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+					errorChan <- err
+					return
 				}
-				if matches {
+
+				items := make([]*types.SimpleTransaction, 0, len(txMap))
+				for _, tx := range txMap {
 					if opts.Articulate {
 						if err = abiCache.ArticulateTransaction(tx); err != nil {
 							errorChan <- err // continue even on error
 						}
 					}
-
-					if opts.Accounting {
-						if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, &raw); err != nil {
-							errorChan <- err
-						} else {
-							tx.Statements = &statements
-						}
+					items = append(items, tx)
+				}
+				sort.Slice(items, func(i, j int) bool {
+					if opts.Reversed {
+						i, j = j, i
 					}
-
-					modelChan <- tx
-				}
-				return nil
-			}
-		}
-
-		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
-				errorChan <- err
-				return
-			} else if !opts.NoZero || cnt > 0 {
-				ledgers = ledger.NewLedger(
-					chain,
-					mon.Address,
-					opts.FirstBlock,
-					opts.LastBlock,
-					opts.Globals.Ether,
-					testMode,
-					opts.NoZero,
-					opts.Traces,
-					&opts.Asset,
-				)
-				if opts.Accounting {
-					_ = ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
-				}
-
-				for _, app := range apps {
-					app := app
-					if err := visitAppearance(&app); err != nil {
-						errorChan <- err
-						return
+					if items[i].BlockNumber == items[j].BlockNumber {
+						return items[i].TransactionIndex < items[j].TransactionIndex
+					}
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+				for _, item := range items {
+					item := item
+					if !item.BlockHash.IsZero() {
+						modelChan <- item
 					}
 				}
+
 			} else {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				continue
+				return
 			}
 		}
+
 	}
 
 	extra := map[string]interface{}{

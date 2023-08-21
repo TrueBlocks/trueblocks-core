@@ -89,7 +89,7 @@ func (s *SimpleParameter) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-//- marshal_only
+// --> marshal_only
 func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
 	// Components
 	components := make([]cache.Marshaler, 0, len(s.Components))
@@ -179,7 +179,14 @@ func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err 
 		return fmt.Errorf("cannot unmarshal Value: %w", err)
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleParameter) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // prepareDownloadList returns a list of chunks (or partial chunks) that need to be updated. Upon return, if a chunk is in this list,
@@ -29,7 +30,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	// filters are required. If the user has specified `--all`, we insist that the corresponding index portion is also present and valid. If the
 	// user has not specified `--all`, then we check the index portion, only if it exists, and then only for the correct header and file size. If a
 	// bloom filter is present on disc, but not in the manifest, then we delete both the bloom filte and the corresponding index portion if it exists.
-	cleanIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+	cleanIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 		if path != index.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
@@ -103,7 +104,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		}
 	}
 
-	walker := index.NewCacheWalker(
+	walker := walk.NewCacheWalker(
 		chain,
 		opts.Globals.TestMode,
 		10, /* maxTests */

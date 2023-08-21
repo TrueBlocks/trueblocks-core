@@ -6,6 +6,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -13,7 +15,7 @@ import (
 func (opts *ExportOptions) readReceipts(
 	addrArray []base.Address,
 	mon *monitor.Monitor,
-	filter *monitor.AppearanceFilter,
+	filter *filter.AppearanceFilter,
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleReceipt, error) {
@@ -32,7 +34,13 @@ func (opts *ExportOptions) readReceipts(
 		return nil, nil
 	}
 
-	if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil {
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  mon.Address.Hex(),
+		Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+		Total:   mon.Count(),
+	})
+
+	if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 		return nil, err
 	}
 
@@ -57,6 +65,9 @@ func (opts *ExportOptions) readReceipts(
 		items = append(items, tx.Receipt)
 	}
 	sort.Slice(items, func(i, j int) bool {
+		if opts.Reversed {
+			i, j = j, i
+		}
 		itemI := items[i]
 		itemJ := items[j]
 		if itemI.BlockNumber == itemJ.BlockNumber {

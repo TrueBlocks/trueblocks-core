@@ -16,7 +16,6 @@ import (
 // EXISTING_CODE
 
 type RawEthCall struct {
-	Abi_spec    string `json:"abi_spec"`
 	Address     string `json:"address"`
 	BlockNumber string `json:"blockNumber"`
 	Bytes       string `json:"bytes"`
@@ -28,15 +27,14 @@ type RawEthCall struct {
 }
 
 type SimpleEthCall struct {
-	Address          base.Address    `json:"address"`
-	BlockNumber      base.Blknum     `json:"blockNumber"`
-	Bytes            string          `json:"bytes"`
-	CallResult       *SimpleFunction `json:"callResult"`
-	CompressedResult string          `json:"compressedResult"`
-	Deployed         base.Blknum     `json:"deployed"`
-	Encoding         string          `json:"encoding"`
-	Signature        string          `json:"signature"`
-	raw              *RawEthCall     `json:"-"`
+	Address          base.Address `json:"address"`
+	BlockNumber      base.Blknum  `json:"blockNumber"`
+	Bytes            string       `json:"bytes"`
+	CompressedResult string       `json:"compressedResult"`
+	Deployed         base.Blknum  `json:"deployed"`
+	Encoding         string       `json:"encoding"`
+	Signature        string       `json:"signature"`
+	raw              *RawEthCall  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

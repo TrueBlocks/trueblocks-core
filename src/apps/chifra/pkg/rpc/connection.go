@@ -15,7 +15,7 @@ type Connection struct {
 	Chain                string
 	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
 	LatestBlockTimestamp base.Timestamp
-	enabledMap           map[string]bool
+	EnabledMap           map[string]bool
 }
 
 // settings allows every command has its own options type, we have to
@@ -69,7 +69,7 @@ func (settings settings) GetRpcConnection() *Connection {
 	ret := &Connection{
 		Chain:      settings.Chain,
 		Store:      store,
-		enabledMap: settings.EnabledMap,
+		EnabledMap: settings.EnabledMap,
 	}
 
 	if store != nil && !store.ReadOnly() {
@@ -109,10 +109,4 @@ func (conn *Connection) TestLog(enabledMap map[string]bool) {
 		logger.TestLog(len(enabled) > 0, "Enabled: ", strings.Join(enabled, ", "))
 	}
 	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
-}
-
-func isFinal(latestTs, blockTs base.Timestamp) bool {
-	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
-	var pendingPeriod = int64(5 * 60)
-	return (latestTs - blockTs) >= pendingPeriod
 }

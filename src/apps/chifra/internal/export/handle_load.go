@@ -31,7 +31,7 @@ package exportPkg
 //     trav->curMonitor = &monitor;
 //     curMonitor = &monitor;
 //     monitor.read Appearances(visitOnLoad, this);
-//     if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
+//     if (reversed)  // TODO: remove this comment once account works backwardly
 //         sort(monitor.apps.begin(), monitor.apps.end(), sortMonitoredAppearanceReverse);
 //     trav->traverse(monitor.apps, this);
 // }

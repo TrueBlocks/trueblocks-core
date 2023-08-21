@@ -7,6 +7,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -15,7 +16,7 @@ import (
 
 func (opts *ExportOptions) readBalances(
 	mon *monitor.Monitor,
-	filter *monitor.AppearanceFilter,
+	filter *filter.AppearanceFilter,
 	errorChan chan error,
 ) ([]*types.SimpleToken, error) {
 
@@ -33,7 +34,12 @@ func (opts *ExportOptions) readBalances(
 		return nil, nil
 	}
 
-	bar := logger.NewBar(mon.Address.Hex(), !opts.Globals.TestMode, mon.Count())
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  mon.Address.Hex(),
+		Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+		Total:   mon.Count(),
+	})
+
 	iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
 		var balance *big.Int
 		if balance, err = opts.Conn.GetBalanceByAppearance(mon.Address, &app); err != nil {
@@ -68,6 +74,9 @@ func (opts *ExportOptions) readBalances(
 		items = append(items, tx)
 	}
 	sort.Slice(items, func(i, j int) bool {
+		if opts.Reversed {
+			i, j = j, i
+		}
 		return items[i].BlockNumber < items[j].BlockNumber
 	})
 

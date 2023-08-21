@@ -1,5 +1,5 @@
-chifra status  abis monitors txs --verbose --max_records 2
-TEST[DATE|TIME] Modes:  [abis monitors txs]
+chifra status  abis monitors transactions --verbose --max_records 2
+TEST[DATE|TIME] Modes:  [abis monitors transactions]
 TEST[DATE|TIME] MaxRecords:  2
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  json
@@ -59,13 +59,26 @@ TEST[DATE|TIME] Format:  json
           "type": "monitorsCache"
         },
         {
-          "items": [],
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "transactionsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "transactionsCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "txsCache"
+          "type": "transactionsCache"
         }
       ],
       "chainConfig": "--paths--",

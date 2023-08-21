@@ -28,7 +28,7 @@ type CommandFileLine struct {
 // ParseCommandsFile parses a text file into `CommandsFile` struct. While parsing, the function validates flags
 // present on the current line.
 func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, err error) {
-	// TODO(dawid): parallelize
+	// TODO: parallelize
 	inputFile, err := os.Open(filePath)
 	if err != nil {
 		return

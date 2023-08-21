@@ -1,0 +1,10 @@
+chifra status  tokens --max_records 100
+TEST[DATE|TIME] Modes:  [tokens]
+TEST[DATE|TIME] MaxRecords:  100
+TEST[DATE|TIME] Format:  json
+{
+  "data": [],
+  "errors": [
+    "no files were found in the [tokens] caches"
+  ]
+}

@@ -13,11 +13,13 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
@@ -53,16 +55,20 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 
 	unchainedChain := "mainnet" // the unchained index is on mainnet
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
+	conn := rpc.TempConnection(unchainedChain)
 
-	if contractCall, err := call.NewContractCall(unchainedChain, unchained.GetUnchainedIndexAddress(), theCall, false); err != nil {
+	if contractCall, _, err := call.NewContractCall(conn, unchained.GetUnchainedIndexAddress(), theCall); err != nil {
 		return "", err
 	} else {
-		conn := rpc.TempConnection(unchainedChain)
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
-		if result, err := contractCall.Call(); err != nil {
+		abiCache := articulate.NewAbiCache(chain, true)
+		artFunc := func(str string, function *types.SimpleFunction) error {
+			return abiCache.ArticulateFunction(function, "", str[2:])
+		}
+		if result, err := contractCall.Call12(artFunc); err != nil {
 			return "", err
 		} else {
-			return result.Outputs["val_0"], nil
+			return result.Values["val_0"], nil
 		}
 	}
 }

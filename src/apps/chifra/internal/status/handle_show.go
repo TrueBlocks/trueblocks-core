@@ -6,10 +6,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -18,7 +21,7 @@ func (opts *StatusOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
-	renderCtx := context.Background()
+	ctx := context.Background()
 
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		now := time.Now()
@@ -31,7 +34,7 @@ func (opts *StatusOptions) HandleShow() error {
 		for _, mT := range opts.ModeTypes {
 			mT := mT
 			counterMap[mT] = &simpleCacheItem{
-				CacheItemType: cacheName(mT),
+				CacheItemType: walk.CacheName(mT),
 				Items:         make([]any, 0),
 				LastCached:    now.Format("2006-01-02 15:04:05"),
 			}
@@ -76,7 +79,16 @@ func (opts *StatusOptions) HandleShow() error {
 							counterMap[cT].NFiles++
 							counterMap[cT].SizeInBytes += file.FileSize(result.Path)
 							if opts.Globals.Verbose && counterMap[cT].NFiles <= opts.MaxRecords {
-								cI, _ := opts.getCacheItem(cT, result.Path)
+								result.FileRange = base.RangeFromFilename(result.Path)
+								result.TsRange.First, _ = tslib.FromBnToTs(chain, result.FileRange.First)
+								result.TsRange.Last, _ = tslib.FromBnToTs(chain, result.FileRange.Last)
+								cI, _ := walk.GetCacheItem(chain, testMode, cT, &result)
+								if isIndex(cT) {
+									bP := index.ToBloomPath(result.Path)
+									cI["bloomSizeBytes"] = file.FileSize(bP)
+									iP := index.ToIndexPath(result.Path)
+									cI["indexSizeBytes"] = file.FileSize(iP)
+								}
 								counterMap[cT].Items = append(counterMap[cT].Items, cI)
 							}
 						}
@@ -130,10 +142,10 @@ func (opts *StatusOptions) HandleShow() error {
 	extra := map[string]interface{}{
 		"showProgress": false,
 		"testMode":     testMode,
-		// "isApi":        isApi,
+		"chains":       opts.Chains,
 	}
 
-	return output.StreamMany(renderCtx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
 type CacheWalker struct {

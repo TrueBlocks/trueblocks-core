@@ -42,7 +42,6 @@ type SimpleLog struct {
 	BlockNumber      base.Blknum     `json:"blockNumber"`
 	CompressedLog    string          `json:"compressedLog,omitempty"`
 	Data             string          `json:"data,omitempty"`
-	Date             string          `json:"date,omitempty"`
 	LogIndex         uint64          `json:"logIndex"`
 	Timestamp        base.Timestamp  `json:"timestamp,omitempty"`
 	Topics           []base.Hash     `json:"topics,omitempty"`
@@ -72,7 +71,7 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 		"blockNumber":      s.BlockNumber,
 		"logIndex":         s.LogIndex,
 		"timestamp":        s.Timestamp,
-		"date":             utils.FormattedDate(s.Timestamp),
+		"date":             s.Date(),
 		"transactionIndex": s.TransactionIndex,
 		"transactionHash":  s.TransactionHash,
 	}
@@ -150,10 +149,11 @@ func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]a
 	}
 }
 
-// EXISTING_CODE
-//
+func (s *SimpleLog) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
 
-//- cacheable by tx as group
+// --> cacheable by block as group
 type SimpleLogGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
@@ -165,7 +165,7 @@ func (s *SimpleLogGroup) CacheName() string {
 }
 
 func (s *SimpleLogGroup) CacheId() string {
-	return fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
+	return fmt.Sprintf("%09d", s.BlockNumber)
 }
 
 func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
@@ -313,8 +313,18 @@ func (s *SimpleLog) UnmarshalCache(version uint64, reader io.Reader) (err error)
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
 }
+
+func (s *SimpleLog) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// EXISTING_CODE
+//
 
 func (s *SimpleLog) getHaystack() string {
 	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))

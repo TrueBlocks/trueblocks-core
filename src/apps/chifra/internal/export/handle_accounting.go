@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -28,11 +29,8 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 	chain := opts.Globals.Chain
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	testMode := opts.Globals.TestMode
-	filter := monitor.NewFilter(
-		chain,
-		true,
+	filter := filter.NewFilter(
 		opts.Reversed,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
@@ -82,7 +80,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 				return
 			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
-					chain,
+					opts.Conn,
 					mon.Address,
 					opts.FirstBlock,
 					opts.LastBlock,

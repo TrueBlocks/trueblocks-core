@@ -7,6 +7,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 1001001,
+      "date": "2016-02-14 03:51:23 UTC",
       "difficulty": 12468438268070,
       "gasLimit": 3141592,
       "gasUsed": 84000,
@@ -119,6 +120,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 1234567,
+      "date": "2016-03-28 19:44:37 UTC",
       "difficulty": 22349600794407,
       "gasLimit": 4712388,
       "gasUsed": 0,
@@ -132,6 +134,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 1590000,
+      "date": "2016-05-26 20:15:14 UTC",
       "difficulty": 41857221373863,
       "gasLimit": 4712388,
       "gasUsed": 64260,
@@ -208,6 +211,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 4000001,
+      "date": "2017-07-09 20:52:51 UTC",
       "difficulty": 1097113993909745,
       "gasLimit": 6712392,
       "gasUsed": 337966,

@@ -150,6 +150,10 @@ func (s *SimpleToken) Model(verbose bool, format string, extraOptions map[string
 	}
 }
 
+func (s *SimpleToken) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
 // EXISTING_CODE
 //
 
@@ -159,10 +163,6 @@ func (s *SimpleToken) IsErc20() bool {
 
 func (s *SimpleToken) IsErc721() bool {
 	return s.TokenType.IsErc721()
-}
-
-func (s *SimpleToken) Date() string {
-	return utils.FormattedDate(s.Timestamp)
 }
 
 type TokenType int

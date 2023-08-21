@@ -42,9 +42,9 @@ Blocks consist of the following fields:
 | miner         | address of block's winning miner                              | address                                             |
 | difficulty    | the computational difficulty at this block                    | uint64                                              |
 | timestamp     | the Unix timestamp of the object                              | timestamp                                           |
+| date          | a calculated field -- the date of the object                  | datetime                                            |
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | wei                                                 |
-| finalized     | flag indicating the system considers this data final          | bool                                                |
 | uncles        |                                                               | Hash                                                |
 
 ## Transaction
@@ -64,29 +64,27 @@ The following commands produce and manage Transactions:
 
 Transactions consist of the following fields:
 
-| Field            | Description                                                                                           | Type                                      |
-| ---------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| hash             | the hash of the transaction                                                                           | hash                                      |
-| blockHash        | the hash of the block containing this transaction                                                     | hash                                      |
-| blockNumber      | the number of the block                                                                               | blknum                                    |
-| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                    |
-| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                    |
-| timestamp        | the Unix timestamp of the object                                                                      | timestamp                                 |
-| from             | address from which the transaction was sent                                                           | address                                   |
-| to               | address to which the transaction was sent                                                             | address                                   |
-| value            | the amount of wei sent with this transactions                                                         | wei                                       |
-| gas              | the maximum number of gas allowed for this transaction                                                | gas                                       |
-| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                       |
-| input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                     |
-| receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt) |
-| statements       | array of reconciliations                                                                              | Reconciliation                            |
-| articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)   |
-| compressedTx     | truncated, more readable version of the articulation                                                  | string                                    |
-| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                     |
-| finalized        | flag indicating the system considers this data final                                                  | bool                                      |
-| extraData        |                                                                                                       | string                                    |
-| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                     |
-| date             |                                                                                                       | datetime                                  |
+| Field            | Description                                                                                           | Type                                           |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| hash             | the hash of the transaction                                                                           | hash                                           |
+| blockHash        | the hash of the block containing this transaction                                                     | hash                                           |
+| blockNumber      | the number of the block                                                                               | blknum                                         |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                         |
+| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                         |
+| timestamp        | the Unix timestamp of the object                                                                      | timestamp                                      |
+| date             |                                                                                                       | datetime                                       |
+| from             | address from which the transaction was sent                                                           | address                                        |
+| to               | address to which the transaction was sent                                                             | address                                        |
+| value            | the amount of wei sent with this transactions                                                         | wei                                            |
+| gas              | the maximum number of gas allowed for this transaction                                                | gas                                            |
+| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                            |
+| input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                          |
+| receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)      |
+| statements       | array of reconciliations                                                                              | [Statement[]](/data-model/accounts/#statement) |
+| articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
+| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                          |
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                          |
+| compressedTx     | truncated, more readable version of the articulation                                                  | string                                         |
 
 ## Transfer
 
@@ -174,12 +172,13 @@ Logs consist of the following fields:
 | blockNumber      | the number of the block                                                                           | blknum                                  |
 | transactionIndex | the zero-indexed position of the transaction in the block                                         | uint64                                  |
 | logIndex         | the zero-indexed position of this log relative to the block                                       | uint64                                  |
-| transactionHash  | the hash of the transction                                                                        | hash                                    |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
-| date             | the date of the block this log appears in                                                         | datetime                                |
+| date             | the date of the block this log appears in (calculated)                                            | datetime                                |
 | address          | the smart contract that emitted this log                                                          | address                                 |
 | topics           | the first topic hashes event signature of the log, up to 3 additional index parameters may appear | topic[]                                 |
 | data             | any remaining un-indexed parameters to the event                                                  | bytes                                   |
+| transactionHash  | the hash of the transction                                                                        | hash                                    |
+| blockHash        | the hash of the block                                                                             | hash                                    |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string                                  |
 
@@ -228,6 +227,7 @@ Traces consist of the following fields:
 | blockHash        | the hash of the block containing this trace               | hash                                              |
 | blockNumber      | the number of the block                                   | blknum                                            |
 | timestamp        | the timestamp of the block                                | timestamp                                         |
+| date             | a calculated value - the date of the block                | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
 | traceAddress     | a particular trace's address in the trace tree            | string[]                                          |
@@ -311,13 +311,14 @@ The following commands produce and manage TraceCounts:
 
 TraceCounts consist of the following fields:
 
-| Field            | Description                             | Type      |
-| ---------------- | --------------------------------------- | --------- |
-| blockNumber      | the block number                        | blknum    |
-| transactionIndex | the transaction index                   | blknum    |
-| transactionHash  | the transaction's hash                  | hash      |
-| timestamp        | the timestamp of the block              | timestamp |
-| tracesCnt        | the number of traces in the transaction | uint64    |
+| Field            | Description                                 | Type      |
+| ---------------- | ------------------------------------------- | --------- |
+| blockNumber      | the block number                            | blknum    |
+| transactionIndex | the transaction index                       | blknum    |
+| transactionHash  | the transaction's hash                      | hash      |
+| timestamp        | the timestamp of the block                  | timestamp |
+| date             | a calculated field -- the date of the block | datetime  |
+| tracesCnt        | the number of traces in the transaction     | uint64    |
 
 ## TraceFilter
 
@@ -355,6 +356,7 @@ BlockCounts consist of the following fields:
 | --------------- | -------------------------------------------------------------- | --------- |
 | blockNumber     | the block's block number                                       | blknum    |
 | timestamp       | the timestamp of the block                                     | timestamp |
+| date            | a calculated field -- the date of the block                    | datetime  |
 | transactionsCnt | the number transactions in the block                           | uint64    |
 | unclesCnt       | the number of uncles in the block                              | uint64    |
 | logsCnt         | the number of logs in the block                                | uint64    |
@@ -395,11 +397,12 @@ The following commands produce and manage Timestamps:
 
 Timestamps consist of the following fields:
 
-| Field       | Description                                | Type      |
-| ----------- | ------------------------------------------ | --------- |
-| blockNumber | the number of the block                    | blknum    |
-| timestamp   | the Unix timestamp of the block            | timestamp |
-| diff        | the number of seconds since the last block | timestamp |
+| Field       | Description                                 | Type      |
+| ----------- | ------------------------------------------- | --------- |
+| blockNumber | the number of the block                     | blknum    |
+| timestamp   | the Unix timestamp of the block             | timestamp |
+| date        | a calculated field -- the date of the block | datetime  |
+| diff        | the number of seconds since the last block  | int64     |
 
 ## TimestampCount
 
@@ -431,6 +434,7 @@ This documentation mentions the following basic data types.
 | gas       | an unsigned big number              | as a string    |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
 | int256    | a signed big number                 | as a string    |
+| int64     | a 64-bit signed integer             |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint32    | a 32-bit unsigned integer           |                |

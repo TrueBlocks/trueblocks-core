@@ -19,12 +19,12 @@ string_q manifestVersion = "trueblocks-core@v0.40.0";
 
 // Run make generate in order for this to take effect
 // search: change-version
-#define MAJOR 0
-#define MINOR 82
+#define MAJOR 1
+#define MINOR 0
 #define BUILD 0
 // Run make generate in order for this to take effect
 
-#define SUBVERS "beta"
+#define SUBVERS "release"
 #define PRODUCT_NAME "GHC-TrueBlocks//"
 //--------------------------------------------------------------------------------
 uint32_t getVersionNum(void) {

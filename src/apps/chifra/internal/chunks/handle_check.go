@@ -42,7 +42,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 			if !skip {
 				hit := false
 				for _, block := range blockNums {
-					h := result.Range.IntersectsB(block)
+					h := result.FileRange.IntersectsB(block)
 					hit = hit || h
 					if hit {
 						break

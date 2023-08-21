@@ -631,7 +631,6 @@ bool CCommandOption::finishCleanup(void) {
     isList = contains(data_type, "list<");
     isEnumList = contains(data_type, "list<enum");
     isStringList = contains(data_type, "list<string");
-    isAddressList = contains(data_type, "list<addr");
     isTopicList = contains(data_type, "list<topic");
     isEnum = contains(data_type, "enum") && !isEnumList;
     isBool = contains(data_type, "boolean");
@@ -639,7 +638,8 @@ bool CCommandOption::finishCleanup(void) {
     isUint32 = contains(data_type, "uint32");
     isUint64 = contains(data_type, "uint64");
     isDouble = contains(data_type, "double");
-    isAddress = contains(data_type, "address");
+    isAddress = contains(substitute(data_type, "|addresses|", ""), "address");
+    isAddressList = contains(data_type, "list<addr");
     isNote = option_type == "note";
     isAlias = option_type == "alias";
     isErr = option_type == "error";
@@ -770,9 +770,9 @@ bool CCommandOption::finishCleanup(void) {
 //---------------------------------------------------------------------------------------------------
 // TODO: search for go-port
 bool isFullyPorted(const string_q& a) {
-    CStringArray tools = {"when",     "list",   "monitors", "chunks",       "init",   "scrape", "abis",
-                          "receipts", "logs",   "state",    "tokens",       "traces", "slurp",  "names",
-                          "daemon",   "config", "status",   "transactions", "blocks", "explore"};
+    CStringArray tools = {"when",     "list",   "monitors", "chunks",       "init",   "scrape",  "abis",
+                          "receipts", "logs",   "state",    "tokens",       "traces", "slurp",   "names",
+                          "daemon",   "config", "status",   "transactions", "blocks", "explore", "export"};
     for (auto tool : tools) {
         if (contains(a, tool))
             return true;

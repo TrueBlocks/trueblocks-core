@@ -37,29 +37,7 @@ extern string_q getDefaultChain(void);
 
 //-------------------------------------------------------------------------
 #define cacheFolder (getPathToCache(""))
-#define cacheFolder_abis (cacheFolder + "abis/")
-#define cacheFolder_blocks (cacheFolder + "blocks/")
-#define cacheFolder_monitors (cacheFolder + "monitors/")
-#define cacheFolder_monitors_staging (cacheFolder + "monitors/staging/")
-#define cacheFolder_names (cacheFolder + "names/")
-#define cacheFolder_objs (cacheFolder + "objs/")
-#define cacheFolder_recons (cacheFolder + "recons/")
-#define cacheFolder_slurps (cacheFolder + "slurps/")
 #define cacheFolder_tmp (cacheFolder + "tmp/")
-#define cacheFolder_traces (cacheFolder + "traces/")
-#define cacheFolder_txs (cacheFolder + "txs/")
-
-//-------------------------------------------------------------------------
-#define indexFolder (getPathToIndex(""))
-#define indexFolder_staging (indexFolder + "staging/")
-#define indexFolder_unripe (indexFolder + "unripe/")
-#define indexFolder_ripe (indexFolder + "ripe/")
-#define indexFolder_finalized (indexFolder + "finalized/")
-#define indexFolder_blooms (indexFolder + "blooms/")
-#define indexFolder_map (indexFolder + "maps/")
-
-//---------------------------------------------------------------------------
-#define indexFolderBin_ts (indexFolder + "ts.bin")
 
 //---------------------------------------------------------------------------
 #define chainConfigsTxt_specials (chainConfigs + "specials.csv")

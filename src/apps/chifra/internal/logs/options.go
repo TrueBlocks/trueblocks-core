@@ -77,6 +77,19 @@ func logsFinishParseApi(w http.ResponseWriter, r *http.Request) *LogsOptions {
 
 // logsFinishParse finishes the parsing for command line invocations. Returns a new LogsOptions.
 func logsFinishParse(args []string) *LogsOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
@@ -114,7 +127,7 @@ func ResetOptions() {
 func (opts *LogsOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"txs": true,
+		"transactions": true,
 	}
 	// EXISTING_CODE
 	return

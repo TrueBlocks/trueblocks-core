@@ -128,7 +128,7 @@ func (s *SimpleFunction) Model(verbose bool, format string, extraOptions map[str
 	}
 }
 
-//- marshal_only
+// --> marshal_only
 func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 	// Anonymous
 	if err = cache.WriteValue(writer, s.Anonymous); err != nil {
@@ -246,7 +246,14 @@ func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err e
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleFunction) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

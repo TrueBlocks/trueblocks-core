@@ -10,6 +10,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -19,13 +20,8 @@ import (
 )
 
 func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
-	filter := monitor.NewFilter(
-		chain,
-		true,
+	filter := filter.NewFilter(
 		opts.Reversed,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
@@ -37,8 +33,11 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
-				showProgress := !opts.Globals.TestMode
-				bar := logger.NewBar(mon.Address.Hex(), showProgress, mon.Count())
+				bar := logger.NewBar(logger.BarOptions{
+					Prefix:  mon.Address.Hex(),
+					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Total:   mon.Count(),
+				})
 				allNeighbors := make([]index.Reason, 0)
 				iterFunc := func(app types.SimpleAppearance, unused *bool) error {
 					if neighbors, err := index.GetNeighbors(&app); err != nil {
@@ -72,6 +71,9 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 					items = append(items, app)
 				}
 				sort.Slice(items, func(i, j int) bool {
+					if opts.Reversed {
+						i, j = j, i
+					}
 					if items[i].BlockNumber == items[j].BlockNumber {
 						if items[i].TransactionIndex == items[j].TransactionIndex {
 							return items[i].Address.Hex() < items[j].Address.Hex()

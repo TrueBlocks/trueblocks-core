@@ -1,6 +1,10 @@
 logs?transactions=46147.0&decache
 {
-  "data": [],
+  "data": [
+    {
+      "msg": "1 items totaling 395 bytes were removed from the logs cache."
+    }
+  ],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",

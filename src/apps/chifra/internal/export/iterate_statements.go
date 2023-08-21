@@ -6,7 +6,9 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -14,10 +16,14 @@ import (
 func (opts *ExportOptions) readStatements(
 	monitorArray []monitor.Monitor,
 	mon *monitor.Monitor,
-	filter *monitor.AppearanceFilter,
+	filter *filter.AppearanceFilter,
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleStatement, error) {
+
+	if !opts.Accounting {
+		log.Fatal("Accounting is not enabled. Implementation error.")
+	}
 
 	var cnt int
 	var err error
@@ -33,7 +39,13 @@ func (opts *ExportOptions) readStatements(
 		return nil, nil
 	}
 
-	if err := opts.readTransactions(mon, txMap, false /* readTraces */); err != nil { // calls IterateOverMap
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  mon.Address.Hex(),
+		Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+		Total:   mon.Count(),
+	})
+
+	if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 		return nil, err
 	}
 
@@ -43,12 +55,10 @@ func (opts *ExportOptions) readStatements(
 	}
 
 	sort.Slice(txArray, func(i, j int) bool {
-		itemI := txArray[i]
-		itemJ := txArray[j]
-		if itemI.BlockNumber == itemJ.BlockNumber {
-			return itemI.TransactionIndex < itemJ.TransactionIndex
+		if txArray[i].BlockNumber == txArray[j].BlockNumber {
+			return txArray[i].TransactionIndex < txArray[j].TransactionIndex
 		}
-		return itemI.BlockNumber < itemJ.BlockNumber
+		return txArray[i].BlockNumber < txArray[j].BlockNumber
 	})
 
 	// Sort the items back into an ordered array by block number
@@ -57,7 +67,7 @@ func (opts *ExportOptions) readStatements(
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	ledgers := ledger.NewLedger(
-		chain,
+		opts.Conn,
 		mon.Address,
 		opts.FirstBlock,
 		opts.LastBlock,
@@ -67,10 +77,6 @@ func (opts *ExportOptions) readStatements(
 		opts.Traces,
 		&opts.Asset,
 	)
-
-	if !opts.Accounting {
-		log.Fatal("Accounting is not enabled. Implementation error.")
-	}
 
 	apps := make([]types.SimpleAppearance, 0, len(txMap))
 	for _, tx := range txArray {
@@ -93,6 +99,9 @@ func (opts *ExportOptions) readStatements(
 	}
 
 	sort.Slice(items, func(i, j int) bool {
+		if opts.Reversed {
+			i, j = j, i
+		}
 		itemI := items[i]
 		itemJ := items[j]
 		if itemI.BlockNumber == itemJ.BlockNumber {

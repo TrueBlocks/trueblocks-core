@@ -22,14 +22,18 @@ func (opts *SlurpOptions) HandleShow() error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawEtherscan], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawSlurp], errorChan chan error) {
 		totalFetched := 0
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
 				paginator.Page = 1
 				done := false
-				var bar = logger.NewExpandingBar("", !opts.Globals.TestMode, 250)
+				bar := logger.NewBar(logger.BarOptions{
+					Type:    logger.Expanding,
+					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Total:   250, // estimate since we have no idea how many there are
+				})
 				for !done {
 					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(addr, tt, &paginator)
 					done = nFetched < paginator.PerPage

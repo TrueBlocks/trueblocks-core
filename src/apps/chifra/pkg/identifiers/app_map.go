@@ -20,7 +20,8 @@ type mappedType interface {
 	types.SimpleTransaction |
 		types.SimpleBlock[string] |
 		types.SimpleBlock[types.SimpleTransaction] |
-		types.SimpleAppearance
+		types.SimpleAppearance |
+		types.SimpleResult
 }
 
 // AsMap takes command line identifiers for blocks or transactions and returns a map of appearances to allocated

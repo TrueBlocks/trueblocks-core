@@ -1,7 +1,7 @@
 chifra blocks  12 --cache --cache_txs
 TEST[DATE|TIME] Blocks:  [12]
 TEST[DATE|TIME] CacheTxs:  true
-TEST[DATE|TIME] Enabled:  blocks, txs
+TEST[DATE|TIME] Enabled:  blocks, transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
@@ -10,6 +10,7 @@ TEST[DATE|TIME] Format:  json
     {
       "baseFeePerGas": 0,
       "blockNumber": 12,
+      "date": "2015-07-30 15:29:04 UTC",
       "difficulty": 17179844608,
       "gasLimit": 5000,
       "gasUsed": 0,

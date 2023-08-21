@@ -54,26 +54,18 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	timer := logger.NewTimer()
 	msg := "chifra export"
 	// EXISTING_CODE
-	chain := opts.Globals.Chain
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
 		return err, true
 	}
 
 	if !opts.IsPorted() {
-		if opts.Globals.IsApiMode() {
-			// The caller has to handle this when in API mode
-			return nil, false
-		}
-
-		handled = true
-		err = opts.Globals.PassItOn("acctExport", chain, opts.toCmdLine(), opts.getEnvStr())
-		return
+		logger.Fatal("Should not happen in BlocksInternal")
 	}
 
 	handled = true
 	if opts.Globals.Decache {
-		err = opts.HandleDecache(monitorArray) // TODO DECACHE monitorArray)
+		err = opts.HandleDecache(monitorArray)
 	} else if opts.Count {
 		err = opts.HandleCount(monitorArray)
 	} else if opts.Receipts {
@@ -112,7 +104,7 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 
 func (opts *ExportOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.Appearances || opts.Count || opts.Logs || opts.Balances || opts.Neighbors || opts.Receipts || opts.Traces
+	ported = true
 	// EXISTING_CODE
 	return
 }
@@ -125,13 +117,13 @@ func (opts *ExportOptions) Validate() error {
 	return opts.validateExport()
 }
 
-// TODO(tjayrush): If an abi file is newer than the monitor file - clear the cache
-// TODO(tjayrush): accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
-// TODO(tjayrush): accounting must be for one monitor address - why?
-// TODO(tjayrush): accounting requires node balances - why?
-// TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
-// TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
-// TODO(tjayrush): If a monitor file is locked, remove the lock and move on (don't read) but don't wait either
+// TODO: If an abi file is newer than the monitor file - clear the cache
+// TODO: accounting disallows freshen, apps, logs, receipts, statements, traces, but requires articulate
+// TODO: accounting must be for one monitor address - why?
+// TODO: accounting requires node balances - why?
+// TODO: Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
+// TODO: Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
+// TODO: If a monitor file is locked, remove the lock and move on (don't read) but don't wait either
 
 // TODO: In the old C++ code, we used to be able to customize the display of the output with a configuration string. This is a VERY important feature as it captures users
 // TODO: In the old C++ code, the first address on the command line was `accountedFor`. Is that still true? Or do we now do accounting for multiple addresses? There should be testing.

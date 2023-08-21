@@ -58,7 +58,7 @@ Appearances consist of the following fields:
 | reason           | the location in the data where the appearance was found | string    |
 | name             | the name of the address, if found                       | string    |
 | timestamp        | the timestamp for this appearance                       | timestamp |
-| date             | the date represented by the timestamp                   | string    |
+| date             | a calculated field -- the date for this appearance      | datetime  |
 
 ## Monitor
 
@@ -195,13 +195,15 @@ The following commands produce and manage Bounds:
 
 Bounds consist of the following fields:
 
-| Field     | Description                                                                  | Type          |
-| --------- | ---------------------------------------------------------------------------- | ------------- |
-| count     | the number of appearances for this address                                   | uint64        |
-| firstApp  | the block number and transaction id of the first appearance of this address  | RawAppearance |
-| firstTs   | the timestamp of the first appearance of this address                        | timestamp     |
-| latestApp | the block number and transaction id of the latest appearance of this address | RawAppearance |
-| latestTs  | the timestamp of the latest appearance of this address                       | timestamp     |
+| Field      | Description                                                                  | Type          |
+| ---------- | ---------------------------------------------------------------------------- | ------------- |
+| count      | the number of appearances for this address                                   | uint64        |
+| firstApp   | the block number and transaction id of the first appearance of this address  | RawAppearance |
+| firstTs    | the timestamp of the first appearance of this address                        | timestamp     |
+| firstDate  | a calculated field -- the date of the first appearance                       | datetime      |
+| latestApp  | the block number and transaction id of the latest appearance of this address | RawAppearance |
+| latestTs   | the timestamp of the latest appearance of this address                       | timestamp     |
+| latestDate | a calculated field -- the date of the latest appearance                      | datetime      |
 
 ## Statement
 

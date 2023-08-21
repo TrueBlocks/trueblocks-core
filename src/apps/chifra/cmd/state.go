@@ -71,7 +71,8 @@ func init() {
 One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "a", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")
+	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")
+	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, "for the --call option only, articulate the retrieved data if ABIs can be found")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
 	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals, capabilities)
 

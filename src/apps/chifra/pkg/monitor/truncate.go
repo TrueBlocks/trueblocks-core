@@ -1,6 +1,7 @@
 package monitor
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -11,7 +12,7 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 		return false, err
 	}
 
-	if apps, cnt, err := mon.ReadAndFilterAppearances(NewEmptyFilter(chain)); err != nil {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
 		return false, err
 	} else if cnt == 0 {
 		return false, nil

@@ -48,8 +48,10 @@ func (opts *TransactionsOptions) HandleLogs() error {
 			cancel()
 		}
 
-		showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
-		bar := logger.NewBar("", showProgress, int64(len(txMap)))
+		bar := logger.NewBar(logger.BarOptions{
+			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Total:   int64(len(txMap)),
+		})
 
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
@@ -99,7 +101,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 
 		for _, item := range items {
 			item := item
-			if item.BlockNumber != 0 {
+			if !item.BlockHash.IsZero() {
 				for _, log := range item.Receipt.Logs {
 					log := log
 					if logFilter.PassesFilter(&log) {

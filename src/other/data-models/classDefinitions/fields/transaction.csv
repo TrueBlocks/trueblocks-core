@@ -1,39 +1,27 @@
-name                 ,type           ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example       ,description
-accessList           ,StorageSlot    ,           ,true   ,true  ,        ,          ,rawonly ,         ,    ,     ,              ,
-chainId              ,string         ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
-type                 ,string         ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
-hash                 ,hash           ,           ,       ,      ,        ,          ,        ,         ,  1 ,  10 ,0xf128...1e98 ,the hash of the transaction
-blockHash            ,hash           ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,0xc421...fb04 ,the hash of the block containing this transaction
-blockNumber          ,blknum         ,           ,       ,      ,        ,          ,        ,         ,  3 ,   1 ,10021         ,the number of the block
-transactionIndex     ,blknum         ,           ,       ,      ,        ,          ,        ,         ,  4 ,   2 ,305           ,the zero-indexed position of the transaction in the block
-nonce                ,uint64         ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,232           ,sequence number of the transactions sent by the sender
-timestamp            ,timestamp      ,           ,       ,      ,        ,          ,        ,         ,  6 ,   4 ,1438335038    ,the Unix timestamp of the object
-from                 ,address        ,           ,       ,      ,        ,          ,        ,         ,  7 ,   5 ,              ,address from which the transaction was sent
-to                   ,address        ,           ,       ,      ,        ,          ,        ,         ,  8 ,   6 ,              ,address to which the transaction was sent
-value                ,wei            ,           ,       ,      ,        ,          ,        ,         ,  9 ,     ,0             ,the amount of wei sent with this transactions
-extraValue1          ,wei            ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-extraValue2          ,wei            ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-gas                  ,gas            ,           ,       ,      ,        ,          ,        ,         , 10 ,     ,158660        ,the maximum number of gas allowed for this transaction
-gasPrice             ,gas            ,           ,       ,      ,        ,          ,        ,         , 11 ,     ,63525836552   ,the number of wei per unit of gas the sender is willing to spend
-maxFeePerGas         ,gas            ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-maxPriorityFeePerGas ,gas            ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-input                ,bytes          ,           ,       ,      ,        ,          ,        ,         , 12 ,     ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
-isError              ,uint8          ,           ,       ,      ,        ,          ,        ,         , 20 ,  11 ,              ,`true` if the transaction ended in error&#44; `false` otherwise
-hasToken             ,uint8          ,           ,       ,      ,        ,          ,        ,         , 17 ,     ,              ,`true` if the transaction is token related&#44; `false` otherwise
-cachebits            ,uint8          ,CB_NONE    ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-reserved2            ,uint8          ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-receipt              ,Receipt        ,           ,true   ,      ,        ,          ,        ,         , 13 ,     ,              ,
-traces               ,Trace          ,           ,true   ,true  ,        ,          ,        ,         ,    ,     ,              ,
-articulatedTx        ,Function       ,           ,true   ,      ,        ,          ,        ,         , 15 ,     ,              ,
-compressedTx         ,string         ,           ,       ,      ,true    ,          ,        ,         , 16 ,  13 ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
-statements           ,Reconciliation ,           ,true   ,true  ,true    ,          ,        ,         , 14 ,     ,              ,array of reconciliations
-finalized            ,bool           ,           ,       ,      ,true    ,true      ,        ,         , 18 ,     ,true          ,flag indicating the system considers this data final
-date                 ,datetime       ,           ,       ,      ,        ,          ,true    ,true     , 21 ,   3 ,              ,
-fromName             ,CName          ,           ,       ,      ,        ,          ,true    ,true     ,    ,     ,              ,
-toName               ,CName          ,           ,       ,      ,        ,          ,true    ,true     ,    ,     ,              ,
-extraData            ,string         ,           ,       ,      ,        ,          ,true    ,true     , 19 ,     ,              ,
-unused               ,bool           ,           ,       ,      ,        ,          ,true    ,true     ,    ,     ,              ,
-ether                ,string         ,           ,       ,      ,        ,          ,true    ,true     ,    ,   7 ,              ,
-etherGasPrice        ,gas            ,           ,       ,      ,        ,          ,true    ,true     ,    ,   8 ,              ,
-gasUsed              ,gas            ,           ,       ,      ,        ,          ,true    ,true     ,    ,   9 ,              ,
-encoding             ,string         ,           ,       ,      ,        ,          ,true    ,true     ,    ,  12 ,              ,
+name                 ,type        ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example       ,description
+accessList           ,StorageSlot ,           ,true   ,true  ,        ,          ,rawonly ,         ,    ,     ,              ,
+chainId              ,string      ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
+blockNumber          ,blknum      ,           ,       ,      ,        ,          ,        ,         ,  3 ,   1 ,10021         ,the number of the block
+transactionIndex     ,blknum      ,           ,       ,      ,        ,          ,        ,         ,  4 ,   2 ,305           ,the zero-indexed position of the transaction in the block
+timestamp            ,timestamp   ,           ,       ,      ,        ,          ,        ,         ,  6 ,   4 ,1438335038    ,the Unix timestamp of the object
+date                 ,datetime    ,           ,       ,      ,        ,          ,        ,         ,  7 ,   3 ,              ,
+hash                 ,hash        ,           ,       ,      ,        ,          ,        ,         ,  1 ,   8 ,0xf128...1e98 ,the hash of the transaction
+blockHash            ,hash        ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,0xc421...fb04 ,the hash of the block containing this transaction
+from                 ,address     ,           ,       ,      ,        ,          ,        ,         ,  8 ,   5 ,              ,address from which the transaction was sent
+to                   ,address     ,           ,       ,      ,        ,          ,        ,         ,  9 ,   6 ,              ,address to which the transaction was sent
+nonce                ,uint64      ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,232           ,sequence number of the transactions sent by the sender
+value                ,wei         ,           ,       ,      ,        ,          ,        ,         , 10 ,     ,0             ,the amount of wei sent with this transactions
+gas                  ,gas         ,           ,       ,      ,        ,          ,        ,         , 11 ,     ,158660        ,the maximum number of gas allowed for this transaction
+gasPrice             ,gas         ,           ,       ,      ,        ,          ,        ,         , 12 ,     ,63525836552   ,the number of wei per unit of gas the sender is willing to spend
+maxFeePerGas         ,gas         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+maxPriorityFeePerGas ,gas         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+input                ,bytes       ,           ,       ,      ,        ,          ,        ,         , 13 ,     ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
+isError              ,uint8       ,           ,       ,      ,        ,          ,        ,         , 18 ,   9 ,              ,`true` if the transaction ended in error&#44; `false` otherwise
+hasToken             ,uint8       ,           ,       ,      ,        ,          ,        ,         , 17 ,     ,              ,`true` if the transaction is token related&#44; `false` otherwise
+receipt              ,Receipt     ,           ,true   ,      ,        ,          ,        ,         , 14 ,     ,              ,
+traces               ,Trace       ,           ,true   ,true  ,        ,          ,        ,         ,    ,     ,              ,
+articulatedTx        ,Function    ,           ,true   ,      ,        ,          ,        ,         , 16 ,     ,              ,
+compressedTx         ,string      ,           ,       ,      ,true    ,          ,        ,         , 19 ,     ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
+statements           ,Statement   ,           ,true   ,true  ,true    ,          ,        ,         , 15 ,     ,              ,array of reconciliations
+gasUsed              ,gas         ,           ,       ,      ,        ,          ,true    ,true     ,    ,   7 ,              ,
+type                 ,string      ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,

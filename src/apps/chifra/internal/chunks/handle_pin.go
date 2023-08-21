@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
@@ -46,7 +47,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		}
 
 		if opts.Deep {
-			pinChunk := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+			pinChunk := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 				rng, err := base.RangeFromFilenameE(path)
 				if err != nil {
 					return false, err
@@ -96,7 +97,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				return true, nil
 			}
 
-			walker := index.NewCacheWalker(
+			walker := walk.NewCacheWalker(
 				chain,
 				opts.Globals.TestMode,
 				100, /* maxTests */

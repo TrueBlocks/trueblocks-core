@@ -177,7 +177,11 @@ func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-//- cacheable by addr_and_tx as group
+func (s *SimpleStatement) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
+// --> cacheable by address,tx as group
 type SimpleStatementGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
@@ -550,15 +554,18 @@ func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err 
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleStatement) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE
 //
-
-func (s *SimpleStatement) Date() string {
-	return utils.FormattedDate(s.Timestamp)
-}
 
 func (s *SimpleStatement) TotalIn() *big.Int {
 	vals := []big.Int{

@@ -14,7 +14,7 @@ import (
 )
 
 // OutputOptions allow more granular configuration of output details
-// TODO (dawid): This used to be "type OutputOptions = struct" (the '=' sign). Was that a typo or purposful? I couldn't embed it in the GlobalOptions data structure, so I removed the '='
+// TODO: This used to be "type OutputOptions = struct" (the '=' sign). Was that a typo or purposful? I couldn't embed it in the GlobalOptions data structure, so I removed the '='
 type OutputOptions struct {
 	// If set, raw data from the RPC will be printed instead of the model
 	ShowRaw bool

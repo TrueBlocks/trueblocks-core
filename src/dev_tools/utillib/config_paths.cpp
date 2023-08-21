@@ -161,7 +161,7 @@ void loadEnvironmentPaths(const string_q& chainIn, const string_q& unchainedPath
 //-------------------------------------------------------------------------
 string_q relativize(const string_q& path) {
     string_q ret = path;
-    replace(ret, indexFolder, "$INDEX/");
+    replace(ret, getPathToIndex(""), "$INDEX/");
     replace(ret, cacheFolder, "$CACHE/");
     replace(ret, chainConfigs, "$CHAIN/");
     replace(ret, rootConfigs, "$CONFIG/");

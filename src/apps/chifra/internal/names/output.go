@@ -263,15 +263,15 @@ func (opts *NamesOptions) getCrudDataEnv() (data *CrudData, err error) {
 
 func (opts *NamesOptions) validateCrudData(data *CrudData) error {
 	if data.Address.Value.IsZero() {
-		// TODO(dawid-names): In the c++ this would pick up opts.Term[0] if it was present and use that
+		// TODO: In the c++ this would pick up opts.Term[0] if it was present and use that
 		return errors.New("address is required")
 	}
 	if data.Name.Value == "" {
-		// TODO(dawid-names): In the c++ this would pick up opts.Term[0] if it was present and use that
+		// TODO: In the c++ this would pick up opts.Term[0] if it was present and use that
 		return errors.New("address is required")
 	}
-	// TODO(dawid-names): I think a name is also required here (but not in AutoName mode in which case
-	// TODO(dawid-names): name is picked up from the contract)
+	// TODO: I think a name is also required here (but not in AutoName mode in which case
+	// TODO: name is picked up from the contract)
 
 	return nil
 }

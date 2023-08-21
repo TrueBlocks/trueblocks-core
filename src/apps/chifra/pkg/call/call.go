@@ -6,46 +6,45 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type ContractCall struct {
-	encoded string
+var ErrAbiNotFound = errors.New("abi not found ")
 
-	Chain       string
+type ContractCall struct {
+	Conn        *rpc.Connection
 	Address     base.Address
 	Method      *types.SimpleFunction
 	Arguments   []any
 	BlockNumber uint64
-	ShowLogs    bool
+	encoded     string
 }
 
-func NewContractCall(chain string, callAddress base.Address, theCall string, showSuggestions bool) (*ContractCall, error) {
+func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string) (*ContractCall, []string, error) {
 	parsed, err := parser.ParseContractCall(theCall)
 	if err != nil {
 		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
-		return nil, err
+		return nil, []string{}, err
 	}
 
 	abiMap := abi.NewFunctionSyncMap()
-	if err = abi.LoadAbi(chain, callAddress, abiMap); err != nil {
-		return nil, err
+	if err = abi.LoadAbi(conn.Chain, callAddress, abiMap); err != nil {
+		return nil, []string{}, err
 	}
 
 	var function *types.SimpleFunction
 	var callArguments []*parser.ContractCallArgument
-	var suggestions []types.SimpleFunction
-
+	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
 		selector := parsed.Encoded[:10]
 		function, _, err = abi.FindAbiFunction(abi.FindBySelector, selector, nil, abiMap)
 		if err != nil {
-			return nil, err
+			return nil, []string{}, err
 		}
 
 	} else {
@@ -66,34 +65,24 @@ func NewContractCall(chain string, callAddress base.Address, theCall string, sho
 
 		function, suggestions, err = abi.FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
 		if err != nil {
-			return nil, err
+			return nil, suggestions, err
 		}
 	}
 
 	if function == nil {
-		message := fmt.Sprintf("No ABI found for function %s", theCall)
-		if showSuggestions {
-			logger.Error(message)
-			if len(suggestions) > 0 {
-				logger.Info("Did you mean:")
-				for index, suggestion := range suggestions {
-					logger.Info(index+1, "-", suggestion.Signature)
-				}
-			}
-		}
-		return nil, errors.New(message)
+		return nil, suggestions, ErrAbiNotFound
 	}
 
 	var args []any
 	if parsed.Encoded == "" {
 		args, err = convertArguments(callArguments, function)
 		if err != nil {
-			return nil, err
+			return nil, suggestions, err
 		}
 	}
 
 	contactCall := &ContractCall{
-		Chain:     chain,
+		Conn:      conn,
 		Address:   callAddress,
 		Method:    function,
 		Arguments: args,
@@ -102,7 +91,7 @@ func NewContractCall(chain string, callAddress base.Address, theCall string, sho
 		contactCall.forceEncoding(parsed.Encoded)
 	}
 
-	return contactCall, nil
+	return contactCall, suggestions, nil
 }
 
 func convertArguments(callArguments []*parser.ContractCallArgument, function *types.SimpleFunction) (args []any, err error) {
@@ -130,7 +119,27 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call() (results *types.SimpleCallResult, err error) {
+func (call *ContractCall) Call12(artFunc func(string, *types.SimpleFunction) error) (results *types.SimpleResult, err error) {
+	if artFunc == nil {
+		logger.Fatal("Implementation error: artFunc is nil")
+	}
+
+	blockTs := base.Timestamp(0)
+	if call.Conn.StoreReadable() {
+		results = &types.SimpleResult{
+			Address:     call.Address,
+			BlockNumber: call.BlockNumber,
+			Encoding:    call.Method.Encoding,
+		}
+		if err := call.Conn.Store.Read(results, nil); err == nil {
+			// logger.Info("cache read:", results.Address, results.BlockNumber, call.Method.Encoding)
+			return results, nil
+			// } else {
+			// 	logger.Info("no cache read:", results.Address, results.BlockNumber, call.Method.Encoding, err)
+		}
+		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)
+	}
+
 	blockNumberHex := "0x" + strconv.FormatUint(call.BlockNumber, 16)
 	if err != nil {
 		return
@@ -152,7 +161,7 @@ func (call *ContractCall) Call() (results *types.SimpleCallResult, err error) {
 		encodedArguments = packedHex[10:]
 	}
 
-	rawReturn, err := query.Query[string](call.Chain, "eth_call", query.Params{
+	rawBytes, err := query.Query[string](call.Conn.Chain, "eth_call", query.Params{
 		map[string]any{
 			"to":   call.Address.Hex(),
 			"data": packedHex,
@@ -163,35 +172,39 @@ func (call *ContractCall) Call() (results *types.SimpleCallResult, err error) {
 		return nil, err
 	}
 
-	rr := *rawReturn
 	function := call.Method.Clone()
-	if len(rr) > 2 {
-		abiCache := articulate.NewAbiCache(call.Chain, true)
-		err = abiCache.ArticulateFunction(function, "", rr[2:])
-		if err != nil {
+	// articulate it if possible
+	if rawBytes != nil {
+		str := *rawBytes
+		if err = artFunc(str, function); err != nil {
 			return nil, err
 		}
 	}
 
-	results = &types.SimpleCallResult{
+	results = &types.SimpleResult{
 		BlockNumber:      call.BlockNumber,
+		Timestamp:        blockTs,
 		Address:          call.Address,
 		Name:             call.Method.Name,
 		Encoding:         call.Method.Encoding,
 		Signature:        call.Method.Signature,
 		EncodedArguments: encodedArguments,
-		RawReturn:        *rawReturn,
+		ReturnedBytes:    *rawBytes,
+		ArticulatedOut:   function,
 	}
-	results.Outputs = make(map[string]string)
-
+	results.Values = make(map[string]string)
 	for index, output := range function.Outputs {
-		results.Outputs[output.DisplayName(index)] = fmt.Sprint(output.Value)
+		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	if call.ShowLogs {
-		msg := fmt.Sprintf("call to %s at block %d at four-byte %s returned %v",
-			call.Address.Hex(), call.BlockNumber, call.Method.Encoding, results.Outputs)
-		logger.TestLog(true, msg)
+	if call.Conn.StoreWritable() && call.Conn.EnabledMap["results"] && base.IsFinal(call.Conn.LatestBlockTimestamp, blockTs) {
+		_ = call.Conn.Store.Write(results, nil)
+		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
+		// if err := call.Conn.Store.Write(results, nil); err != nil {
+		// 	logger.Warn("Failed to write call results to the database", err) // report but don't fail
+		// }
+		// } else if !isFin {
+		// 	logger.Info("Not caching result (not ripe)...", results.Address, results.BlockNumber, call.Method.Encoding)
 	}
 
 	return results, nil

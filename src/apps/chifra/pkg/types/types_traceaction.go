@@ -126,7 +126,7 @@ func (s *SimpleTraceAction) Model(verbose bool, format string, extraOptions map[
 	}
 }
 
-//- marshal_only
+// --> marshal_only
 func (s *SimpleTraceAction) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
@@ -262,7 +262,14 @@ func (s *SimpleTraceAction) UnmarshalCache(version uint64, reader io.Reader) (er
 		return err
 	}
 
+	s.FinishUnmarshal()
+
 	return nil
+}
+
+func (s *SimpleTraceAction) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

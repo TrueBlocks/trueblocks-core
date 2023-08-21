@@ -1,34 +1,378 @@
 <!-- markdownlint-disable MD024 MD036 -->
+
 # History of Changes
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
-## v0.80.0 (coming soon)
-Starts to move chifra export to goLang
-Working
-Added cache testing and decache to all
+## v1.0.0 (2023/08/20)
 
-## v0.71.0 (xxx)
-THE SDK REPO IS A NICE WAY TO SEE WHAT'S CHANGED
-Removes use of FromRpc in favor of Query methods for interacting with the RPC
-Removes a bunch of old tests in ./src/libs cpp code
-Fixes bug related to loadedMap in articulation code
-Remove --apps option from chifra blocks
-Removes previously deprecated --reconcile option from chifra transactions
-Adds rewardType and Author to TraceAction
-Adds traceIndex to Trace
-Removed all --uniq related CPP code to GoLang
-Cleans up various tests
+**OUR FIRST OFFICIAL RELEASE!**
 
-Adds --deep to chifra chunks used `d` for hot key which used to be for `--max_addrs`
-Changes hotkey for chifra chunks --max_addrs from `d` to `m` which used to be for `--remote`
-Changes hotkey for chifra chunks --remote from `m` to `r`
-User can no longer use both `--pin` and `--publish` with the same command for chifra chunks
-Fixes a bug with downloading the timestamps file and allowing Control+C
-Changes `chifra chunks manifest --pin` to only pin the actual chunks if `--deep` is included, otherwise it pins only the timestamps file (both locally and remotely) and the manifest (both locally and remotely).
-Implments `chifra chunks manifest --check --deep` which verifies that all chunks in the manifest are locally pinned
-Implments `chifra chunks index --check --deep` which opens each chunk and checks all addresses in that chunk report "not-no" when tested against the node software.
-Fixed some issues with chifra init by adding --dry_run and implementing --first_block
+This is our first official 1.0.0 release, which means we are feature complete and we will no longer be creating backwards imcompatible changes that will break your existing code (without providing a viable migration path). The release contains a HUGE amount of changes to version v0.70.0 which happened about four months ago. The changes are detailed below. This release requires a pretty draconian migration (you'll have to remove some of your existing caches whose formats have changed). This is the last time, we'll have such a heavy migration.
+
+Make sure to follow the [migration](./MIGRATIONS.md) (it's simple, but does remove your caches).
+
+The most important improvements with verion 1.0.0 are:
+
+1) All of our code is now in GoLang. This means that nearly all of our code is concurrent, which means we're seeing nearly 20-30 time speedups in some code paths, and
+2) Caching is now more complete. Previously, we cached only transactions and some few other things, now nearly every data structure can be cached (by adding the `--cache` option to a command). Also, every command that has a `--cache` option, now has a `--decache` option to remove those items from the cache.
+
+Below is an explicit list of all changes.
+
+## Specification
+
+There were no changes to the [Specification for the Unchained Index](https://trueblocks.io/papers/2023/specification-for-the-unchained-index-v0.51.0-beta.pdf) since the last release.
+
+## Breaking Changes
+
+The following breaking changes were made for this release:
+
+- Bumped version number to v1.0.0.
+- Bumped required GoLang version to 1.21.x.
+- Bumped required CMake version 3.5.
+- The format for all of the following caches has changed: `blocks`, `transactions`, `traces`, `slurps`, `reconciliations`, and `neighbors`. If `chifra` finds any of these caches in its cache folders, it will refuse to run until you [follow the migrations](.MIGRATIONS.md).
+- Removed support for `chifra export --accounting`, `chifr export --neighbors`, and `chifra transactions --account_for` options from the core package. This is a breaking change. These tools will be re-enable, but they will require a license key. More on this change later. If you are using these options, eitehr (a) do not upgrade to this version, or (b) contact us and we will give you a complementary key (this offer has a limited lifetime at our discretion). The `chifra export --balances` option has been added, which does not require a license key.
+- Numerous breaking changes to the data models (see below).
+- Many breaking changes to command line "hotkeys" to make them more consistent across tools (see below).
+- The removal or deprecation of some esoteric, rarely used, or redundant options (see below).
+- For any command that had a `--first_record/--max_record` option, the `--first_record` (which was previously `one-based`) is now `zero-based`. This is a breaking change to any script that uses `--first_record`.
+- The `--log_level` option has been removed from all tools. There is no replacement.
+
+## System Wide Changes
+
+- All -- every single line -- of C++ code is removed from the `chifra` tool. We are now a 100% GoLang shop!
+- The `chifra daemon` command now has a new option `--grpc` which, when included, starts a GRPC server in support of any tool that uses the names database. This is a performance related change and should have no noticable effect on any tool's behaviour (other than speedups).
+- Enabled `--cache` and `--decache` on all meaningful options that query the RPC.
+- Our continuous integration tooling now updates our Docker version each time we push to `master`.
+- Exposed a number of previously hidden options and command (see below).
+- Updated the Unchained Index manifest to latest block.
+- Improved the GoLang automatically generated documentation for all tools and all packages.
+- Improved the examples and ported them to GoLang.
+- Added proper GoLang linting to the automatic build process. PRs may no longer be merged into the `master` or the `develop` branch without passing linting.
+
+## Changes to Data Models
+
+The follow existing data models were either added, removed, or modified by having their fields added to, removed, or renamed. Some models were changed extensively. Please consult the documentation on our website for details. Some of the changes were breaking.
+
+### Modified data models
+
+- `Transaction`: Many changes, some breaking. Consult the documentation for details.
+- `Log`: Many changes, some breaking. Consult the documentation for details.
+- `Trace`: A new field, `TraceIndex`, was added.
+- `TraceAction`: Two new fields, `RewardType` and `Author`, were added.
+- `Timestamp`: A new field, `Diff`, was added to report on changes from the previous record in the display.
+- Many models:
+  - We added a `Timestamp` and `Date` field to many models (i.e. `State` and `Token`). This was done in order to make the data from different tools more consistent.
+  - In some cases, `Timestamp` and `Date` will only appear under the `--verbose` option. Consult the documentation.
+  - For any data model with a `Timestamp`, that data model now also has an (automatically-generated) `Date` field.
+
+### New data models:
+- `ChunkPinReport`: Added `ChunkPinReport` data model. Used by the `chifra chunks` command.
+- `Slurp`: Added `Slurp` data model. Used by the `chifra slurp` command.
+
+### Remove data models
+- The `MonitorCount` data model was removed as unused. Previously used by the `chifra monitors --count` command.
+
+### Renamed data models
+- `EthState` was renamed to `Result`. Used by the `chifra state --call` command.
+- `Reconciliation` was renamed to `Statement`. Used by the `chifra export --accounting` commands.
+- `TokenBalance` was renamed to `Token`. Used by the `chifra tokens` and `chifra export --accounting` commands.
+
+## Tool Specific Changes
+
+**chifra list**
+
+- Changed the default meaning of `chifra list --first_record` from `1` to `0` for this (and all) tools. This is a breaking change.
+- Removed previously `chifra list --appearances` as redundant. The same command without `--appearances` produces identical results.
+- Added `chifra list --reversed` option to reverse the order of the list.
+- Exposed previouly hidden option `chifra list --silent` with `-s` hotkey. This updates the monitor's list of appearances, but does not report anything to the output. Useful for scripting.
+- Exposed previously hidden option `chifra list --bounds` with `-b` hotkey. This returns a range of blocks and timestamps for the first and last appearance of the address. Useful for summarizing the data.
+- Changed hotkey for `chifra list --no_zero` from `-n` to `-z` to be consistent with other tools.
+
+**chifra export**
+
+**Special important note:**. Previously, `chifra export` streamed its results, which means it worked well with both small and very large addresses (such as UniSwap). With this release, due to the way our concurrent code works, we no longer stream. Now, we accumulate the results in memory prior to display. This means that, for very large addresses, you will most likely run out of memory. Instead, you must use the `--first_block/--last_block` options to limit the size of the output prior to calling `chifra`. (For the API usage, you are probably already doing this.) If you don't do this on the command line, `chifra export` will hang and probably crash. We're working on a design to fix this issue shortly.
+
+- Changed the default meaning of `chifra export --first_record` from `1` to `0` for this (and all) tools. This is a breaking change.
+- Added `chifra export --balances`. This option reports on balances for each appearance (no reconciliation) and does not require the `--accounting` option.
+- Exposed previously hidden option `chifra export --factory` with `-y` hotkey. This option reports all deployments of a smart contract by the given address (including smart contract addresses such as the UniSwap factory).
+- Exposed previously hidden option `chifra export --reversed` with `-E` hotykey. This option reverses the list of appearances prior to any filtering or processing. This option currenly works for all options other than `--accounting`.
+- Exposed previsouly hidden `chifra export --ether` option. Where applicable, this option reports the value of the transaction in Ether rather than in Wei.
+- Exposed previously hidden `chifra export --no_zero` option (with `-z` hotkey) to remove zero-value records from `--balances` and `--accounting` reports.
+- Added a hotkey `-P` to the `chifra export --asset` option.
+- Added a hotkey `-B` to the `chifra export --topic` option.
+- Added a hotkey `-m` to the `chifra export --emitter` option.
+- Added a hotkey `-N` to the `chifra export --relevant` option.
+
+**chifra monitors**
+
+- Removed `chifra monitors --decache` option. Use `chifra export --decache` instead.
+- Removed `chifra monitors --first_block` and `chifra monitors --last_block` as unnecessary.
+- Added a hotkey `-C` to the `chifra monitors --clean` option.
+- Added a hotkey `-l` to the `chifra monitors --list` option.
+- Added a hotkey `-w` to the `chifra monitors --watch` option.
+
+**chifra names**
+
+- Exposed previously hidden `chifra names --clean`. This option will `clean` the names database by removing all names that are no longer valid.
+- Exposed previously hidden `chifra names --dry_run`. This option will produce a full listing of all names in the names database that would be changed if the `--clean` option were used. Redirecting the results of this command back into the names database will update the database.
+- Exposed previously hidden `chifra names --autoname`. This option, if given an address, will query the chain for token information (such as Name, Symbol, Decimals, etc.) and automatically add that information to the names database.
+- Removed the `chifra names --to_custom` and `chifra names --named` options as redundant or unused.
+- Changed hotkey for `chifra names --addr` option from `-a` to `-s` to be more consistent with other tools.
+- Changed hotkey for `chifra names --all` option from `-l` to `-a` to be more consistent with other tools.
+- Added a hotkey `-d` to the `chifra names --dry_run` option.
+- Added a hotkey `-r` to the `chifra names --regular` option.
+
+**chifra abis**
+
+- Change hotkey for `chifra abis --clean` from `-c` to `-C` to be more consistent with other tools.
+- Removed `chifra abis --sol` option. Use Go Ethereum's `abigen` instead.
+
+**chifra blocks**
+
+- Removed the `chifra blocks --apps` option as unused. This is a breaking change.
+- Deprecated `chifra blocks --list` and `chifra blocks --list_count` options. This is a future breaking change.
+- Added the `chifra blocks --raw` option. This option returns the raw RPC data retrieved from the node without modification.
+- Exposes previously hidden option `chifra blocks --logs`, which displays the logs in the given block.
+- Exposes previously hidden option `chifra blocks --emitter`, which may be used with the `--logs` option to filter only those emitters.
+- Exposes previously hidden option`chifra blocks --topic`, which may be used with the `--logs` option to filter only those topics.
+- Exposes previously hidden option`chifra blocks --articulate`, which articulates the transactional, log, or traces data in the block if possible.
+- Exposes previously hidden option `chifra blocks --big_range`, which may be needed for the `--logs` option to limit the amount of data requested from the node. The node may crash otherwise.
+- Added the `chifra blocks --cache_txs` option. This may be used only with the `--cache` option to additionally cache the transactions in a block. Note this is slow, but the subsequent queries for the block are greatly sped up. Off by default.
+- Added the `chifra blocks --cache_traces` option. This may be used only with the `--cache` option to additionally cache the traces in a block. Note this is very slow, but the subsequent queries for the block are greatly sped up. Off by default. It may produce a very large number of cache items.
+- Changed hotkey for `chifra blocks --logs --topic` option from `-p` to `-B` to be more consistent with other tools.
+- Changed hotkey for `chifra blocks --logs` option from `-g` to `-l` to be more consistent with other tools.
+
+**chifra transactions**
+
+- Removed `chifra transactions --reconcile` as redundant with `--account_for`. This is a breaking change.
+- Removes previously deprecated `chifra transactions --reconcile`. This is a breaking change.
+- Added `chifra transactions --cache_traces` which will cache traces if the `--cache` option is on. Note that on first invocation, this option is quite slow, but subsequent queries for the same transactions are much faster.
+- Added `chifra transactions --logs`, `chifra transactions --logs --emitter`, and `chifra transactions --logs --topic` analogous to `chifra blocks --logs` options. Use of these options is the fast path to the RPC and are encouraged.
+- Exposed previously hidden `chifra transactions --ether` option. Where appropriate, this displays the value in Ether instead of Wei.
+- Exposed previously hidden `chifra transactions --raw` option. This displays the unadulterated raw data returned by the RPC.
+
+**chifra receipts**
+
+- Enabled `chifra receipts --raw`, `chifra receipts --cache`, and `chifra receipts --decache` options.
+
+**chifra logs**
+
+- Enabled `chifra logs --raw`, `chifra logs --cache`, and `chifra logs --decache` options.
+
+**chifra traces**
+
+- Enabled `chifra traces --raw`, `chifra traces --cache`, and `chifra traces --decache` options.
+
+**chifra when**
+
+- Enabled `chifra when --cache` and `chifra when --decache` options.
+- Exposed previously hidden option `chifra when --timestamps --check --deep`. This tool will query the node for all timestamps for all blocks to ensure that the timestamps file is accurate and complete. This is a very slow process and should only be used when there is a problem with the timestamps file.
+- Added a hotkey `-u` to the `chifra when --update` option.
+- Change hotkey for `chifra when --deep` option from `-e` to `-d` to be more consistent with other tools.
+
+**chifra state**
+
+- Exposed previously hidden `chifra state --call` option. This is a remarkably powerful new feature that allows for Solidity-like syntax for calling functions among many other things.
+- Exposed previously hidden `chifra state --proxy_for` option. This is useful for the `chifra state --call` option when the proxy is not discoverable through the ABI or other means. You can explicitly tell the command where the proxied-to address is.
+- Added `chifra state --articulate` option to articulate the return value for `chifra state --call` and others.
+- Enabled `chifra state --ether`, `chifra state --cache`, and `chifra tokens --decache` options.
+- Changed hotkey for `chifra state --call` option from `-a` to `-l` to be more consistent with other tools.
+- Changed hotkey for `chifra state --no_zero` option from `-n` to `-z` to be more consistent with other tools.
+
+**chifra tokens**
+
+- Added `chifra tokens --changes` option to limit display to only those records where balances change between records.
+- Enabled `chifra tokens --cache` and `chifra tokens --decache` options.
+- Changed hotkey for `chifra tokens --no_zero` option from `-n` to `-z` to be more consistent with other tools.
+
+**chifra config**
+
+- Exposed previously hidden `chifra config --paths`. This is useful during migrations and other times when debugging the configuration.
+
+**chifra status**
+
+- Changed available cache names for the mode of `chifra status <mode>`. Previous values of `[index|blooms|blocks|txs|traces|monitors|names|abis|recons|slurps|staging|unripe|maps|some*|all]` were permitted. New permitted values are: `[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]`. Each cache was renamed accordingly. Note that changes to the cache for version v1.0.0 are a breaking change and require a migration (see above).
+- Exposed `chifta status --chains` option because we no longer display the chain configurations by default in `--verbose` mode. This is a breaking change.
+
+**chifra daemon**
+
+- Exposed previously hidden `chifra daemon --api`, `chifra daemon --scrape`, and `chifra daemon --monitor` tools.
+- Added an option `chifra deamon --grpc` to start a GRPC names server (and other data models in the future) that should speed up some queries. This is optional and experimental, so use with caution.
+
+**chifra scrape**
+
+- Exposes previously hidden `chifra scrape --start_block` option. Experimental. Use with caution.
+- Changed hotkey for `chifra scrape --remote` option from `-m` to `-r` to be more consisten with other tools.
+
+**chifra chunks**
+
+- User can no longer use both `chifra chunks --pin` and `chifra chunks --publish` at the same time. This is a breaking change.
+- Changes `chifra chunks [index|manifest] --pin` to only pin chunks and bloom filters if the `--deep` option is included, otherwise these commands only pin the timestamps database (both locally and remotely if `--remote` is included) and the manifest (both locally and remotely if `--remote` is included).
+- Added `chifra chunks index --check --deep` option, which opens each chunk and checks that all addresses in that chunk report "not-no" when tested against the node software. This is a very slow process.
+- Added `chifra chunks manifest --check --deep` which verifies that all chunks in the manifest are locally pinned and have the correct IPFS hash.
+- Added a new option `chifra chunks --deep` with hotkey `-d` that is used in various places.
+- Added `chifra chunks index --check --deep` to chifra chunks used `d` for hot key which used to be for `--max_addrs`
+- Changed hotkey for `chifra chunks --max_addrs` hotkey changed to `-m` from `-d`.
+- Changed hotkey for `chifra chunks --remote` hotkey change to `-r` from `-m`
+- Changed hotkey for `chifra chunks --max_addrs` from `d` to `m` which used to be for `--remote`
+- Changed hotkey for `chifra chunks --remote` from `m` to `r`
+
+**chifra init**
+
+- Fixed some issues with `chifra init` by adding `--dry_run` and implementing `--first_block`. `--dry_run` may be used to check what would be changed if the option was not present. After running `chifra init`, always run `chifra chunks index --check` to check the results.
+- Fixes a bug in which hitting `Cntl+C` during download of the timestamps file would corrupt the database.
+
+**chifra explore**
+
+- No changes
+
+**chifra slurp**
+
+- Enabled `chifra slurp --raw`, `chifra slurp --cache`, and `chifra slurp --decache` options.
+
+**makeClass**
+
+- No changes
+
+**testRunner**
+
+- No changes
+
+## Pull Requests (46)
+#3154 Catching up to a lot of cache related code
+#3152 Starting to turn on accounting again
+#3151 Stops calling reconcile if not relevant log
+#3150 Catches up to include fixes for chifra slurp
+#3149 Touching export
+#3148 Fixes query package
+#3139 Feature/decache for all
+#3138 Update cmake
+#3137 Move token package to rpcClient, removes separate Token type in favor of SimpleToken
+#3131 Moved linter job to build workflow
+#3124 Removes chain from most methods on rpcClient.Options
+#3129 concurrent access to map core dumps
+#3121 Catches up to caching code in full port
+#3120 Bugfix/token oldbugs
+#3117 Updates chifra export to use new caching code - but still not active …
+#3113 Begins forcing access to the RPC through an object
+#3114 Bumps version to v0.76.0-beta
+#3112 Fixes incorrect use of UnchainedIndex for non-mainnet chains
+#3111 Feature/improve rpc client package
+#3110 Removes separate node package by moving it into rpcClient
+#3109 Removes separate ens package by moving it into rpcClient
+#3108 Feature/remove log level
+#3105 Adds TB_OVERRIDE_CID to force downloading a different manifest
+#3104 Fixing build
+#3090 Moved DefaultRpcOptions out of internal/global
+#3102 Adds support for chifra export --traces
+#3101 Feature/port export testing
+#3100 Add support for chifra export --receipts
+#3099 Bumps version to v0.76.0-beta
+#3098 Adding --neighbors (but disabled) to chifra export
+#3093 Adds more tests, shows caps in tests, #3092
+#3089 Bugfix/3078 maxgas not cached
+#3091 Adds caps testing
+#3088 Cleaning tests
+#3087 Move all global options to capabilities. Add Default option and imple…
+#3085 Feature/capabilities for global options
+#3084 Ports chifra export --balances to goLang
+#3083 Ports chifra export --logs to goLang
+#3062 Feature/port chifra export appearances
+#3080 Cleanup/linting with staticchecker
+#3068 Feature/finalized cache rpc options
+#3074 Cleanup/change cache help line
+#3064 Post merge cleanup
+#3057 Feature/txs enable cache
+#3125 Added workflow to trigger Docker build
+#3155 Feature/final golang port 2
+
+## Issues Closed (8)
+
+#2124 chifra scrape should be able to index from a given block
+#2128 Interesting use of Waku (formerly Whisper)
+#2089 Interesting
+#1891 chifra export --first_block is slower than it needs to be in chifra export
+#1629 chifra export user comments on acctExport Traversers
+#3009 reth is not being detected as an archive node
+#3007 chifra cmd - automate cleanup of command line args
+#3010 chifra traces - we could implement the same thing Sourcify does with the init code (which we get from traces).
+#3020 chifra state crashes with null pointer
+#3024 Checklist for caching
+#3034 Function names
+#3041 Improve articulation calling code across multiple tools.
+#3038 Make sure to document the fact that topic and relevant filters now work on most data types in chifra export
+#3047 Reading from cache should happen even without --cache option
+#3045 Caching and non-final blocks near the head
+#3134 We could probably use the `errcheck` default exclusion for the linter to avoid the `_ =` markers in the code
+#3065 Better interface for all RPC queries
+#3073 It appears --cache option does not actually work in API mode
+#3075 Decache should be global just like cache and it should be available to any command that allows caching
+#3130 chifra blocks could easily have an --articulate options (and should)
+#3136 chifra tokens should have a --no_zero and a --diff
+#3140 --decache does not report anything in API mode
+#3078 chifra blocks does not cache maxGasPer...
+#3082 Cache issues
+#3115 chifra status does not properly report on new cache locations
+#3096 `--decache` should be turned on wherever `cache` is enabled.
+#3153 Remove `log_level` and `wei` throughout (anything else?)
+#3153 chifra blocks --uncles does not cache
+#3157 progress reporting
+#3144 Pending testing seconds against millseconds
+#3126 Access to Topic[0] even when len(log.Topics) == 0
+#3128 Concurrent access to map core dumps
+#3092 finishing caps
+#3079 Use bitflags where possible for capabilities
+#3086 Deprecate global options `--ether` and `--wei` and replace with `--units` and `--decimals` which make sense for both Eth and tokens.
+#2273 Add instructions for adding command line options to a tool
+#2262 Merge readiness
+
+## Issues Opened (45)
+#3157 progress reporting
+#3156 chifra chunks incorrect behaviour
+#3153 chifra blocks --uncles does not cache
+#3146 Error while reading stderr: bufio.Scanner: token too long
+#3145 No new blocks at block
+#3143 Channel in Connection object
+#3142 Any array stored in the cache should be protected with a 'present' flag
+#3141 The use of any and interface doesn't allow us to "break" the build on purpose as a way of searching for a feature
+#3140 --decache does not report anything in API mode
+#3136 chifra tokens should have a --no_zero and a --diff
+#3135 Both chifra state and chifra tokens need to show date when --verbose flag is on
+#3134 We could probably use the `errcheck` default exclusion for the linter to avoid the `_ =` markers in the code
+#3132 Need a test for chifra X --cache should control for Control+C for the user.
+#3130 chifra blocks could easily have an --articulate options (and should)
+#3122 Omission of withdrawal appearances in spec
+#3119 chifra export needs to be made IterateOverMap -- see chifra export --logs
+#3118 Decache should remove empty folders
+#3116 chifra empty hex string
+#3115 chifra status does not properly report on new cache locations
+#3107 Diagram inversion in paper
+#3106 Extraneous errors reported by articulation (and elsewhere)
+#3097 Can `cacheTx` and `cacheTraces` be made into global capabilities?
+#3096 `--decache` should be turned on wherever `cache` is enabled.
+#3095 Remove `log_level` and `wei` throughout (anything else?)
+#3094 Deprecate global options --ether and --wei and replace with --units and --decimals which make sense for both Eth and tokens.
+#3082 Cache issues
+#3081 Once we start writing a cache file, we must finish. We have to capture control+c
+#3078 chifra blocks does not cache maxGasPer...
+#3077 Tools that have `--cache_txs` or `--cache_traces` include internal package in imports.
+#3076 chifra blocks --uncles after 1559 fork can return 0 immediately.
+#3075 Decache should be global just like cache and it should be available to any command that allows caching
+#3073 It appears --cache option does not actually work in API mode
+#3072 Treasure Trove
+#3071 Run tests with TEST_SLURPS=true before releasing v1.0
+#3069 Non-caching chifra blocks is slow
+#3065 Better interface for all RPC queries
+#3063 `transactions/handle_show` loops twice through the same set of items
+#2973 chifra cmd ordering of fields in JSON
+#2959 chifra cmd we need test cases to protect against breaking changes in the RPC data
+#2964 Long ago hack needs resolution
+#2966 chifra blocks --logs -big_range is ignored
+#2969 chifra blocks --logs --articulate (and transactions --logs --articulate) do not articulate
+#2986 chifra state --call option -- allow for caller to include parameter types and return types in the call string
+#2987 chifra state --call allow for calling functions with tuple parameters and/or returns
+#2991 chifra export - reconciliation data model
 
 ## v0.70.0 (2023/05/26)
 
@@ -1030,3 +1374,4 @@ Changes in this release are in support of [the docker version](https://github.co
 
 - **chifra qoutes:**
   - Officially deprecated
+

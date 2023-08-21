@@ -25,8 +25,10 @@ func (opts *ReceiptsOptions) HandleShow() error {
 			errorChan <- err
 			cancel()
 		} else {
-			showProgress := !opts.Globals.TestMode && len(opts.Globals.File) == 0
-			bar := logger.NewBar("", showProgress, int64(len(txMap)))
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+				Total:   int64(len(txMap)),
+			})
 
 			iterCtx, iterCancel := context.WithCancel(context.Background())
 			defer iterCancel()

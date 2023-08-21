@@ -3,4 +3,5 @@ blockNumber      ,blknum    ,           ,       ,      ,        ,          ,    
 transactionIndex ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  2 ,   2 ,     10 ,the transaction index
 transactionHash  ,hash      ,           ,       ,      ,        ,          ,        ,         ,  3 ,   3 ,     10 ,the transaction's hash
 timestamp        ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  4 ,   4 ,     10 ,the timestamp of the block
-tracesCnt        ,uint64    ,           ,       ,      ,        ,          ,        ,         ,  5 ,   5 ,     30 ,the number of traces in the transaction
+date             ,datetime  ,           ,       ,      ,        ,          ,        ,         ,  5 ,   5 ,     10 ,a calculated field -- the date of the block
+tracesCnt        ,uint64    ,           ,       ,      ,        ,          ,        ,         ,  6 ,   6 ,     30 ,the number of traces in the transaction

@@ -5,6 +5,7 @@
 package monitor
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
@@ -14,7 +15,7 @@ func (mon *Monitor) RemoveDups() (int64, int64, error) {
 	}
 	defer mon.Close()
 
-	if apps, cnt, err := mon.ReadAndFilterAppearances(NewEmptyFilter(mon.Chain)); err != nil {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
 		return mon.Count(), mon.Count(), err
 	} else if cnt == 0 {
 		return mon.Count(), mon.Count(), nil

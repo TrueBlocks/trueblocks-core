@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -23,13 +24,9 @@ func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 		}
 	}
 
-	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	filter := monitor.NewFilter(
-		chain,
+	filter := filter.NewFilter(
 		false,
-		false,
-		!testMode,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)

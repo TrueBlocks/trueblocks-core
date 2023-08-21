@@ -85,6 +85,19 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 
 // tracesFinishParse finishes the parsing for command line invocations. Returns a new TracesOptions.
 func tracesFinishParse(args []string) *TracesOptions {
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
@@ -122,8 +135,8 @@ func ResetOptions() {
 func (opts *TracesOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
-		"txs":    true,
-		"traces": true,
+		"transactions": true,
+		"traces":       true,
 	}
 	// EXISTING_CODE
 	return

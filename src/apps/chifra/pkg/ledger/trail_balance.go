@@ -42,8 +42,8 @@ func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
 	// TODO: BOGUS PERF
 	if okay && r.MoneyMoved() {
 		// var err error
-		r.SpotPrice, r.PriceSource, _ = pricing.PriceUsd(l.Chain, l.TestMode, r)
-		// 	if r.SpotPrice, r.PriceSource, err = pricing.PriceUsd(l.Chain, l.TestMode, r); err != nil {
+		r.SpotPrice, r.PriceSource, _ = pricing.PriceUsd(l.Conn, l.TestMode, r)
+		// 	if r.SpotPrice, r.PriceSource, err = pricing.PriceUsd(l.Conn, l.TestMode, r); err != nil {
 		// 		logger.Error("Failed to get price for", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex)
 		// 		logger.Error("Error returned from PriceUsd:", err)
 		// 	}

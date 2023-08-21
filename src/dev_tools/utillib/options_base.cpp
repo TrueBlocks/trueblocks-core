@@ -724,8 +724,8 @@ static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
 }
 
 //-----------------------------------------------------------------------
-// TODO(tjayrush): Can we remove this since this is all processed in the go code?
-// TODO(tjayrush): Almost - if we convert specials to block numbers before calling into the C++
+// TODO: Can we remove this since this is all processed in the go code?
+// TODO: Almost - if we convert specials to block numbers before calling into the C++
 CNameValueArray COptionsBase::specials;
 
 //--------------------------------------------------------------------------------

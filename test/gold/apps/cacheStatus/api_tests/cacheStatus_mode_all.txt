@@ -91,6 +91,30 @@ status?modes=all&verbose&maxRecords=2
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/abis/--address--",
+              "itemType": "abisCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "abisCache"
+        },
+        {
+          "items": [
+            {
+              "address": "--address--",
+              "fileDate": "--fileDate--",
               "filename": "$cachePath/monitors/--address--",
               "itemType": "monitorsCacheItem",
               "nRecords": 15432098,
@@ -113,59 +137,13 @@ status?modes=all&verbose&maxRecords=2
           "type": "monitorsCache"
         },
         {
-          "items": [
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "namesCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "namesCacheItem",
-              "sizeInBytes": 123456789
-            }
-          ],
-          "lastCached": "--lastCached--",
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "--paths--",
-          "sizeInBytes": 789,
-          "type": "namesCache"
-        },
-        {
-          "items": [
-            {
-              "address": "--address--",
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/abis/--address--",
-              "itemType": "abisCacheItem",
-              "sizeInBytes": 123456789
-            },
-            {
-              "address": "--address--",
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/abis/--address--",
-              "itemType": "abisCacheItem",
-              "sizeInBytes": 123456789
-            }
-          ],
-          "lastCached": "--lastCached--",
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "--paths--",
-          "sizeInBytes": 789,
-          "type": "abisCache"
-        },
-        {
           "items": [],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "slurpsCache"
+          "type": "namesCache"
         },
         {
           "items": [
@@ -194,6 +172,73 @@ status?modes=all&verbose&maxRecords=2
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
+              "itemType": "resultsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "resultsCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "resultsCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "logsCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "slurpsCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "stateCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "statementsCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
+          "type": "tokensCache"
+        },
+        {
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
               "itemType": "tracesCacheItem",
               "sizeInBytes": 123456789
             },
@@ -212,13 +257,26 @@ status?modes=all&verbose&maxRecords=2
           "type": "tracesCache"
         },
         {
-          "items": [],
+          "items": [
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "transactionsCacheItem",
+              "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "transactionsCacheItem",
+              "sizeInBytes": 123456789
+            }
+          ],
           "lastCached": "--lastCached--",
           "nFiles": 123,
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "txsCache"
+          "type": "transactionsCache"
         }
       ],
       "chainConfig": "--paths--",

@@ -168,10 +168,10 @@ func readFromArray[Item arrayItem](
 	// make target large enough
 	*target = make([]Item, 0, itemCount)
 
-	// TODO(cache): Just noting. If we knew the records in the array were fixed with (I think we
-	// TODO(cache): may be able to know that), we can read and write the entire chunk of memory
-	// TODO(cache): in one write (or read). It will almost certainly be faster. I don't think we do
-	// TODO(cache): this in C++ code, but I always wanted to.
+	// TODO: Just noting. If we knew the records in the array were fixed with (I think we
+	// TODO: may be able to know that), we can read and write the entire chunk of memory
+	// TODO: in one write (or read). It will almost certainly be faster. I don't think we do
+	// TODO: this in C++ code, but I always wanted to.
 	// read items
 	for i := 0; uint64(i) < itemCount; i++ {
 		item, readErr := readValue(reader)
@@ -271,9 +271,9 @@ func readParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 	return
 }
 
-// TODO(cache): I don't think we want to hard code this version value here. We want to read it programmatically
-// TODO(cache): from auto-generated code. There is a string called version.LibraryVersion that we can use
-// TODO(cache): to calculate this value. We can add a function to the version package.
+// TODO: I don't think we want to hard code this version value here. We want to read it programmatically
+// TODO: from auto-generated code. There is a string called version.LibraryVersion that we can use
+// TODO: to calculate this value. We can add a function to the version package.
 var minimumCacheVersion = uint64(41000)
 
 func ValidateHeader(header *CacheHeader) error {

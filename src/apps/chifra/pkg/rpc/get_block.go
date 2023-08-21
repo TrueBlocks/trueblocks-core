@@ -78,12 +78,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		tx := types.NewSimpleTransaction(raw, &receipt, ts)
 		block.Transactions = append(block.Transactions, *tx)
 
-		if conn.StoreWritable() && conn.enabledMap["txs"] && isFinal(conn.LatestBlockTimestamp, tx.Timestamp) {
+		if conn.StoreWritable() && conn.EnabledMap["transactions"] && base.IsFinal(conn.LatestBlockTimestamp, tx.Timestamp) {
 			_ = conn.Store.Write(tx, nil)
 		}
 	}
 
-	if conn.StoreWritable() && isFinal(conn.LatestBlockTimestamp, block.Timestamp) {
+	if conn.StoreWritable() && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
 
@@ -115,7 +115,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 		block.Transactions = append(block.Transactions, fmt.Sprint(txHash))
 	}
 
-	if conn.StoreWritable() && isFinal(conn.LatestBlockTimestamp, block.Timestamp) {
+	if conn.StoreWritable() && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
 

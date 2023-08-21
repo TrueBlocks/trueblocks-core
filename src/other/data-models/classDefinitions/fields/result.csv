@@ -1,0 +1,10 @@
+name             ,type      ,strDefault ,object ,array ,doc ,disp ,example       ,description
+blockNumber      ,blknum    ,           ,       ,      ,  1 ,     ,10021         ,the block number at which this call was made
+timestamp        ,timestamp ,           ,       ,      ,  2 ,     ,              ,the timestamp of the block for this call
+date             ,datetime  ,           ,       ,      ,  3 ,     ,              ,the date of the block for this call (calculated)
+address          ,address   ,           ,       ,      ,  4 ,     ,0xa1e4...63b4 ,the address of contract being called
+name             ,string    ,           ,       ,      ,  5 ,     ,              ,the name of the function call
+encoding         ,string    ,           ,       ,      ,  6 ,     ,              ,the encoding for the function call
+signature        ,string    ,           ,       ,      ,  7 ,     ,              ,the canonical signature of the interface
+encodedArguments ,string    ,           ,       ,      ,  8 ,     ,              ,the bytes data following the encoding of the call
+articulatedOut   ,Function  ,           ,true   ,      ,  9 ,     ,              ,the result of the call articulated as other models

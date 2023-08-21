@@ -12,6 +12,7 @@ traces?transactions=0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9
       },
       "blockHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
       "blockNumber": 4001001,
+      "date": "2017-07-10 01:53:12 UTC",
       "result": {
         "gasUsed": 23221
       },

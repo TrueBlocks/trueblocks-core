@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
@@ -22,13 +23,13 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	been_here := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		var showAddresses func(walker *index.CacheWalker, path string, first bool) (bool, error)
+		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
 		if opts.Globals.Verbose {
-			showAddresses = func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 				return opts.handleResolvedRecords(modelChan, walker, path, first)
 			}
 		} else {
-			showAddresses = func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 				if path != index.ToBloomPath(path) {
 					return false, fmt.Errorf("should not happen in showAddresses")
 				}
@@ -87,7 +88,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 			}
 		}
 
-		walker := index.NewCacheWalker(
+		walker := walk.NewCacheWalker(
 			chain,
 			opts.Globals.TestMode,
 			10, /* maxTests */

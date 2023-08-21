@@ -34,7 +34,12 @@ func (opts *BlocksOptions) HandleUncles() error {
 		defer iterCancel()
 
 		uncles := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(appMap))
-		bar := logger.NewExpandingBar("", !opts.Globals.TestMode && len(opts.Globals.File) == 0, 125)
+		bar := logger.NewBar(logger.BarOptions{
+			Type:    logger.Expanding,
+			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Total:   int64(len(appMap)),
+		})
+
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[types.SimpleTransaction]) error {
 			if uncs, err := opts.Conn.GetUncleBodiesByNumber(app.BlockNumber); err != nil {
 				errorChan <- err

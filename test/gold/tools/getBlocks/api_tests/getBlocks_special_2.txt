@@ -4,6 +4,7 @@ blocks?blocks=daofork
     {
       "baseFeePerGas": 0,
       "blockNumber": 1920000,
+      "date": "2016-07-20 13:20:40 UTC",
       "difficulty": 62413376722602,
       "gasLimit": 4712384,
       "gasUsed": 84000,
