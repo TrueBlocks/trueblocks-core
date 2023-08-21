@@ -13684,3 +13684,4 @@ tags	address	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isCo
 50-Tokens:ERC20	0xffe8196bc259e8dedc544d935786aa4709ec3e64	Hedge	HDG	On chain	18	seemingly-suitable-haddock	false	false	false	true	true	false
 31-Gitcoin:Grants	0xffeb02c7e5968cc3789e570a639707c6c618eeee	Grant 1732 Ethereum Explorer		https://gitcoin.co/grants/1732/ethereum-explorer		vastly-brave-grubworm	false	false	false	false	false	false
 90-Individuals:Other	0xfff66732389866aeaf8f7305da53f442c29e1b8f	Arbitrage Bot Sender		OnChain		formally-neutral-walleye	false	false	false	false	false	false
+30-Contracts	0x49048044d57e1c92a77f79988d21fa8faf74e97e	Base:Base Bridge		EtherScan.io	18		false	false	false	false	false	false
