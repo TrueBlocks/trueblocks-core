@@ -233,6 +233,8 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
         "          schema:\n"
         "[{SCHEMA}]";
 
+    string_q apiRoute = cmd.api_route;
+
     size_t fieldCnt = 0;
     bool hasDelete = false;
     ostringstream memberStream;
@@ -243,8 +245,9 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
         if (member.longName.empty() || !member.is_visible_docs)
             continue;
         if (!isCrud(member.longName)) {
+            string_q optionName = toCamelCase(member.longName);
             string_q yp = STR_PARAM_YAML;
-            replace(yp, "[{NAME}]", toCamelCase(member.longName));
+            replace(yp, "[{NAME}]", optionName);
             replace(yp, "[{DESCR}]", prepareDescr(member.swagger_descr));
             replace(yp, "[{REQ}]", member.is_required ? "true" : "false");
             replace(yp, "[{SCHEMA}]", getSchema(member.data_type, &member));
@@ -255,6 +258,14 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
                 memberStream << "      parameters:\n";
             memberStream << yp << endl;
             fieldCnt++;
+            if (!(member.option_type % "positional")) {
+                // if (optionName == "addrs") {
+                //     cerr << member.longName << ":" << member.option_type << endl;
+                // }
+                reportOneOption(apiRoute, optionName, "api");
+                // } else {
+                //     cerr << member.longName << ":" << member.option_type << endl;
+            }
         }
     }
 
@@ -263,22 +274,24 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
     globals.push_back("raw");
     globals.push_back("cache");
     for (auto global : globals) {
-        string_q g = getGlobalFeature(cmd.api_route, global);
+        string_q g = getGlobalFeature(apiRoute, global);
         if (g.empty())
             continue;
         CStringArray parts;
         explode(parts, g, '|');
+        string_q optionName = toCamelCase(parts[0]);
         string_q yp = STR_PARAM_YAML;
-        replace(yp, "[{NAME}]", toCamelCase(parts[0]));
+        replace(yp, "[{NAME}]", optionName);
         replace(yp, "[{DESCR}]", prepareDescr(parts[1]));
         replace(yp, "[{REQ}]", "false");
         replace(yp, "[{SCHEMA}]", getSchema(parts[2]));
         memberStream << yp << endl;
         fieldCnt++;
+        reportOneOption(apiRoute, optionName, "api");
     }
 
     if (fieldCnt == 0) {
-        cerr << bRed << "The " << cmd.api_route << " data model has zero documented fields." << cOff << endl;
+        cerr << bRed << "The " << apiRoute << " data model has zero documented fields." << cOff << endl;
         exit(0);
     }
 
@@ -370,12 +383,12 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
     replaceAll(ret, "[{TAGS}]", grp);
     replaceAll(ret, "[{PROPERTIES}]", properties.str());
     replaceAll(ret, "[{EXAMPLE}]", example.str());
-    replaceAll(ret, "[{PATH}]", cmd.api_route);
+    replaceAll(ret, "[{PATH}]", apiRoute);
     replaceAll(ret, "[{PARAMS}]", memberStream.str());
     replaceAll(ret, "[{SUMMARY}]", cmd.summary);
     replaceAll(ret, "[{DESCR}]", cmd.description + corresponds);
     replaceAll(ret, "[{DELETE}]", hasDelete ? STR_DELETE_OPTS : "");
-    replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + cmd.api_route));
+    replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + apiRoute));
     return ret;
 }
 

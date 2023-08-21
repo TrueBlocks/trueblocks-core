@@ -15,7 +15,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 extern string_q getGlobalFeature(const string_q& route, const string_q& feature);
-string_q getGlobals(const string_q& routeIn) {
+string_q getGlobals(const string_q& apiRoute) {
     CStringArray globals;
     globals.push_back("ether");
     globals.push_back("raw");
@@ -23,17 +23,21 @@ string_q getGlobals(const string_q& routeIn) {
 
     ostringstream os;
     for (auto global : globals) {
-        string_q g = getGlobalFeature(routeIn, global);
+        string_q g = getGlobalFeature(apiRoute, global);
         if (g.empty())
             continue;
         CStringArray parts;
         explode(parts, g, '|');
-        const char* STR_LINE = "    \"[{LONGNAME}]\": {\"hotkey\": \"[{HOTKEY}]\", \"type\": \"[{TYPE}]\"},";
-        string_q line = STR_LINE;
-        replace(line, "[{LONGNAME}]", parts[0]);
+        string_q line = "    \"[{LONGNAME}]\": {\"hotkey\": \"[{HOTKEY}]\", \"type\": \"[{TYPE}]\"},";
+        ;
+
+        string_q optionName = parts[0];
+        replace(line, "[{LONGNAME}]", optionName);
         replace(line, "[{HOTKEY}]", parts[3]);
         replace(line, "[{TYPE}]", parts[2] == "boolean" ? "switch" : "flag");
         os << line << endl;
+
+        reportOneOption(apiRoute, optionName, "python");
     }
     return os.str();
 }
