@@ -8,11 +8,11 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 **OUR FIRST OFFICIAL RELEASE!**
 
-This is our first official 1.0.0 release, which means we are feature complete and we will no longer be creating backwards imcompatible changes that will break your existing code (without providing a viable migration path). The release contains a HUGE amount of changes to version v0.70.0 which happened about four months ago. The changes are detailed below. This release requires a pretty draconian migration (you'll have to remove some of your existing caches whose formats have changed). This is the last time, we'll have such a heavy migration.
+This is our first official 1.0.0 release, which means we are feature complete and we will no longer be creating backwards-incompatible changes that will break your existing code (without providing a viable migration path). The release contains a HUGE amount of changes to version v0.70.0 which happened about four months ago. The changes are detailed below. This release requires a pretty draconian migration (you'll have to remove some of your existing caches whose formats have changed). This is the last time, we'll have such a heavy migration.
 
 Make sure to follow the [migration](./MIGRATIONS.md) (it's simple, but does remove your caches).
 
-The most important improvements with verion 1.0.0 are:
+The most important improvements with version 1.0.0 are:
 
 1) All of our code is now in GoLang. This means that nearly all of our code is concurrent, which means we're seeing nearly 20-30 time speedups in some code paths, and
 2) Caching is now more complete. Previously, we cached only transactions and some few other things, now nearly every data structure can be cached (by adding the `--cache` option to a command). Also, every command that has a `--cache` option, now has a `--decache` option to remove those items from the cache.
@@ -31,7 +31,7 @@ The following breaking changes were made for this release:
 - Bumped required GoLang version to 1.21.x.
 - Bumped required CMake version 3.5.
 - The format for all of the following caches has changed: `blocks`, `transactions`, `traces`, `slurps`, `reconciliations`, and `neighbors`. If `chifra` finds any of these caches in its cache folders, it will refuse to run until you [follow the migrations](.MIGRATIONS.md).
-- Removed support for `chifra export --accounting`, `chifr export --neighbors`, and `chifra transactions --account_for` options from the core package. This is a breaking change. These tools will be re-enable, but they will require a license key. More on this change later. If you are using these options, eitehr (a) do not upgrade to this version, or (b) contact us and we will give you a complementary key (this offer has a limited lifetime at our discretion). The `chifra export --balances` option has been added, which does not require a license key.
+- Removed support for `chifra export --accounting`, `chifra export --neighbors`, and `chifra transactions --account_for` options from the core package. This is a breaking change. These tools will be re-enable, but they will require a license key. More on this change later. If you are using these options, either (a) do not upgrade to this version, or (b) contact us and we will give you a complementary key (this offer has a limited lifetime at our discretion). The `chifra export --balances` option has been added, which does not require a license key.
 - Numerous breaking changes to the data models (see below).
 - Many breaking changes to command line "hotkeys" to make them more consistent across tools (see below).
 - The removal or deprecation of some esoteric, rarely used, or redundant options (see below).
@@ -41,18 +41,18 @@ The following breaking changes were made for this release:
 ## System Wide Changes
 
 - All -- every single line -- of C++ code is removed from the `chifra` tool. We are now a 100% GoLang shop!
-- The `chifra daemon` command now has a new option `--grpc` which, when included, starts a GRPC server in support of any tool that uses the names database. This is a performance related change and should have no noticable effect on any tool's behaviour (other than speedups).
+- The `chifra daemon` command now has a new option `--grpc` which, when included, starts a GRPC server in support of any tool that uses the names database. This is a performance-related change and should have no noticeable effect on any tool's behavior (other than speedups).
 - Enabled `--cache` and `--decache` on all meaningful options that query the RPC.
 - Our continuous integration tooling now updates our Docker version each time we push to `master`.
 - Exposed a number of previously hidden options and command (see below).
-- Updated the Unchained Index manifest to latest block.
+- Updated the Unchained Index manifest to the latest block.
 - Improved the GoLang automatically generated documentation for all tools and all packages.
 - Improved the examples and ported them to GoLang.
 - Added proper GoLang linting to the automatic build process. PRs may no longer be merged into the `master` or the `develop` branch without passing linting.
 
 ## Changes to Data Models
 
-The follow existing data models were either added, removed, or modified by having their fields added to, removed, or renamed. Some models were changed extensively. Please consult the documentation on our website for details. Some of the changes were breaking.
+The following existing data models were either added, removed, or modified by having their fields added to, removed, or renamed. Some models were changed extensively. Please consult the documentation on our website for details. Some of the changes were breaking.
 
 ### Modified data models
 
@@ -62,7 +62,7 @@ The follow existing data models were either added, removed, or modified by havin
 - `TraceAction`: Two new fields, `RewardType` and `Author`, were added.
 - `Timestamp`: A new field, `Diff`, was added to report on changes from the previous record in the display.
 - Many models:
-  - We added a `Timestamp` and `Date` field to many models (i.e. `State` and `Token`). This was done in order to make the data from different tools more consistent.
+  - We added a `Timestamp` and `Date` field to many models (i.e., `State` and `Token`). This was done in order to make the data from different tools more consistent.
   - In some cases, `Timestamp` and `Date` will only appear under the `--verbose` option. Consult the documentation.
   - For any data model with a `Timestamp`, that data model now also has an (automatically-generated) `Date` field.
 
@@ -85,7 +85,7 @@ The follow existing data models were either added, removed, or modified by havin
 - Changed the default meaning of `chifra list --first_record` from `1` to `0` for this (and all) tools. This is a breaking change.
 - Removed previously `chifra list --appearances` as redundant. The same command without `--appearances` produces identical results.
 - Added `chifra list --reversed` option to reverse the order of the list.
-- Exposed previouly hidden option `chifra list --silent` with `-s` hotkey. This updates the monitor's list of appearances, but does not report anything to the output. Useful for scripting.
+- Exposed previously hidden option `chifra list --silent` with `-s` hotkey. This updates the monitor's list of appearances but does not report anything to the output. Useful for scripting.
 - Exposed previously hidden option `chifra list --bounds` with `-b` hotkey. This returns a range of blocks and timestamps for the first and last appearance of the address. Useful for summarizing the data.
 - Changed hotkey for `chifra list --no_zero` from `-n` to `-z` to be consistent with other tools.
 
@@ -96,8 +96,8 @@ The follow existing data models were either added, removed, or modified by havin
 - Changed the default meaning of `chifra export --first_record` from `1` to `0` for this (and all) tools. This is a breaking change.
 - Added `chifra export --balances`. This option reports on balances for each appearance (no reconciliation) and does not require the `--accounting` option.
 - Exposed previously hidden option `chifra export --factory` with `-y` hotkey. This option reports all deployments of a smart contract by the given address (including smart contract addresses such as the UniSwap factory).
-- Exposed previously hidden option `chifra export --reversed` with `-E` hotykey. This option reverses the list of appearances prior to any filtering or processing. This option currenly works for all options other than `--accounting`.
-- Exposed previsouly hidden `chifra export --ether` option. Where applicable, this option reports the value of the transaction in Ether rather than in Wei.
+- Exposed previously hidden option `chifra export --reversed` with `-E` hotkey. This option reverses the list of appearances prior to any filtering or processing. This option currently works for all options other than `--accounting`.
+- Exposed previously hidden `chifra export --ether` option. Where applicable, this option reports the value of the transaction in Ether rather than in Wei.
 - Exposed previously hidden `chifra export --no_zero` option (with `-z` hotkey) to remove zero-value records from `--balances` and `--accounting` reports.
 - Added a hotkey `-P` to the `chifra export --asset` option.
 - Added a hotkey `-B` to the `chifra export --topic` option.
@@ -148,7 +148,7 @@ The follow existing data models were either added, removed, or modified by havin
 - Removed `chifra transactions --reconcile` as redundant with `--account_for`. This is a breaking change.
 - Removes previously deprecated `chifra transactions --reconcile`. This is a breaking change.
 - Added `chifra transactions --cache_traces` which will cache traces if the `--cache` option is on. Note that on first invocation, this option is quite slow, but subsequent queries for the same transactions are much faster.
-- Added `chifra transactions --logs`, `chifra transactions --logs --emitter`, and `chifra transactions --logs --topic` analogous to `chifra blocks --logs` options. Use of these options is the fast path to the RPC and are encouraged.
+- Added `chifra transactions --logs`, `chifra transactions --logs --emitter`, and `chifra transactions --logs --topic` analogous to `chifra blocks --logs` options. Use of these options is the fast path to the RPC and is encouraged.
 - Exposed previously hidden `chifra transactions --ether` option. Where appropriate, this displays the value in Ether instead of Wei.
 - Exposed previously hidden `chifra transactions --raw` option. This displays the unadulterated raw data returned by the RPC.
 
@@ -203,7 +203,7 @@ The follow existing data models were either added, removed, or modified by havin
 **chifra scrape**
 
 - Exposes previously hidden `chifra scrape --start_block` option. Experimental. Use with caution.
-- Changed hotkey for `chifra scrape --remote` option from `-m` to `-r` to be more consisten with other tools.
+- Changed hotkey for `chifra scrape --remote` option from `-m` to `-r` to be more consistent with other tools.
 
 **chifra chunks**
 
@@ -329,7 +329,7 @@ The follow existing data models were either added, removed, or modified by havin
 
 ## Issues Opened (45)
 #3157 progress reporting
-#3156 chifra chunks incorrect behaviour
+#3156 chifra chunks incorrect behavior
 #3153 chifra blocks --uncles does not cache
 #3146 Error while reading stderr: bufio.Scanner: token too long
 #3145 No new blocks at block
@@ -788,7 +788,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - [#2851 - chifra init - protect against control+c while download timestamp file](https://github.com/TrueBlocks/trueblocks-core/issues/2851)
 - [#2850 - chifra list --bounds seems unnecessarily slow](https://github.com/TrueBlocks/trueblocks-core/issues/2850)
 - [#2849 - chifra monitors --watch](https://github.com/TrueBlocks/trueblocks-core/issues/2849)
-- [#2848 - chifra status -- saving old behaviour pre-port to golang](https://github.com/TrueBlocks/trueblocks-core/issues/2848)
+- [#2848 - chifra status -- saving old behavior pre-port to golang](https://github.com/TrueBlocks/trueblocks-core/issues/2848)
 - [#2847 - chifra export creates huge number of abi files when scraping UniSwap contracts](https://github.com/TrueBlocks/trueblocks-core/issues/2847)
 - [#2846 - chifra monitors -- add deleted status to the fields](https://github.com/TrueBlocks/trueblocks-core/issues/2846)
 - [#2845 - chifra monitors -- add --count option](https://github.com/TrueBlocks/trueblocks-core/issues/2845)
@@ -835,7 +835,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - Bumped required GoLang version to 1.19.
 - Removed the global `--to_file` option from all tools. You may use the `--output` option instead. Note that `--output` does not work when interacting through the API.
 - Removed the rarely-used, global `--very_raw` option from all tools.
-- Removed the global `--dollars` option from tools that still presented it. Its implementation was unsupportable. To reproduce the behaviour, use the `spotPrice` exported by reconciliations.
+- Removed the global `--dollars` option from tools that still presented it. Its implementation was unsupportable. To reproduce the behavior, use the `spotPrice` exported by reconciliations.
 - During articulation, the export previously included certain whitespace characters direclty (`\t`, `\r` and `\n`, for example). This was causing various problems (for example, trying to import into CSV into MS Excel). The code now replaces those characters with `[t]` for `\t` or `[n]` for `\n`, changes `\r` into a space and (in some cases) changes `,` internal to a field into `_`. This may be a breaking change depending on your usage.
 - Previously, if one exported traces to CSV or TXT, and smart contracts were both created and self destructed in a single trace (which happens frequently), the code used to report the newly-minted smart contract in the `from` field of the trace. This was not canoncial. We stopped doing it. If you wish to see the address of the newly-created contract in such a case, export to `--fmt json`. The value is presented as received from the RPC.
 
@@ -922,7 +922,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 
 - Changed the name of the `--trace` option to `--traces`. Deprecated `--trace` which will be removed in a future release.
 - Renamed the `--statements` option to `--account_for`. `--statements` no longer works.
-- Added placeholder option called `--source` which meant to trace the source of funds into an address. Currenly not implemented.
+- Added placeholder option called `--source` which meant to trace the source of funds into an address. Currently not implemented.
 
 **chifra receipts**
 
@@ -1023,7 +1023,7 @@ With this release, we made a lot of improvements to the help file and the code. 
 
 - Updated version to v0.55.0-alpha.
 - Significant improvement to the help website.
-- First introduction of very rudimentary TypeScript and Python SDKs (currenly pre-alpha and only supported for internal use).
+- First introduction of very rudimentary TypeScript and Python SDKs (currently pre-alpha and only supported for internal use).
 - Removed a number of outdated or unused README files, other documentation, and source code.
 - Removes rarely used and very confusing `--to_file` option from all tools. Accomplish the same thing with `--output <fn>`.
 - Updated the names, timestamps, and manifest databases and published the same to Unchained Index.
@@ -1159,7 +1159,7 @@ Changes in this release are in support of [the docker version](https://github.co
 
 **chifra version**
 
-- Added `chifra version` which is identical to many other command line tools. Identical behaviour to `chifra --version` which still works.
+- Added `chifra version` which is identical to many other command line tools. Identical behavior to `chifra --version` which still works.
 
 ## v0.44.0
 
@@ -1210,7 +1210,7 @@ Changes in this release are in support of [the docker version](https://github.co
 - **chifra export:**
   - Improvements to accounting module. Much better support for token accounting including multiple token transfers in a single transaction and/or block.
   - *Breaking change:* change to `--statements` option which is now only available under the `--accounting` as per user suggestion.
-  - *Breaking change:* `--accounting` no longer turns `--articulate` on by default (users must explicitly add `--articulate` to get same behaviour).
+  - *Breaking change:* `--accounting` no longer turns `--articulate` on by default (users must explicitly add `--articulate` to get same behavior).
   - CStatement class renamed to CLedgerEntry to improve clarity of code.
   - Adds `-f` hotkey to `--flow` option.
 
