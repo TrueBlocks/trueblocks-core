@@ -244,7 +244,7 @@ bool COptions::handle_gocmds(void) {
         CCommandOptionArray members;
         CCommandOptionArray notes;
         for (auto option : routeOptionArray) {
-            bool isOne = option.api_route == p.api_route && isChifraRoute(option, true);
+            bool isOne = option.api_route == p.api_route && option.isChifraRoute(true);
             if (isOne) {
                 members.push_back(option);
             }

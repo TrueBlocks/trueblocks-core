@@ -18,9 +18,6 @@ export function getAbis(
     noHeader?: boolean,
     fmt?: string,
     verbose?: boolean,
-    ether?: boolean,
-    raw?: boolean,
-    cache?: boolean,
   },
   options?: RequestInit,
 ) {

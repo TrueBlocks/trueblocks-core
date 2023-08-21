@@ -14,15 +14,6 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-bool COptions::handle_sdk_py(void) {
-    CStringArray types, paths;
-    if (!handle_sdk_py_types(types)) {
-        return false;
-    }
-
-    if (!handle_sdk_py_paths(paths)) {
-        return false;
-    }
-
+bool COptions::handle_sdk_py_types(CStringArray& typesOut) {
     return true;
 }

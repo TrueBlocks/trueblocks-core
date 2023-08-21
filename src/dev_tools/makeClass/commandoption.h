@@ -79,6 +79,7 @@ class CCommandOption : public CBaseNode {
     explicit CCommandOption(const string_q& line);
     string_q swagger_descr;
     string_q route_list;
+    bool isChifraRoute(bool goCode);
     bool isStringType(void) const {
         return (isEnum || isEnumList || isStringList || isAddressList || isTopicList);
     }
@@ -269,7 +270,14 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//---------------------------------------------------------------------------------------------------
+inline bool CCommandOption::isChifraRoute(bool goCode) {
+    if (goCode && option_type == "deprecated")
+        return true;
+
+    return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
+            option_type != "alias" && option_type != "config" && option_type != "error");
+}
+
 extern bool goPortNewCode(const string_q& a);
 extern bool isFullyPorted(const string_q& a);
 extern string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute);

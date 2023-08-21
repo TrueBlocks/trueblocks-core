@@ -11,6 +11,7 @@ tokensOpts = {
     "byAcct": {"hotkey": "-b", "type": "switch"},
     "changes": {"hotkey": "-c", "type": "switch"},
     "noZero": {"hotkey": "-z", "type": "switch"},
+    "cache": {"hotkey": "-o", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},
     "help": {"hotkey": "-h", "type": "switch"},

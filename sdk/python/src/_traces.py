@@ -10,6 +10,8 @@ tracesOpts = {
     "articulate": {"hotkey": "-a", "type": "switch"},
     "filter": {"hotkey": "-f", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
+    "raw": {"hotkey": "-w", "type": "switch"},
+    "cache": {"hotkey": "-o", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},
     "help": {"hotkey": "-h", "type": "switch"},

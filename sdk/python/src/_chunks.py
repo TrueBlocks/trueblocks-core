@@ -10,7 +10,6 @@ chunksOpts = {
     "check": {"hotkey": "-c", "type": "switch"},
     "pin": {"hotkey": "-i", "type": "switch"},
     "publish": {"hotkey": "-p", "type": "switch"},
-    "truncate": {"hotkey": "-n", "type": "flag"},
     "remote": {"hotkey": "-r", "type": "switch"},
     "belongs": {"hotkey": "-b", "type": "flag"},
     "firstBlock": {"hotkey": "-F", "type": "flag"},

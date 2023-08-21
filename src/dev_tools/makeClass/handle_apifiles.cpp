@@ -197,22 +197,20 @@ string_q getSchema(const string_q& data_type, const CCommandOption* cmd = NULL) 
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q getGlobalFeature(const CCommandOption& cmd, const string_q& feature) {
+string_q getGlobalFeature(const string_q& route, const string_q& feature) {
     if (feature == "raw") {
-        if (cmd.api_route == "blocks" || cmd.api_route == "logs" || cmd.api_route == "receipts" ||
-            cmd.api_route == "slurp" || cmd.api_route == "traces" || cmd.api_route == "transactions") {
-            return "raw|report raw data direclty from the source|boolean";
+        if (route == "blocks" || route == "logs" || route == "receipts" || route == "slurp" || route == "traces" ||
+            route == "transactions") {
+            return "raw|report raw data direclty from the source|boolean|-w";
         }
     } else if (feature == "cache") {
-        if (cmd.api_route == "blocks" || cmd.api_route == "export" || cmd.api_route == "logs" ||
-            cmd.api_route == "receipts" || cmd.api_route == "slurp" || cmd.api_route == "state" ||
-            cmd.api_route == "tokens" || cmd.api_route == "traces" || cmd.api_route == "transactions" ||
-            cmd.api_route == "when") {
-            return "cache|force the results of the query into the cache|boolean";
+        if (route == "blocks" || route == "export" || route == "logs" || route == "receipts" || route == "slurp" ||
+            route == "state" || route == "tokens" || route == "traces" || route == "transactions" || route == "when") {
+            return "cache|force the results of the query into the cache|boolean|-o";
         }
     } else if (feature == "ether") {
-        if (cmd.api_route == "export" || cmd.api_route == "state" || cmd.api_route == "transactions") {
-            return "ether|export values in ether|boolean";
+        if (route == "export" || route == "state" || route == "transactions") {
+            return "ether|export values in ether|boolean|-H";
         }
     }
     return "";
@@ -265,7 +263,7 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
     globals.push_back("raw");
     globals.push_back("cache");
     for (auto global : globals) {
-        string_q g = getGlobalFeature(cmd, global);
+        string_q g = getGlobalFeature(cmd.api_route, global);
         if (g.empty())
             continue;
         CStringArray parts;
@@ -394,7 +392,7 @@ bool COptions::writeOpenApiFile(void) {
     for (auto ep : endpointArray) {
         CCommandOptionArray members;
         for (auto option : routeOptionArray)
-            if (option.api_route == ep.api_route && isChifraRoute(option, false))
+            if (option.api_route == ep.api_route && option.isChifraRoute(false))
                 members.push_back(option);
         ep.members = &members;
 
@@ -484,7 +482,7 @@ string_q get_api_text(const CClassDefinitionArray& models, const CClassDefinitio
 
 extern string_q get_producer_group(const string_q& p, const CCommandOptionArray& endpoints);
 //---------------------------------------------------------------------------------------------------
-string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes) {
+string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& typesOut) {
     if (!isApiRoute(ep.api_route) || contains(ep.api_route, "explore")) {
         return "";
     }
@@ -492,7 +490,7 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
     string_q descr;
     for (auto model : dataModels) {
         if (contains(model.doc_producer, ep.api_route)) {
-            returnTypes.push_back(model.doc_route);
+            typesOut.push_back(model.doc_route);
             if (descr.empty()) {
                 string_q group = get_producer_group(ep.api_route, endpointArray);
                 string_q route = ep.api_route;
@@ -502,12 +500,12 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
     }
 
     string_q prods;
-    for (auto p : returnTypes) {
+    for (auto p : typesOut) {
         replace(p, "cachePtr", "cache");
         prods += "$ref: \"#/components/schemas/" + p + "\"\n";
     }
 
-    if (returnTypes.size() > 1) {
+    if (typesOut.size() > 1) {
         prods = "oneOf:\n" + prods;
         replaceAll(prods, "$ref:", "      - $ref:");
     }

@@ -11,6 +11,8 @@ slurpOpts = {
     "appearances": {"hotkey": "-p", "type": "switch"},
     "perPage": {"hotkey": "-P", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
+    "raw": {"hotkey": "-w", "type": "switch"},
+    "cache": {"hotkey": "-o", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},
     "help": {"hotkey": "-h", "type": "switch"},

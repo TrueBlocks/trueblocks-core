@@ -8,6 +8,8 @@ receiptsPos = "transactions"
 receiptsFmt = "json"
 receiptsOpts = {
     "articulate": {"hotkey": "-a", "type": "switch"},
+    "raw": {"hotkey": "-w", "type": "switch"},
+    "cache": {"hotkey": "-o", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},
     "help": {"hotkey": "-h", "type": "switch"},
