@@ -70,11 +70,12 @@ bool COptions::handle_sdk_py_paths(CStringArray& pathsOut) {
             string_q firstPos;
             ostringstream params;
             for (auto p : members) {
-                if (!p.is_visible_docs) {  // || !p.is_visible) {
-                    continue;
-                }
                 string_q line = "    \"[{LONGNAME}]\": {\"hotkey\": \"[{HOTKEY}]\", \"type\": \"[{TYPE}]\"},\n";
                 string_q optionName = substitute(toCamelCase(p.longName), "deleteme", "delete");
+
+                if (!p.is_visible_docs && !contains(optionName, "cache")) {
+                    continue;
+                }
 
                 replace(line, "[{LONGNAME}]", optionName);
                 replace(line, "[{HOTKEY}]", p.hotKey.empty() ? "" : "-" + p.hotKey);
