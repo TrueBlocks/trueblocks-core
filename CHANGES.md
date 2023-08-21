@@ -240,139 +240,140 @@ The following existing data models were either added, removed, or modified by ha
 - No changes
 
 ## Pull Requests (46)
-#3154 Catching up to a lot of cache related code
-#3152 Starting to turn on accounting again
-#3151 Stops calling reconcile if not relevant log
-#3150 Catches up to include fixes for chifra slurp
-#3149 Touching export
-#3148 Fixes query package
-#3139 Feature/decache for all
-#3138 Update cmake
-#3137 Move token package to rpcClient, removes separate Token type in favor of SimpleToken
-#3131 Moved linter job to build workflow
-#3124 Removes chain from most methods on rpcClient.Options
-#3129 concurrent access to map core dumps
-#3121 Catches up to caching code in full port
-#3120 Bugfix/token oldbugs
-#3117 Updates chifra export to use new caching code - but still not active …
-#3113 Begins forcing access to the RPC through an object
-#3114 Bumps version to v0.76.0-beta
-#3112 Fixes incorrect use of UnchainedIndex for non-mainnet chains
-#3111 Feature/improve rpc client package
-#3110 Removes separate node package by moving it into rpcClient
-#3109 Removes separate ens package by moving it into rpcClient
-#3108 Feature/remove log level
-#3105 Adds TB_OVERRIDE_CID to force downloading a different manifest
-#3104 Fixing build
-#3090 Moved DefaultRpcOptions out of internal/global
-#3102 Adds support for chifra export --traces
-#3101 Feature/port export testing
-#3100 Add support for chifra export --receipts
-#3099 Bumps version to v0.76.0-beta
-#3098 Adding --neighbors (but disabled) to chifra export
-#3093 Adds more tests, shows caps in tests, #3092
-#3089 Bugfix/3078 maxgas not cached
-#3091 Adds caps testing
-#3088 Cleaning tests
-#3087 Move all global options to capabilities. Add Default option and imple…
-#3085 Feature/capabilities for global options
-#3084 Ports chifra export --balances to goLang
-#3083 Ports chifra export --logs to goLang
-#3062 Feature/port chifra export appearances
-#3080 Cleanup/linting with staticchecker
-#3068 Feature/finalized cache rpc options
-#3074 Cleanup/change cache help line
-#3064 Post merge cleanup
-#3057 Feature/txs enable cache
-#3125 Added workflow to trigger Docker build
-#3155 Feature/final golang port 2
+- #3154 Catching up to a lot of cache related code
+- #3152 Starting to turn on accounting again
+- #3151 Stops calling reconcile if not relevant log
+- #3150 Catches up to include fixes for chifra slurp
+- #3149 Touching export
+- #3148 Fixes query package
+- #3139 Feature/decache for all
+- #3138 Update cmake
+- #3137 Move token package to rpcClient, removes separate Token type in favor of SimpleToken
+- #3131 Moved linter job to build workflow
+- #3124 Removes chain from most methods on rpcClient.Options
+- #3129 concurrent access to map core dumps
+- #3121 Catches up to caching code in full port
+- #3120 Bugfix/token oldbugs
+- #3117 Updates chifra export to use new caching code - but still not active …
+- #3113 Begins forcing access to the RPC through an object
+- #3114 Bumps version to v0.76.0-beta
+- #3112 Fixes incorrect use of UnchainedIndex for non-mainnet chains
+- #3111 Feature/improve rpc client package
+- #3110 Removes separate node package by moving it into rpcClient
+- #3109 Removes separate ens package by moving it into rpcClient
+- #3108 Feature/remove log level
+- #3105 Adds TB_OVERRIDE_CID to force downloading a different manifest
+- #3104 Fixing build
+- #3090 Moved DefaultRpcOptions out of internal/global
+- #3102 Adds support for chifra export --traces
+- #3101 Feature/port export testing
+- #3100 Add support for chifra export --receipts
+- #3099 Bumps version to v0.76.0-beta
+- #3098 Adding --neighbors (but disabled) to chifra export
+- #3093 Adds more tests, shows caps in tests, #3092
+- #3089 Bugfix/3078 maxgas not cached
+- #3091 Adds caps testing
+- #3088 Cleaning tests
+- #3087 Move all global options to capabilities. Add Default option and imple…
+- #3085 Feature/capabilities for global options
+- #3084 Ports chifra export --balances to goLang
+- #3083 Ports chifra export --logs to goLang
+- #3062 Feature/port chifra export appearances
+- #3080 Cleanup/linting with staticchecker
+- #3068 Feature/finalized cache rpc options
+- #3074 Cleanup/change cache help line
+- #3064 Post merge cleanup
+- #3057 Feature/txs enable cache
+- #3125 Added workflow to trigger Docker build
+- #3155 Feature/final golang port 2
 
-## Issues Closed (8)
+## Issues Closed (37)
 
-#2124 chifra scrape should be able to index from a given block
-#2128 Interesting use of Waku (formerly Whisper)
-#2089 Interesting
-#1891 chifra export --first_block is slower than it needs to be in chifra export
-#1629 chifra export user comments on acctExport Traversers
-#3009 reth is not being detected as an archive node
-#3007 chifra cmd - automate cleanup of command line args
-#3010 chifra traces - we could implement the same thing Sourcify does with the init code (which we get from traces).
-#3020 chifra state crashes with null pointer
-#3024 Checklist for caching
-#3034 Function names
-#3041 Improve articulation calling code across multiple tools.
-#3038 Make sure to document the fact that topic and relevant filters now work on most data types in chifra export
-#3047 Reading from cache should happen even without --cache option
-#3045 Caching and non-final blocks near the head
-#3134 We could probably use the `errcheck` default exclusion for the linter to avoid the `_ =` markers in the code
-#3065 Better interface for all RPC queries
-#3073 It appears --cache option does not actually work in API mode
-#3075 Decache should be global just like cache and it should be available to any command that allows caching
-#3130 chifra blocks could easily have an --articulate options (and should)
-#3136 chifra tokens should have a --no_zero and a --diff
-#3140 --decache does not report anything in API mode
-#3078 chifra blocks does not cache maxGasPer...
-#3082 Cache issues
-#3115 chifra status does not properly report on new cache locations
-#3096 `--decache` should be turned on wherever `cache` is enabled.
-#3153 Remove `log_level` and `wei` throughout (anything else?)
-#3153 chifra blocks --uncles does not cache
-#3157 progress reporting
-#3144 Pending testing seconds against millseconds
-#3126 Access to Topic[0] even when len(log.Topics) == 0
-#3128 Concurrent access to map core dumps
-#3092 finishing caps
-#3079 Use bitflags where possible for capabilities
-#3086 Deprecate global options `--ether` and `--wei` and replace with `--units` and `--decimals` which make sense for both Eth and tokens.
-#2273 Add instructions for adding command line options to a tool
-#2262 Merge readiness
+- #2124 chifra scrape should be able to index from a given block
+- #2128 Interesting use of Waku (formerly Whisper)
+- #2089 Interesting
+- #1891 chifra export --first_block is slower than it needs to be in chifra export
+- #1629 chifra export user comments on acctExport Traversers
+- #3009 reth is not being detected as an archive node
+- #3007 chifra cmd - automate cleanup of command line args
+- #3010 chifra traces - we could implement the same thing Sourcify does with the init code (which we get from traces).
+- #3020 chifra state crashes with null pointer
+- #3024 Checklist for caching
+- #3034 Function names
+- #3041 Improve articulation calling code across multiple tools.
+- #3038 Make sure to document the fact that topic and relevant filters now work on most data types in chifra export
+- #3047 Reading from cache should happen even without --cache option
+- #3045 Caching and non-final blocks near the head
+- #3134 We could probably use the `errcheck` default exclusion for the linter to avoid the `_ =` markers in the code
+- #3065 Better interface for all RPC queries
+- #3073 It appears --cache option does not actually work in API mode
+- #3075 Decache should be global just like cache and it should be available to any command that allows caching
+- #3130 chifra blocks could easily have an --articulate options (and should)
+- #3136 chifra tokens should have a --no_zero and a --diff
+- #3140 --decache does not report anything in API mode
+- #3078 chifra blocks does not cache maxGasPer...
+- #3082 Cache issues
+- #3115 chifra status does not properly report on new cache locations
+- #3096 `--decache` should be turned on wherever `cache` is enabled.
+- #3153 Remove `log_level` and `wei` throughout (anything else?)
+- #3153 chifra blocks --uncles does not cache
+- #3157 progress reporting
+- #3144 Pending testing seconds against millseconds
+- #3126 Access to Topic[0] even when len(log.Topics) == 0
+- #3128 Concurrent access to map core dumps
+- #3092 finishing caps
+- #3079 Use bitflags where possible for capabilities
+- #3086 Deprecate global options `--ether` and `--wei` and replace with `--units` and `--decimals` which make sense for both Eth and tokens.
+- #2273 Add instructions for adding command line options to a tool
+- #2262 Merge readiness
 
 ## Issues Opened (45)
-#3157 progress reporting
-#3156 chifra chunks incorrect behavior
-#3153 chifra blocks --uncles does not cache
-#3146 Error while reading stderr: bufio.Scanner: token too long
-#3145 No new blocks at block
-#3143 Channel in Connection object
-#3142 Any array stored in the cache should be protected with a 'present' flag
-#3141 The use of any and interface doesn't allow us to "break" the build on purpose as a way of searching for a feature
-#3140 --decache does not report anything in API mode
-#3136 chifra tokens should have a --no_zero and a --diff
-#3135 Both chifra state and chifra tokens need to show date when --verbose flag is on
-#3134 We could probably use the `errcheck` default exclusion for the linter to avoid the `_ =` markers in the code
-#3132 Need a test for chifra X --cache should control for Control+C for the user.
-#3130 chifra blocks could easily have an --articulate options (and should)
-#3122 Omission of withdrawal appearances in spec
-#3119 chifra export needs to be made IterateOverMap -- see chifra export --logs
-#3118 Decache should remove empty folders
-#3116 chifra empty hex string
-#3115 chifra status does not properly report on new cache locations
-#3107 Diagram inversion in paper
-#3106 Extraneous errors reported by articulation (and elsewhere)
-#3097 Can `cacheTx` and `cacheTraces` be made into global capabilities?
-#3096 `--decache` should be turned on wherever `cache` is enabled.
-#3095 Remove `log_level` and `wei` throughout (anything else?)
-#3094 Deprecate global options --ether and --wei and replace with --units and --decimals which make sense for both Eth and tokens.
-#3082 Cache issues
-#3081 Once we start writing a cache file, we must finish. We have to capture control+c
-#3078 chifra blocks does not cache maxGasPer...
-#3077 Tools that have `--cache_txs` or `--cache_traces` include internal package in imports.
-#3076 chifra blocks --uncles after 1559 fork can return 0 immediately.
-#3075 Decache should be global just like cache and it should be available to any command that allows caching
-#3073 It appears --cache option does not actually work in API mode
-#3072 Treasure Trove
-#3071 Run tests with TEST_SLURPS=true before releasing v1.0
-#3069 Non-caching chifra blocks is slow
-#3065 Better interface for all RPC queries
-#3063 `transactions/handle_show` loops twice through the same set of items
-#2973 chifra cmd ordering of fields in JSON
-#2959 chifra cmd we need test cases to protect against breaking changes in the RPC data
-#2964 Long ago hack needs resolution
-#2966 chifra blocks --logs -big_range is ignored
-#2969 chifra blocks --logs --articulate (and transactions --logs --articulate) do not articulate
-#2986 chifra state --call option -- allow for caller to include parameter types and return types in the call string
-#2987 chifra state --call allow for calling functions with tuple parameters and/or returns
-#2991 chifra export - reconciliation data model
+
+- #3157 progress reporting
+- #3156 chifra chunks incorrect behavior
+- #3153 chifra blocks --uncles does not cache
+- #3146 Error while reading stderr: bufio.Scanner: token too long
+- #3145 No new blocks at block
+- #3143 Channel in Connection object
+- #3142 Any array stored in the cache should be protected with a 'present' flag
+- #3141 The use of any and interface doesn't allow us to "break" the build on purpose as a way of searching for a feature
+- #3140 --decache does not report anything in API mode
+- #3136 chifra tokens should have a --no_zero and a --diff
+- #3135 Both chifra state and chifra tokens need to show date when --verbose flag is on
+- #3134 We could probably use the `errcheck` default exclusion for the linter to avoid the `_ =` markers in the code
+- #3132 Need a test for chifra X --cache should control for Control+C for the user.
+- #3130 chifra blocks could easily have an --articulate options (and should)
+- #3122 Omission of withdrawal appearances in spec
+- #3119 chifra export needs to be made IterateOverMap -- see chifra export --logs
+- #3118 Decache should remove empty folders
+- #3116 chifra empty hex string
+- #3115 chifra status does not properly report on new cache locations
+- #3107 Diagram inversion in paper
+- #3106 Extraneous errors reported by articulation (and elsewhere)
+- #3097 Can `cacheTx` and `cacheTraces` be made into global capabilities?
+- #3096 `--decache` should be turned on wherever `cache` is enabled.
+- #3095 Remove `log_level` and `wei` throughout (anything else?)
+- #3094 Deprecate global options --ether and --wei and replace with --units and --decimals which make sense for both Eth and tokens.
+- #3082 Cache issues
+- #3081 Once we start writing a cache file, we must finish. We have to capture control+c
+- #3078 chifra blocks does not cache maxGasPer...
+- #3077 Tools that have `--cache_txs` or `--cache_traces` include internal package in imports.
+- #3076 chifra blocks --uncles after 1559 fork can return 0 immediately.
+- #3075 Decache should be global just like cache and it should be available to any command that allows caching
+- #3073 It appears --cache option does not actually work in API mode
+- #3072 Treasure Trove
+- #3071 Run tests with TEST_SLURPS=true before releasing v1.0
+- #3069 Non-caching chifra blocks is slow
+- #3065 Better interface for all RPC queries
+- #3063 `transactions/handle_show` loops twice through the same set of items
+- #2973 chifra cmd ordering of fields in JSON
+- #2959 chifra cmd we need test cases to protect against breaking changes in the RPC data
+- #2964 Long ago hack needs resolution
+- #2966 chifra blocks --logs -big_range is ignored
+- #2969 chifra blocks --logs --articulate (and transactions --logs --articulate) do not articulate
+- #2986 chifra state --call option -- allow for caller to include parameter types and return types in the call string
+- #2987 chifra state --call allow for calling functions with tuple parameters and/or returns
+- #2991 chifra export - reconciliation data model
 
 ## v0.70.0 (2023/05/26)
 
