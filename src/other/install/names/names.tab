@@ -3976,6 +3976,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isCo
 50-Tokens:ERC20	0x48f775efbe4f5ece6e0df2f7b5932df56823b990	R token	R	On chain	18	subtly-civil-peacock	false	false	false	true	true	false
 50-Tokens:ERC20	0x48ff53777f747cfb694101222a944de070c15d36	Ether Kingdoms Token	IMP	On chain	7	openly-noted-bunny	false	false	false	true	true	false
 90-Individuals:Humanity DAO	0x4901eb51220d8cf9565bb605bf6c8937ea5f9950	aya08167856		https://www.humanitydao.org/humans		largely-communal-ghoul	false	false	false	false	false	false
+30-Contracts	0x49048044d57e1c92a77f79988d21fa8faf74e97e	Base:Base Bridge		EtherScan.io	18	instantly-amusing-yeti	false	false	false	true	false	false
 50-Tokens:ERC20	0x4905b4f22d8cdb0a035b17062e2d498b662991bc	ETHNewYork Hackathon		https://kickback.events/event/[{ADDRESS}]	18	grossly-equal-crawdad	false	false	false	true	true	false
 31-Gitcoin:Grants	0x4906dec30c3c815ee7c410ec38502be9770bbaee	Grant 1682 Rhinobobz Dev Fund		https://gitcoin.co/grants/1682/rhinobobz-dev-fund		vaguely-tolerant-hound	false	false	false	false	false	false
 31-Gitcoin:Grants	0x4906e4f95ad546ce865916f65c825e00630bffa8	Grant 0438 Ador		https://gitcoin.co/grants/438/ador		endlessly-humble-prawn	false	false	false	false	false	false
@@ -12638,7 +12639,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isCo
 50-Tokens:ERC20	0xec67005c4e498ec7f55e092bd1d35cbc47c91892	Melon Token	MLN	On chain	18	fairly-driving-grizzly	false	false	false	true	true	false
 50-Tokens:ERC20	0xec6708fff9f9b579ebd5b783b681968203c843cd	LareCoin	LARE	On chain	18	constantly-singular-tahr	false	false	false	true	true	false
 31-Giveth:Project	0xec67312a71392c43d3980287c36e19d7a3d356fe	Médecins Sans Frontières Australia		Tokenomics		inherently-quality-panda	false	false	false	false	false	false
-30-Contracts	0xec7954f452a6473c21c4078501f0bcf8b266bc99	ProgressiveToken	ADS	EtherScan.io	18		false	false	false	false	false	false
+30-Contracts	0xec7954f452a6473c21c4078501f0bcf8b266bc99	ADSCASH	ADS	On chain	2	physically-robust-sole	false	false	false	true	true	false
 31-Giveth:Project	0xec86d3854592c9adc7287203e16e383d55186132	Wild Spirit Wolf Sanctuary		Tokenomics		equally-deciding-mantis	false	false	false	false	false	false
 90-Individuals:Kickback	0xec8c1050b45789f9ee4d09dcc7d64aaf9e233338	shredcitynation		https://kickback.events/		logically-adapting-grackle	false	false	false	false	false	false
 80-Malicious:DaoDrain	0xec8e57756626fdc07c63ad2eafbd28d08e7b0ca5	DAO Drain 080		GethSource		previously-many-treefrog	false	false	false	true	false	false
@@ -13684,4 +13685,3 @@ tags	address	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isCo
 50-Tokens:ERC20	0xffe8196bc259e8dedc544d935786aa4709ec3e64	Hedge	HDG	On chain	18	seemingly-suitable-haddock	false	false	false	true	true	false
 31-Gitcoin:Grants	0xffeb02c7e5968cc3789e570a639707c6c618eeee	Grant 1732 Ethereum Explorer		https://gitcoin.co/grants/1732/ethereum-explorer		vastly-brave-grubworm	false	false	false	false	false	false
 90-Individuals:Other	0xfff66732389866aeaf8f7305da53f442c29e1b8f	Arbitrage Bot Sender		OnChain		formally-neutral-walleye	false	false	false	false	false	false
-30-Contracts	0x49048044d57e1c92a77f79988d21fa8faf74e97e	Base:Base Bridge		EtherScan.io	18		false	false	false	false	false	false
