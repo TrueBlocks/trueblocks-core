@@ -13,8 +13,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -89,74 +87,70 @@ func (sp SemiParse) String() string {
 	return string(ret)
 }
 
-const addrsPerBatch = 8
+// const addrsPerBatch = 8
 
 func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 	// chain := opts.Globals.Chain
-	theCmds, _ := getCommandsFromFile(opts.Globals)
+	// theCmds, _ := getCommandsFromFile(opts.Globals)
 
-	batches := batchMonitors(monitors, addrsPerBatch)
-	for i := 0; i < len(batches); i++ {
-		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
+	// batches := batchMonitors(monitors, addrsPerBatch)
+	// for i := 0; i < len(batches); i++ {
+	// 	addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
 
-		canceled, err := opts.FreshenMonitorsForWatch(addrs)
-		if canceled || err != nil {
-			return canceled, err
-		}
+	// 	canceled, err := opts.FreshenMonitorsForWatch(addrs)
+	// 	if canceled || err != nil {
+	// 		return canceled, err
+	// 	}
 
-		for j := 0; j < len(batches[i]); j++ {
-			mon := batches[i][j]
-			countAfter := mon.Count()
+	// 	for j := 0; j < len(batches[i]); j++ {
+	// 		mon := batches[i][j]
+	// 		countAfter := mon.Count()
 
-			if countAfter > 1000000 {
-				fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
-				continue
-			}
+	// 		if countAfter > 1000000 {
+	// 			fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
+	// 			continue
+	// 		}
 
-			if countAfter == 0 {
-				continue
-			}
+	// 		if countAfter == 0 {
+	// 			continue
+	// 		}
 
-			for _, sp := range theCmds {
-				outputFn := sp.Folder + "/" + mon.Address.Hex() + "." + sp.Fmt
-				exists := file.FileExists(outputFn)
-				countBefore := countsBefore[j]
+	// 		for _, sp := range theCmds {
+	// 			outputFn := sp.Folder + "/" + mon.Address.Hex() + "." + sp.Fmt
+	// 			exists := file.FileExists(outputFn)
+	// 			countBefore := countsBefore[j]
 
-				if !exists || countAfter > countBefore {
-					cmd := sp.CmdLine + " --output " + outputFn
-					add := ""
-					if exists {
-						add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
-						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
-						add += " --append --no_header"
-					}
-					cmd += add + " " + mon.Address.Hex()
-					cmd = strings.Replace(cmd, "  ", " ", -1)
-					o := opts
-					o.Globals.File = ""
-					// _ = o.Globals.PassItOn("acctExport", chain, cmd, []string{})
-					// fmt.Println("Processing:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
-					// } else {
-					// 	fmt.Println("Skipping:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
-				}
-				// time.Sleep(500 * time.Millisecond)
-			}
-		}
-	}
+	// 			if !exists || countAfter > countBefore {
+	// 				cmd := sp.CmdLine + " --output " + outputFn
+	// 				add := ""
+	// 				if exists {
+	// 					add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
+	// 					add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
+	// 					add += " --append --no_header"
+	// 				}
+	// 				cmd += add + " " + mon.Address.Hex()
+	// 				cmd = strings.Replace(cmd, "  ", " ", -1)
+	// 				o := opts
+	// 				o.Globals.File = ""
+	// 				_ = o.Globals.PassItOn("acctExport", chain, cmd, []string{})
+	// 			}
+	// 		}
+	// 	}
+	// }
 	return false, nil
 }
 
-func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {
-	var batches [][]monitor.Monitor
-	for i := 0; i < len(slice); i += batchSize {
-		end := i + batchSize
-		if end > len(slice) {
-			end = len(slice)
-		}
-		batches = append(batches, slice[i:end])
-	}
-	return batches
-}
+// func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {
+// 	var batches [][]monitor.Monitor
+// 	for i := 0; i < len(slice); i += batchSize {
+// 		end := i + batchSize
+// 		if end > len(slice) {
+// 			end = len(slice)
+// 		}
+// 		batches = append(batches, slice[i:end])
+// 	}
+// 	return batches
+// }
 
 func GetExportFormat(cmd, def string) string {
 	if strings.Contains(cmd, "json") {
@@ -172,70 +166,70 @@ func GetExportFormat(cmd, def string) string {
 	return "csv"
 }
 
-func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
-	ret := []SemiParse{}
-	cmdLines := []string{}
+// func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
+// 	ret := []SemiParse{}
+// 	cmdLines := []string{}
 
-	commandFile := globals.File
-	if commandFile == "" && file.FileExists("./commands.fil") {
-		commandFile = "./commands.fil"
-	}
-	if !file.FileExists(commandFile) {
-		logger.Warn("No --file option supplied. Using default.")
-		cmdLines = append(cmdLines, "export --appearances")
-	} else {
-		cmdLines = file.AsciiFileToLines(commandFile)
-	}
+// 	commandFile := globals.File
+// 	if commandFile == "" && file.FileExists("./commands.fil") {
+// 		commandFile = "./commands.fil"
+// 	}
+// 	if !file.FileExists(commandFile) {
+// 		logger.Warn("No --file option supplied. Using default.")
+// 		cmdLines = append(cmdLines, "export --appearances")
+// 	} else {
+// 		cmdLines = file.AsciiFileToLines(commandFile)
+// 	}
 
-	for _, cmd := range cmdLines {
-		if strings.HasPrefix(cmd, "export ") {
-			cmd = strings.Replace(cmd, "export ", "", -1)
-		}
-		cmd = strings.Trim(cmd, " \t")
-		if len(cmd) > 0 && !strings.HasPrefix(cmd, "#") {
-			sp := SemiParse{}
-			sp.Folder = "exports/" + globals.Chain + "/" + GetOutputFolder(cmd, "unknown")
+// 	for _, cmd := range cmdLines {
+// 		if strings.HasPrefix(cmd, "export ") {
+// 			cmd = strings.Replace(cmd, "export ", "", -1)
+// 		}
+// 		cmd = strings.Trim(cmd, " \t")
+// 		if len(cmd) > 0 && !strings.HasPrefix(cmd, "#") {
+// 			sp := SemiParse{}
+// 			sp.Folder = "exports/" + globals.Chain + "/" + GetOutputFolder(cmd, "unknown")
 
-			sp.Fmt = GetExportFormat(cmd, globals.Format)
-			sp.CmdLine = cmd
-			sp.CmdLine = strings.Replace(sp.CmdLine, " csv", " "+sp.Fmt, -1)
-			sp.CmdLine = strings.Replace(sp.CmdLine, " json", " "+sp.Fmt, -1)
-			sp.CmdLine = strings.Replace(sp.CmdLine, " txt", " "+sp.Fmt, -1)
-			if !strings.Contains(sp.CmdLine, "--fmt") {
-				sp.CmdLine += " --fmt " + sp.Fmt
-			}
-			ret = append(ret, sp)
-		}
-	}
+// 			sp.Fmt = GetExportFormat(cmd, globals.Format)
+// 			sp.CmdLine = cmd
+// 			sp.CmdLine = strings.Replace(sp.CmdLine, " csv", " "+sp.Fmt, -1)
+// 			sp.CmdLine = strings.Replace(sp.CmdLine, " json", " "+sp.Fmt, -1)
+// 			sp.CmdLine = strings.Replace(sp.CmdLine, " txt", " "+sp.Fmt, -1)
+// 			if !strings.Contains(sp.CmdLine, "--fmt") {
+// 				sp.CmdLine += " --fmt " + sp.Fmt
+// 			}
+// 			ret = append(ret, sp)
+// 		}
+// 	}
 
-	logger.Info("Found", len(ret), "commands to process in ./"+globals.File)
-	for i, cmd := range ret {
-		msg := fmt.Sprintf("\t%d. %s", i, cmd.CmdLine)
-		logger.Info(msg)
-	}
+// 	logger.Info("Found", len(ret), "commands to process in ./"+globals.File)
+// 	for i, cmd := range ret {
+// 		msg := fmt.Sprintf("\t%d. %s", i, cmd.CmdLine)
+// 		logger.Info(msg)
+// 	}
 
-	return ret, nil
-}
+// 	return ret, nil
+// }
 
-const spaces = "                                                                                 "
+// const spaces = "                                                                                 "
 
-func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []int64) {
-	var addrs []string
-	for j := 0; j < len(batch); j++ {
-		addrs = append(addrs, batch[j].Address.Hex())
-	}
+// func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []int64) {
+// 	var addrs []string
+// 	for j := 0; j < len(batch); j++ {
+// 		addrs = append(addrs, batch[j].Address.Hex())
+// 	}
 
-	fmt.Println(strings.Repeat(" ", 120), "\r")
-	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
-	fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(strings.Join(addrs, " "), "0x", " \\\n\t0x", -1), colors.Off)
+// 	fmt.Println(strings.Repeat(" ", 120), "\r")
+// 	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
+// 	fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(strings.Join(addrs, " "), "0x", " \\\n\t0x", -1), colors.Off)
 
-	countsBefore := []int64{}
-	for j := 0; j < len(batch); j++ {
-		countsBefore = append(countsBefore, (batch)[j].Count())
-	}
+// 	countsBefore := []int64{}
+// 	for j := 0; j < len(batch); j++ {
+// 		countsBefore = append(countsBefore, (batch)[j].Count())
+// 	}
 
-	return addrs, countsBefore
-}
+// 	return addrs, countsBefore
+// }
 
 // TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc
 // TODO: Need to protect against invalid addresses including zero address
