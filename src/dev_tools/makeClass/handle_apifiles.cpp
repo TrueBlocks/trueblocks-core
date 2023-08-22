@@ -41,34 +41,14 @@ string_q toGoCall(const CCommandOption& cmd) {
     const char* STR_ONEROUTE =
         "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
         "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
-        "\tif err, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
-        "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
-        "\t} else if !handled {\n"
-        "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")\n"
-        "\t}\n"
-        "}";
-
-    const char* STR_ONEROUTE2 =
-        "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
-        "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
         "\tif err, _ := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
         "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
         "\t}\n"
         "}";
 
-    string_q format = STR_ONEROUTE;
-    if (isFullyPorted(cmd.api_route)) {
-        format = STR_ONEROUTE2;
-    }
-
-    if (goPortNewCode(cmd.api_route) || (cmd.tool.empty() || contains(cmd.tool, " "))) {
-        format = substitute(format, "CallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")",
-                            "CallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")");
-    }
-
     ostringstream os;
     os << endl;
-    os << cmd.Format(format) << endl;
+    os << cmd.Format(STR_ONEROUTE) << endl;
     return os.str();
 }
 
@@ -400,7 +380,6 @@ bool COptions::writeOpenApiFile(void) {
     LOG_INFO(cYellow, "handling openapi file...", cOff);
     counter = CCounter();  // reset
 
-    map<string_q, string_q> converts;
     map<string_q, string_q> pkgs;
     for (auto ep : endpointArray) {
         CCommandOptionArray members;
@@ -423,25 +402,11 @@ bool COptions::writeOpenApiFile(void) {
         string_q nick = nextTokenClear(pkg, ' ');
         pkgs[nick] = substitute(pkg, "\n", "");
 
-        if (isApiRoute(ep.api_route) && ep.members) {
-            for (auto p : *((CCommandOptionArray*)ep.members))
-                if (contains(p.longName, "_"))
-                    converts[toCamelCase(p.longName)] = p.longName;
-        }
-
         counter.cmdCount += members.size();
         counter.routeCount++;
     }
     for (auto pkg : pkgs)
         goPkgStream << pkg.first << " " << pkg.second << endl;
-    goPkgStream << "\tconfig \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"" << endl;
-
-    converts["noHeader"] = "no_header";
-    goConvertStream << "\tswitch in {" << endl;
-    for (auto item : converts) {
-        goConvertStream << "\tcase \"" << item.first << "\":\n\t\treturn \"" << item.second << "\"" << endl;
-    }
-    goConvertStream << "\t}" << endl;
 
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/routes.go"));
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/handle_calls.go"));

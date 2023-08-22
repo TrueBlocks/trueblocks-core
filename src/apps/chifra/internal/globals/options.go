@@ -5,7 +5,6 @@
 package globals
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -140,39 +139,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	_ = cmd.Flags().MarkHidden("append")
 
 	SetDefaults(opts)
-}
-
-func (opts *GlobalOptions) toCmdLine() string {
-	options := ""
-	if opts.ShowRaw {
-		options += " --raw"
-	}
-	if opts.Version {
-		options += " --version"
-	}
-	if len(opts.Format) > 0 {
-		options += " --fmt " + opts.Format
-	}
-	if opts.Verbose {
-		options += " --verbose " + fmt.Sprintf("%d", 1)
-	}
-	if len(opts.OutputFn) > 0 {
-		options += " --output " + opts.OutputFn
-	}
-	if opts.Append {
-		options += " --append"
-	}
-	if opts.NoHeader {
-		options += " --no_header"
-	}
-	if opts.Wei {
-		options += " --wei"
-	}
-	if opts.Ether {
-		options += " --ether"
-	}
-
-	return options
 }
 
 func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpc.Connection {
