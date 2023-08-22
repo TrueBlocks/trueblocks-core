@@ -587,7 +587,7 @@ paths:
           schema:
             type: boolean
         - name: watch
-          description: continually scan for new blocks and extract data for monitored addresses
+          description: continually scan for new blocks and extract data as per the command file
           required: false
           style: form
           in: query

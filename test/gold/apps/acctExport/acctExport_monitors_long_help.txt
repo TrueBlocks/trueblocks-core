@@ -14,7 +14,7 @@ Flags:
       --remove        remove a previously deleted monitor
   -C, --clean         clean (i.e. remove duplicate appearances) from monitors
   -l, --list          list monitors in the cache (--verbose for more detail)
-  -w, --watch         continually scan for new blocks and extract data for monitored addresses
+  -w, --watch         continually scan for new blocks and extract data as per the command file
   -s, --sleep float   seconds to sleep between monitor passes (default 14)
   -x, --fmt string    export format, one of [none|json*|txt|csv]
   -v, --verbose       enable verbose output
@@ -23,3 +23,5 @@ Flags:
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.
+  - The --watch option requires the --file option which specifies the command file to apply.
+  - The --watch option looks for a local file called address.csv (.txt). If not found, all existing monitors will be watched.

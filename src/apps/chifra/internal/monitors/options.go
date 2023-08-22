@@ -28,7 +28,7 @@ type MonitorsOptions struct {
 	Remove   bool                  `json:"remove,omitempty"`   // Remove a previously deleted monitor
 	Clean    bool                  `json:"clean,omitempty"`    // Clean (i.e. remove duplicate appearances) from monitors
 	List     bool                  `json:"list,omitempty"`     // List monitors in the cache (--verbose for more detail)
-	Watch    bool                  `json:"watch,omitempty"`    // Continually scan for new blocks and extract data for monitored addresses
+	Watch    bool                  `json:"watch,omitempty"`    // Continually scan for new blocks and extract data as per the command file
 	Sleep    float64               `json:"sleep,omitempty"`    // Seconds to sleep between monitor passes
 	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
 	Conn     *rpc.Connection       `json:"conn,omitempty"`     // The connection to the RPC server
