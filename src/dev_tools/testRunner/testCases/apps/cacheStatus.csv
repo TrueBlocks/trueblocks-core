@@ -48,16 +48,16 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,mode_monitors       ,y    ,modes
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_names          ,y    ,modes = names & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_tmp            ,y    ,modes = tmp & verbose & max_records = 2
 
-cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks        ,y    ,modes = blocks & verbose & max_records = 2
-cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks_dup    ,y    ,modes = blocks & verbose & max_records = 5 & modes = blocks & modes = blocks
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_logs          ,y    ,modes = logs & verbose & max_records = 2
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_slurps        ,y    ,modes = slurps & verbose & max_records = 2
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_state         ,y    ,modes = state & verbose & max_records = 2
-cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_statements    ,y    ,modes = statements & verbose & max_records = 2
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_tokens        ,y    ,modes = tokens & verbose & max_records = 2
-cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_traces        ,y    ,modes = traces & verbose & max_records = 2
-cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_txs           ,y    ,modes = transactions & verbose & max_records = 2
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_recons        ,y    ,modes = recons & verbose & max_records = 2
+cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks         ,y    ,modes = blocks & verbose & max_records = 2
+cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_blocks_dup     ,y    ,modes = blocks & verbose & max_records = 5 & modes = blocks & modes = blocks
+on      ,both ,fast  ,status ,apps/cacheStatus ,mode_logs           ,y    ,modes = logs & verbose & max_records = 2
+on      ,both ,fast  ,status ,apps/cacheStatus ,mode_slurps         ,y    ,modes = slurps & verbose & max_records = 2
+on      ,both ,fast  ,status ,apps/cacheStatus ,mode_state          ,y    ,modes = state & verbose & max_records = 2
+cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_statements     ,y    ,modes = statements & verbose & max_records = 2
+on      ,both ,fast  ,status ,apps/cacheStatus ,mode_tokens         ,y    ,modes = tokens & verbose & max_records = 2
+cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_traces         ,y    ,modes = traces & verbose & max_records = 2
+cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_txs            ,y    ,modes = transactions & verbose & max_records = 2
+on      ,both ,fast  ,status ,apps/cacheStatus ,mode_recons         ,y    ,modes = recons & verbose & max_records = 2
 
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_blooms         ,y    ,modes = blooms & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_index          ,y    ,modes = index & verbose & max_records = 2
