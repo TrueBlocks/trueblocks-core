@@ -28,11 +28,13 @@ func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) e
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		currentBn := uint32(0)
+		currentTs := base.Timestamp(0)
 		visitAppearance := func(app *types.SimpleAppearance) error {
 			if opts.Globals.Verbose {
 				if app.BlockNumber == 0 || app.BlockNumber != currentBn {
-					app.Timestamp, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
+					currentTs, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))
 				}
+				app.Timestamp = currentTs
 				currentBn = app.BlockNumber
 			}
 			modelChan <- app
