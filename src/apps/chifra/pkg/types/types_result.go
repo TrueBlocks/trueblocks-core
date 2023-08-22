@@ -71,19 +71,36 @@ func (s *SimpleResult) Model(verbose bool, format string, extraOptions map[strin
 	}
 	model = map[string]any{
 		"blockNumber": s.BlockNumber,
+		"timestamp":   s.Timestamp,
+		"date":        s.Date(),
 		"address":     s.Address.Hex(),
 		"encoding":    s.Encoding,
 		"bytes":       s.EncodedArguments,
 		"callResult":  callResult,
 	}
 
-	order = []string{
-		"blockNumber",
-		"address",
-		"signature",
-		"encoding",
-		"bytes",
-		"compressedResult",
+	if verbose {
+		order = []string{
+			"blockNumber",
+			"timestamp",
+			"date",
+			"address",
+			"signature",
+			"encoding",
+			"bytes",
+			"compressedResult",
+		}
+	} else {
+		order = []string{
+			"blockNumber",
+			"address",
+			"signature",
+			"encoding",
+			"bytes",
+			"compressedResult",
+		}
+		delete(model, "timestamp")
+		delete(model, "date")
 	}
 
 	isArticulated := extraOptions["articulate"] == true && s.ArticulatedOut != nil
@@ -92,19 +109,12 @@ func (s *SimpleResult) Model(verbose bool, format string, extraOptions map[strin
 		articulatedOut = map[string]interface{}{
 			"name": s.ArticulatedOut.Name,
 		}
-		// inputModels := parametersToMap(s.ArticulatedOut.Inputs)
-		// if inputModels != nil {
-		// 	articulatedOut["inputs"] = inputModels
-		// }
 		outputModels := parametersToMap(s.ArticulatedOut.Outputs)
 		if outputModels != nil {
 			articulatedOut["outputs"] = outputModels
 		}
 		if format == "json" {
 			model["callResult"] = articulatedOut
-		} else {
-			model["compressedShit"] = makeCompressed(articulatedOut)
-			order = append(order, "compressedShit")
 		}
 	}
 

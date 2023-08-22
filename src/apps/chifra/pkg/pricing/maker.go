@@ -39,7 +39,7 @@ func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 	artFunc := func(str string, function *types.SimpleFunction) error {
 		return abiCache.ArticulateFunction(function, "", str[2:])
 	}
-	result, err := contractCall.Call12(artFunc)
+	result, err := contractCall.Call(artFunc)
 	if err != nil {
 		return 0.0, "not-priced", err
 	}

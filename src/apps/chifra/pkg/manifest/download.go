@@ -65,7 +65,7 @@ func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, e
 		artFunc := func(str string, function *types.SimpleFunction) error {
 			return abiCache.ArticulateFunction(function, "", str[2:])
 		}
-		if result, err := contractCall.Call12(artFunc); err != nil {
+		if result, err := contractCall.Call(artFunc); err != nil {
 			return "", err
 		} else {
 			return result.Values["val_0"], nil

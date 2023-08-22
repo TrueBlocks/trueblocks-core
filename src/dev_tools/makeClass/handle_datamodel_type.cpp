@@ -500,6 +500,8 @@ string_q get_id_code(const string_q& cacheBy) {
         return "fmt.Sprintf(\"%09d-%05d\", s.BlockNumber, s.TransactionIndex)";
     } else if (cacheBy == "address,tx") {
         return "fmt.Sprintf(\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)";
+    } else if (cacheBy == "address,block") {
+        return "fmt.Sprintf(\"%s-%09d\", s.Address.Hex()[2:], s.BlockNumber)";
     } else if (cacheBy == "address,block,fourbyte") {
         const char* STR_THE_CODE =
             "fmt.Sprintf(\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber)\n"

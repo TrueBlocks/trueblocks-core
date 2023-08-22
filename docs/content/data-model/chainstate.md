@@ -46,6 +46,31 @@ Results consist of the following fields:
 | encodedArguments | the bytes data following the encoding of the call  | string                                  |
 | articulatedOut   | the result of the call articulated as other models | [Function](/data-model/other/#function) |
 
+## State
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
+contract. This is the decoded `output` value of the smart contract call.
+
+The following commands produce and manage States:
+
+- [chifra state](/chifra/chainstate/#chifra-state)
+
+States consist of the following fields:
+
+| Field       | Description                                                                   | Type      |
+| ----------- | ----------------------------------------------------------------------------- | --------- |
+| blockNumber | the block number at which this call was made                                  | blknum    |
+| timestamp   | the timestamp of the block for this call                                      | timestamp |
+| date        | the date of the block for this call (calculated)                              | datetime  |
+| address     | the address of contract being called                                          | address   |
+| accountType | the type of account at the given block                                        | string    |
+| balance     | the balance of the account at the given block                                 | wei       |
+| code        | the code of the account                                                       | string    |
+| deployed    | for smart contracts only, the block number at which the contract was deployed | blknum    |
+| nonce       | the nonce of the account at the given block                                   | uint64    |
+| proxy       | the proxy address of the account at the given block                           | address   |
+
 ## Token
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -76,28 +101,6 @@ Tokens consist of the following fields:
 | decimals         | the number of decimals for the token contract                         | uint64    |
 | type             | the type of token (ERC20 or ERC721) or none                           | TokenType |
 
-## EthCall
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
-contract. This is the decoded `output` value of the smart contract call.
-
-The following commands produce and manage EthCalls:
-
-- [chifra state](/chifra/chainstate/#chifra-state)
-
-EthCalls consist of the following fields:
-
-| Field            | Description                                                                      | Type    |
-| ---------------- | -------------------------------------------------------------------------------- | ------- |
-| blockNumber      | the block number at which this call was made                                     | blknum  |
-| address          | the address of contract being called                                             | address |
-| signature        | the canonical signature of the interface                                         | string  |
-| encoding         | the encoding for the function call                                               | string  |
-| bytes            | the bytes data following the encoding of the call                                | string  |
-| compressedResult | the compressed version of the result of the call to the contract                 | string  |
-| deployed         | the block number at which this smart contract was deployed (if a smart contract) | blknum  |
-
 ## Base types
 
 This documentation mentions the following basic data types.
@@ -111,3 +114,4 @@ This documentation mentions the following basic data types.
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint64    | a 64-bit unsigned integer           |                |
+| wei       | an unsigned big number              | as a string    |

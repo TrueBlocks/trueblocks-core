@@ -4,7 +4,7 @@
  * This file was generated with makeClass --sdk. Do not edit it.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { address, blknum, EthCall, Result } from '../types';
+import { address, blknum, Result, State } from '../types';
 
 export function getState(
   parameters?: {
@@ -26,7 +26,7 @@ export function getState(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<EthCall[] | Result[]>(
+  return ApiCallers.fetch<Result[] | State[]>(
     { endpoint: '/state', method: 'get', parameters, options },
   );
 }
