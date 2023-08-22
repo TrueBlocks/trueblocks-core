@@ -7,18 +7,17 @@ package monitorsPkg
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -86,7 +85,7 @@ func (sp SemiParse) String() string {
 }
 
 // TODO: Make this configurable
-const addrsPerBatch = 8
+// const addrsPerBatch = 8
 
 func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 	// chain := opts.Globals.Chain
@@ -106,7 +105,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 	// 		countAfter := mon.Count()
 
 	// 		if countAfter > 1000000 {
-				// TODO: Make this value configurable
+	// TODO: Make this value configurable
 	// 			fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
 	// 			continue
 	// 		}
@@ -166,65 +165,65 @@ func GetExportFormat(cmd, def string) string {
 	return "csv"
 }
 
-func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
-	ret := []SemiParse{}
-	cmdLines := file.AsciiFileToLines(globals.File)
-	if len(cmdLines) == 0 {
-		log.Fatal("Implementation error: no commands found in file. Should have been checked in Validate.")
-	}
+// func getCommandsFromFile(globals globals.GlobalOptions) ([]SemiParse, error) {
+// 	ret := []SemiParse{}
+// 	cmdLines := file.AsciiFileToLines(globals.File)
+// 	if len(cmdLines) == 0 {
+// 		log.Fatal("Implementation error: no commands found in file. Should have been checked in Validate.")
+// 	}
 
-	for _, cmd := range cmdLines {
-		cmd = utils.CleanCommand(cmd, []string{"export"})
-		if len(cmd) == 0 {
-			continue
-		}
+// 	for _, cmd := range cmdLines {
+// 		cmd = utils.CleanCommand(cmd, []string{"export"})
+// 		if len(cmd) == 0 {
+// 			continue
+// 		}
 
-		// Do we have a format specified? If not, make one up
-		fmt := GetExportFormat(cmd, globals.Format)
-		cmd = strings.Replace(cmd, " csv", " "+fmt, -1)
-		cmd = strings.Replace(cmd, " json", " "+fmt, -1)
-		cmd = strings.Replace(cmd, " txt", " "+fmt, -1)
-		if !strings.Contains(cmd, "--fmt") {
-			cmd += " --fmt " + fmt
-		}
+// 		// Do we have a format specified? If not, make one up
+// 		fmt := GetExportFormat(cmd, globals.Format)
+// 		cmd = strings.Replace(cmd, " csv", " "+fmt, -1)
+// 		cmd = strings.Replace(cmd, " json", " "+fmt, -1)
+// 		cmd = strings.Replace(cmd, " txt", " "+fmt, -1)
+// 		if !strings.Contains(cmd, "--fmt") {
+// 			cmd += " --fmt " + fmt
+// 		}
 
-		sp := SemiParse{
-			Folder:  "exports/" + globals.Chain + "/" + GetOutputFolder(cmd, "unknown"),
-			Fmt:     fmt,
-			CmdLine: cmd,
-		}
+// 		sp := SemiParse{
+// 			Folder:  "exports/" + globals.Chain + "/" + GetOutputFolder(cmd, "unknown"),
+// 			Fmt:     fmt,
+// 			CmdLine: cmd,
+// 		}
 
-		ret = append(ret, sp)
-	}
+// 		ret = append(ret, sp)
+// 	}
 
-	logger.Info("Found", len(ret), "commands to process in ./"+globals.File)
-	for i, cmd := range ret {
-		msg := fmt.Sprintf("\t%d. %s", i, cmd.CmdLine)
-		logger.Info(msg)
-	}
+// 	logger.Info("Found", len(ret), "commands to process in ./"+globals.File)
+// 	for i, cmd := range ret {
+// 		msg := fmt.Sprintf("\t%d. %s", i, cmd.CmdLine)
+// 		logger.Info(msg)
+// 	}
 
-	return ret, nil
-}
+// 	return ret, nil
+// }
 
-const spaces = "                                                                                 "
+// const spaces = "                                                                                 "
 
-func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []int64) {
-	var addrs []string
-	for j := 0; j < len(batch); j++ {
-		addrs = append(addrs, batch[j].Address.Hex())
-	}
+// func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]string, []int64) {
+// 	var addrs []string
+// 	for j := 0; j < len(batch); j++ {
+// 		addrs = append(addrs, batch[j].Address.Hex())
+// 	}
 
-	fmt.Println(strings.Repeat(" ", 120), "\r")
-	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
-	fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(strings.Join(addrs, " "), "0x", " \\\n\t0x", -1), colors.Off)
+// 	fmt.Println(strings.Repeat(" ", 120), "\r")
+// 	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
+// 	fmt.Println(s, colors.Green, "chifra export --freshen", strings.Replace(strings.Join(addrs, " "), "0x", " \\\n\t0x", -1), colors.Off)
 
-	countsBefore := []int64{}
-	for j := 0; j < len(batch); j++ {
-		countsBefore = append(countsBefore, (batch)[j].Count())
-	}
+// 	countsBefore := []int64{}
+// 	for j := 0; j < len(batch); j++ {
+// 		countsBefore = append(countsBefore, (batch)[j].Count())
+// 	}
 
-	return addrs, countsBefore
-}
+// 	return addrs, countsBefore
+// }
 
 // TODO: We could add statistics counting -- nChanged, nProcessed, txCount, etc
 // TODO: Need to protect against invalid addresses including zero address

@@ -184,7 +184,6 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
-
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
