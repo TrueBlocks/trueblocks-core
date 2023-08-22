@@ -6,18 +6,14 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *TokensOptions) HandleShow() error {
-	if len(opts.Addrs) < 2 && len(opts.Parts) == 0 {
-		logger.Fatal("Implementation error. Should not happen")
-	}
-
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	tokenAddr := base.HexToAddress(opts.Addrs[0])
@@ -26,6 +22,8 @@ func (opts *TokensOptions) HandleShow() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		for _, address := range opts.Addrs[1:] {
 			addr := base.HexToAddress(address)
+			currentBn := uint64(0)
+			currentTs := base.Timestamp(0)
 			for _, br := range opts.BlockIds {
 				blockNums, err := br.ResolveBlocks(chain)
 				if err != nil {
@@ -41,11 +39,18 @@ func (opts *TokensOptions) HandleShow() error {
 					if bal, err := opts.Conn.GetTokenBalanceAt(tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
 						errorChan <- err
 					} else {
+						if opts.Globals.Verbose {
+							if bn == 0 || bn != currentBn {
+								currentTs, _ = tslib.FromBnToTs(chain, bn)
+							}
+							currentBn = bn
+						}
 						s := &types.SimpleToken{
 							Holder:      addr,
 							Address:     tokenAddr,
 							Balance:     *bal,
 							BlockNumber: bn,
+							Timestamp:   currentTs,
 							TokenType:   types.TokenErc20,
 						}
 						modelChan <- s

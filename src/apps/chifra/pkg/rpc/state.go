@@ -35,8 +35,8 @@ type StateFilters struct {
 }
 
 // GetState returns account state
-func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.SimpleEthState, err error) {
-	state = &types.SimpleEthState{
+func (conn *Connection) GetState(fieldBits StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (state *types.SimpleState, err error) {
+	state = &types.SimpleState{
 		Address:     address,
 		BlockNumber: blockNumber,
 		Deployed:    utils.NOPOS,
@@ -149,9 +149,9 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 
 	if (fieldBits & Type) != 0 {
 		if !proxy.IsZero() {
-			state.Accttype = "Proxy"
+			state.AccountType = "Proxy"
 		} else {
-			state.Accttype = conn.getTypeNonProxy(address, blockNumber)
+			state.AccountType = conn.getTypeNonProxy(address, blockNumber)
 		}
 	}
 
