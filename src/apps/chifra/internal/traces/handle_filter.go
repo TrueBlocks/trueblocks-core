@@ -230,7 +230,7 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
         GETRUNTIME_CLASS(CTrace)->sortFieldList();
         GETRUNTIME_CLASS(CTraceAction)->sortFieldList();
         GETRUNTIME_CLASS(CTraceResult)->sortFieldList();
-        if (isTestMode() && !isApiMode()) {
+        if (isTestMode() && !isApi Mode()) {
             ostringstream os;
             for (auto ff : filters) {
                 os << ff << endl;
@@ -1008,7 +1008,7 @@ parseBlockOption
                 hasZero = true;
 
         } else {
-            msg = "The given value '" + arg + "' is not a valid identifier." + (isApiMode() ? "" : "\n");
+            msg = "The given value '" + arg + "' is not a valid identifier." + (isApi Mode() ? "" : "\n");
             return NOPOS;
         }
     }
@@ -1016,7 +1016,7 @@ parseBlockOption
     ASSERT(opts);
     if (opts->isEnabled(OPT_CHECKLATEST) && ret > lastBlock) {
         string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
-        msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApiMode() ? "" : "\n");
+        msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApi Mode() ? "" : "\n");
         return NOPOS;
     }
 

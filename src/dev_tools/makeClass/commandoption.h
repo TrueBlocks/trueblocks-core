@@ -278,8 +278,6 @@ inline bool CCommandOption::isChifraRoute(bool goCode) {
             option_type != "alias" && option_type != "config" && option_type != "error");
 }
 
-extern bool goPortNewCode(const string_q& a);
-extern bool isFullyPorted(const string_q& a);
 extern string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -28,8 +28,6 @@ extern string_q get_index_package(const string_q& fn);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_godefaults(const CCommandOption& cmd);
-extern string_q get_copyopts(const CCommandOption& cmd);
-extern string_q get_positionals(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern string_q clean_go_positionals(const string_q& in, bool hasRpc);
 extern string_q clean_positionals(const string& progName, const string_q& strIn);
@@ -37,8 +35,6 @@ extern string_q clean_positionals(const string& progName, const string_q& strIn)
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
 extern const char* STR_CHIFRA_HELP_END;
-extern const char* STR_TO_CMD_LINE;
-extern const char* STR_GET_ENV_STR;
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
@@ -141,13 +137,6 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     bool hasRpc = contains(asciiFileToString(fn), "rpc.");
 
     string_q source = asciiFileToString(getPathToTemplates("blank_options.go.tmpl"));
-    if (isFullyPorted(p.api_route)) {
-        replaceAll(source, "[{TOCMDLINE}]", "");
-        replaceAll(source, "[{GETENVSTR}]", "");
-    } else {
-        replaceAll(source, "[{TOCMDLINE}]", STR_TO_CMD_LINE);
-        replaceAll(source, "[{GETENVSTR}]", STR_GET_ENV_STR);
-    }
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{LOWER}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
@@ -167,18 +156,14 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
         replaceAll(source, "for key, value := range r.URL.Query() {", "for key, _ := range r.URL.Query() {");
     }
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
-    replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
-    replaceAll(source, "[{POSITIONALS}]", get_positionals(p));
     replaceAll(source, "[{GODEFS}]", get_godefaults(p));
     replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
     source = clean_go_positionals(source, hasRpc);
-    if (isFullyPorted(p.api_route)) {
-        if (!contains(source, "fmt.")) {
-            replaceAll(source, "\t\"fmt\"\n", "");
-        }
-        if (!contains(source, "strings.")) {
-            replaceAll(source, "\t\"strings\"\n", "");
-        }
+    if (!contains(source, "fmt.")) {
+        replaceAll(source, "\t\"fmt\"\n", "");
+    }
+    if (!contains(source, "strings.")) {
+        replaceAll(source, "\t\"strings\"\n", "");
     }
 
     codewrite_t cw(fn, source);
@@ -198,12 +183,6 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     source = substitute(source, "[]string", "++SAVED++");
     source = p.Format(source);
     replaceAll(source, "++SAVED++", "[]string");
-    if (contains(source, "\t// return nil\n\t// EXISTING_CODE\n")) {
-        replaceAll(source,
-                   "\n"
-                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.toCmdLine())\n",
-                   "");
-    }
 
     string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/output.go");
 
@@ -715,19 +694,6 @@ string_q clean_go_positionals(const string_q& in, bool hasRpc) {
     return ret;
 }
 
-const char* STR_POSITIONALS = "\toptions += \" \" + strings.Join(opts.[{VARIABLE}], \" \")";
-//---------------------------------------------------------------------------------------------------
-string_q get_positionals(const CCommandOption& cmd) {
-    ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.option_type == "positional") {
-            os << p.Format(STR_POSITIONALS) << endl;
-        }
-    if (os.str().empty())
-        os << substitute(STR_POSITIONALS, "[{VARIABLE}]", "[]string{}") << endl;
-    return os.str();
-}
-
 string_q get_hidden(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
@@ -762,47 +728,6 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << get_goDefault(p) << ", ";
             os << get_goDescription(p);
             os << ")" << endl;
-        }
-    }
-    return os.str();
-}
-
-string_q get_copyopts(const CCommandOption& cmd) {
-    ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.members)) {
-        if (p.isDeprecated || p.codeLoc() == GOCMD)
-            continue;
-
-        replace(p.longName, "deleteMe", "delete");
-        if (p.option_type != "positional") {
-            string_q format;
-            if (p.go_intype == "[]string") {
-                format =
-                    "\tfor _, [{SINGULAR}] := range opts.[{VARIABLE}] {\n"
-                    "\t\toptions += \" --[{LONGNAME}] \" + [{SINGULAR}]\n"
-                    "\t}";
-            } else if (p.go_intype == "string") {
-                format =
-                    "\tif len(opts.[{VARIABLE}]) > 0 {\n"
-                    "\t\toptions += \" --[{LONGNAME}] \" + opts.[{VARIABLE}]\n"
-                    "\t}";
-            } else if (p.go_intype == "uint64" || p.go_intype == "uint32") {
-                format =
-                    "\tif opts.[{VARIABLE}] != [{DEF_VAL}] {\n"
-                    "\t\toptions += (\" --[{LONGNAME}] \" + fmt.Sprintf(\"%d\", opts.[{VARIABLE}]))\n"
-                    "\t}";
-            } else if (p.go_intype == "float64") {
-                format =
-                    "\tif opts.[{VARIABLE}] != [{DEF_VAL}] {\n"
-                    "\t\toptions += (\" --[{LONGNAME}] \" + fmt.Sprintf(\"%.1f\", opts.[{VARIABLE}]))\n"
-                    "\t}";
-            } else {
-                format =
-                    "\tif opts.[{VARIABLE}] {\n"
-                    "\t\toptions += \" --[{LONGNAME}]\"\n"
-                    "\t}";
-            }
-            os << substitute(p.Format(format), "NOPOS", "utils.NOPOS") << endl;
         }
     }
     return os.str();
@@ -876,24 +801,3 @@ const char* STR_CHIFRA_HELP_END =
     "    -h, --help    display this help screen\n"
     "\n"
     "  Use \"chifra [command] --help\" for more information about a command.\n";
-
-const char* STR_TO_CMD_LINE =
-    "// toCmdLine converts the option to a command line for calling out to the system.\n"
-    "func (opts *[{PROPER}]Options) toCmdLine() string {\n"
-    "\toptions := \"\"\n"
-    "[{DASH_STR}][{POSITIONALS}]"
-    "\t// EXISTING_CODE\n"
-    "\t// EXISTING_CODE\n"
-    "\t//lint:ignore S1025 following line make code-generation easier\n"
-    "\toptions += fmt.Sprintf(\"%s\", \"\") // silence compiler warning for auto gen\n"
-    "\treturn options\n"
-    "}\n\n";
-
-const char* STR_GET_ENV_STR =
-    "// getEnvStr allows for custom environment strings when calling to the system (helps debugging).\n"
-    "func (opts *[{PROPER}]Options) getEnvStr() []string {\n"
-    "\tenvStr := []string{}\n"
-    "\t// EXISTING_CODE\n"
-    "\t// EXISTING_CODE\n"
-    "\treturn envStr\n"
-    "}\n\n";

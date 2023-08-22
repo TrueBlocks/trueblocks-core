@@ -768,30 +768,6 @@ bool CCommandOption::finishCleanup(void) {
 // }
 
 //---------------------------------------------------------------------------------------------------
-// TODO: search for go-port
-bool isFullyPorted(const string_q& a) {
-    CStringArray tools = {"when",     "list",   "monitors", "chunks",       "init",   "scrape",  "abis",
-                          "receipts", "logs",   "state",    "tokens",       "traces", "slurp",   "names",
-                          "daemon",   "config", "status",   "transactions", "blocks", "explore", "export"};
-    for (auto tool : tools) {
-        if (contains(a, tool))
-            return true;
-    }
-    return false;
-}
-
-// TODO: search for go-port
-//---------------------------------------------------------------------------------------------------
-bool goPortNewCode(const string_q& a) {
-    CStringArray tools = {"chunkMan", "fireStorm", "init", "flame", "explore", "daemon"};
-    for (auto tool : tools) {
-        if (contains(a, tool))
-            return true;
-    }
-    return false;
-}
-
-//---------------------------------------------------------------------------------------------------
 string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute) {
     return (" Corresponds to the <a href=\"/chifra/" + toolGroup + "/#chifra-" + toolRoute + "\">chifra " + toolRoute +
             "</a> command line.");
