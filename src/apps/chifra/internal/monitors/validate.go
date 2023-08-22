@@ -5,9 +5,8 @@
 package monitorsPkg
 
 import (
-	"os"
+	"log"
 	"path/filepath"
-	"strings"
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -28,31 +27,33 @@ func (opts *MonitorsOptions) validateMonitors() error {
 
 	} else {
 		if opts.Watch {
-			// phonied up just to make sure we have bloom for block zero
+			if opts.Globals.IsApiMode() {
+				return validate.Usage("The {0} options is not available from the API", "--watch")
+			}
+
+			// phonied up just to make sure we have at least one bloom filter
 			var expOpts exportPkg.ExportOptions
 			expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
 			expOpts.Globals.Chain = chain
+			expOpts.Conn = expOpts.Globals.FinishParse([]string{}, map[string]bool{})
 			err := expOpts.Validate()
 			if err != nil {
 				return validate.Usage(err.Error())
 			}
 
-			cmdFile := opts.Globals.File
-			if !file.FileExists(cmdFile) {
-				dir, _ := os.Getwd()
-				cmdFile = filepath.Join(dir, opts.Globals.File)
-			}
-
-			if file.FileExists(cmdFile) {
-				contents := file.AsciiFileToString(cmdFile)
-				cmds := strings.Split(contents, "\n")
-				if len(cmds) == 0 {
-					return validate.Usage("The command file you specified ({0}) was found but contained no commands.", cmdFile)
+			// The user must have specified a command file -- there is no default
+			if len(opts.Globals.File) == 0 {
+				return validate.Usage("The {0} option is required with the {1} option.", "--file <cmd_file>", "--watch")
+			} else {
+				// Clean it up if it exists
+				if cmdFile, err := filepath.Abs(opts.Globals.File); err != nil {
+					return validate.Usage("The file you specified ({0}) could not be found.", opts.Globals.File)
+				} else {
+					opts.Globals.File = cmdFile
 				}
-			}
-
-			if opts.Globals.IsApiMode() {
-				return validate.Usage("The {0} options is not available from the API", "--watch")
+				if file.FileSize(opts.Globals.File) == 0 {
+					log.Fatal(validate.Usage("The file you specified ({0}) was found but contained no commands.", opts.Globals.File).Error())
+				}
 			}
 
 		} else {

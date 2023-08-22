@@ -251,3 +251,16 @@ func LowerIfHex(addr string) string {
 	}
 	return strings.ToLower(addr)
 }
+
+func CleanCommand(cmd string, removals []string) string {
+	if strings.Contains(cmd, "#") {
+		cmd = cmd[:strings.Index(cmd, "#")]
+	}
+	for _, removal := range removals {
+		if strings.HasPrefix(cmd, removal) {
+			cmd = strings.Replace(cmd, removal, "", 1)
+		}
+	}
+	cmd = strings.Trim(cmd, " \t")
+	return cmd
+}

@@ -38,7 +38,6 @@ import (
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
-	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
@@ -57,10 +56,10 @@ func RouteList(w http.ResponseWriter, r *http.Request) {
 
 // RouteExport Export full detail of transactions for one or more addresses.
 func RouteExport(w http.ResponseWriter, r *http.Request) {
-	if err, handled := exportPkg.ServeExport(w, r); err != nil {
+	if err, _ := exportPkg.ServeExport(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("acctExport"), "", "export")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("acctExport"), "", "export")
 	}
 }
 
@@ -73,10 +72,10 @@ func RouteMonitors(w http.ResponseWriter, r *http.Request) {
 
 // RouteNames Query addresses or names of well known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
-	if err, handled := namesPkg.ServeNames(w, r); err != nil {
+	if err, _ := namesPkg.ServeNames(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("ethNames"), "", "names")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("ethNames"), "", "names")
 	}
 }
 
@@ -89,46 +88,46 @@ func RouteAbis(w http.ResponseWriter, r *http.Request) {
 
 // RouteBlocks Retrieve one or more blocks from the chain or local cache.
 func RouteBlocks(w http.ResponseWriter, r *http.Request) {
-	if err, handled := blocksPkg.ServeBlocks(w, r); err != nil {
+	if err, _ := blocksPkg.ServeBlocks(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("getBlocks"), "", "blocks")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("getBlocks"), "", "blocks")
 	}
 }
 
 // RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
-	if err, handled := transactionsPkg.ServeTransactions(w, r); err != nil {
+	if err, _ := transactionsPkg.ServeTransactions(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("getTrans"), "", "transactions")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("getTrans"), "", "transactions")
 	}
 }
 
 // RouteReceipts Retrieve receipts for the given transaction(s).
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
-	if err, handled := receiptsPkg.ServeReceipts(w, r); err != nil {
+	if err, _ := receiptsPkg.ServeReceipts(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("getReceipts"), "", "receipts")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("getReceipts"), "", "receipts")
 	}
 }
 
 // RouteLogs Retrieve logs for the given transaction(s).
 func RouteLogs(w http.ResponseWriter, r *http.Request) {
-	if err, handled := logsPkg.ServeLogs(w, r); err != nil {
+	if err, _ := logsPkg.ServeLogs(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("getLogs"), "", "logs")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("getLogs"), "", "logs")
 	}
 }
 
 // RouteTraces Retrieve traces for the given transaction(s).
 func RouteTraces(w http.ResponseWriter, r *http.Request) {
-	if err, handled := tracesPkg.ServeTraces(w, r); err != nil {
+	if err, _ := tracesPkg.ServeTraces(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("getTraces"), "", "traces")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("getTraces"), "", "traces")
 	}
 }
 
@@ -141,28 +140,28 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 
 // RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
-	if err, handled := statePkg.ServeState(w, r); err != nil {
+	if err, _ := statePkg.ServeState(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("getState"), "", "state")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("getState"), "", "state")
 	}
 }
 
 // RouteTokens Retrieve token balance(s) for one or more addresses at given block(s).
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
-	if err, handled := tokensPkg.ServeTokens(w, r); err != nil {
+	if err, _ := tokensPkg.ServeTokens(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("getTokens"), "", "tokens")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("getTokens"), "", "tokens")
 	}
 }
 
 // RouteConfig Report on the status of the TrueBlocks system.
 func RouteConfig(w http.ResponseWriter, r *http.Request) {
-	if err, handled := configPkg.ServeConfig(w, r); err != nil {
+	if err, _ := configPkg.ServeConfig(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "config")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "config")
 	}
 }
 
@@ -189,19 +188,19 @@ func RouteInit(w http.ResponseWriter, r *http.Request) {
 
 // RouteExplore Open a local or remote explorer for one or more addresses, blocks, or transactions.
 func RouteExplore(w http.ResponseWriter, r *http.Request) {
-	if err, handled := explorePkg.ServeExplore(w, r); err != nil {
+	if err, _ := explorePkg.ServeExplore(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, "chifra", "explore", "explore")
+		// } else if !handled {
+		// 	CallOne(w, r, "chifra", "explore", "explore")
 	}
 }
 
 // RouteSlurp Fetch data from Etherscan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
-	if err, handled := slurpPkg.ServeSlurp(w, r); err != nil {
+	if err, _ := slurpPkg.ServeSlurp(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
 	}
 }
 
@@ -209,10 +208,10 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 
 // RouteStatus Report on the status of the TrueBlocks system.
 func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	if err, handled := statusPkg.ServeStatus(w, r); err != nil {
+	if err, _ := statusPkg.ServeStatus(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-	} else if !handled {
-		CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
+		// } else if !handled {
+		// 	CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
 	}
 }
 

@@ -198,12 +198,12 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     source = substitute(source, "[]string", "++SAVED++");
     source = p.Format(source);
     replaceAll(source, "++SAVED++", "[]string");
-    if (contains(source, "\t// return nil\n\t// EXISTING_CODE\n")) {
-        replaceAll(source,
-                   "\n"
-                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.toCmdLine())\n",
-                   "");
-    }
+    // if (contains(source, "\t// return nil\n\t// EXISTING_CODE\n")) {
+    //     replaceAll(source,
+    //                "\n"
+    //                "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.toCmdLine())\n",
+    //                "");
+    // }
 
     string_q fn = getPathToSource("apps/chifra/internal/" + p.api_route + "/output.go");
 

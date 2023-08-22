@@ -8,269 +8,251 @@
 
 package daemonPkg
 
-import (
-	"bufio"
-	"bytes"
-	"errors"
-	"fmt"
-	"io"
-	"net/http"
-	"os"
-	"os/exec"
-	"strings"
+// // CallOne handles a route by calling into chifra
+// func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-)
+// 	// We build an array of options that we send along with the call...
+// 	allDogs := []string{}
+// 	if extra != "" {
+// 		allDogs = append(allDogs, extra)
+// 	}
+// 	hasVerbose := false
 
-// CallOne handles a route by calling into chifra
-func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
+// 	chain := config.GetDefaultChain()
+// 	for key, value := range r.URL.Query() {
+// 		if key == "chain" {
+// 			chain = value[0]
+// 		} else {
+// 			if len(value) > 0 && value[0] != "false" {
+// 				// These keys exist only in the API. We strip them here since
+// 				// the command line tools will report them as invalid options.
+// 				if key != "addrs" &&
+// 					key != "terms" &&
+// 					key != "modes" &&
+// 					key != "blocks" &&
+// 					key != "transactions" &&
+// 					key != "mode" &&
+// 					key != "topics" &&
+// 					key != "fourbytes" &&
+// 					key != "names" {
+// 					key = convertToCommandLine(key)
+// 					allDogs = append(allDogs, "--"+key)
+// 				}
+// 				if key == "verbose" {
+// 					hasVerbose = true
+// 				}
+// 				if len(value) > 1 || value[0] != "true" {
+// 					allDogs = append(allDogs, value...)
+// 				}
+// 			}
+// 		}
+// 	}
 
-	// We build an array of options that we send along with the call...
-	allDogs := []string{}
-	if extra != "" {
-		allDogs = append(allDogs, extra)
-	}
-	hasVerbose := false
+// 	GetOptions().Globals.Chain = chain
+// 	if tbCmd == "chifra" {
+// 		allDogs = append(allDogs, "--chain")
+// 		allDogs = append(allDogs, chain)
+// 	}
 
-	chain := config.GetDefaultChain()
-	for key, value := range r.URL.Query() {
-		if key == "chain" {
-			chain = value[0]
-		} else {
-			if len(value) > 0 && value[0] != "false" {
-				// These keys exist only in the API. We strip them here since
-				// the command line tools will report them as invalid options.
-				if key != "addrs" &&
-					key != "terms" &&
-					key != "modes" &&
-					key != "blocks" &&
-					key != "transactions" &&
-					key != "mode" &&
-					key != "topics" &&
-					key != "fourbytes" &&
-					key != "names" {
-					key = convertToCommandLine(key)
-					allDogs = append(allDogs, "--"+key)
-				}
-				if key == "verbose" {
-					hasVerbose = true
-				}
-				if len(value) > 1 || value[0] != "true" {
-					allDogs = append(allDogs, value...)
-				}
-			}
-		}
-	}
+// 	// If the server was started with --verbose and the command does not have --verbose...
+// 	if GetOptions().Globals.Verbose && !hasVerbose {
+// 		allDogs = append(allDogs, "--verbose")
+// 	}
 
-	GetOptions().Globals.Chain = chain
-	if tbCmd == "chifra" {
-		allDogs = append(allDogs, "--chain")
-		allDogs = append(allDogs, chain)
-	}
+// 	allDogs, _ = GetOptions().Conn.GetEnsAddresses(allDogs)
 
-	// If the server was started with --verbose and the command does not have --verbose...
-	if GetOptions().Globals.Verbose && !hasVerbose {
-		allDogs = append(allDogs, "--verbose")
-	}
+// 	// Do the actual call
+// 	cmd := exec.Command(tbCmd, allDogs...)
+// 	if GetOptions().Globals.Verbose {
+// 		logger.Info(colors.Yellow, "Calling: ", cmd, colors.Off)
+// 	}
 
-	allDogs, _ = GetOptions().Conn.GetEnsAddresses(allDogs)
+// 	if cmd.Process != nil {
+// 		// Listen if the call gets canceled
+// 		go func() {
+// 			<-r.Context().Done()
+// 			pid := cmd.Process.Pid
+// 			if err := cmd.Process.Kill(); err != nil {
+// 				logger.Error("failed to kill process: ", err)
+// 			}
+// 			logger.Info("apiCmd: ", apiCmd)
+// 			logger.Info("The client closed the connection to process id ", pid, ". Cleaning up.")
+// 		}()
+// 	}
 
-	// Do the actual call
-	cmd := exec.Command(tbCmd, allDogs...)
-	if GetOptions().Globals.Verbose {
-		logger.Info(colors.Yellow, "Calling: ", cmd, colors.Off)
-	}
+// 	provider, _ := config.GetRpcProvider(chain)
 
-	if cmd.Process != nil {
-		// Listen if the call gets canceled
-		go func() {
-			<-r.Context().Done()
-			pid := cmd.Process.Pid
-			if err := cmd.Process.Kill(); err != nil {
-				logger.Error("failed to kill process: ", err)
-			}
-			logger.Info("apiCmd: ", apiCmd)
-			logger.Info("The client closed the connection to process id ", pid, ". Cleaning up.")
-		}()
-	}
+// 	var env config.ConfigEnv
+// 	env.Chain = chain
+// 	env.ConfigPath = config.GetPathToRootConfig()
+// 	env.CachePath = config.GetPathToCache(env.Chain)
+// 	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain) // order matters
+// 	env.IndexPath = config.GetPathToIndex(env.Chain)             // order matters
+// 	env.DefaultChain = config.GetDefaultChain()
+// 	env.RpcProvider = provider
+// 	envStr := env.ToCSV()
 
-	provider, _ := config.GetRpcProvider(chain)
+// 	if utils.IsTestModeServer(r) {
+// 		// In regular operation, we set an environment variable CPP_API_MODE=true. When
+// 		// testing (the test harness sends a special header) we also set the
+// 		// TEST_MODE=true environment variable and any other vars for this
+// 		// particular test
+// 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "CPP_API_MODE=true")
+// 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
+// 		cmd.Env = append(cmd.Env, vars...)
+// 	} else {
+// 		cmd.Env = append(os.Environ(), "CPP_API_MODE=true")
+// 	}
+// 	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
+// 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
 
-	var env config.ConfigEnv
-	env.Chain = chain
-	env.ConfigPath = config.GetPathToRootConfig()
-	env.CachePath = config.GetPathToCache(env.Chain)
-	env.ChainConfigPath = config.GetPathToChainConfig(env.Chain) // order matters
-	env.IndexPath = config.GetPathToIndex(env.Chain)             // order matters
-	env.DefaultChain = config.GetDefaultChain()
-	env.RpcProvider = provider
-	envStr := env.ToCSV()
+// 	// We need to pass the stderr through to the command line and also pick
+// 	// off and pass along through the web socket and progress reports
+// 	stderrPipe, err := cmd.StderrPipe()
+// 	if err != nil {
+// 		logger.Error(err)
+// 	} else {
+// 		go func() {
+// 			scanForProgress(stderrPipe, func(msg string) {
+// 				connectionPool.broadcast <- &Message{
+// 					Action:  ProgressMessage,
+// 					ID:      tbCmd,
+// 					Content: msg,
+// 				}
+// 			})
+// 		}()
+// 	}
 
-	if utils.IsTestModeServer(r) {
-		// In regular operation, we set an environment variable CPP_API_MODE=true. When
-		// testing (the test harness sends a special header) we also set the
-		// TEST_MODE=true environment variable and any other vars for this
-		// particular test
-		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "CPP_API_MODE=true")
-		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
-		cmd.Env = append(cmd.Env, vars...)
-	} else {
-		cmd.Env = append(os.Environ(), "CPP_API_MODE=true")
-	}
-	cmd.Env = append(cmd.Env, "TB_CONFIG_ENV="+envStr)
-	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
+// 	out, err := cmd.Output()
+// 	if err != nil {
+// 		logger.Error(err)
+// 		connectionPool.broadcast <- &Message{
+// 			Action:  CommandErrorMessage,
+// 			ID:      tbCmd,
+// 			Content: err.Error(),
+// 		}
+// 	}
 
-	// We need to pass the stderr through to the command line and also pick
-	// off and pass along through the web socket and progress reports
-	stderrPipe, err := cmd.StderrPipe()
-	if err != nil {
-		logger.Error(err)
-	} else {
-		go func() {
-			scanForProgress(stderrPipe, func(msg string) {
-				connectionPool.broadcast <- &Message{
-					Action:  ProgressMessage,
-					ID:      tbCmd,
-					Content: msg,
-				}
-			})
-		}()
-	}
+// 	outp := string(out[:])
+// 	// connectionPool.broadcast <- &Message{
+// 	// 	Action:  CommandOutputMessage,
+// 	// 	ID:      tbCmd,
+// 	// 	Content: string(outp),
+// 	// }
+// 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+// 	if strings.Contains(outp, "Error:") {
+// 		// Remove Cobra's "Error:\n" decorator
+// 		parsed := strings.Replace(outp, "Error:", "", 1)
+// 		parsed = strings.Trim(parsed, " \n")
+// 		var unused globals.GlobalOptions
+// 		unused.Chain = chain
+// 		unused.TestMode = utils.IsTestModeServer(r)
+// 		unused.Writer = w
+// 		RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
+// 		return
+// 	}
+// 	if strings.Contains(outp, "\"errors\":") {
+// 		w.WriteHeader(http.StatusBadRequest)
+// 	} else {
+// 		w.WriteHeader(http.StatusOK)
+// 	}
+// 	fmt.Fprint(w, outp)
+// }
 
-	out, err := cmd.Output()
-	if err != nil {
-		logger.Error(err)
-		connectionPool.broadcast <- &Message{
-			Action:  CommandErrorMessage,
-			ID:      tbCmd,
-			Content: err.Error(),
-		}
-	}
+// // TODO: Once we're fully ported to Go, this can go away when CallOne and PassItOn goes away
+// // TODO: camelCase vs. snake_case - issue #1974
+// func convertToCommandLine(in string) string {
+// 	// BEG_CONVERT_CODE
+// 	switch in {
+// 	case "accountFor":
+// 		return "account_for"
+// 	case "allowMissing":
+// 		return "allow_missing"
+// 	case "appsPerChunk":
+// 		return "apps_per_chunk"
+// 	case "bigRange":
+// 		return "big_range"
+// 	case "blockCnt":
+// 		return "block_cnt"
+// 	case "byAcct":
+// 		return "by_acct"
+// 	case "cacheTraces":
+// 		return "cache_traces"
+// 	case "channelCount":
+// 		return "channel_count"
+// 	case "firstBlock":
+// 		return "first_block"
+// 	case "firstRecord":
+// 		return "first_record"
+// 	case "firstSnap":
+// 		return "first_snap"
+// 	case "lastBlock":
+// 		return "last_block"
+// 	case "listCount":
+// 		return "list_count"
+// 	case "matchCase":
+// 		return "match_case"
+// 	case "maxRecords":
+// 		return "max_records"
+// 	case "nocolor":
+// 		return "nocolor"
+// 	case "noHeader":
+// 		return "no_header"
+// 	case "noZero":
+// 		return "no_zero"
+// 	case "proxyFor":
+// 		return "proxy_for"
+// 	case "skipDdos":
+// 		return "skip_ddos"
+// 	case "snapToGrid":
+// 		return "snap_to_grid"
+// 	case "startBlock":
+// 		return "start_block"
+// 	case "toCustom":
+// 		return "to_custom"
+// 	case "unripeDist":
+// 		return "unripe_dist"
+// 	}
+// 	// END_CONVERT_CODE
+// 	return in
+// }
 
-	outp := string(out[:])
-	// connectionPool.broadcast <- &Message{
-	// 	Action:  CommandOutputMessage,
-	// 	ID:      tbCmd,
-	// 	Content: string(outp),
-	// }
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	if strings.Contains(outp, "Error:") {
-		// Remove Cobra's "Error:\n" decorator
-		parsed := strings.Replace(outp, "Error:", "", 1)
-		parsed = strings.Trim(parsed, " \n")
-		var unused globals.GlobalOptions
-		unused.Chain = chain
-		unused.TestMode = utils.IsTestModeServer(r)
-		unused.Writer = w
-		RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
-		return
-	}
-	if strings.Contains(outp, "\"errors\":") {
-		w.WriteHeader(http.StatusBadRequest)
-	} else {
-		w.WriteHeader(http.StatusOK)
-	}
-	fmt.Fprint(w, outp)
-}
+// // dropNL drops new line characters (\n) from the progress stream
+// func dropNL(data []byte) []byte {
+// 	if len(data) > 0 && data[len(data)-1] == '\n' {
+// 		return data[0 : len(data)-1]
+// 	}
+// 	return data
+// }
 
-// TODO: Once we're fully ported to Go, this can go away when CallOne and PassItOn goes away
-// TODO: camelCase vs. snake_case - issue #1974
-func convertToCommandLine(in string) string {
-	// BEG_CONVERT_CODE
-	switch in {
-	case "accountFor":
-		return "account_for"
-	case "allowMissing":
-		return "allow_missing"
-	case "appsPerChunk":
-		return "apps_per_chunk"
-	case "bigRange":
-		return "big_range"
-	case "blockCnt":
-		return "block_cnt"
-	case "byAcct":
-		return "by_acct"
-	case "cacheTraces":
-		return "cache_traces"
-	case "channelCount":
-		return "channel_count"
-	case "firstBlock":
-		return "first_block"
-	case "firstRecord":
-		return "first_record"
-	case "firstSnap":
-		return "first_snap"
-	case "lastBlock":
-		return "last_block"
-	case "listCount":
-		return "list_count"
-	case "matchCase":
-		return "match_case"
-	case "maxRecords":
-		return "max_records"
-	case "nocolor":
-		return "nocolor"
-	case "noHeader":
-		return "no_header"
-	case "noZero":
-		return "no_zero"
-	case "proxyFor":
-		return "proxy_for"
-	case "skipDdos":
-		return "skip_ddos"
-	case "snapToGrid":
-		return "snap_to_grid"
-	case "startBlock":
-		return "start_block"
-	case "toCustom":
-		return "to_custom"
-	case "unripeDist":
-		return "unripe_dist"
-	}
-	// END_CONVERT_CODE
-	return in
-}
+// // scanProgressLine looks for "lines" that end with `\r` not `\n` like usual
+// func scanProgressLine(data []byte, atEOF bool) (advance int, token []byte, err error) {
+// 	if atEOF && len(data) == 0 {
+// 		return 0, nil, nil
+// 	}
+// 	if i := bytes.IndexByte(data, '\r'); i >= 0 {
+// 		return i + 1, dropNL(data[0:i]), nil
+// 	}
+// 	return bufio.ScanLines(data, atEOF)
+// }
 
-// dropNL drops new line characters (\n) from the progress stream
-func dropNL(data []byte) []byte {
-	if len(data) > 0 && data[len(data)-1] == '\n' {
-		return data[0 : len(data)-1]
-	}
-	return data
-}
+// // scanForProgress watches stderr and picks of progress messages
+// func scanForProgress(stderrPipe io.Reader, fn func(string)) {
+// 	scanner := bufio.NewScanner(stderrPipe)
+// 	buf := make([]byte, 1024*1024)
+// 	scanner.Buffer(buf, 1024*1024)
+// 	scanner.Split(scanProgressLine)
+// 	for scanner.Scan() {
+// 		text := scanner.Text()
+// 		if len(text) > 0 {
+// 			fmt.Println(text)
+// 			if strings.Contains(text, "<PROG>") {
+// 				fn(strings.SplitAfter(text, ":")[1])
+// 			}
+// 		}
+// 	}
 
-// scanProgressLine looks for "lines" that end with `\r` not `\n` like usual
-func scanProgressLine(data []byte, atEOF bool) (advance int, token []byte, err error) {
-	if atEOF && len(data) == 0 {
-		return 0, nil, nil
-	}
-	if i := bytes.IndexByte(data, '\r'); i >= 0 {
-		return i + 1, dropNL(data[0:i]), nil
-	}
-	return bufio.ScanLines(data, atEOF)
-}
-
-// scanForProgress watches stderr and picks of progress messages
-func scanForProgress(stderrPipe io.Reader, fn func(string)) {
-	scanner := bufio.NewScanner(stderrPipe)
-	buf := make([]byte, 1024*1024)
-	scanner.Buffer(buf, 1024*1024)
-	scanner.Split(scanProgressLine)
-	for scanner.Scan() {
-		text := scanner.Text()
-		if len(text) > 0 {
-			fmt.Println(text)
-			if strings.Contains(text, "<PROG>") {
-				fn(strings.SplitAfter(text, ":")[1])
-			}
-		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error while reading stderr:", err)
-	}
-}
+// 	if err := scanner.Err(); err != nil {
+// 		fmt.Println("Error while reading stderr:", err)
+// 	}
+// }

@@ -38,15 +38,15 @@ string_q toGoCall(const CCommandOption& cmd) {
     if (!isApiRoute(cmd.api_route))
         return "";
 
-    const char* STR_ONEROUTE =
-        "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
-        "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
-        "\tif err, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
-        "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
-        "\t} else if !handled {\n"
-        "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")\n"
-        "\t}\n"
-        "}";
+    // const char* STR_ONEROUTE =
+    //     "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
+    //     "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
+    //     "\tif err, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
+    //     "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
+    //     "\t} else if !handled {\n"
+    //     "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")\n"
+    //     "\t}\n"
+    //     "}";
 
     const char* STR_ONEROUTE2 =
         "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
@@ -56,15 +56,15 @@ string_q toGoCall(const CCommandOption& cmd) {
         "\t}\n"
         "}";
 
-    string_q format = STR_ONEROUTE;
-    if (isFullyPorted(cmd.api_route)) {
-        format = STR_ONEROUTE2;
-    }
+    string_q format;  // = STR_ONEROUTE;
+    // if (isFullyPorted(cmd.api_route)) {
+    format = STR_ONEROUTE2;
+    // }
 
-    if (goPortNewCode(cmd.api_route) || (cmd.tool.empty() || contains(cmd.tool, " "))) {
-        format = substitute(format, "CallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")",
-                            "CallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")");
-    }
+    // if (goPortNewCode(cmd.api_route) || (cmd.tool.empty() || contains(cmd.tool, " "))) {
+    //     format = substitute(format, "CallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")",
+    //                         "CallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")");
+    // }
 
     ostringstream os;
     os << endl;
