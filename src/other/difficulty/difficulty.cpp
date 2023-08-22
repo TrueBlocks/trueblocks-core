@@ -16,7 +16,7 @@
 #define END 15421559
 
 int main(int argc, const char* argv[]) {
-    loadEnvironmentPaths();
+    load EnvironmentPaths();
     etherlib_init(quickQuitHandler);
     for (size_t i = START; i < END; i++) {
         CBlock block;

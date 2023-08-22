@@ -407,7 +407,6 @@ bool COptions::writeOpenApiFile(void) {
     }
     for (auto pkg : pkgs)
         goPkgStream << pkg.first << " " << pkg.second << endl;
-    goPkgStream << "\tconfig \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"" << endl;
 
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/routes.go"));
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/handle_calls.go"));

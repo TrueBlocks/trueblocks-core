@@ -14,8 +14,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -91,72 +89,68 @@ func (sp SemiParse) String() string {
 const addrsPerBatch = 8
 
 func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
-	chain := opts.Globals.Chain
-	theCmds, _ := getCommandsFromFile(opts.Globals)
+	// chain := opts.Globals.Chain
+	// theCmds, _ := getCommandsFromFile(opts.Globals)
 
-	batches := batchMonitors(monitors, addrsPerBatch)
-	for i := 0; i < len(batches); i++ {
-		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
+	// batches := batchMonitors(monitors, addrsPerBatch)
+	// for i := 0; i < len(batches); i++ {
+	// 	addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
 
-		canceled, err := opts.FreshenMonitorsForWatch(addrs)
-		if canceled || err != nil {
-			return canceled, err
-		}
+	// 	canceled, err := opts.FreshenMonitorsForWatch(addrs)
+	// 	if canceled || err != nil {
+	// 		return canceled, err
+	// 	}
 
-		for j := 0; j < len(batches[i]); j++ {
-			mon := batches[i][j]
-			countAfter := mon.Count()
+	// 	for j := 0; j < len(batches[i]); j++ {
+	// 		mon := batches[i][j]
+	// 		countAfter := mon.Count()
 
-			if countAfter > 1000000 {
+	// 		if countAfter > 1000000 {
 				// TODO: Make this value configurable
-				fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
-				continue
-			}
+	// 			fmt.Println(colors.Red, "Too many transactions for address", mon.Address, colors.Off)
+	// 			continue
+	// 		}
 
-			if countAfter == 0 {
-				continue
-			}
+	// 		if countAfter == 0 {
+	// 			continue
+	// 		}
 
-			for _, sp := range theCmds {
-				outputFn := sp.Folder + "/" + mon.Address.Hex() + "." + sp.Fmt
-				exists := file.FileExists(outputFn)
-				countBefore := countsBefore[j]
+	// 		for _, sp := range theCmds {
+	// 			outputFn := sp.Folder + "/" + mon.Address.Hex() + "." + sp.Fmt
+	// 			exists := file.FileExists(outputFn)
+	// 			countBefore := countsBefore[j]
 
-				if !exists || countAfter > countBefore {
-					cmd := sp.CmdLine + " --output " + outputFn
-					add := ""
-					if exists {
-						add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
-						add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
-						add += " --append --no_header"
-					}
-					cmd += add + " " + mon.Address.Hex()
-					cmd = strings.Replace(cmd, "  ", " ", -1)
-					o := opts
-					o.Globals.File = ""
-					_ = o.Globals.PassItOn("acctExport", chain, cmd, []string{})
-					// fmt.Println("Processing:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
-					// } else {
-					// 	fmt.Println("Skipping:", colors.BrightYellow, outputFn, colors.BrightWhite, exists, countBefore, countAfter, colors.Off)
-				}
-				// time.Sleep(500 * time.Millisecond)
-			}
-		}
-	}
+	// 			if !exists || countAfter > countBefore {
+	// 				cmd := sp.CmdLine + " --output " + outputFn
+	// 				add := ""
+	// 				if exists {
+	// 					add += fmt.Sprintf(" --first_record %d", uint64(countBefore+1))
+	// 					add += fmt.Sprintf(" --max_records %d", uint64(countAfter-countBefore+1)) // extra space won't hurt
+	// 					add += " --append --no_header"
+	// 				}
+	// 				cmd += add + " " + mon.Address.Hex()
+	// 				cmd = strings.Replace(cmd, "  ", " ", -1)
+	// 				o := opts
+	// 				o.Globals.File = ""
+	// 				_ = o.Globals.PassItOn("acctExport", chain, cmd, []string{})
+	// 			}
+	// 		}
+	// 	}
+	// }
 	return false, nil
 }
 
-func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {
-	var batches [][]monitor.Monitor
-	for i := 0; i < len(slice); i += batchSize {
-		end := i + batchSize
-		if end > len(slice) {
-			end = len(slice)
-		}
-		batches = append(batches, slice[i:end])
-	}
-	return batches
-}
+// func batchMonitors(slice []monitor.Monitor, batchSize int) [][]monitor.Monitor {
+// 	var batches [][]monitor.Monitor
+// 	for i := 0; i < len(slice); i += batchSize {
+// 		end := i + batchSize
+// 		if end > len(slice) {
+// 			end = len(slice)
+// 		}
+// 		batches = append(batches, slice[i:end])
+// 	}
+// 	return batches
+// }
 
 func GetExportFormat(cmd, def string) string {
 	if strings.Contains(cmd, "json") {

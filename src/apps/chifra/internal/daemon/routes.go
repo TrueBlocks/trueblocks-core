@@ -15,10 +15,8 @@ import (
 	"net/http"
 	"time"
 
-	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
-
 	// BEG_ROUTE_PKGS
-
+ 
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
@@ -34,15 +32,15 @@ import (
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	// END_ROUTE_PKGS
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
-	// END_ROUTE_PKGS
 )
 
 // BEG_ROUTE_CODE
@@ -58,8 +56,6 @@ func RouteList(w http.ResponseWriter, r *http.Request) {
 func RouteExport(w http.ResponseWriter, r *http.Request) {
 	if err, _ := exportPkg.ServeExport(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("acctExport"), "", "export")
 	}
 }
 
@@ -74,8 +70,6 @@ func RouteMonitors(w http.ResponseWriter, r *http.Request) {
 func RouteNames(w http.ResponseWriter, r *http.Request) {
 	if err, _ := namesPkg.ServeNames(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("ethNames"), "", "names")
 	}
 }
 
@@ -90,8 +84,6 @@ func RouteAbis(w http.ResponseWriter, r *http.Request) {
 func RouteBlocks(w http.ResponseWriter, r *http.Request) {
 	if err, _ := blocksPkg.ServeBlocks(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("getBlocks"), "", "blocks")
 	}
 }
 
@@ -99,8 +91,6 @@ func RouteBlocks(w http.ResponseWriter, r *http.Request) {
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
 	if err, _ := transactionsPkg.ServeTransactions(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("getTrans"), "", "transactions")
 	}
 }
 
@@ -108,8 +98,6 @@ func RouteTransactions(w http.ResponseWriter, r *http.Request) {
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 	if err, _ := receiptsPkg.ServeReceipts(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("getReceipts"), "", "receipts")
 	}
 }
 
@@ -117,8 +105,6 @@ func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 func RouteLogs(w http.ResponseWriter, r *http.Request) {
 	if err, _ := logsPkg.ServeLogs(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("getLogs"), "", "logs")
 	}
 }
 
@@ -126,8 +112,6 @@ func RouteLogs(w http.ResponseWriter, r *http.Request) {
 func RouteTraces(w http.ResponseWriter, r *http.Request) {
 	if err, _ := tracesPkg.ServeTraces(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("getTraces"), "", "traces")
 	}
 }
 
@@ -142,8 +126,6 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 func RouteState(w http.ResponseWriter, r *http.Request) {
 	if err, _ := statePkg.ServeState(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("getState"), "", "state")
 	}
 }
 
@@ -151,17 +133,20 @@ func RouteState(w http.ResponseWriter, r *http.Request) {
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	if err, _ := tokensPkg.ServeTokens(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("getTokens"), "", "tokens")
 	}
 }
 
-// RouteConfig Report on the status of the TrueBlocks system.
+// RouteConfig Report on and edit the configuration of the TrueBlocks system.
 func RouteConfig(w http.ResponseWriter, r *http.Request) {
 	if err, _ := configPkg.ServeConfig(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "config")
+	}
+}
+
+// RouteStatus Report on the state of the internal binary caches.
+func RouteStatus(w http.ResponseWriter, r *http.Request) {
+	if err, _ := statusPkg.ServeStatus(w, r); err != nil {
+		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
@@ -179,7 +164,7 @@ func RouteChunks(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteInit Initialize the TrueBlocks system by downloading from IPFS.
+// RouteInit Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
 	if err, _ := initPkg.ServeInit(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
@@ -190,8 +175,6 @@ func RouteInit(w http.ResponseWriter, r *http.Request) {
 func RouteExplore(w http.ResponseWriter, r *http.Request) {
 	if err, _ := explorePkg.ServeExplore(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, "chifra", "explore", "explore")
 	}
 }
 
@@ -199,21 +182,10 @@ func RouteExplore(w http.ResponseWriter, r *http.Request) {
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 	if err, _ := slurpPkg.ServeSlurp(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("ethslurp"), "", "slurp")
 	}
 }
 
 // END_ROUTE_CODE
-
-// RouteStatus Report on the status of the TrueBlocks system.
-func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	if err, _ := statusPkg.ServeStatus(w, r); err != nil {
-		RespondWithError(w, http.StatusInternalServerError, err)
-		// } else if !handled {
-		// 	CallOne(w, r, config.GetPathToCommands("cacheStatus"), "", "status")
-	}
-}
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "https://trueblocks.io/docs/", http.StatusMovedPermanently)
@@ -265,13 +237,13 @@ var routes = Routes{
 	Route{"RouteState", "GET", "/state", RouteState},
 	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
 	Route{"RouteConfig", "GET", "/config", RouteConfig},
+	Route{"RouteStatus", "GET", "/status", RouteStatus},
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
 	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
-	Route{"RouteStatus", "GET", "/status", RouteStatus},
 	Route{"DeleteMonitors", "DELETE", "/monitors", RouteMonitors},
 }
 
@@ -354,11 +326,16 @@ func Logger(inner http.Handler, name string) http.Handler {
 		start := time.Now()
 		inner.ServeHTTP(w, r)
 		t := ""
-		if utils.IsTestModeServer(r) {
+		if isTestModeServer(r) {
 			t = "-test"
 		}
 		msg := fmt.Sprintf("%d %s%s %s %s %s", nProcessed, r.Method, t, r.RequestURI, name, time.Since(start))
 		logger.Info(msg)
 		nProcessed++
 	})
+}
+
+// isTestModeServer return true if we are running from the testing harness
+func isTestModeServer(r *http.Request) bool {
+	return r.Header.Get("User-Agent") == "testRunner"
 }
