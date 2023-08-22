@@ -83,15 +83,15 @@ func (s *SimpleToken) Model(verbose bool, format string, extraOptions map[string
 	wanted := extraOptions["parts"].([]string)
 	if len(wanted) == 1 {
 		if wanted[0] == "all" {
-			if verbose && false {
-				wanted = []string{"address", "blockNumber", "date", "name", "symbol", "decimals", "totalSupply"}
+			if verbose {
+				wanted = []string{"address", "blockNumber", "timestamp", "date", "name", "symbol", "decimals", "totalSupply"}
 			} else {
 				wanted = []string{"address", "blockNumber", "name", "symbol", "decimals", "totalSupply"}
 			}
 		} else if wanted[0] == "all_held" {
-			if verbose && false {
+			if verbose {
 				wanted = []string{
-					"blockNumber", "date", "holder", "address", "name", "symbol", "decimals", "balance", "units",
+					"blockNumber", "timestamp", "date", "holder", "address", "name", "symbol", "decimals", "balance", "units",
 				}
 			} else {
 				wanted = []string{

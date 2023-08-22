@@ -78,7 +78,7 @@ Notes:
 Data models produced by this tool:
 
 - [result](/data-model/chainstate/#result)
-- [ethcall](/data-model/chainstate/#ethcall)
+- [state](/data-model/chainstate/#state)
 
 Links:
 

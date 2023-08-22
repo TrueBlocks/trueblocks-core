@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
@@ -42,9 +43,11 @@ func (opts *StateOptions) HandleShow() error {
 
 	cnt := 0
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawEthState], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawState], errorChan chan error) {
 		for _, addressStr := range opts.Addrs {
 			address := base.HexToAddress(addressStr)
+			currentBn := uint64(0)
+			currentTs := base.Timestamp(0)
 			for _, br := range opts.BlockIds { // TODO: use the regular way to do this
 				blockNums, err := br.ResolveBlocks(chain)
 				if err != nil {
@@ -58,7 +61,7 @@ func (opts *StateOptions) HandleShow() error {
 
 				for _, bn := range blockNums {
 					if none {
-						modelChan <- &types.SimpleEthState{
+						modelChan <- &types.SimpleState{
 							Address:     address,
 							BlockNumber: bn,
 						}
@@ -80,6 +83,13 @@ func (opts *StateOptions) HandleShow() error {
 					}
 					// state may be nil if it was skipped by a filter for example
 					if state != nil {
+						if opts.Globals.Verbose {
+							if bn == 0 || bn != currentBn {
+								currentTs, _ = tslib.FromBnToTs(chain, bn)
+							}
+							state.Timestamp = currentTs
+							currentBn = bn
+						}
 						cnt++
 						modelChan <- state
 					}

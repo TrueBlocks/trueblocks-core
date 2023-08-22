@@ -50,7 +50,7 @@ func (opts *StateOptions) HandleCall() error {
 				cancel()
 			} else {
 				contractCall.BlockNumber = app.BlockNumber
-				results, err := contractCall.Call12(artFunc)
+				results, err := contractCall.Call(artFunc)
 				if err != nil {
 					errorChan <- err
 					cancel()

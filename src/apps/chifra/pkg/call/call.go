@@ -119,7 +119,7 @@ func (call *ContractCall) forceEncoding(encoding string) {
 	call.encoded = encoding
 }
 
-func (call *ContractCall) Call12(artFunc func(string, *types.SimpleFunction) error) (results *types.SimpleResult, err error) {
+func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error) (results *types.SimpleResult, err error) {
 	if artFunc == nil {
 		logger.Fatal("Implementation error: artFunc is nil")
 	}
