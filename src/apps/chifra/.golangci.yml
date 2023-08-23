@@ -1,0 +1,12 @@
+run:
+  skip-files:
+    - ".*_test.go"
+linters:
+  disable:
+    - ineffassign
+linters-settings:
+  staticcheck:
+    checks:
+      - all
+      # Disable ST1003 correct capitalization of initialisms
+      - -ST1003

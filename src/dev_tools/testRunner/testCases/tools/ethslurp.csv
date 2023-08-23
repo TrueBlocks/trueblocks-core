@@ -29,3 +29,14 @@ on      ,both ,medi  ,slurp ,tools/ethslurp ,block_range         ,y    ,addrs = 
 on      ,both ,fast  ,slurp ,tools/ethslurp ,redir_output        ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = ext & blocks = 3730547-3730590 & output = output_test_file
 on      ,both ,fast  ,slurp ,tools/ethslurp ,redir_output_append ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = ext & blocks = 3730590-3730700 & output = output_test_file & no_header & append
 
+on      ,both ,fast  ,slurp ,tools/ethslurp ,cache_and_decache   ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279 & cache & decache
+on      ,both ,fast  ,slurp ,tools/ethslurp ,cache_one           ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279 & cache
+on      ,both ,fast  ,slurp ,tools/ethslurp ,decache_one         ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279 & decache
+
+shit    ,both ,fast  ,slurp ,tools/ethslurp ,raw                 ,y    ,addrs = 0x839395e20bbb182fa440d08f850e6c7a8f6f0780 & per_page = 1999 & types = int & cache & raw
+
+# Capabilities
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_allowed        ,y    ,addrs=trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
+on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_1   ,y    ,addrs=trueblocks.eth & ether
+on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_2   ,y    ,addrs=trueblocks.eth & wei

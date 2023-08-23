@@ -2,22 +2,22 @@ tokens?addrs=0xa9fe4601811213c340e850ea305481aff02f5b28&parts=all&blocks=1200000
 {
   "data": [
     {
-      "blockNumber": 12000000,
-      "totalSupply": "10359.022508923948006858",
       "address": "0xa9fe4601811213c340e850ea305481aff02f5b28",
+      "blockNumber": 12000000,
+      "decimals": 18,
       "name": "WETH yVault",
       "symbol": "yvWETH",
-      "decimals": 0,
-      "isContract": false,
-      "isErc20": true,
-      "isErc721": false
+      "totalSupply": "10359.022508923948006858"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

@@ -1,7 +1,0 @@
-arrayTest  0
-0. 	000.000 array                ==> c-string
-	000.001 array                ==> string_q
-	000.002 array                ==> string
-	000.003 array                ==> When will we be loved?
-	000.004 int array            ==>  0 1 2 3 4 5 6 7 8 9
-	000.005 reversed             ==>  9 8 7 6 5 4 3 2 1 0

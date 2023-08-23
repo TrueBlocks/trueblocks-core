@@ -14,6 +14,6 @@ We can offer Uniswap a magizine publishing model (and it should not escape our n
 
 They can:
 
-1) provide dashboards showing all sorts of information from a raw data viewpoint -- txs, blocks, traces, logs, neighbors, etc.
+1) provide dashboards showing all sorts of information from a raw data viewpoint -- transactions, blocks, traces, logs, neighbors, etc.
 2) they can publish volumes/issues/articles/pages of downloadable data via the Unchained Index
 

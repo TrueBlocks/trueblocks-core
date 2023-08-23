@@ -38,9 +38,10 @@ type chainGroup struct {
 }
 
 type keyGroup struct {
-	ApiKey string `toml:"apiKey"`
-	Secret string `toml:"secret"`
-	Jwt    string `toml:"jwt"`
+	License string `toml:"license"`
+	ApiKey  string `toml:"apiKey"`
+	Secret  string `toml:"secret"`
+	Jwt     string `toml:"jwt"`
 }
 
 // TODO: This needs to be documented
@@ -119,8 +120,8 @@ func GetRootConfig() *ConfigFile {
 		// only point to the top-levl of the cache or index. Also note that
 		// these two calls do not return if they fail, so no need to handle errors
 		defaultChains := []string{GetDefaultChain()}
-		file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
-		file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
+		_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
+		_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
 	}
 
 	return &trueBlocksConfig

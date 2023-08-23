@@ -19,8 +19,11 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
+  -w, --raw          report JSON data from the source with minimal processing
+  -o, --cache        force the results of the query into the cache
+  -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -v, --verbose      enable verbose output
   -h, --help         display this help screen
 
 Notes:
@@ -33,6 +36,7 @@ Notes:
 Data models produced by this tool:
 
 - [log](/data-model/chaindata/#log)
+- [logfilter](/data-model/chaindata/#logfilter)
 
 <!-- markdownlint-disable MD041 -->
 ### Other Options
@@ -41,15 +45,9 @@ All tools accept the following additional flags, although in some cases, they ha
 
 ```[plaintext]
   -v, --version         display the current version of the tool
-      --wei             export values in wei (the default)
-      --ether           export values in ether
-      --raw             pass raw RPC data directly from the node with no processing
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
-  -h, --help            display this help screen
   ```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any

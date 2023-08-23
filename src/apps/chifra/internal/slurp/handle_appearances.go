@@ -8,21 +8,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *SlurpOptions) HandleShowAppearances() error {
-	paginator := Paginator{
-		page:    1,
-		perPage: int(opts.PerPage),
+func (opts *SlurpOptions) HandleAppearances() error {
+	paginator := rpc.Paginator{
+		Page:    1,
+		PerPage: int(opts.PerPage),
 	}
 	if opts.Globals.TestMode {
-		paginator.perPage = 100
+		paginator.PerPage = 100
 	}
-
-	chain := opts.Globals.Chain
-	logger.Info("Processing", opts.Addrs, "--types:", opts.Types, opts.Blocks)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
@@ -30,10 +27,18 @@ func (opts *SlurpOptions) HandleShowAppearances() error {
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
+				paginator.Page = 1
 				done := false
+
+				bar := logger.NewBar(logger.BarOptions{
+					Type:    logger.Expanding,
+					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Total:   250, // estimate since we have no idea how many there are
+				})
+
 				for !done {
-					txs, nFetched, err := opts.GetTransactionsFromEtherscan(chain, addr, tt, &paginator)
-					done = nFetched < paginator.perPage
+					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(addr, tt, &paginator)
+					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
 						errorChan <- err
@@ -45,12 +50,12 @@ func (opts *SlurpOptions) HandleShowAppearances() error {
 						if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
 							continue
 						}
+						bar.Tick()
 						modelChan <- &types.SimpleAppearance{
 							Address:          base.HexToAddress(addr),
 							BlockNumber:      uint32(tx.BlockNumber),
 							TransactionIndex: uint32(tx.TransactionIndex),
 							Timestamp:        tx.Timestamp,
-							Date:             utils.FormattedDate(tx.Timestamp),
 						}
 						totalFiltered++
 					}
@@ -59,12 +64,11 @@ func (opts *SlurpOptions) HandleShowAppearances() error {
 					sleep := opts.Sleep
 					if sleep > 0 {
 						ms := time.Duration(sleep*1000) * time.Millisecond
-						if !opts.Globals.TestMode {
-							logger.Info(fmt.Sprintf("Sleeping for %g seconds", sleep))
-						}
+						logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
 						time.Sleep(ms)
 					}
 				}
+				bar.Finish(true)
 			}
 		}
 

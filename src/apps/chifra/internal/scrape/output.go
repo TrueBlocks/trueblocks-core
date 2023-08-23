@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
@@ -51,6 +52,8 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra scrape"
 	// EXISTING_CODE
 	if opts.Globals.IsApiMode() {
 		return validate.Usage("chifra scrape is not available in API mode"), true
@@ -59,6 +62,7 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	handled = true
 	err = opts.HandleScrape() // Note this never returns
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }
@@ -74,6 +78,7 @@ func GetScrapeOptions(args []string, g *globals.GlobalOptions) *ScrapeOptions {
 
 func (opts *ScrapeOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }

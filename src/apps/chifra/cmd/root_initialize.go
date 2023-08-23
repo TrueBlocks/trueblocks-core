@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// Initalize makes sure everything is ready to run. These routines don't return if they aren't
+// Initialize makes sure everything is ready to run. These routines don't return if they aren't
 func Initialize() bool {
 	if os.Getenv("NO_COLOR") == "true" {
 		colors.ColorsOff()
@@ -89,6 +89,26 @@ const backVersion string = `
 
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
+	// Allow status and config routes to aide user in migrating...
+	isStatus := false
+	isConfigPaths := false
+	for _, arg := range os.Args {
+		if arg == "status" {
+			isStatus = true
+		} else if arg == "config" {
+			isConfigPaths = true
+		} else if arg == "help" {
+			return
+		} else if isStatus {
+			isStatus = false // only chifra status with no options is okay
+		} else if isConfigPaths && arg != "--paths" {
+			isConfigPaths = false // only chifra config --paths is okay
+		}
+	}
+	if isStatus || isConfigPaths {
+		return
+	}
+
 	user, _ := user.Current()
 
 	// The old $HOME/.quickBlocks folder should not exist...
@@ -182,6 +202,26 @@ func VerifyMigrations() {
 		msg = strings.Replace(msg, "{", colors.Green, -1)
 		msg = strings.Replace(msg, "}", colors.Off, -1)
 		logger.Fatal(msg)
+	}
+
+	items = []string{
+		"blocks",
+		"objs",
+		"recons",
+		"slurps",
+		"traces",
+		"txs",
+	}
+	for _, item := range items {
+		itemPath := filepath.Join(config.GetPathToCache(""), item)
+		if _, err := os.Stat(itemPath); err == nil {
+			msg := strings.Replace(shouldNotExist, "{0}", "{"+itemPath+"}", -1)
+			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+			msg = strings.Replace(msg, "{1}", "{v0.85.0}", -1)
+			msg = strings.Replace(msg, "{", colors.Green, -1)
+			msg = strings.Replace(msg, "}", colors.Off, -1)
+			logger.Fatal(msg)
+		}
 	}
 
 	// We need at least this version...

@@ -1,5 +1,5 @@
-chifra status  txs --max_records 100
-TEST[DATE|TIME] Modes:  [txs]
+chifra status  transactions --max_records 100
+TEST[DATE|TIME] Modes:  [transactions]
 TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Format:  json
 {
@@ -14,7 +14,7 @@ TEST[DATE|TIME] Format:  json
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "txsCache"
+          "type": "transactionsCache"
         }
       ],
       "chainConfig": "--paths--",

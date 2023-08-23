@@ -11,7 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 // Repair repairs a single timestamp
@@ -32,8 +32,8 @@ func Repair(chain string, bn uint64) error {
 			DeCache(chain)
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, tsFn)
-				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+				_ = os.Rename(backupFn, tsFn)
+				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
@@ -46,15 +46,16 @@ func Repair(chain string, bn uint64) error {
 
 			recordSize := int64(unsafe.Sizeof(uint32(0))) * 2
 			pos := (recordSize * int64(bn))
-			fp.Seek(pos, io.SeekStart)
+			_, _ = fp.Seek(pos, io.SeekStart)
 
-			block, _ := rpcClient.GetBlockHeaderByNumber(chain, bn)
+			conn := rpc.TempConnection(chain)
+			block, _ := conn.GetBlockHeaderByNumber(bn)
 			record := TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 			err = binary.Write(fp, binary.LittleEndian, &record)
 			if err != nil {
 				return err
 			}
-			fp.Sync() // probably redundant
+			_ = fp.Sync() // probably redundant
 
 			os.Remove(backupFn)
 			return nil

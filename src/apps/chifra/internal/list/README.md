@@ -24,17 +24,21 @@ Arguments:
 
 Flags:
   -U, --count               display only the count of records for each monitor
-  -n, --no_zero             suppress the display of zero appearance accounts
+  -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
+  -b, --bounds              report first and last block this address appears
   -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
-  -c, --first_record uint   the first record to process (default 1)
+  -s, --silent              freshen the monitor only (no reporting)
+  -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
+  -E, --reversed            produce results in reverse chronological order
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)
   -L, --last_block uint     last block to export (inclusive, ignored when freshening)
   -x, --fmt string          export format, one of [none|json*|txt|csv]
-  -v, --verbose             enable verbose (increase detail with --log_level)
+  -v, --verbose             enable verbose output
   -h, --help                display this help screen
 
 Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - No other options are permitted when --silent is selected.
 ```
 
@@ -52,15 +56,9 @@ All tools accept the following additional flags, although in some cases, they ha
 
 ```[plaintext]
   -v, --version         display the current version of the tool
-      --wei             export values in wei (the default)
-      --ether           export values in ether
-      --raw             pass raw RPC data directly from the node with no processing
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
-  -h, --help            display this help screen
   ```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any

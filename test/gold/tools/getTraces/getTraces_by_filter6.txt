@@ -1,7 +1,8 @@
 chifra traces  --fmt json --filter 0x42ae50!0x42ae52!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111
 TEST[DATE|TIME] Filter:  0x42ae50!0x42ae52!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] map[fromAddress:[0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111] fromBlock:0x42ae50 toBlock:0x42ae52]
+INFO[DATE|TIME] map[after:0 count:18446744073709551615 fromAddress:0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111 fromBlock:4370000 toAddress:0x0 toBlock:4370002] {4370000 4370002}
 {
   "data": [
     {
@@ -15,6 +16,7 @@ INFO[DATE|TIME] map[fromAddress:[0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111] fro
       },
       "blockHash": "0x40996e904604226a5c252f496238d4c70270e0a05c4cb5588987b32fe1c4a7f2",
       "blockNumber": 4370001,
+      "date": "2017-10-16 05:22:42 UTC",
       "result": {
         "gasUsed": 29002,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"

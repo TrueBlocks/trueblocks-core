@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD041 -->
 `[{NAME}]` retrieves ABI files for the given address(es). It searches for the ABI in this order:
-the current local folder, the TrueBlocks cache, [Etherscan](http://etherscan.io), or (in the
+the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.
 
 While this tool may be used from the command line and the API, its primary purpose is in support of

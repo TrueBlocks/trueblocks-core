@@ -34,16 +34,16 @@ bool COptions::model_issuance(void) {
                     for (auto prefund : prefund BalMap)  // USE forEvery Prefund instead
                         rec.minerBaseRewardIn = (rec.minerBaseRewardIn + prefund.second);
                 } else {
-                    rec.minerBaseRewardIn = getBlockReward2(bn);
+                    rec.minerBaseRewardIn = getBlock Reward2(bn);
                 }
                 if (bn != 0 && bn == prevBn) {
                     // This block has an uncle
-                    rec.minerNephewRewardIn = getNephewReward(bn);
+                    rec.minerNephewRewardIn = getNephew Reward(bn);
                     uint64_t count = getUncleCount(bn);
                     for (size_t i = 0; i < count; i++) {
                         CBlock uncle;
                         getUncle(uncle, bn, i);
-                        rec.minerUncleRewardIn = (rec.minerUncleRewardIn + getUncleReward(bn, uncle.blockNumber));
+                        rec.minerUncleRewardIn = (rec.minerUncleRewardIn + getUncle Reward(bn, uncle.blockNumber));
                     }
                 }
                 cout << rec.Format(STR_DISPLAY_EXPORT) << endl;
@@ -90,9 +90,9 @@ bool reconcileIssuance(const CAppearance& app) {
     uint64_t d1 = 0, d2 = 0;
     uint64_t uncleCount = getUncleCount(app.bn);
     if (app.tx != 99998) {
-        minerReward = getBlockReward2(app.bn);
-        nephewReward = getNephewReward(app.bn);
-        minerTxFee = getTransFees(app.bn);
+        minerReward = getBlock Reward2(app.bn);
+        nephewReward = getNephew Reward(app.bn);
+        minerTxFee = getTrans Fees(app.bn);
     }
 
     for (size_t i = 0; i < uncleCount; i++) {
@@ -100,17 +100,17 @@ bool reconcileIssuance(const CAppearance& app) {
         getUncle(uncle, app.bn, i);
         if (uncle.miner == app.addr) {
             if (uncleReward1 == 0) {
-                uncleReward1 = getUncleReward(app.bn, uncle.blockNumber);
+                uncleReward1 = getUncle Reward(app.bn, uncle.blockNumber);
                 d1 = app.bn - uncle.blockNumber;
             } else {
-                uncleReward2 = getUncleReward(app.bn, uncle.blockNumber);
+                uncleReward2 = getUncle Reward(app.bn, uncle.blockNumber);
                 d2 = app.bn - uncle.blockNumber;
             }
         }
     }
 
-    bigint_t begBal = getBalanceAt(app.addr, app.bn - 1);
-    bigint_t endBal = getBalanceAt(app.addr, app.bn);
+    bigint_t begBal = get BalanceAt(app.addr, app.bn - 1);
+    bigint_t endBal = get BalanceAt(app.addr, app.bn);
     bigint_t expected = begBal + minerReward + nephewReward + minerTxFee + uncleReward1 + uncleReward2;
 
     if (expected == endBal) {

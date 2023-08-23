@@ -1,6 +1,6 @@
 name          ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example             ,description
 range         ,blkrange ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,013142464-013145212 ,the block range (inclusive) covered by this chunk
-date          ,string   ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,                    ,the date of the last block in this range
+rangeEnd      ,datetime ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,                    ,the date of the last block in this range
 nAddrs        ,uint64   ,           ,       ,      ,        ,          ,        ,         ,  3 ,     ,                    ,the number of addresses in the chunk
 nApps         ,uint64   ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,                    ,the number of appearances in the chunk
 nBlocks       ,uint64   ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,                    ,the number of blocks in the chunk

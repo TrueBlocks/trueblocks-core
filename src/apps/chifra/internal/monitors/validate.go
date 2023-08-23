@@ -15,6 +15,8 @@ import (
 )
 
 func (opts *MonitorsOptions) validateMonitors() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -29,7 +31,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 			// phonied up just to make sure we have bloom for block zero
 			var expOpts exportPkg.ExportOptions
 			expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
-			expOpts.Globals.Chain = opts.Globals.Chain
+			expOpts.Globals.Chain = chain
 			err := expOpts.Validate()
 			if err != nil {
 				return validate.Usage(err.Error())
@@ -54,6 +56,10 @@ func (opts *MonitorsOptions) validateMonitors() error {
 			}
 
 		} else {
+			if opts.Sleep != 14 {
+				return validate.Usage("The {0} option is not available{1}.", "--sleep", " in non-watch mode")
+			}
+
 			// We validate some of the simpler curd commands here and the rest in HandleCrudCommands
 			if opts.Undelete {
 				if opts.Delete || opts.Remove {
@@ -65,7 +71,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				return validate.Usage("You must provide at least one Ethereum address for this command.")
 			}
 
-			if !opts.Clean && !opts.Delete && !opts.Undelete && !opts.Remove && !opts.Decache {
+			if !opts.Clean && !opts.Delete && !opts.Undelete && !opts.Remove {
 				return validate.Usage("Please provide either --clean or one of the CRUD commands.")
 			}
 
@@ -78,10 +84,6 @@ func (opts *MonitorsOptions) validateMonitors() error {
 						return err
 					}
 				}
-			}
-
-			if opts.Globals.IsApiMode() && opts.Decache {
-				return validate.Usage("The {0} option is not available in API mode.", "--decache")
 			}
 		}
 	}

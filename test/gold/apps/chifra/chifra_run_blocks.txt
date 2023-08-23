@@ -1,11 +1,13 @@
 chifra  blocks 12
 TEST[DATE|TIME] Blocks:  [12]
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
       "baseFeePerGas": 0,
       "blockNumber": 12,
+      "date": "2015-07-30 15:29:04 UTC",
       "difficulty": 17179844608,
       "gasLimit": 5000,
       "gasUsed": 0,

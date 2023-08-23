@@ -1,0 +1,12 @@
+chifra blocks  12 --decache
+TEST[DATE|TIME] Blocks:  [12]
+TEST[DATE|TIME] Decache:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "msg": "1 items totaling 161 bytes were removed from the blocks cache."
+    }
+  ]
+}

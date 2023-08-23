@@ -1,9 +1,8 @@
-chifra scrape  --sleep .5 --pin --log_level 8
+chifra scrape  --sleep .5 --pin
 TEST[DATE|TIME] Pin:  true
 TEST[DATE|TIME] Sleep:  0.5
 TEST[DATE|TIME] AppsPerChunk:  2000000
 TEST[DATE|TIME] FirstSnap:  2000000
-TEST[DATE|TIME] LogLevel:  8
 TEST[DATE|TIME] Format:  txt
 Error: Cannot test block scraper
 Usage:
@@ -14,6 +13,6 @@ Flags:
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
   -s, --sleep float      seconds to sleep between scraper passes (default 14)
   -x, --fmt string       export format, one of [none|json*|txt|csv]
-  -v, --verbose          enable verbose (increase detail with --log_level)
+  -v, --verbose          enable verbose output
   -h, --help             display this help screen
 

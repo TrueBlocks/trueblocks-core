@@ -1,4 +1,4 @@
-state?call=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac&parts=some
+state?call='0x0902f1ac()'&addrs=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B&parts=some
 {
   "errors": [
     "The --parts option is not available with the --call option."

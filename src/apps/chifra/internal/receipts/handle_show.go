@@ -2,97 +2,90 @@ package receiptsPkg
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ReceiptsOptions) HandleShowReceipts() error {
-
-	abiMap := make(abi.AbiInterfaceMap)
-	loadedMap := make(map[base.Address]bool)
+func (opts *ReceiptsOptions) HandleShow() error {
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	testMode := opts.Globals.TestMode
+	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
-		// TODO: stream transaction identifiers
-		for idIndex, rng := range opts.TransactionIds {
-			txList, err := rng.ResolveTxs(opts.Globals.Chain)
-			if err != nil {
-				errorChan <- err
-				if errors.Is(err, ethereum.NotFound) {
-					continue
+		if txMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+			errorChan <- err
+			cancel()
+		} else {
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+				Total:   int64(len(txMap)),
+			})
+
+			iterCtx, iterCancel := context.WithCancel(context.Background())
+			defer iterCancel()
+
+			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+				a := &types.RawAppearance{
+					BlockNumber:      uint32(app.BlockNumber),
+					TransactionIndex: uint32(app.TransactionIndex),
 				}
-				cancel()
-				return
+				if tx, err := opts.Conn.GetTransactionByAppearance(a, false /* needsTraces */); err != nil {
+					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+				} else if tx == nil || tx.Receipt == nil {
+					return fmt.Errorf("transaction at %s has no logs", app.String())
+				} else {
+					if opts.Articulate {
+						if err = abiCache.ArticulateReceipt(tx.Receipt); err != nil {
+							errorChan <- err // continue even with an error
+						}
+					}
+					*value = *tx
+					bar.Tick()
+					return nil
+				}
 			}
 
-			for _, tx := range txList {
-				// TODO(cache): Can this be hidden behind the GetTransactionReceipt interface. No reason
-				// TODO(cache): for this calling code to know the data is in the cache.
-				// Try to load receipt from cache
-				// TODO(cache): We should not be sending chain here. We have enough information to fully resolve the path at this level. Send only path.
-				transaction, _ := cache.GetTransaction(
-					opts.Globals.Chain,
-					uint64(tx.BlockNumber),
-					uint64(tx.TransactionIndex),
-				)
-
-				if transaction != nil && transaction.Receipt != nil {
-					// Some values are not cached
-					transaction.Receipt.BlockNumber = uint64(tx.BlockNumber)
-					transaction.Receipt.TransactionHash = transaction.Hash
-					transaction.Receipt.TransactionIndex = uint64(tx.TransactionIndex)
-					modelChan <- transaction.Receipt
-					continue
-				}
-
-				// TODO: Why does this interface always accept nil and zero at the end?
-				receipt, err := rpcClient.GetTransactionReceipt(opts.Globals.Chain, rpcClient.ReceiptQuery{
-					Bn:      uint64(tx.BlockNumber),
-					Txid:    uint64(tx.TransactionIndex),
-					NeedsTs: true,
-				})
-
-				if err != nil {
-					if errors.Is(err, ethereum.NotFound) {
-						errorChan <- fmt.Errorf("transaction at %s returned an error: %s", opts.Transactions[idIndex], ethereum.NotFound)
-						continue
-					}
+			iterErrorChan := make(chan error)
+			go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+			for err := range iterErrorChan {
+				// TODO: I don't really want to quit looping here. Just report the error and keep going.
+				iterCancel()
+				if !testMode || nErrors == 0 {
 					errorChan <- err
-					cancel()
-					return
+					// Reporting more than one error causes tests to fail because they
+					// appear concurrently so sort differently
+					nErrors++
 				}
+			}
+			bar.Finish(true)
 
-				if opts.Articulate {
-					for index, log := range receipt.Logs {
-						var err error
-						if !loadedMap[log.Address] {
-							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
-								err = nil
-							}
-						}
-						if err == nil {
-							receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
-							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
-							}
-						}
-					}
+			items := make([]types.SimpleReceipt, 0, len(txMap))
+			for _, tx := range txMap {
+				if tx.Receipt != nil {
+					items = append(items, *tx.Receipt)
 				}
+			}
+			sort.Slice(items, func(i, j int) bool {
+				if items[i].BlockNumber == items[j].BlockNumber {
+					return items[i].TransactionIndex < items[j].TransactionIndex
+				}
+				return items[i].BlockNumber < items[j].BlockNumber
+			})
 
-				modelChan <- &receipt
+			for _, item := range items {
+				item := item
+				if item.BlockNumber != 0 {
+					modelChan <- &item
+				}
 			}
 		}
 	}
@@ -100,5 +93,6 @@ func (opts *ReceiptsOptions) HandleShowReceipts() error {
 	extra := map[string]interface{}{
 		"articulate": opts.Articulate,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

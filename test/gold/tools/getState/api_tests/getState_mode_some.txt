@@ -2,20 +2,23 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=some&blocks=2500000
 {
   "data": [
     {
-      "blockNumber": 2500000,
-      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-      "balance": 3905662906205094300000,
-      "nonce": 0,
-      "code": "0x606060405236156100...65c6b64bfe7fe36bd19b",
       "accttype": "Contract",
-      "ether": 3905.6629062050943
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "balance": "3905662906205094119236",
+      "blockNumber": 2500000,
+      "code": "0x6060604052361...64bfe7fe36bd19b",
+      "ether": "3905.662906205094119236",
+      "nonce": 0
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

@@ -9,14 +9,13 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleList() error {
 	// Don't do this in the loop
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	meta, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
@@ -32,8 +31,7 @@ func (opts *BlocksOptions) HandleList() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		for bn := start; bn > end; bn-- {
-			finalized := meta.Age(bn) > 28
-			block, err := rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized)
+			block, err := opts.Conn.GetBlockHeaderByNumber(bn)
 			if err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {

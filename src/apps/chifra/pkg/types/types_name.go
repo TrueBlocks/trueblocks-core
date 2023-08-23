@@ -10,7 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
-	"io"
+	"math/big"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -54,6 +54,7 @@ type SimpleName struct {
 	Tags       string       `json:"tags"`
 	raw        *RawName     `json:"-"`
 	// EXISTING_CODE
+	Prefund big.Int `json:"prefund,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -201,19 +202,9 @@ func (s *SimpleName) Model(verbose bool, format string, extraOptions map[string]
 	}
 }
 
-func (s *SimpleName) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleName) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
 // EXISTING_CODE
+//
+
 func (s *SimpleName) ToMessage() *proto.Name {
 	return &proto.Name{
 		Address:    s.Address.Hex(),

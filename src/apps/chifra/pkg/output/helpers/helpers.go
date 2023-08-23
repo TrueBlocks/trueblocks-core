@@ -7,9 +7,17 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/spf13/cobra"
 )
+
+var discardWriter = io.Writer(nil)
+
+func init() {
+	if os.Getenv("TB_DISCARD_WRITER") == "true" {
+		discardWriter = io.Discard
+	}
+}
 
 var enabledForCmds = map[string]bool{}
 var enabledForCmdsMutex sync.RWMutex
@@ -28,6 +36,8 @@ func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptio
 		outputWriter = os.Stdout
 		if opts.OutputFn != "" {
 			outputWriter = opts.GetOutputFileWriter()
+		} else if discardWriter != nil {
+			outputWriter = discardWriter
 		}
 
 		// If we need to output JSON, init JsonWriter...
@@ -105,8 +115,10 @@ func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions)
 	if enabledForCmds[cmdName] && opts.Format == "json" && !ok {
 		jw := output.NewDefaultJsonWriter(w, false)
 		jw.ShouldWriteMeta = true
-		jw.GetMeta = func() (*rpcClient.MetaData, error) {
-			return rpcClient.GetMetaData(opts.Chain, opts.OutputOptions.TestMode)
+		jw.GetMeta = func() (*rpc.MetaData, error) {
+			chain := opts.Chain
+			conn := rpc.TempConnection(chain)
+			return conn.GetMetaData(opts.OutputOptions.TestMode)
 		}
 		opts.Writer = jw
 	}

@@ -18,6 +18,7 @@
 - [The unchained index](#the-unchained-index)
 - [Docker version](#docker-version)
 - [Documentation](#documentation)
+- [Linting](#linting)
 - [Contributing](#contributing)
 - [Contact](#contact)
 - [List of Contributors](#list-of-contributors)
@@ -125,6 +126,33 @@ Our [official docker version](https://github.com/TrueBlocks/trueblocks-docker) i
 ## Documentation
 
 The TrueBlocks [documentation repo](https://github.com/TrueBlocks/trueblocks-docs) builds the TrueBlocks website. See our website for the [best available documentation](https://trueblocks.io/).
+
+## Linting
+
+Our build process requires the code you submit to be linted.
+
+In order to that, you must install the GoLang linters. [See this page for more information](https://golangci-lint.run/usage/install/).
+
+To install the primary linter (called `golangci-lint`), run this command:
+
+```[shell]
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.53.3
+```
+
+Verify the installation with `golangci-lint --version`. You should see something like this:
+
+```[shell]
+golangci-lint has version 1.50.1 built from <commit> on <date>
+```
+
+Next, run `golangci-lint linters`. Your system should have [at least the default list](https://golangci-lint.run/usage/linters/) to properly lint your submission.
+
+```[shell]
+> golangci-lint linters
+
+
+```
+You are encouraged to use additional linters. If you do, and you think they're useful, please suggest that we add it to our build process.
 
 ## Contributing
 

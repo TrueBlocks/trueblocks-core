@@ -10,9 +10,10 @@ package types
 
 // EXISTING_CODE
 import (
-	"io"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -28,10 +29,10 @@ type RawAppearance struct {
 type SimpleAppearance struct {
 	Address          base.Address   `json:"address"`
 	BlockNumber      uint32         `json:"blockNumber"`
-	TransactionIndex uint32         `json:"transactionIndex"`
 	Reason           string         `json:"reason,omitempty"`
 	Timestamp        base.Timestamp `json:"timestamp"`
-	Date             string         `json:"date"`
+	TraceIndex       uint32         `json:"traceIndex,omitempty"`
+	TransactionIndex uint32         `json:"transactionIndex"`
 	raw              *RawAppearance `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -59,11 +60,13 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 			"blockNumber",
 			"transactionIndex",
 		}
+
 		return Model{
 			Data:  model,
 			Order: order,
 		}
 	}
+
 	model = map[string]interface{}{
 		"address":          s.Address,
 		"blockNumber":      s.BlockNumber,
@@ -75,16 +78,66 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 		"transactionIndex",
 	}
 
-	if verbose {
-		// model["reason"] = s.Reason
-		model["timestamp"] = s.Timestamp
-		model["date"] = s.Date
+	if extraOptions["namesMap"] != nil {
+		name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+		if name.Address.Hex() != "0x0" {
+			model["name"] = name
+			order = append(order, "name")
+		}
+	}
 
+	if extraOptions["uniq"] == true {
+		if s.TraceIndex > 0 {
+			model["traceIndex"] = s.TraceIndex
+			order = append(order, "traceIndex")
+		} else if format != "json" {
+			model["traceIndex"] = ""
+			order = append(order, "traceIndex")
+		}
+		model["reason"] = s.Reason
 		order = append(order, []string{
-			// "reason",
-			"timestamp",
-			"date",
+			"reason",
 		}...)
+		if verbose {
+			model["timestamp"] = s.Timestamp
+			model["date"] = s.Date()
+			order = append(order, []string{
+				"timestamp",
+				"date",
+			}...)
+		}
+	} else if extraOptions["export"] == true && format == "json" {
+		if verbose {
+			if s.Timestamp != utils.NOPOSI {
+				model["timestamp"] = s.Timestamp
+			}
+			model["date"] = s.Date()
+		}
+		if extraOptions["namesMap"] != nil {
+			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
+			if name.Address.Hex() != "0x0" {
+				model["name"] = name.Name
+				order = append(order, "name")
+			}
+		}
+	} else {
+		if verbose {
+			if s.TraceIndex > 0 {
+				model["traceIndex"] = s.TraceIndex
+				order = append(order, "traceIndex")
+			} else if format != "json" {
+				model["traceIndex"] = ""
+				order = append(order, "traceIndex")
+			}
+			model["reason"] = s.Reason
+			model["timestamp"] = s.Timestamp
+			model["date"] = s.Date()
+			order = append(order, []string{
+				"reason",
+				"timestamp",
+				"date",
+			}...)
+		}
 	}
 
 	// EXISTING_CODE
@@ -95,17 +148,15 @@ func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[s
 	}
 }
 
-func (s *SimpleAppearance) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
-func (s *SimpleAppearance) ReadFrom(r io.Reader) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
-}
-
 // EXISTING_CODE
+//
+
+func (s *SimpleAppearance) GetKey() string {
+	return fmt.Sprintf("%s\t%09d\t%05d", s.Address, s.BlockNumber, s.TransactionIndex)
+}
+
+func (s *SimpleAppearance) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
 // EXISTING_CODE

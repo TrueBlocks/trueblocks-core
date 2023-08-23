@@ -1,4 +1,4 @@
-scrape?sleep=.5&pin&logLevel=8
+scrape?sleep=.5&pin
 {
   "errors": [
     "Cannot test block scraper"

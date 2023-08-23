@@ -39,7 +39,7 @@ type Identifier struct {
 	Orig         string         `json:"-"`
 }
 
-// Parses a string containing block range and returns a struct
+// NewBlockRange parses a string containing block range and returns a struct
 // that always has Start, StartType, EndType, ModifierType fields
 // and may as well have End and Modifier, if they are defined.
 // *Type fields can be used to quickly check what is the type of

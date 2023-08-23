@@ -32,181 +32,8 @@ components:
           description: "the timestamp for this appearance"
         date:
           type: string
-          description: "the date represented by the timestamp"
-    reconciliation:
-      description: "a reconiciliation, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the number of the block"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the transaction in the block"
-        logIndex:
-          type: number
-          format: blknum
-          example: 2
-          description: "the zero-indexed position the log in the block, if applicable"
-        transactionHash:
-          type: string
-          format: hash
-          description: "the hash of the transaction that triggered this reconciliation"
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1438335038
-          description: "the Unix timestamp of the object"
-        date:
-          type: string
           format: datetime
-          description: "a calculated field -- the date of this transaction"
-        assetAddr:
-          type: string
-          format: address
-          example: "0x6b17...1d0f"
-          description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
-        assetSymbol:
-          type: string
-          description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
-        decimals:
-          type: number
-          format: uint64
-          description: "the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18"
-        spotPrice:
-          type: number
-          format: double
-          description: "the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
-        priceSource:
-          type: string
-          description: "the on-chain source from which the spot price was taken"
-        accountedFor:
-          type: string
-          format: address
-          example: "0x1bd0...9ce9"
-          description: "the address being accounted for in this reconciliation"
-        sender:
-          type: string
-          format: address
-          example: "0xf503...179b"
-          description: "the initiator of the transfer (the sender)"
-        recipient:
-          type: string
-          format: address
-          example: "0x38d1...1310"
-          description: "the receiver of the transfer (the recipient)"
-        begBal:
-          type: string
-          format: int256
-          description: "the beginning balance of the asset prior to the transaction"
-        amountNet:
-          type: string
-          format: int256
-          description: "a calculated field -- totalIn - totalOut"
-        endBal:
-          type: string
-          format: int256
-          description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
-        encoding:
-          type: string
-          example: "0xa9059cbb"
-          description: "the topic of the event (if this is an ERC20 reconcilation), the four-byte signature of the transaction otherwise"
-        signature:
-          type: string
-          example: "Transfer(...)"
-          description: "if possible, the articulated name of the function or event signature"
-        reconciliationType:
-          type: string
-          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"
-        reconciled:
-          type: boolean
-          example: [true|false]
-          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
-        totalIn:
-          type: string
-          format: int256
-          description: "a calculated field -- the sum of the following `In` fields"
-        amountIn:
-          type: string
-          format: int256
-          description: "the top-level value of the incoming transfer for the accountedFor address"
-        internalIn:
-          type: string
-          format: int256
-          description: "the internal value of the incoming transfer for the accountedFor address"
-        selfDestructIn:
-          type: string
-          format: int256
-          description: "the incoming value of a self-destruct if recipient is the accountedFor address"
-        minerBaseRewardIn:
-          type: string
-          format: int256
-          description: "the base fee reward if the miner is the accountedFor address"
-        minerNephewRewardIn:
-          type: string
-          format: int256
-          description: "the nephew reward if the miner is the accountedFor address"
-        minerTxFeeIn:
-          type: string
-          format: int256
-          description: "the transaction fee reward if the miner is the accountedFor address"
-        minerUncleRewardIn:
-          type: string
-          format: int256
-          description: "the uncle reward if the miner who won the uncle block is the accountedFor address"
-        prefundIn:
-          type: string
-          format: int256
-          description: "at block zero (0) only, the amount of genesis income for the accountedFor address"
-        totalOut:
-          type: string
-          format: int256
-          description: "a calculated field -- the sum of the following `Out` fields"
-        amountOut:
-          type: string
-          format: int256
-          description: "the amount (in units of the asset) of regular outflow during this transaction"
-        internalOut:
-          type: string
-          format: int256
-          description: "the value of any internal value transfers out of the accountedFor account"
-        selfDestructOut:
-          type: string
-          format: int256
-          description: "the value of the self-destructed value out if the accountedFor address was self-destructed"
-        gasOut:
-          type: string
-          format: int256
-          description: "if the transaction's original sender is the accountedFor address, the amount of gas expended"
-        totalOutLessGas:
-          type: string
-          format: int256
-          description: "a calculated field -- totalOut - gasOut"
-        prevAppBlk:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the block number of the previous appearance, or 0 if this is the first appearance"
-        prevBal:
-          type: string
-          format: int256
-          description: "the account balance for the given asset for the previous reconciliation"
-        begBalDiff:
-          type: string
-          format: int256
-          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed"
-        endBalDiff:
-          type: string
-          format: int256
-          description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
-        endBalCalc:
-          type: string
-          format: int256
-          description: "a calculated field -- begBal + amountNet"
+          description: "a calculated field -- the date for this appearance"
     monitor:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object
@@ -348,6 +175,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the first appearance of this address"
+        firstDate:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the first appearance"
         latestApp:
           type: RawAppearance
           description: "the block number and transaction id of the latest appearance of this address"
@@ -355,6 +186,187 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the latest appearance of this address"
+        latestDate:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the latest appearance"
+    statement:
+      description: "a statement, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: blknum
+          example: 2
+          description: "the zero-indexed position the log in the block, if applicable"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transaction that triggered this reconciliation"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of this transaction"
+        assetAddr:
+          type: string
+          format: address
+          example: "0x6b17...1d0f"
+          description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
+        assetSymbol:
+          type: string
+          description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
+        decimals:
+          type: number
+          format: uint64
+          description: "the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18"
+        spotPrice:
+          type: number
+          format: double
+          description: "the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
+        priceSource:
+          type: string
+          description: "the on-chain source from which the spot price was taken"
+        accountedFor:
+          type: string
+          format: address
+          example: "0x1bd0...9ce9"
+          description: "the address being accounted for in this reconciliation"
+        sender:
+          type: string
+          format: address
+          example: "0xf503...179b"
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          example: "0x38d1...1310"
+          description: "the receiver of the transfer (the recipient)"
+        begBal:
+          type: string
+          format: int256
+          description: "the beginning balance of the asset prior to the transaction"
+        amountNet:
+          type: string
+          format: int256
+          description: "a calculated field -- totalIn - totalOut"
+        endBal:
+          type: string
+          format: int256
+          description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
+        reconciliationType:
+          type: string
+          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"
+        reconciled:
+          type: boolean
+          example: [true|false]
+          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
+        totalIn:
+          type: string
+          format: int256
+          description: "a calculated field -- the sum of the following `In` fields"
+        amountIn:
+          type: string
+          format: int256
+          description: "the top-level value of the incoming transfer for the accountedFor address"
+        internalIn:
+          type: string
+          format: int256
+          description: "the internal value of the incoming transfer for the accountedFor address"
+        selfDestructIn:
+          type: string
+          format: int256
+          description: "the incoming value of a self-destruct if recipient is the accountedFor address"
+        minerBaseRewardIn:
+          type: string
+          format: int256
+          description: "the base fee reward if the miner is the accountedFor address"
+        minerNephewRewardIn:
+          type: string
+          format: int256
+          description: "the nephew reward if the miner is the accountedFor address"
+        minerTxFeeIn:
+          type: string
+          format: int256
+          description: "the transaction fee reward if the miner is the accountedFor address"
+        minerUncleRewardIn:
+          type: string
+          format: int256
+          description: "the uncle reward if the miner who won the uncle block is the accountedFor address"
+        correctingIn:
+          type: string
+          format: int256
+          description: "for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances"
+        prefundIn:
+          type: string
+          format: int256
+          description: "at block zero (0) only, the amount of genesis income for the accountedFor address"
+        totalOut:
+          type: string
+          format: int256
+          description: "a calculated field -- the sum of the following `Out` fields"
+        amountOut:
+          type: string
+          format: int256
+          description: "the amount (in units of the asset) of regular outflow during this transaction"
+        internalOut:
+          type: string
+          format: int256
+          description: "the value of any internal value transfers out of the accountedFor account"
+        correctingOut:
+          type: string
+          format: int256
+          description: "for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances"
+        selfDestructOut:
+          type: string
+          format: int256
+          description: "the value of the self-destructed value out if the accountedFor address was self-destructed"
+        gasOut:
+          type: string
+          format: int256
+          description: "if the transaction's original sender is the accountedFor address, the amount of gas expended"
+        totalOutLessGas:
+          type: string
+          format: int256
+          description: "a calculated field -- totalOut - gasOut"
+        prevAppBlk:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number of the previous appearance, or 0 if this is the first appearance"
+        prevBal:
+          type: string
+          format: int256
+          description: "the account balance for the given asset for the previous reconciliation"
+        begBalDiff:
+          type: string
+          format: int256
+          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed"
+        endBalDiff:
+          type: string
+          format: int256
+          description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
+        endBalCalc:
+          type: string
+          format: int256
+          description: "a calculated field -- begBal + amountNet"
+        correctingReason:
+          type: string
+          description: "the reason for the correcting entries, if any"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
       type: object
@@ -394,6 +406,10 @@ components:
           format: timestamp
           example: 1438335038
           description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the object"
         transactions:
           type: array
           items:
@@ -404,10 +420,6 @@ components:
           format: wei
           example: "120911"
           description: "the base fee for this block"
-        finalized:
-          type: boolean
-          example: true
-          description: "flag indicating the system considers this data final"
         uncles:
           type: array
           items:
@@ -446,6 +458,9 @@ components:
           format: timestamp
           example: 1438335038
           description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
         from:
           type: string
           format: address
@@ -481,31 +496,22 @@ components:
         statements:
           type: array
           items:
-            $ref: "#/components/schemas/reconciliation"
+            $ref: "#/components/schemas/statement"
           description: "array of reconciliations"
         articulatedTx:
           type: object
           items:
             $ref: "#/components/schemas/function"
+        hasToken:
+          type: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        isError:
+          type: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
         compressedTx:
           type: string
           example: "0x3d18b912( )"
           description: "truncated, more readable version of the articulation"
-        hasToken:
-          type: boolean
-          description: "`true` if the transaction is token related, `false` otherwise"
-        finalized:
-          type: boolean
-          example: true
-          description: "flag indicating the system considers this data final"
-        extraData:
-          type: string
-        isError:
-          type: boolean
-          description: "`true` if the transaction ended in error, `false` otherwise"
-        date:
-          type: string
-          format: datetime
     transfer:
       description: "the representation of a token transfer"
       type: object
@@ -562,7 +568,7 @@ components:
           description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
         amount:
           type: string
-          format: wei
+          format: int256
           description: "the amount of the transfer in the units of the asset"
         spotPrice:
           type: number
@@ -628,10 +634,6 @@ components:
           format: uint64
           example: 354
           description: "the zero-indexed position of this log relative to the block"
-        transactionHash:
-          type: string
-          format: hash
-          description: "the hash of the transction"
         timestamp:
           type: number
           format: timestamp
@@ -639,7 +641,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the date of the block this log appears in"
+          description: "the date of the block this log appears in (calculated)"
         address:
           type: string
           format: address
@@ -655,6 +657,14 @@ components:
           format: bytes
           example: "0x0000...3ff6"
           description: "any remaining un-indexed parameters to the event"
+        transactionHash:
+          type: string
+          format: hash
+          description: "the hash of the transction"
+        blockHash:
+          type: string
+          format: hash
+          description: "the hash of the block"
         articulatedLog:
           type: object
           items:
@@ -664,6 +674,32 @@ components:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
+    logFilter:
+      description: "used by the fast path log queries for various commands"
+      type: object
+      properties:
+        fromBlock:
+          type: number
+          format: blknum
+          description: "the first block in the block range to query with eth_getLogs"
+        toBlock:
+          type: number
+          format: blknum
+          description: "the last block in the range to query with eth_getLogs"
+        blockHash:
+          type: string
+          format: hash
+          description: "an alternative to blocks specification, the hash of the block to query"
+        emitters:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "one or more emitting addresses from which logs were emitted"
+        topics:
+          type: array
+          items:
+            $ref: "#/components/schemas/topic"
+          description: "one or more topics which logs represent"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
@@ -682,6 +718,10 @@ components:
           type: number
           format: timestamp
           description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated value - the date of the block"
         transactionHash:
           type: string
           format: hash
@@ -750,6 +790,9 @@ components:
           format: address
           example: "0xf503...179b"
           description: "if the call type is self-destruct, the address to which the refund is sent"
+        rewardType:
+          type: string
+          description: "the type of reward"
     traceResult:
       description: "trace result data as returned from the RPC (with slight enhancements)"
       type: object
@@ -795,6 +838,11 @@ components:
           format: timestamp
           example: 10
           description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          example: "10"
+          description: "a calculated field -- the date of the block"
         tracesCnt:
           type: number
           format: uint64
@@ -835,42 +883,42 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10
+          example: 1001001
           description: "the block's block number"
         timestamp:
           type: number
           format: timestamp
           example: 10
           description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          example: "10"
+          description: "a calculated field -- the date of the block"
         transactionsCnt:
           type: number
           format: uint64
-          example: 10
+          example: 239
           description: "the number transactions in the block"
         unclesCnt:
           type: number
           format: uint64
-          example: 20
+          example: 2
           description: "the number of uncles in the block"
         logsCnt:
           type: number
           format: uint64
-          example: 30
+          example: 581
           description: "the number of logs in the block"
         tracesCnt:
           type: number
           format: uint64
-          example: 30
+          example: 1295
           description: "the number of traces in the block"
-        appsCnt:
+        addressCnt:
           type: number
           format: uint64
-          example: 40
-          description: "the number of address appearances in the block"
-        uniqsCnt:
-          type: number
-          format: uint64
-          example: 40
+          example: 318
           description: "the number of address appearances in the block per transaction"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
@@ -909,10 +957,13 @@ components:
           format: timestamp
           example: 1508131331
           description: "the Unix timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the block"
         diff:
-          type: number
-          format: timestamp
-          example: 12
+          type: int64
+          example: "12"
           description: "the number of seconds since the last block"
     timestampCount:
       description: "the number of timestamps in the timestamps database"
@@ -922,50 +973,7 @@ components:
           type: number
           format: uint64
           description: "the number of timestamps in the timestamps database"
-    ethState:
-      description: "the on-chain state of a given address including ETH balance, nonce, and smart contract byte code if present"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the block number at which this state was taken"
-        address:
-          type: string
-          format: address
-          example: "0xa1e4...63b4"
-          description: "the address of the state being queried"
-        proxy:
-          type: string
-          format: address
-          example: "0xa1e4...63b4"
-          description: "if this is a proxy, this is the proxied-to address"
-        balance:
-          type: string
-          format: wei
-          example: "258843698360318500"
-          description: "the balance at the address at the given block height"
-        nonce:
-          type: number
-          format: uint64
-          example: 115
-          description: "the nonce of the address at the given block height"
-        code:
-          type: string
-          format: bytes
-          example: "0x"
-          description: "the byte code at the address (if this is a smart contract)"
-        deployed:
-          type: number
-          format: blknum
-          example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contract)"
-        accttype:
-          type: string
-          example: "one of 'EOA' or 'Contract'"
-          description: "the type of the address at the given block"
-    ethCall:
+    result:
       description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
       type: object
       properties:
@@ -974,74 +982,144 @@ components:
           format: blknum
           example: 10021
           description: "the block number at which this call was made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block for this call"
+        date:
+          type: string
+          format: datetime
+          description: "the date of the block for this call (calculated)"
         address:
           type: string
           format: address
           example: "0xa1e4...63b4"
           description: "the address of contract being called"
-        signature:
+        name:
           type: string
-          description: "the canonical signature of the interface"
+          description: "the name of the function call"
         encoding:
           type: string
           description: "the encoding for the function call"
-        bytes:
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encodedArguments:
           type: string
           description: "the bytes data following the encoding of the call"
-        callResult:
+        articulatedOut:
           type: object
           items:
             $ref: "#/components/schemas/function"
-          description: "the result of the call to the contract"
-        compressedResult:
-          type: string
-          description: "the compressed version of the result of the call to the contract"
-        deployed:
-          type: number
-          format: blknum
-          example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contract)"
-    tokenBalance:
-      description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
+          description: "the result of the call articulated as other models"
+    state:
+      description: "the state of an Ethereum account (EOA or smart contract) on-chain"
       type: object
       properties:
-        holder:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number at which this call was made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block for this call"
+        date:
           type: string
-          format: address
-          example: "0x2910...63d2"
-          description: "the address for which we are reporting the token balance"
-        balance:
-          type: string
-          format: wei
-          example: "258843698360318500"
-          description: "the balance at the address at the given block height"
+          format: datetime
+          description: "the date of the block for this call (calculated)"
         address:
           type: string
           format: address
           example: "0xa1e4...63b4"
-          description: "the address of the token contract being queried"
+          description: "the address of contract being called"
+        accountType:
+          type: string
+          description: "the type of account at the given block"
+        balance:
+          type: string
+          format: wei
+          description: "the balance of the account at the given block"
+        code:
+          type: string
+          description: "the code of the account"
+        deployed:
+          type: number
+          format: blknum
+          description: "for smart contracts only, the block number at which the contract was deployed"
+        nonce:
+          type: number
+          format: uint64
+          description: "the nonce of the account at the given block"
+        proxy:
+          type: string
+          format: address
+          description: "the proxy address of the account at the given block"
+    token:
+      description: "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block at which the report is made"
+        transactionIndex:
+          type: number
+          format: blknum
+          description: "the transaction index (if applicable) at which the report is made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the block"
+        totalSupply:
+          type: string
+          format: int256
+          description: "the total supply of the token contract"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of the token contract"
+        holder:
+          type: string
+          format: address
+          example: "0x2910...63d2"
+          description: "the holder address for which we are reporting"
+        priorBalance:
+          type: string
+          format: int256
+          description: "the holder's asset balance at its prior appearance"
+        balance:
+          type: string
+          format: int256
+          example: "258843698360318500"
+          description: "the holder's asset balance at the given block height"
+        diff:
+          type: string
+          format: int256
+          description: "the difference#&44; if any#&44; between the prior and current balance"
         name:
           type: string
-          example: "The DAO Original"
+          example: "GitCoin"
           description: "the name of the token contract, if available"
         symbol:
           type: string
           example: "GTC"
-          description: "the symbol for this token contract"
+          description: "the symbol of the token contract"
         decimals:
           type: number
           format: uint64
           example: 18
           description: "the number of decimals for the token contract"
-        isContract:
-          type: boolean
-          description: "`true` if the address is a smart contract, `false` otherwise"
-        isErc20:
-          type: boolean
-          description: "`true` if the address is an ERC20, `false` otherwise"
-        isErc721:
-          type: boolean
-          description: "`true` if the address is an ERC720, `false` otherwise"
+        type:
+          type: TokenType
+          example: "ERC721"
+          description: "the type of token (ERC20 or ERC721) or none"
     config:
       description: "status-related data about the TrueBlocks system including the server and local binary caches"
       type: object
@@ -1245,8 +1323,9 @@ components:
           format: blkrange
           example: "013142464-013145212"
           description: "the block range (inclusive) covered by this chunk"
-        date:
+        rangeEnd:
           type: string
+          format: datetime
           description: "the date of the last block in this range"
         nAddrs:
           type: number
@@ -1373,6 +1452,28 @@ components:
           items:
             type: string
           description: "an array of messages explaining failed checks"
+    chunkPinReport:
+      description: "a JSON object containing the results of pinning the Unchained Index"
+      type: object
+      properties:
+        version:
+          type: string
+          description: "the version string hashed into the chunk data"
+        chain:
+          type: string
+          description: "the chain to which this manifest belongs"
+        schemas:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file describing the schemas for the various databases"
+        tsHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing timestamps"
+        manifestHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of file containing CIDs for the various chunks"
     chain:
       description: "a configuration item carrying information about a single chain"
       type: object
@@ -1452,6 +1553,86 @@ components:
           items:
             $ref: "#/components/schemas/parameter"
           description: "for composite types, the parameters making up the composite"
+    slurp:
+      description: "transaction data as returned from by Etherscan"
+      type: object
+      properties:
+        hash:
+          type: string
+          format: hash
+          example: "0xf128...1e98"
+          description: "the hash of the transaction"
+        blockHash:
+          type: string
+          format: hash
+          example: "0xc421...fb04"
+          description: "the hash of the block containing this transaction"
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        nonce:
+          type: number
+          format: uint64
+          example: 232
+          description: "sequence number of the transactions sent by the sender"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the Unix timestamp of the object"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date of the object"
+        from:
+          type: string
+          format: address
+          description: "address from which the transaction was sent"
+        to:
+          type: string
+          format: address
+          description: "address to which the transaction was sent"
+        value:
+          type: string
+          format: wei
+          example: "0"
+          description: "the amount of wei sent with this transactions"
+        gas:
+          type: string
+          format: gas
+          example: "158660"
+          description: "the maximum number of gas allowed for this transaction"
+        gasPrice:
+          type: string
+          format: gas
+          example: "63525836552"
+          description: "the number of wei per unit of gas the sender is willing to spend"
+        input:
+          type: string
+          format: bytes
+          example: "0x3d18b912"
+          description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
+        hasToken:
+          type: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        articulatedTx:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+        compressedTx:
+          type: string
+          example: "0x3d18b912( )"
+          description: "truncated, more readable version of the articulation"
+        isError:
+          type: boolean
+          description: "`true` if the transaction ended in error, `false` otherwise"
     response:
       required:
         - result

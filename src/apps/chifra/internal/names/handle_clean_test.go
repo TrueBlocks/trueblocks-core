@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -97,7 +96,7 @@ func Test_cleanNonContract(t *testing.T) {
 
 func Test_cleanToken(t *testing.T) {
 	type args struct {
-		token *token.Token
+		token *types.SimpleToken
 		name  *types.SimpleName
 	}
 	tests := []struct {
@@ -110,8 +109,8 @@ func Test_cleanToken(t *testing.T) {
 			name: "ERC-20 token",
 			args: args{
 				name: &types.SimpleName{},
-				token: &token.Token{
-					Type: token.TokenErc20,
+				token: &types.SimpleToken{
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -125,8 +124,8 @@ func Test_cleanToken(t *testing.T) {
 			name: "NFT (ERC-721)",
 			args: args{
 				name: &types.SimpleName{},
-				token: &token.Token{
-					Type: token.TokenErc721,
+				token: &types.SimpleToken{
+					TokenType: types.TokenErc721,
 				},
 			},
 			wantModified: true,
@@ -142,8 +141,8 @@ func Test_cleanToken(t *testing.T) {
 				name: &types.SimpleName{
 					Tags: "60-Airdrops",
 				},
-				token: &token.Token{
-					Type: token.TokenErc20,
+				token: &types.SimpleToken{
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -159,8 +158,8 @@ func Test_cleanToken(t *testing.T) {
 				name: &types.SimpleName{
 					Tags: "token",
 				},
-				token: &token.Token{
-					Type: token.TokenErc20,
+				token: &types.SimpleToken{
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -176,8 +175,8 @@ func Test_cleanToken(t *testing.T) {
 				name: &types.SimpleName{
 					Tags: "30-contracts",
 				},
-				token: &token.Token{
-					Type: token.TokenErc20,
+				token: &types.SimpleToken{
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -193,8 +192,8 @@ func Test_cleanToken(t *testing.T) {
 				name: &types.SimpleName{
 					Tags: "55-defi",
 				},
-				token: &token.Token{
-					Type: token.TokenErc20,
+				token: &types.SimpleToken{
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -208,9 +207,9 @@ func Test_cleanToken(t *testing.T) {
 			name: "Fill token name",
 			args: args{
 				name: &types.SimpleName{},
-				token: &token.Token{
-					Name: "TrueBlocksCoin",
-					Type: token.TokenErc20,
+				token: &types.SimpleToken{
+					Name:      "TrueBlocksCoin",
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -225,9 +224,9 @@ func Test_cleanToken(t *testing.T) {
 			name: "Fill token symbol",
 			args: args{
 				name: &types.SimpleName{},
-				token: &token.Token{
-					Symbol: "TBC",
-					Type:   token.TokenErc20,
+				token: &types.SimpleToken{
+					Symbol:    "TBC",
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -242,9 +241,9 @@ func Test_cleanToken(t *testing.T) {
 			name: "Fill token decimals",
 			args: args{
 				name: &types.SimpleName{},
-				token: &token.Token{
-					Decimals: 18,
-					Type:     token.TokenErc20,
+				token: &types.SimpleToken{
+					Decimals:  18,
+					TokenType: types.TokenErc20,
 				},
 			},
 			wantModified: true,
@@ -270,7 +269,7 @@ func Test_cleanToken(t *testing.T) {
 
 func Test_cleanContract(t *testing.T) {
 	type args struct {
-		token   *token.Token
+		token   *types.SimpleToken
 		address base.Address
 		name    *types.SimpleName
 	}

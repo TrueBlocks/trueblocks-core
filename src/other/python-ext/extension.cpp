@@ -40,7 +40,8 @@ static PyObject* get_block(PyObject* self, PyObject* args) {
     getBlock(block, i);
     block.finalized = true;
     if (cache) {
-        writeBlockToBinary(block, getBinaryCacheFilename(CT_BLOCKS, i));
+#define writeBlockToBinary writeNodeToBinary
+        write BlockToBinary(block, getBinaryCacheFilename(CT_BLOCKS, i));
     }
     return Py_BuildValue("s", block.Format().c_str());
 }

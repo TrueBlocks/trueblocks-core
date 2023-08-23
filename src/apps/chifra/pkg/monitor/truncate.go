@@ -1,38 +1,43 @@
 package monitor
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (m *Monitor) TruncateTo(num uint32) (bool, error) {
-	err := m.ReadMonitorHeader()
+func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
+	err := mon.ReadMonitorHeader()
 	if err != nil {
 		return false, err
 	}
 
-	apps := make([]index.AppearanceRecord, m.Count())
-	if err = m.ReadAppearances(&apps); err != nil {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
 		return false, err
-	}
-
-	var keep []index.AppearanceRecord
-	for _, app := range apps {
-		if app.BlockNumber <= num {
-			keep = append(keep, app)
+	} else if cnt == 0 {
+		return false, nil
+	} else {
+		var keep []index.AppearanceRecord
+		for _, app := range apps {
+			if app.BlockNumber <= num {
+				keep = append(keep, index.AppearanceRecord{
+					BlockNumber:   app.BlockNumber,
+					TransactionId: app.TransactionIndex,
+				})
+			}
 		}
-	}
-	lastScanned := utils.Min(num, m.Header.LastScanned)
+		lastScanned := utils.Min(num, mon.Header.LastScanned)
 
-	m.Close() // so when we open it, it gets replaced
-	// Very important to note - if you use false for append, the header gets overwritten
-	// so ordering matters here and we need to write the header afterwards
-	if _, err := m.WriteAppearances(keep, false /* append */); err != nil {
-		m.Close()
-		return false, err
-	}
-	m.WriteMonHeader(m.Deleted, lastScanned, true /* force */)
-	m.Close()
+		mon.Close() // so when we open it, it gets replaced
+		// Very important to note - if you use false for append, the header gets overwritten
+		// so ordering matters here and we need to write the header afterwards
+		if _, err := mon.WriteAppearances(keep, false /* append */); err != nil {
+			mon.Close()
+			return false, err
+		}
+		_ = mon.WriteMonHeader(mon.Deleted, lastScanned, true /* force */)
+		mon.Close()
 
-	return len(apps)-len(keep) > 0, nil
+		return len(apps)-len(keep) > 0, nil
+	}
 }

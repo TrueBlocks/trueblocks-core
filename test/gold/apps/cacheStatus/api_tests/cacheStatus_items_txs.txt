@@ -1,4 +1,4 @@
-status?modes=txs&maxRecords=100
+status?modes=transactions&maxRecords=100
 {
   "data": [
     {
@@ -11,7 +11,7 @@ status?modes=txs&maxRecords=100
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "txsCache"
+          "type": "transactionsCache"
         }
       ],
       "chainConfig": "--paths--",

@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -20,8 +19,10 @@ import (
 // TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 
 func (opts *ScrapeOptions) validateScrape() error {
+	chain := opts.Globals.Chain
+
 	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, "blockScrape.toml", &opts.Settings)
+	opts.Settings, _ = scrapeCfg.GetSettings(chain, "blockScrape.toml", &opts.Settings)
 
 	opts.testLog()
 
@@ -38,7 +39,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("Cannot test block scraper")
 	}
 
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
+	meta, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
@@ -49,7 +50,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if opts.Pin {
 		if opts.Remote {
-			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
+			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(chain)
 			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 			}
@@ -61,7 +62,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	// Note this does not return if a migration is needed
-	index.CheckBackLevelIndex(opts.Globals.Chain)
+	index.CheckBackLevelIndex(chain)
 
 	return opts.Globals.Validate()
 }

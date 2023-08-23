@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -49,10 +50,17 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra receipts"
 	// EXISTING_CODE
 	handled = true
-	err = opts.HandleShowReceipts()
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else {
+		err = opts.HandleShow()
+	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

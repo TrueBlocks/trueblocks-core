@@ -10,8 +10,11 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
 	"fmt"
 	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // EXISTING_CODE
@@ -86,19 +89,109 @@ func (s *SimpleParameter) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-func (s *SimpleParameter) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
+// --> marshal_only
+func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
+	// Components
+	components := make([]cache.Marshaler, 0, len(s.Components))
+	for _, component := range s.Components {
+		component := component
+		components = append(components, &component)
+	}
+	if err = cache.WriteValue(writer, components); err != nil {
+		return err
+	}
+
+	// Indexed
+	if err = cache.WriteValue(writer, s.Indexed); err != nil {
+		return err
+	}
+
+	// InternalType
+	if err = cache.WriteValue(writer, s.InternalType); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.WriteValue(writer, s.Name); err != nil {
+		return err
+	}
+
+	// StrDefault
+	if err = cache.WriteValue(writer, s.StrDefault); err != nil {
+		return err
+	}
+
+	// ParameterType
+	if err = cache.WriteValue(writer, s.ParameterType); err != nil {
+		return err
+	}
+
+	// Value
+	value, err := json.Marshal(s.Value)
+	if err != nil {
+		return fmt.Errorf("cannot marshal Value: %w", err)
+	}
+	if err = cache.WriteValue(writer, value); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func (s *SimpleParameter) ReadFrom(r io.Reader) (n int64, err error) {
+func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Components
+	s.Components = make([]SimpleParameter, 0)
+	if err = cache.ReadValue(reader, &s.Components, version); err != nil {
+		return err
+	}
+
+	// Indexed
+	if err = cache.ReadValue(reader, &s.Indexed, version); err != nil {
+		return err
+	}
+
+	// InternalType
+	if err = cache.ReadValue(reader, &s.InternalType, version); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+		return err
+	}
+
+	// StrDefault
+	if err = cache.ReadValue(reader, &s.StrDefault, version); err != nil {
+		return err
+	}
+
+	// ParameterType
+	if err = cache.ReadValue(reader, &s.ParameterType, version); err != nil {
+		return err
+	}
+
+	// Value
+	var value string
+	if err = cache.ReadValue(reader, &value, version); err != nil {
+		return err
+	}
+	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {
+		return fmt.Errorf("cannot unmarshal Value: %w", err)
+	}
+
+	s.FinishUnmarshal()
+
+	return nil
+}
+
+func (s *SimpleParameter) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return 0, nil
 }
 
 // EXISTING_CODE
+//
+
 // DisplayName returns parameter name if defined, or a default name "val_" + index
 func (s *SimpleParameter) DisplayName(index int) string {
 	if s.Name != "" {
@@ -107,7 +200,7 @@ func (s *SimpleParameter) DisplayName(index int) string {
 	return "val_" + fmt.Sprint(index)
 }
 
-func ParametersToMap(params []SimpleParameter) (result map[string]any) {
+func parametersToMap(params []SimpleParameter) (result map[string]any) {
 	// This produces `null` in JSON instead of an empty object (`{}`)
 	if len(params) == 0 {
 		return nil

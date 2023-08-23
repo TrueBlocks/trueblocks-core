@@ -11,16 +11,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// HandleCrudCommands
+// HandleCrudCommands handles the chifra monitors delete, undelete, remove and decache commands.
 //
-// [State]     | Delete | Undelete | Remove | Decache                    |
-// ------------|--------|------------------------------------------------|
-// Not Deleted | Delete	| Error    | Error  | Delete, Remove and Decache |
-// Deleted     | Error  | Undelete | Remove | Remove and Decache         |
-// ------------|--------|------------------------------------------------|
+// [State]     | Delete | Undelete | Remove |
+// ------------|--------|-------------------|
+// Not Deleted | Delete	| Error    | Error  |
+// Deleted     | Error  | Undelete | Remove |
+// ------------|--------|-------------------|
 func (opts *MonitorsOptions) HandleCrudCommands() error {
+	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
+		m := monitor.NewMonitor(chain, addr, false)
 		if !file.FileExists(m.Path()) {
 			return validate.Usage("No monitor was found for address " + addr + ".")
 
@@ -45,16 +46,16 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 	}
 
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(opts.Globals.Chain, addr, false)
+		m := monitor.NewMonitor(chain, addr, false)
 		if opts.Undelete {
-			m.ReadMonitorHeader()
+			_ = m.ReadMonitorHeader()
 			m.UnDelete()
 			m.Close()
 			logger.Info(("Monitor " + addr + " was undeleted."))
 
 		} else {
 			if opts.Delete {
-				m.ReadMonitorHeader()
+				_ = m.ReadMonitorHeader()
 				m.Delete()
 				m.Close()
 				logger.Info(("Monitor " + addr + " was deleted but not removed."))

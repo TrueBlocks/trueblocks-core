@@ -3,6 +3,7 @@ TEST[DATE|TIME] Transactions:  [3657480.9]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 ----
@@ -20,6 +21,7 @@ Results in ./output_test_file
       },
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
+      "date": "2017-05-06 00:43:39 UTC",
       "result": {
         "gasUsed": 14456,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -40,15 +42,14 @@ Results in ./output_test_file
         "callType": "call",
         "from": "0xb73fa05c12ffc1926a4e8c2b585f168cf4028671",
         "gas": 19000,
-        "input": "0x",
         "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
         "value": "1007817120000000000"
       },
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
+      "date": "2017-05-06 00:43:39 UTC",
       "result": {
-        "gasUsed": 9416,
-        "output": "0x"
+        "gasUsed": 9416
       },
       "subtraces": 1,
       "timestamp": 1494031419,
@@ -62,16 +63,13 @@ Results in ./output_test_file
         "callType": "call",
         "from": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
         "gas": 2300,
-        "input": "0x",
         "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
         "value": "1007817120000000000"
       },
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
       "blockNumber": 3657480,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "date": "2017-05-06 00:43:39 UTC",
+      "result": {},
       "subtraces": 0,
       "timestamp": 1494031419,
       "traceAddress": [

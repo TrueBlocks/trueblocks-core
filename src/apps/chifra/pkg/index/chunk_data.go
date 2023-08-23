@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 const (
@@ -40,7 +39,7 @@ type ChunkData struct {
 // NewChunkData returns an ChunkData with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
 func NewChunkData(path string) (chunk ChunkData, err error) {
-	indexPath := cache.ToIndexPath(path)
+	indexPath := ToIndexPath(path)
 
 	blkRange, err := base.RangeFromFilenameE(indexPath)
 	if err != nil {
@@ -71,8 +70,8 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 }
 
 // String returns a JSON representation of the Chunk
-func (cd ChunkData) String() string {
-	s, _ := json.MarshalIndent(cd, "", "  ")
+func (chunk ChunkData) String() string {
+	s, _ := json.MarshalIndent(chunk, "", "  ")
 	return string(s)
 }
 

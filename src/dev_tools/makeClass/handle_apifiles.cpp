@@ -41,34 +41,14 @@ string_q toGoCall(const CCommandOption& cmd) {
     const char* STR_ONEROUTE =
         "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
         "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
-        "\tif err, handled := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
-        "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
-        "\t} else if !handled {\n"
-        "\t\tCallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")\n"
-        "\t}\n"
-        "}";
-
-    const char* STR_ONEROUTE2 =
-        "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
-        "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
         "\tif err, _ := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
         "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
         "\t}\n"
         "}";
 
-    string_q format = STR_ONEROUTE;
-    if (isFullyPorted(cmd.api_route)) {
-        format = STR_ONEROUTE2;
-    }
-
-    if (goPortNewCode(cmd.api_route) || (cmd.tool.empty() || contains(cmd.tool, " "))) {
-        format = substitute(format, "CallOne(w, r, config.GetPathToCommands(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")",
-                            "CallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")");
-    }
-
     ostringstream os;
     os << endl;
-    os << cmd.Format(format) << endl;
+    os << cmd.Format(STR_ONEROUTE) << endl;
     return os.str();
 }
 
@@ -134,12 +114,12 @@ bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q getSchema(const CCommandOption& cmd) {
+string_q getSchema(const string_q& data_type, const CCommandOption* cmd = NULL) {
     string_q lead = "            ";
 
-    if (contains(cmd.data_type, "list") && contains(cmd.data_type, "enum")) {
+    if (contains(data_type, "list") && contains(data_type, "enum")) {
         ostringstream os;
-        forEveryEnum(visitEnumItem, cmd.data_type, &os);
+        forEveryEnum(visitEnumItem, data_type, &os);
         string_q str_array_enum =
             "~type: array\n"
             "~items:\n"
@@ -149,8 +129,8 @@ string_q getSchema(const CCommandOption& cmd) {
         return substitute(str_array_enum, "~", lead);
     }
 
-    if (contains(cmd.data_type, "list")) {
-        string_q type = substitute(substitute(cmd.data_type, "list<", ""), ">", "");
+    if (contains(data_type, "list")) {
+        string_q type = substitute(substitute(data_type, "list<", ""), ">", "");
         replace(type, "addr", "address_t");
         if (endsWith(type, "_t"))
             replaceReverse(type, "_t", "");
@@ -162,29 +142,29 @@ string_q getSchema(const CCommandOption& cmd) {
         return ret;
     }
 
-    if (contains(cmd.data_type, "boolean")) {
+    if (contains(data_type, "boolean")) {
         string_q ret;
         ret += lead + "type: boolean";
         return ret;
     }
 
-    if (contains(cmd.data_type, "uint") || contains(cmd.data_type, "double") || contains(cmd.data_type, "blknum")) {
+    if (contains(data_type, "uint") || contains(data_type, "double") || contains(data_type, "blknum")) {
         string_q ret;
         ret += lead + "type: number\n";
-        ret += lead + "format: " + substitute(substitute(cmd.data_type, ">", ""), "<", "");
+        ret += lead + "format: " + substitute(substitute(data_type, ">", ""), "<", "");
         return ret;
     }
 
-    if (contains(cmd.data_type, "datetime")) {
+    if (contains(data_type, "datetime")) {
         string_q ret;
         ret += lead + "type: " + "string\n";
         ret += lead + "format: date";
         return ret;
     }
 
-    if (contains(cmd.data_type, "enum")) {
+    if (cmd && contains(data_type, "enum")) {
         ostringstream os;
-        forEveryEnum(visitEnumItem, cmd.data_type, &os);
+        forEveryEnum(visitEnumItem, cmd->data_type, &os);
 
         string_q ret;
         ret += lead + "type: string\n";
@@ -194,6 +174,26 @@ string_q getSchema(const CCommandOption& cmd) {
     }
 
     return lead + "type: " + "string";
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q getGlobalFeature(const string_q& route, const string_q& feature) {
+    if (feature == "raw") {
+        if (route == "blocks" || route == "logs" || route == "receipts" || route == "slurp" || route == "traces" ||
+            route == "transactions") {
+            return "raw|report raw data direclty from the source|boolean|-w";
+        }
+    } else if (feature == "cache") {
+        if (route == "blocks" || route == "export" || route == "logs" || route == "receipts" || route == "slurp" ||
+            route == "state" || route == "tokens" || route == "traces" || route == "transactions" || route == "when") {
+            return "cache|force the results of the query into the cache|boolean|-o";
+        }
+    } else if (feature == "ether") {
+        if (route == "export" || route == "state" || route == "transactions") {
+            return "ether|export values in ether|boolean|-H";
+        }
+    }
+    return "";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -213,6 +213,8 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
         "          schema:\n"
         "[{SCHEMA}]";
 
+    string_q apiRoute = cmd.api_route;
+
     size_t fieldCnt = 0;
     bool hasDelete = false;
     ostringstream memberStream;
@@ -223,11 +225,12 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
         if (member.longName.empty() || !member.is_visible_docs)
             continue;
         if (!isCrud(member.longName)) {
+            string_q optionName = toCamelCase(member.longName);
             string_q yp = STR_PARAM_YAML;
-            replace(yp, "[{NAME}]", toCamelCase(member.longName));
+            replace(yp, "[{NAME}]", optionName);
             replace(yp, "[{DESCR}]", prepareDescr(member.swagger_descr));
             replace(yp, "[{REQ}]", member.is_required ? "true" : "false");
-            replace(yp, "[{SCHEMA}]", getSchema(member));
+            replace(yp, "[{SCHEMA}]", getSchema(member.data_type, &member));
             if (needsTwoAddrs) {
                 replace(yp, "            type: array\n", "            type: array\n            minItems: 2\n");
             }
@@ -235,10 +238,40 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
                 memberStream << "      parameters:\n";
             memberStream << yp << endl;
             fieldCnt++;
+            if (!(member.option_type % "positional")) {
+                // if (optionName == "addrs") {
+                //     cerr << member.longName << ":" << member.option_type << endl;
+                // }
+                reportOneOption(apiRoute, optionName, "api");
+                // } else {
+                //     cerr << member.longName << ":" << member.option_type << endl;
+            }
         }
     }
+
+    CStringArray globals;
+    globals.push_back("ether");
+    globals.push_back("raw");
+    globals.push_back("cache");
+    for (auto global : globals) {
+        string_q g = getGlobalFeature(apiRoute, global);
+        if (g.empty())
+            continue;
+        CStringArray parts;
+        explode(parts, g, '|');
+        string_q optionName = toCamelCase(parts[0]);
+        string_q yp = STR_PARAM_YAML;
+        replace(yp, "[{NAME}]", optionName);
+        replace(yp, "[{DESCR}]", prepareDescr(parts[1]));
+        replace(yp, "[{REQ}]", "false");
+        replace(yp, "[{SCHEMA}]", getSchema(parts[2]));
+        memberStream << yp << endl;
+        fieldCnt++;
+        reportOneOption(apiRoute, optionName, "api");
+    }
+
     if (fieldCnt == 0) {
-        cerr << bRed << "The " << cmd.api_route << " data model has zero documented fields." << cOff << endl;
+        cerr << bRed << "The " << apiRoute << " data model has zero documented fields." << cOff << endl;
         exit(0);
     }
 
@@ -330,12 +363,12 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
     replaceAll(ret, "[{TAGS}]", grp);
     replaceAll(ret, "[{PROPERTIES}]", properties.str());
     replaceAll(ret, "[{EXAMPLE}]", example.str());
-    replaceAll(ret, "[{PATH}]", cmd.api_route);
+    replaceAll(ret, "[{PATH}]", apiRoute);
     replaceAll(ret, "[{PARAMS}]", memberStream.str());
     replaceAll(ret, "[{SUMMARY}]", cmd.summary);
     replaceAll(ret, "[{DESCR}]", cmd.description + corresponds);
     replaceAll(ret, "[{DELETE}]", hasDelete ? STR_DELETE_OPTS : "");
-    replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + cmd.api_route));
+    replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + apiRoute));
     return ret;
 }
 
@@ -347,12 +380,11 @@ bool COptions::writeOpenApiFile(void) {
     LOG_INFO(cYellow, "handling openapi file...", cOff);
     counter = CCounter();  // reset
 
-    map<string_q, string_q> converts;
     map<string_q, string_q> pkgs;
     for (auto ep : endpointArray) {
         CCommandOptionArray members;
         for (auto option : routeOptionArray)
-            if (option.api_route == ep.api_route && isChifraRoute(option, false))
+            if (option.api_route == ep.api_route && option.isChifraRoute(false))
                 members.push_back(option);
         ep.members = &members;
 
@@ -370,26 +402,11 @@ bool COptions::writeOpenApiFile(void) {
         string_q nick = nextTokenClear(pkg, ' ');
         pkgs[nick] = substitute(pkg, "\n", "");
 
-        if (isApiRoute(ep.api_route) && ep.members) {
-            for (auto p : *((CCommandOptionArray*)ep.members))
-                if (contains(p.longName, "_"))
-                    converts[toCamelCase(p.longName)] = p.longName;
-        }
-
         counter.cmdCount += members.size();
         counter.routeCount++;
     }
     for (auto pkg : pkgs)
         goPkgStream << pkg.first << " " << pkg.second << endl;
-    goPkgStream << "\tconfig \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"" << endl;
-
-    converts["logLevel"] = "log_level";
-    converts["noHeader"] = "no_header";
-    goConvertStream << "\tswitch in {" << endl;
-    for (auto item : converts) {
-        goConvertStream << "\tcase \"" << item.first << "\":\n\t\treturn \"" << item.second << "\"" << endl;
-    }
-    goConvertStream << "\t}" << endl;
 
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/routes.go"));
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/handle_calls.go"));
@@ -443,7 +460,7 @@ string_q get_api_text(const CClassDefinitionArray& models, const CClassDefinitio
 
 extern string_q get_producer_group(const string_q& p, const CCommandOptionArray& endpoints);
 //---------------------------------------------------------------------------------------------------
-string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes) {
+string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& typesOut) {
     if (!isApiRoute(ep.api_route) || contains(ep.api_route, "explore")) {
         return "";
     }
@@ -451,7 +468,7 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
     string_q descr;
     for (auto model : dataModels) {
         if (contains(model.doc_producer, ep.api_route)) {
-            returnTypes.push_back(model.doc_route);
+            typesOut.push_back(model.doc_route);
             if (descr.empty()) {
                 string_q group = get_producer_group(ep.api_route, endpointArray);
                 string_q route = ep.api_route;
@@ -461,12 +478,12 @@ string_q COptions::getReturnTypes(const CCommandOption& ep, CStringArray& return
     }
 
     string_q prods;
-    for (auto p : returnTypes) {
+    for (auto p : typesOut) {
         replace(p, "cachePtr", "cache");
         prods += "$ref: \"#/components/schemas/" + p + "\"\n";
     }
 
-    if (returnTypes.size() > 1) {
+    if (typesOut.size() > 1) {
         prods = "oneOf:\n" + prods;
         replaceAll(prods, "$ref:", "      - $ref:");
     }

@@ -6,13 +6,34 @@ import (
 	goEthAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-func ArticulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (articulated *types.SimpleFunction, err error) {
+func (abiCache *AbiCache) ArticulateTrace(trace *types.SimpleTrace) (err error) {
+	address := trace.Action.To
+	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
+		if err := abi.LoadAbi(abiCache.Chain, address, &abiCache.AbiMap); err != nil {
+			abiCache.skipMap.SetValue(address, true)
+			return err
+		} else {
+			abiCache.loadedMap.SetValue(address, true)
+		}
+	}
+
+	if !abiCache.skipMap.GetValue(address) {
+		if trace.ArticulatedTrace, err = articulateTrace(trace, &abiCache.AbiMap); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func articulateTrace(trace *types.SimpleTrace, abiMap *abi.FunctionSyncMap) (articulated *types.SimpleFunction, err error) {
 	input := trace.Action.Input
 	if len(input) < 10 {
 		return
 	}
+
 	encoding := input[:10]
-	articulated = abiMap[encoding]
+	articulated = abiMap.GetValue(encoding)
 
 	if trace.Result == nil || articulated == nil {
 		return
@@ -25,7 +46,7 @@ func ArticulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (arti
 		if err != nil {
 			return nil, err
 		}
-		err = ArticulateArguments(
+		err = articulateArguments(
 			abiMethod.Inputs,
 			trace.Action.Input[10:],
 			nil,
@@ -40,7 +61,7 @@ func ArticulateTrace(trace *types.SimpleTrace, abiMap abi.AbiInterfaceMap) (arti
 	if err != nil {
 		return nil, err
 	}
-	err = ArticulateArguments(
+	err = articulateArguments(
 		abiMethod.Outputs,
 		trace.Result.Output[2:],
 		nil,

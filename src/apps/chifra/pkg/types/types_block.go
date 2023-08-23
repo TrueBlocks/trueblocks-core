@@ -10,14 +10,15 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
+	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-type BlockTransaction interface {
-	string | SimpleTransaction
-}
 
 // EXISTING_CODE
 
@@ -48,7 +49,7 @@ type RawBlock struct {
 	// EXISTING_CODE
 }
 
-type SimpleBlock[Tx BlockTransaction] struct {
+type SimpleBlock[Tx string | SimpleTransaction] struct {
 	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum    `json:"blockNumber"`
 	Difficulty    uint64         `json:"difficulty"`
@@ -62,9 +63,6 @@ type SimpleBlock[Tx BlockTransaction] struct {
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	raw           *RawBlock      `json:"-"`
 	// EXISTING_CODE
-	// Used to be Finalized which has since been removed. Until we implement IsBackLevel
-	// and upgrading cache items, this exists. We can remove it once we do so.
-	UnusedBool bool `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -112,6 +110,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				"blockNumber": s.BlockNumber,
 				"parentHash":  s.ParentHash,
 				"timestamp":   s.Timestamp,
+				"date":        s.Date(),
 				"tx_hashes":   txHashes,
 			},
 			Order: []string{
@@ -119,6 +118,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				"blockNumber",
 				"parentHash",
 				"timestamp",
+				"date",
 				"tx_hashes",
 			},
 		}
@@ -133,12 +133,14 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 		"miner":         s.Miner.Hex(),
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
+		"date":          s.Date(),
 		"baseFeePerGas": s.BaseFeePerGas.Uint64(),
 	}
 
 	order = []string{
 		"blockNumber",
 		"timestamp",
+		"date",
 		"hash",
 		"parentHash",
 		"miner",
@@ -166,7 +168,11 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				model["transactions"] = s.Transactions
 			}
 			order = append(order, "transactions")
-			model["uncles"] = s.Uncles
+			if s.Uncles == nil {
+				model["uncles"] = []base.Hash{}
+			} else {
+				model["uncles"] = s.Uncles
+			}
 			order = append(order, "uncles")
 		}
 	} else {
@@ -185,17 +191,187 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 	}
 }
 
-func (s *SimpleBlock[Tx]) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
+func (s *SimpleBlock[Tx]) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
-func (s *SimpleBlock[Tx]) ReadFrom(r io.Reader) (n int64, err error) {
+// --> cacheable by block
+func (s *SimpleBlock[Tx]) CacheName() string {
+	return "Block"
+}
+
+func (s *SimpleBlock[Tx]) CacheId() string {
+	return fmt.Sprintf("%09d", s.BlockNumber)
+}
+
+func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
+	extension = "bin"
+
+	return
+}
+
+func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
+	// BaseFeePerGas
+	if err = cache.WriteValue(writer, &s.BaseFeePerGas); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
+	// Difficulty
+	if err = cache.WriteValue(writer, s.Difficulty); err != nil {
+		return err
+	}
+
+	// GasLimit
+	if err = cache.WriteValue(writer, s.GasLimit); err != nil {
+		return err
+	}
+
+	// GasUsed
+	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
+		return err
+	}
+
+	// Hash
+	if err = cache.WriteValue(writer, &s.Hash); err != nil {
+		return err
+	}
+
+	// Miner
+	if err = cache.WriteValue(writer, s.Miner); err != nil {
+		return err
+	}
+
+	// ParentHash
+	if err = cache.WriteValue(writer, &s.ParentHash); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+
+	// Transactions
+	var txHashes []string
+	switch v := any(s.Transactions).(type) {
+	case []string:
+		txHashes = v
+	case []SimpleTransaction:
+		txHashes = make([]string, 0, len(s.Transactions))
+		for _, tx := range v {
+			txHashes = append(txHashes, tx.Hash.Hex())
+		}
+	}
+	if err = cache.WriteValue(writer, txHashes); err != nil {
+		return err
+	}
+
+	// Uncles
+	if err = cache.WriteValue(writer, s.Uncles); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// BaseFeePerGas
+	if err = cache.ReadValue(reader, &s.BaseFeePerGas, version); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+
+	// Difficulty
+	if err = cache.ReadValue(reader, &s.Difficulty, version); err != nil {
+		return err
+	}
+
+	// GasLimit
+	if err = cache.ReadValue(reader, &s.GasLimit, version); err != nil {
+		return err
+	}
+
+	// GasUsed
+	if err = cache.ReadValue(reader, &s.GasUsed, version); err != nil {
+		return err
+	}
+
+	// Hash
+	if err = cache.ReadValue(reader, &s.Hash, version); err != nil {
+		return err
+	}
+
+	// Miner
+	if err = cache.ReadValue(reader, &s.Miner, version); err != nil {
+		return err
+	}
+
+	// ParentHash
+	if err = cache.ReadValue(reader, &s.ParentHash, version); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
+		return err
+	}
+
+	// Transactions
+	s.Transactions = make([]string, 0)
+	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
+		return err
+	}
+
+	// Uncles
+	s.Uncles = make([]base.Hash, 0)
+	if err = cache.ReadValue(reader, &s.Uncles, version); err != nil {
+		return err
+	}
+
+	s.FinishUnmarshal()
+
+	return nil
+}
+
+func (s *SimpleBlock[Tx]) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return 0, nil
 }
 
 // EXISTING_CODE
+//
+
+// Dup duplicates all fields but Transactions into target
+func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
+	target.BaseFeePerGas = s.BaseFeePerGas
+	target.BlockNumber = s.BlockNumber
+	target.Difficulty = s.Difficulty
+	target.GasLimit = s.GasLimit
+	target.GasUsed = s.GasUsed
+	target.Hash = s.Hash
+	target.Miner = s.Miner
+	target.ParentHash = s.ParentHash
+	target.Timestamp = s.Timestamp
+	// TODO: This copy of an array possibly doesn't do what we expect
+	target.Uncles = s.Uncles
+	target.raw = s.raw
+}
+
 // EXISTING_CODE

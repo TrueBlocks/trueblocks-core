@@ -1,14 +1,6 @@
-state?call=0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ad&blocks=10092000
+state?call='0x0902f1ad()'&addrs=0xbb2b8038a1640196fbe3e38816f3e67cba72d940&blocks=10092000
 {
-  "data": [],
   "errors": [
-    "No result from call to 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 with fourbyte 0x0902f1ad at block 10092000"
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+    "the --call value provided (0x0902f1ad()) was not found: abi not found "
+  ]
 }

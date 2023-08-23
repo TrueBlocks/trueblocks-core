@@ -19,15 +19,13 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // BEG_CODE_OPTIONS
     // clang-format off
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
-    COption("skip", "s", "<uint64>", OPT_HIDDEN | OPT_FLAG, "run only every 'skip' test (faster)"),
+    COption("skip", "s", "<uint64>", OPT_FLAG, "run only every 'skip' test (faster)"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
     // clang-format on
-    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -39,9 +37,7 @@ bool COptions::parseArguments(string_q& command) {
 
     ::setenv("NO_USERQUERY", "true", 1);
 
-    // BEG_CODE_LOCAL_INIT
     string_q mode = "";
-    // END_CODE_LOCAL_INIT
     string_q path;
 
     bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
@@ -55,7 +51,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-            // BEG_CODE_AUTO
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
@@ -82,20 +77,9 @@ bool COptions::parseArguments(string_q& command) {
             if (!builtInCmd(arg)) {
                 return invalid_option(arg);
             }
-
-            // END_CODE_AUTO
         } else {
             arg = trim(arg, '/');
-            if (arg == "libs" || arg == "libs/") {
-                static bool been_here = false;
-                if (been_here)
-                    break;
-                been_here = true;
-                tests.push_back("libs/utillib");
-                tests.push_back("libs/etherlib");
-                tests.push_back("libs/acctlib");
-
-            } else if (arg == "dev_tools" || arg == "dev_tools/") {
+            if (arg == "dev_tools" || arg == "dev_tools/") {
                 break;
 
             } else if (arg == "tools" || arg == "tools/") {
@@ -138,12 +122,17 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    string_q localFile = getCWD() + "addresses.tsv";
+    replace(localFile, "test/gold/dev_tools/testRunner", "build");
+    if (fileExists(localFile)) {
+        LOG_ERR(localFile, " found in local folder. Chifra monitor tests will fail.");
+        exit(0);
+    }
+
     if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
         return usage("[dev]debug_curl is set in config file. All tests will fail.");
 
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
-    if (!isNodeRunning())
-        return usage("Ethereum at " + getCurlContext()->baseURL + " was not found. All tests will fail.");
 
     if (filter.empty())
         filter = "fast";
@@ -152,9 +141,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (tests.empty()) {
         full_test = true;
-        tests.push_back("libs/utillib");
-        tests.push_back("libs/etherlib");
-        tests.push_back("libs/acctlib");
         if (runSlurps) {
             tests.push_back("tools/ethslurp");
         }
@@ -196,11 +182,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params, 0);
     // END_CODE_GLOBALOPTS
 
-    // BEG_CODE_INIT
     filter = "";
     skip = 1;
     report = false;
-    // END_CODE_INIT
 
     full_test = false;
     minArgs = 0;
@@ -212,13 +196,8 @@ COptions::COptions(void) {
 
     Init();
 
-    // BEG_CODE_NOTES
     // clang-format off
     // clang-format on
-    // END_CODE_NOTES
-
-    // BEG_ERROR_STRINGS
-    // END_ERROR_STRINGS
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -240,22 +219,21 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 void establishTestData(void) {
     cleanFolder(cacheFolder_tmp);
 
-    // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
-    // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
-    // TODO(tjayrush): and re-run. You will see the tests that fail.
+    // TODO: This code is a hack to make test cases pass. We should fix the underlyign reason
+    // TODO: these tests fail. To reproduce, delete the entire cache, comment the lines below
+    // TODO: and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
-    doCommand("chifra blocks --uniq 0");
-    doCommand("chifra blocks --cache 2768801 1995314 1958017 2769609 2799895 2872831 3076260");
-    doCommand("chifra blocks --cache 4369999 1001001 1234567 1590000 4000001-4000004 3657480");
-    doCommand("chifra transactions --cache 47055.0");
-    doCommand("chifra transactions --cache 46147.0");
+    doCommand("chifra blocks --uniq 0 2>/dev/null");
 
+    cerr << bYellow << "Cleaning monitor caches..." << cOff << endl;
     doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
     doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
     doCommand("chifra monitors --decache 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3 2>/dev/null");
     doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
 
+    cerr << bYellow << "Cleaning abi caches..." << cOff << endl;
+    doCommand("chifra abis --clean 2>/dev/null");
     doCommand("chifra abis --clean 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51 2>/dev/null");
     doCommand("chifra abis --clean 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 2>/dev/null");
     doCommand("chifra abis --clean 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 2>/dev/null");
@@ -267,8 +245,22 @@ void establishTestData(void) {
     doCommand("chifra abis --clean 0x7d655c57f71464b6f83811c55d84009cd9f5221c 2>/dev/null");
     doCommand("chifra abis --clean 0x0000000000004946c0e9f43f4dee607b0ef1fa1c 2>/dev/null");
     doCommand("chifra abis --clean 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 2>/dev/null");
+    doCommand("chifra abis --clean 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031 2>/dev/null");
+    doCommand("chifra abis --clean 0x6d903f6003cca6255d85cca4d3b5e5146dc33925 2>/dev/null");
+    doCommand("chifra abis --clean 0x9ba00d6856a4edf4665bca2c2309936572473b7e 2>/dev/null");
+    doCommand("chifra abis --clean 0x1a9c8182c09f50c8318d769245bea52c32be35bc 2>/dev/null");
+    doCommand("chifra abis --clean 0x729d19f657bd0614b4985cf1d82531c67569197b 2>/dev/null");
+    doCommand("chifra abis --clean 0x81f7564e413586f1f99fde55740ac52b43ca99c9 2>/dev/null");
+    doCommand("chifra abis --clean 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819 2>/dev/null");
+    doCommand("chifra abis --clean 0xdbd27635a534a3d3169ef0498beb56fb9c937489 2>/dev/null");
 
-    // Forces the retreival of a few ABI files without which some tests will fail
+    // TODO: If the following lines are commented out, these tests cases fail:
+    // getState_proxy_imp.txt, getState_proxy_imp.txt, getTrans_old_parsing_bug_1.txt
+    // getTrans_old_parsing_bug_2.txt, getTrans_old_parsing_bug_1.txt, getTrans_old_parsing_bug_2.txt
+    // grabABI_ens_test.txt, grabABI_ens_test.txt, acctExport_statement_unfiltered.txt,
+    // acctExport_statement_unfiltered.txt It's all related to abis being in the cache Forces the retreival of a few ABI
+    // files without which some tests will fail
+    cerr << bYellow << "Downloading abi files..." << cOff << endl;
     doCommand("chifra abis 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
     doCommand("chifra abis 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
     doCommand("chifra abis 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
@@ -280,4 +272,12 @@ void establishTestData(void) {
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
     doCommand("chifra abis 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
     doCommand("chifra abis 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7");
+    doCommand("chifra abis 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031");
+    doCommand("chifra abis 0x6d903f6003cca6255d85cca4d3b5e5146dc33925");
+    doCommand("chifra abis 0x9ba00d6856a4edf4665bca2c2309936572473b7e");
+    doCommand("chifra abis 0x1a9c8182c09f50c8318d769245bea52c32be35bc");
+    doCommand("chifra abis 0x729d19f657bd0614b4985cf1d82531c67569197b");
+    doCommand("chifra abis 0x81f7564e413586f1f99fde55740ac52b43ca99c9");
+    doCommand("chifra abis 0x8d12a197cb00d4747a1fe03395095ce2a5cc6819");
+    doCommand("chifra abis 0xdbd27635a534a3d3169ef0498beb56fb9c937489");
 }

@@ -13,8 +13,10 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -23,40 +25,41 @@ import (
 type ListOptions struct {
 	Addrs       []string              `json:"addrs,omitempty"`       // One or more addresses (0x...) to list
 	Count       bool                  `json:"count,omitempty"`       // Display only the count of records for each monitor
-	Appearances bool                  `json:"appearances,omitempty"` // Export each monitor's list of appearances (the default)
-	Silent      bool                  `json:"silent,omitempty"`      // Freshen the monitor only (no reporting)
-	NoZero      bool                  `json:"noZero,omitempty"`      // Suppress the display of zero appearance accounts
+	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
+	Bounds      bool                  `json:"bounds,omitempty"`      // Report first and last block this address appears
 	Unripe      bool                  `json:"unripe,omitempty"`      // List transactions labeled upripe (i.e. less than 28 blocks old)
+	Silent      bool                  `json:"silent,omitempty"`      // Freshen the monitor only (no reporting)
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
+	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
-	Bounds      bool                  `json:"bounds,omitempty"`      // Report first and last block this address appears
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 var defaultListOptions = ListOptions{
-	FirstRecord: 1,
-	MaxRecords:  250,
-	LastBlock:   utils.NOPOS,
+	MaxRecords: 250,
+	LastBlock:  utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ListOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
-	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
+	logger.TestLog(opts.Bounds, "Bounds: ", opts.Bounds)
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
-	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
+	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
+	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
-	logger.TestLog(opts.Bounds, "Bounds: ", opts.Bounds)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -70,7 +73,7 @@ func (opts *ListOptions) String() string {
 func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	copy := defaultListOptions
 	opts := &copy
-	opts.FirstRecord = 1
+	opts.FirstRecord = 0
 	opts.MaxRecords = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -83,50 +86,70 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			}
 		case "count":
 			opts.Count = true
-		case "appearances":
-			opts.Appearances = true
-		case "silent":
-			opts.Silent = true
 		case "noZero":
 			opts.NoZero = true
+		case "bounds":
+			opts.Bounds = true
 		case "unripe":
 			opts.Unripe = true
+		case "silent":
+			opts.Silent = true
 		case "firstRecord":
 			opts.FirstRecord = globals.ToUint64(value[0])
 		case "maxRecords":
 			opts.MaxRecords = globals.ToUint64(value[0])
+		case "reversed":
+			opts.Reversed = true
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
-		case "bounds":
-			opts.Bounds = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "list")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 
 	return opts
 }
 
 // listFinishParse finishes the parsing for command line invocations. Returns a new ListOptions.
 func listFinishParse(args []string) *ListOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, args)
+	for _, arg := range args {
+		if base.IsValidAddress(arg) {
+			opts.Addrs = append(opts.Addrs, arg)
+		}
+	}
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -142,4 +165,17 @@ func ResetOptions() {
 	defaultListOptions = ListOptions{}
 	globals.SetDefaults(&defaultListOptions.Globals)
 	defaultListOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra list
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultListOptions.Globals.Caps = capabilities
 }
+
+func (opts *ListOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

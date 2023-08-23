@@ -12,7 +12,9 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -21,6 +23,7 @@ type ConfigOptions struct {
 	Mode    string                `json:"mode,omitempty"`    // Either show or edit the configuration
 	Paths   bool                  `json:"paths,omitempty"`   // Show the configuration paths for the system
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -32,6 +35,7 @@ var defaultConfigOptions = ConfigOptions{}
 func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -52,13 +56,13 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 		case "paths":
 			opts.Paths = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "config")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -67,9 +71,23 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 
 // configFinishParse finishes the parsing for command line invocations. Returns a new ConfigOptions.
 func configFinishParse(args []string) *ConfigOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
 	defFmt = ""
 	for _, arg := range args {
@@ -84,6 +102,7 @@ func configFinishParse(args []string) *ConfigOptions {
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -99,4 +118,17 @@ func ResetOptions() {
 	defaultConfigOptions = ConfigOptions{}
 	globals.SetDefaults(&defaultConfigOptions.Globals)
 	defaultConfigOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra config
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultConfigOptions.Globals.Caps = capabilities
 }
+
+func (opts *ConfigOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

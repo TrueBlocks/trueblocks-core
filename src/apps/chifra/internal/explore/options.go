@@ -9,13 +9,13 @@ package explorePkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -25,6 +25,7 @@ type ExploreOptions struct {
 	Local   bool                  `json:"local,omitempty"`   // Open the local TrueBlocks explorer
 	Google  bool                  `json:"google,omitempty"`  // Search google excluding popular blockchain explorers
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -37,6 +38,7 @@ func (opts *ExploreOptions) testLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -44,30 +46,6 @@ func (opts *ExploreOptions) testLog() {
 func (opts *ExploreOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *ExploreOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *ExploreOptions) toCmdLine() string {
-	options := ""
-	if opts.Local {
-		options += " --local"
-	}
-	if opts.Google {
-		options += " --google"
-	}
-	options += " " + strings.Join(opts.Terms, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // exploreFinishParseApi finishes the parsing for server invocations. Returns a new ExploreOptions.
@@ -86,15 +64,15 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 		case "google":
 			opts.Google = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "explore")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
-	opts.Terms, _ = ens.ConvertEns(opts.Globals.Chain, opts.Terms)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -102,15 +80,31 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 
 // exploreFinishParse finishes the parsing for command line invocations. Returns a new ExploreOptions.
 func exploreFinishParse(args []string) *ExploreOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
-	opts.Terms, _ = ens.ConvertEns(opts.Globals.Chain, args)
+	opts.Terms = append(opts.Terms, args...)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -126,4 +120,21 @@ func ResetOptions() {
 	defaultExploreOptions = ExploreOptions{}
 	globals.SetDefaults(&defaultExploreOptions.Globals)
 	defaultExploreOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra explore
+	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Fmt)
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
+	// EXISTING_CODE
+	defaultExploreOptions.Globals.Caps = capabilities
 }
+
+func (opts *ExploreOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

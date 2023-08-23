@@ -26,8 +26,8 @@ func (opts *OutputOptions) GetOutputFileWriter() io.Writer {
 		file, err = os.OpenFile(opts.OutputFn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	}
 	if err != nil {
-		// TODO(dawid): - what happens in the server case?
-		// TODO(dawid): In API mode, --output is disallowed, but we should check
+		// TODO: - what happens in the server case?
+		// TODO: In API mode, --output is disallowed, but we should check
 		logger.Fatal(err)
 	}
 	return file

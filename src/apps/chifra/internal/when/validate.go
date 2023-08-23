@@ -12,14 +12,12 @@ import (
 )
 
 func (opts *WhenOptions) validateWhen() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
-	}
-
-	if opts.Globals.ShowRaw {
-		return validate.Usage("The {0} option is not available for {1} command", "--raw", "when")
 	}
 
 	if opts.Timestamps {
@@ -85,7 +83,7 @@ func (opts *WhenOptions) validateWhen() error {
 	}
 
 	err := validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Blocks,
 		validate.ValidBlockIdWithRangeAndDate,
 		1,

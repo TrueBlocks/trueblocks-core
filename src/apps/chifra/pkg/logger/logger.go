@@ -7,7 +7,9 @@ package logger
 import (
 	"fmt"
 	"log"
+	"math"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -39,7 +41,7 @@ var (
 	testMode    = false
 )
 
-// TestLog is used to print command line options to the screen during testing only
+// TestLog is used to print log lines during testing only
 func TestLog(notDefault bool, a ...interface{}) {
 	if !testModeSet {
 		testModeSet = true
@@ -78,7 +80,7 @@ func toLog(sev severity, a ...interface{}) {
 	if sev == progress {
 		for index, aa := range a {
 			if index > 0 {
-				fmt.Fprint(os.Stderr, ' ')
+				fmt.Fprint(os.Stderr, " ")
 			}
 			fmt.Fprint(os.Stderr, aa)
 		}
@@ -125,4 +127,18 @@ func Progress(tick bool, v ...any) {
 		return
 	}
 	toLog(progress, v...)
+}
+
+func CleanLine() {
+	// \033[K is escape sequence meaning "erase to end of line"
+	fmt.Print("\r\033[K")
+}
+
+func PctProgress(done int32, total int, tick int32) {
+	if done%tick != 0 {
+		return
+	}
+
+	percentage := math.Round(float64(done) / float64(total) * 100)
+	toLog(progress, fmt.Sprintf("\r\t\t\t Processing: %.f%% (%d of %d)%s", percentage, done, total, strings.Repeat(" ", 40)))
 }

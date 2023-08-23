@@ -29,21 +29,29 @@ Flags:
   -u, --uniq                 display a list of uniq addresses found in the transaction
   -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
                              One of [ from | to ]
+  -l, --logs                 display only the logs found in the transaction(s)
+  -m, --emitter strings      for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
   -A, --account_for string   reconcile the transaction as per the provided address
-  -o, --cache                force the results of the query into the tx cache (and the trace cache if applicable)
-  -D, --decache              removes a transactions and any traces in the transaction from the cache
+  -H, --ether                specify value in ether
+  -w, --raw                  report JSON data from the source with minimal processing
+  -o, --cache                force the results of the query into the cache
+  -D, --decache              removes related items from the cache
   -x, --fmt string           export format, one of [none|json*|txt|csv]
-  -v, --verbose              enable verbose (increase detail with --log_level)
+  -v, --verbose              enable verbose output
   -h, --help                 display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
+  - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.
+  - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 ```
 
 Data models produced by this tool:
 
+- [statement](/data-model/accounts/#statement)
 - [transaction](/data-model/chaindata/#transaction)
 - [transfer](/data-model/chaindata/#transfer)
 
@@ -54,15 +62,9 @@ All tools accept the following additional flags, although in some cases, they ha
 
 ```[plaintext]
   -v, --version         display the current version of the tool
-      --wei             export values in wei (the default)
-      --ether           export values in ether
-      --raw             pass raw RPC data directly from the node with no processing
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
-  -h, --help            display this help screen
   ```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any

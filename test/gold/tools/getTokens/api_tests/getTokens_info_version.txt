@@ -1,40 +1,20 @@
+tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&parts=version
 {
   "data": [
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
-    }
-  ],
-  "types": [
-    {
-      "type": "CTokenBalance",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "isContract",
-          "type": "bool"
-        },
-        {
-          "name": "isErc20",
-          "type": "bool"
-        },
-        {
-          "name": "isErc721",
-          "type": "bool"
-        }
-      ]
+      "blockNumber": 17000000,
+      "version": ""
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

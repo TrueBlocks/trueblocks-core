@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
@@ -49,40 +50,43 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra blocks"
 	// EXISTING_CODE
-	if opts.IsPorted() {
-		handled = true
-		if opts.Decache {
-			err = opts.HandleDecache()
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in BlocksInternal")
+	}
 
-		} else if opts.Count {
-			err = opts.HandleCounts()
+	handled = true
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
 
-		} else if opts.Traces {
-			err = opts.HandleTrace()
+	} else if opts.Count {
+		err = opts.HandleCounts()
 
-		} else if opts.List > 0 {
-			err = opts.HandleList()
+	} else if opts.Logs {
+		err = opts.HandleLogs()
 
-		} else if opts.Uncles {
-			err = opts.HandleShowUncles()
+	} else if opts.Traces {
+		err = opts.HandleTraces()
 
-		} else {
-			err = opts.HandleShowBlocks()
-		}
+	} else if opts.Uncles {
+		err = opts.HandleUncles()
+
+	} else if opts.List > 0 {
+		err = opts.HandleList()
+
+	} else if opts.Uniq {
+		err = opts.HandleUniq()
+
+	} else if opts.Hashes {
+		err = opts.HandleHashes()
 
 	} else {
-		if opts.Globals.IsApiMode() {
-			return nil, false
-		}
-
-		handled = true
-		err = opts.Globals.PassItOn("getBlocks", opts.Globals.Chain, opts.toCmdLine(), opts.getEnvStr())
-		// TODO: BOGUS -- this is a hack to prevent the output from being written twice. It will be
-		// TODO: removed when the etnire command is ported
-		opts.Globals.Writer = nil
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }
@@ -98,17 +102,7 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 
 func (opts *BlocksOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	if opts.Decache {
-		ported = true
-	} else if opts.Cache {
-		ported = false
-	} else {
-		if opts.Count {
-			ported = (!opts.Apps && !opts.Uniq)
-		} else {
-			ported = !opts.Uncles && !opts.Logs && !opts.Apps && !opts.Uniq && !opts.Traces
-		}
-	}
+	ported = true
 	// EXISTING_CODE
 	return
 }

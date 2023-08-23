@@ -1,6 +1,7 @@
 chifra transactions  16500011.0 --raw --fmt json
 TEST[DATE|TIME] Transactions:  [16500011.0]
 TEST[DATE|TIME] ShowRaw:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

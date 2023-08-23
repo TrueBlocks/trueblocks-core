@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -95,21 +96,17 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		t.Error(err)
 	}
 
-	tooLarge := make([]index.AppearanceRecord, mon.Count()+2)
-	err = mon.ReadAppearances(&tooLarge)
-	if err == nil {
-		t.Error("Expected an error with too large array. Did not get error.")
-	}
-
-	apps := make([]index.AppearanceRecord, mon.Count())
-	err = mon.ReadAppearances(&apps)
-	if err != nil {
+	if apps, _, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
 		t.Error(err)
-	}
-
-	for i, app := range apps {
-		if testApps[i] != app {
-			t.Error("Record", i, "as read (", app, ") is not equal to testApp", testApps[i])
+	} else {
+		for i, app := range apps {
+			tA := app
+			tA.Address = mon.Address
+			tA.BlockNumber = testApps[i].BlockNumber
+			tA.TransactionIndex = testApps[i].TransactionId
+			if tA != app {
+				t.Error("Record", i, "as read (", app, ") is not equal to testApp", tA)
+			}
 		}
 	}
 }

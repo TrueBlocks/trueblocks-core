@@ -12,7 +12,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -20,9 +19,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
+// HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *InitOptions) HandleInit() error {
 	// Make the code below cleaner...
 	chain := opts.Globals.Chain
@@ -30,15 +30,15 @@ func (opts *InitOptions) HandleInit() error {
 	// TODO: BOGUS - IF THE SCRAPER IS RUNNING, THIS WILL CAUSE PROBLEMS
 	// Make sure that the temporary scraper folders are empty, so that, when the
 	// scraper starts, it starts on the correct block.
-	index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
+	_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
 
 	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
 
-	if remoteManifest.Chain != opts.Globals.Chain {
-		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, opts.Globals.Chain)
+	if remoteManifest.Chain != chain {
+		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, chain)
 		return errors.New(msg)
 	}
 
@@ -51,7 +51,7 @@ func (opts *InitOptions) HandleInit() error {
 	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 
 	// Tell the user what we're doing
-	logger.InfoTable("Unchained Index:", unchained.Address_V2)
+	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
 	logger.InfoTable("Schemas:", unchained.Schemas)
 	logger.InfoTable("Config Folder:", config.GetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.GetPathToIndex(chain))
@@ -66,7 +66,7 @@ func (opts *InitOptions) HandleInit() error {
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
 
-	getChunks := func(chunkType cache.CacheType) {
+	getChunks := func(chunkType walk.CacheType) {
 		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType, nCorrections)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
@@ -85,7 +85,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Set up a go routine to download the bloom filters...
 	go func() {
-		getChunks(cache.Index_Bloom)
+		getChunks(walk.Index_Bloom)
 		bloomsDoneChannel <- true
 	}()
 
@@ -93,7 +93,7 @@ func (opts *InitOptions) HandleInit() error {
 	// if opts.All {
 	// Set up another go routine to download the index chunks if the user told us to...
 	go func() {
-		getChunks(cache.Index_Final)
+		getChunks(walk.Index_Final)
 		indexDoneChannel <- true
 	}()
 
@@ -112,10 +112,11 @@ var m sync.Mutex
 // TODO: So we can capture both the blooms and the index portions in one summary. Once we move to single stream, this can go local
 var nProcessed12 int
 var nStarted12 int
-var nUpdated12 int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType cache.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType walk.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
+	chain := opts.Globals.Chain
+
 	failed := []manifest.ChunkRecord{}
 	cancelled := false
 
@@ -127,7 +128,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 	poolSize := runtime.NumCPU() * 2
 
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
-	go index.DownloadChunks(opts.Globals.Chain, chunks, chunkType, poolSize, progressChannel)
+	go index.DownloadChunks(chain, chunks, chunkType, poolSize, progressChannel)
 
 	for event := range progressChannel {
 		chunk, ok := event.Payload.(*manifest.ChunkRecord)
@@ -169,7 +170,6 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 		case progress.Update:
 			msg := fmt.Sprintf("%s%s%s", colors.Yellow, event.Message, colors.Off)
 			logger.Info(msg, spaces)
-			nUpdated12++
 
 		case progress.Finished:
 			nProcessed12++

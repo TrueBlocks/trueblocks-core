@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -18,13 +17,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
 type AddressAppearanceMap map[string][]AppearanceRecord
-
+type AddressBooleanMap map[string]bool
+type AppearanceMap map[string]types.SimpleAppearance
 type WriteChunkReport struct {
 	Range        base.FileRange
 	nAddresses   int
@@ -91,24 +91,24 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 	// At this point, the two tables and the bloom filter are fully populated. We're ready to write to disc...
 
 	// First, we backup the existing chunk if there is one...
-	indexFn := cache.ToIndexPath(fileName)
+	indexFn := ToIndexPath(fileName)
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
-				os.Rename(backupFn, indexFn)
-				os.Remove(backupFn) // seems redundant, but may not be on some operating systems
+				_ = os.Rename(backupFn, indexFn)
+				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
 
 		if fp, err := os.OpenFile(indexFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
 			// defer fp.Close() // Note -- we don't defer because we want to close the file and possibly pin it below...
 
-			fp.Seek(0, io.SeekStart) // already true, but can't hurt
+			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := IndexHeaderRecord{
 				Magic:           file.MagicNumber,
-				Hash:            common.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
+				Hash:            base.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
@@ -116,15 +116,15 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return nil, err
 			}
 
-			if binary.Write(fp, binary.LittleEndian, addressTable); err != nil {
+			if err = binary.Write(fp, binary.LittleEndian, addressTable); err != nil {
 				return nil, err
 			}
 
-			if binary.Write(fp, binary.LittleEndian, appearanceTable); err != nil {
+			if err = binary.Write(fp, binary.LittleEndian, appearanceTable); err != nil {
 				return nil, err
 			}
 
-			if _, err = bl.WriteBloom(chain, cache.ToBloomPath(indexFn)); err != nil {
+			if _, err = bl.WriteBloom(chain, ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
 
@@ -152,12 +152,13 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				return &report, nil
 			}
 
-			result, err := pinning.PinChunk(chain, indexFn, remote)
+			result, err := pinning.PinChunk(chain, ToBloomPath(indexFn), ToIndexPath(indexFn), remote)
 			if err != nil {
 				return &report, err
 			}
 
-			if err = pinning.PinTimestamps(chain, remote); err != nil {
+			path := config.GetPathToIndex(chain) + "ts.bin"
+			if _, err = pinning.PinItem(chain, "timestamps", path, remote); err != nil {
 				return &report, err
 			}
 

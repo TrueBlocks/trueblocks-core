@@ -1,6 +1,7 @@
 chifra when  23123 --list --fmt txt
 TEST[DATE|TIME] Blocks:  [23123]
 TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 Error: Please supply either block identifiers or the --list option.
 Usage:
@@ -16,10 +17,12 @@ Flags:
   -n, --truncate uint   with --timestamps only, truncates the timestamp file at this block (hidden)
   -r, --repair          with --timestamps only, repairs block(s) in the block range by re-querying from the chain
   -c, --check           with --timestamps only, checks the validity of the timestamp data
-      --update          with --timestamps only, bring the timestamp database forward to the latest block
-  -e, --deep            with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)
+  -u, --update          with --timestamps only, bring the timestamp database forward to the latest block
+  -d, --deep            with --timestamps --check only, verifies timestamps from on chain (slow)
+  -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
+  -v, --verbose         enable verbose output
   -h, --help            display this help screen
 
 Notes:

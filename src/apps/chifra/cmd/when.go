@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -29,7 +30,7 @@ var whenCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("when", func() *globals.GlobalOptions {
 		return &whenPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("when", whenPkg.RunWhen, whenPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("when", whenPkg.RunWhen, whenPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &whenPkg.GetOptions().Globals
 	}),
@@ -52,6 +53,11 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
 func init() {
+	var capabilities = caps.Default // Additional global caps for chifra when
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+
 	whenCmd.Flags().SortFlags = false
 
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().List, "list", "l", false, "export a list of the 'special' blocks")
@@ -60,13 +66,12 @@ func init() {
 	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Truncate, "truncate", "n", 0, "with --timestamps only, truncates the timestamp file at this block (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Repair, "repair", "r", false, "with --timestamps only, repairs block(s) in the block range by re-querying from the chain")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, "with --timestamps only, checks the validity of the timestamp data")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "", false, "with --timestamps only, bring the timestamp database forward to the latest block")
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "e", false, "with --timestamps --check only, verifies timestamps from on chain (slow) (hidden)")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, "with --timestamps only, bring the timestamp database forward to the latest block")
+	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "d", false, "with --timestamps --check only, verifies timestamps from on chain (slow)")
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("truncate")
-		whenCmd.Flags().MarkHidden("deep")
 	}
-	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals)
+	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals, capabilities)
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 	whenCmd.SetOut(os.Stderr)

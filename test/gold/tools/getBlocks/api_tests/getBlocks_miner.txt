@@ -4,19 +4,18 @@ blocks?blocks=1&uniq&fmt=json
     {
       "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
       "blockNumber": 1,
-      "transactionIndex": 99999,
-      "traceIndex": "",
       "reason": "miner",
-      "name": "",
-      "timestamp": 1438269988,
-      "date": "2015-07-30 15:26:28 UTC"
+      "transactionIndex": 99999
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

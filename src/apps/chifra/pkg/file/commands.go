@@ -25,10 +25,10 @@ type CommandFileLine struct {
 	Args       []string
 }
 
-// ParseCommandFile parses a text file into `CommandsFile` struct. While parsing, the function validates flags
+// ParseCommandsFile parses a text file into `CommandsFile` struct. While parsing, the function validates flags
 // present on the current line.
 func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, err error) {
-	// TODO(dawid): parallelize
+	// TODO: parallelize
 	inputFile, err := os.Open(filePath)
 	if err != nil {
 		return
@@ -84,7 +84,7 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 	return
 }
 
-// `RunWithFileSupport` returns a function to run Cobra command. The command runs in the usual
+// RunWithFileSupport returns a function to run Cobra command. The command runs in the usual
 // way unless `--file` is specified. If it is specified, this function will parse the file
 // and then run the command in series of independent calls (just like calling `chifra`
 // N times on the command line, but without wasting time and resources for the startup)
@@ -112,8 +112,7 @@ func RunWithFileSupport(
 
 		// TODO: see issue #2444 - probably better ways to do this
 		disallowed := map[string]bool{
-			"daemon": true,
-			"init":   true,
+			"init": true,
 		}
 		if disallowed[mode] {
 			msg := fmt.Sprintf("The --file option is not allowed in %s mode.", mode)

@@ -13,8 +13,10 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -26,8 +28,8 @@ type AbisOptions struct {
 	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
 	Encode  string                `json:"encode,omitempty"`  // Generate the 32-byte encoding for a given cannonical function or event signature
 	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no address is given
-	Sol     bool                  `json:"sol,omitempty"`     // Please use the `solc --abi` tool instead
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
+	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -43,6 +45,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -79,37 +82,52 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			opts.Encode = value[0]
 		case "clean":
 			opts.Clean = true
-		case "sol":
-			opts.Sol = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 
 	return opts
 }
 
 // abisFinishParse finishes the parsing for command line invocations. Returns a new AbisOptions.
 func abisFinishParse(args []string) *AbisOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
-	defFmt := "txt"
-	// EXISTING_CODE
-	if opts.Globals.IsApiMode() {
-		defFmt = "json"
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
 	}
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, args)
+
+	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
+	for _, arg := range args {
+		if base.IsValidAddress(arg) {
+			opts.Addrs = append(opts.Addrs, arg)
+		}
+	}
+	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -125,4 +143,17 @@ func ResetOptions() {
 	defaultAbisOptions = AbisOptions{}
 	globals.SetDefaults(&defaultAbisOptions.Globals)
 	defaultAbisOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra abis
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultAbisOptions.Globals.Caps = capabilities
 }
+
+func (opts *AbisOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

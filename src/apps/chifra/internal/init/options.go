@@ -12,7 +12,9 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -23,6 +25,7 @@ type InitOptions struct {
 	FirstBlock uint64                `json:"firstBlock,omitempty"` // Do not download any chunks earlier than this block
 	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between downloads
 	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
+	Conn       *rpc.Connection       `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -36,6 +39,7 @@ func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -62,13 +66,13 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -77,9 +81,23 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 
 // initFinishParse finishes the parsing for command line invocations. Returns a new InitOptions.
 func initFinishParse(args []string) *InitOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
 	if len(args) > 0 {
 		opts.BadFlag = validate.Usage("Invalid argument ({0}).", args[0])
@@ -88,6 +106,7 @@ func initFinishParse(args []string) *InitOptions {
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -103,4 +122,22 @@ func ResetOptions() {
 	defaultInitOptions = InitOptions{}
 	globals.SetDefaults(&defaultInitOptions.Globals)
 	defaultInitOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra init
+	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Fmt)
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.File)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
+	// EXISTING_CODE
+	defaultInitOptions.Globals.Caps = capabilities
 }
+
+func (opts *InitOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

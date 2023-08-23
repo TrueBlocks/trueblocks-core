@@ -1,5 +1,6 @@
 chifra traces  0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 --fmt json
 TEST[DATE|TIME] Transactions:  [0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328]
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -14,9 +15,9 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
+      "date": "2017-02-15 20:43:44 UTC",
       "result": {
-        "gasUsed": 5437,
-        "output": "0x"
+        "gasUsed": 5437
       },
       "subtraces": 1,
       "timestamp": 1487191424,
@@ -33,6 +34,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x9ee74ad50cb24017ee6fa90cdabc13d00e714ab3692a689a4a22716bdd2de5a4",
       "blockNumber": 3189962,
+      "date": "2017-02-15 20:43:44 UTC",
       "result": null,
       "subtraces": 0,
       "timestamp": 1487191424,

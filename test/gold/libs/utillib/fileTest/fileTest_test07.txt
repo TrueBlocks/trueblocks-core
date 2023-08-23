@@ -1,4 +1,0 @@
-fileTest  rm
-old file:  - 0
-new file:  - 0
-n w s file:  - 0

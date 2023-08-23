@@ -14,9 +14,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Let's define bitmasks to make it easier to validate multiple block identifiers
-// (which usually are arguments to `chifra` commands). This way we can specify
-// that we want e.g. both block number and a special block as valid arguments
+// ValidArgumentType is a bitmask used to make it easier to validate multiple
+// block identifiers (which usually are arguments to `chifra` commands). This
+// way we can specify that we want e.g. both block number and a special block
+// as valid arguments
 type ValidArgumentType uint16
 
 const (

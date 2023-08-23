@@ -22,8 +22,8 @@ func TestIterateOverMap(t *testing.T) {
 		target[i] = testStruct{value: false}
 	}
 	var mu sync.Mutex
-	errs := make(chan error)
-	IterateOverMap(context.Background(), errs, target, func(key int, value testStruct) error {
+	errorChan := make(chan error)
+	IterateOverMap(context.Background(), errorChan, target, func(key int, value testStruct) error {
 		mu.Lock()
 		defer mu.Unlock()
 		item := target[key]
@@ -36,7 +36,7 @@ func TestIterateOverMap(t *testing.T) {
 		return nil
 	})
 
-	if err := <-errs; err != nil {
+	if err := <-errorChan; err != nil {
 		t.Fatal(err)
 	}
 
@@ -72,14 +72,14 @@ func BenchmarkIterateOverMap(b *testing.B) {
 	}
 
 	ctx := context.Background()
-	errs := make(chan error)
+	errorChan := make(chan error)
 	for i := 0; i < b.N; i++ {
-		IterateOverMap(ctx, errs, target, func(key int, value bool) error {
+		IterateOverMap(ctx, errorChan, target, func(key int, value bool) error {
 			time.Sleep(5 * time.Millisecond)
 			return nil
 		})
 
-		if err := <-errs; err != nil {
+		if err := <-errorChan; err != nil {
 			b.Fatal(err)
 		}
 	}

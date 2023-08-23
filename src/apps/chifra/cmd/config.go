@@ -13,6 +13,7 @@ import (
 
 	configPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -29,7 +30,7 @@ var configCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("config", func() *globals.GlobalOptions {
 		return &configPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("config", configPkg.RunConfig, configPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("config", configPkg.RunConfig, configPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &configPkg.GetOptions().Globals
 	}),
@@ -49,13 +50,14 @@ const longConfig = `Purpose:
 const notesConfig = ``
 
 func init() {
+	var capabilities = caps.Default // Additional global caps for chifra config
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	configCmd.Flags().SortFlags = false
 
-	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		configCmd.Flags().MarkHidden("paths")
-	}
-	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals)
+	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system")
+	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals, capabilities)
 
 	configCmd.SetUsageTemplate(UsageWithNotes(notesConfig))
 	configCmd.SetOut(os.Stderr)

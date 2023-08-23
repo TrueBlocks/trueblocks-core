@@ -2,7 +2,7 @@
 
 <!-- markdownlint-disable MD041 -->
 When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**
-([0x0c316b7042b419d07d343f2f4f5bd54ff731183d](https://etherscan.io/address/0x0c316b7042b419d07d343f2f4f5bd54ff731183d)).
+(0x0c316b7042b419d07d343f2f4f5bd54ff731183d).
 
 This value (`manifestHashMap`) is an IPFS hash pointing to a pinned file (called the Manifest) that
 contains a large collection of other IPFS hashes. These other hashes point to each of the Bloom
@@ -30,15 +30,16 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all           in addition to Bloom filters, download full index chunks (recommended)
-  -d, --dry_run       display the results of the download without actually downloading
-  -s, --sleep float   seconds to sleep between downloads
-  -x, --fmt string    export format, one of [none|json*|txt|csv]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+  -a, --all                in addition to Bloom filters, download full index chunks (recommended)
+  -d, --dry_run            display the results of the download without actually downloading
+  -F, --first_block uint   do not download any chunks earlier than this block
+  -s, --sleep float        seconds to sleep between downloads
+  -v, --verbose            enable verbose output
+  -h, --help               display this help screen
 
 Notes:
   - If run with no options, this tool will download or freshen only the Bloom filters.
+  - The --first_block option will fall back to the start of the containing chunk.
   - You may re-run the tool as often as you wish. It will repair or freshen the index.
 ```
 
@@ -54,15 +55,9 @@ All tools accept the following additional flags, although in some cases, they ha
 
 ```[plaintext]
   -v, --version         display the current version of the tool
-      --wei             export values in wei (the default)
-      --ether           export values in ether
-      --raw             pass raw RPC data directly from the node with no processing
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
-  -h, --help            display this help screen
   ```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any

@@ -13,7 +13,6 @@ import (
 	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
@@ -67,7 +66,6 @@ func (bl *ChunkBloom) String() string {
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
 func NewChunkBloom(path string) (bl ChunkBloom, err error) {
-	path = cache.ToBloomPath(path)
 	if !file.FileExists(path) {
 		return bl, errors.New("required bloom file (" + path + ") missing")
 	}
@@ -83,7 +81,7 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 		return
 	}
 
-	bl.File.Seek(0, io.SeekStart)               // already true, but can't hurt
+	_, _ = bl.File.Seek(0, io.SeekStart)        // already true, but can't hurt
 	if err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return
 	}
@@ -92,7 +90,7 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 		return
 	}
 	bl.Blooms = make([]BloomBytes, 0, bl.Count)
-	bl.File.Seek(int64(bl.HeaderSize), io.SeekStart) // Point to the start of Count
+	_, _ = bl.File.Seek(int64(bl.HeaderSize), io.SeekStart) // Point to the start of Count
 
 	return
 }
@@ -121,7 +119,7 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 		bl.File = nil
 	}()
 
-	bl.File.Seek(0, io.SeekStart)               // already true, but can't hurt
+	_, _ = bl.File.Seek(0, io.SeekStart)        // already true, but can't hurt
 	if err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
 	}
@@ -153,14 +151,14 @@ func (bl *ChunkBloom) ReadBloomHeader() error {
 	err := binary.Read(bl.File, binary.LittleEndian, &bl.Header)
 	if err != nil {
 		bl.Header = BloomHeader{}
-		bl.File.Seek(0, io.SeekStart)
+		_, _ = bl.File.Seek(0, io.SeekStart)
 		return err
 	}
 
 	if bl.Header.Magic != file.SmallMagicNumber {
 		// This is an unversioned bloom filter, set back to start of file
 		bl.Header = BloomHeader{}
-		bl.File.Seek(0, io.SeekStart)
+		_, _ = bl.File.Seek(0, io.SeekStart)
 		return ErrInvalidBloomMagic
 	}
 

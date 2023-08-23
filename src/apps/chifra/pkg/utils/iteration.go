@@ -15,9 +15,9 @@ type stepFunc[Key, Value any] func(key Key, value Value) error
 // IterateOverMap distributes batches of `target` items to a pool of goroutines which execute
 // `step` for every `target` item. Use benchmarks to make sure that concurrent iteration
 // is faster than synchronous one.
-func IterateOverMap[Key comparable, Value any](ctx context.Context, errChannel chan error, target map[Key]Value, step stepFunc[Key, Value]) {
+func IterateOverMap[Key comparable, Value any](ctx context.Context, errorChan chan error, target map[Key]Value, step stepFunc[Key, Value]) {
 	var wg sync.WaitGroup
-	defer close(errChannel)
+	defer close(errorChan)
 
 	itemsPerPool := len(target) / runtime.GOMAXPROCS(0)
 	if itemsPerPool < 1 {
@@ -39,19 +39,19 @@ func IterateOverMap[Key comparable, Value any](ctx context.Context, errChannel c
 		default:
 			args, ok := i.([]stepArguments)
 			if !ok {
-				errChannel <- fmt.Errorf("invalid worker argument: %v", i)
+				errorChan <- fmt.Errorf("invalid worker argument: %v", i)
 				return
 			}
 			for _, arg := range args {
 				if err := step(arg.key, arg.value); err != nil {
-					errChannel <- err
+					errorChan <- err
 					return
 				}
 			}
 		}
 	})
 	if err != nil {
-		errChannel <- err
+		errorChan <- err
 		return
 	}
 	defer pool.Release()
@@ -69,11 +69,21 @@ func IterateOverMap[Key comparable, Value any](ctx context.Context, errChannel c
 			wg.Add(1)
 			err = pool.Invoke(payload)
 			if err != nil {
-				errChannel <- err
+				errorChan <- err
 				return
 			}
 			// new batch
 			payload = make([]stepArguments, 0, itemsPerPool)
+		}
+	}
+
+	// don't forget about the remainder...
+	if len(payload) > 0 {
+		wg.Add(1)
+		err = pool.Invoke(payload)
+		if err != nil {
+			errorChan <- err
+			return
 		}
 	}
 

@@ -96,7 +96,7 @@ func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.Simp
 			Decimals: uint64(i),
 			Symbol:   "SYM_" + num,
 			Source:   "Testing",
-			Petname:  AddrToPetname(addressStr, "-"),
+			Petname:  base.AddrToPetname(addressStr, "-"),
 			IsCustom: true,
 		}
 		if _, ok := (*all)[address]; !ok {
@@ -219,7 +219,9 @@ func writeCustomNames(output *os.File) (err error) {
 	if err = file.Lock(output); err != nil {
 		return
 	}
-	defer file.Unlock(output)
+	defer func() {
+		_ = file.Unlock(output)
+	}()
 
 	writer := NewNameWriter(output)
 	for _, name := range loadedCustomNames {

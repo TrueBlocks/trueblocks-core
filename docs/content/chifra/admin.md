@@ -46,8 +46,9 @@ Arguments:
 	One of [ show | edit ]
 
 Flags:
+  -a, --paths        show the configuration paths for the system
   -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -v, --verbose      enable verbose output
   -h, --help         display this help screen
 ```
 
@@ -72,13 +73,14 @@ Usage:
 
 Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
-	One or more of [ index | blooms | blocks | txs | traces | monitors | names | abis | recons | slurps | staging | unripe | maps | some | all ]
+	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
 
 Flags:
-  -c, --first_record uint   the first record to process (default 1)
+  -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
+  -a, --chains              include a list of chain configurations in the output
   -x, --fmt string          export format, one of [none|json*|txt|csv]
-  -v, --verbose             enable verbose (increase detail with --log_level)
+  -v, --verbose             enable verbose output
   -h, --help                display this help screen
 
 Notes:
@@ -130,7 +132,7 @@ Flags:
   -m, --monitor         instruct the node to start the monitors tool
   -g, --grpc            run gRPC server to serve names
   -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
+  -v, --verbose         enable verbose output
   -h, --help            display this help screen
 
 Notes:
@@ -176,13 +178,13 @@ Usage:
   chifra scrape [flags]
 
 Flags:
-  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
-  -i, --pin              pin new chunks (requires locally-running IPFS daemon or --remote)
-  -m, --remote           pin new chunks to the gateway (requires pinning service keys)
-  -s, --sleep float      seconds to sleep between scraper passes (default 14)
-  -x, --fmt string       export format, one of [none|json*|txt|csv]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
+  -n, --block_cnt uint     maximum number of blocks to process per pass (default 2000)
+  -i, --pin                pin new chunks (requires locally-running IPFS daemon or --remote)
+  -r, --remote             pin new chunks to the gateway (requires pinning service keys)
+  -s, --sleep float        seconds to sleep between scraper passes (default 14)
+  -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -v, --verbose            enable verbose output
+  -h, --help               display this help screen
 ```
 
 Data models produced by this tool:
@@ -280,15 +282,15 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
-  -n, --truncate uint      truncate the entire index at this block (requires a block identifier)
-  -m, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
+  -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
   -F, --first_block uint   first block to process (inclusive)
   -L, --last_block uint    last block to process (inclusive)
-  -d, --max_addrs uint     the max number of addresses to process in a given chunk
+  -m, --max_addrs uint     the max number of addresses to process in a given chunk
+  -d, --deep               if true, dig more deeply during checking (manifest only)
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string         export format, one of [none|json*|txt|csv]
-  -v, --verbose            enable verbose (increase detail with --log_level)
+  -v, --verbose            enable verbose output
   -h, --help               display this help screen
 
 Notes:
@@ -300,7 +302,6 @@ Notes:
   - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
   - The --pin option requires a locally running IPFS node or a pinning service API key.
   - The --publish option requires a private key.
-  - You may combine the --pin and --publish options.
 ```
 
 Data models produced by this tool:
@@ -313,6 +314,7 @@ Data models produced by this tool:
 - [chunkaddress](/data-model/admin/#chunkaddress)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [reportcheck](/data-model/admin/#reportcheck)
+- [chunkpinreport](/data-model/admin/#chunkpinreport)
 
 Links:
 
@@ -323,7 +325,7 @@ Links:
 
 <!-- markdownlint-disable MD041 -->
 When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**
-([0x0c316b7042b419d07d343f2f4f5bd54ff731183d](https://etherscan.io/address/0x0c316b7042b419d07d343f2f4f5bd54ff731183d)).
+(0x0c316b7042b419d07d343f2f4f5bd54ff731183d).
 
 This value (`manifestHashMap`) is an IPFS hash pointing to a pinned file (called the Manifest) that
 contains a large collection of other IPFS hashes. These other hashes point to each of the Bloom
@@ -351,15 +353,16 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all           in addition to Bloom filters, download full index chunks (recommended)
-  -d, --dry_run       display the results of the download without actually downloading
-  -s, --sleep float   seconds to sleep between downloads
-  -x, --fmt string    export format, one of [none|json*|txt|csv]
-  -v, --verbose       enable verbose (increase detail with --log_level)
-  -h, --help          display this help screen
+  -a, --all                in addition to Bloom filters, download full index chunks (recommended)
+  -d, --dry_run            display the results of the download without actually downloading
+  -F, --first_block uint   do not download any chunks earlier than this block
+  -s, --sleep float        seconds to sleep between downloads
+  -v, --verbose            enable verbose output
+  -h, --help               display this help screen
 
 Notes:
   - If run with no options, this tool will download or freshen only the Bloom filters.
+  - The --first_block option will fall back to the start of the containing chunk.
   - You may re-run the tool as often as you wish. It will repair or freshen the index.
 ```
 

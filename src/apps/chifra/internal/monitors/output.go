@@ -16,6 +16,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -69,6 +70,8 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra monitors"
 	// EXISTING_CODE
 	handled = true // everything is handled even on failure
 
@@ -82,21 +85,17 @@ func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
 		var wg sync.WaitGroup
 
 		wg.Add(1)
-		MonitorScraper = NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, opts.Globals.LogLevel)
+		MonitorScraper = NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, 0)
 		// Note that this never returns
 		go opts.RunMonitorScraper(&wg)
 
 		wg.Wait()
 
 	} else {
-		if opts.Decache {
-			err = opts.HandleDecache()
-		} else {
-			err = opts.HandleCrudCommands()
-		}
-
+		err = opts.HandleCrudCommands()
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }
@@ -112,7 +111,7 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 
 func (opts *MonitorsOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
-	ported = opts.List
+	ported = opts.List // Don't change this line. (Try it. See what happens.)
 	// EXISTING_CODE
 	return
 }

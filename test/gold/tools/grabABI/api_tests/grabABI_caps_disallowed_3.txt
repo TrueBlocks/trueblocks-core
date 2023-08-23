@@ -1,0 +1,6 @@
+abis?addrs=trueblocks.eth&ether
+{
+  "errors": [
+    "Invalid key (ether) in abis route."
+  ]
+}

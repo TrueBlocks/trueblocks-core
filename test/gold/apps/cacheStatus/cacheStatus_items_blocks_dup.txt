@@ -1,5 +1,5 @@
 chifra status  blocks --max_records 100 blocks blocks
-TEST[DATE|TIME] Modes:  [blocks blocks blocks]
+TEST[DATE|TIME] Modes:  [blocks]
 TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Format:  json
 {

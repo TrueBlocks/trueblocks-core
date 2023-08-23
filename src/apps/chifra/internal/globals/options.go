@@ -5,32 +5,35 @@
 package globals
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
 
 type GlobalOptions struct {
-	Wei     bool   `json:"wei,omitempty"`
-	Ether   bool   `json:"ether,omitempty"`
-	Help    bool   `json:"help,omitempty"`
-	File    string `json:"file,omitempty"`
-	Version bool   `json:"version,omitempty"`
-	Noop    bool   `json:"noop,omitempty"`
-	NoColor bool   `json:"noColor,omitempty"`
+	Wei     bool            `json:"wei,omitempty"`
+	Ether   bool            `json:"ether,omitempty"`
+	Help    bool            `json:"help,omitempty"`
+	File    string          `json:"file,omitempty"`
+	Version bool            `json:"version,omitempty"`
+	Noop    bool            `json:"noop,omitempty"`
+	NoColor bool            `json:"noColor,omitempty"`
+	Cache   bool            `json:"cache,omitempty"`
+	Decache bool            `json:"decache,omitempty"`
+	Caps    caps.Capability `json:"-"`
 	output.OutputOptions
 }
 
 func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
-	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
 	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
@@ -43,6 +46,9 @@ func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.NoColor, "NoColor: ", opts.NoColor)
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(opts.Append, "Append: ", opts.Append)
+	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
+	logger.TestLog(opts.Caps != caps.Default, "Caps: ", opts.Caps.Show())
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 }
@@ -57,114 +63,120 @@ func SetDefaults(opts *GlobalOptions) {
 	}
 }
 
-func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
+// TODO: These options should be in a data file
+func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	opts.TestMode = file.IsTestMode()
+	opts.Caps = c
 
-	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
-	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
+	if opts.Caps.Has(caps.Ether) {
+		cmd.Flags().BoolVarP(&opts.Ether, "ether", "H", false, "specify value in ether")
+	}
+
+	if opts.Caps.Has(caps.Wei) {
+		cmd.Flags().BoolVarP(&opts.Wei, "wei", "W", false, "specify value in wei (the default)")
+	}
+	_ = cmd.Flags().MarkHidden("wei")
+
+	if opts.Caps.Has(caps.Raw) {
+		cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "w", false, "report JSON data from the source with minimal processing")
+	}
+
+	if opts.Caps.Has(caps.Caching) {
+		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
+		cmd.Flags().BoolVarP(&opts.Decache, "decache", "D", false, "removes related items from the cache")
+	}
+
+	if opts.Caps.Has(caps.Fmt) {
+		cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv]")
+	}
+
+	if opts.Caps.Has(caps.Verbose) {
+		cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose output")
+	}
+
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 
-	cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
-	cmd.Flags().BoolVarP(&opts.ShowRaw, "raw", "", false, "report JSON data from the node with minimal processing")
-	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
-	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
-	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
-	cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
-	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
-	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
-	cmd.Flags().BoolVarP(&opts.Ether, "ether", "", false, "specify value in ether")
-	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
-	cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
-	cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
+	if opts.Caps.Has(caps.Chain) {
+		cmd.Flags().StringVarP(&opts.Chain, "chain", "", "", "EVM compatible chain you're running against")
+	}
+	_ = cmd.Flags().MarkHidden("chain")
 
-	cmd.Flags().MarkHidden("chain")
-	cmd.Flags().MarkHidden("raw")
-	cmd.Flags().MarkHidden("version")
-	cmd.Flags().MarkHidden("noop")
-	cmd.Flags().MarkHidden("nocolor")
-	cmd.Flags().MarkHidden("log_level")
-	cmd.Flags().MarkHidden("no_header")
-	cmd.Flags().MarkHidden("wei")
-	cmd.Flags().MarkHidden("ether")
-	cmd.Flags().MarkHidden("file")
-	cmd.Flags().MarkHidden("output")
-	cmd.Flags().MarkHidden("append")
+	if opts.Caps.Has(caps.Version) {
+		cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
+	}
+	_ = cmd.Flags().MarkHidden("version")
+
+	if opts.Caps.Has(caps.Noop) {
+		cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
+	}
+	_ = cmd.Flags().MarkHidden("noop")
+
+	if opts.Caps.Has(caps.NoColor) {
+		cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
+	}
+	_ = cmd.Flags().MarkHidden("nocolor")
+
+	_ = cmd.Flags().MarkDeprecated("log_level", "please use the --verbose option instead")
+
+	if opts.Caps.Has(caps.NoHeader) {
+		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+	}
+	_ = cmd.Flags().MarkHidden("no_header")
+
+	// if opts.Caps.Has(caps.File) {
+	cmd.Flags().StringVarP(&opts.File, "file", "", "", "specify multiple command line options in a file")
+	// }
+	_ = cmd.Flags().MarkHidden("file")
+
+	if opts.Caps.Has(caps.Output) {
+		cmd.Flags().StringVarP(&opts.OutputFn, "output", "", "", "redirect results from stdout to the given file, create if not present")
+	}
+	_ = cmd.Flags().MarkHidden("output")
+
+	if opts.Caps.Has(caps.Append) {
+		cmd.Flags().BoolVarP(&opts.Append, "append", "", false, "if true, open OutputFn for append (truncate otherwise)")
+	}
+	_ = cmd.Flags().MarkHidden("append")
 
 	SetDefaults(opts)
 }
 
-func (opts *GlobalOptions) toCmdLine() string {
-	options := ""
-	if opts.ShowRaw {
-		options += " --raw"
-	}
-	if opts.Version {
-		options += " --version"
-	}
-	if len(opts.Format) > 0 {
-		options += " --fmt " + opts.Format
-	}
-	if opts.Verbose || opts.LogLevel > 0 {
-		level := opts.LogLevel
-		if level == 0 {
-			level = 1
-		}
-		options += " --verbose " + fmt.Sprintf("%d", level)
-	}
-	if len(opts.OutputFn) > 0 {
-		options += " --output " + opts.OutputFn
-	}
-	if opts.Append {
-		options += " --append"
-	}
-	if opts.NoHeader {
-		options += " --no_header"
-	}
-	if opts.Wei {
-		options += " --wei"
-	}
-	if opts.Ether {
-		options += " --ether"
-	}
-
-	return options
-}
-
-func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOptions {
-	opts := &GlobalOptions{}
+func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpc.Connection {
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
 	opts.Writer = w
 
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "fmt":
-			opts.Format = value[0]
-		case "verbose":
-			opts.Verbose = true
-		case "raw":
-			opts.ShowRaw = true
-		case "version":
-			opts.Version = true
-		case "noop":
-			// do nothing
-		case "nocolor":
-			opts.NoColor = true
-		case "logLevel":
-			opts.LogLevel = ToUint64(value[0])
-		case "noHeader":
-			opts.NoHeader = true
+		case "append":
+			opts.Append = true
+		case "cache":
+			opts.Cache = true
 		case "chain":
 			opts.Chain = value[0]
-		case "wei":
-			opts.Wei = true
+		case "decache":
+			opts.Decache = true
 		case "ether":
 			opts.Ether = true
 		case "file":
 			opts.File = value[0]
+		case "fmt":
+			opts.Format = value[0]
+		case "nocolor":
+			opts.NoColor = true
+		case "noHeader":
+			opts.NoHeader = true
+		case "noop":
+			// do nothing
 		case "output":
 			opts.OutputFn = value[0]
-		case "append":
-			opts.Append = true
+		case "raw":
+			opts.ShowRaw = true
+		case "verbose":
+			opts.Verbose = true
+		case "version":
+			opts.Version = true
+		case "wei":
+			opts.Wei = true
 		}
 	}
 
@@ -184,21 +196,15 @@ func GlobalsFinishParseApi(w http.ResponseWriter, r *http.Request) *GlobalOption
 	if len(opts.Chain) == 0 {
 		opts.Chain = config.GetDefaultChain()
 	}
+
 	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
 		logger.Error("Could not establish ts file:", err)
 	}
 
-	return opts
-
-	// The 'help' command is a special case for cobra, so doesn't need to be handled here
-	// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
+	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }
 
-func (opts *GlobalOptions) FinishParse(args []string) {
-	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
-		logger.Error("Could not establish ts file:", err)
-	}
-
+func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpc.Connection {
 	if (len(opts.Format) == 0 || opts.Format == "none") && len(opts.OutputFn) > 0 {
 		parts := strings.Split(opts.OutputFn, ".")
 		if len(parts) > 0 {
@@ -208,29 +214,14 @@ func (opts *GlobalOptions) FinishParse(args []string) {
 			}
 		}
 	}
-}
 
-func IsGlobalOption(key string) bool {
-	permitted := []string{
-		"fmt",
-		"verbose",
-		"raw",
-		"version",
-		"noop",
-		"nocolor",
-		"logLevel",
-		"noHeader",
-		"chain",
-		"wei",
-		"ether",
-		"file",
-		"output",
-		"append",
+	if len(opts.Chain) == 0 {
+		opts.Chain = config.GetDefaultChain()
 	}
-	for _, per := range permitted {
-		if per == key {
-			return true
-		}
+
+	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
+		logger.Error("Could not establish ts file:", err)
 	}
-	return false
+
+	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }

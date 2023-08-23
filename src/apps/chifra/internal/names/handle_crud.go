@@ -4,39 +4,42 @@ import (
 	"context"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (opts *NamesOptions) HandleCrud() (err error) {
+	chain := opts.Globals.Chain
+
 	parts := opts.getType()
 	// TODO: Why do we do this if we don't use the result?
-	if _, err = names.LoadNamesMap(opts.Globals.Chain, parts, nil); err != nil {
+	if _, err = names.LoadNamesMap(chain, parts, nil); err != nil {
 		return err
 	}
 
 	var name *types.SimpleName
 	if opts.Create || opts.Update {
-		name, err = handleCreate(opts.Globals.Chain, opts.crudData)
+		name, err = handleCreate(chain, opts.crudData)
 		if err != nil {
 			return
 		}
 	}
 	if opts.Delete {
-		name, err = handleDelete(opts.Globals.Chain, opts.crudData)
+		name, err = handleDelete(chain, opts.crudData)
 		if err != nil {
 			return
 		}
 	}
 	if opts.Undelete {
-		name, err = handleUndelete(opts.Globals.Chain, opts.crudData)
+		name, err = handleUndelete(chain, opts.crudData)
 		if err != nil {
 			return
 		}
 	}
 	if opts.Remove {
-		name, err = handleRemove(opts.Globals.Chain, opts.crudData)
+		name, err = handleRemove(chain, opts.crudData)
 		// Remove doesn't print the removed item
 		return
 	}
@@ -69,7 +72,7 @@ func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err err
 		Symbol:   data.Symbol.Value,
 		Decimals: decimals,
 		Deleted:  false,
-		Petname:  names.AddrToPetname(data.Address.Value.Hex(), "-"),
+		Petname:  base.AddrToPetname(data.Address.Value.Hex(), "-"),
 	}
 
 	return name, names.CreateCustomName(chain, name)

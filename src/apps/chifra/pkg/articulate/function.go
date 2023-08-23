@@ -7,25 +7,26 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
+func (abiCache *AbiCache) ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
 	}
 
 	if len(inputData) > 0 {
-		if err = ArticulateArguments(abiMethod.Inputs, inputData, nil, function.Inputs); err != nil {
+		if err = articulateArguments(abiMethod.Inputs, inputData, nil, function.Inputs); err != nil {
 			return fmt.Errorf("error processing inputs of %s: %w", abiMethod.Sig, err)
 		}
 	}
 
 	if len(outputData) > 0 {
-		if err = ArticulateArguments(abiMethod.Outputs, outputData, nil, function.Outputs); err != nil {
+		if err = articulateArguments(abiMethod.Outputs, outputData, nil, function.Outputs); err != nil {
 			return fmt.Errorf("error processing output of %s: %w", abiMethod.Sig, err)
 		}
 	}
@@ -33,7 +34,7 @@ func ArticulateFunction(function *types.SimpleFunction, inputData string, output
 	return
 }
 
-func ArticulateArguments(args abi.Arguments, data string, topics []base.Hash, destination []types.SimpleParameter) (err error) {
+func articulateArguments(args abi.Arguments, data string, topics []base.Hash, destination []types.SimpleParameter) (err error) {
 	dataBytes, err := hex.DecodeString(data)
 	if err != nil {
 		return
@@ -84,9 +85,15 @@ func ArticulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 		if err != nil {
 			return err
 		}
-		destinationIndex, ok := argNameToIndex[currentArg.Name]
-		if !ok {
-			return fmt.Errorf("cannot find destination index of argument %s", currentArg.Name)
+		var destinationIndex int
+		if currentArg.Name != "" {
+			var ok bool
+			destinationIndex, ok = argNameToIndex[currentArg.Name]
+			if !ok {
+				return fmt.Errorf("cannot find destination index of argument %s", currentArg.Name)
+			}
+		} else {
+			destinationIndex = index
 		}
 		destination[destinationIndex].Value = result
 	}
@@ -101,7 +108,7 @@ func ArticulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 	out := make(map[string]interface{}, len(indexed))
 	tops := []common.Hash{}
 	for _, hash := range topics {
-		tops = append(tops, common.HexToHash(hash.Hex()))
+		tops = append(tops, hash.ToCommon())
 	}
 	if err = abi.ParseTopicsIntoMap(out, indexed, tops[1:]); err != nil {
 		return err
@@ -169,7 +176,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 	case abi.StringTy:
 		strValue, ok := value.(string)
 		if ok {
-			return SanitizeString(strValue), nil
+			return decode.SanitizeString(strValue), nil
 		}
 		fallthrough
 	case abi.IntTy, abi.UintTy:
@@ -188,7 +195,7 @@ func formatValue(argType *abi.Type, value any) (result any, err error) {
 	case abi.FunctionTy:
 		item, ok := value.([]byte)
 		if ok {
-			result = common.Bytes2Hex(item)
+			result = base.Bytes2Hex(item)
 			break
 		}
 		result = value
@@ -220,13 +227,13 @@ func articulateFixedBytes(abiType *abi.Type, data any) string {
 
 	hashLike, ok := data.([32]byte)
 	if ok && abiType.Size == 32 {
-		hash := common.BytesToHash(hashLike[:])
-		value := strings.ToLower(hash.Hex())
-		articulated, ok := ArticulateString(value)
+		hash := base.BytesToHash(hashLike[:])
+		articulated, ok := decode.ArticulateString(hash.Hex())
 		if ok {
 			return articulated
 		}
-		return value
+		return hash.Hex()
 	}
+
 	return fmt.Sprint(data)
 }

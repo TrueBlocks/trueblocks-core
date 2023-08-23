@@ -65,7 +65,7 @@ func (v *ScanBar) Report(writer io.Writer, action, msg string) {
 	e := w - len(x)
 	var endPad string = strings.Repeat(" ", e)
 	str := fmt.Sprintf("%s%s\r", x, endPad)
-	writer.Write([]byte(str))
+	_, _ = writer.Write([]byte(str))
 }
 
 type winsize struct {

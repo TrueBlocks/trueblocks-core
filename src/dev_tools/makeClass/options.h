@@ -15,15 +15,13 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "etherlib.h"
+#include "utillib.h"
 #include "commandoption.h"
 #include "classdefinition.h"
 
-// BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
 #define ERR_CONFIGMISSING 2
 #define ERR_NEEDONECLASS 3
-// END_ERROR_DEFINES
 
 //-------------------------------------------------------------------
 class CCounter {
@@ -39,11 +37,9 @@ class CCounter {
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    // BEG_CODE_DECLARE
     bool all;
     bool sdk;
     bool openapi;
-    // END_CODE_DECLARE
 
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
@@ -55,54 +51,13 @@ class COptions : public COptionsBase {
     CToml classFile;
     CCounter counter;
     timestamp_t lastFormat;
-    timestamp_t lastLint;
     CCommandOptionArray endpointArray;
     map<string_q, string_q> hugoAliasMap;
 
-    ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
-    ostringstream notesStream, errorStrStream, errorDefStream, goCallStream, goPkgStream, goConvertStream;
+    ostringstream goCallStream, goPkgStream;
     ostringstream goRouteStream, chifraHelpStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream goStream;
-
-    void clearStreams(void) {
-        optionStream.str("");
-        initStream.str("");
-        localStream.str("");
-        autoStream.str("");
-        headerStream.str("");
-        configStream.str("");
-        notesStream.str("");
-        errorStrStream.str("");
-        errorDefStream.str("");
-        goCallStream.str("");
-        goConvertStream.str("");
-        goPkgStream.str("");
-        goRouteStream.str("");
-        chifraHelpStream.str("");
-        apiTagStream.str("");
-        apiPathStream.str("");
-        goStream.str("");
-
-        optionStream.clear();
-        initStream.clear();
-        localStream.clear();
-        autoStream.clear();
-        headerStream.clear();
-        configStream.clear();
-        notesStream.clear();
-        errorStrStream.clear();
-        errorDefStream.clear();
-        goCallStream.clear();
-        goConvertStream.clear();
-        goPkgStream.clear();
-        goRouteStream.clear();
-        chifraHelpStream.clear();
-        apiTagStream.clear();
-        apiPathStream.clear();
-        positionals.clear();
-        goStream.clear();
-    }
 
     COptions(void);
     ~COptions(void);
@@ -111,11 +66,8 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool handle_readmes(void);
-    bool handle_options(void);
     bool handle_gocmds(void);
-    bool handle_lint(void);
     bool handle_format(void);
-    bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);
     bool handle_datamodel(void);
 
     bool handle_sdk(void);
@@ -126,14 +78,9 @@ class COptions : public COptionsBase {
     bool handle_sdk_py_paths(CStringArray& pathsOut);
     bool handle_sdk_py_types(CStringArray& typesOut);
 
-    void generate_switch(const CCommandOption& option);
-    void generate_toggle(const CCommandOption& option);
-    void generate_flag(const CCommandOption& option);
-    void generate_positional(const CCommandOption& option);
-    void generate_deprecated(const CCommandOption& option);
-
     bool handle_gocmds_cmd(const CCommandOption& cmd);
     bool handle_gocmds_options(const CCommandOption& cmd);
+    bool handle_gocmds_docfile(const CCommandOption& cmd);
     bool handle_gocmds_output(const CCommandOption& cmd);
     void verifyGoEnumValidators(void);
 
@@ -145,12 +92,8 @@ class COptions : public COptionsBase {
 
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void* data);
-extern bool lintFiles(const string_q& path, void* data);
 extern bool formatCppFiles(const string_q& path, void* data);
 extern bool formatGoFiles(const string_q& path, void* data);
-extern string_q getCaseGetCode(const CMemberArray& fields);
-extern string_q getCaseSetCode(const CMemberArray& fields);
-extern string_q convertTypes(const string_q& inStr);
 extern string_q splitIfTooWide(const string_q& in);
 extern void expandTabbys(string_q& strOut);
 
@@ -197,11 +140,13 @@ extern string_q getPathToTemplates(const string_q& part);
 
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
-extern bool isChifraRoute(const CCommandOption& cmd, bool depOk);
 extern bool isApiRoute(const string_q& route);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
 
 //---------------------------------------------------------------------------------------------------
-#define sdkPath string_q("/Users/jrush/Development/trueblocks-sdk/")
+#define sdkPath string_q("../sdk/")
+
+//---------------------------------------------------------------------------------------------------
+extern void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase);

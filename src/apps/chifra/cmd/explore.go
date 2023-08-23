@@ -13,6 +13,7 @@ import (
 
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -29,7 +30,7 @@ var exploreCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("explore", func() *globals.GlobalOptions {
 		return &explorePkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("explore", explorePkg.RunExplore, explorePkg.ResetOptions),
+	RunE: file.RunWithFileSupport("explore", explorePkg.RunExplore, explorePkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &explorePkg.GetOptions().Globals
 	}),
@@ -48,11 +49,19 @@ const longExplore = `Purpose:
 const notesExplore = ``
 
 func init() {
+	var capabilities = caps.Default // Additional global caps for chifra explore
+	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Fmt)
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
+	// EXISTING_CODE
+
 	exploreCmd.Flags().SortFlags = false
 
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, "open the local TrueBlocks explorer")
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, "search google excluding popular blockchain explorers")
-	globals.InitGlobals(exploreCmd, &explorePkg.GetOptions().Globals)
+	globals.InitGlobals(exploreCmd, &explorePkg.GetOptions().Globals, capabilities)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	exploreCmd.SetOut(os.Stderr)

@@ -19,6 +19,8 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestNamesOptions_getCrudDataHttp(t *testing.T) {
@@ -141,6 +143,8 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 	}
 	setEnvs(expected)
 	opts = &NamesOptions{}
+	chain := utils.GetTestChain()
+	opts.Conn = rpc.TempConnection(chain)
 	result, err = opts.getCrudDataEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -163,6 +167,7 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 	}
 	setEnvs(expected)
 	opts = &NamesOptions{}
+	opts.Conn = rpc.TempConnection(chain)
 	_, err = opts.getCrudDataEnv()
 	if err == nil {
 		t.Fatal("error expected")

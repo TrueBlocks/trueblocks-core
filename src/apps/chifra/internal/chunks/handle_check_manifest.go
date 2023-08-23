@@ -89,5 +89,6 @@ func (comp *CompareState) checkArrays(report *simpleReportCheck) error {
 			report.PassedCnt++
 		}
 	}
+
 	return nil
 }

@@ -23,11 +23,6 @@ import (
 	"golang.org/x/term"
 )
 
-// IsTestModeServer return true if we are running from the testing harness
-func IsTestModeServer(r *http.Request) bool {
-	return r.Header.Get("User-Agent") == "testRunner"
-}
-
 // IsServerWriter tries to cast `w` into `http.ResponseWriter`
 // and returns true if the cast was successful
 func IsServerWriter(w io.Writer) bool {
@@ -88,24 +83,9 @@ func PadRight(str string, totalLen int, pad rune) string {
 	return str + tail
 }
 
-func ToCamelCase(in string) string {
-	if len(in) == 0 {
-		return in
-	}
-
-	var arr []string
-	fields := strings.Fields(in)
-	for _, field := range fields {
-		arr = append(arr, strings.Title(field))
-	}
-	arr[0] = strings.ToLower(arr[0])
-	return strings.Join(arr, "")
-}
-
 // TODO: Might be nice if the below two values were the same so we could cast between them.
 // TODO: Trouble is that these values may be stored on disc.
 
-// maximum uint64
 const NOPOS = uint64(^uint64(0))
 const NOPOSI = int64(0xdeadbeef)
 
@@ -210,14 +190,59 @@ func Str_2_BigInt(str string) big.Int {
 	return ret
 }
 
-func WeiToEther(wei *big.Int) *big.Float {
-	return new(big.Float).Quo(new(big.Float).SetInt(wei), big.NewFloat(params.Ether))
+func weiToEther(wei *big.Int) *big.Float {
+	// Copied from https://github.com/ethereum/go-ethereum/issues/21221#issuecomment-805852059
+	f := new(big.Float)
+	f.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
+	f.SetMode(big.ToNearestEven)
+	fWei := new(big.Float)
+	fWei.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
+	fWei.SetMode(big.ToNearestEven)
+	return f.Quo(fWei.SetInt(wei), big.NewFloat(params.Ether))
+}
+
+func FormattedValue(in big.Int, asEther bool, decimals int) string {
+	if asEther {
+		return weiToEther(&in).Text('f', -1*decimals)
+	}
+	return in.Text(10)
 }
 
 func FormattedDate(ts int64) string {
 	return gostradamus.FromUnixTimestamp(ts).Format("2006-01-02 15:04:05 UTC")
 }
 
+func FormattedCode(verbose bool, code string) string {
+	if verbose {
+		return code
+	}
+
+	codeLen := len(code)
+	if codeLen <= 128 {
+		return code
+	}
+
+	return strings.Join(
+		[]string{
+			code[:15],
+			code[codeLen-15:],
+		},
+		"...",
+	)
+}
+
 func PointerOf[T any](value T) *T {
 	return &value
+}
+
+func MustParseUint(input any) (result uint64) {
+	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
+	return
+}
+
+func LowerIfHex(addr string) string {
+	if !strings.HasPrefix(addr, "0x") {
+		return addr
+	}
+	return strings.ToLower(addr)
 }

@@ -1,0 +1,6 @@
+monitors?addrs=trueblocks.eth&ether
+{
+  "errors": [
+    "Invalid key (ether) in monitors route."
+  ]
+}

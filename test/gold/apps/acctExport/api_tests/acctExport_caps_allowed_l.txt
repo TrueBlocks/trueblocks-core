@@ -1,0 +1,6 @@
+list?addrs=trueblocks.eth&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&failOnPurpose
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in list route."
+  ]
+}

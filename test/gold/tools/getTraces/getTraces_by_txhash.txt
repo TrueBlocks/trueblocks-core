@@ -1,5 +1,6 @@
 chifra traces  0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fmt json
 TEST[DATE|TIME] Transactions:  [0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6]
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -8,15 +9,14 @@ TEST[DATE|TIME] Format:  json
         "callType": "call",
         "from": "0x012077b1528ff43035ae2511725771b9c23578e9",
         "gas": 229000,
-        "input": "0x",
         "to": "0x4e86721a4e00d7167c11d9cfd2480403bb630378",
         "value": "2000000000000000000"
       },
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
+      "date": "2017-10-08 17:50:40 UTC",
       "result": {
-        "gasUsed": 48838,
-        "output": "0x"
+        "gasUsed": 48838
       },
       "subtraces": 2,
       "timestamp": 1507485040,
@@ -36,6 +36,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
+      "date": "2017-10-08 17:50:40 UTC",
       "result": {
         "gasUsed": 28693,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -54,16 +55,13 @@ TEST[DATE|TIME] Format:  json
         "callType": "call",
         "from": "0x4e86721a4e00d7167c11d9cfd2480403bb630378",
         "gas": 2300,
-        "input": "0x",
         "to": "0x71b1ee0848c4f68df05429490fc4237089692e1e",
         "value": "2000000000000000000"
       },
       "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
       "blockNumber": 4348290,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "date": "2017-10-08 17:50:40 UTC",
+      "result": {},
       "subtraces": 0,
       "timestamp": 1507485040,
       "traceAddress": [

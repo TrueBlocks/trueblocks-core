@@ -8,23 +8,24 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // HandleTimestampUpdate update the timestamp file to the latest block
 func (opts *WhenOptions) HandleTimestampUpdate() error {
+	chain := opts.Globals.Chain
+
 	if opts.Globals.TestMode {
 		logger.Warn("Update option not tested.")
 		return nil
 	}
 
-	cnt, err := tslib.NTimestamps(opts.Globals.Chain)
+	cnt, err := tslib.NTimestamps(chain)
 	if err != nil {
 		return err
 	}
 
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, false)
+	meta, err := opts.Conn.GetMetaData(false)
 	if err != nil {
 		return err
 	}
@@ -38,20 +39,20 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 
 	logger.Info("Updating timestamps file from", cnt, "to", meta.Latest, fmt.Sprintf("(%d blocks)", (meta.Latest-cnt)))
 	for bn := cnt; bn < meta.Latest; bn++ {
-		block, _ := rpcClient.GetBlockHeaderByNumber(opts.Globals.Chain, bn)
+		block, _ := opts.Conn.GetBlockHeaderByNumber(bn)
 		record := tslib.TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 		timestamps = append(timestamps, record)
 		logger.Progress(true, "Adding block", bn, "to timestamp array")
 		if bn%1000 == 0 {
 			logger.Info("Writing...", len(timestamps), "timestamps at block", bn)
-			tslib.Append(opts.Globals.Chain, timestamps)
+			_ = tslib.Append(chain, timestamps)
 			timestamps = []tslib.TimestampRecord{}
 		}
 	}
 
 	if len(timestamps) > 0 {
 		logger.Info("Writing...", len(timestamps), "timestamps at block", meta.Latest)
-		tslib.Append(opts.Globals.Chain, timestamps)
+		_ = tslib.Append(chain, timestamps)
 	}
 
 	return nil

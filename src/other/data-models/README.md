@@ -8,7 +8,6 @@ List of types that support the Modeler interface
 | ./internal/chunks   | types_chunkbloom.go      | simpleChunkBloom      | chunkBloom        |         | x      |
 | ./internal/chunks   | types_chunkindex.go      | simpleChunkIndex      | chunkIndex        |         | x      |
 | ./internal/chunks   | types_chunkstats.go      | simpleChunkStats      | chunkStats        |         | x      |
-| ./internal/chunks   | types_manifest.go        | simpleManifest        | manifest          |         | x      |
 | ./internal/chunks   | types_reportcheck.go     | simpleReportCheck     | reportCheck       |         | x      |
 | ./internal/list     | types_bounds.go          | simpleBounds          | bounds            |         | x      |
 | ./internal/monitors | types_monitorclean.go    | simpleMonitorClean    | monitorClean      |         | x      |
@@ -24,10 +23,11 @@ List of types that support the Modeler interface
 | ./pkg/types         | types_chain.go           | SimpleChain           | chain             | x       | x      |
 | ./pkg/types         | types_chunkrecord.go     | SimpleChunkRecord     | chunkRecord       |         | x      |
 | ./pkg/types         | types_ethcall.go         | SimpleEthCall         | ethCall           | x       | x      |
-| ./pkg/types         | types_etherscan.go       | SimpleEtherscan       | <--- missing ---> |         |        |
-| ./pkg/types         | types_ethstate.go        | SimpleEthState        | ethState          | x       | x      |
+| ./pkg/types         | types_slurp.go           | SimpleSlurp           | slurp             |         | x      |
+| ./pkg/types         | types_ethstate.go        | SimpleState           | ethState          | x       | x      |
 | ./pkg/types         | types_function.go        | SimpleFunction        | function          | x       | x      |
 | ./pkg/types         | types_log.go             | SimpleLog             | log               | x       | x      |
+| ./pkg/types         | types_manifest.go        | SimpleManifest        | manifest          |         | x      |
 | ./pkg/types         | types_monitor.go         | SimpleMonitor         | monitor           | x       |        | not turned on |
 | ./pkg/types         | types_name.go            | SimpleName            | name              | x       | x      |
 | ./pkg/types         | types_namedblock.go      | SimpleNamedBlock      | namedBlock        |         | x      |
@@ -40,7 +40,6 @@ List of types that support the Modeler interface
 | ./pkg/types         | types_tracefilter.go     | SimpleTraceFilter     | traceFilter       |         | x      |
 | ./pkg/types         | types_traceresult.go     | SimpleTraceResult     | traceResult       | x       | x      |
 | ./pkg/types         | types_transaction.go     | SimpleTransaction     | transaction       | x       | x      |
-| ./pkg/types         | types_transfer.go        | SimpleTransfer        | transfer          | x       | x      |
 |                     |                          |                       |                   |         |        |
 | ./api               | openapi.yaml             | <--- missing --->     | abi               |         |        |
 | ./api               | openapi.yaml             | <--- missing --->     | appearanceCount   |         |        |

@@ -1,4 +1,4 @@
-status?modes=abis&modes=monitors&modes=txs&verbose&maxRecords=2
+status?modes=abis&modes=monitors&modes=transactions&verbose&maxRecords=2
 {
   "data": [
     {
@@ -59,13 +59,13 @@ status?modes=abis&modes=monitors&modes=txs&verbose&maxRecords=2
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
+              "itemType": "transactionsCacheItem",
               "sizeInBytes": 123456789
             },
             {
               "fileDate": "--fileDate--",
               "filename": "$cachePath/data-model/file.bin",
-              "itemType": "txsCacheItem",
+              "itemType": "transactionsCacheItem",
               "sizeInBytes": 123456789
             }
           ],
@@ -74,7 +74,7 @@ status?modes=abis&modes=monitors&modes=txs&verbose&maxRecords=2
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "txsCache"
+          "type": "transactionsCache"
         }
       ],
       "chainConfig": "--paths--",

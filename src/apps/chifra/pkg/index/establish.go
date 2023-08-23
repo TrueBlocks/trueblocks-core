@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -21,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // EstablishIndexChunk a filename to an index portion, finds the correspoding CID (hash)
@@ -53,7 +53,7 @@ func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
 	progressChannel := make(chan *progress.ProgressMsg)
 
 	go func() {
-		DownloadChunks(chain, chunks, cache.Index_Final, 4 /* poolSize */, progressChannel)
+		DownloadChunks(chain, chunks, walk.Index_Final, 4 /* poolSize */, progressChannel)
 		close(progressChannel)
 	}()
 
@@ -149,6 +149,7 @@ const BackLevelVersion string = `
 	`
 
 // TODO: There is a header validator in the validate package. Can we use that instead?
+
 func HasValidIndexHeader(fileName string) (bool, error) {
 	header, err := ReadChunkHeader(fileName, true)
 	if err != nil {

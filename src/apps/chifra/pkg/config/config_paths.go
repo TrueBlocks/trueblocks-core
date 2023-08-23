@@ -6,7 +6,6 @@ package config
 
 import (
 	"os"
-	"os/user"
 	"path/filepath"
 	"strings"
 
@@ -97,18 +96,15 @@ func GetPathToCache(chain string) string {
 	return newPath
 }
 
-// GetPathToCommands returns full path the the given tool
-func GetPathToCommands(part string) string {
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	return dir + "/.local/bin/chifra/" + part
-}
-
 // EstablishCachePaths sets up the cache folders and subfolders. It only returns if it succeeds.
 func EstablishCachePaths(cachePath string) {
 	folders := []string{
-		"abis", "blocks", "monitors", "monitors/staging", "objs", "prices",
-		"recons", "slurps", "tmp", "traces", "txs", "names",
+		"abis",
+		"monitors",
+		"monitors/staging",
+		"names",
+		"tmp",
+		"v1",
 	}
 
 	if err := file.EstablishFolders(cachePath, folders); err != nil {

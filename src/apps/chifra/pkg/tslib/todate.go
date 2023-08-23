@@ -3,7 +3,6 @@ package tslib
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/bykof/gostradamus"
 )
@@ -26,8 +25,9 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 	}
 
 	if name == "latest" {
-		meta, _ := rpcClient.GetMetaData(chain, false)
-		ts := rpc.GetBlockTimestamp(chain, meta.Latest)
+		conn := rpc.TempConnection(chain)
+		meta, _ := conn.GetMetaData(false)
+		ts := conn.GetBlockTimestamp(meta.Latest)
 		return FromTsToDate(ts)
 	}
 
@@ -38,7 +38,7 @@ func FromNameToDate(chain, name string) (gostradamus.DateTime, error) {
 	}
 
 	// default to first
-	return gostradamus.Parse(specials[0].Date, gostradamus.Iso8601)
+	return FromBnToDate(chain, specials[0].BlockNumber)
 }
 
 // FromTsToDate returns a date given a Linux timestamp (not chain-specific)

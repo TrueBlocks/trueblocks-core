@@ -1,7 +1,0 @@
-[settings]
-class = CMonitorCount
-fields = monitorcount.csv
-includes = etherlib.h
-
-cpp_output = src/libs/acctlib/
-go_output =

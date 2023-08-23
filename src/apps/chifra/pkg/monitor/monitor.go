@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // Header is the header of the Monitor file. Note that it's the same width as an index.AppearanceRecord
@@ -87,7 +86,7 @@ func NewStagedMonitor(chain, addr string) (Monitor, error) {
 }
 
 // TODO: Most other Stringer interfaces produce JSON data. Can we switch the polarity of this...
-// String implements the Stringer interface
+
 func (mon Monitor) String() string {
 	if mon.Deleted {
 		return fmt.Sprintf("%s\t%d\t%d\t%d\t%t", mon.Address.Hex(), mon.Count(), file.FileSize(mon.Path()), mon.LastScanned, mon.Deleted)
@@ -106,7 +105,7 @@ func (mon *Monitor) Path() (path string) {
 }
 
 // Reload loads information about the monitor such as the file's size and record count
-func (mon *Monitor) Reload(create bool) (uint32, error) {
+func (mon *Monitor) Reload(create bool) (int64, error) {
 	if create && !file.FileExists(mon.Path()) {
 		// Make sure the file exists since we've been told to monitor it
 		err := mon.WriteMonHeader(false, 0, false /* force */)
@@ -117,13 +116,13 @@ func (mon *Monitor) Reload(create bool) (uint32, error) {
 	return mon.Count(), nil
 }
 
-func (mon *Monitor) Count() uint32 {
+func (mon *Monitor) Count() int64 {
 	if file.FileSize(mon.Path()) == 0 {
 		return 0
 	}
-	s := uint32(file.FileSize(mon.Path()))
-	w := uint32(index.AppRecordWidth)
-	n := uint32(s / w)
+	s := file.FileSize(mon.Path())
+	w := int64(index.AppRecordWidth)
+	n := s / w
 	return n - 1
 }
 
@@ -142,14 +141,14 @@ func (mon *Monitor) Close() {
 
 // IsDeleted returns true if the monitor has been deleted but not removed
 func (mon *Monitor) IsDeleted() bool {
-	mon.ReadMonitorHeader()
+	_ = mon.ReadMonitorHeader()
 	return mon.Header.Deleted
 }
 
 // Delete marks the file's delete flag, but does not physically remove the file
 func (mon *Monitor) Delete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteMonHeader(true, mon.LastScanned, false /* force */)
+	_ = mon.WriteMonHeader(true, mon.LastScanned, false /* force */)
 	mon.Deleted = true
 	return
 }
@@ -157,7 +156,7 @@ func (mon *Monitor) Delete() (prev bool) {
 // UnDelete unmarks the file's delete flag
 func (mon *Monitor) UnDelete() (prev bool) {
 	prev = mon.Deleted
-	mon.WriteMonHeader(false, mon.LastScanned, false /* force */)
+	_ = mon.WriteMonHeader(false, mon.LastScanned, false /* force */)
 	mon.Deleted = false
 	return
 }
@@ -194,7 +193,8 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 				parts := strings.Split(line, "\t")
 				if len(parts) > 0 {
 					addr := strings.Trim(parts[0], " ")
-					if !addrMap[addr] && validate.IsValidAddress(addr) && !validate.IsZeroAddress(addr) {
+					a := base.HexToAddress(addr)
+					if !addrMap[addr] && base.IsValidAddress(addr) && !a.IsZero() {
 						monitorChan <- NewMonitor(chain, addr, true /* create */)
 					}
 					addrMap[addr] = true
@@ -211,7 +211,7 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 			return err
 		}
 		if !info.IsDir() {
-			addr, _ := base.AddrFromPath(path, ".mon.bin")
+			addr, _ := base.AddressFromPath(path, ".mon.bin")
 			if len(addr) > 0 {
 				monitorChan <- NewMonitor(chain, addr, true /* create */)
 			}
@@ -221,7 +221,7 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 
 	logger.Info("Building address list from current monitors")
 	path = config.GetPathToCache(chain) + "monitors"
-	filepath.Walk(path, walkFunc)
+	_ = filepath.Walk(path, walkFunc)
 }
 
 var monitorMutex sync.Mutex

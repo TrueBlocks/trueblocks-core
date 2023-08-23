@@ -1,6 +1,7 @@
 chifra transactions  6409270.108 --articulate --fmt json
 TEST[DATE|TIME] Transactions:  [6409270.108]
 TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -18,7 +19,7 @@ TEST[DATE|TIME] Format:  json
       "blockHash": "0x9e901f01afb3f1745ebca74d5ac4b37a1a6fe4c177e2e88ba0bb20824f107ace",
       "blockNumber": 6409270,
       "date": "2018-09-27 13:21:58 UTC",
-      "ether": "0.000000000000000000",
+      "ether": "0",
       "from": "0x035d45345cdc7e4f91ef8cddf7c55d79cc65bc16",
       "gas": 60000,
       "gasCost": 486000000000000,
@@ -37,6 +38,7 @@ TEST[DATE|TIME] Format:  json
       },
       "timestamp": 1538054518,
       "to": "0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9",
+      "traces": [],
       "transactionIndex": 108,
       "value": "0"
     }

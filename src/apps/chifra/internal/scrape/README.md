@@ -27,13 +27,13 @@ Usage:
   chifra scrape [flags]
 
 Flags:
-  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
-  -i, --pin              pin new chunks (requires locally-running IPFS daemon or --remote)
-  -m, --remote           pin new chunks to the gateway (requires pinning service keys)
-  -s, --sleep float      seconds to sleep between scraper passes (default 14)
-  -x, --fmt string       export format, one of [none|json*|txt|csv]
-  -v, --verbose          enable verbose (increase detail with --log_level)
-  -h, --help             display this help screen
+  -n, --block_cnt uint     maximum number of blocks to process per pass (default 2000)
+  -i, --pin                pin new chunks (requires locally-running IPFS daemon or --remote)
+  -r, --remote             pin new chunks to the gateway (requires pinning service keys)
+  -s, --sleep float        seconds to sleep between scraper passes (default 14)
+  -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -v, --verbose            enable verbose output
+  -h, --help               display this help screen
 ```
 
 Data models produced by this tool:
@@ -108,15 +108,9 @@ All tools accept the following additional flags, although in some cases, they ha
 
 ```[plaintext]
   -v, --version         display the current version of the tool
-      --wei             export values in wei (the default)
-      --ether           export values in ether
-      --raw             pass raw RPC data directly from the node with no processing
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
-  -h, --help            display this help screen
   ```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any

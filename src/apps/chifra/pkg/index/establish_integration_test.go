@@ -14,8 +14,8 @@ package index
 // }
 
 // func IndexPathFromRange(fileRange base.FileRange) (string, error) {
-// 	tmp := cache.New CachePath("mainnet", cache.Index_Final)
-// 	path := tmp.Get FullPath(cache.FilenameFromRange(fileRange, ""))
+// 	tmp := cache CachePath("mainnet", walk.Index_Final)
+// 	path := tmp.Get FullPath(walk.FilenameFromRange(fileRange, ""))
 // 	if file.FileExists(path) {
 // 		return path, nil
 // 	}

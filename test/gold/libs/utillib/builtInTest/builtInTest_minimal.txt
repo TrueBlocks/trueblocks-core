@@ -1,2 +1,0 @@
-builtInTest  --fmt json --ether --wei --nocolor --noop
-Unprocessed commands: 

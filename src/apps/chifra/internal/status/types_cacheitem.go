@@ -10,9 +10,6 @@ package statusPkg
 
 // EXISTING_CODE
 import (
-	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -48,16 +45,4 @@ func (s *simpleCacheItem) Model(verbose bool, format string, extraOptions map[st
 }
 
 // EXISTING_CODE
-func NewSingleCacheStats(t cache.CacheType, now time.Time) *simpleCacheItem {
-	return &simpleCacheItem{
-		CacheItemType: t.CacheName(),
-		Items:         make([]any, 0),
-		LastCached:    now.Format("2006-01-02 15:04:05"),
-		NFiles:        0,
-		NFolders:      0,
-		Path:          "",
-		SizeInBytes:   0,
-	}
-}
-
 // EXISTING_CODE

@@ -13,9 +13,11 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // StatusOptions provides all command options for the chifra status command.
@@ -23,23 +25,26 @@ type StatusOptions struct {
 	Modes       []string              `json:"modes,omitempty"`       // The (optional) name of the binary cache to report on, terse otherwise
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
+	Chains      bool                  `json:"chains,omitempty"`      // Include a list of chain configurations in the output
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
-	ModeTypes []cache.CacheType `json:"-"`
+	ModeTypes []walk.CacheType `json:"-"`
 	// EXISTING_CODE
 }
 
 var defaultStatusOptions = StatusOptions{
-	FirstRecord: 1,
-	MaxRecords:  10000,
+	MaxRecords: 10000,
 }
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
-	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
+	logger.TestLog(opts.Chains, "Chains: ", opts.Chains)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -53,7 +58,7 @@ func (opts *StatusOptions) String() string {
 func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	copy := defaultStatusOptions
 	opts := &copy
-	opts.FirstRecord = 1
+	opts.FirstRecord = 0
 	opts.MaxRecords = 10000
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -66,19 +71,21 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			opts.FirstRecord = globals.ToUint64(value[0])
 		case "maxRecords":
 			opts.MaxRecords = globals.ToUint64(value[0])
+		case "chains":
+			opts.Chains = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
 	}
-	opts.ModeTypes = cache.GetCacheTypes(opts.Modes)
+	opts.ModeTypes = walk.CacheTypesFromStringSlice(opts.Modes)
 	// EXISTING_CODE
 
 	return opts
@@ -86,15 +93,29 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 
 // statusFinishParse finishes the parsing for command line invocations. Returns a new StatusOptions.
 func statusFinishParse(args []string) *StatusOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
 	opts.Modes = append(opts.Modes, args...)
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {
 		opts.Modes = append(opts.Modes, "some")
 	}
-	opts.ModeTypes = cache.GetCacheTypes(opts.Modes)
+	opts.ModeTypes = walk.CacheTypesFromStringSlice(opts.Modes)
 	if len(opts.Modes) > 0 {
 		defFmt = "json"
 	}
@@ -102,6 +123,7 @@ func statusFinishParse(args []string) *StatusOptions {
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -117,4 +139,17 @@ func ResetOptions() {
 	defaultStatusOptions = StatusOptions{}
 	globals.SetDefaults(&defaultStatusOptions.Globals)
 	defaultStatusOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra status
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultStatusOptions.Globals.Caps = capabilities
 }
+
+func (opts *StatusOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

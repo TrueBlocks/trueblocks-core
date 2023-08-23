@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -29,7 +30,7 @@ var tokensCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("tokens", func() *globals.GlobalOptions {
 		return &tokensPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("tokens", tokensPkg.RunTokens, tokensPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("tokens", tokensPkg.RunTokens, tokensPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &tokensPkg.GetOptions().Globals
 	}),
@@ -48,20 +49,27 @@ const longTokens = `Purpose:
 
 const notesTokens = `
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
   - If the queried node does not store historical state, the results are undefined.
-  - Special blocks are detailed under chifra when --list.`
+  - Special blocks are detailed under chifra when --list.
+  - If the --parts option is not empty, all addresses are considered tokens and each token's attributes are presented.`
 
 func init() {
+	var capabilities = caps.Default // Additional global caps for chifra tokens
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
+
 	tokensCmd.Flags().SortFlags = false
 
 	tokensCmd.Flags().StringSliceVarP(&tokensPkg.GetOptions().Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | all ]`)
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
-	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	globals.InitGlobals(tokensCmd, &tokensPkg.GetOptions().Globals)
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
+	globals.InitGlobals(tokensCmd, &tokensPkg.GetOptions().Globals, capabilities)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	tokensCmd.SetOut(os.Stderr)

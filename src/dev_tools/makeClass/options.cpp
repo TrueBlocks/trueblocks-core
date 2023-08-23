@@ -19,7 +19,6 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // BEG_CODE_OPTIONS
     // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
@@ -27,35 +26,35 @@ static const COption params[] = {
     COption("gocmds", "g", "", OPT_SWITCH, "export go command code"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
-    COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("sdk", "s", "", OPT_SWITCH, "create typescript sdk"),
-    COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
+    COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
-    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
+
+//--------------------------------------------------------------------------------
+bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string& argIn) {
+    strings.push_back(argIn);
+    return true;
+}
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    // BEG_CODE_LOCAL_INIT
     CStringArray files;
     bool options = false;
     bool gocmds = false;
     bool readmes = false;
     bool format = false;
-    bool lint = false;
-    // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-            // BEG_CODE_AUTO
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
@@ -70,9 +69,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-f" || arg == "--format") {
             format = true;
-
-        } else if (arg == "-l" || arg == "--lint") {
-            lint = true;
 
         } else if (arg == "-s" || arg == "--sdk") {
             sdk = true;
@@ -89,8 +85,6 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             if (!parseStringList2(this, files, arg))
                 return false;
-
-            // END_CODE_AUTO
         }
     }
 
@@ -172,6 +166,7 @@ bool COptions::parseArguments(string_q& command) {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
+
     LOG_INFO("Processing ", classDefs.size(), " class definition files.");
 
     for (auto classDefIn : classDefs) {
@@ -195,8 +190,6 @@ bool COptions::parseArguments(string_q& command) {
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (openapi && !handle_datamodel())
         return false;
-    if (options && !handle_options())
-        return false;
     if (openapi && !writeOpenApiFile())
         return false;
     if (gocmds && !handle_gocmds())
@@ -205,15 +198,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     if (format && !handle_format())
         return false;
-    if (lint && !handle_lint())
-        return false;
     if (sdk && !handle_sdk())
         return false;
 
     // Default to run if we get only all
 
-    // Maybe the user only wants to generate code, format, or lint...
-    if (all && (options + format + lint + readmes) > 0)
+    // Maybe the user only wants to generate code, or format
+    if (all && (options + format + readmes) > 0)
         return false;
 
     // If not, we need classDefs to work with...
@@ -237,18 +228,15 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     // END_CODE_GLOBALOPTS
 
-    // BEG_CODE_INIT
     all = false;
     sdk = false;
     openapi = false;
-    // END_CODE_INIT
 
     classDefs.clear();
     counter = CCounter();
 
     CToml toml(rootConfigToml_makeClass);
     lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_format", 0));
-    lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_lint", 0));
     toml.Release();
 }
 
@@ -256,19 +244,15 @@ void COptions::Init(void) {
 COptions::COptions(void) : classFile("") {
     Init();
 
-    // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("The `--options` flag generates `COption` code for each of the various tools.");
     notes.push_back("More information on class definition files is found in the documentation.");
     // clang-format on
-    // END_CODE_NOTES
 
     usageErrs[ERR_NOERROR] = "No error";
-    // ERROR_STRINGS
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
     usageErrs[ERR_CONFIGMISSING] = "File {0} does not exist.";
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
-    // ERROR_STRINGS
 
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
@@ -424,12 +408,4 @@ void COptions::verifyDescriptions(void) {
             }
         }
     }
-}
-
-//---------------------------------------------------------------------------------------------------
-bool isChifraRoute(const CCommandOption& cmd, bool depOk) {
-    if (depOk && cmd.option_type == "deprecated")
-        return true;
-    return (cmd.option_type != "deprecated" && cmd.option_type != "description" && cmd.option_type != "note" &&
-            cmd.option_type != "alias" && cmd.option_type != "config" && cmd.option_type != "error");
 }

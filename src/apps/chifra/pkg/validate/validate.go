@@ -5,17 +5,11 @@
 package validate
 
 import (
-	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-func IsHex(str string) bool {
-	return len(strings.Trim(str[2:], "0123456789abcdefABCDEF")) == 0
-}
 
 func Usage(msg string, values ...string) error {
 	return usage.Usage(msg, values...)
@@ -25,78 +19,51 @@ func Deprecated(cmd, rep string) error {
 	return usage.Deprecated(cmd, rep)
 }
 
-func Is0xPrefixed(str string) bool {
-	if len(str) < 3 {
-		return false
-	}
-	return str[:2] == "0x"
-}
-
-func IsValidHex(typ string, val string, nBytes int) (bool, error) {
-	if !Is0xPrefixed(val) {
-		return false, Usage("The {0} option ({1}) must {2}.", typ, val, "start with '0x'")
-	} else if len(val) != (2 + nBytes*2) {
-		return false, Usage("The {0} option ({1}) must {2}.", typ, val, fmt.Sprintf("be %d bytes long", nBytes))
-	} else if !IsHex(val) {
-		return false, Usage("The {0} option ({1}) must {2}.", typ, val, "be hex")
-	}
-	return true, nil
-}
-
 func IsValidHash(hash string) bool {
-	ok, err := IsValidHex("hash", hash, 32)
+	ok, err := base.IsValidHex("hash", hash, 32)
 	return ok && err == nil
 }
 
 func IsValidFourByteE(val string) (bool, error) {
-	return IsValidHex("fourbyte", val, 4)
+	return base.IsValidHex("fourbyte", val, 4)
 }
 
 func IsValidFourByte(val string) bool {
-	ok, _ := IsValidHex("fourbyte", val, 4)
+	ok, _ := base.IsValidHex("fourbyte", val, 4)
 	return ok
 }
 
 func IsValidTopicE(val string) (bool, error) {
-	return IsValidHex("topic", val, 32)
+	return base.IsValidHex("topic", val, 32)
 }
 
 func IsValidTopic(val string) bool {
-	ok, _ := IsValidHex("topic", val, 32)
+	ok, _ := base.IsValidHex("topic", val, 32)
 	return ok
-}
-
-func IsValidAddress(val string) bool {
-	if strings.Contains(val, ".eth") {
-		return true
-	}
-	ok, _ := IsValidHex("address", val, 20)
-	return ok
-}
-
-func IsValidAddressE(val string) (bool, error) {
-	if strings.Contains(val, ".eth") {
-		return true, nil
-	}
-	return IsValidHex("address", val, 20)
-}
-
-func IsSmartContract(chain, addr string) (bool, error) {
-	bytes, err := rpcClient.GetCodeAt(chain, addr, utils.NOPOS)
-	return len(bytes) > 0, err
-}
-
-func IsZeroAddress(val string) bool {
-	v := strings.Replace(val, "0", "", -1)
-	return v == "x" || v == "X"
 }
 
 func ValidateAddresses(args []string) error {
 	for _, arg := range args {
-		if !IsValidAddress(arg) {
+		if !base.IsValidAddress(arg) {
 			return Usage("The value {0} is not a valid address.", arg)
 		}
 	}
+	return nil
+}
+
+func ValidateExactlyOneAddr(args []string) error {
+	if err := ValidateAtLeastOneAddr(args); err != nil {
+		return Usage("Please specify a valid Ethereum address.")
+	}
+
+	if len(args) > 1 {
+		return Usage("Please specify only a single Ethereum address.")
+	}
+
+	if !base.IsValidAddress(args[0]) {
+		return Usage("The value {0} is not a valid address.", args[0])
+	}
+
 	return nil
 }
 
@@ -106,7 +73,7 @@ func ValidateAtLeastOneAddr(args []string) error {
 		if hasOne {
 			break
 		}
-		hasOne = IsValidAddress(arg)
+		hasOne = base.IsValidAddress(arg)
 	}
 	if hasOne {
 		return nil
@@ -148,6 +115,7 @@ func ValidateEnumSlice(field string, values []string, valid string) error {
 // TODO: we can use this to decide. But, do so way down the call stack, so if the
 // TODO: ABI is present, and the Etherscan key is not, we can still articulate.
 // TODO: Only fail this if we're at the last resort.
+
 func CanArticulate(on bool) bool {
 	// if !on {
 	return true

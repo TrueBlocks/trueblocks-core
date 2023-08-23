@@ -1,0 +1,169 @@
+chifra transactions  0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 --ether --output output_test_file2 --fmt json
+TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  output_test_file2
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
+----
+Results in ./output_test_file2
+{
+  "data": [
+    {
+      "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+      "blockNumber": 12655579,
+      "date": "2021-06-18 01:53:30 UTC",
+      "ether": "0",
+      "from": "0x37da92c11a2d5c05077ce41ac2243aa38032d4af",
+      "gas": 2892788,
+      "gasCost": 28323430000000000,
+      "gasPrice": 10000000000,
+      "gasUsed": 2832343,
+      "hash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+      "input": "0xc9567bf9",
+      "nonce": 6,
+      "receipt": {
+        "contractAddress": "0x0",
+        "effectiveGasPrice": 10000000000,
+        "gasUsed": 2832343,
+        "logs": [
+          {
+            "address": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+            "data": "0x00000000000000000000000000000000000000000000021e19e0c9bab2400000",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 115,
+            "timestamp": 1623981210,
+            "topics": [
+              "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+              "0x000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200",
+              "0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d"
+            ]
+          },
+          {
+            "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+            "data": "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5000000000000000000000000000000000000000000000000000000000000aa5e",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 116,
+            "timestamp": 1623981210,
+            "topics": [
+              "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+              "0x000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+              "0x000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200"
+            ]
+          },
+          {
+            "address": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+            "data": "0x0000000000000000000000000000000000000000000001b1ae4d6e2ef5000000",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 117,
+            "timestamp": 1623981210,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200",
+              "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
+            ]
+          },
+          {
+            "address": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+            "data": "0x00000000000000000000000000000000000000000000006c6b935b8bbd400000",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 118,
+            "timestamp": 1623981210,
+            "topics": [
+              "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+              "0x000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200",
+              "0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d"
+            ]
+          },
+          {
+            "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+            "data": "0x0000000000000000000000000000000000000000000000002629f66e0c530000",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 119,
+            "timestamp": 1623981210,
+            "topics": [
+              "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c",
+              "0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d"
+            ]
+          },
+          {
+            "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+            "data": "0x0000000000000000000000000000000000000000000000002629f66e0c530000",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 120,
+            "timestamp": 1623981210,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d",
+              "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
+            ]
+          },
+          {
+            "address": "0xea0be20914783d6b538539795069ca333f820bc5",
+            "data": "0x00000000000000000000000000000000000000000000000000000000000003e8",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 121,
+            "timestamp": 1623981210,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "0x0000000000000000000000000000000000000000000000000000000000000000"
+            ]
+          },
+          {
+            "address": "0xea0be20914783d6b538539795069ca333f820bc5",
+            "data": "0x0000000000000000000000000000000000000000000000080a6898a04e86f7f6",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 122,
+            "timestamp": 1623981210,
+            "topics": [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "0x00000000000000000000000037da92c11a2d5c05077ce41ac2243aa38032d4af"
+            ]
+          },
+          {
+            "address": "0xea0be20914783d6b538539795069ca333f820bc5",
+            "data": "0x0000000000000000000000000000000000000000000000002629f66e0c5300000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 123,
+            "timestamp": 1623981210,
+            "topics": [
+              "0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1"
+            ]
+          },
+          {
+            "address": "0xea0be20914783d6b538539795069ca333f820bc5",
+            "data": "0x0000000000000000000000000000000000000000000000002629f66e0c5300000000000000000000000000000000000000000000000001b1ae4d6e2ef5000000",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 124,
+            "timestamp": 1623981210,
+            "topics": [
+              "0x4c209b5fc8ad50758f13e2e1088ba56a560dff690a1c6fef26394f4c03821c4f",
+              "0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d"
+            ]
+          },
+          {
+            "address": "0xea0be20914783d6b538539795069ca333f820bc5",
+            "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "date": "2021-06-18 01:53:30 UTC",
+            "logIndex": 125,
+            "timestamp": 1623981210,
+            "topics": [
+              "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+              "0x000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200",
+              "0x0000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488d"
+            ]
+          }
+        ],
+        "status": 1
+      },
+      "timestamp": 1623981210,
+      "to": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "traces": [],
+      "transactionIndex": 76,
+      "value": "0"
+    }
+  ]
+}
+

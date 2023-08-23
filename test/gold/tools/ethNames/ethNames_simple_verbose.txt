@@ -2,7 +2,8 @@ chifra names  etwork --verbose
 TEST[DATE|TIME] Terms:  [etwork]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] gRPC server not running falling back to file-based search
+EROR[DATE|TIME] gRPC connection error: gRPC server not running
+WARN[DATE|TIME] falling back to file-based search
 tags	address	name	symbol	decimals	petname
 31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma			brightly-ultimate-bengal
 31-Giveth:Project	0x035495b687850f79cb1652f416ea7ec19907557c	Bees network			plainly-climbing-coral

@@ -15,12 +15,9 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "etherlib.h"
+#include "utillib.h"
 #include "testcase.h"
 #include "measure.h"
-
-// BEG_ERROR_DEFINES
-// END_ERROR_DEFINES
 
 #define API (1 << 0)
 #define CMD (1 << 1)
@@ -29,11 +26,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    // BEG_CODE_DECLARE
     string_q filter;
     uint64_t skip;
     bool report;
-    // END_CODE_DECLARE
 
     int modes = CMD;
     bool ignoreOff = false;

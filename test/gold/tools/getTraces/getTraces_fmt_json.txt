@@ -1,5 +1,6 @@
 chifra traces  2222222.0 2332332.0 --fmt json
 TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -14,6 +15,7 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
       "blockNumber": 2222222,
+      "date": "2016-09-08 15:22:45 UTC",
       "error": "invalid jump destination",
       "result": null,
       "subtraces": 0,
@@ -34,9 +36,9 @@ TEST[DATE|TIME] Format:  json
       },
       "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
       "blockNumber": 2332332,
+      "date": "2016-09-26 21:07:02 UTC",
       "result": {
-        "gasUsed": 13042,
-        "output": "0x"
+        "gasUsed": 13042
       },
       "subtraces": 0,
       "timestamp": 1474924022,

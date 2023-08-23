@@ -29,17 +29,21 @@ Flags:
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -P, --per_page uint   the number of records to request on each page (default 5000)
   -s, --sleep float     seconds to sleep between requests (default 0.25)
+  -w, --raw             report JSON data from the source with minimal processing
+  -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose (increase detail with --log_level)
+  -v, --verbose         enable verbose output
   -h, --help            display this help screen
 
 Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
 ```
 
 Data models produced by this tool:
 
-- [transaction](/data-model/chaindata/#transaction)
+- [slurp](/data-model/other/#slurp)
 
 Links:
 

@@ -6,16 +6,13 @@ traces?fmt=json&filter=4370000!4370002!!!1!2
         "callType": "call",
         "from": "0x51836a753e344257b361519e948ffcaf5fb8d521",
         "gas": 69000,
-        "input": "0x",
         "to": "0x4afe1b1857dd0ff16a4cc46f8be92ab1165e6458",
         "value": "44800000000000000"
       },
       "blockHash": "0xb1fcff633029ee18ab6482b58ff8b6e95dd7c82a954c852157152a7a6d32785e",
       "blockNumber": 4370000,
-      "result": {
-        "gasUsed": 0,
-        "output": "0x"
-      },
+      "date": "2017-10-16 05:22:11 UTC",
+      "result": {},
       "subtraces": 0,
       "timestamp": 1508131331,
       "traceAddress": [],
@@ -34,9 +31,9 @@ traces?fmt=json&filter=4370000!4370002!!!1!2
       },
       "blockHash": "0xb1fcff633029ee18ab6482b58ff8b6e95dd7c82a954c852157152a7a6d32785e",
       "blockNumber": 4370000,
+      "date": "2017-10-16 05:22:11 UTC",
       "result": {
-        "gasUsed": 16116,
-        "output": "0x"
+        "gasUsed": 16116
       },
       "subtraces": 1,
       "timestamp": 1508131331,

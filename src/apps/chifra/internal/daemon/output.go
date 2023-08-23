@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/spf13/cobra"
 )
@@ -57,7 +56,13 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra daemon"
 	// EXISTING_CODE
+	if !opts.IsPorted() {
+		logger.Fatal("Should not happen in DaemonInternal")
+	}
+
 	handled = true
 	apiUrl := opts.Port
 	if !strings.HasPrefix(apiUrl, "http") {
@@ -65,27 +70,38 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	}
 
 	chain := opts.Globals.Chain
+	provider, _ := config.GetRpcProvider(chain)
+
 	logger.InfoTable("Server URL:        ", apiUrl)
-	logger.InfoTable("RPC Provider:      ", config.GetRpcProvider(chain))
+	logger.InfoTable("RPC Provider:      ", provider)
 	logger.InfoTable("Root Config Path:  ", config.GetPathToRootConfig())
 	logger.InfoTable("Chain Config Path: ", config.GetPathToChainConfig(chain))
 	logger.InfoTable("Cache Path:        ", config.GetPathToCache(chain))
 	logger.InfoTable("Index Path:        ", config.GetPathToIndex(chain))
 
-	meta, err := rpcClient.GetMetaData(chain, false)
+	meta, err := opts.Conn.GetMetaData(false)
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
 		logger.InfoTable("Progress:", msg)
 		logger.Fatal("")
 	} else {
-		nTs, _ := tslib.NTimestamps(opts.Globals.Chain)
-		msg := fmt.Sprintf("%d, %d, %d,  %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
+		nTs, _ := tslib.NTimestamps(chain)
+		msg := fmt.Sprintf("%d, %d, %d, %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 		logger.InfoTable("Progress:          ", msg)
 	}
 
-	go opts.HandleScraper()
-	go opts.HandleMonitor()
-	go opts.HandleGrpc()
+	go func() {
+		_ = opts.HandleScraper()
+	}()
+	go func() {
+		_ = opts.HandleMonitor()
+	}()
+	go func() {
+		_ = opts.HandleGrpc()
+	}()
+
+	// do not remove, this fixes a lint warning that happens in the boilerplate because of the Fatal just below
+	timer.Report(msg)
 
 	// Start listening to the web sockets
 	RunWebsocketPool()
@@ -93,6 +109,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	logger.Fatal(http.ListenAndServe(opts.Port, NewRouter()))
 
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }
@@ -108,6 +125,7 @@ func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
 
 func (opts *DaemonOptions) IsPorted() (ported bool) {
 	// EXISTING_CODE
+	ported = true
 	// EXISTING_CODE
 	return
 }

@@ -142,7 +142,7 @@ func TestStreamMany(t *testing.T) {
 		FieldType: FieldArray,
 	}
 
-	renderData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+	renderData := func(models chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,
@@ -190,7 +190,7 @@ func TestStreamMany(t *testing.T) {
 
 func TestApiFormat(t *testing.T) {
 	outputBuffer := &bytes.Buffer{}
-	renderData := func(models chan types.Modeler[types.RawReceipt], errors chan error) {
+	renderData := func(models chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		models <- &types.SimpleReceipt{
 			BlockNumber:      uint64(123),
 			TransactionIndex: 1,

@@ -1,6 +1,7 @@
 chifra transactions  4000000.5 --raw
 TEST[DATE|TIME] Transactions:  [4000000.5]
 TEST[DATE|TIME] ShowRaw:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt
 {
   "data": [

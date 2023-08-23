@@ -1,0 +1,6 @@
+tokens?addrs=trueblocks.eth&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&cache&decache&failOnPurpose
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in tokens route."
+  ]
+}

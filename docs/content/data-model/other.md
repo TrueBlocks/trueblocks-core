@@ -77,11 +77,52 @@ Parameters consist of the following fields:
 | internalType | for composite types, the internal type of the parameter     | string                                      |
 | components   | for composite types, the parameters making up the composite | [Parameter[]](/data-model/other/#parameter) |
 
+## Slurp
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+THIS SHOULD BE ETHERSCAN DATA RELATED, BUT IT'S NOT TIED IN, SO IT DOESN'T DO ANYTHING
+The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
+
+The following commands produce and manage Slurps:
+
+- [chifra slurp](/chifra/other/#chifra-slurp)
+
+Slurps consist of the following fields:
+
+| Field            | Description                                                                                           | Type                                    |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| hash             | the hash of the transaction                                                                           | hash                                    |
+| blockHash        | the hash of the block containing this transaction                                                     | hash                                    |
+| blockNumber      | the number of the block                                                                               | blknum                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                  |
+| nonce            | sequence number of the transactions sent by the sender                                                | uint64                                  |
+| timestamp        | the Unix timestamp of the object                                                                      | timestamp                               |
+| date             | a calculated field -- the date of the object                                                          | datetime                                |
+| from             | address from which the transaction was sent                                                           | address                                 |
+| to               | address to which the transaction was sent                                                             | address                                 |
+| value            | the amount of wei sent with this transactions                                                         | wei                                     |
+| gas              | the maximum number of gas allowed for this transaction                                                | gas                                     |
+| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                     |
+| input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                   |
+| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                    |
+| articulatedTx    |                                                                                                       | [Function](/data-model/other/#function) |
+| compressedTx     | truncated, more readable version of the articulation                                                  | string                                  |
+| isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                    |
+
 ## Base types
 
 This documentation mentions the following basic data types.
 
-| Type   | Description                         | Notes |
-| ------ | ----------------------------------- | ----- |
-| bool   | either `true`, `false`, `1`, or `0` |       |
-| string | a normal character string           |       |
+| Type      | Description                         | Notes          |
+| --------- | ----------------------------------- | -------------- |
+| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
+| blknum    | an alias for a uint64               |                |
+| bool      | either `true`, `false`, `1`, or `0` |                |
+| bytes     | an arbitrarily long string of bytes |                |
+| datetime  | a JSON formatted date               | as a string    |
+| gas       | an unsigned big number              | as a string    |
+| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| string    | a normal character string           |                |
+| timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| uint64    | a 64-bit unsigned integer           |                |
+| wei       | an unsigned big number              | as a string    |

@@ -17,6 +17,8 @@ import (
 )
 
 func (opts *ChunksOptions) validateChunks() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -46,7 +48,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	if opts.Mode == "manifest" {
 		if opts.Pin {
 			if opts.Remote {
-				pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(opts.Globals.Chain)
+				pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(chain)
 				if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 				}
@@ -59,6 +61,22 @@ func (opts *ChunksOptions) validateChunks() error {
 	} else {
 		if opts.Publish {
 			return validate.Usage("The {0} option is available only in {1} mode.", "--publish", "index or manifest")
+		}
+	}
+
+	if opts.Pin && opts.Publish {
+		return validate.Usage("The {0} and {1} options are mutually exclusive.", "--pin", "--publish")
+	}
+
+	if opts.Deep {
+		if opts.Mode == "index" {
+			// do nothing
+		} else if opts.Mode == "manifest" {
+			if !pinning.LocalDaemonRunning() {
+				return validate.Usage("The {0} option requires {1}.", "manifest --deep", "a locally running IPFS daemon")
+			}
+		} else {
+			return validate.Usage("The {0} option requires mode {1}.", "--deep", "index or manifest")
 		}
 	}
 
@@ -96,14 +114,8 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
-	// if opts.Globals.Verbose || opts.Globals.LogLevel > 0 {
-	// 	if opts.Mode == "addresses" && opts.Globals.Format == "json" {
-	// 		return validate.Usage("Do not use {0} with {1}", "--format json", "--verbose in the addresses mode")
-	// 	}
-	// }
-
 	err = validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Blocks,
 		validate.ValidBlockIdWithRangeAndDate,
 		1,
@@ -133,7 +145,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(opts.Globals.Chain); err != nil {
+	if err := index.IndexIsInitialized(chain); err != nil {
 		if opts.Globals.IsApiMode() {
 			return err
 		} else {

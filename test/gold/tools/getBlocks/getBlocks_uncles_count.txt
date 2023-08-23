@@ -2,18 +2,17 @@ chifra blocks  3 469 --uncles --count
 TEST[DATE|TIME] Blocks:  [3 469]
 TEST[DATE|TIME] Uncles:  true
 TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
       "blockNumber": 3,
-      "timestamp": 1438270048,
       "transactionsCnt": 0,
       "unclesCnt": 1
     },
     {
       "blockNumber": 469,
-      "timestamp": 1438271156,
       "transactionsCnt": 0,
       "unclesCnt": 2
     }

@@ -51,7 +51,6 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 						BlockNumber: bn,
 						Name:        record[1],
 						Timestamp:   ts,
-						Date:        record[3],
 					})
 				}
 			}

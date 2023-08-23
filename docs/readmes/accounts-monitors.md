@@ -3,8 +3,7 @@
 <!-- markdownlint-disable MD041 -->
 `chifra monitors`` has two purposes: (1) to `--watch` a set of addresses. This function is in its early
 stages and will be better explained elsewhere. Please see an example of what one may do with
-`chifra monitors --watch` [here](https://tokenomics.io/), and (2) allows one to manage existing
-monitored addresses.
+`chifra monitors --watch`, and (2) allows one to manage existing monitored addresses.
 
 A "monitor" is simply a file on a hard drive that represents the transactional history of a given
 Ethereum address. Monitors are very small, being only the `<block_no><tx_id>` pair representing each
@@ -30,22 +29,20 @@ Arguments:
   addrs - one or more addresses (0x...) to process
 
 Flags:
-      --clean         clean (i.e. remove duplicate appearances) from monitors
       --delete        delete a monitor, but do not remove it
       --undelete      undelete a previously deleted monitor
       --remove        remove a previously deleted monitor
-      --decache       removes a monitor and all associated data from the cache
-      --list          list monitors in the cache (--verbose for more detail)
-      --watch         continually scan for new blocks and extract data for monitored addresses
+  -C, --clean         clean (i.e. remove duplicate appearances) from monitors
+  -l, --list          list monitors in the cache (--verbose for more detail)
+  -w, --watch         continually scan for new blocks and extract data for monitored addresses
   -s, --sleep float   seconds to sleep between monitor passes (default 14)
   -x, --fmt string    export format, one of [none|json*|txt|csv]
-  -v, --verbose       enable verbose (increase detail with --log_level)
+  -v, --verbose       enable verbose output
   -h, --help          display this help screen
 
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.
-  - The --decache option will remove all cache items (blocks, txs, traces, recons) for the given address(es).
 ```
 
 Data models produced by this tool:

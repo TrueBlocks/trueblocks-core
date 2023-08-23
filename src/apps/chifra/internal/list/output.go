@@ -13,6 +13,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -50,27 +51,26 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 		return err, true
 	}
 
+	timer := logger.NewTimer()
+	msg := "chifra list"
 	// EXISTING_CODE
 	handled = true // everything is handled even on failure
 
 	// We always freshen the monitors. This call fills the monitors array.
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	var canceled bool
-	canceled, err = opts.HandleFreshenMonitors(&monitorArray)
-	if err != nil {
-		return
+	if canceled, err := opts.HandleFreshenMonitors(&monitorArray); err != nil || canceled {
+		return err, true
 	}
 
-	if !canceled {
-		if opts.Count {
-			err = opts.HandleListCount(monitorArray)
-		} else if opts.Bounds {
-			err = opts.HandleBounds(monitorArray)
-		} else if !opts.Silent {
-			err = opts.HandleListAppearances(monitorArray)
-		}
+	if opts.Count {
+		err = opts.HandleCount(monitorArray)
+	} else if opts.Bounds {
+		err = opts.HandleBounds(monitorArray)
+	} else if !opts.Silent {
+		err = opts.HandleListAppearances(monitorArray)
 	}
 	// EXISTING_CODE
+	timer.Report(msg)
 
 	return
 }

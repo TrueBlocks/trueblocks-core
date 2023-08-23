@@ -11,38 +11,38 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// HandleChunksCheck looks at three different arrays: index files on disc, manifest on disc,
+// HandleCheck looks at three different arrays: index files on disc, manifest on disc,
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
-func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
-	// Checking only reports in JSON Mode
-	opts.Globals.Format = "json"
+func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
+	chain := opts.Globals.Chain
 
 	maxTestItems := 10
-	filenameChan := make(chan cache.CacheFileInfo)
+	filenameChan := make(chan walk.CacheFileInfo)
 
-	var nRoutines int = 1
-	go cache.WalkCacheFolder(context.Background(), opts.Globals.Chain, cache.Index_Bloom, nil, filenameChan)
+	var nRoutines = 1
+	go walk.WalkCacheFolder(context.Background(), chain, walk.Index_Bloom, nil, filenameChan)
 
 	fileNames := []string{}
 	for result := range filenameChan {
 		switch result.Type {
-		case cache.Index_Bloom:
-			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !cache.IsCacheType(result.Path, cache.Index_Bloom, true /* checkExt */)
+		case walk.Index_Bloom:
+			skip := (opts.Globals.TestMode && len(fileNames) > maxTestItems) || !walk.IsCacheType(result.Path, walk.Index_Bloom, true /* checkExt */)
 			if !skip {
 				hit := false
 				for _, block := range blockNums {
-					h := result.Range.IntersectsB(block)
+					h := result.FileRange.IntersectsB(block)
 					hit = hit || h
 					if hit {
 						break
@@ -52,7 +52,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 					fileNames = append(fileNames, result.Path)
 				}
 			}
-		case cache.Cache_NotACache:
+		case walk.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
 				close(filenameChan)
@@ -63,7 +63,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	}
 
 	if len(fileNames) == 0 {
-		msg := fmt.Sprint("No files found to check in", config.GetPathToIndex(opts.Globals.Chain))
+		msg := fmt.Sprint("No files found to check in", config.GetPathToIndex(chain))
 		return errors.New(msg)
 	}
 
@@ -71,12 +71,12 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromCache)
+	cacheManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
 	if err != nil {
 		return err
 	}
 
-	remoteManifest, err := manifest.ReadManifest(opts.Globals.Chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -111,7 +111,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 
 	reports := []simpleReportCheck{}
 
-	allowMissing := scrapeCfg.AllowMissing(opts.Globals.Chain)
+	allowMissing := scrapeCfg.AllowMissing(chain)
 	seq := simpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
@@ -158,7 +158,7 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 	reports = append(reports, r2c)
 
 	// we only check the stage if it exists
-	stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+	stagePath := index.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if file.FileExists(stageFn) {
 		stage := simpleReportCheck{Reason: "Check staging folder"}
@@ -168,13 +168,20 @@ func (opts *ChunksOptions) HandleChunksCheck(blockNums []uint64) error {
 		reports = append(reports, stage)
 	}
 
+	if opts.Deep {
+		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}
+		if err := opts.CheckDeep(cacheManifest, &deep); err != nil {
+			return err
+		}
+		reports = append(reports, deep)
+	}
+
 	for i := 0; i < len(reports); i++ {
 		reports[i].FailedCnt = reports[i].CheckedCnt - reports[i].PassedCnt
 		if reports[i].FailedCnt == 0 {
-			reports[i].PassedCnt = 0
-			reports[i].VisitedCnt = 0
 			reports[i].Result = "passed"
 		} else {
+			reports[i].Result = "failed"
 			reports[i].SkippedCnt = reports[i].VisitedCnt - reports[i].CheckedCnt
 		}
 	}

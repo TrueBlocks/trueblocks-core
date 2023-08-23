@@ -16,8 +16,9 @@ import (
 	"io"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // `payable` was present in ABIs before Solidity 0.5.0 and was replaced by `stateMutability`
@@ -127,19 +128,146 @@ func (s *SimpleFunction) Model(verbose bool, format string, extraOptions map[str
 	}
 }
 
-func (s *SimpleFunction) WriteTo(w io.Writer) (n int64, err error) {
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return 0, nil
+// --> marshal_only
+func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
+	// Anonymous
+	if err = cache.WriteValue(writer, s.Anonymous); err != nil {
+		return err
+	}
+
+	// Constant
+	if err = cache.WriteValue(writer, s.Constant); err != nil {
+		return err
+	}
+
+	// Encoding
+	if err = cache.WriteValue(writer, s.Encoding); err != nil {
+		return err
+	}
+
+	// Inputs
+	inputs := make([]cache.Marshaler, 0, len(s.Inputs))
+	for _, input := range s.Inputs {
+		input := input
+		inputs = append(inputs, &input)
+	}
+	if err = cache.WriteValue(writer, inputs); err != nil {
+		return err
+	}
+
+	// Message
+	if err = cache.WriteValue(writer, s.Message); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.WriteValue(writer, s.Name); err != nil {
+		return err
+	}
+
+	// Outputs
+	outputs := make([]cache.Marshaler, 0, len(s.Outputs))
+	for _, output := range s.Outputs {
+		output := output
+		outputs = append(outputs, &output)
+	}
+	if err = cache.WriteValue(writer, outputs); err != nil {
+		return err
+	}
+
+	// Signature
+	if err = cache.WriteValue(writer, s.Signature); err != nil {
+		return err
+	}
+
+	// StateMutability
+	if err = cache.WriteValue(writer, s.StateMutability); err != nil {
+		return err
+	}
+
+	// FunctionType
+	if err = cache.WriteValue(writer, s.FunctionType); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func (s *SimpleFunction) ReadFrom(r io.Reader) (n int64, err error) {
+func (s *SimpleFunction) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	// Anonymous
+	if err = cache.ReadValue(reader, &s.Anonymous, version); err != nil {
+		return err
+	}
+
+	// Constant
+	if err = cache.ReadValue(reader, &s.Constant, version); err != nil {
+		return err
+	}
+
+	// Encoding
+	if err = cache.ReadValue(reader, &s.Encoding, version); err != nil {
+		return err
+	}
+
+	// Inputs
+	s.Inputs = make([]SimpleParameter, 0)
+	if err = cache.ReadValue(reader, &s.Inputs, version); err != nil {
+		return err
+	}
+
+	// Message
+	if err = cache.ReadValue(reader, &s.Message, version); err != nil {
+		return err
+	}
+
+	// Name
+	if err = cache.ReadValue(reader, &s.Name, version); err != nil {
+		return err
+	}
+
+	// Outputs
+	s.Outputs = make([]SimpleParameter, 0)
+	if err = cache.ReadValue(reader, &s.Outputs, version); err != nil {
+		return err
+	}
+
+	// Signature
+	if err = cache.ReadValue(reader, &s.Signature, version); err != nil {
+		return err
+	}
+
+	// StateMutability
+	if err = cache.ReadValue(reader, &s.StateMutability, version); err != nil {
+		return err
+	}
+
+	// FunctionType
+	if err = cache.ReadValue(reader, &s.FunctionType, version); err != nil {
+		return err
+	}
+
+	s.FinishUnmarshal()
+
+	return nil
+}
+
+func (s *SimpleFunction) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return 0, nil
 }
 
 // EXISTING_CODE
+//
+
+func (s *SimpleFunction) Clone() *SimpleFunction {
+	shallowCopy := *s
+	shallowCopy.Inputs = make([]SimpleParameter, len(s.Inputs))
+	shallowCopy.Outputs = make([]SimpleParameter, len(s.Outputs))
+	copy(shallowCopy.Inputs, s.Inputs)
+	copy(shallowCopy.Outputs, s.Outputs)
+	return &shallowCopy
+}
+
 func FunctionFromAbiEvent(ethEvent *abi.Event) *SimpleFunction {
 	// ID is encoded signature
 	encSig := strings.ToLower(ethEvent.ID.Hex())
@@ -159,7 +287,7 @@ func FunctionFromAbiEvent(ethEvent *abi.Event) *SimpleFunction {
 // FunctionFromAbiMethod converts go-ethereum's abi.Method to our SimpleFunction
 func FunctionFromAbiMethod(ethMethod *abi.Method) *SimpleFunction {
 	// method.ID is our "four-byte"
-	fourByte := "0x" + strings.ToLower(string(common.Bytes2Hex(ethMethod.ID)))
+	fourByte := "0x" + base.Bytes2Hex(ethMethod.ID)
 
 	var functionType string
 	switch ethMethod.Type {
@@ -233,14 +361,14 @@ func argumentTypesToSimpleParameters(argTypes []*abi.Type) (result []SimpleParam
 	return
 }
 
-func AbiMethodFromFunction(function *SimpleFunction) (ethMethod *abi.Method, err error) {
-	if !function.IsMethod() {
+func (s *SimpleFunction) AbiMethodFromFunction() (ethMethod *abi.Method, err error) {
+	if !s.IsMethod() {
 		err = fmt.Errorf("FunctionToAbiMethod called for an event")
 		return
 	}
 
-	removeUnknownTuples(function)
-	jsonAbi, err := json.Marshal([]any{function})
+	removeUnknownTuples(s)
+	jsonAbi, err := json.Marshal([]any{s})
 	if err != nil {
 		return
 	}
@@ -248,23 +376,23 @@ func AbiMethodFromFunction(function *SimpleFunction) (ethMethod *abi.Method, err
 	if err != nil {
 		return
 	}
-	found, ok := res.Methods[function.Name]
+	found, ok := res.Methods[s.Name]
 	if !ok {
-		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		err = fmt.Errorf("generating ABI method: method not found: %s", s.Name)
 		return
 	}
 	ethMethod = &found
 	return
 }
 
-func AbiEventFromFunction(function *SimpleFunction) (ethMethod *abi.Event, err error) {
-	if function.IsMethod() {
+func (s *SimpleFunction) AbiEventFromFunction() (ethMethod *abi.Event, err error) {
+	if s.IsMethod() {
 		err = fmt.Errorf("functionToAbiEvent called for a method")
 		return
 	}
 
-	removeUnknownTuples(function)
-	jsonAbi, err := json.Marshal([]any{function})
+	removeUnknownTuples(s)
+	jsonAbi, err := json.Marshal([]any{s})
 	if err != nil {
 		return
 	}
@@ -272,9 +400,9 @@ func AbiEventFromFunction(function *SimpleFunction) (ethMethod *abi.Event, err e
 	if err != nil {
 		return
 	}
-	found, ok := res.Events[function.Name]
+	found, ok := res.Events[s.Name]
 	if !ok {
-		err = fmt.Errorf("generating ABI method: method not found: %s", function.Name)
+		err = fmt.Errorf("generating ABI method: method not found: %s", s.Name)
 		return
 	}
 	ethMethod = &found
@@ -310,7 +438,7 @@ func (s *SimpleFunction) SetAbiMethod(method *abi.Method) {
 
 func (s *SimpleFunction) GetAbiMethod() (abiMethod *abi.Method, err error) {
 	if s.abiMethod == nil {
-		abiMethod, err = AbiMethodFromFunction(s)
+		abiMethod, err = s.AbiMethodFromFunction()
 		if err != nil {
 			return
 		}
@@ -326,7 +454,7 @@ func (s *SimpleFunction) SetAbiEvent(event *abi.Event) {
 
 func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 	if s.abiEvent == nil {
-		abiEvent, err = AbiEventFromFunction(s)
+		abiEvent, err = s.AbiEventFromFunction()
 		if err != nil {
 			return
 		}
@@ -336,7 +464,6 @@ func (s *SimpleFunction) GetAbiEvent() (abiEvent *abi.Event, err error) {
 	return s.abiEvent, nil
 }
 
-// TODO: I feel like we might be able to remove stateMutability since we don't really use it.
 // Normalize sets StateMutability from `payable` field. It is only useful when
 // reading ABIs generated before Solidity 0.5.0, which use `payable` field:
 // https://docs.soliditylang.org/en/develop/050-breaking-changes.html#command-line-and-json-interfaces
@@ -350,6 +477,22 @@ func (s *SimpleFunction) Normalize() {
 		return
 	}
 	s.StateMutability = "nonpayable"
+}
+
+// Pack encodes function call
+func (s *SimpleFunction) Pack(callArguments []any) (packed []byte, err error) {
+	abiMethod, err := s.GetAbiMethod()
+	if err != nil {
+		return
+	}
+	packedArgs, err := abiMethod.Inputs.Pack(callArguments...)
+	if err != nil {
+		return
+	}
+	packed = abiMethod.ID
+	packed = append(packed, packedArgs...)
+
+	return
 }
 
 // EXISTING_CODE

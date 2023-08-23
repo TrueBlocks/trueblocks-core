@@ -16,13 +16,15 @@ import (
 
 // HandleTimestampsShow handles chifra when --timestamps
 func (opts *WhenOptions) HandleTimestampsShow() error {
-	bnMap, err := identifiers.GetBlockNumberMap(opts.Globals.Chain, opts.BlockIds)
+	chain := opts.Globals.Chain
+
+	bnMap, err := identifiers.GetBlockNumberMap(chain, opts.BlockIds)
 	if err != nil {
 		return err
 	}
 
 	var cnt uint64
-	cnt, err = tslib.NTimestamps(opts.Globals.Chain)
+	cnt, err = tslib.NTimestamps(chain)
 	if err != nil {
 		return err
 	}
@@ -32,7 +34,7 @@ func (opts *WhenOptions) HandleTimestampsShow() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for bn := uint64(0); bn < cnt; bn++ {
 			if len(bnMap) == 0 || bnMap[bn] {
-				ts, err := tslib.FromBn(opts.Globals.Chain, bn)
+				ts, err := tslib.FromBn(chain, bn)
 				if err != nil {
 					errorChan <- err
 				}

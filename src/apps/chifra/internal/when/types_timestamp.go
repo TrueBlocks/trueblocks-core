@@ -12,13 +12,14 @@ package whenPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
 type simpleTimestamp struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
-	Diff        base.Timestamp `json:"diff"`
+	Diff        int64          `json:"diff"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -49,6 +50,10 @@ func (s *simpleTimestamp) Model(verbose bool, format string, extraOptions map[st
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *simpleTimestamp) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // EXISTING_CODE

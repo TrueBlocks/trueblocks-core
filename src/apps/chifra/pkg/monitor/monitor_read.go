@@ -11,7 +11,9 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // ReadMonitorHeader reads the monitor's header and returns without closing the file
@@ -31,7 +33,7 @@ func (mon *Monitor) ReadMonitorHeader() (err error) {
 }
 
 // ReadAppearanceAt returns the appearance at the one-based index. The file remains open.
-func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (err error) {
+func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (err error) {
 	if idx == 0 || idx > mon.Count() {
 		// the file contains a header one record wide, so a one-based index eases caller code
 		err = fmt.Errorf("index out of range in ReadAppearanceAt[%d]", idx)
@@ -61,32 +63,17 @@ func (mon *Monitor) ReadAppearanceAt(idx uint32, app *index.AppearanceRecord) (e
 	return
 }
 
-// ReadAppearances returns appearances starting at the first appearance in the file. The call
-// will read as many records as are available in the array. The file remains opened.
-func (mon *Monitor) ReadAppearances(apps *[]index.AppearanceRecord) (err error) {
-	if uint32(len(*apps)) > mon.Count() {
-		err = fmt.Errorf("array is larger than the size of the file in ReadAppearances (%d,%d)", len(*apps), mon.Count())
-		return
-	}
-
-	if mon.ReadFp == nil {
-		path := mon.Path()
-		mon.ReadFp, err = os.OpenFile(path, os.O_RDONLY, 0644)
-		if err != nil {
-			return
+// ReadAppearancesToMap reads all appearances from the monitor and returns a map of the appearances to the given type.
+func ReadAppearancesToMap[T any](mon *Monitor, filter *filter.AppearanceFilter) (theMap map[types.SimpleAppearance]*T, cnt int, err error) {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+		return nil, 0, err
+	} else if cnt == 0 {
+		return nil, 0, nil
+	} else {
+		m := make(map[types.SimpleAppearance]*T, mon.Count())
+		for _, app := range apps {
+			m[app] = new(T)
 		}
+		return m, len(m), nil
 	}
-
-	// Seek past the header to get to the first record
-	_, err = mon.ReadFp.Seek(index.AppRecordWidth, io.SeekStart)
-	if err != nil {
-		return
-	}
-
-	err = binary.Read(mon.ReadFp, binary.LittleEndian, apps)
-	if err != nil {
-		return
-	}
-
-	return
 }

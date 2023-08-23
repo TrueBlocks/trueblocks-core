@@ -1,14 +1,14 @@
-chifra list  0x9531c059098e3d194ff87febb587ab07b30b1306 --count --fmt json
+chifra list  0x9531c059098e3d194ff87febb587ab07b30b1306 --count --fmt json --last_block 12000000
 TEST[DATE|TIME] Addrs:  [0x9531c059098e3d194ff87febb587ab07b30b1306]
 TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] LastBlock:  12000000
 TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
       "address": "0x9531c059098e3d194ff87febb587ab07b30b1306",
-      "nRecords": 1001001,
-      "fileSize": 1001001,
-      "lastScanned": 15000000
+      "fileSize": 57005,
+      "nRecords": 620
     }
   ]
 }

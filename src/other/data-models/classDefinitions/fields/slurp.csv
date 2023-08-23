@@ -1,0 +1,25 @@
+name                 ,type           ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example       ,description
+hash                 ,hash           ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,0xf128...1e98 ,the hash of the transaction
+blockHash            ,hash           ,           ,       ,      ,        ,          ,        ,         ,  2 ,     ,0xc421...fb04 ,the hash of the block containing this transaction
+blockNumber          ,blknum         ,           ,       ,      ,        ,          ,        ,         ,  3 ,     ,10021         ,the number of the block
+transactionIndex     ,blknum         ,           ,       ,      ,        ,          ,        ,         ,  4 ,     ,305           ,the zero-indexed position of the transaction in the block
+nonce                ,uint64         ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,232           ,sequence number of the transactions sent by the sender
+timestamp            ,timestamp      ,           ,       ,      ,        ,          ,        ,         ,  6 ,     ,1438335038    ,the Unix timestamp of the object
+date                 ,datetime       ,           ,       ,      ,        ,          ,        ,         ,  7 ,     ,              ,a calculated field -- the date of the object
+from                 ,address        ,           ,       ,      ,        ,          ,        ,         ,  8 ,     ,              ,address from which the transaction was sent
+to                   ,address        ,           ,       ,      ,        ,          ,        ,         ,  9 ,     ,              ,address to which the transaction was sent
+value                ,wei            ,           ,       ,      ,        ,          ,        ,         , 10 ,     ,0             ,the amount of wei sent with this transactions
+gas                  ,gas            ,           ,       ,      ,        ,          ,        ,         , 11 ,     ,158660        ,the maximum number of gas allowed for this transaction
+gasPrice             ,gas            ,           ,       ,      ,        ,          ,        ,         , 12 ,     ,63525836552   ,the number of wei per unit of gas the sender is willing to spend
+input                ,bytes          ,           ,       ,      ,        ,          ,        ,         , 13 ,     ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
+hasToken             ,bool           ,           ,       ,      ,        ,          ,        ,         , 14 ,     ,              ,`true` if the transaction is token related&#44; `false` otherwise
+articulatedTx        ,Function       ,           ,true   ,      ,        ,          ,        ,         , 15 ,     ,              ,
+compressedTx         ,string         ,           ,       ,      ,        ,          ,        ,         , 16 ,     ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
+isError              ,bool           ,           ,       ,      ,        ,          ,        ,         , 17 ,     ,              ,`true` if the transaction ended in error&#44; `false` otherwise
+functionName         ,string         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+methodId             ,string         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+gasUsed              ,gas            ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+contractAddress      ,address        ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+cumulativeGasUsed    ,string         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+txReceiptStatus      ,string         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+ether                ,string         ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,

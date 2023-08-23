@@ -1,0 +1,6 @@
+list?addrs=0x007f7f58d3eb5b7510a301ecc749fc1fcddbe14d&addrs=0x4444DEADdeadDEADdeadDEADdeadDEADdeadDEAD&addrs=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&firstBlock=100000&lastBlock=100100&fmt=txt&noZero
+{
+  "errors": [
+    "The --no_zero option is only available with the --count option."
+  ]
+}

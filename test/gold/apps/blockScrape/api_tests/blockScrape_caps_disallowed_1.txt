@@ -1,0 +1,6 @@
+scrape?fmt=json
+{
+  "errors": [
+    "Cannot test block scraper"
+  ]
+}

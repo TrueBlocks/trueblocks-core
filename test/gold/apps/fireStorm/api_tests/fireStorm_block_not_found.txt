@@ -1,6 +1,6 @@
 explore?terms=0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
 {
   "errors": [
-    "block at 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2 returned an error: not found"
+    "The explore option is not available in api mode."
   ]
 }

@@ -57,7 +57,7 @@ func (chunk *ChunkData) searchForAddressRecord(address base.Address) int {
 	pos := sort.Search(int(chunk.Header.AddressCount), compareFunc)
 
 	readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
-	chunk.File.Seek(readLocation, io.SeekStart)
+	_, _ = chunk.File.Seek(readLocation, io.SeekStart)
 	rec := AddressRecord{}
 	err := rec.ReadAddress(chunk.File)
 	if err != nil {

@@ -1,7 +1,8 @@
 chifra traces  --fmt json --filter 4370000!0x42ae53!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111!0xc42209accc14029c1012fb5680d95fbd6036e2a0
 TEST[DATE|TIME] Filter:  4370000!0x42ae53!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111!0xc42209accc14029c1012fb5680d95fbd6036e2a0
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] map[fromAddress:[0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111] fromBlock:0x42ae50 toAddress:[0xc42209accc14029c1012fb5680d95fbd6036e2a0] toBlock:0x42ae53]
+INFO[DATE|TIME] map[after:0 count:18446744073709551615 fromAddress:0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111 fromBlock:4370000 toAddress:0xc42209accc14029c1012fb5680d95fbd6036e2a0 toBlock:4370003] {4370000 4370003}
 {
   "data": [
     {
@@ -15,6 +16,7 @@ INFO[DATE|TIME] map[fromAddress:[0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111] fro
       },
       "blockHash": "0x40996e904604226a5c252f496238d4c70270e0a05c4cb5588987b32fe1c4a7f2",
       "blockNumber": 4370001,
+      "date": "2017-10-16 05:22:42 UTC",
       "result": {
         "gasUsed": 29002,
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"

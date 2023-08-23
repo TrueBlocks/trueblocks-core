@@ -9,8 +9,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 var ensRegistrar = `[{"constant":false,"inputs":[{"name":"_hash","type":"bytes32"}],"name":"releaseDeed","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_hash","type":"bytes32"}],"name":"getAllowedTime","outputs":[{"name":"timestamp","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"unhashedName","type":"string"}],"name":"invalidateName","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"hash","type":"bytes32"},{"name":"owner","type":"address"},{"name":"value","type":"uint256"},{"name":"salt","type":"bytes32"}],"name":"shaBid","outputs":[{"name":"sealedBid","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"bidder","type":"address"},{"name":"seal","type":"bytes32"}],"name":"cancelBid","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_hash","type":"bytes32"}],"name":"entries","outputs":[{"name":"","type":"uint8"},{"name":"","type":"address"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"ens","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_hash","type":"bytes32"},{"name":"_value","type":"uint256"},{"name":"_salt","type":"bytes32"}],"name":"unsealBid","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_hash","type":"bytes32"}],"name":"transferRegistrars","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"bytes32"}],"name":"sealedBids","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_hash","type":"bytes32"}],"name":"state","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_hash","type":"bytes32"},{"name":"newOwner","type":"address"}],"name":"transfer","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_hash","type":"bytes32"},{"name":"_timestamp","type":"uint256"}],"name":"isAllowed","outputs":[{"name":"allowed","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_hash","type":"bytes32"}],"name":"finalizeAuction","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"registryStarted","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"launchLength","outputs":[{"name":"","type":"uint32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"sealedBid","type":"bytes32"}],"name":"newBid","outputs":[],"payable":true,"type":"function"},{"constant":false,"inputs":[{"name":"labels","type":"bytes32[]"}],"name":"eraseNode","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_hashes","type":"bytes32[]"}],"name":"startAuctions","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"bytes32"},{"name":"deed","type":"address"},{"name":"registrationDate","type":"uint256"}],"name":"acceptRegistrarTransfer","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_hash","type":"bytes32"}],"name":"startAuction","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"rootNode","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"hashes","type":"bytes32[]"},{"name":"sealedBid","type":"bytes32"}],"name":"startAuctionsAndBid","outputs":[],"payable":true,"type":"function"},{"inputs":[{"name":"_ens","type":"address"},{"name":"_rootNode","type":"bytes32"},{"name":"_startDate","type":"uint256"}],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hash","type":"bytes32"},{"indexed":false,"name":"registrationDate","type":"uint256"}],"name":"AuctionStarted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hash","type":"bytes32"},{"indexed":true,"name":"bidder","type":"address"},{"indexed":false,"name":"deposit","type":"uint256"}],"name":"NewBid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hash","type":"bytes32"},{"indexed":true,"name":"owner","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"status","type":"uint8"}],"name":"BidRevealed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hash","type":"bytes32"},{"indexed":true,"name":"owner","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"registrationDate","type":"uint256"}],"name":"HashRegistered","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hash","type":"bytes32"},{"indexed":false,"name":"value","type":"uint256"}],"name":"HashReleased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hash","type":"bytes32"},{"indexed":true,"name":"name","type":"string"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"registrationDate","type":"uint256"}],"name":"HashInvalidated","type":"event"}]`
@@ -23,9 +23,10 @@ func TestArticulateFunction(t *testing.T) {
 	}
 	const hexdata = `00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000015800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000158000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000001580000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000015800000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000158`
 
+	abiCache := NewAbiCache(utils.GetTestChain(), true)
 	am := abi.Methods["get"]
 	f := types.FunctionFromAbiMethod(&am)
-	if err = ArticulateFunction(f, hexdata, ""); err != nil {
+	if err = abiCache.ArticulateFunction(f, hexdata, ""); err != nil {
 		t.Fatal(err)
 	}
 
@@ -50,7 +51,7 @@ func TestArticulateArguments(t *testing.T) {
 
 	abiMethod := abi.Methods["transfer"]
 	f := types.FunctionFromAbiMethod(&abiMethod)
-	if err = ArticulateArguments(abiMethod.Inputs, input[10:], nil, f.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, input[10:], nil, f.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -82,7 +83,7 @@ func TestArticulateArgumentsMixedIndexed(t *testing.T) {
 	abiEvent := abi.Events["AuctionStarted"]
 	result := types.FunctionFromAbiEvent(&abiEvent)
 
-	if err = ArticulateArguments(abiEvent.Inputs, txData[2:], txTopics, result.Inputs); err != nil {
+	if err = articulateArguments(abiEvent.Inputs, txData[2:], txTopics, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -121,7 +122,8 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573" {
@@ -136,7 +138,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -151,7 +153,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -166,7 +168,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -181,7 +183,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -196,7 +198,7 @@ func TestArticulateArgumentsSimpleData(t *testing.T) {
 	if err != nil {
 		return
 	}
-	if err = ArticulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, string(packed), nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 	if value := result.Inputs[0].Value; value != expected {
@@ -219,7 +221,7 @@ func TestArticulateArgumentsSlice(t *testing.T) {
 	abiMethod := abi.Methods["startAuctionsAndBid"]
 	result := types.FunctionFromAbiMethod(&abiMethod)
 
-	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -256,7 +258,7 @@ func TestArticulateArgumentsComplex(t *testing.T) {
 	abiMethod := abi.Methods["operate"]
 	result := types.FunctionFromAbiMethod(&abiMethod)
 
-	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -293,7 +295,7 @@ func TestArticulateArgumentsTupleWrongType(t *testing.T) {
 	abiMethod := abi.Methods["operate"]
 	result := types.FunctionFromAbiMethod(&abiMethod)
 
-	if err = ArticulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
+	if err = articulateArguments(abiMethod.Inputs, txData[2:], nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -412,8 +414,9 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	txData := common.Bytes2Hex(rawPayload)
-	if err = ArticulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
+	txData := base.Bytes2Hex(rawPayload)
+
+	if err = articulateArguments(abiMethod.Inputs, txData, nil, result.Inputs); err != nil {
 		t.Fatal(err)
 	}
 
@@ -455,5 +458,36 @@ func TestArticulateArgumentsTupleTuple(t *testing.T) {
 	expected, _ = json.Marshal(third)
 	if value := result.Inputs[2].Value; value != string(expected) {
 		t.Fatal("wrong value of the third input:", value)
+	}
+}
+
+func TestArticulateAnonymousArguments(t *testing.T) {
+	// peek() from 0x729d19f657bd0614b4985cf1d82531c67569197b
+	abiJson := `[{"constant":true,"inputs":[],"name":"peek","outputs":[{"name":"","type":"bytes32"},{"name":"","type":"bool"}],"payable":false,"type":"function"}]`
+	abi, err := abi.JSON(strings.NewReader(abiJson))
+	if err != nil {
+		t.Fatal(err)
+	}
+	output := `0x00000000000000000000000000000000000000000000002993a384ff8db780000000000000000000000000000000000000000000000000000000000000000001`
+
+	abiMethod := abi.Methods["peek"]
+	f := types.FunctionFromAbiMethod(&abiMethod)
+
+	if err = articulateArguments(abiMethod.Outputs, output[2:], nil, f.Outputs); err != nil {
+		t.Fatal(err)
+	}
+
+	if paramType := f.Outputs[0].ParameterType; paramType != "bytes32" {
+		t.Fatal("wrong type of the first parameter", paramType)
+	}
+	if value := f.Outputs[0].Value; value != "0x00000000000000000000000000000000000000000000002993a384ff8db78000" {
+		t.Fatal("wrong value of the first parameter", value)
+	}
+
+	if paramType := f.Outputs[1].ParameterType; paramType != "bool" {
+		t.Fatal("wrong type of the second parameter", paramType)
+	}
+	if value := f.Outputs[1].Value; value != true {
+		t.Fatal("wrong value of the second parameter", value)
 	}
 }

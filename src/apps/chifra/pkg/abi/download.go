@@ -6,17 +6,26 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
+var perfTiming bool
+
+func init() {
+	perfTiming = os.Getenv("TB_TIMER_ON") == "true"
+}
+
+var AbiNotFound = `[{"name":"AbiNotFound","type":"function"}]`
+
+// DownloadAbi downloads the ABI for the given address and saves it to the cache.
 // TODO: This function should be easy to replace with "ABI providers" (different services like
 // Sourcify or custom ones configured by the user)
-func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap) error {
+func DownloadAbi(chain string, address base.Address, destination *FunctionSyncMap) error {
 	if address.IsZero() {
 		return errors.New("address is 0x0")
 	}
@@ -56,27 +65,29 @@ func DownloadAbi(chain string, address base.Address, destination AbiInterfaceMap
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
-		logger.Warn("provider responded with:", address.Hex(), data["message"])
+		if !perfTiming {
+			logger.Warn("provider responded with:", address.Hex(), data["message"])
+		}
 
-		reader := strings.NewReader("[{\"name\": \"AbiNotFound\",\"type\": \"function\"}]")
-		fromJson(reader, destination)
+		reader := strings.NewReader(AbiNotFound)
+		_ = fromJson(reader, destination)
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {
 			return err
 		}
-		if err = cache.InsertAbi(chain, address, reader); err != nil {
+		if err = insertAbi(chain, address, reader); err != nil {
 			return err
 		}
 		return nil
 	}
 
 	reader := strings.NewReader(data["result"])
-	fromJson(reader, destination)
+	_ = fromJson(reader, destination)
 	if _, err = reader.Seek(0, io.SeekStart); err != nil {
 		return err
 	}
 
 	// Write the body to file
-	if err = cache.InsertAbi(chain, address, reader); err != nil {
+	if err = insertAbi(chain, address, reader); err != nil {
 		return err
 	}
 	return nil

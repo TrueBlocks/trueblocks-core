@@ -9,13 +9,13 @@ package exportPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -32,9 +32,9 @@ type ExportOptions struct {
 	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
 	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
 	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
+	Balances    bool                  `json:"balances,omitempty"`    // Traverse the transaction history and show each change in ETH balances
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
-	Cache       bool                  `json:"cache,omitempty"`       // Write transactions to the cache (see notes)
-	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Write traces to the cache (see notes)
+	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Force the transaction's traces into the cache
 	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
@@ -47,18 +47,19 @@ type ExportOptions struct {
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled upripe (i.e. less than 28 blocks old)
 	Load        string                `json:"load,omitempty"`        // A comma separated list of dynamic traversers to load
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
+	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to process (inclusive)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
+	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 var defaultExportOptions = ExportOptions{
-	FirstRecord: 1,
-	MaxRecords:  250,
-	LastBlock:   utils.NOPOS,
+	MaxRecords: 250,
+	LastBlock:  utils.NOPOS,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -73,11 +74,11 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Neighbors, "Neighbors: ", opts.Neighbors)
 	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
+	logger.TestLog(opts.Balances, "Balances: ", opts.Balances)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.FirstRecord != 1, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
@@ -88,8 +89,10 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
 	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
+	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -99,100 +102,11 @@ func (opts *ExportOptions) String() string {
 	return string(b)
 }
 
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *ExportOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *ExportOptions) toCmdLine() string {
-	options := ""
-	if opts.Appearances {
-		options += " --appearances"
-	}
-	if opts.Receipts {
-		options += " --receipts"
-	}
-	if opts.Logs {
-		options += " --logs"
-	}
-	if opts.Traces {
-		options += " --traces"
-	}
-	if opts.Neighbors {
-		options += " --neighbors"
-	}
-	if opts.Accounting {
-		options += " --accounting"
-	}
-	if opts.Statements {
-		options += " --statements"
-	}
-	if opts.Articulate {
-		options += " --articulate"
-	}
-	if opts.Cache {
-		options += " --cache"
-	}
-	if opts.CacheTraces {
-		options += " --cache_traces"
-	}
-	if opts.Count {
-		options += " --count"
-	}
-	if opts.FirstRecord != 1 {
-		options += (" --first_record " + fmt.Sprintf("%d", opts.FirstRecord))
-	}
-	if opts.MaxRecords != 250 {
-		options += (" --max_records " + fmt.Sprintf("%d", opts.MaxRecords))
-	}
-	if opts.Relevant {
-		options += " --relevant"
-	}
-	for _, emitter := range opts.Emitter {
-		options += " --emitter " + emitter
-	}
-	for _, topic := range opts.Topic {
-		options += " --topic " + topic
-	}
-	for _, asset := range opts.Asset {
-		options += " --asset " + asset
-	}
-	if len(opts.Flow) > 0 {
-		options += " --flow " + opts.Flow
-	}
-	if opts.Factory {
-		options += " --factory"
-	}
-	if len(opts.Load) > 0 {
-		options += " --load " + opts.Load
-	}
-	if opts.Reversed {
-		options += " --reversed"
-	}
-	if opts.FirstBlock != 0 {
-		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
-	}
-	if opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS {
-		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
-	}
-	options += " " + strings.Join(opts.Addrs, " ")
-	options += " " + strings.Join(opts.Topics, " ")
-	options += " " + strings.Join(opts.Fourbytes, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
-}
-
 // exportFinishParseApi finishes the parsing for server invocations. Returns a new ExportOptions.
 func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	copy := defaultExportOptions
 	opts := &copy
-	opts.FirstRecord = 1
+	opts.FirstRecord = 0
 	opts.MaxRecords = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
@@ -227,10 +141,10 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Accounting = true
 		case "statements":
 			opts.Statements = true
+		case "balances":
+			opts.Balances = true
 		case "articulate":
 			opts.Articulate = true
-		case "cache":
-			opts.Cache = true
 		case "cacheTraces":
 			opts.CacheTraces = true
 		case "count":
@@ -266,53 +180,66 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
+		case "noZero":
+			opts.NoZero = true
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter, _ = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset, _ = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
 	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
 
 	return opts
 }
 
 // exportFinishParse finishes the parsing for command line invocations. Returns a new ExportOptions.
 func exportFinishParse(args []string) *ExportOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
-	defFmt := "txt"
-	// EXISTING_CODE
-	dupMap := make(map[string]bool)
-	for _, arg := range args {
-		if !dupMap[arg] {
-			if validate.IsValidTopic(arg) {
-				opts.Topics = append(opts.Topics, arg)
-			} else if validate.IsValidFourByte(arg) {
-				opts.Fourbytes = append(opts.Fourbytes, arg)
-			} else {
-				opts.Addrs = append(opts.Addrs, arg)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
 			}
+			dedup[arg]++
 		}
-		dupMap[arg] = true
+		args = tmp
 	}
-	opts.Addrs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Addrs)
-	opts.Emitter, _ = ens.ConvertEns(opts.Globals.Chain, opts.Emitter)
-	opts.Asset, _ = ens.ConvertEns(opts.Globals.Chain, opts.Asset)
+
+	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
+	for _, arg := range args {
+		if validate.IsValidTopic(arg) {
+			opts.Topics = append(opts.Topics, arg)
+		} else if validate.IsValidFourByte(arg) {
+			opts.Fourbytes = append(opts.Fourbytes, arg)
+		} else {
+			opts.Addrs = append(opts.Addrs, arg)
+		}
+	}
+	// EXISTING_CODE
+	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
+	opts.Asset, _ = opts.Conn.GetEnsAddresses(opts.Asset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -328,4 +255,26 @@ func ResetOptions() {
 	defaultExportOptions = ExportOptions{}
 	globals.SetDefaults(&defaultExportOptions.Globals)
 	defaultExportOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra export
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
+	// EXISTING_CODE
+	defaultExportOptions.Globals.Caps = capabilities
 }
+
+func (opts *ExportOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		// TODO: Enabled neighbors cache
+		"transactions": true,
+		"statements":   true,
+		"traces":       opts.CacheTraces,
+	}
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

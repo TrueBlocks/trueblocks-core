@@ -12,6 +12,7 @@ package tracesPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -55,6 +56,10 @@ func (s *simpleTraceCount) Model(verbose bool, format string, extraOptions map[s
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *simpleTraceCount) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // EXISTING_CODE

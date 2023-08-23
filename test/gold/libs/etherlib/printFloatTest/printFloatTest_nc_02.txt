@@ -1,2 +1,0 @@
-printFloatTest   -t 2
-Test 2

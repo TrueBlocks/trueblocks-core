@@ -1,12 +1,8 @@
 [settings]
 class = CChain
 fields = chain.csv
-includes = utillib.h
-cpp_includes =
 doc_group = 04-Admin
 doc_descr = a configuration item carrying information about a single chain
-doc_route = 412-chain
+doc_route = 413-chain
 doc_producer = status, config
-
-cpp_output = src/libs/utillib/
 go_output = src/apps/chifra/pkg/types

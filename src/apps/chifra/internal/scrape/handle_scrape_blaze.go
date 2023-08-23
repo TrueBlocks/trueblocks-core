@@ -16,37 +16,40 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpcClient.MetaData, blazeOpts *BlazeOptions) error {
+func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *BlazeOptions) error {
+	chain := opts.Globals.Chain
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
 	if _, err := blazeOpts.HandleBlaze(progress); err != nil {
-		index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
+		_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
 		return err
 	}
 
-	for bn := int(opts.StartBlock); bn < int(opts.StartBlock+opts.BlockCnt); bn++ {
+	for bn := opts.StartBlock; bn < opts.StartBlock+opts.BlockCnt; bn++ {
 		if !blazeOpts.ProcessedMap[bn] {
 			// At least one block was not processed. This would only happen in the event of an
 			// error, so clean up, report the error and return. The loop will repeat.
-			index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
+			_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
 			msg := fmt.Sprintf("A block %d was not processed%s", bn, strings.Repeat(" ", 50))
 			return errors.New(msg)
 		}
 	}
 
-	WriteTimestamps(blazeOpts.Chain, blazeOpts.TsArray, blazeOpts.StartBlock+blazeOpts.BlockCount)
+	_ = WriteTimestamps(blazeOpts.Chain, blazeOpts.TsArray, blazeOpts.StartBlock+blazeOpts.BlockCount)
 
 	return nil
 }
 
 // TODO: Protect against overwriting files on disc
+
 func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uint64) error {
+	conn := rpc.TempConnection(chain)
+
 	sort.Slice(tsArray, func(i, j int) bool {
 		return tsArray[i].Bn < tsArray[j].Bn
 	})
@@ -75,14 +78,14 @@ func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uin
 		if cnt >= len(tsArray) {
 			ts = tslib.TimestampRecord{
 				Bn: uint32(bn),
-				Ts: uint32(rpc.GetBlockTimestamp(chain, bn)),
+				Ts: uint32(conn.GetBlockTimestamp(bn)),
 			}
 		} else {
 			ts = tsArray[cnt]
 			if tsArray[cnt].Bn != uint32(bn) {
 				ts = tslib.TimestampRecord{
 					Bn: uint32(bn),
-					Ts: uint32(rpc.GetBlockTimestamp(chain, bn)),
+					Ts: uint32(conn.GetBlockTimestamp(bn)),
 				}
 				cnt-- // set it back
 			}

@@ -17,8 +17,5 @@ func (opts *InitOptions) validateInit() error {
 		return validate.Usage("integration testing was skipped for chifra init")
 	}
 
-	// Note - we don't check the index for back level since chifra init is how we upgrade the index
-	// index.CheckBackLevelIndex(opts.Globals.Chain)
-
 	return opts.Globals.Validate()
 }

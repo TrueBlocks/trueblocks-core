@@ -1,23 +1,17 @@
 tokens?addrs=0x00000000441378008ea67f4284a57932b1c000a5&fmt=json&blocks=7442048&parts=all
 {
-  "data": [
-    {
-      "blockNumber": 7442048,
-      "totalSupply": "",
-      "address": "0x00000000441378008ea67f4284a57932b1c000a5",
-      "name": "",
-      "symbol": "",
-      "decimals": 0,
-      "isContract": false,
-      "isErc20": false,
-      "isErc721": false
-    }
-  ],
+  "data": [],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  },
+  "errors": [
+    "address is not token"
+  ]
 }

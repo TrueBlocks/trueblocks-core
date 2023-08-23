@@ -1,5 +1,4 @@
-# minimum cmake version supported
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required (VERSION 3.5)
 
 # folder project
 project(apps)
@@ -11,5 +10,4 @@ include_directories(${BASE_INCLUDE})
 # message (WARNING  "*** Entering apps folder ***")
 
 # Compilation order of the src subdirectories
-add_subdirectory(acctExport)
 add_subdirectory(chifra)

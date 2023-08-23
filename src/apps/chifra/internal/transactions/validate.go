@@ -5,15 +5,25 @@
 package transactionsPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *TransactionsOptions) validateTransactions() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
+	}
+
+	key := config.GetRootConfig().Keys["trueblocks"].License
+	if len(opts.AccountFor) > 0 && !strings.Contains(key, "+accounting") {
+		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 
 	if len(opts.Flow) > 0 {
@@ -29,28 +39,44 @@ func (opts *TransactionsOptions) validateTransactions() error {
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
+		if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
+			return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
+		} else if opts.Logs {
+			for _, emitter := range opts.Emitter {
+				valid, err := base.IsValidAddressE(emitter)
+				if !valid {
+					return err
+				}
+			}
+
+			for _, topic := range opts.Topic {
+				valid, err := validate.IsValidTopicE(topic)
+				if !valid {
+					return err
+				}
+			}
+		}
+
 		if len(opts.Transactions) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers.")
 		}
 
-		if len(opts.Reconcile) > 0 {
-			return validate.Usage("The --reconcile option has been deprecated. Use --account_for instead.")
-		}
-
 		if len(opts.AccountFor) > 0 {
-			if opts.Cache {
-				return validate.Usage("The {0} option is not available with the {1} option", "--cache", "--account_for")
-			}
 			if opts.Uniq {
-				return validate.Usage("The {0} option is not available with the {1} option", "--uniq", "--account_for")
+				return validate.Usage("The {0} option is not available{1}.", "--uniq", " with the --account_for option")
 			}
-			if !validate.IsValidAddress(opts.AccountFor) {
+			if !base.IsValidAddress(opts.AccountFor) {
 				return validate.Usage("Invalid reconcilation address {0}.", opts.AccountFor)
 			}
 		}
 
-		if opts.Traces && !node.IsTracingNode(opts.Globals.TestMode, opts.Globals.Chain) {
-			return validate.Usage("Tracing is required for this program to work properly.")
+		if opts.Traces {
+			if !opts.Conn.IsNodeTracing(opts.Globals.TestMode) {
+				return validate.Usage("Tracing is required for this program to work properly.")
+			}
+			if opts.Uniq {
+				return validate.Usage("The {0} option is not available{1}.", "--uniq", " with the --traces option")
+			}
 		}
 
 		if !validate.CanArticulate(opts.Articulate) {
@@ -59,7 +85,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 	}
 
 	err := validate.ValidateIdentifiers(
-		opts.Globals.Chain,
+		chain,
 		opts.Transactions,
 		validate.ValidTransId,
 		-1,

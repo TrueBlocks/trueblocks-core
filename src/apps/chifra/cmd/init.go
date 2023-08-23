@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -29,7 +30,7 @@ var initCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("init", func() *globals.GlobalOptions {
 		return &initPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("init", initPkg.RunInit, initPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &initPkg.GetOptions().Globals
 	}),
@@ -45,19 +46,26 @@ const longInit = `Purpose:
 const notesInit = `
 Notes:
   - If run with no options, this tool will download or freshen only the Bloom filters.
+  - The --first_block option will fall back to the start of the containing chunk.
   - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {
+	var capabilities = caps.Default // Additional global caps for chifra init
+	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Fmt)
+	capabilities = capabilities.Remove(caps.NoHeader)
+	capabilities = capabilities.Remove(caps.File)
+	capabilities = capabilities.Remove(caps.Output)
+	capabilities = capabilities.Remove(caps.Append)
+	// EXISTING_CODE
+
 	initCmd.Flags().SortFlags = false
 
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().All, "all", "a", false, "in addition to Bloom filters, download full index chunks (recommended)")
 	initCmd.Flags().BoolVarP(&initPkg.GetOptions().DryRun, "dry_run", "d", false, "display the results of the download without actually downloading")
-	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, "do not download any chunks earlier than this block (hidden)")
+	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, "do not download any chunks earlier than this block")
 	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, "seconds to sleep between downloads")
-	if os.Getenv("TEST_MODE") != "true" {
-		initCmd.Flags().MarkHidden("first_block")
-	}
-	globals.InitGlobals(initCmd, &initPkg.GetOptions().Globals)
+	globals.InitGlobals(initCmd, &initPkg.GetOptions().Globals, capabilities)
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
 	initCmd.SetOut(os.Stderr)

@@ -13,8 +13,9 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -37,9 +38,8 @@ type NamesOptions struct {
 	Delete    bool                  `json:"delete,omitempty"`    // Delete a name, but do not remove it
 	Undelete  bool                  `json:"undelete,omitempty"`  // Undelete a previously deleted name
 	Remove    bool                  `json:"remove,omitempty"`    // Remove a previously deleted name
-	ToCustom  bool                  `json:"toCustom,omitempty"`  // This option has been deprecated
-	Named     bool                  `json:"named,omitempty"`     // Please use the --all option instead
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
+	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
 	crudData *CrudData
@@ -67,8 +67,7 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
-	logger.TestLog(opts.ToCustom, "ToCustom: ", opts.ToCustom)
-	logger.TestLog(opts.Named, "Named: ", opts.Named)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -121,20 +120,16 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Undelete = true
 		case "remove":
 			opts.Remove = true
-		case "toCustom":
-			opts.ToCustom = true
-		case "named":
-			opts.Named = true
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
-	opts.Terms, _ = ens.ConvertEns(opts.Globals.Chain, opts.Terms)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 
 	return opts
@@ -142,15 +137,31 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 
 // namesFinishParse finishes the parsing for command line invocations. Returns a new NamesOptions.
 func namesFinishParse(args []string) *NamesOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
-	opts.Terms, _ = ens.ConvertEns(opts.Globals.Chain, args)
+	opts.Terms = append(opts.Terms, args...)
+	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
 	// EXISTING_CODE
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -166,4 +177,17 @@ func ResetOptions() {
 	defaultNamesOptions = NamesOptions{}
 	globals.SetDefaults(&defaultNamesOptions.Globals)
 	defaultNamesOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra names
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultNamesOptions.Globals.Caps = capabilities
 }
+
+func (opts *NamesOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

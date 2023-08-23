@@ -4,6 +4,7 @@ blocks?blocks=2222222%202332332&fmt=json
     {
       "baseFeePerGas": 0,
       "blockNumber": 2222222,
+      "date": "2016-09-08 15:22:45 UTC",
       "difficulty": 67778199271167,
       "gasLimit": 4704588,
       "gasUsed": 1306412,
@@ -16,12 +17,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.000000000000000000",
+          "ether": "0",
           "from": "0x02fcf30912b6fe2b6452ee19721c6068fe4c7b61",
           "gas": 1000000,
           "gasCost": 2e+16,
           "gasPrice": 20000000000,
           "gasUsed": 1000000,
+          "hasToken": true,
           "hash": "0x9c34ba45c523f75009d279553fe2a7e9a99a991a297439226321bea26ab62bbb",
           "input": "0xa9059cbb0000000000000000000000009e9d1613f966936f74534ba71614350d1d87c4b100000000000000000000000000000000000000000000002d9614d1e3f1f00000",
           "isError": true,
@@ -35,6 +37,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
+          "traces": [],
           "transactionIndex": 0,
           "value": "0"
         },
@@ -42,14 +45,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "100.990000000000000000",
+          "ether": "100.99",
           "from": "0x91337a300e0361bddb2e377dd4e88ccb7796663d",
           "gas": 90000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0x0020145652bb7bb9a8d52e99410732558a51a2aff99ebab649008c161b4868b3",
-          "input": "0x",
           "nonce": 11326,
           "receipt": {
             "contractAddress": "0x0",
@@ -60,6 +62,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0xe9475a01ba4095760d9f9c02b79c6e8094a30d74",
+          "traces": [],
           "transactionIndex": 1,
           "value": "100990000000000000000"
         },
@@ -67,14 +70,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.002245430000000000",
+          "ether": "0.00224543",
           "from": "0xcd88e0e0c455345833ce31c5452c1c37f4b4c438",
           "gas": 21000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0xa95d75cd092226a4df9b0224156d963915dbc3a2816bf88cc064688ba1181f59",
-          "input": "0x",
           "nonce": 15372,
           "receipt": {
             "contractAddress": "0x0",
@@ -85,6 +87,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x95d07a26b6b65c66492d40171f08e5b7980c3110",
+          "traces": [],
           "transactionIndex": 2,
           "value": "2245430000000000"
         },
@@ -92,14 +95,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.010077690000000000",
+          "ether": "0.01007769",
           "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
           "gas": 940000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0xb4661ac21905db1f841a4db9eb9a9bc782d1426d7edb56c579a287ae692db896",
-          "input": "0x",
           "nonce": 45713,
           "receipt": {
             "contractAddress": "0x0",
@@ -110,6 +112,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x4655e26af6f139702fdc120bbfdae72172f73f76",
+          "traces": [],
           "transactionIndex": 3,
           "value": "10077690000000000"
         },
@@ -117,14 +120,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.002101380000000000",
+          "ether": "0.00210138",
           "from": "0xcd88e0e0c455345833ce31c5452c1c37f4b4c438",
           "gas": 21000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0x809870cc07efd30ca65528140bb42f520061a9d798c1d8e9cfdb09699ae7597c",
-          "input": "0x",
           "nonce": 15373,
           "receipt": {
             "contractAddress": "0x0",
@@ -135,6 +137,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x0c60643d137e430e0e20aa84ec29c7dc882ac778",
+          "traces": [],
           "transactionIndex": 4,
           "value": "2101380000000000"
         },
@@ -142,14 +145,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "3.004621300000000000",
+          "ether": "3.0046213",
           "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
           "gas": 940000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0x821395ce825608b6141b301cdb6e0fbb952dbebec58e701398dd5f36d631fe1f",
-          "input": "0x",
           "nonce": 45714,
           "receipt": {
             "contractAddress": "0x0",
@@ -160,6 +162,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x1fbe8dad27dbd28935fc6ca71a41d12f8be9d8a7",
+          "traces": [],
           "transactionIndex": 5,
           "value": "3004621300000000000"
         },
@@ -167,14 +170,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "5.463912680000000000",
+          "ether": "5.46391268",
           "from": "0x9e6316f44baeeee5d41a1070516cc5fa47baf227",
           "gas": 250000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0x2f949568071c182dae6c1037ffeb486fa0eca7218a301dfd35bf4a04b8bbf598",
-          "input": "0x",
           "nonce": 54535,
           "receipt": {
             "contractAddress": "0x0",
@@ -185,6 +187,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x098449d48e7c40ca33025e4ec7337e5ffd414b8e",
+          "traces": [],
           "transactionIndex": 6,
           "value": "5463912680000000000"
         },
@@ -192,14 +195,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "10.003562600000000000",
+          "ether": "10.0035626",
           "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
           "gas": 940000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0x2c74d833ecfa2ab17e2423bb74721942547e9712e14397fe06b74692a9301fe7",
-          "input": "0x",
           "nonce": 45715,
           "receipt": {
             "contractAddress": "0x0",
@@ -210,6 +212,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x346c078fcf7d694666cb4bad0403ce7641999ce0",
+          "traces": [],
           "transactionIndex": 7,
           "value": "10003562600000000000"
         },
@@ -217,14 +220,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.270000000000000000",
+          "ether": "0.27",
           "from": "0x9e6316f44baeeee5d41a1070516cc5fa47baf227",
           "gas": 250000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0x647a13d854af0657fd61ea39573b14ee99f283ffd076a792749194de01558fc6",
-          "input": "0x",
           "nonce": 54536,
           "receipt": {
             "contractAddress": "0x0",
@@ -235,6 +237,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x804c66efac67f818f7ca63ee6d14be790d504e36",
+          "traces": [],
           "transactionIndex": 8,
           "value": "270000000000000000"
         },
@@ -242,14 +245,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.100151880000000000",
+          "ether": "0.10015188",
           "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
           "gas": 940000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0xed645ecfff81df3b70390c88c8287fa10b7c30a215a7a89dc2f450f8ca2b4af0",
-          "input": "0x",
           "nonce": 45716,
           "receipt": {
             "contractAddress": "0x0",
@@ -260,6 +262,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0xf8b9cd050f5b8b337f1ed259a2f4355e0884d0eb",
+          "traces": [],
           "transactionIndex": 9,
           "value": "100151880000000000"
         },
@@ -267,7 +270,7 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.000000000000000000",
+          "ether": "0",
           "from": "0x8848ff7d264f5bf31271677fde819ab8242ad5ba",
           "gas": 1000000,
           "gasCost": 481100000000000,
@@ -285,6 +288,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x60a38887a58ac0a005818c3c21d8994ae5151a94",
+          "traces": [],
           "transactionIndex": 10,
           "value": "0"
         },
@@ -292,14 +296,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.257408100000000000",
+          "ether": "0.2574081",
           "from": "0xb2930b35844a230f00e51431acae96fe543a0347",
           "gas": 940000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0xc8b50601cd1abd9149bc2c6895da8c4863668692f42f820ab4852bb00549dcd6",
-          "input": "0x",
           "nonce": 45717,
           "receipt": {
             "contractAddress": "0x0",
@@ -310,6 +313,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0xbf6ceb4d62256459216dfa6a87651c1e4f45da5d",
+          "traces": [],
           "transactionIndex": 11,
           "value": "257408100000000000"
         },
@@ -317,7 +321,7 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.000000000000000000",
+          "ether": "0",
           "from": "0x8848ff7d264f5bf31271677fde819ab8242ad5ba",
           "gas": 1000000,
           "gasCost": 482380000000000,
@@ -335,6 +339,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x60a38887a58ac0a005818c3c21d8994ae5151a94",
+          "traces": [],
           "transactionIndex": 12,
           "value": "0"
         },
@@ -342,7 +347,7 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.000000000000000000",
+          "ether": "0",
           "from": "0x8848ff7d264f5bf31271677fde819ab8242ad5ba",
           "gas": 1000000,
           "gasCost": 482380000000000,
@@ -360,6 +365,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x60a38887a58ac0a005818c3c21d8994ae5151a94",
+          "traces": [],
           "transactionIndex": 13,
           "value": "0"
         },
@@ -367,7 +373,7 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
           "blockNumber": 2222222,
           "date": "2016-09-08 15:22:45 UTC",
-          "ether": "0.000000000000000000",
+          "ether": "0",
           "from": "0x8848ff7d264f5bf31271677fde819ab8242ad5ba",
           "gas": 1000000,
           "gasCost": 482380000000000,
@@ -385,6 +391,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1473348165,
           "to": "0x60a38887a58ac0a005818c3c21d8994ae5151a94",
+          "traces": [],
           "transactionIndex": 14,
           "value": "0"
         }
@@ -394,6 +401,7 @@ blocks?blocks=2222222%202332332&fmt=json
     {
       "baseFeePerGas": 0,
       "blockNumber": 2332332,
+      "date": "2016-09-26 21:07:02 UTC",
       "difficulty": 74071927411516,
       "gasLimit": 1500000,
       "gasUsed": 368200,
@@ -406,12 +414,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "0.000000000000000000",
+          "ether": "0",
           "from": "0xdb89587bb407b576134ff297d1848ea6d9066812",
           "gas": 105000,
           "gasCost": 1135529405817140,
           "gasPrice": 53316245930,
           "gasUsed": 21298,
+          "hasToken": true,
           "hash": "0xa023f79cc26b321111cf051cab92b3a325e00ecfa9d377845a41654f6b2f0ebe",
           "input": "0xa9059cbb0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2000000000000000000000000000000000000000000000000031d958f80134000",
           "nonce": 10,
@@ -423,7 +432,9 @@ blocks?blocks=2222222%202332332&fmt=json
               {
                 "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
                 "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
+                "date": "2016-09-26 21:07:02 UTC",
                 "logIndex": 0,
+                "timestamp": 1474924022,
                 "topics": [
                   "0x8b0c34a52f9e28d78caaa7066cd047b398dae74941a208b77777420f492bd7e1",
                   "0x000000000000000000000000db89587bb407b576134ff297d1848ea6d9066812",
@@ -435,6 +446,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
+          "traces": [],
           "transactionIndex": 0,
           "value": "0"
         },
@@ -442,14 +454,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "1.000000000000000000",
+          "ether": "1",
           "from": "0x90069522e946b7f72c0da114953d00e04f0df521",
           "gas": 121000,
           "gasCost": 951825744534000,
           "gasPrice": 45325035454,
           "gasUsed": 21000,
           "hash": "0xb8df18c9f97c34639c4c3b35dbdc90bdc240f7f86c8aafdc73a0eb4cf220e1b2",
-          "input": "0x",
           "nonce": 3,
           "receipt": {
             "contractAddress": "0x0",
@@ -460,6 +471,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0x1cc1df085c736372be53a256b839f21fda18a2ee",
+          "traces": [],
           "transactionIndex": 1,
           "value": "1000000000000000000"
         },
@@ -467,7 +479,7 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "0.997713514453748200",
+          "ether": "0.9977135144537482",
           "from": "0x919d4b8e5209e3b86328f2fee280be9aaf86fcb3",
           "gas": 90000,
           "gasCost": 2417089394061523,
@@ -485,6 +497,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444",
+          "traces": [],
           "transactionIndex": 2,
           "value": "997713514453748200"
         },
@@ -492,14 +505,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "5.500000000000000000",
+          "ether": "5.5",
           "from": "0x045bcf0e061fca15faea44f23bf16191bef175f0",
           "gas": 90000,
           "gasCost": 897418314303000,
           "gasPrice": 42734205443,
           "gasUsed": 21000,
           "hash": "0xc8bc120188b92d0c4a80881df0b6b74ef86a4f1830b226c920d38fff91546a74",
-          "input": "0x",
           "receipt": {
             "contractAddress": "0x0",
             "effectiveGasPrice": 42734205443,
@@ -509,6 +521,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0x4cc775b72ad38642d967331c5005702ff0f2bd98",
+          "traces": [],
           "transactionIndex": 3,
           "value": "5500000000000000000"
         },
@@ -534,6 +547,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444",
+          "traces": [],
           "transactionIndex": 4,
           "value": "25103082916353380616"
         },
@@ -541,14 +555,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "1.001872670000000000",
+          "ether": "1.00187267",
           "from": "0x47dae03c318c33fa1ce25a9d8a91d8d64c34ead7",
           "gas": 40000,
           "gasCost": 873900000000000,
           "gasPrice": 30000000000,
           "gasUsed": 29130,
           "hash": "0x001e41973b641222790cffc46229ad060f3934da8b1007bb7f8aeab89a878ed9",
-          "input": "0x",
           "nonce": 1050,
           "receipt": {
             "contractAddress": "0x0",
@@ -558,7 +571,9 @@ blocks?blocks=2222222%202332332&fmt=json
               {
                 "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
                 "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+                "date": "2016-09-26 21:07:02 UTC",
                 "logIndex": 1,
+                "timestamp": 1474924022,
                 "topics": [
                   "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
                 ]
@@ -568,6 +583,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
+          "traces": [],
           "transactionIndex": 5,
           "value": "1001872670000000000"
         },
@@ -575,14 +591,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "1.965689230000000000",
+          "ether": "1.96568923",
           "from": "0xa4caf2a169d7cba3095dfbb0817afaa57b44e6a5",
           "gas": 40000,
           "gasCost": 873900000000000,
           "gasPrice": 30000000000,
           "gasUsed": 29130,
           "hash": "0x111ef0b4e95c7c6aebf2f4502e6452566adfc999ef67609b90b2a7049bf71f16",
-          "input": "0x",
           "nonce": 196,
           "receipt": {
             "contractAddress": "0x0",
@@ -592,7 +607,9 @@ blocks?blocks=2222222%202332332&fmt=json
               {
                 "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
                 "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+                "date": "2016-09-26 21:07:02 UTC",
                 "logIndex": 2,
+                "timestamp": 1474924022,
                 "topics": [
                   "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
                 ]
@@ -602,6 +619,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
+          "traces": [],
           "transactionIndex": 6,
           "value": "1965689230000000000"
         },
@@ -609,14 +627,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "1.000751370000000000",
+          "ether": "1.00075137",
           "from": "0x669b4b664be6deaae0b8efb91b0cc19731da2322",
           "gas": 40000,
           "gasCost": 873900000000000,
           "gasPrice": 30000000000,
           "gasUsed": 29130,
           "hash": "0x2117f49d9d999bf84cf543d81eab3a0cdf392609701d7680fb0c8445b8c36fda",
-          "input": "0x",
           "nonce": 83,
           "receipt": {
             "contractAddress": "0x0",
@@ -626,7 +643,9 @@ blocks?blocks=2222222%202332332&fmt=json
               {
                 "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
                 "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+                "date": "2016-09-26 21:07:02 UTC",
                 "logIndex": 3,
+                "timestamp": 1474924022,
                 "topics": [
                   "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
                 ]
@@ -636,6 +655,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
+          "traces": [],
           "transactionIndex": 7,
           "value": "1000751370000000000"
         },
@@ -643,14 +663,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "2.305460750000000000",
+          "ether": "2.30546075",
           "from": "0x46d95ac9f5f38a66691f59f33ee6655af833e0b5",
           "gas": 40000,
           "gasCost": 873900000000000,
           "gasPrice": 30000000000,
           "gasUsed": 29130,
           "hash": "0x3625813840c77b0eaac38650dc66da659ec2cef03c289f0a3d23b162e768f6a3",
-          "input": "0x",
           "nonce": 49,
           "receipt": {
             "contractAddress": "0x0",
@@ -660,7 +679,9 @@ blocks?blocks=2222222%202332332&fmt=json
               {
                 "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
                 "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+                "date": "2016-09-26 21:07:02 UTC",
                 "logIndex": 4,
+                "timestamp": 1474924022,
                 "topics": [
                   "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
                 ]
@@ -670,6 +691,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
+          "traces": [],
           "transactionIndex": 8,
           "value": "2305460750000000000"
         },
@@ -677,14 +699,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "0.998800000000000000",
+          "ether": "0.9988",
           "from": "0x5455701e1d575265afdeb3bfc13723dcf8fec20c",
           "gas": 40000,
           "gasCost": 873900000000000,
           "gasPrice": 30000000000,
           "gasUsed": 29130,
           "hash": "0x6371f79028970cc6451183d55dd06f8e650acc83877df4fd8770dde5d25e1447",
-          "input": "0x",
           "receipt": {
             "contractAddress": "0x0",
             "effectiveGasPrice": 30000000000,
@@ -693,7 +714,9 @@ blocks?blocks=2222222%202332332&fmt=json
               {
                 "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
                 "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+                "date": "2016-09-26 21:07:02 UTC",
                 "logIndex": 5,
+                "timestamp": 1474924022,
                 "topics": [
                   "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
                 ]
@@ -703,6 +726,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
+          "traces": [],
           "transactionIndex": 9,
           "value": "998800000000000000"
         },
@@ -710,14 +734,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "1.009251550000000000",
+          "ether": "1.00925155",
           "from": "0x1a40e8fa5436fff43b762ffee33b143f69ada5a1",
           "gas": 40000,
           "gasCost": 873900000000000,
           "gasPrice": 30000000000,
           "gasUsed": 29130,
           "hash": "0x664e1aae87cf76f273b6d3dc116b76ef8083af1076d75685fa35e275abaf9556",
-          "input": "0x",
           "nonce": 843,
           "receipt": {
             "contractAddress": "0x0",
@@ -727,7 +750,9 @@ blocks?blocks=2222222%202332332&fmt=json
               {
                 "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
                 "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+                "date": "2016-09-26 21:07:02 UTC",
                 "logIndex": 6,
+                "timestamp": 1474924022,
                 "topics": [
                   "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
                 ]
@@ -737,6 +762,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
+          "traces": [],
           "transactionIndex": 10,
           "value": "1009251550000000000"
         },
@@ -744,14 +770,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "1.000000000000000000",
+          "ether": "1",
           "from": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
           "gas": 121000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0x3a20e87313c2ca40ace2c731946f754394438310726303c4d85259dfbeef779c",
-          "input": "0x",
           "nonce": 47856,
           "receipt": {
             "contractAddress": "0x0",
@@ -762,6 +787,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0x80ace98f74fcf2b1a3779200d85ee111ec4d36d6",
+          "traces": [],
           "transactionIndex": 11,
           "value": "1000000000000000000"
         },
@@ -769,14 +795,13 @@ blocks?blocks=2222222%202332332&fmt=json
           "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",
           "blockNumber": 2332332,
           "date": "2016-09-26 21:07:02 UTC",
-          "ether": "0.057474740000000000",
+          "ether": "0.05747474",
           "from": "0x29d5527caa78f1946a409fa6acaf14a0a4a0274b",
           "gas": 21000,
           "gasCost": 420000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 21000,
           "hash": "0xf46a389971b3173bc239aa9dc1cf539a4db296161684e5ff29d0e8b89fff7721",
-          "input": "0x",
           "nonce": 1284,
           "receipt": {
             "contractAddress": "0x0",
@@ -787,6 +812,7 @@ blocks?blocks=2222222%202332332&fmt=json
           },
           "timestamp": 1474924022,
           "to": "0x5f1a93f3557824faf37669d8c26973dfc06f838a",
+          "traces": [],
           "transactionIndex": 12,
           "value": "57474740000000000"
         }

@@ -2,23 +2,24 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f10742870
 {
   "data": [
     {
-      "blockNumber": 4000000,
-      "holder": "0xa25d04fa348f107428708ba19c95d1c79b3744bf",
-      "balance": "435000",
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+      "balance": "435000",
+      "blockNumber": 4000000,
+      "decimals": 18,
+      "holder": "0xa25d04fa348f107428708ba19c95d1c79b3744bf",
       "name": "Swarm City Token",
       "symbol": "SWT",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": false
+      "units": "435000000000000000000000"
     }
   ],
   "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
+    "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
   }
 }

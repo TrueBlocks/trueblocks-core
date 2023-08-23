@@ -13,9 +13,11 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -34,8 +36,10 @@ type ChunksOptions struct {
 	FirstBlock uint64                   `json:"firstBlock,omitempty"` // First block to process (inclusive)
 	LastBlock  uint64                   `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
 	MaxAddrs   uint64                   `json:"maxAddrs,omitempty"`   // The max number of addresses to process in a given chunk
+	Deep       bool                     `json:"deep,omitempty"`       // If true, dig more deeply during checking (manifest only)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
+	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -60,7 +64,9 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
+	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -109,35 +115,50 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.LastBlock = globals.ToUint64(value[0])
 		case "maxAddrs":
 			opts.MaxAddrs = globals.ToUint64(value[0])
+		case "deep":
+			opts.Deep = true
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
-	// TODO: Do we know if an option is an address? If yes, we could automate this
-	opts.Belongs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Belongs)
 	// EXISTING_CODE
+	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 
 	return opts
 }
 
 // chunksFinishParse finishes the parsing for command line invocations. Returns a new ChunksOptions.
 func chunksFinishParse(args []string) *ChunksOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
 	if len(args) > 0 {
 		opts.Mode = args[0]
 		for i, arg := range args {
 			if i > 0 {
-				if validate.IsValidAddress(arg) {
+				if base.IsValidAddress(arg) {
 					opts.Belongs = append(opts.Belongs, arg)
 				} else {
 					opts.Blocks = append(opts.Blocks, arg)
@@ -145,7 +166,6 @@ func chunksFinishParse(args []string) *ChunksOptions {
 			}
 		}
 	}
-	opts.Belongs, _ = ens.ConvertEns(opts.Globals.Chain, opts.Belongs)
 	if opts.Truncate == 0 {
 		opts.Truncate = utils.NOPOS
 	}
@@ -155,11 +175,21 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	if opts.MaxAddrs == 0 {
 		opts.MaxAddrs = utils.NOPOS
 	}
-	defFmt = opts.defaultFormat(defFmt)
+	getDef := func(def string) string {
+		if (opts.Mode == "index" && opts.Check) ||
+			(opts.Mode == "manifest" && opts.Check) ||
+			opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
+			return "json"
+		}
+		return def
+	}
+	defFmt = getDef(defFmt)
 	// EXISTING_CODE
+	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -175,4 +205,17 @@ func ResetOptions() {
 	defaultChunksOptions = ChunksOptions{}
 	globals.SetDefaults(&defaultChunksOptions.Globals)
 	defaultChunksOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra chunks
+	// EXISTING_CODE
+	// EXISTING_CODE
+	defaultChunksOptions.Globals.Caps = capabilities
 }
+
+func (opts *ChunksOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

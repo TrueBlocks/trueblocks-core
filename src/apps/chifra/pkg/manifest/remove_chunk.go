@@ -5,7 +5,6 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
@@ -14,10 +13,8 @@ import (
 // update the manifest by removing all chunks at or after the given path. Note that if this
 // function aborts due to error and the backup files still exist, the function will attempt
 // to restore the backup files before returning.
-func RemoveChunk(chain, path string) (err error) {
+func RemoveChunk(chain, bloomFn, indexFn string) (err error) {
 	manifestFn := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
-	indexFn := cache.ToIndexPath(path)
-	bloomFn := cache.ToBloomPath(path)
 
 	manifestBackup := manifestFn + ".backup"
 	indexBackup := indexFn + ".backup"
@@ -27,16 +24,16 @@ func RemoveChunk(chain, path string) (err error) {
 		if err != nil {
 			// If the backup files still exist when the function ends, something went wrong, reset everything
 			if file.FileExists(manifestBackup) {
-				file.Copy(manifestFn, manifestBackup)
-				os.Remove(manifestBackup)
+				_, _ = file.Copy(manifestFn, manifestBackup)
+				_ = os.Remove(manifestBackup)
 			}
 			if file.FileExists(indexBackup) {
-				file.Copy(indexFn, indexBackup)
-				os.Remove(indexBackup)
+				_, _ = file.Copy(indexFn, indexBackup)
+				_ = os.Remove(indexBackup)
 			}
 			if file.FileExists(bloomBackup) {
-				file.Copy(bloomFn, bloomBackup)
-				os.Remove(bloomBackup)
+				_, _ = file.Copy(bloomFn, bloomBackup)
+				_ = os.Remove(bloomBackup)
 			}
 		}
 	}()
@@ -64,7 +61,7 @@ func RemoveChunk(chain, path string) (err error) {
 	var man *Manifest
 	man, err = ReadManifest(chain, FromCache)
 
-	removedRange, err1 := base.RangeFromFilenameE(path)
+	removedRange, err1 := base.RangeFromFilenameE(bloomFn)
 	if err1 != nil {
 		err = err1
 		return err

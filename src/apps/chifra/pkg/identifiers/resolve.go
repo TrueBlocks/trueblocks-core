@@ -9,9 +9,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -37,7 +35,7 @@ func (id *Identifier) ResolveBlocks(chain string) ([]uint64, error) {
 	return blocks, nil
 }
 
-// getBounds returns the earliest and latest blocks for an array of identifiers
+// GetBounds returns the earliest and latest blocks for an array of identifiers
 func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error) {
 	ret = base.BlockRange{
 		First: utils.NOPOS,
@@ -74,10 +72,14 @@ func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
 }
 
 func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
+	conn := rpc.TempConnection(chain)
+
 	dt, err := tslib.FromBnToDate(chain, bn)
 	if err != nil {
 		return bn, err
 	}
+
+	// within five minutes of the period, snap to the future, otherwise snap to the past
 	switch period {
 	case "hourly":
 		dt = dt.ShiftMinutes(5)
@@ -87,17 +89,27 @@ func snapBnToPeriod(bn uint64, chain, period string) (uint64, error) {
 		dt = dt.FloorDay()
 	case "weekly":
 		dt = dt.ShiftMinutes(5)
-		dt = dt.FloorWeek() // returns Monday -- we want Sunday
-		dt = dt.ShiftDays(-1).FloorDay()
+		dt = dt.FloorWeek()
+		dt = dt.ShiftDays(-1).FloorDay() // returns Monday -- we want Sunday
 	case "monthly":
 		dt = dt.ShiftMinutes(5)
 		dt = dt.FloorMonth()
+	case "quarterly": // we assume here that the data is already on the quarter
+		dt = dt.ShiftMinutes(5)
+		dt = dt.FloorMonth()
+		for {
+			if dt.Month() == 1 || dt.Month() == 4 || dt.Month() == 7 || dt.Month() == 10 {
+				break
+			}
+			dt = dt.ShiftMonths(1)
+			dt = dt.FloorMonth()
+		}
 	case "annually":
 		dt = dt.ShiftMinutes(5)
 		dt = dt.FloorYear()
 	}
 
-	firstDate := gostradamus.FromUnixTimestamp(rpc.GetBlockTimestamp(chain, 0))
+	firstDate := gostradamus.FromUnixTimestamp(conn.GetBlockTimestamp(uint64(0)))
 	if dt.Time().Before(firstDate.Time()) {
 		dt = firstDate
 	}
@@ -136,6 +148,10 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 				dt = dt.ShiftMinutes(5)
 				dt = dt.ShiftMonths(1)
 				dt = dt.FloorMonth()
+			case "quarterly":
+				dt = dt.ShiftMinutes(5)
+				dt = dt.ShiftMonths(3)
+				dt = dt.FloorMonth()
 			case "annually":
 				dt = dt.ShiftMinutes(5)
 				dt = dt.ShiftYears(1)
@@ -159,10 +175,11 @@ func (id *Identifier) nextBlock(chain string, current uint64) (uint64, error) {
 }
 
 func (p *Point) resolvePoint(chain string) uint64 {
+	conn := rpc.TempConnection(chain)
+
 	var bn uint64
 	if p.Hash != "" {
-		provider := config.GetRpcProvider(chain)
-		bn, _ = rpcClient.BlockNumberFromHash(provider, p.Hash)
+		bn, _ = conn.GetBlockNumberByHash(p.Hash)
 	} else if p.Date != "" {
 		bn, _ = tslib.FromDateToBn(chain, p.Date)
 	} else if p.Special != "" {
@@ -171,9 +188,8 @@ func (p *Point) resolvePoint(chain string) uint64 {
 		var err error
 		bn, err = tslib.FromTsToBn(chain, base.Timestamp(p.Number))
 		if err == tslib.ErrInTheFuture {
-			provider := config.GetRpcProvider(chain)
-			latest := rpcClient.BlockNumber(provider)
-			tsFuture := rpc.GetBlockTimestamp(chain, latest)
+			latest := conn.GetLatestBlockNumber()
+			tsFuture := conn.GetBlockTimestamp(latest)
 			secs := uint64(tsFuture - base.Timestamp(p.Number))
 			blks := (secs / 13)
 			bn = latest + blks
@@ -185,12 +201,12 @@ func (p *Point) resolvePoint(chain string) uint64 {
 }
 
 func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
+	conn := rpc.TempConnection(chain)
 	txs := []types.RawAppearance{}
 
 	if id.StartType == BlockNumber {
 		if id.Modifier.Period == "all" {
-			provider := config.GetRpcProvider(chain)
-			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.Number))
+			cnt, err := conn.GetTransactionCountInBlock(uint64(id.Start.Number))
 			if err != nil {
 				return txs, err
 			}
@@ -212,8 +228,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 
 	if id.StartType == BlockHash && id.EndType == TransactionIndex {
 		if id.Modifier.Period == "all" {
-			provider := config.GetRpcProvider(chain)
-			cnt, err := rpcClient.TxCountByBlockNumber(provider, uint64(id.Start.resolvePoint(chain)))
+			cnt, err := conn.GetTransactionCountInBlock(uint64(id.Start.resolvePoint(chain)))
 			if err != nil {
 				return txs, err
 			}
@@ -229,8 +244,7 @@ func (id *Identifier) ResolveTxs(chain string) ([]types.RawAppearance, error) {
 	}
 
 	if id.StartType == TransactionHash {
-		bn, txid, err := rpcClient.GetAppearanceFromHash(chain, id.Start.Hash)
-		app := types.RawAppearance{BlockNumber: uint32(bn), TransactionIndex: uint32(txid)}
+		app, err := conn.GetTransactionAppByHash(id.Start.Hash)
 		return append(txs, app), err
 	}
 

@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -18,8 +17,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/user"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
@@ -30,12 +30,12 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	if !user.QueryUser(strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncating") {
+	if !opts.Globals.IsApiMode() && !usage.QueryUser(strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncating") {
 		return nil
 	}
 
-	indexPath := config.GetPathToIndex(opts.Globals.Chain)
-	index.CleanTemporaryFolders(indexPath, true)
+	indexPath := config.GetPathToIndex(chain)
+	_ = index.CleanTemporaryFolders(indexPath, true)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -46,8 +46,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		// of the last chunks remaining.
 		latestChunk := uint64(0)
 		nChunksRemoved := 0
-		truncateIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-			if path != cache.ToBloomPath(path) {
+		truncateIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			if path != index.ToBloomPath(path) {
 				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 			}
 
@@ -63,7 +63,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 
 			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 			if rng.Intersects(testRange) {
-				if err = manifest.RemoveChunk(chain, path); err != nil {
+				if err = manifest.RemoveChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err
 				}
 				nChunksRemoved++
@@ -81,8 +81,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			return true, nil
 		}
 
-		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+		walker := walk.NewCacheWalker(
+			chain,
 			opts.Globals.TestMode,
 			100, /* maxTests */
 			truncateIndex,
@@ -101,11 +101,11 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 					return err
 				}
 				if !info.IsDir() {
-					addr, _ := base.AddrFromPath(path, ".mon.bin")
+					addr, _ := base.AddressFromPath(path, ".mon.bin")
 					if len(addr) > 0 {
 						mon := monitor.NewMonitor(chain, addr, false /* create */)
 						var removed bool
-						if removed, err = mon.TruncateTo(uint32(latestChunk)); err != nil {
+						if removed, err = mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
 							return err
 						}
 						if removed {
@@ -115,7 +115,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				}
 				return nil
 			}
-			filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
+			_ = filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
 
 			// All that's left to do is report on what happened.
 			fin := "."

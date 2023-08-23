@@ -7,14 +7,12 @@ package scrapePkg
 import (
 	"path/filepath"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -22,18 +20,20 @@ import (
 // HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns
 // true if the processing should continue, false otherwise. Currently, the only thing to do
 // is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
-func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
-	// We always clean the temporary folders (other than staging) when starting
-	index.CleanTemporaryFolders(config.GetPathToIndex(opts.Globals.Chain), false)
+func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
+	chain := opts.Globals.Chain
 
-	bloomPath := config.GetPathToIndex(opts.Globals.Chain) + "blooms/000000000-000000000.bloom"
+	// We always clean the temporary folders (other than staging) when starting
+	_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
+
+	bloomPath := config.GetPathToIndex(chain) + "blooms/000000000-000000000.bloom"
 	if file.FileExists(bloomPath) {
 		// The file already exists, nothing to do
 		return true, nil
 	}
 
-	prefundPath := filepath.Join(config.GetPathToChainConfig(opts.Globals.Chain), "allocs.csv")
-	prefunds, err := prefunds.LoadPrefunds(opts.Globals.Chain, prefundPath, nil)
+	prefundPath := filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+	prefunds, err := prefunds.LoadPrefunds(chain, prefundPath, nil)
 	if err != nil {
 		return false, err
 	}
@@ -50,13 +50,13 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpcClient.MetaData, blaze
 	array := []tslib.TimestampRecord{}
 	array = append(array, tslib.TimestampRecord{
 		Bn: uint32(0),
-		Ts: uint32(rpc.GetBlockTimestamp(opts.Globals.Chain, 0)),
+		Ts: uint32(opts.Conn.GetBlockTimestamp(uint64(0))),
 	})
-	tslib.Append(opts.Globals.Chain, array)
+	_ = tslib.Append(chain, array)
 
 	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
-	indexPath := cache.ToIndexPath(bloomPath)
-	if report, err := index.WriteChunk(opts.Globals.Chain, indexPath, appMap, len(prefunds), opts.Pin, opts.Remote); err != nil {
+	indexPath := index.ToIndexPath(bloomPath)
+	if report, err := index.WriteChunk(chain, indexPath, appMap, len(prefunds), opts.Pin, opts.Remote); err != nil {
 		return false, err
 	} else if report == nil {
 		logger.Fatal("Should not happen, write chunk returned empty report")

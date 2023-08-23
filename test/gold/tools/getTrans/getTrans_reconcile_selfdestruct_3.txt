@@ -1,0 +1,110 @@
+chifra transactions  0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 --fmt json --account_for 0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c --traces
+TEST[DATE|TIME] Transactions:  [0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309]
+TEST[DATE|TIME] Traces:  true
+TEST[DATE|TIME] AccountFor:  0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
+TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Block 2608034 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ====> ETH TRACES
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] ledger.blockNumber:     2608033
+TEST[DATE|TIME] prevBlock:              2608033
+TEST[DATE|TIME] transfer.blockNumber:   2608034
+TEST[DATE|TIME] nextBlock:              2608035
+TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    reconciliationType:  trace-eth
+TEST[DATE|TIME]    accountedFor:        0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
+TEST[DATE|TIME]    sender:              0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
+TEST[DATE|TIME]    recipient:           0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME]    assetSymbol:         WEI
+TEST[DATE|TIME]    decimals:            18
+TEST[DATE|TIME]    prevAppBlk:          2608033
+TEST[DATE|TIME]    hash:                0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309
+TEST[DATE|TIME]    timestamp:           1478880237
+TEST[DATE|TIME]    blockNumber:         2608034
+TEST[DATE|TIME]    transactionIndex:    5
+TEST[DATE|TIME]    logIndex:            0
+TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
+TEST[DATE|TIME]    spotPrice:           0
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0
+TEST[DATE|TIME]    amountIn:            490372688211999273
+TEST[DATE|TIME]    internalIn:          0
+TEST[DATE|TIME]    minerBaseRewardIn:   0
+TEST[DATE|TIME]    minerNephewRewardIn: 0
+TEST[DATE|TIME]    minerTxFeeIn:        0
+TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        0
+TEST[DATE|TIME]    prefundIn:           0
+TEST[DATE|TIME]    selfDestructIn:      0
+TEST[DATE|TIME]    totalIn:             490372688211999273
+TEST[DATE|TIME]    amountOut:           0
+TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       0
+TEST[DATE|TIME]    selfDestructOut:     490372688211999273
+TEST[DATE|TIME]    gasOut:              0
+TEST[DATE|TIME]    totalOut:            490372688211999273
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    endBal:              0
+TEST[DATE|TIME]    begBalDiff:          0
+TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME]    correctingReason:    
+TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] End of trial balance report
+{
+  "data": [
+    {
+      "accountedFor": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
+      "amountIn": "490372688211999273",
+      "amountNet": "0",
+      "amountOut": "0",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetSymbol": "WEI",
+      "begBal": "0",
+      "begBalDiff": "0",
+      "blockNumber": 2608034,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2016-11-11 16:03:57 UTC",
+      "decimals": 18,
+      "endBal": "0",
+      "endBalCalc": "0",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevAppBlk": 2608033,
+      "prevBal": "0",
+      "priceSource": "eth-not-priced-pre-maker",
+      "recipient": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "reconciled": true,
+      "reconciliationType": "trace-eth",
+      "selfDestructIn": "0",
+      "selfDestructOut": "490372688211999273",
+      "sender": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
+      "spotPrice": 0,
+      "timestamp": 1478880237,
+      "totalIn": "490372688211999273",
+      "totalOut": "490372688211999273",
+      "totalOutLessGas": "490372688211999273",
+      "transactionHash": "0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309",
+      "transactionIndex": 5
+    }
+  ]
+}

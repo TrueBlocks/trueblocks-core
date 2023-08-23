@@ -11,9 +11,11 @@ import (
 )
 
 func (opts *WhenOptions) HandleList() error {
+	chain := opts.Globals.Chain
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawNamedBlock], errorChan chan error) {
-		results, err := tslib.GetSpecials(opts.Globals.Chain)
+		results, err := tslib.GetSpecials(chain)
 		if err != nil {
 			errorChan <- err
 			if errors.Is(err, ethereum.NotFound) {

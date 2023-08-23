@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+rm -f results
+rm -fR one two
+mkdir -p one two
+
+BLOCKS1="15000000-15000300"
+BLOCKS2="2010010-3010010:1000000"
+BLOCKS3="2010010-2010040"
+BLOCKS4="14001001-14001005"
+TRANS1="15000000.*"
+TRANS2="1001001.*"
+TRANS3="2000000-3000000:1000"
+ADDR1="0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+ADDR2="0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
+ADDR3="0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+ADDR4="0x839395e20bbb182fa440d08f850e6c7a8f6f0780"
+TOPIC1="0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c"
+
+# ./test_cache.1 blocks       $BLOCKS1 --hashes                            | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS2 --noop                              | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS1 --hashes --cache_txs                | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS2 --cache_txs                         | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS1 --count                             | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS3 --uncles                            | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS3 --uniq --cache_txs                  | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS3 --uniq --cache_txs --flow from      | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS4 --logs --cache_txs                  | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 blocks       $BLOCKS3 --logs --cache_txs --emitter $ADDR1 | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+
+# ./test_cache.1 transactions $TRANS1 --noop                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 transactions $TRANS1 --raw                    | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# # ./test_cache.1 transactions $TRANS1 --articulate             | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 transactions $TRANS2 --uniq                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 transactions $TRANS2 --uniq --flow from       | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 transactions $TRANS1 --logs                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 transactions $TRANS1 --logs --topic $TOPIC1   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 transactions $TRANS1 --logs --emitter $ADDR3  | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+
+# ./test_cache.1 receipts     $TRANS1 --noop                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 receipts     $TRANS1 --raw                    | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# # ./test_cache.1 receipts     $TRANS1 --articulate             | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+
+# ./test_cache.1 logs         $TRANS1 --noop                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 logs         $TRANS1 --raw                    | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# # ./test_cache.1 logs         $TRANS1 --articulate             | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+
+# ./test_cache.1 traces       $TRANS2 --noop                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+
+# ./test_cache.1 slurp          $ADDR4 --parts all --noop        | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 slurp          $ADDR4 --parts all --appearances | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+
+# ./test_cache.1 when         $TRANS3 --noop                   | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+
+# don't test listing
+# echo "PERF chifra list " | tee -a results
+# TB_TIMER_ON=true chifra list $ADDR2 2>/dev/null | grep PERF | tee -a results
+# cp -pR ~/Data/trueblocks/v0.70.0/cache/mainnet/monitors .
+
+# # ./test_cache.1 export         $ADDR2 --noop                    | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 export         $ADDR2 --appearances             | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 export         $ADDR2 --logs                    | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+# ./test_cache.1 export         $ADDR2 --receipts                | sed 's/PERF/|PERF/' | tr '|' '\n' | grep PERF | tee -a results
+
+cp results results_$(hostname)_$(date +"%Y_%m_%d_%I_%M_%p").log

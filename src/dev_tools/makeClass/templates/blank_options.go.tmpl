@@ -14,12 +14,13 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-[{CACHEPKG}][{CONFIGPKG}]	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+[{BASEPKG}]	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
+[{CONFIGPKG}][{INDEXPKG}]	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient/ens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-)
+[{WALKPKG}])
 
 // [{PROPER}]Options provides all command options for the chifra [{LOWER}] command.
 type [{PROPER}]Options struct {
@@ -31,7 +32,8 @@ var default[{PROPER}]Options = [{PROPER}]Options{[{GODEFS}]}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *[{PROPER}]Options) testLog() {
-[{TEST_LOGS}]	opts.Globals.TestLog()
+[{TEST_LOGS}]	opts.Conn.TestLog(opts.getCaches())
+	opts.Globals.TestLog()
 }
 
 // String implements the Stringer interface
@@ -40,36 +42,51 @@ func (opts *[{PROPER}]Options) String() string {
 	return string(b)
 }
 
-[{GETENVSTR}][{TOCMDLINE}]// [{LOWER}]FinishParseApi finishes the parsing for server invocations. Returns a new [{PROPER}]Options.
+// [{LOWER}]FinishParseApi finishes the parsing for server invocations. Returns a new [{PROPER}]Options.
 func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 	copy := default[{PROPER}]Options
 	opts := &copy
 [{DEFAULTS_API}]	for key, value := range r.URL.Query() {
 		switch key {
 [{REQUEST_OPTS}]		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "[{ROUTE}]")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+[{ENS_CONVERT1}]
 	// EXISTING_CODE
 	// EXISTING_CODE
-
+[{ENS_CONVERT2}]
 	return opts
 }
 
 // [{LOWER}]FinishParse finishes the parsing for command line invocations. Returns a new [{PROPER}]Options.
 func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+[{ENS_CONVERT1}]
 	// EXISTING_CODE
 	// EXISTING_CODE
-[{CONFIG_OVERRIDE}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+[{ENS_CONVERT2}][{CONFIG_OVERRIDE}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -85,4 +102,17 @@ func ResetOptions() {
 	default[{PROPER}]Options = [{PROPER}]Options{}
 	globals.SetDefaults(&default[{PROPER}]Options.Globals)
 	default[{PROPER}]Options.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra [{ROUTE}]
+	// EXISTING_CODE
+	// EXISTING_CODE
+	default[{PROPER}]Options.Globals.Caps = capabilities
 }
+
+func (opts *[{PROPER}]Options) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

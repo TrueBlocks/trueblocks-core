@@ -14,6 +14,7 @@ import (
 )
 
 // TODO: Protect against overwriting files on disc
+
 // WriteMonHeader writes the monitor's header
 func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32, force bool) (err error) {
 	f, err := os.OpenFile(mon.Path(), os.O_WRONLY|os.O_CREATE, 0644)
@@ -27,7 +28,7 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32, force bool)
 		mon.LastScanned = lastScanned
 	}
 
-	f.Seek(0, io.SeekStart)
+	_, _ = f.Seek(0, io.SeekStart)
 	err = binary.Write(f, binary.LittleEndian, mon.Header)
 	return
 }
@@ -61,8 +62,9 @@ func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.App
 }
 
 // TODO: Protect against overwriting files on disc
+
 // WriteAppearances writes appearances to a Monitor
-func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool) (uint32, error) {
+func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool) (int64, error) {
 	var f *os.File
 	var err error
 	path := mon.Path()
@@ -75,7 +77,7 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool)
 		return 0, err
 	}
 
-	f.Seek(index.AppRecordWidth, io.SeekStart)
+	_, _ = f.Seek(index.AppRecordWidth, io.SeekStart)
 
 	b := make([]byte, 4)
 	for _, app := range apps {
@@ -94,6 +96,6 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool)
 	}
 
 	f.Close() // do not defer this, we need to close it so the fileSize is right
-	mon.Reload(false /* create */)
+	_, _ = mon.Reload(false /* create */)
 	return mon.Count(), nil
 }

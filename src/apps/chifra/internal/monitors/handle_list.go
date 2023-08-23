@@ -16,14 +16,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// HandleList
+// HandleList handles the chifra monitors --list command.
 func (opts *MonitorsOptions) HandleList() error {
-	testMode := opts.Globals.TestMode
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 	monitorMap, monArray := monitor.GetMonitorMap(chain)
 	if opts.Globals.Verbose {
 		for i := 0; i < len(monArray); i++ {
-			monArray[i].ReadMonitorHeader()
+			_ = monArray[i].ReadMonitorHeader()
 			monArray[i].Close()
 		}
 	}

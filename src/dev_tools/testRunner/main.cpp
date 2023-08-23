@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "utillib.h"
 #include "options.h"
 #include "testcase.h"
 #include "measure.h"
@@ -24,7 +24,6 @@ string_q perf_fmt;
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
-    etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
     establishFolder(cacheFolder_tmp);
@@ -70,12 +69,15 @@ int main(int argc, const char* argv[]) {
             explode(lines, contents, '\n');
 
             map<string_q, CTestCase> testMap;
-            bool testTestOnly = getEnvStr("TEST_TEST_ONLY") == "true";
+            string_q ttOnly = getEnvStr("TEST_TEST_ONLY");
+            bool ttOnlyB = !ttOnly.empty();
             for (auto line : lines) {
-                if (testTestOnly) {
+                if (ttOnlyB) {
                     runLocal = false;
                     if (startsWith(line, "test")) {
                         replace(line, "test", "on");
+                    } else if (startsWith(line, ttOnly)) {
+                        replace(line, ttOnly, "on");
                     } else if (startsWith(line, "on")) {
                         replace(line, "on", "local");
                     }
@@ -142,8 +144,8 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            options.doTests(total, testArray, path, testName, API, !testTestOnly);
-            options.doTests(total, testArray, path, testName, CMD, !testTestOnly);
+            options.doTests(total, testArray, path, testName, API, !ttOnlyB);
+            options.doTests(total, testArray, path, testName, CMD, !ttOnlyB);
             if (shouldQuit())
                 break;
 
@@ -231,16 +233,11 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             ostringstream cmd;
 
             CStringArray fileLines;
-            string_q allFile = substitute(test.goldPath, "/api_tests", "") + "all_tests.env";
-            if (fileExists(allFile))
-                asciiFileToLines(allFile, fileLines);
-
             string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
             if (fileExists(envFile))
                 asciiFileToLines(envFile, fileLines);
 
             ostringstream prepender;
-
             CStringArray envLines;
             for (auto f : fileLines) {
                 if (!startsWith(f, "#")) {
@@ -263,13 +260,18 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 } else {
                     exe = test.tool;
                     if (test.isCmd)
-                        exe = "chifra " + (test.extra.empty() ? test.route : test.extra);
+                        exe = "chifra " + test.route;
                 }
 
                 string_q fullCmd = exe + " " + test.options;
                 string_q debugCmd = relativize(fullCmd);
                 string_q redir = test.workPath + test.fileName;
                 cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
+                string_q rFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".redir";
+                if (fileExists(rFile)) {
+                    fullCmd += " --output " + test.name + "_out.file";
+                    test.origLine += " & output = " + test.name + "_out.file";
+                }
                 cmd << env << fullCmd << " >>" << redir << " 2>&1";
 
             } else {

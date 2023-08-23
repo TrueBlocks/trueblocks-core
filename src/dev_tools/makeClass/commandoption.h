@@ -69,7 +69,6 @@ class CCommandOption : public CBaseNode {
     bool isDouble;
     bool isAddress;
     bool isConfig;
-    bool isGoOnly;
     bool isDeprecated;
     bool isNote;
     bool isAlias;
@@ -78,10 +77,9 @@ class CCommandOption : public CBaseNode {
     void* notes{nullptr};
     CStringArray aliases;
     explicit CCommandOption(const string_q& line);
-    void verifyOptions(CStringArray& warnings);
-    void verifyHotkey(CStringArray& warnings, map<string, string>& hotKeys);
     string_q swagger_descr;
     string_q route_list;
+    bool isChifraRoute(bool goCode);
     bool isStringType(void) const {
         return (isEnum || isEnumList || isStringList || isAddressList || isTopicList);
     }
@@ -176,7 +174,6 @@ inline void CCommandOption::initialize(void) {
     isDouble = false;
     isAddress = false;
     isConfig = false;
-    isGoOnly = false;
     isDeprecated = false;
     isNote = false;
     isAlias = false;
@@ -226,7 +223,6 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isDouble = co.isDouble;
     isAddress = co.isAddress;
     isConfig = co.isConfig;
-    isGoOnly = co.isGoOnly;
     isDeprecated = co.isDeprecated;
     isNote = co.isNote;
     isAlias = co.isAlias;
@@ -274,10 +270,14 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//---------------------------------------------------------------------------------------------------
-// TODO: search for go-port
-extern bool goPortNewCode(const string_q& a);
-extern bool isFullyPorted(const string_q& a);
+inline bool CCommandOption::isChifraRoute(bool goCode) {
+    if (goCode && option_type == "deprecated")
+        return true;
+
+    return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
+            option_type != "alias" && option_type != "config" && option_type != "error");
+}
+
 extern string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute);
 // EXISTING_CODE
 }  // namespace qblocks

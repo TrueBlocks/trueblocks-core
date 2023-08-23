@@ -15,7 +15,7 @@ import (
 func (opts *GlobalOptions) Validate() error {
 	if len(opts.File) > 0 {
 		if opts.IsApiMode() {
-			return validate.Usage("The {0} option is not available in {1} mode", "--file", "Api")
+			return validate.Usage("The {0} option is not available{1}.", "--file", " in api mode")
 		}
 		if !file.FileExists(opts.File) {
 			return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
@@ -27,13 +27,13 @@ func (opts *GlobalOptions) Validate() error {
 	}
 
 	if len(opts.OutputFn) > 0 && opts.IsApiMode() {
-		return validate.Usage("The {0} option is not available in Api Mode.", "--output")
+		return validate.Usage("The {0} option is not available{1}.", "--output", " in api mode")
 	}
 
 	// TODO: Can we re-enable this? It doesn't work in Sepolia under docker. Returns a really weird message.
 	// tmpPath := filepath.Join(config.GetPathToCache(opts.Chain), "tmp", "checkProvider.txt")
 	// if !file.FileExists(tmpPath) {
-	// 	if version, err := rpcClient.GetVersion(opts.Chain); err != nil {
+	// 	if version, err := conn.GetClientVersion(opts.Chain); err != nil {
 	// 		logger.Fatal("Cannot connect with the node software.", version, err)
 	// 	} else {
 	// 		file.StringToAsciiFile(tmpPath, version)
@@ -50,16 +50,22 @@ func (opts *GlobalOptions) Validate() error {
 		fmt.Println("{ \"outputFilename\": \"--output_filename--\" }")
 	}
 
+	if opts.Cache && opts.Decache {
+		return validate.Usage("The {0} and {1} options are mutually exclusive.", "--cache", "--decache")
+	}
+
 	return nil
 }
 
 // TODO: This could be removed by changing the code generator
+
 func ToFloat64(val string) float64 {
 	f, _ := strconv.ParseFloat(val, 64)
 	return f
 }
 
 // TODO: This could be removed by changing the code generator
+
 func ToUint64(val string) uint64 {
 	f, _ := strconv.ParseUint(val, 10, 64)
 	return f

@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "acctlib.h"
+#include "utillib.h"
 
 namespace qblocks {
 
@@ -35,7 +35,6 @@ class CTestCase : public CBaseNode {
     string_q name;
     string_q post;
     string_q options;
-    string_q extra;
     string_q path;
     string_q goldPath;
     string_q workPath;
@@ -117,7 +116,6 @@ inline void CTestCase::initialize(void) {
     name = "";
     post = "";
     options = "";
-    extra = "";
     path = "";
     goldPath = "";
     workPath = "";
@@ -144,7 +142,6 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     name = te.name;
     post = te.post;
     options = te.options;
-    extra = te.extra;
     path = te.path;
     goldPath = te.goldPath;
     workPath = te.workPath;

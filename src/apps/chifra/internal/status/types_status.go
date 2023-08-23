@@ -21,8 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -113,28 +112,39 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 		order = append(order, "caches")
 	}
 
-	if verbose && !testMode {
+	if extraOptions["chains"] == true {
 		var chains []types.SimpleChain
-		chainArray := config.GetChainArray()
-		for _, chain := range chainArray {
+		if extraOptions["testMode"] == true {
 			ch := types.SimpleChain{
-				Chain:          chain.Chain,
-				ChainId:        mustParseUint(chain.ChainId),
-				LocalExplorer:  chain.LocalExplorer,
-				RemoteExplorer: chain.RemoteExplorer,
-				RpcProvider:    chain.RpcProvider,
-				ApiProvider:    chain.ApiProvider,
-				IpfsGateway:    chain.IpfsGateway,
-				Symbol:         chain.Symbol,
+				Chain:         "testChain",
+				ChainId:       12345,
+				LocalExplorer: "http://localhost:8080",
+				RpcProvider:   "http://localhost:8545",
+				Symbol:        "ETH",
 			}
 			chains = append(chains, ch)
-		}
-		sort.Slice(chains, func(i, j int) bool {
-			if chains[i].ChainId == chains[j].ChainId {
-				return chains[i].Chain < chains[j].Chain
+		} else {
+			chainArray := config.GetChainArray()
+			for _, chain := range chainArray {
+				ch := types.SimpleChain{
+					Chain:          chain.Chain,
+					ChainId:        mustParseUint(chain.ChainId),
+					LocalExplorer:  chain.LocalExplorer,
+					RemoteExplorer: chain.RemoteExplorer,
+					RpcProvider:    chain.RpcProvider,
+					ApiProvider:    chain.ApiProvider,
+					IpfsGateway:    chain.IpfsGateway,
+					Symbol:         chain.Symbol,
+				}
+				chains = append(chains, ch)
 			}
-			return chains[i].ChainId < chains[j].ChainId
-		})
+			sort.Slice(chains, func(i, j int) bool {
+				if chains[i].ChainId == chains[j].ChainId {
+					return chains[i].Chain < chains[j].Chain
+				}
+				return chains[i].ChainId < chains[j].ChainId
+			})
+		}
 		model["chains"] = chains
 		order = append(order, "chains")
 	}
@@ -147,7 +157,9 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 }
 
 // EXISTING_CODE
-func ToProgress(chain string, meta *rpcClient.MetaData) string {
+//
+
+func ToProgress(chain string, meta *rpc.MetaData) string {
 	nTs, _ := tslib.NTimestamps(chain)
 	format := "%d, %d, %d, %d ts: %d"
 	return fmt.Sprintf(format, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
@@ -157,20 +169,21 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
-	meta, err := rpcClient.GetMetaData(chain, false)
+	meta, err := opts.Conn.GetMetaData(false)
 	if err != nil {
 		return nil, err
 	}
 
-	vers, err := rpcClient.GetVersion(chain)
+	vers, err := opts.Conn.GetClientVersion()
 	if err != nil {
 		return nil, err
 	}
 
+	provider, _ := config.GetRpcProvider(chain)
 	s := &simpleStatus{
 		ClientVersion: vers,
 		Version:       version.LibraryVersion,
-		RPCProvider:   config.GetRpcProvider(chain),
+		RPCProvider:   provider,
 		RootConfig:    config.GetPathToRootConfig(),
 		ChainConfig:   config.GetPathToChainConfig(chain),
 		CachePath:     config.GetPathToCache(chain),
@@ -178,8 +191,8 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		Progress:      ToProgress(chain, meta),
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
-		IsArchive:     node.IsArchiveNode(chain),
-		IsTracing:     node.IsTracingNode(testMode, chain),
+		IsArchive:     opts.Conn.IsNodeArchive(),
+		IsTracing:     opts.Conn.IsNodeTracing(testMode),
 		HasEsKey:      config.HasEsKeys(chain),
 		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,
@@ -230,7 +243,7 @@ func (s *simpleStatus) toTemplate(w io.Writer, testMode bool, format string) boo
 		return false
 	}
 
-	t.Execute(w, s)
+	_ = t.Execute(w, s)
 	return true
 }
 

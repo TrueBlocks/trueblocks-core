@@ -4,6 +4,7 @@ traces?transactions=0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb
     {
       "action": {
         "address": "",
+        "author": "",
         "balance": "",
         "callType": "call",
         "from": "0x5335e5d8069fc2326354b97802bfde48d56ca2e2",
@@ -11,6 +12,7 @@ traces?transactions=0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb
         "init": "",
         "input": "0x62a02fe30000000000000000000000000000000000000000000000000000b5e620f48000",
         "refundAddress": "",
+        "rewardType": "",
         "selfDestructed": "",
         "to": "0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35",
         "value": "0x0"

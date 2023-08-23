@@ -1,8 +1,4 @@
-# ---------------------------------------------------------------------------------------
-# This file belongs to the QuickBlocks project from QuickBlocks.io
-# ---------------------------------------------------------------------------------------
-# Minimum cmake version supported
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required (VERSION 3.5)
 
 # ----------------------------------------------------------------------------------------
 # C++17 required
@@ -49,6 +45,7 @@ endif(CURL_FOUND)
 #
 message(STATUS "======== LOOKING FOR PROTOC ========================")
 find_package(Protobuf 3.21)
+message(STATUS ${Protobuf_PROTOC_EXECUTABLE})
 
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings
@@ -62,14 +59,11 @@ endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set(BASE_LIBS acct ether util ${CURL_LIBRARIES})
+set(BASE_LIBS util ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Base included paths
-set(BASE_INCLUDE
-    "${CMAKE_SOURCE_DIR}/libs/utillib"
-    "${CMAKE_SOURCE_DIR}/libs/etherlib"
-    "${CMAKE_SOURCE_DIR}/libs/acctlib")
+set(BASE_INCLUDE "${CMAKE_SOURCE_DIR}/dev_tools/utillib")
 
 # ----------------------------------------------------------------------------------------
 set(BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
@@ -81,24 +75,52 @@ set(BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
 set(CMAKE_INSTALL_PREFIX "/usr/local/" CACHE PATH "Default install directory")
 
 # ----------------------------------------------------------------------------------------
+function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC DEST_DIR)
+    get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
+    add_custom_target(${NAME})
+    add_custom_command(TARGET ${NAME}
+                    COMMAND go build
+                    -o "${DEST_DIR}/${NAME}"
+                    ${CMAKE_GO_FLAGS} ${MAIN_SRC}
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+                    DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
+    add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
+endfunction(ADD_GO_INSTALLABLE_PROGRAM)
+
+# ----------------------------------------------------------------------------------------
+function(COMPILE_PROTOBUFFERS NAME MAIN_SRC)
+  message("Compiling protobuf files")
+  get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
+  add_custom_target(${NAME})
+  add_custom_command(TARGET ${NAME}
+                    COMMAND protoc
+                    --go_out=.
+                    --go_opt=paths=source_relative
+                    --go-grpc_out=.
+                    --go-grpc_opt=paths=source_relative
+                    ${MAIN_SRC}
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/proto
+                    DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
+  add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
+endfunction(COMPILE_PROTOBUFFERS)
+
+# ----------------------------------------------------------------------------------------
 # Enable testing
 # enable_testing()
-add_custom_target(lint COMMAND "${BIN_DIR}/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(lint COMMAND "golangci-lint" "run" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
 add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --openapi" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "--all --readmes --openapi --options --gocmds --sdk" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(sdk COMMAND "${BIN_DIR}/makeClass" "--sdk" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(gocmds COMMAND "${BIN_DIR}/makeClass" "--options --gocmds" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "--lint --format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(tests COMMAND "${BIN_TEST_DIR}/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
-add_subdirectory(libs)
-add_subdirectory(tools)
-add_subdirectory(apps)
 add_subdirectory(dev_tools)
+add_subdirectory(apps)
 add_subdirectory(examples)
 add_subdirectory(other)

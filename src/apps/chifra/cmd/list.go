@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -29,7 +30,7 @@ var listCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("list", func() *globals.GlobalOptions {
 		return &listPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("list", listPkg.RunList, listPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("list", listPkg.RunList, listPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &listPkg.GetOptions().Globals
 	}),
@@ -47,27 +48,27 @@ const longList = `Purpose:
 
 const notesList = `
 Notes:
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - No other options are permitted when --silent is selected.`
 
 func init() {
+	var capabilities = caps.Default // Additional global caps for chifra list
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	listCmd.Flags().SortFlags = false
 
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Count, "count", "U", false, "display only the count of records for each monitor")
-	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Appearances, "appearances", "p", false, "export each monitor's list of appearances (the default) (hidden)")
-	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Silent, "silent", "", false, "freshen the monitor only (no reporting) (hidden)")
-	listCmd.Flags().BoolVarP(&listPkg.GetOptions().NoZero, "no_zero", "n", false, "suppress the display of zero appearance accounts")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().NoZero, "no_zero", "z", false, "for the --count option only, suppress the display of zero appearance accounts")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Bounds, "bounds", "b", false, "report first and last block this address appears")
 	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Unripe, "unripe", "u", false, "list transactions labeled upripe (i.e. less than 28 blocks old)")
-	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstRecord, "first_record", "c", 1, "the first record to process")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Silent, "silent", "s", false, "freshen the monitor only (no reporting)")
+	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
+	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when freshening)")
-	listCmd.Flags().BoolVarP(&listPkg.GetOptions().Bounds, "bounds", "", false, "report first and last block this address appears (hidden)")
-	if os.Getenv("TEST_MODE") != "true" {
-		listCmd.Flags().MarkHidden("appearances")
-		listCmd.Flags().MarkHidden("silent")
-		listCmd.Flags().MarkHidden("bounds")
-	}
-	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals)
+	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals, capabilities)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	listCmd.SetOut(os.Stderr)

@@ -5,7 +5,6 @@
 package manifest
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,19 +13,20 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 // fromRemote gets the CID from the smart contract, calls
 // the gateway and returns the parsed manifest
 func fromRemote(chain string) (*Manifest, error) {
-	cid, err := ReadUnchainIndex(chain, "", unchained.PreferredPublisher)
+	cid, err := ReadUnchainedIndex(chain, "", unchained.GetPreferredPublisher())
 	if err != nil {
 		return nil, err
 	}
@@ -40,87 +40,37 @@ func fromRemote(chain string) (*Manifest, error) {
 	return downloadManifest(chain, gatewayUrl, cid)
 }
 
-// ReadUnchainIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
+// ReadUnchainedIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
 // published by the given publisher
-func ReadUnchainIndex(ch, reason, publisher string) (string, error) {
-	provider := config.GetRpcProvider("mainnet") // we always read from the mainnet smart contract
-	rpcClient.CheckRpc(provider)
-	ethClient := rpcClient.GetClient(provider)
-	defer ethClient.Close()
-
-	abiFn := filepath.Join(config.GetPathToRootConfig(), "abis/known-000/unchainedV2.json")
-	address := common.HexToAddress(unchained.Address_V2)
-	signature := unchained.ReadHashName_V2
-
-	abiSource, err := os.OpenFile(abiFn, os.O_RDONLY, 0)
-	if err != nil {
-		return "", fmt.Errorf("while reading contract ABI: %w", err)
-	}
-	defer abiSource.Close()
-
-	contractAbi, err := abi.JSON(abiSource)
-	if err != nil {
-		return "", fmt.Errorf("while parsing contract ABI: %w", err)
+func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, error) {
+	cid := os.Getenv("TB_OVERRIDE_CID")
+	if cid != "" {
+		return cid, nil
 	}
 
-	which := ch
+	database := chain
 	if reason != "" {
-		which += ("-" + reason)
+		database += ("-" + reason)
 	}
 
-	callData, err := contractAbi.Pack(signature, common.HexToAddress(publisher), which)
-	if err != nil {
-		return "", fmt.Errorf("while building calldata: %w", err)
-	}
+	unchainedChain := "mainnet" // the unchained index is on mainnet
+	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
+	conn := rpc.TempConnection(unchainedChain)
 
-	msg := ethereum.CallMsg{
-		To:   &address,
-		Data: callData,
-	}
-
-	response, err := ethClient.CallContract(
-		context.Background(),
-		msg,
-		nil,
-	)
-	if err != nil {
-		return "", fmt.Errorf("while calling contract: %w", err)
-	}
-
-	if len(response) == 0 {
-		msg := fmt.Sprintf("empty response %sfrom provider %s on chain %s",
-			response, provider, which)
-		// Node may be syncing
-		response, err := ethClient.SyncProgress(context.Background())
-		// If synced, return the empty response message.
-		if response == nil {
-			return "", fmt.Errorf(msg)
+	if contractCall, _, err := call.NewContractCall(conn, unchained.GetUnchainedIndexAddress(), theCall); err != nil {
+		return "", err
+	} else {
+		contractCall.BlockNumber = conn.GetLatestBlockNumber()
+		abiCache := articulate.NewAbiCache(chain, true)
+		artFunc := func(str string, function *types.SimpleFunction) error {
+			return abiCache.ArticulateFunction(function, "", str[2:])
+		}
+		if result, err := contractCall.Call(artFunc); err != nil {
+			return "", err
 		} else {
-			if err != nil {
-				return "", fmt.Errorf("assessing sync progress: %w", err)
-			}
-			// Syncing
-			// TODO: This should be broadened to handle all queries to the node that end with no response
-			msg := fmt.Sprintf("chain %s on provider %s is syncing. Please wait until this is finished.", which, provider)
-			return "", fmt.Errorf(msg)
+			return result.Values["val_0"], nil
 		}
 	}
-
-	unpacked, err := contractAbi.Unpack(signature, response)
-	if err != nil {
-		return "", fmt.Errorf("while unpacking value: %w", err)
-	}
-
-	if len(unpacked) == 0 {
-		return "", errors.New("contract returned empty data")
-	}
-
-	ret := unpacked[0].(string)
-	if len(ret) == 0 {
-		return "", errors.New("The Unchained Index returned empty CID for " + which + ". Has the index for that chain been published?")
-	}
-
-	return ret, nil
 }
 
 // downloadManifest downloads manifest from the given gateway and parses it into
@@ -144,6 +94,6 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 		err := json.NewDecoder(response.Body).Decode(m)
 		return m, err
 	default:
-		return nil, errors.New("unrecognized content type")
+		return nil, errors.New("unrecognized content type: " + response.Header.Get("content-type"))
 	}
 }

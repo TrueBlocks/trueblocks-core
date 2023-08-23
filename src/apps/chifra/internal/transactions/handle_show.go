@@ -2,118 +2,88 @@ package transactionsPkg
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"strings"
+	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *TransactionsOptions) HandleShowTxs() (err error) {
-	abiMap := make(abi.AbiInterfaceMap)
-	loadedMap := make(map[base.Address]bool)
+func (opts *TransactionsOptions) HandleShow() (err error) {
 	chain := opts.Globals.Chain
+	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	testMode := opts.Globals.TestMode
+	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
-		for _, rng := range opts.TransactionIds {
-			txIds, err := rng.ResolveTxs(chain)
-			if err != nil && !errors.Is(err, ethereum.NotFound) {
-				errorChan <- err
-				cancel()
+		if txMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+			errorChan <- err
+			cancel()
+		} else {
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+				Total:   int64(len(txMap)),
+			})
+
+			iterCtx, iterCancel := context.WithCancel(context.Background())
+			defer iterCancel()
+
+			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+				a := &types.RawAppearance{
+					BlockNumber:      uint32(app.BlockNumber),
+					TransactionIndex: uint32(app.TransactionIndex),
+				}
+				if tx, err := opts.Conn.GetTransactionByAppearance(a, opts.Traces /* needsTraces */); err != nil {
+					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+				} else if tx == nil {
+					return fmt.Errorf("transaction at %s has no logs", app.String())
+				} else {
+					if opts.Articulate && tx.ArticulatedTx == nil {
+						if err = abiCache.ArticulateTransaction(tx); err != nil {
+							errorChan <- err // continue even with an error
+						}
+					}
+					*value = *tx
+					bar.Tick()
+					return nil
+				}
 			}
 
-			for _, appearance := range txIds {
-				tx, err := rpcClient.GetTransactionByAppearance(chain, &appearance, opts.Traces)
-				if err != nil {
-					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", strings.Replace(rng.Orig, "-", ".", -1), err)
-					continue
+			iterErrorChan := make(chan error)
+			go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+			for err := range iterErrorChan {
+				// TODO: I don't really want to quit looping here. Just report the error and keep going.
+				iterCancel()
+				if !testMode || nErrors == 0 {
+					errorChan <- err
+					// Reporting more than one error causes tests to fail because they
+					// appear concurrently so sort differently
+					nErrors++
 				}
-				if tx == nil {
-					errorChan <- fmt.Errorf("transaction at %s not found", strings.Replace(rng.Orig, "-", ".", -1))
-					continue
+			}
+			bar.Finish(true)
+
+			items := make([]types.SimpleTransaction, 0, len(txMap))
+			for _, tx := range txMap {
+				items = append(items, *tx)
+			}
+			sort.Slice(items, func(i, j int) bool {
+				if items[i].BlockNumber == items[j].BlockNumber {
+					return items[i].TransactionIndex < items[j].TransactionIndex
 				}
+				return items[i].BlockNumber < items[j].BlockNumber
+			})
 
-				if opts.Articulate {
-					if !loadedMap[tx.To] {
-						if err = abi.LoadAbi(chain, tx.To, abiMap); err != nil {
-							// continue processing even with an error
-							errorChan <- err
-							err = nil
-						}
-					}
-
-					for index, log := range tx.Receipt.Logs {
-						var err error
-						if !loadedMap[log.Address] {
-							if err = abi.LoadAbi(chain, log.Address, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
-								err = nil
-							}
-						}
-						if err == nil {
-							tx.Receipt.Logs[index].ArticulatedLog, err = articulate.ArticulateLog(&log, abiMap)
-							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
-							}
-						}
-					}
-
-					for index, trace := range tx.Traces {
-						var err error
-						if !loadedMap[trace.Action.To] {
-							if err = abi.LoadAbi(chain, trace.Action.To, abiMap); err != nil {
-								// continue processing even with an error
-								errorChan <- err
-								err = nil
-							}
-						}
-						if err == nil {
-							tx.Traces[index].ArticulatedTrace, err = articulate.ArticulateTrace(&trace, abiMap)
-							if err != nil {
-								// continue processing even with an error
-								errorChan <- err
-							}
-						}
-					}
-
-					var found *types.SimpleFunction
-					var selector string
-					if len(tx.Input) >= 10 {
-						selector = tx.Input[:10]
-						inputData := tx.Input[10:]
-						found = abiMap[selector]
-						if found != nil {
-							tx.ArticulatedTx = found
-							var outputData string
-							if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
-								outputData = tx.Traces[0].Result.Output[2:]
-							}
-							if err = articulate.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
-								// continue processing even with an error
-								errorChan <- err
-							}
-						}
-					}
-
-					if found == nil && len(tx.Input) > 0 {
-						if message, ok := articulate.ArticulateString(tx.Input); ok {
-							tx.Message = message
-							// } else if len(selector) > 0 {
-							// 	// don't report this error
-							// 	errorChan <- fmt.Errorf("method/event not found: %s", selector)
-						}
-					}
+			for _, item := range items {
+				item := item
+				if !item.BlockHash.IsZero() {
+					modelChan <- &item
 				}
-				modelChan <- tx
 			}
 		}
 	}
@@ -122,5 +92,6 @@ func (opts *TransactionsOptions) HandleShowTxs() (err error) {
 		"articulate": opts.Articulate,
 		"traces":     opts.Traces,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

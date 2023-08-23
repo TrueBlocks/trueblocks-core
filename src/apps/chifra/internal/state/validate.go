@@ -6,15 +6,18 @@ package statePkg
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/node"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *StateOptions) validateState() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -47,44 +50,49 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("The {0} option is not available{1}.", "--no_zero", " with the --call option")
 			}
 
-			for _, addr := range opts.Addrs {
-				if validate.IsValidAddress(addr) {
-					return validate.Usage("The {0} option is not available{1}.", "--call", " when an address is present")
-				}
+			if len(opts.Addrs) != 1 {
+				return validate.Usage("Exactly one address is required for the {0} option.", "--call")
 			}
 
-			parts := strings.Split(opts.Call, "!")
-			contract := parts[0]
+			contract := opts.Addrs[0]
 			if len(opts.ProxyFor) > 0 {
 				contract = opts.ProxyFor
 			}
 
-			ok, err := validate.IsSmartContract(opts.Globals.Chain, contract)
+			err := opts.Conn.IsContractAt(base.HexToAddress(contract), nil)
 			if err != nil {
+				if errors.Is(err, rpc.ErrNotAContract) {
+					return validate.Usage("The address for the --call option must be a smart contract.")
+				}
 				return err
 			}
-			if !ok {
-				return validate.Usage("The first argument for the --call option must be a smart contract.")
-			}
 
-			if len(parts) < 2 {
-				// TODO: Remove this and present ABI in non-test mode
-				// non-test mode on the terminal does something we want to preserve in the C++ code -- it
-				// presents the abi for this contract. We can do that in Go, so we only fail during testing
-				if opts.Globals.TestMode || opts.Globals.IsApiMode() {
-					return validate.Usage("You must provide either a four-byte code or a function signature for the smart contract.")
-				}
-			} else {
-				// command is either a fourbyte or a function signature
-				command := parts[1]
-				if !validate.IsValidFourByte(command) {
-					if !strings.Contains(command, "(") || !strings.Contains(command, ")") {
-						return validate.Usage("The provided value ({0}) must be either a four-byte nor a function signature.", command)
+			// Before we do anythinng, let's just make sure we have a valid four-byte
+			callAddress := base.HexToAddress(opts.Addrs[0])
+			if opts.ProxyFor != "" {
+				callAddress = base.HexToAddress(opts.ProxyFor)
+			}
+			if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
+				message := fmt.Sprintf("the --call value provided (%s) was not found: %s", opts.Call, err)
+				if len(suggestions) > 0 {
+					if len(suggestions) > 0 {
+						message += " Suggestions: "
+						for index, suggestion := range suggestions {
+							if index > 0 {
+								message += " "
+							}
+							message += fmt.Sprintf("%d: %s.", index+1, suggestion)
+						}
 					}
 				}
+				return errors.New(message)
 			}
 
 		} else {
+			if opts.Articulate {
+				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call")
+			}
+
 			if len(opts.ProxyFor) > 0 {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
 			}
@@ -104,7 +112,7 @@ func (opts *StateOptions) validateState() error {
 	// Blocks are optional, but if they are present, they must be valid
 	if len(opts.Blocks) > 0 {
 		bounds, err := validate.ValidateIdentifiersWithBounds(
-			opts.Globals.Chain,
+			chain,
 			opts.Blocks,
 			validate.ValidBlockIdWithRangeAndDate,
 			1,
@@ -123,9 +131,9 @@ func (opts *StateOptions) validateState() error {
 			return err
 		}
 
-		latest := rpcClient.BlockNumber(config.GetRpcProvider(opts.Globals.Chain))
+		latest := opts.Conn.GetLatestBlockNumber()
 		// TODO: Should be configurable
-		if bounds.First < (latest-250) && !node.IsArchiveNode(opts.Globals.Chain) {
+		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive() {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}
 	}

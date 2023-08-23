@@ -9,9 +9,9 @@ import (
 	"runtime"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
 )
@@ -58,7 +58,7 @@ func collectWorker(i interface{}) {
 	// now we update the record
 	record.strRecords = append(record.strRecords, StringRecord{Value: args.Str, Len: strLen})
 	record.sigRecords = append(record.sigRecords, SignatureRecord{
-		Signature: common.BytesToHash(args.Encoded),
+		Signature: base.BytesToHash(args.Encoded),
 		Offset:    offset,
 		Len:       uint32(strLen),
 	})

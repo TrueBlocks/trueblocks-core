@@ -13,6 +13,7 @@ import (
 
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/spf13/cobra"
@@ -29,7 +30,7 @@ var exportCmd = &cobra.Command{
 	PreRun: outputHelpers.PreRunWithJsonWriter("export", func() *globals.GlobalOptions {
 		return &exportPkg.GetOptions().Globals
 	}),
-	RunE:    file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
+	RunE: file.RunWithFileSupport("export", exportPkg.RunExport, exportPkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &exportPkg.GetOptions().Globals
 	}),
@@ -49,14 +50,25 @@ const longExport = `Purpose:
 
 const notesExport = `
 Notes:
-  - An address must start with '0x' and be forty-two characters long.
+  - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
   - Neighbors include every address that appears in any transaction in which the export address also appears.
-  - If provided, --max_records dominates, also, if provided, --first_record overrides --first_block.`
+  - If present, --first_/--last_block are applied, followed by user-supplied filters such as asset or topic, followed by --first_/--max_record if present.
+  - The --first_record and --max_record options are zero-based (as are the block options).
+  - The _block and _record filters are ignored when used with the --count option.
+  - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
+  - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).`
 
 func init() {
+	var capabilities = caps.Default // Additional global caps for chifra export
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Wei)
+	// EXISTING_CODE
+
 	exportCmd.Flags().SortFlags = false
 
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Appearances, "appearances", "p", false, "export a list of appearances")
@@ -66,34 +78,38 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Neighbors, "neighbors", "n", false, "export the neighbors of the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "for the accounting options only, export only statements")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, "traverse the transaction history and show each change in ETH balances")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Cache, "cache", "i", false, "write transactions to the cache (see notes)")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "write traces to the cache (see notes)")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "force the transaction's traces into the cache")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
-	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 1, "the first record to process")
+	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Relevant, "relevant", "", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
-	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "", nil, "for log export only, export only logs if emitted by one of these address(es)")
-	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")
-	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "", nil, "for the accounting options only, export statements only for this asset")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Relevant, "relevant", "N", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
+	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "m", nil, "for log export only, export only logs if emitted by one of these address(es)")
+	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "B", nil, "for log export only, export only logs with this topic(s)")
+	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "P", nil, "for the accounting options only, export statements only for this asset")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export statements with incoming, outgoing, or zero value
 One of [ in | out | zero ]`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Factory, "factory", "y", false, "for --traces only, report addresses created by (or self-destructed by) the given address(es)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Unripe, "unripe", "u", false, "export transactions labeled upripe (i.e. less than 28 blocks old)")
-	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")
+	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Load, "load", "O", "", "a comma separated list of dynamic traversers to load (hidden)")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reversed, "reversed", "E", false, "produce results in reverse chronological order")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().NoZero, "no_zero", "z", false, "for the --count option only, suppress the display of zero appearance accounts")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("load")
-		exportCmd.Flags().MarkHidden("reversed")
 	}
-	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals)
+	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals, capabilities)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
+	// This no-op makes scripting a bit easier. You may provide `--txs` option to the chifra export command, and it will be the same as no parameters at all.
+	var unused bool
+	exportCmd.Flags().BoolVarP(&unused, "txs", "", false, "no-op options shows transactions (same as default)")
+	exportCmd.Flags().MarkHidden("txs")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(exportCmd)

@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "utillib.h"
 #include "options.h"
 
 extern string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code);
@@ -107,37 +107,15 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
     if (contains(fn, "/other/data-models/")) {
         return true;
     }
-    if (contains(fn, "/stub/") || goPortNewCode(fn))
+    if (contains(fn, "/stub/"))
         return true;
 
     string_q orig = asciiFileToString(fn);
     string_q codeOut = orig;
-    if (endsWith(fn, ".cpp")) {
-        CStringArray tokens = {"_CODE_AUTO", "_CODE_OPTIONS", "_CODE_LOCAL_INIT",
-                               "_CODE_INIT", "_CODE_NOTES",   "ERROR_STRINGS"};
-
-        for (auto tok : tokens) {
-            bool missing = !contains(orig, tok);
-            bool ported = contains(orig, "_CHIFRA") || contains(fn, "flame") || contains(fn, "abis") ||
-                          contains(fn, "when") || contains(fn, "daemon");
-            if (missing && !ported) {
-                LOG_WARN(fn, " does not contain token ", tok);
-            }
-        }
-
-        codeOut = replaceCode(codeOut, "CODE_AUTO", opts->autoStream.str());
-        codeOut = replaceCode(codeOut, "CODE_OPTIONS", opts->optionStream.str());
-        codeOut = replaceCode(codeOut, "CODE_LOCAL_INIT", opts->localStream.str());
-        codeOut = replaceCode(codeOut, "CODE_INIT", opts->initStream.str());
-        codeOut = replaceCode(codeOut, "CODE_NOTES", opts->notesStream.str());
-        codeOut = replaceCode(codeOut, "ERROR_STRINGS", opts->errorStrStream.str());
-        replaceAll(codeOut, "    // clang-format on\n    // clang-format off\n", "");
-
-    } else if (endsWith(fn, ".go.tmpl") || endsWith(fn, ".go")) {
+    if (endsWith(fn, ".go.tmpl") || endsWith(fn, ".go")) {
         codeOut = replaceCode(codeOut, "ROUTE_PKGS", trim(opts->goPkgStream.str(), '\n') + "\n");
         codeOut = replaceCode(codeOut, "ROUTE_CODE", opts->goCallStream.str());
         codeOut = replaceCode(codeOut, "ROUTE_ITEMS", opts->goRouteStream.str());
-        codeOut = replaceCode(codeOut, "CONVERT_CODE", opts->goConvertStream.str());
 
     } else if (endsWith(fn, ".yaml")) {
         string_q components = trim(asciiFileToString(getDocsPathTemplates("api/components.txt")), '\n');
@@ -150,19 +128,6 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         replace(codeOut, "[{DESCRIPTION}]", descr);
         replace(codeOut, "[{COMPONENTS}]", components);
         replace(codeOut, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
-
-    } else if (endsWith(fn, ".h")) {
-        CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
-        for (auto tok : tokens) {
-            bool missing = !contains(orig, tok);
-            bool ported = contains(orig, "_CHIFRA") || contains(fn, "flame") || contains(fn, "abis") ||
-                          contains(fn, "when") || contains(fn, "daemon");
-            if (missing && !ported) {
-                LOG_WARN(fn, " does not contain token ", tok);
-            }
-        }
-        codeOut = replaceCode(codeOut, "CODE_DECLARE", opts->headerStream.str());
-        codeOut = replaceCode(codeOut, "ERROR_DEFINES", opts->errorDefStream.str());
 
     } else {
         cerr << "Unkown file type for " << fn << endl;

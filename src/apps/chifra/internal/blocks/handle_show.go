@@ -7,67 +7,86 @@ package blocksPkg
 import (
 	"context"
 	"errors"
+	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
-func (opts *BlocksOptions) HandleShowBlocks() error {
-	// Don't do this in the loop
-	meta, err := rpcClient.GetMetaData(opts.Globals.Chain, opts.Globals.TestMode)
-	if err != nil {
-		return err
-	}
+func (opts *BlocksOptions) HandleShow() error {
+	chain := opts.Globals.Chain
+	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
-		for _, br := range opts.BlockIds {
-			blockNums, err := br.ResolveBlocks(opts.Globals.Chain)
-			if err != nil {
+		var err error
+		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[types.SimpleTransaction]
+		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
+
+		bar := logger.NewBar(logger.BarOptions{
+			Type:    logger.Expanding,
+			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Total:   int64(len(appMap)),
+		})
+
+		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[types.SimpleTransaction]) error {
+			if block, err := opts.Conn.GetBlockBodyByNumber(app.BlockNumber); err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
-					continue
+					errorChan <- errors.New("uncles not found")
 				}
 				cancel()
-				return
+				return nil
+			} else {
+				bar.Tick()
+				*value = block
 			}
+			return nil
+		}
 
-			for _, bn := range blockNums {
-				finalized := meta.Age(bn) > 28
-
-				// Decide on the concrete type of block.Transactions and set values
-				var block types.Modeler[types.RawBlock]
-				var err error
-				if !opts.Hashes {
-					var b types.SimpleBlock[types.SimpleTransaction]
-					b, err = rpcClient.GetBlockByNumberWithTxs(opts.Globals.Chain, bn, finalized)
-					block = &b
-				} else {
-					var b types.SimpleBlock[string]
-					b, err = rpcClient.GetBlockByNumber(opts.Globals.Chain, bn, finalized)
-					block = &b
-				}
-
-				if err != nil {
-					errorChan <- err
-					if errors.Is(err, ethereum.NotFound) {
-						continue
-					}
-					cancel()
-					return
-				}
-
-				modelChan <- block
+		iterErrorChan := make(chan error)
+		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+		for err := range iterErrorChan {
+			if !opts.Globals.TestMode || nErrors == 0 {
+				errorChan <- err
+				nErrors++
 			}
+		}
+		bar.Finish(true)
+
+		items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(appMap))
+		for _, item := range appMap {
+			items = append(items, item)
+		}
+		sort.Slice(items, func(i, j int) bool {
+			if items[i].BlockNumber == items[j].BlockNumber {
+				return items[i].Hash.Hex() < items[j].Hash.Hex()
+			}
+			return items[i].BlockNumber < items[j].BlockNumber
+		})
+
+		for _, item := range items {
+			item := item
+			modelChan <- item
 		}
 	}
 
 	extra := map[string]interface{}{
-		"hashes": opts.Hashes,
-		"count":  opts.Count,
-		"uncles": opts.Uncles,
+		"hashes":     opts.Hashes,
+		"count":      opts.Count,
+		"uncles":     opts.Uncles,
+		"articulate": opts.Articulate,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

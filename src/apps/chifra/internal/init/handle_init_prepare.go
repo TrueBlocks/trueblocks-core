@@ -11,13 +11,13 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // prepareDownloadList returns a list of chunks (or partial chunks) that need to be updated. Upon return, if a chunk is in this list,
@@ -30,8 +30,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	// filters are required. If the user has specified `--all`, we insist that the corresponding index portion is also present and valid. If the
 	// user has not specified `--all`, then we check the index portion, only if it exists, and then only for the correct header and file size. If a
 	// bloom filter is present on disc, but not in the manifest, then we delete both the bloom filte and the corresponding index portion if it exists.
-	cleanIndex := func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-		if path != cache.ToBloomPath(path) {
+	cleanIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+		if path != index.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
 
@@ -63,8 +63,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.OKAY:
 				chunk.IndexHash = "" // we don't have to download it
 				chunk.IndexSize = 0
-				if file.FileExists(cache.ToIndexPath(path)) {
-					reportReason("The index file", indexStatus, cache.ToIndexPath(path), opts.Globals.Verbose)
+				if file.FileExists(index.ToIndexPath(path)) {
+					reportReason("The index file", indexStatus, index.ToIndexPath(path), opts.Globals.Verbose)
 				}
 			case validate.FILE_ERROR:
 				return false, err // bubble the error up
@@ -75,7 +75,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			case validate.WRONG_MAGIC:
 				fallthrough
 			case validate.WRONG_HASH:
-				reportReason("The index file", indexStatus, cache.ToIndexPath(path), opts.Globals.Verbose)
+				reportReason("The index file", indexStatus, index.ToIndexPath(path), opts.Globals.Verbose)
 			default:
 				logger.Fatal("should not happen ==> unknown return from IsValidChunk")
 			}
@@ -92,7 +92,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 				return false, err
 			}
 
-			indexPath := cache.ToIndexPath(path)
+			indexPath := index.ToIndexPath(path)
 			if file.FileExists(indexPath) {
 				reportReason("The index file", validate.NOT_IN_MANIFEST, indexPath, opts.Globals.Verbose)
 				if err := os.Remove(indexPath); err != nil {
@@ -104,8 +104,8 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		}
 	}
 
-	walker := index.NewCacheWalker(
-		opts.Globals.Chain,
+	walker := walk.NewCacheWalker(
+		chain,
 		opts.Globals.TestMode,
 		10, /* maxTests */
 		cleanIndex,
@@ -127,7 +127,10 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	for _, chunk := range man.ChunkMap {
 		if chunk != nil {
 			rng := base.RangeFromRangeString(chunk.Range)
-			_, indexPath := rng.RangeToFilename(opts.Globals.Chain)
+			if rng.Last < opts.FirstBlock {
+				continue
+			}
+			_, indexPath := rng.RangeToFilename(chain)
 			if !opts.All && !file.FileExists(indexPath) {
 				chunk.IndexHash = ""
 				chunk.IndexSize = 0

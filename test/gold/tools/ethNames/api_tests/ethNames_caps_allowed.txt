@@ -1,0 +1,6 @@
+names?terms=find_nothing&chain&fmt&nocolor&noop&version&verbose&noHeader&file&output&append&failOnPurpose
+{
+  "errors": [
+    "Invalid key (failOnPurpose) in names route."
+  ]
+}

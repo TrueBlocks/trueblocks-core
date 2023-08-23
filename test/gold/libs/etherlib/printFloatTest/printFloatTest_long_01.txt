@@ -1,2 +1,0 @@
-printFloatTest  --testNum 1
-1.40000010000001

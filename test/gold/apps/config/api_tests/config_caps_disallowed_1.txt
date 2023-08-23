@@ -1,0 +1,6 @@
+config?cache
+{
+  "errors": [
+    "Invalid key (cache) in config route."
+  ]
+}

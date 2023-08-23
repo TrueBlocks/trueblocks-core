@@ -15,7 +15,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -26,6 +25,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
@@ -39,7 +39,7 @@ type MonitorUpdate struct {
 	FirstBlock uint64
 }
 
-const maxTestingBlock = 15000000
+const maxTestingBlock = 17000000
 
 // mutexesPerAddress map stores mutex for each address that is being/has been freshened
 var mutexesPerAddress = make(map[string]*sync.Mutex)
@@ -71,6 +71,13 @@ func unlockForAddress(address string) {
 }
 
 func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) (bool, error) {
+	chain := opts.Globals.Chain
+
+	// TODO: There are special case addresses for the sender of mining rewards and
+	// TODO: prefund allocations that get ignored here because they are baddresses.
+	// TODO: We could, if we wished, create special cases here to (for example) report
+	// TODO: the balance sheet for "Ethereum" as a whole. How much has been spent on mining?
+	// TODO: How much was the original allocation worth?
 	for _, address := range opts.Addrs {
 		lockForAddress(address)
 		defer unlockForAddress(address) // reminder: this defers until the function returns, not this loop
@@ -102,8 +109,8 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
-			mon, _ := monitor.NewStagedMonitor(opts.Globals.Chain, addr)
-			mon.ReadMonitorHeader()
+			mon, _ := monitor.NewStagedMonitor(chain, addr)
+			_ = mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
 				updater.FirstBlock = uint64(mon.LastScanned)
 			}
@@ -113,7 +120,6 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	chain := opts.Globals.Chain
 	bloomPath := config.GetPathToIndex(chain) + "blooms/"
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
@@ -131,7 +137,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 		if !info.IsDir() {
 			fileName := bloomPath + "/" + info.Name()
-			if !cache.IsCacheType(fileName, cache.Index_Bloom, true /* checkExt */) {
+			if !walk.IsCacheType(fileName, walk.Index_Bloom, true /* checkExt */) {
 				continue // sometimes there are .gz files in this folder, for example
 			}
 			fileRange, err := base.RangeFromFilenameE(fileName)
@@ -183,7 +189,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 
 	if !opts.Globals.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := cache.ToStagingPath(config.GetPathToIndex(opts.Globals.Chain) + "staging")
+		stagePath := index.ToStagingPath(config.GetPathToIndex(chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
@@ -227,7 +233,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		wg.Done()
 	}()
 
-	bloomFilename := cache.ToBloomPath(fileName)
+	bloomFilename := index.ToBloomPath(fileName)
 
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
@@ -263,7 +269,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 		return
 	}
 
-	indexFilename := cache.ToIndexPath(fileName)
+	indexFilename := index.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
 		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {
@@ -320,7 +326,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 		mon.Close()
 		// Note that result.AppRecords may be nil here (because, for example, this
 		// monitor had a false positive), but we do still want to update the header.
-		mon.WriteMonHeader(mon.Deleted, lastScanned, false /* force */)
+		_ = mon.WriteMonHeader(mon.Deleted, lastScanned, false /* force */)
 		if result.AppRecords != nil {
 			nWritten := len(*result.AppRecords)
 			if nWritten > 0 {

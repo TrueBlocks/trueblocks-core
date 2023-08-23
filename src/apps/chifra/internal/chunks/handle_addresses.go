@@ -10,34 +10,35 @@ import (
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
+	chain := opts.Globals.Chain
 	been_here := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		var showAddresses func(walker *index.CacheWalker, path string, first bool) (bool, error)
+		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
 		if opts.Globals.Verbose {
-			showAddresses = func(walker *index.CacheWalker, path string, first bool) (bool, error) {
+			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 				return opts.handleResolvedRecords(modelChan, walker, path, first)
 			}
 		} else {
-			showAddresses = func(walker *index.CacheWalker, path string, first bool) (bool, error) {
-				if path != cache.ToBloomPath(path) {
+			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+				if path != index.ToBloomPath(path) {
 					return false, fmt.Errorf("should not happen in showAddresses")
 				}
 
-				path = cache.ToIndexPath(path)
+				path = index.ToIndexPath(path)
 				if !file.FileExists(path) {
 					// This is okay, if the user used chifra init without the --all option. Warn them and continue
 					msg := ""
-					path = strings.Replace(path, config.GetPathToIndex(opts.Globals.Chain), "$indexPath", 1)
+					path = strings.Replace(path, config.GetPathToIndex(chain), "$indexPath", 1)
 					if been_here < 3 {
 						msg = fmt.Sprintf("index file %s does not exist. Run 'chifra init --all' to create it.", path)
 					} else if been_here == 3 {
@@ -87,8 +88,8 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 			}
 		}
 
-		walker := index.NewCacheWalker(
-			opts.Globals.Chain,
+		walker := walk.NewCacheWalker(
+			chain,
 			opts.Globals.TestMode,
 			10, /* maxTests */
 			showAddresses,

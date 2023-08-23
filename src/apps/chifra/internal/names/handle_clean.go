@@ -1,47 +1,54 @@
-// New tests -- chifra names --autoname (address in the environment)
-// New tests -- chifra names --autoname <address>
 package namesPkg
+
+// TODO: New tests -- chifra names --autoname (address in the environment)
+// TODO: New tests -- chifra names --autoname <address>
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"math"
 	"strings"
-	"sync"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/contract"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/token"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *NamesOptions) HandleClean() error {
+	chain := opts.Globals.Chain
+
 	label := "custom"
 	db := names.DatabaseCustom
 	if opts.Regular {
 		label = "regular"
 		db = names.DatabaseRegular
 	}
-	logger.Info("Processing", label, "names file", "("+names.GetDatabasePath(opts.Globals.Chain, db)+")")
+	sourcePath := names.GetDatabasePath(chain, db)
+	logger.Info("Processing", label, "names file", "("+sourcePath+")")
+	destinationLabel := sourcePath
+	if opts.DryRun {
+		destinationLabel = "standard output"
+	}
+	logger.Info("Writing results to", destinationLabel)
 
 	var message string
-	err := opts.cleanNames()
+	modifiedCount, err := opts.cleanNames()
 	if err != nil {
 		message = fmt.Sprintf("The %s names database was not cleaned", label)
 		logger.Warn(message)
 	} else {
-		message = fmt.Sprintf("The %s names database was cleaned", label)
+		message = fmt.Sprintf("The %s names database was cleaned. %d name(s) has been modified", label, modifiedCount)
 		logger.Info(message)
 	}
 
 	if opts.Globals.IsApiMode() {
-		output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		_ = output.StreamMany(context.Background(), func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 			modelChan <- &types.SimpleMessage{
 				Msg: message,
 			}
@@ -50,39 +57,51 @@ func (opts *NamesOptions) HandleClean() error {
 	return err
 }
 
-func (opts *NamesOptions) cleanNames() error {
+func (opts *NamesOptions) cleanNames() (int, error) {
+	chain := opts.Globals.Chain
+
 	parts := names.Custom
 	if opts.Regular {
 		parts = names.Regular
 	}
 
 	// Load databases
-	allNames, err := names.LoadNamesMap(opts.Globals.Chain, parts, []string{})
+	allNames, err := names.LoadNamesMap(chain, parts, []string{})
 	if err != nil {
-		return err
+		return 0, err
 	}
-	prefundMap, err := preparePrefunds(opts.Globals.Chain)
+	prefundMap, err := preparePrefunds(chain)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	// Prepare progress reporting. We will report percentage.
 	total := len(allNames)
 	var done atomic.Int32
-	progressChan := make(chan int)
+	modifiedCount := 0
+	type Progress struct {
+		ProgressDelta int32
+		Modified      bool
+	}
+	progressChan := make(chan Progress)
 	defer close(progressChan)
 	// Listen on a channel and whenever it updates, call `reportProgress`
 	go func() {
 		for progress := range progressChan {
-			doneNow := done.Add(int32(progress))
-			reportProgress(doneNow, total)
+			doneNow := done.Add(progress.ProgressDelta)
+			if progress.Modified {
+				modifiedCount += int(progress.ProgressDelta)
+			}
+			logger.PctProgress(doneNow, total, 10)
 		}
 	}()
 
-	// If nothing gets modified we won't bother with saving the files
-	var anyNameModified bool
-	// We'll use once to set `anyNameModified` from goroutines
-	var onceMod sync.Once
+	defer func() {
+		// Clean line after progress report.
+		if done.Load() > 0 {
+			logger.CleanLine()
+		}
+	}()
 
 	// For --dry_run, we don't want to write to the real database
 	var overrideDatabase names.Database
@@ -92,9 +111,9 @@ func (opts *NamesOptions) cleanNames() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	errorChannel := make(chan error)
-	go utils.IterateOverMap(ctx, errorChannel, allNames, func(address base.Address, name types.SimpleName) error {
-		modified, err := cleanName(opts.Globals.Chain, &name)
+	errorChan := make(chan error)
+	go utils.IterateOverMap(ctx, errorChan, allNames, func(address base.Address, name types.SimpleName) error {
+		modified, err := cleanName(chain, &name)
 		if err != nil {
 			return wrapErrorWithAddr(&address, err)
 		}
@@ -103,16 +122,16 @@ func (opts *NamesOptions) cleanNames() error {
 			modified = true
 		}
 
-		progressChan <- 1
+		progressChan <- Progress{
+			ProgressDelta: 1,
+			Modified:      modified,
+		}
 
 		if !modified {
 			return nil
 		}
 
-		// The name has been modified, so set the flag and...
-		onceMod.Do(func() { anyNameModified = true })
-
-		// ...update names in-memory cache
+		// update names in-memory cache
 		if opts.Regular {
 			if err = names.UpdateRegularName(&name); err != nil {
 				return wrapErrorWithAddr(&address, err)
@@ -125,35 +144,23 @@ func (opts *NamesOptions) cleanNames() error {
 		return nil
 	})
 
-	// Block until we get an error from any of the iterations or `IterateOverMap` finishes
-	if stepErr := <-errorChannel; stepErr != nil {
+	// Block until we get an error from any of the iterations or the iteration finishes
+	if stepErr := <-errorChan; stepErr != nil {
 		cancel()
-		return stepErr
+		return 0, stepErr
 	}
 
 	// If nothing has been changed, we can exit here
-	if !anyNameModified {
-		return nil
+	if modifiedCount == 0 {
+		return 0, nil
 	}
 
 	// Write to disk
 	if opts.Regular {
-		return names.WriteRegularNames(opts.Globals.Chain, overrideDatabase)
+		return modifiedCount, names.WriteRegularNames(chain, overrideDatabase)
 	}
 
-	return names.WriteCustomNames(opts.Globals.Chain, overrideDatabase)
-}
-
-func reportProgress(done int32, total int) {
-	if done%10 != 0 {
-		return
-	}
-
-	percentage := math.Round(float64(done) / float64(total) * 100)
-	logger.Progress(
-		true,
-		fmt.Sprintf("Cleaning: %.f%% (%d items, %d total)", percentage, done, total),
-	)
+	return modifiedCount, names.WriteCustomNames(chain, overrideDatabase)
 }
 
 // wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles
@@ -179,25 +186,25 @@ func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
 }
 
 func cleanName(chain string, name *types.SimpleName) (modified bool, err error) {
-	isContract, err := contract.IsContractAt(chain, name.Address, nil)
-	if err != nil {
+	conn := rpc.TempConnection(chain)
+	if err = conn.IsContractAt(name.Address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
 		return
 	}
+
+	isContract := !errors.Is(err, rpc.ErrNotAContract)
 	wasContract := name.IsContract && !isContract
 	modified = cleanCommon(name)
 
 	if !isContract {
+		err = nil // not an error to not be a contract
 		if mod := cleanNonContract(name, wasContract); mod {
 			modified = true
 		}
 		return
 	}
 
-	tokenState, err := token.GetState(chain, name.Address, "latest")
-	if _, ok := err.(token.ErrNodeConnection); ok {
-		return
-	}
-	// It's not a token
+	// If this address is not a token, we're done
+	tokenState, err := conn.GetTokenState(name.Address, "latest")
 	if err != nil {
 		err = nil
 	}
@@ -231,7 +238,7 @@ func cleanCommon(name *types.SimpleName) (modified bool) {
 	}
 
 	if len(name.Petname) == 0 {
-		name.Petname = names.AddrToPetname(name.Address.Hex(), "-")
+		name.Petname = base.AddrToPetname(name.Address.Hex(), "-")
 		modified = true
 	}
 	return
@@ -246,7 +253,7 @@ func removeDoubleSpaces(str string) (string, bool) {
 	return result, true
 }
 
-func cleanContract(token *token.Token, address base.Address, name *types.SimpleName) (modified bool, err error) {
+func cleanContract(token *types.SimpleToken, address base.Address, name *types.SimpleName) (modified bool, err error) {
 	if !name.IsContract {
 		name.IsContract = true
 		modified = true
@@ -291,8 +298,8 @@ func cleanContract(token *token.Token, address base.Address, name *types.SimpleN
 	return
 }
 
-func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
-	if !name.IsErc20 && token.IsErc20() {
+func cleanToken(name *types.SimpleName, token *types.SimpleToken) (modified bool) {
+	if !name.IsErc20 && token.TokenType.IsErc20() {
 		name.IsErc20 = true
 		modified = true
 	}
@@ -303,7 +310,7 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.IsErc20() && (name.Tags == "" ||
+	if token.TokenType.IsErc20() && (name.Tags == "" ||
 		strings.Contains(name.Tags, "token") ||
 		strings.Contains(name.Tags, "30-contracts") ||
 		strings.Contains(name.Tags, "55-defi") ||
@@ -359,17 +366,17 @@ func cleanToken(name *types.SimpleName, token *token.Token) (modified bool) {
 		modified = true
 	}
 
-	if token.IsErc721() && !name.IsErc721 {
+	if token.TokenType.IsErc721() && !name.IsErc721 {
 		name.IsErc721 = true
 		modified = true
 	}
 
-	if !token.IsErc721() && name.IsErc721 {
+	if !token.TokenType.IsErc721() && name.IsErc721 {
 		name.IsErc721 = false
 		modified = true
 	}
 
-	if token.IsErc721() && name.IsErc721 && name.Tags == "" {
+	if token.TokenType.IsErc721() && name.IsErc721 && name.Tags == "" {
 		name.Tags = "50-Tokens:ERC721"
 		modified = true
 	}
@@ -424,73 +431,73 @@ func cleanNonContract(name *types.SimpleName, wasContract bool) (modified bool) 
 
 // static const string_q erc721QueryBytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
 // inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t latest) {
-//     string_q val = getTokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes);
+//     string_q val = get TokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes);
 //     return val == "T" || val == "true";
 // }
 
-//     bool isAirdrop = containsI(account.name, "airdrop");
-//     if (account.tags == "60-Airdrops")
-//         account.tags = "";
+//     bool isAirdrop = containsI(ac count.name, "airdrop");
+//     if (ac count.tags == "60-Airdrops")
+//         ac count.tags = "";
 
 //     if (!isContract) {
-//         bool isEmpty = account.tags.empty();
-//         bool isContract = contains(account.tags, "Contracts");
-//         bool isToken = contains(account.tags, "Tokens");
-//         account.tags = !isEmpty && !isContract && !isToken ? account.tags : "90-Individuals:Other";
+//         bool isEmpty = ac count.tags.empty();
+//         bool isContract = contains(ac count.tags, "Contracts");
+//         bool isToken = contains(ac count.tags, "Tokens");
+//         ac count.tags = !isEmpty && !isContract && !isToken ? ac count.tags : "90-Individuals:Other";
 //         if (wasContract) {
 //             // This used to be a contract and now is not, so it must be a self destruct
-//             account.isContract = true;
-//             account.tags = "37-SelfDestructed";
+//             ac count.isContract = true;
+//             ac count.tags = "37-SelfDestructed";
 //         }
 
 //     } else {
 //         // This is a contract...
-//         account.isContract = true;
+//         ac count.isContract = true;
 
-//         string_q name = getTokenState(account.address, "name", opts->abi_spec, latestBlock);
-//         string_q symbol = getTokenState(account.address, "symbol", opts->abi_spec, latestBlock);
-//         uint64_t decimals = str_2_Uint(getTokenState(account.address, "decimals", opts->abi_spec, latestBlock));
+//         string_q name = getToken State(ac count.address, "name", opts->abi_spec, latestBlock);
+//         string_q symbol = getToken State(ac count.address, "symbol", opts->abi_spec, latestBlock);
+//         uint64_t decimals = str_2_Uint(getToken State(ac count.address, "decimals", opts->abi_spec, latestBlock));
 //         if (!name.empty() || !symbol.empty() || decimals > 0) {
-//             account.isErc20 = true;
-//             account.source =
-//                 (account.source.empty() || account.source == "TrueBlocks.io" || account.source == "EtherScan.io")
+//             ac count.isErc20 = true;
+//             ac count.source =
+//                 (ac count.source.empty() || ac count.source == "TrueBlocks.io" || ac count.source == "EtherScan.io")
 //                     ? "On chain"
-//                     : account.source;
+//                     : ac count.source;
 //             // Use the values from on-chain if we can...
-//             account.name = (!name.empty() ? name : account.name);
-//             account.symbol = (!symbol.empty() ? symbol : account.symbol);
-//             account.decimals = decimals ? decimals : (account.decimals ? account.decimals : 18);
-//             account.isErc721 = isErc721(account.address, opts->abi_spec, latestBlock);
-//             if (account.isErc721) {
-//                 account.tags = "50-Tokens:ERC721";
+//             ac count.name = (!name.empty() ? name : ac count.name);
+//             ac count.symbol = (!symbol.empty() ? symbol : ac count.symbol);
+//             ac count.decimals = decimals ? decimals : (ac count.decimals ? ac count.decimals : 18);
+//             ac count.isErc721 = isErc721(ac count.address, opts->abi_spec, latestBlock);
+//             if (ac count.isErc721) {
+//                 ac count.tags = "50-Tokens:ERC721";
 
 //             } else {
 //                 // This is an ERC20, so if we've not tagged it specifically, make it thus
-//                 if (account.tags.empty() || containsI(account.tags, "token") ||
-//                     containsI(account.tags, "30-contracts") || containsI(account.tags, "55-defi") || isAirdrop) {
-//                     account.tags = "50-Tokens:ERC20";
+//                 if (ac count.tags.empty() || containsI(ac count.tags, "token") ||
+//                     containsI(ac count.tags, "30-contracts") || containsI(ac count.tags, "55-defi") || isAirdrop) {
+//                     ac count.tags = "50-Tokens:ERC20";
 //                 }
 //             }
 
 //         } else {
-//             account.isErc20 = false;
-//             account.isErc721 = false;
+//             ac count.isErc20 = false;
+//             ac count.isErc721 = false;
 //         }
-//         if (account.tags.empty())
-//             account.tags = "30-Contracts";
+//         if (ac count.tags.empty())
+//             ac count.tags = "30-Contracts";
 //     }
 
-//     if (isAirdrop && !containsI(account.name, "Airdrop")) {
-//         replaceAll(account.name, " airdrop", "");
-//         replaceAll(account.name, " Airdrop", "");
-//         account.name = account.name + " Airdrop";
+//     if (isAirdrop && !containsI(ac count.name, "Airdrop")) {
+//         replaceAll(ac count.name, " airdrop", "");
+//         replaceAll(ac count.name, " Airdrop", "");
+//         ac count.name = ac count.name + " Airdrop";
 //     }
 
 //     // Clean up name and symbol
-//     account.name = trim(substitute(account.name, "  ", " "));
-//     account.symbol = trim(substitute(account.symbol, "  ", " "));
+//     ac count.name = trim(substitute(ac count.name, "  ", " "));
+//     ac count.symbol = trim(substitute(ac count.symbol, "  ", " "));
 
-//     return !account.name.empty();
+//     return !ac count.name.empty();
 // }
 
 // 1) There are five files:

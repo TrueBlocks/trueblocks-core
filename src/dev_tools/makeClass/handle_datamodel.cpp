@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "utillib.h"
 #include "options.h"
 
 extern const char* STR_YAML_TAIL;
@@ -47,6 +47,9 @@ bool COptions::handle_datamodel(void) {
 
     bool badStuff = false;
     for (auto model : dataModels) {
+        if (model.doc_route == "no_doc") {
+            continue;
+        }
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
         string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
         if (!fileExists(groupFn)) {

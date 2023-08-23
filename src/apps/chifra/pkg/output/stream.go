@@ -14,14 +14,12 @@ import (
 )
 
 // OutputOptions allow more granular configuration of output details
-// TODO (dawid): This used to be "type OutputOptions = struct" (the '=' sign). Was that a typo or purposful? I couldn't embed it in the GlobalOptions data structure, so I removed the '='
+// TODO: This used to be "type OutputOptions = struct" (the '=' sign). Was that a typo or purposful? I couldn't embed it in the GlobalOptions data structure, so I removed the '='
 type OutputOptions struct {
 	// If set, raw data from the RPC will be printed instead of the model
 	ShowRaw bool
 	// If set, hidden fields will be printed as well (depends on the format)
 	Verbose bool
-	// If Verbose is true, this is the level of detail (verbose alone implies LogLevel=1)
-	LogLevel uint64
 	// If set, the first line of "txt" and "csv" output will NOT (the keys) will squelched
 	NoHeader bool
 	// The format in which to print the output
@@ -85,9 +83,9 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	outputWriter := csv.NewWriter(w)
 	outputWriter.Comma = rune(separator)
 	if !options.NoHeader { // notice double negative
-		outputWriter.Write(model.Order)
+		_ = outputWriter.Write(model.Order)
 	}
-	outputWriter.Write(strs)
+	_ = outputWriter.Write(strs)
 	// This Flushes for each printed item, but in the exchange the user gets
 	// the data printed as it comes
 	outputWriter.Flush()
@@ -100,8 +98,8 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 	return nil
 }
 
-// StreamRaw outputs raw `Raw` to `w`
-func StreamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
+// streamRaw outputs raw `Raw` to `w`
+func streamRaw[Raw types.RawData](w io.Writer, raw *Raw) (err error) {
 	jw, ok := w.(*JsonWriter)
 	if !ok {
 		// This should never happen
@@ -165,7 +163,7 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			// If the output is JSON and we are printing another item, put `,` in front of it
 			var err error
 			if options.ShowRaw {
-				err = StreamRaw(options.Writer, model.Raw())
+				err = streamRaw(options.Writer, model.Raw())
 			} else {
 				modelValue := model.Model(options.Verbose, options.Format, options.Extra)
 				if customFormat {

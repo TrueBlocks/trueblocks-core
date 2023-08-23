@@ -9,38 +9,39 @@ package blocksPkg
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // BlocksOptions provides all command options for the chifra blocks command.
 type BlocksOptions struct {
-	Blocks     []string                 `json:"blocks,omitempty"`     // A space-separated list of one or more block identifiers
-	BlockIds   []identifiers.Identifier `json:"blockIds,omitempty"`   // Block identifiers
-	Hashes     bool                     `json:"hashes,omitempty"`     // Display only transaction hashes, default is to display full transaction detail
-	Uncles     bool                     `json:"uncles,omitempty"`     // Display uncle blocks (if any) instead of the requested block
-	Traces     bool                     `json:"traces,omitempty"`     // Export the traces from the block as opposed to the block data
-	Apps       bool                     `json:"apps,omitempty"`       // Display a list of uniq address appearances in the block
-	Uniq       bool                     `json:"uniq,omitempty"`       // Display a list of uniq address appearances per transaction
-	Flow       string                   `json:"flow,omitempty"`       // For the uniq and apps options only, export only from or to (including trace from or to)
-	Logs       bool                     `json:"logs,omitempty"`       // Display only the logs found in the block(s)
-	Emitter    []string                 `json:"emitter,omitempty"`    // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
-	Topic      []string                 `json:"topic,omitempty"`      // For the --logs option only, filter logs to show only those with this topic(s)
-	Articulate bool                     `json:"articulate,omitempty"` // For the --logs option only, articulate the retrieved data if ABIs can be found
-	BigRange   uint64                   `json:"bigRange,omitempty"`   // For the --logs option only, allow for block ranges larger than 500
-	Count      bool                     `json:"count,omitempty"`      // Display the number of the lists of appearances for --addrs or --uniq
-	Cache      bool                     `json:"cache,omitempty"`      // Force a write of the block to the cache
-	Decache    bool                     `json:"decache,omitempty"`    // Removes a block and any transactions or traces in the block from the cache
-	List       uint64                   `json:"list,omitempty"`       // Summary list of blocks running backwards from latest block minus num
-	ListCount  uint64                   `json:"listCount,omitempty"`  // The number of blocks to report for --list option
-	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
-	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
+	Blocks      []string                 `json:"blocks,omitempty"`      // A space-separated list of one or more block identifiers
+	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
+	Hashes      bool                     `json:"hashes,omitempty"`      // Display only transaction hashes, default is to display full transaction detail
+	Uncles      bool                     `json:"uncles,omitempty"`      // Display uncle blocks (if any) instead of the requested block
+	Traces      bool                     `json:"traces,omitempty"`      // Export the traces from the block as opposed to the block data
+	Uniq        bool                     `json:"uniq,omitempty"`        // Display a list of uniq address appearances per transaction
+	Flow        string                   `json:"flow,omitempty"`        // For the --uniq option only, export only from or to (including trace from or to)
+	Logs        bool                     `json:"logs,omitempty"`        // Display only the logs found in the block(s)
+	Emitter     []string                 `json:"emitter,omitempty"`     // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
+	Topic       []string                 `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
+	Articulate  bool                     `json:"articulate,omitempty"`  // For the --logs option only, articulate the retrieved data if ABIs can be found
+	BigRange    uint64                   `json:"bigRange,omitempty"`    // For the --logs option only, allow for block ranges larger than 500
+	Count       bool                     `json:"count,omitempty"`       // Display the number of the lists of appearances for --addrs or --uniq
+	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block's transactions to the cache (slow)
+	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block's traces to the cache (slower)
+	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
+	ListCount   uint64                   `json:"listCount,omitempty"`   // The number of blocks to report for --list option
+	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
+	Conn        *rpc.Connection          `json:"conn,omitempty"`        // The connection to the RPC server
+	BadFlag     error                    `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -55,7 +56,6 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
 	logger.TestLog(opts.Uncles, "Uncles: ", opts.Uncles)
 	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
-	logger.TestLog(opts.Apps, "Apps: ", opts.Apps)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
@@ -64,10 +64,11 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.BigRange != 500, "BigRange: ", opts.BigRange)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
-	logger.TestLog(opts.Decache, "Decache: ", opts.Decache)
+	logger.TestLog(opts.CacheTxs, "CacheTxs: ", opts.CacheTxs)
+	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
@@ -75,63 +76,6 @@ func (opts *BlocksOptions) testLog() {
 func (opts *BlocksOptions) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
-}
-
-// getEnvStr allows for custom environment strings when calling to the system (helps debugging).
-func (opts *BlocksOptions) getEnvStr() []string {
-	envStr := []string{}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	return envStr
-}
-
-// toCmdLine converts the option to a command line for calling out to the system.
-func (opts *BlocksOptions) toCmdLine() string {
-	options := ""
-	if opts.Hashes {
-		options += " --hashes"
-	}
-	if opts.Uncles {
-		options += " --uncles"
-	}
-	if opts.Traces {
-		options += " --traces"
-	}
-	if opts.Apps {
-		options += " --apps"
-	}
-	if opts.Uniq {
-		options += " --uniq"
-	}
-	if len(opts.Flow) > 0 {
-		options += " --flow " + opts.Flow
-	}
-	if opts.Logs {
-		options += " --logs"
-	}
-	for _, emitter := range opts.Emitter {
-		options += " --emitter " + emitter
-	}
-	for _, topic := range opts.Topic {
-		options += " --topic " + topic
-	}
-	if opts.Articulate {
-		options += " --articulate"
-	}
-	if opts.BigRange != 500 {
-		options += (" --big_range " + fmt.Sprintf("%d", opts.BigRange))
-	}
-	if opts.Count {
-		options += " --count"
-	}
-	if opts.Cache {
-		options += " --cache"
-	}
-	options += " " + strings.Join(opts.Blocks, " ")
-	// EXISTING_CODE
-	// EXISTING_CODE
-	options += fmt.Sprintf("%s", "") // silence compiler warning for auto gen
-	return options
 }
 
 // blocksFinishParseApi finishes the parsing for server invocations. Returns a new BlocksOptions.
@@ -154,8 +98,6 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.Uncles = true
 		case "traces":
 			opts.Traces = true
-		case "apps":
-			opts.Apps = true
 		case "uniq":
 			opts.Uniq = true
 		case "flow":
@@ -178,42 +120,59 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			opts.BigRange = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
-		case "cache":
-			opts.Cache = true
-		case "decache":
-			opts.Decache = true
+		case "cacheTxs":
+			opts.CacheTxs = true
+		case "cacheTraces":
+			opts.CacheTraces = true
 		case "list":
 			opts.List = globals.ToUint64(value[0])
 		case "listCount":
 			opts.ListCount = globals.ToUint64(value[0])
 		default:
-			if !globals.IsGlobalOption(key) {
+			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
-				return opts
 			}
 		}
 	}
-	opts.Globals = *globals.GlobalsFinishParseApi(w, r)
+	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 
 	return opts
 }
 
 // blocksFinishParse finishes the parsing for command line invocations. Returns a new BlocksOptions.
 func blocksFinishParse(args []string) *BlocksOptions {
-	opts := GetOptions()
-	opts.Globals.FinishParse(args)
+	// remove duplicates from args if any (not needed in api mode because the server does it).
+	dedup := map[string]int{}
+	if len(args) > 0 {
+		tmp := []string{}
+		for _, arg := range args {
+			if value := dedup[arg]; value == 0 {
+				tmp = append(tmp, arg)
+			}
+			dedup[arg]++
+		}
+		args = tmp
+	}
+
 	defFmt := "txt"
+	opts := GetOptions()
+	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+
 	// EXISTING_CODE
+	opts.Blocks = args
 	if !opts.Uniq && opts.List == 0 {
 		defFmt = "json"
 	}
-	opts.Blocks = args
 	// EXISTING_CODE
+	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
+
 	return opts
 }
 
@@ -229,4 +188,25 @@ func ResetOptions() {
 	defaultBlocksOptions = BlocksOptions{}
 	globals.SetDefaults(&defaultBlocksOptions.Globals)
 	defaultBlocksOptions.Globals.Writer = w
+	capabilities := caps.Default // Additional global caps for chifra blocks
+	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
+	defaultBlocksOptions.Globals.Caps = capabilities
 }
+
+func (opts *BlocksOptions) getCaches() (m map[string]bool) {
+	// EXISTING_CODE
+	m = map[string]bool{
+		"blocks":       !opts.Uncles,
+		"transactions": opts.CacheTxs || opts.Uniq,
+		"traces":       opts.CacheTraces || opts.Uniq,
+		"logs":         opts.Logs,
+	}
+	// EXISTING_CODE
+	return
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

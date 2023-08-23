@@ -6,9 +6,10 @@ package explorePkg
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum"
 )
@@ -33,10 +34,16 @@ type ExploreUrl struct {
 var urls []ExploreUrl
 
 func (opts *ExploreOptions) validateExplore() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
+	}
+
+	if opts.Globals.IsApiMode() {
+		return validate.Usage("The {0} option is not available{1}.", "explore", " in api mode")
 	}
 
 	if opts.Google && opts.Local {
@@ -46,7 +53,7 @@ func (opts *ExploreOptions) validateExplore() error {
 	for _, arg := range opts.Terms {
 		arg = strings.ToLower(arg)
 
-		if validate.IsValidAddress(arg) {
+		if base.IsValidAddress(arg) {
 			if strings.Contains(arg, ".eth") {
 				urls = append(urls, ExploreUrl{arg, ExploreEnsName})
 			} else {
@@ -61,9 +68,9 @@ func (opts *ExploreOptions) validateExplore() error {
 			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
 		}
 
-		valid, _ := validate.IsValidTransId(opts.Globals.Chain, []string{arg}, validate.ValidTransId)
+		valid, _ := validate.IsValidTransId(chain, []string{arg}, validate.ValidTransId)
 		if valid {
-			txHash, err := rpcClient.Id_2_TxHash(opts.Globals.Chain, arg, validate.IsBlockHash)
+			txHash, err := opts.idToTxHash(chain, arg, validate.IsBlockHash)
 			if err == nil {
 				urls = append(urls, ExploreUrl{txHash, ExploreTx})
 				continue
@@ -71,11 +78,11 @@ func (opts *ExploreOptions) validateExplore() error {
 			// an error here is okay since we can't distinquish between tx hashes and block hashes...
 		}
 
-		valid, _ = validate.IsValidBlockId(opts.Globals.Chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)
+		valid, _ = validate.IsValidBlockId(chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)
 		if valid {
-			blockHash, err := rpcClient.Id_2_BlockHash(opts.Globals.Chain, arg, validate.IsBlockHash)
+			blockHash, err := opts.idToBlockHash(chain, arg, validate.IsBlockHash)
 			if err == nil {
-				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
+				urls = append(urls, ExploreUrl{blockHash.Hex(), ExploreBlock})
 				continue
 			}
 			// An error here is not okay because we have a valid hash but it's not a valid on-chain
@@ -117,4 +124,54 @@ func (t ExploreType) String() string {
 	default:
 		return fmt.Sprintf("%d", t)
 	}
+}
+
+func (opts *ExploreOptions) idToBlockHash(chain, arg string, isBlockHash func(arg string) bool) (base.Hash, error) {
+	if isBlockHash(arg) {
+		return opts.Conn.GetBlockHashByHash(arg)
+	}
+
+	blockNum, err := strconv.ParseUint(arg, 10, 64)
+	if err != nil {
+		return base.Hash{}, nil
+	}
+
+	blkHash, err := opts.Conn.GetBlockHashByNumber(blockNum)
+	return blkHash, err
+}
+
+// idToTxHash takes a valid identifier (txHash/blockHash, blockHash.txId, blockNumber.txId)
+// and returns the transaction hash represented by that identifier. (If it's a valid transaction.
+// It may not be because transaction hashes and block hashes are both 32-byte hex)
+func (opts *ExploreOptions) idToTxHash(chain, arg string, isBlockHash func(arg string) bool) (string, error) {
+	// simple case first
+	if !strings.Contains(arg, ".") {
+		// We know it's a hash, but we want to know if it's a legitimate tx on chain
+		return opts.Conn.GetTransactionHashByHash(arg)
+	}
+
+	parts := strings.Split(arg, ".")
+	if len(parts) != 2 {
+		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
+	}
+
+	if isBlockHash(parts[0]) {
+		txId, err := strconv.ParseUint(parts[1], 10, 64)
+		if err != nil {
+			return "", nil
+		}
+		return opts.Conn.GetTransactionHashByHashAndID(parts[0], txId)
+	}
+
+	blockNum, err := strconv.ParseUint(parts[0], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+	txId, err := strconv.ParseUint(parts[1], 10, 64)
+	if err != nil {
+		return "", nil
+	}
+
+	hash, err := opts.Conn.GetTransactionHashByNumberAndID(blockNum, txId)
+	return hash.Hex(), err
 }

@@ -2,9 +2,8 @@ chifra slurp  wolfofethereum.eth --types int 12524380-13675400 --fmt json
 TEST[DATE|TIME] Addrs:  [0x0559a413a3ab19508a144aeebc474eb14c5e76ce]
 TEST[DATE|TIME] Blocks:  [12524380-13675400]
 TEST[DATE|TIME] Types:  [int]
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] Processing [0x0559a413a3ab19508a144aeebc474eb14c5e76ce] --types: [int] [12524380-13675400]
-INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0x0559a413a3ab19508a144aeebc474eb14c5e76ce&page=1&offset=100
 {
   "data": [
     {
@@ -52,7 +51,7 @@ INFO[DATE|TIME] Processing https://api.etherscan.io/api?module=account&sort=asc&
     {
       "blockNumber": 13504782,
       "date": "2021-10-28 08:59:56 UTC",
-      "ether": "0.000000043979427230",
+      "ether": "0.00000004397942723",
       "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
       "gas": 39091,
       "gasCost": 0,

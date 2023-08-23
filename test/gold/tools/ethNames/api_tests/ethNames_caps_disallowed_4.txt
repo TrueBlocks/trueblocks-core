@@ -1,0 +1,6 @@
+names?terms=find_nothing&wei
+{
+  "errors": [
+    "Invalid key (wei) in names route."
+  ]
+}
