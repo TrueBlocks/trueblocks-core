@@ -47,12 +47,15 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11085,apps,Accounts,monitors,acctExport,clean,C,,false,false,true,true,gocmd,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
 11093,apps,Accounts,monitors,acctExport,list,l,,false,false,true,true,gocmd,switch,<boolean>,list monitors in the cache (--verbose for more detail)
 11294,apps,Accounts,monitors,acctExport,watch,w,,false,false,true,true,gocmd,switch,<boolean>,continually scan for new blocks and extract data as per the command file
-11296,apps,Accounts,monitors,acctExport,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between monitor passes
+11295,apps,Accounts,monitors,acctExport,watchlist,a,,false,false,true,true,gocmd,flag,<string>,available with --watch option only&#44; a file containing the addresses to watch
+11296,apps,Accounts,monitors,acctExport,commands,c,,false,false,true,true,gocmd,flag,<string>,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
+11297,apps,Accounts,monitors,acctExport,sleep,s,14,false,false,true,true,gocmd,flag,<double>,available with --watch option only&#44; the number of seconds to sleep between runs
 11094,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
 11095,apps,Accounts,monitors,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
-11096,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
-11097,apps,Accounts,monitors,acctExport,n3,,,false,false,false,false,--,note,,The --watch option requires the --file option which specifies the command file to apply.
-11098,apps,Accounts,monitors,acctExport,n4,,,false,false,false,false,--,note,,The --watch option looks for a local file called address.csv (.txt). If not found&#44; all existing monitors will be watched.
+11096,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all existing monitors are be cleaned.
+11096,apps,Accounts,monitors,acctExport,n3,,,false,false,false,false,--,note,,The --watch option requires two additional parameters to be specified: `--watchlist` and `--commands`.
+11097,apps,Accounts,monitors,acctExport,n4,,,false,false,false,false,--,note,,Addresses provided on the command line are ignored in `--watch` mode.
+11098,apps,Accounts,monitors,acctExport,n4,,,false,false,false,false,--,note,,Providing the value `existing` to the `--watchlist` monitors all existing monitor files (see --list).
 
 12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to list
 12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor

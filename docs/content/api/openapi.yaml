@@ -594,8 +594,27 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: watchlist
+          description: >
+            available with --watch option only, a file containing the addresses to watch
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: commands
+          description: >
+            available with --watch option only, the file containing the list of commands to apply to each watched address
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: sleep
-          description: seconds to sleep between monitor passes
+          description: >
+            available with --watch option only, the number of seconds to sleep between runs
           required: false
           style: form
           in: query

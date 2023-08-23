@@ -424,6 +424,9 @@ monitors,clean,cmds
 monitors,clean,python
 monitors,clean,readme
 monitors,clean,typescript
+monitors,commands,api
+monitors,commands,python
+monitors,commands,typescript
 monitors,delete,api
 monitors,delete,python
 monitors,delete,readme
@@ -456,6 +459,9 @@ monitors,watch,cmds
 monitors,watch,python
 monitors,watch,readme
 monitors,watch,typescript
+monitors,watchlist,api
+monitors,watchlist,python
+monitors,watchlist,typescript
 names,addr,api
 names,addr,cmds
 names,addr,python

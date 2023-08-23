@@ -15,6 +15,8 @@ export function getMonitors(
     clean?: boolean,
     list?: boolean,
     watch?: boolean,
+    watchlist?: string,
+    commands?: string,
     sleep?: double,
     chain: string,
     noHeader?: boolean,

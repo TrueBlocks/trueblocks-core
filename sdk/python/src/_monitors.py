@@ -13,6 +13,8 @@ monitorsOpts = {
     "clean": {"hotkey": "-C", "type": "switch"},
     "list": {"hotkey": "-l", "type": "switch"},
     "watch": {"hotkey": "-w", "type": "switch"},
+    "watchlist": {"hotkey": "-a", "type": "flag"},
+    "commands": {"hotkey": "-c", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},
