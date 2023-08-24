@@ -3,10 +3,6 @@ cmake_minimum_required (VERSION 3.5)
 # application project
 project (chifra)
 
-if(PROTOBUF_FOUND)
-  COMPILE_PROTOBUFFERS(chifra_proto chifra.proto)
-endif(PROTOBUF_FOUND)
-
 ADD_GO_INSTALLABLE_PROGRAM(chifra *.go ${BIN_DIR})
 
 # Define the executable to be generated
