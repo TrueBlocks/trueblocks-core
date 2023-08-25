@@ -1,12 +1,6 @@
 <!-- markdownlint-disable MD033 MD036 MD041 -->
 <h1>TrueBlocks SDKs</h1>
 
-![GitHub repo size](https://img.shields.io/github/repo-size/TrueBlocks/trueblocks-sdk)
-[![GitHub contributors](https://img.shields.io/github/contributors/TrueBlocks/trueblocks-sdk)](https://github.com/TrueBlocks/trueblocks-sdk/contributors)
-[![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-sdk?style%3Dsocial)](https://github.com/TrueBlocks/trueblocks-sdk/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-sdk?style=social)](https://github.com/TrueBlocks/trueblocks-sdk/network/members)
-[![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)](https://twitter.com/trueblocks)
-
 **IMPORTANT NOTE**
 
 While we fully intend to support this portion of our repo in the future, we are currently focused on the core TrueBlocks code. We are not currently accepting PR's or issues on this repo. We will be back to this repo soon. Use at your own risk.
@@ -44,16 +38,12 @@ The TrueBlocks [documentation repo](https://github.com/TrueBlocks/trueblocks-doc
 
 ## Contributing
 
-A chart showing the number of stars on our repo over time.
-
-<img width="600px" src="https://starchart.cc/TrueBlocks/trueblocks-sdk.svg">
-
 We love contributors. Please see information about our [work flow](https://github.com/TrueBlocks/trueblocks-core/blob/develop/docs/BRANCHING.md) before proceeding.
 
 1. Fork this repository into your own repo.
 2. Create a branch: `git checkout -b <branch_name>`.
 3. Make changes to your local branch and commit them to your forked repo: `git commit -m '<commit_message>'`
-4. Push back to the original branch: `git push origin TrueBlocks/trueblocks-sdk`
+4. Push back to the original branch: `git push origin TrueBlocks/trueblocks-core`
 5. Create the pull request.
 
 ## Contact
