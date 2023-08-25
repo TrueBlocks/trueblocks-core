@@ -112,7 +112,7 @@ func (c *Command) String() string {
 	return string(b)
 }
 
-const addrsPerBatch = 8
+const perBatch = 8
 
 func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 	theCmds, err := opts.getCommands()
@@ -120,9 +120,25 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 		return false, err
 	}
 
-	batches := batchSlice[monitor.Monitor](monitors, addrsPerBatch)
+	batches := batchSlice[monitor.Monitor](monitors, perBatch)
 	for i := 0; i < len(batches); i++ {
-		addrs, countsBefore := preProcessBatch(batches[i], i, len(monitors))
+		addrs := []base.Address{}
+		countsBefore := []int64{}
+		for _, mon := range batches[i] {
+			addrs = append(addrs, mon.Address)
+			countsBefore = append(countsBefore, mon.Count())
+		}
+
+		fmt.Printf("%s%d-%d of %d:%s chifra export --freshen",
+			colors.BrightBlue,
+			i*perBatch,
+			utils.Min((i+1)*perBatch-1, len(monitors)),
+			len(monitors),
+			colors.Green)
+		for _, addr := range addrs {
+			fmt.Printf(" %s", addr.Hex())
+		}
+		fmt.Println(colors.Off)
 
 		canceled, err := opts.FreshenMonitorsForWatch(addrs)
 		if canceled || err != nil {
@@ -217,32 +233,6 @@ func (opts *MonitorsOptions) getCommands() (ret []Command, err error) {
 		}
 	}
 	return ret, nil
-}
-
-const spaces = "                                                                                 "
-
-func preProcessBatch(batch []monitor.Monitor, i, nMons int) ([]base.Address, []int64) {
-	var addrs []base.Address
-	for j := 0; j < len(batch); j++ {
-		addrs = append(addrs, batch[j].Address)
-	}
-
-	addrList := ""
-	for _, addr := range addrs {
-		addrList += addr.Hex() + " "
-	}
-	addrList = strings.Replace(addrList, "0x", " \\\n\t0x", -1)
-
-	fmt.Println(strings.Repeat(" ", 120), "\r")
-	s := fmt.Sprintf("%s\r%d-%d", colors.BrightBlue+spaces, i*addrsPerBatch, nMons)
-	fmt.Println(s, colors.Green, "chifra export --freshen", addrList, colors.Off)
-
-	countsBefore := []int64{}
-	for j := 0; j < len(batch); j++ {
-		countsBefore = append(countsBefore, (batch)[j].Count())
-	}
-
-	return addrs, countsBefore
 }
 
 func (opts *MonitorsOptions) getOutputFolder(orig string) (string, error) {
