@@ -66,16 +66,26 @@ func (s *SimpleNamedBlock) Model(verbose bool, format string, extraOptions map[s
 		if len(s.Name) > 0 {
 			model["name"] = s.Name
 		}
+		if verbose {
+			if len(s.Component) > 0 {
+				model["component"] = s.Component
+			}
+			if len(s.Description) > 0 {
+				model["description"] = s.Description
+			}
+		}
+
 	} else {
 		model["name"] = s.Name
 		order = append(order, "name")
-	}
 
-	if verbose {
-		model["component"] = s.Component
-		model["description"] = s.Description
-		order = append([]string{"component"}, order...)
-		order = append(order, "description")
+		if verbose {
+			model["component"] = s.Component
+			order = append([]string{"component"}, order...)
+
+			model["description"] = s.Description
+			order = append(order, "description")
+		}
 	}
 
 	// EXISTING_CODE

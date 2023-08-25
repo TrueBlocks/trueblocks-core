@@ -16,9 +16,9 @@ import (
 )
 
 func TestGetValueByName2(t *testing.T) {
-	value, err := FromNameToBn(utils.GetTestChain(), "tangerine whistle")
+	value, err := FromNameToBn(utils.GetTestChain(), "tangerine_whistle")
 	if err != nil {
-		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine", ethereum.NotFound))
+		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine_whistle", ethereum.NotFound))
 	}
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)

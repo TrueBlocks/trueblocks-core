@@ -3,7 +3,9 @@ when?blocks=stateclear&verbose
   "data": [
     {
       "blockNumber": 2717576,
+      "component": "execution",
       "date": "2016-11-29 19:38:29 UTC",
+      "description": "The block of the state clearing soft fork.",
       "name": "stateclear",
       "timestamp": 1480448309
     }

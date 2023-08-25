@@ -43,15 +43,15 @@ func TestGetNameByValue(t *testing.T) {
 	if err != nil {
 		t.Error(fmt.Errorf("block at %s returned an error: %w", "2463000", ethereum.NotFound))
 	}
-	if name != "tangerine whistle" {
+	if name != "tangerine_whistle" {
 		t.Errorf("Wrong name: %s", name)
 	}
 }
 
 func TestGetValueByName(t *testing.T) {
-	value, err := FromNameToBn(utils.GetTestChain(), "tangerine whistle")
+	value, err := FromNameToBn(utils.GetTestChain(), "tangerine_whistle")
 	if err != nil {
-		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine", ethereum.NotFound))
+		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine_whistle", ethereum.NotFound))
 	}
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)
