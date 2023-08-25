@@ -151,49 +151,6 @@ func VerifyMigrations() {
 		logger.Fatal(msg)
 	}
 
-	// If any of the following folders or files exist, the user has not
-	// completed migration 0.25.0. Tell them to do so and quit.
-	// TODO: This can be removed at some point
-	items := []string{
-		"manifest",
-		"mocked",
-		"names",
-		"blockScrape.toml",
-		"ethNames.toml",
-		"ethslurp.toml",
-		"fireStorm.toml",
-		"whenBlock.toml",
-		"ts.bin.gz",
-		"cache/abis/",
-		"cache/blocks/",
-		"cache/monitors/",
-		"cache/names/",
-		"cache/objs/",
-		"cache/recons/",
-		"cache/slurps/",
-		"cache/tmp/",
-		"cache/traces/",
-		"cache/txs/",
-		"unchained/staging/",
-		"unchained/unripe/",
-		"unchained/ripe/",
-		"unchained/finalized/",
-		"unchained/blooms/",
-		"unchained/maps/",
-		"unchained/ts.bin",
-	}
-	for _, item := range items {
-		itemPath := filepath.Join(configFolder + item)
-		if _, err := os.Stat(itemPath); err == nil {
-			msg := strings.Replace(shouldNotExist, "{0}", "{./"+item+"}", -1)
-			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-			msg = strings.Replace(msg, "{1}", "{v0.25.0}", -1)
-			msg = strings.Replace(msg, "{", colors.Green, -1)
-			msg = strings.Replace(msg, "}", colors.Off, -1)
-			logger.Fatal(msg)
-		}
-	}
-
 	// We need to find the chain configuration path
 	chainConfigPath := config.GetPathToChainConfig("")
 	if _, err := os.Stat(chainConfigPath); err != nil {
@@ -204,7 +161,8 @@ func VerifyMigrations() {
 		logger.Fatal(msg)
 	}
 
-	items = []string{
+	// Make sure they've completed migrations prior to v1.0.0
+	items := []string{
 		"blocks",
 		"objs",
 		"recons",
@@ -217,7 +175,7 @@ func VerifyMigrations() {
 		if _, err := os.Stat(itemPath); err == nil {
 			msg := strings.Replace(shouldNotExist, "{0}", "{"+itemPath+"}", -1)
 			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-			msg = strings.Replace(msg, "{1}", "{v0.85.0}", -1)
+			msg = strings.Replace(msg, "{1}", "{v1.0.0}", -1)
 			msg = strings.Replace(msg, "{", colors.Green, -1)
 			msg = strings.Replace(msg, "}", colors.Off, -1)
 			logger.Fatal(msg)

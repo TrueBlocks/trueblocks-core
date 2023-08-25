@@ -86,7 +86,6 @@ One of [ from | to ]`)
 	transactionsCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	transactionsCmd.Flags().MarkDeprecated("trace", "please use --traces instead")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(transactionsCmd)
