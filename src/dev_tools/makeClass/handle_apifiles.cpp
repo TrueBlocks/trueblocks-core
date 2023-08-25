@@ -220,8 +220,7 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
     ostringstream memberStream;
     for (auto member : *(CCommandOptionArray*)cmd.members) {
         bool needsTwoAddrs = containsI(member.description, "two or more addresses");
-        hasDelete |= contains(member.longName, "deleteMe");
-        replace(member.longName, "deleteMe", "delete");
+        hasDelete |= contains(member.longName, "delete");
         if (member.longName.empty() || !member.is_visible_docs)
             continue;
         if (!isCrud(member.longName)) {

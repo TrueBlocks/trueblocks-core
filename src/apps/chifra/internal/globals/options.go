@@ -116,8 +116,6 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	}
 	_ = cmd.Flags().MarkHidden("nocolor")
 
-	_ = cmd.Flags().MarkDeprecated("log_level", "please use the --verbose option instead")
-
 	if opts.Caps.Has(caps.NoHeader) {
 		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
 	}
