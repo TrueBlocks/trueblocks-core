@@ -15,14 +15,21 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_py(void) {
-    CStringArray types, paths;
-    if (!handle_sdk_py_types(types)) {
-        return false;
-    }
+    std::filesystem::path dest{sdkPath};
+    dest = dest / "python";
+    auto configPath = dest / "generator-config.yaml";
+    auto specFilePath = "../docs/content/api/openapi.yaml";
 
-    if (!handle_sdk_py_paths(paths)) {
-        return false;
-    }
+    ostringstream cmd;
+    cmd << "npx"
+        << " @openapitools/openapi-generator-cli"
+        << " generate"
+        << " --config" << configPath
+        << " --input-spec " << specFilePath
+        << " --generator-name python"
+        << " --output " << dest;
+
+    string_q res = doCommand(cmd.str());
 
     return true;
 }
