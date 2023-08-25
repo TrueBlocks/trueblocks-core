@@ -1,4 +1,4 @@
-monitors?watch&commands=../test/gold/apps/acctExports/commands.fil&watchlist=../test/gold/apps/acctExports/watches.txt&runOnce&fmt=json
+monitors?watch&commands=./command.fil&watchlist=./watches.txt&runOnce&fmt=json
 {
   "errors": [
     "The --watch options is not available from the API"
