@@ -16,7 +16,7 @@ import (
 )
 
 func TestGetValueByName2(t *testing.T) {
-	value, err := FromNameToBn(utils.GetTestChain(), "tangerine")
+	value, err := FromNameToBn(utils.GetTestChain(), "tangerine whistle")
 	if err != nil {
 		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine", ethereum.NotFound))
 	}
@@ -38,8 +38,8 @@ func TestGetSpecials2(t *testing.T) {
 		t.Error(err)
 	}
 
-	if len(specials) != 33 {
-		t.Error("Wrong number of special blocks ", len(specials), ". Should have 33.")
+	if len(specials) != 39 {
+		t.Error("Wrong number of special blocks ", len(specials), ". Should have 39.")
 	}
 
 	for _, item := range specials {

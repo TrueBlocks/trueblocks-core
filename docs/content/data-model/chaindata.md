@@ -379,12 +379,13 @@ The following commands produce and manage NamedBlocks:
 
 NamedBlocks consist of the following fields:
 
-| Field       | Description                         | Type      |
-| ----------- | ----------------------------------- | --------- |
-| blockNumber | the number of the block             | blknum    |
-| timestamp   | the Unix timestamp of the block     | timestamp |
-| date        | human readable version of timestamp | datetime  |
-| name        | an optional name for the block      | string    |
+| Field       | Description                          | Type      |
+| ----------- | ------------------------------------ | --------- |
+| blockNumber | the number of the block              | blknum    |
+| timestamp   | the Unix timestamp of the block      | timestamp |
+| date        | human readable version of timestamp  | datetime  |
+| name        | an optional name for the block       | string    |
+| description | an optional description of the block | string    |
 
 ## Timestamp
 

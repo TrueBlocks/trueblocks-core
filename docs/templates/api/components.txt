@@ -943,6 +943,9 @@ components:
           type: string
           example: "byzantium"
           description: "an optional name for the block"
+        description:
+          type: string
+          description: "an optional description of the block"
     timestamp:
       description: "the timestamp, date and difference in timestamp of previous block produced by chifra when"
       type: object

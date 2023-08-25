@@ -18,6 +18,8 @@ import (
 
 type RawNamedBlock struct {
 	BlockNumber string `json:"blockNumber"`
+	Component   string `json:"component"`
+	Description string `json:"description"`
 	Name        string `json:"name"`
 	Timestamp   string `json:"timestamp"`
 	// EXISTING_CODE
@@ -26,6 +28,8 @@ type RawNamedBlock struct {
 
 type SimpleNamedBlock struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
+	Component   string         `json:"component,omitempty"`
+	Description string         `json:"description,omitempty"`
 	Name        string         `json:"name,omitempty"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	raw         *RawNamedBlock `json:"-"`
@@ -66,6 +70,14 @@ func (s *SimpleNamedBlock) Model(verbose bool, format string, extraOptions map[s
 		model["name"] = s.Name
 		order = append(order, "name")
 	}
+
+	if verbose {
+		model["component"] = s.Component
+		model["description"] = s.Description
+		order = append([]string{"component"}, order...)
+		order = append(order, "description")
+	}
+
 	// EXISTING_CODE
 
 	return Model{

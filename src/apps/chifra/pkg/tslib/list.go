@@ -9,11 +9,11 @@ import (
 	"errors"
 	"io"
 	"os"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetSpecials returns a chain-specific list of special block names and numbers
@@ -34,7 +34,8 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 		return
 	}
 	reader := csv.NewReader(file)
-	reader.FieldsPerRecord = 4
+	//	component,block/epoch,name,timestamp,date,description
+	reader.FieldsPerRecord = 6
 
 	for {
 		record, err1 := reader.Read()
@@ -44,16 +45,21 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 		if err1 != nil {
 			return specials, err1
 		}
-		if len(record) == 4 {
-			if bn, err := strconv.ParseUint(record[0], 10, 64); err == nil {
-				if ts, err := strconv.ParseInt(record[2], 10, 64); err == nil {
-					specials = append(specials, types.SimpleNamedBlock{
-						BlockNumber: bn,
-						Name:        record[1],
-						Timestamp:   ts,
-					})
-				}
+		if len(record) == 6 {
+			bn := utils.MustParseUint(record[1])
+			name := record[2]
+			ts := utils.MustParseInt(record[3])
+			if bn == 0 && name != "frontier" {
+				continue
 			}
+			s := types.SimpleNamedBlock{
+				BlockNumber: bn,
+				Name:        name,
+				Timestamp:   ts,
+				Component:   record[0],
+				Description: record[5],
+			}
+			specials = append(specials, s)
 		}
 	}
 
