@@ -16,7 +16,7 @@ import (
 	"time"
 
 	// BEG_ROUTE_PKGS
- 
+
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
@@ -37,6 +37,7 @@ import (
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+
 	// END_ROUTE_PKGS
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/gorilla/mux"
@@ -184,6 +185,7 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
+
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -279,6 +281,7 @@ func NewRouter() *mux.Router {
 	router.
 		Methods("OPTIONS").
 		Handler(OptionsHandler)
+	router.Use(ContentTypeHandler)
 
 	for _, route := range routes {
 		var handler http.Handler
@@ -308,6 +311,26 @@ var OptionsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reques
 func CorsHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		addCorsHeaders(w)
+		next.ServeHTTP(w, r)
+	})
+}
+
+// ContentTypeHandler sets correct Content-Type header on response
+func ContentTypeHandler(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requestedFormat := r.URL.Query().Get("fmt")
+
+		var contentType string
+		switch requestedFormat {
+		case "txt":
+			contentType = "text/plain"
+		case "csv":
+			contentType = "text/csv"
+		default:
+			contentType = "application/json"
+		}
+
+		w.Header().Set("Content-Type", contentType)
 		next.ServeHTTP(w, r)
 	})
 }
