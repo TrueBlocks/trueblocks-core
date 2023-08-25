@@ -587,7 +587,44 @@ paths:
           schema:
             type: boolean
         - name: watch
-          description: continually scan for new blocks and extract data for monitored addresses
+          description: continually scan for new blocks and extract data as per the command file
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: watchlist
+          description: >
+            available with --watch option only, a file containing the addresses to watch
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: commands
+          description: >
+            available with --watch option only, the file containing the list of commands to apply to each watched address
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: batchSize
+          description: >
+            available with --watch option only, the number of monitors to process in each batch
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
+            format: uint64
+        - name: runOnce
+          description: >
+            available with --watch option only, only run the monitor --watch commands once then quit
           required: false
           style: form
           in: query
@@ -595,7 +632,8 @@ paths:
           schema:
             type: boolean
         - name: sleep
-          description: seconds to sleep between monitor passes
+          description: >
+            available with --watch option only, the number of seconds to sleep between runs
           required: false
           style: form
           in: query

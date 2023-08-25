@@ -96,7 +96,7 @@ func (a *Address) Pad32() string {
 // a valid address starting with 0x and ends with the fileType. if the path does
 // not contain an address, an error is returned. If the path does not end with the
 // given fileType, it panics.
-func AddressFromPath(path, fileType string) (string, error) {
+func AddressFromPath(path, fileType string) (Address, error) {
 	_, fileName := filepath.Split(path)
 
 	if !strings.HasSuffix(fileName, fileType) {
@@ -108,11 +108,11 @@ func AddressFromPath(path, fileType string) (string, error) {
 	}
 
 	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {
-		return "", errors.New("path does not appear to contain an address")
+		return HexToAddress("0x0"), errors.New("path does not appear to contain an address")
 	}
 
 	parts := strings.Split(fileName, ".")
-	return strings.ToLower(parts[0]), nil
+	return HexToAddress(parts[0]), nil
 }
 
 // As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.

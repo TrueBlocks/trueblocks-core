@@ -5,12 +5,12 @@
 package monitorsPkg
 
 import (
-	"os"
+	"log"
 	"path/filepath"
-	"strings"
 
-	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -28,36 +28,66 @@ func (opts *MonitorsOptions) validateMonitors() error {
 
 	} else {
 		if opts.Watch {
-			// phonied up just to make sure we have bloom for block zero
-			var expOpts exportPkg.ExportOptions
-			expOpts.Addrs = append(expOpts.Addrs, "0x0000000000000000000000000000000000000001")
-			expOpts.Globals.Chain = chain
-			err := expOpts.Validate()
-			if err != nil {
-				return validate.Usage(err.Error())
-			}
-
-			cmdFile := opts.Globals.File
-			if !file.FileExists(cmdFile) {
-				dir, _ := os.Getwd()
-				cmdFile = filepath.Join(dir, opts.Globals.File)
-			}
-
-			if file.FileExists(cmdFile) {
-				contents := file.AsciiFileToString(cmdFile)
-				cmds := strings.Split(contents, "\n")
-				if len(cmds) == 0 {
-					return validate.Usage("The command file you specified ({0}) was found but contained no commands.", cmdFile)
-				}
-			}
-
 			if opts.Globals.IsApiMode() {
 				return validate.Usage("The {0} options is not available from the API", "--watch")
 			}
 
+			if len(opts.Globals.File) > 0 {
+				return validate.Usage("The {0} option is not allowed with the {1} option. Use {2} instead.", "--file", "--watch", "--commands")
+			}
+
+			if len(opts.Commands) == 0 {
+				return validate.Usage("The {0} option requires {1}.", "--watch", "a --commands file")
+			} else {
+				cmdFile, err := filepath.Abs(opts.Commands)
+				if err != nil || !file.FileExists(cmdFile) {
+					return validate.Usage("The {0} option requires {1} to exist.", "--watch", opts.Commands)
+				}
+				if file.FileSize(cmdFile) == 0 {
+					log.Fatal(validate.Usage("The file you specified ({0}) was found but contained no commands.", cmdFile).Error())
+				}
+			}
+
+			if len(opts.Watchlist) == 0 {
+				return validate.Usage("The {0} option requires {1}.", "--watch", "a --watchlist file")
+			} else {
+				if opts.Watchlist != "existing" {
+					watchList, err := filepath.Abs(opts.Watchlist)
+					if err != nil || !file.FileExists(watchList) {
+						return validate.Usage("The {0} option requires {1} to exist.", "--watch", opts.Watchlist)
+					}
+					if file.FileSize(watchList) == 0 {
+						log.Fatal(validate.Usage("The file you specified ({0}) was found but contained no addresses.", watchList).Error())
+					}
+				}
+			}
+
+			// Note that this does not return if the index is not initialized
+			if err := index.IndexIsInitialized(chain); err != nil {
+				if opts.Globals.IsApiMode() {
+					return err
+				} else {
+					logger.Fatal(err)
+				}
+			}
+
+			if opts.BatchSize < 1 {
+				return validate.Usage("The {0} option must be greater than zero.", "--batch-size")
+			}
+
 		} else {
+			if opts.BatchSize != 8 {
+				return validate.Usage("The {0} option is not available{1}.", "--batch-size", " without --watch")
+			} else {
+				opts.BatchSize = 0
+			}
+
+			if opts.RunOnce {
+				return validate.Usage("The {0} option is not available{1}.", "--run-once", " without --watch")
+			}
+
 			if opts.Sleep != 14 {
-				return validate.Usage("The {0} option is not available{1}.", "--sleep", " in non-watch mode")
+				return validate.Usage("The {0} option is not available{1}.", "--sleep", " without --watch")
 			}
 
 			// We validate some of the simpler curd commands here and the rest in HandleCrudCommands

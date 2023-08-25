@@ -1,8 +1,8 @@
-chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --undelete
-TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
-TEST[DATE|TIME] Undelete:  true
-TEST[DATE|TIME] Format:  txt
-Error: Monitor for 0x001d14804b399c6ef80e64576f657660804fec0b must be deleted before being undeleted.
+chifra monitors  --watch --batch_size 0 --fmt json
+TEST[DATE|TIME] Watch:  true
+TEST[DATE|TIME] BatchSize:  0
+TEST[DATE|TIME] Format:  json
+Error: The --watch option requires a --commands file.
 Usage:
   chifra monitors [flags] <address> [address...]
 

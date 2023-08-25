@@ -38,7 +38,6 @@ import (
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	// END_ROUTE_PKGS
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"

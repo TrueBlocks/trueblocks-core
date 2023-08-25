@@ -246,3 +246,11 @@ func LowerIfHex(addr string) string {
 	}
 	return strings.ToLower(addr)
 }
+
+func StripComments(cmd string) string {
+	cmd = strings.Trim(strings.Replace(cmd, "\t", " ", -1), " \t")
+	if strings.Contains(cmd, "#") {
+		cmd = cmd[:strings.Index(cmd, "#")]
+	}
+	return cmd
+}

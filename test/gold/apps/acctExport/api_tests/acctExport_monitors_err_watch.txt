@@ -1,0 +1,6 @@
+monitors?watch&batchSize=0&fmt=json
+{
+  "errors": [
+    "The --watch options is not available from the API"
+  ]
+}
