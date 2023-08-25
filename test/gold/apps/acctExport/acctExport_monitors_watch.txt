@@ -1,8 +1,10 @@
-chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --undelete
-TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
-TEST[DATE|TIME] Undelete:  true
-TEST[DATE|TIME] Format:  txt
-Error: Monitor for 0x001d14804b399c6ef80e64576f657660804fec0b must be deleted before being undeleted.
+chifra monitors  --watch --commands ../test/gold/apps/acctExport/commands.fil --watchlist ../test/gold/apps/acctExport/watches.txt --run_once --fmt json
+TEST[DATE|TIME] Watch:  true
+TEST[DATE|TIME] Watchlist:  ../test/gold/apps/acctExport/watches.txt
+TEST[DATE|TIME] Commands:  ../test/gold/apps/acctExport/commands.fil
+TEST[DATE|TIME] RunOnce:  true
+TEST[DATE|TIME] Format:  json
+Error: The --watch option requires ../test/gold/apps/acctExports/commands.fil to exist.
 Usage:
   chifra monitors [flags] <address> [address...]
 

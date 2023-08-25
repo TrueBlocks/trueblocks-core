@@ -109,15 +109,13 @@ func (c *Command) String() string {
 	return string(b)
 }
 
-const perBatch = 8
-
 func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 	theCmds, err := opts.getCommands()
 	if err != nil {
 		return false, err
 	}
 
-	batches := batchSlice[monitor.Monitor](monitors, perBatch)
+	batches := batchSlice[monitor.Monitor](monitors, opts.BatchSize)
 	for i := 0; i < len(batches); i++ {
 		addrs := []base.Address{}
 		countsBefore := []int64{}
@@ -126,10 +124,11 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 			countsBefore = append(countsBefore, mon.Count())
 		}
 
+		batchSize := int(opts.BatchSize)
 		fmt.Printf("%s%d-%d of %d:%s chifra export --freshen",
 			colors.BrightBlue,
-			i*perBatch,
-			utils.Min((i+1)*perBatch-1, len(monitors)),
+			i*batchSize,
+			utils.Min(((i+1)*batchSize)-1, len(monitors)),
 			len(monitors),
 			colors.Green)
 		for _, addr := range addrs {
@@ -174,10 +173,10 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 	return false, nil
 }
 
-func batchSlice[T any](slice []T, batchSize int) [][]T {
+func batchSlice[T any](slice []T, batchSize uint64) [][]T {
 	var batches [][]T
-	for i := 0; i < len(slice); i += batchSize {
-		end := i + batchSize
+	for i := 0; i < len(slice); i += int(batchSize) {
+		end := i + int(batchSize)
 		if end > len(slice) {
 			end = len(slice)
 		}

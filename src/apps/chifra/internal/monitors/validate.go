@@ -71,9 +71,23 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				}
 			}
 
+			if opts.BatchSize < 1 {
+				return validate.Usage("The {0} option must be greater than zero.", "--batch-size")
+			}
+
 		} else {
+			if opts.BatchSize != 8 {
+				return validate.Usage("The {0} option is not available{1}.", "--batch-size", " without --watch")
+			} else {
+				opts.BatchSize = 0
+			}
+
+			if opts.RunOnce {
+				return validate.Usage("The {0} option is not available{1}.", "--run-once", " without --watch")
+			}
+
 			if opts.Sleep != 14 {
-				return validate.Usage("The {0} option is not available{1}.", "--sleep", " in non-watch mode")
+				return validate.Usage("The {0} option is not available{1}.", "--sleep", " without --watch")
 			}
 
 			// We validate some of the simpler curd commands here and the rest in HandleCrudCommands
