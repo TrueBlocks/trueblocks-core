@@ -17,7 +17,6 @@ bool COptions::handle_protobuf(void) {
         " --go_opt=paths=source_relative"
         " --go-grpc_out=."
         " --go-grpc_opt=paths=source_relative"
-        " apps/chifra/proto/chifra.proto"
-    );
+        " apps/chifra/proto/chifra.proto");
     return res.empty();
 }

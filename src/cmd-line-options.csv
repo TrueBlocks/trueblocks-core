@@ -41,7 +41,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10480,apps,Accounts,export,acctExport,n10,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; transactions&#44; traces&#44; etc.) for the given address(es).
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to process
-11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
+11087,apps,Accounts,monitors,acctExport,delete,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
 11093,apps,Accounts,monitors,acctExport,undelete,,,false,false,true,true,gocmd,switch,<boolean>,undelete a previously deleted monitor
 11091,apps,Accounts,monitors,acctExport,remove,,,false,false,true,true,gocmd,switch,<boolean>,remove a previously deleted monitor
 11085,apps,Accounts,monitors,acctExport,clean,C,,false,false,true,true,gocmd,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
@@ -86,7 +86,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12305,tools,Accounts,names,ethNames,autoname,A,,false,false,true,true,gocmd,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12310,tools,Accounts,names,ethNames,create,,,false,false,false,true,gocmd,switch,<boolean>,create a new name record
 12315,tools,Accounts,names,ethNames,update,,,false,false,false,true,gocmd,switch,<boolean>,edit an existing name
-12320,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
+12320,tools,Accounts,names,ethNames,delete,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
 12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,gocmd,switch,<boolean>,undelete a previously deleted name
 12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,gocmd,switch,<boolean>,remove a previously deleted name
 12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
