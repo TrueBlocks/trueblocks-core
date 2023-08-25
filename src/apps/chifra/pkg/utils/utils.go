@@ -240,6 +240,11 @@ func MustParseUint(input any) (result uint64) {
 	return
 }
 
+func MustParseInt(input any) (result int64) {
+	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
+	return
+}
+
 func LowerIfHex(addr string) string {
 	if !strings.HasPrefix(addr, "0x") {
 		return addr

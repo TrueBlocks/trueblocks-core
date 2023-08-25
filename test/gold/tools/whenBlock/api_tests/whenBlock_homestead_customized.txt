@@ -3,7 +3,9 @@ when?blocks=homestead&verbose&fmt=json
   "data": [
     {
       "blockNumber": 1150000,
+      "component": "execution",
       "date": "2016-03-14 18:49:53 UTC",
+      "description": "The Homestead fork that looked to the future. It included several protocol changes and a networking change that gave Ethereum the ability to do further network upgrades.",
       "name": "homestead",
       "timestamp": 1457981393
     }
