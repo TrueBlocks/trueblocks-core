@@ -15,13 +15,15 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_py(void) {
+    LOG_INFO(cYellow, "makeClass --sdk (python) generating files", cOff);
+
     std::filesystem::path dest{sdkPath};
     dest = dest / "python";
     auto configPath = dest / "generator-config.yaml";
     auto specFilePath = "../docs/content/api/openapi.yaml";
 
     ostringstream cmd;
-    cmd << "npx"
+    cmd << "npx -y"
         << " @openapitools/openapi-generator-cli"
         << " generate"
         << " --config" << configPath
