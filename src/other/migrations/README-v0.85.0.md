@@ -6,7 +6,7 @@
 
 Version 1.0.0 is here! As part of this accomplishment, we've removed a lot of old code related to caching. We tried very hard to do this in a backward compatible way, but, alas, we could not. For this reason, in order to use release v1.0.0 and later, you must remove the old cache.
 
-You will continue to erceive the message that brought you to this migration until you complete it.
+You will continue to receive the message that brought you to this migration until you complete it.
 
 The migration is simple. Do this:
 
