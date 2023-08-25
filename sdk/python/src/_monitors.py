@@ -15,6 +15,8 @@ monitorsOpts = {
     "watch": {"hotkey": "-w", "type": "switch"},
     "watchlist": {"hotkey": "-a", "type": "flag"},
     "commands": {"hotkey": "-c", "type": "flag"},
+    "batchSize": {"hotkey": "-b", "type": "flag"},
+    "runOnce": {"hotkey": "-r", "type": "switch"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},

@@ -219,7 +219,7 @@ chifra export --logs [{ADDRESS}]
 etc.
 ```
 
-The `[{ADDRESS}]` token is a stand-in for all addresses in the `--watchlist`. Addresses are processed in groups of eight (8). (We will be making this group size configurable soon.)
+The `[{ADDRESS}]` token is a stand-in for all addresses in the `--watchlist`. Addresses are processed in groups of `batch_size` (default 8).
 
 Invalid commands or invalid addresses are ignored. If a command fails, the process continues with the next command. If a command fails for a particular address, the process continues with the next address. A warning is generated.
 
@@ -242,6 +242,8 @@ Flags:
   -w, --watch              continually scan for new blocks and extract data as per the command file
   -a, --watchlist string   available with --watch option only, a file containing the addresses to watch
   -c, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
+  -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
+  -r, --run_once           available with --watch option only, only run the monitor --watch commands once then quit
   -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose output

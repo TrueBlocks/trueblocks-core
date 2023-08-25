@@ -417,6 +417,9 @@ logs,raw,python
 logs,raw,readme
 logs,raw,typescript
 logs,transactions,typescript
+monitors,batchSize,api
+monitors,batchSize,python
+monitors,batchSize,typescript
 monitors,cache,typescript
 monitors,chain,typescript
 monitors,clean,api
@@ -444,6 +447,9 @@ monitors,remove,cmds
 monitors,remove,python
 monitors,remove,readme
 monitors,remove,typescript
+monitors,runOnce,api
+monitors,runOnce,python
+monitors,runOnce,typescript
 monitors,sleep,api
 monitors,sleep,cmds
 monitors,sleep,python

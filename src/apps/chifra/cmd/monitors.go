@@ -69,6 +69,8 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Watch, "watch", "w", false, "continually scan for new blocks and extract data as per the command file")
 	monitorsCmd.Flags().StringVarP(&monitorsPkg.GetOptions().Watchlist, "watchlist", "a", "", "available with --watch option only, a file containing the addresses to watch")
 	monitorsCmd.Flags().StringVarP(&monitorsPkg.GetOptions().Commands, "commands", "c", "", "available with --watch option only, the file containing the list of commands to apply to each watched address")
+	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.GetOptions().BatchSize, "batch_size", "b", 8, "available with --watch option only, the number of monitors to process in each batch")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().RunOnce, "run_once", "r", false, "available with --watch option only, only run the monitor --watch commands once then quit")
 	monitorsCmd.Flags().Float64VarP(&monitorsPkg.GetOptions().Sleep, "sleep", "s", 14, "available with --watch option only, the number of seconds to sleep between runs")
 	globals.InitGlobals(monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
 

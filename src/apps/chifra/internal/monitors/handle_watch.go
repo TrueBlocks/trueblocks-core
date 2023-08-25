@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -43,8 +42,6 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 	defer wg.Done()
 
 	chain := opts.Globals.Chain
-	// establishExportPaths(chain)
-
 	tmpPath := config.GetPathToCache(chain) + "tmp/"
 
 	s.ChangeState(true, tmpPath)
@@ -64,7 +61,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 				logger.Error(err)
 				return
 			} else {
-				if canceled || os.Getenv("RUN_ONCE") == "true" {
+				if canceled || opts.RunOnce {
 					return
 				}
 			}

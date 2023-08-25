@@ -4,7 +4,7 @@
  * This file was generated with makeClass --sdk. Do not edit it.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { address, double, Monitor, MonitorClean } from '../types';
+import { address, double, Monitor, MonitorClean, uint64 } from '../types';
 
 export function getMonitors(
   parameters?: {
@@ -17,6 +17,8 @@ export function getMonitors(
     watch?: boolean,
     watchlist?: string,
     commands?: string,
+    batchSize?: uint64,
+    runOnce?: boolean,
     sleep?: double,
     chain: string,
     noHeader?: boolean,

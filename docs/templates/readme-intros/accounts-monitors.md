@@ -37,6 +37,6 @@ chifra export --logs [{ADDRESS}]
 etc.
 ```
 
-The `[{ADDRESS}]` token is a stand-in for all addresses in the `--watchlist`. Addresses are processed in groups of eight (8). (We will be making this group size configurable soon.)
+The `[{ADDRESS}]` token is a stand-in for all addresses in the `--watchlist`. Addresses are processed in groups of `batch_size` (default 8).
 
 Invalid commands or invalid addresses are ignored. If a command fails, the process continues with the next command. If a command fails for a particular address, the process continues with the next address. A warning is generated.

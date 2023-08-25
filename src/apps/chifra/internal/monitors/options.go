@@ -31,6 +31,8 @@ type MonitorsOptions struct {
 	Watch     bool                  `json:"watch,omitempty"`     // Continually scan for new blocks and extract data as per the command file
 	Watchlist string                `json:"watchlist,omitempty"` // Available with --watch option only, a file containing the addresses to watch
 	Commands  string                `json:"commands,omitempty"`  // Available with --watch option only, the file containing the list of commands to apply to each watched address
+	BatchSize uint64                `json:"batchSize,omitempty"` // Available with --watch option only, the number of monitors to process in each batch
+	RunOnce   bool                  `json:"runOnce,omitempty"`   // Available with --watch option only, only run the monitor --watch commands once then quit
 	Sleep     float64               `json:"sleep,omitempty"`     // Available with --watch option only, the number of seconds to sleep between runs
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
 	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
@@ -39,7 +41,9 @@ type MonitorsOptions struct {
 	// EXISTING_CODE
 }
 
-var defaultMonitorsOptions = MonitorsOptions{}
+var defaultMonitorsOptions = MonitorsOptions{
+	BatchSize: 8,
+}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *MonitorsOptions) testLog() {
@@ -52,6 +56,8 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.Watch, "Watch: ", opts.Watch)
 	logger.TestLog(len(opts.Watchlist) > 0, "Watchlist: ", opts.Watchlist)
 	logger.TestLog(len(opts.Commands) > 0, "Commands: ", opts.Commands)
+	logger.TestLog(opts.BatchSize != 8, "BatchSize: ", opts.BatchSize)
+	logger.TestLog(opts.RunOnce, "RunOnce: ", opts.RunOnce)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -67,6 +73,7 @@ func (opts *MonitorsOptions) String() string {
 func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 	copy := defaultMonitorsOptions
 	opts := &copy
+	opts.BatchSize = 8
 	opts.Sleep = 14
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -91,6 +98,10 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			opts.Watchlist = value[0]
 		case "commands":
 			opts.Commands = value[0]
+		case "batchSize":
+			opts.BatchSize = globals.ToUint64(value[0])
+		case "runOnce":
+			opts.RunOnce = true
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
