@@ -13,7 +13,7 @@ info:
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
 
-    ## How to use this API
+    ## How to use this API effectively
 
     This API's endpoints are exact translations of the commands used by the chifra
     CLI application, and the query parameters mirror the commands' options and
