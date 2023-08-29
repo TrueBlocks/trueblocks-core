@@ -31,22 +31,24 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			Schemas: unchained.Schemas,
 		}
 
-		var err error
-		tsPath := config.GetPathToIndex(chain) + "ts.bin"
-		if man.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
-			errorChan <- err
-			cancel()
-			return
+		if len(blockNums) == 0 {
+			var err error
+			tsPath := config.GetPathToIndex(chain) + "ts.bin"
+			if man.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
+				errorChan <- err
+				cancel()
+				return
+			}
+
+			manPath := config.GetPathToChainConfig(chain) + "manifest.json"
+			if man.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
+				errorChan <- err
+				cancel()
+				return
+			}
 		}
 
-		manPath := config.GetPathToChainConfig(chain) + "manifest.json"
-		if man.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
-			errorChan <- err
-			cancel()
-			return
-		}
-
-		if opts.Deep {
+		if len(blockNums) != 0 || opts.Deep {
 			pinChunk := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 				rng, err := base.RangeFromFilenameE(path)
 				if err != nil {
