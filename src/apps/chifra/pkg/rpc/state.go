@@ -170,7 +170,7 @@ func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*big.Int, er
 		return &zero, err
 	} else {
 		defer ec.Close()
-		return ec.BalanceAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(bn))
+		return ec.BalanceAt(context.Background(), addr.Common(), new(big.Int).SetUint64(bn))
 	}
 }
 

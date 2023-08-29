@@ -114,7 +114,7 @@ func TestPack(t *testing.T) {
 	}
 
 	a := base.HexToAddress("0xE2e87901a3E1CB22b9853AE0827DE34E6Fae0575")
-	addr := a.ToCommon()
+	addr := a.Common()
 
 	type args struct {
 		callArguments []any

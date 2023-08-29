@@ -60,11 +60,11 @@ func (a *Address) IsZero() bool {
 	return v == "0x0000000000000000000000000000000000000000"
 }
 
-func (a *Address) ToCommon() common.Address {
+func (a *Address) Common() common.Address {
 	return common.BytesToAddress(a.Bytes())
 }
 
-func (a *Address) FromCommon(c *common.Address) Address {
+func (a *Address) SetCommon(c *common.Address) Address {
 	return BytesToAddress(c.Bytes())
 }
 
