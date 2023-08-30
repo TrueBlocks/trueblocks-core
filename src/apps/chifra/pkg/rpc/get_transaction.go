@@ -283,7 +283,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt RewardType, appearan
 					for _, tx := range block.Transactions {
 						gp := big.NewInt(int64(tx.GasPrice))
 						gu := big.NewInt(int64(tx.Receipt.GasUsed))
-						feeReward.Add(feeReward, gp.Mul(gp, gu))
+						feeReward = feeReward.Add(feeReward, gp.Mul(gp, gu))
 					}
 				} else {
 					blockReward = big.NewInt(0)

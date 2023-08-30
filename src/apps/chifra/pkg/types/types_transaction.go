@@ -35,8 +35,8 @@ type Rewards struct {
 
 func NewReward(block, nephew, txFee, uncle *big.Int) (Rewards, big.Int) {
 	total := new(big.Int).Add(block, nephew)
-	total.Add(total, txFee)
-	total.Add(total, uncle)
+	total = total.Add(total, txFee)
+	total = total.Add(total, uncle)
 	return Rewards{
 		Block:  *block,
 		Nephew: *nephew,
