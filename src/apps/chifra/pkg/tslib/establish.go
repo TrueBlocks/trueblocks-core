@@ -97,9 +97,12 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 		}
 	}()
 
-	trapChannel := sigintTrap.Enable(context.Background(), func() {}, func() {
+	ctx, cancel := context.WithCancel(context.Background())
+	cleanOnQuit := func() {
 		userHitsCtrlC = true
-	})
+		logger.Warn(sigintTrap.TrapMessage)
+	}
+	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
 
 	ff, err := os.Create(fileName)
