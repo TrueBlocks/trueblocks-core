@@ -257,14 +257,14 @@ ReportChecks consist of the following fields:
 
 | Field      | Description                                   | Type     |
 | ---------- | --------------------------------------------- | -------- |
-| Reason     | the reason for the test                       | string   |
+| result     | the result of the check                       | string   |
 | visitedCnt | the number of visited items in the cache      | uint32   |
 | checkedCnt | the number of checks                          | uint32   |
 | skippedCnt | the number of skipped checks                  | uint32   |
 | passedCnt  | the number of passed checks                   | uint32   |
 | failedCnt  | the number of failed checks                   | uint32   |
-| result     | the result of the check                       | string   |
 | msgStrings | an array of messages explaining failed checks | []string |
+| reason     | the reason for the test                       | string   |
 
 ## ChunkPinReport
 
