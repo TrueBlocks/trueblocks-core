@@ -1424,9 +1424,9 @@ components:
       description: "report on checking contents of chunks"
       type: object
       properties:
-        Reason:
+        result:
           type: string
-          description: "the reason for the test"
+          description: "the result of the check"
         visitedCnt:
           type: number
           format: uint32
@@ -1447,14 +1447,14 @@ components:
           type: number
           format: uint32
           description: "the number of failed checks"
-        result:
-          type: string
-          description: "the result of the check"
         msgStrings:
           type: array
           items:
             type: string
           description: "an array of messages explaining failed checks"
+        reason:
+          type: string
+          description: "the reason for the test"
     chunkPinReport:
       description: "a JSON object containing the results of pinning the Unchained Index"
       type: object
