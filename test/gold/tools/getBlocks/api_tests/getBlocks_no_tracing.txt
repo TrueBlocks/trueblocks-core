@@ -1,6 +1,6 @@
 blocks?blocks=12&traces&chain=non-tracing
 {
   "errors": [
-    "Tracing is required for this program to work properly."
+    "chifra blocks --traces requires tracing, err: trace_block is missing"
   ]
 }

@@ -113,6 +113,9 @@ func QuerySlice[T any](chain string, method string, params Params) ([]T, error) 
 	if err != nil {
 		return nil, err
 	}
+	if response.Error != nil {
+		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
+	}
 
 	return response.Result, err
 }

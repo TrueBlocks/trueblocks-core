@@ -1,6 +1,6 @@
 traces?transactions=3648669.24&chain=non-tracing
 {
   "errors": [
-    "Tracing is required for this program to work properly."
+    "chifra traces requires tracing, err: trace_block is missing"
   ]
 }

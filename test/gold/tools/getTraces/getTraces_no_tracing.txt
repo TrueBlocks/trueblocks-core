@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [3648669.24]
 TEST[DATE|TIME] Chain:  non-tracing
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
-Error: Tracing is required for this program to work properly.
+Error: chifra traces requires tracing, err: trace_block is missing
 Usage:
   chifra traces [flags] <tx_id> [tx_id...]
 
