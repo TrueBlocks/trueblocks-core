@@ -20,7 +20,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// TODO: We should repond to non-tracing (i.e. Geth) nodes better
 // TODO: Make sure we're not running acctScrape and/or pause if it's running
 
 func (opts *ScrapeOptions) HandleScrape() error {
@@ -32,7 +31,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	provider, _ := config.GetRpcProvider(chain)
-	blazeOpts := BlazeOptions{
+	blazeMan := BlazeManager{
 		Chain:        chain,
 		NChannels:    opts.Settings.Channel_count,
 		StartBlock:   opts.StartBlock,
@@ -45,7 +44,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 	}
 
-	if ok, err := opts.HandlePrepare(progress, &blazeOpts); !ok || err != nil {
+	if ok, err := opts.HandlePrepare(progress); !ok || err != nil {
 		return err
 	}
 
@@ -74,8 +73,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		provider, _ := config.GetRpcProvider(chain)
-
-		blazeOpts = BlazeOptions{
+		blazeMan = BlazeManager{
 			Chain:        chain,
 			NChannels:    opts.Settings.Channel_count,
 			StartBlock:   opts.StartBlock,
@@ -111,13 +109,13 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// Here we do the actual scrape for this round. If anything goes wrong, the
 		// function will have cleaned up (i.e. remove the unstaged ripe blocks). Note
 		// that we don't quit, instead we sleep and we retry continually.
-		if err := opts.HandleScrapeBlaze(progress, &blazeOpts); err != nil {
+		if err := opts.HandleScrapeBlaze(progress, &blazeMan); err != nil {
 			logger.Error(colors.BrightRed, err, colors.Off)
 			goto PAUSE
 		}
-		blazeOpts.syncedReporting(base.Blknum(blazeOpts.StartBlock+blazeOpts.BlockCount), true /* force */)
+		blazeMan.syncedReporting(base.Blknum(blazeMan.StartBlock+blazeMan.BlockCount), true /* force */)
 
-		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
+		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeMan); !ok || err != nil {
 			logger.Error(err)
 			if !ok {
 				break

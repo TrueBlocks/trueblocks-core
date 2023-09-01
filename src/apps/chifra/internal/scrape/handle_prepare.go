@@ -20,7 +20,7 @@ import (
 // HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns
 // true if the processing should continue, false otherwise. Currently, the only thing to do
 // is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
-func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
+func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData) (ok bool, err error) {
 	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting
