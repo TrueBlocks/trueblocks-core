@@ -19,8 +19,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// ScrapedData combines the block data, trace data, and log data into a single structure
-type ScrapedData struct {
+// scrapedData combines the block data, trace data, and log data into a single structure
+type scrapedData struct {
 	blockNumber base.Blknum
 	traces      []types.SimpleTrace
 	logs        []types.SimpleLog
@@ -78,7 +78,7 @@ func (blazeOpts *BlazeOptions) HandleBlaze1(meta *rpc.MetaData, blocks []int) (o
 	// and writes them to the timestamp database.
 	//
 	blockChannel := make(chan int)
-	appearanceChannel := make(chan ScrapedData)
+	appearanceChannel := make(chan scrapedData)
 	tsChannel := make(chan tslib.TimestampRecord)
 
 	blazeOpts.BlockWg.Add(int(blazeOpts.NChannels))
@@ -120,11 +120,11 @@ func (blazeOpts *BlazeOptions) HandleBlaze1(meta *rpc.MetaData, blocks []int) (o
 }
 
 // BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
-func (blazeOpts *BlazeOptions) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
+func (blazeOpts *BlazeOptions) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel chan int, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
 	defer blazeOpts.BlockWg.Done()
 	for bn := range blockChannel {
 
-		sd := ScrapedData{
+		sd := scrapedData{
 			blockNumber: base.Blknum(bn),
 		}
 
@@ -157,8 +157,8 @@ func (blazeOpts *BlazeOptions) BlazeProcessBlocks(meta *rpc.MetaData, blockChann
 
 var blazeMutex sync.Mutex
 
-// BlazeProcessAppearances processes ScrapedData objects shoved down the appearanceChannel
-func (blazeOpts *BlazeOptions) BlazeProcessAppearances(meta *rpc.MetaData, appearanceChannel chan ScrapedData) (err error) {
+// BlazeProcessAppearances processes scrapedData objects shoved down the appearanceChannel
+func (blazeOpts *BlazeOptions) BlazeProcessAppearances(meta *rpc.MetaData, appearanceChannel chan scrapedData) (err error) {
 	defer blazeOpts.AppearanceWg.Done()
 
 	for sData := range appearanceChannel {
