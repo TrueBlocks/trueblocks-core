@@ -36,14 +36,14 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	blazeOpts := BlazeOptions{
 		Chain:        chain,
 		NChannels:    opts.Settings.Channel_count,
-		NProcessed:   0,
 		StartBlock:   opts.StartBlock,
 		BlockCount:   opts.BlockCnt,
 		UnripeDist:   opts.Settings.Unripe_dist,
 		RpcProvider:  provider,
+		AppsPerChunk: opts.Settings.Apps_per_chunk,
+		NProcessed:   0,
 		TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
-		AppsPerChunk: opts.Settings.Apps_per_chunk,
 	}
 
 	if ok, err := opts.HandlePrepare(progress, &blazeOpts); !ok || err != nil {

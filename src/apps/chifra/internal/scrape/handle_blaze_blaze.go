@@ -29,29 +29,29 @@ type ScrapedData struct {
 type BlazeOptions struct {
 	Chain        string                  `json:"chain"`
 	NChannels    uint64                  `json:"nChannels"`
-	NProcessed   uint64                  `json:"nProcessed"`
 	StartBlock   uint64                  `json:"startBlock"`
 	BlockCount   uint64                  `json:"blockCnt"`
-	RipeBlock    uint64                  `json:"ripeBlock"`
 	UnripeDist   uint64                  `json:"unripe"`
 	RpcProvider  string                  `json:"rpcProvider"`
+	AppsPerChunk uint64                  `json:"-"`
+	NProcessed   uint64                  `json:"nProcessed"`
+	RipeBlock    uint64                  `json:"ripeBlock"`
 	TsArray      []tslib.TimestampRecord `json:"-"`
 	ProcessedMap map[base.Blknum]bool    `json:"-"`
 	BlockWg      sync.WaitGroup          `json:"-"`
 	AppearanceWg sync.WaitGroup          `json:"-"`
 	TsWg         sync.WaitGroup          `json:"-"`
-	AppsPerChunk uint64                  `json:"-"`
 }
 
 func (blazeOpts *BlazeOptions) String() string {
 	copy := BlazeOptions{
 		Chain:      blazeOpts.Chain,
 		NChannels:  blazeOpts.NChannels,
-		NProcessed: blazeOpts.NProcessed,
 		StartBlock: blazeOpts.StartBlock,
 		BlockCount: blazeOpts.BlockCount,
-		RipeBlock:  blazeOpts.RipeBlock,
 		UnripeDist: blazeOpts.UnripeDist,
+		NProcessed: blazeOpts.NProcessed,
+		RipeBlock:  blazeOpts.RipeBlock,
 	}
 	b, _ := json.MarshalIndent(&copy, "", "  ")
 	return string(b)
