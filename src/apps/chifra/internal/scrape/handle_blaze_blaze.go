@@ -40,7 +40,7 @@ type BlazeOptions struct {
 	ProcessedMap map[base.Blknum]bool    `json:"-"`
 	BlockWg      sync.WaitGroup          `json:"-"`
 	AppearanceWg sync.WaitGroup          `json:"-"`
-	TsWg         sync.WaitGroup          `json:"-"`
+	TimestampsWg sync.WaitGroup          `json:"-"`
 }
 
 func (blazeOpts *BlazeOptions) String() string {
@@ -96,7 +96,7 @@ func (blazeOpts *BlazeOptions) HandleBlaze1(meta *rpc.MetaData, blocks []int) (o
 		}()
 	}
 
-	blazeOpts.TsWg.Add(int(blazeOpts.NChannels))
+	blazeOpts.TimestampsWg.Add(int(blazeOpts.NChannels))
 	for i := 0; i < int(blazeOpts.NChannels); i++ {
 		go func() {
 			_ = blazeOpts.BlazeProcessTimestamps(tsChannel)
@@ -114,7 +114,7 @@ func (blazeOpts *BlazeOptions) HandleBlaze1(meta *rpc.MetaData, blocks []int) (o
 	blazeOpts.AppearanceWg.Wait()
 
 	close(tsChannel)
-	blazeOpts.TsWg.Wait()
+	blazeOpts.TimestampsWg.Wait()
 
 	return true, nil
 }
@@ -185,13 +185,14 @@ func (blazeOpts *BlazeOptions) BlazeProcessAppearances(meta *rpc.MetaData, appea
 
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
 func (blazeOpts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord) (err error) {
-	defer blazeOpts.TsWg.Done()
+	defer blazeOpts.TimestampsWg.Done()
 
 	for ts := range tsChannel {
 		blazeMutex.Lock()
 		blazeOpts.Timestamps = append(blazeOpts.Timestamps, ts)
 		blazeMutex.Unlock()
 	}
+
 	return
 }
 
