@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -19,39 +20,37 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// TODO: We should repond to non-tracing (i.e. Geth) nodes better
 // TODO: Make sure we're not running acctScrape and/or pause if it's running
 
 func (opts *ScrapeOptions) HandleScrape() error {
 	chain := opts.Globals.Chain
-	conn := rpc.TempConnection(chain)
 
-	progress, err := conn.GetMetaData(opts.Globals.TestMode)
+	progress, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
 
 	provider, _ := config.GetRpcProvider(chain)
-	blazeOpts := BlazeOptions{
+	blazeMan := BlazeManager{
 		Chain:        chain,
 		NChannels:    opts.Settings.Channel_count,
-		NProcessed:   0,
 		StartBlock:   opts.StartBlock,
 		BlockCount:   opts.BlockCnt,
 		UnripeDist:   opts.Settings.Unripe_dist,
 		RpcProvider:  provider,
-		TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
-		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 		AppsPerChunk: opts.Settings.Apps_per_chunk,
+		NProcessed:   0,
+		Timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
+		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 	}
 
-	if ok, err := opts.HandlePrepare(progress, &blazeOpts); !ok || err != nil {
+	if ok, err := opts.HandlePrepare(progress); !ok || err != nil {
 		return err
 	}
 
 	origBlockCnt := opts.BlockCnt
 	for {
-		progress, err = conn.GetMetaData(opts.Globals.TestMode)
+		progress, err = opts.Conn.GetMetaData(opts.Globals.TestMode)
 		if err != nil {
 			return err
 		}
@@ -74,19 +73,18 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		provider, _ := config.GetRpcProvider(chain)
-
-		blazeOpts = BlazeOptions{
+		blazeMan = BlazeManager{
 			Chain:        chain,
 			NChannels:    opts.Settings.Channel_count,
-			NProcessed:   0,
 			StartBlock:   opts.StartBlock,
 			BlockCount:   opts.BlockCnt,
-			RipeBlock:    ripeBlock,
 			UnripeDist:   opts.Settings.Unripe_dist,
 			RpcProvider:  provider,
-			TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
-			ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 			AppsPerChunk: opts.Settings.Apps_per_chunk,
+			NProcessed:   0,
+			RipeBlock:    ripeBlock,
+			Timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
+			ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 		}
 
 		// Remove whatever's in the unripePath before running each round. We do this
@@ -111,13 +109,13 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// Here we do the actual scrape for this round. If anything goes wrong, the
 		// function will have cleaned up (i.e. remove the unstaged ripe blocks). Note
 		// that we don't quit, instead we sleep and we retry continually.
-		if err := opts.HandleScrapeBlaze(progress, &blazeOpts); err != nil {
+		if err := opts.HandleScrapeBlaze(progress, &blazeMan); err != nil {
 			logger.Error(colors.BrightRed, err, colors.Off)
 			goto PAUSE
 		}
-		blazeOpts.syncedReporting(base.Blknum(blazeOpts.StartBlock+blazeOpts.BlockCount), true /* force */)
+		blazeMan.syncedReporting(base.Blknum(blazeMan.StartBlock+blazeMan.BlockCount), true /* force */)
 
-		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeOpts); !ok || err != nil {
+		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeMan); !ok || err != nil {
 			logger.Error(err)
 			if !ok {
 				break
@@ -130,4 +128,23 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	return nil
+}
+
+func (opts *ScrapeOptions) Pause(progressThen *rpc.MetaData) {
+	// we always pause at least a quarter of a second to allow the node to 'rest'
+	time.Sleep(250 * time.Millisecond)
+	isDefaultSleep := opts.Sleep >= 13 && opts.Sleep <= 14
+	distanceFromHead := progressThen.Latest - progressThen.Staging
+	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.Settings.Unripe_dist)
+	if shouldSleep {
+		sleep := opts.Sleep
+		if sleep > 1 {
+			logger.Info("Sleeping for", sleep, "seconds -", distanceFromHead, "away from head.")
+		}
+		halfSecs := (sleep * 2) - 1 // we already slept one quarter of a second
+		for i := 0; i < int(halfSecs); i++ {
+			time.Sleep(time.Duration(500) * time.Millisecond)
+		}
+	}
+
 }

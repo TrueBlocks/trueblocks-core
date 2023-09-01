@@ -21,17 +21,17 @@ import (
 
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *BlazeOptions) error {
+func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeMan *BlazeManager) error {
 	chain := opts.Globals.Chain
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
-	if _, err := blazeOpts.HandleBlaze(progress); err != nil {
+	if _, err := blazeMan.HandleBlaze(progress); err != nil {
 		_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
 		return err
 	}
 
 	for bn := opts.StartBlock; bn < opts.StartBlock+opts.BlockCnt; bn++ {
-		if !blazeOpts.ProcessedMap[bn] {
+		if !blazeMan.ProcessedMap[bn] {
 			// At least one block was not processed. This would only happen in the event of an
 			// error, so clean up, report the error and return. The loop will repeat.
 			_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
@@ -40,7 +40,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *
 		}
 	}
 
-	_ = WriteTimestamps(blazeOpts.Chain, blazeOpts.TsArray, blazeOpts.StartBlock+blazeOpts.BlockCount)
+	_ = WriteTimestamps(blazeMan.Chain, blazeMan.Timestamps, blazeMan.StartBlock+blazeMan.BlockCount)
 
 	return nil
 }
