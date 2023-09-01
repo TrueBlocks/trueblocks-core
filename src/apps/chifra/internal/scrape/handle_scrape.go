@@ -41,7 +41,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		RpcProvider:  provider,
 		AppsPerChunk: opts.Settings.Apps_per_chunk,
 		NProcessed:   0,
-		TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
+		Timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 	}
 
@@ -85,7 +85,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			AppsPerChunk: opts.Settings.Apps_per_chunk,
 			NProcessed:   0,
 			RipeBlock:    ripeBlock,
-			TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
+			Timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 			ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 		}
 

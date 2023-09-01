@@ -34,9 +34,9 @@ type BlazeOptions struct {
 	UnripeDist   uint64                  `json:"unripe"`
 	RpcProvider  string                  `json:"rpcProvider"`
 	AppsPerChunk uint64                  `json:"-"`
-	NProcessed   uint64                  `json:"nProcessed"`
 	RipeBlock    uint64                  `json:"ripeBlock"`
-	TsArray      []tslib.TimestampRecord `json:"-"`
+	NProcessed   uint64                  `json:"nProcessed"`
+	Timestamps   []tslib.TimestampRecord `json:"-"`
 	ProcessedMap map[base.Blknum]bool    `json:"-"`
 	BlockWg      sync.WaitGroup          `json:"-"`
 	AppearanceWg sync.WaitGroup          `json:"-"`
@@ -50,8 +50,8 @@ func (blazeOpts *BlazeOptions) String() string {
 		StartBlock: blazeOpts.StartBlock,
 		BlockCount: blazeOpts.BlockCount,
 		UnripeDist: blazeOpts.UnripeDist,
-		NProcessed: blazeOpts.NProcessed,
 		RipeBlock:  blazeOpts.RipeBlock,
+		NProcessed: blazeOpts.NProcessed,
 	}
 	b, _ := json.MarshalIndent(&copy, "", "  ")
 	return string(b)
@@ -189,7 +189,7 @@ func (blazeOpts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.Times
 
 	for ts := range tsChannel {
 		blazeMutex.Lock()
-		blazeOpts.TsArray = append(blazeOpts.TsArray, ts)
+		blazeOpts.Timestamps = append(blazeOpts.Timestamps, ts)
 		blazeMutex.Unlock()
 	}
 	return
