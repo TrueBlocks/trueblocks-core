@@ -192,7 +192,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     opts.Conn.IsNodeArchive(),
-		IsTracing:     opts.Conn.IsNodeTracing(testMode),
+		IsTracing:     opts.Conn.IsNodeTracing(),
 		HasEsKey:      config.HasEsKeys(chain),
 		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,

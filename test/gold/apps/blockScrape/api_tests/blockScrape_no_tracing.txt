@@ -1,6 +1,6 @@
 scrape?chain=non-tracing
 {
   "errors": [
-    "Cannot test block scraper"
+    "chifra scrape requires tracing, err: trace_block is missing"
   ]
 }
