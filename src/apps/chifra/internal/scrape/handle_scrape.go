@@ -25,9 +25,8 @@ import (
 
 func (opts *ScrapeOptions) HandleScrape() error {
 	chain := opts.Globals.Chain
-	conn := rpc.TempConnection(chain)
 
-	progress, err := conn.GetMetaData(opts.Globals.TestMode)
+	progress, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err
 	}
@@ -52,7 +51,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 	origBlockCnt := opts.BlockCnt
 	for {
-		progress, err = conn.GetMetaData(opts.Globals.TestMode)
+		progress, err = opts.Conn.GetMetaData(opts.Globals.TestMode)
 		if err != nil {
 			return err
 		}
@@ -79,15 +78,15 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		blazeOpts = BlazeOptions{
 			Chain:        chain,
 			NChannels:    opts.Settings.Channel_count,
-			NProcessed:   0,
 			StartBlock:   opts.StartBlock,
 			BlockCount:   opts.BlockCnt,
-			RipeBlock:    ripeBlock,
 			UnripeDist:   opts.Settings.Unripe_dist,
 			RpcProvider:  provider,
+			AppsPerChunk: opts.Settings.Apps_per_chunk,
+			NProcessed:   0,
+			RipeBlock:    ripeBlock,
 			TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 			ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
-			AppsPerChunk: opts.Settings.Apps_per_chunk,
 		}
 
 		// Remove whatever's in the unripePath before running each round. We do this
