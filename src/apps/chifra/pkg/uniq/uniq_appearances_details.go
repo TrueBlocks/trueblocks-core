@@ -103,6 +103,7 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 		}
 	}
 
+	// TODO: See issue #3195 - there are addresses on the receipt that do not appear in traces
 	if err := uniqFromLogsDetails(chain, procFunc, flow, trans.Receipt.Logs, ts, addrMap); err != nil {
 		return err
 	}

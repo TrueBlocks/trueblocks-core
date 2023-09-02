@@ -7,4 +7,6 @@ doc_descr = receipt data as returned from the RPC (with slight enhancements)
 doc_route = 204-receipt
 doc_producer = receipts, export
 go_output = src/apps/chifra/pkg/types
-cache_type = marshal_only
+cache_type = cacheable
+cache_by = block
+cache_as = group

@@ -31,7 +31,7 @@ func (bm *BlazeManager) BlockCount() base.Blknum {
 // scrapedData combines the extracted block data, trace data, and log data into a
 // structure that is passed through to the AddressChannel for further processing.
 type scrapedData struct {
-	bn     base.Blknum
-	traces []types.SimpleTrace
-	logs   []types.SimpleLog
+	bn       base.Blknum
+	traces   []types.SimpleTrace
+	receipts []types.SimpleReceipt
 }

@@ -109,7 +109,7 @@ func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChanne
 		}
 
 		// TODO: BOGUS - This could use rawLogs so as to avoid unnecessary decoding
-		if sd.logs, err = conn.GetLogsByNumber(uint64(bn), base.Timestamp(ts.Ts)); err != nil {
+		if sd.receipts, err = conn.GetReceiptsByNumber(uint64(bn), base.Timestamp(ts.Ts)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
 		}
@@ -135,7 +135,7 @@ func (blazeMan *BlazeManager) BlazeProcessAppearances(meta *rpc.MetaData, appear
 			return err
 		}
 
-		err = index.UniqFromLogs(blazeMan.Chain, sData.logs, addrMap)
+		err = index.UniqFromReceipts(blazeMan.Chain, sData.receipts, addrMap)
 		if err != nil {
 			return err
 		}
