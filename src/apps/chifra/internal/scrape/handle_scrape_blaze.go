@@ -40,7 +40,8 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeMan *B
 		}
 	}
 
-	_ = WriteTimestamps(blazeMan.Chain, blazeMan.Timestamps, blazeMan.StartBlock+blazeMan.BlockCount)
+	end := blazeMan.StartBlock() + blazeMan.BlockCount()
+	_ = WriteTimestamps(blazeMan.Chain, blazeMan.Timestamps, end)
 
 	return nil
 }

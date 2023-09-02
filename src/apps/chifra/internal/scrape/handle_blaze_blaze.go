@@ -20,72 +20,78 @@ import (
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
 func (blazeMan *BlazeManager) HandleBlaze(meta *rpc.MetaData) (ok bool, err error) {
-	blocks := []int{}
-	for block := int(blazeMan.StartBlock); block < int(blazeMan.StartBlock+blazeMan.BlockCount); block++ {
+	blocks := []base.Blknum{}
+
+	start := blazeMan.StartBlock()
+	end := blazeMan.StartBlock() + blazeMan.BlockCount()
+
+	for block := start; block < end; block++ {
 		blocks = append(blocks, block)
 	}
+
 	return blazeMan.HandleBlaze1(meta, blocks)
 }
 
-// TODO: We could, if we wished, use getLogs with a block range to retrieve all of the logs in the range
-// TODO: with a single query. See closed issue #1829
+func (blazeMan *BlazeManager) HandleBlaze1(meta *rpc.MetaData, blocks []base.Blknum) (ok bool, err error) {
+	nChannels := int(blazeMan.opts.Settings.Channel_count)
 
-func (blazeMan *BlazeManager) HandleBlaze1(meta *rpc.MetaData, blocks []int) (ok bool, err error) {
-	//
-	// We build a pipeline that takes block numbers in through the blockChannel which queries the chain
-	// and sends the results through the appearanceChannel and the timestampChannel. The appearanceChannel
-	// processes appearances and writes them to the ripe folder. The timestampChannel processes timestamps
-	// and writes them to the timestamp database.
-	//
-	blockChannel := make(chan int)
+	// We need three pipelines...we shove into blocks, blocks shoves into appearances and timestamps
+	blockChannel := make(chan base.Blknum)
 	appearanceChannel := make(chan scrapedData)
 	tsChannel := make(chan tslib.TimestampRecord)
 
-	blazeMan.BlockWg.Add(int(blazeMan.NChannels))
-	for i := 0; i < int(blazeMan.NChannels); i++ {
+	// TODO: The go routines below may fail. Question -- how does one respond to an error inside a go routine?
+
+	blockWg := sync.WaitGroup{}
+	blockWg.Add(nChannels)
+	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = blazeMan.BlazeProcessBlocks(meta, blockChannel, appearanceChannel, tsChannel)
+			_ = blazeMan.BlazeProcessBlocks(meta, blockChannel, &blockWg, appearanceChannel, tsChannel)
 		}()
 	}
 
-	// TODO: These go routines may fail. Question -- how does one respond to an error inside a go routine?
-	blazeMan.AppearanceWg.Add(int(blazeMan.NChannels))
-	for i := 0; i < int(blazeMan.NChannels); i++ {
+	appWg := sync.WaitGroup{}
+	appWg.Add(nChannels)
+	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = blazeMan.BlazeProcessAppearances(meta, appearanceChannel)
+			_ = blazeMan.BlazeProcessAppearances(meta, appearanceChannel, &appWg)
 		}()
 	}
 
-	blazeMan.TimestampsWg.Add(int(blazeMan.NChannels))
-	for i := 0; i < int(blazeMan.NChannels); i++ {
+	tsWg := sync.WaitGroup{}
+	tsWg.Add(nChannels)
+	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = blazeMan.BlazeProcessTimestamps(tsChannel)
+			_ = blazeMan.BlazeProcessTimestamps(tsChannel, &tsWg)
 		}()
 	}
 
+	// Now we have three go routines waiting for data. Send it...
 	for _, block := range blocks {
 		blockChannel <- block
 	}
 
+	// ...and wait until we're done...
 	close(blockChannel)
-	blazeMan.BlockWg.Wait()
+	blockWg.Wait()
 
 	close(appearanceChannel)
-	blazeMan.AppearanceWg.Wait()
+	appWg.Wait()
 
 	close(tsChannel)
-	blazeMan.TimestampsWg.Wait()
+	tsWg.Wait()
 
 	return true, nil
 }
 
-// BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
-func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel chan int, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
-	defer blazeMan.BlockWg.Done()
+// BlazeProcessBlocks processes the block channel and for each block query the node for both
+// traces and logs. Send results down appearanceChannel.
+func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
+	defer blockWg.Done()
 	for bn := range blockChannel {
 
 		sd := scrapedData{
-			blockNumber: base.Blknum(bn),
+			bn: bn,
 		}
 
 		chain := blazeMan.Chain
@@ -102,7 +108,7 @@ func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChanne
 			return err
 		}
 
-		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
+		// TODO: BOGUS - This could use rawLogs so as to avoid unnecessary decoding
 		if sd.logs, err = conn.GetLogsByNumber(uint64(bn), base.Timestamp(ts.Ts)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
@@ -118,8 +124,8 @@ func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChanne
 var blazeMutex sync.Mutex
 
 // BlazeProcessAppearances processes scrapedData objects shoved down the appearanceChannel
-func (blazeMan *BlazeManager) BlazeProcessAppearances(meta *rpc.MetaData, appearanceChannel chan scrapedData) (err error) {
-	defer blazeMan.AppearanceWg.Done()
+func (blazeMan *BlazeManager) BlazeProcessAppearances(meta *rpc.MetaData, appearanceChannel chan scrapedData, appWg *sync.WaitGroup) (err error) {
+	defer appWg.Done()
 
 	for sData := range appearanceChannel {
 		addrMap := make(index.AddressBooleanMap)
@@ -134,7 +140,7 @@ func (blazeMan *BlazeManager) BlazeProcessAppearances(meta *rpc.MetaData, appear
 			return err
 		}
 
-		err = blazeMan.WriteAppearancesBlaze(meta, sData.blockNumber, addrMap)
+		err = blazeMan.WriteAppearancesBlaze(meta, sData.bn, addrMap)
 		if err != nil {
 			return err
 		}
@@ -144,8 +150,8 @@ func (blazeMan *BlazeManager) BlazeProcessAppearances(meta *rpc.MetaData, appear
 }
 
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
-func (blazeMan *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord) (err error) {
-	defer blazeMan.TimestampsWg.Done()
+func (blazeMan *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord, tsWg *sync.WaitGroup) (err error) {
+	defer tsWg.Done()
 
 	for ts := range tsChannel {
 		blazeMutex.Lock()
@@ -208,7 +214,7 @@ func (blazeMan *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 		if blazeMan.RipeBlock > uint64(bn) {
 			dist = (blazeMan.RipeBlock - uint64(bn))
 		}
-		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", blazeMan.NProcessed, blazeMan.BlockCount, bn, blazeMan.RipeBlock, dist)
+		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", blazeMan.NProcessed, blazeMan.BlockCount(), bn, blazeMan.RipeBlock, dist)
 		logger.Progress(true, msg)
 	}
 }

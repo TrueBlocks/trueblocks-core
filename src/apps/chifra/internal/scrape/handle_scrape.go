@@ -30,15 +30,9 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return err
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
 	blazeMan := BlazeManager{
 		Chain:        chain,
-		NChannels:    opts.Settings.Channel_count,
-		StartBlock:   opts.StartBlock,
-		BlockCount:   opts.BlockCnt,
-		UnripeDist:   opts.Settings.Unripe_dist,
-		RpcProvider:  provider,
-		AppsPerChunk: opts.Settings.Apps_per_chunk,
+		opts:         opts,
 		NProcessed:   0,
 		Timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
@@ -72,15 +66,9 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			ripeBlock = progress.Latest - opts.Settings.Unripe_dist
 		}
 
-		provider, _ := config.GetRpcProvider(chain)
 		blazeMan = BlazeManager{
 			Chain:        chain,
-			NChannels:    opts.Settings.Channel_count,
-			StartBlock:   opts.StartBlock,
-			BlockCount:   opts.BlockCnt,
-			UnripeDist:   opts.Settings.Unripe_dist,
-			RpcProvider:  provider,
-			AppsPerChunk: opts.Settings.Apps_per_chunk,
+			opts:         opts,
 			NProcessed:   0,
 			RipeBlock:    ripeBlock,
 			Timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
@@ -113,8 +101,8 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			logger.Error(colors.BrightRed, err, colors.Off)
 			goto PAUSE
 		}
-		blazeMan.syncedReporting(base.Blknum(blazeMan.StartBlock+blazeMan.BlockCount), true /* force */)
 
+		blazeMan.syncedReporting(blazeMan.StartBlock()+blazeMan.BlockCount(), true /* force */)
 		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeMan); !ok || err != nil {
 			logger.Error(err)
 			if !ok {

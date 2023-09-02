@@ -42,7 +42,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		// we need to move the file to the end of the scraped range so we show progress
 		stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
 		stageRange := base.RangeFromFilename(stageFn)
-		newRangeLast := utils.Min(blazeMan.RipeBlock, blazeMan.StartBlock+opts.BlockCnt-1)
+		end := blazeMan.StartBlock() + opts.BlockCnt
+		newRangeLast := utils.Min(blazeMan.RipeBlock, end-1)
 		if stageRange.Last < newRangeLast {
 			newRange := base.FileRange{First: stageRange.First, Last: newRangeLast}
 			newFilename := filepath.Join(stageFolder, newRange.String()+".txt")
@@ -55,7 +56,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	// Check to see if we got as many ripe files as we were expecting. In the case when AllowMissing is true, we
 	// can't really know, but if AllowMissing is false, then the number of files should be the same as the range width
 	ripeCnt := len(ripeFileList)
-	if uint64(ripeCnt) < (blazeMan.BlockCount - blazeMan.UnripeDist) {
+	unripeDist := opts.Settings.Unripe_dist
+	if uint64(ripeCnt) < (blazeMan.BlockCount() - unripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
 		allowMissing := scrapeCfg.AllowMissing(chain)
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
@@ -70,7 +72,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	// ripeRange := rangeFromFileList(ripeFileList)
 	stageRange := base.RangeFromFilename(stageFn)
 
-	curRange := base.FileRange{First: blazeMan.StartBlock, Last: blazeMan.StartBlock + opts.BlockCnt - 1}
+	curRange := base.FileRange{First: blazeMan.StartBlock(), Last: blazeMan.StartBlock() + opts.BlockCnt - 1}
 	if file.FileExists(stageFn) {
 		curRange = stageRange
 	}
@@ -107,6 +109,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		isOvertop := (curCount >= uint64(opts.Settings.Apps_per_chunk))
 
 		if isSnap || isOvertop {
+			// we're consolidating...
 			appMap := make(index.AddressAppearanceMap, len(appearances))
 			for _, line := range appearances {
 				parts := strings.Split(line, "\t")
@@ -142,7 +145,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		Last := uint64(0)
 		if len(parts) > 1 {
 			Last, _ = strconv.ParseUint(parts[1], 10, 32)
-			Last = utils.Max(utils.Min(blazeMan.RipeBlock, blazeMan.StartBlock+opts.BlockCnt-1), Last)
+			Last = utils.Max(utils.Min(blazeMan.RipeBlock, blazeMan.StartBlock()+opts.BlockCnt-1), Last)
 		} else {
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
