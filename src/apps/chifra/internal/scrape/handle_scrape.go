@@ -8,102 +8,93 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// TODO: Make sure we're not running acctScrape and/or pause if it's running
-
+// HandleScrape enters a forever loop and continually scrapes either BlockCnt blocks
+// or until the chain is caught up. It pauses for Sleep --sleep seconds between each scrape.
 func (opts *ScrapeOptions) HandleScrape() error {
+	var err error
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+	origBlockCnt := opts.BlockCnt
 
-	progress, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
+	blazeMan := BlazeManager{
+		chain:        chain,
+		timestamps:   make([]tslib.TimestampRecord, 0, origBlockCnt),
+		processedMap: make(map[base.Blknum]bool, origBlockCnt),
+		nProcessed:   0,
+		opts:         opts,
+	}
+	blazeMan.meta, err = opts.Conn.GetMetaData(testMode)
 	if err != nil {
 		return err
 	}
 
-	blazeMan := BlazeManager{
-		Chain:        chain,
-		opts:         opts,
-		NProcessed:   0,
-		Timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
-		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
-	}
-
-	if ok, err := opts.HandlePrepare(progress); !ok || err != nil {
+	// Clean the temporary files and makes sure block zero has been processed
+	if ok, err := opts.Prepare(); !ok || err != nil {
 		return err
 	}
 
-	origBlockCnt := opts.BlockCnt
+	ripeBlock := base.Blknum(0)
+	unripePath := filepath.Join(config.GetPathToIndex(chain), "unripe")
+
+	// The forever loop. Loop until the user hits Cntl+C or the server tells us to stop.
 	for {
-		progress, err = opts.Conn.GetMetaData(opts.Globals.TestMode)
-		if err != nil {
-			return err
+		if blazeMan.meta, err = opts.Conn.GetMetaData(testMode); err != nil {
+			logger.Error(fmt.Sprintf("Error fetching meta data: %s. Sleeping...", err))
+			goto PAUSE
 		}
 
-		// We start the current round one block past the end of the previous round
-		opts.StartBlock = utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
-		// And each round we assume we're going to process this many blocks...
+		if blazeMan.meta.NextIndexHeight() > blazeMan.meta.ChainHeight() {
+			// If the user is re-syncing the chain, the index may be ahead of the chain,
+			// so we go to sleep and try again later.
+			msg := fmt.Sprintf("The index (%d) is ahead of the chain (%d).",
+				blazeMan.meta.NextIndexHeight(),
+				blazeMan.meta.ChainHeight(),
+			)
+			logger.Error(msg)
+			goto PAUSE
+		}
+
+		opts.StartBlock = blazeMan.meta.NextIndexHeight()
 		opts.BlockCnt = origBlockCnt
-		if (opts.StartBlock + opts.BlockCnt) > progress.Latest {
-			// ...unless we're too close to the head, then we shorten the number of blocks to process
-			opts.BlockCnt = (progress.Latest - opts.StartBlock)
+		if (blazeMan.StartBlock() + blazeMan.BlockCount()) > blazeMan.meta.Latest {
+			opts.BlockCnt = (blazeMan.meta.Latest - blazeMan.StartBlock())
 		}
 
 		// The 'ripeBlock' is the head of the chain unless the chain is further along
 		// than 'UnripeDist.' If it is, the `ripeBlock` is 'UnripeDist' behind the
 		// head (i.e., 28 blocks usually - six minutes)
-		ripeBlock := progress.Latest
+		ripeBlock = blazeMan.meta.Latest
 		if ripeBlock > opts.Settings.Unripe_dist {
-			ripeBlock = progress.Latest - opts.Settings.Unripe_dist
+			ripeBlock = blazeMan.meta.Latest - opts.Settings.Unripe_dist
 		}
 
 		blazeMan = BlazeManager{
-			Chain:        chain,
+			chain:        chain,
 			opts:         opts,
-			NProcessed:   0,
-			RipeBlock:    ripeBlock,
-			Timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
-			ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
-		}
-
-		// Remove whatever's in the unripePath before running each round. We do this
-		// because the chain may have re-organized (which it does frequently). This is
-		// why we have an unripePath.
-		unripePath := filepath.Join(config.GetPathToIndex(chain), "unripe")
-		err = os.RemoveAll(unripePath)
-		if err != nil {
-			return err
-		}
-
-		// In some cases, the index may be already ahead of the chain tip. (For example,
-		// we may be dealing with a node installation that is being re-synced, but the
-		// index already exists.) In this case, we sleep for a while to allow the chain
-		// to catch up.
-		m := utils.Max(progress.Ripe, utils.Max(progress.Staging, progress.Finalized)) + 1
-		if m > progress.Latest {
-			fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", progress.Latest)))
-			goto PAUSE
+			nProcessed:   0,
+			ripeBlock:    ripeBlock,
+			timestamps:   make([]tslib.TimestampRecord, 0, origBlockCnt),
+			processedMap: make(map[base.Blknum]bool, origBlockCnt),
 		}
 
 		// Here we do the actual scrape for this round. If anything goes wrong, the
 		// function will have cleaned up (i.e. remove the unstaged ripe blocks). Note
 		// that we don't quit, instead we sleep and we retry continually.
-		if err := opts.HandleScrapeBlaze(progress, &blazeMan); err != nil {
+		if err := blazeMan.HandleScrapeBlaze(); err != nil {
 			logger.Error(colors.BrightRed, err, colors.Off)
 			goto PAUSE
 		}
 
-		blazeMan.syncedReporting(blazeMan.StartBlock()+blazeMan.BlockCount(), true /* force */)
-		if ok, err := opts.HandleScrapeConsolidate(progress, &blazeMan); !ok || err != nil {
+		// Try to create chunks...
+		if ok, err := blazeMan.Consolidate(); !ok || err != nil {
 			logger.Error(err)
 			if !ok {
 				break
@@ -112,27 +103,14 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 	PAUSE:
-		opts.Pause(progress)
+		// The chain frequently re-orgs. Before sleeping, we remove any unripe files so they
+		// are re-queried in the next round. This is the reason for the unripePath.
+		if err = os.RemoveAll(unripePath); err != nil {
+			return err
+		}
+
+		blazeMan.Pause()
 	}
 
 	return nil
-}
-
-func (opts *ScrapeOptions) Pause(progressThen *rpc.MetaData) {
-	// we always pause at least a quarter of a second to allow the node to 'rest'
-	time.Sleep(250 * time.Millisecond)
-	isDefaultSleep := opts.Sleep >= 13 && opts.Sleep <= 14
-	distanceFromHead := progressThen.Latest - progressThen.Staging
-	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*opts.Settings.Unripe_dist)
-	if shouldSleep {
-		sleep := opts.Sleep
-		if sleep > 1 {
-			logger.Info("Sleeping for", sleep, "seconds -", distanceFromHead, "away from head.")
-		}
-		halfSecs := (sleep * 2) - 1 // we already slept one quarter of a second
-		for i := 0; i < int(halfSecs); i++ {
-			time.Sleep(time.Duration(500) * time.Millisecond)
-		}
-	}
-
 }

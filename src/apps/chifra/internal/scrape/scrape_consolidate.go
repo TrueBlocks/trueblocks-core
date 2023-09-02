@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -21,9 +20,11 @@ import (
 
 const asciiAppearanceSize = 59
 
-// HandleScrapeConsolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
-func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, blazeMan *BlazeManager) (bool, error) {
-	chain := blazeMan.Chain
+// Consolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
+func (bm *BlazeManager) Consolidate() (bool, error) {
+	chain := bm.chain
+
+	bm.syncedReporting(bm.StartBlock()+bm.BlockCount(), true /* force */)
 
 	// Get a sorted list of files in the ripe folder
 	ripeFolder := filepath.Join(config.GetPathToIndex(chain), "ripe")
@@ -36,14 +37,14 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	if len(ripeFileList) == 0 {
 		// On active chains, this most likely never happens, but on some less used or private chains, this is a frequent occurrence.
 		// return a message, but don't do anything about it.
-		msg := fmt.Sprintf("No new blocks at block %d (%d away from head)%s", progressThen.Latest, (progressThen.Latest - progressThen.Ripe), spaces)
+		msg := fmt.Sprintf("No new blocks at block %d (%d away from head)%s", bm.meta.Latest, (bm.meta.Latest - bm.meta.Ripe), spaces)
 		logger.Info(msg)
 
 		// we need to move the file to the end of the scraped range so we show progress
 		stageFn, _ := file.LatestFileInFolder(stageFolder) // it may not exist...
 		stageRange := base.RangeFromFilename(stageFn)
-		end := blazeMan.StartBlock() + opts.BlockCnt
-		newRangeLast := utils.Min(blazeMan.RipeBlock, end-1)
+		end := bm.StartBlock() + bm.BlockCount()
+		newRangeLast := utils.Min(bm.ripeBlock, end-1)
 		if stageRange.Last < newRangeLast {
 			newRange := base.FileRange{First: stageRange.First, Last: newRangeLast}
 			newFilename := filepath.Join(stageFolder, newRange.String()+".txt")
@@ -56,8 +57,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	// Check to see if we got as many ripe files as we were expecting. In the case when AllowMissing is true, we
 	// can't really know, but if AllowMissing is false, then the number of files should be the same as the range width
 	ripeCnt := len(ripeFileList)
-	unripeDist := opts.Settings.Unripe_dist
-	if uint64(ripeCnt) < (blazeMan.BlockCount() - unripeDist) {
+	unripeDist := bm.opts.Settings.Unripe_dist
+	if uint64(ripeCnt) < (bm.BlockCount() - unripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
 		allowMissing := scrapeCfg.AllowMissing(chain)
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
@@ -72,7 +73,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	// ripeRange := rangeFromFileList(ripeFileList)
 	stageRange := base.RangeFromFilename(stageFn)
 
-	curRange := base.FileRange{First: blazeMan.StartBlock(), Last: blazeMan.StartBlock() + opts.BlockCnt - 1}
+	curRange := base.FileRange{First: bm.StartBlock(), Last: bm.StartBlock() + bm.BlockCount() - 1}
 	if file.FileExists(stageFn) {
 		curRange = stageRange
 	}
@@ -105,8 +106,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		ripeRange := base.RangeFromFilename(ripePath)
 		curRange.Last = ripeRange.Last
 
-		isSnap := (curRange.Last >= opts.Settings.First_snap && (curRange.Last%opts.Settings.Snap_to_grid) == 0)
-		isOvertop := (curCount >= uint64(opts.Settings.Apps_per_chunk))
+		isSnap := (curRange.Last >= bm.opts.Settings.First_snap && (curRange.Last%bm.opts.Settings.Snap_to_grid) == 0)
+		isOvertop := (curCount >= uint64(bm.opts.Settings.Apps_per_chunk))
 
 		if isSnap || isOvertop {
 			// we're consolidating...
@@ -125,7 +126,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 			}
 
 			indexPath := config.GetPathToIndex(chain) + "finalized/" + curRange.String() + ".bin"
-			if report, err := index.WriteChunk(chain, indexPath, appMap, len(appearances), opts.Pin, opts.Remote); err != nil {
+			if report, err := index.WriteChunk(chain, indexPath, appMap, len(appearances), bm.opts.Pin, bm.opts.Remote); err != nil {
 				return false, err
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")
@@ -145,13 +146,13 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		Last := uint64(0)
 		if len(parts) > 1 {
 			Last, _ = strconv.ParseUint(parts[1], 10, 32)
-			Last = utils.Max(utils.Min(blazeMan.RipeBlock, blazeMan.StartBlock()+opts.BlockCnt-1), Last)
+			Last = utils.Max(utils.Min(bm.ripeBlock, bm.StartBlock()+bm.BlockCount()-1), Last)
 		} else {
 			return true, errors.New("Cannot find last block number at lineLast in consolidate: " + lineLast)
 		}
 
 		conn := rpc.TempConnection(chain)
-		m, _ := conn.GetMetaData(opts.Globals.TestMode)
+		m, _ := conn.GetMetaData(bm.opts.Globals.TestMode)
 		rng := base.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)
 		fileName := filepath.Join(config.GetPathToIndex(chain), "staging", f)
@@ -166,27 +167,12 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 
 	stageFn, _ = file.LatestFileInFolder(stageFolder) // it may not exist...
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
-	opts.Report(nAppsThen, nAppsNow)
+	bm.Report(nAppsThen, nAppsNow)
 
 	// logger.Info("Removing backup file as it's not needed.")
 	os.Remove(backupFn) // commits the change
 
 	return true, err
-}
-
-func (opts *ScrapeOptions) Report(nAppsThen, nAppsNow int) {
-	msg := "Block={%d} have {%d} appearances of {%d} ({%0.1f%%}). Need {%d} more. Added {%d} records ({%0.2f} apps/blk)."
-	need := opts.Settings.Apps_per_chunk - utils.Min(opts.Settings.Apps_per_chunk, uint64(nAppsNow))
-	seen := nAppsNow
-	if nAppsThen < nAppsNow {
-		seen = nAppsNow - nAppsThen
-	}
-	pct := float64(nAppsNow) / float64(opts.Settings.Apps_per_chunk)
-	pBlk := float64(seen) / float64(opts.BlockCnt)
-	height := opts.StartBlock + opts.BlockCnt - 1
-	msg = strings.Replace(msg, "{", colors.Green, -1)
-	msg = strings.Replace(msg, "}", colors.Off, -1)
-	logger.Info(fmt.Sprintf(msg, height, nAppsNow, opts.Settings.Apps_per_chunk, pct*100, need, seen, pBlk))
 }
 
 func isListSequential(chain string, ripeFileList []os.DirEntry, allowMissing bool) error {

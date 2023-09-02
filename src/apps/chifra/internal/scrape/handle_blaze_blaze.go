@@ -94,7 +94,7 @@ func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChanne
 			bn: bn,
 		}
 
-		chain := blazeMan.Chain
+		chain := blazeMan.chain
 		conn := rpc.TempConnection(chain)
 
 		ts := tslib.TimestampRecord{
@@ -130,12 +130,12 @@ func (blazeMan *BlazeManager) BlazeProcessAppearances(meta *rpc.MetaData, appear
 	for sData := range appearanceChannel {
 		addrMap := make(index.AddressBooleanMap)
 
-		err = index.UniqFromTraces(blazeMan.Chain, sData.traces, addrMap)
+		err = index.UniqFromTraces(blazeMan.chain, sData.traces, addrMap)
 		if err != nil {
 			return err
 		}
 
-		err = index.UniqFromReceipts(blazeMan.Chain, sData.receipts, addrMap)
+		err = index.UniqFromReceipts(blazeMan.chain, sData.receipts, addrMap)
 		if err != nil {
 			return err
 		}
@@ -155,7 +155,7 @@ func (blazeMan *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.Timest
 
 	for ts := range tsChannel {
 		blazeMutex.Lock()
-		blazeMan.Timestamps = append(blazeMan.Timestamps, ts)
+		blazeMan.timestamps = append(blazeMan.timestamps, ts)
 		blazeMutex.Unlock()
 	}
 
@@ -173,9 +173,9 @@ func (blazeMan *BlazeManager) WriteAppearancesBlaze(meta *rpc.MetaData, bn base.
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := config.GetPathToIndex(blazeMan.Chain) + "ripe/" + blockNumStr + ".txt"
-		if bn > base.Blknum(blazeMan.RipeBlock) {
-			fileName = config.GetPathToIndex(blazeMan.Chain) + "unripe/" + blockNumStr + ".txt"
+		fileName := config.GetPathToIndex(blazeMan.chain) + "ripe/" + blockNumStr + ".txt"
+		if bn > blazeMan.ripeBlock {
+			fileName = config.GetPathToIndex(blazeMan.chain) + "unripe/" + blockNumStr + ".txt"
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
@@ -188,9 +188,9 @@ func (blazeMan *BlazeManager) WriteAppearancesBlaze(meta *rpc.MetaData, bn base.
 
 	blazeMan.syncedReporting(bn, false /* force */)
 	writeMutex.Lock()
-	blazeMan.ProcessedMap[bn] = true
+	blazeMan.processedMap[bn] = true
 	writeMutex.Unlock()
-	blazeMan.NProcessed++
+	blazeMan.nProcessed++
 
 	return
 }
@@ -199,7 +199,7 @@ var (
 	locker uint32
 )
 
-func (blazeMan *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
+func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 	if !atomic.CompareAndSwapUint32(&locker, 0, 1) {
 		// Simply skip the update if someone else is already reporting
 		return
@@ -207,14 +207,18 @@ func (blazeMan *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 	// Make sure to clear the lock on exit
 	defer atomic.StoreUint32(&locker, 0)
 
-	// TODO: See issue https://github.com/TrueBlocks/trueblocks-core/issues/2238
-	step := uint64(17)
-	if blazeMan.NProcessed%step == 0 || force {
+	// Only report once in a while (17 blocks)
+	if bm.nProcessed%17 == 0 || force {
 		dist := uint64(0)
-		if blazeMan.RipeBlock > uint64(bn) {
-			dist = (blazeMan.RipeBlock - uint64(bn))
+		if bm.ripeBlock > bn {
+			dist = (bm.ripeBlock - bn)
 		}
-		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", blazeMan.NProcessed, blazeMan.BlockCount(), bn, blazeMan.RipeBlock, dist)
+		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)",
+			bm.nProcessed,
+			bm.BlockCount(),
+			bn,
+			bm.ripeBlock,
+			dist)
 		logger.Progress(true, msg)
 	}
 }
