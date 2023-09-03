@@ -21,13 +21,13 @@ import (
 
 // ScrapeBatch is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (bm *BlazeManager) ScrapeBatch() error {
+func (bm *BlazeManager) ScrapeBatch() (error, bool) {
 	chain := bm.chain
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
 	if _, err := bm.HandleBlaze(); err != nil {
 		_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
-		return err
+		return err, true
 	}
 
 	start := bm.StartBlock()
@@ -39,13 +39,11 @@ func (bm *BlazeManager) ScrapeBatch() error {
 			// error, so clean up, report the error and return. The loop will repeat.
 			_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
 			msg := fmt.Sprintf("A block %d was not processed%s", bn, strings.Repeat(" ", 50))
-			return errors.New(msg)
+			return errors.New(msg), true
 		}
 	}
 
-	_ = bm.WriteTimestamps(end)
-
-	return nil
+	return bm.WriteTimestamps(end), true
 }
 
 // TODO: Protect against overwriting files on disc

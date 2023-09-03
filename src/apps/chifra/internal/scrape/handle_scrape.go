@@ -5,7 +5,6 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -14,6 +13,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/pkg/errors"
 )
 
 // HandleScrape enters a forever loop and continually scrapes --block_cnt blocks
@@ -31,10 +32,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		nProcessed:   0,
 		opts:         opts,
 	}
-	bm.meta, err = opts.Conn.GetMetaData(testMode)
-	if err != nil {
-		return err
-	}
+	// bm.meta, err = opts.Conn.GetMetaData(testMode)
+	// if err != nil {
+	// 	return err
+	// }
 
 	// Clean the temporary files and makes sure block zero has been processed
 	if ok, err := bm.Prepare(); !ok || err != nil {
@@ -42,26 +43,36 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	runCount := uint64(0)
-	// The forever loop. Loop until the user hits Cntl+C, until runCount runs
-	// out, or until the server tells us to stop.
+	// Loop until the user hits Cntl+C, until runCount runs out, or until
+	// the server tells us to stop.
 	for {
+		// Fetch the meta data which tells us how far along the index is.
 		if bm.meta, err = opts.Conn.GetMetaData(testMode); err != nil {
-			logger.Error(fmt.Sprintf("Error fetching meta data: %s. Sleeping...", err))
+			var ErrFetchingMeta = errors.Errorf("error fetching meta data: %s.", err)
+			logger.Error(ErrFetchingMeta)
 			goto PAUSE
 		}
 
+		// We're may be too close to the start of the chain to have ripe blocks.
+		// Report no error but try again soon.
+		if bm.meta.ChainHeight() < opts.Settings.Unripe_dist {
+			goto PAUSE
+		}
+
+		// The user may have restarted his node's sync (that is, started over).
+		// In this case, the index may be ahead of the chain, if so we go to
+		// sleep and try again later in the hopes that the chain catches up.
 		if bm.meta.NextIndexHeight() > bm.meta.ChainHeight() {
-			// The user may have restarted his node's sync (that is, started over).
-			// In this case, the index may be ahead of the chain, so we go to sleep
-			// and try again later.
-			msg := fmt.Sprintf("The index (%d) is ahead of the chain (%d).",
+			var ErrIndexAhead = errors.Errorf(
+				"index (%d) is ahead of chain (%d)",
 				bm.meta.NextIndexHeight(),
 				bm.meta.ChainHeight(),
 			)
-			logger.Error(msg)
+			logger.Error(ErrIndexAhead)
 			goto PAUSE
 		}
 
+		// Let's start a new round...
 		bm = BlazeManager{
 			chain:        chain,
 			opts:         opts,
@@ -71,30 +82,26 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			meta:         bm.meta,
 		}
 
-		// Adjust startBlock, blockCount, and ripeBlock for this round
+		// Order dependant, be careful!
+		// first block to scrape (one past end of previous round).
 		bm.startBlock = bm.meta.NextIndexHeight()
-		bm.blockCount = opts.BlockCnt
-		if (bm.StartBlock() + bm.BlockCount()) > bm.meta.ChainHeight() {
-			bm.blockCount = (bm.meta.Latest - bm.StartBlock())
-		}
+		// user supplied, but not so many to pass the chain tip.
+		bm.blockCount = utils.Min(opts.BlockCnt, bm.meta.ChainHeight()-bm.StartBlock()+1)
+		// Unripe_dist behind the chain tip.
+		bm.ripeBlock = bm.meta.ChainHeight() - opts.Settings.Unripe_dist
 
-		// Keep ripeBlock at least Unripe_dist behind the head (i.e., 28 blocks usually - six minutes)
-		bm.ripeBlock = bm.meta.ChainHeight()
-		if bm.ripeBlock > opts.Settings.Unripe_dist {
-			bm.ripeBlock = bm.meta.ChainHeight() - opts.Settings.Unripe_dist
-		}
-
-		// Here we do the actual scrape for this round. If anything goes wrong, the called
-		// function cleans up (i.e. remove the unstaged ripe blocks). Note that even on error,
-		// we don't quit. Instead we retry in the hopes that whatever happened corrects itself.
-		if err := bm.ScrapeBatch(); err != nil {
+		// Scrape this round. Only quit on catostrophic errors. Report and sleep otherwise.
+		if err, ok := bm.ScrapeBatch(); !ok || err != nil {
 			logger.Error(colors.BrightRed, err, colors.Off)
+			if !ok {
+				break
+			}
 			goto PAUSE
 		}
 
-		// Try to create chunks...
+		// Consilidate a chunk (if possible). Only quit on catostrophic errors. Report and sleep otherwise.
 		if ok, err := bm.Consolidate(); !ok || err != nil {
-			logger.Error(err)
+			logger.Error(colors.BrightRed, err, colors.Off)
 			if !ok {
 				break
 			}
@@ -102,8 +109,9 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 	PAUSE:
-		// The chain frequently re-orgs. Before sleeping, we remove any unripe files so they
-		// are re-queried in the next round. This is the reason for the unripePath.
+		// If we've gotten this far, we want to clean up the unripe files (we no longer need them).
+		// The chain frequently re-orgs, so we want to re-qeury these next round. This is why
+		// we have an unripePath.
 		unripePath := filepath.Join(config.GetPathToIndex(chain), "unripe")
 		if err = os.RemoveAll(unripePath); err != nil {
 			return err
@@ -114,8 +122,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			break
 		}
 
+		// sleep for a bit (there's no new blocks anyway if we're caught up).
 		bm.pause()
 	}
 
+	// We've left the loop and we're done.
 	return nil
 }
