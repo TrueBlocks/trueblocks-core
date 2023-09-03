@@ -68,7 +68,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 			}
 
 			runCount++
-			if opts.RunCount == 0 || runCount >= opts.RunCount {
+			if opts.RunCount != 0 && runCount >= opts.RunCount {
 				return
 			}
 

@@ -162,7 +162,7 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 
 	stageFn, _ = file.LatestFileInFolder(stageFolder) // it may not exist...
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
-	bm.report(nAppsThen, nAppsNow)
+	bm.report(int(bm.opts.Settings.Apps_per_chunk), nAppsThen, nAppsNow)
 
 	os.Remove(backupFn) // commits the change
 
@@ -175,8 +175,7 @@ func isListSequential(chain string, ripeFileList []os.DirEntry, allowMissing boo
 		fileRange := base.RangeFromFilename(file.Name())
 		if prev != base.NotARange && prev != fileRange {
 			if !prev.Preceeds(fileRange, !allowMissing) {
-				msg := fmt.Sprintf("Ripe files are not sequential (%s ==> %s)", prev, fileRange)
-				return errors.New(msg)
+				return fmt.Errorf("ripe files are not sequential (%s ==> %s)", prev, fileRange)
 			}
 		}
 		prev = fileRange

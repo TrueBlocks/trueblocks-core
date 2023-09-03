@@ -19,8 +19,8 @@ import (
 // forever loop. Returns true if processing should continue, false otherwise.
 // The routine cleans the temporary folders (if any) and then makes sure the zero
 // block (reads the allocation file, if present) is processed.
-func (bm *BlazeManager) Prepare() (ok bool, err error) {
-	chain := bm.chain
+func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
+	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting
 	_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
@@ -50,13 +50,13 @@ func (bm *BlazeManager) Prepare() (ok bool, err error) {
 	array := []tslib.TimestampRecord{}
 	array = append(array, tslib.TimestampRecord{
 		Bn: uint32(0),
-		Ts: uint32(bm.opts.Conn.GetBlockTimestamp(0)),
+		Ts: uint32(opts.Conn.GetBlockTimestamp(0)),
 	})
 	_ = tslib.Append(chain, array)
 
 	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
 	indexPath := index.ToIndexPath(bloomPath)
-	if report, err := index.WriteChunk(chain, indexPath, appMap, len(prefunds), bm.opts.Pin, bm.opts.Remote); err != nil {
+	if report, err := index.WriteChunk(chain, indexPath, appMap, len(prefunds), opts.Pin, opts.Remote); err != nil {
 		return false, err
 	} else if report == nil {
 		logger.Fatal("Should not happen, write chunk returned empty report")

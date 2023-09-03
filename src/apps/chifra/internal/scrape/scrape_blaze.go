@@ -14,13 +14,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
 func (bm *BlazeManager) HandleBlaze() (ok bool, err error) {
-	nChannels := int(bm.opts.Settings.Channel_count)
 	blocks := []base.Blknum{}
 
 	start := bm.StartBlock()
@@ -37,24 +37,24 @@ func (bm *BlazeManager) HandleBlaze() (ok bool, err error) {
 	// TODO: The go routines below may fail. Question -- how does one respond to an error inside a go routine?
 
 	blockWg := sync.WaitGroup{}
-	blockWg.Add(nChannels)
-	for i := 0; i < nChannels; i++ {
+	blockWg.Add(bm.nChannels)
+	for i := 0; i < bm.nChannels; i++ {
 		go func() {
 			_ = bm.ProcessBlocks(blockChannel, &blockWg, appearanceChannel, tsChannel)
 		}()
 	}
 
 	appWg := sync.WaitGroup{}
-	appWg.Add(nChannels)
-	for i := 0; i < nChannels; i++ {
+	appWg.Add(bm.nChannels)
+	for i := 0; i < bm.nChannels; i++ {
 		go func() {
 			_ = bm.ProcessAppearances(appearanceChannel, &appWg)
 		}()
 	}
 
 	tsWg := sync.WaitGroup{}
-	tsWg.Add(nChannels)
-	for i := 0; i < nChannels; i++ {
+	tsWg.Add(bm.nChannels)
+	for i := 0; i < bm.nChannels; i++ {
 		go func() {
 			_ = bm.ProcessTimestamps(tsChannel, &tsWg)
 		}()
@@ -215,4 +215,12 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 			dist)
 		logger.Progress(true, msg)
 	}
+}
+
+// scrapedData combines the extracted block data, trace data, and log data into a
+// structure that is passed through to the AddressChannel for further processing.
+type scrapedData struct {
+	bn       base.Blknum
+	traces   []types.SimpleTrace
+	receipts []types.SimpleReceipt
 }
