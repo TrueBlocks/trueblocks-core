@@ -19,22 +19,24 @@ import (
 // if every block was visited or not.
 type BlazeManager struct {
 	chain        string
-	ripeBlock    base.Blknum
 	timestamps   []tslib.TimestampRecord
 	processedMap map[base.Blknum]bool
 	nProcessed   uint64
 	opts         *ScrapeOptions
 	meta         *rpc.MetaData
+	startBlock   base.Blknum
+	blockCount   base.Blknum
+	ripeBlock    base.Blknum
 }
 
 // StartBlock returns the start block for the current pass of the scraper.
 func (bm *BlazeManager) StartBlock() base.Blknum {
-	return bm.opts.StartBlock
+	return bm.startBlock
 }
 
 // BlockCount returns the number of blocks to process for this pass of the scraper.
 func (bm *BlazeManager) BlockCount() base.Blknum {
-	return bm.opts.BlockCnt
+	return bm.blockCount
 }
 
 // Report prints out a report of the progress of the scraper.
