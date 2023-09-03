@@ -447,9 +447,9 @@ monitors,remove,cmds
 monitors,remove,python
 monitors,remove,readme
 monitors,remove,typescript
-monitors,runOnce,api
-monitors,runOnce,python
-monitors,runOnce,typescript
+monitors,runCount,api
+monitors,runCount,python
+monitors,runCount,typescript
 monitors,sleep,api
 monitors,sleep,cmds
 monitors,sleep,python

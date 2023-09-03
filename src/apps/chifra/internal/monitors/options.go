@@ -32,7 +32,7 @@ type MonitorsOptions struct {
 	Watchlist string                `json:"watchlist,omitempty"` // Available with --watch option only, a file containing the addresses to watch
 	Commands  string                `json:"commands,omitempty"`  // Available with --watch option only, the file containing the list of commands to apply to each watched address
 	BatchSize uint64                `json:"batchSize,omitempty"` // Available with --watch option only, the number of monitors to process in each batch
-	RunOnce   bool                  `json:"runOnce,omitempty"`   // Available with --watch option only, only run the monitor --watch commands once then quit
+	RunCount  uint64                `json:"runCount,omitempty"`  // Available with --watch option only, run the monitor this many times, then quit
 	Sleep     float64               `json:"sleep,omitempty"`     // Available with --watch option only, the number of seconds to sleep between runs
 	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
 	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
@@ -57,7 +57,7 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(len(opts.Watchlist) > 0, "Watchlist: ", opts.Watchlist)
 	logger.TestLog(len(opts.Commands) > 0, "Commands: ", opts.Commands)
 	logger.TestLog(opts.BatchSize != 8, "BatchSize: ", opts.BatchSize)
-	logger.TestLog(opts.RunOnce, "RunOnce: ", opts.RunOnce)
+	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -74,6 +74,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 	copy := defaultMonitorsOptions
 	opts := &copy
 	opts.BatchSize = 8
+	opts.RunCount = 0
 	opts.Sleep = 14
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -100,8 +101,8 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			opts.Commands = value[0]
 		case "batchSize":
 			opts.BatchSize = globals.ToUint64(value[0])
-		case "runOnce":
-			opts.RunOnce = true
+		case "runCount":
+			opts.RunCount = globals.ToUint64(value[0])
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:

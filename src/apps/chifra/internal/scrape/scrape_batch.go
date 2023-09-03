@@ -19,9 +19,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
-// HandleScrapeBlaze is called each time around the forever loop prior to calling into
+// ScrapeBatch is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (bm *BlazeManager) HandleScrapeBlaze() error {
+func (bm *BlazeManager) ScrapeBatch() error {
 	chain := bm.chain
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure

@@ -49,7 +49,7 @@ const longMonitors = `Purpose:
 const notesMonitors = `
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
-  - If no address is presented to the --clean command, all existing monitors are be cleaned.
+  - If no address is presented to the --clean command, all existing monitors will be cleaned.
   - The --watch option requires two additional parameters to be specified: --watchlist and --commands.
   - Addresses provided on the command line are ignored in --watch mode.
   - Providing the value existing to the --watchlist monitors all existing monitor files (see --list).`
@@ -70,8 +70,11 @@ func init() {
 	monitorsCmd.Flags().StringVarP(&monitorsPkg.GetOptions().Watchlist, "watchlist", "a", "", "available with --watch option only, a file containing the addresses to watch")
 	monitorsCmd.Flags().StringVarP(&monitorsPkg.GetOptions().Commands, "commands", "c", "", "available with --watch option only, the file containing the list of commands to apply to each watched address")
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.GetOptions().BatchSize, "batch_size", "b", 8, "available with --watch option only, the number of monitors to process in each batch")
-	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().RunOnce, "run_once", "r", false, "available with --watch option only, only run the monitor --watch commands once then quit")
+	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.GetOptions().RunCount, "run_count", "u", 0, "available with --watch option only, run the monitor this many times, then quit (hidden)")
 	monitorsCmd.Flags().Float64VarP(&monitorsPkg.GetOptions().Sleep, "sleep", "s", 14, "available with --watch option only, the number of seconds to sleep between runs")
+	if os.Getenv("TEST_MODE") != "true" {
+		monitorsCmd.Flags().MarkHidden("run_count")
+	}
 	globals.InitGlobals(monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))

@@ -46,6 +46,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 
 	s.ChangeState(true, tmpPath)
 
+	runCount := uint64(0)
 	for {
 		if !s.Running {
 			s.Pause()
@@ -61,9 +62,14 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 				logger.Error(err)
 				return
 			} else {
-				if canceled || opts.RunOnce {
+				if canceled {
 					return
 				}
+			}
+
+			runCount++
+			if opts.RunCount == 0 || runCount >= opts.RunCount {
+				return
 			}
 
 			sleep := opts.Sleep

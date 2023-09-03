@@ -10,7 +10,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -23,8 +22,6 @@ const asciiAppearanceSize = 59
 // Consolidate calls into the block scraper to (a) call Blaze and (b) consolidate if applicable
 func (bm *BlazeManager) Consolidate() (bool, error) {
 	chain := bm.chain
-
-	bm.syncedReporting(bm.StartBlock()+bm.BlockCount(), true /* force */)
 
 	// Get a sorted list of files in the ripe folder
 	ripeFolder := filepath.Join(config.GetPathToIndex(chain), "ripe")
@@ -60,7 +57,7 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 	unripeDist := bm.opts.Settings.Unripe_dist
 	if uint64(ripeCnt) < (bm.BlockCount() - unripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
-		allowMissing := scrapeCfg.AllowMissing(chain)
+		allowMissing := bm.opts.Settings.Allow_missing
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
 			_ = index.CleanTemporaryFolders(config.GetPathToCache(chain), false)
 			return true, err
@@ -161,15 +158,12 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 			os.Remove(fileName) // cleans up by replacing the previous stage
 			return true, err
 		}
-		// logger.Info(colors.Red, "fileName:", fileName, colors.Off)
-		// logger.Info(colors.Red, "curRange:", curRange, colors.Off)
 	}
 
 	stageFn, _ = file.LatestFileInFolder(stageFolder) // it may not exist...
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
-	bm.Report(nAppsThen, nAppsNow)
+	bm.report(nAppsThen, nAppsNow)
 
-	// logger.Info("Removing backup file as it's not needed.")
 	os.Remove(backupFn) // commits the change
 
 	return true, err

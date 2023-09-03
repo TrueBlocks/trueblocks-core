@@ -38,7 +38,7 @@ func (bm *BlazeManager) BlockCount() base.Blknum {
 }
 
 // Report prints out a report of the progress of the scraper.
-func (bm *BlazeManager) Report(nAppsThen, nAppsNow int) {
+func (bm *BlazeManager) report(nAppsThen, nAppsNow int) {
 	settings := bm.opts.Settings
 
 	msg := "Block={%d} have {%d} appearances of {%d} ({%0.1f%%}). Need {%d} more. Added {%d} records ({%0.2f} apps/blk)."
@@ -56,7 +56,7 @@ func (bm *BlazeManager) Report(nAppsThen, nAppsNow int) {
 }
 
 // Pause goes to sleep for a period of time based on the settings.
-func (bm *BlazeManager) Pause() {
+func (bm *BlazeManager) pause() {
 	// we always pause at least a quarter of a second to allow the node to 'rest'
 	time.Sleep(250 * time.Millisecond)
 	isDefaultSleep := bm.opts.Sleep >= 13 && bm.opts.Sleep <= 14

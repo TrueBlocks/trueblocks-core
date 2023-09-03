@@ -20,20 +20,14 @@ import (
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
 func (bm *BlazeManager) HandleBlaze() (ok bool, err error) {
+	nChannels := int(bm.opts.Settings.Channel_count)
 	blocks := []base.Blknum{}
 
 	start := bm.StartBlock()
 	end := bm.StartBlock() + bm.BlockCount()
-
 	for block := start; block < end; block++ {
 		blocks = append(blocks, block)
 	}
-
-	return bm.HandleBlaze1(blocks)
-}
-
-func (bm *BlazeManager) HandleBlaze1(blocks []base.Blknum) (ok bool, err error) {
-	nChannels := int(bm.opts.Settings.Channel_count)
 
 	// We need three pipelines...we shove into blocks, blocks shoves into appearances and timestamps
 	blockChannel := make(chan base.Blknum)
@@ -46,7 +40,7 @@ func (bm *BlazeManager) HandleBlaze1(blocks []base.Blknum) (ok bool, err error) 
 	blockWg.Add(nChannels)
 	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = bm.BlazeProcessBlocks(blockChannel, &blockWg, appearanceChannel, tsChannel)
+			_ = bm.ProcessBlocks(blockChannel, &blockWg, appearanceChannel, tsChannel)
 		}()
 	}
 
@@ -54,7 +48,7 @@ func (bm *BlazeManager) HandleBlaze1(blocks []base.Blknum) (ok bool, err error) 
 	appWg.Add(nChannels)
 	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = bm.BlazeProcessAppearances(appearanceChannel, &appWg)
+			_ = bm.ProcessAppearances(appearanceChannel, &appWg)
 		}()
 	}
 
@@ -62,7 +56,7 @@ func (bm *BlazeManager) HandleBlaze1(blocks []base.Blknum) (ok bool, err error) 
 	tsWg.Add(nChannels)
 	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = bm.BlazeProcessTimestamps(tsChannel, &tsWg)
+			_ = bm.ProcessTimestamps(tsChannel, &tsWg)
 		}()
 	}
 
@@ -84,9 +78,9 @@ func (bm *BlazeManager) HandleBlaze1(blocks []base.Blknum) (ok bool, err error) 
 	return true, nil
 }
 
-// BlazeProcessBlocks processes the block channel and for each block query the node for both
+// ProcessBlocks processes the block channel and for each block query the node for both
 // traces and logs. Send results down appearanceChannel.
-func (bm *BlazeManager) BlazeProcessBlocks(blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
+func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
 	defer blockWg.Done()
 	for bn := range blockChannel {
 
@@ -122,8 +116,8 @@ func (bm *BlazeManager) BlazeProcessBlocks(blockChannel chan base.Blknum, blockW
 
 var blazeMutex sync.Mutex
 
-// BlazeProcessAppearances processes scrapedData objects shoved down the appearanceChannel
-func (bm *BlazeManager) BlazeProcessAppearances(appearanceChannel chan scrapedData, appWg *sync.WaitGroup) (err error) {
+// ProcessAppearances processes scrapedData objects shoved down the appearanceChannel
+func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, appWg *sync.WaitGroup) (err error) {
 	defer appWg.Done()
 
 	for sData := range appearanceChannel {
@@ -139,7 +133,7 @@ func (bm *BlazeManager) BlazeProcessAppearances(appearanceChannel chan scrapedDa
 			return err
 		}
 
-		err = bm.WriteAppearancesBlaze(sData.bn, addrMap)
+		err = bm.WriteAppearances(sData.bn, addrMap)
 		if err != nil {
 			return err
 		}
@@ -148,8 +142,8 @@ func (bm *BlazeManager) BlazeProcessAppearances(appearanceChannel chan scrapedDa
 	return
 }
 
-// BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
-func (bm *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord, tsWg *sync.WaitGroup) (err error) {
+// ProcessTimestamps processes timestamp data (currently by printing to a temporary file)
+func (bm *BlazeManager) ProcessTimestamps(tsChannel chan tslib.TimestampRecord, tsWg *sync.WaitGroup) (err error) {
 	defer tsWg.Done()
 
 	for ts := range tsChannel {
@@ -163,7 +157,8 @@ func (bm *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRec
 
 var writeMutex sync.Mutex
 
-func (bm *BlazeManager) WriteAppearancesBlaze(bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
+// WriteAppearances writes the appearance for a chunk to a file
+func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {

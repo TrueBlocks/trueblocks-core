@@ -37,7 +37,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	// Clean the temporary files and makes sure block zero has been processed
-	if ok, err := opts.Prepare(); !ok || err != nil {
+	if ok, err := blazeMan.Prepare(); !ok || err != nil {
 		return err
 	}
 
@@ -45,6 +45,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	unripePath := filepath.Join(config.GetPathToIndex(chain), "unripe")
 
 	// The forever loop. Loop until the user hits Cntl+C or the server tells us to stop.
+	runCount := uint64(0)
 	for {
 		if blazeMan.meta, err = opts.Conn.GetMetaData(testMode); err != nil {
 			logger.Error(fmt.Sprintf("Error fetching meta data: %s. Sleeping...", err))
@@ -89,7 +90,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// Here we do the actual scrape for this round. If anything goes wrong, the
 		// function will have cleaned up (i.e. remove the unstaged ripe blocks). Note
 		// that we don't quit, instead we sleep and we retry continually.
-		if err := blazeMan.HandleScrapeBlaze(); err != nil {
+		if err := blazeMan.ScrapeBatch(); err != nil {
 			logger.Error(colors.BrightRed, err, colors.Off)
 			goto PAUSE
 		}
@@ -110,7 +111,12 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			return err
 		}
 
-		blazeMan.Pause()
+		runCount++
+		if opts.RunCount == 0 || runCount >= opts.RunCount {
+			break
+		}
+
+		blazeMan.pause()
 	}
 
 	return nil

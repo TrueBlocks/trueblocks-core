@@ -35,6 +35,10 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("{0} requires tracing, err: {1}", "chifra scrape", rpc.ErrTraceBlockMissing)
 	}
 
+	if !opts.Conn.IsNodeArchive() {
+		return validate.Usage("{0} requires {1}.", "chifra scrape", "an archive node")
+	}
+
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
