@@ -25,7 +25,7 @@ func (bm *BlazeManager) HandleScrapeBlaze() error {
 	chain := bm.chain
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
-	if _, err := bm.HandleBlaze(bm.meta); err != nil {
+	if _, err := bm.HandleBlaze(); err != nil {
 		_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
 		return err
 	}

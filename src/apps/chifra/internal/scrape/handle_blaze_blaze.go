@@ -19,21 +19,21 @@ import (
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
-func (blazeMan *BlazeManager) HandleBlaze(meta *rpc.MetaData) (ok bool, err error) {
+func (bm *BlazeManager) HandleBlaze() (ok bool, err error) {
 	blocks := []base.Blknum{}
 
-	start := blazeMan.StartBlock()
-	end := blazeMan.StartBlock() + blazeMan.BlockCount()
+	start := bm.StartBlock()
+	end := bm.StartBlock() + bm.BlockCount()
 
 	for block := start; block < end; block++ {
 		blocks = append(blocks, block)
 	}
 
-	return blazeMan.HandleBlaze1(meta, blocks)
+	return bm.HandleBlaze1(blocks)
 }
 
-func (blazeMan *BlazeManager) HandleBlaze1(meta *rpc.MetaData, blocks []base.Blknum) (ok bool, err error) {
-	nChannels := int(blazeMan.opts.Settings.Channel_count)
+func (bm *BlazeManager) HandleBlaze1(blocks []base.Blknum) (ok bool, err error) {
+	nChannels := int(bm.opts.Settings.Channel_count)
 
 	// We need three pipelines...we shove into blocks, blocks shoves into appearances and timestamps
 	blockChannel := make(chan base.Blknum)
@@ -46,7 +46,7 @@ func (blazeMan *BlazeManager) HandleBlaze1(meta *rpc.MetaData, blocks []base.Blk
 	blockWg.Add(nChannels)
 	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = blazeMan.BlazeProcessBlocks(meta, blockChannel, &blockWg, appearanceChannel, tsChannel)
+			_ = bm.BlazeProcessBlocks(blockChannel, &blockWg, appearanceChannel, tsChannel)
 		}()
 	}
 
@@ -54,7 +54,7 @@ func (blazeMan *BlazeManager) HandleBlaze1(meta *rpc.MetaData, blocks []base.Blk
 	appWg.Add(nChannels)
 	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = blazeMan.BlazeProcessAppearances(meta, appearanceChannel, &appWg)
+			_ = bm.BlazeProcessAppearances(appearanceChannel, &appWg)
 		}()
 	}
 
@@ -62,7 +62,7 @@ func (blazeMan *BlazeManager) HandleBlaze1(meta *rpc.MetaData, blocks []base.Blk
 	tsWg.Add(nChannels)
 	for i := 0; i < nChannels; i++ {
 		go func() {
-			_ = blazeMan.BlazeProcessTimestamps(tsChannel, &tsWg)
+			_ = bm.BlazeProcessTimestamps(tsChannel, &tsWg)
 		}()
 	}
 
@@ -86,7 +86,7 @@ func (blazeMan *BlazeManager) HandleBlaze1(meta *rpc.MetaData, blocks []base.Blk
 
 // BlazeProcessBlocks processes the block channel and for each block query the node for both
 // traces and logs. Send results down appearanceChannel.
-func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
+func (bm *BlazeManager) BlazeProcessBlocks(blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
 	defer blockWg.Done()
 	for bn := range blockChannel {
 
@@ -94,7 +94,7 @@ func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChanne
 			bn: bn,
 		}
 
-		chain := blazeMan.chain
+		chain := bm.chain
 		conn := rpc.TempConnection(chain)
 
 		ts := tslib.TimestampRecord{
@@ -108,7 +108,6 @@ func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChanne
 			return err
 		}
 
-		// TODO: BOGUS - This could use rawLogs so as to avoid unnecessary decoding
 		if sd.receipts, err = conn.GetReceiptsByNumber(uint64(bn), base.Timestamp(ts.Ts)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
@@ -124,23 +123,23 @@ func (blazeMan *BlazeManager) BlazeProcessBlocks(meta *rpc.MetaData, blockChanne
 var blazeMutex sync.Mutex
 
 // BlazeProcessAppearances processes scrapedData objects shoved down the appearanceChannel
-func (blazeMan *BlazeManager) BlazeProcessAppearances(meta *rpc.MetaData, appearanceChannel chan scrapedData, appWg *sync.WaitGroup) (err error) {
+func (bm *BlazeManager) BlazeProcessAppearances(appearanceChannel chan scrapedData, appWg *sync.WaitGroup) (err error) {
 	defer appWg.Done()
 
 	for sData := range appearanceChannel {
 		addrMap := make(index.AddressBooleanMap)
 
-		err = index.UniqFromTraces(blazeMan.chain, sData.traces, addrMap)
+		err = index.UniqFromTraces(bm.chain, sData.traces, addrMap)
 		if err != nil {
 			return err
 		}
 
-		err = index.UniqFromReceipts(blazeMan.chain, sData.receipts, addrMap)
+		err = index.UniqFromReceipts(bm.chain, sData.receipts, addrMap)
 		if err != nil {
 			return err
 		}
 
-		err = blazeMan.WriteAppearancesBlaze(meta, sData.bn, addrMap)
+		err = bm.WriteAppearancesBlaze(sData.bn, addrMap)
 		if err != nil {
 			return err
 		}
@@ -150,12 +149,12 @@ func (blazeMan *BlazeManager) BlazeProcessAppearances(meta *rpc.MetaData, appear
 }
 
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
-func (blazeMan *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord, tsWg *sync.WaitGroup) (err error) {
+func (bm *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord, tsWg *sync.WaitGroup) (err error) {
 	defer tsWg.Done()
 
 	for ts := range tsChannel {
 		blazeMutex.Lock()
-		blazeMan.timestamps = append(blazeMan.timestamps, ts)
+		bm.timestamps = append(bm.timestamps, ts)
 		blazeMutex.Unlock()
 	}
 
@@ -164,7 +163,7 @@ func (blazeMan *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.Timest
 
 var writeMutex sync.Mutex
 
-func (blazeMan *BlazeManager) WriteAppearancesBlaze(meta *rpc.MetaData, bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
+func (bm *BlazeManager) WriteAppearancesBlaze(bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {
@@ -173,9 +172,9 @@ func (blazeMan *BlazeManager) WriteAppearancesBlaze(meta *rpc.MetaData, bn base.
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := config.GetPathToIndex(blazeMan.chain) + "ripe/" + blockNumStr + ".txt"
-		if bn > blazeMan.ripeBlock {
-			fileName = config.GetPathToIndex(blazeMan.chain) + "unripe/" + blockNumStr + ".txt"
+		fileName := config.GetPathToIndex(bm.chain) + "ripe/" + blockNumStr + ".txt"
+		if bn > bm.ripeBlock {
+			fileName = config.GetPathToIndex(bm.chain) + "unripe/" + blockNumStr + ".txt"
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
@@ -186,11 +185,11 @@ func (blazeMan *BlazeManager) WriteAppearancesBlaze(meta *rpc.MetaData, bn base.
 		}
 	}
 
-	blazeMan.syncedReporting(bn, false /* force */)
+	bm.syncedReporting(bn, false /* force */)
 	writeMutex.Lock()
-	blazeMan.processedMap[bn] = true
+	bm.processedMap[bn] = true
 	writeMutex.Unlock()
-	blazeMan.nProcessed++
+	bm.nProcessed++
 
 	return
 }

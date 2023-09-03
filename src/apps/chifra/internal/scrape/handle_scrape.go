@@ -64,7 +64,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 
 		opts.StartBlock = blazeMan.meta.NextIndexHeight()
 		opts.BlockCnt = origBlockCnt
-		if (blazeMan.StartBlock() + blazeMan.BlockCount()) > blazeMan.meta.Latest {
+		if (blazeMan.StartBlock() + blazeMan.BlockCount()) > blazeMan.meta.ChainHeight() {
 			opts.BlockCnt = (blazeMan.meta.Latest - blazeMan.StartBlock())
 		}
 
@@ -83,6 +83,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			ripeBlock:    ripeBlock,
 			timestamps:   make([]tslib.TimestampRecord, 0, origBlockCnt),
 			processedMap: make(map[base.Blknum]bool, origBlockCnt),
+			meta:         blazeMan.meta,
 		}
 
 		// Here we do the actual scrape for this round. If anything goes wrong, the

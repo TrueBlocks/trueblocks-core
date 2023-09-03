@@ -14,36 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// GetReceiptsByNumber returns all receipts in a blocks along with their logs
-func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.SimpleReceipt, error) {
-	if conn.StoreReadable() {
-		receiptGroup := &types.SimpleReceiptGroup{
-			BlockNumber:      bn,
-			TransactionIndex: utils.NOPOS,
-		}
-		if err := conn.Store.Read(receiptGroup, nil); err == nil {
-			return receiptGroup.Receipts, nil
-		}
-	}
-
-	if receipts, err := conn.getReceiptsSimple(bn); err != nil {
-		return receipts, err
-	} else {
-		if conn.StoreWritable() && conn.EnabledMap["receipts"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
-			receiptGroup := &types.SimpleReceiptGroup{
-				Receipts:         receipts,
-				BlockNumber:      bn,
-				TransactionIndex: utils.NOPOS,
-			}
-			if err = conn.Store.Write(receiptGroup, nil); err != nil {
-				logger.Warn("Failed to write receipts to cache", err)
-			}
-		}
-
-		return receipts, err
-	}
-}
-
 // GetReceipt retrieves a single receipt by block number and transaction id. If suggested is provided,
 // it will be used for the timestamp of the logs.
 func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested base.Timestamp) (receipt types.SimpleReceipt, err error) {
@@ -100,6 +70,36 @@ func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.Ra
 		} else {
 			return receipt, txHash, nil
 		}
+	}
+}
+
+// GetReceiptsByNumber returns all receipts in a blocks along with their logs
+func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.SimpleReceipt, error) {
+	if conn.StoreReadable() {
+		receiptGroup := &types.SimpleReceiptGroup{
+			BlockNumber:      bn,
+			TransactionIndex: utils.NOPOS,
+		}
+		if err := conn.Store.Read(receiptGroup, nil); err == nil {
+			return receiptGroup.Receipts, nil
+		}
+	}
+
+	if receipts, err := conn.getReceiptsSimple(bn); err != nil {
+		return receipts, err
+	} else {
+		if conn.StoreWritable() && conn.EnabledMap["receipts"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
+			receiptGroup := &types.SimpleReceiptGroup{
+				Receipts:         receipts,
+				BlockNumber:      bn,
+				TransactionIndex: utils.NOPOS,
+			}
+			if err = conn.Store.Write(receiptGroup, nil); err != nil {
+				logger.Warn("Failed to write receipts to cache", err)
+			}
+		}
+
+		return receipts, err
 	}
 }
 
