@@ -21,17 +21,20 @@ import (
 
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeMan *BlazeManager) error {
-	chain := opts.Globals.Chain
+func (bm *BlazeManager) HandleScrapeBlaze() error {
+	chain := bm.chain
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
-	if _, err := blazeMan.HandleBlaze(progress); err != nil {
+	if _, err := bm.HandleBlaze(); err != nil {
 		_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
 		return err
 	}
 
-	for bn := opts.StartBlock; bn < opts.StartBlock+opts.BlockCnt; bn++ {
-		if !blazeMan.ProcessedMap[bn] {
+	start := bm.StartBlock()
+	end := bm.StartBlock() + bm.BlockCount()
+
+	for bn := start; bn < end; bn++ {
+		if !bm.processedMap[bn] {
 			// At least one block was not processed. This would only happen in the event of an
 			// error, so clean up, report the error and return. The loop will repeat.
 			_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
@@ -40,18 +43,19 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeMan *B
 		}
 	}
 
-	_ = WriteTimestamps(blazeMan.Chain, blazeMan.Timestamps, blazeMan.StartBlock+blazeMan.BlockCount)
+	_ = bm.WriteTimestamps(end)
 
 	return nil
 }
 
 // TODO: Protect against overwriting files on disc
 
-func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uint64) error {
+func (bm *BlazeManager) WriteTimestamps(endPoint uint64) error {
+	chain := bm.chain
 	conn := rpc.TempConnection(chain)
 
-	sort.Slice(tsArray, func(i, j int) bool {
-		return tsArray[i].Bn < tsArray[j].Bn
+	sort.Slice(bm.timestamps, func(i, j int) bool {
+		return bm.timestamps[i].Bn < bm.timestamps[j].Bn
 	})
 
 	// Assume that the existing timestamps file always contains valid timestamps in a valid order so we can only append
@@ -75,14 +79,14 @@ func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uin
 		// Append to the timestamps file all the new timestamps but as we do that make sure we're
 		// not skipping anything at the front, in the middle, or at the end of the list
 		ts := tslib.TimestampRecord{}
-		if cnt >= len(tsArray) {
+		if cnt >= len(bm.timestamps) {
 			ts = tslib.TimestampRecord{
 				Bn: uint32(bn),
 				Ts: uint32(conn.GetBlockTimestamp(bn)),
 			}
 		} else {
-			ts = tsArray[cnt]
-			if tsArray[cnt].Bn != uint32(bn) {
+			ts = bm.timestamps[cnt]
+			if bm.timestamps[cnt].Bn != uint32(bn) {
 				ts = tslib.TimestampRecord{
 					Bn: uint32(bn),
 					Ts: uint32(conn.GetBlockTimestamp(bn)),

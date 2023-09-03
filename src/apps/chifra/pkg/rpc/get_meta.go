@@ -8,6 +8,7 @@ import (
 	"context"
 	"encoding/json"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -85,11 +86,22 @@ func (conn *Connection) GetMetaData(testmode bool) (*MetaData, error) {
 	return &meta, nil
 }
 
-func (m MetaData) String() string {
+func (m *MetaData) String() string {
 	ret, _ := json.MarshalIndent(m, "", "  ")
 	return string(ret)
 }
 
-func (m MetaData) Age(bn uint64) int64 {
-	return int64(m.Latest) - int64(bn) // Allows negative
+// Highest returns the height of the index (i.e., max between the finalized, staging, and ripe indexes).
+func (m *MetaData) IndexHeight() base.Blknum {
+	return utils.Max(m.Finalized, utils.Max(m.Staging, m.Ripe))
+}
+
+// NextIndexHeight returns the block after the height of the index.
+func (m *MetaData) NextIndexHeight() base.Blknum {
+	return m.IndexHeight() + 1
+}
+
+// ChainHeight returns the block after the height of the index.
+func (m *MetaData) ChainHeight() base.Blknum {
+	return m.Latest
 }

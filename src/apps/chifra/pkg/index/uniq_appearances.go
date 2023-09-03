@@ -13,6 +13,18 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+// UniqFromReceipts extracts addresses from an array of receipts
+func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap AddressBooleanMap) (err error) {
+	for _, receipt := range receipts {
+		created := receipt.ContractAddress
+		addAddressToMaps(created.Hex(), receipt.BlockNumber, receipt.TransactionIndex, addrMap)
+		if err := UniqFromLogs(chain, receipt.Logs, addrMap); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // UniqFromLogs extracts addresses from the logs
 func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
 	for _, log := range logs {

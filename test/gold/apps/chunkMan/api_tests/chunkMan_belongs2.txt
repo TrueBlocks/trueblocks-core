@@ -2,17 +2,15 @@ chunks?mode=index&belongs=0x0000000000000214156104345760006001905490&blocks=0x12
 {
   "data": [
     {
-      "addressRecord": {
-        "address": "0x0000000000000214156104345760006001905490",
-        "offset": 3,
-        "count": 1
-      },
+      "address": "0x0000000000000214156104345760006001905490",
       "appearances": [
         {
           "blockNumber": 208380,
           "transactionIndex": 0
         }
-      ]
+      ],
+      "count": 1,
+      "offset": 3
     }
   ],
   "meta": {

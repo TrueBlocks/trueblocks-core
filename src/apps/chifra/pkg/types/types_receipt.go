@@ -10,10 +10,15 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
+	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
@@ -139,7 +144,43 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 	}
 }
 
-// --> marshal_only
+// --> cacheable by block as group
+type SimpleReceiptGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Receipts         []SimpleReceipt
+}
+
+func (s *SimpleReceiptGroup) CacheName() string {
+	return "Receipt"
+}
+
+func (s *SimpleReceiptGroup) CacheId() string {
+	return fmt.Sprintf("%09d", s.BlockNumber)
+}
+
+func (s *SimpleReceiptGroup) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
+	extension = "bin"
+
+	return
+}
+
+func (s *SimpleReceiptGroup) MarshalCache(writer io.Writer) (err error) {
+	return cache.WriteValue(writer, s.Receipts)
+}
+
+func (s *SimpleReceiptGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Receipts, version)
+}
+
 func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 	// BlockHash
 	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
@@ -300,6 +341,37 @@ func (s *SimpleReceipt) IsDefault() bool {
 	c := s.GasUsed == 0
 	d := len(s.Logs) == 0
 	return a && b && c && d
+}
+
+func (r *RawReceipt) RawToSimple(vals map[string]any) (SimpleReceipt, error) {
+	logs := []SimpleLog{}
+	for _, rawLog := range r.Logs {
+		rawLog := rawLog
+		simpleLog, _ := rawLog.RawToSimple(vals)
+		logs = append(logs, simpleLog)
+	}
+
+	cumulativeGasUsed, err := hexutil.DecodeUint64(r.CumulativeGasUsed)
+	if err != nil {
+		return SimpleReceipt{}, err
+	}
+
+	receipt := SimpleReceipt{
+		BlockHash:         base.HexToHash(r.BlockHash),
+		BlockNumber:       utils.MustParseUint(r.BlockNumber),
+		ContractAddress:   base.HexToAddress(r.ContractAddress),
+		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
+		EffectiveGasPrice: utils.MustParseUint(r.EffectiveGasPrice),
+		GasUsed:           utils.MustParseUint(r.GasUsed),
+		Status:            uint32(utils.MustParseUint(r.Status)),
+		IsError:           utils.MustParseUint(r.Status) == 0,
+		TransactionHash:   base.HexToHash(r.TransactionHash),
+		TransactionIndex:  utils.MustParseUint(r.TransactionIndex),
+		Logs:              logs,
+		raw:               r,
+	}
+
+	return receipt, nil
 }
 
 // EXISTING_CODE
