@@ -20,14 +20,7 @@ import (
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
 // and then extracting addresses and timestamps from those data structures.
-func (bm *BlazeManager) HandleBlaze() (ok bool, err error) {
-	blocks := []base.Blknum{}
-
-	start := bm.StartBlock()
-	end := bm.StartBlock() + bm.BlockCount()
-	for block := start; block < end; block++ {
-		blocks = append(blocks, block)
-	}
+func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
 
 	// We need three pipelines...we shove into blocks, blocks shoves into appearances and timestamps
 	blockChannel := make(chan base.Blknum)
@@ -75,7 +68,7 @@ func (bm *BlazeManager) HandleBlaze() (ok bool, err error) {
 	close(tsChannel)
 	tsWg.Wait()
 
-	return true, nil
+	return nil, true
 }
 
 // ProcessBlocks processes the block channel and for each block query the node for both

@@ -39,6 +39,11 @@ func (bm *BlazeManager) BlockCount() base.Blknum {
 	return bm.blockCount
 }
 
+// EndBlock returns the last block to process for this pass of the scraper.
+func (bm *BlazeManager) EndBlock() base.Blknum {
+	return bm.startBlock + bm.blockCount
+}
+
 // Report prints out a report of the progress of the scraper.
 func (bm *BlazeManager) report(perChunk, nAppsThen, nAppsNow int) {
 	need := perChunk - utils.Min(perChunk, nAppsNow)

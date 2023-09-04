@@ -5,37 +5,33 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
-	"errors"
 	"fmt"
-	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 )
 
-// ScrapeBatch is called each time around the forever loop prior to calling into
-// Blaze to actually scrape the blocks.
-func (bm *BlazeManager) ScrapeBatch() (error, bool) {
-	chain := bm.chain
+// ScrapeBatch is called each time around the forever loop. It calls into
+// HandleBlaze and writes the timestamps if there's no error.
+func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
+	indexPath := config.GetPathToIndex(bm.chain)
 
-	// Do the actual scrape, wait until it finishes, clean up and return on failure
-	if _, err := bm.HandleBlaze(); err != nil {
-		_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
-		return err, true
+	if err, ok := bm.HandleBlaze(blocks); !ok || err != nil {
+		_ = index.CleanTemporaryFolders(indexPath, false)
+		return err, ok
 	}
 
-	start := bm.StartBlock()
-	end := bm.StartBlock() + bm.BlockCount()
-
-	for bn := start; bn < end; bn++ {
-		if !bm.processedMap[bn] {
-			// At least one block was not processed. This would only happen in the event of an
-			// error, so clean up, report the error and return. The loop will repeat.
-			_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
-			msg := fmt.Sprintf("A block %d was not processed%s", bn, strings.Repeat(" ", 50))
-			return errors.New(msg), true
+	// Check to see if we missed any blocks...
+	for _, block := range blocks {
+		if !bm.processedMap[block] {
+			// We missed a block. We need to clean up and continue
+			// next time around the loop. This may happen if the
+			// node returns an error for example.
+			_ = index.CleanTemporaryFolders(indexPath, false)
+			return fmt.Errorf("a block (%d) was not processed", block), true
 		}
 	}
 
-	return bm.SaveTimestamps(end), true
+	return bm.WriteTimestamps(blocks), true
 }

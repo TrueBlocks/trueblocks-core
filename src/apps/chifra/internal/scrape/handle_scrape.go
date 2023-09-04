@@ -21,7 +21,10 @@ import (
 // (or less if close to the head). The forever loop pauses each round for
 // --sleep seconds (or, if not close to the head, for .25 seconds).
 func (opts *ScrapeOptions) HandleScrape() error {
+	var blocks = make([]base.Blknum, 0, opts.BlockCnt)
 	var err error
+	var ok bool
+
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
@@ -42,17 +45,15 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// Fetch the meta data which tells us how far along the index is.
 		if bm.meta, err = opts.Conn.GetMetaData(testMode); err != nil {
 			var ErrFetchingMeta = fmt.Errorf("error fetching meta data: %s", err)
-			logger.Error(ErrFetchingMeta)
+			logger.Error(colors.BrightRed, ErrFetchingMeta, colors.Off)
 			goto PAUSE
 		}
-		// logger.Info(colors.Green+"meta data fetched"+colors.Off, bm.meta)
 
 		// We're may be too close to the start of the chain to have ripe blocks.
 		// Report no error but try again soon.
 		if bm.meta.ChainHeight() < opts.Settings.Unripe_dist {
 			goto PAUSE
 		}
-		// logger.Info(colors.Green+"ripe block found"+colors.Off, bm.meta.ChainHeight()-opts.Settings.Unripe_dist)
 
 		// The user may have restarted his node's sync (that is, started over).
 		// In this case, the index may be ahead of the chain, if so we go to
@@ -63,10 +64,9 @@ func (opts *ScrapeOptions) HandleScrape() error {
 				bm.meta.NextIndexHeight(),
 				bm.meta.ChainHeight(),
 			)
-			logger.Error(ErrIndexAhead)
+			logger.Error(colors.BrightRed, ErrIndexAhead, colors.Off)
 			goto PAUSE
 		}
-		// logger.Info(colors.Green+"index is not ahead of chain"+colors.Off, bm.meta.NextIndexHeight())
 
 		// Let's start a new round...
 		bm = BlazeManager{
@@ -86,27 +86,30 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		bm.blockCount = utils.Min(opts.BlockCnt, bm.meta.ChainHeight()-bm.StartBlock()+1)
 		// Unripe_dist behind the chain tip.
 		bm.ripeBlock = bm.meta.ChainHeight() - opts.Settings.Unripe_dist
-		// logger.Info(colors.Green, bm.startBlock, bm.blockCount, bm.ripeBlock)
+
+		// These are the blocks we're going to process this round
+		blocks = make([]base.Blknum, 0, bm.BlockCount())
+		for block := bm.StartBlock(); block < bm.EndBlock(); block++ {
+			blocks = append(blocks, block)
+		}
 
 		// Scrape this round. Only quit on catostrophic errors. Report and sleep otherwise.
-		if err, ok := bm.ScrapeBatch(); !ok || err != nil {
+		if err, ok = bm.ScrapeBatch(blocks); !ok || err != nil {
 			logger.Error(colors.BrightRed, err, colors.Off)
 			if !ok {
 				break
 			}
 			goto PAUSE
 		}
-		// logger.Info(colors.Green+"scrape batch complete"+colors.Off, bm.nProcessed)
 
 		// Consilidate a chunk (if possible). Only quit on catostrophic errors. Report and sleep otherwise.
-		if ok, err := bm.Consolidate(); !ok || err != nil {
+		if err, ok = bm.Consolidate(blocks); !ok || err != nil {
 			logger.Error(colors.BrightRed, err, colors.Off)
 			if !ok {
 				break
 			}
 			goto PAUSE
 		}
-		// logger.Info(colors.Green+"consolidate complete"+colors.Off, bm.nProcessed)
 
 	PAUSE:
 		// If we've gotten this far, we want to clean up the unripe files (we no longer need them).
