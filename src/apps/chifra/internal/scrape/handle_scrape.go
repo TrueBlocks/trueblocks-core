@@ -37,7 +37,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	// Loop until the user hits Cntl+C, until runCount runs out, or until
 	// the server tells us to stop.
 	for {
-		// We create a new manager for each loop...
+		// We create a new manager for each loop...we will populate it in a minute...
 		bm := BlazeManager{
 			chain: chain,
 		}
@@ -134,3 +134,4 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	// We've left the loop and we're done.
 	return nil
 }
+

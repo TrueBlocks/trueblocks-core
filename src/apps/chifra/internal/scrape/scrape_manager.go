@@ -66,7 +66,6 @@ func (opts *ScrapeOptions) pause(dist uint64) {
 	// we always pause at least a quarter of a second to allow the node to 'rest'
 	time.Sleep(250 * time.Millisecond)
 	isDefaultSleep := opts.Sleep >= 13 && opts.Sleep <= 14
-	// distanceFromHead := meta.ChainHeight() - meta.Staging
 	shouldSleep := !isDefaultSleep || dist <= (2*opts.Settings.Unripe_dist)
 	if shouldSleep {
 		sleep := opts.Sleep // this value may change elsewhere allow us to break out of sleeping????

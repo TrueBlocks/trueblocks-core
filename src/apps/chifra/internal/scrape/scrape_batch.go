@@ -35,3 +35,4 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 
 	return bm.WriteTimestamps(blocks), true
 }
+
