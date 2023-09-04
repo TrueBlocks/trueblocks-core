@@ -34,7 +34,7 @@ func (bm *BlazeManager) SaveTimestamps(endPoint uint64) error {
 	}
 
 	defer func() {
-		tslib.DeCache(chain)
+		tslib.ClearCache(chain)
 		fp.Close()
 		// sigintTrap.Disable(trapCh)
 		// writeMutex.Unlock()

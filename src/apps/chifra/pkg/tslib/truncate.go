@@ -34,7 +34,7 @@ func Truncate(chain string, maxBn uint64) error {
 	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		defer func() {
-			DeCache(chain)
+			ClearCache(chain)
 			if file.FileExists(backupFn) {
 				// If the backup file exists, something failed, so we replace the original file.
 				_ = os.Rename(backupFn, tsFn)

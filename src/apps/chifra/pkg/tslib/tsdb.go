@@ -121,7 +121,7 @@ func FromTs(chain string, ts base.Timestamp) (*TimestampRecord, error) {
 	return &perChainTimestamps[chain].memory[index], nil
 }
 
-func DeCache(chain string) {
+func ClearCache(chain string) {
 	perChainTimestamps[chain] = TimestampDatabase{
 		loaded: false,
 		count:  0,
