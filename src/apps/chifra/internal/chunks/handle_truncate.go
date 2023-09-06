@@ -36,7 +36,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	_ = index.CleanEphemeralIndexFolders(chain)
+	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe", "staging"})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {

@@ -51,7 +51,10 @@ func (bm *BlazeManager) IsTestMode() bool {
 	return bm.opts.Globals.TestMode
 }
 
-// PerChunk returns the number of blocks to process per chunk.
+// AllowMissing returns true for all chains but mainnet and the value
+// of the config item on mainnet (false by default). The scraper will
+// halt if AllowMissing is false and a block with zero appearances is
+// encountered.
 func (bm *BlazeManager) AllowMissing() bool {
 	if bm.chain != "mainnet" {
 		return true
