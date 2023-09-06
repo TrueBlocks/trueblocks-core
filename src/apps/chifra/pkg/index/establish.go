@@ -87,7 +87,7 @@ func CleanTempIndexFolders(chain string, subFolders []string) error {
 			return err
 		}
 		// ...but put it back
-		file.EstablishFolder(folder)
+		_ = file.EstablishFolder(folder)
 	}
 
 	return nil

@@ -161,7 +161,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 				continue
 			}
 
-			logger.Info("Processing item %d in batch %d: %d %d\n", j, i, countsBefore[j], countAfter)
+			logger.Info(fmt.Printf("Processing item %d in batch %d: %d %d\n", j, i, countsBefore[j], countAfter))
 
 			for _, cmd := range theCmds {
 				countBefore := countsBefore[j]
