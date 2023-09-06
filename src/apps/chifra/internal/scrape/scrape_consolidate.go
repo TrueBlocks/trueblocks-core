@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -108,6 +109,9 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			} else {
 				report.Snapped = isSnap
 				report.Report()
+			}
+			if bm.opts.Remote {
+				time.Sleep(250 * time.Millisecond)
 			}
 
 			// reset for next chunk
