@@ -54,6 +54,10 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
 
+	// Some counters...
+	nAppsFound := 0
+	nAddrsFound := 0
+
 	// Load the stage into the map...
 	exists := file.FileExists(stageFn) // order matters
 	appMap, chunkRange, nAppearances := bm.AsciiFileToAppearanceMap(stageFn)
@@ -61,11 +65,9 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		// Brand new stage.
 		chunkRange = base.FileRange{First: bm.meta.Finalized + 1, Last: blocks[0]}
 	}
-	nAppsThen := int(file.FileSize(stageFn) / asciiAppearanceSize)
-	nAddrsThen := len(appMap)
-	nAddrsNow := nAddrsThen
 
 	// For each block...
+	nChunks := 0
 	for _, block := range blocks {
 		fn := fmt.Sprintf("%09d.txt", block)
 		if file.FileExists(filepath.Join(bm.UnripeFolder(), fn)) {
@@ -86,6 +88,8 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		// Read in the ripe file, add it to the appMap and...
 		thisMap, _, thisCount := bm.AsciiFileToAppearanceMap(ripeFn)
 		nAppearances += thisCount
+		nAppsFound += thisCount
+		nAddrsFound += len(thisMap)
 		for addr, apps := range thisMap {
 			appMap[addr] = append(appMap[addr], apps...)
 		}
@@ -105,7 +109,6 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.Snapped = isSnap
 				report.Report()
 			}
-			nAddrsNow += len(appMap)
 
 			// reset for next chunk
 			bm.meta, _ = bm.opts.Conn.GetMetaData(bm.IsTestMode())
@@ -113,12 +116,11 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			chunkRange.First = chunkRange.Last + 1
 			chunkRange.Last = chunkRange.Last + 1
 			nAppearances = 0
+			nChunks++
 		}
 	}
 
 	if len(appMap) > 0 { // are there any appearances in this block range?
-		nAddrsNow += len(appMap)
-
 		newRange := base.FileRange{First: bm.meta.Finalized + 1, Last: 0}
 
 		// We need an array because we're going to write it back to disc
@@ -134,17 +136,16 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		// The stage needs to be sorted because the end user queries it and we want the search to be fast
 		sort.Strings(appearances)
 
-		newStageFn := filepath.Join(bm.StageFolder(), fmt.Sprintf("%s.txt", newRange))
-		if err := file.LinesToAsciiFile(newStageFn, appearances); err != nil {
-			os.Remove(newStageFn)
+		stageFn = filepath.Join(bm.StageFolder(), fmt.Sprintf("%s.txt", newRange))
+		if err := file.LinesToAsciiFile(stageFn, appearances); err != nil {
+			os.Remove(stageFn)
 			return err, true
 		}
 	}
 
 	// Let the user know what happened...
-	stageFn, _ = file.LatestFileInFolder(bm.StageFolder()) // it may not exist...
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
-	bm.report(len(blocks), int(bm.PerChunk()), nAppsNow, nAppsNow-nAppsThen, nAddrsNow-nAddrsThen)
+	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
 
 	// Commit the change by deleting the backup file.
 	os.Remove(backupFn)

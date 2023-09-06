@@ -17,17 +17,20 @@ func colored(s string) string {
 }
 
 // Report prints out a report of the progress of the scraper.
-func (bm *BlazeManager) report(nBlocks, perChunk, nAppsNow, nAppsFound, nAddrsFound int) {
+func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound, nAddrsFound int) {
 	nNeeded := perChunk - utils.Min(perChunk, nAppsNow)
+	appsPerBlock := float64(nAppsFound) / float64(nBlocks)
+	appsPerAddr := float64(nAppsFound) / float64(nAddrsFound)
 	pctFull := float64(nAppsNow) / float64(perChunk)
-	appsPerBlock := float64(nAppsFound) / float64(bm.BlockCount())
 
-	msg := fmt.Sprintf(`At block {%d}, found {%d} apps for {%d} addrs in {%d} blocks ({%0.2f} apps/blk). Have {%d} of {%d} {%0.1f%%}. Need {%d} more.`,
+	msg := fmt.Sprintf(`#{%d}, found {%6d} apps, {%5d} addrs ({%0.1f/addr}), in {%4d} blks ({%0.1f}/blk). Created {%d} chunks, staged {%5d} of {%d} ({%0.1f%%}). Need {%5d} more.`,
 		bm.EndBlock(),
 		nAppsFound,
 		nAddrsFound,
+		appsPerAddr,
 		nBlocks,
 		appsPerBlock,
+		nChunks,
 		nAppsNow,
 		perChunk,
 		pctFull*100,
