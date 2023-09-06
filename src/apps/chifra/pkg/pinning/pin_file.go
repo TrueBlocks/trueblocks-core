@@ -36,7 +36,6 @@ func PinItem(chain string, dbName, path string, isRemote bool) (hash base.IpfsHa
 	}
 
 	if isLocal {
-		logger.Info("Pinning", dbName, "to local service")
 		localService, _ := NewPinningService(chain, Local)
 		if hash, err = localService.PinFile(path, true); err != nil {
 			err = fmt.Errorf("error pinning locally: %s", err)
@@ -45,7 +44,6 @@ func PinItem(chain string, dbName, path string, isRemote bool) (hash base.IpfsHa
 	}
 
 	if isRemote {
-		logger.Info("Pinning", dbName, "to remote service")
 		remoteService, _ := NewPinningService(chain, Pinata)
 		var remoteHash base.IpfsHash
 		if remoteHash, err = remoteService.PinFile(path, true); err != nil {
@@ -60,7 +58,7 @@ func PinItem(chain string, dbName, path string, isRemote bool) (hash base.IpfsHa
 		}
 	}
 
-	logger.Info("Pinned", dbName, "file", path, "to", hash)
+	logger.Info(colors.Magenta+"Pinned", dbName, "file", path, "to", hash, colors.Off)
 	return
 }
 
@@ -77,7 +75,6 @@ func PinChunk(chain, bloomFile, indexFile string, isRemote bool) (PinResult, err
 
 	isLocal := LocalDaemonRunning()
 	if isLocal {
-		// logger.Info(colors.Magenta+"Pinning locally...", colors.Off)
 		if result.Local.BloomHash, result.err = localService.PinFile(bloomFile, true); result.err != nil {
 			return PinResult{}, result.err
 		}
@@ -90,7 +87,6 @@ func PinChunk(chain, bloomFile, indexFile string, isRemote bool) (PinResult, err
 	}
 
 	if isRemote {
-		logger.Info(colors.Magenta+"Pinning remotely...", colors.Off)
 		if result.Remote.BloomHash, result.err = remoteService.PinFile(bloomFile, false); result.err != nil {
 			return PinResult{}, result.err
 		}

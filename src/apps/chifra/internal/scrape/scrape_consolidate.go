@@ -42,7 +42,6 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			}
 		}()
 	}
-	countThen := file.FileSize(stageFn) / asciiAppearanceSize
 
 	// After this point if we fail the backup file will replace the original file, so
 	// we can safely remove these the stage file (and ripe files) and it will get replaced
@@ -62,6 +61,9 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		// Brand new stage.
 		chunkRange = base.FileRange{First: bm.meta.Finalized + 1, Last: blocks[0]}
 	}
+	nAppsThen := int(file.FileSize(stageFn) / asciiAppearanceSize)
+	nAddrsThen := len(appMap)
+	nAddrsNow := nAddrsThen
 
 	// For each block...
 	for _, block := range blocks {
@@ -103,6 +105,8 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.Snapped = isSnap
 				report.Report()
 			}
+			nAddrsNow += len(appMap)
+
 			// reset for next chunk
 			bm.meta, _ = bm.opts.Conn.GetMetaData(bm.IsTestMode())
 			appMap = make(index.AddressAppearanceMap, 0)
@@ -113,6 +117,8 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	}
 
 	if len(appMap) > 0 { // are there any appearances in this block range?
+		nAddrsNow += len(appMap)
+
 		newRange := base.FileRange{First: bm.meta.Finalized + 1, Last: 0}
 
 		// We need an array because we're going to write it back to disc
@@ -124,6 +130,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				newRange.Last = utils.Max(newRange.Last, uint64(app.BlockNumber))
 			}
 		}
+
 		// The stage needs to be sorted because the end user queries it and we want the search to be fast
 		sort.Strings(appearances)
 
@@ -136,8 +143,8 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 	// Let the user know what happened...
 	stageFn, _ = file.LatestFileInFolder(bm.StageFolder()) // it may not exist...
-	countNow := file.FileSize(stageFn) / asciiAppearanceSize
-	bm.report(int64(bm.PerChunk()), countThen, countNow)
+	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
+	bm.report(len(blocks), int(bm.PerChunk()), nAppsNow, nAppsNow-nAppsThen, nAddrsNow-nAddrsThen)
 
 	// Commit the change by deleting the backup file.
 	os.Remove(backupFn)

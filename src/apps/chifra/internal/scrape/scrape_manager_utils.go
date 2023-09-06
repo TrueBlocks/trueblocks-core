@@ -10,21 +10,30 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Report prints out a report of the progress of the scraper.
-func (bm *BlazeManager) report(perChunk, nAppsThen, nAppsNow int64) {
-	need := perChunk - utils.Min(perChunk, nAppsNow)
-	seen := nAppsNow
-	if nAppsThen < nAppsNow {
-		seen = nAppsNow - nAppsThen
-	}
-	pct := float64(nAppsNow) / float64(perChunk)
-	pBlk := float64(seen) / float64(bm.BlockCount())
-	height := bm.StartBlock() + bm.BlockCount() - 1
+func colored(s string) string {
+	s = strings.Replace(s, "{", colors.Green, -1)
+	s = strings.Replace(s, "}", colors.Off, -1)
+	return s
+}
 
-	const templ = `Block={%d} have {%d} appearances of {%d} ({%0.1f%%}). Need {%d} more. Added {%d} records ({%0.2f} apps/blk).`
-	msg := strings.Replace(templ, "{", colors.Green, -1)
-	msg = strings.Replace(msg, "}", colors.Off, -1)
-	logger.Info(fmt.Sprintf(msg, height, nAppsNow, perChunk, pct*100, need, seen, pBlk))
+// Report prints out a report of the progress of the scraper.
+func (bm *BlazeManager) report(nBlocks, perChunk, nAppsNow, nAppsFound, nAddrsFound int) {
+	nNeeded := perChunk - utils.Min(perChunk, nAppsNow)
+	pctFull := float64(nAppsNow) / float64(perChunk)
+	appsPerBlock := float64(nAppsFound) / float64(bm.BlockCount())
+
+	msg := fmt.Sprintf(`At block {%d}, found {%d} apps for {%d} addrs in {%d} blocks ({%0.2f} apps/blk). Have {%d} of {%d} {%0.1f%%}. Need {%d} more.`,
+		bm.EndBlock(),
+		nAppsFound,
+		nAddrsFound,
+		nBlocks,
+		appsPerBlock,
+		nAppsNow,
+		perChunk,
+		pctFull*100,
+		nNeeded,
+	)
+	logger.Info(colored(msg))
 }
 
 // Pause goes to sleep for a period of time based on the settings.

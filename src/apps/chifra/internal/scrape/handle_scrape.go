@@ -104,10 +104,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		if opts.Globals.Verbose {
 			logger.Info("chain head:           ", bm.meta.ChainHeight())
 			logger.Info("opts.BlockCnt:        ", opts.BlockCnt)
-			logger.Info("opts.ChunkSize:       ", opts.Settings.Apps_per_chunk)
-			logger.Info("block count:          ", bm.blockCount)
 			logger.Info("ripe block:           ", bm.ripeBlock)
-			logger.Info("start block:          ", bm.startBlock)
+			logger.Info("perChunk:             ", bm.PerChunk())
+			logger.Info("start block:          ", bm.StartBlock())
+			logger.Info("block count:          ", bm.BlockCount())
 			logger.Info("len(blocks):          ", len(blocks))
 			if len(blocks) > 0 {
 				logger.Info("blocks[0]:            ", blocks[0])

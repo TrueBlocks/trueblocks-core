@@ -43,6 +43,10 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
 
+	if opts.BlockCnt < 10 {
+		return validate.Usage("Specify at least {0} with {0}.", "10 blocks per round", "chifra scrape")
+	}
+
 	// We can't really test this code, so we just report and quit
 	if opts.Globals.TestMode {
 		return validate.Usage("Cannot test block scraper")
