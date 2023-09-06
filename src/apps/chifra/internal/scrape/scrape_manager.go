@@ -1,16 +1,12 @@
 package scrapePkg
 
 import (
-	"fmt"
-	"strings"
-	"time"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // BlazeManager manages the scraper by keeping track of the progress of the scrape and
@@ -20,12 +16,13 @@ type BlazeManager struct {
 	chain        string
 	timestamps   []tslib.TimestampRecord
 	processedMap map[base.Blknum]bool
-	nProcessed   uint64
 	opts         *ScrapeOptions
 	meta         *rpc.MetaData
 	startBlock   base.Blknum
 	blockCount   base.Blknum
 	ripeBlock    base.Blknum
+	nRipe        int
+	nUnripe      int
 	nChannels    int
 }
 
@@ -44,35 +41,55 @@ func (bm *BlazeManager) EndBlock() base.Blknum {
 	return bm.startBlock + bm.blockCount
 }
 
-// Report prints out a report of the progress of the scraper.
-func (bm *BlazeManager) report(perChunk, nAppsThen, nAppsNow int) {
-	need := perChunk - utils.Min(perChunk, nAppsNow)
-	seen := nAppsNow
-	if nAppsThen < nAppsNow {
-		seen = nAppsNow - nAppsThen
-	}
-	pct := float64(nAppsNow) / float64(perChunk)
-	pBlk := float64(seen) / float64(bm.BlockCount())
-	height := bm.StartBlock() + bm.BlockCount() - 1
-
-	const templ = `Block={%d} have {%d} appearances of {%d} ({%0.1f%%}). Need {%d} more. Added {%d} records ({%0.2f} apps/blk).`
-	msg := strings.Replace(templ, "{", colors.Green, -1)
-	msg = strings.Replace(msg, "}", colors.Off, -1)
-	logger.Info(fmt.Sprintf(msg, height, nAppsNow, perChunk, pct*100, need, seen, pBlk))
+// nProcessed returns the number of blocks processed so far (i.e., ripe + unripe).
+func (bm *BlazeManager) nProcessed() int {
+	return bm.nRipe + bm.nUnripe
 }
 
-// Pause goes to sleep for a period of time based on the settings.
-func (opts *ScrapeOptions) pause(dist uint64) {
-	// we always pause at least a quarter of a second to allow the node to 'rest'
-	time.Sleep(250 * time.Millisecond)
-	isDefaultSleep := opts.Sleep >= 13 && opts.Sleep <= 14
-	shouldSleep := !isDefaultSleep || dist <= (2*opts.Settings.Unripe_dist)
-	if shouldSleep {
-		sleep := opts.Sleep // this value may change elsewhere allow us to break out of sleeping????
-		logger.Progress(sleep > 1, "Sleeping for", sleep, "seconds -", dist, "away from head.")
-		halfSecs := (sleep * 2) - 1 // we already slept one quarter of a second
-		for i := 0; i < int(halfSecs); i++ {
-			time.Sleep(time.Duration(500) * time.Millisecond)
-		}
+// IsTestMode returns true if the scraper is running in test mode.
+func (bm *BlazeManager) IsTestMode() bool {
+	return bm.opts.Globals.TestMode
+}
+
+// PerChunk returns the number of blocks to process per chunk.
+func (bm *BlazeManager) AllowMissing() bool {
+	if bm.chain != "mainnet" {
+		return true
 	}
+	return bm.opts.Settings.Allow_missing
+}
+
+// PerChunk returns the number of blocks to process per chunk.
+func (bm *BlazeManager) PerChunk() base.Blknum {
+	return bm.opts.Settings.Apps_per_chunk
+}
+
+// FirstSnap returns the first block to process.
+func (bm *BlazeManager) FirstSnap() base.Blknum {
+	return bm.opts.Settings.First_snap
+}
+
+// SnapTo returns the number of blocks to process per chunk.
+func (bm *BlazeManager) SnapTo() base.Blknum {
+	return bm.opts.Settings.Snap_to_grid
+}
+
+// IsSnap returns true if the block is a snap point.
+func (bm *BlazeManager) IsSnap(block base.Blknum) bool {
+	return block >= bm.FirstSnap() && (block%bm.SnapTo()) == 0
+}
+
+// StageFolder returns the folder where the stage file is stored.
+func (bm *BlazeManager) StageFolder() string {
+	return filepath.Join(config.GetPathToIndex(bm.chain), "staging")
+}
+
+// RipeFolder returns the folder where the stage file is stored.
+func (bm *BlazeManager) RipeFolder() string {
+	return filepath.Join(config.GetPathToIndex(bm.chain), "ripe")
+}
+
+// UnripeFolder returns the folder where the stage file is stored.
+func (bm *BlazeManager) UnripeFolder() string {
+	return filepath.Join(config.GetPathToIndex(bm.chain), "unripe")
 }

@@ -70,19 +70,24 @@ func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
 	return file.FileExists(fileName), nil
 }
 
-// CleanTemporaryFolders removes any files that may be partial or incomplete
-func CleanTemporaryFolders(indexPath string, incStaging bool) error {
-	folders := []string{"ripe", "unripe", "maps", "staging"}
-	if !incStaging {
-		folders = folders[:len(folders)-2]
-	}
+// CleanEphemeralIndexFolders removes files in ripe and unripe
+func CleanEphemeralIndexFolders(chain string) error {
+	return CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
+}
 
-	for _, f := range folders {
+// CleanTempIndexFolders removes any files that may be partial or incomplete
+func CleanTempIndexFolders(chain string, subFolders []string) error {
+	indexPath := config.GetPathToIndex(chain)
+
+	for _, f := range subFolders {
 		folder := filepath.Join(indexPath, f)
+		// We want to remove whatever is there...
 		err := os.RemoveAll(folder)
 		if err != nil {
 			return err
 		}
+		// ...but put it back
+		file.EstablishFolder(folder)
 	}
 
 	return nil

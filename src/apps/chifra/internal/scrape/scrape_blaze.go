@@ -150,8 +150,19 @@ func (bm *BlazeManager) ProcessTimestamps(tsChannel chan tslib.TimestampRecord, 
 
 var writeMutex sync.Mutex
 
+// TODO: The original intent of creating files was so that we could start over where we left off
+// if we failed. But this isn't how it works. We cleanup any temp files if we fail, which means
+// we write these files and if we fail, we remove them. If we don't fail, we've written them out,
+// but only to re-read them and delete them in this round. Would could have easily just kept them
+// in an in-memory cache. This would also allow us to not have to stringify the data and just store
+// pointers to structs in memory. We wouldn't have to keep a seperate timestamps database nor a
+// processedMap (the pointer would serve that purpose).
+
 // WriteAppearances writes the appearance for a chunk to a file
 func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
+	ripePath := config.GetPathToIndex(bm.chain) + "ripe/"
+	unripePath := config.GetPathToIndex(bm.chain) + "unripe/"
+
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {
@@ -160,15 +171,15 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap index.AddressBo
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := config.GetPathToIndex(bm.chain) + "ripe/" + blockNumStr + ".txt"
+		fileName := ripePath + blockNumStr + ".txt"
 		if bn > bm.ripeBlock {
-			fileName = config.GetPathToIndex(bm.chain) + "unripe/" + blockNumStr + ".txt"
+			fileName = unripePath + blockNumStr + ".txt"
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 		err = os.WriteFile(fileName, toWrite, 0744) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 		if err != nil {
-			fmt.Println("call1 to WriteFile returned error", err)
+			fmt.Println("WriteFile returned error", err)
 			return err
 		}
 	}
@@ -177,7 +188,11 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap index.AddressBo
 	writeMutex.Lock()
 	bm.processedMap[bn] = true
 	writeMutex.Unlock()
-	bm.nProcessed++
+	if bn > bm.ripeBlock {
+		bm.nUnripe++
+	} else {
+		bm.nRipe++
+	}
 
 	return
 }
@@ -195,13 +210,13 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 	defer atomic.StoreUint32(&locker, 0)
 
 	// Only report once in a while (17 blocks)
-	if bm.nProcessed%17 == 0 || force {
+	if bm.nProcessed()%17 == 0 || force {
 		dist := uint64(0)
 		if bm.ripeBlock > bn {
 			dist = (bm.ripeBlock - bn)
 		}
 		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)",
-			bm.nProcessed,
+			bm.nProcessed(),
 			bm.BlockCount(),
 			bn,
 			bm.ripeBlock,
