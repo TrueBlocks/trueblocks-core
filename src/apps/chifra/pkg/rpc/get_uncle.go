@@ -84,6 +84,8 @@ func (conn *Connection) GetUnclesCountInBlock(bn uint64) (uint64, error) {
 
 	if count, err := query.Query[string](conn.Chain, method, params); err != nil {
 		return 0, err
+	} else if count == nil || *count == "" {
+		return 0, nil
 	} else {
 		return strconv.ParseUint(fmt.Sprint(*count), 0, 64)
 	}
