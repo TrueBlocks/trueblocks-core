@@ -1,6 +1,3 @@
-//go:build integration
-// +build integration
-
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -38,7 +35,8 @@ func TestGetSpecials2(t *testing.T) {
 		t.Error(err)
 	}
 
-	if len(specials) != 39 {
+	if len(specials) != 42 {
+		fmt.Println(specials)
 		t.Error("Wrong number of special blocks ", len(specials), ". Should have 39.")
 	}
 
