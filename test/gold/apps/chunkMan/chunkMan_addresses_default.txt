@@ -1,5 +1,6 @@
 chifra chunks  addresses
 TEST[DATE|TIME] Mode:  addresses
+TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 address	range	offset	count
 0x000d836201318ec6899a67540690382780743280	000000000-000000000	0	1

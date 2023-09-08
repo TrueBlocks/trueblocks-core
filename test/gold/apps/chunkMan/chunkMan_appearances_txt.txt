@@ -1,5 +1,6 @@
 chifra chunks  appearances --fmt txt
 TEST[DATE|TIME] Mode:  appearances
+TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 blockNumber	transactionIndex
 0	0

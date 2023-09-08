@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -84,6 +85,10 @@ func readSpecials(path string, nFields int) (specials []types.SimpleNamedBlock, 
 						"ts":   2,
 						// "date": 3, // skipped since we have timestamp
 					}
+				}
+				if strings.Contains(record[locs["bn"]], "-") {
+					// before block zero
+					continue
 				}
 				s := types.SimpleNamedBlock{
 					BlockNumber: utils.MustParseUint(record[locs["bn"]]),

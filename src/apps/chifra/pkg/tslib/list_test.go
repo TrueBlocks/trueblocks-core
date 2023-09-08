@@ -73,7 +73,7 @@ func TestGetSpecials(t *testing.T) {
 		t.Error(err)
 	}
 
-	if len(specials) != 42 {
+	if len(specials) != 39 {
 		t.Error("Wrong number of special blocks ", len(specials), ". Should have 39.")
 	}
 

@@ -1,5 +1,6 @@
 chifra chunks  header --fmt csv
 TEST[DATE|TIME] Mode:  header
+TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  csv
 Error: The mode option (header) must be one of [ manifest | index | blooms | addresses | appearances | stats ]
 Usage:
@@ -14,6 +15,7 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
+  -P, --publisher string   for some query options, the publisher of the index (default "trueblocks.eth")
   -n, --truncate uint      truncate the entire index at this block (requires a block identifier) (hidden)
   -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
@@ -35,4 +37,5 @@ Notes:
   - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
   - The --pin option requires a locally running IPFS node or a pinning service API key.
   - The --publish option requires a private key.
+  - The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
 
