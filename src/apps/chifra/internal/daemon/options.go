@@ -39,8 +39,8 @@ var defaultDaemonOptions = DaemonOptions{
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *DaemonOptions) testLog() {
-	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
-	logger.TestLog(len(opts.Api) > 0, "Api: ", opts.Api)
+	logger.TestLog(len(opts.Port) > 0 && opts.Port != ":8080", "Port: ", opts.Port)
+	logger.TestLog(len(opts.Api) > 0 && opts.Api != "on", "Api: ", opts.Api)
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
 	logger.TestLog(opts.Grpc, "Grpc: ", opts.Grpc)
