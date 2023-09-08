@@ -30,6 +30,7 @@ type ChunksOptions struct {
 	Check      bool                     `json:"check,omitempty"`      // Check the manifest, index, or blooms for internal consistency
 	Pin        bool                     `json:"pin,omitempty"`        // Pin the manifest or each index chunk and bloom
 	Publish    bool                     `json:"publish,omitempty"`    // Publish the manifest to the Unchained Index smart contract
+	Publisher  string                   `json:"publisher,omitempty"`  // For some query options, the publisher of the index
 	Truncate   uint64                   `json:"truncate,omitempty"`   // Truncate the entire index at this block (requires a block identifier)
 	Remote     bool                     `json:"remote,omitempty"`     // Prior to processing, retreive the manifest from the Unchained Index smart contract
 	Belongs    []string                 `json:"belongs,omitempty"`    // In index mode only, checks the address(es) for inclusion in the given index chunk
@@ -46,6 +47,7 @@ type ChunksOptions struct {
 }
 
 var defaultChunksOptions = ChunksOptions{
+	Publisher: "trueblocks.eth",
 	Truncate:  utils.NOPOS,
 	LastBlock: utils.NOPOS,
 	MaxAddrs:  utils.NOPOS,
@@ -58,6 +60,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
@@ -100,6 +103,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Pin = true
 		case "publish":
 			opts.Publish = true
+		case "publisher":
+			opts.Publisher = value[0]
 		case "truncate":
 			opts.Truncate = globals.ToUint64(value[0])
 		case "remote":

@@ -13,6 +13,7 @@ export function getChunks(
     check?: boolean,
     pin?: boolean,
     publish?: boolean,
+    publisher?: string,
     remote?: boolean,
     belongs?: address[],
     firstBlock?: blknum,

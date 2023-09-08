@@ -10,6 +10,7 @@ export function getInit(
   parameters?: {
     all?: boolean,
     dryRun?: boolean,
+    publisher?: string,
     firstBlock?: blknum,
     sleep?: double,
     chain: string,
