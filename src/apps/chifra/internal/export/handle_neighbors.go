@@ -422,7 +422,7 @@ bool visitBloom(const string_q& path, void* data) {
 
 //-----------------------------------------------------------------------
 void COptions::addNeighbor(CAddressUintMap& map, const address_t& addr) {
-    if ((addr == ledgerManager.accountedFor || isZeroAddr(addr)))
+    if ((addr == ledgerManager.accountedFor || isZ eroAddr(addr)))
         return;
     map[addr]++;
 }

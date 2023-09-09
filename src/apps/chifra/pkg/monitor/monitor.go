@@ -170,14 +170,11 @@ func (mon *Monitor) Remove() (bool, error) {
 	return !file.FileExists(mon.Path()), nil
 }
 
-// SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
-var SentinalAddr = base.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
-
 // ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
 // a file called addresses.tsv in the current folder or, if not present, from existing monitors
 func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 	defer func() {
-		monitorChan <- Monitor{Address: SentinalAddr}
+		monitorChan <- Monitor{Address: base.SentinalAddr}
 	}()
 
 	if watchList != "existing" {
@@ -250,7 +247,7 @@ func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
 	for mon := range monitorChan {
 		mon := mon
 		switch mon.Address {
-		case SentinalAddr:
+		case base.SentinalAddr:
 			close(monitorChan)
 		default:
 			monMap[mon.Address] = &mon

@@ -19,6 +19,12 @@ type Address struct {
 	common.Address
 }
 
+// A few well known address. ZeroAddr, of course, is 0x0. SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
+var (
+	SentinalAddr = HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
+	ZeroAddr     = HexToAddress("0x0")
+)
+
 // Hex returns string representation of an address
 func (a *Address) Hex() string {
 	if a.IsZero() {

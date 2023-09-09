@@ -43,7 +43,7 @@ func TestGetContractDeployBlock(t *testing.T) {
 	}
 
 	// Error when the address is not a contract
-	_, err = conn.GetContractDeployBlock(base.HexToAddress("0x0"))
+	_, err = conn.GetContractDeployBlock(base.ZeroAddr)
 	if err != ErrNotAContract {
 		t.Fatal("expected ErrNotAContract, but got", err)
 	}

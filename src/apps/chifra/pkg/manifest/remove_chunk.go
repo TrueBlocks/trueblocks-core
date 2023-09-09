@@ -59,7 +59,7 @@ func RemoveChunk(chain, bloomFn, indexFn string) (err error) {
 	}
 
 	var man *Manifest
-	man, err = ReadManifest(chain, FromCache)
+	man, err = ReadManifest(chain, base.ZeroAddr, FromCache)
 
 	removedRange, err1 := base.RangeFromFilenameE(bloomFn)
 	if err1 != nil {

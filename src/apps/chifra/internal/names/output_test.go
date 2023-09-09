@@ -157,7 +157,7 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 	// invalid envs
 	expected = &CrudData{
 		Address: crudDataField[base.Address]{
-			Value:   base.HexToAddress("0x0"),
+			Value:   base.ZeroAddr,
 			Updated: true,
 		},
 		Name: crudDataField[string]{
