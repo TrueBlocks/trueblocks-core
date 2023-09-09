@@ -102,7 +102,8 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		if isSnap || isOvertop {
 			// Make a chunk - i.e., consolidate
 			chunkPath := indexPath + "finalized/" + chunkRange.String() + ".bin"
-			if report, err := index.WriteChunk(chain, chunkPath, appMap, nAppearances, bm.opts.Pin, bm.opts.Remote); err != nil {
+			publisher := base.ZeroAddr
+			if report, err := index.WriteChunk(chain, chunkPath, publisher, appMap, nAppearances, bm.opts.Pin, bm.opts.Remote); err != nil {
 				return err, false
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")

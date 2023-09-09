@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -16,7 +17,7 @@ import (
 func (opts *InitOptions) HandleDryRun() error {
 	chain := opts.Globals.Chain
 
-	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, base.HexToAddress(opts.Publisher), manifest.FromContract)
 	if err != nil {
 		return err
 	}

@@ -71,12 +71,12 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
+	cacheManifest, err := manifest.ReadManifest(chain, base.HexToAddress(opts.Publisher), manifest.FromCache)
 	if err != nil {
 		return err
 	}
 
-	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, base.HexToAddress(opts.Publisher), manifest.FromContract)
 	if err != nil {
 		return err
 	}

@@ -12,6 +12,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -32,7 +33,7 @@ func (opts *InitOptions) HandleInit() error {
 	// scraper starts, it starts on the correct block.
 	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe", "staging"})
 
-	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, base.HexToAddress(opts.Publisher), manifest.FromContract)
 	if err != nil {
 		return err
 	}

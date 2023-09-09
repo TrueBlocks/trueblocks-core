@@ -30,7 +30,9 @@ func EstablishTsFile(chain string) error {
 		return nil
 	}
 
-	cid, err := manifest.ReadUnchainedIndex(chain, "ts", unchained.GetPreferredPublisher())
+	database := chain + "-ts"
+	publisher := unchained.GetPreferredPublisher()
+	cid, err := manifest.ReadUnchainedIndex(chain, publisher, database)
 	if err != nil {
 		return err
 	}

@@ -64,9 +64,12 @@ const (
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
 
 // ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
-func ReadManifest(chain string, source Source) (*Manifest, error) {
+func ReadManifest(chain string, publisher base.Address, source Source) (*Manifest, error) {
 	if source == FromContract {
-		man, err := fromRemote(chain)
+		if publisher.IsZero() {
+			publisher = unchained.GetPreferredPublisher()
+		}
+		man, err := fromRemote(chain, publisher)
 		if man != nil {
 			man.LoadChunkMap()
 		}
@@ -98,8 +101,8 @@ func (m *Manifest) LoadChunkMap() {
 
 // TODO: Protect against overwriting files on disc
 
-func UpdateManifest(chain string, chunk ChunkRecord) error {
-	man, err := ReadManifest(chain, FromCache)
+func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) error {
+	man, err := ReadManifest(chain, publisher, FromCache)
 	if err != nil {
 		if err != ErrManifestNotFound {
 			return err
