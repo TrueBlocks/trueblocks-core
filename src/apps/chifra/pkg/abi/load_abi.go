@@ -15,8 +15,10 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -802,6 +804,12 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(chain string, address base.Address, destination *FunctionSyncMap) (err error) {
+	tmp := rpc.TempConnection(chain)
+	if err = tmp.IsContractAt(address, nil); err == rpc.ErrNotAContract {
+		logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
+		return nil
+	}
+
 	// If there was no error, the abi was loaded...
 	err = LoadAbiFromAddress(chain, address, destination)
 	if err == nil {
