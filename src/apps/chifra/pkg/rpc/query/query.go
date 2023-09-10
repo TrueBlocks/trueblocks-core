@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"runtime"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -28,6 +29,16 @@ type rpcResponse[T any] struct {
 type eip1474Error struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
+}
+
+func init() {
+	// We need to increase MaxIdleConnsPerHost, otherwise chifra will keep trying to open too
+	// many ports. It can lead to bind errors.
+	// The default value is too low, so Go closes ports too fast. In the meantime, chifra tries
+	// to get new ones and so it can run out of available ports.
+	//
+	// We change DefaultTransport as the whole codebase uses it.
+	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
 }
 
 // Query returns a single result for given method and params.
@@ -79,13 +90,7 @@ func FromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
 
 func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
 	body := bytes.NewReader(marshalled)
-	req, err := http.NewRequest("POST", rpcProvider, body)
-	if err != nil {
-		return err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := http.Post(rpcProvider, "application/json", body)
 	if err != nil {
 		return err
 	}
