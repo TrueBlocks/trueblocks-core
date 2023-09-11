@@ -167,6 +167,7 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTestCase, "test_id");
 
+    // Note that if this value is not in the config file, add it
     apiProvider = getGlobalConfig("testRunner")->getConfigStr("settings", "api_provider", "http://localhost:8080");
     if (!endsWith(apiProvider, '/'))
         apiProvider += "/";

@@ -32,7 +32,6 @@ type chainGroup struct {
 	LocalExplorer  string `toml:"localExplorer"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
-	ApiProvider    string `toml:"apiProvider"`
 	IpfsGateway    string `toml:"ipfsGateway"`
 	Symbol         string `toml:"symbol"`
 }
@@ -138,7 +137,7 @@ func IsAtLeastVersion(needle string) bool {
 		return true
 	}
 
-	return !current.IsEarlierThan(desired)
+	return desired.IsEarlierThan(current) || desired == current
 }
 
 // GetPathToRootConfig returns the path where to find configuration files

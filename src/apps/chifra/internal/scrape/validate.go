@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -32,11 +31,11 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	if !opts.Conn.IsNodeTracing() {
-		return validate.Usage("{0} requires tracing, err: {1}", "chifra scrape", rpc.ErrTraceBlockMissing)
+		return validate.Usage("{0} requires {1}, try {2} instead.", "chifra scrape", "tracing", "chifra init")
 	}
 
 	if !opts.Conn.IsNodeArchive() {
-		return validate.Usage("{0} requires {1}.", "chifra scrape", "an archive node")
+		return validate.Usage("{0} requires {1}, try {2} instead.", "chifra scrape", "an archive node", "chifra init")
 	}
 
 	if opts.Sleep < .25 {

@@ -750,7 +750,7 @@ func LoadAbiFromAddress(chain string, address base.Address, destination *Functio
 	if err = fromJson(localFile, destination); err != nil {
 		return
 	}
-	// File is correct
+	// File is correct, cache it
 	if err = insertAbi(chain, address, localFile); err != nil {
 		return
 	}

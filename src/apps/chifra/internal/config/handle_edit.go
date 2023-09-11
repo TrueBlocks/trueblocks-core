@@ -12,6 +12,6 @@ func (opts *ConfigOptions) HandleEdit() error {
 	editor := os.Getenv("EDITOR")
 	configFolder := config.GetPathToRootConfig()
 	configFile := filepath.Join(configFolder + "trueBlocks.toml")
-	utils.System(editor + " " + configFile)
+	utils.System(editor + " \"" + configFile + "\"")
 	return nil
 }
