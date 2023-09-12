@@ -96,7 +96,7 @@ add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTO
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
-add_subdirectory(dev_tools)
+# add_subdirectory(dev_tools)
 add_subdirectory(apps)
 add_subdirectory(examples)
 add_subdirectory(other)

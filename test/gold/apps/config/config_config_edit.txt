@@ -1,3 +1,2 @@
 chifra config  edit
 TEST[DATE|TIME] Mode:  edit
-WARN[DATE|TIME] The config tool is current unavailable. Please use the 'chifra status' tool instead.
