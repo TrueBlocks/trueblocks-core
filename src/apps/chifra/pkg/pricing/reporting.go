@@ -48,14 +48,14 @@ func (r *priceDebugger) report(msg string, testMode bool) {
 	logger.TestLog(true, "blockNumber:        ", r.blockNumber)
 	logger.TestLog(true, "source1 (uni/mkr):  ", r.source1)
 	logger.TestLog(true, "str0 (call):        ", r.theCall1)
-	if r.source2 != base.HexToAddress("0x0") {
+	if r.source2 != base.ZeroAddr {
 		logger.TestLog(true, "source2 (pair):     ", r.source2)
 	}
 	logger.TestLog(true, "str1 (call/data):   ", r.theCall2)
-	if r.first != base.HexToAddress("0x0") {
+	if r.first != base.ZeroAddr {
 		logger.TestLog(true, "first:              ", r.first)
 	}
-	if r.second != base.HexToAddress("0x0") {
+	if r.second != base.ZeroAddr {
 		logger.TestLog(true, "second:             ", r.second)
 		logger.TestLog(true, "reversed:           ", r.reversed)
 	}

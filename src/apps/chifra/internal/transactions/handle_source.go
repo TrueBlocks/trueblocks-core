@@ -44,7 +44,7 @@ bool CSourceSearch::traceTransfer(CTransfer& transfer, const string_q& id) {
                 CTransfer* tt = &man.transfers[i];
                 string_q ttId = transfer_2_Id(tt);
                 ostringstream msg;
-                if (!isZeroAddr(tt->sender)) {
+                if (!isZ eroAddr(tt->sender)) {
                     if (tt->amount > 0) {
                         if (transfer.sender == tt->recipient) {
                             if (isWhiteListed(tt)) {

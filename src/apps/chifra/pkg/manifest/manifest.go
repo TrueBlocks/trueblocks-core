@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -130,7 +131,7 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 		})
 	}
 
-	logger.Info("Updating manifest with", len(man.Chunks), "chunks", spaces)
+	logger.Info(colors.Magenta+"Updating manifest with", len(man.Chunks), "chunks", spaces, colors.Off)
 	return man.SaveManifest(chain)
 }
 

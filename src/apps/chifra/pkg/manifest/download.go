@@ -35,6 +35,8 @@ func fromRemote(chain string) (*Manifest, error) {
 
 	logger.InfoTable("Chain:", chain)
 	logger.InfoTable("Gateway:", gatewayUrl)
+	// logger.InfoTable("Publisher:", publisher)
+	// logger.InfoTable("Database:", database)
 	logger.InfoTable("CID:", cid)
 
 	return downloadManifest(chain, gatewayUrl, cid)
