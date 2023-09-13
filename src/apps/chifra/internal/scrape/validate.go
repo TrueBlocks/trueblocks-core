@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -32,11 +31,19 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	if !opts.Conn.IsNodeTracing() {
-		return validate.Usage("{0} requires tracing, err: {1}", "chifra scrape", rpc.ErrTraceBlockMissing)
+		return validate.Usage("{0} requires {1}, try {2} instead.", "chifra scrape", "tracing", "chifra init")
+	}
+
+	if !opts.Conn.IsNodeArchive() {
+		return validate.Usage("{0} requires {1}, try {2} instead.", "chifra scrape", "an archive node", "chifra init")
 	}
 
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
+	}
+
+	if opts.BlockCnt < 10 {
+		return validate.Usage("Specify at least {0} with {0}.", "10 blocks per round", "chifra scrape")
 	}
 
 	// We can't really test this code, so we just report and quit
