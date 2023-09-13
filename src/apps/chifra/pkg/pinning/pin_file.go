@@ -46,7 +46,7 @@ func PinItem(chain string, dbName, path string, isRemote bool) (hash base.IpfsHa
 	if isRemote {
 		remoteService, _ := NewPinningService(chain, Pinata)
 		var remoteHash base.IpfsHash
-		if remoteHash, err = remoteService.PinFile(path, true); err != nil {
+		if remoteHash, err = remoteService.PinFile(path, false); err != nil {
 			err = fmt.Errorf("error pinning remotely: %s", err)
 			return
 		}
