@@ -50,11 +50,11 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11288,apps,Accounts,monitors,acctExport,watchlist,a,,false,false,true,true,gocmd,flag,<string>,available with --watch option only&#44; a file containing the addresses to watch
 11292,apps,Accounts,monitors,acctExport,commands,c,,false,false,true,true,gocmd,flag,<string>,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
 11294,apps,Accounts,monitors,acctExport,batch_size,b,8,false,false,true,true,gocmd,flag,<uint64>,available with --watch option only&#44; the number of monitors to process in each batch
-11296,apps,Accounts,monitors,acctExport,run_once,r,,false,false,true,true,gocmd,switch,<boolean>,available with --watch option only&#44; only run the monitor --watch commands once then quit
+11296,apps,Accounts,monitors,acctExport,run_count,u,0,false,false,false,false,gocmd,flag,<uint64>,available with --watch option only&#44; run the monitor this many times&#44; then quit
 11298,apps,Accounts,monitors,acctExport,sleep,s,14,false,false,true,true,gocmd,flag,<double>,available with --watch option only&#44; the number of seconds to sleep between runs
 11094,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
 11095,apps,Accounts,monitors,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
-11096,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all existing monitors are be cleaned.
+11096,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all existing monitors will be cleaned.
 11096,apps,Accounts,monitors,acctExport,n3,,,false,false,false,false,--,note,,The --watch option requires two additional parameters to be specified: `--watchlist` and `--commands`.
 11097,apps,Accounts,monitors,acctExport,n4,,,false,false,false,false,--,note,,Addresses provided on the command line are ignored in `--watch` mode.
 11098,apps,Accounts,monitors,acctExport,n5,,,false,false,false,false,--,note,,Providing the value `existing` to the `--watchlist` monitors all existing monitor files (see --list).
@@ -223,6 +223,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12132,apps,Admin,scrape,blockScrape,remote,r,,false,false,true,true,gocmd,switch,<boolean>,pin new chunks to the gateway (requires pinning service keys)
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
 12185,apps,Admin,scrape,blockScrape,start_block,l,0,false,false,true,true,gocmd,flag,<uint64>,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+12187,apps,Admin,scrape,blockScrape,run_count,u,0,false,false,false,false,gocmd,flag,<uint64>,run the scraper this many times&#44; then quit
 12160,apps,Admin,scrape,blockScrape,apps_per_chunk,,200000,false,false,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
 12170,apps,Admin,scrape,blockScrape,snap_to_grid,,100000,false,false,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
 12175,apps,Admin,scrape,blockScrape,first_snap,,0,false,false,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
@@ -277,7 +278,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31995,apps,Admin,chunks,chunkMan,n8,,,false,false,false,false,--,note,,The --publish option requires a private key.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks (recommended)
-11910,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading
+11907,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading
 11915,apps,Admin,init,init,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,do not download any chunks earlier than this block
 11920,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11925,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.

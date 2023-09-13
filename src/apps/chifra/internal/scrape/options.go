@@ -26,6 +26,7 @@ type ScrapeOptions struct {
 	Remote     bool                     `json:"remote,omitempty"`     // Pin new chunks to the gateway (requires pinning service keys)
 	Sleep      float64                  `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
 	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	RunCount   uint64                   `json:"runCount,omitempty"`   // Run the scraper this many times, then quit
 	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
@@ -45,6 +46,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
+	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -63,6 +65,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
 	opts.StartBlock = 0
+	opts.RunCount = 0
 	opts.Settings.Apps_per_chunk = 200000
 	opts.Settings.Snap_to_grid = 100000
 	opts.Settings.First_snap = 0
@@ -80,6 +83,8 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.Sleep = globals.ToFloat64(value[0])
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
+		case "runCount":
+			opts.RunCount = globals.ToUint64(value[0])
 		case "appsPerChunk":
 			opts.Settings.Apps_per_chunk = globals.ToUint64(value[0])
 		case "snapToGrid":

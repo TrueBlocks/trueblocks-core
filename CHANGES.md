@@ -4,6 +4,11 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
+## v1.1.0 (2023/09/05)
+
+Added `--run_count` to `chifra scrape` (for debugging purposes).
+Add `--run_count` to both the `chifra scrape` and the `chifra monitors --watch`, hides both because they are intended for debugging only.
+
 ## v1.0.0 (2023/08/20)
 
 **OUR FIRST OFFICIAL RELEASE!**
