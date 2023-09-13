@@ -6,6 +6,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v1.1.0 (2023/09/05)
 
+Enables `chifra config edit`
 Added `--run_count` to `chifra scrape` (for debugging purposes).
 Changed names of some rarely used special blocks in `chifra when`. Breaking, but minimal impact.
 Removes a number of previously deprecated options. `chifra abis --sol`, `chifra names --named`, `chifra names --to_custom`, `chifra transactions --trace`, and `chifra --log_level` for all commands.
