@@ -1,6 +1,6 @@
 scrape?blockCnt=-12
 {
   "errors": [
-    "Cannot test block scraper"
+    "Specify at least 10 blocks per round with 10 blocks per round."
   ]
 }

@@ -81,7 +81,7 @@ func (s *SimpleNamedBlock) Model(verbose bool, format string, extraOptions map[s
 
 		if verbose {
 			model["component"] = s.Component
-			order = append([]string{"component"}, order...)
+			order = append(order, "component")
 
 			model["description"] = s.Description
 			order = append(order, "description")

@@ -7,8 +7,10 @@ package tslib
 import (
 	"encoding/csv"
 	"errors"
+	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -18,8 +20,8 @@ import (
 
 // GetSpecials returns a chain-specific list of special block names and numbers
 func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
-	specialsPath := config.GetPathToChainConfig(chain) + "specials.csv"
-	_, err = os.Stat(specialsPath)
+	path := config.GetPathToChainConfig(chain) + "specials.csv"
+	_, err = os.Stat(path)
 	if err != nil {
 		// It's okay if there are no specials for a certain chain
 		if chain == "mainnet" {
@@ -29,42 +31,16 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 		return specials, nil
 	}
 
-	file, err := os.OpenFile(specialsPath, os.O_RDONLY, 0)
-	if err != nil {
-		return
-	}
-	reader := csv.NewReader(file)
-	//	component,block/epoch,name,timestamp,date,description
-	reader.FieldsPerRecord = 6
-
-	for {
-		record, err1 := reader.Read()
-		if err1 == io.EOF {
-			break
-		}
-		if err1 != nil {
-			return specials, err1
-		}
-		if len(record) == 6 {
-			bn := utils.MustParseUint(record[1])
-			name := record[2]
-			ts := utils.MustParseInt(record[3])
-			if bn == 0 && name != "frontier" {
-				continue
+	if specials, err = readSpecials(path, 6); err != nil {
+		if errors.Is(err, csv.ErrFieldCount) {
+			if specials, err = readSpecials(path, 4); err != nil {
+				return specials, err
 			}
-			s := types.SimpleNamedBlock{
-				BlockNumber: bn,
-				Name:        name,
-				Timestamp:   ts,
-				Component:   record[0],
-				Description: record[5],
-			}
-			specials = append(specials, s)
 		}
 	}
 
 	if len(specials) == 0 {
-		err = errors.New("found no special blocks")
+		err = fmt.Errorf("found no special blocks in file %s", path)
 	}
 
 	return
@@ -74,4 +50,66 @@ func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
 func IsSpecialBlock(chain, needle string) bool {
 	_, err := FromNameToBn(chain, needle)
 	return err == nil
+}
+
+func readSpecials(path string, nFields int) (specials []types.SimpleNamedBlock, err error) {
+	file, err := os.OpenFile(path, os.O_RDONLY, 0)
+	if err != nil {
+		return
+	}
+
+	reader := csv.NewReader(file)
+	//	block,name,timestamp,date
+	reader.FieldsPerRecord = nFields
+	for {
+		if record, err := reader.Read(); err == io.EOF {
+			break
+
+		} else if err != nil {
+			return specials, err
+
+		} else {
+			if nFields == len(record) {
+				locs := map[string]int{
+					"bn":        1,
+					"name":      2,
+					"ts":        3,
+					"component": 0,
+					// "date":        4, // skipped since we have timestamp
+					"description": 5,
+				}
+				if nFields == 4 {
+					locs = map[string]int{
+						"bn":   0,
+						"name": 1,
+						"ts":   2,
+						// "date": 3, // skipped since we have timestamp
+					}
+				}
+				if strings.Contains(record[locs["bn"]], "-") {
+					// before block zero
+					continue
+				}
+				s := types.SimpleNamedBlock{
+					BlockNumber: utils.MustParseUint(record[locs["bn"]]),
+					Name:        record[locs["name"]],
+					Timestamp:   utils.MustParseInt(record[locs["ts"]]),
+				}
+				// is this the header?
+				if s.BlockNumber == 0 && s.Name == "name" {
+					continue
+				}
+
+				if nFields == 6 {
+					s.Component = record[locs["component"]]
+					s.Description = record[locs["description"]]
+				} else {
+					s.Component = "execution"
+				}
+
+				specials = append(specials, s)
+			}
+		}
+	}
+	return
 }
