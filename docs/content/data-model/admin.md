@@ -234,15 +234,15 @@ The following commands produce and manage CacheItems:
 
 CacheItems consist of the following fields:
 
-| Field       | Description                                         | Type   |
-| ----------- | --------------------------------------------------- | ------ |
-| type        | the type of the cache                               | string |
-| items       | the individual items in the cache (if --verbose)    | Any    |
-| lastCached  | the date of the most recent item added to the cache | string |
-| nFiles      | the number of items in the cache                    | uint64 |
-| nFolders    | the number of folders holding that many items       | uint64 |
-| path        | the path to the top of the given cache              | string |
-| sizeInBytes | the size of the cache in bytes                      | int64  |
+| Field       | Description                                         | Type      |
+| ----------- | --------------------------------------------------- | --------- |
+| type        | the type of the cache                               | string    |
+| items       | the individual items in the cache (if --verbose)    | Any       |
+| lastCached  | the date of the most recent item added to the cache | string    |
+| nFiles      | the number of items in the cache                    | uint64    |
+| nFolders    | the number of folders holding that many items       | uint64    |
+| path        | the path to the top of the given cache              | string    |
+| sizeInBytes | the size of the cache in bytes                      | int64     |
 
 ## ReportCheck
 
