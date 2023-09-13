@@ -26,7 +26,7 @@ func (bm *BlazeManager) HandleScrapeBlaze() error {
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
 	if _, err := bm.HandleBlaze(); err != nil {
-		_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
+		_ = index.CleanEphemeralIndexFolders(chain)
 		return err
 	}
 
@@ -37,7 +37,7 @@ func (bm *BlazeManager) HandleScrapeBlaze() error {
 		if !bm.processedMap[bn] {
 			// At least one block was not processed. This would only happen in the event of an
 			// error, so clean up, report the error and return. The loop will repeat.
-			_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
+			_ = index.CleanEphemeralIndexFolders(chain)
 			msg := fmt.Sprintf("A block %d was not processed%s", bn, strings.Repeat(" ", 50))
 			return errors.New(msg)
 		}

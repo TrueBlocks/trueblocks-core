@@ -1,10 +1,10 @@
 [version]
-current = "v0.40.0-beta"
+current = "v1.0.0-release"
 
 [settings]
-cachePath = ""
 defaultChain = "mainnet"
 defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
+cachePath = ""
 indexPath = ""
 
 [keys]
@@ -17,55 +17,45 @@ apiKey = ""
 jwt = ""
 secret = ""
 
+[keys.trueblocks]
+license = ""
+
 #[dev]
 #debug_curl=true
 
 [chains]
 
 [chains.mainnet]
-apiProvider = "http://localhost:8080"
-chainId = "1"
-localExplorer = "http://localhost:1234"
-remoteExplorer = "https://etherscan.io"
 rpcProvider = "http://localhost:8545"
-symbol = "ETH"
-
-[chains.gnosis]
-apiProvider = "http://localhost:8080"
-chainId = "100"
+remoteExplorer = "https://etherscan.io"
 localExplorer = "http://localhost:1234"
-remoteExplorer = "https://gnosisscan.io/"
-rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
-symbol = "XDAI"
+symbol = "ETH"
+chainId = "1"
 
 [chains.sepolia]
-apiProvider = "http://localhost:8080"
-chainId = "11155111"
-localExplorer = "http://localhost:1234"
-remoteExplorer = "https://sepolia.otterscan.io/"
 rpcProvider = "http://localhost:8548"
-symbol = "ETH"
-
-[chains.goerli]
-apiProvider = "http://localhost:8080"
-chainId = "5"
+remoteExplorer = "https://sepolia.otterscan.io/"
 localExplorer = "http://localhost:1234"
-remoteExplorer = "https://goerli.etherscan.io"
-rpcProvider = "https://goerli-light.eth.linkpool.io"
 symbol = "ETH"
+chainId = "11155111"
+
+[chains.gnosis]
+rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
+remoteExplorer = "https://gnosisscan.io/"
+localExplorer = "http://localhost:1234"
+symbol = "XDAI"
+chainId = "100"
 
 [chains.optimism]
-apiProvider = "http://localhost:8080"
-chainId = "10"
-localExplorer = "http://localhost:1234"
-remoteExplorer = "https://optimistic.etherscan.io"
 rpcProvider = "https://mainnet.optimism.io"
+remoteExplorer = "https://optimistic.etherscan.io"
+localExplorer = "http://localhost:1234"
 symbol = "OPT"
+chainId = "10"
 
 [chains.polygon]
-apiProvider = "http://localhost:8080"
-chainId = "80001"
-localExplorer = "http://localhost:1234"
-remoteExplorer = "https://mumbai.polygonscan.com"
 rpcProvider = "https://rpc-mumbai.maticvigil.com"
+remoteExplorer = "https://mumbai.polygonscan.com"
+localExplorer = "http://localhost:1234"
 symbol = "MATIC"
+chainId = "80001"

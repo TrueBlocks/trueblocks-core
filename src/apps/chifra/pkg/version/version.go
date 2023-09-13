@@ -17,27 +17,28 @@ type Version struct {
 }
 
 func NewVersion(str string) (vers Version, err error) {
-	if str[:3] == "GHC" {
-		// First, remove the part that cannot be parsed with ParseInt
-		str = str[len("GHC-TrueBlocks//"):]
-	}
+	str = strings.Replace(str, "GHC-TrueBlocks//", "", -1)
 	str = strings.Replace(strings.Replace(str, "-", ".", -1), "v", "", -1)
 	parts := strings.Split(str, ".")
+
 	if len(parts) > 0 {
 		if vers.Major, err = strconv.ParseInt(parts[0], 10, 32); err != nil {
 			return vers, err
 		}
 	}
+
 	if len(parts) > 1 {
 		if vers.Minor, err = strconv.ParseInt(parts[1], 10, 32); err != nil {
 			return vers, err
 		}
 	}
+
 	if len(parts) > 2 {
 		if vers.Build, err = strconv.ParseInt(parts[2], 10, 32); err != nil {
 			return vers, err
 		}
 	}
+
 	if len(parts) > 3 {
 		vers.Aspect = parts[3]
 	}

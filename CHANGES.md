@@ -6,6 +6,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v1.1.0 (2023/09/05)
 
+Forces v1.0.0-release into the TrueBlocks.toml file (needs a migration)
 Added `--watch_list`, `--commands`, `--batch_size`, and `--run_count` options to `chifra monitors`.
 Enables `chifra config edit`
 Added `--run_count` to `chifra scrape` (for debugging purposes).
@@ -14,9 +15,13 @@ Removes a number of previously deprecated options. `chifra abis --sol`, `chifra 
 Better error reporting when running against non-tracing nodes.
 Fixed an issue with Content-Type in the server.
 Fixed an issue where user could hit cntl+c during caching and corrupt the database.
+Fixed an issue where scraper was missing some smart contract addresses created during out of gas transactions.
+Better error handling from the RPC.
 Added a verbose mode to `chifra when` to include more specials and a description for each special block.
 Now disallows running `chifra scrape` if the node is not a tracing archive node.
+Near complete re-write of block scraper to fix few bugs and prepare for writing v1.0.0 of the spec.
 Add `--run_count` to both the `chifra scrape` and the `chifra monitors --watch`, hides both because they are intended for debugging only.
+Added `--publisher` option to `chifra init` and `chifra chunks`.
 
 ## v1.0.0 (2023/08/20)
 

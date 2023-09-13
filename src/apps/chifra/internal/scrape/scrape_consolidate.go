@@ -10,7 +10,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -60,9 +59,9 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 	unripeDist := bm.opts.Settings.Unripe_dist
 	if uint64(ripeCnt) < (bm.BlockCount() - unripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
-		allowMissing := scrapeCfg.AllowMissing(chain)
+		allowMissing := false // scrapeCfg.AllowMissing(chain)
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
-			_ = index.CleanTemporaryFolders(config.GetPathToCache(chain), false)
+			_ = index.CleanEphemeralIndexFolders(chain)
 			return true, err
 		}
 	}

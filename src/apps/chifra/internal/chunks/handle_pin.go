@@ -65,7 +65,9 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 
 				result, err := pinning.PinChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path), opts.Remote)
 				if err != nil {
-					return false, err
+					errorChan <- err
+					cancel() // keep going...
+					return true, nil
 				}
 
 				if pinning.LocalDaemonRunning() {
@@ -85,6 +87,13 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					logger.Fatal("Failed")
 				} else if opts.Remote && pinning.LocalDaemonRunning() {
 					logger.Info(colors.BrightGreen+"Matches: "+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
+				}
+				if opts.Globals.Verbose {
+					if opts.Remote {
+						fmt.Println("result.Remote:", result.Remote.String())
+					} else {
+						fmt.Println("result.Local:", result.Local.String())
+					}
 				}
 
 				sleep := opts.Sleep

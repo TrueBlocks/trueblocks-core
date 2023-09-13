@@ -111,7 +111,9 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 
 	reports := []simpleReportCheck{}
 
-	allowMissing := scrapeCfg.AllowMissing(chain)
+	s, _ := scrapeCfg.GetSettings(chain, "blockScrape.toml", nil)
+	allowMissing := s.Allow_missing
+
 	seq := simpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
