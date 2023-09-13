@@ -2068,6 +2068,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: publisher
+          description: for some query options, the publisher of the index
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: remote
           description: >
             prior to processing, retreive the manifest from the Unchained Index smart contract
@@ -2198,6 +2206,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: publisher
+          description: the publisher of the index to download
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: firstBlock
           description: do not download any chunks earlier than this block
           required: false
