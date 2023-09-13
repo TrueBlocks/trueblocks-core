@@ -17,7 +17,6 @@ status?modes=blocks&maxRecords=100&chains
       "chainConfig": "--paths--",
       "chains": [
         {
-          "apiProvider": "",
           "chain": "testChain",
           "chainId": 12345,
           "ipfsGateway": "",

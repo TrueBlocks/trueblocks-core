@@ -21,7 +21,6 @@ TEST[DATE|TIME] Format:  json
       "chainConfig": "--paths--",
       "chains": [
         {
-          "apiProvider": "",
           "chain": "testChain",
           "chainId": 12345,
           "ipfsGateway": "",

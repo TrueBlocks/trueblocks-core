@@ -6,6 +6,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v1.1.0 (2023/09/05)
 
+Added `--watch_list`, `--commands`, `--batch_size`, and `--run_count` options to `chifra monitors`.
 Enables `chifra config edit`
 Added `--run_count` to `chifra scrape` (for debugging purposes).
 Changed names of some rarely used special blocks in `chifra when`. Breaking, but minimal impact.
@@ -14,6 +15,7 @@ Better error reporting when running against non-tracing nodes.
 Fixed an issue with Content-Type in the server.
 Fixed an issue where user could hit cntl+c during caching and corrupt the database.
 Added a verbose mode to `chifra when` to include more specials and a description for each special block.
+Now disallows running `chifra scrape` if the node is not a tracing archive node.
 Add `--run_count` to both the `chifra scrape` and the `chifra monitors --watch`, hides both because they are intended for debugging only.
 
 ## v1.0.0 (2023/08/20)

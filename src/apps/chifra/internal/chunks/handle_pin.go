@@ -20,12 +20,12 @@ import (
 )
 
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
-	firstBlock := mustParseUint(os.Getenv("TB_CHUNK_PIN_FIRST_BLOCK"))
+	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
 
 	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		man := simpleChunkPinReport{
+		report := simpleChunkPinReport{
 			Version: version.ManifestVersion,
 			Chain:   chain,
 			Schemas: unchained.Schemas,
@@ -34,14 +34,14 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		if len(blockNums) == 0 {
 			var err error
 			tsPath := config.GetPathToIndex(chain) + "ts.bin"
-			if man.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
+			if report.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err
 				cancel()
 				return
 			}
 
 			manPath := config.GetPathToChainConfig(chain) + "manifest.json"
-			if man.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
+			if report.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
 				errorChan <- err
 				cancel()
 				return
@@ -69,13 +69,13 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				}
 
 				if pinning.LocalDaemonRunning() {
-					man.Pinned = append(man.Pinned, result.Local.BloomHash)
-					man.Pinned = append(man.Pinned, result.Local.IndexHash)
+					report.Pinned = append(report.Pinned, result.Local.BloomHash)
+					report.Pinned = append(report.Pinned, result.Local.IndexHash)
 				}
 
 				if opts.Remote {
-					man.Pinned = append(man.Pinned, result.Remote.BloomHash)
-					man.Pinned = append(man.Pinned, result.Remote.IndexHash)
+					report.Pinned = append(report.Pinned, result.Remote.BloomHash)
+					report.Pinned = append(report.Pinned, result.Remote.IndexHash)
 				}
 
 				if !result.Matches {
@@ -113,7 +113,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 		}
 
-		modelChan <- &man
+		modelChan <- &report
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())

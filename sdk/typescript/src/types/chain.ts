@@ -10,7 +10,6 @@ export type Chain = {
   chainId: uint64
   symbol: string
   rpcProvider: string
-  apiProvider: string
   remoteExplorer: string
   localExplorer: string
   ipfsGateway: string
