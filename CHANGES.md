@@ -7,6 +7,12 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 ## v1.1.0 (2023/09/05)
 
 Added `--run_count` to `chifra scrape` (for debugging purposes).
+Changed names of some rarely used special blocks in `chifra when`. Breaking, but minimal impact.
+Removes a number of previously deprecated options. `chifra abis --sol`, `chifra names --named`, `chifra names --to_custom`, `chifra transactions --trace`, and `chifra --log_level` for all commands.
+Better error reporting when running against non-tracing nodes.
+Fixed an issue with Content-Type in the server.
+Fixed an issue where user could hit cntl+c during caching and corrupt the database.
+Added a verbose mode to `chifra when` to include more specials and a description for each special block.
 Add `--run_count` to both the `chifra scrape` and the `chifra monitors --watch`, hides both because they are intended for debugging only.
 
 ## v1.0.0 (2023/08/20)

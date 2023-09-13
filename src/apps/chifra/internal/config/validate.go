@@ -5,6 +5,9 @@
 package configPkg
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -18,6 +21,10 @@ func (opts *ConfigOptions) validateConfig() error {
 	err := validate.ValidateEnum("modes", opts.Mode, "[show|edit]")
 	if err != nil {
 		return err
+	}
+
+	if opts.Mode == "edit" && os.Getenv("EDITOR") == "" {
+		return fmt.Errorf("You must set the EDITOR environment variable to use the 'edit' mode.")
 	}
 
 	return opts.Globals.Validate()
