@@ -23,7 +23,14 @@ type BlazeManager struct {
 	ripeBlock    base.Blknum
 	nRipe        int
 	nUnripe      int
+	nTimestamps  int
 	nChannels    int
+	errors       []scrapeError
+}
+
+type scrapeError struct {
+	block base.Blknum
+	err   error
 }
 
 // StartBlock returns the start block for the current pass of the scraper.

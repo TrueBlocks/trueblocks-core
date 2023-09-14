@@ -22,6 +22,9 @@ import (
 // and then extracting addresses and timestamps from those data structures.
 func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
 
+	// clear this out
+	bm.errors = make([]scrapeError, 0)
+
 	// We need three pipelines...we shove into blocks, blocks shoves into appearances and timestamps
 	blockChannel := make(chan base.Blknum)
 	appearanceChannel := make(chan scrapedData)
@@ -33,7 +36,7 @@ func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
 	blockWg.Add(bm.nChannels)
 	for i := 0; i < bm.nChannels; i++ {
 		go func() {
-			_ = bm.ProcessBlocks(blockChannel, &blockWg, appearanceChannel, tsChannel)
+			_ = bm.ProcessBlocks(blockChannel, &blockWg, appearanceChannel)
 		}()
 	}
 
@@ -41,7 +44,7 @@ func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
 	appWg.Add(bm.nChannels)
 	for i := 0; i < bm.nChannels; i++ {
 		go func() {
-			_ = bm.ProcessAppearances(appearanceChannel, &appWg)
+			_ = bm.ProcessAppearances(appearanceChannel, &appWg, tsChannel)
 		}()
 	}
 
@@ -73,63 +76,55 @@ func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
 
 // ProcessBlocks processes the block channel and for each block query the node for both
 // traces and logs. Send results down appearanceChannel.
-func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
+func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData) (err error) {
 	defer blockWg.Done()
 	for bn := range blockChannel {
-
-		sd := scrapedData{
-			bn: bn,
-		}
-
+		// TODO: Is it better to share the connection or create a new one each time?
 		chain := bm.chain
 		conn := rpc.TempConnection(chain)
 
-		ts := tslib.TimestampRecord{
-			Bn: uint32(bn),
-			Ts: uint32(conn.GetBlockTimestamp(uint64(bn))),
+		sd := scrapedData{
+			bn: bn,
+			ts: tslib.TimestampRecord{
+				Bn: uint32(bn),
+				Ts: uint32(conn.GetBlockTimestamp(bn)),
+			},
 		}
 
+		// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
-		if sd.traces, err = conn.GetTracesByBlockNumber(uint64(bn)); err != nil {
-			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
-			return err
+		var err error
+		if sd.traces, err = conn.GetTracesByBlockNumber(bn); err != nil {
+			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
+		} else if sd.receipts, err = conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
+			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
+		} else {
+			appearanceChannel <- sd
 		}
-
-		if sd.receipts, err = conn.GetReceiptsByNumber(uint64(bn), base.Timestamp(ts.Ts)); err != nil {
-			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
-			return err
-		}
-
-		appearanceChannel <- sd
-		tsChannel <- ts
 	}
-
 	return
 }
 
 var blazeMutex sync.Mutex
 
 // ProcessAppearances processes scrapedData objects shoved down the appearanceChannel
-func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, appWg *sync.WaitGroup) (err error) {
+func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, appWg *sync.WaitGroup, tsChannel chan tslib.TimestampRecord) (err error) {
 	defer appWg.Done()
 
 	for sData := range appearanceChannel {
 		addrMap := make(index.AddressBooleanMap)
+		if err = index.UniqFromTraces(bm.chain, sData.traces, addrMap); err != nil {
+			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
-		err = index.UniqFromTraces(bm.chain, sData.traces, addrMap)
-		if err != nil {
-			return err
-		}
+		} else if err = index.UniqFromReceipts(bm.chain, sData.receipts, addrMap); err != nil {
+			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
-		err = index.UniqFromReceipts(bm.chain, sData.receipts, addrMap)
-		if err != nil {
-			return err
+		} else {
+			if err = bm.WriteAppearances(sData.bn, addrMap); err != nil {
+				bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
+			}
 		}
-
-		err = bm.WriteAppearances(sData.bn, addrMap)
-		if err != nil {
-			return err
-		}
+		tsChannel <- sData.ts
 	}
 
 	return
@@ -138,13 +133,12 @@ func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, a
 // ProcessTimestamps processes timestamp data (currently by printing to a temporary file)
 func (bm *BlazeManager) ProcessTimestamps(tsChannel chan tslib.TimestampRecord, tsWg *sync.WaitGroup) (err error) {
 	defer tsWg.Done()
-
 	for ts := range tsChannel {
 		blazeMutex.Lock()
 		bm.timestamps = append(bm.timestamps, ts)
 		blazeMutex.Unlock()
+		bm.nTimestamps++
 	}
-
 	return
 }
 
@@ -179,7 +173,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap index.AddressBo
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 		err = os.WriteFile(fileName, toWrite, 0744) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 		if err != nil {
-			fmt.Println("WriteFile returned error", err)
+			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 			return err
 		}
 	}
@@ -187,12 +181,12 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap index.AddressBo
 	bm.syncedReporting(bn, false /* force */)
 	writeMutex.Lock()
 	bm.processedMap[bn] = true
-	writeMutex.Unlock()
 	if bn > bm.ripeBlock {
 		bm.nUnripe++
 	} else {
 		bm.nRipe++
 	}
+	writeMutex.Unlock()
 
 	return
 }
@@ -229,6 +223,7 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 // structure that is passed through to the AddressChannel for further processing.
 type scrapedData struct {
 	bn       base.Blknum
+	ts       tslib.TimestampRecord
 	traces   []types.SimpleTrace
 	receipts []types.SimpleReceipt
 }

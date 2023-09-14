@@ -12,6 +12,7 @@ import (
 
 func colored(s string) string {
 	s = strings.Replace(s, "{", colors.Green, -1)
+	s = strings.Replace(s, "@", colors.BrightYellow, -1)
 	s = strings.Replace(s, "}", colors.Off, -1)
 	return s
 }
@@ -19,21 +20,18 @@ func colored(s string) string {
 // Report prints out a report of the progress of the scraper.
 func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound, nAddrsFound int) {
 	nNeeded := perChunk - utils.Min(perChunk, nAppsNow)
-	appsPerBlock := float64(nAppsFound) / float64(nBlocks)
 	appsPerAddr := float64(nAppsFound) / float64(nAddrsFound)
 	pctFull := float64(nAppsNow) / float64(perChunk)
 
-	msg := fmt.Sprintf(`%s #{%d}, found {%6d} apps, {%5d} addrs ({%0.1f/addr}), in {%4d} blks ({%0.1f}/blk). Created {%d} chunks, staged {%5d} of {%d} ({%0.1f%%}). Need {%5d} more.`,
+	report := `%s #{%d}, found {%6d} appearances and {%5d} addrs ({%0.1f/addr}). Created {%d} chunks, staged {%5d} records (@%0.1f%%}), need {%5d}.`
+	msg := fmt.Sprintf(report,
 		bm.chain,
 		bm.EndBlock(),
 		nAppsFound,
 		nAddrsFound,
 		appsPerAddr,
-		nBlocks,
-		appsPerBlock,
 		nChunks,
 		nAppsNow,
-		perChunk,
 		pctFull*100,
 		nNeeded,
 	)

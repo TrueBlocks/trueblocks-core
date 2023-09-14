@@ -9,6 +9,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // ScrapeBatch is called each time around the forever loop. It calls into
@@ -17,6 +18,9 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 	chain := bm.chain
 
 	if err, ok := bm.HandleBlaze(blocks); !ok || err != nil {
+		for _, err := range bm.errors {
+			logger.Error(fmt.Sprintf("error at block %d: %v", err.block, err.err))
+		}
 		_ = index.CleanEphemeralIndexFolders(chain)
 		return err, ok
 	}
@@ -24,6 +28,9 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 	// Check to see if we missed any blocks...
 	for _, block := range blocks {
 		if !bm.processedMap[block] {
+			for _, err := range bm.errors {
+				logger.Error(fmt.Sprintf("error at block %d: %v", err.block, err.err))
+			}
 			// We missed a block. We need to clean up and continue
 			// next time around the loop. This may happen if the
 			// node returns an error for example.
@@ -33,14 +40,20 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 	}
 
 	// defensive programming...
-	if len(blocks) != len(bm.processedMap) || len(blocks) != bm.nProcessed() {
+	if len(blocks) != len(bm.processedMap) ||
+		len(blocks) != bm.nProcessed() ||
+		bm.nTimestamps != bm.nProcessed() {
+		for _, err := range bm.errors {
+			logger.Error(fmt.Sprintf("error at block %d: %v", err.block, err.err))
+		}
 		_ = index.CleanEphemeralIndexFolders(chain)
-		return fmt.Errorf(`check failed len(blocks): %d len(map): %d nRipe: %d nUnripe: %d nProcessed: %d`,
+		return fmt.Errorf(`check failed len(blocks): %d len(map): %d nRipe: %d nUnripe: %d nProcessed: %d nTs: %d`,
 			len(blocks),
 			len(bm.processedMap),
 			bm.nRipe,
 			bm.nUnripe,
 			bm.nProcessed(),
+			bm.nTimestamps,
 		), true
 	}
 

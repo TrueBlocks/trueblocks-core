@@ -85,6 +85,10 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// Order dependant, be careful!
 		// first block to scrape (one past end of previous round).
 		bm.startBlock = bm.meta.NextIndexHeight()
+		// if opts.StartBlock != 0 {
+		// 	bm.startBlock = opts.StartBlock
+		// }
+
 		// user supplied, but not so many to pass the chain tip.
 		bm.blockCount = utils.Min(opts.BlockCnt, bm.meta.ChainHeight()-bm.StartBlock()+1)
 		// Unripe_dist behind the chain tip.
