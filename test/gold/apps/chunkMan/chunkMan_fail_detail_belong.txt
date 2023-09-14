@@ -18,7 +18,7 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
-  -P, --publisher string   for some query options, the publisher of the index (default "trueblocks.eth")
+  -P, --publisher string   for some query options, the publisher of the index (hidden) (default "trueblocks.eth")
   -n, --truncate uint      truncate the entire index at this block (requires a block identifier) (hidden)
   -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
