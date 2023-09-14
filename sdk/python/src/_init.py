@@ -9,7 +9,6 @@ initFmt = "json"
 initOpts = {
     "all": {"hotkey": "-a", "type": "switch"},
     "dryRun": {"hotkey": "-d", "type": "switch"},
-    "publisher": {"hotkey": "-P", "type": "flag"},
     "firstBlock": {"hotkey": "-F", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "fmt": {"hotkey": "-x", "type": "flag"},

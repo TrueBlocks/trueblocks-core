@@ -125,9 +125,7 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 			}
 
 			indexPath := config.GetPathToIndex(chain) + "finalized/" + curRange.String() + ".bin"
-			// TODO: Either this needs to be an option or PreferredPublisher needs to be configurable
-			publisher := base.ZeroAddr
-			if report, err := index.WriteChunk(chain, indexPath, publisher, appMap, len(appearances), bm.opts.Pin, bm.opts.Remote); err != nil {
+			if report, err := index.WriteChunk(chain, bm.opts.PublisherAddr, indexPath, appMap, len(appearances), bm.opts.Pin, bm.opts.Remote); err != nil {
 				return false, err
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")

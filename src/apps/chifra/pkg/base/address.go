@@ -168,3 +168,8 @@ func IsValidAddressE(val string) (bool, error) {
 
 // FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers
 var FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+
+// GetTestPublisher does not get customized per chain. We can only test against mainnet currently
+func GetTestPublisher() Address {
+	return HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+}

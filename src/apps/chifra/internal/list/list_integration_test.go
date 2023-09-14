@@ -20,7 +20,7 @@ import (
 )
 
 func Test_HandleFreshenMonitors(t *testing.T) {
-	tslib.EstablishTsFile(utils.GetTestChain())
+	tslib.EstablishTsFile(utils.GetTestChain(), base.GetTestPublisher())
 	opts := globals.GlobalOptions{}
 	opts.Chain = "mainnet"
 	listOpts := ListOptions{

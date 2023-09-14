@@ -62,6 +62,13 @@ func (opts *ListOptions) validateList() error {
 		}
 	}
 
+	if len(opts.Publisher) > 0 {
+		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
+		if err != nil {
+			return err
+		}
+	}
+
 	// Note that this does not return if the index is not initialized
 	if err := index.IndexIsInitialized(chain); err != nil {
 		if opts.Globals.IsApiMode() {

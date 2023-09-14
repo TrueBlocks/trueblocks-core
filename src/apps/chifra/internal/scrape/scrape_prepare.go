@@ -7,7 +7,6 @@ package scrapePkg
 import (
 	"path/filepath"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -57,9 +56,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 
 	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
 	indexPath := index.ToIndexPath(bloomPath)
-	// TODO: Either this needs to be an option or PreferredPublisher needs to be configurable
-	publisher := base.ZeroAddr
-	if report, err := index.WriteChunk(chain, indexPath, publisher, appMap, len(prefunds), opts.Pin, opts.Remote); err != nil {
+	if report, err := index.WriteChunk(chain, opts.PublisherAddr, indexPath, appMap, len(prefunds), opts.Pin, opts.Remote); err != nil {
 		return false, err
 	} else if report == nil {
 		logger.Fatal("Should not happen, write chunk returned empty report")

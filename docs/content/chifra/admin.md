@@ -282,7 +282,6 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
-  -P, --publisher string   for some query options, the publisher of the index (default "trueblocks.eth")
   -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
   -F, --first_block uint   first block to process (inclusive)
@@ -357,7 +356,6 @@ Usage:
 Flags:
   -a, --all                in addition to Bloom filters, download full index chunks (recommended)
   -d, --dry_run            display the results of the download without actually downloading
-  -P, --publisher string   the publisher of the index to download (default "trueblocks.eth")
   -F, --first_block uint   do not download any chunks earlier than this block
   -s, --sleep float        seconds to sleep between downloads
   -v, --verbose            enable verbose output

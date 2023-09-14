@@ -25,10 +25,10 @@ import (
 
 // EstablishIndexChunk a filename to an index portion, finds the correspoding CID (hash)
 // entry in the manifest, and downloads the index chunk to the local drive
-func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
+func EstablishIndexChunk(chain string, publisher base.Address, fileRange base.FileRange) (bool, error) {
 	exists, fileName := fileRange.RangeToFilename(chain)
 
-	chunkManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
+	chunkManifest, err := manifest.ReadManifest(chain, publisher, manifest.FromCache)
 	if err != nil {
 		return exists, err
 	}

@@ -46,7 +46,7 @@ func (c *WriteChunkReport) Report() {
 	}
 }
 
-func WriteChunk(chain, fileName string, publisher base.Address, addrAppearanceMap AddressAppearanceMap, nApps int, pin, remote bool) (*WriteChunkReport, error) {
+func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int, pin, remote bool) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -167,7 +167,7 @@ func WriteChunk(chain, fileName string, publisher base.Address, addrAppearanceMa
 			report.PinRecord.BloomHash = rec.BloomHash
 			report.PinRecord.IndexSize = rec.IndexSize
 			report.PinRecord.BloomSize = rec.BloomSize
-			return &report, manifest.UpdateManifest(chain, rec)
+			return &report, manifest.UpdateManifest(chain, publisher, rec)
 
 		} else {
 			return nil, err

@@ -43,6 +43,7 @@ type ChunksOptions struct {
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
+	PublisherAddr base.Address
 	// EXISTING_CODE
 }
 
@@ -134,6 +135,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	// EXISTING_CODE
 	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 
@@ -161,6 +163,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	if len(args) > 0 {
 		opts.Mode = args[0]
 		for i, arg := range args {

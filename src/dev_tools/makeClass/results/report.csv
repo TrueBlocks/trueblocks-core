@@ -389,6 +389,9 @@ list,noZero,python
 list,noZero,typescript
 list,no_zero,cmds
 list,no_zero,readme
+list,publisher,api
+list,publisher,python
+list,publisher,typescript
 list,raw,typescript
 list,reversed,api
 list,reversed,cmds
@@ -593,6 +596,9 @@ scrape,pin,cmds
 scrape,pin,python
 scrape,pin,readme
 scrape,pin,typescript
+scrape,publisher,api
+scrape,publisher,python
+scrape,publisher,typescript
 scrape,raw,typescript
 scrape,remote,api
 scrape,remote,cmds

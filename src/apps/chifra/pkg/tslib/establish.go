@@ -11,16 +11,16 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
-func EstablishTsFile(chain string) error {
+func EstablishTsFile(chain string, publisher base.Address) error {
 	if chain == "non-tracing" { // A test-mode chain to test IsTracing
 		return nil
 	}
@@ -30,7 +30,8 @@ func EstablishTsFile(chain string) error {
 		return nil
 	}
 
-	cid, err := manifest.ReadUnchainedIndex(chain, "ts", unchained.GetPreferredPublisher())
+	database := chain + "-ts"
+	cid, err := manifest.ReadUnchainedIndex(chain, publisher, database)
 	if err != nil {
 		return err
 	}
