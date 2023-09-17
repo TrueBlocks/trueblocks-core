@@ -105,7 +105,7 @@ func (opts *ChunksOptions) exportTo(dest, source string) (bool, error) {
 	})
 
 	for _, app := range apps {
-		fmt.Println(fmt.Sprintf("%s\t%d\t%d\t%s", dest, app.BlockNumber, app.TransactionIndex, app.Address))
+		fmt.Printf("%s\t%d\t%d\t%s", dest, app.BlockNumber, app.TransactionIndex, app.Address)
 	}
 
 	return true, nil
