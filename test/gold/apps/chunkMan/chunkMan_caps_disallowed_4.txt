@@ -18,6 +18,7 @@ Flags:
   -n, --truncate uint      truncate the entire index at this block (requires a block identifier) (hidden)
   -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
+  -f, --diff               compare two index portions (see notes) (hidden)
   -F, --first_block uint   first block to process (inclusive)
   -L, --last_block uint    last block to process (inclusive)
   -m, --max_addrs uint     the max number of addresses to process in a given chunk

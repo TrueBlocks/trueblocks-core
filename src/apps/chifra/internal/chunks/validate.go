@@ -7,8 +7,10 @@ package chunksPkg
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -32,6 +34,19 @@ func (opts *ChunksOptions) validateChunks() error {
 	err := validate.ValidateEnum("mode", opts.Mode, "[manifest|index|blooms|addresses|appearances|stats]")
 	if err != nil {
 		return err
+	}
+
+	if opts.Diff {
+		if opts.Mode != "index" {
+			return validate.Usage("The {0} option is only available in {1} mode.", "--diff", "index")
+		}
+		path := os.Getenv("TB_CHUNKS_DIFFPATH")
+		if path == "" {
+			return validate.Usage("The {0} option requires {1}.", "--diff", "TB_CHUNKS_DIFFPATH to be set")
+		}
+		if !file.FolderExists(path) {
+			return fmt.Errorf("the path TB_CHUNKS_DIFFPATH=%s does not exist", path)
+		}
 	}
 
 	isIndexOrManifest := opts.Mode == "index" || opts.Mode == "manifest"
@@ -136,6 +151,10 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage("Specify only a single block range at a time.")
 		}
 		return err
+	}
+
+	if opts.Diff && len(opts.BlockIds) != 1 {
+		return validate.Usage("The {0} option requires exactly one block identifier.", "--diff")
 	}
 
 	if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS || opts.MaxAddrs != utils.NOPOS {
