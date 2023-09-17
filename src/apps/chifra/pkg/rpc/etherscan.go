@@ -126,14 +126,14 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 		// }
 	} else if requestType == "miner" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
-		s.TransactionIndex = 99999
+		s.TransactionIndex = types.BlockReward
 		s.From = base.BlockRewardSender
 		s.Value.SetString("5000000000000000000", 0)
 		s.To = base.HexToAddress(addr)
 
 	} else if requestType == "uncles" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
-		s.TransactionIndex = 99998
+		s.TransactionIndex = types.UncleReward
 		s.From = base.UncleRewardSender
 		s.Value.SetString("3750000000000000000", 0)
 		s.To = base.HexToAddress(addr)

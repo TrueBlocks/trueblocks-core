@@ -23,45 +23,49 @@ import (
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string   `json:"author"`
-	BaseFeePerGas    string   `json:"baseFeePerGas"`
-	BlockNumber      string   `json:"number"`
-	Difficulty       string   `json:"difficulty"`
-	ExtraData        string   `json:"extraData"`
-	GasLimit         string   `json:"gasLimit"`
-	GasUsed          string   `json:"gasUsed"`
-	Hash             string   `json:"hash"`
-	LogsBloom        string   `json:"logsBloom"`
-	Miner            string   `json:"miner"`
-	MixHash          string   `json:"mixHash"`
-	Nonce            string   `json:"nonce"`
-	ParentHash       string   `json:"parentHash"`
-	ReceiptsRoot     string   `json:"receiptsRoot"`
-	Sha3Uncles       string   `json:"sha3Uncles"`
-	Size             string   `json:"size"`
-	StateRoot        string   `json:"stateRoot"`
-	Timestamp        string   `json:"timestamp"`
-	TotalDifficulty  string   `json:"totalDifficulty"`
-	Transactions     []any    `json:"transactions"`
-	TransactionsRoot string   `json:"transactionsRoot"`
-	Uncles           []string `json:"uncles"`
+	Author           string          `json:"author"`
+	BaseFeePerGas    string          `json:"baseFeePerGas"`
+	BlockNumber      string          `json:"number"`
+	Difficulty       string          `json:"difficulty"`
+	ExtraData        string          `json:"extraData"`
+	GasLimit         string          `json:"gasLimit"`
+	GasUsed          string          `json:"gasUsed"`
+	Hash             string          `json:"hash"`
+	LogsBloom        string          `json:"logsBloom"`
+	Miner            string          `json:"miner"`
+	MixHash          string          `json:"mixHash"`
+	Nonce            string          `json:"nonce"`
+	ParentHash       string          `json:"parentHash"`
+	ReceiptsRoot     string          `json:"receiptsRoot"`
+	Sha3Uncles       string          `json:"sha3Uncles"`
+	Size             string          `json:"size"`
+	StateRoot        string          `json:"stateRoot"`
+	Timestamp        string          `json:"timestamp"`
+	TotalDifficulty  string          `json:"totalDifficulty"`
+	Transactions     []any           `json:"transactions"`
+	TransactionsRoot string          `json:"transactionsRoot"`
+	Uncles           []string        `json:"uncles"`
+	Withdrawals      []RawWithdrawal `json:"withdrawals"`
+	WithdrawalsRoot  string          `json:"withdrawalsRoot"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleBlock[Tx string | SimpleTransaction] struct {
-	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
-	BlockNumber   base.Blknum    `json:"blockNumber"`
-	Difficulty    uint64         `json:"difficulty"`
-	GasLimit      base.Gas       `json:"gasLimit"`
-	GasUsed       base.Gas       `json:"gasUsed"`
-	Hash          base.Hash      `json:"hash"`
-	Miner         base.Address   `json:"miner"`
-	ParentHash    base.Hash      `json:"parentHash"`
-	Timestamp     base.Timestamp `json:"timestamp"`
-	Transactions  []Tx           `json:"transactions"`
-	Uncles        []base.Hash    `json:"uncles,omitempty"`
-	raw           *RawBlock      `json:"-"`
+	BaseFeePerGas   base.Wei           `json:"baseFeePerGas"`
+	BlockNumber     base.Blknum        `json:"blockNumber"`
+	Difficulty      uint64             `json:"difficulty"`
+	GasLimit        base.Gas           `json:"gasLimit"`
+	GasUsed         base.Gas           `json:"gasUsed"`
+	Hash            base.Hash          `json:"hash"`
+	Miner           base.Address       `json:"miner"`
+	ParentHash      base.Hash          `json:"parentHash"`
+	Timestamp       base.Timestamp     `json:"timestamp"`
+	Transactions    []Tx               `json:"transactions"`
+	Uncles          []base.Hash        `json:"uncles,omitempty"`
+	Withdrawals     []SimpleWithdrawal `json:"withdrawals,omitempty"`
+	WithdrawalsRoot base.Hash          `json:"withdrawalsRoot,omitempty"`
+	raw             *RawBlock          `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -104,7 +108,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 			txHashes = append(txHashes, txs...)
 			// TODO: no error if can't cast?
 		}
-		return Model{
+		model := Model{
 			Data: map[string]interface{}{
 				"hash":        s.Hash,
 				"blockNumber": s.BlockNumber,
@@ -122,6 +126,15 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				"tx_hashes",
 			},
 		}
+		if len(s.Withdrawals) > 0 {
+			model.Data["withdrawals"] = s.Withdrawals
+			model.Order = append(model.Order, "withdrawals")
+		}
+		if !s.WithdrawalsRoot.IsZero() {
+			model.Data["withdrawalsRoot"] = s.WithdrawalsRoot
+			model.Order = append(model.Order, "withdrawalsRoot")
+		}
+		return model
 	}
 
 	model = map[string]interface{}{
@@ -182,6 +195,15 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 			model["unclesCnt"] = len(s.Uncles)
 			order = append(order, "unclesCnt")
 		}
+	}
+
+	if len(s.Withdrawals) > 0 {
+		model["withdrawals"] = s.Withdrawals
+		order = append(order, "withdrawals")
+	}
+	if !s.WithdrawalsRoot.IsZero() {
+		model["withdrawalsRoot"] = s.WithdrawalsRoot
+		order = append(order, "withdrawalsRoot")
 	}
 	// EXISTING_CODE
 
@@ -284,6 +306,21 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Withdrawals
+	withdrawals := make([]cache.Marshaler, 0, len(s.Withdrawals))
+	for _, withdrawal := range s.Withdrawals {
+		withdrawal := withdrawal
+		withdrawals = append(withdrawals, &withdrawal)
+	}
+	if err = cache.WriteValue(writer, withdrawals); err != nil {
+		return err
+	}
+
+	// WithdrawalsRoot
+	if err = cache.WriteValue(writer, &s.WithdrawalsRoot); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -342,6 +379,17 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 	// Uncles
 	s.Uncles = make([]base.Hash, 0)
 	if err = cache.ReadValue(reader, &s.Uncles, version); err != nil {
+		return err
+	}
+
+	// Withdrawals
+	s.Withdrawals = make([]SimpleWithdrawal, 0)
+	if err = cache.ReadValue(reader, &s.Withdrawals, version); err != nil {
+		return err
+	}
+
+	// WithdrawalsRoot
+	if err = cache.ReadValue(reader, &s.WithdrawalsRoot, version); err != nil {
 		return err
 	}
 

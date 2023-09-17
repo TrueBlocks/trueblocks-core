@@ -33,19 +33,21 @@ The following commands produce and manage Blocks:
 
 Blocks consist of the following fields:
 
-| Field         | Description                                                   | Type                                                |
-| ------------- | ------------------------------------------------------------- | --------------------------------------------------- |
-| gasLimit      | the system-wide maximum amount of gas permitted in this block | gas                                                 |
-| hash          | the hash of the current block                                 | hash                                                |
-| blockNumber   | the number of the block                                       | blknum                                              |
-| parentHash    | hash of previous block                                        | hash                                                |
-| miner         | address of block's winning miner                              | address                                             |
-| difficulty    | the computational difficulty at this block                    | uint64                                              |
-| timestamp     | the Unix timestamp of the object                              | timestamp                                           |
-| date          | a calculated field -- the date of the object                  | datetime                                            |
-| transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
-| baseFeePerGas | the base fee for this block                                   | wei                                                 |
-| uncles        |                                                               | Hash                                                |
+| Field           | Description                                                   | Type                                                |
+| --------------- | ------------------------------------------------------------- | --------------------------------------------------- |
+| gasLimit        | the system-wide maximum amount of gas permitted in this block | gas                                                 |
+| hash            | the hash of the current block                                 | hash                                                |
+| blockNumber     | the number of the block                                       | blknum                                              |
+| parentHash      | hash of previous block                                        | hash                                                |
+| miner           | address of block's winning miner                              | address                                             |
+| difficulty      | the computational difficulty at this block                    | uint64                                              |
+| timestamp       | the Unix timestamp of the object                              | timestamp                                           |
+| date            | a calculated field -- the date of the object                  | datetime                                            |
+| transactions    | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
+| baseFeePerGas   | the base fee for this block                                   | wei                                                 |
+| uncles          | a possibly empty array of uncle hashes                        | Hash                                                |
+| withdrawals     | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
+| withdrawalsRoot |                                                               | hash                                                |
 
 ## Transaction
 
@@ -122,6 +124,24 @@ Transfers consist of the following fields:
 | priceSource      | the on-chain source from which the spot price was taken                                        | string    |
 | encoding         | the four-byte encoding of the transaction's function call                                      | string    |
 
+## Withdrawal
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`withdrawals` is an array present in post-Shanghai blocks representing Consensys layer staking reward withdrawals. Note that the amount present is in Gwei. The `withdrawals` array is not present in pre-Shanghai blocks.
+
+The following commands produce and manage Withdrawals:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+
+Withdrawals consist of the following fields:
+
+| Field          | Description                                                                                                          | Type    |
+| -------------- | -------------------------------------------------------------------------------------------------------------------- | ------- |
+| address        | the recipient for the withdrawn ether                                                                                | address |
+| amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei     |
+| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | uint64  |
+| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | uint64  |
+
 ## Receipt
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -182,26 +202,6 @@ Logs consist of the following fields:
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string                                  |
 
-## LogFilter
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-Log filters are used to speed up querying of the node when searching for logs.
-
-The following commands produce and manage LogFilters:
-
-- [chifra blocks](/chifra/chaindata/#chifra-blocks)
-- [chifra logs](/chifra/chaindata/#chifra-logs)
-
-LogFilters consist of the following fields:
-
-| Field     | Description                                                            | Type          |
-| --------- | ---------------------------------------------------------------------- | ------------- |
-| fromBlock | the first block in the block range to query with eth_getLogs           | blknum        |
-| toBlock   | the last block in the range to query with eth_getLogs                  | blknum        |
-| blockHash | an alternative to blocks specification, the hash of the block to query | hash          |
-| emitters  | one or more emitting addresses from which logs were emitted            | Address       |
-| topics    | one or more topics which logs represent                                | topic[]       |
-
 ## Trace
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -253,6 +253,26 @@ Fields that change during self-destruct transaction:
 | Action::Value |                       | Action.Balance           |
 |               | Action.RefundAddress  |                          |
 |               | Action.Balance        |                          |
+
+## LogFilter
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+Log filters are used to speed up querying of the node when searching for logs.
+
+The following commands produce and manage LogFilters:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+
+LogFilters consist of the following fields:
+
+| Field     | Description                                                            | Type          |
+| --------- | ---------------------------------------------------------------------- | ------------- |
+| fromBlock | the first block in the block range to query with eth_getLogs           | blknum        |
+| toBlock   | the last block in the range to query with eth_getLogs                  | blknum        |
+| blockHash | an alternative to blocks specification, the hash of the block to query | hash          |
+| emitters  | one or more emitting addresses from which logs were emitted            | Address       |
+| topics    | one or more topics which logs represent                                | topic[]       |
 
 ## TraceAction
 

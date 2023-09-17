@@ -99,7 +99,7 @@ func debugCurl(payload rpcPayload, rpcProvider string) {
 }
 
 // fromRpc Returns all traces for a given block.
-func FromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
+func FromRpc(rpcProvider string, payload *Payload, ret any) error {
 	payloadToSend := rpcPayload{
 		Jsonrpc: "2.0",
 		Method:  payload.Method,

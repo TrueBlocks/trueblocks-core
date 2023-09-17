@@ -3,7 +3,7 @@
 /*
  * This file was generated with makeClass --sdk. Do not edit it.
  */
-import { address, blknum, datetime, gas, hash, timestamp, Transaction, uint64, wei } from '.';
+import { address, blknum, datetime, gas, hash, timestamp, Transaction, uint64, wei, Withdrawal } from '.';
 
 export type Block = {
   author: address
@@ -29,4 +29,6 @@ export type Block = {
   transactions: Transaction[]
   transactionsRoot: hash
   uncles?: hash[]
+  withdrawals?: Withdrawal[]
+  withdrawalsRoot?: hash
 }

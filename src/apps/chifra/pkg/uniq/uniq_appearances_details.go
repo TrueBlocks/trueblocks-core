@@ -38,12 +38,12 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			return err
 		} else {
 			miner := block.Miner.Hex()
-			txid := uint64(99999)
+			txid := types.BlockReward
 			if block.Miner.IsZero() {
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
 				miner = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-				txid = 99997
+				txid = types.MisconfigReward
 			}
 			streamAppearance(procFunc, flow, "miner", miner, bn, txid, utils.NOPOS, ts, addrMap)
 
@@ -52,12 +52,12 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 			} else {
 				for _, uncle := range uncles {
 					unc := uncle.Miner.Hex()
-					txid = uint64(99998)
+					txid = types.UncleReward
 					if uncle.Miner.IsZero() {
 						// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 						// burned). We enter a false record with a false tx_id to account for this.
 						unc = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-						txid = 99998 // do not change this!
+						txid = types.UncleReward // do not change this!
 					}
 					streamAppearance(procFunc, flow, "uncle", unc, bn, txid, utils.NOPOS, ts, addrMap)
 				}
@@ -203,32 +203,32 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
 				author := trace.Action.Author.Hex()
-				falseTxid := uint64(99999)
+				falseTxid := types.BlockReward
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
 				a := base.HexToAddress(author)
 				if a.IsZero() {
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					falseTxid = uint64(99997)
+					falseTxid = types.MisconfigReward
 				}
 				streamAppearance(procFunc, flow, "miner", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "uncle" {
 				author := trace.Action.Author.Hex()
-				falseTxid := uint64(99998)
+				falseTxid := types.UncleReward
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
 				a := base.HexToAddress(author)
 				if a.IsZero() {
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					falseTxid = uint64(99998) // do not change! it will break the index
+					falseTxid = types.UncleReward // do not change! it will break the index
 				}
 				streamAppearance(procFunc, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
-				falseTxid := uint64(99996)
+				falseTxid := types.ExternalReward
 				streamAppearance(procFunc, flow, "external", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else {

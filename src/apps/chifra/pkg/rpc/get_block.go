@@ -52,10 +52,10 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		return block, err
 	}
 
-	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
-	for _, uncle := range rawBlock.Uncles {
-		block.Uncles = append(block.Uncles, base.HexToHash(uncle))
-	}
+	// block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
+	// for _, uncle := range rawBlock.Uncles {
+	// 	block.Uncles = append(block.Uncles, base.HexToHash(uncle))
+	// }
 
 	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
 	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
@@ -105,10 +105,10 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 		return block, err
 	}
 
-	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
-	for _, uncle := range rawBlock.Uncles {
-		block.Uncles = append(block.Uncles, base.HexToHash(uncle))
-	}
+	// block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
+	// for _, uncle := range rawBlock.Uncles {
+	// 	block.Uncles = append(block.Uncles, base.HexToHash(uncle))
+	// }
 
 	block.Transactions = make([]string, 0, len(rawBlock.Transactions))
 	for _, txHash := range rawBlock.Transactions {
@@ -237,16 +237,31 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 		uncles = append(uncles, base.HexToHash(uncle))
 	}
 
+	withdrawals := make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
+	for _, wd := range rawBlock.Withdrawals {
+		s := types.SimpleWithdrawal{
+			Address: base.HexToAddress(wd.Address),
+			// Amount:         wd.Amount,
+			Index:          utils.MustParseUint(wd.Index),
+			ValidatorIndex: utils.MustParseUint(wd.ValidatorIndex),
+		}
+		s.Amount.SetString(wd.Amount, 0)
+		// s.Amount = s.Amount.Div(s.Amount, big.NewInt(1000000000))
+		withdrawals = append(withdrawals, s)
+	}
+
 	block = types.SimpleBlock[Tx]{
-		BlockNumber: blockNumber,
-		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
-		Hash:        base.HexToHash(rawBlock.Hash),
-		ParentHash:  base.HexToHash(rawBlock.ParentHash),
-		GasLimit:    gasLimit,
-		GasUsed:     gasUsed,
-		Miner:       base.HexToAddress(rawBlock.Miner),
-		Difficulty:  difficulty,
-		Uncles:      uncles,
+		BlockNumber:     blockNumber,
+		Timestamp:       base.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
+		Hash:            base.HexToHash(rawBlock.Hash),
+		ParentHash:      base.HexToHash(rawBlock.ParentHash),
+		GasLimit:        gasLimit,
+		GasUsed:         gasUsed,
+		Miner:           base.HexToAddress(rawBlock.Miner),
+		Difficulty:      difficulty,
+		Uncles:          uncles,
+		Withdrawals:     withdrawals,
+		WithdrawalsRoot: base.HexToHash(rawBlock.WithdrawalsRoot),
 	}
 	return
 }
