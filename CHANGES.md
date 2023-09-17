@@ -6,6 +6,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v1.1.0 (2023/09/05)
 
+Adds withdrawals to blocks data structure, breaking change to block cache - needs migration
 Forces v1.0.0-release into the TrueBlocks.toml file (needs a migration)
 Added `--watch_list`, `--commands`, `--batch_size`, and `--run_count` options to `chifra monitors`.
 Enables `chifra config edit`
