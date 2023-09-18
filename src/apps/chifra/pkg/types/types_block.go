@@ -83,19 +83,6 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["count"] == true {
-		return Model{
-			Data: map[string]interface{}{
-				"blockNumber":     s.BlockNumber,
-				"transactionsCnt": len(s.Transactions),
-			},
-			Order: []string{
-				"blockNumber",
-				"transactionsCnt",
-			},
-		}
-	}
-
 	if extraOptions["hashes"] == true {
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is
@@ -167,6 +154,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 		if extraOptions["list"] == true {
 			model["transactionsCnt"] = len(s.Transactions)
 			model["unclesCnt"] = len(s.Uncles)
+			model["withdrawalsCnt"] = len(s.Withdrawals)
 		} else {
 			// If we wanted just transactions' hashes, we would return earlier. So here we know that we
 			// have transactions as objects and want to load models for them to be able to display them
@@ -194,6 +182,8 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 		if extraOptions["list"] == true {
 			model["unclesCnt"] = len(s.Uncles)
 			order = append(order, "unclesCnt")
+			model["withdrawalsCnt"] = len(s.Withdrawals)
+			order = append(order, "withdrawalsCnt")
 		}
 	}
 

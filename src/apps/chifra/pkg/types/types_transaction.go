@@ -206,9 +206,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		if s.Receipt != nil && !s.Receipt.IsDefault() {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
-			// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
-			// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
-			// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
+			// TODO: This is quite odd. Why?
 			status := &s.Receipt.Status
 			if s.BlockNumber < base.ByzantiumBlock || *status == 4294967295-1 {
 				status = nil

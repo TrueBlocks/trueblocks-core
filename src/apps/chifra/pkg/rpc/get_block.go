@@ -237,32 +237,34 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 		uncles = append(uncles, base.HexToHash(uncle))
 	}
 
-	withdrawals := make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
-	for _, wd := range rawBlock.Withdrawals {
-		s := types.SimpleWithdrawal{
-			Address: base.HexToAddress(wd.Address),
-			// Amount:         wd.Amount,
-			Index:          utils.MustParseUint(wd.Index),
-			ValidatorIndex: utils.MustParseUint(wd.ValidatorIndex),
-		}
-		s.Amount.SetString(wd.Amount, 0)
-		// s.Amount = s.Amount.Div(s.Amount, big.NewInt(1000000000))
-		withdrawals = append(withdrawals, s)
+	block = types.SimpleBlock[Tx]{
+		BlockNumber: blockNumber,
+		Timestamp:   base.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
+		Hash:        base.HexToHash(rawBlock.Hash),
+		ParentHash:  base.HexToHash(rawBlock.ParentHash),
+		GasLimit:    gasLimit,
+		GasUsed:     gasUsed,
+		Miner:       base.HexToAddress(rawBlock.Miner),
+		Difficulty:  difficulty,
+		Uncles:      uncles,
 	}
 
-	block = types.SimpleBlock[Tx]{
-		BlockNumber:     blockNumber,
-		Timestamp:       base.Timestamp(ts), // note that we turn Ethereum's timestamps into types.Timestamp upon read.
-		Hash:            base.HexToHash(rawBlock.Hash),
-		ParentHash:      base.HexToHash(rawBlock.ParentHash),
-		GasLimit:        gasLimit,
-		GasUsed:         gasUsed,
-		Miner:           base.HexToAddress(rawBlock.Miner),
-		Difficulty:      difficulty,
-		Uncles:          uncles,
-		Withdrawals:     withdrawals,
-		WithdrawalsRoot: base.HexToHash(rawBlock.WithdrawalsRoot),
+	if len(rawBlock.Withdrawals) > 0 {
+		block.Withdrawals = make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
+		for _, withdrawal := range rawBlock.Withdrawals {
+			amt := big.NewInt(0)
+			amt.SetString(withdrawal.Amount, 0)
+			s := types.SimpleWithdrawal{
+				Address:        base.HexToAddress(withdrawal.Address),
+				Amount:         *amt,
+				Index:          utils.MustParseUint(withdrawal.Index),
+				ValidatorIndex: utils.MustParseUint(withdrawal.ValidatorIndex),
+			}
+			block.Withdrawals = append(block.Withdrawals, s)
+		}
+		block.WithdrawalsRoot = base.HexToHash(rawBlock.WithdrawalsRoot)
 	}
+
 	return
 }
 

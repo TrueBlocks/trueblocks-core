@@ -372,16 +372,17 @@ The following commands produce and manage BlockCounts:
 
 BlockCounts consist of the following fields:
 
-| Field           | Description                                                    | Type      |
-| --------------- | -------------------------------------------------------------- | --------- |
-| blockNumber     | the block's block number                                       | blknum    |
-| timestamp       | the timestamp of the block                                     | timestamp |
-| date            | a calculated field -- the date of the block                    | datetime  |
-| transactionsCnt | the number transactions in the block                           | uint64    |
-| unclesCnt       | the number of uncles in the block                              | uint64    |
-| logsCnt         | the number of logs in the block                                | uint64    |
-| tracesCnt       | the number of traces in the block                              | uint64    |
-| addressCnt      | the number of address appearances in the block per transaction | uint64    |
+| Field           | Description                                    | Type      |
+| --------------- | ---------------------------------------------- | --------- |
+| blockNumber     | the block's block number                       | blknum    |
+| timestamp       | the timestamp of the block                     | timestamp |
+| date            | a calculated field -- the date of the block    | datetime  |
+| transactionsCnt | the number transactions in the block           | uint64    |
+| unclesCnt       | the number of uncles in the block              | uint64    |
+| logsCnt         | the number of logs in the block                | uint64    |
+| tracesCnt       | the number of traces in the block              | uint64    |
+| withdrawalsCnt  | the number of withdrawals in the block         | uint64    |
+| addressCnt      | the number of address appearances in the block | uint64    |
 
 ## NamedBlock
 

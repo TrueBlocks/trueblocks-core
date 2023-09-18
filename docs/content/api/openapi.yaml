@@ -3307,11 +3307,16 @@ components:
           format: uint64
           example: 1295
           description: "the number of traces in the block"
+        withdrawalsCnt:
+          type: number
+          format: uint64
+          example: 12
+          description: "the number of withdrawals in the block"
         addressCnt:
           type: number
           format: uint64
           example: 318
-          description: "the number of address appearances in the block per transaction"
+          description: "the number of address appearances in the block"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
       type: object

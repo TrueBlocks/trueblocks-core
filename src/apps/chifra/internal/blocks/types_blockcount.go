@@ -25,6 +25,7 @@ type simpleBlockCount struct {
 	TracesCnt       uint64         `json:"tracesCnt,omitempty"`
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
+	WithdrawalsCnt  uint64         `json:"withdrawalsCnt,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -59,6 +60,7 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 	wantsLogs := extraOptions["logs"] == true
 	wantsTraces := extraOptions["traces"] == true
 	wantsUniqs := extraOptions["uniqs"] == true
+	wantsWithdrawals := true
 
 	if format == "json" {
 		if wantsUncles && s.UnclesCnt > 0 {
@@ -72,6 +74,9 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 		}
 		if wantsUniqs && s.AddressCnt > 0 {
 			model["addressCnt"] = s.AddressCnt
+		}
+		if wantsWithdrawals && s.WithdrawalsCnt > 0 {
+			model["withdrawalsCnt"] = s.WithdrawalsCnt
 		}
 
 	} else {
@@ -90,6 +95,10 @@ func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[s
 		if wantsUniqs {
 			model["addressCnt"] = s.AddressCnt
 			order = append(order, "addressCnt")
+		}
+		if wantsWithdrawals {
+			model["withdrawalsCnt"] = s.WithdrawalsCnt
+			order = append(order, "withdrawalsCnt")
 		}
 	}
 	// EXISTING_CODE
