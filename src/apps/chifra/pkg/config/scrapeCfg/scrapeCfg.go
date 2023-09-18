@@ -34,9 +34,9 @@ type ScrapeSettings struct {
 }
 
 var defaultSettings = ScrapeSettings{
-	Apps_per_chunk: 200000,
+	Apps_per_chunk: 500000,
 	Snap_to_grid:   100000,
-	First_snap:     0,
+	First_snap:     500000,
 	Unripe_dist:    28,
 	Channel_count:  20,
 	Allow_missing:  false,
@@ -206,10 +206,10 @@ type blockScrapeSettings struct {
 var defaultSettings = blockScrapeSettings{
 	Block_chan_cnt:        10,
 	Addr_chan_cnt:         20,
-	Apps_per_chunk:        200000,
+	Apps_per_chunk:        500000,
 	Unripe_dist:           28,
 	Snap_to_grid:          100000,
-	First_snap:            0,
+	First_snap:            500000,
 	Allow_missing:         false,
 	Pinata_api_key:        "",
 	Pinata_secret_api_key: "",
