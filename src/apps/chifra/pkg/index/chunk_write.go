@@ -40,7 +40,7 @@ func (c *WriteChunkReport) Report() {
 		report += ` @(snapped to grid)}`
 	}
 	report += " (size: {%d} , nBlocks: {%d})"
-	logger.Info(colors.Colored(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span())))
+	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 	if c.Pinned {
 		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
 		logger.Info(str)

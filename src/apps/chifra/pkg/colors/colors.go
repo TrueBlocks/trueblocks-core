@@ -52,3 +52,12 @@ func Colored(s string) string {
 	s = strings.Replace(s, "}", Off, -1)
 	return s
 }
+
+func ColoredWith(s string, c string) string {
+	s = c + s
+	s = strings.Replace(s, "{", Green, -1)
+	s = strings.Replace(s, "@", BrightYellow, -1)
+	s = strings.Replace(s, "}", c, -1)
+	s += Off
+	return s
+}
