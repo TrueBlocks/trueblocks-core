@@ -109,6 +109,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				logger.Fatal("Should not happen, write chunk returned empty report")
 			} else {
 				report.Snapped = isSnap
+				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
 			if bm.opts.Remote {

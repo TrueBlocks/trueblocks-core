@@ -2,20 +2,12 @@ package scrapePkg
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-func colored(s string) string {
-	s = strings.Replace(s, "{", colors.Green, -1)
-	s = strings.Replace(s, "@", colors.BrightYellow, -1)
-	s = strings.Replace(s, "}", colors.Off, -1)
-	return s
-}
 
 // Report prints out a report of the progress of the scraper.
 func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound, nAddrsFound int) {
@@ -35,7 +27,7 @@ func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound,
 		pctFull*100,
 		nNeeded,
 	)
-	logger.Info(colored(msg))
+	logger.Info(colors.Colored(msg))
 }
 
 // Pause goes to sleep for a period of time based on the settings.

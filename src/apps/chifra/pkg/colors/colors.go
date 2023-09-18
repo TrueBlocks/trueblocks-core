@@ -4,6 +4,8 @@
 
 package colors
 
+import "strings"
+
 var Off = "\033[0m"
 var Red = "\033[31m"
 var Green = "\033[32m"
@@ -42,4 +44,11 @@ func ColorsOff() {
 	BrightCyan = ""
 	BrightWhite = ""
 	BrightBlack = ""
+}
+
+func Colored(s string) string {
+	s = strings.Replace(s, "{", Green, -1)
+	s = strings.Replace(s, "@", BrightYellow, -1)
+	s = strings.Replace(s, "}", Off, -1)
+	return s
 }

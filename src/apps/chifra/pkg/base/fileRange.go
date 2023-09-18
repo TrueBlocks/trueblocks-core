@@ -134,3 +134,7 @@ func (r *FileRange) LaterThanB(blk uint64) bool {
 func (r *FileRange) Equals(needle FileRange) bool {
 	return r.First == needle.First && r.Last == needle.Last
 }
+
+func (r *FileRange) Span() uint64 {
+	return r.Last - r.First + 1
+}

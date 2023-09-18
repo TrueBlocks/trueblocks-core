@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -29,17 +28,19 @@ type WriteChunkReport struct {
 	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
+	FileSize     int64
 	Snapped      bool
 	Pinned       bool
 	PinRecord    manifest.ChunkRecord
 }
 
 func (c *WriteChunkReport) Report() {
-	str := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
+	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
 	if c.Snapped {
-		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
+		report += ` @(snapped to grid)}`
 	}
-	logger.Info(str)
+	report += " (size: {%d} , nBlocks: {%d})"
+	logger.Info(colors.Colored(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span())))
 	if c.Pinned {
 		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
 		logger.Info(str)
@@ -177,8 +178,6 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 		return nil, err
 	}
 }
-
-var spaces20 = strings.Repeat(" ", 20)
 
 func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
 	if len(result.Local.BloomHash) > 0 {
