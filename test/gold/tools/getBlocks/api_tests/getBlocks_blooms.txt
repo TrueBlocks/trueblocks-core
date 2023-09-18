@@ -76,7 +76,8 @@ blocks?blocks=1590000%204000001%204000002
           "value": "100000000000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -503,7 +504,8 @@ blocks?blocks=1590000%204000001%204000002
           "value": "500179743164106942"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -759,7 +761,8 @@ blocks?blocks=1590000%204000001%204000002
           "value": "1252142000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ],
   "meta": {

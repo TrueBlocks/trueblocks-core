@@ -13,7 +13,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0x04e32cc0a4ac556424551eb4d98a7b93c28a306d3a5eb35fa7908b5e4f3ea44e",
       "timestamp": 1470160466,
       "transactionsCnt": 1,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -27,7 +29,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0x563be29ceea1bd5caea30e2b7b2a4d0c7a4fa987ae571a259186bf87b434e38b",
       "timestamp": 1470160460,
       "transactionsCnt": 5,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -41,7 +45,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0x51c2628f8aa4d459f3eefe7899fee0fad76099568a63e292ebbe22f0451ad7b4",
       "timestamp": 1470160445,
       "transactionsCnt": 0,
-      "unclesCnt": 1
+      "unclesCnt": 1,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -55,7 +61,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0x005d2a74f972c60b08ca9c77c40942718108c212e48ccef96af108ecaadc2725",
       "timestamp": 1470160443,
       "transactionsCnt": 4,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -69,7 +77,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0x5a11aa70e7d180189165234fba6d924c31e777041908dd68a241ed626a1d0e7e",
       "timestamp": 1470160438,
       "transactionsCnt": 2,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -83,7 +93,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0xe00a8d672316106fd2185747e6a28a99cbe424726eea16587841f0a4caa1750f",
       "timestamp": 1470160435,
       "transactionsCnt": 15,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -97,7 +109,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0x1fc45e0f2941a54f61a46130e2c232faa23894dc540562e863e082bdf315a398",
       "timestamp": 1470160418,
       "transactionsCnt": 1,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -111,7 +125,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0x288d336362eeccc0e008090702066e8e342e2bd2d25ad91e17ec485f898c91d4",
       "timestamp": 1470160416,
       "transactionsCnt": 13,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -125,7 +141,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0x151424b1bf03d08f7e4e45ef2b764b48519fca4230c8b6f4746f010b9d108de9",
       "timestamp": 1470160375,
       "transactionsCnt": 1,
-      "unclesCnt": 1
+      "unclesCnt": 1,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -139,7 +157,9 @@ blocks?list=1000&listCount=10
       "parentHash": "0xa0cd662f8f0f72e306e74a0da29d5c40e841b504c6dded42033f1383d55d65cc",
       "timestamp": 1470160363,
       "transactionsCnt": 3,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawals": [],
+      "withdrawalsCnt": 0
     }
   ],
   "meta": {

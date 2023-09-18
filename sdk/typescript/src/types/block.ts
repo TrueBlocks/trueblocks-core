@@ -30,5 +30,4 @@ export type Block = {
   transactionsRoot: hash
   uncles?: hash[]
   withdrawals?: Withdrawal[]
-  withdrawalsRoot?: hash
 }

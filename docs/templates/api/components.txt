@@ -430,9 +430,6 @@ components:
           items:
             $ref: "#/components/schemas/withdrawal"
           description: "a possibly empty array of withdrawals (post Shanghai)"
-        withdrawalsRoot:
-          type: string
-          format: hash
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object

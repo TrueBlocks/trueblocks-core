@@ -262,7 +262,6 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 			}
 			block.Withdrawals = append(block.Withdrawals, s)
 		}
-		block.WithdrawalsRoot = base.HexToHash(rawBlock.WithdrawalsRoot)
 	}
 
 	return

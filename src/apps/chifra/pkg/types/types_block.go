@@ -46,26 +46,24 @@ type RawBlock struct {
 	TransactionsRoot string          `json:"transactionsRoot"`
 	Uncles           []string        `json:"uncles"`
 	Withdrawals      []RawWithdrawal `json:"withdrawals"`
-	WithdrawalsRoot  string          `json:"withdrawalsRoot"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleBlock[Tx string | SimpleTransaction] struct {
-	BaseFeePerGas   base.Wei           `json:"baseFeePerGas"`
-	BlockNumber     base.Blknum        `json:"blockNumber"`
-	Difficulty      uint64             `json:"difficulty"`
-	GasLimit        base.Gas           `json:"gasLimit"`
-	GasUsed         base.Gas           `json:"gasUsed"`
-	Hash            base.Hash          `json:"hash"`
-	Miner           base.Address       `json:"miner"`
-	ParentHash      base.Hash          `json:"parentHash"`
-	Timestamp       base.Timestamp     `json:"timestamp"`
-	Transactions    []Tx               `json:"transactions"`
-	Uncles          []base.Hash        `json:"uncles,omitempty"`
-	Withdrawals     []SimpleWithdrawal `json:"withdrawals,omitempty"`
-	WithdrawalsRoot base.Hash          `json:"withdrawalsRoot,omitempty"`
-	raw             *RawBlock          `json:"-"`
+	BaseFeePerGas base.Wei           `json:"baseFeePerGas"`
+	BlockNumber   base.Blknum        `json:"blockNumber"`
+	Difficulty    uint64             `json:"difficulty"`
+	GasLimit      base.Gas           `json:"gasLimit"`
+	GasUsed       base.Gas           `json:"gasUsed"`
+	Hash          base.Hash          `json:"hash"`
+	Miner         base.Address       `json:"miner"`
+	ParentHash    base.Hash          `json:"parentHash"`
+	Timestamp     base.Timestamp     `json:"timestamp"`
+	Transactions  []Tx               `json:"transactions"`
+	Uncles        []base.Hash        `json:"uncles,omitempty"`
+	Withdrawals   []SimpleWithdrawal `json:"withdrawals,omitempty"`
+	raw           *RawBlock          `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -116,10 +114,6 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 		if len(s.Withdrawals) > 0 {
 			model.Data["withdrawals"] = s.Withdrawals
 			model.Order = append(model.Order, "withdrawals")
-		}
-		if !s.WithdrawalsRoot.IsZero() {
-			model.Data["withdrawalsRoot"] = s.WithdrawalsRoot
-			model.Order = append(model.Order, "withdrawalsRoot")
 		}
 		return model
 	}
@@ -176,24 +170,21 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 			}
 			order = append(order, "uncles")
 		}
+		if len(s.Withdrawals) > 0 {
+			model["withdrawals"] = s.Withdrawals
+			order = append(order, "withdrawals")
+		} else {
+			model["withdrawals"] = []SimpleWithdrawal{}
+		}
 	} else {
 		model["transactionsCnt"] = len(s.Transactions)
 		order = append(order, "transactionsCnt")
+		model["withdrawalsCnt"] = len(s.Withdrawals)
+		order = append(order, "withdrawalsCnt")
 		if extraOptions["list"] == true {
 			model["unclesCnt"] = len(s.Uncles)
 			order = append(order, "unclesCnt")
-			model["withdrawalsCnt"] = len(s.Withdrawals)
-			order = append(order, "withdrawalsCnt")
 		}
-	}
-
-	if len(s.Withdrawals) > 0 {
-		model["withdrawals"] = s.Withdrawals
-		order = append(order, "withdrawals")
-	}
-	if !s.WithdrawalsRoot.IsZero() {
-		model["withdrawalsRoot"] = s.WithdrawalsRoot
-		order = append(order, "withdrawalsRoot")
 	}
 	// EXISTING_CODE
 
@@ -306,11 +297,6 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// WithdrawalsRoot
-	if err = cache.WriteValue(writer, &s.WithdrawalsRoot); err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -375,11 +361,6 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 	// Withdrawals
 	s.Withdrawals = make([]SimpleWithdrawal, 0)
 	if err = cache.ReadValue(reader, &s.Withdrawals, version); err != nil {
-		return err
-	}
-
-	// WithdrawalsRoot
-	if err = cache.ReadValue(reader, &s.WithdrawalsRoot, version); err != nil {
 		return err
 	}
 

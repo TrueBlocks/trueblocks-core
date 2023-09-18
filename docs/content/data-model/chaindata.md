@@ -33,21 +33,20 @@ The following commands produce and manage Blocks:
 
 Blocks consist of the following fields:
 
-| Field           | Description                                                   | Type                                                |
-| --------------- | ------------------------------------------------------------- | --------------------------------------------------- |
-| gasLimit        | the system-wide maximum amount of gas permitted in this block | gas                                                 |
-| hash            | the hash of the current block                                 | hash                                                |
-| blockNumber     | the number of the block                                       | blknum                                              |
-| parentHash      | hash of previous block                                        | hash                                                |
-| miner           | address of block's winning miner                              | address                                             |
-| difficulty      | the computational difficulty at this block                    | uint64                                              |
-| timestamp       | the Unix timestamp of the object                              | timestamp                                           |
-| date            | a calculated field -- the date of the object                  | datetime                                            |
-| transactions    | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
-| baseFeePerGas   | the base fee for this block                                   | wei                                                 |
-| uncles          | a possibly empty array of uncle hashes                        | Hash                                                |
-| withdrawals     | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
-| withdrawalsRoot |                                                               | hash                                                |
+| Field         | Description                                                   | Type                                                |
+| ------------- | ------------------------------------------------------------- | --------------------------------------------------- |
+| gasLimit      | the system-wide maximum amount of gas permitted in this block | gas                                                 |
+| hash          | the hash of the current block                                 | hash                                                |
+| blockNumber   | the number of the block                                       | blknum                                              |
+| parentHash    | hash of previous block                                        | hash                                                |
+| miner         | address of block's winning miner                              | address                                             |
+| difficulty    | the computational difficulty at this block                    | uint64                                              |
+| timestamp     | the Unix timestamp of the object                              | timestamp                                           |
+| date          | a calculated field -- the date of the object                  | datetime                                            |
+| transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
+| baseFeePerGas | the base fee for this block                                   | wei                                                 |
+| uncles        | a possibly empty array of uncle hashes                        | Hash                                                |
+| withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
 
 ## Transaction
 

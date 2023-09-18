@@ -426,7 +426,8 @@ blocks?blocks=4000001
           "value": "500179743164106942"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ],
   "meta": {

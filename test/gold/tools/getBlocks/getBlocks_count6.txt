@@ -5,5 +5,5 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Count:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
-blockNumber	transactionsCnt	unclesCnt	tracesCnt
-3	0	1	2
+blockNumber	transactionsCnt	unclesCnt	tracesCnt	withdrawalsCnt
+3	0	1	2	0
