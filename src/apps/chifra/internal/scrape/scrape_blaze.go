@@ -98,6 +98,8 @@ func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sy
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else if sd.receipts, err = conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
+		} else if sd.withdrawals, err = conn.GetWithdrawalsByNumber(bn); err != nil {
+			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else {
 			appearanceChannel <- sd
 		}
@@ -117,6 +119,9 @@ func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, a
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
 		} else if err = index.UniqFromReceipts(bm.chain, sData.receipts, addrMap); err != nil {
+			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
+
+		} else if err = index.UniqFromWithdrawals(bm.chain, sData.withdrawals, sData.bn, addrMap); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
 		} else {
@@ -222,8 +227,9 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 // scrapedData combines the extracted block data, trace data, and log data into a
 // structure that is passed through to the AddressChannel for further processing.
 type scrapedData struct {
-	bn       base.Blknum
-	ts       tslib.TimestampRecord
-	traces   []types.SimpleTrace
-	receipts []types.SimpleReceipt
+	bn          base.Blknum
+	ts          tslib.TimestampRecord
+	traces      []types.SimpleTrace
+	receipts    []types.SimpleReceipt
+	withdrawals []types.SimpleWithdrawal
 }
