@@ -111,7 +111,7 @@ func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSetting
 	if strings.Contains(configFn, "trueBlocks.toml") {
 		configFn = filepath.Join(config.GetPathToRootConfig(), configFn)
 	} else {
-		configFn = filepath.Join(config.GetPathToChainConfig(chain), configFn)
+		configFn = filepath.Join(config.MustGetPathToChainConfig(chain), configFn)
 	}
 
 	if file.FileExists(configFn) {
@@ -226,7 +226,7 @@ type BlockScrape struct {
 }
 
 func GetBlockScrapeSettings(chain string) blockScrapeSettings {
-	str := utils.AsciiFileToString(GetPathToChainConfig(chain) + "blockScrape.toml")
+	str := utils.AsciiFileToString(filepath.Join(MustGetPathToChainConfig(chain), "blockScrape.toml"))
 	conf := BlockScrape{
 		Settings: defaultSettings,
 	}

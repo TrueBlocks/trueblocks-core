@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -40,7 +41,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				return
 			}
 
-			manPath := config.GetPathToChainConfig(chain) + "manifest.json"
+			manPath := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
 			if man.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
 				errorChan <- err
 				cancel()

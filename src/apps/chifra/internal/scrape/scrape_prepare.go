@@ -32,7 +32,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	}
 
 	// If there are no prefunds, we're done.
-	prefundPath := filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+	prefundPath := filepath.Join(config.MustGetPathToChainConfig(chain), "allocs.csv")
 	prefunds, err := prefunds.LoadPrefunds(chain, prefundPath, nil)
 	if err != nil {
 		return false, err

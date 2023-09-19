@@ -17,7 +17,7 @@ import (
 // chain does not have a pre-allocation, this function will return
 // false, when in fact the node may be an archive node.
 func (conn *Connection) IsNodeArchive() bool {
-	thePath := filepath.Join(config.GetPathToChainConfig(conn.Chain), "allocs.csv")
+	thePath := filepath.Join(config.MustGetPathToChainConfig(conn.Chain), "allocs.csv")
 	largest, err := prefunds.GetLargestPrefund(conn.Chain, thePath)
 	if err != nil {
 		return false

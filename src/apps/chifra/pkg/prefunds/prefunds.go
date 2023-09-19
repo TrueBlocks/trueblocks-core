@@ -11,7 +11,7 @@ import (
 )
 
 func GetPrefundPath(chain string) string {
-	return filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+	return filepath.Join(config.MustGetPathToChainConfig(chain), "allocs.csv")
 }
 
 // Allocation is a single allocation in the genesis file
