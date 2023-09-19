@@ -14,7 +14,7 @@ import (
 )
 
 func TestLoadSpecials(t *testing.T) {
-	path := config.GetPathToChainConfig(utils.GetTestChain())
+	path := config.MustGetPathToChainConfig(utils.GetTestChain())
 	t.Log("path: ", path)
 
 	specials, err := GetSpecials(utils.GetTestChain())

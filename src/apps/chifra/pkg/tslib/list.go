@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -20,7 +21,7 @@ import (
 
 // GetSpecials returns a chain-specific list of special block names and numbers
 func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
-	path := config.GetPathToChainConfig(chain) + "specials.csv"
+	path := filepath.Join(config.MustGetPathToChainConfig(chain), "specials.csv")
 	_, err = os.Stat(path)
 	if err != nil {
 		// It's okay if there are no specials for a certain chain

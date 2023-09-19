@@ -22,6 +22,10 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return opts.BadFlag
 	}
 
+	if !config.IsChainConfigured(chain) {
+		return validate.Usage("chain {0} is not properly configured.", chain)
+	}
+
 	key := config.GetRootConfig().Keys["trueblocks"].License
 	if len(opts.AccountFor) > 0 && !strings.Contains(key, "+accounting") {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")

@@ -7,6 +7,7 @@ package listPkg
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -20,6 +21,10 @@ func (opts *ListOptions) validateList() error {
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
+	}
+
+	if !config.IsChainConfigured(chain) {
+		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
 	if opts.LastBlock == 0 {

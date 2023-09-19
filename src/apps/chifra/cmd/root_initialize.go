@@ -152,7 +152,7 @@ func VerifyMigrations() {
 	}
 
 	// We need to find the chain configuration path
-	chainConfigPath := config.GetPathToChainConfig("")
+	chainConfigPath := config.MustGetPathToChainConfig("")
 	if _, err := os.Stat(chainConfigPath); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+chainConfigPath+"}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)

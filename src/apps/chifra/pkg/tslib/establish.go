@@ -21,11 +21,7 @@ import (
 )
 
 func EstablishTsFile(chain string, publisher base.Address) error {
-	if chain == "non-tracing" { // A test-mode chain to test IsTracing
-		return nil
-	}
-
-	tsPath := config.GetPathToIndex(chain) + "ts.bin"
+	tsPath := filepath.Join(config.GetPathToIndex(chain), "ts.bin")
 	if file.FileExists(tsPath) {
 		return nil
 	}

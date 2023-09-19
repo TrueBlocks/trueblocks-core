@@ -196,14 +196,18 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 		opts.Chain = config.GetDefaultChain()
 	}
 
-	// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
-	// TODO: Why do we need to do this here?
-	publisher := unchained.GetPreferredPublisher()
-	if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
-		logger.Error("Could not establish ts file:", err)
+	if config.IsChainConfigured(opts.Chain) {
+		// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
+		// TODO: Why do we need to do this here?
+		publisher := unchained.GetPreferredPublisher()
+		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
+			logger.Error("Could not establish ts file:", err)
+		}
+		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+	} else {
+		// the error will be reported by the validator
+		return rpc.TempConnection(opts.Chain)
 	}
-
-	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }
 
 func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpc.Connection {
@@ -221,12 +225,16 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 		opts.Chain = config.GetDefaultChain()
 	}
 
-	// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
-	// TODO: Why do we need to do this here?
-	publisher := unchained.GetPreferredPublisher()
-	if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
-		logger.Error("Could not establish ts file:", err)
+	if config.IsChainConfigured(opts.Chain) {
+		// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
+		// TODO: Why do we need to do this here?
+		publisher := unchained.GetPreferredPublisher()
+		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
+			logger.Error("Could not establish ts file:", err)
+		}
+		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+	} else {
+		// the error will be reported by the validator
+		return rpc.TempConnection(opts.Chain)
 	}
-
-	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }
