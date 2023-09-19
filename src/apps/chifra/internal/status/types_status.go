@@ -185,7 +185,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		Version:       version.LibraryVersion,
 		RPCProvider:   provider,
 		RootConfig:    config.GetPathToRootConfig(),
-		ChainConfig:   config.GetPathToChainConfig(chain),
+		ChainConfig:   config.MustGetPathToChainConfig(chain),
 		CachePath:     config.GetPathToCache(chain),
 		IndexPath:     config.GetPathToIndex(chain),
 		Progress:      ToProgress(chain, meta),

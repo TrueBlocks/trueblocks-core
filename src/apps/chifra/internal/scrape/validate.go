@@ -31,6 +31,10 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return opts.BadFlag
 	}
 
+	if !config.IsChainConfigured(chain) {
+		return validate.Usage("chain {0} is not properly configured.", chain)
+	}
+
 	if !opts.Conn.IsNodeTracing() {
 		return validate.Usage("{0} requires tracing, err: {1}", "chifra scrape", rpc.ErrTraceBlockMissing)
 	}

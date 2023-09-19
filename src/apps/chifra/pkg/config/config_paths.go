@@ -11,18 +11,16 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 )
 
-const chainConfigMustExist string = `
-
-	The chain configuration folder for chain {0} does not exist. Is it correct?
-	Check: {1}
-
-`
+// MustGetPathToChainConfig returns the chain-specific config folder ignoring errors
+func MustGetPathToChainConfig(chain string) string {
+	path, _ := GetPathToChainConfig(chain)
+	return path
+}
 
 // GetPathToChainConfig returns the chain-specific config folder
-func GetPathToChainConfig(chain string) string {
+func GetPathToChainConfig(chain string) (string, error) {
 	// TODO: We can test this with a unit test
 	if chain == "non-tracing" { // Test mode only for testing non-tracing nodes
 		return GetPathToChainConfig("mainnet")
@@ -36,10 +34,8 @@ func GetPathToChainConfig(chain string) string {
 
 	// Our configuration files are always in ./config folder relative to top most folder
 	cfgFolder := filepath.Join(ret, "config/", chain) + "/"
-	if _, err := os.Stat(cfgFolder); err != nil {
-		logger.Fatal(usage.Usage(chainConfigMustExist, chain, cfgFolder))
-	}
-	return cfgFolder
+	_, err := os.Stat(cfgFolder)
+	return cfgFolder, err
 }
 
 // GetPathToIndex returns the one and only indexPath
@@ -126,4 +122,14 @@ func EstablishIndexPaths(indexPath string) {
 	if err := file.EstablishFolders(indexPath, folders); err != nil {
 		logger.Fatal(err)
 	}
+}
+
+func IsChainConfigured(needle string) bool {
+	haystack := GetChainArray()
+	for _, chain := range haystack {
+		if chain.Chain == needle {
+			return true
+		}
+	}
+	return false
 }

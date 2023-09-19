@@ -24,6 +24,10 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
+	if !config.IsChainConfigured(chain) {
+		return validate.Usage("chain {0} is not properly configured.", chain)
+	}
+
 	key := config.GetRootConfig().Keys["trueblocks"].License
 	if opts.Neighbors && !strings.Contains(key, "+neighbors") {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--neighbors")
