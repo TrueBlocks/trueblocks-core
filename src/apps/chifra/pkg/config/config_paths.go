@@ -21,11 +21,6 @@ func MustGetPathToChainConfig(chain string) string {
 
 // GetPathToChainConfig returns the chain-specific config folder
 func GetPathToChainConfig(chain string) (string, error) {
-	// TODO: We can test this with a unit test
-	if chain == "non-tracing" { // Test mode only for testing non-tracing nodes
-		return GetPathToChainConfig("mainnet")
-	}
-
 	// We always need a chain
 	if len(chain) == 0 {
 		chain = GetDefaultChain()

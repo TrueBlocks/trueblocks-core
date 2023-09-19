@@ -4,7 +4,7 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Chain:  non-tracing
 TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
 TEST[DATE|TIME] Format:  txt
-Error: chifra transactions --traces requires tracing, err: trace_block is missing
+Error: chain non-tracing is not properly configured.
 Usage:
   chifra transactions [flags] <tx_id> [tx_id...]
 

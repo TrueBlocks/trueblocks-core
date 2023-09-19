@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [3648669.24]
 TEST[DATE|TIME] Chain:  non-tracing
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
-Error: chifra traces requires tracing, err: trace_block is missing
+Error: chain non-tracing is not properly configured.
 Usage:
   chifra traces [flags] <tx_id> [tx_id...]
 
