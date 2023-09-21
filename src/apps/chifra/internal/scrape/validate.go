@@ -38,22 +38,6 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	pidPath := filepath.Join(config.GetPathToCache(chain), "tmp/scrape.pid")
-	if file.FileExists(pidPath) {
-		pid := utils.MustParseInt(file.AsciiFileToString(pidPath))
-		// fmt.Println("Pid file exists with contents:", pid)
-		if running, err := utils.PidExists(pid); err == nil && running {
-			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
-		} else if err != nil {
-			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
-		}
-		// fmt.Println("Removing pid file")
-		os.Remove(pidPath)
-	}
-
-	// We are the only one running, make a note so others don't start again
-	_ = file.StringToAsciiFile(pidPath, fmt.Sprintf("%d", os.Getpid()))
-
 	if !opts.Conn.IsNodeTracing() {
 		return validate.Usage("{0} requires tracing, err: {1}", "chifra scrape", rpc.ErrTraceBlockMissing)
 	}
@@ -92,5 +76,24 @@ func (opts *ScrapeOptions) validateScrape() error {
 	// Note this does not return if a migration is needed
 	index.CheckBackLevelIndex(chain)
 
-	return opts.Globals.Validate()
+	ret := opts.Globals.Validate()
+
+	pidPath := filepath.Join(config.GetPathToCache(chain), "tmp/scrape.pid")
+	if file.FileExists(pidPath) {
+		pid := utils.MustParseInt(file.AsciiFileToString(pidPath))
+		// fmt.Println("Pid file exists with contents:", pid)
+		if running, err := utils.PidExists(pid); err == nil && running {
+			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
+		} else if err != nil {
+			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
+		}
+		// fmt.Println("Removing pid file")
+		os.Remove(pidPath)
+	}
+	// If we've gotten this far, we're the only one running. As we enter the forever
+	// loop, we want to make sure no-one else runs. We do this by writing our pid to
+	// a file. Note that this probably doesn't work in the server.
+	_ = file.StringToAsciiFile(pidPath, fmt.Sprintf("%d", os.Getpid()))
+
+	return ret
 }
