@@ -52,7 +52,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	// We are the only one running, make a note so others don't start again
-	file.StringToAsciiFile(pidPath, fmt.Sprintf("%d", os.Getpid()))
+	_ = file.StringToAsciiFile(pidPath, fmt.Sprintf("%d", os.Getpid()))
 
 	if !opts.Conn.IsNodeTracing() {
 		return validate.Usage("{0} requires tracing, err: {1}", "chifra scrape", rpc.ErrTraceBlockMissing)
