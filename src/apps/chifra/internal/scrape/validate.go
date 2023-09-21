@@ -6,9 +6,12 @@ package scrapePkg
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -34,6 +37,22 @@ func (opts *ScrapeOptions) validateScrape() error {
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
+
+	pidPath := filepath.Join(config.GetPathToCache(chain), "tmp/scrape.pid")
+	if file.FileExists(pidPath) {
+		pid := utils.MustParseInt(file.AsciiFileToString(pidPath))
+		// fmt.Println("Pid file exists with contents:", pid)
+		if running, err := utils.PidExists(pid); err == nil && running {
+			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
+		} else if err != nil {
+			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
+		}
+		// fmt.Println("Removing pid file")
+		os.Remove(pidPath)
+	}
+
+	// We are the only one running, make a note so others don't start again
+	file.StringToAsciiFile(pidPath, fmt.Sprintf("%d", os.Getpid()))
 
 	if !opts.Conn.IsNodeTracing() {
 		return validate.Usage("{0} requires tracing, err: {1}", "chifra scrape", rpc.ErrTraceBlockMissing)
