@@ -6,6 +6,7 @@ package colors
 
 import "strings"
 
+var None = ""
 var Off = "\033[0m"
 var Red = "\033[31m"
 var Green = "\033[32m"

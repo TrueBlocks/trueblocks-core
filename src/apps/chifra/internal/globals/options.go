@@ -201,7 +201,7 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 		// TODO: Why do we need to do this here?
 		publisher := unchained.GetPreferredPublisher()
 		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
-			logger.Error("Could not establish ts file:", err)
+			logger.Warn(err)
 		}
 		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 	} else {
@@ -230,7 +230,7 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 		// TODO: Why do we need to do this here?
 		publisher := unchained.GetPreferredPublisher()
 		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
-			logger.Error("Could not establish ts file:", err)
+			logger.Warn(err)
 		}
 		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 	} else {

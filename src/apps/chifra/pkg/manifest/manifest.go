@@ -70,6 +70,8 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		cid, err := ReadUnchainedIndex(chain, publisher, database)
 		if err != nil {
 			return nil, err
+		} else if len(cid) == 0 {
+			return nil, fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
 		}
 
 		gatewayUrl := config.GetIpfsGateway(chain)
