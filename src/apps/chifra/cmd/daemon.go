@@ -65,12 +65,17 @@ func init() {
 	daemonCmd.Flags().SortFlags = false
 
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "specify the server's port")
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Api, "api", "a", "on", `instruct the node to start the API server
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Api, "api", "a", "on", `instruct the node to start the API server (hidden)
 One of [ off | on ]`)
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Scrape, "scrape", "s", "", `start the scraper, initialize it with either just blooms or entire index, generate for new blocks
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Scrape, "scrape", "s", "", `start the scraper, initialize it with either just blooms or entire index, generate for new blocks (hidden)
 One of [ off | blooms | index ]`)
-	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool")
+	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Monitor, "monitor", "m", false, "instruct the node to start the monitors tool (hidden)")
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, "run gRPC server to serve names")
+	if os.Getenv("TEST_MODE") != "true" {
+		daemonCmd.Flags().MarkHidden("api")
+		daemonCmd.Flags().MarkHidden("scrape")
+		daemonCmd.Flags().MarkHidden("monitor")
+	}
 	globals.InitGlobals(daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
 
 	daemonCmd.SetUsageTemplate(UsageWithNotes(notesDaemon))
