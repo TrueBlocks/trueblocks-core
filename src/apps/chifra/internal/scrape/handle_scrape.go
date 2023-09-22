@@ -156,7 +156,11 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		}
 
 		// sleep for a bit (there's no new blocks anyway if we're caught up).
-		opts.pause(bm.meta.ChainHeight() - bm.meta.StageHeight())
+		distanceFromHead := base.Blknum(28)
+		if bm.meta != nil { // it may be nil if the node died
+			distanceFromHead = bm.meta.ChainHeight() - bm.meta.StageHeight()
+		}
+		opts.pause(distanceFromHead)
 
 		// defensive programming - just double checking our own understanding...
 		count := file.NFilesInFolder(bm.RipeFolder())

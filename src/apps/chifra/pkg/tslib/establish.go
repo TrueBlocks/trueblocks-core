@@ -77,7 +77,7 @@ func downloadCidToBinary(chain, database, outputFn, cid string) error {
 		return errors.New("CID not found")
 	}
 
-	logger.Info(fmt.Sprintf("%sDownloading Complete %s (%s). Writing file...%s", colors.Yellow, database, cid, colors.Off))
+	logger.Info(fmt.Sprintf("%sDownloading complete %s (%s). Writing file...%s", colors.Yellow, database, cid, colors.Off))
 
 	userHitsCtrlC := false
 	go func() {
