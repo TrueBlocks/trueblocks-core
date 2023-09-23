@@ -23,11 +23,11 @@ func TestVersion(t *testing.T) {
 		Aspect: "",
 	}
 
-	if !early.IsEarlierThan(late) {
+	if early.Uint64() >= late.Uint64() {
 		t.Error("early is not earlier than late")
 	}
 
-	if late.IsEarlierThan(early) {
+	if late.Uint64() < early.Uint64() {
 		t.Error("late is earlier than early")
 	}
 }

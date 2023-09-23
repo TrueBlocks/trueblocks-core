@@ -203,7 +203,7 @@ func upgradeConfigs() {
 		os.Remove(f.Path)
 	}
 
-	file.LinesToAsciiFile(fn, linesOut)
+	_ = file.LinesToAsciiFile(fn, linesOut)
 }
 
 func findConfigFiles() []walk.CacheFileInfo {
