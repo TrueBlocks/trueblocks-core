@@ -94,14 +94,14 @@ func toLog(sev severity, a ...interface{}) {
 		fmt.Fprintln(os.Stderr, "")
 
 	} else if sev == warning {
+		defer fmt.Fprint(os.Stderr, colors.Off)
 		fmt.Fprint(os.Stderr, colors.Yellow)
-		fmt.Fprint(os.Stderr, a...)
-		fmt.Fprintln(os.Stderr, colors.Off)
+		fmt.Fprintln(os.Stderr, a...)
 
 	} else if sev == err {
+		defer fmt.Fprint(os.Stderr, colors.Off)
 		fmt.Fprint(os.Stderr, colors.Red)
-		fmt.Fprint(os.Stderr, a...)
-		fmt.Fprintln(os.Stderr, colors.Off)
+		fmt.Fprintln(os.Stderr, a...)
 
 	} else {
 		fmt.Fprintln(os.Stderr, a...)
