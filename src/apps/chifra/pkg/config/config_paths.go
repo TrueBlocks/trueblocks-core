@@ -120,11 +120,6 @@ func EstablishIndexPaths(indexPath string) {
 }
 
 func IsChainConfigured(needle string) bool {
-	haystack := GetChainArray()
-	for _, chain := range haystack {
-		if chain.Chain == needle {
-			return true
-		}
-	}
-	return false
+	haystack, _ := GetChainLists()
+	return haystack[needle] != chainGroup{}
 }

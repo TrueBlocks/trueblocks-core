@@ -43,6 +43,8 @@ const (
 	Index_Staging
 	Index_Unripe
 	Index_Maps
+
+	Config
 )
 
 var cacheTypeToName = map[CacheType]string{
@@ -66,6 +68,7 @@ var cacheTypeToName = map[CacheType]string{
 	Index_Staging:      "staging",
 	Index_Unripe:       "unripe",
 	Index_Maps:         "neighbors",
+	Config:             "config",
 }
 
 // CacheTypeToFolder is a map of cache types to the folder name (also, it acts as the mode in chifra status)
@@ -90,6 +93,7 @@ var CacheTypeToFolder = map[CacheType]string{
 	Index_Staging:      "staging",
 	Index_Unripe:       "unripe",
 	Index_Maps:         "maps",
+	Config:             "config",
 }
 
 var cacheTypeToExt = map[CacheType]string{
@@ -113,18 +117,11 @@ var cacheTypeToExt = map[CacheType]string{
 	Index_Staging:      "txt",
 	Index_Unripe:       "txt",
 	Index_Maps:         "bin",
+	Config:             "toml",
 }
 
 func (ct CacheType) String() string {
 	return cacheTypeToName[ct]
-	/*
-		207: func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
-		171: func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
-		206: func (s *SimpleSlurpGroup) CacheLocation() (directory string, extension string) {
-		200: func (s *SimpleStatementGroup) CacheLocation() (directory string, extension string) {
-		216: func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) {
-		322: func (s *SimpleTransaction) CacheLocation() (directory string, extension string) {
-	*/
 }
 
 func IsCacheType(path string, cT CacheType, checkExt bool) bool {
@@ -179,6 +176,8 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 		fallthrough
 	case Index_Maps:
 		return filepath.Join(config.GetPathToIndex(chain), CacheTypeToFolder[cacheType]) + "/"
+	case Config:
+		return config.GetPathToRootConfig()
 	case Cache_NotACache:
 		fallthrough
 	default:
@@ -192,6 +191,11 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 func WalkCacheFolder(ctx context.Context, chain string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {
 	path := GetRootPathFromCacheType(chain, cacheType)
 	walkFolder(ctx, path, cacheType, data, filenameChan)
+}
+
+func WalkConfigFolders(ctx context.Context, data interface{}, filenameChan chan<- CacheFileInfo) {
+	path := config.GetPathToRootConfig()
+	walkFolder(ctx, path, Config, data, filenameChan)
 }
 
 func walkFolder(ctx context.Context, path string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {

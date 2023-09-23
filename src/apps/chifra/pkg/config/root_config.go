@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
 )
 
@@ -63,16 +62,16 @@ type ConfigFile struct {
 	Chains   map[string]chainGroup
 }
 
-func GetChainArray() []chainGroup {
-	var result []chainGroup
+func GetChainLists() (map[string]chainGroup, []chainGroup) {
+	chainArray := make([]chainGroup, 0, len(GetRootConfig().Chains))
 	for k, v := range GetRootConfig().Chains {
 		v.Chain = k
 		if len(v.IpfsGateway) == 0 {
 			v.IpfsGateway = GetRootConfig().Settings.DefaultGateway
 		}
-		result = append(result, v)
+		chainArray = append(chainArray, v)
 	}
-	return result
+	return GetRootConfig().Chains, chainArray
 }
 
 // init sets up default values for the given configuration
@@ -124,20 +123,6 @@ func GetRootConfig() *ConfigFile {
 	}
 
 	return &trueBlocksConfig
-}
-
-func IsAtLeastVersion(needle string) bool {
-	var current, desired version.Version
-	var err error
-	if current, err = version.NewVersion(GetRootConfig().Version.Current); err != nil {
-		return true
-	}
-
-	if desired, err = version.NewVersion(needle); err != nil {
-		return true
-	}
-
-	return desired.IsEarlierThan(current) || desired == current
 }
 
 // GetPathToRootConfig returns the path where to find configuration files

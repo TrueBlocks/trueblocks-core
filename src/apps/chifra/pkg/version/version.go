@@ -5,8 +5,9 @@
 package version
 
 import (
-	"strconv"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Version struct {
@@ -16,48 +17,50 @@ type Version struct {
 	Aspect string `json:"aspect"`
 }
 
-func NewVersion(str string) (vers Version, err error) {
+func NewVersion(str string) Version {
 	str = strings.Replace(str, "GHC-TrueBlocks//", "", -1)
 	str = strings.Replace(strings.Replace(str, "-", ".", -1), "v", "", -1)
 	parts := strings.Split(str, ".")
 
+	var vers Version
 	if len(parts) > 0 {
-		if vers.Major, err = strconv.ParseInt(parts[0], 10, 32); err != nil {
-			return vers, err
-		}
+		vers.Major = utils.MustParseInt(parts[0])
 	}
-
 	if len(parts) > 1 {
-		if vers.Minor, err = strconv.ParseInt(parts[1], 10, 32); err != nil {
-			return vers, err
-		}
+		vers.Minor = utils.MustParseInt(parts[1])
 	}
 
 	if len(parts) > 2 {
-		if vers.Build, err = strconv.ParseInt(parts[2], 10, 32); err != nil {
-			return vers, err
-		}
+		vers.Build = utils.MustParseInt(parts[2])
 	}
 
 	if len(parts) > 3 {
 		vers.Aspect = parts[3]
 	}
 
-	return vers, nil
+	return vers
 }
 
-func (ref *Version) IsEarlierThan(test Version) bool {
-	if ref.Major < test.Major {
-		return true
-	}
-	if ref.Minor < test.Minor {
-		return true
-	}
-	if ref.Build < test.Build {
-		return true
-	}
-	return false
-}
+// func (desired *Version) IsEarlierThan(current Version) bool {
+// 	if desired.Major < current.Major {
+
+// 		.Major == test.Major {
+// 		if ref.Minor == test.Minor {
+
+// 	if ref.Major < test.Major {
+// 		return true
+// 	} else if ref.Major > test.Major {
+// 		return false
+// 	}
+
+// 	if ref.Minor < test.Minor {
+// 		return true
+// 	}
+// 	if ref.Build < test.Build {
+// 		return true
+// 	}
+// 	return false
+// }
 
 // Uint64 returns version as a single uint64
 func (ref *Version) Uint64() uint64 {

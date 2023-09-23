@@ -43,7 +43,7 @@ var minimalVersion version.Version
 
 func init() {
 	var err error
-	minimalVersion, err = version.NewVersion("GHC-TrueBlocks//0.10.0-beta")
+	minimalVersion = version.NewVersion("GHC-TrueBlocks//0.10.0-beta")
 	if err != nil {
 		panic(err)
 	}
