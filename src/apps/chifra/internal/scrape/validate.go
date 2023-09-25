@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -23,9 +22,6 @@ import (
 
 func (opts *ScrapeOptions) validateScrape() error {
 	chain := opts.Globals.Chain
-
-	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	opts.Settings, _ = scrapeCfg.GetSettings(chain, "blockScrape.toml", &opts.Settings)
 
 	opts.testLog()
 
@@ -45,6 +41,10 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return validate.Usage("{0} requires {1}, try {2} instead.", "chifra scrape", "an archive node", "chifra init")
 	}
 
+	if opts.Globals.IsApiMode() {
+		return validate.Usage("chifra scrape is not available in API mode")
+	}
+
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
@@ -54,7 +54,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	// We can't really test this code, so we just report and quit
-	if opts.Globals.TestMode {
+	if opts.Globals.TestMode && !opts.DryRun {
 		return validate.Usage("Cannot test block scraper")
 	}
 

@@ -7,6 +7,7 @@ package rpc
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	ensGo "github.com/wealdtech/go-ens/v3"
 )
@@ -14,6 +15,18 @@ import (
 // GetEnsAddresses converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
 func (conn *Connection) GetEnsAddresses(addrs []string) (out []string, found bool) {
+	has := false
+	for _, addr := range addrs {
+		a := base.HexToAddress(addr)
+		if !a.IsZero() {
+			has = true
+			break
+		}
+	}
+	if !has {
+		return addrs, false
+	}
+
 	// Note: we use ENS on mainnet always
 	tc := TempConnection("mainnet")
 	if ec, err := tc.getClient(); err != nil {

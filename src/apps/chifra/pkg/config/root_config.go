@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/viper"
 )
 
@@ -42,6 +43,24 @@ type keyGroup struct {
 	Jwt     string `toml:"jwt"`
 }
 
+type ScrapeSettings struct {
+	AppsPerChunk uint64 `toml:"appsPerChunk" json:"appsPerChunk"`
+	SnapToGrid   uint64 `toml:"snapToGrid" json:"snapToGrid"`
+	FirstSnap    uint64 `toml:"firstSnap" json:"firstSnap"`
+	UnripeDist   uint64 `toml:"unripeDist" json:"unripeDist"`
+	AllowMissing bool   `toml:"allowMissing" json:"allowMissing"`
+	ChannelCount uint64 `toml:"channelCount" json:"channelCount"`
+}
+
+func (s *ScrapeSettings) TestLog(chain string, test bool) {
+	logger.TestLog(false, "AppsPerChunk: ", s.AppsPerChunk)
+	logger.TestLog(false, "SnapToGrid: ", s.SnapToGrid)
+	logger.TestLog(false, "FirstSnap: ", s.FirstSnap)
+	logger.TestLog(false, "UnripeDist: ", s.UnripeDist)
+	logger.TestLog(false, "ChannelCount: ", s.ChannelCount)
+	logger.TestLog(false, "AllowMissing: ", s.AllowMissing)
+}
+
 // TODO: This needs to be documented
 type grpcGroup struct {
 	UdsTimeout time.Duration `toml:"udsTimeout"`
@@ -60,6 +79,7 @@ type ConfigFile struct {
 	Grpc     grpcGroup
 	Keys     map[string]keyGroup
 	Chains   map[string]chainGroup
+	Scrape   map[string]ScrapeSettings
 }
 
 func GetChainLists() (map[string]chainGroup, []chainGroup) {
@@ -81,6 +101,12 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
 	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
+	// trueBlocksViper.SetDefault("Scrapers.AppsPerChunk", 500000)
+	// trueBlocksViper.SetDefault("Scrapers.SnapToGrid", 100000)
+	// trueBlocksViper.SetDefault("Scrapers.FirstSnap", 500000)
+	// trueBlocksViper.SetDefault("Scrapers.UnripeDist", 28)
+	// trueBlocksViper.SetDefault("Scrapers.ChannelCount", 20)
+	// trueBlocksViper.SetDefault("Scrapers.AllowMissing", false)
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
@@ -88,7 +114,16 @@ func init() {
 func GetRootConfig() *ConfigFile {
 	if len(trueBlocksConfig.Settings.CachePath) == 0 {
 		configPath := GetPathToRootConfig()
-		MustReadConfig(trueBlocksViper, &trueBlocksConfig, configPath)
+		trueBlocksViper.AddConfigPath(configPath)
+		trueBlocksViper.SetEnvPrefix("TB")
+		trueBlocksViper.AutomaticEnv()
+		trueBlocksViper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+		if err := trueBlocksViper.ReadInConfig(); err != nil {
+			logger.Fatal(err)
+		}
+		if err := trueBlocksViper.Unmarshal(&trueBlocksConfig); err != nil {
+			logger.Fatal(err)
+		}
 
 		user, _ := user.Current()
 
@@ -171,29 +206,6 @@ func PathFromXDG(envVar string) (string, error) {
 	return filepath.Join(xdg, "") + "/", nil
 }
 
-// MustReadConfig calls Viper's ReadInConfig and fills values in the
-// given targetStruct. Any error will result in a call to logger.Fatal
-func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string) {
-	v.AddConfigPath(path)
-	v.SetEnvPrefix("TB")
-	v.AutomaticEnv()
-	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-
-	err := v.ReadInConfig()
-	if err != nil {
-		_, ok := err.(viper.ConfigFileNotFoundError)
-		// We only require some files to be present
-		if !ok {
-			logger.Fatal(err)
-		}
-	}
-
-	err = v.Unmarshal(targetStruct)
-	if err != nil {
-		logger.Fatal(err)
-	}
-}
-
 func GetPinningKeys(chain string) (string, string, string) {
 	keys := GetRootConfig().Keys
 	a := keys["pinata"].ApiKey
@@ -210,4 +222,49 @@ func HasPinningKeys(chain string) bool {
 func HasEsKeys(chain string) bool {
 	keys := GetRootConfig().Keys
 	return len(keys["etherscan"].ApiKey) > 0
+}
+
+func SetScrapeArgs(chain string, args map[string]string) {
+	if trueBlocksConfig.Scrape == nil {
+		trueBlocksConfig.Scrape = make(map[string]ScrapeSettings, 10)
+		trueBlocksConfig.Scrape[chain] = GetScrapeSettings(chain)
+	}
+	settings := trueBlocksConfig.Scrape[chain]
+	for key, value := range args {
+		switch key {
+		case "appsPerChunk":
+			settings.AppsPerChunk = utils.MustParseUint(value)
+		case "snapToGrid":
+			settings.SnapToGrid = utils.MustParseUint(value)
+		case "firstSnap":
+			settings.FirstSnap = utils.MustParseUint(value)
+		case "unripeDist":
+			settings.UnripeDist = utils.MustParseUint(value)
+		case "channelCount":
+			settings.ChannelCount = utils.MustParseUint(value)
+		case "allowMissing":
+			settings.AllowMissing = true
+		}
+	}
+	trueBlocksConfig.Scrape[chain] = settings
+}
+
+func GetScrapeSettings(chain string) ScrapeSettings {
+	empty := ScrapeSettings{}
+	if GetRootConfig().Scrape[chain] == empty {
+		settings := ScrapeSettings{
+			AppsPerChunk: 500000,
+			SnapToGrid:   100000,
+			FirstSnap:    500000,
+			UnripeDist:   28,
+			ChannelCount: 20,
+			AllowMissing: false,
+		}
+		if chain == "mainnet" {
+			settings.AppsPerChunk = 2000000
+			settings.FirstSnap = 2300000
+		}
+		trueBlocksConfig.Scrape[chain] = settings
+	}
+	return GetRootConfig().Scrape[chain]
 }

@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -22,6 +23,11 @@ import (
 // (or less if close to the head). The forever loop pauses each round for
 // --sleep seconds (or, if not close to the head, for .25 seconds).
 func (opts *ScrapeOptions) HandleScrape() error {
+	if opts.DryRun {
+		fmt.Println(config.GetScrapeSettings("mainnet"))
+		fmt.Println(config.GetScrapeSettings("sepolia"))
+		return nil
+	}
 	var blocks = make([]base.Blknum, 0, opts.BlockCnt)
 	var err error
 	var ok bool
@@ -53,7 +59,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// This only happens if the chain and the index scraper are both started at the
 		// same time (rarely). This protects against the case where the chain has no ripe blocks.
 		// Report no error and sleep for a while.
-		if bm.meta.ChainHeight() < opts.Settings.Unripe_dist {
+		if bm.meta.ChainHeight() < opts.Settings.UnripeDist {
 			goto PAUSE
 		}
 
@@ -79,7 +85,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 			processedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 			meta:         bm.meta,
-			nChannels:    int(opts.Settings.Channel_count),
+			nChannels:    int(opts.Settings.ChannelCount),
 		}
 
 		// Order dependant, be careful!
@@ -92,7 +98,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// user supplied, but not so many to pass the chain tip.
 		bm.blockCount = utils.Min(opts.BlockCnt, bm.meta.ChainHeight()-bm.StartBlock()+1)
 		// Unripe_dist behind the chain tip.
-		bm.ripeBlock = bm.meta.ChainHeight() - opts.Settings.Unripe_dist
+		bm.ripeBlock = bm.meta.ChainHeight() - opts.Settings.UnripeDist
 
 		// These are the blocks we're going to process this round
 		blocks = make([]base.Blknum, 0, bm.BlockCount())

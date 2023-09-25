@@ -66,22 +66,22 @@ func (bm *BlazeManager) AllowMissing() bool {
 	if bm.chain != "mainnet" {
 		return true
 	}
-	return bm.opts.Settings.Allow_missing
+	return config.GetScrapeSettings(bm.chain).AllowMissing
 }
 
 // PerChunk returns the number of blocks to process per chunk.
 func (bm *BlazeManager) PerChunk() base.Blknum {
-	return bm.opts.Settings.Apps_per_chunk
+	return config.GetScrapeSettings(bm.chain).AppsPerChunk
 }
 
 // FirstSnap returns the first block to process.
 func (bm *BlazeManager) FirstSnap() base.Blknum {
-	return bm.opts.Settings.First_snap
+	return config.GetScrapeSettings(bm.chain).FirstSnap
 }
 
 // SnapTo returns the number of blocks to process per chunk.
 func (bm *BlazeManager) SnapTo() base.Blknum {
-	return bm.opts.Settings.Snap_to_grid
+	return config.GetScrapeSettings(bm.chain).SnapToGrid
 }
 
 // IsSnap returns true if the block is a snap point.

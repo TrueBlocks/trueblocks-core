@@ -1,4 +1,4 @@
-scrape?fmt=json
+scrape?dryRun
 {
   "errors": [
     "chifra scrape is not available in API mode"

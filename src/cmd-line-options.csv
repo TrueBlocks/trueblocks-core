@@ -226,6 +226,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12185,apps,Admin,scrape,blockScrape,start_block,l,0,false,false,true,true,gocmd,flag,<uint64>,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
 12187,apps,Admin,scrape,blockScrape,run_count,u,0,false,false,false,false,gocmd,flag,<uint64>,run the scraper this many times&#44; then quit
 12188,apps,Admin,scrape,blockScrape,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
+12189,apps,Admin,scrape,blockScrape,dry_run,d,,false,false,false,false,gocmd,switch,<boolean>,show the configuration that would be applied if run&#44;no changes are made
 12160,apps,Admin,scrape,blockScrape,apps_per_chunk,,500000,false,false,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
 12170,apps,Admin,scrape,blockScrape,snap_to_grid,,100000,false,false,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
 12175,apps,Admin,scrape,blockScrape,first_snap,,500000,false,false,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled

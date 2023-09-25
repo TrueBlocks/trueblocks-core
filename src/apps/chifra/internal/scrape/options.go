@@ -14,7 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -22,17 +22,18 @@ import (
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	BlockCnt   uint64                   `json:"blockCnt,omitempty"`   // Maximum number of blocks to process per pass
-	Pin        bool                     `json:"pin,omitempty"`        // Pin new chunks (requires locally-running IPFS daemon or --remote)
-	Remote     bool                     `json:"remote,omitempty"`     // Pin new chunks to the gateway (requires pinning service keys)
-	Sleep      float64                  `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
-	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
-	RunCount   uint64                   `json:"runCount,omitempty"`   // Run the scraper this many times, then quit
-	Publisher  string                   `json:"publisher,omitempty"`  // For some query options, the publisher of the index
-	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
-	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
-	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
-	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
+	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
+	Pin          bool                  `json:"pin,omitempty"`          // Pin new chunks (requires locally-running IPFS daemon or --remote)
+	Remote       bool                  `json:"remote,omitempty"`       // Pin new chunks to the gateway (requires pinning service keys)
+	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
+	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	RunCount     uint64                `json:"runCount,omitempty"`     // Run the scraper this many times, then quit
+	Publisher    string                `json:"publisher,omitempty"`    // For some query options, the publisher of the index
+	DryRun       bool                  `json:"dryRun,omitempty"`       // Show the configuration that would be applied if run,no changes are made
+	Settings     config.ScrapeSettings `json:"settings,omitempty"`     // Configuration items for the scrape
+	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
+	Conn         *rpc.Connection       `json:"conn,omitempty"`         // The connection to the RPC server
+	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
 	// EXISTING_CODE
 	PublisherAddr base.Address
 	// EXISTING_CODE
@@ -52,6 +53,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
 	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
 	logger.TestLog(len(opts.Publisher) > 0 && opts.Publisher != "trueblocks.eth", "Publisher: ", opts.Publisher)
+	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -71,11 +73,12 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.Sleep = 14
 	opts.StartBlock = 0
 	opts.RunCount = 0
-	opts.Settings.Apps_per_chunk = 500000
-	opts.Settings.Snap_to_grid = 100000
-	opts.Settings.First_snap = 500000
-	opts.Settings.Unripe_dist = 28
-	opts.Settings.Channel_count = 20
+	opts.Settings.AppsPerChunk = 500000
+	opts.Settings.SnapToGrid = 100000
+	opts.Settings.FirstSnap = 500000
+	opts.Settings.UnripeDist = 28
+	opts.Settings.ChannelCount = 20
+	configs := make(map[string]string, 10)
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blockCnt":
@@ -92,18 +95,20 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.RunCount = globals.ToUint64(value[0])
 		case "publisher":
 			opts.Publisher = value[0]
+		case "dryRun":
+			opts.DryRun = true
 		case "appsPerChunk":
-			opts.Settings.Apps_per_chunk = globals.ToUint64(value[0])
+			fallthrough
 		case "snapToGrid":
-			opts.Settings.Snap_to_grid = globals.ToUint64(value[0])
+			fallthrough
 		case "firstSnap":
-			opts.Settings.First_snap = globals.ToUint64(value[0])
+			fallthrough
 		case "unripeDist":
-			opts.Settings.Unripe_dist = globals.ToUint64(value[0])
+			fallthrough
 		case "channelCount":
-			opts.Settings.Channel_count = globals.ToUint64(value[0])
+			fallthrough
 		case "allowMissing":
-			opts.Settings.Allow_missing = true
+			configs[key] = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
@@ -114,6 +119,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	config.SetScrapeArgs(opts.Globals.Chain, configs)
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	// EXISTING_CODE
 
@@ -141,15 +147,15 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	configs := getConfigCmdsFromArgs()
+	config.SetScrapeArgs(opts.Globals.Chain, configs)
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
 		// these options have been deprecated, so do nothing
 	} else if len(args) > 1 {
 		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
 	}
-	configFn := "blockScrape.toml"
 	// EXISTING_CODE
-	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, configFn, &scrapeCfg.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

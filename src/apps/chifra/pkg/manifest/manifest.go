@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
@@ -34,7 +33,7 @@ type Manifest struct {
 	Schemas base.IpfsHash `json:"schemas"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
-	Config scrapeCfg.ScrapeSettings `json:"config"`
+	Config config.ScrapeSettings `json:"config"`
 
 	// A list of pinned chunks (see ChunkRecord) detailing the location of all chunks in the index and associated bloom filters
 	Chunks []ChunkRecord `json:"chunks"`
@@ -153,8 +152,7 @@ func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) err
 
 // SaveManifest writes the manifest to disc in JSON
 func (m *Manifest) SaveManifest(chain string) error {
-	configFn := "blockScrape.toml"
-	m.Config, _ = scrapeCfg.GetSettings(chain, configFn, &scrapeCfg.Unset)
+	m.Config = config.GetScrapeSettings(chain)
 
 	fileName := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)

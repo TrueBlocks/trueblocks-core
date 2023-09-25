@@ -5,6 +5,7 @@
 package version
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -41,28 +42,12 @@ func NewVersion(str string) Version {
 	return vers
 }
 
-// func (desired *Version) IsEarlierThan(current Version) bool {
-// 	if desired.Major < current.Major {
-
-// 		.Major == test.Major {
-// 		if ref.Minor == test.Minor {
-
-// 	if ref.Major < test.Major {
-// 		return true
-// 	} else if ref.Major > test.Major {
-// 		return false
-// 	}
-
-// 	if ref.Minor < test.Minor {
-// 		return true
-// 	}
-// 	if ref.Build < test.Build {
-// 		return true
-// 	}
-// 	return false
-// }
-
 // Uint64 returns version as a single uint64
 func (ref *Version) Uint64() uint64 {
 	return uint64((ref.Major * 1000000) + (ref.Minor * 1000) + ref.Build)
+}
+
+// String prints the version to a string
+func (ref *Version) String() string {
+	return fmt.Sprintf("v%d.%d.%d-%s", ref.Major, ref.Minor, ref.Build, ref.Aspect)
 }
