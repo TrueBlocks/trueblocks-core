@@ -2,7 +2,6 @@ package tslib
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -58,7 +57,7 @@ func downloadCidToBinary(chain, database, outputFn, cid string) error {
 		return err
 	}
 	if header.StatusCode != 200 {
-		return errors.New("CID not found")
+		return fmt.Errorf("CID not found: %d status", header.StatusCode)
 	}
 
 	if header.ContentLength <= file.FileSize(outputFn) {
@@ -74,7 +73,7 @@ func downloadCidToBinary(chain, database, outputFn, cid string) error {
 	}
 	defer response.Body.Close()
 	if response.StatusCode != 200 {
-		return errors.New("CID not found")
+		return fmt.Errorf("CID not found: %d status", header.StatusCode)
 	}
 
 	logger.Info(fmt.Sprintf("%sDownloading complete %s (%s). Writing file...%s", colors.Yellow, database, cid, colors.Off))

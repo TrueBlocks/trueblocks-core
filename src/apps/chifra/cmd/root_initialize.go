@@ -61,6 +61,7 @@ func VerifyMigrations() {
 
 	const doesNotExist string = `0002. A config item ({0}) is missing. See {https://trueblocks.io/docs/install/install-core/}.`
 	const shouldNotExist string = `0002. A config item ({0}) exists but should not. See {https://trueblocks.io/docs/install/install-core/}.`
+	const noChains string = `0003. The configuration file ({0}) contains no chain specifications. See {https://trueblocks.io/docs/install/install-core/}.`
 
 	// The old $HOME/.quickBlocks folder should not exist...
 	if _, err := os.Stat(filepath.Join(user.HomeDir, ".quickBlocks")); err == nil {
@@ -88,7 +89,6 @@ func VerifyMigrations() {
 	// ...and some chains...
 	chainMap, _ := config.GetChainLists()
 	if len(chainMap) == 0 {
-		const noChains string = `0003. The configuration file ({0}) contains no chain specifications. See {https://trueblocks.io/docs/install/install-core/}.`
 		msg := strings.Replace(noChains, "{0}", "{"+configFile+"}", -1)
 		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
@@ -161,7 +161,7 @@ func isStatusOrConfig() bool {
 
 // upgradeConfigs will upgrade the config files to the latest versions
 func upgradeConfigs(newVersion version.Version) {
-	scraperConfigs := findConfigFiles()
+	configFiles := findConfigFiles()
 
 	fn := config.GetPathToRootConfig() + "trueBlocks.toml"
 	contents := file.AsciiFileToString(fn)
@@ -180,11 +180,11 @@ func upgradeConfigs(newVersion version.Version) {
 		}
 	}
 
-	if !hasScrapeSection && len(scraperConfigs) > 0 {
+	if !hasScrapeSection && len(configFiles) > 0 {
 		linesOut = append(linesOut, "[scrape]")
 	}
 
-	for _, f := range scraperConfigs {
+	for _, f := range configFiles {
 		if strings.Contains(f.Path, "ethslurp.toml") {
 			os.Remove(f.Path)
 			continue

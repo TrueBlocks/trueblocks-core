@@ -145,9 +145,6 @@ chunks,publish,cmds
 chunks,publish,python
 chunks,publish,readme
 chunks,publish,typescript
-chunks,publisher,api
-chunks,publisher,python
-chunks,publisher,typescript
 chunks,raw,typescript
 chunks,remote,api
 chunks,remote,cmds
@@ -341,9 +338,6 @@ init,firstBlock,typescript
 init,first_block,cmds
 init,first_block,readme
 init,noHeader,typescript
-init,publisher,api
-init,publisher,python
-init,publisher,typescript
 init,raw,typescript
 init,sleep,api
 init,sleep,cmds
@@ -389,9 +383,6 @@ list,noZero,python
 list,noZero,typescript
 list,no_zero,cmds
 list,no_zero,readme
-list,publisher,api
-list,publisher,python
-list,publisher,typescript
 list,raw,typescript
 list,reversed,api
 list,reversed,cmds
@@ -456,9 +447,9 @@ monitors,remove,cmds
 monitors,remove,python
 monitors,remove,readme
 monitors,remove,typescript
-monitors,runCount,api
-monitors,runCount,python
-monitors,runCount,typescript
+monitors,runOnce,api
+monitors,runOnce,python
+monitors,runOnce,typescript
 monitors,sleep,api
 monitors,sleep,cmds
 monitors,sleep,python
@@ -596,9 +587,6 @@ scrape,pin,cmds
 scrape,pin,python
 scrape,pin,readme
 scrape,pin,typescript
-scrape,publisher,api
-scrape,publisher,python
-scrape,publisher,typescript
 scrape,raw,typescript
 scrape,remote,api
 scrape,remote,cmds

@@ -7,7 +7,6 @@ package rpc
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	ensGo "github.com/wealdtech/go-ens/v3"
 )
@@ -17,8 +16,7 @@ import (
 func (conn *Connection) GetEnsAddresses(addrs []string) (out []string, found bool) {
 	has := false
 	for _, addr := range addrs {
-		a := base.HexToAddress(addr)
-		if !a.IsZero() {
+		if strings.Contains(addr, ".eth") {
 			has = true
 			break
 		}

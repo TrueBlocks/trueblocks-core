@@ -1,61 +1,57 @@
 [version]
-current = "v1.0.0-release"
+  current = "v1.0.0-release"
 
 [settings]
-defaultChain = "mainnet"
-defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
-cachePath = ""
-indexPath = ""
+  cachePath = ""
+  indexPath = ""
+  defaultChain = "mainnet"
+  defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
 
 [keys]
+  [keys.etherscan]
+    apiKey = ""
+  [keys.infura]
+    apiKey = ""
+    secret = ""
+  [keys.pinata]
+    apiKey = ""
+    secret = ""
+    jwt = ""
+  [keys.trueblocks]
+    license = ""
+    apiKey = ""
 
-[keys.etherscan]
-apiKey = ""
-
-[keys.pinata]
-apiKey = ""
-jwt = ""
-secret = ""
-
-[keys.trueblocks]
-license = ""
-
-#[dev]
-#debug_curl=true
+[dev]
+  debug_curl=false
 
 [chains]
-
-[chains.mainnet]
-rpcProvider = "http://localhost:8545"
-remoteExplorer = "https://etherscan.io"
-localExplorer = "http://localhost:1234"
-symbol = "ETH"
-chainId = "1"
-
-[chains.sepolia]
-rpcProvider = "http://localhost:8548"
-remoteExplorer = "https://sepolia.otterscan.io/"
-localExplorer = "http://localhost:1234"
-symbol = "ETH"
-chainId = "11155111"
-
-[chains.gnosis]
-rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
-remoteExplorer = "https://gnosisscan.io/"
-localExplorer = "http://localhost:1234"
-symbol = "XDAI"
-chainId = "100"
-
-[chains.optimism]
-rpcProvider = "https://mainnet.optimism.io"
-remoteExplorer = "https://optimistic.etherscan.io"
-localExplorer = "http://localhost:1234"
-symbol = "OPT"
-chainId = "10"
-
-[chains.polygon]
-rpcProvider = "https://rpc-mumbai.maticvigil.com"
-remoteExplorer = "https://mumbai.polygonscan.com"
-localExplorer = "http://localhost:1234"
-symbol = "MATIC"
-chainId = "80001"
+  [chains.gnosis]
+    chainId = "100"
+    localExplorer = "http://localhost:1234"
+    remoteExplorer = "https://gnosisscan.io/"
+    rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
+    symbol = "XDAI"
+  [chains.mainnet]
+    chainId = "1"
+    localExplorer = "http://localhost:1234"
+    remoteExplorer = "https://etherscan.io"
+    rpcProvider = "http://localhost:8545"
+    symbol = "ETH"
+  [chains.optimism]
+    chainId = "10"
+    localExplorer = "http://localhost:1234"
+    remoteExplorer = "https://optimistic.etherscan.io"
+    rpcProvider = "https://mainnet.optimism.io"
+    symbol = "OPT"
+  [chains.polygon]
+    chainId = "80001"
+    localExplorer = "http://localhost:1234"
+    remoteExplorer = "https://mumbai.polygonscan.com"
+    rpcProvider = "https://rpc-mumbai.maticvigil.com"
+    symbol = "MATIC"
+  [chains.sepolia]
+    chainId = "11155111"
+    localExplorer = "http://localhost:1234"
+    remoteExplorer = "https://sepolia.otterscan.io/"
+    rpcProvider = "http://localhost:8548"
+    symbol = "ETH"

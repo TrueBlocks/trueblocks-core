@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -27,20 +26,20 @@ type versionGroup struct {
 }
 
 type chainGroup struct {
-	Chain          string `toml:"chain"`
+	Chain          string `toml:"chain,omitempty"`
 	ChainId        string `toml:"chainId"`
-	LocalExplorer  string `toml:"localExplorer"`
-	RemoteExplorer string `toml:"remoteExplorer"`
+	LocalExplorer  string `toml:"localExplorer,omitempty"`
+	RemoteExplorer string `toml:"remoteExplorer,omitempty"`
 	RpcProvider    string `toml:"rpcProvider"`
-	IpfsGateway    string `toml:"ipfsGateway"`
+	IpfsGateway    string `toml:"ipfsGateway,omitempty"`
 	Symbol         string `toml:"symbol"`
 }
 
 type keyGroup struct {
-	License string `toml:"license"`
+	License string `toml:"license,omitempty"`
 	ApiKey  string `toml:"apiKey"`
-	Secret  string `toml:"secret"`
-	Jwt     string `toml:"jwt"`
+	Secret  string `toml:"secret,omitempty"`
+	Jwt     string `toml:"jwt,omitempty"`
 }
 
 type ScrapeSettings struct {
@@ -61,11 +60,6 @@ func (s *ScrapeSettings) TestLog(chain string, test bool) {
 	logger.TestLog(false, "AllowMissing: ", s.AllowMissing)
 }
 
-// TODO: This needs to be documented
-type grpcGroup struct {
-	UdsTimeout time.Duration `toml:"udsTimeout"`
-}
-
 type settingsGroup struct {
 	CachePath      string `toml:"cachePath"`
 	IndexPath      string `toml:"indexPath"`
@@ -74,12 +68,11 @@ type settingsGroup struct {
 }
 
 type ConfigFile struct {
-	Version  versionGroup
-	Settings settingsGroup
-	Grpc     grpcGroup
-	Keys     map[string]keyGroup
-	Chains   map[string]chainGroup
-	Scrape   map[string]ScrapeSettings
+	Version  versionGroup              `toml:"version"`
+	Settings settingsGroup             `toml:"settings"`
+	Keys     map[string]keyGroup       `toml:"keys"`
+	Chains   map[string]chainGroup     `toml:"chains"`
+	Scrape   map[string]ScrapeSettings `toml:"scrape"`
 }
 
 func GetChainLists() (map[string]chainGroup, []chainGroup) {
