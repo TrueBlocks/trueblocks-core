@@ -738,7 +738,7 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
             os << "(&[{ROUTE}]Pkg.GetOptions().";
-            if (p.isConfig12) {
+            if (p.isConfig) {
                 os << "Settings." + p.Format("[{VARIABLE}]") << ", ";
             } else {
                 os << p.Format("[{VARIABLE}]") << ", ";

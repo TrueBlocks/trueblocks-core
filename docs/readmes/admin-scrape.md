@@ -62,6 +62,7 @@ Each of the following additional configurable command line options are available
 | channelCount       | uint64       | 20           | number of concurrent processing channels |
 | allowMissing       | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
 
+Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
 These items may be set in three ways, each overridding the preceeding method:
 

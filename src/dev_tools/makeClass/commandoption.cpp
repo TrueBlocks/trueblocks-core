@@ -518,7 +518,7 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                 }
             case 'v':
                 if (fieldIn % "variable") {
-                    if (com->isConfig12) {
+                    if (com->isConfig) {
                         return firstUpper(toCamelCase(com->longName));
                     }
                     return substitute(toProper(com->longName), "_", "");
@@ -643,7 +643,7 @@ bool CCommandOption::finishCleanup(void) {
     isNote = option_type == "note";
     isAlias = option_type == "alias";
     isErr = option_type == "error";
-    isConfig12 = generate == "config";
+    isConfig = generate == "config";
     isDeprecated = option_type == "deprecated";
 
     real_type = data_type;

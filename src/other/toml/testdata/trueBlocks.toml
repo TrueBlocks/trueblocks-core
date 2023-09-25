@@ -1,0 +1,92 @@
+[version]
+current = "v0.40.0-release"
+
+[settings]
+defaultChain = "mainnet"
+defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
+cachePath = "/Users/jrush/Data/trueblocks/v1.0.0/cache"
+indexPath = "/Users/jrush/Data/trueblocks/v1.0.0/unchained"
+#cachePath = "/Users/jrush/Data/trueblocks/junk/cache"
+#indexPath = "/Users/jrush/Data/trueblocks/junk/unchained"
+
+[keys]
+
+[keys.etherscan]
+apiKey = "68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1"
+
+[keys.pinata]
+apiKey = "d627c657d3e2864a26d9"
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI0NzIwZTk3Mi0zNWY3LTRiMjEtYWMzNS0xMWIyM2JlZDBmYjEiLCJlbWFpbCI6ImpydXNoQHF1aWNrYmxvY2tzLmlvIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9LHsiaWQiOiJOWUMxIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6ImQ2MjdjNjU3ZDNlMjg2NGEyNmQ5Iiwic2NvcGVkS2V5U2VjcmV0IjoiYmFjOTA0YjA2YTdiMmE2NTFmN2I4ZWZiMmM4OTc4MTdiY2EzOWNhZjRjYzM1NmU4ZGE5Yzg3ZGZkNTlhNGEzMCIsImlhdCI6MTYxMjIzMzU5OX0.gg2kKI1-HxLHx-rJRDlfLsdtwCyrGhT3AWtCiedTOC8"
+secret = "bac904b06a7b2a651f7b8efb2c897817bca39caf4cc356e8da9c87dfd59a4a30"
+
+[keys.estuary]
+apiKey = "EST5eabb540-bdf5-4962-b331-7c58309efbb6ARY"
+
+[keys.infura]
+apiKey = "2DdVx0frVxcrOWDkMJ8QAblNscm"
+secret = "0876aced67896db23df9f6901e6fcb9a"
+
+[keys.trueblocks]
+license = "+neighbors+accounting"
+
+#[dev]
+#debug_curl=true
+
+[chains]
+
+[chains.mainnet]
+#rpcProvider = "http://localhost:23456"
+rpcProvider = "http://localhost:23457"
+#rpcProvider = "https://mainnet.infura.io/v3/22c9bef7243b468e864a4bf606677d29"
+remoteExplorer = "https://etherscan.io"
+localExplorer = "http://localhost:1234"
+symbol = "ETH"
+chainId = "1"
+
+[chains.sepolia]
+rpcProvider = "http://localhost:8545"
+# rpcProvider = "http://localhost:30305"
+remoteExplorer = "https://sepolia.otterscan.io/"
+localExplorer = "http://localhost:1234"
+symbol = "ETH"
+chainId = "11155111"
+
+[chains.gnosis]
+rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
+remoteExplorer = "https://gnosisscan.io/"
+localExplorer = "http://localhost:1234"
+symbol = "XDAI"
+chainId = "100"
+
+[chains.optimism]
+rpcProvider = "https://mainnet.optimism.io"
+remoteExplorer = "https://optimistic.etherscan.io"
+localExplorer = "http://localhost:1234"
+symbol = "OPT"
+chainId = "10"
+
+[chains.polygon]
+rpcProvider = "https://rpc-mumbai.maticvigil.com"
+remoteExplorer = "https://mumbai.polygonscan.com"
+localExplorer = "http://localhost:1234"
+symbol = "MATIC"
+chainId = "80001"
+
+# [scrape]
+
+# [scrape.mainnet]
+# appsPerChunk = 12
+# snapToGrid = 13
+# firstSnap = 14
+# unripeDist = 15
+# channelCount = 16
+# allowMissing = true
+
+# [scrape.sepolia]
+# appsPerChunk = 12
+# snapToGrid = 13
+# firstSnap = 14
+# unripeDist = 15
+# channelCount = 16
+# allowMissing = true
+
