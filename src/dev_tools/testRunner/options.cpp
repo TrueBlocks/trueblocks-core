@@ -42,7 +42,7 @@ bool COptions::parseArguments(string_q& command) {
 
     bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
     bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
-    bool runSlurps = true || (hasKey && wantsTest);
+    bool runSlurps = (hasKey && wantsTest);
 
     CToml config(rootConfigToml_makeClass);
 

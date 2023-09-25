@@ -22,7 +22,10 @@ func (conn *Connection) GetEnsAddresses(addrs []string) (out []string, found boo
 		}
 	}
 	if !has {
-		return addrs, false
+		for _, term := range addrs {
+			out = append(out, utils.LowerIfHex(term))
+		}
+		return out, false
 	}
 
 	// Note: we use ENS on mainnet always
