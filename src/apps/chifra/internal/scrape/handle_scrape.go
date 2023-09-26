@@ -24,7 +24,7 @@ import (
 // --sleep seconds (or, if not close to the head, for .25 seconds).
 func (opts *ScrapeOptions) HandleScrape() error {
 	if opts.DryRun {
-		fmt.Println(config.GetScrapeSettings(opts.Globals.Chain))
+		fmt.Println(config.GetScrape(opts.Globals.Chain))
 		return nil
 	}
 

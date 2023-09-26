@@ -110,7 +110,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 
 	reports := []simpleReportCheck{}
 
-	allowMissing := config.GetScrapeSettings(chain).AllowMissing
+	allowMissing := config.GetScrape(chain).AllowMissing
 
 	seq := simpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {

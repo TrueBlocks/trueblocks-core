@@ -64,10 +64,8 @@ func GetIpfsGateway(chain string) string {
 }
 
 // GetRpcProvider returns the RPC provider for a chain
-func GetRpcProvider(chain string) (string, error) {
-	ch := GetRootConfig().Chains[chain]
-	cleaned := cleanPrefix(ch.RpcProvider)
-	return cleaned, nil
+func GetChain(chain string) chainGroup {
+	return GetRootConfig().Chains[chain]
 }
 
 // GetSymbol returns the expected chain id for a given chain

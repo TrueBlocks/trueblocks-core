@@ -32,7 +32,7 @@ func SetScrapeArgs(chain string, args map[string]string) {
 
 	empty := ScrapeSettings{}
 	if trueBlocksConfig.Chains[chain].Scrape == empty {
-		ch.Scrape = GetScrapeSettings(chain)
+		ch.Scrape = GetScrape(chain)
 
 	} else {
 		settings := trueBlocksConfig.Chains[chain].Scrape
@@ -58,7 +58,7 @@ func SetScrapeArgs(chain string, args map[string]string) {
 	trueBlocksConfig.Chains[chain] = ch
 }
 
-func GetScrapeSettings(chain string) ScrapeSettings {
+func GetScrape(chain string) ScrapeSettings {
 	empty := ScrapeSettings{}
 	if GetRootConfig().Chains[chain].Scrape == empty {
 		settings := ScrapeSettings{

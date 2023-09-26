@@ -178,7 +178,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		return nil, err
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetChain(chain).RpcProvider
 	s := &simpleStatus{
 		ClientVersion: vers,
 		Version:       version.LibraryVersion,
