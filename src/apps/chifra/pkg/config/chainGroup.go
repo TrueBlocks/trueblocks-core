@@ -17,7 +17,7 @@ type chainGroup struct {
 	Scrape         ScrapeSettings `toml:"scrape"`
 }
 
-func GetChainLists() (map[string]chainGroup, []chainGroup) {
+func GetChains() []chainGroup {
 	chainArray := make([]chainGroup, 0, len(GetRootConfig().Chains))
 	for k, v := range GetRootConfig().Chains {
 		v.Chain = k
@@ -26,30 +26,22 @@ func GetChainLists() (map[string]chainGroup, []chainGroup) {
 		}
 		chainArray = append(chainArray, v)
 	}
-	return GetRootConfig().Chains, chainArray
+	return chainArray
+}
+
+// GetRpcProvider returns the RPC provider for a chain
+func GetChain(chain string) chainGroup {
+	return GetRootConfig().Chains[chain]
 }
 
 func IsChainConfigured(needle string) bool {
-	haystack, _ := GetChainLists()
-	return haystack[needle] != chainGroup{}
+	return GetRootConfig().Chains[needle] != chainGroup{}
 }
 
 // GetChainId returns the expected chain id for a given chain
 func GetChainId(chain string) string {
 	ch := GetRootConfig().Chains[chain]
 	return ch.ChainId
-}
-
-// GetLocalExplorer returns the expected chain id for a given chain
-func GetLocalExplorer(chain string) string {
-	ch := GetRootConfig().Chains[chain]
-	return cleanUrl(ch.LocalExplorer)
-}
-
-// GetRemoteExplorer returns the expected chain id for a given chain
-func GetRemoteExplorer(chain string) string {
-	ch := GetRootConfig().Chains[chain]
-	return cleanUrl(ch.RemoteExplorer)
 }
 
 // GetIpfsGateway returns the ipfs gateway for a chain
@@ -61,17 +53,6 @@ func GetIpfsGateway(chain string) string {
 	}
 	gateway = strings.Replace(gateway, "[{CHAIN}]", chain, -1)
 	return cleanUrl(gateway)
-}
-
-// GetRpcProvider returns the RPC provider for a chain
-func GetChain(chain string) chainGroup {
-	return GetRootConfig().Chains[chain]
-}
-
-// GetSymbol returns the expected chain id for a given chain
-func GetSymbol(chain string) string {
-	ch := GetRootConfig().Chains[chain]
-	return ch.Symbol
 }
 
 func cleanUrl(url string) string {

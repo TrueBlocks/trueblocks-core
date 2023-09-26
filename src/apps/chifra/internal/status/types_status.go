@@ -124,7 +124,7 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 			}
 			chains = append(chains, ch)
 		} else {
-			_, chainArray := config.GetChainLists()
+			chainArray := config.GetChains()
 			for _, chain := range chainArray {
 				ch := types.SimpleChain{
 					Chain:          chain.Chain,

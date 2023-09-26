@@ -84,8 +84,8 @@ func VerifyMigrations() {
 	}
 
 	// ...and some chains...
-	chainMap, _ := config.GetChainLists()
-	if len(chainMap) == 0 {
+	chainArray := config.GetChains()
+	if len(chainArray) == 0 {
 		msg := strings.Replace(noChains, "{0}", "{"+configFile+"}", -1)
 		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
