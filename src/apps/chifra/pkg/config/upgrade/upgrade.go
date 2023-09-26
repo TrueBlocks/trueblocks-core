@@ -36,7 +36,7 @@ func UpgradeConfigs(newVersion version.Version) error {
 
 		fn := config.GetPathToRootConfig() + "config/" + chain + "/blockScrape.toml"
 		if file.FileExists(fn) {
-			MergeScrapeConfig(fn, &scrape)
+			_ = MergeScrapeConfig(fn, &scrape)
 		}
 		ch.Scrape = scrape
 		cfg.Chains[chain] = ch
