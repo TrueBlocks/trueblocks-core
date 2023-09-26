@@ -34,10 +34,6 @@ func IsChainConfigured(needle string) bool {
 	return haystack[needle] != chainGroup{}
 }
 
-func GetDefaultChain() string {
-	return GetRootConfig().Settings.DefaultChain
-}
-
 // GetChainId returns the expected chain id for a given chain
 func GetChainId(chain string) string {
 	ch := GetRootConfig().Chains[chain]

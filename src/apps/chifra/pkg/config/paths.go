@@ -23,7 +23,7 @@ func MustGetPathToChainConfig(chain string) string {
 func GetPathToChainConfig(chain string) (string, error) {
 	// We always need a chain
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = GetSettings().DefaultChain
 	}
 	ret := PathToRootConfig()
 
@@ -36,7 +36,7 @@ func GetPathToChainConfig(chain string) (string, error) {
 // PathToIndex returns the one and only indexPath
 func PathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
-	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
+	indexPath, err := pathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
 		logger.Fatal(err)
 	} else if len(indexPath) == 0 {
@@ -51,7 +51,7 @@ func PathToIndex(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = GetSettings().DefaultChain
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
@@ -63,7 +63,7 @@ func PathToIndex(chain string) string {
 // PathToCache returns the one and only cachePath
 func PathToCache(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
-	cachePath, err := PathFromXDG("XDG_CACHE_HOME")
+	cachePath, err := pathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
 		logger.Fatal(err)
 	} else if len(cachePath) == 0 {
@@ -78,7 +78,7 @@ func PathToCache(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = GetSettings().DefaultChain
 	}
 
 	// We know what we want, create it if it doesn't exist and return it

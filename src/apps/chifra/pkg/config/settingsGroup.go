@@ -10,3 +10,7 @@ type settingsGroup struct {
 	DefaultChain   string `toml:"defaultChain"`
 	DefaultGateway string `toml:"defaultGateway"`
 }
+
+func GetSettings() settingsGroup {
+	return GetRootConfig().Settings
+}

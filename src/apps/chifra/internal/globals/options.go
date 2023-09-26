@@ -36,7 +36,7 @@ type GlobalOptions struct {
 func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
-	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
+	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetSettings().DefaultChain, "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
 	logger.TestLog(opts.Help, "Help: ", opts.Help)
@@ -56,7 +56,7 @@ func (opts *GlobalOptions) TestLog() {
 
 func SetDefaults(opts *GlobalOptions) {
 	if len(opts.Chain) == 0 {
-		opts.Chain = config.GetDefaultChain()
+		opts.Chain = config.GetSettings().DefaultChain
 	}
 
 	if opts.ShowRaw {
@@ -193,7 +193,7 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 	}
 
 	if len(opts.Chain) == 0 {
-		opts.Chain = config.GetDefaultChain()
+		opts.Chain = config.GetSettings().DefaultChain
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
@@ -222,7 +222,7 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 	}
 
 	if len(opts.Chain) == 0 {
-		opts.Chain = config.GetDefaultChain()
+		opts.Chain = config.GetSettings().DefaultChain
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
