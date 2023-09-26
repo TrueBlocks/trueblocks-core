@@ -15,12 +15,12 @@ import (
 
 // MustGetPathToChainConfig returns the chain-specific config folder ignoring errors
 func MustGetPathToChainConfig(chain string) string {
-	path, _ := GetPathToChainConfig(chain)
+	path, _ := PathToChainConfig(chain)
 	return path
 }
 
-// GetPathToChainConfig returns the chain-specific config folder
-func GetPathToChainConfig(chain string) (string, error) {
+// PathToChainConfig returns the chain-specific config folder
+func PathToChainConfig(chain string) (string, error) {
 	// We always need a chain
 	if len(chain) == 0 {
 		chain = GetSettings().DefaultChain
@@ -40,7 +40,7 @@ func PathToIndex(chain string) string {
 	if err != nil {
 		logger.Fatal(err)
 	} else if len(indexPath) == 0 {
-		indexPath = GetRootConfig().Settings.IndexPath
+		indexPath = GetSettings().IndexPath
 	}
 
 	// We want the index folder to be named `unchained` and be in
@@ -67,7 +67,7 @@ func PathToCache(chain string) string {
 	if err != nil {
 		logger.Fatal(err)
 	} else if len(cachePath) == 0 {
-		cachePath = GetRootConfig().Settings.CachePath
+		cachePath = GetSettings().CachePath
 	}
 
 	// We want the cache folder to be named `cache` and be in

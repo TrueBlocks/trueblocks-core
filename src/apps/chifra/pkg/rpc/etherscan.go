@@ -172,7 +172,7 @@ func getEtherscanUrl(value string, requestType string, paginator *Paginator) (st
 		logger.Fatal("Should not happen in getEtherscanUrl", requestType)
 	}
 
-	key := config.GetRootConfig().Keys["etherscan"].ApiKey
+	key := config.GetKey("etherscan").ApiKey
 	if key == "" {
 		return "", errors.New("cannot read Etherscan API key")
 	}

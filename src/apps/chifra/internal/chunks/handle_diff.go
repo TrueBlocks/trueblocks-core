@@ -54,6 +54,10 @@ func (opts *ChunksOptions) handleDiff(modelChan chan types.Modeler[types.RawMode
 	wd, _ := os.Getwd()
 	diffPath = strings.Replace(diffPath, "./", wd+"/", -1)
 
+	if !file.FileExists(diffPath) {
+		logger.Fatal(fmt.Sprintf("The diff path does not exist: %s", diffPath))
+	}
+
 	logger.Info("Comparing:")
 	logger.Info(fmt.Sprintf("  existing: %s (%d)", path, file.FileSize(path)))
 	logger.Info(fmt.Sprintf("  current:  %s (%d)", diffPath, file.FileSize(diffPath)))
@@ -105,7 +109,7 @@ func (opts *ChunksOptions) exportTo(dest, source string) (bool, error) {
 	})
 
 	for _, app := range apps {
-		fmt.Printf("%s\t%d\t%d\t%s", dest, app.BlockNumber, app.TransactionIndex, app.Address)
+		fmt.Printf("%s\t%d\t%d\t%s\n", dest, app.BlockNumber, app.TransactionIndex, app.Address)
 	}
 
 	return true, nil

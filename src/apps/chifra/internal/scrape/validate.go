@@ -69,8 +69,8 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if opts.Pin {
 		if opts.Remote {
-			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(chain)
-			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+			pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
+			if pinataKey == "" || pinataSecret == "" {
 				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 			}
 

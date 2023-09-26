@@ -118,7 +118,7 @@ func VerifyMigrations() {
 	}
 
 	requiredVer := version.NewVersion("v1.0.0-release")
-	currentVer := version.NewVersion(config.GetRootConfig().Version.Current)
+	currentVer := version.NewVersion(config.GetVersion().Current)
 	if currentVer.Uint64() < requiredVer.Uint64() {
 		_ = upgrade.UpgradeConfigs(requiredVer) // does not return
 	}

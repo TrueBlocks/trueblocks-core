@@ -7,18 +7,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-func ReadConfigFile(inFile string, config interface{}) error {
-	_, err := toml.DecodeFile(inFile, config)
+func ReadConfigFile(inFile string, contents interface{}) error {
+	_, err := toml.DecodeFile(inFile, contents)
 	return err
 }
 
-func WriteConfigFile(outFn string, config *ConfigFile) error {
-	config.Version.Current = version.VersionString()
+func (cfg *ConfigFile) WriteConfigFile(outFn string) error {
+	cfg.SetVersionStr(version.VersionString())
 	if f, err := os.Create(outFn); err != nil {
 		return err
 	} else {
 		defer f.Close()
-		if err := toml.NewEncoder(f).Encode(config); err != nil {
+		if err := toml.NewEncoder(f).Encode(cfg); err != nil {
 			return err
 		}
 	}

@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+// ScrapeSettings carries config information for the scraper
 type ScrapeSettings struct {
 	AppsPerChunk uint64 `toml:"appsPerChunk" json:"appsPerChunk"`
 	SnapToGrid   uint64 `toml:"snapToGrid" json:"snapToGrid"`
@@ -16,6 +17,30 @@ type ScrapeSettings struct {
 	UnripeDist   uint64 `toml:"unripeDist" json:"unripeDist"`
 	AllowMissing bool   `toml:"allowMissing" json:"allowMissing"`
 	ChannelCount uint64 `toml:"channelCount" json:"channelCount"`
+}
+
+// GetScrape returns the scraper settings per chain
+func GetScrape(chain string) ScrapeSettings {
+	empty := ScrapeSettings{}
+	if GetRootConfig().Chains[chain].Scrape == empty {
+		settings := ScrapeSettings{
+			AppsPerChunk: 500000,
+			SnapToGrid:   100000,
+			FirstSnap:    500000,
+			UnripeDist:   28,
+			ChannelCount: 20,
+			AllowMissing: false,
+		}
+		if chain == "mainnet" {
+			settings.AppsPerChunk = 2000000
+			settings.FirstSnap = 2300000
+		}
+		ch := GetRootConfig().Chains[chain]
+		ch.Scrape = settings
+		GetRootConfig().Chains[chain] = ch
+	}
+
+	return GetRootConfig().Chains[chain].Scrape
 }
 
 func (s *ScrapeSettings) TestLog(chain string, test bool) {
@@ -56,27 +81,4 @@ func SetScrapeArgs(chain string, args map[string]string) {
 	}
 
 	trueBlocksConfig.Chains[chain] = ch
-}
-
-func GetScrape(chain string) ScrapeSettings {
-	empty := ScrapeSettings{}
-	if GetRootConfig().Chains[chain].Scrape == empty {
-		settings := ScrapeSettings{
-			AppsPerChunk: 500000,
-			SnapToGrid:   100000,
-			FirstSnap:    500000,
-			UnripeDist:   28,
-			ChannelCount: 20,
-			AllowMissing: false,
-		}
-		if chain == "mainnet" {
-			settings.AppsPerChunk = 2000000
-			settings.FirstSnap = 2300000
-		}
-		ch := trueBlocksConfig.Chains[chain]
-		ch.Scrape = settings
-		trueBlocksConfig.Chains[chain] = ch
-	}
-
-	return GetRootConfig().Chains[chain].Scrape
 }

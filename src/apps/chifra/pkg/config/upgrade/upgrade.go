@@ -44,7 +44,7 @@ func UpgradeConfigs(newVersion version.Version) error {
 
 	// Re-write the file (after making a backup) with the new version
 	_, _ = file.Copy(fn, fn+".bak")
-	_ = config.WriteConfigFile(fn, &cfg) // updates the version
+	_ = cfg.WriteConfigFile(fn) // updates the version
 	logger.Fatal(colors.Colored(fmt.Sprintf("Your configuration files were upgraded to {%s}. Rerun your command.", newVersion.String())))
 
 	return nil

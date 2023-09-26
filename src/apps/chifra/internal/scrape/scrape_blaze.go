@@ -144,8 +144,8 @@ func (bm *BlazeManager) ProcessTimestamps(tsChannel chan tslib.TimestampRecord, 
 	for ts := range tsChannel {
 		blazeMutex.Lock()
 		bm.timestamps = append(bm.timestamps, ts)
-		blazeMutex.Unlock()
 		bm.nTimestamps++
+		blazeMutex.Unlock()
 	}
 	return
 }

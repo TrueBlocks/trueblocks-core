@@ -7,3 +7,11 @@ package config
 type versionGroup struct {
 	Current string `toml:"current"`
 }
+
+func GetVersion() versionGroup {
+	return GetRootConfig().Version
+}
+
+func (cfg *ConfigFile) SetVersionStr(current string) {
+	cfg.Version.Current = current
+}
