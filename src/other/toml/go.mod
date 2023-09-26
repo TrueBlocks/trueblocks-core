@@ -1,6 +1,6 @@
 module toml-test
 
-go 1.21.0
+go 1.21
 
 require github.com/BurntSushi/toml v0.3.1
 
