@@ -1,0 +1,8 @@
+chifra scrape  --dry_run
+TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] DryRun:  true
+TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
+TEST[DATE|TIME] Format:  txt
+The index (3735928560) is ahead of the chain ("0xdeadbeef").
+{12 13 14 15 true 16}
+{12 13 14 15 true 16}
