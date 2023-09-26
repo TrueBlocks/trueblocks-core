@@ -93,7 +93,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 
 	// First, we backup the existing chunk if there is one...
 	indexFn := ToIndexPath(fileName)
-	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, indexFn); err == nil {
 		defer func() {
 			if file.FileExists(backupFn) {
@@ -158,7 +158,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 				return &report, err
 			}
 
-			path := config.GetPathToIndex(chain) + "ts.bin"
+			path := config.PathToIndex(chain) + "ts.bin"
 			if _, err = pinning.PinItem(chain, "timestamps", path, remote); err != nil {
 				return &report, err
 			}

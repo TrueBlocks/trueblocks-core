@@ -45,7 +45,7 @@ func (opts *InitOptions) HandleDryRun() error {
 	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
 	logger.InfoTable("Schemas:", schema)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
-	logger.InfoTable("Index Folder:", config.GetPathToIndex(chain))
+	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
 	logger.InfoTable("Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
 	logger.InfoTable("Corrections Needed:", fmt.Sprintf("%d", nCorrections))
 

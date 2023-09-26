@@ -447,7 +447,6 @@ string_q get_optfields(const CCommandOption& cmd) {
     string_q configDocs = getDocsPathTemplates(n);
     ::remove(configDocs.c_str());  // remove it if it exists, we will replace it
 
-    bool hasConfig = 0;
     size_t varWidth = 0, typeWidth = 0;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         string_q var = p.Format("[{VARIABLE}]");
@@ -486,6 +485,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     os << "// " << firstUpper(c) << endl;
 
     ostringstream os;
+    bool hasConfig = 0;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.generate == "config") {
             ostringstream dd;

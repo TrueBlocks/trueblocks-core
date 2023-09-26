@@ -47,7 +47,7 @@ func (opts *ChunksOptions) handleDiff(modelChan chan types.Modeler[types.RawMode
 	path = index.ToIndexPath(path)
 	folder, name := filepath.Split(path)
 	diffPath := os.Getenv("TB_CHUNKS_DIFFPATH")
-	diffPath = filepath.Join(strings.Replace(folder, config.GetPathToIndex(opts.Globals.Chain), diffPath+"/", -1), name)
+	diffPath = filepath.Join(strings.Replace(folder, config.PathToIndex(opts.Globals.Chain), diffPath+"/", -1), name)
 	if len(diffPath) > 0 && diffPath[0] != '/' {
 		diffPath = "./" + diffPath
 	}

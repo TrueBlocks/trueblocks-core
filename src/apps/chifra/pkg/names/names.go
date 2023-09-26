@@ -340,7 +340,7 @@ func asString(which string, b []byte) string {
 	return ret
 }
 
-	// binPath := config.GetPathToCache(chain) + "names/names.bin"
+	// binPath := config.PathToCache(chain) + "names/names.bin"
 	// namesPath := filepath.Join(config.MustGetPathToChainConfig(chain), "names.tab")
 	// customPath := filepath.Join(config.MustGetPathToChainConfig(chain), "names_custom.tab")
 	// Load the names from the binary file (note that these may overwrite the prefund names)

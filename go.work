@@ -2,5 +2,4 @@ go 1.21
 
 use (
 	./src/apps/chifra
-	./src/other/toml
 )

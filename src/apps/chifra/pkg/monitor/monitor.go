@@ -97,9 +97,9 @@ func (mon Monitor) String() string {
 // Path returns the path to the Monitor file
 func (mon *Monitor) Path() (path string) {
 	if mon.Staged {
-		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + mon.Address.Hex() + Ext
+		path = config.PathToCache(mon.Chain) + "monitors/staging/" + mon.Address.Hex() + Ext
 	} else {
-		path = config.GetPathToCache(mon.Chain) + "monitors/" + mon.Address.Hex() + Ext
+		path = config.PathToCache(mon.Chain) + "monitors/" + mon.Address.Hex() + Ext
 	}
 	return
 }
@@ -206,7 +206,7 @@ func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 	}
 
 	logger.Info("Building address list from current monitors")
-	path := config.GetPathToCache(chain) + "monitors"
+	path := config.PathToCache(chain) + "monitors"
 	_ = filepath.Walk(path, walkFunc)
 }
 

@@ -68,7 +68,7 @@ func VerifyMigrations() {
 	}
 
 	// Both the config folder...
-	configFolder := config.GetPathToRootConfig()
+	configFolder := config.PathToRootConfig()
 	if _, err := os.Stat(configFolder); err != nil {
 		msg := strings.Replace(doesNotExist, "{0}", "{"+configFolder+"}", -1)
 		msg = colors.ColoredWith(msg, colors.Yellow)
@@ -109,7 +109,7 @@ func VerifyMigrations() {
 		"txs",
 	}
 	for _, item := range items {
-		itemPath := filepath.Join(config.GetPathToCache(""), item)
+		itemPath := filepath.Join(config.PathToCache(""), item)
 		if _, err := os.Stat(itemPath); err == nil {
 			msg := strings.Replace(shouldNotExist, "{0}", "{"+itemPath+"}", -1)
 			msg = colors.ColoredWith(msg, colors.Yellow)

@@ -12,7 +12,7 @@ import (
 
 // upgradeConfigs will upgrade the config files to the latest versions
 func UpgradeConfigs(newVersion version.Version) error {
-	fn := config.GetPathToRootConfig() + "trueBlocks.toml"
+	fn := config.PathToRootConfig() + "trueBlocks.toml"
 	var cfg config.ConfigFile
 	if err := config.ReadConfigFile(fn, &cfg); err != nil {
 		return err
@@ -34,7 +34,7 @@ func UpgradeConfigs(newVersion version.Version) error {
 			scrape.FirstSnap = 2300000
 		}
 
-		fn := config.GetPathToRootConfig() + "config/" + chain + "/blockScrape.toml"
+		fn := config.PathToRootConfig() + "config/" + chain + "/blockScrape.toml"
 		if file.FileExists(fn) {
 			_ = MergeScrapeConfig(fn, &scrape)
 		}

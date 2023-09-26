@@ -24,10 +24,10 @@ import (
 // --sleep seconds (or, if not close to the head, for .25 seconds).
 func (opts *ScrapeOptions) HandleScrape() error {
 	if opts.DryRun {
-		fmt.Println(config.GetScrapeSettings("mainnet"))
-		fmt.Println(config.GetScrapeSettings("sepolia"))
+		fmt.Println(config.GetScrapeSettings(opts.Globals.Chain))
 		return nil
 	}
+
 	var blocks = make([]base.Blknum, 0, opts.BlockCnt)
 	var err error
 	var ok bool

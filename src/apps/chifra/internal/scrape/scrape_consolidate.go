@@ -26,12 +26,12 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	var err error
 	chain := bm.chain
 
-	indexPath := config.GetPathToIndex(chain)
+	indexPath := config.PathToIndex(chain)
 
 	backupFn := ""
 	stageFn, _ := file.LatestFileInFolder(bm.StageFolder()) // it may not exist...
 	if file.FileExists(stageFn) {
-		backupFn, err = file.MakeBackup(filepath.Join(config.GetPathToCache(chain)+"tmp"), stageFn)
+		backupFn, err = file.MakeBackup(filepath.Join(config.PathToCache(chain)+"tmp"), stageFn)
 		if err != nil {
 			return errors.New("Could not create backup file: " + err.Error()), true
 		}

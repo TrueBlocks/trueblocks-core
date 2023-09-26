@@ -91,15 +91,15 @@ func (bm *BlazeManager) IsSnap(block base.Blknum) bool {
 
 // StageFolder returns the folder where the stage file is stored.
 func (bm *BlazeManager) StageFolder() string {
-	return filepath.Join(config.GetPathToIndex(bm.chain), "staging")
+	return filepath.Join(config.PathToIndex(bm.chain), "staging")
 }
 
 // RipeFolder returns the folder where the stage file is stored.
 func (bm *BlazeManager) RipeFolder() string {
-	return filepath.Join(config.GetPathToIndex(bm.chain), "ripe")
+	return filepath.Join(config.PathToIndex(bm.chain), "ripe")
 }
 
 // UnripeFolder returns the folder where the stage file is stored.
 func (bm *BlazeManager) UnripeFolder() string {
-	return filepath.Join(config.GetPathToIndex(bm.chain), "unripe")
+	return filepath.Join(config.PathToIndex(bm.chain), "unripe")
 }

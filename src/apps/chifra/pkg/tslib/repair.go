@@ -25,8 +25,8 @@ func Repair(chain string, bn uint64) error {
 		return errors.New(msg)
 	}
 
-	tsFn := filepath.Join(config.GetPathToIndex(chain), "ts.bin")
-	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	tsFn := filepath.Join(config.PathToIndex(chain), "ts.bin")
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		defer func() {
 			ClearCache(chain)

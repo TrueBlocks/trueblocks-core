@@ -116,7 +116,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				}
 				return nil
 			}
-			_ = filepath.Walk(config.GetPathToCache(chain)+"monitors", truncateMonitor)
+			_ = filepath.Walk(config.PathToCache(chain)+"monitors", truncateMonitor)
 
 			// All that's left to do is report on what happened.
 			fin := "."

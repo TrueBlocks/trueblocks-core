@@ -95,10 +95,13 @@ func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sy
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
 		var err error
 		if sd.traces, err = conn.GetTracesByBlockNumber(bn); err != nil {
+			// if sd.traces, err = []types.SimpleTrace{}, nil; err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else if sd.receipts, err = conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
+			// } else if sd.receipts, err = []types.SimpleReceipt{}, nil; err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else if sd.withdrawals, err = conn.GetWithdrawalsByNumber(bn); err != nil {
+			// } else if sd.withdrawals, err = []types.SimpleWithdrawal{}, nil; err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else {
 			appearanceChannel <- sd
@@ -159,8 +162,8 @@ var writeMutex sync.Mutex
 
 // WriteAppearances writes the appearance for a chunk to a file
 func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
-	ripePath := config.GetPathToIndex(bm.chain) + "ripe/"
-	unripePath := config.GetPathToIndex(bm.chain) + "unripe/"
+	ripePath := config.PathToIndex(bm.chain) + "ripe/"
+	unripePath := config.PathToIndex(bm.chain) + "unripe/"
 
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))

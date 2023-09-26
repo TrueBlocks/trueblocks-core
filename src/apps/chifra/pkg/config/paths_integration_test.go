@@ -54,14 +54,14 @@ func Test_GetPathTo(t *testing.T) {
 			if withChain {
 				testPath = filepath.Join(MustGetPathToChainConfig(test.chain), test.part)
 			} else {
-				testPath = filepath.Join(GetPathToRootConfig(), test.part)
+				testPath = filepath.Join(PathToRootConfig(), test.part)
 			}
 		} else if test.group == "Cache" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
-			testPath = GetPathToCache(test.chain) + test.part
+			testPath = PathToCache(test.chain) + test.part
 		} else if test.group == "Index" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
-			testPath = GetPathToIndex(test.chain) + test.part
+			testPath = PathToIndex(test.chain) + test.part
 		}
 
 		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)

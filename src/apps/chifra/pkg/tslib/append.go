@@ -10,8 +10,8 @@ import (
 )
 
 func Append(chain string, tsArray []TimestampRecord) error {
-	tsFn := config.GetPathToIndex(chain) + "ts.bin"
-	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	tsFn := config.PathToIndex(chain) + "ts.bin"
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		ClearCache(chain)
 		defer func() {

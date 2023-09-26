@@ -30,8 +30,8 @@ type ConfigFile struct {
 // init sets up default values for the given configuration
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks") // trueBlocks.toml (so we can find it)
-	trueBlocksViper.SetDefault("Settings.CachePath", GetPathToRootConfig()+"cache/")
-	trueBlocksViper.SetDefault("Settings.IndexPath", GetPathToRootConfig()+"unchained/")
+	trueBlocksViper.SetDefault("Settings.CachePath", PathToRootConfig()+"cache/")
+	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
 	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
 	// trueBlocksViper.SetDefault("Scrapers.AppsPerChunk", 500000)
@@ -46,7 +46,7 @@ func init() {
 // that this routine is local to the package
 func GetRootConfig() *ConfigFile {
 	if len(trueBlocksConfig.Settings.CachePath) == 0 {
-		configPath := GetPathToRootConfig()
+		configPath := PathToRootConfig()
 		trueBlocksViper.AddConfigPath(configPath)
 		trueBlocksViper.SetEnvPrefix("TB")
 		trueBlocksViper.AutomaticEnv()
@@ -93,8 +93,8 @@ func GetRootConfig() *ConfigFile {
 	return &trueBlocksConfig
 }
 
-// GetPathToRootConfig returns the path where to find configuration files
-func GetPathToRootConfig() string {
+// PathToRootConfig returns the path where to find configuration files
+func PathToRootConfig() string {
 	configPath, err := PathFromXDG("XDG_CONFIG_HOME")
 	if err != nil {
 		logger.Fatal(err)

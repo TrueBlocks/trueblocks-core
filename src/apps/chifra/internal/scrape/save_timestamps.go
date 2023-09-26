@@ -27,7 +27,7 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 
 	// Assume that the existing timestamps file always contains valid timestamps in
 	// a valid order so we can only append as we go (which is very fast)
-	tsPath := config.GetPathToIndex(chain) + "ts.bin"
+	tsPath := config.PathToIndex(chain) + "ts.bin"
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err
