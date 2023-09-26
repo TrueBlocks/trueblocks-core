@@ -51,3 +51,7 @@ func (ref *Version) Uint64() uint64 {
 func (ref *Version) String() string {
 	return fmt.Sprintf("v%d.%d.%d-%s", ref.Major, ref.Minor, ref.Build, ref.Aspect)
 }
+
+func VersionString() string {
+	return strings.Replace(LibraryVersion, "GHC-TrueBlocks//", "v", -1)
+}

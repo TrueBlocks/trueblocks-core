@@ -118,8 +118,3 @@ func EstablishIndexPaths(indexPath string) {
 		logger.Fatal(err)
 	}
 }
-
-func IsChainConfigured(needle string) bool {
-	haystack, _ := GetChainLists()
-	return haystack[needle] != chainGroup{}
-}

@@ -5,8 +5,6 @@
 package cmd
 
 import (
-	"context"
-	"fmt"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -15,10 +13,9 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/upgrade"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // Initialize makes sure everything is ready to run. These routines don't return if they aren't
@@ -123,7 +120,7 @@ func VerifyMigrations() {
 	requiredVer := version.NewVersion("v1.0.0-release")
 	currentVer := version.NewVersion(config.GetRootConfig().Version.Current)
 	if currentVer.Uint64() < requiredVer.Uint64() {
-		upgradeConfigs(requiredVer)
+		_ = upgrade.UpgradeConfigs(requiredVer) // does not return
 	}
 }
 
@@ -157,84 +154,4 @@ func isStatusOrConfig() bool {
 	}
 
 	return isConfig && (hasPaths || hasEdit) && cnt < 4
-}
-
-// upgradeConfigs will upgrade the config files to the latest versions
-func upgradeConfigs(newVersion version.Version) {
-	configFiles := findConfigFiles()
-
-	fn := config.GetPathToRootConfig() + "trueBlocks.toml"
-	contents := file.AsciiFileToString(fn)
-	lines := strings.Split(contents, "\n")
-	linesOut := make([]string, 0, len(lines))
-
-	hasScrapeSection := false
-	for _, line := range lines {
-		if strings.Contains(line, "[scrape]") {
-			hasScrapeSection = true
-		}
-		if strings.HasPrefix(line, "current") {
-			linesOut = append(linesOut, "current = \""+newVersion.String()+"\"")
-		} else if !strings.Contains(line, "apiProvider") {
-			linesOut = append(linesOut, line)
-		}
-	}
-
-	if !hasScrapeSection && len(configFiles) > 0 {
-		linesOut = append(linesOut, "[scrape]")
-	}
-
-	for _, f := range configFiles {
-		if strings.Contains(f.Path, "ethslurp.toml") {
-			os.Remove(f.Path)
-			continue
-		}
-
-		contents := file.AsciiFileToString(f.Path)
-		theseLines := strings.Split(contents, "\n")
-		for i, line := range theseLines {
-			if strings.Contains(line, "[settings]") {
-				parts := strings.Split(f.Path, "/")
-				chain := parts[len(parts)-2]
-				theseLines[i] = "[scrape." + chain + "]"
-			} else {
-				theseLines[i] = strings.Replace(theseLines[i], "apps_per_chunk", "appsPerChunk", -1)
-				theseLines[i] = strings.Replace(theseLines[i], "snap_to_grid", "snapToGrid", -1)
-				theseLines[i] = strings.Replace(theseLines[i], "first_snap", "firstSnap", -1)
-				theseLines[i] = strings.Replace(theseLines[i], "unripe_dist", "unripeDist", -1)
-				theseLines[i] = strings.Replace(theseLines[i], "channel_count", "channelCount", -1)
-				theseLines[i] = strings.Replace(theseLines[i], "allow_missing", "allowMissing", -1)
-			}
-		}
-		linesOut = append(linesOut, "")
-		linesOut = append(linesOut, theseLines...)
-		os.Remove(f.Path)
-	}
-
-	_ = file.LinesToAsciiFile(fn, linesOut)
-	logger.Fatal(fmt.Sprintf("Your configuration files were upgraded to %s. Rerun your command.", newVersion.String()))
-}
-
-func findConfigFiles() []walk.CacheFileInfo {
-	filenameChan := make(chan walk.CacheFileInfo)
-	var nRoutines = 1
-	go walk.WalkConfigFolders(context.Background(), nil, filenameChan)
-
-	files := make([]walk.CacheFileInfo, 0, 10)
-	for result := range filenameChan {
-		switch result.Type {
-		case walk.Config:
-			if strings.Contains(result.Path, "ethslurp.toml") || strings.Contains(result.Path, "blockScrape.toml") {
-				files = append(files, result)
-			}
-		case walk.Cache_NotACache:
-			nRoutines--
-			if nRoutines == 0 {
-				close(filenameChan)
-			}
-		default:
-			logger.Fatal("should not happen in upgradeConfigs")
-		}
-	}
-	return files
 }

@@ -1,12 +1,11 @@
 [version]
-  current = "v0.40.0-release"
+  current = "v1.0.0-release"
 
 [settings]
   cachePath = "/Users/jrush/Data/trueblocks/v1.0.0/cache"
   indexPath = "/Users/jrush/Data/trueblocks/v1.0.0/unchained"
   defaultChain = "mainnet"
   defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
-  udsTimeout = 0
 
 [keys]
   [keys.estuary]
@@ -31,32 +30,27 @@
     remoteExplorer = "https://gnosisscan.io/"
     rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
     symbol = "XDAI"
-    [chains.gnosis.scrape]
   [chains.mainnet]
     chainId = "1"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://etherscan.io"
     rpcProvider = "http://localhost:23457"
     symbol = "ETH"
-    [chains.mainnet.scrape]
   [chains.optimism]
     chainId = "10"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://optimistic.etherscan.io"
     rpcProvider = "https://mainnet.optimism.io"
     symbol = "OPT"
-    [chains.optimism.scrape]
   [chains.polygon]
     chainId = "80001"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://mumbai.polygonscan.com"
     rpcProvider = "https://rpc-mumbai.maticvigil.com"
     symbol = "MATIC"
-    [chains.polygon.scrape]
   [chains.sepolia]
     chainId = "11155111"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://sepolia.otterscan.io/"
     rpcProvider = "http://localhost:8545"
     symbol = "ETH"
-    [chains.sepolia.scrape]

@@ -1,57 +1,54 @@
-[Version]
-  current = "v0.40.0-release"
+[version]
+  current = "v1.0.0-release"
 
-[Settings]
+[settings]
   cachePath = "/Users/jrush/Data/trueblocks/v1.0.0/cache"
   indexPath = "/Users/jrush/Data/trueblocks/v1.0.0/unchained"
   defaultChain = "mainnet"
   defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
 
-[Grpc]
-  udsTimeout = 0
-
-[Keys]
-  [Keys.estuary]
+[keys]
+  [keys.estuary]
     apiKey = "EST5eabb540-bdf5-4962-b331-7c58309efbb6ARY"
-  [Keys.etherscan]
+  [keys.etherscan]
     apiKey = "68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1"
-  [Keys.infura]
+  [keys.infura]
     apiKey = "2DdVx0frVxcrOWDkMJ8QAblNscm"
     secret = "0876aced67896db23df9f6901e6fcb9a"
-  [Keys.pinata]
+  [keys.pinata]
     apiKey = "d627c657d3e2864a26d9"
     secret = "bac904b06a7b2a651f7b8efb2c897817bca39caf4cc356e8da9c87dfd59a4a30"
     jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI0NzIwZTk3Mi0zNWY3LTRiMjEtYWMzNS0xMWIyM2JlZDBmYjEiLCJlbWFpbCI6ImpydXNoQHF1aWNrYmxvY2tzLmlvIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9LHsiaWQiOiJOWUMxIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6ImQ2MjdjNjU3ZDNlMjg2NGEyNmQ5Iiwic2NvcGVkS2V5U2VjcmV0IjoiYmFjOTA0YjA2YTdiMmE2NTFmN2I4ZWZiMmM4OTc4MTdiY2EzOWNhZjRjYzM1NmU4ZGE5Yzg3ZGZkNTlhNGEzMCIsImlhdCI6MTYxMjIzMzU5OX0.gg2kKI1-HxLHx-rJRDlfLsdtwCyrGhT3AWtCiedTOC8"
-  [Keys.trueblocks]
+  [keys.trueblocks]
     license = "+neighbors+accounting"
     apiKey = ""
 
-[Chains]
-  [Chains.gnosis]
+[chains]
+  [chains.gnosis]
     chainId = "100"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://gnosisscan.io/"
     rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
     symbol = "XDAI"
-  [Chains.mainnet]
+  [chains.mainnet]
     chainId = "1"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://etherscan.io"
     rpcProvider = "http://localhost:23457"
     symbol = "ETH"
-  [Chains.optimism]
+  [chains.optimism]
     chainId = "10"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://optimistic.etherscan.io"
     rpcProvider = "https://mainnet.optimism.io"
     symbol = "OPT"
-  [Chains.polygon]
+  [chains.polygon]
     chainId = "80001"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://mumbai.polygonscan.com"
     rpcProvider = "https://rpc-mumbai.maticvigil.com"
     symbol = "MATIC"
-  [Chains.sepolia]
+  [chains.sepolia]
     chainId = "11155111"
     localExplorer = "http://localhost:1234"
     remoteExplorer = "https://sepolia.otterscan.io/"

@@ -4,9 +4,39 @@
 
 package config
 
-import (
-	"strings"
-)
+import "strings"
+
+type chainGroup struct {
+	Chain          string         `toml:"chain,omitempty"`
+	ChainId        string         `toml:"chainId"`
+	IpfsGateway    string         `toml:"ipfsGateway,omitempty"`
+	LocalExplorer  string         `toml:"localExplorer,omitempty"`
+	RemoteExplorer string         `toml:"remoteExplorer,omitempty"`
+	RpcProvider    string         `toml:"rpcProvider"`
+	Symbol         string         `toml:"symbol"`
+	Scrape         ScrapeSettings `toml:"scrape"`
+}
+
+func GetChainLists() (map[string]chainGroup, []chainGroup) {
+	chainArray := make([]chainGroup, 0, len(GetRootConfig().Chains))
+	for k, v := range GetRootConfig().Chains {
+		v.Chain = k
+		if len(v.IpfsGateway) == 0 {
+			v.IpfsGateway = GetRootConfig().Settings.DefaultGateway
+		}
+		chainArray = append(chainArray, v)
+	}
+	return GetRootConfig().Chains, chainArray
+}
+
+func IsChainConfigured(needle string) bool {
+	haystack, _ := GetChainLists()
+	return haystack[needle] != chainGroup{}
+}
+
+func GetDefaultChain() string {
+	return GetRootConfig().Settings.DefaultChain
+}
 
 // GetChainId returns the expected chain id for a given chain
 func GetChainId(chain string) string {

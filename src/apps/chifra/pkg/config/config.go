@@ -14,77 +14,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/viper"
 )
 
 var trueBlocksViper = viper.New()
 var trueBlocksConfig ConfigFile
 
-type versionGroup struct {
-	Current string `toml:"current"`
-}
-
-type chainGroup struct {
-	Chain          string `toml:"chain,omitempty"`
-	ChainId        string `toml:"chainId"`
-	LocalExplorer  string `toml:"localExplorer,omitempty"`
-	RemoteExplorer string `toml:"remoteExplorer,omitempty"`
-	RpcProvider    string `toml:"rpcProvider"`
-	IpfsGateway    string `toml:"ipfsGateway,omitempty"`
-	Symbol         string `toml:"symbol"`
-}
-
-type keyGroup struct {
-	License string `toml:"license,omitempty"`
-	ApiKey  string `toml:"apiKey"`
-	Secret  string `toml:"secret,omitempty"`
-	Jwt     string `toml:"jwt,omitempty"`
-}
-
-type ScrapeSettings struct {
-	AppsPerChunk uint64 `toml:"appsPerChunk" json:"appsPerChunk"`
-	SnapToGrid   uint64 `toml:"snapToGrid" json:"snapToGrid"`
-	FirstSnap    uint64 `toml:"firstSnap" json:"firstSnap"`
-	UnripeDist   uint64 `toml:"unripeDist" json:"unripeDist"`
-	AllowMissing bool   `toml:"allowMissing" json:"allowMissing"`
-	ChannelCount uint64 `toml:"channelCount" json:"channelCount"`
-}
-
-func (s *ScrapeSettings) TestLog(chain string, test bool) {
-	logger.TestLog(false, "AppsPerChunk: ", s.AppsPerChunk)
-	logger.TestLog(false, "SnapToGrid: ", s.SnapToGrid)
-	logger.TestLog(false, "FirstSnap: ", s.FirstSnap)
-	logger.TestLog(false, "UnripeDist: ", s.UnripeDist)
-	logger.TestLog(false, "ChannelCount: ", s.ChannelCount)
-	logger.TestLog(false, "AllowMissing: ", s.AllowMissing)
-}
-
-type settingsGroup struct {
-	CachePath      string `toml:"cachePath"`
-	IndexPath      string `toml:"indexPath"`
-	DefaultChain   string `toml:"defaultChain"`
-	DefaultGateway string `toml:"defaultGateway"`
-}
-
 type ConfigFile struct {
-	Version  versionGroup              `toml:"version"`
-	Settings settingsGroup             `toml:"settings"`
-	Keys     map[string]keyGroup       `toml:"keys"`
-	Chains   map[string]chainGroup     `toml:"chains"`
-	Scrape   map[string]ScrapeSettings `toml:"scrape"`
-}
-
-func GetChainLists() (map[string]chainGroup, []chainGroup) {
-	chainArray := make([]chainGroup, 0, len(GetRootConfig().Chains))
-	for k, v := range GetRootConfig().Chains {
-		v.Chain = k
-		if len(v.IpfsGateway) == 0 {
-			v.IpfsGateway = GetRootConfig().Settings.DefaultGateway
-		}
-		chainArray = append(chainArray, v)
-	}
-	return GetRootConfig().Chains, chainArray
+	Version  versionGroup          `toml:"version"`
+	Settings settingsGroup         `toml:"settings"`
+	Keys     map[string]keyGroup   `toml:"keys"`
+	Chains   map[string]chainGroup `toml:"chains"`
 }
 
 // init sets up default values for the given configuration
@@ -177,10 +117,6 @@ func GetPathToRootConfig() string {
 	return filepath.Join(user.HomeDir, osPath) + "/"
 }
 
-func GetDefaultChain() string {
-	return GetRootConfig().Settings.DefaultChain
-}
-
 func PathFromXDG(envVar string) (string, error) {
 	// If present, we require both an existing path and a fully qualified path
 	xdg := os.Getenv(envVar)
@@ -197,67 +133,4 @@ func PathFromXDG(envVar string) (string, error) {
 	}
 
 	return filepath.Join(xdg, "") + "/", nil
-}
-
-func GetPinningKeys(chain string) (string, string, string) {
-	keys := GetRootConfig().Keys
-	a := keys["pinata"].ApiKey
-	b := keys["pinata"].Secret
-	c := keys["estuary"].ApiKey
-	return a, b, c
-}
-
-func HasPinningKeys(chain string) bool {
-	a, b, c := GetPinningKeys(chain)
-	return len(a)+len(b)+len(c) > 0
-}
-
-func HasEsKeys(chain string) bool {
-	keys := GetRootConfig().Keys
-	return len(keys["etherscan"].ApiKey) > 0
-}
-
-func SetScrapeArgs(chain string, args map[string]string) {
-	if trueBlocksConfig.Scrape == nil {
-		trueBlocksConfig.Scrape = make(map[string]ScrapeSettings, 10)
-		trueBlocksConfig.Scrape[chain] = GetScrapeSettings(chain)
-	}
-	settings := trueBlocksConfig.Scrape[chain]
-	for key, value := range args {
-		switch key {
-		case "appsPerChunk":
-			settings.AppsPerChunk = utils.MustParseUint(value)
-		case "snapToGrid":
-			settings.SnapToGrid = utils.MustParseUint(value)
-		case "firstSnap":
-			settings.FirstSnap = utils.MustParseUint(value)
-		case "unripeDist":
-			settings.UnripeDist = utils.MustParseUint(value)
-		case "channelCount":
-			settings.ChannelCount = utils.MustParseUint(value)
-		case "allowMissing":
-			settings.AllowMissing = true
-		}
-	}
-	trueBlocksConfig.Scrape[chain] = settings
-}
-
-func GetScrapeSettings(chain string) ScrapeSettings {
-	empty := ScrapeSettings{}
-	if GetRootConfig().Scrape[chain] == empty {
-		settings := ScrapeSettings{
-			AppsPerChunk: 500000,
-			SnapToGrid:   100000,
-			FirstSnap:    500000,
-			UnripeDist:   28,
-			ChannelCount: 20,
-			AllowMissing: false,
-		}
-		if chain == "mainnet" {
-			settings.AppsPerChunk = 2000000
-			settings.FirstSnap = 2300000
-		}
-		trueBlocksConfig.Scrape[chain] = settings
-	}
-	return GetRootConfig().Scrape[chain]
 }

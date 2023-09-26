@@ -1,6 +1,9 @@
 all:
 	@go build && ./toml-test
+
+diff:
+	@make all
 	@echo "Diffing output..."
-	@diff -u testdata/expected.toml testdata/output.toml
-	@diff -u testdata/expected.toml testdata/output1.toml
+	@diff testdata/expected.toml testdata/output.toml
+	@diff testdata/expected.toml testdata/output1.toml
 
