@@ -38,7 +38,7 @@ func EstablishTsFile(chain string, publisher base.Address) error {
 
 // downloadCidToBinary downloads a CID to a binary file
 func downloadCidToBinary(chain, database, outputFn, cid string) error {
-	gatewayUrl := config.GetIpfsGateway(chain)
+	gatewayUrl := config.GetChain(chain).IpfsGateway
 
 	url, err := url.Parse(gatewayUrl)
 	if err != nil {

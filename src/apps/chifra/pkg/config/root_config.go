@@ -117,7 +117,7 @@ func GetRootConfig() *ConfigFile {
 		// only then can we complete these paths. At this point these paths
 		// only point to the top-levl of the cache or index. Also note that
 		// these two calls do not return if they fail, so no need to handle errors
-		defaultChains := []string{GetDefaultChain()}
+		defaultChains := []string{GetSettings().DefaultChain}
 		_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
 		_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
 	}
@@ -149,8 +149,8 @@ func PathToRootConfig() string {
 	return filepath.Join(user.HomeDir, osPath) + "/"
 }
 
-func GetDefaultChain() string {
-	return GetRootConfig().Settings.DefaultChain
+func GetSettings() settingsGroup {
+	return GetRootConfig().Settings
 }
 
 func PathFromXDG(envVar string) (string, error) {

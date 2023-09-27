@@ -99,8 +99,8 @@ func GetDefault(chain string) ScrapeSettings {
 	return base
 }
 
-// GetSettings retrieves scrape config from (in order) default, config, environment, optionally provided cmdLine
-func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSettings, error) {
+// GetScrape retrieves scrape config from (in order) default, config, environment, optionally provided cmdLine
+func GetScrape(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSettings, error) {
 	// Start with the defalt values...
 	base := GetDefault(chain)
 
@@ -184,7 +184,7 @@ func (s *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 //
 
 func AllowMissing(chain string) bool {
-	s, _ := GetSettings(chain, "blockScrape.toml", nil)
+	s, _ := GetScrape(chain, "blockScrape.toml", nil)
 	return s.AllowMissing
 }
 

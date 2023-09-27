@@ -13,40 +13,21 @@ func HasChains() bool {
 	return len(GetRootConfig().Chains) > 0
 }
 
-// GetChainId returns the expected chain id for a given chain
-func GetChainId(chain string) string {
+// GetChain
+func GetChain(chain string) chainGroup {
 	ch := GetRootConfig().Chains[chain]
-	return ch.ChainId
-}
-
-// GetLocalExplorer returns the expected chain id for a given chain
-func GetLocalExplorer(chain string) string {
-	ch := GetRootConfig().Chains[chain]
-	return cleanUrl(ch.LocalExplorer)
-}
-
-// GetRemoteExplorer returns the expected chain id for a given chain
-func GetRemoteExplorer(chain string) string {
-	ch := GetRootConfig().Chains[chain]
-	return cleanUrl(ch.RemoteExplorer)
-}
-
-// GetIpfsGateway returns the ipfs gateway for a chain
-func GetIpfsGateway(chain string) string {
-	def := GetRootConfig().Settings.DefaultGateway
-	gateway := GetRootConfig().Chains[chain].IpfsGateway
-	if len(gateway) == 0 {
-		gateway = def
+	if ch.Chain == "" {
+		ch.RpcProvider = cleanPrefix(ch.RpcProvider)
+		ch.LocalExplorer = cleanUrl(ch.LocalExplorer)
+		ch.RemoteExplorer = cleanUrl(ch.RemoteExplorer)
+		if ch.IpfsGateway == "" {
+			ch.IpfsGateway = GetRootConfig().Settings.DefaultGateway
+		}
+		ch.IpfsGateway = strings.Replace(ch.IpfsGateway, "[{CHAIN}]", chain, -1)
+		ch.IpfsGateway = cleanUrl(ch.IpfsGateway)
+		GetRootConfig().Chains[chain] = ch
 	}
-	gateway = strings.Replace(gateway, "[{CHAIN}]", chain, -1)
-	return cleanUrl(gateway)
-}
-
-// GetRpcProvider returns the RPC provider for a chain
-func GetRpcProvider(chain string) (string, error) {
-	ch := GetRootConfig().Chains[chain]
-	cleaned := cleanPrefix(ch.RpcProvider)
-	return cleaned, nil
+	return ch
 }
 
 // GetSymbol returns the expected chain id for a given chain

@@ -23,7 +23,7 @@ func MustGetPathToChainConfig(chain string) string {
 func GetPathToChainConfig(chain string) (string, error) {
 	// We always need a chain
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = GetSettings().DefaultChain
 	}
 	ret := PathToRootConfig()
 
@@ -51,7 +51,7 @@ func PathToIndex(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = GetSettings().DefaultChain
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
@@ -78,7 +78,7 @@ func PathToCache(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = GetSettings().DefaultChain
 	}
 
 	// We know what we want, create it if it doesn't exist and return it

@@ -186,7 +186,7 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		downloadWg:      &downloadWg,
-		gatewayUrl:      config.GetIpfsGateway(chain),
+		gatewayUrl:      config.GetChain(chain).IpfsGateway,
 		writeChannel:    writeChannel,
 		nRetries:        8,
 	}

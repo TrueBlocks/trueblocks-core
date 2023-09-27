@@ -25,7 +25,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	chain := opts.Globals.Chain
 
 	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	opts.Settings, _ = config.GetSettings(chain, "blockScrape.toml", &opts.Settings)
+	opts.Settings, _ = config.GetScrape(chain, "blockScrape.toml", &opts.Settings)
 
 	opts.testLog()
 
