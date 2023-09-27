@@ -6,6 +6,8 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v1.1.0 (2023/09/05)
 
+Added chifra config show
+Updated trueBlocks.toml config file to include scraper configs
 Updates block data structure to read withdrawals and adds them to the index
 Adds withdrawals to blocks data structure, breaking change to block cache - needs migration
 Forces v1.0.0-release into the TrueBlocks.toml file (needs a migration)
