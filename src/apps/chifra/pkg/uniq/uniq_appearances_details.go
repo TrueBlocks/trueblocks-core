@@ -37,10 +37,10 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 		} else {
 			miner := block.Miner.Hex()
 			txid := types.BlockReward
-			if block.Miner.IsZero() {
+			if base.IsPrecompile(block.Miner.Hex()) {
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
-				miner = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
+				miner = base.SentinalAddr.Hex()
 				txid = types.MisconfigReward
 			}
 			streamAppearance(procFunc, flow, "miner", miner, bn, txid, utils.NOPOS, ts, addrMap)
@@ -51,10 +51,10 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 				for _, uncle := range uncles {
 					unc := uncle.Miner.Hex()
 					txid = types.UncleReward
-					if uncle.Miner.IsZero() {
+					if base.IsPrecompile(block.Miner.Hex()) {
 						// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 						// burned). We enter a false record with a false tx_id to account for this.
-						unc = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
+						unc = base.SentinalAddr.Hex()
 						txid = types.UncleReward // do not change this!
 					}
 					streamAppearance(procFunc, flow, "uncle", unc, bn, txid, utils.NOPOS, ts, addrMap)
@@ -204,9 +204,8 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				falseTxid := types.BlockReward
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
-				a := base.HexToAddress(author)
-				if a.IsZero() {
-					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
+				if base.IsPrecompile(author) {
+					author = base.SentinalAddr.Hex()
 					falseTxid = types.MisconfigReward
 				}
 				streamAppearance(procFunc, flow, "miner", author, bn, falseTxid, traceid, ts, addrMap)
@@ -216,9 +215,8 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				falseTxid := types.UncleReward
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
-				a := base.HexToAddress(author)
-				if a.IsZero() {
-					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
+				if base.IsPrecompile(author) {
+					author = base.SentinalAddr.Hex()
 					falseTxid = types.UncleReward // do not change! it will break the index
 				}
 				streamAppearance(procFunc, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
