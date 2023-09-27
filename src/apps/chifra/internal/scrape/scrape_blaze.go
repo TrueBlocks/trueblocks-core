@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -79,29 +78,22 @@ func (bm *BlazeManager) HandleBlaze(blocks []base.Blknum) (err error, ok bool) {
 func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData) (err error) {
 	defer blockWg.Done()
 	for bn := range blockChannel {
-		// TODO: Is it better to share the connection or create a new one each time?
-		chain := bm.chain
-		conn := rpc.TempConnection(chain)
-
 		sd := scrapedData{
 			bn: bn,
 			ts: tslib.TimestampRecord{
 				Bn: uint32(bn),
-				Ts: uint32(conn.GetBlockTimestamp(bn)),
+				Ts: uint32(bm.opts.Conn.GetBlockTimestamp(bn)),
 			},
 		}
 
 		// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
 		var err error
-		if sd.traces, err = conn.GetTracesByBlockNumber(bn); err != nil {
-			// if sd.traces, err = []types.SimpleTrace{}, nil; err != nil {
+		if sd.traces, err = bm.opts.Conn.GetTracesByBlockNumber(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
-		} else if sd.receipts, err = conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
-			// } else if sd.receipts, err = []types.SimpleReceipt{}, nil; err != nil {
+		} else if sd.receipts, err = bm.opts.Conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
-		} else if sd.withdrawals, err = conn.GetWithdrawalsByNumber(bn); err != nil {
-			// } else if sd.withdrawals, err = []types.SimpleWithdrawal{}, nil; err != nil {
+		} else if sd.withdrawals, err = bm.opts.Conn.GetWithdrawalsByNumber(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else {
 			appearanceChannel <- sd
