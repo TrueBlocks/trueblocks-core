@@ -12,6 +12,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -29,6 +30,7 @@ type InitOptions struct {
 	Conn       *rpc.Connection       `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
+	PublisherAddr base.Address
 	// EXISTING_CODE
 }
 
@@ -81,6 +83,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	// EXISTING_CODE
 
 	return opts
@@ -107,6 +110,7 @@ func initFinishParse(args []string) *InitOptions {
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	if len(args) > 0 {
 		opts.BadFlag = validate.Usage("Invalid argument ({0}).", args[0])
 	}

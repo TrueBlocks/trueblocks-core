@@ -133,6 +133,13 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
+	if len(opts.Publisher) > 0 {
+		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
+		if err != nil {
+			return err
+		}
+	}
+
 	err = validate.ValidateIdentifiers(
 		chain,
 		opts.Blocks,

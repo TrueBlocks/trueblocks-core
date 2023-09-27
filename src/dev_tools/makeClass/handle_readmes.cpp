@@ -194,17 +194,20 @@ const char* STR_CONFIG =
     "\n"
     "Each of the following additional configurable command line options are available.\n"
     "\n"
-    "**Configuration file:** `$CONFIG/$CHAIN/blockScrape.toml`  \n"
-    "**Configuration group:** `[settings]`  \n"
+    "**Configuration file:** `trueBlocks.toml`  \n"
+    "**Configuration group:** `[scrape.<chain>]`  \n"
     "\n"
     "[{CONFIGS}]\n"
+    "Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 "
+    "respectively. See the specification for a justification of these values.\n"
     "\n"
     "These items may be set in three ways, each overridding the preceeding method:\n"
     "\n"
-    "-- in the above configuration file under the `[settings]` group,  \n"
-    "-- in the environment by exporting the configuration item as UPPER&lowbar;CASE, without "
-    "underbars, and prepended with TB_SETTINGS&lowbar;, or  \n"
-    "-- on the command line using the configuration item with leading dashes (i.e., `--name`).  ";
+    "-- in the above configuration file under the `[scrape.<chain>]` group,  \n"
+    "-- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and "
+    "prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  \n"
+    "-- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`). "
+    " ";
 
 const char* STR_README_BEGPARTS = "## [{NAME}]\n\n";
 const char* STR_README_ENDPARTS = "\n[{USAGE}][{MODELS}][{LINKS}][{CONFIG}][{NOTES}][{FOOTER}]\n";

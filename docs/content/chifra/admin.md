@@ -213,8 +213,8 @@ Links:
 
 Each of the following additional configurable command line options are available.
 
-**Configuration file:** `$CONFIG/$CHAIN/blockScrape.toml`  
-**Configuration group:** `[settings]`  
+**Configuration file:** `trueBlocks.toml`  
+**Configuration group:** `[scrape.<chain>]`  
 
 | Item               | Type         | Default      | Description / Default |
 | ------------------ | ------------ | ------------ | --------- |
@@ -225,12 +225,13 @@ Each of the following additional configurable command line options are available
 | channel&lowbar;count | uint64       | 20           | number of concurrent processing channels |
 | allow&lowbar;missing | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
 
+Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
 These items may be set in three ways, each overridding the preceeding method:
 
--- in the above configuration file under the `[settings]` group,  
--- in the environment by exporting the configuration item as UPPER&lowbar;CASE, without underbars, and prepended with TB_SETTINGS&lowbar;, or  
--- on the command line using the configuration item with leading dashes (i.e., `--name`).  
+-- in the above configuration file under the `[scrape.<chain>]` group,  
+-- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
+-- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
 
 <!-- markdownlint-disable MD041 -->
 ### further information

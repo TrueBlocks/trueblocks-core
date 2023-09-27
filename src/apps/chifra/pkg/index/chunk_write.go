@@ -8,8 +8,6 @@ import (
 	"path/filepath"
 	"sort"
 
-		"strings"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -30,24 +28,26 @@ type WriteChunkReport struct {
 	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
+	FileSize     int64
 	Snapped      bool
 	Pinned       bool
 	PinRecord    manifest.ChunkRecord
 }
 
 func (c *WriteChunkReport) Report() {
-	str := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
+	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
 	if c.Snapped {
-		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
+		report += ` @(snapped to grid)}`
 	}
-	logger.Info(str)
+	report += " (size: {%d} , span: {%d})"
+	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 	if c.Pinned {
 		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
 		logger.Info(str)
 	}
 }
 
-func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int, pin, remote bool) (*WriteChunkReport, error) {
+func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int, pin, remote bool) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -168,7 +168,7 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 			report.PinRecord.BloomHash = rec.BloomHash
 			report.PinRecord.IndexSize = rec.IndexSize
 			report.PinRecord.BloomSize = rec.BloomSize
-			return &report, manifest.UpdateManifest(chain, rec)
+			return &report, manifest.UpdateManifest(chain, publisher, rec)
 
 		} else {
 			return nil, err
@@ -178,8 +178,6 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 		return nil, err
 	}
 }
-
-var spaces20 = strings.Repeat(" ", 20)
 
 func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
 	if len(result.Local.BloomHash) > 0 {

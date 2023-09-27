@@ -18,7 +18,6 @@ extern string_q get_aliases(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
-extern string_q get_config_override(const CCommandOption& cmd);
 extern string_q get_ens_convert1(const CCommandOption& cmd);
 extern string_q get_ens_convert2(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
@@ -142,7 +141,6 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
-    replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
     replaceAll(source, "[{ENS_CONVERT1}]", get_ens_convert1(p));
     replaceAll(source, "[{ENS_CONVERT2}]", get_ens_convert2(p));
     replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
@@ -543,18 +541,6 @@ string_q get_ens_convert2(const CCommandOption& cmd) {
         }
     }
     return os.str();
-}
-
-string_q get_config_override(const CCommandOption& cmd) {
-    for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.generate == "config") {
-            ostringstream os;
-            os << "\t"
-               << "opts.Settings, _ = " << cmd.api_route
-               << "Cfg.GetSettings(opts.Globals.Chain, configFn, &" + cmd.api_route + "Cfg.Unset)\n";
-            return os.str();
-        }
-    return "";
 }
 
 string_q get_config_package(const CCommandOption& cmd) {

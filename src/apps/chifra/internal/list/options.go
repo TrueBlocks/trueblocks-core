@@ -39,6 +39,7 @@ type ListOptions struct {
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
+	PublisherAddr base.Address
 	// EXISTING_CODE
 }
 
@@ -119,6 +120,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 
@@ -146,6 +148,7 @@ func listFinishParse(args []string) *ListOptions {
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	for _, arg := range args {
 		if base.IsValidAddress(arg) {
 			opts.Addrs = append(opts.Addrs, arg)

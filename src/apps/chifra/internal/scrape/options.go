@@ -12,6 +12,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -34,6 +35,7 @@ type ScrapeOptions struct {
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
+	PublisherAddr base.Address
 	// EXISTING_CODE
 }
 
@@ -116,6 +118,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	// EXISTING_CODE
 
 	return opts
@@ -142,14 +145,13 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
 		// these options have been deprecated, so do nothing
 	} else if len(args) > 1 {
 		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
 	}
-	configFn := "blockScrape.toml"
 	// EXISTING_CODE
-	opts.Settings, _ = scrapeCfg.GetSettings(opts.Globals.Chain, configFn, &scrapeCfg.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

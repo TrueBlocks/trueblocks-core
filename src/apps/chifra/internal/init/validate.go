@@ -26,5 +26,12 @@ func (opts *InitOptions) validateInit() error {
 		return validate.Usage("integration testing was skipped for chifra init")
 	}
 
+	if len(opts.Publisher) > 0 {
+		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
+		if err != nil {
+			return err
+		}
+	}
+
 	return opts.Globals.Validate()
 }
