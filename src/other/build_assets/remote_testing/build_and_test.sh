@@ -40,7 +40,7 @@ then
         exit 1
     fi
 
-    TEST_MODE=true chifra daemon -p ":$SRV_PORT" 2>/dev/null &
+    TEST_MODE=true chifra daemon -p ":$SRV_PORT" 2>server-log &
 
     echo "Waiting for chifra daemon -p :$SRV_PORT to start..."
     sleep 15
@@ -50,6 +50,8 @@ then
     if [ $? -gt 0 ]
     then
         echo "Error: Waited 15 seconds, chifra daemon is not running. Quitting..."
+	cat server-log
+	rm -f server-log
         exit 2
     fi
 
@@ -90,5 +92,7 @@ fi
 P=`pwd`
 echo "Compressing and saving test/working into $P"
 tar -cJ --file /root/test_results/working.tar.xz ../test/working/
+
+rm -f server-log
 
 exit $RESULT
