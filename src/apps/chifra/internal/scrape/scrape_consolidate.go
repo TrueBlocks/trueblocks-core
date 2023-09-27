@@ -59,7 +59,7 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 	unripeDist := bm.opts.Settings.UnripeDist
 	if uint64(ripeCnt) < (bm.BlockCount() - unripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
-		allowMissing := config.AllowMissing(chain)
+		allowMissing := config.GetScrape(chain).AllowMissing
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
 			_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
 			return true, err

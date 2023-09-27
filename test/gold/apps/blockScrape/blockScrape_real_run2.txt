@@ -1,7 +1,6 @@
 chifra scrape  --sleep .5
 TEST[DATE|TIME] Sleep:  0.5
 TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] Apps_per_chunk:  200000
 TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
 TEST[DATE|TIME] Format:  txt
 Error: Cannot test block scraper

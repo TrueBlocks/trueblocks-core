@@ -33,7 +33,7 @@ func DownloadAbi(chain string, address base.Address, destination *FunctionSyncMa
 	// C++ code used do check if the address is contract in 2 places: here and in handle_addresses. We
 	// check only in handle_addresses.
 
-	key := config.GetRootConfig().Keys["etherscan"].ApiKey
+	key := config.GetKey("etherscan").ApiKey
 	if key == "" {
 		return errors.New("cannot read Etherscan API key")
 	}

@@ -152,6 +152,8 @@ func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) err
 
 // SaveManifest writes the manifest to disc in JSON
 func (m *Manifest) SaveManifest(chain string) error {
+	m.Config = config.GetScrape(chain)
+
 	fileName := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {

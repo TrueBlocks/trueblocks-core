@@ -24,9 +24,6 @@ import (
 func (opts *ScrapeOptions) validateScrape() error {
 	chain := opts.Globals.Chain
 
-	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	opts.Settings, _ = config.GetScrape(chain, "blockScrape.toml", &opts.Settings)
-
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -61,7 +58,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if opts.Pin {
 		if opts.Remote {
-			pinataKey, pinataSecret := config.GetPinningKeys(chain)
+			pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
 			if pinataKey == "" || pinataSecret == "" {
 				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 			}
