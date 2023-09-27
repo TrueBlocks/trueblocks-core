@@ -169,12 +169,12 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				model["uncles"] = s.Uncles
 			}
 			order = append(order, "uncles")
-		}
-		if len(s.Withdrawals) > 0 {
-			model["withdrawals"] = s.Withdrawals
-			order = append(order, "withdrawals")
-		} else {
-			model["withdrawals"] = []SimpleWithdrawal{}
+			if len(s.Withdrawals) > 0 {
+				model["withdrawals"] = s.Withdrawals
+				order = append(order, "withdrawals")
+			} else {
+				model["withdrawals"] = []SimpleWithdrawal{}
+			}
 		}
 	} else {
 		model["transactionsCnt"] = len(s.Transactions)

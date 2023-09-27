@@ -179,7 +179,7 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
 
     string_q toAddrs;
     for (auto addr : filter.toAddress) {
-        if (!isZ eroAddr(addr))
+        if (!isZeroAddr(addr))
             toAddrs += ("\"" + addr + "\",");
     }
     if (!toAddrs.empty()) {
@@ -188,7 +188,7 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
 
     string_q fromAddrs;
     for (auto addr : filter.fromAddress) {
-        if (!isZ eroAddr(addr))
+        if (!isZeroAddr(addr))
             fromAddrs += ("\"" + addr + "\",");
     }
     if (!fromAddrs.empty()) {
