@@ -249,10 +249,10 @@ const (
 //     return 0;
 // }
 
-const (
-	byzantiumBlock      = uint64(4370000)
-	constantinopleBlock = uint64(7280000)
-)
+// const (
+// 	byzantiumBlock      = uint64(4370000)
+// 	constantinopleBlock = uint64(7280000)
+// )
 
 // TODO: This is not cross-chain correct
 

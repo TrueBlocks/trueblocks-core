@@ -52,11 +52,6 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		return block, err
 	}
 
-	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
-	for _, uncle := range rawBlock.Uncles {
-		block.Uncles = append(block.Uncles, base.HexToHash(uncle))
-	}
-
 	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
 	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
 	for _, rawTx := range rawBlock.Transactions {
@@ -103,11 +98,6 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 	block.SetRaw(rawBlock) // may have failed, but it's ok
 	if err != nil {
 		return block, err
-	}
-
-	block.Uncles = make([]base.Hash, 0, len(rawBlock.Uncles))
-	for _, uncle := range rawBlock.Uncles {
-		block.Uncles = append(block.Uncles, base.HexToHash(uncle))
 	}
 
 	block.Transactions = make([]string, 0, len(rawBlock.Transactions))
@@ -273,9 +263,9 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 func (conn *Connection) getBlockReward(bn uint64) *big.Int {
 	if bn == 0 {
 		return big.NewInt(0)
-	} else if bn < byzantiumBlock {
+	} else if bn < base.ByzantiumBlock {
 		return big.NewInt(5000000000000000000)
-	} else if bn < constantinopleBlock {
+	} else if bn < base.ConstantinopleBlock {
 		return big.NewInt(3000000000000000000)
 	} else {
 		return big.NewInt(2000000000000000000)

@@ -7,13 +7,14 @@ import (
 	"path"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-const udsDefaultTimeout = 5 * time.Millisecond
+// TODO: we can put this config item back if we need it. Put it in the
+// settings group not its own group
+// const udsDefaultTimeout = 5 * time.Millisecond
 
 var ErrServerNotRunning = errors.New("gRPC server not running")
 
@@ -22,10 +23,12 @@ func SocketAddress() string {
 }
 
 func GetContext() (context.Context, context.CancelFunc) {
-	timeout := config.GetRootConfig().Grpc.UdsTimeout
-	if timeout == 0 {
-		timeout = udsDefaultTimeout
-	}
+	// TODO: we can put this config item back if we need it. Put it in the
+	// settings group not its own group
+	timeout := 5 * time.Millisecond // config.GetRootConfig().Grpc.UdsTimeout
+	// if timeout == 0 {
+	// 	timeout = udsDefaultTimeout
+	// }
 	return context.WithTimeout(context.Background(), timeout)
 }
 

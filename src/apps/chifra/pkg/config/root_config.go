@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
 )
 
@@ -124,20 +123,6 @@ func GetRootConfig() *ConfigFile {
 	}
 
 	return &trueBlocksConfig
-}
-
-func IsAtLeastVersion(needle string) bool {
-	var current, desired version.Version
-	var err error
-	if current, err = version.NewVersion(GetRootConfig().Version.Current); err != nil {
-		return true
-	}
-
-	if desired, err = version.NewVersion(needle); err != nil {
-		return true
-	}
-
-	return !current.IsEarlierThan(desired)
 }
 
 // PathToRootConfig returns the path where to find configuration files

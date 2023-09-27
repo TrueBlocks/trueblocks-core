@@ -21,7 +21,7 @@ type Allocation struct {
 }
 
 // emptyAllocs is a list of empty allocations. We use this to return at least one allocation
-var emptyAllocs = []Allocation{{Address: base.HexToAddress("0x0"), Balance: *big.NewInt(0)}}
+var emptyAllocs = []Allocation{{Address: base.ZeroAddr, Balance: *big.NewInt(0)}}
 
 type allocCallback func(*Allocation, *any) (bool, error)
 

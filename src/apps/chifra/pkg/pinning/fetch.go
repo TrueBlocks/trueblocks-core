@@ -33,7 +33,7 @@ func FetchFromGateway(ctx context.Context, gateway, hash string) (*FetchResult, 
 	}
 	if response.StatusCode != 200 {
 		// logger.Fatalln("DefaultClient.Do returned StatusCode not equal to 200 in FetFromGateway with", url)
-		return nil, fmt.Errorf("wrong status code: %d", response.StatusCode)
+		return nil, fmt.Errorf("fetch to %s returned status code: %d", url, response.StatusCode)
 	}
 	body := response.Body
 

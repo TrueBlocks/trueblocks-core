@@ -7,7 +7,8 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strings"
+
+		"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
