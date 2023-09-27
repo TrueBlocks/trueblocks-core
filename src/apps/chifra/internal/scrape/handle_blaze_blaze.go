@@ -33,7 +33,7 @@ func (bm *BlazeManager) HandleBlaze() (ok bool, err error) {
 }
 
 func (bm *BlazeManager) HandleBlaze1(blocks []base.Blknum) (ok bool, err error) {
-	nChannels := int(bm.opts.Settings.Channel_count)
+	nChannels := int(bm.opts.Settings.ChannelCount)
 
 	// We need three pipelines...we shove into blocks, blocks shoves into appearances and timestamps
 	blockChannel := make(chan base.Blknum)

@@ -42,17 +42,17 @@ func (bm *BlazeManager) Report(nAppsThen, nAppsNow int) {
 	settings := bm.opts.Settings
 
 	msg := "Block={%d} have {%d} appearances of {%d} ({%0.1f%%}). Need {%d} more. Added {%d} records ({%0.2f} apps/blk)."
-	need := settings.Apps_per_chunk - utils.Min(settings.Apps_per_chunk, uint64(nAppsNow))
+	need := settings.AppsPerChunk - utils.Min(settings.AppsPerChunk, uint64(nAppsNow))
 	seen := nAppsNow
 	if nAppsThen < nAppsNow {
 		seen = nAppsNow - nAppsThen
 	}
-	pct := float64(nAppsNow) / float64(settings.Apps_per_chunk)
+	pct := float64(nAppsNow) / float64(settings.AppsPerChunk)
 	pBlk := float64(seen) / float64(bm.BlockCount())
 	height := bm.StartBlock() + bm.BlockCount() - 1
 	msg = strings.Replace(msg, "{", colors.Green, -1)
 	msg = strings.Replace(msg, "}", colors.Off, -1)
-	logger.Info(fmt.Sprintf(msg, height, nAppsNow, settings.Apps_per_chunk, pct*100, need, seen, pBlk))
+	logger.Info(fmt.Sprintf(msg, height, nAppsNow, settings.AppsPerChunk, pct*100, need, seen, pBlk))
 }
 
 // Pause goes to sleep for a period of time based on the settings.
@@ -61,7 +61,7 @@ func (bm *BlazeManager) Pause() {
 	time.Sleep(250 * time.Millisecond)
 	isDefaultSleep := bm.opts.Sleep >= 13 && bm.opts.Sleep <= 14
 	distanceFromHead := bm.meta.Latest - bm.meta.Staging
-	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*bm.opts.Settings.Unripe_dist)
+	shouldSleep := !isDefaultSleep || distanceFromHead <= (2*bm.opts.Settings.UnripeDist)
 	if shouldSleep {
 		sleep := bm.opts.Sleep // this value may change elsewhere allow us to break out of sleeping????
 		if sleep > 1 {

@@ -10,7 +10,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -57,10 +56,10 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 	// Check to see if we got as many ripe files as we were expecting. In the case when AllowMissing is true, we
 	// can't really know, but if AllowMissing is false, then the number of files should be the same as the range width
 	ripeCnt := len(ripeFileList)
-	unripeDist := bm.opts.Settings.Unripe_dist
+	unripeDist := bm.opts.Settings.UnripeDist
 	if uint64(ripeCnt) < (bm.BlockCount() - unripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
-		allowMissing := scrapeCfg.AllowMissing(chain)
+		allowMissing := config.AllowMissing(chain)
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
 			_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
 			return true, err
@@ -106,8 +105,8 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 		ripeRange := base.RangeFromFilename(ripePath)
 		curRange.Last = ripeRange.Last
 
-		isSnap := (curRange.Last >= bm.opts.Settings.First_snap && (curRange.Last%bm.opts.Settings.Snap_to_grid) == 0)
-		isOvertop := (curCount >= uint64(bm.opts.Settings.Apps_per_chunk))
+		isSnap := (curRange.Last >= bm.opts.Settings.FirstSnap && (curRange.Last%bm.opts.Settings.SnapToGrid) == 0)
+		isOvertop := (curCount >= uint64(bm.opts.Settings.AppsPerChunk))
 
 		if isSnap || isOvertop {
 			// we're consolidating...

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package scrapeCfg
+package config
 
 import (
 	"os"
@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/BurntSushi/toml"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -23,34 +22,34 @@ import (
 
 // ScrapeSettings are configuration items needed by the scraper
 type ScrapeSettings struct {
-	Apps_per_chunk uint64 `json:"appsPerChunk"`           // The number of appearances to build into a chunk before consolidating it
-	Snap_to_grid   uint64 `json:"snapToGrid"`             // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
-	First_snap     uint64 `json:"firstSnap"`              // The first block at which snap_to_grid is enabled
-	Unripe_dist    uint64 `json:"unripeDist"`             // The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
-	Channel_count  uint64 `json:"-"`                      // Number of concurrent block processing channels
-	Allow_missing  bool   `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
+	AppsPerChunk uint64 `json:"appsPerChunk"`           // The number of appearances to build into a chunk before consolidating it
+	SnapToGrid   uint64 `json:"snapToGrid"`             // An override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index
+	FirstSnap    uint64 `json:"firstSnap"`              // The first block at which snap_to_grid is enabled
+	UnripeDist   uint64 `json:"unripeDist"`             // The distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
+	ChannelCount uint64 `json:"-"`                      // Number of concurrent block processing channels
+	AllowMissing bool   `json:"allowMissing,omitempty"` // Do not report errors for blockchain that contain blocks with zero addresses
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 var defaultSettings = ScrapeSettings{
-	Apps_per_chunk: 200000,
-	Snap_to_grid:   100000,
-	First_snap:     0,
-	Unripe_dist:    28,
-	Channel_count:  20,
-	Allow_missing:  false,
+	AppsPerChunk: 200000,
+	SnapToGrid:   100000,
+	FirstSnap:    0,
+	UnripeDist:   28,
+	ChannelCount: 20,
+	AllowMissing: false,
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 var Unset = ScrapeSettings{
-	Apps_per_chunk: utils.NOPOS,
-	Snap_to_grid:   utils.NOPOS,
-	First_snap:     utils.NOPOS,
-	Unripe_dist:    utils.NOPOS,
-	Channel_count:  utils.NOPOS,
-	Allow_missing:  false,
+	AppsPerChunk: utils.NOPOS,
+	SnapToGrid:   utils.NOPOS,
+	FirstSnap:    utils.NOPOS,
+	UnripeDist:   utils.NOPOS,
+	ChannelCount: utils.NOPOS,
+	AllowMissing: false,
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -58,18 +57,18 @@ var Unset = ScrapeSettings{
 func (s *ScrapeSettings) isDefault(chain, fldName string) bool {
 	def := GetDefault(chain)
 	switch fldName {
-	case "Apps_per_chunk":
-		return s.Apps_per_chunk == def.Apps_per_chunk
-	case "Snap_to_grid":
-		return s.Snap_to_grid == def.Snap_to_grid
-	case "First_snap":
-		return s.First_snap == def.First_snap
-	case "Unripe_dist":
-		return s.Unripe_dist == def.Unripe_dist
-	case "Channel_count":
-		return s.Channel_count == def.Channel_count
-	case "Allow_missing":
-		return s.Allow_missing == def.Allow_missing
+	case "AppsPerChunk":
+		return s.AppsPerChunk == def.AppsPerChunk
+	case "SnapToGrid":
+		return s.SnapToGrid == def.SnapToGrid
+	case "FirstSnap":
+		return s.FirstSnap == def.FirstSnap
+	case "UnripeDist":
+		return s.UnripeDist == def.UnripeDist
+	case "ChannelCount":
+		return s.ChannelCount == def.ChannelCount
+	case "AllowMissing":
+		return s.AllowMissing == def.AllowMissing
 	}
 
 	// EXISTING_CODE
@@ -79,12 +78,12 @@ func (s *ScrapeSettings) isDefault(chain, fldName string) bool {
 }
 
 func (s *ScrapeSettings) TestLog(chain string, test bool) {
-	logger.TestLog(!s.isDefault(chain, "Apps_per_chunk"), "Apps_per_chunk: ", s.Apps_per_chunk)
-	logger.TestLog(!s.isDefault(chain, "Snap_to_grid"), "Snap_to_grid: ", s.Snap_to_grid)
-	logger.TestLog(!s.isDefault(chain, "First_snap"), "First_snap: ", s.First_snap)
-	logger.TestLog(!s.isDefault(chain, "Unripe_dist"), "Unripe_dist: ", s.Unripe_dist)
-	logger.TestLog(!s.isDefault(chain, "Channel_count"), "Channel_count: ", s.Channel_count)
-	logger.TestLog(!s.isDefault(chain, "Allow_missing"), "Allow_missing: ", s.Allow_missing)
+	logger.TestLog(!s.isDefault(chain, "AppsPerChunk"), "AppsPerChunk: ", s.AppsPerChunk)
+	logger.TestLog(!s.isDefault(chain, "SnapToGrid"), "SnapToGrid: ", s.SnapToGrid)
+	logger.TestLog(!s.isDefault(chain, "FirstSnap"), "FirstSnap: ", s.FirstSnap)
+	logger.TestLog(!s.isDefault(chain, "UnripeDist"), "UnripeDist: ", s.UnripeDist)
+	logger.TestLog(!s.isDefault(chain, "ChannelCount"), "ChannelCount: ", s.ChannelCount)
+	logger.TestLog(!s.isDefault(chain, "AllowMissing"), "AllowMissing: ", s.AllowMissing)
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -93,8 +92,8 @@ func GetDefault(chain string) ScrapeSettings {
 	base := defaultSettings
 	// EXISTING_CODE
 	if chain == "mainnet" {
-		base.Apps_per_chunk = 2000000
-		base.First_snap = 2300000
+		base.AppsPerChunk = 2000000
+		base.FirstSnap = 2300000
 	}
 	// EXISTING_CODE
 	return base
@@ -109,9 +108,9 @@ func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSetting
 	fieldList, _, _ := utils.GetFields(&tt, "txt", true)
 
 	if strings.Contains(configFn, "trueBlocks.toml") {
-		configFn = filepath.Join(config.PathToRootConfig(), configFn)
+		configFn = filepath.Join(PathToRootConfig(), configFn)
 	} else {
-		configFn = filepath.Join(config.MustGetPathToChainConfig(chain), configFn)
+		configFn = filepath.Join(MustGetPathToChainConfig(chain), configFn)
 	}
 
 	if file.FileExists(configFn) {
@@ -158,23 +157,23 @@ func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSetting
 }
 
 func (s *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
-	if !overlay.isDefault(chain, "Apps_per_chunk") && overlay.Apps_per_chunk != 0 && overlay.Apps_per_chunk != utils.NOPOS {
-		s.Apps_per_chunk = overlay.Apps_per_chunk
+	if !overlay.isDefault(chain, "AppsPerChunk") && overlay.AppsPerChunk != 0 && overlay.AppsPerChunk != utils.NOPOS {
+		s.AppsPerChunk = overlay.AppsPerChunk
 	}
-	if !overlay.isDefault(chain, "Snap_to_grid") && overlay.Snap_to_grid != 0 && overlay.Snap_to_grid != utils.NOPOS {
-		s.Snap_to_grid = overlay.Snap_to_grid
+	if !overlay.isDefault(chain, "SnapToGrid") && overlay.SnapToGrid != 0 && overlay.SnapToGrid != utils.NOPOS {
+		s.SnapToGrid = overlay.SnapToGrid
 	}
-	if !overlay.isDefault(chain, "First_snap") && overlay.First_snap != 0 && overlay.First_snap != utils.NOPOS {
-		s.First_snap = overlay.First_snap
+	if !overlay.isDefault(chain, "FirstSnap") && overlay.FirstSnap != 0 && overlay.FirstSnap != utils.NOPOS {
+		s.FirstSnap = overlay.FirstSnap
 	}
-	if !overlay.isDefault(chain, "Unripe_dist") && overlay.Unripe_dist != 0 && overlay.Unripe_dist != utils.NOPOS {
-		s.Unripe_dist = overlay.Unripe_dist
+	if !overlay.isDefault(chain, "UnripeDist") && overlay.UnripeDist != 0 && overlay.UnripeDist != utils.NOPOS {
+		s.UnripeDist = overlay.UnripeDist
 	}
-	if !overlay.isDefault(chain, "Channel_count") && overlay.Channel_count != 0 && overlay.Channel_count != utils.NOPOS {
-		s.Channel_count = overlay.Channel_count
+	if !overlay.isDefault(chain, "ChannelCount") && overlay.ChannelCount != 0 && overlay.ChannelCount != utils.NOPOS {
+		s.ChannelCount = overlay.ChannelCount
 	}
-	if !overlay.isDefault(chain, "Allow_missing") && overlay.Allow_missing {
-		s.Allow_missing = overlay.Allow_missing
+	if !overlay.isDefault(chain, "AllowMissing") && overlay.AllowMissing {
+		s.AllowMissing = overlay.AllowMissing
 	}
 
 	// EXISTING_CODE
@@ -186,7 +185,7 @@ func (s *ScrapeSettings) overlay(chain string, overlay ScrapeSettings) {
 
 func AllowMissing(chain string) bool {
 	s, _ := GetSettings(chain, "blockScrape.toml", nil)
-	return s.Allow_missing
+	return s.AllowMissing
 }
 
 func toEnvStr(name string) string {
@@ -198,11 +197,11 @@ OLD_BLOCKSCRAPE_CONFIG_CODE
 type blockScrapeSettings struct {
 	Block_chan_cnt        int
 	Addr_chan_cnt         int
-	Apps_per_chunk        int
-	Unripe_dist           int
-	Snap_to_grid          int
-	First_snap            int
-	Allow_missing         bool
+	AppsPerChunk        int
+	UnripeDist           int
+	SnapToGrid          int
+	FirstSnap            int
+	AllowMissing         bool
 	Pinata_api_key        string
 	Pinata_secret_api_key string
 	Pinata_jwt            string
@@ -211,11 +210,11 @@ type blockScrapeSettings struct {
 var defaultSettings = blockScrapeSettings{
 	Block_chan_cnt:        10,
 	Addr_chan_cnt:         20,
-	Apps_per_chunk:        200000,
-	Unripe_dist:           28,
-	Snap_to_grid:          100000,
-	First_snap:            0,
-	Allow_missing:         false,
+	AppsPerChunk:        200000,
+	UnripeDist:           28,
+	SnapToGrid:          100000,
+	FirstSnap:            0,
+	AllowMissing:         false,
 	Pinata_api_key:        "",
 	Pinata_secret_api_key: "",
 	Pinata_jwt:            "",
