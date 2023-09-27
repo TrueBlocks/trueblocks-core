@@ -4,7 +4,7 @@
  * This file was generated with makeClass --sdk. Do not edit it.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { address, Appearance, blknum, Block, BlockCount, Log, LogFilter, topic, Trace, TraceAction, TraceResult, uint64 } from '../types';
+import { address, Appearance, blknum, Block, BlockCount, Log, LogFilter, topic, Trace, TraceAction, TraceResult, uint64, Withdrawal } from '../types';
 
 export function getBlocks(
   parameters?: {
@@ -30,7 +30,7 @@ export function getBlocks(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Appearance[] | Block[] | BlockCount[] | Log[] | LogFilter[] | Trace[] | TraceAction[] | TraceResult[]>(
+  return ApiCallers.fetch<Appearance[] | Block[] | BlockCount[] | Log[] | LogFilter[] | Trace[] | TraceAction[] | TraceResult[] | Withdrawal[]>(
     { endpoint: '/blocks', method: 'get', parameters, options },
   );
 }

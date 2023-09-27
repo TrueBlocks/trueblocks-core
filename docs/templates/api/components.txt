@@ -615,6 +615,26 @@ components:
         transactionIndex:
           type: number
           format: blknum
+    withdrawal:
+      description: "withdrawal record for post-Shanghai withdrawals from the consensus layer"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the recipient for the withdrawn ether"
+        amount:
+          type: string
+          format: wei
+          description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        index:
+          type: number
+          format: uint64
+          description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
+        validatorIndex:
+          type: number
+          format: uint64
+          description: "the validator_index of the validator on the consensus layer the withdrawal corresponds to"
     log:
       description: "log data as returned from the RPC (with slight enhancements)"
       type: object
@@ -915,11 +935,16 @@ components:
           format: uint64
           example: 1295
           description: "the number of traces in the block"
+        withdrawalsCnt:
+          type: number
+          format: uint64
+          example: 12
+          description: "the number of withdrawals in the block"
         addressCnt:
           type: number
           format: uint64
           example: 318
-          description: "the number of address appearances in the block per transaction"
+          description: "the number of address appearances in the block"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
       type: object

@@ -25,6 +25,7 @@ type simpleBlockCount struct {
 	TracesCnt       uint64         `json:"tracesCnt,omitempty"`
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
+	WithdrawalsCnt  uint64         `json:"withdrawalsCnt,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

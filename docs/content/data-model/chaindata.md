@@ -151,6 +151,24 @@ Receipts consist of the following fields:
 | transactionHash  |                                                                            | hash                                |
 | transactionIndex |                                                                            | blknum                              |
 
+## Withdrawal
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`withdrawals` is an array present in post-Shanghai blocks representing Consensys layer staking reward withdrawals. Note that the amount present is in Gwei. The `withdrawals` array is not present in pre-Shanghai blocks.
+
+The following commands produce and manage Withdrawals:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+
+Withdrawals consist of the following fields:
+
+| Field          | Description                                                                                                          | Type    |
+| -------------- | -------------------------------------------------------------------------------------------------------------------- | ------- |
+| address        | the recipient for the withdrawn ether                                                                                | address |
+| amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei     |
+| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | uint64  |
+| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | uint64  |
+
 ## Log
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -352,16 +370,17 @@ The following commands produce and manage BlockCounts:
 
 BlockCounts consist of the following fields:
 
-| Field           | Description                                                    | Type      |
-| --------------- | -------------------------------------------------------------- | --------- |
-| blockNumber     | the block's block number                                       | blknum    |
-| timestamp       | the timestamp of the block                                     | timestamp |
-| date            | a calculated field -- the date of the block                    | datetime  |
-| transactionsCnt | the number transactions in the block                           | uint64    |
-| unclesCnt       | the number of uncles in the block                              | uint64    |
-| logsCnt         | the number of logs in the block                                | uint64    |
-| tracesCnt       | the number of traces in the block                              | uint64    |
-| addressCnt      | the number of address appearances in the block per transaction | uint64    |
+| Field           | Description                                    | Type      |
+| --------------- | ---------------------------------------------- | --------- |
+| blockNumber     | the block's block number                       | blknum    |
+| timestamp       | the timestamp of the block                     | timestamp |
+| date            | a calculated field -- the date of the block    | datetime  |
+| transactionsCnt | the number transactions in the block           | uint64    |
+| unclesCnt       | the number of uncles in the block              | uint64    |
+| logsCnt         | the number of logs in the block                | uint64    |
+| tracesCnt       | the number of traces in the block              | uint64    |
+| withdrawalsCnt  | the number of withdrawals in the block         | uint64    |
+| addressCnt      | the number of address appearances in the block | uint64    |
 
 ## NamedBlock
 
