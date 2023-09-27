@@ -1,5 +1,6 @@
 chifra chunks  index 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9
 TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Belongs:  [0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9]
 TEST[DATE|TIME] Format:  json
 Error: You must specify at least one block identifier with the --belongs option
@@ -15,6 +16,7 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
+  -P, --publisher string   for some query options, the publisher of the index (hidden) (default "trueblocks.eth")
   -n, --truncate uint      truncate the entire index at this block (requires a block identifier) (hidden)
   -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk

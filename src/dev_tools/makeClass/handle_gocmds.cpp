@@ -384,6 +384,7 @@ string_q get_godefaults(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (!isDef(p)) {
             string_q val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
+            val = substitute(val, "trueblocks.eth", "\"trueblocks.eth\"");
             os << "\t" << padRight(p.Format("[{VARIABLE}]") + ": ", wid + 2, ' ') << val << "," << endl;
         }
     }
@@ -640,7 +641,11 @@ string_q get_goDefault(const CCommandOption& p) {
             return p.def_val;
         return "0.0";
     } else if (p.go_intype == "string") {
-        return p.def_val;
+        if (contains(p.def_val, ".eth")) {  // an address
+            return "\"" + p.def_val + "\"";
+        } else {
+            return p.def_val;
+        }
     } else if (p.go_intype == "uint64") {
         if (contains(p.def_val, "NOPOS")) {
             return "0";

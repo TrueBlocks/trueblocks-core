@@ -32,6 +32,7 @@ type ListOptions struct {
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
+	Publisher   string                `json:"publisher,omitempty"`   // For some query options, the publisher of the index
 	FirstBlock  uint64                `json:"firstBlock,omitempty"`  // First block to export (inclusive, ignored when freshening)
 	LastBlock   uint64                `json:"lastBlock,omitempty"`   // Last block to export (inclusive, ignored when freshening)
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
@@ -43,6 +44,7 @@ type ListOptions struct {
 
 var defaultListOptions = ListOptions{
 	MaxRecords: 250,
+	Publisher:  "trueblocks.eth",
 	LastBlock:  utils.NOPOS,
 }
 
@@ -57,6 +59,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
@@ -100,6 +103,8 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.MaxRecords = globals.ToUint64(value[0])
 		case "reversed":
 			opts.Reversed = true
+		case "publisher":
+			opts.Publisher = value[0]
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
@@ -111,6 +116,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -137,6 +143,7 @@ func listFinishParse(args []string) *ListOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
 
 	// EXISTING_CODE
 	for _, arg := range args {

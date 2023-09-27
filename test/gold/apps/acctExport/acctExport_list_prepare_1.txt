@@ -1,5 +1,6 @@
 chifra list  0x001d14804b399c6ef80e64576f657660804fec0b --fmt json --last_block 1501460
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LastBlock:  1501460
 TEST[DATE|TIME] Format:  json
 {
