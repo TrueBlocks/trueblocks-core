@@ -30,7 +30,7 @@ func (opts *InitOptions) HandleInit() error {
 	// TODO: BOGUS - IF THE SCRAPER IS RUNNING, THIS WILL CAUSE PROBLEMS
 	// Make sure that the temporary scraper folders are empty, so that, when the
 	// scraper starts, it starts on the correct block.
-	_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), true)
+	_ = index.CleanTemporaryFolders(config.PathToIndex(chain), true)
 
 	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
 	if err != nil {
@@ -54,7 +54,7 @@ func (opts *InitOptions) HandleInit() error {
 	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
 	logger.InfoTable("Schemas:", unchained.Schemas)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
-	logger.InfoTable("Index Folder:", config.GetPathToIndex(chain))
+	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
 	logger.InfoTable("Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
 	logger.InfoTable("Corrections Needed:", fmt.Sprintf("%d", nCorrections))
 

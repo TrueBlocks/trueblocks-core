@@ -42,7 +42,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	}
 
 	ripeBlock := base.Blknum(0)
-	unripePath := filepath.Join(config.GetPathToIndex(chain), "unripe")
+	unripePath := filepath.Join(config.PathToIndex(chain), "unripe")
 
 	// The forever loop. Loop until the user hits Cntl+C or the server tells us to stop.
 	for {

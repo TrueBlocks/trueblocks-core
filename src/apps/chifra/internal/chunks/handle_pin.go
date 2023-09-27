@@ -34,7 +34,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 
 		if len(blockNums) == 0 {
 			var err error
-			tsPath := config.GetPathToIndex(chain) + "ts.bin"
+			tsPath := config.PathToIndex(chain) + "ts.bin"
 			if man.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err
 				cancel()

@@ -73,7 +73,7 @@ func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord,
 func WriteChunkHeaderHash(chain, fileName string, headerHash base.Hash) ( /* changed */ bool, error) {
 	var err error
 
-	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 	indexFn := ToIndexPath(fileName)
 	if !file.FileExists(indexFn) {
 		return false, nil

@@ -109,7 +109,7 @@ func GetSettings(chain, configFn string, cmdLine *ScrapeSettings) (ScrapeSetting
 	fieldList, _, _ := utils.GetFields(&tt, "txt", true)
 
 	if strings.Contains(configFn, "trueBlocks.toml") {
-		configFn = filepath.Join(config.GetPathToRootConfig(), configFn)
+		configFn = filepath.Join(config.PathToRootConfig(), configFn)
 	} else {
 		configFn = filepath.Join(config.MustGetPathToChainConfig(chain), configFn)
 	}
