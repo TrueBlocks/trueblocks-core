@@ -26,6 +26,11 @@ Now disallows running `chifra scrape` if the node is not a tracing archive node.
 Near complete re-write of block scraper to fix few bugs and prepare for writing v1.0.0 of the spec.
 Add `--run_count` to both the `chifra scrape` and the `chifra monitors --watch`, hides both because they are intended for debugging only.
 Added `--publisher` option to `chifra init` and `chifra chunks`.
+- Removed `apiProvider` field from `Chain` data model as unused.
+- Changes to `Config` data model to improve clarity and consistency:
+  - changed `GetPathToRootConfig` to `PathToRootConfig`
+  - changed `GetPathToCache` to `PathToCache`
+  - changed `GetPathToIndex` to `PathToIndex`
 
 ## v1.0.0 (2023/08/20)
 
