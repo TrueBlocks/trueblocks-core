@@ -42,11 +42,7 @@ func (e *ExampleBlock) MarshalCache(writer io.Writer) (err error) {
 var minimalVersion version.Version
 
 func init() {
-	var err error
 	minimalVersion = version.NewVersion("GHC-TrueBlocks//0.10.0-beta")
-	if err != nil {
-		panic(err)
-	}
 }
 
 // Now we make ExampleBlock implement CacheUnmarshaler interface, which is like

@@ -34,12 +34,6 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
 	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
-	// trueBlocksViper.SetDefault("Scrapers.AppsPerChunk", 500000)
-	// trueBlocksViper.SetDefault("Scrapers.SnapToGrid", 100000)
-	// trueBlocksViper.SetDefault("Scrapers.FirstSnap", 500000)
-	// trueBlocksViper.SetDefault("Scrapers.UnripeDist", 28)
-	// trueBlocksViper.SetDefault("Scrapers.ChannelCount", 20)
-	// trueBlocksViper.SetDefault("Scrapers.AllowMissing", false)
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
