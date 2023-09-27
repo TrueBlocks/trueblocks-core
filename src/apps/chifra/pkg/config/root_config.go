@@ -32,7 +32,6 @@ type chainGroup struct {
 	LocalExplorer  string `toml:"localExplorer"`
 	RemoteExplorer string `toml:"remoteExplorer"`
 	RpcProvider    string `toml:"rpcProvider"`
-	ApiProvider    string `toml:"apiProvider"`
 	IpfsGateway    string `toml:"ipfsGateway"`
 	Symbol         string `toml:"symbol"`
 }

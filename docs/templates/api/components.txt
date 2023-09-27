@@ -1494,9 +1494,6 @@ components:
         rpcProvider:
           type: string
           description: "A valid RPC provider for the chain"
-        apiProvider:
-          type: string
-          description: "A valid API provider for the explorer"
         remoteExplorer:
           type: string
           description: "A remote explorer for the chain such as Etherscan"

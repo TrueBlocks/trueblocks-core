@@ -122,7 +122,6 @@ The `[chains.mainnet]` section of your file should look something like this:
 
 ```[shell]
 [chains.mainnet]
-apiProvider = "http://localhost:8080"
 chainId = "1"
 localExplorer = "http://localhost:1234"
 ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
