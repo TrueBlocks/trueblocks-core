@@ -2,13 +2,13 @@ blocks?blocks=3%20469&count&uncles&uniq&fmt=json
 {
   "data": [
     {
-      "addressCnt": 3,
+      "addressCnt": 2,
       "blockNumber": 3,
       "transactionsCnt": 0,
       "unclesCnt": 1
     },
     {
-      "addressCnt": 3,
+      "addressCnt": 2,
       "blockNumber": 469,
       "transactionsCnt": 0,
       "unclesCnt": 2
