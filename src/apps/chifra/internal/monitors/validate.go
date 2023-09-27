@@ -77,18 +77,18 @@ func (opts *MonitorsOptions) validateMonitors() error {
 			}
 
 			if opts.BatchSize < 1 {
-				return validate.Usage("The {0} option must be greater than zero.", "--batch-size")
+				return validate.Usage("The {0} option must be greater than zero.", "--batch_size")
 			}
 
 		} else {
 			if opts.BatchSize != 8 {
-				return validate.Usage("The {0} option is not available{1}.", "--batch-size", " without --watch")
+				return validate.Usage("The {0} option is not available{1}.", "--batch_size", " without --watch")
 			} else {
 				opts.BatchSize = 0
 			}
 
-			if opts.RunOnce {
-				return validate.Usage("The {0} option is not available{1}.", "--run-once", " without --watch")
+			if opts.RunCount > 0 {
+				return validate.Usage("The {0} option is not available{1}.", "--run_count", " without --watch")
 			}
 
 			if opts.Sleep != 14 {

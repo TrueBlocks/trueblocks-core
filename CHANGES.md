@@ -11,6 +11,9 @@ This file details changes made to TrueBlocks over time. See the [migration notes
   - changed `GetPathToRootConfig` to `PathToRootConfig`
   - changed `GetPathToCache` to `PathToCache`
   - changed `GetPathToIndex` to `PathToIndex`
+- Removes `runOnce` from `chifra monitors` (in favor of hidden `runCount` - for `chifra scrape` as well).
+- Adds `dryRun` to `chifra scrape`.
+- Adds `diff` to `chifra chunks`.
 
 ## v1.0.0 (2023/08/20)
 

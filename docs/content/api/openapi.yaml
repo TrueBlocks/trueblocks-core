@@ -622,15 +622,6 @@ paths:
           schema:
             type: number
             format: uint64
-        - name: runOnce
-          description: >
-            available with --watch option only, only run the monitor --watch commands once then quit
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: sleep
           description: >
             available with --watch option only, the number of seconds to sleep between runs

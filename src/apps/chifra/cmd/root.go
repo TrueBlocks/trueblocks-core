@@ -32,7 +32,6 @@ func init() {
 	chifraCmd.SetOut(os.Stderr)
 	chifraCmd.SetFlagErrorFunc(ErrFunc)
 	chifraCmd.Flags().SortFlags = false
-
 	chifraCmd.SetUsageTemplate(helpText)
 }
 

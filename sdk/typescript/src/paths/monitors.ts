@@ -18,7 +18,6 @@ export function getMonitors(
     watchlist?: string,
     commands?: string,
     batchSize?: uint64,
-    runOnce?: boolean,
     sleep?: double,
     chain: string,
     noHeader?: boolean,
