@@ -83,7 +83,6 @@ func (opts *BlocksOptions) HandleShow() error {
 
 	extra := map[string]interface{}{
 		"hashes":     opts.Hashes,
-		"count":      opts.Count,
 		"uncles":     opts.Uncles,
 		"articulate": opts.Articulate,
 	}

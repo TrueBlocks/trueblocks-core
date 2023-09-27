@@ -58,7 +58,8 @@ blocks?blocks=2768801%201995314%201958017&raw
         }
       ],
       "transactionsRoot": "0xb82a3089b32828fdf00c1dc690253c4c171cf5e31cde2a19818a219d991841fd",
-      "uncles": []
+      "uncles": [],
+      "withdrawals": null
     },
     {
       "author": "",
@@ -134,7 +135,8 @@ blocks?blocks=2768801%201995314%201958017&raw
         }
       ],
       "transactionsRoot": "0x976cfa98e970746ea6c254552dd31cb2a3f7cc38b0e08a744c91aaf1fbbbd84e",
-      "uncles": []
+      "uncles": [],
+      "withdrawals": null
     },
     {
       "author": "",
@@ -195,7 +197,8 @@ blocks?blocks=2768801%201995314%201958017&raw
         }
       ],
       "transactionsRoot": "0x431798971e1b33824842c82e8ae24c3078863f5fd47e373a068f22cab63bab5f",
-      "uncles": []
+      "uncles": [],
+      "withdrawals": null
     }
   ],
   "meta": {
