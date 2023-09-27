@@ -3,9 +3,9 @@
 
 [settings]
   cachePath = ""
-  indexPath = ""
   defaultChain = "mainnet"
   defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
+  indexPath = ""
 
 [keys]
   [keys.etherscan]
@@ -15,14 +15,11 @@
     secret = ""
   [keys.pinata]
     apiKey = ""
-    secret = ""
     jwt = ""
+    secret = ""
   [keys.trueblocks]
     license = ""
     apiKey = ""
-
-[dev]
-  debug_curl=false
 
 [chains]
   [chains.gnosis]
