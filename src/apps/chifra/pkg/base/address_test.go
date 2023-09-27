@@ -65,8 +65,7 @@ func TestAddress_IsZero(t *testing.T) {
 		t.Fatal("wrong result for zero value")
 	}
 
-	zeroAddr := HexToAddress("0x0")
-	if result := zeroAddr.IsZero(); result != true {
+	if result := ZeroAddr.IsZero(); result != true {
 		t.Fatal("wrong result for zero address")
 	}
 }

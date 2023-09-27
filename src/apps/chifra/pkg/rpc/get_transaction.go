@@ -74,12 +74,12 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 		if tx, err = conn.GetTransactionPrefundByApp(appearance); err != nil {
 			return nil, err
 		}
-	} else if txid == 99999 || txid == 99997 || txid == 99996 {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(BLOCK_REWARD, appearance); err != nil {
+	} else if txid == types.BlockReward || txid == types.MisconfigReward || txid == types.ExternalReward {
+		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.BlockReward, appearance); err != nil {
 			return nil, err
 		}
-	} else if txid == 99998 {
-		if tx, err = conn.GetTransactionRewardByTypeAndApp(UNCLE_REWARD, appearance); err != nil {
+	} else if txid == types.UncleReward {
+		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.UncleReward, appearance); err != nil {
 			return nil, err
 		}
 	}
@@ -218,15 +218,6 @@ func (conn *Connection) GetTransactionPrefundByApp(appearance *types.RawAppearan
 	return nil, errors.New("not found")
 }
 
-type RewardType int
-
-const (
-	BLOCK_REWARD RewardType = iota
-	NEPHEW_REWARD
-	UNCLE_REWARD
-	TXFEE_REWARD
-)
-
 // // This data was taken from Geth ./params/config.go
 // blknum_t hardForkBlock(const string_q& hf) {
 //     if (hf == "byzantium") {
@@ -249,14 +240,9 @@ const (
 //     return 0;
 // }
 
-const (
-	byzantiumBlock      = uint64(4370000)
-	constantinopleBlock = uint64(7280000)
-)
-
 // TODO: This is not cross-chain correct
 
-func (conn *Connection) GetTransactionRewardByTypeAndApp(rt RewardType, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
+func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
 	if block, err := conn.GetBlockBodyByNumber(uint64(appearance.BlockNumber)); err != nil {
 		return nil, err
 	} else {
@@ -272,7 +258,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt RewardType, appearan
 			bn := uint64(appearance.BlockNumber)
 			blockReward = conn.getBlockReward(bn)
 			switch rt {
-			case BLOCK_REWARD:
+			case types.BlockReward:
 				if block.Miner.Hex() == appearance.Address {
 					sender = base.BlockRewardSender
 					nUncles := len(uncles)
@@ -288,7 +274,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt RewardType, appearan
 				} else {
 					blockReward = big.NewInt(0)
 				}
-			case UNCLE_REWARD:
+			case types.UncleReward:
 				for _, uncle := range uncles {
 					if uncle.Miner.Hex() == appearance.Address {
 						sender = base.UncleRewardSender
@@ -302,7 +288,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt RewardType, appearan
 				if block.Miner.Hex() == appearance.Address {
 					sender = base.BlockRewardSender // if it's both, it's the block reward
 					// The uncle miner may also have been the miner of the block
-					if minerTx, err := conn.GetTransactionRewardByTypeAndApp(BLOCK_REWARD, appearance); err != nil {
+					if minerTx, err := conn.GetTransactionRewardByTypeAndApp(types.BlockReward, appearance); err != nil {
 						return nil, err
 					} else {
 						blockReward = &minerTx.Rewards.Block
@@ -312,9 +298,9 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt RewardType, appearan
 				} else {
 					blockReward = big.NewInt(0)
 				}
-			case NEPHEW_REWARD:
+			case types.NephewReward:
 				fallthrough
-			case TXFEE_REWARD:
+			case types.TxFeeReward:
 				fallthrough
 			default:
 				return nil, errors.New("invalid reward type")

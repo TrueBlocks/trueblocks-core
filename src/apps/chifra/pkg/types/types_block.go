@@ -23,45 +23,47 @@ import (
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string   `json:"author"`
-	BaseFeePerGas    string   `json:"baseFeePerGas"`
-	BlockNumber      string   `json:"number"`
-	Difficulty       string   `json:"difficulty"`
-	ExtraData        string   `json:"extraData"`
-	GasLimit         string   `json:"gasLimit"`
-	GasUsed          string   `json:"gasUsed"`
-	Hash             string   `json:"hash"`
-	LogsBloom        string   `json:"logsBloom"`
-	Miner            string   `json:"miner"`
-	MixHash          string   `json:"mixHash"`
-	Nonce            string   `json:"nonce"`
-	ParentHash       string   `json:"parentHash"`
-	ReceiptsRoot     string   `json:"receiptsRoot"`
-	Sha3Uncles       string   `json:"sha3Uncles"`
-	Size             string   `json:"size"`
-	StateRoot        string   `json:"stateRoot"`
-	Timestamp        string   `json:"timestamp"`
-	TotalDifficulty  string   `json:"totalDifficulty"`
-	Transactions     []any    `json:"transactions"`
-	TransactionsRoot string   `json:"transactionsRoot"`
-	Uncles           []string `json:"uncles"`
+	Author           string          `json:"author"`
+	BaseFeePerGas    string          `json:"baseFeePerGas"`
+	BlockNumber      string          `json:"number"`
+	Difficulty       string          `json:"difficulty"`
+	ExtraData        string          `json:"extraData"`
+	GasLimit         string          `json:"gasLimit"`
+	GasUsed          string          `json:"gasUsed"`
+	Hash             string          `json:"hash"`
+	LogsBloom        string          `json:"logsBloom"`
+	Miner            string          `json:"miner"`
+	MixHash          string          `json:"mixHash"`
+	Nonce            string          `json:"nonce"`
+	ParentHash       string          `json:"parentHash"`
+	ReceiptsRoot     string          `json:"receiptsRoot"`
+	Sha3Uncles       string          `json:"sha3Uncles"`
+	Size             string          `json:"size"`
+	StateRoot        string          `json:"stateRoot"`
+	Timestamp        string          `json:"timestamp"`
+	TotalDifficulty  string          `json:"totalDifficulty"`
+	Transactions     []any           `json:"transactions"`
+	TransactionsRoot string          `json:"transactionsRoot"`
+	Uncles           []string        `json:"uncles"`
+	Withdrawals      []RawWithdrawal `json:"withdrawals"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleBlock[Tx string | SimpleTransaction] struct {
-	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
-	BlockNumber   base.Blknum    `json:"blockNumber"`
-	Difficulty    uint64         `json:"difficulty"`
-	GasLimit      base.Gas       `json:"gasLimit"`
-	GasUsed       base.Gas       `json:"gasUsed"`
-	Hash          base.Hash      `json:"hash"`
-	Miner         base.Address   `json:"miner"`
-	ParentHash    base.Hash      `json:"parentHash"`
-	Timestamp     base.Timestamp `json:"timestamp"`
-	Transactions  []Tx           `json:"transactions"`
-	Uncles        []base.Hash    `json:"uncles,omitempty"`
-	raw           *RawBlock      `json:"-"`
+	BaseFeePerGas base.Wei           `json:"baseFeePerGas"`
+	BlockNumber   base.Blknum        `json:"blockNumber"`
+	Difficulty    uint64             `json:"difficulty"`
+	GasLimit      base.Gas           `json:"gasLimit"`
+	GasUsed       base.Gas           `json:"gasUsed"`
+	Hash          base.Hash          `json:"hash"`
+	Miner         base.Address       `json:"miner"`
+	ParentHash    base.Hash          `json:"parentHash"`
+	Timestamp     base.Timestamp     `json:"timestamp"`
+	Transactions  []Tx               `json:"transactions"`
+	Uncles        []base.Hash        `json:"uncles,omitempty"`
+	Withdrawals   []SimpleWithdrawal `json:"withdrawals,omitempty"`
+	raw           *RawBlock          `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -79,19 +81,6 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["count"] == true {
-		return Model{
-			Data: map[string]interface{}{
-				"blockNumber":     s.BlockNumber,
-				"transactionsCnt": len(s.Transactions),
-			},
-			Order: []string{
-				"blockNumber",
-				"transactionsCnt",
-			},
-		}
-	}
-
 	if extraOptions["hashes"] == true {
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is
@@ -284,6 +273,16 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Withdrawals
+	withdrawals := make([]cache.Marshaler, 0, len(s.Withdrawals))
+	for _, withdrawal := range s.Withdrawals {
+		withdrawal := withdrawal
+		withdrawals = append(withdrawals, &withdrawal)
+	}
+	if err = cache.WriteValue(writer, withdrawals); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -342,6 +341,12 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 	// Uncles
 	s.Uncles = make([]base.Hash, 0)
 	if err = cache.ReadValue(reader, &s.Uncles, version); err != nil {
+		return err
+	}
+
+	// Withdrawals
+	s.Withdrawals = make([]SimpleWithdrawal, 0)
+	if err = cache.ReadValue(reader, &s.Withdrawals, version); err != nil {
 		return err
 	}
 

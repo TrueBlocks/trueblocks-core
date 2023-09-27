@@ -7,8 +7,10 @@ package chunksPkg
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -38,6 +40,19 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
+	if opts.Diff {
+		if opts.Mode != "index" {
+			return validate.Usage("The {0} option is only available in {1} mode.", "--diff", "index")
+		}
+		path := os.Getenv("TB_CHUNKS_DIFFPATH")
+		if path == "" {
+			return validate.Usage("The {0} option requires {1}.", "--diff", "TB_CHUNKS_DIFFPATH to be set")
+		}
+		if !file.FolderExists(path) {
+			return fmt.Errorf("the path TB_CHUNKS_DIFFPATH=%s does not exist", path)
+		}
+	}
+
 	isIndexOrManifest := opts.Mode == "index" || opts.Mode == "manifest"
 	if !isIndexOrManifest {
 		if err = opts.isDisallowed(!isIndexOrManifest /* i.e., true */, opts.Mode); err != nil {
@@ -52,7 +67,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	if opts.Mode == "manifest" {
 		if opts.Pin {
 			if opts.Remote {
-				pinataKey, pinataSecret := config.GetPinningKeys(chain)
+				pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
 				if pinataKey == "" || pinataSecret == "" {
 					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 				}
@@ -76,8 +91,8 @@ func (opts *ChunksOptions) validateChunks() error {
 		if opts.Mode == "index" {
 			// do nothing
 		} else if opts.Mode == "manifest" {
-			if !pinning.LocalDaemonRunning() {
-				return validate.Usage("The {0} option requires {1}.", "manifest --deep", "a locally running IPFS daemon")
+			if !opts.Remote && !pinning.LocalDaemonRunning() {
+				return validate.Usage("The {0} option requires {1}.", "manifest --deep", "a locally running IPFS daemon or --remote")
 			}
 		} else {
 			return validate.Usage("The {0} option requires mode {1}.", "--deep", "index or manifest")
@@ -118,6 +133,13 @@ func (opts *ChunksOptions) validateChunks() error {
 		return err
 	}
 
+	if len(opts.Publisher) > 0 {
+		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
+		if err != nil {
+			return err
+		}
+	}
+
 	err = validate.ValidateIdentifiers(
 		chain,
 		opts.Blocks,
@@ -133,6 +155,10 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage("Specify only a single block range at a time.")
 		}
 		return err
+	}
+
+	if opts.Diff && len(opts.BlockIds) != 1 {
+		return validate.Usage("The {0} option requires exactly one block identifier.", "--diff")
 	}
 
 	if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS || opts.MaxAddrs != utils.NOPOS {

@@ -2,7 +2,6 @@ package tslib
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -11,32 +10,35 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
-func EstablishTsFile(chain string) error {
+func EstablishTsFile(chain string, publisher base.Address) error {
 	tsPath := filepath.Join(config.PathToIndex(chain), "ts.bin")
 	if file.FileExists(tsPath) {
 		return nil
 	}
 
-	cid, err := manifest.ReadUnchainedIndex(chain, "ts", unchained.GetPreferredPublisher())
+	database := chain + "-ts"
+	cid, err := manifest.ReadUnchainedIndex(chain, publisher, database)
 	if err != nil {
 		return err
+	} else if len(cid) == 0 {
+		return fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
 	}
 
-	return downloadCidToBinary(chain, cid, tsPath)
+	return downloadCidToBinary(chain, database, tsPath, cid)
 }
 
-// downloadCidToBinary downloads a timestamp database file
-func downloadCidToBinary(chain, cid, fileName string) error {
-	gatewayUrl := config.GetIpfsGateway(chain)
+// downloadCidToBinary downloads a CID to a binary file
+func downloadCidToBinary(chain, database, outputFn, cid string) error {
+	gatewayUrl := config.GetChain(chain).IpfsGateway
 
 	url, err := url.Parse(gatewayUrl)
 	if err != nil {
@@ -46,20 +48,19 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 
 	logger.InfoTable("Chain:", chain)
 	logger.InfoTable("Gateway:", gatewayUrl)
-	logger.InfoTable("CID:", cid)
 	logger.InfoTable("URL:", url.String())
-	msg := colors.Yellow + "Downloading timestamp file. This may take a moment..." + colors.Off
-	logger.Info(msg)
+	logger.InfoTable("CID:", cid)
+	logger.Info(fmt.Sprintf("%sDownloading database %s (%s). This may take a moment...%s", colors.Yellow, database, cid, colors.Off))
 
 	header, err := http.Head(url.String())
 	if err != nil {
 		return err
 	}
 	if header.StatusCode != 200 {
-		return errors.New("received non-200 response code")
+		return fmt.Errorf("CID not found: %d status", header.StatusCode)
 	}
 
-	if header.ContentLength <= file.FileSize(fileName) {
+	if header.ContentLength <= file.FileSize(outputFn) {
 		// The file on disc is larger than the one we will download which means it has more
 		// timestamps in it, so we don't download it.
 		return nil
@@ -72,18 +73,18 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 	}
 	defer response.Body.Close()
 	if response.StatusCode != 200 {
-		return errors.New("received non-200 response code")
+		return fmt.Errorf("CID not found: %d status", header.StatusCode)
 	}
 
-	logger.Info(colors.Yellow + "Download complete. Saving timestamps..." + colors.Off)
+	logger.Info(fmt.Sprintf("%sDownloading complete %s (%s). Writing file...%s", colors.Yellow, database, cid, colors.Off))
 
 	userHitsCtrlC := false
 	go func() {
 		for {
-			if file.FileSize(fileName) >= header.ContentLength {
+			if file.FileSize(outputFn) >= header.ContentLength {
 				break
 			}
-			pct := int(float64(file.FileSize(fileName)) / float64(header.ContentLength) * 100)
+			pct := int(float64(file.FileSize(outputFn)) / float64(header.ContentLength) * 100)
 			msg := colors.Yellow + fmt.Sprintf("Downloading timestamps. Please wait... %d%%", pct) + colors.Off
 			if userHitsCtrlC {
 				msg = colors.Yellow + fmt.Sprintf("Finishing work. please wait... %d%%                                 ", pct) + colors.Off
@@ -101,7 +102,7 @@ func downloadCidToBinary(chain, cid, fileName string) error {
 	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
 
-	ff, err := os.Create(fileName)
+	ff, err := os.Create(outputFn)
 	if err != nil {
 		return err
 	}

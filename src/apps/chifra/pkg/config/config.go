@@ -10,69 +10,21 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
 )
 
 var trueBlocksViper = viper.New()
 var trueBlocksConfig ConfigFile
 
-type versionGroup struct {
-	Current string `toml:"current"`
-}
-
-type chainGroup struct {
-	Chain          string `toml:"chain"`
-	ChainId        string `toml:"chainId"`
-	LocalExplorer  string `toml:"localExplorer"`
-	RemoteExplorer string `toml:"remoteExplorer"`
-	RpcProvider    string `toml:"rpcProvider"`
-	IpfsGateway    string `toml:"ipfsGateway"`
-	Symbol         string `toml:"symbol"`
-}
-
-type keyGroup struct {
-	License string `toml:"license"`
-	ApiKey  string `toml:"apiKey"`
-	Secret  string `toml:"secret"`
-	Jwt     string `toml:"jwt"`
-}
-
-// TODO: This needs to be documented
-type grpcGroup struct {
-	UdsTimeout time.Duration `toml:"udsTimeout"`
-}
-
-type settingsGroup struct {
-	CachePath      string `toml:"cachePath"`
-	IndexPath      string `toml:"indexPath"`
-	DefaultChain   string `toml:"defaultChain"`
-	DefaultGateway string `toml:"defaultGateway"`
-}
-
 type ConfigFile struct {
-	Version  versionGroup
-	Settings settingsGroup
-	Grpc     grpcGroup
-	Keys     map[string]keyGroup
-	Chains   map[string]chainGroup
-}
-
-func GetChainArray() []chainGroup {
-	var result []chainGroup
-	for k, v := range GetRootConfig().Chains {
-		v.Chain = k
-		if len(v.IpfsGateway) == 0 {
-			v.IpfsGateway = GetRootConfig().Settings.DefaultGateway
-		}
-		result = append(result, v)
-	}
-	return result
+	Version  versionGroup          `toml:"version"`
+	Settings settingsGroup         `toml:"settings"`
+	Keys     map[string]keyGroup   `toml:"keys"`
+	Chains   map[string]chainGroup `toml:"chains"`
 }
 
 // init sets up default values for the given configuration
@@ -89,7 +41,16 @@ func init() {
 func GetRootConfig() *ConfigFile {
 	if len(trueBlocksConfig.Settings.CachePath) == 0 {
 		configPath := PathToRootConfig()
-		MustReadConfig(trueBlocksViper, &trueBlocksConfig, configPath)
+		trueBlocksViper.AddConfigPath(configPath)
+		trueBlocksViper.SetEnvPrefix("TB")
+		trueBlocksViper.AutomaticEnv()
+		trueBlocksViper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+		if err := trueBlocksViper.ReadInConfig(); err != nil {
+			logger.Fatal(err)
+		}
+		if err := trueBlocksViper.Unmarshal(&trueBlocksConfig); err != nil {
+			logger.Fatal(err)
+		}
 
 		user, _ := user.Current()
 
@@ -118,7 +79,7 @@ func GetRootConfig() *ConfigFile {
 		// only then can we complete these paths. At this point these paths
 		// only point to the top-levl of the cache or index. Also note that
 		// these two calls do not return if they fail, so no need to handle errors
-		defaultChains := []string{GetDefaultChain()}
+		defaultChains := []string{GetSettings().DefaultChain}
 		_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
 		_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
 	}
@@ -126,23 +87,9 @@ func GetRootConfig() *ConfigFile {
 	return &trueBlocksConfig
 }
 
-func IsAtLeastVersion(needle string) bool {
-	var current, desired version.Version
-	var err error
-	if current, err = version.NewVersion(GetRootConfig().Version.Current); err != nil {
-		return true
-	}
-
-	if desired, err = version.NewVersion(needle); err != nil {
-		return true
-	}
-
-	return !current.IsEarlierThan(desired)
-}
-
 // PathToRootConfig returns the path where to find configuration files
 func PathToRootConfig() string {
-	configPath, err := PathFromXDG("XDG_CONFIG_HOME")
+	configPath, err := pathFromXDG("XDG_CONFIG_HOME")
 	if err != nil {
 		logger.Fatal(err)
 	} else if len(configPath) > 0 {
@@ -164,11 +111,7 @@ func PathToRootConfig() string {
 	return filepath.Join(user.HomeDir, osPath) + "/"
 }
 
-func GetDefaultChain() string {
-	return GetRootConfig().Settings.DefaultChain
-}
-
-func PathFromXDG(envVar string) (string, error) {
+func pathFromXDG(envVar string) (string, error) {
 	// If present, we require both an existing path and a fully qualified path
 	xdg := os.Getenv(envVar)
 	if len(xdg) == 0 {
@@ -184,44 +127,4 @@ func PathFromXDG(envVar string) (string, error) {
 	}
 
 	return filepath.Join(xdg, "") + "/", nil
-}
-
-// MustReadConfig calls Viper's ReadInConfig and fills values in the
-// given targetStruct. Any error will result in a call to logger.Fatal
-func MustReadConfig(v *viper.Viper, targetStruct interface{}, path string) {
-	v.AddConfigPath(path)
-	v.SetEnvPrefix("TB")
-	v.AutomaticEnv()
-	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-
-	err := v.ReadInConfig()
-	if err != nil {
-		_, ok := err.(viper.ConfigFileNotFoundError)
-		// We only require some files to be present
-		if !ok {
-			logger.Fatal(err)
-		}
-	}
-
-	err = v.Unmarshal(targetStruct)
-	if err != nil {
-		logger.Fatal(err)
-	}
-}
-
-func GetPinningKeys(chain string) (string, string) {
-	keys := GetRootConfig().Keys
-	a := keys["pinata"].ApiKey
-	b := keys["pinata"].Secret
-	return a, b
-}
-
-func HasPinningKeys(chain string) bool {
-	a, b := GetPinningKeys(chain)
-	return len(a)+len(b) > 0
-}
-
-func HasEsKeys(chain string) bool {
-	keys := GetRootConfig().Keys
-	return len(keys["etherscan"].ApiKey) > 0
 }

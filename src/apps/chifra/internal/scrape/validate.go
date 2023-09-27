@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
@@ -24,9 +23,6 @@ import (
 
 func (opts *ScrapeOptions) validateScrape() error {
 	chain := opts.Globals.Chain
-
-	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	opts.Settings, _ = scrapeCfg.GetSettings(chain, "blockScrape.toml", &opts.Settings)
 
 	opts.testLog()
 
@@ -62,7 +58,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if opts.Pin {
 		if opts.Remote {
-			pinataKey, pinataSecret := config.GetPinningKeys(chain)
+			pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
 			if pinataKey == "" || pinataSecret == "" {
 				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 			}
@@ -75,6 +71,13 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	// Note this does not return if a migration is needed
 	index.CheckBackLevelIndex(chain)
+
+	if len(opts.Publisher) > 0 {
+		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
+		if err != nil {
+			return err
+		}
+	}
 
 	ret := opts.Globals.Validate()
 

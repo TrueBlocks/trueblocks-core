@@ -46,6 +46,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 
 	s.ChangeState(true, tmpPath)
 
+	runCount := uint64(0)
 	for {
 		if !s.Running {
 			s.Pause()
@@ -61,9 +62,14 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup, s *Scraper) {
 				logger.Error(err)
 				return
 			} else {
-				if canceled || opts.RunOnce {
+				if canceled {
 					return
 				}
+			}
+
+			runCount++
+			if opts.RunCount != 0 && runCount >= opts.RunCount {
+				return
 			}
 
 			sleep := opts.Sleep
@@ -155,7 +161,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 				continue
 			}
 
-			fmt.Printf("Processing item %d in batch %d: %d %d\n", j, i, countsBefore[j], countAfter)
+			logger.Info(fmt.Sprintf("Processing item %d in batch %d: %d %d\n", j, i, countsBefore[j], countAfter))
 
 			for _, cmd := range theCmds {
 				countBefore := countsBefore[j]
@@ -313,7 +319,7 @@ func (opts *MonitorsOptions) getMonitorList() []monitor.Monitor {
 
 	for result := range monitorChan {
 		switch result.Address {
-		case monitor.SentinalAddr:
+		case base.SentinalAddr:
 			close(monitorChan)
 		default:
 			if result.Count() > 500000 {

@@ -105,3 +105,8 @@ func (m *MetaData) NextIndexHeight() base.Blknum {
 func (m *MetaData) ChainHeight() base.Blknum {
 	return m.Latest
 }
+
+// StageHieght returns the highest block that's been staged
+func (m *MetaData) StageHeight() base.Blknum {
+	return m.Staging
+}

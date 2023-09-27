@@ -53,6 +53,19 @@ func (s *SimpleWithdrawal) Model(verbose bool, format string, extraOptions map[s
 	var order = []string{}
 
 	// EXISTING_CODE
+	model = map[string]interface{}{
+		"address":        s.Address,
+		"amount":         s.Amount,
+		"index":          s.Index,
+		"validatorIndex": s.ValidatorIndex,
+	}
+
+	order = []string{
+		"address",
+		"amount",
+		"index",
+		"validatorIndex",
+	}
 	// EXISTING_CODE
 
 	return Model{

@@ -13,7 +13,7 @@ import (
 // update the manifest by removing all chunks at or after the given path. Note that if this
 // function aborts due to error and the backup files still exist, the function will attempt
 // to restore the backup files before returning.
-func RemoveChunk(chain, bloomFn, indexFn string) (err error) {
+func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) (err error) {
 	manifestFn := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
 
 	manifestBackup := manifestFn + ".backup"
@@ -59,7 +59,7 @@ func RemoveChunk(chain, bloomFn, indexFn string) (err error) {
 	}
 
 	var man *Manifest
-	man, err = ReadManifest(chain, FromCache)
+	man, err = ReadManifest(chain, publisher, FromCache)
 
 	removedRange, err1 := base.RangeFromFilenameE(bloomFn)
 	if err1 != nil {

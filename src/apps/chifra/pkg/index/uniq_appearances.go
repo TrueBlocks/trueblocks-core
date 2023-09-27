@@ -11,6 +11,15 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+// UniqFromWithdrawals extracts addresses from an array of receipts
+func UniqFromWithdrawals(chain string, withdrawals []types.SimpleWithdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
+	for _, withdrawal := range withdrawals {
+		// logger.Info("Adding withdrawl", withdrawal.Address.Hex(), bn, types.Withdrawal)
+		addAddressToMaps(withdrawal.Address.Hex(), bn, types.Withdrawal, addrMap)
+	}
+	return nil
+}
+
 // UniqFromReceipts extracts addresses from an array of receipts
 func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap AddressBooleanMap) (err error) {
 	for _, receipt := range receipts {
@@ -74,11 +83,11 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
-					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addAddressToMaps(author, bn, 99997, addrMap)
+					author = base.SentinalAddr.Hex()
+					addAddressToMaps(author, bn, types.MisconfigReward, addrMap)
 
 				} else {
-					addAddressToMaps(author, bn, 99999, addrMap)
+					addAddressToMaps(author, bn, types.BlockReward, addrMap)
 
 				}
 
@@ -89,18 +98,18 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
-					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addAddressToMaps(author, bn, 99998, addrMap)
+					author = base.SentinalAddr.Hex()
+					addAddressToMaps(author, bn, types.UncleReward, addrMap)
 
 				} else {
-					addAddressToMaps(author, bn, 99998, addrMap)
+					addAddressToMaps(author, bn, types.UncleReward, addrMap)
 
 				}
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
-				addAddressToMaps(author, bn, 99996, addrMap)
+				addAddressToMaps(author, bn, types.ExternalReward, addrMap)
 
 			} else {
 				fmt.Println("Unknown reward type", trace.Action.RewardType)

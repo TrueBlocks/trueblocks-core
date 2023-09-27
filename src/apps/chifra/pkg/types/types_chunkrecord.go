@@ -10,6 +10,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -72,4 +74,9 @@ func (s *SimpleChunkRecord) Model(verbose bool, format string, extraOptions map[
 }
 
 // EXISTING_CODE
+func (s *SimpleChunkRecord) String() string {
+	bytes, _ := json.MarshalIndent(s, "", "  ")
+	return string(bytes)
+}
+
 // EXISTING_CODE

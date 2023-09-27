@@ -1,5 +1,6 @@
 chifra chunks  index
 TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 range	magic	hash	nAddresses	nAppearances	fileSize
 000000000-000000000	0xdeadbeef	0x81ae...1da1	8893	8893	320192

@@ -22,6 +22,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
+// TODO: We need to make sure, when we truncate, that we truncate the corresponding maps files as well.
+
 func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 
@@ -34,8 +36,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	indexPath := config.PathToIndex(chain)
-	_ = index.CleanTemporaryFolders(indexPath, true)
+	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe", "staging"})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -63,7 +64,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 
 			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 			if rng.Intersects(testRange) {
-				if err = manifest.RemoveChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
+				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err
 				}
 				nChunksRemoved++

@@ -72,8 +72,8 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// than 'UnripeDist.' If it is, the `ripeBlock` is 'UnripeDist' behind the
 		// head (i.e., 28 blocks usually - six minutes)
 		ripeBlock = blazeMan.meta.Latest
-		if ripeBlock > opts.Settings.Unripe_dist {
-			ripeBlock = blazeMan.meta.Latest - opts.Settings.Unripe_dist
+		if ripeBlock > opts.Settings.UnripeDist {
+			ripeBlock = blazeMan.meta.Latest - opts.Settings.UnripeDist
 		}
 
 		blazeMan = BlazeManager{

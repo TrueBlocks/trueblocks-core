@@ -1,4 +1,5 @@
 chifra list  
+TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 Error: Please specify at least one valid Ethereum address.
 Usage:
@@ -16,6 +17,7 @@ Flags:
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
   -E, --reversed            produce results in reverse chronological order
+  -P, --publisher string    for some query options, the publisher of the index (hidden) (default "trueblocks.eth")
   -F, --first_block uint    first block to export (inclusive, ignored when freshening)
   -L, --last_block uint     last block to export (inclusive, ignored when freshening)
   -x, --fmt string          export format, one of [none|json*|txt|csv]
