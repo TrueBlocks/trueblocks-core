@@ -115,25 +115,25 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 	if requestType == "int" {
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't want to make another RPC call
 		// We tried (see commented code), but EtherScan balks with a weird message
-		s.TransactionIndex = 80809
+		s.TransactionIndex = types.EsInternalTx
 		// s.BlockHash = base.HexToHash("0xdeadbeef")
 		// got, err := conn.GetESTransactionByHash(s.Hash)
 		// if err != nil {
 		// 	logger.Warn("error getting transaction from etherscan:", err)
-		// 	s.TransactionIndex = 80809
+		// 	s.TransactionIndex = EsInternalTx
 		// } else {
 		// 	s.TransactionIndex = utils.MustParseUint(got.TransactionIndex)
 		// }
 	} else if requestType == "miner" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
-		s.TransactionIndex = 99999
+		s.TransactionIndex = types.BlockReward
 		s.From = base.BlockRewardSender
 		s.Value.SetString("5000000000000000000", 0)
 		s.To = base.HexToAddress(addr)
 
 	} else if requestType == "uncles" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
-		s.TransactionIndex = 99998
+		s.TransactionIndex = types.UncleReward
 		s.From = base.UncleRewardSender
 		s.Value.SetString("3750000000000000000", 0)
 		s.To = base.HexToAddress(addr)

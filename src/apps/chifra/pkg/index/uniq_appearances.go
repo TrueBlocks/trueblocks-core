@@ -83,11 +83,11 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
-					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addAddressToMaps(author, bn, 99997, addrMap)
+					author = base.SentinalAddr.Hex()
+					addAddressToMaps(author, bn, types.MisconfigReward, addrMap)
 
 				} else {
-					addAddressToMaps(author, bn, 99999, addrMap)
+					addAddressToMaps(author, bn, types.BlockReward, addrMap)
 
 				}
 
@@ -98,18 +98,18 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
-					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addAddressToMaps(author, bn, 99998, addrMap)
+					author = base.SentinalAddr.Hex()
+					addAddressToMaps(author, bn, types.UncleReward, addrMap)
 
 				} else {
-					addAddressToMaps(author, bn, 99998, addrMap)
+					addAddressToMaps(author, bn, types.UncleReward, addrMap)
 
 				}
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
-				addAddressToMaps(author, bn, 99996, addrMap)
+				addAddressToMaps(author, bn, types.ExternalReward, addrMap)
 
 			} else {
 				fmt.Println("Unknown reward type", trace.Action.RewardType)
