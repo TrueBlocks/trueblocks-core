@@ -80,9 +80,10 @@ Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
+- [withdrawal](/data-model/chaindata/#withdrawal)
 - [log](/data-model/chaindata/#log)
-- [logfilter](/data-model/chaindata/#logfilter)
 - [trace](/data-model/chaindata/#trace)
+- [logfilter](/data-model/chaindata/#logfilter)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
 - [blockcount](/data-model/chaindata/#blockcount)

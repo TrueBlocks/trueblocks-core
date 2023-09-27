@@ -118,8 +118,7 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
             if (!p.is_visible_docs) {
                 continue;
             }
-            string_q optionName = substitute(toCamelCase(p.longName), "deleteme", "delete");
-
+            string_q optionName = toCamelCase(p.longName);
             params << "    " << optionName;
             params << (p.is_required ? "" : "?") << ": ";
             params << toTsType(p.data_type, imports) << ",";

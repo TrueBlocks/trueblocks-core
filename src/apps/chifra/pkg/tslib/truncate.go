@@ -30,8 +30,8 @@ func Truncate(chain string, maxBn uint64) error {
 
 	truncated := perChainTimestamps[chain].memory[0:maxBn]
 
-	tsFn := filepath.Join(config.GetPathToIndex(chain), "ts.bin")
-	tmpPath := filepath.Join(config.GetPathToCache(chain), "tmp")
+	tsFn := filepath.Join(config.PathToIndex(chain), "ts.bin")
+	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		defer func() {
 			DeCache(chain)

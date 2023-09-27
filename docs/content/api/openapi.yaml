@@ -1109,15 +1109,16 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#logfilter">Logfilter</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, and/or <a href="/data-model/chaindata/#blockcount">Blockcount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/chaindata/#block">Block</a>, <a href="/data-model/chaindata/#withdrawal">Withdrawal</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#logfilter">Logfilter</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, and/or <a href="/data-model/chaindata/#blockcount">Blockcount</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-blocks">chifra blocks</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/block"
+                        - $ref: "#/components/schemas/withdrawal"
                         - $ref: "#/components/schemas/log"
-                        - $ref: "#/components/schemas/logFilter"
                         - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/logFilter"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/blockCount"
@@ -2951,6 +2952,26 @@ components:
         encoding:
           type: string
           description: "the four-byte encoding of the transaction's function call"
+    withdrawal:
+      description: "withdrawal record for post-Shanghai withdrawals from the consensus layer"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the recipient for the withdrawn ether"
+        amount:
+          type: string
+          format: wei
+          description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        index:
+          type: number
+          format: uint64
+          description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
+        validatorIndex:
+          type: number
+          format: uint64
+          description: "the validator_index of the validator on the consensus layer the withdrawal corresponds to"
     receipt:
       description: "receipt data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3045,32 +3066,6 @@ components:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
-    logFilter:
-      description: "used by the fast path log queries for various commands"
-      type: object
-      properties:
-        fromBlock:
-          type: number
-          format: blknum
-          description: "the first block in the block range to query with eth_getLogs"
-        toBlock:
-          type: number
-          format: blknum
-          description: "the last block in the range to query with eth_getLogs"
-        blockHash:
-          type: string
-          format: hash
-          description: "an alternative to blocks specification, the hash of the block to query"
-        emitters:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
-          description: "one or more emitting addresses from which logs were emitted"
-        topics:
-          type: array
-          items:
-            $ref: "#/components/schemas/topic"
-          description: "one or more topics which logs represent"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3132,6 +3127,32 @@ components:
         compressedTrace:
           type: string
           description: "a compressed string version of the articulated trace"
+    logFilter:
+      description: "used by the fast path log queries for various commands"
+      type: object
+      properties:
+        fromBlock:
+          type: number
+          format: blknum
+          description: "the first block in the block range to query with eth_getLogs"
+        toBlock:
+          type: number
+          format: blknum
+          description: "the last block in the range to query with eth_getLogs"
+        blockHash:
+          type: string
+          format: hash
+          description: "an alternative to blocks specification, the hash of the block to query"
+        emitters:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "one or more emitting addresses from which logs were emitted"
+        topics:
+          type: array
+          items:
+            $ref: "#/components/schemas/topic"
+          description: "one or more topics which logs represent"
     traceAction:
       description: "trace action data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3286,11 +3307,16 @@ components:
           format: uint64
           example: 1295
           description: "the number of traces in the block"
+        withdrawalsCnt:
+          type: number
+          format: uint64
+          example: 12
+          description: "the number of withdrawals in the block"
         addressCnt:
           type: number
           format: uint64
           example: 318
-          description: "the number of address appearances in the block per transaction"
+          description: "the number of address appearances in the block"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
       type: object
@@ -3865,9 +3891,6 @@ components:
         rpcProvider:
           type: string
           description: "A valid RPC provider for the chain"
-        apiProvider:
-          type: string
-          description: "A valid API provider for the explorer"
         remoteExplorer:
           type: string
           description: "A remote explorer for the chain such as Etherscan"

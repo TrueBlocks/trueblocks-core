@@ -638,8 +638,8 @@ func save(chain string, filePath string, content io.Reader) (err error) {
 // LoadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
 func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
 	isUpToDate := func(chain string) (bool, error) {
-		testFn := path.Join(config.GetPathToCache(chain), "abis/known.bin")
-		testDir := path.Join(config.GetPathToRootConfig(), "abis")
+		testFn := path.Join(config.PathToCache(chain), "abis/known.bin")
+		testDir := path.Join(config.PathToRootConfig(), "abis")
 		if cacheFile, err := os.Stat(testFn); os.IsNotExist(err) {
 			return false, nil
 
@@ -685,7 +685,7 @@ func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
 // findKnownAbi finds known ABI by name in known-* directories
 func findKnownAbi(name string) (filePath string) {
 	for _, subdirName := range knownAbiSubdirectories {
-		testPath := path.Join(config.GetPathToRootConfig(), "abis", subdirName, name+".json")
+		testPath := path.Join(config.PathToRootConfig(), "abis", subdirName, name+".json")
 		if file.FileExists(testPath) {
 			filePath = testPath
 			return
@@ -695,7 +695,7 @@ func findKnownAbi(name string) (filePath string) {
 }
 
 func getKnownAbiPaths() (filePaths []string, err error) {
-	knownDirPath := path.Join(config.GetPathToRootConfig(), "abis")
+	knownDirPath := path.Join(config.PathToRootConfig(), "abis")
 	err = filepath.WalkDir(knownDirPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err

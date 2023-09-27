@@ -21,7 +21,7 @@ import (
 )
 
 func EstablishTsFile(chain string) error {
-	tsPath := filepath.Join(config.GetPathToIndex(chain), "ts.bin")
+	tsPath := filepath.Join(config.PathToIndex(chain), "ts.bin")
 	if file.FileExists(tsPath) {
 		return nil
 	}

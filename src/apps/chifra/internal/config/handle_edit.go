@@ -15,7 +15,7 @@ func (opts *ConfigOptions) HandleEdit() error {
 		logger.Info("would have opened config file for edit")
 	} else {
 		editor := os.Getenv("EDITOR")
-		configFolder := config.GetPathToRootConfig()
+		configFolder := config.PathToRootConfig()
 		configFile := filepath.Join(configFolder + "trueBlocks.toml")
 		utils.System(editor + " \"" + configFile + "\"")
 	}

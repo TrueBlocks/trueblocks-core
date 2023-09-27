@@ -62,8 +62,8 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if opts.Pin {
 		if opts.Remote {
-			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(chain)
-			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
+			pinataKey, pinataSecret := config.GetPinningKeys(chain)
+			if pinataKey == "" || pinataSecret == "" {
 				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 			}
 
@@ -78,7 +78,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	ret := opts.Globals.Validate()
 
-	pidPath := filepath.Join(config.GetPathToCache(chain), "tmp/scrape.pid")
+	pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
 	if file.FileExists(pidPath) {
 		pid := utils.MustParseInt(file.AsciiFileToString(pidPath))
 		// fmt.Println("Pid file exists with contents:", pid)

@@ -63,7 +63,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	}
 
 	if len(fileNames) == 0 {
-		msg := fmt.Sprint("No files found to check in", config.GetPathToIndex(chain))
+		msg := fmt.Sprint("No files found to check in", config.PathToIndex(chain))
 		return errors.New(msg)
 	}
 
@@ -158,7 +158,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	reports = append(reports, r2c)
 
 	// we only check the stage if it exists
-	stagePath := index.ToStagingPath(config.GetPathToIndex(chain) + "staging")
+	stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if file.FileExists(stageFn) {
 		stage := simpleReportCheck{Reason: "Check staging folder"}

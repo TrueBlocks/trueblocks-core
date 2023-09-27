@@ -172,9 +172,9 @@ func (bm *BlazeManager) WriteAppearancesBlaze(bn base.Blknum, addrMap index.Addr
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := config.GetPathToIndex(bm.chain) + "ripe/" + blockNumStr + ".txt"
+		fileName := config.PathToIndex(bm.chain) + "ripe/" + blockNumStr + ".txt"
 		if bn > bm.ripeBlock {
-			fileName = config.GetPathToIndex(bm.chain) + "unripe/" + blockNumStr + ".txt"
+			fileName = config.PathToIndex(bm.chain) + "unripe/" + blockNumStr + ".txt"
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")

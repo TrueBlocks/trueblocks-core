@@ -15,4 +15,4 @@ some machines, or when running against some EVM node software, the scraper may o
 hardware. Slowing things down will ensure proper operation. Finally, you may optionally `--pin`
 each new chunk to IPFS which naturally shards the database among all users. By default, pinning
 is against a locally running IPFS node, but the `--remote` option allows pinning to an IPFS
-pinning service such as Pinata or Estuary.
+pinning service such as Pinata.

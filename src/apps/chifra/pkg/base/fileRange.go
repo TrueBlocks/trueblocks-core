@@ -63,7 +63,7 @@ func RangeFromFilenameE(path string) (blkRange FileRange, err error) {
 
 // RangeFromRangeString returns a file range from a string
 func RangeFromRangeString(rngStr string) FileRange {
-	return RangeFromFilename(config.GetPathToIndex("mainnet") + "finalized/" + rngStr + ".bin") // okay to use mainnet since we're only interested in range
+	return RangeFromFilename(config.PathToIndex("mainnet") + "finalized/" + rngStr + ".bin") // okay to use mainnet since we're only interested in range
 }
 
 func (r FileRange) String() string {
@@ -72,7 +72,7 @@ func (r FileRange) String() string {
 
 // RangeToFilename returns a fileName and and existance bool given a file range and a type
 func (r *FileRange) RangeToFilename(chain string) (bool, string) {
-	fileName := config.GetPathToIndex(chain) + "finalized/" + r.String() + ".bin"
+	fileName := config.PathToIndex(chain) + "finalized/" + r.String() + ".bin"
 	return file.FileExists(fileName), fileName
 }
 

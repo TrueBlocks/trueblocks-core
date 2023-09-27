@@ -31,7 +31,7 @@ func (opts *GlobalOptions) Validate() error {
 	}
 
 	// TODO: Can we re-enable this? It doesn't work in Sepolia under docker. Returns a really weird message.
-	// tmpPath := filepath.Join(config.GetPathToCache(opts.Chain), "tmp", "checkProvider.txt")
+	// tmpPath := filepath.Join(config.PathToCache(opts.Chain), "tmp", "checkProvider.txt")
 	// if !file.FileExists(tmpPath) {
 	// 	if version, err := conn.GetClientVersion(opts.Chain); err != nil {
 	// 		logger.Fatal("Cannot connect with the node software.", version, err)
