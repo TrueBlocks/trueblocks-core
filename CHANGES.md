@@ -4,6 +4,14 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
+## v1.1.0 (2023/10/01)
+
+- Removed `apiProvider` field from `Chain` data model as unused.
+- Changes to `Config` data model to improve clarity and consistency:
+  - changed `GetPathToRootConfig` to `PathToRootConfig`
+  - changed `GetPathToCache` to `PathToCache`
+  - changed `GetPathToIndex` to `PathToIndex`
+
 ## v1.0.0 (2023/08/20)
 
 **OUR FIRST OFFICIAL RELEASE!**
