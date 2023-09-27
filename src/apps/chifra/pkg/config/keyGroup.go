@@ -11,6 +11,6 @@ type keyGroup struct {
 	Jwt     string `toml:"jwt,omitempty"`
 }
 
-func GetKey(group string) keyGroup {
-	return GetRootConfig().Keys[group]
+func GetKey(set string) keyGroup {
+	return GetRootConfig().Keys[set]
 }
