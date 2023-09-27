@@ -23,7 +23,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting
-	_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
+	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
 
 	// If the file already exists, we're done.
 	bloomPath := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"

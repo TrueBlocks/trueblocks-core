@@ -62,7 +62,7 @@ func (bm *BlazeManager) Consolidate() (bool, error) {
 		// Then, if they are not at least sequential, clean up and try again...
 		allowMissing := scrapeCfg.AllowMissing(chain)
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
-			_ = index.CleanTemporaryFolders(config.PathToCache(chain), false)
+			_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
 			return true, err
 		}
 	}
