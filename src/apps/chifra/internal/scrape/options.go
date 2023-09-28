@@ -73,9 +73,9 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.Sleep = 14
 	opts.StartBlock = 0
 	opts.RunCount = 0
-	opts.Settings.AppsPerChunk = 500000
-	opts.Settings.SnapToGrid = 100000
-	opts.Settings.FirstSnap = 500000
+	opts.Settings.AppsPerChunk = 2000000
+	opts.Settings.SnapToGrid = 250000
+	opts.Settings.FirstSnap = 2000000
 	opts.Settings.UnripeDist = 28
 	opts.Settings.ChannelCount = 20
 	configs := make(map[string]string, 10)

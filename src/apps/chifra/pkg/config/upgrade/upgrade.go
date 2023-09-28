@@ -22,15 +22,15 @@ func UpgradeConfigs(newVersion version.Version) error {
 		group.Chain = chain
 		ch := cfg.Chains[chain]
 		scrape := config.ScrapeSettings{
-			AppsPerChunk: 500000,
-			SnapToGrid:   100000,
-			FirstSnap:    500000,
+			AppsPerChunk: 2000000,
+			SnapToGrid:   250000,
+			FirstSnap:    2000000,
 			UnripeDist:   28,
 			AllowMissing: false,
 			ChannelCount: 20,
 		}
 		if chain == "mainnet" {
-			scrape.AppsPerChunk = 2000000
+			scrape.SnapToGrid = 100000
 			scrape.FirstSnap = 2300000
 		}
 

@@ -26,7 +26,7 @@ func GetScrape(chain string) ScrapeSettings {
 		settings := ScrapeSettings{
 			AppsPerChunk: 2000000,
 			SnapToGrid:   250000,
-			FirstSnap:    200000,
+			FirstSnap:    2000000,
 			UnripeDist:   28,
 			ChannelCount: 20,
 			AllowMissing: false,
