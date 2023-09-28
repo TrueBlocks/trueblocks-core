@@ -16,10 +16,10 @@ func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound,
 	appsPerAddr := float64(nAppsFound) / float64(nAddrsFound)
 	pctFull := float64(nAppsNow) / float64(perChunk)
 
-	report := `%s #{%d}, found {%6d} appearances and {%5d} addrs ({%0.1f/addr}). Created {%d} chunks, staged {%5d} records (@%0.1f%%}), need {%5d}.`
+	report := `%s #{%d}, found {%6d} appearances and {%5d} addrs ({%0.1f/addr}). {%d} chunks created, {%5d} records staged (@%0.1f%%}), need {%5d}.`
 	msg := fmt.Sprintf(report,
 		bm.chain,
-		bm.EndBlock(),
+		bm.EndBlock()-1,
 		nAppsFound,
 		nAddrsFound,
 		appsPerAddr,

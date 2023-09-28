@@ -24,15 +24,15 @@ func GetScrape(chain string) ScrapeSettings {
 	empty := ScrapeSettings{}
 	if GetRootConfig().Chains[chain].Scrape == empty {
 		settings := ScrapeSettings{
-			AppsPerChunk: 500000,
-			SnapToGrid:   100000,
-			FirstSnap:    500000,
+			AppsPerChunk: 2000000,
+			SnapToGrid:   250000,
+			FirstSnap:    200000,
 			UnripeDist:   28,
 			ChannelCount: 20,
 			AllowMissing: false,
 		}
 		if chain == "mainnet" {
-			settings.AppsPerChunk = 2000000
+			settings.SnapToGrid = 100000
 			settings.FirstSnap = 2300000
 		}
 		ch := GetRootConfig().Chains[chain]

@@ -23,8 +23,8 @@ import (
 // (or less if close to the head). The forever loop pauses each round for
 // --sleep seconds (or, if not close to the head, for .25 seconds).
 func (opts *ScrapeOptions) HandleScrape() error {
+	logger.Info("Scraping:", config.GetScrape(opts.Globals.Chain))
 	if opts.DryRun {
-		fmt.Println(config.GetScrape(opts.Globals.Chain))
 		return nil
 	}
 
