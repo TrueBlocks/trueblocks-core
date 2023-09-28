@@ -68,6 +68,12 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 
 		cnt++
 	}
+	msg := fmt.Sprintf("Updating timestamps %-04d of %-04d (%-04d remaining)"+spaces,
+		blocks[len(blocks)-1],
+		blocks[len(blocks)-1],
+		0,
+	)
+	logger.Progress(true, msg)
 
 	return nil
 }
