@@ -125,7 +125,7 @@ func (opts *ChunksOptions) exportTo(dest, source string) (bool, error) {
 		out = append(out, fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address))
 	}
 	outputFile := filepath.Join(outputFolder, "apps.txt")
-	file.LinesToAsciiFile(outputFile, out)
+	_ = file.LinesToAsciiFile(outputFile, out)
 	logger.Info(colors.Colored(fmt.Sprintf("Wrote {%d} lines to {%s}", len(out), outputFile)))
 
 	return true, nil
