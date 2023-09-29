@@ -16,47 +16,29 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(trueBlocks)
 
 # ----------------------------------------------------------------------------------------
-# Debug msg
-# message(DEBUG  "Building src")
-
-# ----------------------------------------------------------------------------------------
 # Allow targets in cascade
 set_property(GLOBAL PROPERTY ALLOW_DUPLICATE_CUSTOM_TARGETS 1)
 
 # ----------------------------------------------------------------------------------------
 # Mandatory python3 interpret, the directive PythonInterp sets the following variables
 message(STATUS "======== LOOKING FOR PYTHON ========================")
-
 find_package(Python COMPONENTS Interpreter Development)
 
 # ----------------------------------------------------------------------------------------
 # We require the CURL library to be installed for most apps and tools
 # if found add its include path to includes section and link with it
-#
 message(STATUS "======== LOOKING FOR CURL ========================")
 find_package(CURL REQUIRED)
-
-if(CURL_FOUND)
-    include_directories(${CURL_INCLUDE_DIRS})
-endif(CURL_FOUND)
+include_directories(${CURL_INCLUDE_DIRS})
 
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings
 set(DL_LIB "-ldl")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -O2 -fPIC")
-
 if(APPLE)
     set(DL_LIB "")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
-
-# ----------------------------------------------------------------------------------------
-# Linkable libraries
-set(BASE_LIBS util ${CURL_LIBRARIES})
-
-# ----------------------------------------------------------------------------------------
-# Base included paths
-set(BASE_INCLUDE "${CMAKE_SOURCE_DIR}/dev_tools/utillib")
 
 # ----------------------------------------------------------------------------------------
 set(BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
