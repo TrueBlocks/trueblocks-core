@@ -24,6 +24,9 @@ var chainMutex sync.Mutex
 
 // GetChain returns the chain for a given chain
 func GetChain(chain string) chainGroup {
+	chainMutex.Lock()
+	defer chainMutex.Unlock()
+
 	ch := GetRootConfig().Chains[chain]
 	if ch.Chain == "" {
 		ch.Chain = chain
@@ -35,9 +38,7 @@ func GetChain(chain string) chainGroup {
 		}
 		ch.IpfsGateway = strings.Replace(ch.IpfsGateway, "[{CHAIN}]", chain, -1)
 		// cache it...
-		chainMutex.Lock()
 		GetRootConfig().Chains[chain] = ch
-		chainMutex.Unlock()
 	}
 	return ch
 }

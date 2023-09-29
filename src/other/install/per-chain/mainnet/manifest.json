@@ -6,7 +6,9 @@
     "appsPerChunk": 2000000,
     "snapToGrid": 100000,
     "firstSnap": 2300000,
-    "unripeDist": 28
+    "unripeDist": 28,
+    "allowMissing": false,
+    "channelCount": 20
   },
   "chunks": [
     {
@@ -17,25 +19,25 @@
       "indexSize": 320192
     },
     {
-      "range": "000000001-000590502",
-      "bloomHash": "QmZxFR7NmeUvyLoynX4cpN2DFKukbaFq78jmBAyGLeUkYD",
+      "range": "000000001-000590501",
+      "bloomHash": "QmdMVuheoXD1HNy8GHfJ138NSWmbwJwPaP3XN4HpuxuyXD",
       "bloomSize": 131114,
-      "indexHash": "Qmehw7ebshWsBQV4ZZLaEqETkttguRAonoQKMqVeumP9Fy",
-      "indexSize": 16821060
+      "indexHash": "QmXwh3qPE5ktzReLdUQjUSe4NAkwysYNM1f9jKKqjZNMJY",
+      "indexSize": 16821292
     },
     {
-      "range": "000590503-000864335",
-      "bloomHash": "QmXnbSfo2vNEezgmRqd5g4g59LL1tS113yGKqo4i23jRAc",
+      "range": "000590502-000864332",
+      "bloomHash": "QmQCQWXJ3pNH9itotydcSCpQcPXvAE9tTEQQtTV2bjo42T",
       "bloomSize": 524342,
-      "indexHash": "Qmce2u6VUG2A8Dsa6cPRtnNausU6JFAZ2FYz4b3NnMViVx",
-      "indexSize": 20604588
+      "indexHash": "QmVv9eTk392MF9ZjgxN4Xjf1QZSTvx6um9JSDsF2Z61YGD",
+      "indexSize": 20604640
     },
     {
-      "range": "000864336-001076298",
+      "range": "000864333-001076298",
       "bloomHash": "QmXNfBwxQ59LFo62ZExjLKzhaVGknRQQZuo1suFaFxeWAy",
       "bloomSize": 262190,
-      "indexHash": "QmXjuhoUJif2ERvasdS6qTrqASVQzhmAukJGHfaKCUVkuB",
-      "indexSize": 18268336
+      "indexHash": "QmYLDLZ3fcFxKE8dBFrJwKnJbbDiAMWYF7voMRjHRSC3K7",
+      "indexSize": 18268376
     },
     {
       "range": "001076299-001229769",
