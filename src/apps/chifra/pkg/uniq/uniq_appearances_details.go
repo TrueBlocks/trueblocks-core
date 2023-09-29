@@ -35,27 +35,29 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 		if block, err := conn.GetBlockBodyByNumber(bn); err != nil {
 			return err
 		} else {
-			if block.Miner.IsZero() {
-				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-				// burned). We enter a false record with a false tx_id to account for this.
-				miner := base.SentinalAddr.Hex()
-				streamAppearance(procFunc, flow, "miner", miner, bn, types.MisconfigReward, utils.NOPOS, ts, addrMap)
-			} else {
-				streamAppearance(procFunc, flow, "miner", block.Miner.Hex(), bn, types.BlockReward, utils.NOPOS, ts, addrMap)
+			author := block.Miner.Hex()
+			fakeId := types.BlockReward
+			if base.IsPrecompile(author) {
+				// Some blocks have a misconfigured miner setting. We process this block, so that
+				// every block gets a record, but it will be excluded from the index. See #3252.
+				author = base.SentinalAddr.Hex()
+				fakeId = types.MisconfigReward
 			}
+			streamAppearance(procFunc, flow, "miner", author, bn, fakeId, utils.NOPOS, ts, addrMap)
 
 			if uncles, err := conn.GetUncleBodiesByNumber(bn); err != nil {
 				return err
 			} else {
 				for _, uncle := range uncles {
-					if block.Miner.IsZero() {
-						// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-						// burned). We enter a false record with a false tx_id to account for this.
-						// do not change this!
-						streamAppearance(procFunc, flow, "uncle", base.SentinalAddr.Hex(), bn, types.UncleReward, utils.NOPOS, ts, addrMap)
-					} else {
-						streamAppearance(procFunc, flow, "uncle", uncle.Miner.Hex(), bn, types.UncleReward, utils.NOPOS, ts, addrMap)
+					author := uncle.Miner.Hex()
+					fakeId := types.UncleReward
+					if base.IsPrecompile(author) {
+						// Some blocks have a misconfigured miner setting. We process this block, so that
+						// every block gets a record, but it will be excluded from the index. See #3252.
+						author = base.SentinalAddr.Hex()
+						fakeId = types.MisconfigReward
 					}
+					streamAppearance(procFunc, flow, "uncle", author, bn, fakeId, utils.NOPOS, ts, addrMap)
 				}
 			}
 
@@ -198,28 +200,37 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
-				if trace.Action.Author.IsZero() {
-					// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-					// burned). We enter a false record with a false tx_id to account for this.
-					streamAppearance(procFunc, flow, "miner", base.SentinalAddr.Hex(), bn, types.MisconfigReward, traceid, ts, addrMap)
-				} else {
-					streamAppearance(procFunc, flow, "miner", trace.Action.Author.Hex(), bn, types.BlockReward, traceid, ts, addrMap)
+				author := trace.Action.Author.Hex()
+				fakeId := types.BlockReward
+				if base.IsPrecompile(author) {
+					// Some blocks have a misconfigured miner setting. We process this block, so that
+					// every block gets a record, but it will be excluded from the index. See #3252.
+					author = base.SentinalAddr.Hex()
+					fakeId = types.MisconfigReward
 				}
+				streamAppearance(procFunc, flow, "miner", author, bn, fakeId, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "uncle" {
-				if trace.Action.Author.IsZero() {
-					// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-					// burned). We enter a false record with a false tx_id to account for this.
-					streamAppearance(procFunc, flow, "uncle", base.SentinalAddr.Hex(), bn, types.UncleReward /* don't change */, traceid, ts, addrMap)
-				} else {
-					streamAppearance(procFunc, flow, "uncle", trace.Action.Author.Hex(), bn, types.UncleReward, traceid, ts, addrMap)
+				author := trace.Action.Author.Hex()
+				fakeId := types.UncleReward
+				if base.IsPrecompile(author) {
+					// Some blocks have a misconfigured miner setting. We process this block, so that
+					// every block gets a record, but it will be excluded from the index. See #3252.
+					author = base.SentinalAddr.Hex()
+					fakeId = types.MisconfigReward
 				}
+				streamAppearance(procFunc, flow, "uncle", author, bn, fakeId, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "external" {
-				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
-				falseTxid := types.ExternalReward
-				streamAppearance(procFunc, flow, "external", author, bn, falseTxid, traceid, ts, addrMap)
+				fakeId := types.ExternalReward
+				if base.IsPrecompile(author) {
+					// Some blocks have a misconfigured miner setting. We process this block, so that
+					// every block gets a record, but it will be excluded from the index. See #3252.
+					author = base.SentinalAddr.Hex()
+					fakeId = types.MisconfigReward
+				}
+				streamAppearance(procFunc, flow, "external", author, bn, fakeId, traceid, ts, addrMap)
 
 			} else {
 				return errors.New("Unknown reward type" + trace.Action.RewardType)

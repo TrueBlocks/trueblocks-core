@@ -77,30 +77,26 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
-				if trace.Action.Author.IsZero() {
-					// Early clients allowed misconfigured miner settings with address
-					// 0x0 (reward got burned). We enter a false record with a false tx_id
-					// to account for this.
-					author := base.SentinalAddr.Hex()
-					addAddressToMaps(author, bn, types.MisconfigReward, addrMap)
-
-				} else {
-					addAddressToMaps(trace.Action.Author.Hex(), bn, types.BlockReward, addrMap)
-
+				author := trace.Action.Author.Hex()
+				fakeId := types.BlockReward
+				if base.IsPrecompile(author) {
+					// Some blocks have a misconfigured miner setting. We process this block, so that
+					// every block gets a record, but it will be excluded from the index. See #3252.
+					author = base.SentinalAddr.Hex()
+					fakeId = types.MisconfigReward
 				}
+				addAddressToMaps(author, bn, fakeId, addrMap)
 
 			} else if trace.Action.RewardType == "uncle" {
-				if trace.Action.Author.IsZero() {
-					// Early clients allowed misconfigured miner settings with address
-					// 0x0 (reward got burned). We enter a false record with a false tx_id
-					// to account for this.
-					author := base.SentinalAddr.Hex()
-					addAddressToMaps(author, bn, types.UncleReward, addrMap)
-
-				} else {
-					addAddressToMaps(trace.Action.Author.Hex(), bn, types.UncleReward, addrMap)
-
+				author := trace.Action.Author.Hex()
+				fakeId := types.UncleReward
+				if base.IsPrecompile(author) {
+					// Some blocks have a misconfigured miner setting. We process this block, so that
+					// every block gets a record, but it will be excluded from the index. See #3252.
+					author = base.SentinalAddr.Hex()
+					fakeId = types.MisconfigReward
 				}
+				addAddressToMaps(author, bn, fakeId, addrMap)
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...

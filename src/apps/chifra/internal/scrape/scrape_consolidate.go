@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -61,7 +62,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 	// Load the stage into the map...
 	exists := file.FileExists(stageFn) // order matters
-	appMap, chunkRange, nAppearances := bm.AsciiFileToAppearanceMap(stageFn)
+	appMap, chunkRange, nAppearances := bm.AsciiFileToAppearanceMap(stageFn, true /*removeMisconfigs*/)
 	if !exists {
 		// Brand new stage.
 		chunkRange = base.FileRange{First: bm.meta.Finalized + 1, Last: blocks[0]}
@@ -87,7 +88,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		}
 
 		// Read in the ripe file, add it to the appMap and...
-		thisMap, _, thisCount := bm.AsciiFileToAppearanceMap(ripeFn)
+		thisMap, _, thisCount := bm.AsciiFileToAppearanceMap(ripeFn, false /* removeMisconfigs */)
 		nAppearances += thisCount
 		nAppsFound += thisCount
 		nAddrsFound += len(thisMap)
@@ -160,7 +161,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
-func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (index.AddressAppearanceMap, base.FileRange, int) {
+func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string, removeMisconfigs bool) (index.AddressAppearanceMap, base.FileRange, int) {
 	appearances := file.AsciiFileToLines(fn)
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
@@ -178,6 +179,10 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (index.AddressAppear
 			addr := strings.ToLower(parts[0])
 			bn := utils.MustParseUint(strings.TrimLeft(parts[1], "0"))
 			txid := utils.MustParseUint(strings.TrimLeft(parts[2], "0"))
+			// See #3252
+			if removeMisconfigs && addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
+				continue
+			}
 			fileRange.First = utils.Min(fileRange.First, bn)
 			fileRange.Last = utils.Max(fileRange.Last, bn)
 			appMap[addr] = append(appMap[addr], index.AppearanceRecord{
@@ -186,5 +191,6 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (index.AddressAppear
 			})
 		}
 	}
+
 	return appMap, fileRange, len(appearances)
 }
