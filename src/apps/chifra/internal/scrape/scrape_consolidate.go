@@ -62,7 +62,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 	// Load the stage into the map...
 	exists := file.FileExists(stageFn) // order matters
-	appMap, chunkRange, nAppearances := bm.AsciiFileToAppearanceMap(stageFn, true /*removeMisconfigs*/)
+	appMap, chunkRange, nAppearances := bm.AsciiFileToAppearanceMap(stageFn)
 	if !exists {
 		// Brand new stage.
 		chunkRange = base.FileRange{First: bm.meta.Finalized + 1, Last: blocks[0]}
@@ -88,7 +88,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		}
 
 		// Read in the ripe file, add it to the appMap and...
-		thisMap, _, thisCount := bm.AsciiFileToAppearanceMap(ripeFn, false /* removeMisconfigs */)
+		thisMap, _, thisCount := bm.AsciiFileToAppearanceMap(ripeFn)
 		nAppearances += thisCount
 		nAppsFound += thisCount
 		nAddrsFound += len(thisMap)
@@ -161,7 +161,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
-func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string, removeMisconfigs bool) (index.AddressAppearanceMap, base.FileRange, int) {
+func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (index.AddressAppearanceMap, base.FileRange, int) {
 	appearances := file.AsciiFileToLines(fn)
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
@@ -180,7 +180,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string, removeMisconfigs boo
 			bn := utils.MustParseUint(strings.TrimLeft(parts[1], "0"))
 			txid := utils.MustParseUint(strings.TrimLeft(parts[2], "0"))
 			// See #3252
-			if removeMisconfigs && addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
+			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
 				continue
 			}
 			fileRange.First = utils.Min(fileRange.First, bn)

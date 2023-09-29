@@ -124,7 +124,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	// TODO: BOGUS This should be configurable - If we make this too big, the pinning service chokes
+	// If we make this too big, the pinning service chokes
 	poolSize := runtime.NumCPU() * 2
 
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
