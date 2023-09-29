@@ -45,6 +45,7 @@ const (
 	Index_Maps
 
 	Config
+	Regular
 )
 
 var cacheTypeToName = map[CacheType]string{
@@ -69,6 +70,7 @@ var cacheTypeToName = map[CacheType]string{
 	Index_Unripe:       "unripe",
 	Index_Maps:         "neighbors",
 	Config:             "config",
+	Regular:            "regular",
 }
 
 // CacheTypeToFolder is a map of cache types to the folder name (also, it acts as the mode in chifra status)
@@ -94,6 +96,7 @@ var CacheTypeToFolder = map[CacheType]string{
 	Index_Unripe:       "unripe",
 	Index_Maps:         "maps",
 	Config:             "config",
+	Regular:            "regular",
 }
 
 var cacheTypeToExt = map[CacheType]string{
@@ -118,6 +121,7 @@ var cacheTypeToExt = map[CacheType]string{
 	Index_Unripe:       "txt",
 	Index_Maps:         "bin",
 	Config:             "toml",
+	Regular:            "",
 }
 
 func (ct CacheType) String() string {
@@ -196,6 +200,10 @@ func WalkCacheFolder(ctx context.Context, chain string, cacheType CacheType, dat
 func WalkConfigFolders(ctx context.Context, data interface{}, filenameChan chan<- CacheFileInfo) {
 	path := config.PathToRootConfig()
 	walkFolder(ctx, path, Config, data, filenameChan)
+}
+
+func WalkFolder(ctx context.Context, path string, data interface{}, filenameChan chan<- CacheFileInfo) {
+	walkFolder(ctx, path, Regular, data, filenameChan)
 }
 
 func walkFolder(ctx context.Context, path string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {

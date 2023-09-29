@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -20,18 +21,17 @@ import (
 
 func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showDiff := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-			return opts.handleDiff(modelChan, walker, path, first)
-		}
-
 		walker := walk.NewCacheWalker(
 			chain,
-			opts.Globals.TestMode,
+			testMode,
 			10000, /* maxTests */
-			showDiff,
+			func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+				return opts.handleDiff(chain, path)
+			},
 		)
 
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
@@ -43,35 +43,44 @@ func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-func (opts *ChunksOptions) handleDiff(modelChan chan types.Modeler[types.RawModeler], walker *walk.CacheWalker, path string, first bool) (bool, error) {
-	path = index.ToIndexPath(path)
-	_, name := filepath.Split(path)
-
-	diffPath := os.Getenv("TB_CHUNKS_DIFFPATH")
-	if !strings.Contains(diffPath, "unchained/") {
-		diffPath = filepath.Join(diffPath, "unchained/", opts.Globals.Chain, "finalized")
-	}
-	diffPath, _ = filepath.Abs(diffPath)
-	diffPath = filepath.Join(diffPath, name)
-	if !file.FileExists(diffPath) {
-		logger.Fatal(fmt.Sprintf("The diff path does not exist: %s", diffPath))
-	}
+func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {
+	thisPath := index.ToIndexPath(path)
+	diffPath := getDiffPath(chain, thisPath)
 
 	logger.Info("Comparing:")
-	logger.Info(fmt.Sprintf("  existing: %s (%d)", path, file.FileSize(path)))
+	logger.Info(fmt.Sprintf("  existing: %s (%d)", thisPath, file.FileSize(thisPath)))
 	logger.Info(fmt.Sprintf("  current:  %s (%d)", diffPath, file.FileSize(diffPath)))
 
-	if _, err := opts.exportTo("one", path); err != nil {
+	rng := base.RangeFromFilename(path)
+	outFn := fmt.Sprintf("%d", rng.First+((rng.Last-rng.First)/2))
+	if _, err := opts.exportTo("one", thisPath, outFn); err != nil {
 		return false, err
 	}
-	if _, err := opts.exportTo("two", diffPath); err != nil {
+
+	if _, err := opts.exportTo("two", diffPath, outFn); err != nil {
 		return false, err
 	}
 
 	return true, nil
 }
 
-func (opts *ChunksOptions) exportTo(dest, source string) (bool, error) {
+// getDiffPath returns the path to the diff folder.
+func getDiffPath(chain, path string) (diffPath string) {
+	rng := base.RangeFromFilename(path)
+	diffPath = os.Getenv("TB_CHUNKS_DIFFPATH")
+	if !strings.Contains(diffPath, "unchained/") {
+		diffPath = filepath.Join(diffPath, "unchained/", chain, "finalized")
+	}
+	diffPath, _ = filepath.Abs(diffPath)
+	diffPath, _ = index.FindFileByBlockNumber(chain, diffPath, rng.First+(rng.Last-rng.First)/2)
+	if !file.FileExists(diffPath) {
+		logger.Fatal(fmt.Sprintf("The diff path does not exist: [%s]", diffPath))
+	}
+
+	return
+}
+
+func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 	outputFolder, _ := filepath.Abs("./" + dest)
 	if !file.FolderExists(outputFolder) {
 		if err := os.MkdirAll(outputFolder, os.ModePerm); err != nil {
@@ -124,8 +133,12 @@ func (opts *ChunksOptions) exportTo(dest, source string) (bool, error) {
 	for _, app := range apps {
 		out = append(out, fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address))
 	}
-	outputFile := filepath.Join(outputFolder, "apps.txt")
-	_ = file.LinesToAsciiFile(outputFile, out)
+
+	outputFile := filepath.Join(outputFolder, fmt.Sprintf("%s_apps.txt", outFn))
+	if err = file.LinesToAsciiFile(outputFile, out); err != nil {
+		return false, err
+	}
+
 	logger.Info(colors.Colored(fmt.Sprintf("Wrote {%d} lines to {%s}", len(out), outputFile)))
 
 	return true, nil
