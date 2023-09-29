@@ -77,30 +77,28 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
-				author := trace.Action.Author.Hex()
-				if base.IsPrecompile(author) {
+				if trace.Action.Author.IsZero() {
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
-					author = base.SentinalAddr.Hex()
+					author := base.SentinalAddr.Hex()
 					addAddressToMaps(author, bn, types.MisconfigReward, addrMap)
 
 				} else {
-					addAddressToMaps(author, bn, types.BlockReward, addrMap)
+					addAddressToMaps(trace.Action.Author.Hex(), bn, types.BlockReward, addrMap)
 
 				}
 
 			} else if trace.Action.RewardType == "uncle" {
-				author := trace.Action.Author.Hex()
-				if base.IsPrecompile(author) {
+				if trace.Action.Author.IsZero() {
 					// Early clients allowed misconfigured miner settings with address
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
-					author = base.SentinalAddr.Hex()
+					author := base.SentinalAddr.Hex()
 					addAddressToMaps(author, bn, types.UncleReward, addrMap)
 
 				} else {
-					addAddressToMaps(author, bn, types.UncleReward, addrMap)
+					addAddressToMaps(trace.Action.Author.Hex(), bn, types.UncleReward, addrMap)
 
 				}
 

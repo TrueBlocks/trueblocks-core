@@ -35,29 +35,27 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 		if block, err := conn.GetBlockBodyByNumber(bn); err != nil {
 			return err
 		} else {
-			miner := block.Miner.Hex()
-			txid := types.BlockReward
-			if base.IsPrecompile(block.Miner.Hex()) {
+			if block.Miner.IsZero() {
 				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 				// burned). We enter a false record with a false tx_id to account for this.
-				miner = base.SentinalAddr.Hex()
-				txid = types.MisconfigReward
+				miner := base.SentinalAddr.Hex()
+				streamAppearance(procFunc, flow, "miner", miner, bn, types.MisconfigReward, utils.NOPOS, ts, addrMap)
+			} else {
+				streamAppearance(procFunc, flow, "miner", block.Miner.Hex(), bn, types.BlockReward, utils.NOPOS, ts, addrMap)
 			}
-			streamAppearance(procFunc, flow, "miner", miner, bn, txid, utils.NOPOS, ts, addrMap)
 
 			if uncles, err := conn.GetUncleBodiesByNumber(bn); err != nil {
 				return err
 			} else {
 				for _, uncle := range uncles {
-					unc := uncle.Miner.Hex()
-					txid = types.UncleReward
-					if base.IsPrecompile(block.Miner.Hex()) {
+					if block.Miner.IsZero() {
 						// Early clients allowed misconfigured miner settings with address 0x0 (reward got
 						// burned). We enter a false record with a false tx_id to account for this.
-						unc = base.SentinalAddr.Hex()
-						txid = types.UncleReward // do not change this!
+						// do not change this!
+						streamAppearance(procFunc, flow, "uncle", base.SentinalAddr.Hex(), bn, types.UncleReward, utils.NOPOS, ts, addrMap)
+					} else {
+						streamAppearance(procFunc, flow, "uncle", uncle.Miner.Hex(), bn, types.UncleReward, utils.NOPOS, ts, addrMap)
 					}
-					streamAppearance(procFunc, flow, "uncle", unc, bn, txid, utils.NOPOS, ts, addrMap)
 				}
 			}
 
@@ -200,26 +198,22 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
-				author := trace.Action.Author.Hex()
-				falseTxid := types.BlockReward
-				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-				// burned). We enter a false record with a false tx_id to account for this.
-				if base.IsPrecompile(author) {
-					author = base.SentinalAddr.Hex()
-					falseTxid = types.MisconfigReward
+				if trace.Action.Author.IsZero() {
+					// Early clients allowed misconfigured miner settings with address 0x0 (reward got
+					// burned). We enter a false record with a false tx_id to account for this.
+					streamAppearance(procFunc, flow, "miner", base.SentinalAddr.Hex(), bn, types.MisconfigReward, traceid, ts, addrMap)
+				} else {
+					streamAppearance(procFunc, flow, "miner", trace.Action.Author.Hex(), bn, types.BlockReward, traceid, ts, addrMap)
 				}
-				streamAppearance(procFunc, flow, "miner", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "uncle" {
-				author := trace.Action.Author.Hex()
-				falseTxid := types.UncleReward
-				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-				// burned). We enter a false record with a false tx_id to account for this.
-				if base.IsPrecompile(author) {
-					author = base.SentinalAddr.Hex()
-					falseTxid = types.UncleReward // do not change! it will break the index
+				if trace.Action.Author.IsZero() {
+					// Early clients allowed misconfigured miner settings with address 0x0 (reward got
+					// burned). We enter a false record with a false tx_id to account for this.
+					streamAppearance(procFunc, flow, "uncle", base.SentinalAddr.Hex(), bn, types.UncleReward /* don't change */, traceid, ts, addrMap)
+				} else {
+					streamAppearance(procFunc, flow, "uncle", trace.Action.Author.Hex(), bn, types.UncleReward, traceid, ts, addrMap)
 				}
-				streamAppearance(procFunc, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "external" {
 				// This only happens in xDai as far as we know...
