@@ -53,11 +53,11 @@ func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {
 
 	rng := base.RangeFromFilename(path)
 	outFn := fmt.Sprintf("%d", rng.First+((rng.Last-rng.First)/2))
-	if _, err := opts.exportTo("one", thisPath, outFn); err != nil {
+	if _, err := opts.exportTo("existing", thisPath, outFn); err != nil {
 		return false, err
 	}
 
-	if _, err := opts.exportTo("two", diffPath, outFn); err != nil {
+	if _, err := opts.exportTo("proposed", diffPath, outFn); err != nil {
 		return false, err
 	}
 
@@ -129,9 +129,10 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 	})
 
 	out := make([]string, 0, len(apps))
-	out = append(out, source)
 	for _, app := range apps {
-		out = append(out, fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address))
+		if app.Address != base.SentinalAddr || uint64(app.TransactionIndex) != types.MisconfigReward {
+			out = append(out, fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address))
+		}
 	}
 
 	outputFile := filepath.Join(outputFolder, fmt.Sprintf("%s_apps.txt", outFn))
