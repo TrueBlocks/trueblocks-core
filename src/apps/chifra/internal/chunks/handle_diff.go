@@ -130,7 +130,9 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 
 	out := make([]string, 0, len(apps))
 	for _, app := range apps {
-		out = append(out, fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address))
+		if app.Address != base.SentinalAddr || uint64(app.TransactionIndex) != types.MisconfigReward {
+			out = append(out, fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address))
+		}
 	}
 
 	outputFile := filepath.Join(outputFolder, fmt.Sprintf("%s_apps.txt", outFn))
