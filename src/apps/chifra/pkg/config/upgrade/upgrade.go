@@ -44,9 +44,15 @@ func UpgradeConfigs(newVersion version.Version) error {
 		cfg.Chains[chain] = ch
 
 		oldPath := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
+		newPath := config.PathToManifest(chain)
 		if file.FileExists(oldPath) {
-			_ = os.Rename(oldPath, config.PathToManifest(chain))
+			logger.Info("Moving", oldPath, "to", newPath)
+			// _ = os.Rename(oldPath, newPath)
+			_, _ = file.Copy(oldPath, newPath)
+			_ = os.Remove(oldPath)
 		}
+		logger.Info(oldPath+":", file.FileExists(oldPath))
+		logger.Info(newPath+":", file.FileExists(newPath))
 	}
 
 	// Re-write the file (after making a backup) with the new version

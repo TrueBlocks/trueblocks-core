@@ -12,8 +12,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -158,15 +158,15 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	reports = append(reports, r2c)
 
 	// we only check the stage if it exists
-	stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
-	stageFn, _ := file.LatestFileInFolder(stagePath)
-	if file.FileExists(stageFn) {
-		stage := simpleReportCheck{Reason: "Check staging folder"}
-		if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
-			return err
-		}
-		reports = append(reports, stage)
-	}
+	// stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
+	// stageFn, _ := file.LatestFileInFolder(stagePath)
+	// if file.FileExists(stageFn) {
+	// 	stage := simpleReportCheck{Reason: "Check staging folder"}
+	// 	if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
+	// 		return err
+	// 	}
+	// 	reports = append(reports, stage)
+	// }
 
 	if opts.Deep {
 		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}
