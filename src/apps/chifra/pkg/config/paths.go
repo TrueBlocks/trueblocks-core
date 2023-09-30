@@ -33,6 +33,16 @@ func PathToChainConfig(chain string) (string, error) {
 	return cfgFolder, err
 }
 
+// PathToManifest returns the path to the manifest database per chain
+func PathToManifest(chain string) string {
+	return filepath.Join(PathToIndex(chain), "manifest.json")
+}
+
+// PathToIndex returns the path to the timestamps database per chain
+func PathToTimestamps(chain string) string {
+	return filepath.Join(PathToIndex(chain), "ts.bin")
+}
+
 // PathToIndex returns the one and only indexPath
 func PathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file

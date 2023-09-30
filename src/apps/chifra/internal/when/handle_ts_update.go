@@ -42,16 +42,16 @@ func (opts *WhenOptions) HandleTimestampUpdate() error {
 		block, _ := opts.Conn.GetBlockHeaderByNumber(bn)
 		record := tslib.TimestampRecord{Bn: uint32(block.BlockNumber), Ts: uint32(block.Timestamp)}
 		timestamps = append(timestamps, record)
-		logger.Progress(true, "Adding block", bn, "to timestamp array")
+		logger.Progress(bn%23 == 0, "Adding block", bn, "of", meta.Latest, "to timestamp array")
 		if bn%1000 == 0 {
-			logger.Info("Writing...", len(timestamps), "timestamps at block", bn)
+			logger.Info("Writing...", len(timestamps), "timestamps at block", bn, "                          ")
 			_ = tslib.Append(chain, timestamps)
 			timestamps = []tslib.TimestampRecord{}
 		}
 	}
 
 	if len(timestamps) > 0 {
-		logger.Info("Writing...", len(timestamps), "timestamps at block", meta.Latest)
+		logger.Info("Writing...", len(timestamps), "timestamps at block", meta.Latest, "                          ")
 		_ = tslib.Append(chain, timestamps)
 	}
 

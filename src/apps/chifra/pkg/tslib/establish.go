@@ -20,7 +20,7 @@ import (
 )
 
 func EstablishTsFile(chain string, publisher base.Address) error {
-	tsPath := filepath.Join(config.PathToIndex(chain), "ts.bin")
+	tsPath := config.PathToTimestamps(chain)
 	if file.FileExists(tsPath) {
 		return nil
 	}

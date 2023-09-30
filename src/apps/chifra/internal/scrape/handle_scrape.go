@@ -7,6 +7,7 @@ package scrapePkg
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -23,7 +24,16 @@ import (
 // (or less if close to the head). The forever loop pauses each round for
 // --sleep seconds (or, if not close to the head, for .25 seconds).
 func (opts *ScrapeOptions) HandleScrape() error {
-	logger.Info("Scraping:", config.GetScrape(opts.Globals.Chain))
+	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+	defer func() {
+		pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
+		_ = os.Remove(pidPath)
+	}()
+
+	logger.Info("Scraping:")
+	logger.Info("  Path:    ", config.PathToIndex(opts.Globals.Chain))
+	logger.Info("  Settings:", config.GetScrape(opts.Globals.Chain))
 	if opts.DryRun {
 		return nil
 	}
@@ -31,9 +41,6 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	var blocks = make([]base.Blknum, 0, opts.BlockCnt)
 	var err error
 	var ok bool
-
-	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
 
 	// Clean the temporary files and makes sure block zero has been processed
 	if ok, err := opts.Prepare(); !ok || err != nil {
@@ -82,7 +89,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			opts:         opts,
 			nRipe:        0,
 			nUnripe:      0,
-			timestamps:   make([]tslib.TimestampRecord, 0, opts.BlockCnt),
+			timestamps12: make(map[base.Blknum]tslib.TimestampRecord, opts.BlockCnt),
 			processedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 			meta:         bm.meta,
 			nChannels:    int(opts.Settings.ChannelCount),

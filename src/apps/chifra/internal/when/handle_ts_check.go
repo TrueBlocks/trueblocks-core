@@ -124,4 +124,4 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Si
 }
 
 // TODO: There's got to be a better way
-var clear = strings.Repeat(" ", 80)
+var clear = strings.Repeat(" ", 60)

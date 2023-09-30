@@ -2,7 +2,6 @@ package manifest
 
 import (
 	"os"
-	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -14,7 +13,7 @@ import (
 // function aborts due to error and the backup files still exist, the function will attempt
 // to restore the backup files before returning.
 func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) (err error) {
-	manifestFn := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
+	manifestFn := config.PathToManifest(chain)
 
 	manifestBackup := manifestFn + ".backup"
 	indexBackup := indexFn + ".backup"

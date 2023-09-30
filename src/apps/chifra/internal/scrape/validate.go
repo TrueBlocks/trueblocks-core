@@ -104,9 +104,9 @@ func (opts *ScrapeOptions) validateScrape() error {
 		pid := utils.MustParseInt(file.AsciiFileToString(pidPath))
 		// fmt.Println("Pid file exists with contents:", pid)
 		if running, err := utils.PidExists(pid); err == nil && running {
-			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
+			return validate.Usage("The {0} is already running. If it is not, remove {1} and try again.", "scraper", pidPath)
 		} else if err != nil {
-			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
+			return validate.Usage("The {0} is already running. If it is not, remove {1} and try again.", "scraper", pidPath)
 		}
 		// fmt.Println("Removing pid file")
 		os.Remove(pidPath)

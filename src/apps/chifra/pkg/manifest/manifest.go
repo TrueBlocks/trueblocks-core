@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"path/filepath"
 	"sort"
 	"strings"
 
@@ -88,7 +87,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		return man, err
 	}
 
-	manifestPath := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
+	manifestPath := config.PathToManifest(chain)
 	contents := file.AsciiFileToString(manifestPath)
 	if !file.FileExists(manifestPath) || len(contents) == 0 {
 		return nil, ErrManifestNotFound
@@ -154,7 +153,7 @@ func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) err
 func (m *Manifest) SaveManifest(chain string) error {
 	m.Config = config.GetScrape(chain)
 
-	fileName := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
+	fileName := config.PathToManifest(chain)
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)

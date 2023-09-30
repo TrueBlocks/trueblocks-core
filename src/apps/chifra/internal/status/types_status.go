@@ -159,9 +159,9 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 //
 
 func ToProgress(chain string, meta *rpc.MetaData) string {
-	nTs, _ := tslib.NTimestamps(chain)
+	nTs, _ := tslib.NTimestamps(chain) // when the file has one record, the block is zero, etc.
 	format := "%d, %d, %d, %d ts: %d"
-	return fmt.Sprintf(format, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
+	return fmt.Sprintf(format, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs-1)
 }
 
 func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {

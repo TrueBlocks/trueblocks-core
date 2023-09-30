@@ -30,7 +30,7 @@ func Truncate(chain string, maxBn uint64) error {
 
 	truncated := perChainTimestamps[chain].memory[0:maxBn]
 
-	tsFn := filepath.Join(config.PathToIndex(chain), "ts.bin")
+	tsFn := config.PathToTimestamps(chain)
 	tmpPath := filepath.Join(config.PathToCache(chain), "tmp")
 	if backupFn, err := file.MakeBackup(tmpPath, tsFn); err == nil {
 		defer func() {
@@ -41,6 +41,13 @@ func Truncate(chain string, maxBn uint64) error {
 				_ = os.Remove(backupFn) // seems redundant, but may not be on some operating systems
 			}
 		}()
+
+		// remove the file and...
+		if err := os.Remove(tsFn); err != nil {
+			return err
+		}
+
+		// ...open it fresh
 		if fp, err := os.OpenFile(tsFn, os.O_WRONLY|os.O_CREATE, 0644); err == nil {
 			defer func() {
 				fp.Close()

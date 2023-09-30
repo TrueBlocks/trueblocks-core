@@ -2,6 +2,8 @@ package upgrade
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -40,6 +42,11 @@ func UpgradeConfigs(newVersion version.Version) error {
 		}
 		ch.Scrape = scrape
 		cfg.Chains[chain] = ch
+
+		oldPath := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
+		if file.FileExists(oldPath) {
+			_ = os.Rename(oldPath, config.PathToManifest(chain))
+		}
 	}
 
 	// Re-write the file (after making a backup) with the new version

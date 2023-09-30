@@ -158,7 +158,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 				return &report, err
 			}
 
-			path := config.PathToIndex(chain) + "ts.bin"
+			path := config.PathToTimestamps(chain)
 			if _, err = pinning.PinItem(chain, "timestamps", path, remote); err != nil {
 				return &report, err
 			}
