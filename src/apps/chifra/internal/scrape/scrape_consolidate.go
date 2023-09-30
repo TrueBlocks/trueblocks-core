@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -179,10 +178,6 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (index.AddressAppear
 			addr := strings.ToLower(parts[0])
 			bn := utils.MustParseUint(strings.TrimLeft(parts[1], "0"))
 			txid := utils.MustParseUint(strings.TrimLeft(parts[2], "0"))
-			// See #3252
-			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
-				continue
-			}
 			fileRange.First = utils.Min(fileRange.First, bn)
 			fileRange.Last = utils.Max(fileRange.Last, bn)
 			appMap[addr] = append(appMap[addr], index.AppearanceRecord{
