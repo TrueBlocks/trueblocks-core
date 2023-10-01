@@ -63,12 +63,6 @@ func GetRootConfig() *ConfigFile {
 		logger.Fatal(err)
 	}
 
-	requiredVer := version.NewVersion("v1.0.0-release")
-	currentVer := version.NewVersion(trueBlocksConfig.Version.Current)
-	if currentVer.Uint64() < requiredVer.Uint64() {
-		_ = UpgradeConfigs(requiredVer) // does not return
-	}
-
 	user, _ := user.Current()
 
 	cachePath := trueBlocksConfig.Settings.CachePath
@@ -96,9 +90,15 @@ func GetRootConfig() *ConfigFile {
 	// only then can we complete these paths. At this point these paths
 	// only point to the top-levl of the cache or index. Also note that
 	// these two calls do not return if they fail, so no need to handle errors
-	defaultChains := []string{trueBlocksConfig.Settings.DefaultChain}
+	defaultChains := []string{"mainnet", "sepolia", trueBlocksConfig.Settings.DefaultChain}
 	_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
 	_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
+
+	requiredVer := version.NewVersion("v1.0.0-release")
+	currentVer := version.NewVersion(trueBlocksConfig.Version.Current)
+	if currentVer.Uint64() < requiredVer.Uint64() {
+		_ = UpgradeConfigs(requiredVer) // does not return
+	}
 
 	// clean up the config data
 	for chain, ch := range trueBlocksConfig.Chains {

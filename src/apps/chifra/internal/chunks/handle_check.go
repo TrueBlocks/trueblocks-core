@@ -12,8 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -158,6 +156,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	reports = append(reports, r2c)
 
 	// we only check the stage if it exists
+	// TODO: clean this up
 	// stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
 	// stageFn, _ := file.LatestFileInFolder(stagePath)
 	// if file.FileExists(stageFn) {
