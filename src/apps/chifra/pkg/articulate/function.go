@@ -75,7 +75,7 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 
 	unpacked, err := args.Unpack(dataBytes)
 	if err != nil {
-		return
+		return fmt.Errorf("error unpacking arguments %w", err)
 	}
 
 	// Set values of non-indexed arguments

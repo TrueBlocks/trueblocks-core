@@ -100,7 +100,6 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				"parentHash":  s.ParentHash,
 				"timestamp":   s.Timestamp,
 				"date":        s.Date(),
-				"tx_hashes":   txHashes,
 			},
 			Order: []string{
 				"hash",
@@ -108,13 +107,23 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 				"parentHash",
 				"timestamp",
 				"date",
-				"tx_hashes",
 			},
 		}
-		if len(s.Withdrawals) > 0 {
-			model.Data["withdrawals"] = s.Withdrawals
-			model.Order = append(model.Order, "withdrawals")
+
+		if format == "json" {
+			model.Data["tx_hashes"] = txHashes
+			if s.BlockNumber > base.ShanghaiBlock {
+				model.Data["withdrawals"] = s.Withdrawals
+			}
+		} else {
+			model.Data["transactionsCnt"] = len(txHashes)
+			model.Order = append(model.Order, "transactionsCnt")
+			if s.BlockNumber > base.ShanghaiBlock {
+				model.Data["withdrawalsCnt"] = len(s.Withdrawals)
+				model.Order = append(model.Order, "withdrawalsCnt")
+			}
 		}
+
 		return model
 	}
 
