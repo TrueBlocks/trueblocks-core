@@ -14,7 +14,7 @@ import (
 // if every block was visited or not.
 type BlazeManager struct {
 	chain        string
-	timestamps12 map[base.Blknum]tslib.TimestampRecord
+	timestamps   map[base.Blknum]tslib.TimestampRecord
 	processedMap map[base.Blknum]bool
 	opts         *ScrapeOptions
 	meta         *rpc.MetaData

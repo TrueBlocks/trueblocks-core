@@ -135,7 +135,7 @@ func (bm *BlazeManager) ProcessTimestamps(tsChannel chan tslib.TimestampRecord, 
 	defer tsWg.Done()
 	for ts := range tsChannel {
 		blazeMutex.Lock()
-		bm.timestamps12[base.Blknum(ts.Bn)] = ts
+		bm.timestamps[base.Blknum(ts.Bn)] = ts
 		bm.nTimestamps++
 		blazeMutex.Unlock()
 	}

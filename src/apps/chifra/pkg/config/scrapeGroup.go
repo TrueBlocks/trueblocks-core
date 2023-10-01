@@ -21,25 +21,6 @@ type ScrapeSettings struct {
 
 // GetScrape returns the scraper settings per chain
 func GetScrape(chain string) ScrapeSettings {
-	empty := ScrapeSettings{}
-	if GetRootConfig().Chains[chain].Scrape == empty {
-		settings := ScrapeSettings{
-			AppsPerChunk: 2000000,
-			SnapToGrid:   250000,
-			FirstSnap:    2000000,
-			UnripeDist:   28,
-			ChannelCount: 20,
-			AllowMissing: false,
-		}
-		if chain == "mainnet" {
-			settings.SnapToGrid = 100000
-			settings.FirstSnap = 2300000
-		}
-		ch := GetRootConfig().Chains[chain]
-		ch.Scrape = settings
-		GetRootConfig().Chains[chain] = ch
-	}
-
 	return GetRootConfig().Chains[chain].Scrape
 }
 

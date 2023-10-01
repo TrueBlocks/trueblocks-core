@@ -1,4 +1,4 @@
-package upgrade
+package config
 
 import (
 	"fmt"
@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -14,16 +13,21 @@ import (
 
 // upgradeConfigs will upgrade the config files to the latest versions
 func UpgradeConfigs(newVersion version.Version) error {
-	fn := config.PathToRootConfig() + "trueBlocks.toml"
-	var cfg config.ConfigFile
-	if err := config.ReadConfigFile(fn, &cfg); err != nil {
+	pathToConfig := PathToRootConfig()
+	pathToChainConfigFile := func(chain, fileName string) string {
+		return filepath.Join(pathToConfig, "config", chain, fileName)
+	}
+
+	fn := pathToConfig + "trueBlocks.toml"
+	var cfg ConfigFile
+	if err := ReadConfigFile(fn, &cfg); err != nil {
 		return err
 	}
 
-	for chain, group := range cfg.Chains {
-		group.Chain = chain
+	for chain, _ := range cfg.Chains {
 		ch := cfg.Chains[chain]
-		scrape := config.ScrapeSettings{
+		ch.Chain = chain
+		scrape := ScrapeSettings{
 			AppsPerChunk: 2000000,
 			SnapToGrid:   250000,
 			FirstSnap:    2000000,
@@ -36,27 +40,24 @@ func UpgradeConfigs(newVersion version.Version) error {
 			scrape.FirstSnap = 2300000
 		}
 
-		fn := config.PathToRootConfig() + "config/" + chain + "/blockScrape.toml"
+		fn := pathToChainConfigFile(chain, "blockScrape.toml")
 		if file.FileExists(fn) {
 			_ = MergeScrapeConfig(fn, &scrape)
+			_ = os.Remove(fn)
 		}
 		ch.Scrape = scrape
 		cfg.Chains[chain] = ch
 
-		oldPath := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
-		newPath := config.PathToManifest(chain)
+		oldPath := pathToChainConfigFile(chain, "manifest.json")
+		newPath := filepath.Join(PathToIndex(chain), "manifest.json")
 		if file.FileExists(oldPath) {
-			logger.Info("Moving", oldPath, "to", newPath)
-			// _ = os.Rename(oldPath, newPath)
-			_, _ = file.Copy(oldPath, newPath)
+			_, _ = file.Copy(newPath, oldPath)
 			_ = os.Remove(oldPath)
 		}
-		logger.Info(oldPath+":", file.FileExists(oldPath))
-		logger.Info(newPath+":", file.FileExists(newPath))
 	}
 
 	// Re-write the file (after making a backup) with the new version
-	_, _ = file.Copy(fn, fn+".bak")
+	_, _ = file.Copy(fn+".bak", fn)
 	_ = cfg.WriteConfigFile(fn) // updates the version
 	logger.Fatal(colors.Colored(fmt.Sprintf("Your configuration files were upgraded to {%s}. Rerun your command.", newVersion.String())))
 
@@ -76,9 +77,9 @@ type OldScrape struct {
 	Settings oldScrapeGroup `toml:"settings"`
 }
 
-func MergeScrapeConfig(fn string, scrape *config.ScrapeSettings) error {
+func MergeScrapeConfig(fn string, scrape *ScrapeSettings) error {
 	var sCfg OldScrape
-	if err := config.ReadConfigFile(fn, &sCfg); err != nil {
+	if err := ReadConfigFile(fn, &sCfg); err != nil {
 		return err
 	}
 	if sCfg.Settings.AppsPerChunk > 0 {

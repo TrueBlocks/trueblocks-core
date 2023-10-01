@@ -64,11 +64,11 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 			continue
 		}
 
-		if base.Blknum(bm.timestamps12[block].Bn) != block {
+		if base.Blknum(bm.timestamps[block].Bn) != block {
 			return fmt.Errorf("timestamp missing at block %d", block)
 		}
 
-		ts := bm.timestamps12[block]
+		ts := bm.timestamps[block]
 		// usage.QueryUser(fmt.Sprintf("writing: %d-%d-%d", block, ts.Bn, ts.Ts), "")
 		if err := writeOne(fp, &ts, block, blocks); err != nil {
 			return err

@@ -4,7 +4,7 @@
 [settings]
   cachePath = ""
   defaultChain = "mainnet"
-  defaultGateway = "https://ipfs.unchainedindex.io/ipfs/"
+  defaultGateway = "https://ipfs.unchainedindex.io/ipfs"
   indexPath = ""
 
 [keys]

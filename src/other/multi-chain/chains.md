@@ -26,7 +26,7 @@ There are three values we need to control:
     - `known` abi files (which remain correct even accross chains)
     - Always find these at `$TB_HOME/`
   - Otherwise chain specific configs are found at `$TB_HOME/config/$CHAIN/`
-  - Example: `$TB_HOME/config/main net/blockScrape.toml`
+  - Example: `$INDEX_PATH/mainnet/blockScrape.toml`
   - Users may place a config file at `$TB_HOME`. If found, it will be read first and chain-specific values will be 'overlayed' if present or appended if not.
 
 - Where are the chain-specific caches?

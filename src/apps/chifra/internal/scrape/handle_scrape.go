@@ -89,7 +89,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			opts:         opts,
 			nRipe:        0,
 			nUnripe:      0,
-			timestamps12: make(map[base.Blknum]tslib.TimestampRecord, opts.BlockCnt),
+			timestamps:   make(map[base.Blknum]tslib.TimestampRecord, opts.BlockCnt),
 			processedMap: make(map[base.Blknum]bool, opts.BlockCnt),
 			meta:         bm.meta,
 			nChannels:    int(opts.Settings.ChannelCount),

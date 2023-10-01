@@ -10,10 +10,12 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/spf13/viper"
 )
 
@@ -34,56 +36,107 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
 	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
+	trueBlocksViper.SetDefault("Settings.LocalGateway", "http://localhost:5001")
 }
+
+var configMutex sync.Mutex
+var configLoaded = false
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
 // that this routine is local to the package
 func GetRootConfig() *ConfigFile {
-	if len(trueBlocksConfig.Settings.CachePath) == 0 {
-		configPath := PathToRootConfig()
-		trueBlocksViper.AddConfigPath(configPath)
-		trueBlocksViper.SetEnvPrefix("TB")
-		trueBlocksViper.AutomaticEnv()
-		trueBlocksViper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-		if err := trueBlocksViper.ReadInConfig(); err != nil {
-			logger.Fatal(err)
-		}
-		if err := trueBlocksViper.Unmarshal(&trueBlocksConfig); err != nil {
-			logger.Fatal(err)
-		}
+	if configLoaded {
+		return &trueBlocksConfig
+	}
+	configMutex.Lock()
+	defer configMutex.Unlock()
 
-		user, _ := user.Current()
-
-		cachePath := trueBlocksConfig.Settings.CachePath
-		if len(cachePath) == 0 || cachePath == "<not_set>" {
-			cachePath = filepath.Join(configPath, "cache") + "/"
-		}
-		cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
-		cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
-		trueBlocksConfig.Settings.CachePath = cachePath
-
-		indexPath := trueBlocksConfig.Settings.IndexPath
-		if len(indexPath) == 0 || indexPath == "<not_set>" {
-			indexPath = filepath.Join(configPath, "unchained") + "/"
-		}
-		indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
-		indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
-		trueBlocksConfig.Settings.IndexPath = indexPath
-
-		if len(trueBlocksConfig.Settings.DefaultChain) == 0 {
-			trueBlocksConfig.Settings.DefaultChain = "mainnet"
-		}
-
-		// We establish only the top-level folders here. When we figure out
-		// which chain we're on (not until the user tells us on the command line)
-		// only then can we complete these paths. At this point these paths
-		// only point to the top-levl of the cache or index. Also note that
-		// these two calls do not return if they fail, so no need to handle errors
-		defaultChains := []string{GetSettings().DefaultChain}
-		_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
-		_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
+	configPath := PathToRootConfig()
+	trueBlocksViper.AddConfigPath(configPath)
+	trueBlocksViper.SetEnvPrefix("TB")
+	trueBlocksViper.AutomaticEnv()
+	trueBlocksViper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	if err := trueBlocksViper.ReadInConfig(); err != nil {
+		logger.Fatal(err)
+	}
+	if err := trueBlocksViper.Unmarshal(&trueBlocksConfig); err != nil {
+		logger.Fatal(err)
 	}
 
+	requiredVer := version.NewVersion("v1.0.0-release")
+	currentVer := version.NewVersion(trueBlocksConfig.Version.Current)
+	if currentVer.Uint64() < requiredVer.Uint64() {
+		_ = UpgradeConfigs(requiredVer) // does not return
+	}
+
+	user, _ := user.Current()
+
+	cachePath := trueBlocksConfig.Settings.CachePath
+	if len(cachePath) == 0 || cachePath == "<not_set>" {
+		cachePath = filepath.Join(configPath, "cache") + "/"
+	}
+	cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
+	cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
+	trueBlocksConfig.Settings.CachePath = cachePath
+
+	indexPath := trueBlocksConfig.Settings.IndexPath
+	if len(indexPath) == 0 || indexPath == "<not_set>" {
+		indexPath = filepath.Join(configPath, "unchained") + "/"
+	}
+	indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
+	indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
+	trueBlocksConfig.Settings.IndexPath = indexPath
+
+	if len(trueBlocksConfig.Settings.DefaultChain) == 0 {
+		trueBlocksConfig.Settings.DefaultChain = "mainnet"
+	}
+
+	// We establish only the top-level folders here. When we figure out
+	// which chain we're on (not until the user tells us on the command line)
+	// only then can we complete these paths. At this point these paths
+	// only point to the top-levl of the cache or index. Also note that
+	// these two calls do not return if they fail, so no need to handle errors
+	defaultChains := []string{trueBlocksConfig.Settings.DefaultChain}
+	_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
+	_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
+
+	// clean up the config data
+	for chain, ch := range trueBlocksConfig.Chains {
+		clean := func(url string) string {
+			if !strings.HasPrefix(url, "http") {
+				url = "https://" + url
+			}
+			if !strings.HasSuffix(url, "/") {
+				url += "/"
+			}
+			return url
+		}
+		ch.Chain = chain
+		if len(ch.IpfsGateway) == 0 {
+			ch.IpfsGateway = clean(trueBlocksConfig.Settings.DefaultGateway)
+		}
+		ch.LocalExplorer = clean(ch.LocalExplorer)
+		ch.RemoteExplorer = clean(ch.RemoteExplorer)
+		ch.RpcProvider = clean(ch.RpcProvider)
+		ch.IpfsGateway = clean(ch.IpfsGateway)
+		if ch.Scrape.AppsPerChunk == 0 {
+			settings := ScrapeSettings{
+				AppsPerChunk: 2000000,
+				SnapToGrid:   250000,
+				FirstSnap:    2000000,
+				UnripeDist:   28,
+				ChannelCount: 20,
+				AllowMissing: false,
+			}
+			if chain == "mainnet" {
+				settings.SnapToGrid = 100000
+				settings.FirstSnap = 2300000
+			}
+			ch.Scrape = settings
+		}
+		trueBlocksConfig.Chains[chain] = ch
+	}
+	configLoaded = true
 	return &trueBlocksConfig
 }
 

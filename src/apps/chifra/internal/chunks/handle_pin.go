@@ -70,7 +70,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					return true, nil
 				}
 
-				if pinning.LocalDaemonRunning() {
+				if config.IpfsRunning() {
 					report.Pinned = append(report.Pinned, result.Local.BloomHash)
 					report.Pinned = append(report.Pinned, result.Local.IndexHash)
 				}
@@ -85,7 +85,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					logger.Warn(colors.Yellow+result.Local.BloomHash.String(), "-", result.Local.IndexHash, colors.Off)
 					logger.Warn(colors.Yellow+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
 					logger.Fatal("Failed")
-				} else if opts.Remote && pinning.LocalDaemonRunning() {
+				} else if opts.Remote && config.IpfsRunning() {
 					logger.Info(colors.BrightGreen+"Matches: "+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
 				}
 				if opts.Globals.Verbose {

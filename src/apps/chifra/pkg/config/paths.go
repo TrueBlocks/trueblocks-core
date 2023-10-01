@@ -50,7 +50,7 @@ func PathToIndex(chain string) string {
 	if err != nil {
 		logger.Fatal(err)
 	} else if len(indexPath) == 0 {
-		indexPath = GetSettings().IndexPath
+		indexPath = trueBlocksConfig.Settings.IndexPath
 	}
 
 	// We want the index folder to be named `unchained` and be in
@@ -61,7 +61,7 @@ func PathToIndex(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = GetSettings().DefaultChain
+		chain = trueBlocksConfig.Settings.DefaultChain
 	}
 
 	// We know what we want, create it if it doesn't exist and return it

@@ -13,9 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/upgrade"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // Initialize makes sure everything is ready to run. These routines don't return if they aren't
@@ -115,12 +113,6 @@ func VerifyMigrations() {
 			msg = colors.ColoredWith(msg, colors.Yellow)
 			logger.Fatal(msg)
 		}
-	}
-
-	requiredVer := version.NewVersion("v1.0.0-release")
-	currentVer := version.NewVersion(config.GetVersion().Current)
-	if currentVer.Uint64() < requiredVer.Uint64() {
-		_ = upgrade.UpgradeConfigs(requiredVer) // does not return
 	}
 }
 

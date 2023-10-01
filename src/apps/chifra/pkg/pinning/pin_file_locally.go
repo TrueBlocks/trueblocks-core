@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
@@ -14,8 +15,7 @@ func (s *Service) pinFileLocally(filepath string) (base.IpfsHash, error) {
 	}
 	defer file.Close()
 
-	// TODO: should be configurable (see #2804)
-	sh := shell.NewShell("localhost:5001")
+	sh := shell.NewShell(config.IPFS_URL)
 	cid, err := sh.Add(file, shell.Pin(true))
 	if err != nil {
 		return "", err

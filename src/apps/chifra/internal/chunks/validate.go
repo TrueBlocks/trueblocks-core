@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -72,7 +71,7 @@ func (opts *ChunksOptions) validateChunks() error {
 					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 				}
 
-			} else if !pinning.LocalDaemonRunning() {
+			} else if !config.IpfsRunning() {
 				return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
 
 			}
@@ -91,7 +90,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		if opts.Mode == "index" {
 			// do nothing
 		} else if opts.Mode == "manifest" {
-			if !opts.Remote && !pinning.LocalDaemonRunning() {
+			if !opts.Remote && !config.IpfsRunning() {
 				return validate.Usage("The {0} option requires {1}.", "manifest --deep", "a locally running IPFS daemon or --remote")
 			}
 		} else {
