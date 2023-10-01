@@ -6,7 +6,7 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v1.1.0 (2023/10/01)
 
-Rewrite the entire scraper and the spec
+Rewrite the entire scraper and the specification
 Generate an entire new data set for Sepolia and Mainnet with new hashes since the spec is different.
 Added chifra config show
 Updated trueBlocks.toml config file to include scraper configs
