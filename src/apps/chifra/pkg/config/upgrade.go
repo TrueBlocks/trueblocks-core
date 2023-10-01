@@ -24,7 +24,7 @@ func UpgradeConfigs(newVersion version.Version) error {
 		return err
 	}
 
-	for chain, _ := range cfg.Chains {
+	for chain := range cfg.Chains {
 		ch := cfg.Chains[chain]
 		ch.Chain = chain
 		scrape := ScrapeSettings{
