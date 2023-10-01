@@ -41,7 +41,7 @@ then
     fi
 
     # If there are any config migrations, this will trigger it..
-    chifra blocks 1 >/dev/null 2>&1
+    chifra blocks 1 >/dev/null
 
     # start the server...
     TEST_MODE=true chifra daemon -p ":$SRV_PORT" 2>/dev/null &
