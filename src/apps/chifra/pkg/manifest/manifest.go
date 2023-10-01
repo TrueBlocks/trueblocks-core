@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
@@ -34,22 +35,11 @@ type Manifest struct {
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Config config.ScrapeSettings `json:"config"`
 
-	// A list of pinned chunks (see ChunkRecord) detailing the location of all chunks in the index and associated bloom filters
-	Chunks []ChunkRecord `json:"chunks"`
+	// A list of pinned chunks (see types.SimpleChunkRecord) detailing the location of all chunks in the index and associated bloom filters
+	Chunks []types.SimpleChunkRecord `json:"chunks"`
 
 	// A map to make set membership easier
-	ChunkMap map[string]*ChunkRecord `json:"-"`
-}
-
-// ChunkRecord is asingle record in the Manifest's Chunks table. It associates a block range, an
-// IPFS hash of the chunk covering that block range, and a hash of the Bloom filter covering that
-// chunk. The format of the chunk and the Bloom filter are detailed in the manifest's Schema record.
-type ChunkRecord struct {
-	Range     string        `json:"range"`
-	BloomHash base.IpfsHash `json:"bloomHash"`
-	BloomSize int64         `json:"bloomSize"`
-	IndexHash base.IpfsHash `json:"indexHash,omitempty"`
-	IndexSize int64         `json:"indexSize,omitempty"`
+	ChunkMap map[string]*types.SimpleChunkRecord `json:"-"`
 }
 
 type Source uint
@@ -113,7 +103,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 }
 
 func (m *Manifest) LoadChunkMap() {
-	m.ChunkMap = make(map[string]*ChunkRecord)
+	m.ChunkMap = make(map[string]*types.SimpleChunkRecord)
 	for i := range m.Chunks {
 		m.ChunkMap[m.Chunks[i].Range] = &m.Chunks[i]
 	}
@@ -121,13 +111,13 @@ func (m *Manifest) LoadChunkMap() {
 
 // TODO: Protect against overwriting files on disc
 
-func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) error {
+func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
 	empty := Manifest{
 		Version:  version.ManifestVersion,
 		Chain:    chain,
 		Schemas:  unchained.Schemas,
-		Chunks:   []ChunkRecord{},
-		ChunkMap: make(map[string]*ChunkRecord),
+		Chunks:   []types.SimpleChunkRecord{},
+		ChunkMap: make(map[string]*types.SimpleChunkRecord),
 	}
 
 	var man *Manifest

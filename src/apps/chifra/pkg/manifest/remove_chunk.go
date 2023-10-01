@@ -6,6 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // RemoveChunk must remove the underlying chunk (both Bloom filter and the chunk itself) and
@@ -66,7 +67,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 		return err
 	}
 
-	newChunks := []ChunkRecord{}
+	newChunks := []types.SimpleChunkRecord{}
 	for _, chunk := range man.Chunks {
 		chunkRange := base.RangeFromRangeString(chunk.Range)
 		if chunkRange.EarlierThan(removedRange) {

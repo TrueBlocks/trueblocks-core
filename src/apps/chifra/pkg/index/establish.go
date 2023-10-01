@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -34,7 +35,7 @@ func EstablishIndexChunk(chain string, publisher base.Address, fileRange base.Fi
 	}
 
 	// Find bloom filter's CID
-	var matchedPin manifest.ChunkRecord
+	var matchedPin types.SimpleChunkRecord
 	for _, pin := range chunkManifest.Chunks {
 		if strings.Contains(fileName, pin.Range) {
 			matchedPin = pin
@@ -49,7 +50,7 @@ func EstablishIndexChunk(chain string, publisher base.Address, fileRange base.Fi
 
 	// Start downloading the filter
 	matchedPin.BloomHash = "" // we want to download only the index chunk
-	chunks := []manifest.ChunkRecord{matchedPin}
+	chunks := []types.SimpleChunkRecord{matchedPin}
 	progressChannel := make(chan *progress.ProgressMsg)
 
 	go func() {

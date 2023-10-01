@@ -34,14 +34,14 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		if len(blockNums) == 0 {
 			var err error
 			tsPath := config.PathToTimestamps(chain)
-			if report.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
+			if report.TsHash, err = pinning.PinOneFile(chain, "timestamps", tsPath, config.IpfsRunning(), opts.Remote); err != nil {
 				errorChan <- err
 				cancel()
 				return
 			}
 
 			manPath := config.PathToManifest(chain)
-			if report.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
+			if report.ManifestHash, err = pinning.PinOneFile(chain, "manifest", manPath, config.IpfsRunning(), opts.Remote); err != nil {
 				errorChan <- err
 				cancel()
 				return
@@ -63,7 +63,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					return false, fmt.Errorf("should not happen in pinChunk")
 				}
 
-				result, err := pinning.PinChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path), opts.Remote)
+				result, err := pinning.PinOneChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path), config.IpfsRunning(), opts.Remote)
 				if err != nil {
 					errorChan <- err
 					cancel() // keep going...
@@ -80,7 +80,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					report.Pinned = append(report.Pinned, result.Remote.IndexHash)
 				}
 
-				if !result.Matches {
+				if !result.Matches() {
 					logger.Warn("Local and remote pins do not match")
 					logger.Warn(colors.Yellow+result.Local.BloomHash.String(), "-", result.Local.IndexHash, colors.Off)
 					logger.Warn(colors.Yellow+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
@@ -88,6 +88,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				} else if opts.Remote && config.IpfsRunning() {
 					logger.Info(colors.BrightGreen+"Matches: "+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
 				}
+
 				if opts.Globals.Verbose {
 					if opts.Remote {
 						fmt.Println("result.Remote:", result.Remote.String())

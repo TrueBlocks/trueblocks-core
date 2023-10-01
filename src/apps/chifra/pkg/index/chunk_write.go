@@ -31,7 +31,7 @@ type WriteChunkReport struct {
 	FileSize     int64
 	Snapped      bool
 	Pinned       bool
-	PinRecord    manifest.ChunkRecord
+	PinRecord    types.SimpleChunkRecord
 }
 
 func (c *WriteChunkReport) Report() {
@@ -153,13 +153,8 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 				return &report, nil
 			}
 
-			result, err := pinning.PinChunk(chain, ToBloomPath(indexFn), ToIndexPath(indexFn), remote)
+			result, err := pinning.PinOneChunk(chain, ToBloomPath(indexFn), ToIndexPath(indexFn), config.IpfsRunning(), remote)
 			if err != nil {
-				return &report, err
-			}
-
-			path := config.PathToTimestamps(chain)
-			if _, err = pinning.PinItem(chain, "timestamps", path, remote); err != nil {
 				return &report, err
 			}
 
@@ -179,18 +174,16 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 	}
 }
 
-func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
+func ResultToRecord(result *pinning.Result) types.SimpleChunkRecord {
 	if len(result.Local.BloomHash) > 0 {
-		return manifest.ChunkRecord{
-			Range:     result.Range.String(),
+		return types.SimpleChunkRecord{
 			IndexHash: result.Local.IndexHash,
 			IndexSize: result.Local.IndexSize,
 			BloomHash: result.Local.BloomHash,
 			BloomSize: result.Local.BloomSize,
 		}
 	}
-	return manifest.ChunkRecord{
-		Range:     result.Range.String(),
+	return types.SimpleChunkRecord{
 		IndexHash: result.Remote.IndexHash,
 		IndexSize: result.Remote.IndexSize,
 		BloomHash: result.Remote.BloomHash,

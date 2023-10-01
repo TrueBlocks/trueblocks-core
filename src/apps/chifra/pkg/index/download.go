@@ -11,7 +11,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
+	"net/url"
 	"os"
+	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 
@@ -19,10 +23,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	ants "github.com/panjf2000/ants/v2"
 )
@@ -33,7 +36,7 @@ type jobResult struct {
 	rng      string
 	fileSize int64
 	contents io.Reader
-	theChunk *manifest.ChunkRecord
+	theChunk *types.SimpleChunkRecord
 }
 
 type ProgressChan chan<- *progress.ProgressMsg
@@ -65,7 +68,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 	progressChannel := workerArgs.progressChannel
 
 	return func(param interface{}) {
-		chunk := param.(manifest.ChunkRecord)
+		chunk := param.(types.SimpleChunkRecord)
 
 		defer workerArgs.downloadWg.Done()
 
@@ -90,7 +93,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 					Message: msg,
 				}
 
-				download, err := pinning.FetchFromGateway(workerArgs.ctx, workerArgs.gatewayUrl, hash.String())
+				download, err := fetchFromIpfsGateway(workerArgs.ctx, workerArgs.gatewayUrl, hash.String())
 				if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
 					// The request to fetch the chunk was cancelled, because user has
 					// pressed Ctrl-C
@@ -126,6 +129,45 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 			}
 		}
 	}
+}
+
+// fetchResult type make it easier to return both download content and
+// download size information (for validation purposes)
+type fetchResult struct {
+	Body       io.ReadCloser
+	ContentLen int64 // download size in bytes
+}
+
+// fetchFromIpfsGateway downloads a chunk from an IPFS gateway using HTTP
+func fetchFromIpfsGateway(ctx context.Context, gateway, hash string) (*fetchResult, error) {
+	url, _ := url.Parse(gateway)
+	url.Path = filepath.Join(url.Path, hash)
+	request, err := http.NewRequestWithContext(ctx, "GET", url.String(), nil)
+	if err != nil {
+		// logger.Fatalln("NewRequestWithContext failed in FetFromGateway with", url)
+		return nil, err
+	}
+	response, err := http.DefaultClient.Do(request)
+	if err != nil {
+		// logger.Fatalln("DefaultClient.Do failed in FetFromGateway with", url)
+		return nil, err
+	}
+	if response.StatusCode != 200 {
+		// logger.Fatalln("DefaultClient.Do returned StatusCode not equal to 200 in FetFromGateway with", url)
+		return nil, fmt.Errorf("fetch to %s returned status code: %d", url, response.StatusCode)
+	}
+	body := response.Body
+
+	contentLen, err := strconv.ParseInt(response.Header.Get("Content-Length"), 10, 64)
+	if err != nil {
+		// logger.Fatalln("Could not parse Content-Length in FetFromGateway with", url)
+		return nil, err
+	}
+
+	return &fetchResult{
+		Body:       body,
+		ContentLen: contentLen,
+	}, nil
 }
 
 // getWriteWorker returns a worker function that writes chunk to disk
@@ -173,7 +215,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType wal
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each chunk in chunks. ProgressMsg is reported to progressChannel.
-func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunkType walk.CacheType, poolSize int, progressChannel ProgressChan) {
+func DownloadChunks(chain string, chunksToDownload []types.SimpleChunkRecord, chunkType walk.CacheType, poolSize int, progressChannel ProgressChan) {
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
 	defer func() {
