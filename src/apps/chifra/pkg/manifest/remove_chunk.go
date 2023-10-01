@@ -38,6 +38,12 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 		}
 	}()
 
+	var man *Manifest
+	man, err = ReadManifest(chain, publisher, FromCache)
+	if err != nil {
+		return err
+	}
+
 	if _, err = file.Copy(manifestBackup, manifestFn); err != nil {
 		return err
 	}
@@ -57,9 +63,6 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 	if err := os.Remove(bloomFn); err != nil {
 		return err
 	}
-
-	var man *Manifest
-	man, err = ReadManifest(chain, publisher, FromCache) // TODO: unused error?
 
 	removedRange, err1 := base.RangeFromFilenameE(bloomFn)
 	if err1 != nil {
