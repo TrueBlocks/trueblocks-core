@@ -88,8 +88,17 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 	}
 
 	manifestPath := config.PathToManifest(chain)
+	if !file.FileExists(manifestPath) {
+		// basically EstablishManifest
+		man, err := ReadManifest(chain, publisher, FromContract)
+		if err != nil {
+			return nil, err
+		}
+		return man, man.SaveManifest(chain)
+	}
+
 	contents := file.AsciiFileToString(manifestPath)
-	if !file.FileExists(manifestPath) || len(contents) == 0 {
+	if len(contents) == 0 {
 		return nil, ErrManifestNotFound
 	}
 
@@ -113,20 +122,25 @@ func (m *Manifest) LoadChunkMap() {
 // TODO: Protect against overwriting files on disc
 
 func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) error {
-	man, err := ReadManifest(chain, publisher, FromCache)
-	if err != nil {
-		if err != ErrManifestNotFound {
-			return err
-		}
+	empty := Manifest{
+		Version:  version.ManifestVersion,
+		Chain:    chain,
+		Schemas:  unchained.Schemas,
+		Chunks:   []ChunkRecord{},
+		ChunkMap: make(map[string]*ChunkRecord),
+	}
 
-		// This is okay. Create an empty manifest
-		man = &Manifest{
-			Version: version.ManifestVersion,
-			Chain:   chain,
-			Schemas: unchained.Schemas,
-			// Databases: unchained.Databases,
-			Chunks:   []ChunkRecord{},
-			ChunkMap: make(map[string]*ChunkRecord),
+	var man *Manifest
+	if !file.FileExists(config.PathToManifest(chain)) {
+		man = &empty
+	} else {
+		var err error
+		man, err = ReadManifest(chain, publisher, FromCache)
+		if err != nil {
+			if err != ErrManifestNotFound {
+				return err
+			}
+			man = &empty
 		}
 	}
 

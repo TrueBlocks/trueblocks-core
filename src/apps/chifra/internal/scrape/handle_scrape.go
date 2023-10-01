@@ -31,9 +31,13 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		_ = os.Remove(pidPath)
 	}()
 
+	path := config.PathToCache(chain)
+	if testMode {
+		path = "--unchained-path--"
+	}
 	logger.Info("Scraping:")
-	logger.Info("  Path:    ", config.PathToIndex(opts.Globals.Chain))
-	logger.Info("  Settings:", config.GetScrape(opts.Globals.Chain))
+	logger.Info("  Path:    ", path)
+	logger.Info("  Settings:", config.GetScrape(chain))
 	if opts.DryRun {
 		return nil
 	}

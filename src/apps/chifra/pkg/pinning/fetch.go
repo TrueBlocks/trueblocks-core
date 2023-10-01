@@ -10,15 +10,15 @@ import (
 	"strconv"
 )
 
-// FetchResult type make it easier to return both download content and
+// fetchResult type make it easier to return both download content and
 // download size information (for validation purposes)
-type FetchResult struct {
+type fetchResult struct {
 	Body       io.ReadCloser
 	ContentLen int64 // download size in bytes
 }
 
 // FetchFromGateway downloads a chunk from an IPFS gateway using HTTP
-func FetchFromGateway(ctx context.Context, gateway, hash string) (*FetchResult, error) {
+func FetchFromGateway(ctx context.Context, gateway, hash string) (*fetchResult, error) {
 	url, _ := url.Parse(gateway)
 	url.Path = filepath.Join(url.Path, hash)
 	request, err := http.NewRequestWithContext(ctx, "GET", url.String(), nil)
@@ -43,7 +43,7 @@ func FetchFromGateway(ctx context.Context, gateway, hash string) (*FetchResult, 
 		return nil, err
 	}
 
-	return &FetchResult{
+	return &fetchResult{
 		Body:       body,
 		ContentLen: contentLen,
 	}, nil

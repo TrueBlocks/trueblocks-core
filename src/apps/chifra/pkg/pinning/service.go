@@ -33,14 +33,14 @@ func NewPinningService(chain string, which ServiceType) (Service, error) {
 			Apikey:     pinataKey,
 			Secret:     pinataSecret,
 			ResultName: "IpfsHash",
-			HeaderFunc: PinataHeaders,
+			HeaderFunc: pinataHeaders,
 		}, nil
 	default:
 		return Service{}, fmt.Errorf("unknown service type %d", which)
 	}
 }
 
-func PinataHeaders(s *Service, contentType string) map[string]string {
+func pinataHeaders(s *Service, contentType string) map[string]string {
 	headers := make(map[string]string)
 	headers["Content-Type"] = contentType
 	headers["pinata_secret_api_key"] = s.Secret

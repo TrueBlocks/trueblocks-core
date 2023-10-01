@@ -58,7 +58,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 	}
 
 	var man *Manifest
-	man, err = ReadManifest(chain, publisher, FromCache)
+	man, err = ReadManifest(chain, publisher, FromCache) // TODO: unused error?
 
 	removedRange, err1 := base.RangeFromFilenameE(bloomFn)
 	if err1 != nil {
