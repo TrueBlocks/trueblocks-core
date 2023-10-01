@@ -1227,10 +1227,10 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
+        specification:
           type: string
           format: ipfshash
-          description: "IPFS cid of file describing the schemas for the various databases"
+          description: "IPFS cid of the specification"
         databases:
           type: string
           format: ipfshash
@@ -1496,10 +1496,10 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
+        specification:
           type: string
           format: ipfshash
-          description: "IPFS cid of file describing the schemas for the various databases"
+          description: "IPFS cid of the specification"
         tsHash:
           type: string
           format: ipfshash

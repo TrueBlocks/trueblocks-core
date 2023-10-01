@@ -30,7 +30,7 @@ type Manifest struct {
 	Chain string `json:"chain"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
-	Schemas base.IpfsHash `json:"schemas"`
+	Specification base.IpfsHash `json:"specification"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Config config.ScrapeSettings `json:"config"`
@@ -116,11 +116,11 @@ func (m *Manifest) LoadChunkMap() {
 
 func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
 	empty := Manifest{
-		Version:  version.ManifestVersion,
-		Chain:    chain,
-		Schemas:  unchained.Schemas,
-		Chunks:   []types.SimpleChunkRecord{},
-		ChunkMap: make(map[string]*types.SimpleChunkRecord),
+		Version:       version.ManifestVersion,
+		Chain:         chain,
+		Specification: unchained.Specification,
+		Chunks:        []types.SimpleChunkRecord{},
+		ChunkMap:      make(map[string]*types.SimpleChunkRecord),
 	}
 
 	var man *Manifest

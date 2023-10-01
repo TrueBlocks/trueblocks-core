@@ -8,7 +8,7 @@ import { ipfshash } from '.';
 export type ChunkPinReport = {
   version: string
   chain: string
-  schemas: ipfshash
+  specification: ipfshash
   tsHash: ipfshash
   manifestHash: ipfshash
 }

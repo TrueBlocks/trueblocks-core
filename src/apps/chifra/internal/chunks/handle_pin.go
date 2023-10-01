@@ -26,9 +26,9 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		report := simpleChunkPinReport{
-			Version: version.ManifestVersion,
-			Chain:   chain,
-			Schemas: unchained.Schemas,
+			Version:       version.ManifestVersion,
+			Chain:         chain,
+			Specification: unchained.Specification,
 		}
 
 		if len(blockNums) == 0 {

@@ -53,7 +53,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Tell the user what we're doing
 	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
-	logger.InfoTable("Schemas:", unchained.Schemas)
+	logger.InfoTable("Specification:", unchained.Specification)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
 	logger.InfoTable("Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
