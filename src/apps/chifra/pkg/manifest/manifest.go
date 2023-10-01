@@ -74,6 +74,11 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		if man != nil {
 			man.LoadChunkMap()
 		}
+
+		if man.Specification == "" {
+			man.Specification = unchained.Specification
+		}
+
 		return man, err
 	}
 
@@ -101,7 +106,12 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		return man, err
 	}
 
+	if man.Specification == "" {
+		man.Specification = unchained.Specification
+	}
+
 	man.LoadChunkMap()
+
 	return man, nil
 }
 
@@ -120,6 +130,7 @@ func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChun
 		Chain:         chain,
 		Specification: unchained.Specification,
 		Chunks:        []types.SimpleChunkRecord{},
+		Config:        config.GetScrape(chain),
 		ChunkMap:      make(map[string]*types.SimpleChunkRecord),
 	}
 
