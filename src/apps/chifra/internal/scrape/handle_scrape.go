@@ -31,7 +31,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		_ = os.Remove(pidPath)
 	}()
 
-	path := config.PathToCache(chain)
+	path := config.PathToIndex(chain)
 	if testMode {
 		path = "--unchained-path--"
 	}

@@ -84,8 +84,8 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 }
 
 func writeOne(fp *os.File, ts *tslib.TimestampRecord, block base.Blknum, blocks []base.Blknum) error {
-	// logger.Progress((block%13) == 0, fmt.Sprintf("Updating timestamps %-04d of %-04d (%-04d remaining)"+spaces,
-	logger.Info(fmt.Sprintf("Updating timestamps %-04d of %-04d (%-04d remaining)"+spaces,
+	logger.Progress((block%13) == 0, fmt.Sprintf("Updating timestamps %-04d of %-04d (%-04d remaining)"+spaces,
+		// logger.Info(fmt.Sprintf("Updating timestamps %-04d of %-04d (%-04d remaining)"+spaces,
 		block,
 		blocks[len(blocks)-1],
 		blocks[len(blocks)-1]-block,

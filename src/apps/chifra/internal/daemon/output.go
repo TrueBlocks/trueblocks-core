@@ -86,7 +86,10 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		logger.Fatal("")
 	} else {
 		nTs, _ := tslib.NTimestamps(chain) // when the file has one record, the block is zero, etc.
-		msg := fmt.Sprintf("%d, %d, %d, %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs-1)
+		if nTs > 0 {
+			nTs--
+		}
+		msg := fmt.Sprintf("%d, %d, %d, %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 		logger.InfoTable("Progress:          ", msg)
 	}
 
