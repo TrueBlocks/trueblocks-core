@@ -417,8 +417,8 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     const CMember* mem = reinterpret_cast<const CMember*>(dataPtr);
     if (mem) {
         switch (tolower(fieldIn[0])) {
-            // EXISTING_CODE
-            // clang-format off
+                // EXISTING_CODE
+                // clang-format off
             case 'i':
                 if (fieldIn % "is_pointer")   return bool_2_Str_t(mem->memberFlags & IS_POINTER);
                 if (fieldIn % "is_array")     return bool_2_Str_t(mem->memberFlags & IS_ARRAY);
