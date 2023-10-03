@@ -208,7 +208,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 
 			// TODO: This is quite odd. Why?
 			status := &s.Receipt.Status
-			if s.BlockNumber < base.ByzantiumBlock || *status == 4294967295-1 {
+			if s.BlockNumber < base.KnownBlock(chain, base.Byzantium) || *status == 4294967295-1 {
 				status = nil
 			}
 
