@@ -66,19 +66,6 @@ func (opts *ScrapeOptions) validateScrape() error {
 		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
 	}
 
-	if opts.Pin {
-		if opts.Remote {
-			pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
-			if pinataKey == "" || pinataSecret == "" {
-				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
-			}
-
-		} else if !config.IpfsRunning() {
-			return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
-
-		}
-	}
-
 	if len(opts.Publisher) > 0 {
 		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
 		if err != nil {

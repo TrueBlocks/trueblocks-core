@@ -1,5 +1,4 @@
-chifra scrape  --pin
-TEST[DATE|TIME] Pin:  true
+chifra scrape
 TEST[DATE|TIME] AppsPerChunk:  2000000
 TEST[DATE|TIME] FirstSnap:  2000000
 TEST[DATE|TIME] Format:  txt

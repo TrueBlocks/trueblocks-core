@@ -1,5 +1,4 @@
-chifra scrape  --sleep .5 --pin
-TEST[DATE|TIME] Pin:  true
+chifra scrape  --sleep .5
 TEST[DATE|TIME] Sleep:  0.5
 TEST[DATE|TIME] AppsPerChunk:  2000000
 TEST[DATE|TIME] FirstSnap:  2000000

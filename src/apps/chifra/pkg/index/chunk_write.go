@@ -14,8 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -30,8 +28,6 @@ type WriteChunkReport struct {
 	nAppearances int
 	FileSize     int64
 	Snapped      bool
-	Pinned       bool
-	PinRecord    types.SimpleChunkRecord
 }
 
 func (c *WriteChunkReport) Report() {
@@ -41,13 +37,9 @@ func (c *WriteChunkReport) Report() {
 	}
 	report += " (size: {%d} , span: {%d})"
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
-	if c.Pinned {
-		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
-		logger.Info(str)
-	}
 }
 
-func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int, pin, remote bool) (*WriteChunkReport, error) {
+func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -146,24 +138,8 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 				Range:        rng,
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
-				Pinned:       pin,
 			}
-
-			if !pin {
-				return &report, nil
-			}
-
-			result, err := pinning.PinOneChunk(chain, ToBloomPath(indexFn), ToIndexPath(indexFn), config.IpfsRunning(), remote)
-			if err != nil {
-				return &report, err
-			}
-
-			rec := ResultToRecord(&result)
-			report.PinRecord.IndexHash = rec.IndexHash
-			report.PinRecord.BloomHash = rec.BloomHash
-			report.PinRecord.IndexSize = rec.IndexSize
-			report.PinRecord.BloomSize = rec.BloomSize
-			return &report, manifest.UpdateManifest(chain, publisher, rec)
+			return &report, nil
 
 		} else {
 			return nil, err
@@ -171,22 +147,5 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 
 	} else {
 		return nil, err
-	}
-}
-
-func ResultToRecord(result *pinning.Result) types.SimpleChunkRecord {
-	if len(result.Local.BloomHash) > 0 {
-		return types.SimpleChunkRecord{
-			IndexHash: result.Local.IndexHash,
-			IndexSize: result.Local.IndexSize,
-			BloomHash: result.Local.BloomHash,
-			BloomSize: result.Local.BloomSize,
-		}
-	}
-	return types.SimpleChunkRecord{
-		IndexHash: result.Remote.IndexHash,
-		IndexSize: result.Remote.IndexSize,
-		BloomHash: result.Remote.BloomHash,
-		BloomSize: result.Remote.BloomSize,
 	}
 }
