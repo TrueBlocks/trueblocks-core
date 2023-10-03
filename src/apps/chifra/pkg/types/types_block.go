@@ -399,6 +399,7 @@ func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
 	target.Timestamp = s.Timestamp
 	// TODO: This copy of an array possibly doesn't do what we expect
 	target.Uncles = s.Uncles
+	target.Withdrawals = s.Withdrawals
 	target.raw = s.raw
 }
 
