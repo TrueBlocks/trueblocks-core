@@ -15,6 +15,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+// EXISTING_CODE
+
 type simpleChunkIndex struct {
 	Hash         base.Hash `json:"hash"`
 	Magic        string    `json:"magic"`
