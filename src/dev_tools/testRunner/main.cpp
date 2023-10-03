@@ -241,8 +241,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             CStringArray envLines;
             for (auto f : fileLines) {
                 if (!startsWith(f, "#")) {
-                    for (auto line : fileLines)
-                        prepender << "Env: " << line << endl;
+                    prepender << "Env: " << f << endl;
                     envLines.push_back(f);
                 }
             }

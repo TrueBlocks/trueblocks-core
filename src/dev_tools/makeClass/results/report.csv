@@ -425,10 +425,10 @@ monitors,clean,python
 monitors,clean,readme
 monitors,clean,typescript
 monitors,delete,api
+monitors,delete,cmds
 monitors,delete,python
 monitors,delete,readme
 monitors,delete,typescript
-monitors,deleteMe,cmds
 monitors,ether,typescript
 monitors,list,api
 monitors,list,cmds
@@ -487,9 +487,9 @@ names,custom,python
 names,custom,readme
 names,custom,typescript
 names,delete,api
+names,delete,cmds
 names,delete,python
 names,delete,typescript
-names,deleteMe,cmds
 names,dryRun,api
 names,dryRun,python
 names,dryRun,typescript

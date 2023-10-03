@@ -274,7 +274,6 @@ bool visitEnumItem2(string_q& item, void* data) {
 string_q get_use(const CCommandOption& cmd) {
     ostringstream arguments;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
-        replace(p.longName, "deleteMe", "delete");
         if (p.option_type == "positional") {
             if (arguments.str().empty())
                 arguments << endl << "Arguments:" << endl;
@@ -396,7 +395,6 @@ string_q get_testlogs(const CCommandOption& cmd) {
     bool hasConfig = false;
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
-        replace(p.longName, "deleteMe", "delete");
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
         if (p.generate == "config") {
             hasConfig = true;
@@ -452,7 +450,6 @@ string_q get_optfields(const CCommandOption& cmd) {
             typeWidth = max(type.length(), typeWidth);
             continue;
         }
-        replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
         varWidth = max(var.length(), varWidth);
         string_q type = p.Format("[{GO_INTYPE}]");
@@ -498,7 +495,6 @@ string_q get_optfields(const CCommandOption& cmd) {
             hasConfig = true;
             continue;
         }
-        replace(p.longName, "deleteMe", "delete");
         string_q var = p.Format("[{VARIABLE}]");
         string_q type = p.Format("[{GO_INTYPE}]");
         ONE(os, var, varWidth, type, typeWidth, p.description);
@@ -619,7 +615,6 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
 string_q get_requestopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
-        replace(p.longName, "deleteMe", "delete");
         string_q low = toCamelCase(p.Format("[{LOWER}]"));
         string_q fmt;
         if (startsWith(p.data_type, "list<")) {
@@ -697,7 +692,6 @@ string_q clean_go_positionals(const string_q& in, bool hasRpc) {
 string_q get_hidden(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
-        replace(p.longName, "deleteMe", "delete");
         if (!p.is_visible) {
             os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
         }
@@ -718,7 +712,6 @@ string_q get_setopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.option_type != "positional") {
-            replace(p.longName, "deleteMe", "delete");
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
             os << "(&[{ROUTE}]Pkg.GetOptions()." << (p.isConfig ? "Settings." : "");
