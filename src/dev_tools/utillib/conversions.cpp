@@ -240,7 +240,7 @@ address_t topic_2_Addr(const topic_t& topic) {
 
 //--------------------------------------------------------------------------------
 address_t str_2_Addr(const string_q& str) {
-    if (isZeroAddr(str))
+    if (isZeroHash(str))
         return "0x0";
 
     string_q ret = substitute(str, "0x", "");
@@ -355,11 +355,6 @@ bool isZeroHash(const hash_t& hash) {
 //-----------------------------------------------------------------------
 bool isEtherAddr(const address_t& addr) {
     return toLower(addr) == FAKE_ETH_ADDRESS;
-}
-
-//--------------------------------------------------------------------------------
-bool isZeroAddr(const address_t& addr) {
-    return isZeroHash(addr);
 }
 
 //--------------------------------------------------------------------------------

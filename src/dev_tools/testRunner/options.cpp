@@ -42,7 +42,7 @@ bool COptions::parseArguments(string_q& command) {
 
     bool hasKey = getGlobalConfig("")->getConfigStr("keys.etherscan", "apiKey", "<not_set>") != "<not_set>";
     bool wantsTest = getEnvStr("TEST_SLURPS") == "true";
-    bool runSlurps = hasKey && wantsTest;
+    bool runSlurps = (hasKey && wantsTest);
 
     CToml config(rootConfigToml_makeClass);
 
@@ -167,6 +167,7 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTestCase, "test_id");
 
+    // TODO: this value is not in the testRunner config file, add it
     apiProvider = getGlobalConfig("testRunner")->getConfigStr("settings", "api_provider", "http://localhost:8080");
     if (!endsWith(apiProvider, '/'))
         apiProvider += "/";

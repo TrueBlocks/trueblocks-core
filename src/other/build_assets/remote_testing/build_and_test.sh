@@ -40,6 +40,10 @@ then
         exit 1
     fi
 
+    # If there are any config migrations, this will trigger it..
+    chifra blocks 1 >/dev/null
+
+    # start the server...
     TEST_MODE=true chifra daemon -p ":$SRV_PORT" 2>/dev/null &
 
     echo "Waiting for chifra daemon -p :$SRV_PORT to start..."
