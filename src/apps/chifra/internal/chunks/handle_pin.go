@@ -84,7 +84,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					logger.Warn("Local and remote pins do not match")
 					logger.Warn(colors.Yellow+result.Local.BloomHash.String(), "-", result.Local.IndexHash, colors.Off)
 					logger.Warn(colors.Yellow+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
-					logger.Fatal("Failed")
+					logger.Fatal("IPFS hashes between local and remote do not match")
 				} else if opts.Remote && config.IpfsRunning() {
 					logger.Info(colors.BrightGreen+"Matches: "+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
 				}
