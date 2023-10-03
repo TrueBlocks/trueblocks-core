@@ -63,7 +63,7 @@ func (s *SimpleToken) SetRaw(raw *RawToken) {
 	s.raw = raw
 }
 
-func (s *SimpleToken) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

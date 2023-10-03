@@ -13,6 +13,10 @@ import (
 
 // GetWithdrawalsByNumber returns all withdrawals in a block
 func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.SimpleWithdrawal, error) {
+	if bn < base.KnownBlock(conn.Chain, base.Shanghai) {
+		return []types.SimpleWithdrawal{}, nil
+	}
+
 	if conn.StoreReadable() {
 		withdrawalGroup := &types.SimpleWithdrawalGroup{
 			BlockNumber:      bn,

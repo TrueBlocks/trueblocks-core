@@ -209,7 +209,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 // GetTracesByFilter returns a slice of traces in a given transaction's hash
 func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, error) {
 	var f types.SimpleTraceFilter
-	ff, _ := f.ParseBangString(filter)
+	ff, _ := f.ParseBangString(conn.Chain, filter)
 
 	method := "trace_filter"
 	params := query.Params{ff}

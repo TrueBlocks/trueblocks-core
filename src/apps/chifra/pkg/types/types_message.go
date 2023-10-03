@@ -21,7 +21,7 @@ func (s *SimpleMessage) Raw() *RawModeler {
 	return nil
 }
 
-func (s *SimpleMessage) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleMessage) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

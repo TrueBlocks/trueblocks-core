@@ -46,7 +46,7 @@ func (s *SimpleChunkRecord) SetRaw(raw *RawChunkRecord) {
 	s.raw = raw
 }
 
-func (s *SimpleChunkRecord) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChunkRecord) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

@@ -59,7 +59,7 @@ func (s *SimpleState) SetRaw(raw *RawState) {
 	s.raw = raw
 }
 
-func (s *SimpleState) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleState) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

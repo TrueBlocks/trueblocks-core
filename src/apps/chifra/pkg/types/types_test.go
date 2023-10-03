@@ -4,15 +4,17 @@ import (
 	"testing"
 
 	base "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestTypes(t *testing.T) {
+	chain := utils.GetTestChain()
 	s := SimpleReceipt{
 		BlockHash:   base.HexToHash("0x1"),
 		BlockNumber: 100,
 	}
 
-	data := s.Model(false, "csv", nil).Data
+	data := s.Model(chain, "csv", false, nil).Data
 
 	if data["blockHash"] != nil {
 		t.Fatal("hidden field leaked")
@@ -22,7 +24,7 @@ func TestTypes(t *testing.T) {
 		t.Fatal("visible field missing")
 	}
 
-	data = s.Model(true, "json", nil).Data
+	data = s.Model(chain, "json", true, nil).Data
 	if data["blockHash"] == nil {
 		t.Fatal("hidden field missing when verbose = true")
 	}

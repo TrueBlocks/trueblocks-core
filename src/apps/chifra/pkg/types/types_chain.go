@@ -45,7 +45,7 @@ func (s *SimpleChain) SetRaw(raw *RawChain) {
 	s.raw = raw
 }
 
-func (s *SimpleChain) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChain) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

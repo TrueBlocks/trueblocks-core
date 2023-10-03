@@ -48,7 +48,7 @@ func (s *SimpleWithdrawal) SetRaw(raw *RawWithdrawal) {
 	s.raw = raw
 }
 
-func (s *SimpleWithdrawal) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

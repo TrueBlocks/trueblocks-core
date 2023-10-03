@@ -79,6 +79,10 @@ func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) 
 
 // GetUnclesCountInBlock returns the number of uncles in a block.
 func (conn *Connection) GetUnclesCountInBlock(bn uint64) (uint64, error) {
+	if bn >= base.KnownBlock(conn.Chain, base.Merge) {
+		return 0, nil
+	}
+
 	method := "eth_getUncleCountByBlockNumber"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
