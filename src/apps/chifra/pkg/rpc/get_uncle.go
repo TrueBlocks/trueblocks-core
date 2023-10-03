@@ -79,7 +79,7 @@ func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) 
 
 // GetUnclesCountInBlock returns the number of uncles in a block.
 func (conn *Connection) GetUnclesCountInBlock(bn uint64) (uint64, error) {
-	if bn >= base.MergeBlock {
+	if bn >= base.KnownBlock(conn.Chain, base.Merge) {
 		return 0, nil
 	}
 

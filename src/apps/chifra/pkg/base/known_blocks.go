@@ -1,10 +1,27 @@
 package base
 
-// TODO: This is not correct per chain...
-const (
-	ByzantiumBlock      = Blknum(4370000)
-	ConstantinopleBlock = Blknum(7280000)
-	LondonBlock         = Blknum(12965000)
-	MergeBlock          = Blknum(15537393)
-	ShanghaiBlock       = Blknum(17034870)
+var (
+	Byzantium      = "byzantium"
+	Constantinople = "constantinople"
+	London         = "london"
+	Merge          = "merge"
+	Shanghai       = "shanghai"
 )
+
+var knownBlocks = map[string]map[string]Blknum{
+	"mainnet": {
+		Byzantium:      4370000,
+		Constantinople: 7280000,
+		London:         12965000,
+		Merge:          15537393,
+		Shanghai:       17034870,
+	},
+	"sepolia": {
+		Merge:    1450409,
+		Shanghai: 2990908,
+	},
+}
+
+func KnownBlock(chain, blockName string) Blknum {
+	return knownBlocks[chain][blockName]
+}
