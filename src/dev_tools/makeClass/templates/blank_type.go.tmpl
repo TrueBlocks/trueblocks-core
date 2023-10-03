@@ -29,7 +29,7 @@ func (s *Simple[{CLASS_NAME}]) SetRaw(raw *[{RAW_NAME}]) {
 	s.raw = raw
 }
 
-func (s *Simple[{CLASS_NAME}]) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *Simple[{CLASS_NAME}]) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

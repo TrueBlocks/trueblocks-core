@@ -50,7 +50,7 @@ func (s *SimpleTraceFilter) SetRaw(raw *RawTraceFilter) {
 	s.raw = raw
 }
 
-func (s *SimpleTraceFilter) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTraceFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -103,7 +103,7 @@ func (s *SimpleTraceFilter) PassesBasic(trace *SimpleTrace, nTested uint64, nPas
 	return true, ""
 }
 
-func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]interface{}, br base.BlockRange) {
+func (s *SimpleTraceFilter) ParseBangString(chain, filter string) (ret map[string]interface{}, br base.BlockRange) {
 	parts := strings.Split(filter, "!")
 	for {
 		if len(parts) >= 6 {
@@ -129,7 +129,7 @@ func (s *SimpleTraceFilter) ParseBangString(filter string) (ret map[string]inter
 	if s.Count == 0 {
 		s.Count = utils.NOPOS
 	}
-	return s.Model(false, "", nil).Data, base.BlockRange{First: s.FromBlock, Last: s.ToBlock}
+	return s.Model(chain, "", false, nil).Data, base.BlockRange{First: s.FromBlock, Last: s.ToBlock}
 }
 
 // EXISTING_CODE

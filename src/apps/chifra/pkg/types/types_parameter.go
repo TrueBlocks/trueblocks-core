@@ -52,7 +52,7 @@ func (s *SimpleParameter) SetRaw(raw *RawParameter) {
 	s.raw = raw
 }
 
-func (s *SimpleParameter) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleParameter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

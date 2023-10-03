@@ -68,7 +68,7 @@ func (s *SimpleReceipt) SetRaw(raw *RawReceipt) {
 	s.raw = raw
 }
 
-func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -104,7 +104,7 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 		} else {
 			logs := make([]map[string]any, 0, len(s.Logs))
 			for _, log := range s.Logs {
-				logs = append(logs, log.Model(verbose, format, extraOptions).Data)
+				logs = append(logs, log.Model(chain, format, verbose, extraOptions).Data)
 			}
 			model["logs"] = logs
 		}
