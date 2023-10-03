@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -18,6 +19,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
+
+var nVisited int
 
 func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
 	chain := opts.Globals.Chain
@@ -34,9 +37,18 @@ func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
 			},
 		)
 
+		logger.Info("Walking the bloom files at...", config.PathToIndex(chain))
+		if !file.FolderExists(config.PathToIndex(chain)) {
+			logger.Fatal(fmt.Sprintf("The index folder does not exist: [%s]", config.PathToIndex(chain)))
+		}
+
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
 			cancel()
+		}
+
+		if nVisited == 0 {
+			logger.Warn("No bloom filters were visited. Does the block number exist in the finalized folder?")
 		}
 	}
 
@@ -44,6 +56,8 @@ func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
 }
 
 func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {
+	nVisited++
+
 	thisPath := index.ToIndexPath(path)
 	diffPath := getDiffPath(chain, thisPath)
 
