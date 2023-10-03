@@ -76,7 +76,7 @@ func (s *SimpleBlock[Tx]) SetRaw(raw *RawBlock) {
 	s.raw = raw
 }
 
-func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -112,13 +112,13 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 
 		if format == "json" {
 			model.Data["tx_hashes"] = txHashes
-			if s.BlockNumber > base.ShanghaiBlock {
+			if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
 				model.Data["withdrawals"] = s.Withdrawals
 			}
 		} else {
 			model.Data["transactionsCnt"] = len(txHashes)
 			model.Order = append(model.Order, "transactionsCnt")
-			if s.BlockNumber > base.ShanghaiBlock {
+			if s.BlockNumber > base.KnownBlock(chain, base.Shanghai) {
 				model.Data["withdrawalsCnt"] = len(s.Withdrawals)
 				model.Order = append(model.Order, "withdrawalsCnt")
 			}
@@ -165,7 +165,7 @@ func (s *SimpleBlock[Tx]) Model(verbose bool, format string, extraOptions map[st
 			if ok {
 				items := make([]map[string]interface{}, 0, len(txs))
 				for _, txObject := range txs {
-					items = append(items, txObject.Model(verbose, format, extraOptions).Data)
+					items = append(items, txObject.Model(chain, format, verbose, extraOptions).Data)
 				}
 				model["transactions"] = items
 			} else {

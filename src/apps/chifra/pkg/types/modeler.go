@@ -1,7 +1,7 @@
 package types
 
 type Modeler[RT RawData] interface {
-	Model(verbose bool, format string, extraOptions map[string]any) Model
+	Model(chain, format string, verbose bool, extraOptions map[string]any) Model
 	Raw() *RT
 }
 

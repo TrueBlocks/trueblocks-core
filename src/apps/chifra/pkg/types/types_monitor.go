@@ -31,7 +31,7 @@ func (s *SimpleMonitor) SetRaw(raw *RawMonitor) {
 	s.raw = raw
 }
 
-func (s *SimpleMonitor) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleMonitor) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

@@ -165,7 +165,7 @@ func StreamMany[Raw types.RawData](ctx context.Context, fetchData fetchDataFunc[
 			if options.ShowRaw {
 				err = streamRaw(options.Writer, model.Raw())
 			} else {
-				modelValue := model.Model(options.Verbose, options.Format, options.Extra)
+				modelValue := model.Model(options.Chain, options.Format, options.Verbose, options.Extra)
 				if customFormat {
 					err = StreamWithTemplate(options.Writer, modelValue, tmpl)
 				} else {

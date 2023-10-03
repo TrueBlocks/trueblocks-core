@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var input = types.SimpleReceipt{
@@ -37,21 +38,21 @@ var input = types.SimpleReceipt{
 	TransactionIndex: 1,
 }
 
-func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, format string, expectKeys bool) error {
+func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, chain, format string, expectKeys bool) error {
 	buffer := new(bytes.Buffer)
-	StreamModel(buffer, input.Model(false, format, nil), OutputOptions{
+	StreamModel(buffer, input.Model(chain, format, false, nil), OutputOptions{
 		Format:   format,
 		NoHeader: !expectKeys,
 	})
 	result := buffer.String()
 
 	var expectedItems []string
-	data := input.Model(false, format, nil).Data
-	for _, key := range input.Model(false, format, nil).Order {
+	data := input.Model(chain, format, false, nil).Data
+	for _, key := range input.Model(chain, format, false, nil).Order {
 		expectedItems = append(expectedItems, fmt.Sprint(data[key]))
 	}
 	if expectKeys {
-		w.Write(input.Model(false, format, nil).Order)
+		w.Write(input.Model(chain, format, false, nil).Order)
 	}
 	w.Write(expectedItems)
 	w.Flush()
@@ -64,34 +65,36 @@ func helperStreamFormats(w csv.Writer, outputBuffer *bytes.Buffer, format string
 }
 
 func TestStreamFormats(t *testing.T) {
+	chain := utils.GetTestChain()
 	outputBuffer := &bytes.Buffer{}
 	csvWriter := csv.NewWriter(outputBuffer)
 
-	err := helperStreamFormats(*csvWriter, outputBuffer, "csv", false)
+	err := helperStreamFormats(*csvWriter, outputBuffer, chain, "csv", false)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	csvWriter.Comma = '\t'
 	outputBuffer.Reset()
-	err = helperStreamFormats(*csvWriter, outputBuffer, "txt", false)
+	err = helperStreamFormats(*csvWriter, outputBuffer, chain, "txt", false)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	csvWriter.Comma = ':'
 	outputBuffer.Reset()
-	err = helperStreamFormats(*csvWriter, outputBuffer, ":", false)
+	err = helperStreamFormats(*csvWriter, outputBuffer, chain, ":", false)
 	if err != nil {
 		t.Fatal(err)
 	}
 }
 
 func TestStreamJson(t *testing.T) {
+	chain := utils.GetTestChain()
 	outputBuffer := &bytes.Buffer{}
 	w := NewJsonWriter(outputBuffer)
 	w.DefaultField = DefaultField{Key: "Data", FieldType: FieldArray}
-	StreamModel(w, input.Model(false, "json", nil), OutputOptions{
+	StreamModel(w, input.Model(chain, "json", false, nil), OutputOptions{
 		Format:     "json",
 		JsonIndent: "  ",
 	})
@@ -100,7 +103,7 @@ func TestStreamJson(t *testing.T) {
 	expected, err := json.MarshalIndent(struct {
 		Data []interface{}
 	}{
-		Data: []interface{}{input.Model(false, "json", nil).Data},
+		Data: []interface{}{input.Model(chain, "json", false, nil).Data},
 	}, "", "  ")
 
 	if err != nil {
@@ -112,20 +115,22 @@ func TestStreamJson(t *testing.T) {
 }
 
 func TestStreamPrintKeys(t *testing.T) {
+	chain := utils.GetTestChain()
 	outputBuffer := &bytes.Buffer{}
 	csvWriter := csv.NewWriter(outputBuffer)
 
-	err := helperStreamFormats(*csvWriter, outputBuffer, "csv", true)
+	err := helperStreamFormats(*csvWriter, outputBuffer, chain, "csv", true)
 	if err != nil {
 		t.Fatal(err)
 	}
 }
 
 func TestStreamTemplate(t *testing.T) {
+	chain := utils.GetTestChain()
 	tmpl := template.Must(template.New("").Parse("{{.blockNumber}} used {{.gasUsed}}{{if .Nonexistent}}111{{else}}.{{end}}"))
 	outputBuffer := &bytes.Buffer{}
 
-	err := StreamWithTemplate(outputBuffer, input.Model(false, "", nil), tmpl)
+	err := StreamWithTemplate(outputBuffer, input.Model(chain, "", false, nil), tmpl)
 	if err != nil {
 		t.Fatal(err)
 	}
