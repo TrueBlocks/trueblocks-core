@@ -92,7 +92,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// Remove whatever's in the unripePath before running each round. We do this
 		// because the chain may have re-organized (which it does frequently). This is
 		// why we have an unripePath.
-		unripePath := filepath.Join(config.GetPathToIndex(chain), "unripe")
+		unripePath := filepath.Join(config.PathToIndex(chain), "unripe")
 		err = os.RemoveAll(unripePath)
 		if err != nil {
 			return err

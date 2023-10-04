@@ -26,13 +26,13 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	chain := blazeOpts.Chain
 
 	// Get a sorted list of files in the ripe folder
-	ripeFolder := filepath.Join(config.GetPathToIndex(chain), "ripe")
+	ripeFolder := filepath.Join(config.PathToIndex(chain), "ripe")
 	ripeFileList, err := os.ReadDir(ripeFolder)
 	if err != nil {
 		return true, err
 	}
 
-	stageFolder := filepath.Join(config.GetPathToIndex(chain), "staging")
+	stageFolder := filepath.Join(config.PathToIndex(chain), "staging")
 	if len(ripeFileList) == 0 {
 		// On active chains, this most likely never happens, but on some less used or private chains, this is a frequent occurrence.
 		// return a message, but don't do anything about it.
@@ -59,7 +59,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		// Then, if they are not at least sequential, clean up and try again...
 		allowMissing := scrapeCfg.AllowMissing(chain)
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
-			_ = index.CleanTemporaryFolders(config.GetPathToCache(chain), false)
+			_ = index.CleanTemporaryFolders(config.PathToCache(chain), false)
 			return true, err
 		}
 	}
@@ -76,7 +76,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	}
 
 	// Note, this file may be empty or non-existant
-	tmpPath := filepath.Join(config.GetPathToCache(chain) + "tmp")
+	tmpPath := filepath.Join(config.PathToCache(chain) + "tmp")
 	backupFn, err := file.MakeBackup(tmpPath, stageFn)
 	if err != nil {
 		return true, errors.New("Could not create backup file: " + err.Error())
@@ -121,7 +121,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 				}
 			}
 
-			indexPath := config.GetPathToIndex(chain) + "finalized/" + curRange.String() + ".bin"
+			indexPath := config.PathToIndex(chain) + "finalized/" + curRange.String() + ".bin"
 			if report, err := index.WriteChunk(chain, indexPath, appMap, len(appearances), opts.Pin, opts.Remote); err != nil {
 				return false, err
 			} else if report == nil {
@@ -151,7 +151,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		m, _ := conn.GetMetaData(opts.Globals.TestMode)
 		rng := base.FileRange{First: m.Finalized + 1, Last: Last}
 		f := fmt.Sprintf("%s.txt", rng)
-		fileName := filepath.Join(config.GetPathToIndex(chain), "staging", f)
+		fileName := filepath.Join(config.PathToIndex(chain), "staging", f)
 		err = file.LinesToAsciiFile(fileName, appearances)
 		if err != nil {
 			os.Remove(fileName) // cleans up by replacing the previous stage

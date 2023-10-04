@@ -67,10 +67,10 @@ func TestHexToHash(t *testing.T) {
 func TestHashCompareToCommon(t *testing.T) {
 	c := common.HexToHash("0x00000123456789abcde")
 	b := HexToHash("0x00000123456789abcde")
-	if c != b.ToCommon() {
+	if c != b.Common() {
 		t.Fatal("base.Hash.toCommon() does not match")
 	}
-	if b != new(Hash).FromCommon(&c) {
+	if b != new(Hash).SetCommon(&c) {
 		t.Fatal("fromCommon(c) does not match Hash")
 	}
 }

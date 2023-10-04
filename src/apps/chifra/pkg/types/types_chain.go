@@ -13,7 +13,6 @@ package types
 // EXISTING_CODE
 
 type RawChain struct {
-	ApiProvider    string `json:"apiProvider"`
 	Chain          string `json:"chain"`
 	ChainId        string `json:"chainId"`
 	IpfsGateway    string `json:"ipfsGateway"`
@@ -26,7 +25,6 @@ type RawChain struct {
 }
 
 type SimpleChain struct {
-	ApiProvider    string    `json:"apiProvider"`
 	Chain          string    `json:"chain"`
 	ChainId        uint64    `json:"chainId"`
 	IpfsGateway    string    `json:"ipfsGateway"`
@@ -47,13 +45,12 @@ func (s *SimpleChain) SetRaw(raw *RawChain) {
 	s.raw = raw
 }
 
-func (s *SimpleChain) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChain) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	model = map[string]interface{}{
-		"apiProvider":    s.ApiProvider,
 		"chain":          s.Chain,
 		"chainId":        s.ChainId,
 		"ipfsGateway":    s.IpfsGateway,
@@ -63,7 +60,6 @@ func (s *SimpleChain) Model(verbose bool, format string, extraOptions map[string
 		"symbol":         s.Symbol,
 	}
 	order = []string{
-		"apiProvider",
 		"chain",
 		"chainId",
 		"ipfsGateway",

@@ -68,7 +68,6 @@ func init() {
 	abisCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	abisCmd.Flags().MarkDeprecated("sol", "please use the `solc --abi` tool instead")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(abisCmd)

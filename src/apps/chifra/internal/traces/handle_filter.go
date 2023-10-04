@@ -23,7 +23,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
 	nErrors := 0
 	traceFilter := types.SimpleTraceFilter{}
-	_, br := traceFilter.ParseBangString(opts.Filter)
+	_, br := traceFilter.ParseBangString(chain, opts.Filter)
 
 	ids := make([]identifiers.Identifier, 0)
 	if _, err := validate.ValidateIdentifiersWithBounds(chain, []string{fmt.Sprintf("%d-%d", br.First, br.Last+1)}, validate.ValidBlockIdWithRangeAndDate, 1, &ids); err != nil {

@@ -82,7 +82,7 @@ Manifests consist of the following fields:
 | --------- | --------------------------------------------------------------------- | ----------------------------------------------- |
 | version   | the version string hashed into the chunk data                         | string                                          |
 | chain     | the chain to which this manifest belongs                              | string                                          |
-| schemas   | IPFS cid of file describing the schemas for the various databases     | ipfshash                                        |
+| schemas   | IPFS cid of the specification                                         | ipfshash                                        |
 | databases | IPFS cid of file containing CIDs for the various databases            | ipfshash                                        |
 | chunks    | a list of the IPFS hashes of all of the chunks in the unchained index | [ChunkRecord[]](/data-model/admin/#chunkrecord) |
 
@@ -257,14 +257,14 @@ ReportChecks consist of the following fields:
 
 | Field      | Description                                   | Type     |
 | ---------- | --------------------------------------------- | -------- |
-| Reason     | the reason for the test                       | string   |
+| result     | the result of the check                       | string   |
 | visitedCnt | the number of visited items in the cache      | uint32   |
 | checkedCnt | the number of checks                          | uint32   |
 | skippedCnt | the number of skipped checks                  | uint32   |
 | passedCnt  | the number of passed checks                   | uint32   |
 | failedCnt  | the number of failed checks                   | uint32   |
-| result     | the result of the check                       | string   |
 | msgStrings | an array of messages explaining failed checks | []string |
+| reason     | the reason for the test                       | string   |
 
 ## ChunkPinReport
 
@@ -277,13 +277,13 @@ The following commands produce and manage ChunkPinReports:
 
 ChunkPinReports consist of the following fields:
 
-| Field        | Description                                                       | Type     |
-| ------------ | ----------------------------------------------------------------- | -------- |
-| version      | the version string hashed into the chunk data                     | string   |
-| chain        | the chain to which this manifest belongs                          | string   |
-| schemas      | IPFS cid of file describing the schemas for the various databases | ipfshash |
-| tsHash       | IPFS cid of file containing timestamps                            | ipfshash |
-| manifestHash | IPFS cid of file containing CIDs for the various chunks           | ipfshash |
+| Field        | Description                                             | Type     |
+| ------------ | ------------------------------------------------------- | -------- |
+| version      | the version string hashed into the chunk data           | string   |
+| chain        | the chain to which this manifest belongs                | string   |
+| schemas      | IPFS cid of the specification                           | ipfshash |
+| tsHash       | IPFS cid of file containing timestamps                  | ipfshash |
+| manifestHash | IPFS cid of file containing CIDs for the various chunks | ipfshash |
 
 ## Chain
 
@@ -304,7 +304,6 @@ Chains consist of the following fields:
 | chainId        | The chain id as reported by the RPC                              | uint64 |
 | symbol         | The symbol of the base currency on the chain                     | string |
 | rpcProvider    | A valid RPC provider for the chain                               | string |
-| apiProvider    | A valid API provider for the explorer                            | string |
 | remoteExplorer | A remote explorer for the chain such as Etherscan                | string |
 | localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
 | ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |

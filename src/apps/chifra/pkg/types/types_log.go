@@ -17,6 +17,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -60,7 +61,7 @@ func (s *SimpleLog) SetRaw(raw *RawLog) {
 	s.raw = raw
 }
 
-func (s *SimpleLog) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleLog) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -349,6 +350,33 @@ func (s *SimpleLog) ContainsAny(addrArray []base.Address) bool {
 func (s *SimpleLog) ContainsAddress(addr base.Address) bool {
 	haystack := s.getHaystack()
 	return strings.Contains(string(haystack), addr.Hex()[2:])
+}
+
+func (r *RawLog) RawToSimple(vals map[string]any) (SimpleLog, error) {
+	hash, ok := vals["hash"].(base.Hash)
+	if !ok {
+		logger.Fatal("Hash not found in raw log values")
+	}
+
+	log := SimpleLog{
+		Address:          base.HexToAddress(r.Address),
+		BlockNumber:      utils.MustParseUint(r.BlockNumber),
+		BlockHash:        base.HexToHash(r.BlockHash),
+		TransactionIndex: utils.MustParseUint(r.TransactionIndex),
+		TransactionHash:  hash,
+		LogIndex:         utils.MustParseUint(r.LogIndex),
+		Data:             r.Data,
+		raw:              r,
+	}
+	for _, topic := range r.Topics {
+		log.Topics = append(log.Topics, base.HexToHash(topic))
+	}
+
+	if ts, ok := vals["timestamp"].(base.Timestamp); ok && ts != utils.NOPOSI {
+		log.Timestamp = ts
+	}
+
+	return log, nil
 }
 
 // EXISTING_CODE

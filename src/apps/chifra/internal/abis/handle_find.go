@@ -65,7 +65,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		defer checkOne.Release()
 
 		// TODO: UnchainedIndex --> This could be part of unchained index
-		sigsFile, err := os.OpenFile(config.GetPathToRootConfig()+"abis/known-000/uniq_sigs.tab", os.O_RDONLY, 0)
+		sigsFile, err := os.OpenFile(config.PathToRootConfig()+"abis/known-000/uniq_sigs.tab", os.O_RDONLY, 0)
 		if err != nil {
 			errorChan <- err
 			cancel()
@@ -79,7 +79,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 		sigsScanner.Split(bufio.ScanLines)
 
 		// TODO: UnchainedIndex --> This could be part of unchained index
-		funcsFile, _ := os.OpenFile(config.GetPathToRootConfig()+"abis/known-000/uniq_funcs.tab", os.O_RDONLY, 0)
+		funcsFile, _ := os.OpenFile(config.PathToRootConfig()+"abis/known-000/uniq_funcs.tab", os.O_RDONLY, 0)
 		defer func() {
 			funcsFile.Close()
 		}()

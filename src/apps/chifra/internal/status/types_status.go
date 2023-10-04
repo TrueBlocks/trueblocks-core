@@ -56,7 +56,7 @@ func (s *simpleStatus) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleStatus) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -132,7 +132,6 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 					LocalExplorer:  chain.LocalExplorer,
 					RemoteExplorer: chain.RemoteExplorer,
 					RpcProvider:    chain.RpcProvider,
-					ApiProvider:    chain.ApiProvider,
 					IpfsGateway:    chain.IpfsGateway,
 					Symbol:         chain.Symbol,
 				}
@@ -184,10 +183,10 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		ClientVersion: vers,
 		Version:       version.LibraryVersion,
 		RPCProvider:   provider,
-		RootConfig:    config.GetPathToRootConfig(),
-		ChainConfig:   config.GetPathToChainConfig(chain),
-		CachePath:     config.GetPathToCache(chain),
-		IndexPath:     config.GetPathToIndex(chain),
+		RootConfig:    config.PathToRootConfig(),
+		ChainConfig:   config.MustGetPathToChainConfig(chain),
+		CachePath:     config.PathToCache(chain),
+		IndexPath:     config.PathToIndex(chain),
 		Progress:      ToProgress(chain, meta),
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),

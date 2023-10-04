@@ -10,8 +10,11 @@ import (
 	"os"
 	"os/signal"
 	"sync"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 )
 
+var TrapMessage = colors.Yellow + "Ctrl+C. Finishing..." + colors.Off
 var ErrInterrupted = errors.New("interrupted")
 var SigintMessageOnce sync.Once
 

@@ -44,7 +44,7 @@ func (s *SimpleLogFilter) SetRaw(raw *RawLogFilter) {
 	s.raw = raw
 }
 
-func (s *SimpleLogFilter) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleLogFilter) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

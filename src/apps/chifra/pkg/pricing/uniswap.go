@@ -90,7 +90,7 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		reserve1.SetString(result.Values["_reserve1"])
 	}
 	bigPrice := new(big.Float)
-	bigPrice.Quo(reserve0, reserve1)
+	bigPrice = bigPrice.Quo(reserve0, reserve1)
 
 	price, _ = bigPrice.Float64()
 	price *= multiplier

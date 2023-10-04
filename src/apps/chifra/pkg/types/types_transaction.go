@@ -35,8 +35,8 @@ type Rewards struct {
 
 func NewReward(block, nephew, txFee, uncle *big.Int) (Rewards, big.Int) {
 	total := new(big.Int).Add(block, nephew)
-	total.Add(total, txFee)
-	total.Add(total, uncle)
+	total = total.Add(total, txFee)
+	total = total.Add(total, uncle)
 	return Rewards{
 		Block:  *block,
 		Nephew: *nephew,
@@ -106,7 +106,7 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 	s.raw = raw
 }
 
-func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -175,7 +175,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		if s.Statements != nil {
 			statements := make([]map[string]any, 0, len(*s.Statements))
 			for _, statement := range *s.Statements {
-				statements = append(statements, statement.Model(verbose, format, extraOptions).Data)
+				statements = append(statements, statement.Model(chain, format, verbose, extraOptions).Data)
 			}
 			model["statements"] = statements
 		}
@@ -206,9 +206,6 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		if s.Receipt != nil && !s.Receipt.IsDefault() {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
-			// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
-			// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
-			// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
 			byzantiumBlock := uint64(4370000)
 			status := &s.Receipt.Status
 			if s.BlockNumber < byzantiumBlock || *status == 4294967295-1 {
@@ -253,7 +250,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		if extraOptions["traces"] == true && len(s.Traces) > 0 {
 			traceModels := make([]map[string]any, 0, len(s.Traces))
 			for _, trace := range s.Traces {
-				traceModels = append(traceModels, trace.Model(verbose, format, extraOptions).Data)
+				traceModels = append(traceModels, trace.Model(chain, format, verbose, extraOptions).Data)
 			}
 			model["traces"] = traceModels
 		} else {

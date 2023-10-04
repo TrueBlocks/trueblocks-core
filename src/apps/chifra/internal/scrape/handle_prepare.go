@@ -24,15 +24,15 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *
 	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting
-	_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
+	_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
 
-	bloomPath := config.GetPathToIndex(chain) + "blooms/000000000-000000000.bloom"
+	bloomPath := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"
 	if file.FileExists(bloomPath) {
 		// The file already exists, nothing to do
 		return true, nil
 	}
 
-	prefundPath := filepath.Join(config.GetPathToChainConfig(chain), "allocs.csv")
+	prefundPath := filepath.Join(config.MustGetPathToChainConfig(chain), "allocs.csv")
 	prefunds, err := prefunds.LoadPrefunds(chain, prefundPath, nil)
 	if err != nil {
 		return false, err

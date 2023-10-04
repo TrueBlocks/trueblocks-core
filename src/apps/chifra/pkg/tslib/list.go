@@ -18,7 +18,7 @@ import (
 
 // GetSpecials returns a chain-specific list of special block names and numbers
 func GetSpecials(chain string) (specials []types.SimpleNamedBlock, err error) {
-	specialsPath := config.GetPathToChainConfig(chain) + "specials.csv"
+	specialsPath := config.MustGetPathToChainConfig(chain) + "specials.csv"
 	_, err = os.Stat(specialsPath)
 	if err != nil {
 		// It's okay if there are no specials for a certain chain

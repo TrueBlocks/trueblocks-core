@@ -40,6 +40,7 @@ class COptions : public COptionsBase {
     bool all;
     bool sdk;
     bool openapi;
+    bool protobuf;
 
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
@@ -85,6 +86,8 @@ class COptions : public COptionsBase {
     void verifyGoEnumValidators(void);
 
     bool writeOpenApiFile(void);
+
+    bool handle_protobuf(void);
 
     string_q getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes);
     void verifyDescriptions(void);

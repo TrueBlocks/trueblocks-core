@@ -26,7 +26,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
 	if _, err := blazeOpts.HandleBlaze(progress); err != nil {
-		_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
+		_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
 		return err
 	}
 
@@ -34,7 +34,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *
 		if !blazeOpts.ProcessedMap[bn] {
 			// At least one block was not processed. This would only happen in the event of an
 			// error, so clean up, report the error and return. The loop will repeat.
-			_ = index.CleanTemporaryFolders(config.GetPathToIndex(chain), false)
+			_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
 			msg := fmt.Sprintf("A block %d was not processed%s", bn, strings.Repeat(" ", 50))
 			return errors.New(msg)
 		}
@@ -55,14 +55,14 @@ func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uin
 	})
 
 	// Assume that the existing timestamps file always contains valid timestamps in a valid order so we can only append
-	tsPath := config.GetPathToIndex(chain) + "ts.bin"
+	tsPath := config.PathToIndex(chain) + "ts.bin"
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err
 	}
 
 	defer func() {
-		tslib.DeCache(chain)
+		tslib.ClearCache(chain)
 		fp.Close()
 		// sigintTrap.Disable(trapCh)
 		// writeMutex.Unlock()

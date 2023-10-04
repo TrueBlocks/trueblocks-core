@@ -21,18 +21,18 @@ const chainConfigMustExist string = `
 
 `
 
-// GetPathToChainConfig returns the chain-specific config folder
-func GetPathToChainConfig(chain string) string {
+// MustGetPathToChainConfig returns the chain-specific config folder
+func MustGetPathToChainConfig(chain string) string {
 	// TODO: We can test this with a unit test
 	if chain == "non-tracing" { // Test mode only for testing non-tracing nodes
-		return GetPathToChainConfig("mainnet")
+		return MustGetPathToChainConfig("mainnet")
 	}
 
 	// We always need a chain
 	if len(chain) == 0 {
 		chain = GetDefaultChain()
 	}
-	ret := GetPathToRootConfig()
+	ret := PathToRootConfig()
 
 	// Our configuration files are always in ./config folder relative to top most folder
 	cfgFolder := filepath.Join(ret, "config/", chain) + "/"
@@ -42,8 +42,8 @@ func GetPathToChainConfig(chain string) string {
 	return cfgFolder
 }
 
-// GetPathToIndex returns the one and only indexPath
-func GetPathToIndex(chain string) string {
+// PathToIndex returns the one and only indexPath
+func PathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
@@ -69,8 +69,8 @@ func GetPathToIndex(chain string) string {
 	return newPath
 }
 
-// GetPathToCache returns the one and only cachePath
-func GetPathToCache(chain string) string {
+// PathToCache returns the one and only cachePath
+func PathToCache(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	cachePath, err := PathFromXDG("XDG_CACHE_HOME")
 	if err != nil {

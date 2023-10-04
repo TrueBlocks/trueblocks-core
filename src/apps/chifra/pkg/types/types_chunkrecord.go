@@ -10,6 +10,8 @@ package types
 
 // EXISTING_CODE
 import (
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -44,7 +46,7 @@ func (s *SimpleChunkRecord) SetRaw(raw *RawChunkRecord) {
 	s.raw = raw
 }
 
-func (s *SimpleChunkRecord) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleChunkRecord) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -72,4 +74,9 @@ func (s *SimpleChunkRecord) Model(verbose bool, format string, extraOptions map[
 }
 
 // EXISTING_CODE
+func (s *SimpleChunkRecord) String() string {
+	bytes, _ := json.MarshalIndent(s, "", "  ")
+	return string(bytes)
+}
+
 // EXISTING_CODE

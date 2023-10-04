@@ -371,15 +371,9 @@ func readFunction(reader *bufio.Reader) (function *types.SimpleFunction, err err
 	return
 }
 
-// getCacheAndChainPath returns path to cache for given chain
-func getCacheAndChainPath(chain string) string {
-	cacheDir := config.GetRootConfig().Settings.CachePath
-	return path.Join(cacheDir, chain)
-}
-
 // getAbis reads all ABIs stored in the cache
 func getAbis(chain string) ([]types.SimpleFunction, error) {
-	fullPath := path.Join(getCacheAndChainPath(chain), walk.CacheTypeToFolder[walk.Cache_Abis], "known.bin")
+	fullPath := path.Join(config.PathToCache(chain), walk.CacheTypeToFolder[walk.Cache_Abis], "known.bin")
 	if f, err := os.Open(fullPath); err != nil {
 		return nil, err
 
@@ -607,7 +601,7 @@ func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
 
 // save writes contents of `content` Reader to a file
 func save(chain string, filePath string, content io.Reader) (err error) {
-	cacheDir := getCacheAndChainPath(chain)
+	cacheDir := config.PathToCache(chain)
 	fullPath := path.Join(cacheDir, filePath)
 
 	var f *os.File
@@ -636,8 +630,8 @@ func save(chain string, filePath string, content io.Reader) (err error) {
 // LoadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
 func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
 	isUpToDate := func(chain string) (bool, error) {
-		testFn := path.Join(config.GetPathToCache(chain), "abis/known.bin")
-		testDir := path.Join(config.GetPathToRootConfig(), "abis")
+		testFn := path.Join(config.PathToCache(chain), "abis/known.bin")
+		testDir := path.Join(config.PathToRootConfig(), "abis")
 		if cacheFile, err := os.Stat(testFn); os.IsNotExist(err) {
 			return false, nil
 
@@ -683,7 +677,7 @@ func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
 // findKnownAbi finds known ABI by name in known-* directories
 func findKnownAbi(name string) (filePath string) {
 	for _, subdirName := range knownAbiSubdirectories {
-		testPath := path.Join(config.GetPathToRootConfig(), "abis", subdirName, name+".json")
+		testPath := path.Join(config.PathToRootConfig(), "abis", subdirName, name+".json")
 		if file.FileExists(testPath) {
 			filePath = testPath
 			return
@@ -693,7 +687,7 @@ func findKnownAbi(name string) (filePath string) {
 }
 
 func getKnownAbiPaths() (filePaths []string, err error) {
-	knownDirPath := path.Join(config.GetPathToRootConfig(), "abis")
+	knownDirPath := path.Join(config.PathToRootConfig(), "abis")
 	err = filepath.WalkDir(knownDirPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -748,7 +742,7 @@ func LoadAbiFromAddress(chain string, address base.Address, destination *Functio
 	if err = fromJson(localFile, destination); err != nil {
 		return
 	}
-	// File is correct
+	// File is correct, cache it
 	if err = insertAbi(chain, address, localFile); err != nil {
 		return
 	}
@@ -758,7 +752,7 @@ func LoadAbiFromAddress(chain string, address base.Address, destination *Functio
 
 // insertAbi copies file (e.g. opened local file) into cache
 func insertAbi(chain string, address base.Address, inputReader io.Reader) error {
-	fullPath := path.Join(getCacheAndChainPath(chain), walk.CacheTypeToFolder[walk.Cache_Abis], address.Hex()+".json")
+	fullPath := path.Join(config.PathToCache(chain), walk.CacheTypeToFolder[walk.Cache_Abis], address.Hex()+".json")
 	if file, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666); err != nil {
 		return err
 	} else {
@@ -773,7 +767,7 @@ func insertAbi(chain string, address base.Address, inputReader io.Reader) error 
 // GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
 func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
 	filePath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], address.Hex()+".json")
-	f, err := os.Open(path.Join(getCacheAndChainPath(chain), filePath))
+	f, err := os.Open(path.Join(config.PathToCache(chain), filePath))
 	if err != nil {
 		return
 	}

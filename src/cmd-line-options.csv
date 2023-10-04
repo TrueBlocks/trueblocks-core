@@ -41,16 +41,16 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10480,apps,Accounts,export,acctExport,n10,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; transactions&#44; traces&#44; etc.) for the given address(es).
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to process
-11087,apps,Accounts,monitors,acctExport,deleteMe,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
+11087,apps,Accounts,monitors,acctExport,delete,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
 11093,apps,Accounts,monitors,acctExport,undelete,,,false,false,true,true,gocmd,switch,<boolean>,undelete a previously deleted monitor
 11091,apps,Accounts,monitors,acctExport,remove,,,false,false,true,true,gocmd,switch,<boolean>,remove a previously deleted monitor
 11085,apps,Accounts,monitors,acctExport,clean,C,,false,false,true,true,gocmd,switch,<boolean>,clean (i.e. remove duplicate appearances) from monitors
-11093,apps,Accounts,monitors,acctExport,list,l,,false,false,true,true,gocmd,switch,<boolean>,list monitors in the cache (--verbose for more detail)
-11294,apps,Accounts,monitors,acctExport,watch,w,,false,false,true,true,gocmd,switch,<boolean>,continually scan for new blocks and extract data for monitored addresses
-11296,apps,Accounts,monitors,acctExport,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between monitor passes
-11095,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
-11097,apps,Accounts,monitors,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
-11099,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
+11080,apps,Accounts,monitors,acctExport,list,l,,false,false,true,true,gocmd,switch,<boolean>,list monitors in the cache (--verbose for more detail)
+11284,apps,Accounts,monitors,acctExport,watch,w,,false,false,true,true,gocmd,switch,<boolean>,continually scan for new blocks and extract data for monitored addresses
+11298,apps,Accounts,monitors,acctExport,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between monitor passes
+11094,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
+11095,apps,Accounts,monitors,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
+11096,apps,Accounts,monitors,acctExport,n2,,,false,false,false,false,--,note,,If no address is presented to the --clean command&#44; all monitors will be cleaned.
 
 12005,apps,Accounts,list,acctExport,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to list
 12015,apps,Accounts,list,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of records for each monitor
@@ -81,7 +81,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12305,tools,Accounts,names,ethNames,autoname,A,,false,false,true,true,gocmd,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12310,tools,Accounts,names,ethNames,create,,,false,false,false,true,gocmd,switch,<boolean>,create a new name record
 12315,tools,Accounts,names,ethNames,update,,,false,false,false,true,gocmd,switch,<boolean>,edit an existing name
-12320,tools,Accounts,names,ethNames,deleteMe,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
+12320,tools,Accounts,names,ethNames,delete,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
 12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,gocmd,switch,<boolean>,undelete a previously deleted name
 12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,gocmd,switch,<boolean>,remove a previously deleted name
 12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
@@ -270,7 +270,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31995,apps,Admin,chunks,chunkMan,n8,,,false,false,false,false,--,note,,The --publish option requires a private key.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks (recommended)
-11910,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading
+11907,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading
 11915,apps,Admin,init,init,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,do not download any chunks earlier than this block
 11920,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11925,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.

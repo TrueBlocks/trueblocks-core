@@ -11,7 +11,7 @@ func TestTraceFilter(t *testing.T) {
 	// 	trace := trace
 	// 	for _, filter := range filters {
 	// 		f := SimpleTraceFilter{}
-	// 		f.ParseBangString(filter.bang)
+	// 		f.ParseBangString(chain, filter.bang)
 	// 		// if index > 0 && w > 7 {
 	// 		// 	filter.exp = false
 	// 		// }

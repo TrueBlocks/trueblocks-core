@@ -85,7 +85,7 @@ func (s *SimpleSlurp) SetRaw(raw *RawSlurp) {
 	s.raw = raw
 }
 
-func (s *SimpleSlurp) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -163,12 +163,14 @@ func (s *SimpleSlurp) Model(verbose bool, format string, extraOptions map[string
 		if strings.HasPrefix(a, "0x") && len(a) == 42 {
 			model["contractAddress"] = a
 		}
+		// etherscan sometimes returns this word instead of a hex address
 		if len(s.Input) > 2 && s.Input != "deprecated" {
 			model["input"] = s.Input
 		}
 	} else {
 		model["hasToken"] = s.HasToken
 		model["isError"] = s.IsError
+		// etherscan sometimes returns this word instead of a hex address
 		if s.Input == "deprecated" {
 			s.Input = "0x"
 		}

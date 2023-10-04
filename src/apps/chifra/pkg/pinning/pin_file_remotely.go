@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
+// pinFileRemotely pins a file remotely to the pinning service
 func (s *Service) pinFileRemotely(filepath string) (base.IpfsHash, error) {
 	if s.PinUrl == "" {
 		return "", fmt.Errorf("empty remote pinning URL")

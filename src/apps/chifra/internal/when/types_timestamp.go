@@ -29,7 +29,7 @@ func (s *simpleTimestamp) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleTimestamp) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleTimestamp) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

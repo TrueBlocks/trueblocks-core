@@ -14,11 +14,11 @@ import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 // EXISTING_CODE
 
 type simpleReportCheck struct {
-	Reason     string   `json:"reason"`
 	CheckedCnt uint32   `json:"checkedCnt"`
 	FailedCnt  uint32   `json:"failedCnt"`
 	MsgStrings []string `json:"msgStrings"`
 	PassedCnt  uint32   `json:"passedCnt"`
+	Reason     string   `json:"reason"`
 	Result     string   `json:"result"`
 	SkippedCnt uint32   `json:"skippedCnt"`
 	VisitedCnt uint32   `json:"visitedCnt"`
@@ -30,20 +30,19 @@ func (s *simpleReportCheck) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleReportCheck) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	model = map[string]any{
-		"reason":     s.Reason,
 		"result":     s.Result,
 		"checkedCnt": s.CheckedCnt,
 		"visitedCnt": s.VisitedCnt,
 		"passedCnt":  s.PassedCnt,
+		"reason":     s.Reason,
 	}
 	order = []string{
-		"reason",
 		"result",
 		"checkedCnt",
 		"visitedCnt",
@@ -57,6 +56,7 @@ func (s *simpleReportCheck) Model(verbose bool, format string, extraOptions map[
 		model["skippedCnt"] = s.SkippedCnt
 		order = append(order, "skippedCnt")
 	}
+	order = append(order, "reason")
 	if format == "json" {
 		if len(s.MsgStrings) > 0 {
 			model["msgStrings"] = s.MsgStrings

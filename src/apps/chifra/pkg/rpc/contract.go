@@ -28,7 +28,7 @@ func (conn *Connection) IsContractAt(address base.Address, block *types.SimpleNa
 		}
 
 		ctx := context.Background()
-		if code, err := ec.CodeAt(ctx, address.ToCommon(), clientBlockArg); err != nil {
+		if code, err := ec.CodeAt(ctx, address.Common(), clientBlockArg); err != nil {
 			return err
 		} else {
 			if len(code) == 0 {
@@ -45,7 +45,7 @@ func (conn *Connection) GetContractCodeAt(addr base.Address, bn uint64) ([]byte,
 		return []byte{}, err
 	} else {
 		defer ec.Close()
-		return ec.CodeAt(context.Background(), addr.ToCommon(), new(big.Int).SetUint64(bn))
+		return ec.CodeAt(context.Background(), addr.Common(), new(big.Int).SetUint64(bn))
 	}
 }
 

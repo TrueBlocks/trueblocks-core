@@ -68,7 +68,7 @@ func (s *SimpleTrace) SetRaw(raw *RawTrace) {
 	s.raw = raw
 }
 
-func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTrace) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -134,10 +134,10 @@ func (s *SimpleTrace) Model(verbose bool, format string, extraOptions map[string
 			model["type"] = s.TraceType
 		}
 		if s.Action != nil {
-			model["action"] = s.Action.Model(verbose, format, extraOptions).Data
+			model["action"] = s.Action.Model(chain, format, verbose, extraOptions).Data
 		}
 		if s.Result != nil {
-			model["result"] = s.Result.Model(verbose, format, extraOptions).Data
+			model["result"] = s.Result.Model(chain, format, verbose, extraOptions).Data
 		}
 
 		if isArticulated {

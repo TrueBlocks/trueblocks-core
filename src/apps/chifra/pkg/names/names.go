@@ -103,7 +103,7 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 	}
 
 	if parts&Regular != 0 {
-		namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
+		namesPath := filepath.Join(config.MustGetPathToChainConfig(chain), "names.tab")
 		_ = loadRegularMap(chain, namesPath, terms, parts, &namesMap)
 	}
 
@@ -245,7 +245,7 @@ func OpenDatabaseFile(chain string, kind Database, openFlag int) (*os.File, erro
 
 func GetDatabasePath(chain string, db Database) string {
 	return filepath.Join(
-		config.GetPathToChainConfig(chain), string(db),
+		config.MustGetPathToChainConfig(chain), string(db),
 	)
 }
 
@@ -340,9 +340,9 @@ func asString(which string, b []byte) string {
 	return ret
 }
 
-	// binPath := config.GetPathToCache(chain) + "names/names.bin"
-	// namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
-	// customPath := filepath.Join(config.GetPathToChainConfig(chain), "names_custom.tab")
+	// binPath := config.PathToCache(chain) + "names/names.bin"
+	// namesPath := filepath.Join(config.MustGetPathToChainConfig(chain), "names.tab")
+	// customPath := filepath.Join(config.MustGetPathToChainConfig(chain), "names_custom.tab")
 	// Load the names from the binary file (note that these may overwrite the prefund names)
 	if parts&Regular != 0 {
 		// enabled := false // os.Getenv("FAST") == "true" // TODO: this isn't right
@@ -381,7 +381,7 @@ func asString(which string, b []byte) string {
 		// 		}
 		// 	}
 		// } else {
-		namesPath := filepath.Join(config.GetPathToChainConfig(chain), "names.tab")
+		namesPath := filepath.Join(config.MustGetPathToChainConfig(chain), "names.tab")
 		loadRegularMap(chain, namesPath, terms, parts, &ret)
 		// }
 	}

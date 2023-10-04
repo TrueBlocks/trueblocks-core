@@ -27,7 +27,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 		curTs := conn.GetBlockTimestamp(bn)
 		var idx uint64
 
-		// TODO: This could be loadTrace in the same way loadBlocks works
+		// TODO: This could be loadTrace in the same way load Blocks works
 		var ret []types.SimpleTrace
 		for _, rawTrace := range rawTraces {
 			traceAction := types.SimpleTraceAction{
@@ -163,7 +163,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 				result.SetRaw(rawTrace.Result)
 			}
 
-			// TODO: This could be loadTrace in the same way loadBlocks works
+			// TODO: This could be loadTrace in the same way load Blocks works
 			trace := types.SimpleTrace{
 				Error:            rawTrace.Error,
 				BlockHash:        base.HexToHash(rawTrace.BlockHash),
@@ -209,7 +209,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 // GetTracesByFilter returns a slice of traces in a given transaction's hash
 func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, error) {
 	var f types.SimpleTraceFilter
-	ff, _ := f.ParseBangString(filter)
+	ff, _ := f.ParseBangString(conn.Chain, filter)
 
 	method := "trace_filter"
 	params := query.Params{ff}
@@ -222,7 +222,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 		curTs := conn.GetBlockTimestamp(utils.MustParseUint(f.FromBlock))
 		var idx uint64
 
-		// TODO: This could be loadTrace in the same way loadBlocks works
+		// TODO: This could be loadTrace in the same way load Blocks works
 		for _, rawTrace := range rawTraces {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			rawTrace := rawTrace

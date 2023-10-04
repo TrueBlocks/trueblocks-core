@@ -25,6 +25,7 @@ type simpleBlockCount struct {
 	TracesCnt       uint64         `json:"tracesCnt,omitempty"`
 	TransactionsCnt uint64         `json:"transactionsCnt"`
 	UnclesCnt       uint64         `json:"unclesCnt,omitempty"`
+	WithdrawalsCnt  uint64         `json:"withdrawalsCnt,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -33,7 +34,7 @@ func (s *simpleBlockCount) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleBlockCount) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleBlockCount) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

@@ -28,6 +28,7 @@ static const COption params[] = {
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("sdk", "s", "", OPT_SWITCH, "create typescript sdk"),
     COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
+    COption("protobuf", "p", "", OPT_SWITCH, "compile protobufs"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
 };
@@ -75,6 +76,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
+
+        } else if (arg == "-p" || arg == "--protobuf") {
+            protobuf = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -199,6 +203,8 @@ bool COptions::parseArguments(string_q& command) {
     if (format && !handle_format())
         return false;
     if (sdk && !handle_sdk())
+        return false;
+    if (protobuf && !handle_protobuf())
         return false;
 
     // Default to run if we get only all

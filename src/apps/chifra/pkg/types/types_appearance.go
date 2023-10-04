@@ -16,6 +16,19 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+const (
+	// below are stored in cache, do not change
+	BlockReward     base.Txnum = 99999 // the largest five-digit decimal number
+	UncleReward     base.Txnum = 99998
+	MisconfigReward base.Txnum = 99997
+	ExternalReward  base.Txnum = 99996
+	Withdrawal      base.Txnum = 99995
+	// above are stored in cache, do not change
+	NephewReward base.Txnum = 99994
+	TxFeeReward  base.Txnum = 99993
+	EsInternalTx base.Txnum = 99992
+)
+
 // EXISTING_CODE
 
 type RawAppearance struct {
@@ -46,7 +59,7 @@ func (s *SimpleAppearance) SetRaw(raw *RawAppearance) {
 	s.raw = raw
 }
 
-func (s *SimpleAppearance) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
