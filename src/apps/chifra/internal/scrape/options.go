@@ -12,6 +12,7 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -26,16 +27,19 @@ type ScrapeOptions struct {
 	Remote     bool                     `json:"remote,omitempty"`     // Pin new chunks to the gateway (requires pinning service keys)
 	Sleep      float64                  `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
 	StartBlock uint64                   `json:"startBlock,omitempty"` // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	Publisher  string                   `json:"publisher,omitempty"`  // For some query options, the publisher of the index
 	Settings   scrapeCfg.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
+	PublisherAddr base.Address             `json:"-"`
 	// EXISTING_CODE
 }
 
 var defaultScrapeOptions = ScrapeOptions{
-	BlockCnt: 2000,
+	BlockCnt:  2000,
+	Publisher: "trueblocks.eth",
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -45,6 +49,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
+	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -80,6 +85,8 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.Sleep = globals.ToFloat64(value[0])
 		case "startBlock":
 			opts.StartBlock = globals.ToUint64(value[0])
+		case "publisher":
+			opts.Publisher = value[0]
 		case "appsPerChunk":
 			opts.Settings.Apps_per_chunk = globals.ToUint64(value[0])
 		case "snapToGrid":
@@ -99,6 +106,8 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -124,6 +133,8 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {

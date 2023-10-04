@@ -314,6 +314,7 @@ Notes:
   - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
   - The --pin option requires a locally running IPFS node or a pinning service API key.
   - The --publish option requires a private key.
+  - The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
 ```
 
 Data models produced by this tool:

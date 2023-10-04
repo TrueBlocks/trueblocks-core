@@ -199,6 +199,9 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
     } else if (name % "Logs") {
         ret = isRaw ? "[]RawLog" : "[]SimpleLog";
 
+    } else if (name % "Withdrawals") {
+        ret = isRaw ? "[]RawWithdrawal" : "[]SimpleWithdrawal";
+
     } else if (name % "Action") {
         ret = isRaw ? "RawTraceAction" : "*SimpleTraceAction";
 
