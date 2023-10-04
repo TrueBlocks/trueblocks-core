@@ -132,7 +132,6 @@ func (s *simpleStatus) Model(verbose bool, format string, extraOptions map[strin
 					LocalExplorer:  chain.LocalExplorer,
 					RemoteExplorer: chain.RemoteExplorer,
 					RpcProvider:    chain.RpcProvider,
-					ApiProvider:    chain.ApiProvider,
 					IpfsGateway:    chain.IpfsGateway,
 					Symbol:         chain.Symbol,
 				}

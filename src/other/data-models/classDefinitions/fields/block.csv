@@ -21,4 +21,4 @@ date             ,datetime    ,           ,       ,      ,        ,          ,  
 baseFeePerGas    ,wei         ,           ,       ,      ,        ,          ,        ,         , 10 ,   7 ,120911        ,the base fee for this block
 transactions     ,Transaction ,           ,true   ,true  ,        ,          ,        ,         ,  9 ,     ,              ,a possibly empty array of transactions or transaction hashes
 transactionsRoot ,hash        ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
-uncles           ,hash        ,           ,       ,true  ,true    ,true      ,        ,         , 11 ,     ,              ,
+uncles           ,hash        ,           ,       ,true  ,true    ,true      ,        ,         , 11 ,     ,              ,a possibly empty array of uncle hashes

@@ -49,12 +49,6 @@ func GetRpcProvider(chain string) (string, error) {
 	return cleaned, nil
 }
 
-// GetApiProvider returns the RPC provider for a chain
-func GetApiProvider(chain string) string {
-	ch := GetRootConfig().Chains[chain]
-	return cleanUrl(ch.ApiProvider)
-}
-
 // GetSymbol returns the expected chain id for a given chain
 func GetSymbol(chain string) string {
 	ch := GetRootConfig().Chains[chain]

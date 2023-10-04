@@ -6,4 +6,4 @@ transactionsCnt ,uint64    ,           ,       ,      ,        ,          ,     
 unclesCnt       ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  5 ,   5 ,      2 ,the number of uncles in the block
 logsCnt         ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  6 ,   6 ,    581 ,the number of logs in the block
 tracesCnt       ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  7 ,   7 ,   1295 ,the number of traces in the block
-addressCnt      ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  8 ,   8 ,    318 ,the number of address appearances in the block per transaction
+addressCnt      ,uint64    ,           ,       ,      ,        ,true      ,        ,         ,  8 ,   8 ,    318 ,the number of address appearances in the block
