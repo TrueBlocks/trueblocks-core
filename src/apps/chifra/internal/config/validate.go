@@ -5,18 +5,24 @@
 package configPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *ConfigOptions) validateConfig() error {
+	chain := opts.Globals.Chain
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateEnum("modes", opts.Mode, "[show|edit]")
-	if err != nil {
+	if !config.IsChainConfigured(chain) {
+		return validate.Usage("chain {0} is not properly configured.", chain)
+	}
+
+	if err := validate.ValidateEnum("modes", opts.Mode, "[show|edit]"); err != nil {
 		return err
 	}
 

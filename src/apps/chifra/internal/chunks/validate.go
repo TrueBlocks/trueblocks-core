@@ -25,6 +25,10 @@ func (opts *ChunksOptions) validateChunks() error {
 		return opts.BadFlag
 	}
 
+	if !config.IsChainConfigured(chain) {
+		return validate.Usage("chain {0} is not properly configured.", chain)
+	}
+
 	if len(opts.Mode) == 0 {
 		return validate.Usage("Please choose at least one of {0}.", "[manifest|index|blooms|addresses|appearances|stats]")
 	}

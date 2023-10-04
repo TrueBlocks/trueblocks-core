@@ -8,6 +8,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -18,6 +19,10 @@ func (opts *BlocksOptions) validateBlocks() error {
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
+	}
+
+	if !config.IsChainConfigured(chain) {
+		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
 	for _, emitter := range opts.Emitter {

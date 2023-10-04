@@ -4,7 +4,7 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Chain:  non-tracing
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
-Error: Tracing is required for this program to work properly.
+Error: chain non-tracing is not properly configured.
 Usage:
   chifra blocks [flags] <block> [block...]
 
