@@ -10,7 +10,10 @@ package types
 
 // EXISTING_CODE
 import (
+	"fmt"
 	"io"
+	"path/filepath"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -139,7 +142,43 @@ func (s *SimpleReceipt) Model(verbose bool, format string, extraOptions map[stri
 	}
 }
 
-// --> marshal_only
+// --> cacheable by block as group
+type SimpleReceiptGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Receipts         []SimpleReceipt
+}
+
+func (s *SimpleReceiptGroup) CacheName() string {
+	return "Receipt"
+}
+
+func (s *SimpleReceiptGroup) CacheId() string {
+	return fmt.Sprintf("%09d", s.BlockNumber)
+}
+
+func (s *SimpleReceiptGroup) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
+	extension = "bin"
+
+	return
+}
+
+func (s *SimpleReceiptGroup) MarshalCache(writer io.Writer) (err error) {
+	return cache.WriteValue(writer, s.Receipts)
+}
+
+func (s *SimpleReceiptGroup) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.Receipts, version)
+}
+
 func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 	// BlockHash
 	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
