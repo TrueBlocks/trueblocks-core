@@ -1,7 +1,6 @@
 chifra chunks  addresses --check
 TEST[DATE|TIME] Mode:  addresses
 TEST[DATE|TIME] Check:  true
-TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 Error: The --check option is not available in addresses mode.
 Usage:

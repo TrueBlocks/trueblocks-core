@@ -1,6 +1,5 @@
 chifra chunks  --check
 TEST[DATE|TIME] Check:  true
-TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 Error: Please choose at least one of [manifest|index|blooms|addresses|appearances|stats].
 Usage:

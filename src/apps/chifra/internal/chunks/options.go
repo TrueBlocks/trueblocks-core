@@ -44,7 +44,7 @@ type ChunksOptions struct {
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
-	PublisherAddr base.Address
+	PublisherAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -62,7 +62,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
-	logger.TestLog(len(opts.Publisher) > 0 && opts.Publisher != "trueblocks.eth", "Publisher: ", opts.Publisher)
+	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
@@ -137,9 +137,9 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
-	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	// EXISTING_CODE
 	opts.Belongs, _ = opts.Conn.GetEnsAddresses(opts.Belongs)
 
@@ -165,9 +165,9 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
-	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 	if len(args) > 0 {
 		opts.Mode = args[0]
 		for i, arg := range args {

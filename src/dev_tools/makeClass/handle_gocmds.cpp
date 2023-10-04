@@ -408,9 +408,14 @@ string_q get_testlogs(const CCommandOption& cmd) {
             } else if (startsWith(p.data_type, "list<") || p.data_type == "<string>" || p.data_type == "<address>" ||
                        contains(p.data_type, "enum")) {
                 if (!p.def_val.empty() && p.def_val != "\"\"" && p.def_val != "utils.NOPOS") {
-                    const char* STR_TESTLOG_STRING =
+                    string_q STR_TESTLOG_STRING =
                         "\tlogger.TestLog(len(opts.[{VARIABLE}]) > 0 && opts.[{VARIABLE}] != \"[{DEF_VAL}]\", "
                         "\"[{VARIABLE}]: \", opts.[{VARIABLE}])";
+                    if (contains(p.def_val, ".eth")) {
+                        STR_TESTLOG_STRING =
+                            "\tlogger.TestLog(!rpc.IsSame(opts.[{VARIABLE}], \"[{DEF_VAL}]\"), "
+                            "\"[{VARIABLE}]: \", opts.[{VARIABLE}])";
+                    }
                     p.def_val = substitute(p.def_val, "\"", "");
                     os << p.Format(STR_TESTLOG_STRING) << endl;
                 } else {
@@ -528,13 +533,12 @@ string_q get_optfields(const CCommandOption& cmd) {
 string_q get_ens_convert1(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
-        // if (p.isAddressList) {
-        //     const char* STR_ENS_CONVERT = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddresses(opts.[{VARIABLE}])";
-        //     os << p.Format(STR_ENS_CONVERT) << endl;
-        // } else
         if (p.isAddress) {
-            const char* STR_ENS_CONVERT = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddress(opts.[{VARIABLE}])";
-            os << p.Format(STR_ENS_CONVERT) << endl;
+            string_q str = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddress(opts.[{VARIABLE}])";
+            if (containsI(p.longName, "publisher")) {
+                str += "\n\topts.[{VARIABLE}]Addr = base.HexToAddress(opts.[{VARIABLE}])";
+            }
+            os << p.Format(str) << endl;
         }
     }
     return os.str();
@@ -544,8 +548,11 @@ string_q get_ens_convert2(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isAddressList) {
-            const char* STR_ENS_CONVERT = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddresses(opts.[{VARIABLE}])";
-            os << p.Format(STR_ENS_CONVERT) << endl;
+            string_q str = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddresses(opts.[{VARIABLE}])";
+            if (containsI(p.longName, "publisher")) {
+                str += "\n\topts.[{VARIABLE}]Addr = base.HexToAddress(opts.[{VARIABLE}])";
+            }
+            os << p.Format(str) << endl;
         }
     }
     return os.str();

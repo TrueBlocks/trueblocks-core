@@ -66,3 +66,17 @@ func (conn *Connection) GetEnsAddress(addr string) (string, bool) {
 		return utils.LowerIfHex(addr), false
 	}
 }
+
+// IsSame returns true if the two strings are the same, ignoring case.
+// If not equal, it also tried to interpret the strings as addresses using ENS.
+func IsSame(a string, b string) bool {
+	if strings.EqualFold(a, b) {
+		return true
+	}
+	if !strings.HasSuffix(b, ".eth") {
+		return false
+	}
+	unused := TempConnection("mainnet")
+	ensAddr, _ := unused.GetEnsAddress(b)
+	return ensAddr == a
+}
