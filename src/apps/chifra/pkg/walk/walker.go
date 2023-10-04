@@ -28,39 +28,6 @@ func (walker *CacheWalker) MaxTests() int {
 	return walker.maxTests
 }
 
-func (walker *CacheWalker) WalkRegularFolder(path string, blockNums []uint64) error {
-	filenameChan := make(chan CacheFileInfo)
-
-	var nRoutines int = 1
-	go WalkFolder(context.Background(), path, nil, filenameChan)
-
-	cnt := 0
-	for result := range filenameChan {
-		switch result.Type {
-		case Regular:
-			ok, err := walker.visitFunc1(walker, result.Path, cnt == 0)
-			if err != nil {
-				return err
-			}
-			if ok {
-				cnt++
-			} else {
-				return nil
-			}
-		case Cache_NotACache:
-			nRoutines--
-			if nRoutines == 0 {
-				close(filenameChan)
-				continue
-			}
-		default:
-			logger.Fatal("should not happen in WalkRegularFolder")
-		}
-	}
-
-	return nil
-}
-
 func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 	filenameChan := make(chan CacheFileInfo)
 
