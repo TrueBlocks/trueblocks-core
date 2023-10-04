@@ -132,16 +132,11 @@ Aliases:
   daemon, serve
 
 Flags:
-  -p, --port string     specify the server's port (default ":8080")
-  -a, --api string      instruct the node to start the API server
-                        One of [ off | on ] (default "on")
-  -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks
-                        One of [ off | blooms | index ]
-  -m, --monitor         instruct the node to start the monitors tool
-  -g, --grpc            run gRPC server to serve names
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose output
-  -h, --help            display this help screen
+  -p, --port string   specify the server's port (default ":8080")
+  -g, --grpc          run gRPC server to serve names
+  -x, --fmt string    export format, one of [none|json*|txt|csv]
+  -v, --verbose       enable verbose output
+  -h, --help          display this help screen
 
 Notes:
   - To start API open terminal window and run chifra daemon.
@@ -319,6 +314,7 @@ Notes:
   - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
   - The --pin option requires a locally running IPFS node or a pinning service API key.
   - The --publish option requires a private key.
+  - The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
 ```
 
 Data models produced by this tool:

@@ -75,8 +75,7 @@ bool COptions::handle_sdk_py_paths(CStringArray& pathsOut) {
             ostringstream params;
             for (auto p : members) {
                 string_q line = "    \"[{LONGNAME}]\": {\"hotkey\": \"[{HOTKEY}]\", \"type\": \"[{TYPE}]\"},\n";
-                string_q optionName = substitute(toCamelCase(p.longName), "deleteme", "delete");
-
+                string_q optionName = toCamelCase(p.longName);
                 if (!p.is_visible_docs && !contains(optionName, "cache")) {
                     continue;
                 }

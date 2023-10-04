@@ -30,9 +30,11 @@ type ChunksOptions struct {
 	Check      bool                     `json:"check,omitempty"`      // Check the manifest, index, or blooms for internal consistency
 	Pin        bool                     `json:"pin,omitempty"`        // Pin the manifest or each index chunk and bloom
 	Publish    bool                     `json:"publish,omitempty"`    // Publish the manifest to the Unchained Index smart contract
+	Publisher  string                   `json:"publisher,omitempty"`  // For some query options, the publisher of the index
 	Truncate   uint64                   `json:"truncate,omitempty"`   // Truncate the entire index at this block (requires a block identifier)
 	Remote     bool                     `json:"remote,omitempty"`     // Prior to processing, retreive the manifest from the Unchained Index smart contract
 	Belongs    []string                 `json:"belongs,omitempty"`    // In index mode only, checks the address(es) for inclusion in the given index chunk
+	Diff       bool                     `json:"diff,omitempty"`       // Compare two index portions (see notes)
 	FirstBlock uint64                   `json:"firstBlock,omitempty"` // First block to process (inclusive)
 	LastBlock  uint64                   `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
 	MaxAddrs   uint64                   `json:"maxAddrs,omitempty"`   // The max number of addresses to process in a given chunk
@@ -42,10 +44,12 @@ type ChunksOptions struct {
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
+	PublisherAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
 var defaultChunksOptions = ChunksOptions{
+	Publisher: "trueblocks.eth",
 	Truncate:  utils.NOPOS,
 	LastBlock: utils.NOPOS,
 	MaxAddrs:  utils.NOPOS,
@@ -58,9 +62,11 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
+	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
+	logger.TestLog(opts.Diff, "Diff: ", opts.Diff)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
@@ -100,6 +106,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Pin = true
 		case "publish":
 			opts.Publish = true
+		case "publisher":
+			opts.Publisher = value[0]
 		case "truncate":
 			opts.Truncate = globals.ToUint64(value[0])
 		case "remote":
@@ -109,6 +117,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Belongs = append(opts.Belongs, s...)
 			}
+		case "diff":
+			opts.Diff = true
 		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastBlock":
@@ -126,6 +136,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -152,6 +164,8 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
 	if len(args) > 0 {

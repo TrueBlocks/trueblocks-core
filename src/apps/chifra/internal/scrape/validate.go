@@ -30,6 +30,10 @@ func (opts *ScrapeOptions) validateScrape() error {
 		return opts.BadFlag
 	}
 
+	if !config.IsChainConfigured(chain) {
+		return validate.Usage("chain {0} is not properly configured.", chain)
+	}
+
 	if opts.Sleep < .25 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", opts.Sleep), "be at least .25")
 	}
@@ -64,5 +68,13 @@ func (opts *ScrapeOptions) validateScrape() error {
 	// Note this does not return if a migration is needed
 	index.CheckBackLevelIndex(chain)
 
-	return opts.Globals.Validate()
+	if len(opts.Publisher) > 0 {
+		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
+		if err != nil {
+			return err
+		}
+	}
+
+	ret := opts.Globals.Validate()
+	return ret
 }

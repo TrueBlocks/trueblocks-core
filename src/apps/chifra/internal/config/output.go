@@ -60,8 +60,10 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 	handled = true
 	if opts.Paths {
 		err = opts.HandlePaths()
-	} else {
-		logger.Warn("The config tool is current unavailable. Please use the 'chifra status' tool instead.")
+	} else if opts.Mode == "edit" {
+		err = opts.HandleEdit()
+	} else if opts.Mode == "show" {
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

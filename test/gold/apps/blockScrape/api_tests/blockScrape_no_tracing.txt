@@ -1,6 +1,6 @@
 scrape?chain=non-tracing
 {
   "errors": [
-    "Cannot test block scraper"
+    "chain non-tracing is not properly configured."
   ]
 }

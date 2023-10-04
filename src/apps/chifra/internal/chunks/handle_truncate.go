@@ -22,6 +22,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
+// TODO: We need to make sure, when we truncate, that we truncate the corresponding maps files as well.
+
 func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 
