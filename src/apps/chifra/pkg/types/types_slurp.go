@@ -85,7 +85,7 @@ func (s *SimpleSlurp) SetRaw(raw *RawSlurp) {
 	s.raw = raw
 }
 
-func (s *SimpleSlurp) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

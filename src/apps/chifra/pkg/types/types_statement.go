@@ -109,7 +109,7 @@ func (s *SimpleStatement) SetRaw(raw *RawStatement) {
 	s.raw = raw
 }
 
-func (s *SimpleStatement) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

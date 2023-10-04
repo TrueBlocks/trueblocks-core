@@ -18,7 +18,7 @@ func (s *simpleAppearanceTable) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleAppearanceTable) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleAppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]any{
 			"addressRecord": s.AddressRecord,

@@ -31,7 +31,7 @@ func (s *simpleChunkIndex) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleChunkIndex) Model(verbose bool, format string, extraOptions map[string]any) types.Model {
+func (s *simpleChunkIndex) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 

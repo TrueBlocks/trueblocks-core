@@ -106,7 +106,7 @@ func (s *SimpleTransaction) SetRaw(raw *RawTransaction) {
 	s.raw = raw
 }
 
-func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -175,7 +175,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		if s.Statements != nil {
 			statements := make([]map[string]any, 0, len(*s.Statements))
 			for _, statement := range *s.Statements {
-				statements = append(statements, statement.Model(verbose, format, extraOptions).Data)
+				statements = append(statements, statement.Model(chain, format, verbose, extraOptions).Data)
 			}
 			model["statements"] = statements
 		}
@@ -253,7 +253,7 @@ func (s *SimpleTransaction) Model(verbose bool, format string, extraOptions map[
 		if extraOptions["traces"] == true && len(s.Traces) > 0 {
 			traceModels := make([]map[string]any, 0, len(s.Traces))
 			for _, trace := range s.Traces {
-				traceModels = append(traceModels, trace.Model(verbose, format, extraOptions).Data)
+				traceModels = append(traceModels, trace.Model(chain, format, verbose, extraOptions).Data)
 			}
 			model["traces"] = traceModels
 		} else {

@@ -45,7 +45,7 @@ func (s *SimpleNamedBlock) SetRaw(raw *RawNamedBlock) {
 	s.raw = raw
 }
 
-func (s *SimpleNamedBlock) Model(verbose bool, format string, extraOptions map[string]any) Model {
+func (s *SimpleNamedBlock) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
