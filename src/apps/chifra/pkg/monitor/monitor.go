@@ -97,9 +97,9 @@ func (mon Monitor) String() string {
 // Path returns the path to the Monitor file
 func (mon *Monitor) Path() (path string) {
 	if mon.Staged {
-		path = config.GetPathToCache(mon.Chain) + "monitors/staging/" + mon.Address.Hex() + Ext
+		path = config.PathToCache(mon.Chain) + "monitors/staging/" + mon.Address.Hex() + Ext
 	} else {
-		path = config.GetPathToCache(mon.Chain) + "monitors/" + mon.Address.Hex() + Ext
+		path = config.PathToCache(mon.Chain) + "monitors/" + mon.Address.Hex() + Ext
 	}
 	return
 }
@@ -170,14 +170,11 @@ func (mon *Monitor) Remove() (bool, error) {
 	return !file.FileExists(mon.Path()), nil
 }
 
-// SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
-var SentinalAddr = base.HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
-
 // ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
 // a file called addresses.tsv in the current folder or, if not present, from existing monitors
 func ListMonitors(chain string, monitorChan chan<- Monitor) {
 	defer func() {
-		monitorChan <- Monitor{Address: SentinalAddr}
+		monitorChan <- Monitor{Address: base.SentinalAddr}
 	}()
 
 	pwd, _ := os.Getwd()
@@ -220,7 +217,7 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 	}
 
 	logger.Info("Building address list from current monitors")
-	path = config.GetPathToCache(chain) + "monitors"
+	path = config.PathToCache(chain) + "monitors"
 	_ = filepath.Walk(path, walkFunc)
 }
 
@@ -261,7 +258,7 @@ func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
 	for mon := range monitorChan {
 		mon := mon
 		switch mon.Address {
-		case SentinalAddr:
+		case base.SentinalAddr:
 			close(monitorChan)
 		default:
 			monMap[mon.Address] = &mon

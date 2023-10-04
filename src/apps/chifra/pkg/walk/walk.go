@@ -43,6 +43,9 @@ const (
 	Index_Staging
 	Index_Unripe
 	Index_Maps
+
+	Config
+	Regular
 )
 
 var cacheTypeToName = map[CacheType]string{
@@ -66,6 +69,8 @@ var cacheTypeToName = map[CacheType]string{
 	Index_Staging:      "staging",
 	Index_Unripe:       "unripe",
 	Index_Maps:         "neighbors",
+	Config:             "config",
+	Regular:            "regular",
 }
 
 // CacheTypeToFolder is a map of cache types to the folder name (also, it acts as the mode in chifra status)
@@ -90,6 +95,8 @@ var CacheTypeToFolder = map[CacheType]string{
 	Index_Staging:      "staging",
 	Index_Unripe:       "unripe",
 	Index_Maps:         "maps",
+	Config:             "config",
+	Regular:            "regular",
 }
 
 var cacheTypeToExt = map[CacheType]string{
@@ -113,18 +120,12 @@ var cacheTypeToExt = map[CacheType]string{
 	Index_Staging:      "txt",
 	Index_Unripe:       "txt",
 	Index_Maps:         "bin",
+	Config:             "toml",
+	Regular:            "",
 }
 
 func (ct CacheType) String() string {
 	return cacheTypeToName[ct]
-	/*
-		207: func (s *SimpleBlock[Tx]) CacheLocation() (directory string, extension string) {
-		171: func (s *SimpleLogGroup) CacheLocation() (directory string, extension string) {
-		206: func (s *SimpleSlurpGroup) CacheLocation() (directory string, extension string) {
-		200: func (s *SimpleStatementGroup) CacheLocation() (directory string, extension string) {
-		216: func (s *SimpleTraceGroup) CacheLocation() (directory string, extension string) {
-		322: func (s *SimpleTransaction) CacheLocation() (directory string, extension string) {
-	*/
 }
 
 func IsCacheType(path string, cT CacheType, checkExt bool) bool {
@@ -146,7 +147,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Names:
 		fallthrough
 	case Cache_Tmp:
-		return filepath.Join(config.GetPathToCache(chain), CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType]) + "/"
 
 	case Cache_Blocks:
 		fallthrough
@@ -165,7 +166,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Traces:
 		fallthrough
 	case Cache_Transactions:
-		return filepath.Join(config.GetPathToCache(chain), "v1", CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType]) + "/"
 
 	case Index_Bloom:
 		fallthrough
@@ -178,7 +179,9 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Index_Unripe:
 		fallthrough
 	case Index_Maps:
-		return filepath.Join(config.GetPathToIndex(chain), CacheTypeToFolder[cacheType]) + "/"
+		return filepath.Join(config.PathToIndex(chain), CacheTypeToFolder[cacheType]) + "/"
+	case Config:
+		return config.PathToRootConfig()
 	case Cache_NotACache:
 		fallthrough
 	default:
@@ -192,6 +195,15 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 func WalkCacheFolder(ctx context.Context, chain string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {
 	path := GetRootPathFromCacheType(chain, cacheType)
 	walkFolder(ctx, path, cacheType, data, filenameChan)
+}
+
+func WalkConfigFolders(ctx context.Context, data interface{}, filenameChan chan<- CacheFileInfo) {
+	path := config.PathToRootConfig()
+	walkFolder(ctx, path, Config, data, filenameChan)
+}
+
+func WalkFolder(ctx context.Context, path string, data interface{}, filenameChan chan<- CacheFileInfo) {
+	walkFolder(ctx, path, Regular, data, filenameChan)
 }
 
 func walkFolder(ctx context.Context, path string, cacheType CacheType, data interface{}, filenameChan chan<- CacheFileInfo) {
@@ -318,8 +330,8 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 	}
 
 	display := cacheInfo.Path
-	display = strings.Replace(display, config.GetPathToCache(chain), "./", -1)
-	display = strings.Replace(display, config.GetPathToIndex(chain), "./", -1)
+	display = strings.Replace(display, config.PathToCache(chain), "./", -1)
+	display = strings.Replace(display, config.PathToIndex(chain), "./", -1)
 
 	switch cT {
 	case Index_Maps:
@@ -328,7 +340,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		fallthrough
 	case Index_Final:
 		if testMode {
-			display = strings.Replace(cacheInfo.Path, config.GetPathToIndex(chain), "$indexPath/", 1)
+			display = strings.Replace(cacheInfo.Path, config.PathToIndex(chain), "$indexPath/", 1)
 		}
 		return map[string]interface{}{
 			// "bloomSizeBytes": file.FileSize(index.ToBloomPath(cacheInfo.Path)),
@@ -355,7 +367,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 			}
 		}
 		if testMode {
-			display = strings.Replace(cacheInfo.Path, config.GetPathToCache(chain), "$cachePath/", 1)
+			display = strings.Replace(cacheInfo.Path, config.PathToCache(chain), "$cachePath/", 1)
 			display = strings.Replace(display, address, "--address--", -1)
 			address = "--address--"
 		}
@@ -393,7 +405,7 @@ func GetDecachePath(chain string, typ CacheType, address base.Address, blockNum,
 	part4 := blkStr
 	part5 := ""
 
-	cachePath := config.GetPathToCache(chain)
+	cachePath := config.PathToCache(chain)
 	switch typ {
 	case Cache_Abis:
 		basePath = fmt.Sprintf("%s%s/", cachePath, typ)

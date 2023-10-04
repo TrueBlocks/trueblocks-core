@@ -17,6 +17,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
@@ -339,6 +341,37 @@ func (s *SimpleReceipt) IsDefault() bool {
 	c := s.GasUsed == 0
 	d := len(s.Logs) == 0
 	return a && b && c && d
+}
+
+func (r *RawReceipt) RawToSimple(vals map[string]any) (SimpleReceipt, error) {
+	logs := []SimpleLog{}
+	for _, rawLog := range r.Logs {
+		rawLog := rawLog
+		simpleLog, _ := rawLog.RawToSimple(vals)
+		logs = append(logs, simpleLog)
+	}
+
+	cumulativeGasUsed, err := hexutil.DecodeUint64(r.CumulativeGasUsed)
+	if err != nil {
+		return SimpleReceipt{}, err
+	}
+
+	receipt := SimpleReceipt{
+		BlockHash:         base.HexToHash(r.BlockHash),
+		BlockNumber:       utils.MustParseUint(r.BlockNumber),
+		ContractAddress:   base.HexToAddress(r.ContractAddress),
+		CumulativeGasUsed: fmt.Sprint(cumulativeGasUsed),
+		EffectiveGasPrice: utils.MustParseUint(r.EffectiveGasPrice),
+		GasUsed:           utils.MustParseUint(r.GasUsed),
+		Status:            uint32(utils.MustParseUint(r.Status)),
+		IsError:           utils.MustParseUint(r.Status) == 0,
+		TransactionHash:   base.HexToHash(r.TransactionHash),
+		TransactionIndex:  utils.MustParseUint(r.TransactionIndex),
+		Logs:              logs,
+		raw:               r,
+	}
+
+	return receipt, nil
 }
 
 // EXISTING_CODE

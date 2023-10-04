@@ -84,14 +84,8 @@ func (i *Item) Encode(value any) (err error) {
 }
 
 func (i *Item) Decode(value any) (err error) {
-	h, err := i.readHeader()
-	if err != nil {
+	if _, err = i.readHeader(); err != nil {
 		return
 	}
-	if h.Version < currentHeader.Version {
-		// TODO: implement migration (back levels)
-		return errors.New("migration needed")
-	}
-
 	return i.unmarshal(value)
 }

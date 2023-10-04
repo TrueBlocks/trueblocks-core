@@ -72,7 +72,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 		return man, err
 	}
 
-	manifestPath := filepath.Join(config.GetPathToChainConfig(chain), "manifest.json")
+	manifestPath := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
 	contents := file.AsciiFileToString(manifestPath)
 	if !file.FileExists(manifestPath) || len(contents) == 0 {
 		return nil, ErrManifestNotFound
@@ -136,7 +136,7 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 
 // SaveManifest writes the manifest to disc in JSON
 func (m *Manifest) SaveManifest(chain string) error {
-	fileName := config.GetPathToChainConfig(chain) + "manifest.json"
+	fileName := config.MustGetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)

@@ -22,7 +22,7 @@ import (
 //  4. Makes sure that the last block inside is == last if allow_missing == false, < otherwise
 func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, report *simpleReportCheck) error {
 	chain := opts.Globals.Chain
-	stagePath := index.ToStagingPath(config.GetPathToIndex(chain) + "staging")
+	stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
 	stageFn, _ := file.LatestFileInFolder(stagePath)
 	if !file.FileExists(stageFn) {
 		return nil

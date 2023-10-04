@@ -122,7 +122,7 @@ func VerifyMigrations() {
 	}
 
 	// Both the config folder...
-	configFolder := config.GetPathToRootConfig()
+	configFolder := config.PathToRootConfig()
 	if _, err := os.Stat(configFolder); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+configFolder+"}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
@@ -195,7 +195,7 @@ func VerifyMigrations() {
 	}
 
 	// We need to find the chain configuration path
-	chainConfigPath := config.GetPathToChainConfig("")
+	chainConfigPath := config.MustGetPathToChainConfig("")
 	if _, err := os.Stat(chainConfigPath); err != nil {
 		msg := strings.Replace(notExist, "{0}", "{"+chainConfigPath+"}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
@@ -213,7 +213,7 @@ func VerifyMigrations() {
 		"txs",
 	}
 	for _, item := range items {
-		itemPath := filepath.Join(config.GetPathToCache(""), item)
+		itemPath := filepath.Join(config.PathToCache(""), item)
 		if _, err := os.Stat(itemPath); err == nil {
 			msg := strings.Replace(shouldNotExist, "{0}", "{"+itemPath+"}", -1)
 			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)

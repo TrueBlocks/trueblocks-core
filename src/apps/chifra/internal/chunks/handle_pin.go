@@ -32,14 +32,14 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		}
 
 		var err error
-		tsPath := config.GetPathToIndex(chain) + "ts.bin"
+		tsPath := config.PathToIndex(chain) + "ts.bin"
 		if man.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
 			errorChan <- err
 			cancel()
 			return
 		}
 
-		manPath := config.GetPathToChainConfig(chain) + "manifest.json"
+		manPath := config.MustGetPathToChainConfig(chain) + "manifest.json"
 		if man.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
 			errorChan <- err
 			cancel()

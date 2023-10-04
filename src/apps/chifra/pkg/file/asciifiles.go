@@ -74,7 +74,7 @@ func LinesToAsciiFile(filename string, value []string) error {
 	}
 	defer file.Close()
 
-	lines := strings.Join(value, "\n") + "\n"
+	lines := strings.Join(value[:], "\n") + "\n"
 	_, err = io.WriteString(file, lines)
 	if err != nil {
 		return err

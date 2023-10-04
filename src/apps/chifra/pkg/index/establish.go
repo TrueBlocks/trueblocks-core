@@ -91,7 +91,7 @@ func CleanTemporaryFolders(indexPath string, incStaging bool) error {
 func IndexIsInitialized(chain string) error {
 	CheckBackLevelIndex(chain)
 
-	path := config.GetPathToIndex(chain) + "blooms/000000000-000000000.bloom"
+	path := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"
 	if !file.FileExists(path) {
 		msg := strings.Replace(IndexNotInitialized, "{0}", "{v0.40.0-beta}", -1)
 		msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
@@ -116,7 +116,7 @@ const IndexNotInitialized string = `
 	`
 
 func CheckBackLevelIndex(chain string) {
-	fileName := config.GetPathToIndex(chain) + "finalized/000000000-000000000.bin"
+	fileName := config.PathToIndex(chain) + "finalized/000000000-000000000.bin"
 	if !file.FileExists(fileName) {
 		return
 	}

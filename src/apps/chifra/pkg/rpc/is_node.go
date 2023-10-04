@@ -18,7 +18,7 @@ func (conn *Connection) IsNodeArchive() bool {
 	// An archive node better have a balance at the end of block zero the same as
 	// the pre-allocation amount for that account. We use the largest allocation
 	// so as to ensure we get an actual balance
-	thePath := filepath.Join(config.GetPathToChainConfig(conn.Chain), "allocs.csv")
+	thePath := filepath.Join(config.MustGetPathToChainConfig(conn.Chain), "allocs.csv")
 	largest, err := prefunds.GetLargestPrefund(conn.Chain, thePath)
 	if err != nil {
 		return false

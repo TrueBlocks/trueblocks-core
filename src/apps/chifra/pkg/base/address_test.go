@@ -65,8 +65,7 @@ func TestAddress_IsZero(t *testing.T) {
 		t.Fatal("wrong result for zero value")
 	}
 
-	zeroAddr := HexToAddress("0x0")
-	if result := zeroAddr.IsZero(); result != true {
+	if result := ZeroAddr.IsZero(); result != true {
 		t.Fatal("wrong result for zero address")
 	}
 }
@@ -117,10 +116,10 @@ func TestAddressCache(t *testing.T) {
 func TestAddressCompareToCommon(t *testing.T) {
 	c := common.HexToAddress("0x00000123456789abcde")
 	b := HexToAddress("0x00000123456789abcde")
-	if c != b.ToCommon() {
+	if c != b.Common() {
 		t.Fatal("base.Hash.toCommon() does not match")
 	}
-	if b != new(Address).FromCommon(&c) {
+	if b != new(Address).SetCommon(&c) {
 		t.Fatal("fromCommon(c) does not match Hash")
 	}
 }

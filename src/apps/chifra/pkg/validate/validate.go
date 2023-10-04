@@ -15,10 +15,6 @@ func Usage(msg string, values ...string) error {
 	return usage.Usage(msg, values...)
 }
 
-func Deprecated(cmd, rep string) error {
-	return usage.Deprecated(cmd, rep)
-}
-
 func IsValidHash(hash string) bool {
 	ok, err := base.IsValidHex("hash", hash, 32)
 	return ok && err == nil

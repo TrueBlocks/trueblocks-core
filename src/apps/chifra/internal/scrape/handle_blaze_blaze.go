@@ -206,9 +206,9 @@ func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpc.MetaData, bn base.Blkn
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := config.GetPathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
+		fileName := config.PathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
 		if bn > base.Blknum(opts.RipeBlock) {
-			fileName = config.GetPathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"
+			fileName = config.PathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")

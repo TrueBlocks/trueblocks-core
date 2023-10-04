@@ -51,16 +51,16 @@ func Test_GetPathTo(t *testing.T) {
 				}
 			}
 			if withChain {
-				testPath = GetPathToChainConfig(test.chain) + test.part
+				testPath = MustGetPathToChainConfig(test.chain) + test.part
 			} else {
-				testPath = GetPathToRootConfig() + test.part
+				testPath = PathToRootConfig() + test.part
 			}
 		} else if test.group == "Cache" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
-			testPath = GetPathToCache(test.chain) + test.part
+			testPath = PathToCache(test.chain) + test.part
 		} else if test.group == "Index" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
-			testPath = GetPathToIndex(test.chain) + test.part
+			testPath = PathToIndex(test.chain) + test.part
 		}
 
 		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)

@@ -104,7 +104,7 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		"petname",
 	}
 
-	if len(s.Address.Bytes()) > 0 && s.Address != base.HexToAddress("0x0") {
+	if len(s.Address.Bytes()) > 0 && s.Address != base.ZeroAddr {
 		model["address"] = strings.ToLower(s.Address.String())
 	}
 

@@ -35,8 +35,8 @@ type Rewards struct {
 
 func NewReward(block, nephew, txFee, uncle *big.Int) (Rewards, big.Int) {
 	total := new(big.Int).Add(block, nephew)
-	total.Add(total, txFee)
-	total.Add(total, uncle)
+	total = total.Add(total, txFee)
+	total = total.Add(total, uncle)
 	return Rewards{
 		Block:  *block,
 		Nephew: *nephew,
@@ -206,9 +206,6 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		if s.Receipt != nil && !s.Receipt.IsDefault() {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
-			// TODO: this should not be hardcoded here. We have tslib.GetSpecials(), but there
-			// TODO: are 2 issues with it: 1. circular dependency with types package, 2. every
-			// TODO: call to GetSpecials parses CSV file, so we need to call it once and cache
 			byzantiumBlock := uint64(4370000)
 			status := &s.Receipt.Status
 			if s.BlockNumber < byzantiumBlock || *status == 4294967295-1 {

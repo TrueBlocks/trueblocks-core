@@ -74,10 +74,10 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 
 	logger.InfoTable("Server URL:        ", apiUrl)
 	logger.InfoTable("RPC Provider:      ", provider)
-	logger.InfoTable("Root Config Path:  ", config.GetPathToRootConfig())
-	logger.InfoTable("Chain Config Path: ", config.GetPathToChainConfig(chain))
-	logger.InfoTable("Cache Path:        ", config.GetPathToCache(chain))
-	logger.InfoTable("Index Path:        ", config.GetPathToIndex(chain))
+	logger.InfoTable("Root Config Path:  ", config.PathToRootConfig())
+	logger.InfoTable("Chain Config Path: ", config.MustGetPathToChainConfig(chain))
+	logger.InfoTable("Cache Path:        ", config.PathToCache(chain))
+	logger.InfoTable("Index Path:        ", config.PathToIndex(chain))
 
 	meta, err := opts.Conn.GetMetaData(false)
 	if err != nil {

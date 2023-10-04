@@ -13,6 +13,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -28,7 +29,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 	chain := opts.Globals.Chain
 	establishExportPaths(chain)
 
-	tmpPath := config.GetPathToCache(chain) + "tmp/"
+	tmpPath := config.PathToCache(chain) + "tmp/"
 
 	var s = &MonitorScraper
 	s.ChangeState(true, tmpPath)
@@ -44,7 +45,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 			count := 0
 			for result := range monitorChan {
 				switch result.Address {
-				case monitor.SentinalAddr:
+				case base.SentinalAddr:
 					close(monitorChan)
 				default:
 					if result.Count() > 500000 {

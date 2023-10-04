@@ -44,6 +44,6 @@ TEST[DATE|TIME] Format:  json
     }
   ],
   "errors": [
-    "error processing inputs of multiTransfer(address[],uint256[]): abi: cannot marshal in to go slice: offset 100044391374672273860246760221380327089348539217601200758913655878371288058266 would go over slice boundary (len=104)"
+    "error processing inputs of multiTransfer(address[],uint256[]): error unpacking arguments abi: cannot marshal in to go slice: offset 100044391374672273860246760221380327089348539217601200758913655878371288058266 would go over slice boundary (len=104)"
   ]
 }
