@@ -64,7 +64,11 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Clean, "clean", "C", false, "clean (i.e. remove duplicate appearances) from monitors")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().List, "list", "l", false, "list monitors in the cache (--verbose for more detail)")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Watch, "watch", "w", false, "continually scan for new blocks and extract data as per the command file")
+	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.GetOptions().RunCount, "run_count", "u", 0, "available with --watch option only, run the monitor this many times, then quit (hidden)")
 	monitorsCmd.Flags().Float64VarP(&monitorsPkg.GetOptions().Sleep, "sleep", "s", 14, "available with --watch option only, the number of seconds to sleep between runs")
+	if os.Getenv("TEST_MODE") != "true" {
+		monitorsCmd.Flags().MarkHidden("run_count")
+	}
 	globals.InitGlobals(monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))

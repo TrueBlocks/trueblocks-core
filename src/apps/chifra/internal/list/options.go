@@ -39,7 +39,7 @@ type ListOptions struct {
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
-	PublisherAddr base.Address          `json:"-"`
+	PublisherAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
