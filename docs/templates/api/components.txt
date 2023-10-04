@@ -1230,7 +1230,7 @@ components:
         schemas:
           type: string
           format: ipfshash
-          description: "IPFS cid of file describing the schemas for the various databases"
+          description: "IPFS cid of the specification"
         databases:
           type: string
           format: ipfshash
@@ -1499,7 +1499,7 @@ components:
         schemas:
           type: string
           format: ipfshash
-          description: "IPFS cid of file describing the schemas for the various databases"
+          description: "IPFS cid of the specification"
         tsHash:
           type: string
           format: ipfshash

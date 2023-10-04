@@ -147,6 +147,7 @@ func (s *Store) Read(value Locator, options *ReadOptions) (err error) {
 	item := NewItem(buffer)
 	err = item.Decode(value)
 	if err != nil {
+		_ = os.Remove(itemPath)
 		printErr("decoding", err)
 	}
 	return

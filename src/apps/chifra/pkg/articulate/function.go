@@ -75,7 +75,7 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 
 	unpacked, err := args.Unpack(dataBytes)
 	if err != nil {
-		return
+		return fmt.Errorf("error unpacking arguments %w", err)
 	}
 
 	// Set values of non-indexed arguments
@@ -108,7 +108,7 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 	out := make(map[string]interface{}, len(indexed))
 	tops := []common.Hash{}
 	for _, hash := range topics {
-		tops = append(tops, hash.ToCommon())
+		tops = append(tops, hash.Common())
 	}
 	if err = abi.ParseTopicsIntoMap(out, indexed, tops[1:]); err != nil {
 		return err
