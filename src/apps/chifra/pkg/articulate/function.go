@@ -108,7 +108,7 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 	out := make(map[string]interface{}, len(indexed))
 	tops := []common.Hash{}
 	for _, hash := range topics {
-		tops = append(tops, hash.ToCommon())
+		tops = append(tops, hash.Common())
 	}
 	if err = abi.ParseTopicsIntoMap(out, indexed, tops[1:]); err != nil {
 		return err

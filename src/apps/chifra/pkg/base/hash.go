@@ -59,11 +59,11 @@ func (h *Hash) UnmarshalCache(version uint64, reader io.Reader) error {
 	return nil
 }
 
-func (h *Hash) ToCommon() common.Hash {
+func (h *Hash) Common() common.Hash {
 	return common.BytesToHash(h.Bytes())
 }
 
-func (h *Hash) FromCommon(c *common.Hash) Hash {
+func (h *Hash) SetCommon(c *common.Hash) Hash {
 	return BytesToHash(c.Bytes())
 }
 

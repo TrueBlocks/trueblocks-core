@@ -25,7 +25,6 @@ const (
 	test
 	warning
 	err
-	fatal
 )
 
 var severityToLabel = map[severity]string{
@@ -35,7 +34,6 @@ var severityToLabel = map[severity]string{
 	test:     "TEST",
 	warning:  "WARN",
 	err:      "EROR",
-	fatal:    "FATL",
 }
 
 var (
@@ -100,7 +98,7 @@ func toLog(sev severity, a ...interface{}) {
 		fmt.Fprint(os.Stderr, colors.Yellow)
 		fmt.Fprintln(os.Stderr, a...)
 
-	} else if sev == err || sev == fatal {
+	} else if sev == err {
 		defer fmt.Fprint(os.Stderr, colors.Off)
 		fmt.Fprint(os.Stderr, colors.Red)
 		fmt.Fprintln(os.Stderr, a...)
@@ -127,8 +125,7 @@ func Error(v ...any) {
 }
 
 func Fatal(v ...any) {
-	toLog(fatal, v...)
-	os.Exit(1)
+	log.Fatal(v...)
 }
 
 func Panic(v ...any) {
