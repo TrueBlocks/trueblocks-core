@@ -18,6 +18,8 @@ import (
 
 type RawNamedBlock struct {
 	BlockNumber string `json:"blockNumber"`
+	Component   string `json:"component"`
+	Description string `json:"description"`
 	Name        string `json:"name"`
 	Timestamp   string `json:"timestamp"`
 	// EXISTING_CODE
@@ -26,6 +28,8 @@ type RawNamedBlock struct {
 
 type SimpleNamedBlock struct {
 	BlockNumber base.Blknum    `json:"blockNumber"`
+	Component   string         `json:"component,omitempty"`
+	Description string         `json:"description,omitempty"`
 	Name        string         `json:"name,omitempty"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	raw         *RawNamedBlock `json:"-"`

@@ -3270,6 +3270,11 @@ components:
           format: uint64
           example: 1295
           description: "the number of traces in the block"
+        withdrawalsCnt:
+          type: number
+          format: uint64
+          example: 12
+          description: "the number of withdrawals in the block"
         addressCnt:
           type: number
           format: uint64
@@ -3298,6 +3303,9 @@ components:
           type: string
           example: "byzantium"
           description: "an optional name for the block"
+        description:
+          type: string
+          description: "an optional description of the block"
     timestamp:
       description: "the timestamp, date and difference in timestamp of previous block produced by chifra when"
       type: object
@@ -3776,9 +3784,9 @@ components:
       description: "report on checking contents of chunks"
       type: object
       properties:
-        Reason:
+        result:
           type: string
-          description: "the reason for the test"
+          description: "the result of the check"
         visitedCnt:
           type: number
           format: uint32
@@ -3799,14 +3807,14 @@ components:
           type: number
           format: uint32
           description: "the number of failed checks"
-        result:
-          type: string
-          description: "the result of the check"
         msgStrings:
           type: array
           items:
             type: string
           description: "an array of messages explaining failed checks"
+        reason:
+          type: string
+          description: "the reason for the test"
     chunkPinReport:
       description: "a JSON object containing the results of pinning the Unchained Index"
       type: object

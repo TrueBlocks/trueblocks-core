@@ -13,5 +13,6 @@ export type BlockCount = {
   unclesCnt?: uint64
   logsCnt?: uint64
   tracesCnt?: uint64
+  withdrawalsCnt?: uint64
   addressCnt?: uint64
 }

@@ -6,12 +6,12 @@
 import { uint32 } from '.';
 
 export type ReportCheck = {
-  Reason: string
+  result: string
   visitedCnt: uint32
   checkedCnt: uint32
   skippedCnt: uint32
   passedCnt: uint32
   failedCnt: uint32
-  result: string
   msgStrings: string[]
+  reason: string
 }
