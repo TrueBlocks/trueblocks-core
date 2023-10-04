@@ -5,7 +5,7 @@ TEST[DATE|TIME] Format:  json
   "data": [
     {
       "fileSize": 320192,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 8893,
       "nAppearances": 8893,
@@ -13,7 +13,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16821060,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 29322,
       "nAppearances": 2000000,
@@ -21,7 +21,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 20604588,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 164448,
       "nAppearances": 2000000,
@@ -29,7 +29,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18268336,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 81007,
       "nAppearances": 2000012,
@@ -37,7 +37,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18376332,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 84862,
       "nAppearances": 2000019,
@@ -45,7 +45,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17737464,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 62049,
       "nAppearances": 2000006,
@@ -53,7 +53,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18186200,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 78077,
       "nAppearances": 2000000,
@@ -61,7 +61,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 19273504,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 116909,
       "nAppearances": 2000001,
@@ -69,7 +69,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 19733288,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 133329,
       "nAppearances": 2000004,
@@ -77,7 +77,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 19451020,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 123164,
       "nAppearances": 2000298,
@@ -85,7 +85,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 19880132,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 138572,
       "nAppearances": 2000009,
@@ -93,7 +93,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18933576,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 104763,
       "nAppearances": 2000021,
@@ -101,7 +101,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18301884,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 82206,
       "nAppearances": 2000009,
@@ -109,7 +109,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18536336,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 90469,
       "nAppearances": 2000395,
@@ -117,7 +117,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18282420,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 73590,
       "nAppearances": 2027732,
@@ -125,7 +125,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 4928068,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 67944,
       "nAppearances": 378199,
@@ -133,7 +133,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18488932,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 87620,
       "nAppearances": 2004441,
@@ -141,7 +141,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16254832,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 6439,
       "nAppearances": 2009312,
@@ -149,7 +149,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16268472,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 6711,
       "nAppearances": 2010065,
@@ -157,7 +157,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16714252,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 25506,
       "nAppearances": 2000005,
@@ -165,7 +165,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18179224,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 77827,
       "nAppearances": 2000003,
@@ -173,7 +173,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17620200,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 55899,
       "nAppearances": 2006873,
@@ -181,7 +181,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17799104,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 61451,
       "nAppearances": 2009804,
@@ -189,7 +189,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17325892,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 44940,
       "nAppearances": 2008441,
@@ -197,7 +197,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17287356,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 45338,
       "nAppearances": 2002231,
@@ -205,7 +205,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17329600,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 44939,
       "nAppearances": 2008908,
@@ -213,7 +213,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17278840,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 45081,
       "nAppearances": 2002066,
@@ -221,7 +221,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17304396,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 45760,
       "nAppearances": 2002884,
@@ -229,7 +229,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17719488,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 57543,
       "nAppearances": 2013530,
@@ -237,7 +237,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17370896,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 47847,
       "nAppearances": 2003892,
@@ -245,7 +245,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17358408,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 47479,
       "nAppearances": 2003619,
@@ -253,7 +253,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17437028,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 47220,
       "nAppearances": 2014353,
@@ -261,7 +261,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17401020,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 48258,
       "nAppearances": 2006219,
@@ -269,7 +269,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17359116,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 47542,
       "nAppearances": 2003487,
@@ -277,7 +277,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18118048,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 75583,
       "nAppearances": 2000210,
@@ -285,7 +285,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 13087964,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 62172,
       "nAppearances": 1418388,
@@ -293,7 +293,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17013496,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 34753,
       "nAppearances": 2005046,
@@ -301,7 +301,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16790220,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 26434,
       "nAppearances": 2006253,
@@ -309,7 +309,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16803776,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 27965,
       "nAppearances": 2002589,
@@ -317,7 +317,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16801868,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 27464,
       "nAppearances": 2004104,
@@ -325,7 +325,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16696960,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 20211,
       "nAppearances": 2016376,
@@ -333,7 +333,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16709168,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 20351,
       "nAppearances": 2017412,
@@ -341,7 +341,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16610412,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 21148,
       "nAppearances": 2002278,
@@ -349,7 +349,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16616548,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 21478,
       "nAppearances": 2001890,
@@ -357,7 +357,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16903000,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 28227,
       "nAppearances": 2014075,
@@ -365,7 +365,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16908912,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 29363,
       "nAppearances": 2010838,
@@ -373,7 +373,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16631512,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 21623,
       "nAppearances": 2003253,
@@ -381,7 +381,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16857624,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 28209,
       "nAppearances": 2008466,
@@ -389,7 +389,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16843104,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 28329,
       "nAppearances": 2006231,
@@ -397,7 +397,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16929832,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 28415,
       "nAppearances": 2016771,
@@ -405,7 +405,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16605856,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 20831,
       "nAppearances": 2002818,
@@ -413,7 +413,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16612068,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 20778,
       "nAppearances": 2003780,
@@ -421,7 +421,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16585444,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 20036,
       "nAppearances": 2003049,
@@ -429,7 +429,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16693324,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 22142,
       "nAppearances": 2009163,
@@ -437,7 +437,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16746536,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 23161,
       "nAppearances": 2012248,
@@ -445,7 +445,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16782084,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 23384,
       "nAppearances": 2015911,
@@ -453,7 +453,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16681268,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 21736,
       "nAppearances": 2009077,
@@ -461,7 +461,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 16896376,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 27455,
       "nAppearances": 2015949,
@@ -469,7 +469,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 60224500,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1578916,
       "nAppearances": 2001851,
@@ -477,7 +477,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 69479636,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1909506,
       "nAppearances": 2001678,
@@ -485,7 +485,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 71582220,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1984516,
       "nAppearances": 2001966,
@@ -493,7 +493,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 64289176,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1723289,
       "nAppearances": 2004630,
@@ -501,7 +501,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 71728776,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1989077,
       "nAppearances": 2004322,
@@ -509,7 +509,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 71482240,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1981505,
       "nAppearances": 2000007,
@@ -517,7 +517,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 71436288,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1978913,
       "nAppearances": 2003335,
@@ -525,7 +525,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 51847076,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1278818,
       "nAppearances": 2005016,
@@ -533,7 +533,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 37564872,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 769753,
       "nAppearances": 2001468,
@@ -541,7 +541,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 67452740,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1837434,
       "nAppearances": 2000568,
@@ -549,7 +549,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 68314124,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1867962,
       "nAppearances": 2001393,
@@ -557,7 +557,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 21042468,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 427048,
       "nAppearances": 1135635,
@@ -565,7 +565,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17000564,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 98216,
       "nAppearances": 1781309,
@@ -573,7 +573,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 33477640,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 624129,
       "nAppearances": 2000248,
@@ -581,7 +581,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 70352380,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1940732,
       "nAppearances": 2001480,
@@ -589,7 +589,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 68939480,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1890511,
       "nAppearances": 2000641,
@@ -597,7 +597,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 68748016,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1883143,
       "nAppearances": 2002496,
@@ -605,7 +605,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 43491940,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1200206,
       "nAppearances": 1235766,
@@ -613,7 +613,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 70650908,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1951752,
       "nAppearances": 2000226,
@@ -621,7 +621,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 70386880,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1942249,
       "nAppearances": 2000483,
@@ -629,7 +629,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 70401788,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1942904,
       "nAppearances": 2000054,
@@ -637,7 +637,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 70512196,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1946378,
       "nAppearances": 2001696,
@@ -645,7 +645,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 70461908,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1944426,
       "nAppearances": 2002242,
@@ -653,7 +653,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 70112356,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 1932008,
       "nAppearances": 2002011,
@@ -661,7 +661,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 27868060,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 461204,
       "nAppearances": 1869288,
@@ -669,7 +669,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17155096,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 91467,
       "nAppearances": 1824247,
@@ -677,7 +677,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17687356,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 95628,
       "nAppearances": 1876216,
@@ -685,7 +685,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17844020,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 89322,
       "nAppearances": 1917870,
@@ -693,7 +693,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 18493300,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 89032,
       "nAppearances": 2000045,
@@ -701,7 +701,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 715116,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 10368,
       "nAppearances": 53096,
@@ -709,7 +709,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 19342168,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 119331,
       "nAppearances": 2000107,
@@ -717,7 +717,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 3153052,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 36436,
       "nAppearances": 266600,
@@ -725,7 +725,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 20638196,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 165636,
       "nAppearances": 2000043,
@@ -733,7 +733,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 11705384,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 111789,
       "nAppearances": 1071906,
@@ -741,7 +741,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 21186264,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 185217,
       "nAppearances": 2000018,
@@ -749,7 +749,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 17627816,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 160071,
       "nAppearances": 1643223,
@@ -757,7 +757,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 20530560,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 161767,
       "nAppearances": 2000130,
@@ -765,7 +765,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 15111272,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 144569,
       "nAppearances": 1382912,
@@ -773,7 +773,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 21977516,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 213444,
       "nAppearances": 2000130,
@@ -781,7 +781,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 22903768,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 246555,
       "nAppearances": 2000023,
@@ -789,7 +789,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 8030176,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 103759,
       "nAppearances": 640610,
@@ -797,7 +797,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 23123048,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 254383,
       "nAppearances": 2000035,
@@ -805,7 +805,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "fileSize": 24207296,
-      "hash": "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1",
+      "hash": "0x81ae...1da1",
       "magic": "0xdeadbeef",
       "nAddresses": 293107,
       "nAppearances": 2000032,
