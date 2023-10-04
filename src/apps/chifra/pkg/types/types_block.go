@@ -79,19 +79,6 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOptions["count"] == true {
-		return Model{
-			Data: map[string]interface{}{
-				"blockNumber":     s.BlockNumber,
-				"transactionsCnt": len(s.Transactions),
-			},
-			Order: []string{
-				"blockNumber",
-				"transactionsCnt",
-			},
-		}
-	}
-
 	if extraOptions["hashes"] == true {
 		txHashes := make([]string, 0, len(s.Transactions))
 		// Check what type Tx is
