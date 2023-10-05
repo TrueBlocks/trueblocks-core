@@ -8,8 +8,6 @@ scrapePos = ""
 scrapeFmt = "json"
 scrapeOpts = {
     "blockCnt": {"hotkey": "-n", "type": "flag"},
-    "pin": {"hotkey": "-i", "type": "switch"},
-    "remote": {"hotkey": "-r", "type": "switch"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "startBlock": {"hotkey": "-l", "type": "flag"},
     "fmt": {"hotkey": "-x", "type": "flag"},
