@@ -28,7 +28,9 @@ func (opts *WhenOptions) HandleList() error {
 		for _, result := range results {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			result := result
-			modelChan <- &result
+			if opts.Globals.Verbose || result.Component == "execution" {
+				modelChan <- &result
+			}
 		}
 	}
 

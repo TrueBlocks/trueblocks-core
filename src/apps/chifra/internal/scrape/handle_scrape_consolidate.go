@@ -122,7 +122,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 			}
 
 			indexPath := config.PathToIndex(chain) + "finalized/" + curRange.String() + ".bin"
-			if report, err := index.WriteChunk(chain, indexPath, appMap, len(appearances), opts.Pin, opts.Remote); err != nil {
+			if report, err := index.WriteChunk(chain, indexPath, appMap, len(appearances)); err != nil {
 				return false, err
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")

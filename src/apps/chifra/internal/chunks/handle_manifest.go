@@ -28,7 +28,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		if len(man.Chunks) > 10 {
 			man.Chunks = man.Chunks[:10]
 		}
-		man.Schemas = "--testing-hash--"
+		man.Specification = "--testing-hash--"
 	}
 
 	ctx := context.Background()
@@ -51,9 +51,9 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 	} else {
 		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
 			s := types.SimpleManifest{
-				Version: man.Version,
-				Chain:   man.Chain,
-				Schemas: man.Schemas,
+				Version:       man.Version,
+				Chain:         man.Chain,
+				Specification: man.Specification,
 			}
 			for _, chunk := range man.Chunks {
 				s.Chunks = append(s.Chunks, types.SimpleChunkRecord{

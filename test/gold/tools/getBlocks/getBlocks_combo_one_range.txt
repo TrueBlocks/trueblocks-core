@@ -115,7 +115,8 @@ TEST[DATE|TIME] Format:  json
           "value": "61848232647269079"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -129,7 +130,8 @@ TEST[DATE|TIME] Format:  json
       "parentHash": "0xacc1728d558f47fc847b749e0972097fd7e95c6c96eadef06bd356c0cf248710",
       "timestamp": 1459194277,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -206,7 +208,8 @@ TEST[DATE|TIME] Format:  json
           "value": "100000000000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -633,7 +636,8 @@ TEST[DATE|TIME] Format:  json
           "value": "500179743164106942"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }

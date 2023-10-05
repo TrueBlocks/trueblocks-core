@@ -238,6 +238,22 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 		Difficulty:  difficulty,
 		Uncles:      uncles,
 	}
+
+	if len(rawBlock.Withdrawals) > 0 {
+		block.Withdrawals = make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
+		for _, withdrawal := range rawBlock.Withdrawals {
+			amt := big.NewInt(0)
+			amt.SetString(withdrawal.Amount, 0)
+			s := types.SimpleWithdrawal{
+				Address:        base.HexToAddress(withdrawal.Address),
+				Amount:         *amt,
+				Index:          utils.MustParseUint(withdrawal.Index),
+				ValidatorIndex: utils.MustParseUint(withdrawal.ValidatorIndex),
+			}
+			block.Withdrawals = append(block.Withdrawals, s)
+		}
+	}
+
 	return
 }
 

@@ -1,6 +1,0 @@
-scrape?pin
-{
-  "errors": [
-    "Cannot test block scraper"
-  ]
-}

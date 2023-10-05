@@ -30,23 +30,17 @@ type WriteChunkReport struct {
 	nAddresses   int
 	nAppearances int
 	Snapped      bool
-	Pinned       bool
-	PinRecord    manifest.ChunkRecord
 }
 
 func (c *WriteChunkReport) Report() {
-	str := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
+	report := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
 	if c.Snapped {
-		str = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
+		report = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
 	}
-	logger.Info(str)
-	if c.Pinned {
-		str := fmt.Sprintf("%sPinned chunk $INDEX/%s.bin (%s,%s)%s", colors.BrightBlue, c.Range, c.PinRecord.IndexHash, c.PinRecord.BloomHash, colors.Off)
-		logger.Info(str)
-	}
+	logger.Info(report)
 }
 
-func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int, pin, remote bool) (*WriteChunkReport, error) {
+func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -145,29 +139,8 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 				Range:        rng,
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
-				Pinned:       pin,
 			}
-
-			if !pin {
-				return &report, nil
-			}
-
-			result, err := pinning.PinChunk(chain, ToBloomPath(indexFn), ToIndexPath(indexFn), remote)
-			if err != nil {
-				return &report, err
-			}
-
-			path := config.PathToIndex(chain) + "ts.bin"
-			if _, err = pinning.PinItem(chain, "timestamps", path, remote); err != nil {
-				return &report, err
-			}
-
-			rec := ResultToRecord(&result)
-			report.PinRecord.IndexHash = rec.IndexHash
-			report.PinRecord.BloomHash = rec.BloomHash
-			report.PinRecord.IndexSize = rec.IndexSize
-			report.PinRecord.BloomSize = rec.BloomSize
-			return &report, manifest.UpdateManifest(chain, rec)
+			return &report, nil
 
 		} else {
 			return nil, err

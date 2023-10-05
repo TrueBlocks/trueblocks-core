@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -50,19 +49,6 @@ func (opts *ScrapeOptions) validateScrape() error {
 	m := utils.Max(meta.Ripe, utils.Max(meta.Staging, meta.Finalized)) + 1
 	if m > meta.Latest {
 		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
-	}
-
-	if opts.Pin {
-		if opts.Remote {
-			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(chain)
-			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
-				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
-			}
-
-		} else if !pinning.LocalDaemonRunning() {
-			return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
-
-		}
 	}
 
 	// Note this does not return if a migration is needed

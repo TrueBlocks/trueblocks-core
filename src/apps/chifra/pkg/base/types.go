@@ -26,6 +26,9 @@ func HexToWei(hex string) (result *Wei) {
 
 func IsFinal(latestTs, blockTs Timestamp) bool {
 	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
-	var pendingPeriod = int64(5 * 60)
-	return (latestTs - blockTs) >= pendingPeriod
+	var min = Timestamp(5)
+	var s = Timestamp(60)
+	var pendingPeriod = min * s
+	var diff = latestTs - blockTs
+	return diff >= pendingPeriod
 }

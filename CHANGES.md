@@ -4,7 +4,40 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
-## v1.0.0 (2023/08/21)
+## v1.1.0 (2023/10/07)
+
+Rewrite the entire scraper and the specification
+Generate an entire new data set for Sepolia and Mainnet with new hashes since the spec is different.
+Added chifra config show
+Updated trueBlocks.toml config file to include scraper configs
+Updates block data structure to read withdrawals and adds them to the index
+Adds withdrawals to blocks data structure, breaking change to block cache - needs migration
+Forces v1.0.0-release into the TrueBlocks.toml file (needs a migration)
+Added `--watch_list`, `--commands`, `--batch_size`, and `--run_count` options to `chifra monitors`.
+Enables `chifra config edit`
+Added `--run_count` to `chifra scrape` (for debugging purposes).
+Changed names of some rarely used special blocks in `chifra when`. Breaking, but minimal impact.
+Removes a number of previously deprecated options. `chifra abis --sol`, `chifra names --named`, `chifra names --to_custom`, `chifra transactions --trace`, and `chifra --log_level` for all commands.
+Better error reporting when running against non-tracing nodes.
+Fixed an issue with Content-Type in the server.
+Fixed an issue where user could hit cntl+c during caching and corrupt the database.
+Fixed an issue where scraper was missing some smart contract addresses created during out of gas transactions.
+Better error handling from the RPC.
+Added a verbose mode to `chifra when` to include more specials and a description for each special block.
+Now disallows running `chifra scrape` if the node is not a tracing archive node.
+Near complete re-write of block scraper to fix few bugs and prepare for writing v1.0.0 of the spec.
+Add `--run_count` to both the `chifra scrape` and the `chifra monitors --watch`, hides both because they are intended for debugging only.
+Added `--publisher` option to `chifra init` and `chifra chunks`.
+- Removed `apiProvider` field from `Chain` data model as unused.
+- Changes to `Config` data model to improve clarity and consistency:
+  - changed `GetPathToRootConfig` to `PathToRootConfig`
+  - changed `GetPathToCache` to `PathToCache`
+  - changed `GetPathToIndex` to `PathToIndex`
+- Removes `runOnce` from `chifra monitors` (in favor of hidden `runCount` - for `chifra scrape` as well).
+- Adds `dryRun` to `chifra scrape`.
+- Adds `diff` to `chifra chunks`.
+
+## v1.0.0 (2023/08/20)
 
 **OUR FIRST OFFICIAL RELEASE!**
 

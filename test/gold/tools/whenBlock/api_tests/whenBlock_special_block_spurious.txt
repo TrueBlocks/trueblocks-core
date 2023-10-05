@@ -1,10 +1,10 @@
-when?blocks=spurious
+when?blocks=spurious_dragon
 {
   "data": [
     {
       "blockNumber": 2675000,
       "date": "2016-11-22 16:15:44 UTC",
-      "name": "spurious",
+      "name": "spurious_dragon",
       "timestamp": 1479831344
     }
   ],

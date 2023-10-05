@@ -30,7 +30,7 @@ type Manifest struct {
 	Chain string `json:"chain"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
-	Schemas base.IpfsHash `json:"schemas"`
+	Specification base.IpfsHash `json:"specification"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Config scrapeCfg.ScrapeSettings `json:"config"`
@@ -44,7 +44,7 @@ type Manifest struct {
 
 // ChunkRecord is asingle record in the Manifest's Chunks table. It associates a block range, an
 // IPFS hash of the chunk covering that block range, and a hash of the Bloom filter covering that
-// chunk. The format of the chunk and the Bloom filter are detailed in the manifest's Schema record.
+// chunk. The format of the chunk and the Bloom filter are detailed in the manifest's Specification record.
 type ChunkRecord struct {
 	Range     string        `json:"range"`
 	BloomHash base.IpfsHash `json:"bloomHash"`
@@ -106,9 +106,9 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 
 		// This is okay. Create an empty manifest
 		man = &Manifest{
-			Version: version.ManifestVersion,
-			Chain:   chain,
-			Schemas: unchained.Schemas,
+			Version:       version.ManifestVersion,
+			Chain:         chain,
+			Specification: unchained.Specification,
 			// Databases: unchained.Databases,
 			Chunks:   []ChunkRecord{},
 			ChunkMap: make(map[string]*ChunkRecord),

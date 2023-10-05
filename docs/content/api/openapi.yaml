@@ -1960,22 +1960,6 @@ paths:
           schema:
             type: number
             format: uint64
-        - name: pin
-          description: pin new chunks (requires locally-running IPFS daemon or --remote)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: remote
-          description: pin new chunks to the gateway (requires pinning service keys)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: sleep
           description: seconds to sleep between scraper passes
           required: false
@@ -2788,6 +2772,11 @@ components:
           items:
             $ref: "#/components/schemas/hash"
           description: "a possibly empty array of uncle hashes"
+        withdrawals:
+          type: array
+          items:
+            $ref: "#/components/schemas/withdrawal"
+          description: "a possibly empty array of withdrawals (post Shanghai)"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3585,7 +3574,7 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
+        specification:
           type: string
           format: ipfshash
           description: "IPFS cid of the specification"
@@ -3854,7 +3843,7 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
+        specification:
           type: string
           format: ipfshash
           description: "IPFS cid of the specification"

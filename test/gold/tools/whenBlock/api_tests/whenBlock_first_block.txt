@@ -4,7 +4,7 @@ when?blocks=0
     {
       "blockNumber": 0,
       "date": "2015-07-30 15:26:15 UTC",
-      "name": "first",
+      "name": "frontier",
       "timestamp": 1438269975
     }
   ],

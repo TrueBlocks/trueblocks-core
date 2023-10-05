@@ -127,3 +127,7 @@ func EstablishIndexPaths(indexPath string) {
 		logger.Fatal(err)
 	}
 }
+
+func PathToTimestamps(chain string) string {
+	return filepath.Join(PathToIndex(chain), "ts.bin")
+}

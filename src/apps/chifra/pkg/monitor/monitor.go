@@ -209,8 +209,8 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 		}
 		if !info.IsDir() {
 			addr, _ := base.AddressFromPath(path, ".mon.bin")
-			if len(addr) > 0 {
-				monitorChan <- NewMonitor(chain, addr, true /* create */)
+			if !addr.IsZero() {
+				monitorChan <- NewMonitor(chain, addr.Hex(), true /* create */)
 			}
 		}
 		return nil

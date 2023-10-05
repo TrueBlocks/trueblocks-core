@@ -429,7 +429,8 @@ TEST[DATE|TIME] Format:  json
           "value": "500179743164106942"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -685,7 +686,8 @@ TEST[DATE|TIME] Format:  json
           "value": "1252142000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }

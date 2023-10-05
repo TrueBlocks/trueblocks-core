@@ -13,7 +13,8 @@ blocks?listCount=2&list=1030000&blocks=10010
       "parentHash": "0xbbb5717268f9e6550d66a92b450957a9fff92c5b63b96fde2182157734c6f04a",
       "timestamp": 1454891238,
       "transactionsCnt": 1,
-      "unclesCnt": 1
+      "unclesCnt": 1,
+      "withdrawalsCnt": 0
     },
     {
       "baseFeePerGas": 0,
@@ -27,7 +28,8 @@ blocks?listCount=2&list=1030000&blocks=10010
       "parentHash": "0xf579e346652cbac8899ae24c7a163e94552efb7b2ea08f022a90b9127b6b623a",
       "timestamp": 1454891236,
       "transactionsCnt": 0,
-      "unclesCnt": 0
+      "unclesCnt": 0,
+      "withdrawalsCnt": 0
     }
   ],
   "meta": {

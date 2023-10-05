@@ -30,7 +30,7 @@ func NTimestamps(chain string) (uint64, error) {
 		return perChainTimestamps[chain].count, nil
 	}
 
-	tsPath := config.PathToIndex(chain) + "ts.bin"
+	tsPath := config.PathToTimestamps(chain)
 
 	fileStat, err := os.Stat(tsPath)
 	if err != nil {
@@ -56,7 +56,7 @@ func loadTimestamps(chain string) error {
 		return err
 	}
 
-	tsPath := config.PathToIndex(chain) + "ts.bin"
+	tsPath := config.PathToTimestamps(chain)
 	tsFile, err := os.OpenFile(tsPath, os.O_RDONLY, 0)
 	if err != nil {
 		return err
