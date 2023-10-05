@@ -184,7 +184,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x18fd55f5a0bd58666a8df2cafa99084d95d074ecbe2c69ed9dff799fd16a8d02",
       "timestamp": 1439674369,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -198,7 +199,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x5b7b67dc6261baaa796294bad763ecdf7e379870b9fa14368f3e6c35208d2d08",
       "timestamp": 1440511996,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -212,7 +214,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x40df760931bf831b2ae0af8b35abc2142d37fff2343bd69212ea7b34d0e84189",
       "timestamp": 1440826383,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -226,7 +229,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0xe8536d9df30672546a9e6fd1c1fa347b533788107da9a389c40d4ca9fed5d68b",
       "timestamp": 1443211927,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -240,7 +244,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0xe1c9de04e275b1f9d30f79658704e500fe051c3b9106c0488b637476dc22aa6d",
       "timestamp": 1444799304,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "blockNumber": 394557,
@@ -262,7 +267,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x349a3004a809d6923f521e5a1e52b50540e9ecd66812717a1c2794c48df0776b",
       "timestamp": 1445864379,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -276,7 +282,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x7b1782b524ff6d1cda559a9932452669e3a44559fd56a0f21b3a33c6dd391f3f",
       "timestamp": 1446452690,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "blockNumber": 599852,
@@ -326,7 +333,8 @@ Results in ./cmd_file2_out.file
           "value": "1222482780000000256"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -340,7 +348,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x3aa4d24d45bc337a428da2d2f1990129a76f0c9ce7b836a2ec334c471bb42432",
       "timestamp": 1449247432,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -354,7 +363,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0xac58eb546318b9fe4d32ad5961f9f6772c3a9995bac9966279924ba1918773ff",
       "timestamp": 1450655797,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -396,7 +406,8 @@ Results in ./cmd_file2_out.file
       ],
       "uncles": [
         "0x19b632838d81f7b0863cb210834c7a5d7538aa0f35b730ae2cc6c26ab5057ed7"
-      ]
+      ],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -436,7 +447,8 @@ Results in ./cmd_file2_out.file
           "value": "9422000000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -501,7 +513,8 @@ Results in ./cmd_file2_out.file
           "value": "2027587470000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -792,7 +805,8 @@ Results in ./cmd_file2_out.file
           "value": "1"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "blockNumber": 1078767,
@@ -871,7 +885,8 @@ Results in ./cmd_file2_out.file
           "value": "1092623490000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -947,7 +962,8 @@ Results in ./cmd_file2_out.file
           "value": "437194980000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -961,7 +977,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x997b11e4192922846b2abb504ad941195475bad3974a18f022024a57b41fa610",
       "timestamp": 1455405670,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1026,7 +1043,8 @@ Results in ./cmd_file2_out.file
           "value": "2821992340000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1141,7 +1159,8 @@ Results in ./cmd_file2_out.file
           "value": "1089015400000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1206,7 +1225,8 @@ Results in ./cmd_file2_out.file
           "value": "1729671320000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1220,7 +1240,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x2e78dac39b208dee1b244f8c5b78ef2dd944f2da6e36ab718e9b9ee14ef3d3cf",
       "timestamp": 1455412740,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1356,7 +1377,8 @@ Results in ./cmd_file2_out.file
           "value": "189990000000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1398,7 +1420,8 @@ Results in ./cmd_file2_out.file
       ],
       "uncles": [
         "0x0e418cdd167f809adf7d8c006f97ef51328a2cfbf145fac1d6d5029ece22ccbf"
-      ]
+      ],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1412,7 +1435,8 @@ Results in ./cmd_file2_out.file
       "parentHash": "0x4629804a744475256d2e2e07fddc1a082e333c7f8c63d981dd5ff7f106082640",
       "timestamp": 1455418125,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1451,7 +1475,8 @@ Results in ./cmd_file2_out.file
           "value": "188950000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }

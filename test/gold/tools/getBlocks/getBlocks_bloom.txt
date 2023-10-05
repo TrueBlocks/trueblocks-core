@@ -429,7 +429,8 @@ TEST[DATE|TIME] Format:  json
           "value": "500179743164106942"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }

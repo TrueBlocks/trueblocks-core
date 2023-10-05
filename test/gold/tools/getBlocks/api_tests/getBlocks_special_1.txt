@@ -215,7 +215,8 @@ blocks?blocks=stateclear
           "value": "3002278387066304500"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ],
   "meta": {

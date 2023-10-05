@@ -60,6 +60,7 @@ func (s *simpleBlockCount) Model(chain, format string, verbose bool, extraOption
 	wantsLogs := extraOptions["logs"] == true
 	wantsTraces := extraOptions["traces"] == true
 	wantsUniqs := extraOptions["uniqs"] == true
+	wantsWithdrawals := true
 
 	if format == "json" {
 		if wantsUncles && s.UnclesCnt > 0 {
@@ -73,6 +74,9 @@ func (s *simpleBlockCount) Model(chain, format string, verbose bool, extraOption
 		}
 		if wantsUniqs && s.AddressCnt > 0 {
 			model["addressCnt"] = s.AddressCnt
+		}
+		if wantsWithdrawals && s.WithdrawalsCnt > 0 {
+			model["withdrawalsCnt"] = s.WithdrawalsCnt
 		}
 
 	} else {
@@ -91,6 +95,10 @@ func (s *simpleBlockCount) Model(chain, format string, verbose bool, extraOption
 		if wantsUniqs {
 			model["addressCnt"] = s.AddressCnt
 			order = append(order, "addressCnt")
+		}
+		if wantsWithdrawals {
+			model["withdrawalsCnt"] = s.WithdrawalsCnt
+			order = append(order, "withdrawalsCnt")
 		}
 	}
 	// EXISTING_CODE

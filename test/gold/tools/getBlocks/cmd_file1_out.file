@@ -63,7 +63,8 @@
           "value": "1092623490000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -753,7 +754,8 @@
           "value": "180692600000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -795,7 +797,8 @@
       ],
       "uncles": [
         "0x4a7c124af4668d2c34714b10677e5a3e4100f0355c566e864aa63c490d9e39bf"
-      ]
+      ],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -809,7 +812,8 @@
       "parentHash": "0x85bd2983043a4b717893f96407a24dda3af899e100ca65a5efc62e5859bd50bc",
       "timestamp": 1461564158,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "blockNumber": 1909113,
@@ -831,7 +835,8 @@
       "parentHash": "0x6ca269d02245567d73e81cd959b9ed079e3f483fd5916976863610b49d78618b",
       "timestamp": 1470422063,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "blockNumber": 2127401,
@@ -903,7 +908,8 @@
           "value": "7000000000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -943,7 +949,8 @@
           "value": "3000000000000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1108,7 +1115,8 @@
           "value": "1020478480000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1122,7 +1130,8 @@
       "parentHash": "0xffd3fd40d63430db65c335f592c6bfcc88f091fa0684ddb67c38969486a19e52",
       "timestamp": 1477523292,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1162,7 +1171,8 @@
           "value": "1021036464000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -1176,7 +1186,8 @@
       "parentHash": "0x474c65a602268ccbddc6c1386c686db6523fa6172073bd07218ed27238441548",
       "timestamp": 1480604456,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }

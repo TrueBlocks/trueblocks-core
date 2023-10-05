@@ -112,7 +112,8 @@ blocks?blocks=1001001
           "value": "61848232647269079"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ],
   "meta": {
