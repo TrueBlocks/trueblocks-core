@@ -15,7 +15,7 @@ var manifestJSONSource = `
 {
   "version": "2",
   "chain": "mainnet",
-  "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
+  "specification": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
   "chunks": [
     {
       "fileName": "000000000-000000000",

@@ -3585,7 +3585,7 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
+        specification:
           type: string
           format: ipfshash
           description: "IPFS cid of the specification"
@@ -3854,7 +3854,7 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
+        specification:
           type: string
           format: ipfshash
           description: "IPFS cid of the specification"

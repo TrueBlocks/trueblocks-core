@@ -75,7 +75,7 @@ chunks?mode=manifest
           "range": "001729009-001848054"
         }
       ],
-      "schemas": "--testing-hash--",
+      "specification": "--testing-hash--",
       "version": "trueblocks-core@v0.40.0"
     }
   ],
