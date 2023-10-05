@@ -3,28 +3,16 @@ package tslib
 import (
 	"errors"
 	"fmt"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // FromBnToName returns the block's chain-specific name (if found) given its block number
 func FromBnToName(chain string, bn uint64) (string, error) {
-	nb, err := FromBnToNamedBlock(chain, bn)
-	if err != nil || nb == nil {
-		return "", err
-	}
-	return nb.Name, nil
-}
-
-// FromBnToNamedBlock returns the block's chain-specific name (if found) given its block number
-func FromBnToNamedBlock(chain string, bn uint64) (*types.SimpleNamedBlock, error) {
 	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
-		value := value
 		if value.BlockNumber == bn {
-			return &value, nil
+			return value.Name, nil
 		}
 	}
 	msg := fmt.Sprintf("Block number %d is not special", bn)
-	return nil, errors.New(msg)
+	return "", errors.New(msg)
 }

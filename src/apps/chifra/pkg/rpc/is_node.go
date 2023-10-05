@@ -7,16 +7,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 )
 
-// TODO: Some of this code may be chain-specific - for example,
-// some chains have no pre-allocation.
-
-// IsNodeArchive tries to return true if the node is an archive
-// node with the following caveteat: we assume that the node has
-// been initialized with a pre-allocation. This is a reasonable
-// assumption for most chains, but not all. For example, if a
-// chain does not have a pre-allocation, this function will return
-// false, when in fact the node may be an archive node.
+// IsNodeArchive returns true if the node is an archive node
 func (conn *Connection) IsNodeArchive() bool {
+	// TODO: from C++ code
+	// const CToml* config = getGlobalConfig("blockScrape");
+	// if (!config->getConfigBool("requires", "archive", true))
+	//     return true;
+
+	// TODO: chain-specific code - some chains have no pre-allocation
+	// An archive node better have a balance at the end of block zero the same as
+	// the pre-allocation amount for that account. We use the largest allocation
+	// so as to ensure we get an actual balance
 	thePath := filepath.Join(config.MustGetPathToChainConfig(conn.Chain), "allocs.csv")
 	largest, err := prefunds.GetLargestPrefund(conn.Chain, thePath)
 	if err != nil {
@@ -28,16 +29,127 @@ func (conn *Connection) IsNodeArchive() bool {
 		return false
 	}
 
+	// fmt.Println("Largest:", largest.Balance, "Balance:", *bal, "Cmp:", bal.Cmp(&largest.Balance) == 0)
 	return bal.Cmp(&largest.Balance) == 0
 }
 
-// ErrTraceBlockMissing is returned when the node does not support the trace_block endpoint.
-var ErrTraceBlockMissing = "trace_block is missing"
+//-----------------------------------------------------------------------
+// bool findLargest(const Allocation& prefund, void* data) {
+//     Allocation* largest = (Allocation*)data;
+//     if (prefund.amount > largest->amount) {
+//         largest->address = prefund.address;
+//         largest->amount = prefund.amount;
+//     }
+//     return true;
+// }
+//
+// //-----------------------------------------------------------------------
+// Allocation largestPrefund(void) {
+//     if (prefundBalMap.size() == 0)
+//         loadPrefundBalances();
+//     Allocation largest;
+//     forEveryPrefund(findLargest, &largest);
+//     return largest;
+// }
+// extern Allocation largestPrefund(void);
+// //-------------------------------------------------------------------------
+// bool isArchiveNode(void) {
+//     // short curcuit for some situations
+//     const CToml* config = getGlobalConfig("blockScrape");
+//     if (!config->getConfigBool("requires", "archive", true))
+//         return true;
+//
+//     // An archive node better have a balance at the end of block zero the same as
+//     // the allocation amount for that account. We use the largest allocation so as
+//     // to ensure we get an actual balance
+//     Allocation largest = largestPrefund();
+//     return get BalanceAt(largest.address, 0) == largest.amount;
+// }
+//
+// // #if 0
+// // //-----------------------------------------------------------------------
+// // bool readPrefundBals(void) {
+// //     if (!fileExists(cacheFolderBin_allocs))
+// //         return false;
+//
+// //     CArchive archive(READING_ARCHIVE);
+// //     if (!archive.Lock(cacheFolderBin_allocs, modeReadOnly, LOCK_NOWAIT))
+// //         return false;
+//
+// //     uint64_t count;
+// //     archive >> count;
+// //     for (size_t i = 0; i < count; i++) {
+// //         wei_t amount;
+// //         string_q address;
+// //         archive >> address >> amount;
+// //         prefundBalMap[address] = amount;
+// //     }
+// //     archive.Release();
+//
+// //     return true;
+// // }
+//
+// // //-----------------------------------------------------------------------
+// // bool readPrefundAscii(void) {
+// //     if (!fileExists(chainConfigsTxt_allocs))
+// //         return false;
+//
+// //     CStringArray lines;
+// //     asciiFileToLines(chainConfigsTxt_allocs, lines);
+// //     for (auto line : lines) {
+// //         if (startsWith(line, "0x")) {
+// //             CStringArray parts;
+// //             explode(parts, line, '\t');
+// //             string_q address = toLower(parts[0]);
+// //             wei_t amount = str_2_Wei(parts[1]);
+// //             prefundBalMap[address] = amount;
+// //         }
+// //     }
+// //     return true;
+// // }
+//
+// // //-----------------------------------------------------------------------
+// // bool writePrefundBin(void) {
+// //     CArchive archive(WRITING_ARCHIVE);
+// //     if (!archive.Lock(cacheFolderBin_allocs, modeWriteCreate, LOCK_NOWAIT)) {
+// //         LOG_WARN("Could not lock prefund cache at: ", cacheFolderBin_allocs);
+// //         return false;
+// //     }
+//
+// //     archive << uint64_t(prefundBalMap.size());
+// //     for (const auto& item : prefundBalMap)
+// //         archive << item.first << item.second;
+// //     archive.Release();
+//
+// //     return true;
+// // }
+//
+// // //-----------------------------------------------------------------------
+// // bool loadPrefundBalances(void) {
+// //     LOG_TEST_STR("Loading prefund balances");
+// //     if (prefundBalMap.size() > 0) {
+// //         LOG_TEST_STR("Already loaded");
+// //         return true;
+// //     }
+//
+// //     if (readPrefundBals())
+// //         return true;
+//
+// //     if (!readPrefundAscii())
+// //         return false;
+//
+// //     return writePrefundBin();
+// // }
+//
+// // #endif
 
-// IsNodeTracing returns true if the node exposes the `block_trace` RPC endpoing. It
-// queries block 1 (which we presume exists). The function returns false if
-// block_trace an error.
-func (conn *Connection) IsNodeTracing() bool {
-	_, err := conn.GetTracesByBlockNumber(1)
-	return err == nil
+// TODO: BOGUS This needs to be implemented in a cross-chain, cross-client manner
+
+// IsNodeTracing returns true if the node is an archive node. Note currently always returns true.
+func (conn *Connection) IsNodeTracing(testMode bool) bool {
+	// TODO: We can test this with a unit test
+	if testMode && conn.Chain == "non-tracing" {
+		return false
+	}
+	return true
 }

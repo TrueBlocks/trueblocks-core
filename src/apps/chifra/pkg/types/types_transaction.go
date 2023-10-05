@@ -206,9 +206,9 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		if s.Receipt != nil && !s.Receipt.IsDefault() {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
-			// TODO: This is quite odd. Why?
+			byzantiumBlock := uint64(4370000)
 			status := &s.Receipt.Status
-			if s.BlockNumber < base.KnownBlock(chain, base.Byzantium) || *status == 4294967295-1 {
+			if s.BlockNumber < byzantiumBlock || *status == 4294967295-1 {
 				status = nil
 			}
 

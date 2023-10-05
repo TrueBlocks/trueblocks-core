@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -32,24 +31,22 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			Schemas: unchained.Schemas,
 		}
 
-		if len(blockNums) == 0 {
-			var err error
-			tsPath := config.PathToIndex(chain) + "ts.bin"
-			if report.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
-				errorChan <- err
-				cancel()
-				return
-			}
-
-			manPath := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
-			if report.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
-				errorChan <- err
-				cancel()
-				return
-			}
+		var err error
+		tsPath := config.PathToIndex(chain) + "ts.bin"
+		if report.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
+			errorChan <- err
+			cancel()
+			return
 		}
 
-		if len(blockNums) != 0 || opts.Deep {
+		manPath := config.MustGetPathToChainConfig(chain) + "manifest.json"
+		if report.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
+			errorChan <- err
+			cancel()
+			return
+		}
+
+		if opts.Deep {
 			pinChunk := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 				rng, err := base.RangeFromFilenameE(path)
 				if err != nil {
@@ -66,9 +63,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 
 				result, err := pinning.PinChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path), opts.Remote)
 				if err != nil {
-					errorChan <- err
-					cancel() // keep going...
-					return true, nil
+					return false, err
 				}
 
 				if pinning.LocalDaemonRunning() {
@@ -88,13 +83,6 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					logger.Fatal("Failed")
 				} else if opts.Remote && pinning.LocalDaemonRunning() {
 					logger.Info(colors.BrightGreen+"Matches: "+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
-				}
-				if opts.Globals.Verbose {
-					if opts.Remote {
-						fmt.Println("result.Remote:", result.Remote.String())
-					} else {
-						fmt.Println("result.Local:", result.Local.String())
-					}
 				}
 
 				sleep := opts.Sleep

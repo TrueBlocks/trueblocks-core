@@ -22,4 +22,3 @@ baseFeePerGas    ,wei         ,           ,       ,      ,        ,          ,  
 transactions     ,Transaction ,           ,true   ,true  ,        ,          ,        ,         ,  9 ,     ,              ,a possibly empty array of transactions or transaction hashes
 transactionsRoot ,hash        ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
 uncles           ,hash        ,           ,       ,true  ,true    ,true      ,        ,         , 11 ,     ,              ,a possibly empty array of uncle hashes
-withdrawals      ,Withdrawal  ,           ,true   ,true  ,        ,true      ,        ,         , 12 ,     ,              ,a possibly empty array of withdrawals (post Shanghai)

@@ -16,17 +16,41 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
+// fromRemote gets the CID from the smart contract, calls
+// the gateway and returns the parsed manifest
+func fromRemote(chain string) (*Manifest, error) {
+	cid, err := ReadUnchainedIndex(chain, "", unchained.GetPreferredPublisher())
+	if err != nil {
+		return nil, err
+	}
+
+	gatewayUrl := config.GetIpfsGateway(chain)
+
+	logger.InfoTable("Chain:", chain)
+	logger.InfoTable("Gateway:", gatewayUrl)
+	logger.InfoTable("CID:", cid)
+
+	return downloadManifest(chain, gatewayUrl, cid)
+}
+
 // ReadUnchainedIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
 // published by the given publisher
-func ReadUnchainedIndex(chain string, publisher base.Address, database string) (string, error) {
+func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, error) {
 	cid := os.Getenv("TB_OVERRIDE_CID")
 	if cid != "" {
 		return cid, nil
+	}
+
+	database := chain
+	if reason != "" {
+		database += ("-" + reason)
 	}
 
 	unchainedChain := "mainnet" // the unchained index is on mainnet

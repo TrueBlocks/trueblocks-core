@@ -3,9 +3,7 @@ when?blocks=daofund&verbose
   "data": [
     {
       "blockNumber": 1428756,
-      "component": "execution",
       "date": "2016-04-30 01:42:53 UTC",
-      "description": "The first block people were able to fund the infamous DAO.",
       "name": "daofund",
       "timestamp": 1461980573
     }

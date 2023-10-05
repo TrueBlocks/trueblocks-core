@@ -83,7 +83,7 @@ func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
 [{ENS_CONVERT1}]
 	// EXISTING_CODE
 	// EXISTING_CODE
-[{ENS_CONVERT2}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+[{ENS_CONVERT2}][{CONFIG_OVERRIDE}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
 

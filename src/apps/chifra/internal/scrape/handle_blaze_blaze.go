@@ -1,6 +1,7 @@
 package scrapePkg
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"sort"
@@ -14,87 +15,120 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
-// and then extracting addresses and timestamps from those data structures.
-func (bm *BlazeManager) HandleBlaze() (ok bool, err error) {
-	blocks := []base.Blknum{}
-
-	start := bm.StartBlock()
-	end := bm.StartBlock() + bm.BlockCount()
-
-	for block := start; block < end; block++ {
-		blocks = append(blocks, block)
-	}
-
-	return bm.HandleBlaze1(blocks)
+// ScrapedData combines the block data, trace data, and log data into a single structure
+type ScrapedData struct {
+	blockNumber base.Blknum
+	traces      []types.SimpleTrace
+	logs        []types.SimpleLog
 }
 
-func (bm *BlazeManager) HandleBlaze1(blocks []base.Blknum) (ok bool, err error) {
-	nChannels := int(bm.opts.Settings.ChannelCount)
+type BlazeOptions struct {
+	Chain        string                  `json:"chain"`
+	NChannels    uint64                  `json:"nChannels"`
+	NProcessed   uint64                  `json:"nProcessed"`
+	StartBlock   uint64                  `json:"startBlock"`
+	BlockCount   uint64                  `json:"blockCnt"`
+	RipeBlock    uint64                  `json:"ripeBlock"`
+	UnripeDist   uint64                  `json:"unripe"`
+	RpcProvider  string                  `json:"rpcProvider"`
+	TsArray      []tslib.TimestampRecord `json:"-"`
+	ProcessedMap map[base.Blknum]bool    `json:"-"`
+	BlockWg      sync.WaitGroup          `json:"-"`
+	AppearanceWg sync.WaitGroup          `json:"-"`
+	TsWg         sync.WaitGroup          `json:"-"`
+	AppsPerChunk uint64                  `json:"-"`
+}
 
-	// We need three pipelines...we shove into blocks, blocks shoves into appearances and timestamps
-	blockChannel := make(chan base.Blknum)
-	appearanceChannel := make(chan scrapedData)
+func (opts *BlazeOptions) String() string {
+	copy := BlazeOptions{
+		Chain:      opts.Chain,
+		NChannels:  opts.NChannels,
+		NProcessed: opts.NProcessed,
+		StartBlock: opts.StartBlock,
+		BlockCount: opts.BlockCount,
+		RipeBlock:  opts.RipeBlock,
+		UnripeDist: opts.UnripeDist,
+	}
+	b, _ := json.MarshalIndent(&copy, "", "  ")
+	return string(b)
+}
+
+// HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs
+// and then extracting addresses and timestamps from those data structures.
+func (opts *BlazeOptions) HandleBlaze(meta *rpc.MetaData) (ok bool, err error) {
+	blocks := []int{}
+	for block := int(opts.StartBlock); block < int(opts.StartBlock+opts.BlockCount); block++ {
+		blocks = append(blocks, block)
+	}
+	return opts.HandleBlaze1(meta, blocks)
+}
+
+// TODO: We could, if we wished, use getLogs with a block range to retrieve all of the logs in the range
+// TODO: with a single query. See closed issue #1829
+
+func (opts *BlazeOptions) HandleBlaze1(meta *rpc.MetaData, blocks []int) (ok bool, err error) {
+	//
+	// We build a pipeline that takes block numbers in through the blockChannel which queries the chain
+	// and sends the results through the appearanceChannel and the timestampChannel. The appearanceChannel
+	// processes appearances and writes them to the ripe folder. The timestampChannel processes timestamps
+	// and writes them to the timestamp database.
+	//
+	blockChannel := make(chan int)
+	appearanceChannel := make(chan ScrapedData)
 	tsChannel := make(chan tslib.TimestampRecord)
 
-	// TODO: The go routines below may fail. Question -- how does one respond to an error inside a go routine?
-
-	blockWg := sync.WaitGroup{}
-	blockWg.Add(nChannels)
-	for i := 0; i < nChannels; i++ {
+	opts.BlockWg.Add(int(opts.NChannels))
+	for i := 0; i < int(opts.NChannels); i++ {
 		go func() {
-			_ = bm.BlazeProcessBlocks(blockChannel, &blockWg, appearanceChannel, tsChannel)
+			_ = opts.BlazeProcessBlocks(meta, blockChannel, appearanceChannel, tsChannel)
 		}()
 	}
 
-	appWg := sync.WaitGroup{}
-	appWg.Add(nChannels)
-	for i := 0; i < nChannels; i++ {
+	// TODO: These go routines may fail. Question -- how does one respond to an error inside a go routine?
+	opts.AppearanceWg.Add(int(opts.NChannels))
+	for i := 0; i < int(opts.NChannels); i++ {
 		go func() {
-			_ = bm.BlazeProcessAppearances(appearanceChannel, &appWg)
+			_ = opts.BlazeProcessAppearances(meta, appearanceChannel)
 		}()
 	}
 
-	tsWg := sync.WaitGroup{}
-	tsWg.Add(nChannels)
-	for i := 0; i < nChannels; i++ {
+	opts.TsWg.Add(int(opts.NChannels))
+	for i := 0; i < int(opts.NChannels); i++ {
 		go func() {
-			_ = bm.BlazeProcessTimestamps(tsChannel, &tsWg)
+			_ = opts.BlazeProcessTimestamps(tsChannel)
 		}()
 	}
 
-	// Now we have three go routines waiting for data. Send it...
 	for _, block := range blocks {
 		blockChannel <- block
 	}
 
-	// ...and wait until we're done...
 	close(blockChannel)
-	blockWg.Wait()
+	opts.BlockWg.Wait()
 
 	close(appearanceChannel)
-	appWg.Wait()
+	opts.AppearanceWg.Wait()
 
 	close(tsChannel)
-	tsWg.Wait()
+	opts.TsWg.Wait()
 
 	return true, nil
 }
 
-// BlazeProcessBlocks processes the block channel and for each block query the node for both
-// traces and logs. Send results down appearanceChannel.
-func (bm *BlazeManager) BlazeProcessBlocks(blockChannel chan base.Blknum, blockWg *sync.WaitGroup, appearanceChannel chan scrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
-	defer blockWg.Done()
+// BlazeProcessBlocks Processes the block channel and for each block query the node for both traces and logs. Send results down appearanceChannel.
+func (opts *BlazeOptions) BlazeProcessBlocks(meta *rpc.MetaData, blockChannel chan int, appearanceChannel chan ScrapedData, tsChannel chan tslib.TimestampRecord) (err error) {
+	defer opts.BlockWg.Done()
 	for bn := range blockChannel {
 
-		sd := scrapedData{
-			bn: bn,
+		sd := ScrapedData{
+			blockNumber: base.Blknum(bn),
 		}
 
-		chain := bm.chain
+		chain := opts.Chain
 		conn := rpc.TempConnection(chain)
 
 		ts := tslib.TimestampRecord{
@@ -108,7 +142,8 @@ func (bm *BlazeManager) BlazeProcessBlocks(blockChannel chan base.Blknum, blockW
 			return err
 		}
 
-		if sd.receipts, err = conn.GetReceiptsByNumber(uint64(bn), base.Timestamp(ts.Ts)); err != nil {
+		// TODO: BOGUS - This could use rawTraces so as to avoid unnecessary decoding
+		if sd.logs, err = conn.GetLogsByNumber(uint64(bn), base.Timestamp(ts.Ts)); err != nil {
 			// TODO: BOGUS - we should send in an errorChannel and send the error down that channel and continue here
 			return err
 		}
@@ -122,24 +157,24 @@ func (bm *BlazeManager) BlazeProcessBlocks(blockChannel chan base.Blknum, blockW
 
 var blazeMutex sync.Mutex
 
-// BlazeProcessAppearances processes scrapedData objects shoved down the appearanceChannel
-func (bm *BlazeManager) BlazeProcessAppearances(appearanceChannel chan scrapedData, appWg *sync.WaitGroup) (err error) {
-	defer appWg.Done()
+// BlazeProcessAppearances processes ScrapedData objects shoved down the appearanceChannel
+func (opts *BlazeOptions) BlazeProcessAppearances(meta *rpc.MetaData, appearanceChannel chan ScrapedData) (err error) {
+	defer opts.AppearanceWg.Done()
 
 	for sData := range appearanceChannel {
 		addrMap := make(index.AddressBooleanMap)
 
-		err = index.UniqFromTraces(bm.chain, sData.traces, addrMap)
+		err = index.UniqFromTraces(opts.Chain, sData.traces, addrMap)
 		if err != nil {
 			return err
 		}
 
-		err = index.UniqFromReceipts(bm.chain, sData.receipts, addrMap)
+		err = index.UniqFromLogs(opts.Chain, sData.logs, addrMap)
 		if err != nil {
 			return err
 		}
 
-		err = bm.WriteAppearancesBlaze(sData.bn, addrMap)
+		err = opts.WriteAppearancesBlaze(meta, sData.blockNumber, addrMap)
 		if err != nil {
 			return err
 		}
@@ -149,21 +184,20 @@ func (bm *BlazeManager) BlazeProcessAppearances(appearanceChannel chan scrapedDa
 }
 
 // BlazeProcessTimestamps processes timestamp data (currently by printing to a temporary file)
-func (bm *BlazeManager) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord, tsWg *sync.WaitGroup) (err error) {
-	defer tsWg.Done()
+func (opts *BlazeOptions) BlazeProcessTimestamps(tsChannel chan tslib.TimestampRecord) (err error) {
+	defer opts.TsWg.Done()
 
 	for ts := range tsChannel {
 		blazeMutex.Lock()
-		bm.timestamps = append(bm.timestamps, ts)
+		opts.TsArray = append(opts.TsArray, ts)
 		blazeMutex.Unlock()
 	}
-
 	return
 }
 
 var writeMutex sync.Mutex
 
-func (bm *BlazeManager) WriteAppearancesBlaze(bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
+func (opts *BlazeOptions) WriteAppearancesBlaze(meta *rpc.MetaData, bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {
@@ -172,9 +206,9 @@ func (bm *BlazeManager) WriteAppearancesBlaze(bn base.Blknum, addrMap index.Addr
 		sort.Strings(appearanceArray)
 
 		blockNumStr := utils.PadNum(int(bn), 9)
-		fileName := config.PathToIndex(bm.chain) + "ripe/" + blockNumStr + ".txt"
-		if bn > bm.ripeBlock {
-			fileName = config.PathToIndex(bm.chain) + "unripe/" + blockNumStr + ".txt"
+		fileName := config.PathToIndex(opts.Chain) + "ripe/" + blockNumStr + ".txt"
+		if bn > base.Blknum(opts.RipeBlock) {
+			fileName = config.PathToIndex(opts.Chain) + "unripe/" + blockNumStr + ".txt"
 		}
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
@@ -185,11 +219,11 @@ func (bm *BlazeManager) WriteAppearancesBlaze(bn base.Blknum, addrMap index.Addr
 		}
 	}
 
-	bm.syncedReporting(bn, false /* force */)
+	opts.syncedReporting(bn, false /* force */)
 	writeMutex.Lock()
-	bm.processedMap[bn] = true
+	opts.ProcessedMap[bn] = true
 	writeMutex.Unlock()
-	bm.nProcessed++
+	opts.NProcessed++
 
 	return
 }
@@ -198,7 +232,7 @@ var (
 	locker uint32
 )
 
-func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
+func (opts *BlazeOptions) syncedReporting(bn base.Blknum, force bool) {
 	if !atomic.CompareAndSwapUint32(&locker, 0, 1) {
 		// Simply skip the update if someone else is already reporting
 		return
@@ -206,18 +240,14 @@ func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 	// Make sure to clear the lock on exit
 	defer atomic.StoreUint32(&locker, 0)
 
-	// Only report once in a while (17 blocks)
-	if bm.nProcessed%17 == 0 || force {
+	// TODO: See issue https://github.com/TrueBlocks/trueblocks-core/issues/2238
+	step := uint64(17)
+	if opts.NProcessed%step == 0 || force {
 		dist := uint64(0)
-		if bm.ripeBlock > bn {
-			dist = (bm.ripeBlock - bn)
+		if opts.RipeBlock > uint64(bn) {
+			dist = (opts.RipeBlock - uint64(bn))
 		}
-		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)",
-			bm.nProcessed,
-			bm.BlockCount(),
-			bn,
-			bm.ripeBlock,
-			dist)
+		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from head)", opts.NProcessed, opts.BlockCount, bn, opts.RipeBlock, dist)
 		logger.Progress(true, msg)
 	}
 }

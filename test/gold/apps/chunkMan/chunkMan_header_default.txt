@@ -1,6 +1,5 @@
 chifra chunks  header
 TEST[DATE|TIME] Mode:  header
-TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 Error: The mode option (header) must be one of [ manifest | index | blooms | addresses | appearances | stats ]
 Usage:

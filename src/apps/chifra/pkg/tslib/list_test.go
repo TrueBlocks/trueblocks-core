@@ -43,15 +43,15 @@ func TestGetNameByValue(t *testing.T) {
 	if err != nil {
 		t.Error(fmt.Errorf("block at %s returned an error: %w", "2463000", ethereum.NotFound))
 	}
-	if name != "tangerine_whistle" {
+	if name != "tangerine" {
 		t.Errorf("Wrong name: %s", name)
 	}
 }
 
 func TestGetValueByName(t *testing.T) {
-	value, err := FromNameToBn(utils.GetTestChain(), "tangerine_whistle")
+	value, err := FromNameToBn(utils.GetTestChain(), "tangerine")
 	if err != nil {
-		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine_whistle", ethereum.NotFound))
+		t.Error(fmt.Errorf("block at %s returned an error: %w", "tangerine", ethereum.NotFound))
 	}
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)
@@ -73,8 +73,8 @@ func TestGetSpecials(t *testing.T) {
 		t.Error(err)
 	}
 
-	if len(specials) != 39 {
-		t.Error("Wrong number of special blocks ", len(specials), ". Should have 39.")
+	if len(specials) != 33 {
+		t.Error("Wrong number of special blocks ", len(specials), ". Should have 33.")
 	}
 
 	// TODO: Turn off go testing that requires connection to a node

@@ -7,7 +7,7 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 0,
       "date": "2015-07-30 15:26:15 UTC",
-      "name": "frontier",
+      "name": "first",
       "timestamp": 1438269975
     },
     {
@@ -67,13 +67,13 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 2463000,
       "date": "2016-10-18 13:19:31 UTC",
-      "name": "tangerine_whistle",
+      "name": "tangerine",
       "timestamp": 1476796771
     },
     {
       "blockNumber": 2675000,
       "date": "2016-11-22 16:15:44 UTC",
-      "name": "spurious_dragon",
+      "name": "spurious",
       "timestamp": 1479831344
     },
     {
@@ -169,14 +169,8 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 9200000,
       "date": "2020-01-02 08:30:49 UTC",
-      "name": "muir_glacier",
+      "name": "muirglacier",
       "timestamp": 1577953849
-    },
-    {
-      "blockNumber": 11052984,
-      "date": "2020-10-14 09:22:52 UTC",
-      "name": "deposit_contract",
-      "timestamp": 1602667372
     },
     {
       "blockNumber": 12244000,
@@ -193,26 +187,20 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13773000,
       "date": "2021-12-09 19:55:23 UTC",
-      "name": "arrow_glacier",
+      "name": "arrowglacier",
       "timestamp": 1639079723
     },
     {
       "blockNumber": 15050000,
       "date": "2022-06-30 10:54:04 UTC",
-      "name": "gray_glacier",
+      "name": "grayglacier",
       "timestamp": 1656586444
     },
     {
       "blockNumber": 15537393,
       "date": "2022-09-15 06:42:42 UTC",
-      "name": "paris_merge",
+      "name": "themerge",
       "timestamp": 1663224162
-    },
-    {
-      "blockNumber": 17034870,
-      "date": "2023-04-12 22:27:59 UTC",
-      "name": "shanghai",
-      "timestamp": 1681338479
     }
   ]
 }

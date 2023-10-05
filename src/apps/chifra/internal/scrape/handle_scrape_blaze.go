@@ -21,41 +21,37 @@ import (
 
 // HandleScrapeBlaze is called each time around the forever loop prior to calling into
 // Blaze to actually scrape the blocks.
-func (bm *BlazeManager) HandleScrapeBlaze() error {
-	chain := bm.chain
+func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *BlazeOptions) error {
+	chain := opts.Globals.Chain
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
-	if _, err := bm.HandleBlaze(); err != nil {
-		_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
+	if _, err := blazeOpts.HandleBlaze(progress); err != nil {
+		_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
 		return err
 	}
 
-	start := bm.StartBlock()
-	end := bm.StartBlock() + bm.BlockCount()
-
-	for bn := start; bn < end; bn++ {
-		if !bm.processedMap[bn] {
+	for bn := opts.StartBlock; bn < opts.StartBlock+opts.BlockCnt; bn++ {
+		if !blazeOpts.ProcessedMap[bn] {
 			// At least one block was not processed. This would only happen in the event of an
 			// error, so clean up, report the error and return. The loop will repeat.
-			_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
+			_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
 			msg := fmt.Sprintf("A block %d was not processed%s", bn, strings.Repeat(" ", 50))
 			return errors.New(msg)
 		}
 	}
 
-	_ = bm.WriteTimestamps(end)
+	_ = WriteTimestamps(blazeOpts.Chain, blazeOpts.TsArray, blazeOpts.StartBlock+blazeOpts.BlockCount)
 
 	return nil
 }
 
 // TODO: Protect against overwriting files on disc
 
-func (bm *BlazeManager) WriteTimestamps(endPoint uint64) error {
-	chain := bm.chain
+func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uint64) error {
 	conn := rpc.TempConnection(chain)
 
-	sort.Slice(bm.timestamps, func(i, j int) bool {
-		return bm.timestamps[i].Bn < bm.timestamps[j].Bn
+	sort.Slice(tsArray, func(i, j int) bool {
+		return tsArray[i].Bn < tsArray[j].Bn
 	})
 
 	// Assume that the existing timestamps file always contains valid timestamps in a valid order so we can only append
@@ -79,14 +75,14 @@ func (bm *BlazeManager) WriteTimestamps(endPoint uint64) error {
 		// Append to the timestamps file all the new timestamps but as we do that make sure we're
 		// not skipping anything at the front, in the middle, or at the end of the list
 		ts := tslib.TimestampRecord{}
-		if cnt >= len(bm.timestamps) {
+		if cnt >= len(tsArray) {
 			ts = tslib.TimestampRecord{
 				Bn: uint32(bn),
 				Ts: uint32(conn.GetBlockTimestamp(bn)),
 			}
 		} else {
-			ts = bm.timestamps[cnt]
-			if bm.timestamps[cnt].Bn != uint32(bn) {
+			ts = tsArray[cnt]
+			if tsArray[cnt].Bn != uint32(bn) {
 				ts = tslib.TimestampRecord{
 					Bn: uint32(bn),
 					Ts: uint32(conn.GetBlockTimestamp(bn)),

@@ -122,8 +122,7 @@ TEST[DATE|TIME] Format:  json
         "0xa600632d3a6b343ecd51795291818dbd8c59e4588c08c0cfc5a9f2614edfe567"
       ],
       "transactionsRoot": "0x6494993a4b201058be9dc1cf005a7b7795b4c7452b0b66af7e82a97549cbed49",
-      "uncles": [],
-      "withdrawals": null
+      "uncles": []
     }
   ]
 }

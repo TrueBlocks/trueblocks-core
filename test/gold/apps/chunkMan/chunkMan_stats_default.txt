@@ -1,6 +1,5 @@
 chifra chunks  stats
 TEST[DATE|TIME] Mode:  stats
-TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 range	rangeEnd	nAddrs	nApps	nBlocks	nBlooms	recWid	bloomSz	chunkSz	addrsPerBlock	appsPerBlock	appsPerAddr	ratio
 000000000-000000000	2015-07-30 15:26:15 UTC	8893	8893	1	1	131076	131114	320192	8893	8893	1	2.4420885641502816

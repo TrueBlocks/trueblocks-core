@@ -124,7 +124,7 @@ func (s *simpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 			}
 			chains = append(chains, ch)
 		} else {
-			chainArray := config.GetChains()
+			chainArray := config.GetChainArray()
 			for _, chain := range chainArray {
 				ch := types.SimpleChain{
 					Chain:          chain.Chain,
@@ -178,7 +178,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		return nil, err
 	}
 
-	provider := config.GetChain(chain).RpcProvider
+	provider, _ := config.GetRpcProvider(chain)
 	s := &simpleStatus{
 		ClientVersion: vers,
 		Version:       version.LibraryVersion,
@@ -191,9 +191,9 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     opts.Conn.IsNodeArchive(),
-		IsTracing:     opts.Conn.IsNodeTracing(),
-		HasEsKey:      len(config.GetKey("etherscan").ApiKey) > 0,
-		HasPinKey:     len(config.GetKey("pinata").ApiKey) > 0 || len(config.GetKey("pinata").Secret) > 0,
+		IsTracing:     opts.Conn.IsNodeTracing(testMode),
+		HasEsKey:      config.HasEsKeys(chain),
+		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,
 		NetworkId:     fmt.Sprint(meta.NetworkId),
 		ChainId:       fmt.Sprint(meta.ChainId),

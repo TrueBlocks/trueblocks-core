@@ -519,7 +519,7 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
             case 'v':
                 if (fieldIn % "variable") {
                     if (com->isConfig) {
-                        return firstUpper(toCamelCase(com->longName));
+                        return firstUpper(com->Format("[{LOWER}]"));
                     }
                     return substitute(toProper(com->longName), "_", "");
                 }

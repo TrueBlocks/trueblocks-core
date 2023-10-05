@@ -6,9 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"runtime"
-	"strings"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -52,7 +50,7 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 		Params: params,
 	}
 
-	provider := config.GetChain(chain).RpcProvider
+	provider, _ := config.GetRpcProvider(chain)
 	err := FromRpc(provider, &payload, &response)
 	if err != nil {
 		return nil, err
@@ -66,48 +64,21 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 
 var rpcCounter uint32
 
-type rpcPayload struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Method  string `json:"method"`
-	Params  `json:"params"`
-	ID      int `json:"id"`
-}
-
-var devDebug = false
-var devDebugMethod = ""
-
-func init() {
-	devDebugMethod = os.Getenv("TB_DEBUG_CURL")
-	devDebug = len(devDebugMethod) > 0
-}
-
-func debugCurl(payload rpcPayload, rpcProvider string) {
-	if !devDebug {
-		return
-	}
-
-	if devDebugMethod != "true" && payload.Method != devDebugMethod {
-		return
-	}
-
-	bytes, _ := json.MarshalIndent(payload, "", "")
-	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
-	var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
-	curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
-	curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
-	fmt.Println(curlCmd)
-}
-
 // fromRpc Returns all traces for a given block.
-func FromRpc(rpcProvider string, payload *Payload, ret any) error {
+func FromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
+	type rpcPayload struct {
+		Jsonrpc string `json:"jsonrpc"`
+		Method  string `json:"method"`
+		Params  `json:"params"`
+		ID      int `json:"id"`
+	}
+
 	payloadToSend := rpcPayload{
 		Jsonrpc: "2.0",
 		Method:  payload.Method,
 		Params:  payload.Params,
 		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 	}
-
-	debugCurl(payloadToSend, rpcProvider)
 
 	plBytes, err := json.Marshal(payloadToSend)
 	if err != nil {
@@ -142,13 +113,10 @@ func QuerySlice[T any](chain string, method string, params Params) ([]T, error) 
 		Params: params,
 	}
 
-	provider := config.GetChain(chain).RpcProvider
+	provider, _ := config.GetRpcProvider(chain)
 	err := FromRpc(provider, &payload, &response)
 	if err != nil {
 		return nil, err
-	}
-	if response.Error != nil {
-		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
 	}
 
 	return response.Result, err
@@ -173,7 +141,7 @@ func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T
 		payloads = append(payloads, *config.Payload)
 	}
 
-	provider := config.GetChain(chain).RpcProvider
+	provider, _ := config.GetRpcProvider(chain)
 	err := fromRpcBatch(provider, payloads, &response)
 	if err != nil {
 		return nil, err

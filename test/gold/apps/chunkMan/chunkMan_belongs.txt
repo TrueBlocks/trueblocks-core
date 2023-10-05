@@ -1,7 +1,6 @@
 chifra chunks  index --belongs 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9 2287625 --fmt csv
 TEST[DATE|TIME] Mode:  index
 TEST[DATE|TIME] Blocks:  [2287625]
-TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Belongs:  [0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9]
 TEST[DATE|TIME] Format:  csv
 Error: The --belongs option only works with --fmt json

@@ -102,7 +102,7 @@ func (a *Address) Pad32() string {
 // a valid address starting with 0x and ends with the fileType. if the path does
 // not contain an address, an error is returned. If the path does not end with the
 // given fileType, it panics.
-func AddressFromPath(path, fileType string) (Address, error) {
+func AddressFromPath(path, fileType string) (string, error) {
 	_, fileName := filepath.Split(path)
 
 	if !strings.HasSuffix(fileName, fileType) {
@@ -114,11 +114,11 @@ func AddressFromPath(path, fileType string) (Address, error) {
 	}
 
 	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {
-		return HexToAddress("0x0"), errors.New("path does not appear to contain an address")
+		return "", errors.New("path does not appear to contain an address")
 	}
 
 	parts := strings.Split(fileName, ".")
-	return HexToAddress(parts[0]), nil
+	return strings.ToLower(parts[0]), nil
 }
 
 // As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
@@ -168,8 +168,3 @@ func IsValidAddressE(val string) (bool, error) {
 
 // FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers
 var FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-
-// GetTestPublisher does not get customized per chain. We can only test against mainnet currently
-func GetTestPublisher() Address {
-	return HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
-}

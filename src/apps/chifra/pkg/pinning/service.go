@@ -37,7 +37,8 @@ const (
 )
 
 func NewPinningService(chain string, which ServiceType) (Service, error) {
-	pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
+	pinataKey, pinataSecret, _ := config.GetPinningKeys(chain)
+
 	switch which {
 	case Local:
 		return Service{}, nil

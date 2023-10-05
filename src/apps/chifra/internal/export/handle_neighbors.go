@@ -141,7 +141,7 @@ bool isSame(const CReverseAppMapEntry* a, const CReverseAppMapEntry* b) {
 
 //-----------------------------------------------------------------------
 bool assignReason(const CName& accountedFor, CAppearance& app, const CTransaction& trans) {
-    if (app.transactionIndex > types.ExternalReward) {  // leave this here for searching: types.BlockReward
+    if (app.transactionIndex > 99996) {  // leave this here for searching: 99999
         app.reason = "miner";
         return true;
     }

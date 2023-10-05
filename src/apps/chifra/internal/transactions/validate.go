@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -26,7 +25,7 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	key := config.GetKey("trueblocks").License
+	key := config.GetRootConfig().Keys["trueblocks"].License
 	if len(opts.AccountFor) > 0 && !strings.Contains(key, "+accounting") {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
@@ -76,8 +75,8 @@ func (opts *TransactionsOptions) validateTransactions() error {
 		}
 
 		if opts.Traces {
-			if !opts.Conn.IsNodeTracing() {
-				return validate.Usage("{0} requires tracing, err: {1}", "chifra transactions --traces", rpc.ErrTraceBlockMissing)
+			if !opts.Conn.IsNodeTracing(opts.Globals.TestMode) {
+				return validate.Usage("Tracing is required for this program to work properly.")
 			}
 			if opts.Uniq {
 				return validate.Usage("The {0} option is not available{1}.", "--uniq", " with the --traces option")

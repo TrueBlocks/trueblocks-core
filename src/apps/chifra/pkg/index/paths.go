@@ -1,6 +1,11 @@
 package index
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+)
 
 func isCacheType(path string, folder, extension string) bool {
 	if !strings.Contains(path, folder) {
@@ -48,4 +53,22 @@ func ToStagingPath(pathIn string) string {
 	ret = strings.Replace(ret, "/finalized/", "/staging/", -1)
 	ret = strings.Replace(ret, "/blooms/", "/staging/", -1)
 	return ret
+}
+
+// FindFileByBlockNumber returns the path to a file whose range intersects the given block number.
+func FindFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string, err error) {
+	walker := walk.NewCacheWalker(
+		chain,
+		false,
+		10000, /* maxTests */
+		func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			rng := base.RangeFromFilename(path)
+			if rng.IntersectsB(bn) {
+				fileName = ToIndexPath(path)
+				return false, nil // stop walking
+			}
+			return true, nil // continue walking
+		},
+	)
+	return fileName, walker.WalkRegularFolder(path, []base.Blknum{bn})
 }

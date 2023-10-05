@@ -425,11 +425,6 @@ components:
           items:
             $ref: "#/components/schemas/hash"
           description: "a possibly empty array of uncle hashes"
-        withdrawals:
-          type: array
-          items:
-            $ref: "#/components/schemas/withdrawal"
-          description: "a possibly empty array of withdrawals (post Shanghai)"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object

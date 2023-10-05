@@ -6,14 +6,11 @@ package scrapePkg
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -24,6 +21,9 @@ import (
 func (opts *ScrapeOptions) validateScrape() error {
 	chain := opts.Globals.Chain
 
+	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
+	opts.Settings, _ = scrapeCfg.GetSettings(chain, "blockScrape.toml", &opts.Settings)
+
 	opts.testLog()
 
 	if opts.BadFlag != nil {
@@ -32,10 +32,6 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
-	}
-
-	if !opts.Conn.IsNodeTracing() {
-		return validate.Usage("{0} requires tracing, err: {1}", "chifra scrape", rpc.ErrTraceBlockMissing)
 	}
 
 	if opts.Sleep < .25 {
@@ -58,8 +54,8 @@ func (opts *ScrapeOptions) validateScrape() error {
 
 	if opts.Pin {
 		if opts.Remote {
-			pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
-			if pinataKey == "" || pinataSecret == "" {
+			pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(chain)
+			if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
 				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
 			}
 
@@ -80,23 +76,5 @@ func (opts *ScrapeOptions) validateScrape() error {
 	}
 
 	ret := opts.Globals.Validate()
-
-	pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
-	if file.FileExists(pidPath) {
-		pid := utils.MustParseInt(file.AsciiFileToString(pidPath))
-		// fmt.Println("Pid file exists with contents:", pid)
-		if running, err := utils.PidExists(pid); err == nil && running {
-			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
-		} else if err != nil {
-			return validate.Usage("The {0} is already be running. If it is not, remove {1} and try again.", "scraper", pidPath)
-		}
-		// fmt.Println("Removing pid file")
-		os.Remove(pidPath)
-	}
-	// If we've gotten this far, we're the only one running. As we enter the forever
-	// loop, we want to make sure no-one else runs. We do this by writing our pid to
-	// a file. Note that this probably doesn't work in the server.
-	_ = file.StringToAsciiFile(pidPath, fmt.Sprintf("%d", os.Getpid()))
-
 	return ret
 }

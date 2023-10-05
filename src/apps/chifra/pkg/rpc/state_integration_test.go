@@ -4,7 +4,6 @@
 package rpc
 
 import (
-	"fmt"
 	"math/big"
 	"reflect"
 	"strconv"
@@ -147,35 +146,7 @@ func TestGetState(t *testing.T) {
 			}
 
 			if !reflect.DeepEqual(gotState, tt.wantState) {
-				msg := ""
-				if gotState.AccountType != tt.wantState.AccountType {
-					msg += fmt.Sprintf("AccountType: %s -- %s\n", gotState.AccountType, tt.wantState.AccountType)
-				}
-				if gotState.Address != tt.wantState.Address {
-					msg += fmt.Sprintf("Address:     %s -- %s\n", gotState.Address, tt.wantState.Address)
-				}
-				if gotState.Balance.String() != tt.wantState.Balance.String() {
-					msg += fmt.Sprintf("Balance:     %s -- %s\n", gotState.Balance.String(), tt.wantState.Balance.String())
-				}
-				if gotState.BlockNumber != tt.wantState.BlockNumber {
-					msg += fmt.Sprintf("BlockNumber: %d -- %d\n", gotState.BlockNumber, tt.wantState.BlockNumber)
-				}
-				if gotState.Code != tt.wantState.Code {
-					msg += fmt.Sprintf("Code:        %s -- %s\n", gotState.Code, tt.wantState.Code)
-				}
-				if gotState.Deployed != tt.wantState.Deployed {
-					msg += fmt.Sprintf("Deployed:    %d -- %d\n", gotState.Deployed, tt.wantState.Deployed)
-				}
-				if gotState.Nonce != tt.wantState.Nonce {
-					msg += fmt.Sprintf("Nonce:       %d -- %d\n", gotState.Nonce, tt.wantState.Nonce)
-				}
-				if gotState.Proxy != tt.wantState.Proxy {
-					msg += fmt.Sprintf("Proxy:       %s -- %s\n", gotState.Proxy, tt.wantState.Proxy)
-				}
-				if gotState.Timestamp != tt.wantState.Timestamp {
-					msg += fmt.Sprintf("Timestamp:   %d -- %d\n", gotState.Timestamp, tt.wantState.Timestamp)
-				}
-				t.Errorf(fmt.Sprintf("Test %s\n", tt.name), msg)
+				t.Errorf("GetState() = %+v, want %+v", gotState, tt.wantState)
 			}
 		})
 	}

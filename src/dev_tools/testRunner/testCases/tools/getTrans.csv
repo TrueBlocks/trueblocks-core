@@ -111,7 +111,7 @@ delay   ,cmd  ,slow  ,transactions ,tools/getTrans ,articulate               ,y 
 
 # The don't work because next/prev nav doesn't get parsed
 delay   ,both ,fast  ,transactions ,tools/getTrans ,first                    ,n    ,transactions = 40500.0:next & fmt = txt
-delay   ,both ,fast  ,transactions ,tools/getTrans ,first2                   ,n    ,transactions = frontier & fmt = txt
+delay   ,both ,fast  ,transactions ,tools/getTrans ,first2                   ,n    ,transactions = first & fmt = txt
 delay   ,both ,fast  ,transactions ,tools/getTrans ,nav_prev1                ,n    ,transactions = 1001001.1:prev & fmt = txt
 delay   ,both ,fast  ,transactions ,tools/getTrans ,nav_prev2                ,n    ,transactions = 1001001.0:prev & fmt = txt & no_header
 delay   ,both ,fast  ,transactions ,tools/getTrans ,nav_next1                ,n    ,transactions = 1001001.2:next & fmt = txt

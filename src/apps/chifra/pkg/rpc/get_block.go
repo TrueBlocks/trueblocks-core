@@ -263,13 +263,11 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 func (conn *Connection) getBlockReward(bn uint64) *big.Int {
 	if bn == 0 {
 		return big.NewInt(0)
-	} else if bn < base.KnownBlock(conn.Chain, base.Byzantium) {
+	} else if bn < byzantiumBlock {
 		return big.NewInt(5000000000000000000)
-	} else if bn < base.KnownBlock(conn.Chain, base.Constantinople) {
+	} else if bn < constantinopleBlock {
 		return big.NewInt(3000000000000000000)
-	} else if bn < base.KnownBlock(conn.Chain, base.Merge) {
-		return big.NewInt(2000000000000000000)
 	} else {
-		return big.NewInt(0)
+		return big.NewInt(2000000000000000000)
 	}
 }

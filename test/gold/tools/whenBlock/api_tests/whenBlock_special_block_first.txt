@@ -1,12 +1,10 @@
-when?blocks=frontier&verbose
+when?blocks=first&verbose
 {
   "data": [
     {
       "blockNumber": 0,
-      "component": "execution",
       "date": "2015-07-30 15:26:15 UTC",
-      "description": "Frontier was a live&#44; but barebone implementation of the Ethereum project. It followed the successful Olympic testing phase. It was intended for technical users&#44; specifically developers. Blocks had a gas limit of 5&#44;000. This ‘thawing’ period enabled miners to start their operations and for early adopters to install their clients without having to ‘rush’.",
-      "name": "frontier",
+      "name": "first",
       "timestamp": 1438269975
     }
   ],

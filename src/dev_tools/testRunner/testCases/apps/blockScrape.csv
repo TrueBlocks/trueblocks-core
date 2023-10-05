@@ -41,11 +41,6 @@ off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n 
 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,by_file_bad                  ,n    ,file = cmd_file_2
 
-local   ,both ,fast  ,scrape ,apps/blockScrape ,options_defaults             ,n    ,dry_run
-local   ,both ,fast  ,scrape ,apps/blockScrape ,options_with_env             ,n    ,dry_run
-local   ,both ,fast  ,scrape ,apps/blockScrape ,options_cmd_line             ,n    ,dry_run & apps_per_chunk 10000 & snap_to_grid 10000 & first_snap 10000 & unripe_dist 10000 & channel_count 10000
-local   ,both ,fast  ,scrape ,apps/blockScrape ,options_combo                ,n    ,dry_run & apps_per_chunk 10000 & snap_to_grid 10000 & first_snap 10000
-
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_allowed                 ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose

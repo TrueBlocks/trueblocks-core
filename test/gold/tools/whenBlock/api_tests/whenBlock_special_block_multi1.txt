@@ -3,17 +3,13 @@ when?blocks=stateclear%20iceage%204001001&verbose
   "data": [
     {
       "blockNumber": 2717576,
-      "component": "execution",
       "date": "2016-11-29 19:38:29 UTC",
-      "description": "The block of the state clearing soft fork.",
       "name": "stateclear",
       "timestamp": 1480448309
     },
     {
       "blockNumber": 200000,
-      "component": "execution",
       "date": "2015-09-07 21:33:09 UTC",
-      "description": "The frontier thawing fork lifted the 5&#44;000 gas limit per block and set the default gas price to 51 gwei. This allowed for transactions – transactions require 21&#44;000 gas. The difficulty bomb was introduced to ensure a future hard-fork to proof-of-stake.",
       "name": "iceage",
       "timestamp": 1441661589
     },

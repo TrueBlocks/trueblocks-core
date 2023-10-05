@@ -1,12 +1,10 @@
-when?blocks=tangerine_whistle&verbose
+when?blocks=tangerine&verbose
 {
   "data": [
     {
       "blockNumber": 2463000,
-      "component": "execution",
       "date": "2016-10-18 13:19:31 UTC",
-      "description": "The Tangerine Whistle fork was the first response to the denial of service (DoS) attacks on the network (September/October 2016) including: addressing urgent network health issues concerning underpriced operation codes.",
-      "name": "tangerine_whistle",
+      "name": "tangerine",
       "timestamp": 1476796771
     }
   ],

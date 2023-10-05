@@ -25,10 +25,10 @@ import (
 
 // EstablishIndexChunk a filename to an index portion, finds the correspoding CID (hash)
 // entry in the manifest, and downloads the index chunk to the local drive
-func EstablishIndexChunk(chain string, publisher base.Address, fileRange base.FileRange) (bool, error) {
+func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
 	exists, fileName := fileRange.RangeToFilename(chain)
 
-	chunkManifest, err := manifest.ReadManifest(chain, publisher, manifest.FromCache)
+	chunkManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
 	if err != nil {
 		return exists, err
 	}
@@ -70,24 +70,19 @@ func EstablishIndexChunk(chain string, publisher base.Address, fileRange base.Fi
 	return file.FileExists(fileName), nil
 }
 
-// CleanEphemeralIndexFolders removes files in ripe and unripe
-func CleanEphemeralIndexFolders(chain string) error {
-	return CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
-}
+// CleanTemporaryFolders removes any files that may be partial or incomplete
+func CleanTemporaryFolders(indexPath string, incStaging bool) error {
+	folders := []string{"ripe", "unripe", "maps", "staging"}
+	if !incStaging {
+		folders = folders[:len(folders)-2]
+	}
 
-// CleanTempIndexFolders removes any files that may be partial or incomplete
-func CleanTempIndexFolders(chain string, subFolders []string) error {
-	indexPath := config.PathToIndex(chain)
-
-	for _, f := range subFolders {
+	for _, f := range folders {
 		folder := filepath.Join(indexPath, f)
-		// We want to remove whatever is there...
 		err := os.RemoveAll(folder)
 		if err != nil {
 			return err
 		}
-		// ...but put it back
-		_ = file.EstablishFolder(folder)
 	}
 
 	return nil

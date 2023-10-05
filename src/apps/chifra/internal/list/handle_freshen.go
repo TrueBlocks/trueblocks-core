@@ -271,7 +271,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 
 	indexFilename := index.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
-		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, updater.Options.PublisherAddr, bl.Range)
+		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, bl.Range)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return

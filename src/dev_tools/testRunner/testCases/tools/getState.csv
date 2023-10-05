@@ -28,7 +28,7 @@ on      ,both ,fast  ,state ,tools/getState ,verbose                        ,y  
 on      ,both ,fast  ,state ,tools/getState ,verbose_long                   ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & verbose
 on      ,both ,fast  ,state ,tools/getState ,special_block_1                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = iceage
 on      ,both ,fast  ,state ,tools/getState ,special_block_2                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = stateclear
-on      ,both ,fast  ,state ,tools/getState ,special_block_3                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = frontier
+on      ,both ,fast  ,state ,tools/getState ,special_block_3                ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = first
 on      ,both ,fast  ,state ,tools/getState ,wei                            ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & wei
 on      ,both ,fast  ,state ,tools/getState ,ether                          ,n    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 4000000 & ether & fmt = txt
 on      ,both ,medi  ,state ,tools/getState ,changes                        ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1430957-1430966 & changes & fmt = txt

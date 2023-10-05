@@ -36,7 +36,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe", "staging"})
+	indexPath := config.PathToIndex(chain)
+	_ = index.CleanTemporaryFolders(indexPath, true)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -64,7 +65,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 
 			testRange := base.FileRange{First: opts.Truncate, Last: utils.NOPOS}
 			if rng.Intersects(testRange) {
-				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
+				if err = manifest.RemoveChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err
 				}
 				nChunksRemoved++
@@ -103,7 +104,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				}
 				if !info.IsDir() {
 					addr, _ := base.AddressFromPath(path, ".mon.bin")
-					if !addr.IsZero() {
+					if len(addr) > 0 {
 						mon := monitor.NewMonitor(chain, addr, false /* create */)
 						var removed bool
 						if removed, err = mon.TruncateTo(chain, uint32(latestChunk)); err != nil {

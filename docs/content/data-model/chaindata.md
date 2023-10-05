@@ -46,7 +46,6 @@ Blocks consist of the following fields:
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | wei                                                 |
 | uncles        | a possibly empty array of uncle hashes                        | Hash                                                |
-| withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
 
 ## Transaction
 

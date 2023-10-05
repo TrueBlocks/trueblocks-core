@@ -47,14 +47,11 @@ func (opts *WhenOptions) HandleShow() error {
 					continue
 				}
 
-				nb, _ := tslib.FromBnToNamedBlock(chain, block.BlockNumber)
-				if nb == nil {
-					modelChan <- &types.SimpleNamedBlock{
-						BlockNumber: block.BlockNumber,
-						Timestamp:   block.Timestamp,
-					}
-				} else {
-					modelChan <- nb
+				nm, _ := tslib.FromBnToName(chain, block.BlockNumber)
+				modelChan <- &types.SimpleNamedBlock{
+					BlockNumber: block.BlockNumber,
+					Timestamp:   block.Timestamp,
+					Name:        nm,
 				}
 			}
 		}

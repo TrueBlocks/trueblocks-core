@@ -1,6 +1,5 @@
 chifra chunks  manifest
 TEST[DATE|TIME] Mode:  manifest
-TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 range	bloomHash	bloomSize	indexHash	indexSize
 000000000-000000000	QmYhuaJu9bHAGpSsuaQug7bjnLcoE6B5PCZsg4XZGVFbKy	131114	QmaKUsfH5AXqPJgjGAQFZWRheF1jtc5PqGi8cYrwmMCXdu	320192

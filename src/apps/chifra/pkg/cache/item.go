@@ -26,7 +26,10 @@ func init() {
 	// Set currentHeader, so that we don't have to parse version
 	// and build a header each time we want to encode/decode cache
 	// item.
-	ver := version.NewVersion(version.LibraryVersion)
+	ver, err := version.NewVersion(version.LibraryVersion)
+	if err != nil {
+		panic(err)
+	}
 	currentHeader = &header{
 		Magic:   Magic,
 		Version: ver.Uint64(),

@@ -1,6 +1,5 @@
 chifra chunks  blooms --fmt txt
 TEST[DATE|TIME] Mode:  blooms
-TEST[DATE|TIME] Publisher:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Format:  txt
 range	magic	hash	nBlooms	nInserted	size	byteWidth
 000000000-000000000	0xdead	0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1	1	8893	131114	131072

@@ -23,11 +23,11 @@ func TestVersion(t *testing.T) {
 		Aspect: "",
 	}
 
-	if early.Uint64() >= late.Uint64() {
+	if !early.IsEarlierThan(late) {
 		t.Error("early is not earlier than late")
 	}
 
-	if late.Uint64() < early.Uint64() {
+	if late.IsEarlierThan(early) {
 		t.Error("late is earlier than early")
 	}
 }
@@ -40,6 +40,7 @@ func TestNewVersion(t *testing.T) {
 		name     string
 		args     args
 		wantVers Version
+		wantErr  bool
 	}{
 		{
 			name: "library version string",
@@ -53,22 +54,14 @@ func TestNewVersion(t *testing.T) {
 				Aspect: "beta",
 			},
 		},
-		{
-			name: "version 1.0.0",
-			args: args{
-				str: "v1.0.0-release",
-			},
-			wantVers: Version{
-				Major:  1,
-				Minor:  0,
-				Build:  0,
-				Aspect: "release",
-			},
-		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotVers := NewVersion(tt.args.str)
+			gotVers, err := NewVersion(tt.args.str)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewVersion() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
 			if !reflect.DeepEqual(gotVers, tt.wantVers) {
 				t.Errorf("NewVersion() = %v, want %v", gotVers, tt.wantVers)
 			}

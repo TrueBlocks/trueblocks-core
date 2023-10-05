@@ -14,20 +14,6 @@ import (
 // GetEnsAddresses converts an array of strings, if they contains .eth, into addresses. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
 func (conn *Connection) GetEnsAddresses(addrs []string) (out []string, found bool) {
-	has := false
-	for _, addr := range addrs {
-		if strings.Contains(addr, ".eth") {
-			has = true
-			break
-		}
-	}
-	if !has {
-		for _, term := range addrs {
-			out = append(out, utils.LowerIfHex(term))
-		}
-		return out, false
-	}
-
 	// Note: we use ENS on mainnet always
 	tc := TempConnection("mainnet")
 	if ec, err := tc.getClient(); err != nil {

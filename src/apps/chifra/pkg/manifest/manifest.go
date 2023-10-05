@@ -11,8 +11,8 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
@@ -33,7 +33,7 @@ type Manifest struct {
 	Schemas base.IpfsHash `json:"schemas"`
 
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
-	Config config.ScrapeSettings `json:"config"`
+	Config scrapeCfg.ScrapeSettings `json:"config"`
 
 	// A list of pinned chunks (see ChunkRecord) detailing the location of all chunks in the index and associated bloom filters
 	Chunks []ChunkRecord `json:"chunks"`
@@ -63,25 +63,9 @@ const (
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
 
 // ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
-func ReadManifest(chain string, publisher base.Address, source Source) (*Manifest, error) {
+func ReadManifest(chain string, source Source) (*Manifest, error) {
 	if source == FromContract {
-		database := chain
-		cid, err := ReadUnchainedIndex(chain, publisher, database)
-		if err != nil {
-			return nil, err
-		} else if len(cid) == 0 {
-			return nil, fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
-		}
-
-		gatewayUrl := config.GetChain(chain).IpfsGateway
-
-		logger.InfoTable("Chain:", chain)
-		logger.InfoTable("Gateway:", gatewayUrl)
-		logger.InfoTable("Publisher:", publisher)
-		logger.InfoTable("Database:", database)
-		logger.InfoTable("CID:", cid)
-
-		man, err := downloadManifest(chain, gatewayUrl, cid)
+		man, err := fromRemote(chain)
 		if man != nil {
 			man.LoadChunkMap()
 		}
@@ -113,8 +97,8 @@ func (m *Manifest) LoadChunkMap() {
 
 // TODO: Protect against overwriting files on disc
 
-func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) error {
-	man, err := ReadManifest(chain, publisher, FromCache)
+func UpdateManifest(chain string, chunk ChunkRecord) error {
+	man, err := ReadManifest(chain, FromCache)
 	if err != nil {
 		if err != ErrManifestNotFound {
 			return err
@@ -146,15 +130,13 @@ func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) err
 		})
 	}
 
-	logger.Info(colors.Magenta+"Updating manifest with", len(man.Chunks), "chunks", spaces, colors.Off)
+	logger.Info("Updating manifest with", len(man.Chunks), "chunks", spaces)
 	return man.SaveManifest(chain)
 }
 
 // SaveManifest writes the manifest to disc in JSON
 func (m *Manifest) SaveManifest(chain string) error {
-	m.Config = config.GetScrape(chain)
-
-	fileName := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
+	fileName := config.MustGetPathToChainConfig(chain) + "manifest.json"
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)

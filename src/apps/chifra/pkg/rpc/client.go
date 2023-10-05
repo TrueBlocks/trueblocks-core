@@ -75,7 +75,7 @@ var clientMutex sync.Mutex
 var perProviderClientMap = map[string]*ethclient.Client{}
 
 func (conn *Connection) getClient() (*ethclient.Client, error) {
-	provider := config.GetChain(conn.Chain).RpcProvider
+	provider, _ := config.GetRpcProvider(conn.Chain)
 	if provider == "https://" {
 		var noProvider = `
 
