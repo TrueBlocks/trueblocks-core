@@ -4,7 +4,7 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
-## v1.0.0 (2023/08/20)
+## v1.0.0 (2023/08/21)
 
 **OUR FIRST OFFICIAL RELEASE!**
 
