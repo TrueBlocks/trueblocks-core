@@ -4,7 +4,7 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
-## v1.1.0 (2023/10/01)
+## v1.1.0 (2023/10/07)
 
 Rewrite the entire scraper and the specification
 Generate an entire new data set for Sepolia and Mainnet with new hashes since the spec is different.
