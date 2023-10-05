@@ -126,18 +126,10 @@ func GetRootConfig() *ConfigFile {
 	return &trueBlocksConfig
 }
 
-func IsAtLeastVersion(needle string) bool {
-	var current, desired version.Version
-	var err error
-	if current, err = version.NewVersion(GetRootConfig().Version.Current); err != nil {
-		return true
-	}
-
-	if desired, err = version.NewVersion(needle); err != nil {
-		return true
-	}
-
-	return !current.IsEarlierThan(desired)
+func IsAtLeastVersion(required string) bool {
+	fileVer := version.NewVersion(GetRootConfig().Version.Current)
+	requiredVer := version.NewVersion(required)
+	return fileVer.Uint64() >= requiredVer.Uint64()
 }
 
 // PathToRootConfig returns the path where to find configuration files
