@@ -60,7 +60,6 @@ func readSpecials(path string, nFields int) (specials []types.SimpleNamedBlock, 
 	}
 
 	reader := csv.NewReader(file)
-	//	block,name,timestamp,date
 	reader.FieldsPerRecord = nFields
 	for {
 		if record, err := reader.Read(); err == io.EOF {

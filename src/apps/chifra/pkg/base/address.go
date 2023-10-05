@@ -114,7 +114,7 @@ func AddressFromPath(path, fileType string) (Address, error) {
 	}
 
 	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {
-		return HexToAddress("0x0"), errors.New("path does not appear to contain an address")
+		return ZeroAddr, errors.New("path does not appear to contain an address")
 	}
 
 	parts := strings.Split(fileName, ".")

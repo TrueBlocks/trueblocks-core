@@ -30,7 +30,6 @@ func NewVersion(str string) Version {
 	if len(parts) > 1 {
 		vers.Minor = utils.MustParseInt(parts[1])
 	}
-
 	if len(parts) > 2 {
 		vers.Build = utils.MustParseInt(parts[2])
 	}

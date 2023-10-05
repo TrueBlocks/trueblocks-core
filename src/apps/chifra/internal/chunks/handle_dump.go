@@ -15,7 +15,7 @@ chifra when --timestamps 2>&1 | tee -a ten/scrape
 
 echo
 echo "Manifest"
-cat ~/Library/Application\ Support/TrueBlocks/config/sepolia/mani fest.json 2>/dev/null | tee -a ten/scrape
+cat ~/Library/Application\ Support/TrueBlocks/config/sepolia/manifest.json 2>/dev/null | tee -a ten/scrape
 
 echo | tee -a ten/scrape
 echo "chifra chunks pins" | tee -a ten/scrape

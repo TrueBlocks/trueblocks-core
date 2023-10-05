@@ -32,18 +32,18 @@ func (opts *InitOptions) HandleDryRun() error {
 	}
 
 	// Get the list of things we need to download
-	specification := unchained.Specification
+	spec := unchained.Specification
 	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 	if opts.Globals.TestMode {
 		if len(chunksToDownload) > 10 {
 			chunksToDownload = chunksToDownload[:10]
 		}
-		specification = "--testing-hash--"
+		spec = "--testing-hash--"
 	}
 
 	// Tell the user what we're doing
 	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
-	logger.InfoTable("Specification:", specification)
+	logger.InfoTable("Specification:", spec)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
 	logger.InfoTable("Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
