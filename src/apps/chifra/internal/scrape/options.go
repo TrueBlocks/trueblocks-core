@@ -69,9 +69,9 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.Sleep = 14
 	opts.StartBlock = 0
 	opts.RunCount = 0
-	opts.Settings.Apps_per_chunk = 200000
-	opts.Settings.Snap_to_grid = 100000
-	opts.Settings.First_snap = 0
+	opts.Settings.Apps_per_chunk = 2000000
+	opts.Settings.Snap_to_grid = 250000
+	opts.Settings.First_snap = 2000000
 	opts.Settings.Unripe_dist = 28
 	opts.Settings.Channel_count = 20
 	for key, value := range r.URL.Query() {

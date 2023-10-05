@@ -94,6 +94,7 @@ func GetDefault(chain string) ScrapeSettings {
 	// EXISTING_CODE
 	if chain == "mainnet" {
 		base.Apps_per_chunk = 2000000
+		base.Snap_to_grid = 100000
 		base.First_snap = 2300000
 	}
 	// EXISTING_CODE
