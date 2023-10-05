@@ -1,4 +1,4 @@
-FROM golang:1.20-buster as builder
+FROM golang:1.21.1-bookworm as builder
 
 ARG repo
 ARG commit_sha
