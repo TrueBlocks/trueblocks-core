@@ -55,7 +55,7 @@ func WriteTimestamps(chain string, tsArray []tslib.TimestampRecord, endPoint uin
 	})
 
 	// Assume that the existing timestamps file always contains valid timestamps in a valid order so we can only append
-	tsPath := config.PathToIndex(chain) + "ts.bin"
+	tsPath := config.PathToTimestamps(chain)
 	fp, err := os.OpenFile(tsPath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err
