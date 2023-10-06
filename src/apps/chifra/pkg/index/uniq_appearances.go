@@ -80,8 +80,6 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 				author := trace.Action.Author.Hex()
 				fakeId := types.BlockReward
 				if base.IsPrecompile(author) {
-					// Some blocks have a misconfigured miner setting. We process this block, so that
-					// every block gets a record, but it will be excluded from the index. See #3252.
 					author = base.SentinalAddr.Hex()
 					fakeId = types.MisconfigReward
 				}
@@ -91,8 +89,6 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 				author := trace.Action.Author.Hex()
 				fakeId := types.UncleReward
 				if base.IsPrecompile(author) {
-					// Some blocks have a misconfigured miner setting. We process this block, so that
-					// every block gets a record, but it will be excluded from the index. See #3252.
 					author = base.SentinalAddr.Hex()
 					fakeId = types.MisconfigReward
 				}
