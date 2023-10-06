@@ -10,9 +10,11 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
@@ -33,22 +35,11 @@ type Manifest struct {
 	// An IPFS hash pointing to documentation describing the binary format of the files in the index
 	Config config.ScrapeSettings `json:"config"`
 
-	// A list of pinned chunks (see ChunkRecord) detailing the location of all chunks in the index and associated bloom filters
-	Chunks []ChunkRecord `json:"chunks"`
+	// A list of pinned chunks (see types.SimpleChunkRecord) detailing the location of all chunks in the index and associated bloom filters
+	Chunks []types.SimpleChunkRecord `json:"chunks"`
 
 	// A map to make set membership easier
-	ChunkMap map[string]*ChunkRecord `json:"-"`
-}
-
-// ChunkRecord is asingle record in the Manifest's Chunks table. It associates a block range, an
-// IPFS hash of the chunk covering that block range, and a hash of the Bloom filter covering that
-// chunk. The format of the chunk and the Bloom filter are detailed in the manifest's Specification record.
-type ChunkRecord struct {
-	Range     string        `json:"range"`
-	BloomHash base.IpfsHash `json:"bloomHash"`
-	BloomSize int64         `json:"bloomSize"`
-	IndexHash base.IpfsHash `json:"indexHash,omitempty"`
-	IndexSize int64         `json:"indexSize,omitempty"`
+	ChunkMap map[string]*types.SimpleChunkRecord `json:"-"`
 }
 
 type Source uint
@@ -63,16 +54,49 @@ var ErrManifestNotFound = errors.New("could not find manifest.json or it was emp
 // ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
 func ReadManifest(chain string, publisher base.Address, source Source) (*Manifest, error) {
 	if source == FromContract {
-		man, err := fromRemote(chain)
+		database := chain
+		cid, err := ReadUnchainedIndex(chain, publisher, database)
+		if err != nil {
+			return nil, err
+		} else if len(cid) == 0 {
+			return nil, fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
+		}
+
+		gatewayUrl := config.GetChain(chain).IpfsGateway
+
+		logger.InfoTable("Chain:", chain)
+		logger.InfoTable("Gateway:", gatewayUrl)
+		logger.InfoTable("Publisher:", publisher)
+		logger.InfoTable("Database:", database)
+		logger.InfoTable("CID:", cid)
+
+		man, err := downloadManifest(chain, gatewayUrl, cid)
 		if man != nil {
 			man.LoadChunkMap()
 		}
+
+		if man.Specification == "" {
+			man.Specification = unchained.Specification
+		}
+
 		return man, err
 	}
 
 	manifestPath := config.PathToManifest(chain)
+	if !file.FileExists(manifestPath) {
+		// basically EstablishManifest
+		if publisher.IsZero() {
+			publisher = unchained.GetPreferredPublisher()
+		}
+		man, err := ReadManifest(chain, publisher, FromContract)
+		if err != nil {
+			return nil, err
+		}
+		return man, man.SaveManifest(chain)
+	}
+
 	contents := file.AsciiFileToString(manifestPath)
-	if !file.FileExists(manifestPath) || len(contents) == 0 {
+	if len(contents) == 0 {
 		return nil, ErrManifestNotFound
 	}
 
@@ -82,12 +106,17 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		return man, err
 	}
 
+	if man.Specification == "" {
+		man.Specification = unchained.Specification
+	}
+
 	man.LoadChunkMap()
+
 	return man, nil
 }
 
 func (m *Manifest) LoadChunkMap() {
-	m.ChunkMap = make(map[string]*ChunkRecord)
+	m.ChunkMap = make(map[string]*types.SimpleChunkRecord)
 	for i := range m.Chunks {
 		m.ChunkMap[m.Chunks[i].Range] = &m.Chunks[i]
 	}
@@ -95,21 +124,27 @@ func (m *Manifest) LoadChunkMap() {
 
 // TODO: Protect against overwriting files on disc
 
-func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) error {
-	man, err := ReadManifest(chain, publisher, FromCache)
-	if err != nil {
-		if err != ErrManifestNotFound {
-			return err
-		}
+func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
+	empty := Manifest{
+		Version:       version.ManifestVersion,
+		Chain:         chain,
+		Specification: unchained.Specification,
+		Chunks:        []types.SimpleChunkRecord{},
+		Config:        config.GetScrape(chain),
+		ChunkMap:      make(map[string]*types.SimpleChunkRecord),
+	}
 
-		// This is okay. Create an empty manifest
-		man = &Manifest{
-			Version:       version.ManifestVersion,
-			Chain:         chain,
-			Specification: unchained.Specification,
-			// Databases: unchained.Databases,
-			Chunks:   []ChunkRecord{},
-			ChunkMap: make(map[string]*ChunkRecord),
+	var man *Manifest
+	if !file.FileExists(config.PathToManifest(chain)) {
+		man = &empty
+	} else {
+		var err error
+		man, err = ReadManifest(chain, publisher, FromCache)
+		if err != nil {
+			if err != ErrManifestNotFound {
+				return err
+			}
+			man = &empty
 		}
 	}
 
@@ -128,12 +163,14 @@ func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) err
 		})
 	}
 
-	logger.Info("Updating manifest with", len(man.Chunks), "chunks", spaces)
+	logger.Info(colors.Magenta+"Updating manifest with", len(man.Chunks), "chunks", spaces, colors.Off)
 	return man.SaveManifest(chain)
 }
 
 // SaveManifest writes the manifest to disc in JSON
 func (m *Manifest) SaveManifest(chain string) error {
+	m.Config = config.GetScrape(chain)
+
 	fileName := config.PathToManifest(chain)
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {

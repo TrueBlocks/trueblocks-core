@@ -105,7 +105,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				if !info.IsDir() {
 					addr, _ := base.AddressFromPath(path, ".mon.bin")
 					if !addr.IsZero() {
-						mon := monitor.NewMonitor(chain, addr.Hex(), false /* create */)
+						mon := monitor.NewMonitor(chain, addr, false /* create */)
 						var removed bool
 						if removed, err = mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
 							return err

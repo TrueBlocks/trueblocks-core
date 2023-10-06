@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 func EstablishTsFile(chain string, publisher base.Address) error {
@@ -27,7 +26,7 @@ func EstablishTsFile(chain string, publisher base.Address) error {
 	}
 
 	database := chain + "-ts"
-	cid, err := manifest.ReadUnchainedIndex(chain, "ts", unchained.GetPreferredPublisher())
+	cid, err := manifest.ReadUnchainedIndex(chain, publisher, database)
 	if err != nil {
 		return err
 	} else if len(cid) == 0 {

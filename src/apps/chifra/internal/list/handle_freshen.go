@@ -23,7 +23,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -272,7 +271,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 
 	indexFilename := index.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
-		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, unchained.GetPreferredPublisher(), bl.Range)
+		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, updater.Options.PublisherAddr, bl.Range)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return

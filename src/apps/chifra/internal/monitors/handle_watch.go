@@ -41,7 +41,7 @@ func (opts *MonitorsOptions) RunMonitorScraper(wg *sync.WaitGroup) {
 		} else {
 			monitorChan := make(chan monitor.Monitor)
 			var monitors []monitor.Monitor
-			go monitor.ListMonitors(chain, monitorChan)
+			go monitor.ListMonitors(chain, "", monitorChan)
 			count := 0
 			for result := range monitorChan {
 				switch result.Address {

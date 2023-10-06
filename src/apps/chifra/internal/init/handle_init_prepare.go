@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -24,7 +25,7 @@ import (
 // its bloomHash, its indexHash, or both contains the IPFS hash that needst to be download. Any chunks (or portions thereof) that are
 // not in the list are valid and remain on disc. That means that the chunk is the manifest, has the right file size, has a valid header,
 // and is of the rigth version.
-func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []uint64) ([]manifest.ChunkRecord, int) {
+func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []uint64) ([]types.SimpleChunkRecord, int) {
 	// cleanIndex checks that the file is in the manifest, has a valid header, is of the correct version, and is of the right size. If any of those
 	// are not true, we remove that file and add it to the download list. Important note: we only walk the bloom filter folder because the bloom
 	// filters are required. If the user has specified `--all`, we insist that the corresponding index portion is also present and valid. If the
@@ -115,7 +116,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		return man.Chunks, len(man.Chunks)
 	}
 
-	chunksNeeded := make([]manifest.ChunkRecord, 0, len(man.Chunks))
+	chunksNeeded := make([]types.SimpleChunkRecord, 0, len(man.Chunks))
 	defer func() {
 		// Sort the downloads in reverse order, so the process happens from latest block to earliest
 		sort.Slice(chunksNeeded, func(i, j int) bool {

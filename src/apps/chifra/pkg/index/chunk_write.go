@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -29,15 +28,17 @@ type WriteChunkReport struct {
 	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
+	FileSize     int64
 	Snapped      bool
 }
 
 func (c *WriteChunkReport) Report() {
-	report := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
+	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
 	if c.Snapped {
-		report = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
+		report += ` @(snapped to grid)}`
 	}
-	logger.Info(report)
+	report += " (size: {%d} , span: {%d})"
+	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
 func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
@@ -153,9 +154,9 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 
 var spaces20 = strings.Repeat(" ", 20)
 
-func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
+func ResultToRecord(result *pinning.PinResult) types.SimpleChunkRecord {
 	if len(result.Local.BloomHash) > 0 {
-		return manifest.ChunkRecord{
+		return types.SimpleChunkRecord{
 			Range:     result.Range.String(),
 			IndexHash: result.Local.IndexHash,
 			IndexSize: result.Local.IndexSize,
@@ -163,7 +164,7 @@ func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
 			BloomSize: result.Local.BloomSize,
 		}
 	}
-	return manifest.ChunkRecord{
+	return types.SimpleChunkRecord{
 		Range:     result.Range.String(),
 		IndexHash: result.Remote.IndexHash,
 		IndexSize: result.Remote.IndexSize,

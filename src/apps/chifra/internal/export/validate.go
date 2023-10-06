@@ -28,7 +28,7 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	key := config.GetRootConfig().Keys["trueblocks"].License
+	key := config.GetKey("trueblocks").License
 	if opts.Neighbors && !strings.Contains(key, "+neighbors") {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--neighbors")
 	}
