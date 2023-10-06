@@ -1,0 +1,31 @@
+Env: TB_CHAINS_SEPOLIA_SCRAPE_APPSPERCHUNK=99995
+Env: TB_CHAINS_SEPOLIA_SCRAPE_SNAPTOGRID=99994
+Env: TB_CHAINS_SEPOLIA_SCRAPE_FIRSTSNAP=99993
+Env: TB_CHAINS_SEPOLIA_SCRAPE_UNRIPEDIST=99992
+Env: TB_CHAINS_SEPOLIA_SCRAPE_CHANNELCOUNT=99991
+Env: TB_CHAINS_SEPOLIA_SCRAPE_ALLOWMISSING=true
+chifra scrape  --dry_run --snap_to_grid 10000 --first_snap 10000 --chain sepolia
+TEST[DATE|TIME] DryRun:  true
+TEST[DATE|TIME] Chain:  sepolia
+TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
+TEST[DATE|TIME] Format:  txt
+Error: Cannot test block scraper
+Usage:
+  chifra scrape [flags]
+
+Flags:
+  -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
+  -s, --sleep float           seconds to sleep between scraper passes (default 14)
+  -l, --start_block uint      first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -u, --run_count uint        run the scraper this many times, then quit (hidden)
+  -P, --publisher string      for some query options, the publisher of the index (hidden) (default "trueblocks.eth")
+  -d, --dry_run               show the configuration that would be applied if run,no changes are made (hidden)
+      --apps_per_chunk uint   the number of appearances to build into a chunk before consolidating it (hidden) (default 2000000)
+      --snap_to_grid uint     an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden) (default 250000)
+      --first_snap uint       the first block at which snap_to_grid is enabled (hidden) (default 2000000)
+      --unripe_dist uint      the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden) (default 28)
+      --channel_count uint    number of concurrent processing channels (hidden) (default 20)
+      --allow_missing         do not report errors for blockchains that contain blocks with zero addresses (hidden)
+  -v, --verbose               enable verbose output
+  -h, --help                  display this help screen
+

@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -15,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -149,26 +147,5 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 
 	} else {
 		return nil, err
-	}
-}
-
-var spaces20 = strings.Repeat(" ", 20)
-
-func ResultToRecord(result *pinning.PinResult) types.SimpleChunkRecord {
-	if len(result.Local.BloomHash) > 0 {
-		return types.SimpleChunkRecord{
-			Range:     result.Range.String(),
-			IndexHash: result.Local.IndexHash,
-			IndexSize: result.Local.IndexSize,
-			BloomHash: result.Local.BloomHash,
-			BloomSize: result.Local.BloomSize,
-		}
-	}
-	return types.SimpleChunkRecord{
-		Range:     result.Range.String(),
-		IndexHash: result.Remote.IndexHash,
-		IndexSize: result.Remote.IndexSize,
-		BloomHash: result.Remote.BloomHash,
-		BloomSize: result.Remote.BloomSize,
 	}
 }
