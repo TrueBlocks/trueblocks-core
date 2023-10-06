@@ -7,12 +7,12 @@ package initPkg
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func Test_retry(t *testing.T) {
 	callCounter := 0
-	failingPins := []manifest.ChunkRecord{
+	failingPins := []types.SimpleChunkRecord{
 		{
 			Range: "first",
 		},
@@ -23,7 +23,7 @@ func Test_retry(t *testing.T) {
 			Range: "third",
 		},
 	}
-	fakeDownload := func(p []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
+	fakeDownload := func(p []types.SimpleChunkRecord) ([]types.SimpleChunkRecord, bool) {
 		defer func() { callCounter++ }()
 		switch callCounter {
 		case 0:
@@ -37,7 +37,7 @@ func Test_retry(t *testing.T) {
 			if len(p) != len(failingPins[2:]) {
 				t.Error("Wrong count for 3nd call", len(p))
 			}
-			return []manifest.ChunkRecord{}, false
+			return []types.SimpleChunkRecord{}, false
 		}
 
 		t.Fatal("Too many calls")

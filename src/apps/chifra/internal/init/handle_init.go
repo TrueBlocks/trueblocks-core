@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -30,9 +31,9 @@ func (opts *InitOptions) HandleInit() error {
 	// TODO: BOGUS - IF THE SCRAPER IS RUNNING, THIS WILL CAUSE PROBLEMS
 	// Make sure that the temporary scraper folders are empty, so that, when the
 	// scraper starts, it starts on the correct block.
-	_ = index.CleanTemporaryFolders(config.PathToIndex(chain), true)
+	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe", "maps", "staging"})
 
-	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -76,7 +77,7 @@ func (opts *InitOptions) HandleInit() error {
 		// The download finished...
 		if len(failedChunks) > 0 {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
-			retry(failedChunks, 3, func(items []manifest.ChunkRecord) ([]manifest.ChunkRecord, bool) {
+			retry(failedChunks, 3, func(items []types.SimpleChunkRecord) ([]types.SimpleChunkRecord, bool) {
 				logger.Info("Retrying", len(items), "bloom(s)")
 				return opts.downloadAndReportProgress(items, chunkType, nCorrections)
 			})
@@ -114,24 +115,24 @@ var nProcessed12 int
 var nStarted12 int
 
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
-func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord, chunkType walk.CacheType, nTotal int) ([]manifest.ChunkRecord, bool) {
+func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRecord, chunkType walk.CacheType, nTotal int) ([]types.SimpleChunkRecord, bool) {
 	chain := opts.Globals.Chain
 
-	failed := []manifest.ChunkRecord{}
+	failed := []types.SimpleChunkRecord{}
 	cancelled := false
 
 	// Establish a channel to listen for progress messages
 	progressChannel := progress.MakeChan()
 	defer close(progressChannel)
 
-	// TODO: BOGUS This should be configurable - If we make this too big, the pinning service chokes
+	// If we make this too big, the pinning service chokes
 	poolSize := runtime.NumCPU() * 2
 
 	// Start the go routine that downloads the chunks. This sends messages through the progressChannel
 	go index.DownloadChunks(chain, chunks, chunkType, poolSize, progressChannel)
 
 	for event := range progressChannel {
-		chunk, ok := event.Payload.(*manifest.ChunkRecord)
+		chunk, ok := event.Payload.(*types.SimpleChunkRecord)
 		var rng string
 		if ok {
 			rng = chunk.Range
@@ -208,7 +209,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []manifest.ChunkRecord
 // TODO: we want to re-process failed downloads on the stop. In that way, we can do progressive backoff per chunk (as opposed
 // TODO: to globally). We want to back-off on single chunks instead of every chunk. The backoff routine carries an 'attempts'
 // TODO: value and we wait after each failure 2^nAttempts (double the wait each time it fails). Max 10 tries or something.
-func retry(failedChunks []manifest.ChunkRecord, nTimes int, downloadChunksFunc func(chunks []manifest.ChunkRecord) (failed []manifest.ChunkRecord, cancelled bool)) int {
+func retry(failedChunks []types.SimpleChunkRecord, nTimes int, downloadChunksFunc func(chunks []types.SimpleChunkRecord) (failed []types.SimpleChunkRecord, cancelled bool)) int {
 	count := 0
 
 	chunksToRetry := failedChunks

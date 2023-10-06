@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -15,8 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -29,18 +26,20 @@ type WriteChunkReport struct {
 	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
+	FileSize     int64
 	Snapped      bool
 }
 
 func (c *WriteChunkReport) Report() {
-	report := fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Off, spaces20)
+	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
 	if c.Snapped {
-		report = fmt.Sprintf("%sWrote %d address and %d appearance records to $INDEX/%s.bin %s%s%s", colors.BrightBlue, c.nAddresses, c.nAppearances, c.Range, colors.Yellow, "(snapped to grid)", colors.Off)
+		report += ` @(snapped to grid)}`
 	}
-	logger.Info(report)
+	report += " (size: {%d} , span: {%d})"
+	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
+func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -148,26 +147,5 @@ func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, 
 
 	} else {
 		return nil, err
-	}
-}
-
-var spaces20 = strings.Repeat(" ", 20)
-
-func ResultToRecord(result *pinning.PinResult) manifest.ChunkRecord {
-	if len(result.Local.BloomHash) > 0 {
-		return manifest.ChunkRecord{
-			Range:     result.Range.String(),
-			IndexHash: result.Local.IndexHash,
-			IndexSize: result.Local.IndexSize,
-			BloomHash: result.Local.BloomHash,
-			BloomSize: result.Local.BloomSize,
-		}
-	}
-	return manifest.ChunkRecord{
-		Range:     result.Range.String(),
-		IndexHash: result.Remote.IndexHash,
-		IndexSize: result.Remote.IndexSize,
-		BloomHash: result.Remote.BloomHash,
-		BloomSize: result.Remote.BloomSize,
 	}
 }

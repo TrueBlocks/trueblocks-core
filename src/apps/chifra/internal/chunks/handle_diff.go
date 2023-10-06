@@ -9,6 +9,8 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -18,56 +20,88 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
+var nVisited int
+
 func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showDiff := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-			return opts.handleDiff(modelChan, walker, path, first)
-		}
-
 		walker := walk.NewCacheWalker(
 			chain,
-			opts.Globals.TestMode,
+			testMode,
 			10000, /* maxTests */
-			showDiff,
+			func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+				return opts.handleDiff(chain, path)
+			},
 		)
+
+		logger.Info("Walking the bloom files at...", config.PathToIndex(chain))
+		if !file.FolderExists(config.PathToIndex(chain)) {
+			logger.Fatal(fmt.Sprintf("The index folder does not exist: [%s]", config.PathToIndex(chain)))
+		}
 
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
 			errorChan <- err
 			cancel()
+		}
+
+		if nVisited == 0 {
+			logger.Warn("No bloom filters were visited. Does the block number exist in the finalized folder?")
 		}
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-func (opts *ChunksOptions) handleDiff(modelChan chan types.Modeler[types.RawModeler], walker *walk.CacheWalker, path string, first bool) (bool, error) {
-	path = index.ToIndexPath(path)
-	folder, name := filepath.Split(path)
-	diffPath := os.Getenv("TB_CHUNKS_DIFFPATH")
-	diffPath = filepath.Join(strings.Replace(folder, config.PathToIndex(opts.Globals.Chain), diffPath+"/", -1), name)
-	if len(diffPath) > 0 && diffPath[0] != '/' {
-		diffPath = "./" + diffPath
-	}
-	wd, _ := os.Getwd()
-	diffPath = strings.Replace(diffPath, "./", wd+"/", -1)
+func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {
+	nVisited++
 
-	if !file.FileExists(diffPath) {
-		logger.Fatal(fmt.Sprintf("The diff path does not exist: %s", diffPath))
-	}
+	thisPath := index.ToIndexPath(path)
+	diffPath := getDiffPath(chain, thisPath)
 
 	logger.Info("Comparing:")
-	logger.Info(fmt.Sprintf("  existing: %s (%d)", path, file.FileSize(path)))
+	logger.Info(fmt.Sprintf("  existing: %s (%d)", thisPath, file.FileSize(thisPath)))
 	logger.Info(fmt.Sprintf("  current:  %s (%d)", diffPath, file.FileSize(diffPath)))
 
-	_, _ = opts.exportTo("one", path)
-	_, _ = opts.exportTo("two", diffPath)
+	rng := base.RangeFromFilename(path)
+	outFn := fmt.Sprintf("%d", rng.First+((rng.Last-rng.First)/2))
+	if _, err := opts.exportTo("existing", thisPath, outFn); err != nil {
+		return false, err
+	}
+
+	if _, err := opts.exportTo("proposed", diffPath, outFn); err != nil {
+		return false, err
+	}
+
 	return true, nil
 }
 
-func (opts *ChunksOptions) exportTo(dest, source string) (bool, error) {
+// getDiffPath returns the path to the diff folder.
+func getDiffPath(chain, path string) (diffPath string) {
+	rng := base.RangeFromFilename(path)
+	diffPath = os.Getenv("TB_CHUNKS_DIFFPATH")
+	if !strings.Contains(diffPath, "unchained/") {
+		diffPath = filepath.Join(diffPath, "unchained/", chain, "finalized")
+	}
+	diffPath, _ = filepath.Abs(diffPath)
+	diffPath, _ = index.FindFileByBlockNumber(chain, diffPath, rng.First+(rng.Last-rng.First)/2)
+	if !file.FileExists(diffPath) {
+		logger.Fatal(fmt.Sprintf("The diff path does not exist: [%s]", diffPath))
+	}
+
+	return
+}
+
+func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
+	outputFolder, _ := filepath.Abs("./" + dest)
+	if !file.FolderExists(outputFolder) {
+		if err := os.MkdirAll(outputFolder, os.ModePerm); err != nil {
+			return false, err
+		}
+	}
+
 	indexChunk, err := index.NewChunkData(source)
 	if err != nil {
 		return false, err
@@ -108,9 +142,19 @@ func (opts *ChunksOptions) exportTo(dest, source string) (bool, error) {
 		return apps[i].BlockNumber < apps[j].BlockNumber
 	})
 
+	out := make([]string, 0, len(apps))
 	for _, app := range apps {
-		fmt.Printf("%s\t%d\t%d\t%s\n", dest, app.BlockNumber, app.TransactionIndex, app.Address)
+		if app.Address != base.SentinalAddr || uint64(app.TransactionIndex) != types.MisconfigReward {
+			out = append(out, fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address))
+		}
 	}
+
+	outputFile := filepath.Join(outputFolder, fmt.Sprintf("%s_apps.txt", outFn))
+	if err = file.LinesToAsciiFile(outputFile, out); err != nil {
+		return false, err
+	}
+
+	logger.Info(colors.Colored(fmt.Sprintf("Wrote {%d} lines to {%s}", len(out), outputFile)))
 
 	return true, nil
 }

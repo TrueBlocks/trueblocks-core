@@ -11,11 +11,11 @@ package scrapePkg
 // EXISTING_CODE
 import (
 	"net/http"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
 )
@@ -55,10 +55,6 @@ func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
 	timer := logger.NewTimer()
 	msg := "chifra scrape"
 	// EXISTING_CODE
-	if opts.Globals.IsApiMode() {
-		return validate.Usage("chifra scrape is not available in API mode"), true
-	}
-
 	handled = true
 	err = opts.HandleScrape() // Note this never returns
 	// EXISTING_CODE
@@ -84,4 +80,30 @@ func (opts *ScrapeOptions) IsPorted() (ported bool) {
 }
 
 // EXISTING_CODE
+func getConfigCmdsFromArgs() map[string]string {
+	configs := make(map[string]string, 10)
+	for i := 0; i < len(os.Args); i++ {
+		arg := os.Args[i]
+		next := ""
+		if i < len(os.Args)-1 {
+			next = os.Args[i+1]
+		}
+		switch arg {
+		case "--apps_per_chunk":
+			configs["appsPerChunk"] = next
+		case "--snap_to_grid":
+			configs["snapToGrid"] = next
+		case "--first_snap":
+			configs["firstSnap"] = next
+		case "--unripe_dist":
+			configs["unripeDist"] = next
+		case "--channel_count":
+			configs["channelCount"] = next
+		case "--allow_missing":
+			configs["allowMissing"] = "true"
+		}
+	}
+	return configs
+}
+
 // EXISTING_CODE

@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"os"
 	"os/user"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"testing"
@@ -51,9 +52,9 @@ func Test_GetPathTo(t *testing.T) {
 				}
 			}
 			if withChain {
-				testPath = MustGetPathToChainConfig(test.chain) + test.part
+				testPath = filepath.Join(MustGetPathToChainConfig(test.chain), test.part)
 			} else {
-				testPath = PathToRootConfig() + test.part
+				testPath = filepath.Join(PathToRootConfig(), test.part)
 			}
 		} else if test.group == "Cache" {
 			os.Setenv("XDG_CACHE_HOME", test.xdg)

@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -25,16 +26,16 @@ import (
 
 // EstablishIndexChunk a filename to an index portion, finds the correspoding CID (hash)
 // entry in the manifest, and downloads the index chunk to the local drive
-func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
+func EstablishIndexChunk(chain string, publisher base.Address, fileRange base.FileRange) (bool, error) {
 	exists, fileName := fileRange.RangeToFilename(chain)
 
-	chunkManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
+	chunkManifest, err := manifest.ReadManifest(chain, publisher, manifest.FromCache)
 	if err != nil {
 		return exists, err
 	}
 
 	// Find bloom filter's CID
-	var matchedPin manifest.ChunkRecord
+	var matchedPin types.SimpleChunkRecord
 	for _, pin := range chunkManifest.Chunks {
 		if strings.Contains(fileName, pin.Range) {
 			matchedPin = pin
@@ -49,7 +50,7 @@ func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
 
 	// Start downloading the filter
 	matchedPin.BloomHash = "" // we want to download only the index chunk
-	chunks := []manifest.ChunkRecord{matchedPin}
+	chunks := []types.SimpleChunkRecord{matchedPin}
 	progressChannel := make(chan *progress.ProgressMsg)
 
 	go func() {
@@ -70,19 +71,24 @@ func EstablishIndexChunk(chain string, fileRange base.FileRange) (bool, error) {
 	return file.FileExists(fileName), nil
 }
 
-// CleanTemporaryFolders removes any files that may be partial or incomplete
-func CleanTemporaryFolders(indexPath string, incStaging bool) error {
-	folders := []string{"ripe", "unripe", "maps", "staging"}
-	if !incStaging {
-		folders = folders[:len(folders)-2]
-	}
+// CleanEphemeralIndexFolders removes files in ripe and unripe
+func CleanEphemeralIndexFolders(chain string) error {
+	return CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
+}
 
-	for _, f := range folders {
+// CleanTempIndexFolders removes any files that may be partial or incomplete
+func CleanTempIndexFolders(chain string, subFolders []string) error {
+	indexPath := config.PathToIndex(chain)
+
+	for _, f := range subFolders {
 		folder := filepath.Join(indexPath, f)
+		// We want to remove whatever is there...
 		err := os.RemoveAll(folder)
 		if err != nil {
 			return err
 		}
+		// ...but put it back
+		_ = file.EstablishFolder(folder)
 	}
 
 	return nil

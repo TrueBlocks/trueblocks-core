@@ -1,6 +1,6 @@
 scrape?file=cmd_file_2
 {
   "errors": [
-    "Cannot test block scraper"
+    "chifra scrape is not available in API mode"
   ]
 }

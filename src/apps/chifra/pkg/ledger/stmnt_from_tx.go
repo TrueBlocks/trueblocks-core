@@ -11,7 +11,7 @@ import (
 
 // GetStatementsFromTransaction returns a statement from a given transaction
 func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types.SimpleTransaction) (statements []*types.SimpleStatement) {
-	if false && conn.StoreReadable() {
+	if conn.StoreReadable() {
 		statementGroup := &types.SimpleStatementGroup{
 			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
@@ -135,7 +135,7 @@ func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types
 		}
 	}
 
-	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
+	if l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
 		objects := make([]types.SimpleStatement, len(statements))
 		for _, ptr := range statements {
 			objects = append(objects, *ptr)
@@ -147,12 +147,6 @@ func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types
 			Statements:       objects,
 		}
 		_ = conn.Store.Write(statementGroup, nil)
-		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
-		// if err := call.Conn.Store.Write(results, nil); err != nil {
-		// 	logger.Warn("Failed to write call results to the database", err) // report but don't fail
-		// }
-		// } else if !isFin {
-		// 	logger.Info("Not caching result (not ripe)...", results.Address, results.BlockNumber, call.Method.Encoding)
 	}
 
 	return

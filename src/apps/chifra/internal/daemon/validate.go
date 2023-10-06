@@ -28,28 +28,20 @@ func (opts *DaemonOptions) validateDaemon() error {
 		return validate.Usage("The {0} option is not available{1}.", "daemon", " in api mode")
 	}
 
-	err := validate.ValidateEnum("scrape", opts.Scrape, "[off|blooms|index]")
-	if err != nil {
-		return err
+	// validate.ValidateEnum("scrape", opts.Scrape, "[off|blooms|index]")
+	// validate.ValidateEnum("api", opts.Api, "[off|on]")
+	opts.Api = "on"
+
+	if len(opts.Scrape) > 0 {
+		return validate.Usage("The {0} option is currenlty not available. Use {1} instead.", "--scrape", "chifra scrape")
 	}
-	if len(opts.Scrape) > 0 && opts.Scrape != "index" {
-		return validate.Usage("Only the {0} option is available for {1}.", "index", "--scrape")
-	}
+
 	if opts.Monitor {
 		return validate.Usage("The {0} option is currenlty not available. Use {1} instead.", "--monitor", "chifra monitors --watch")
 	}
 
-	err = validate.ValidateEnum("api", opts.Api, "[off|on]")
-	if err != nil {
-		return err
-	}
-
-	if !opts.Monitor && len(opts.Scrape) == 0 && len(opts.Api) == 0 {
-		return validate.Usage("At least one of --scrape, --monitors, or --api must be present.")
-	}
-
 	if len(opts.Port) > 0 && !strings.Contains(opts.Port, ":") {
-		return validate.Usage("The {0} option ({1}) must {2}.", "--port", opts.Port, "start with ':'")
+		opts.Port = ":" + opts.Port
 	}
 
 	return opts.Globals.Validate()

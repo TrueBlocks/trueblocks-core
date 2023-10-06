@@ -12,9 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -71,12 +68,12 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
+	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromCache)
 	if err != nil {
 		return err
 	}
 
-	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -111,7 +108,8 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 
 	reports := []simpleReportCheck{}
 
-	allowMissing := scrapeCfg.AllowMissing(chain)
+	allowMissing := config.GetScrape(chain).AllowMissing
+
 	seq := simpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err
@@ -158,15 +156,16 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	reports = append(reports, r2c)
 
 	// we only check the stage if it exists
-	stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
-	stageFn, _ := file.LatestFileInFolder(stagePath)
-	if file.FileExists(stageFn) {
-		stage := simpleReportCheck{Reason: "Check staging folder"}
-		if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
-			return err
-		}
-		reports = append(reports, stage)
-	}
+	// TODO: clean this up
+	// stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
+	// stageFn, _ := file.LatestFileInFolder(stagePath)
+	// if file.FileExists(stageFn) {
+	// 	stage := simpleReportCheck{Reason: "Check staging folder"}
+	// 	if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
+	// 		return err
+	// 	}
+	// 	reports = append(reports, stage)
+	// }
 
 	if opts.Deep {
 		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}

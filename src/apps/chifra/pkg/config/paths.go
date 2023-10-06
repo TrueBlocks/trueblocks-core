@@ -11,45 +11,46 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 )
 
-const chainConfigMustExist string = `
-
-	The chain configuration folder for chain {0} does not exist. Is it correct?
-	Check: {1}
-
-`
-
-// MustGetPathToChainConfig returns the chain-specific config folder
+// MustGetPathToChainConfig returns the chain-specific config folder ignoring errors
 func MustGetPathToChainConfig(chain string) string {
-	// TODO: We can test this with a unit test
-	if chain == "non-tracing" { // Test mode only for testing non-tracing nodes
-		return MustGetPathToChainConfig("mainnet")
-	}
+	path, _ := PathToChainConfig(chain)
+	return path
+}
 
+// PathToChainConfig returns the chain-specific config folder
+func PathToChainConfig(chain string) (string, error) {
 	// We always need a chain
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = GetSettings().DefaultChain
 	}
 	ret := PathToRootConfig()
 
 	// Our configuration files are always in ./config folder relative to top most folder
 	cfgFolder := filepath.Join(ret, "config/", chain) + "/"
-	if _, err := os.Stat(cfgFolder); err != nil {
-		logger.Fatal(usage.Usage(chainConfigMustExist, chain, cfgFolder))
-	}
-	return cfgFolder
+	_, err := os.Stat(cfgFolder)
+	return cfgFolder, err
+}
+
+// PathToManifest returns the path to the manifest database per chain
+func PathToManifest(chain string) string {
+	return filepath.Join(PathToIndex(chain), "manifest.json")
+}
+
+// PathToTimestamps returns the path to the timestamps database per chain
+func PathToTimestamps(chain string) string {
+	return filepath.Join(PathToIndex(chain), "ts.bin")
 }
 
 // PathToIndex returns the one and only indexPath
 func PathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
-	indexPath, err := PathFromXDG("XDG_CACHE_HOME")
+	indexPath, err := pathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
 		logger.Fatal(err)
 	} else if len(indexPath) == 0 {
-		indexPath = GetRootConfig().Settings.IndexPath
+		indexPath = trueBlocksConfig.Settings.IndexPath
 	}
 
 	// We want the index folder to be named `unchained` and be in
@@ -60,7 +61,7 @@ func PathToIndex(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = trueBlocksConfig.Settings.DefaultChain
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
@@ -72,11 +73,11 @@ func PathToIndex(chain string) string {
 // PathToCache returns the one and only cachePath
 func PathToCache(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
-	cachePath, err := PathFromXDG("XDG_CACHE_HOME")
+	cachePath, err := pathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
 		logger.Fatal(err)
 	} else if len(cachePath) == 0 {
-		cachePath = GetRootConfig().Settings.CachePath
+		cachePath = GetSettings().CachePath
 	}
 
 	// We want the cache folder to be named `cache` and be in
@@ -87,7 +88,7 @@ func PathToCache(chain string) string {
 
 	// We always have to have a chain...
 	if len(chain) == 0 {
-		chain = GetDefaultChain()
+		chain = GetSettings().DefaultChain
 	}
 
 	// We know what we want, create it if it doesn't exist and return it
@@ -126,8 +127,4 @@ func EstablishIndexPaths(indexPath string) {
 	if err := file.EstablishFolders(indexPath, folders); err != nil {
 		logger.Fatal(err)
 	}
-}
-
-func PathToTimestamps(chain string) string {
-	return filepath.Join(PathToIndex(chain), "ts.bin")
 }

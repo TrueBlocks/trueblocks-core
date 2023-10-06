@@ -31,22 +31,24 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			Specification: unchained.Specification,
 		}
 
-		var err error
-		tsPath := config.PathToTimestamps(chain)
-		if report.TsHash, err = pinning.PinItem(chain, "timestamps", tsPath, opts.Remote); err != nil {
-			errorChan <- err
-			cancel()
-			return
+		if len(blockNums) == 0 {
+			var err error
+			tsPath := config.PathToTimestamps(chain)
+			if report.TsHash, _, err = pinning.PinOneFile(chain, "timestamps", tsPath, config.IpfsRunning(), opts.Remote); err != nil {
+				errorChan <- err
+				cancel()
+				return
+			}
+
+			manPath := config.PathToManifest(chain)
+			if report.ManifestHash, _, err = pinning.PinOneFile(chain, "manifest", manPath, config.IpfsRunning(), opts.Remote); err != nil {
+				errorChan <- err
+				cancel()
+				return
+			}
 		}
 
-		manPath := config.MustGetPathToChainConfig(chain) + "manifest.json"
-		if report.ManifestHash, err = pinning.PinItem(chain, "manifest", manPath, opts.Remote); err != nil {
-			errorChan <- err
-			cancel()
-			return
-		}
-
-		if opts.Deep {
+		if len(blockNums) != 0 || opts.Deep {
 			pinChunk := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 				rng, err := base.RangeFromFilenameE(path)
 				if err != nil {
@@ -61,28 +63,28 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					return false, fmt.Errorf("should not happen in pinChunk")
 				}
 
-				result, err := pinning.PinChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path), opts.Remote)
+				local, remote, err := pinning.PinOneChunk(chain, index.ToBloomPath(path), index.ToIndexPath(path), config.IpfsRunning(), opts.Remote)
 				if err != nil {
-					return false, err
+					errorChan <- err
+					cancel() // keep going...
+					return true, nil
 				}
 
-				if pinning.LocalDaemonRunning() {
-					report.Pinned = append(report.Pinned, result.Local.BloomHash)
-					report.Pinned = append(report.Pinned, result.Local.IndexHash)
-				}
-
-				if opts.Remote {
-					report.Pinned = append(report.Pinned, result.Remote.BloomHash)
-					report.Pinned = append(report.Pinned, result.Remote.IndexHash)
-				}
-
-				if !result.Matches {
+				if !pinning.Matches(&local, &remote) {
 					logger.Warn("Local and remote pins do not match")
-					logger.Warn(colors.Yellow+result.Local.BloomHash.String(), "-", result.Local.IndexHash, colors.Off)
-					logger.Warn(colors.Yellow+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
-					logger.Fatal("Failed")
-				} else if opts.Remote && pinning.LocalDaemonRunning() {
-					logger.Info(colors.BrightGreen+"Matches: "+result.Remote.BloomHash.String(), "-", result.Remote.IndexHash, colors.Off)
+					logger.Warn(colors.Yellow+local.BloomHash.String(), "-", local.IndexHash, colors.Off)
+					logger.Warn(colors.Yellow+remote.BloomHash.String(), "-", remote.IndexHash, colors.Off)
+					logger.Fatal("IPFS hashes between local and remote do not match")
+				} else if opts.Remote && config.IpfsRunning() {
+					logger.Info(colors.BrightGreen+"Matches: "+remote.BloomHash.String(), "-", remote.IndexHash, colors.Off)
+				}
+
+				if opts.Globals.Verbose {
+					if opts.Remote {
+						fmt.Println("result.Remote:", remote.String())
+					} else {
+						fmt.Println("result.Local:", local.String())
+					}
 				}
 
 				sleep := opts.Sleep

@@ -13,17 +13,19 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
 type reporter struct {
-	chunk  *manifest.ChunkRecord
+	chunk  *types.SimpleChunkRecord
 	report *simpleReportCheck
 	mutex  *sync.Mutex
 }
@@ -105,9 +107,10 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 
 			return nil
 		}
+
 	} else if opts.Mode == "manifest" {
 		total = len(theMap) * 2
-		sh = shell.NewShell("localhost:5001")
+		sh = shell.NewShell(config.IPFS_URL)
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			progressChan <- 1
 			err = checkHashes(item.chunk, "blooom", sh, item)
@@ -143,7 +146,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 	return nil
 }
 
-func checkHashes(chunk *manifest.ChunkRecord, which string, sh *shell.Shell, report *reporter) error {
+func checkHashes(chunk *types.SimpleChunkRecord, which string, sh *shell.Shell, report *reporter) error {
 	h := chunk.BloomHash.String()
 	// sz := int(chunk.BloomSize)
 	if which == "index" {

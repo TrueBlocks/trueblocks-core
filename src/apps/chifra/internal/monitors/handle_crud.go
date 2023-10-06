@@ -5,6 +5,7 @@
 package monitorsPkg
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
@@ -21,7 +22,7 @@ import (
 func (opts *MonitorsOptions) HandleCrudCommands() error {
 	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(chain, addr, false)
+		m := monitor.NewMonitor(chain, base.HexToAddress(addr), false)
 		if !file.FileExists(m.Path()) {
 			return validate.Usage("No monitor was found for address " + addr + ".")
 
@@ -46,7 +47,7 @@ func (opts *MonitorsOptions) HandleCrudCommands() error {
 	}
 
 	for _, addr := range opts.Addrs {
-		m := monitor.NewMonitor(chain, addr, false)
+		m := monitor.NewMonitor(chain, base.HexToAddress(addr), false)
 		if opts.Undelete {
 			_ = m.ReadMonitorHeader()
 			m.UnDelete()

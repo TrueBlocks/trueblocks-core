@@ -11,12 +11,14 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 func Test_Monitor(t *testing.T) {
 	testAddr := "0xF503017d7bAf7fbc0fff7492b751025c6a78179b"
 
-	mon := NewMonitor("mainnet", testAddr, true /* create */)
+	mon := NewMonitor("mainnet", base.HexToAddress(testAddr), true /* create */)
 	path := mon.Path()
 	dir, fileName := filepath.Split(path)
 

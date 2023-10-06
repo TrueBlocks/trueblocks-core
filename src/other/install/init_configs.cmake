@@ -105,10 +105,6 @@ CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/mainnet "specials.csv"           
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/gnosis  "specials.csv"             ${INSTALL_DEST}/config/gnosis/)
 CopyIgnorePresent (${INSTALL_SOURCE}/per-chain/sepolia "specials.csv"             ${INSTALL_DEST}/config/sepolia/)
 
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/mainnet "manifest.json"            ${INSTALL_DEST}/config/mainnet/)
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/gnosis  "manifest.json"            ${INSTALL_DEST}/config/gnosis/)
-CopyNotPresent    (${INSTALL_SOURCE}/per-chain/sepolia "manifest.json"            ${INSTALL_DEST}/config/sepolia/)
-
 CopyNotPresent    (${INSTALL_SOURCE}/names/            "names_custom.tab"         ${INSTALL_DEST}/config/mainnet/)
 
 CopyFolder        (${INSTALL_SOURCE}/abis/known-000/                              ${INSTALL_DEST}/abis/known-000/)

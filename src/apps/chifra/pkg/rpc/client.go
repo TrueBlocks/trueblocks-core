@@ -75,8 +75,8 @@ var clientMutex sync.Mutex
 var perProviderClientMap = map[string]*ethclient.Client{}
 
 func (conn *Connection) getClient() (*ethclient.Client, error) {
-	provider, _ := config.GetRpcProvider(conn.Chain)
-	if provider == "https://" {
+	provider := config.GetChain(conn.Chain).RpcProvider
+	if provider == "" || provider == "https://" {
 		var noProvider = `
 
   Warning: The RPC server ([{PROVIDER}]) was not available. Either start it, or edit the rpcProvider

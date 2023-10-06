@@ -90,21 +90,12 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 				curTs = conn.GetBlockTimestamp(bn)
 				curBlock = bn
 			}
-			log := types.SimpleLog{
-				Address:          base.HexToAddress(rawLog.Address),
-				BlockHash:        base.HexToHash(rawLog.BlockHash),
-				BlockNumber:      utils.MustParseUint(rawLog.BlockNumber),
-				Data:             rawLog.Data,
-				LogIndex:         utils.MustParseUint(rawLog.LogIndex),
-				Timestamp:        curTs,
-				TransactionHash:  base.HexToHash(rawLog.TransactionHash),
-				TransactionIndex: utils.MustParseUint(rawLog.TransactionIndex),
-			}
-			for _, topic := range rawLog.Topics {
-				log.Topics = append(log.Topics, base.HexToHash(topic))
-			}
-			log.SetRaw(&rawLog)
-			ret = append(ret, log)
+			txHash := base.HexToHash(rawLog.TransactionHash)
+			simpleLog, _ := rawLog.RawToSimple(map[string]any{
+				"hash":      txHash,
+				"timestamp": curTs,
+			})
+			ret = append(ret, simpleLog)
 		}
 		return ret, nil
 	}

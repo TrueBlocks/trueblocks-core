@@ -12,26 +12,26 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-// HandlePrepare performs actions that need to happen prior to entering the forever loop. Returns
-// true if the processing should continue, false otherwise. Currently, the only thing to do
-// is write the zero block Index Chunk / Bloom filter pair if it doesn't exist.
-func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *BlazeOptions) (ok bool, err error) {
+// Prepare performs actions that need to be done prior to entering the
+// forever loop. Returns true if processing should continue, false otherwise.
+// The routine cleans the temporary folders (if any) and then makes sure the zero
+// block (reads the allocation file, if present) is processed.
+func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting
-	_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
+	_ = index.CleanEphemeralIndexFolders(chain)
 
+	// If the file already exists, we're done.
 	bloomPath := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"
 	if file.FileExists(bloomPath) {
-		// The file already exists, nothing to do
 		return true, nil
 	}
 
+	// If there are no prefunds, we're done.
 	prefundPath := filepath.Join(config.MustGetPathToChainConfig(chain), "allocs.csv")
 	prefunds, err := prefunds.LoadPrefunds(chain, prefundPath, nil)
 	if err != nil {
@@ -40,7 +40,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *
 
 	appMap := make(index.AddressAppearanceMap, len(prefunds))
 	for i, prefund := range prefunds {
-		addr := hexutil.Encode(prefund.Address.Bytes()) // a lowercase string
+		addr := prefund.Address.Hex()
 		appMap[addr] = append(appMap[addr], index.AppearanceRecord{
 			BlockNumber:   0,
 			TransactionId: uint32(i),
@@ -50,18 +50,19 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *
 	array := []tslib.TimestampRecord{}
 	array = append(array, tslib.TimestampRecord{
 		Bn: uint32(0),
-		Ts: uint32(opts.Conn.GetBlockTimestamp(uint64(0))),
+		Ts: uint32(opts.Conn.GetBlockTimestamp(0)),
 	})
 	_ = tslib.Append(chain, array)
 
 	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
 	indexPath := index.ToIndexPath(bloomPath)
-	if report, err := index.WriteChunk(chain, indexPath, appMap, len(prefunds)); err != nil {
+	if report, err := index.WriteChunk(chain, opts.PublisherAddr, indexPath, appMap, len(prefunds)); err != nil {
 		return false, err
 	} else if report == nil {
 		logger.Fatal("Should not happen, write chunk returned empty report")
 	} else {
 		report.Snapped = true // assumes block zero is a snap to grid (which it is in a sense)
+		report.FileSize = file.FileSize(indexPath)
 		report.Report()
 	}
 

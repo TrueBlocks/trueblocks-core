@@ -23,7 +23,6 @@ type simpleChunkPinReport struct {
 	TsHash        base.IpfsHash `json:"tsHash"`
 	Version       string        `json:"version"`
 	// EXISTING_CODE
-	Pinned []base.IpfsHash `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -42,7 +41,6 @@ func (s *simpleChunkPinReport) Model(chain, format string, verbose bool, extraOp
 		"specification": s.Specification,
 		"tsHash":        s.TsHash,
 		"version":       s.Version,
-		"nPinned":       len(s.Pinned),
 	}
 	order = []string{
 		"chain",
@@ -50,7 +48,6 @@ func (s *simpleChunkPinReport) Model(chain, format string, verbose bool, extraOp
 		"specification",
 		"tsHash",
 		"version",
-		"nPinned",
 	}
 	// EXISTING_CODE
 
