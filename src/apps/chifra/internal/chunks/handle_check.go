@@ -70,12 +70,12 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(chain, manifest.FromCache)
+	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromCache)
 	if err != nil {
 		return err
 	}
 
-	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -110,7 +110,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 
 	reports := []simpleReportCheck{}
 
-	allowMissing := config.AllowMissing(chain)
+	allowMissing := config.GetScrape(chain).AllowMissing
 	seq := simpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
 		return err

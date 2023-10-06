@@ -112,7 +112,7 @@ func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 		return query
 	}
 
-	url := config.GetRemoteExplorer(chain)
+	url := config.GetChain(chain).RemoteExplorer
 	query := ""
 	switch u.termType {
 	case ExploreNone:
@@ -128,7 +128,7 @@ func (u *ExploreUrl) getUrl(opts *ExploreOptions) string {
 	}
 
 	if opts.Local {
-		url = config.GetLocalExplorer(chain)
+		url = config.GetChain(chain).LocalExplorer
 		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
 		query = strings.Replace(query, "block/", "explorer/blocks/", -1)
 	}

@@ -14,6 +14,8 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+// GetReceipt retrieves a single receipt by block number and transaction id. If suggested is provided,
+// it will be used for the timestamp of the logs.
 func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested base.Timestamp) (receipt types.SimpleReceipt, err error) {
 	receipt, err = conn.GetReceiptNoTimestamp(bn, txid) // note that the logs do not yet have timestamp...
 
@@ -23,6 +25,7 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 	for index := 0; index < len(receipt.Logs); index++ {
 		receipt.Logs[index].Timestamp = suggested
 	}
+
 	return receipt, err
 }
 

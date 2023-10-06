@@ -43,7 +43,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		return err
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetChain(chain).RpcProvider
 	blazeOpts := BlazeOptions{
 		Chain:        chain,
 		NChannels:    opts.Settings.ChannelCount,
@@ -85,7 +85,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 			ripeBlock = progress.Latest - opts.Settings.UnripeDist
 		}
 
-		provider, _ := config.GetRpcProvider(chain)
+		provider := config.GetChain(chain).RpcProvider
 
 		blazeOpts = BlazeOptions{
 			Chain:        chain,

@@ -70,7 +70,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	}
 
 	chain := opts.Globals.Chain
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetChain(chain).RpcProvider
 
 	logger.InfoTable("Server URL:        ", apiUrl)
 	logger.InfoTable("RPC Provider:      ", provider)

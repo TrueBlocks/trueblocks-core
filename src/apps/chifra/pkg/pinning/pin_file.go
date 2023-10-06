@@ -5,6 +5,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -24,7 +25,7 @@ type PinResult struct {
 // services if they are available. If the local service is not available, the remote
 // service is used.
 func PinItem(chain string, dbName, path string, isRemote bool) (hash base.IpfsHash, err error) {
-	isLocal := LocalDaemonRunning()
+	isLocal := config.IpfsRunning()
 	if !isLocal && !isRemote {
 		err = fmt.Errorf("no pinning service available")
 		return
@@ -73,7 +74,7 @@ func PinChunk(chain, bloomFile, indexFile string, isRemote bool) (PinResult, err
 	localService, _ := NewPinningService(chain, Local)
 	remoteService, _ := NewPinningService(chain, Pinata)
 
-	isLocal := LocalDaemonRunning()
+	isLocal := config.IpfsRunning()
 	if isLocal {
 		if result.Local.BloomHash, result.err = localService.PinFile(bloomFile, true); result.err != nil {
 			return PinResult{}, result.err

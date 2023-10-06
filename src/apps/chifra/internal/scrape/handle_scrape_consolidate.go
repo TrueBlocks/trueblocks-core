@@ -56,7 +56,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	ripeCnt := len(ripeFileList)
 	if uint64(ripeCnt) < (blazeOpts.BlockCount - blazeOpts.UnripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
-		allowMissing := config.AllowMissing(chain)
+		allowMissing := config.GetScrape(chain).AllowMissing
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
 			_ = index.CleanTemporaryFolders(config.PathToCache(chain), false)
 			return true, err
@@ -121,7 +121,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 			}
 
 			indexPath := config.PathToIndex(chain) + "finalized/" + curRange.String() + ".bin"
-			if report, err := index.WriteChunk(chain, indexPath, appMap, len(appearances)); err != nil {
+			if report, err := index.WriteChunk(chain, opts.PublisherAddr, indexPath, appMap, len(appearances)); err != nil {
 				return false, err
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")

@@ -50,7 +50,7 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 		Params: params,
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetChain(chain).RpcProvider
 	err := FromRpc(provider, &payload, &response)
 	if err != nil {
 		return nil, err
@@ -113,7 +113,7 @@ func QuerySlice[T any](chain string, method string, params Params) ([]T, error) 
 		Params: params,
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetChain(chain).RpcProvider
 	err := FromRpc(provider, &payload, &response)
 	if err != nil {
 		return nil, err
@@ -141,7 +141,7 @@ func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T
 		payloads = append(payloads, *config.Payload)
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetChain(chain).RpcProvider
 	err := fromRpcBatch(provider, payloads, &response)
 	if err != nil {
 		return nil, err

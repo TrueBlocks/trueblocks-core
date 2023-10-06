@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -19,27 +20,26 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
-func EstablishTsFile(chain string) error {
-	if chain == "non-tracing" { // A test-mode chain to test IsTracing
-		return nil
-	}
-
+func EstablishTsFile(chain string, publisher base.Address) error {
 	tsPath := config.PathToTimestamps(chain)
 	if file.FileExists(tsPath) {
 		return nil
 	}
 
+	database := chain + "-ts"
 	cid, err := manifest.ReadUnchainedIndex(chain, "ts", unchained.GetPreferredPublisher())
 	if err != nil {
 		return err
+	} else if len(cid) == 0 {
+		return fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
 	}
 
-	return downloadCidToBinary(chain, cid, tsPath)
+	return downloadCidToBinary(chain, database, tsPath, cid)
 }
 
 // downloadCidToBinary downloads a CID to a binary file
-func downloadCidToBinary(chain, cid, outputFn string) error {
-	gatewayUrl := config.GetIpfsGateway(chain)
+func downloadCidToBinary(chain, database, outputFn, cid string) error {
+	gatewayUrl := config.GetChain(chain).IpfsGateway
 
 	url, err := url.Parse(gatewayUrl)
 	if err != nil {
@@ -51,7 +51,7 @@ func downloadCidToBinary(chain, cid, outputFn string) error {
 	logger.InfoTable("Gateway:", gatewayUrl)
 	logger.InfoTable("URL:", url.String())
 	logger.InfoTable("CID:", cid)
-	logger.Info(fmt.Sprintf("%sDownloading database %s (%s). This may take a moment...%s", colors.Yellow, "database", cid, colors.Off))
+	logger.Info(fmt.Sprintf("%sDownloading database %s (%s). This may take a moment...%s", colors.Yellow, database, cid, colors.Off))
 
 	header, err := http.Head(url.String())
 	if err != nil {
@@ -77,7 +77,7 @@ func downloadCidToBinary(chain, cid, outputFn string) error {
 		return fmt.Errorf("CID not found: %d status", header.StatusCode)
 	}
 
-	logger.Info(colors.Yellow + "Download complete. Saving timestamps..." + colors.Off)
+	logger.Info(fmt.Sprintf("%sDownloading complete %s (%s). Writing file...%s", colors.Yellow, database, cid, colors.Off))
 
 	userHitsCtrlC := false
 	go func() {
@@ -95,9 +95,12 @@ func downloadCidToBinary(chain, cid, outputFn string) error {
 		}
 	}()
 
-	trapChannel := sigintTrap.Enable(context.Background(), func() {}, func() {
+	ctx, cancel := context.WithCancel(context.Background())
+	cleanOnQuit := func() {
 		userHitsCtrlC = true
-	})
+		logger.Warn(sigintTrap.TrapMessage)
+	}
+	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
 
 	ff, err := os.Create(outputFn)

@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"path/filepath"
 	"sort"
 	"strings"
 
@@ -62,7 +61,7 @@ const (
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
 
 // ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
-func ReadManifest(chain string, source Source) (*Manifest, error) {
+func ReadManifest(chain string, publisher base.Address, source Source) (*Manifest, error) {
 	if source == FromContract {
 		man, err := fromRemote(chain)
 		if man != nil {
@@ -71,7 +70,7 @@ func ReadManifest(chain string, source Source) (*Manifest, error) {
 		return man, err
 	}
 
-	manifestPath := filepath.Join(config.MustGetPathToChainConfig(chain), "manifest.json")
+	manifestPath := config.PathToManifest(chain)
 	contents := file.AsciiFileToString(manifestPath)
 	if !file.FileExists(manifestPath) || len(contents) == 0 {
 		return nil, ErrManifestNotFound
@@ -96,8 +95,8 @@ func (m *Manifest) LoadChunkMap() {
 
 // TODO: Protect against overwriting files on disc
 
-func UpdateManifest(chain string, chunk ChunkRecord) error {
-	man, err := ReadManifest(chain, FromCache)
+func UpdateManifest(chain string, publisher base.Address, chunk ChunkRecord) error {
+	man, err := ReadManifest(chain, publisher, FromCache)
 	if err != nil {
 		if err != ErrManifestNotFound {
 			return err
@@ -135,7 +134,7 @@ func UpdateManifest(chain string, chunk ChunkRecord) error {
 
 // SaveManifest writes the manifest to disc in JSON
 func (m *Manifest) SaveManifest(chain string) error {
-	fileName := config.MustGetPathToChainConfig(chain) + "manifest.json"
+	fileName := config.PathToManifest(chain)
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)

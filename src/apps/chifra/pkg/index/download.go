@@ -142,7 +142,10 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType wal
 		case <-workerArgs.ctx.Done():
 			return
 		default:
-			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel, func() { logger.Info("Finishing work...") })
+			cleanOnQuit := func() {
+				logger.Warn(sigintTrap.TrapMessage)
+			}
+			trapChannel := sigintTrap.Enable(workerArgs.ctx, workerArgs.cancel, cleanOnQuit)
 			err := writeBytesToDisc(chain, chunkType, res)
 			sigintTrap.Disable(trapChannel)
 			if errors.Is(workerArgs.ctx.Err(), context.Canceled) {
@@ -183,7 +186,7 @@ func DownloadChunks(chain string, chunksToDownload []manifest.ChunkRecord, chunk
 		ctx:             ctx,
 		progressChannel: progressChannel,
 		downloadWg:      &downloadWg,
-		gatewayUrl:      config.GetIpfsGateway(chain),
+		gatewayUrl:      config.GetChain(chain).IpfsGateway,
 		writeChannel:    writeChannel,
 		nRetries:        8,
 	}

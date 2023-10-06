@@ -40,7 +40,7 @@ func (c *WriteChunkReport) Report() {
 	logger.Info(report)
 }
 
-func WriteChunk(chain, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
+func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 

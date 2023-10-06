@@ -22,16 +22,16 @@ import (
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	BlockCnt   uint64                `json:"blockCnt,omitempty"`   // Maximum number of blocks to process per pass
-	Sleep      float64               `json:"sleep,omitempty"`      // Seconds to sleep between scraper passes
-	StartBlock uint64                `json:"startBlock,omitempty"` // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
-	RunCount   uint64                `json:"runCount,omitempty"`   // Run the scraper this many times, then quit
-	Publisher  string                `json:"publisher,omitempty"`  // For some query options, the publisher of the index
-	DryRun     bool                  `json:"dryRun,omitempty"`     // Show the configuration that would be applied if run,no changes are made
-	Settings   config.ScrapeSettings `json:"settings,omitempty"`   // Configuration items for the scrape
-	Globals    globals.GlobalOptions `json:"globals,omitempty"`    // The global options
-	Conn       *rpc.Connection       `json:"conn,omitempty"`       // The connection to the RPC server
-	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
+	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
+	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
+	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	RunCount     uint64                `json:"runCount,omitempty"`     // Run the scraper this many times, then quit
+	Publisher    string                `json:"publisher,omitempty"`    // For some query options, the publisher of the index
+	DryRun       bool                  `json:"dryRun,omitempty"`       // Show the configuration that would be applied if run,no changes are made
+	Settings     config.ScrapeSettings `json:"settings,omitempty"`     // Configuration items for the scrape
+	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
+	Conn         *rpc.Connection       `json:"conn,omitempty"`         // The connection to the RPC server
+	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
 	// EXISTING_CODE
 	PublisherAddr base.Address `json:"-"`
 	// EXISTING_CODE
@@ -74,6 +74,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.Settings.FirstSnap = 2000000
 	opts.Settings.UnripeDist = 28
 	opts.Settings.ChannelCount = 20
+	configs := make(map[string]string, 10)
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blockCnt":
@@ -89,17 +90,17 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 		case "dryRun":
 			opts.DryRun = true
 		case "appsPerChunk":
-			opts.Settings.AppsPerChunk = globals.ToUint64(value[0])
+			fallthrough
 		case "snapToGrid":
-			opts.Settings.SnapToGrid = globals.ToUint64(value[0])
+			fallthrough
 		case "firstSnap":
-			opts.Settings.FirstSnap = globals.ToUint64(value[0])
+			fallthrough
 		case "unripeDist":
-			opts.Settings.UnripeDist = globals.ToUint64(value[0])
+			fallthrough
 		case "channelCount":
-			opts.Settings.ChannelCount = globals.ToUint64(value[0])
+			fallthrough
 		case "allowMissing":
-			opts.Settings.AllowMissing = true
+			configs[key] = value[0]
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
@@ -143,9 +144,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	} else if len(args) > 1 {
 		opts.BadFlag = validate.Usage("Invalid argument {0}", args[0])
 	}
-	configFn := "blockScrape.toml"
 	// EXISTING_CODE
-	opts.Settings, _ = config.GetSettings(opts.Globals.Chain, configFn, &config.Unset)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

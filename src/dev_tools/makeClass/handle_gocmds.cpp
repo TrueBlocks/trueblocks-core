@@ -18,7 +18,6 @@ extern string_q get_aliases(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
-extern string_q get_config_override(const CCommandOption& cmd);
 extern string_q get_ens_convert1(const CCommandOption& cmd);
 extern string_q get_ens_convert2(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
@@ -142,7 +141,6 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
-    replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
     replaceAll(source, "[{ENS_CONVERT1}]", get_ens_convert1(p));
     replaceAll(source, "[{ENS_CONVERT2}]", get_ens_convert2(p));
     replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
@@ -560,18 +558,6 @@ string_q get_ens_convert2(const CCommandOption& cmd) {
     return os.str();
 }
 
-string_q get_config_override(const CCommandOption& cmd) {
-    for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.generate == "config") {
-            ostringstream os;
-            os << "\t"
-               << "opts.Settings, _ = " << cmd.api_route
-               << "Cfg.GetSettings(opts.Globals.Chain, configFn, &" + cmd.api_route + "Cfg.Unset)\n";
-            return os.str();
-        }
-    return "";
-}
-
 string_q get_config_package(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members))
         if (p.generate == "config")
@@ -603,6 +589,13 @@ string_q get_index_package(const string_q& fn) {
 }
 
 string_q get_defaults_apis(const CCommandOption& cmd) {
+    string_q last = "";
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
+        if (p.generate == "config") {
+            last = p.longName;
+        }
+    }
+
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isDeprecated) {
@@ -624,11 +617,21 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
             }
             os << p.Format(fmt) << endl;
         }
+        if (p.longName == last) {
+            os << "\tconfigs := make(map[string]string, 10)" << endl;
+        }
     }
     return os.str();
 }
 
 string_q get_requestopts(const CCommandOption& cmd) {
+    string_q last = "";
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
+        if (p.generate == "config") {
+            last = p.longName;
+        }
+    }
+
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         string_q low = toCamelCase(p.Format("[{LOWER}]"));
@@ -639,9 +642,16 @@ string_q get_requestopts(const CCommandOption& cmd) {
             fmt = substitute(STR_REQUEST_CASE1, "++LOWER++", low);
         }
         if (p.generate == "config") {
-            fmt = substitute(fmt, "opts.", "opts.Settings.");
+            if (p.longName == last) {
+                os << "\t\tcase \"" + low + "\":" << endl;
+                os << "\t\t\tconfigs[key] = value[0]" << endl;
+            } else {
+                fmt = substitute(fmt, "opts.[{VARIABLE}] = [{ASSIGN}]", "fallthrough");
+                os << p.Format(fmt) << endl;
+            }
+        } else {
+            os << p.Format(fmt) << endl;
         }
-        os << p.Format(fmt) << endl;
     }
     return os.str();
 }

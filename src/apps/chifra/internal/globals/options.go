@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/spf13/cobra"
 )
 
@@ -35,7 +36,7 @@ type GlobalOptions struct {
 func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
-	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetDefaultChain(), "Chain: ", opts.Chain)
+	logger.TestLog(len(opts.Chain) > 0 && opts.Chain != config.GetSettings().DefaultChain, "Chain: ", opts.Chain)
 	logger.TestLog(opts.Wei, "Wei: ", opts.Wei)
 	logger.TestLog(opts.Ether, "Ether: ", opts.Ether)
 	logger.TestLog(opts.Help, "Help: ", opts.Help)
@@ -55,7 +56,7 @@ func (opts *GlobalOptions) TestLog() {
 
 func SetDefaults(opts *GlobalOptions) {
 	if len(opts.Chain) == 0 {
-		opts.Chain = config.GetDefaultChain()
+		opts.Chain = config.GetSettings().DefaultChain
 	}
 
 	if opts.ShowRaw {
@@ -192,14 +193,21 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 	}
 
 	if len(opts.Chain) == 0 {
-		opts.Chain = config.GetDefaultChain()
+		opts.Chain = config.GetSettings().DefaultChain
 	}
 
-	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
-		logger.Error("Could not establish ts file:", err)
+	if config.IsChainConfigured(opts.Chain) {
+		// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
+		// TODO: Why do we need to do this here?
+		publisher := unchained.GetPreferredPublisher()
+		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
+			logger.Warn(err)
+		}
+		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+	} else {
+		// the error will be reported by the validator
+		return rpc.TempConnection(opts.Chain)
 	}
-
-	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }
 
 func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *rpc.Connection {
@@ -214,12 +222,19 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 	}
 
 	if len(opts.Chain) == 0 {
-		opts.Chain = config.GetDefaultChain()
+		opts.Chain = config.GetSettings().DefaultChain
 	}
 
-	if err := tslib.EstablishTsFile(opts.Chain); err != nil {
-		logger.Error("Could not establish ts file:", err)
+	if config.IsChainConfigured(opts.Chain) {
+		// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
+		// TODO: Why do we need to do this here?
+		publisher := unchained.GetPreferredPublisher()
+		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
+			logger.Warn(err)
+		}
+		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+	} else {
+		// the error will be reported by the validator
+		return rpc.TempConnection(opts.Chain)
 	}
-
-	return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
 }

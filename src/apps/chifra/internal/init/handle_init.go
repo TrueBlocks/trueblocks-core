@@ -32,7 +32,7 @@ func (opts *InitOptions) HandleInit() error {
 	// scraper starts, it starts on the correct block.
 	_ = index.CleanTemporaryFolders(config.PathToIndex(chain), true)
 
-	remoteManifest, err := manifest.ReadManifest(chain, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
 	if err != nil {
 		return err
 	}

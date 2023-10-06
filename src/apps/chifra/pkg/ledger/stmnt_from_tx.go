@@ -147,12 +147,6 @@ func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types
 			Statements:       objects,
 		}
 		_ = conn.Store.Write(statementGroup, nil)
-		// logger.Info("Writing call results to the database...", results.Address, results.BlockNumber, call.Method.Encoding)
-		// if err := call.Conn.Store.Write(results, nil); err != nil {
-		// 	logger.Warn("Failed to write call results to the database", err) // report but don't fail
-		// }
-		// } else if !isFin {
-		// 	logger.Info("Not caching result (not ripe)...", results.Address, results.BlockNumber, call.Method.Encoding)
 	}
 
 	return

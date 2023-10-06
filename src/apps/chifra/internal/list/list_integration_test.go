@@ -12,6 +12,8 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -19,7 +21,8 @@ import (
 )
 
 func Test_HandleFreshenMonitors(t *testing.T) {
-	tslib.EstablishTsFile(utils.GetTestChain())
+	_ = config.GetRootConfig()
+	tslib.EstablishTsFile(utils.GetTestChain(), base.GetTestPublisher())
 	opts := globals.GlobalOptions{}
 	opts.Chain = "mainnet"
 	listOpts := ListOptions{

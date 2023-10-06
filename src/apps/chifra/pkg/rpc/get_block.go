@@ -78,7 +78,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		}
 	}
 
-	if conn.StoreWritable() && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
+	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
 
@@ -105,7 +105,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 		block.Transactions = append(block.Transactions, fmt.Sprint(txHash))
 	}
 
-	if conn.StoreWritable() && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
+	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
 
@@ -276,14 +276,20 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 	}
 }
 
+// This most likely does not work for non-mainnet chains which don't know
+// anything about the Known blocks.
+
+// getBlockReward returns the block reward for a given block number
 func (conn *Connection) getBlockReward(bn uint64) *big.Int {
 	if bn == 0 {
 		return big.NewInt(0)
-	} else if bn < byzantiumBlock {
+	} else if bn < base.KnownBlock(conn.Chain, base.Byzantium) {
 		return big.NewInt(5000000000000000000)
-	} else if bn < constantinopleBlock {
+	} else if bn < base.KnownBlock(conn.Chain, base.Constantinople) {
 		return big.NewInt(3000000000000000000)
-	} else {
+	} else if bn < base.KnownBlock(conn.Chain, base.Merge) {
 		return big.NewInt(2000000000000000000)
+	} else {
+		return big.NewInt(0)
 	}
 }
