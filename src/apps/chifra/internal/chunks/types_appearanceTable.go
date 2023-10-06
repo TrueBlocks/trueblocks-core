@@ -21,11 +21,15 @@ func (s *simpleAppearanceTable) Raw() *types.RawModeler {
 func (s *simpleAppearanceTable) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	return types.Model{
 		Data: map[string]any{
-			"addressRecord": s.AddressRecord,
-			"appearances":   s.Appearances,
+			"address":     s.AddressRecord.Address.Hex(),
+			"offset":      s.AddressRecord.Offset,
+			"count":       s.AddressRecord.Count,
+			"appearances": s.Appearances,
 		},
 		Order: []string{
-			"addressRecord",
+			"address",
+			"offset",
+			"count",
 			"appearances",
 		},
 	}

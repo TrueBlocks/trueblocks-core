@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
@@ -106,9 +107,10 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 
 			return nil
 		}
+
 	} else if opts.Mode == "manifest" {
 		total = len(theMap) * 2
-		sh = shell.NewShell("localhost:5001")
+		sh = shell.NewShell(config.IPFS_URL)
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			progressChan <- 1
 			err = checkHashes(item.chunk, "blooom", sh, item)
