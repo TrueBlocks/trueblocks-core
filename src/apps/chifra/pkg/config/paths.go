@@ -38,7 +38,7 @@ func PathToManifest(chain string) string {
 	return filepath.Join(PathToIndex(chain), "manifest.json")
 }
 
-// PathToIndex returns the path to the timestamps database per chain
+// PathToTimestamps returns the path to the timestamps database per chain
 func PathToTimestamps(chain string) string {
 	return filepath.Join(PathToIndex(chain), "ts.bin")
 }
