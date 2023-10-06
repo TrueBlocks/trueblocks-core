@@ -26,7 +26,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *
 
 	// Do the actual scrape, wait until it finishes, clean up and return on failure
 	if _, err := blazeOpts.HandleBlaze(progress); err != nil {
-		_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
+		_ = index.CleanEphemeralIndexFolders(chain)
 		return err
 	}
 
@@ -34,7 +34,7 @@ func (opts *ScrapeOptions) HandleScrapeBlaze(progress *rpc.MetaData, blazeOpts *
 		if !blazeOpts.ProcessedMap[bn] {
 			// At least one block was not processed. This would only happen in the event of an
 			// error, so clean up, report the error and return. The loop will repeat.
-			_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
+			_ = index.CleanEphemeralIndexFolders(chain)
 			msg := fmt.Sprintf("A block %d was not processed%s", bn, strings.Repeat(" ", 50))
 			return errors.New(msg)
 		}

@@ -24,7 +24,7 @@ func (opts *ScrapeOptions) HandlePrepare(progressThen *rpc.MetaData, blazeOpts *
 	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting
-	_ = index.CleanTemporaryFolders(config.PathToIndex(chain), false)
+	_ = index.CleanEphemeralIndexFolders(chain)
 
 	bloomPath := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"
 	if file.FileExists(bloomPath) {

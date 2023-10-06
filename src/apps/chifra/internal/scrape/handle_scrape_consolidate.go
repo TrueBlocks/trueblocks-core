@@ -58,7 +58,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		// Then, if they are not at least sequential, clean up and try again...
 		allowMissing := config.GetScrape(chain).AllowMissing
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
-			_ = index.CleanTemporaryFolders(config.PathToCache(chain), false)
+			_ = index.CleanEphemeralIndexFolders(chain)
 			return true, err
 		}
 	}
