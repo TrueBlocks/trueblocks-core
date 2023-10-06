@@ -112,6 +112,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	config.SetScrapeArgs(opts.Globals.Chain, configs)
 	// EXISTING_CODE
 
 	return opts
@@ -139,6 +140,8 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
+	configs := getConfigCmdsFromArgs()
+	config.SetScrapeArgs(opts.Globals.Chain, configs)
 	if len(args) == 1 && (args[0] == "run" || args[0] == "indexer") {
 		// these options have been deprecated, so do nothing
 	} else if len(args) > 1 {

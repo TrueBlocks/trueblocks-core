@@ -6,6 +6,6 @@ Env: TB_CHAINS_MAINNET_SCRAPE_CHANNELCOUNT=99995
 scrape?dryRun
 {
   "errors": [
-    "Cannot test block scraper"
+    "chifra scrape is not available in API mode"
   ]
 }

@@ -7,6 +7,6 @@ Env: TB_CHAINS_SEPOLIA_SCRAPE_ALLOWMISSING=true
 scrape?dryRun&snapToGrid=10000&firstSnap=10000&chain=sepolia
 {
   "errors": [
-    "Cannot test block scraper"
+    "chifra scrape is not available in API mode"
   ]
 }
