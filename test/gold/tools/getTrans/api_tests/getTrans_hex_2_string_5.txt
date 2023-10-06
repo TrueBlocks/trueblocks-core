@@ -29,7 +29,7 @@ transactions?transactions=0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e
       "ether": "0",
       "from": "0x4c0a466df0628fe8699051b3ac6506653191cc21",
       "gas": 388323,
-      "gasCost": 17795365650296560,
+      "gasCost": 17795365650296559,
       "gasPrice": 45826195333,
       "gasUsed": 388323,
       "hash": "0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da",

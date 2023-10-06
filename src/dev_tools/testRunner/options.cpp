@@ -216,9 +216,18 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     return true;
 }
 
+string_q postProcessor = "";
+
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(cacheFolder_tmp);
+
+    string_q jqDef = doCommand("which gojq");
+    // if (jqDef.empty()) {
+    jqDef = "jq .";
+    // }
+    postProcessor = getGlobalConfig("testRunner")->getConfigStr("settings", "json_pretty_print", jqDef);
+    cerr << bYellow << "Using `" << postProcessor << "` for post processing." << cOff << endl;
 
     // TODO: This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO: these tests fail. To reproduce, delete the entire cache, comment the lines below
