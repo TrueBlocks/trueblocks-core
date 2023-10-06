@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -57,7 +56,7 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 	ripeCnt := len(ripeFileList)
 	if uint64(ripeCnt) < (blazeOpts.BlockCount - blazeOpts.UnripeDist) {
 		// Then, if they are not at least sequential, clean up and try again...
-		allowMissing := scrapeCfg.AllowMissing(chain)
+		allowMissing := config.AllowMissing(chain)
 		if err := isListSequential(chain, ripeFileList, allowMissing); err != nil {
 			_ = index.CleanTemporaryFolders(config.PathToCache(chain), false)
 			return true, err
@@ -103,8 +102,8 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 		ripeRange := base.RangeFromFilename(ripePath)
 		curRange.Last = ripeRange.Last
 
-		isSnap := (curRange.Last >= opts.Settings.First_snap && (curRange.Last%opts.Settings.Snap_to_grid) == 0)
-		isOvertop := (curCount >= uint64(opts.Settings.Apps_per_chunk))
+		isSnap := (curRange.Last >= opts.Settings.FirstSnap && (curRange.Last%opts.Settings.SnapToGrid) == 0)
+		isOvertop := (curCount >= uint64(opts.Settings.AppsPerChunk))
 
 		if isSnap || isOvertop {
 			appMap := make(index.AddressAppearanceMap, len(appearances))
@@ -173,17 +172,17 @@ func (opts *ScrapeOptions) HandleScrapeConsolidate(progressThen *rpc.MetaData, b
 
 func (opts *ScrapeOptions) Report(nAppsThen, nAppsNow int) {
 	msg := "Block={%d} have {%d} appearances of {%d} ({%0.1f%%}). Need {%d} more. Added {%d} records ({%0.2f} apps/blk)."
-	need := opts.Settings.Apps_per_chunk - utils.Min(opts.Settings.Apps_per_chunk, uint64(nAppsNow))
+	need := opts.Settings.AppsPerChunk - utils.Min(opts.Settings.AppsPerChunk, uint64(nAppsNow))
 	seen := nAppsNow
 	if nAppsThen < nAppsNow {
 		seen = nAppsNow - nAppsThen
 	}
-	pct := float64(nAppsNow) / float64(opts.Settings.Apps_per_chunk)
+	pct := float64(nAppsNow) / float64(opts.Settings.AppsPerChunk)
 	pBlk := float64(seen) / float64(opts.BlockCnt)
 	height := opts.StartBlock + opts.BlockCnt - 1
 	msg = strings.Replace(msg, "{", colors.Green, -1)
 	msg = strings.Replace(msg, "}", colors.Off, -1)
-	logger.Info(fmt.Sprintf(msg, height, nAppsNow, opts.Settings.Apps_per_chunk, pct*100, need, seen, pBlk))
+	logger.Info(fmt.Sprintf(msg, height, nAppsNow, opts.Settings.AppsPerChunk, pct*100, need, seen, pBlk))
 }
 
 func isListSequential(chain string, ripeFileList []os.DirEntry, allowMissing bool) error {

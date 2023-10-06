@@ -454,17 +454,16 @@ string_q get_optfields(const CCommandOption& cmd) {
     string_q configDocs = getDocsPathTemplates(n);
     ::remove(configDocs.c_str());  // remove it if it exists, we will replace it
 
-    bool hasConfig = 0;
     size_t varWidth = 0, typeWidth = 0;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
+        string_q var = p.Format("[{VARIABLE}]");
         if (p.generate == "config") {
-            string_q var = p.Format("Settings");
+            var = toCamelCase(var);
             varWidth = max(var.length(), varWidth);
-            string_q type = cmd.Format("[{API_ROUTE}]Cfg.[{PROPER}]Settings");
+            string_q type = cmd.Format("config.[{PROPER}]Settings");
             typeWidth = max(type.length(), typeWidth);
             continue;
         }
-        string_q var = p.Format("[{VARIABLE}]");
         varWidth = max(var.length(), varWidth);
         string_q type = p.Format("[{GO_INTYPE}]");
         typeWidth = max(type.length(), typeWidth);
@@ -493,6 +492,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     os << "// " << firstUpper(c) << endl;
 
     ostringstream os;
+    bool hasConfig = 0;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.generate == "config") {
             ostringstream dd;
@@ -502,7 +502,7 @@ string_q get_optfields(const CCommandOption& cmd) {
                 dd << "| " << string_q(18, '-') << " | " << string_q(12, '-') << " | " << string_q(12, '-')
                    << " | --------- |" << endl;
             }
-            string_q x = substitute(p.Format("[{LONGNAME}]"), "_", "&lowbar;");
+            string_q x = toCamelCase(p.Format("[{LONGNAME}]"));
             dd << "| " << padRight(x, 18) << " | " << padRight(p.Format("[{GO_INTYPE}]"), 12) << " | "
                << padRight(p.Format("[{DEF_VAL}]"), 12) << " | " << p.Format("[{DESCRIPTION}]") << " |" << endl;
             appendToAsciiFile(configDocs, dd.str());
@@ -521,7 +521,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     }
 
     if (hasConfig) {
-        string type = cmd.Format("[{API_ROUTE}]Cfg.[{PROPER}]Settings");
+        string type = cmd.Format("config.[{PROPER}]Settings");
         ONE(os, "Settings", varWidth, type, typeWidth, "Configuration items for the " + cmd.api_route);
     }
 
@@ -575,7 +575,7 @@ string_q get_config_override(const CCommandOption& cmd) {
 string_q get_config_package(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members))
         if (p.generate == "config")
-            return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/" + cmd.api_route + "Cfg\"\n";
+            return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"\n";
     return "";
 }
 
@@ -734,8 +734,12 @@ string_q get_setopts(const CCommandOption& cmd) {
         if (p.option_type != "positional") {
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
-            os << "(&[{ROUTE}]Pkg.GetOptions()." << (p.isConfig ? "Settings." : "");
-            os << p.Format("[{VARIABLE}]") << ", ";
+            os << "(&[{ROUTE}]Pkg.GetOptions().";
+            if (p.isConfig) {
+                os << "Settings." + p.Format("[{VARIABLE}]") << ", ";
+            } else {
+                os << p.Format("[{VARIABLE}]") << ", ";
+            }
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << get_goDefault(p) << ", ";

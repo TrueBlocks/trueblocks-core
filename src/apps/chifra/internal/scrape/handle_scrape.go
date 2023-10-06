@@ -24,6 +24,18 @@ import (
 
 func (opts *ScrapeOptions) HandleScrape() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+
+	path := config.PathToIndex(chain)
+	if testMode {
+		path = "--unchained-path--"
+	}
+	logger.Info("Scraping:")
+	logger.Info("  Path:    ", path)
+	logger.Info("  Settings:", opts.Settings)
+	if opts.DryRun {
+		return nil
+	}
 	conn := rpc.TempConnection(chain)
 
 	progress, err := conn.GetMetaData(opts.Globals.TestMode)
@@ -34,15 +46,15 @@ func (opts *ScrapeOptions) HandleScrape() error {
 	provider, _ := config.GetRpcProvider(chain)
 	blazeOpts := BlazeOptions{
 		Chain:        chain,
-		NChannels:    opts.Settings.Channel_count,
+		NChannels:    opts.Settings.ChannelCount,
 		NProcessed:   0,
 		StartBlock:   opts.StartBlock,
 		BlockCount:   opts.BlockCnt,
-		UnripeDist:   opts.Settings.Unripe_dist,
+		UnripeDist:   opts.Settings.UnripeDist,
 		RpcProvider:  provider,
 		TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 		ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
-		AppsPerChunk: opts.Settings.Apps_per_chunk,
+		AppsPerChunk: opts.Settings.AppsPerChunk,
 	}
 
 	if ok, err := opts.HandlePrepare(progress, &blazeOpts); !ok || err != nil {
@@ -69,24 +81,24 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// than 'UnripeDist.' If it is, the `ripeBlock` is 'UnripeDist' behind the
 		// head (i.e., 28 blocks usually - six minutes)
 		ripeBlock := progress.Latest
-		if ripeBlock > opts.Settings.Unripe_dist {
-			ripeBlock = progress.Latest - opts.Settings.Unripe_dist
+		if ripeBlock > opts.Settings.UnripeDist {
+			ripeBlock = progress.Latest - opts.Settings.UnripeDist
 		}
 
 		provider, _ := config.GetRpcProvider(chain)
 
 		blazeOpts = BlazeOptions{
 			Chain:        chain,
-			NChannels:    opts.Settings.Channel_count,
+			NChannels:    opts.Settings.ChannelCount,
 			NProcessed:   0,
 			StartBlock:   opts.StartBlock,
 			BlockCount:   opts.BlockCnt,
 			RipeBlock:    ripeBlock,
-			UnripeDist:   opts.Settings.Unripe_dist,
+			UnripeDist:   opts.Settings.UnripeDist,
 			RpcProvider:  provider,
 			TsArray:      make([]tslib.TimestampRecord, 0, opts.BlockCnt),
 			ProcessedMap: make(map[base.Blknum]bool, opts.BlockCnt),
-			AppsPerChunk: opts.Settings.Apps_per_chunk,
+			AppsPerChunk: opts.Settings.AppsPerChunk,
 		}
 
 		// Remove whatever's in the unripePath before running each round. We do this

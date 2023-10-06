@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/scrapeCfg"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -21,7 +20,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	chain := opts.Globals.Chain
 
 	// First, we need to pick up the settings TODO: Should be auto-generated code somehow
-	opts.Settings, _ = scrapeCfg.GetSettings(chain, "blockScrape.toml", &opts.Settings)
+	opts.Settings, _ = config.GetSettings(chain, "blockScrape.toml", &opts.Settings)
 
 	opts.testLog()
 

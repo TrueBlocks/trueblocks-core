@@ -159,7 +159,10 @@ func (s *simpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 //
 
 func ToProgress(chain string, meta *rpc.MetaData) string {
-	nTs, _ := tslib.NTimestamps(chain)
+	nTs, _ := tslib.NTimestamps(chain) // when the file has one record, the block is zero, etc.
+	if nTs > 0 {
+		nTs--
+	}
 	format := "%d, %d, %d, %d ts: %d"
 	return fmt.Sprintf(format, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 }
@@ -191,7 +194,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     opts.Conn.IsNodeArchive(),
-		IsTracing:     opts.Conn.IsNodeTracing(testMode),
+		IsTracing:     opts.Conn.IsNodeTracing(),
 		HasEsKey:      config.HasEsKeys(chain),
 		HasPinKey:     config.HasPinningKeys(chain),
 		Chain:         chain,
