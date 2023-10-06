@@ -28,22 +28,16 @@ func (opts *DaemonOptions) validateDaemon() error {
 		return validate.Usage("The {0} option is not available{1}.", "daemon", " in api mode")
 	}
 
+	// validate.ValidateEnum("scrape", opts.Scrape, "[off|blooms|index]")
+	// validate.ValidateEnum("api", opts.Api, "[off|on]")
+	opts.Api = "on"
+
 	if len(opts.Scrape) > 0 {
-		err := validate.ValidateEnum("scrape", opts.Scrape, "[off|blooms|index]")
-		if err != nil {
-			return err
-		}
 		return validate.Usage("The {0} option is currenlty not available. Use {1} instead.", "--scrape", "chifra scrape")
 	}
 
 	if opts.Monitor {
 		return validate.Usage("The {0} option is currenlty not available. Use {1} instead.", "--monitor", "chifra monitors --watch")
-	}
-
-	if len(opts.Api) > 0 {
-		if err := validate.ValidateEnum("api", opts.Api, "[off|on]"); err != nil {
-			return err
-		}
 	}
 
 	if len(opts.Port) > 0 && !strings.Contains(opts.Port, ":") {

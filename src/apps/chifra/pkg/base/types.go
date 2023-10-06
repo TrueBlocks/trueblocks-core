@@ -1,6 +1,8 @@
 package base
 
-import "math/big"
+import (
+	"math/big"
+)
 
 type Wei = big.Int
 type Gas = uint64

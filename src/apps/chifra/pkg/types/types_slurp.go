@@ -154,7 +154,7 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 	if s.BlockHash != base.HexToHash("0xdeadbeef") && !s.BlockHash.IsZero() {
 		model["blockHash"] = s.BlockHash
 	}
-	if s.TransactionIndex != 80809 {
+	if s.TransactionIndex != EsInternalTx {
 		model["transactionIndex"] = s.TransactionIndex
 	}
 
