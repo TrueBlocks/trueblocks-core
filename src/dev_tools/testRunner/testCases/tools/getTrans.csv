@@ -18,7 +18,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,verbose_blk_idx1         ,y 
 on      ,both ,fast  ,transactions ,tools/getTrans ,verbose_blk_idx2         ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,verbose_blk_idx3         ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & traces
 
-on      ,both ,medi  ,transactions ,tools/getTrans ,articulate_2             ,y    ,transactions = 3648669.24 & articulate & verbose & traces & fmt = json
+on      ,both ,medi  ,transactions ,tools/getTrans ,articulate_2             ,n    ,transactions = 3648669.24 & articulate & verbose & traces & fmt = json
 on      ,both ,medi  ,transactions ,tools/getTrans ,by_blk_hash_bad          ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
 on      ,both ,medi  ,transactions ,tools/getTrans ,by_blk_hash_good         ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,three_ways               ,n    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79 3657480.79 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad & fmt = txt
@@ -26,12 +26,12 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,bad_blkhash_msg          ,y 
 on      ,both ,fast  ,transactions ,tools/getTrans ,source_disabled          ,y    ,transactions = 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a & source & fmt = json
 
 on      ,cmd  ,medi  ,transactions ,tools/getTrans ,core_dump_bug            ,y    ,@avt & transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 & fmt = json
-on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_default              ,y    ,transactions = 2222222.0 2332332.0
+on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_default              ,n    ,transactions = 2222222.0 2332332.0
 on      ,both ,fast  ,transactions ,tools/getTrans ,star                     ,y    ,transactions = 2222221.* & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_txt                  ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_csv                  ,n    ,transactions = 2222222.0 2332332.0 & fmt = csv
 on      ,both ,medi  ,transactions ,tools/getTrans ,fmt_api                  ,y    ,transactions = 2222222.0 2332332.0 & fmt = api
-on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_json                 ,y    ,transactions = 2222222.0 2332332.0 & fmt = json
+on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_json                 ,n    ,transactions = 2222222.0 2332332.0 & fmt = json
 on      ,cmd  ,fast  ,transactions ,tools/getTrans ,fmt_junk                 ,y    ,transactions = 2222222.0 2332332.0 & fmt = junk
 on      ,both ,fast  ,transactions ,tools/getTrans ,old_hang_bug             ,y    ,transactions = 6409270.108 & articulate & fmt = json
 
@@ -79,11 +79,11 @@ on      ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2        ,y 
 
 on      ,both ,slow  ,transactions ,tools/getTrans ,articulate_proxy         ,y    ,transactions = 11476466.96 & articulate & fmt = json
 
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_1           ,y    ,transactions = 0x028dcd16e00f95a1526186f30b105fd69c89e3d25d42ff8708c9f638b1bfabdd & articulate
+on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_1           ,n    ,transactions = 0x028dcd16e00f95a1526186f30b105fd69c89e3d25d42ff8708c9f638b1bfabdd & articulate
 on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_2           ,y    ,transactions = 0x178e2bcd2d2eb05002d4f7b3ae5f47731bddba6c8ef940738a696ae2bd4a0b39 & articulate
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_3           ,y    ,transactions = 0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaab3c57f6f8f28 & articulate
+on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_3           ,n    ,transactions = 0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaab3c57f6f8f28 & articulate
 on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_4           ,y    ,transactions = 0x8cd78c1a30f526ca92673f9970701d2be1cdba53384dc31ba05037cabf851993 & articulate
-on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,y    ,transactions = 0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da & articulate
+on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_5           ,n    ,transactions = 0x9ad65c86eb8e78fdfc46bdb75c309d41fe48ecb11b6abd70505e30558bd2d8da & articulate
 on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_6           ,y    ,transactions = 0xc12685b2f235e540892f709b09aa5b5e552a328097550b13964aa26609e20ad3 & articulate
 on      ,both ,fast  ,transactions ,tools/getTrans ,hex_2_string_7           ,n    ,transactions = 0xf626a4fe94e1c4fb207fad62b1cd8164ba7ac83bad73585a60e8e3bd2a4576bb & articulate & fmt = csv
 on      ,both ,fast  ,transactions ,tools/getTrans ,message                  ,y    ,transactions = 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 & articulate
@@ -152,9 +152,9 @@ on      ,cmd  ,fast  ,transactions ,tools/getTrans ,mulit_line_mulit_txs     ,n 
 on      ,cmd  ,fast  ,transactions ,tools/getTrans ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
 
 on      ,both ,fast  ,transactions ,tools/getTrans ,cache_and_decache        ,y    ,transactions = 46147.0 & cache & decache
-on      ,both ,fast  ,transactions ,tools/getTrans ,cache_one                ,y    ,transactions = 46147.0 & cache
+on      ,both ,fast  ,transactions ,tools/getTrans ,cache_one                ,n    ,transactions = 46147.0 & cache
 on      ,both ,fast  ,transactions ,tools/getTrans ,decache_one              ,y    ,transactions = 46147.0 & decache
-on      ,both ,fast  ,transactions ,tools/getTrans ,cache_traces             ,y    ,transactions = 46147.0 & cache & cache_traces
+on      ,both ,fast  ,transactions ,tools/getTrans ,cache_traces             ,n    ,transactions = 46147.0 & cache & cache_traces
 on      ,both ,fast  ,transactions ,tools/getTrans ,decache_traces           ,y    ,transactions = 46147.0 & decache
 
 # Capabilities

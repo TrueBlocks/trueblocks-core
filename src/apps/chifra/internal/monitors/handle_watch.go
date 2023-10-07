@@ -319,7 +319,7 @@ func (opts *MonitorsOptions) getMonitorList() []monitor.Monitor {
 
 	for result := range monitorChan {
 		switch result.Address {
-		case base.SentinalAddr:
+		case base.NotAMonitor:
 			close(monitorChan)
 		default:
 			if result.Count() > 500000 {
