@@ -45,16 +45,15 @@ const (
 
 // NewMonitor returns a Monitor (but has not yet read in the AppearanceRecords). If 'create' is
 // sent, create the Monitor if it does not already exist
-func NewMonitor(chain string, addr base.Address, create bool) Monitor {
+func NewMonitor(chain string, addr base.Address, create bool) (Monitor, error) {
 	mon := new(Monitor)
 	mon.Header = Header{Magic: file.SmallMagicNumber}
 	mon.Address = addr
 	mon.Chain = chain
-	_, err := mon.Reload(create)
-	if err != nil {
+	if _, err := mon.Reload(create); err != nil {
 		logger.Error(err)
 	}
-	return *mon
+	return *mon, nil
 }
 
 // NewMonitorStaged returns a Monitor whose path is in the 'staging' folder
@@ -185,7 +184,8 @@ func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 			line = utils.StripComments(line)
 			addr := base.HexToAddress(line)
 			if !addrMap[addr] && !addr.IsZero() && base.IsValidAddress(addr.Hex()) {
-				monitorChan <- NewMonitor(chain, addr, true /* create */)
+				mon, _ := NewMonitor(chain, addr, true /* create */)
+				monitorChan <- mon
 			}
 			addrMap[addr] = true
 		}
@@ -199,7 +199,8 @@ func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 		if !info.IsDir() {
 			addr, _ := base.AddressFromPath(path, ".mon.bin")
 			if !addr.IsZero() {
-				monitorChan <- NewMonitor(chain, addr, true /* create */)
+				mon, _ := NewMonitor(chain, addr, true /* create */)
+				monitorChan <- mon
 			}
 		}
 		return nil
