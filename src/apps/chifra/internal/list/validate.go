@@ -61,7 +61,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if len(opts.Globals.File) == 0 {
-		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
+		err := validate.ValidateAtLeastOneNonSentinal(opts.Addrs)
 		if err != nil {
 			return err
 		}
