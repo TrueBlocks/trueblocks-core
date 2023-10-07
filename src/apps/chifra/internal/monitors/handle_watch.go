@@ -25,16 +25,18 @@ import (
 
 // HandleWatch starts the monitor watcher
 func (opts *MonitorsOptions) HandleWatch() error {
-	opts.Globals.Cache = true
-	scraper := NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, 0)
+	return validate.Usage("The monitor function is currently disabled.")
 
-	var wg sync.WaitGroup
-	wg.Add(1)
-	// Note that this never returns in normal operation
-	go opts.RunMonitorScraper(&wg, &scraper)
-	wg.Wait()
+	// opts.Globals.Cache = true
+	// scraper := NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, 0)
 
-	return nil
+	// var wg sync.WaitGroup
+	// wg.Add(1)
+	// // Note that this never returns in normal operation
+	// go opts.RunMonitorScraper(&wg, &scraper)
+	// wg.Wait()
+
+	// return nil
 }
 
 // RunMonitorScraper runs continually, never stopping and freshens any existing monitors
