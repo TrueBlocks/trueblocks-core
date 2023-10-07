@@ -57,8 +57,8 @@ func NewMonitor(chain string, addr base.Address, create bool) Monitor {
 	return *mon
 }
 
-// NewStagedMonitor returns a Monitor whose path is in the 'staging' folder
-func NewStagedMonitor(chain, addr string) (Monitor, error) {
+// NewMonitorStaged returns a Monitor whose path is in the 'staging' folder
+func NewMonitorStaged(chain, addr string) (Monitor, error) {
 	mon := Monitor{
 		Header:  Header{Magic: file.SmallMagicNumber},
 		Address: base.HexToAddress(addr),
