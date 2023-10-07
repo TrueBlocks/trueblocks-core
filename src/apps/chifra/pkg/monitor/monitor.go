@@ -173,7 +173,7 @@ func (mon *Monitor) Remove() (bool, error) {
 // a file called addresses.tsv in the current folder or, if not present, from existing monitors
 func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 	defer func() {
-		monitorChan <- Monitor{Address: base.SentinalAddr}
+		monitorChan <- Monitor{Address: base.NotAMonitor}
 	}()
 
 	if watchList != "existing" {
@@ -248,7 +248,7 @@ func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
 	for mon := range monitorChan {
 		mon := mon
 		switch mon.Address {
-		case base.SentinalAddr:
+		case base.NotAMonitor:
 			close(monitorChan)
 		default:
 			monMap[mon.Address] = &mon

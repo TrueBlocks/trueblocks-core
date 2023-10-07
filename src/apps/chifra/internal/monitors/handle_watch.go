@@ -25,18 +25,16 @@ import (
 
 // HandleWatch starts the monitor watcher
 func (opts *MonitorsOptions) HandleWatch() error {
-	return validate.Usage("The monitor function is currently disabled.")
+	opts.Globals.Cache = true
+	scraper := NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, 0)
 
-	// opts.Globals.Cache = true
-	// scraper := NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, 0)
+	var wg sync.WaitGroup
+	wg.Add(1)
+	// Note that this never returns in normal operation
+	go opts.RunMonitorScraper(&wg, &scraper)
+	wg.Wait()
 
-	// var wg sync.WaitGroup
-	// wg.Add(1)
-	// // Note that this never returns in normal operation
-	// go opts.RunMonitorScraper(&wg, &scraper)
-	// wg.Wait()
-
-	// return nil
+	return nil
 }
 
 // RunMonitorScraper runs continually, never stopping and freshens any existing monitors
@@ -321,7 +319,7 @@ func (opts *MonitorsOptions) getMonitorList() []monitor.Monitor {
 
 	for result := range monitorChan {
 		switch result.Address {
-		case base.SentinalAddr:
+		case base.NotAMonitor:
 			close(monitorChan)
 		default:
 			if result.Count() > 500000 {
