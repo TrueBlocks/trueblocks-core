@@ -11,7 +11,7 @@ import (
 
 // GetStatementsFromTransaction returns a statement from a given transaction
 func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types.SimpleTransaction) (statements []*types.SimpleStatement) {
-	if false && conn.StoreReadable() {
+	if conn.StoreReadable() {
 		statementGroup := &types.SimpleStatementGroup{
 			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
@@ -135,7 +135,7 @@ func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types
 		}
 	}
 
-	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
+	if l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
 		objects := make([]types.SimpleStatement, len(statements))
 		for _, ptr := range statements {
 			objects = append(objects, *ptr)
