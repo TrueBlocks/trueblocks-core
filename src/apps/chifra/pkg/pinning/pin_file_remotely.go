@@ -13,14 +13,11 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 // pinFileRemotely pins a file remotely to the pinning service
 func (s *Service) pinFileRemotely(filepath string) (base.IpfsHash, error) {
-	if s.PinUrl == "" {
-		return "", fmt.Errorf("empty remote pinning URL")
-	}
-
 	if s.HeaderFunc == nil {
 		return "", fmt.Errorf("header function is nil")
 	}
@@ -52,7 +49,7 @@ func (s *Service) pinFileRemotely(filepath string) (base.IpfsHash, error) {
 		Timeout: 30 * time.Second,
 	}
 
-	req, err := http.NewRequest(http.MethodPost, s.PinUrl, r)
+	req, err := http.NewRequest(http.MethodPost, config.GetPinning().RemotePinUrl, r)
 	if err != nil {
 		return "", err
 	}

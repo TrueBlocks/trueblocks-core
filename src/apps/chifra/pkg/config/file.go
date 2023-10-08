@@ -7,13 +7,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-func ReadConfigFile(inFile string, contents interface{}) error {
+// readFile reads the toml config file into the given struct
+func readFile(inFile string, contents interface{}) error {
 	_, err := toml.DecodeFile(inFile, contents)
 	return err
 }
 
-func (cfg *ConfigFile) WriteConfigFile(outFn string) error {
-	cfg.SetVersionStr(version.VersionString())
+// writeFile writes the toml config file from the given struct
+func (cfg *ConfigFile) writeFile(outFn string, vers version.Version) error {
+	cfg.SetVersionStr(vers.String())
 	if f, err := os.Create(outFn); err != nil {
 		return err
 	} else {

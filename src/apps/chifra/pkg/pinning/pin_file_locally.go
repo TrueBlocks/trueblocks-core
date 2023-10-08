@@ -16,7 +16,7 @@ func (s *Service) pinFileLocally(filepath string) (base.IpfsHash, error) {
 	}
 	defer file.Close()
 
-	sh := shell.NewShell(config.IPFS_URL)
+	sh := shell.NewShell(config.GetPinning().LocalPinUrl)
 	cid, err := sh.Add(file, shell.Pin(true))
 	if err != nil {
 		return "", err

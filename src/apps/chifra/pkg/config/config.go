@@ -25,6 +25,7 @@ var trueBlocksConfig ConfigFile
 type ConfigFile struct {
 	Version  versionGroup          `toml:"version"`
 	Settings settingsGroup         `toml:"settings"`
+	Pinning  pinningGroup          `toml:"pinning"`
 	Keys     map[string]keyGroup   `toml:"keys"`
 	Chains   map[string]chainGroup `toml:"chains"`
 }
@@ -35,8 +36,9 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.CachePath", PathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
-	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
-	trueBlocksViper.SetDefault("Settings.LocalGateway", "http://localhost:5001")
+	trueBlocksViper.SetDefault("Pinning.GatewayURL", "https://ipfs.unchainedindex.io/ipfs")
+	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
+	trueBlocksViper.SetDefault("Pinning.GatewayUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
 }
 
 var configMutex sync.Mutex
@@ -94,11 +96,9 @@ func GetRootConfig() *ConfigFile {
 	_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
 	_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
 
-	requiredVer := version.NewVersion("v1.0.0-release")
+	// migrate the config file if necessary (note that this does not return if the file is migrated).
 	currentVer := version.NewVersion(trueBlocksConfig.Version.Current)
-	if currentVer.Uint64() < requiredVer.Uint64() {
-		_ = UpgradeConfigs(requiredVer) // does not return
-	}
+	_ = migrate(currentVer)
 
 	// clean up the config data
 	for chain, ch := range trueBlocksConfig.Chains {
@@ -113,7 +113,7 @@ func GetRootConfig() *ConfigFile {
 		}
 		ch.Chain = chain
 		if len(ch.IpfsGateway) == 0 {
-			ch.IpfsGateway = clean(trueBlocksConfig.Settings.DefaultGateway)
+			ch.IpfsGateway = clean(trueBlocksConfig.Pinning.GatewayURL)
 		}
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
@@ -138,6 +138,12 @@ func GetRootConfig() *ConfigFile {
 	}
 	configLoaded = true
 	return &trueBlocksConfig
+}
+
+// PathToConfigFile returns the path where to find the configuration file
+func PathToConfigFile() string {
+	configFolder := PathToRootConfig()
+	return filepath.Join(configFolder, "trueBlocks.toml")
 }
 
 // PathToRootConfig returns the path where to find configuration files

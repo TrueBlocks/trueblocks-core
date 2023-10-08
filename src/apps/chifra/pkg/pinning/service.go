@@ -17,21 +17,21 @@ const (
 type Service struct {
 	Apikey     string
 	Secret     string
-	PinUrl     string
+	Jwt        string
 	ResultName string
 	HeaderFunc func(s *Service, contentType string) map[string]string
 }
 
 func NewPinningService(chain string, which ServiceType) (Service, error) {
-	pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
+	apiKey, secret, jwt := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret, config.GetKey("pinata").Jwt
 	switch which {
 	case Local:
 		return Service{}, nil
 	case Pinata:
 		return Service{
-			PinUrl:     config.PINATA_URL,
-			Apikey:     pinataKey,
-			Secret:     pinataSecret,
+			Apikey:     apiKey,
+			Secret:     secret,
+			Jwt:        jwt,
 			ResultName: "IpfsHash",
 			HeaderFunc: pinataHeaders,
 		}, nil
@@ -43,7 +43,11 @@ func NewPinningService(chain string, which ServiceType) (Service, error) {
 func pinataHeaders(s *Service, contentType string) map[string]string {
 	headers := make(map[string]string)
 	headers["Content-Type"] = contentType
-	headers["pinata_secret_api_key"] = s.Secret
-	headers["pinata_api_key"] = s.Apikey
+	if s.Secret != "" {
+		headers["pinata_secret_api_key"] = s.Secret
+		headers["pinata_api_key"] = s.Apikey
+	} else {
+		headers["authorization"] = "Bearer " + s.Jwt
+	}
 	return headers
 }
