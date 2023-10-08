@@ -63,39 +63,43 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
-	if opts.Mode == "manifest" {
-		if opts.Pin {
-			if opts.Remote {
-				pinataKey, pinataSecret := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret
-				if pinataKey == "" || pinataSecret == "" {
-					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
-				}
+	isPin := opts.Pin
+	isPublish := opts.Publish
+	isRemote := opts.Remote
+	isDeep := opts.Deep
 
-			} else if !config.IpfsRunning() {
-				return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
+	if !isIndexOrManifest && (isPin || isPublish || isRemote || isDeep) {
+		return validate.Usage("The {0} options is only available in {1} or {2} mode.", "--pin --publish --remote and --deep", "manifest", "index")
+	}
 
+	if !isPin && (isRemote || isDeep) {
+		return validate.Usage("The {0} options require {1}.", "--remote and --deep", "--pin")
+	}
+
+	if isPin {
+		if isRemote {
+			apiKey, secret, jwt := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret, config.GetKey("pinata").Jwt
+			if secret == "" && jwt == "" {
+				return validate.Usage("Either the {0} key or the {1} is required.", "secret", "jwt")
 			}
-		}
-	} else {
-		if opts.Publish {
-			return validate.Usage("The {0} option is available only in {1} mode.", "--publish", "index or manifest")
-		}
-	}
-
-	if opts.Pin && opts.Publish {
-		return validate.Usage("The {0} and {1} options are mutually exclusive.", "--pin", "--publish")
-	}
-
-	if opts.Deep {
-		if opts.Mode == "index" {
-			// do nothing
-		} else if opts.Mode == "manifest" {
-			if !opts.Remote && !config.IpfsRunning() {
-				return validate.Usage("The {0} option requires {1}.", "manifest --deep", "a locally running IPFS daemon or --remote")
+			if secret != "" && apiKey == "" {
+				return validate.Usage("If the {0} key is present, so must be the {1}.", "secret", "apiKey")
+			}
+			if config.GetPinning().RemotePinUrl == "" {
+				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "a remotePinUrl")
 			}
 		} else {
-			return validate.Usage("The {0} option requires mode {1}.", "--deep", "index or manifest")
+			if !config.IpfsRunning() {
+				return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon")
+			}
+			if config.GetPinning().LocalPinUrl == "" {
+				return validate.Usage("The {0} option requires {1}.", "--pin", "a localPinUrl")
+			}
 		}
+	}
+
+	if opts.Publish {
+		return validate.Usage("The {0} option is currenlty unavailable.", "--publish")
 	}
 
 	if opts.Mode != "index" {
