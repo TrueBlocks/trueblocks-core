@@ -110,11 +110,12 @@ func GetOptions() *LogsOptions {
 	return &defaultLogsOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultLogsOptions = LogsOptions{}
 	globals.SetDefaults(&defaultLogsOptions.Globals)
+	defaultLogsOptions.Globals.TestMode = testMode
 	defaultLogsOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra logs
 	// EXISTING_CODE

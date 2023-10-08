@@ -182,11 +182,12 @@ func GetOptions() *BlocksOptions {
 	return &defaultBlocksOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultBlocksOptions = BlocksOptions{}
 	globals.SetDefaults(&defaultBlocksOptions.Globals)
+	defaultBlocksOptions.Globals.TestMode = testMode
 	defaultBlocksOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra blocks
 	// EXISTING_CODE

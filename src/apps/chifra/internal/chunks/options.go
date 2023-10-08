@@ -213,11 +213,12 @@ func GetOptions() *ChunksOptions {
 	return &defaultChunksOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultChunksOptions = ChunksOptions{}
 	globals.SetDefaults(&defaultChunksOptions.Globals)
+	defaultChunksOptions.Globals.TestMode = testMode
 	defaultChunksOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra chunks
 	// EXISTING_CODE

@@ -156,11 +156,12 @@ func GetOptions() *TransactionsOptions {
 	return &defaultTransactionsOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultTransactionsOptions = TransactionsOptions{}
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
+	defaultTransactionsOptions.Globals.TestMode = testMode
 	defaultTransactionsOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra transactions
 	// EXISTING_CODE

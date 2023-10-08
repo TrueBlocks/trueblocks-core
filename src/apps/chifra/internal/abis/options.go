@@ -137,11 +137,12 @@ func GetOptions() *AbisOptions {
 	return &defaultAbisOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultAbisOptions = AbisOptions{}
 	globals.SetDefaults(&defaultAbisOptions.Globals)
+	defaultAbisOptions.Globals.TestMode = testMode
 	defaultAbisOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra abis
 	// EXISTING_CODE

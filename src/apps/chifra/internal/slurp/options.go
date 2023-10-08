@@ -169,11 +169,12 @@ func GetOptions() *SlurpOptions {
 	return &defaultSlurpOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultSlurpOptions = SlurpOptions{}
 	globals.SetDefaults(&defaultSlurpOptions.Globals)
+	defaultSlurpOptions.Globals.TestMode = testMode
 	defaultSlurpOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra slurp
 	// EXISTING_CODE
