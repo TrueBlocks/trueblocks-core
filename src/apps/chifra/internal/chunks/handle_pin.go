@@ -77,7 +77,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				} else {
 					man.Chunks = append(man.Chunks, local)
 				}
-				man.SaveManifest(chain, outPath)
+				_ = man.SaveManifest(chain, outPath)
 
 				if opts.Globals.Verbose {
 					if opts.Remote {

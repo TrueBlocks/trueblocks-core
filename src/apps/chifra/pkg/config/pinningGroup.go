@@ -17,9 +17,6 @@ type pinningGroup struct {
 }
 
 func GetPinning() pinningGroup {
-	p := GetRootConfig().Pinning
-	p.LocalPinUrl = "http://localhost:5001"
-	p.RemotePinUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 	return GetRootConfig().Pinning
 }
 

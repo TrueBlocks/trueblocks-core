@@ -1,11 +1,15 @@
 [version]
-    current = "v1.0.0-release"
+    current = "v1.5.0-release"
 
 [settings]
     cachePath = ""
     defaultChain = "mainnet"
-    defaultGateway = "https://ipfs.unchainedindex.io/ipfs"
     indexPath = ""
+
+[pinning]
+    gatewayUrl = "https://ipfs.unchainedindex.io/ipfs/"
+    localPinUrl = "http://localhost:5001"
+    remotePinUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 
 [keys]
     [keys.etherscan]

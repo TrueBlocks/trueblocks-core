@@ -39,7 +39,6 @@ func init() {
 	trueBlocksViper.SetDefault("Pinning.GatewayURL", "https://ipfs.unchainedindex.io/ipfs")
 	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
 	trueBlocksViper.SetDefault("Pinning.GatewayUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
-	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
 }
 
 var configMutex sync.Mutex
@@ -97,11 +96,9 @@ func GetRootConfig() *ConfigFile {
 	_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
 	_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
 
-	requiredVer := version.NewVersion("v1.0.0-release")
+	// migrate the config file if necessary (note that this does not return if the file is migrated).
 	currentVer := version.NewVersion(trueBlocksConfig.Version.Current)
-	if currentVer.Uint64() < requiredVer.Uint64() {
-		_ = migrate(currentVer, requiredVer) // does not return
-	}
+	_ = migrate(currentVer)
 
 	// clean up the config data
 	for chain, ch := range trueBlocksConfig.Chains {

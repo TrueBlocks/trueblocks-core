@@ -11,55 +11,80 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// migrate will upgrade the config files to the latest versions
-func migrate(oldVersion, newVersion version.Version) error {
-	pathToConfig := PathToRootConfig()
-	pathToChainConfigFile := func(chain, fileName string) string {
-		return filepath.Join(pathToConfig, "config", chain, fileName)
-	}
+func pathToChainConfigFile(chain, fileName string) string {
+	return filepath.Join(PathToRootConfig(), "config", chain, fileName)
+}
 
-	fn := pathToConfig + "trueBlocks.toml"
+// migrate upgrades the config files to the latest versions if necessary
+func migrate(currentVer version.Version) error {
+	minVersion := version.NewVersion("v1.5.0-release")
+	if currentVer.Uint64() >= minVersion.Uint64() {
+		return nil
+	}
+	// note that this routine does not return if it gets this far.
+
 	var cfg ConfigFile
-	if err := readFile(fn, &cfg); err != nil {
+	configFile := PathToConfigFile()
+	if err := readFile(configFile, &cfg); err != nil {
 		return err
 	}
 
-	for chain := range cfg.Chains {
-		ch := cfg.Chains[chain]
-		ch.Chain = chain
-		scrape := ScrapeSettings{
-			AppsPerChunk: 2000000,
-			SnapToGrid:   250000,
-			FirstSnap:    2000000,
-			UnripeDist:   28,
-			AllowMissing: false,
-			ChannelCount: 20,
-		}
-		if chain == "mainnet" {
-			scrape.SnapToGrid = 100000
-			scrape.FirstSnap = 2300000
-		}
+	v10000 := version.NewVersion("v1.0.0-release")
+	if currentVer.Uint64() < v10000.Uint64() {
+		for chain := range cfg.Chains {
+			ch := cfg.Chains[chain]
+			ch.Chain = chain
+			scrape := ScrapeSettings{
+				AppsPerChunk: 2000000,
+				SnapToGrid:   250000,
+				FirstSnap:    2000000,
+				UnripeDist:   28,
+				AllowMissing: false,
+				ChannelCount: 20,
+			}
+			if chain == "mainnet" {
+				scrape.SnapToGrid = 100000
+				scrape.FirstSnap = 2300000
+			}
 
-		fn := pathToChainConfigFile(chain, "blockScrape.toml")
-		if file.FileExists(fn) {
-			_ = MergeScrapeConfig(fn, &scrape)
-			_ = os.Remove(fn)
-		}
-		ch.Scrape = scrape
-		cfg.Chains[chain] = ch
+			fn := pathToChainConfigFile(chain, "blockScrape.toml")
+			if file.FileExists(fn) {
+				_ = MergeScrapeConfig(fn, &scrape)
+				_ = os.Remove(fn)
+			}
+			ch.Scrape = scrape
+			cfg.Chains[chain] = ch
 
-		oldPath := pathToChainConfigFile(chain, "manifest.json")
-		newPath := filepath.Join(PathToIndex(chain), "manifest.json")
-		if file.FileExists(oldPath) {
-			_, _ = file.Copy(newPath, oldPath)
-			_ = os.Remove(oldPath)
+			oldPath := pathToChainConfigFile(chain, "manifest.json")
+			newPath := filepath.Join(PathToIndex(chain), "manifest.json")
+			if file.FileExists(oldPath) {
+				_, _ = file.Copy(newPath, oldPath)
+				_ = os.Remove(oldPath)
+			}
 		}
 	}
 
+	v15000 := version.NewVersion("v1.5.0-release")
+	if currentVer.Uint64() < v15000.Uint64() {
+		pinning := pinningGroup{
+			LocalPinUrl:  "http://localhost:5001",
+			RemotePinUrl: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+		}
+		if cfg.Settings.DefaultGateway != "" {
+			pinning.GatewayURL = cfg.Settings.DefaultGateway
+		} else {
+			pinning.GatewayURL = "https://ipfs.unchainedindex.io/ipfs"
+		}
+		cfg.Settings.DefaultGateway = ""
+		cfg.Pinning = pinning
+	}
+
 	// Re-write the file (after making a backup) with the new version
-	_, _ = file.Copy(fn+".bak", fn)
-	_ = cfg.writeFile(fn, newVersion) // updates the version
-	logger.Fatal(colors.Colored(fmt.Sprintf("Your configuration files were upgraded to {%s}. Rerun your command.", newVersion.String())))
+	_, _ = file.Copy(configFile+".bak", configFile)
+	_ = cfg.writeFile(configFile, minVersion) // updates the version
+
+	msg := "Your configuration files were upgraded to {%s}. Rerun your command."
+	logger.Fatal(colors.Colored(fmt.Sprintf(msg, minVersion.String())))
 
 	return nil
 }
