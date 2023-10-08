@@ -24,6 +24,14 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
+	if opts.LastBlock == 0 {
+		opts.LastBlock = utils.NOPOS
+	}
+
+	if opts.MaxRecords == 0 {
+		opts.MaxRecords = 250
+	}
+
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
@@ -51,19 +59,23 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if len(opts.Globals.File) == 0 {
-		if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
-			return err
-		}
+	if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
 		for _, a := range opts.Addrs {
 			if !base.IsValidAddress(a) {
-				if len(a) < 10 {
-					return validate.Usage("Invalid fourbyte: {0}", a)
-				} else if len(a) > 60 {
-					return validate.Usage("Invalid hash: {0}", a)
-				} else {
-					return validate.Usage("Invalid address: {0}", a)
-				}
+				logger.Error("Invalid address: {0}", a)
+			}
+		}
+		return err
+	}
+
+	for _, a := range opts.Addrs {
+		if !base.IsValidAddress(a) {
+			if len(a) < 10 {
+				return validate.Usage("Invalid fourbyte: {0}", a)
+			} else if len(a) > 60 {
+				return validate.Usage("Invalid hash: {0}", a)
+			} else {
+				return validate.Usage("Invalid address: {0}", a)
 			}
 		}
 	}
