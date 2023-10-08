@@ -140,6 +140,12 @@ func GetRootConfig() *ConfigFile {
 	return &trueBlocksConfig
 }
 
+// PathToConfigFile returns the path where to find the configuration file
+func PathToConfigFile() string {
+	configFolder := PathToRootConfig()
+	return filepath.Join(configFolder, "trueBlocks.toml")
+}
+
 // PathToRootConfig returns the path where to find configuration files
 func PathToRootConfig() string {
 	configPath, err := pathFromXDG("XDG_CONFIG_HOME")

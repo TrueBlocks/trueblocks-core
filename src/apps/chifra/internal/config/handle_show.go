@@ -8,7 +8,7 @@ import (
 )
 
 func (opts *ConfigOptions) HandleShow() error {
-	fn := config.PathToRootConfig() + "trueBlocks.toml"
-	fmt.Printf("%s", file.AsciiFileToString(fn))
+	configFile := config.PathToConfigFile()
+	fmt.Printf("%s", file.AsciiFileToString(configFile))
 	return nil
 }

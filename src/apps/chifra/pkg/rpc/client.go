@@ -84,7 +84,7 @@ func (conn *Connection) getClient() (*ethclient.Client, error) {
 `
 		msg := noProvider
 		msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
-		msg = strings.Replace(msg, "[{FILE}]", config.PathToRootConfig()+"trueBlocks.toml", -1)
+		msg = strings.Replace(msg, "[{FILE}]", config.PathToConfigFile(), -1)
 		msg = strings.Replace(msg, "https://", "<empty>", -1)
 		return nil, fmt.Errorf("%s", msg)
 	}
