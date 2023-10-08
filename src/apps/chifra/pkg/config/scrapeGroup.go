@@ -15,8 +15,8 @@ type ScrapeSettings struct {
 	SnapToGrid   uint64 `toml:"snapToGrid" json:"snapToGrid"`
 	FirstSnap    uint64 `toml:"firstSnap" json:"firstSnap"`
 	UnripeDist   uint64 `toml:"unripeDist" json:"unripeDist"`
-	AllowMissing bool   `toml:"allowMissing,omitempty" json:"allowMissing,omitempty"`
-	ChannelCount uint64 `toml:"channelCount,omitempty" json:"channelCount,omitempty"`
+	AllowMissing bool   `toml:"allowMissing" json:"allowMissing,omitempty"`
+	ChannelCount uint64 `toml:"channelCount" json:"channelCount,omitempty"`
 }
 
 // GetScrape returns the scraper settings per chain
