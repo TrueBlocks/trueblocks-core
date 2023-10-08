@@ -178,11 +178,12 @@ func GetOptions() *StateOptions {
 	return &defaultStateOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultStateOptions = StateOptions{}
 	globals.SetDefaults(&defaultStateOptions.Globals)
+	defaultStateOptions.Globals.TestMode = testMode
 	defaultStateOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra state
 	// EXISTING_CODE

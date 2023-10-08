@@ -6,6 +6,7 @@ TEST[DATE|TIME] File:  cmd_file
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Transactions:  [13327455.0]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] NoHeader:  true
@@ -13,6 +14,7 @@ TEST[DATE|TIME] File:  cmd_file
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 ----
 Results in ./by_file_v_out.file
 {

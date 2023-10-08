@@ -30,7 +30,7 @@ func (opts *LogsOptions) HandleShow() error {
 			cancel()
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+				Enabled: !opts.Globals.TestMode,
 				Total:   int64(len(txMap)),
 			})
 

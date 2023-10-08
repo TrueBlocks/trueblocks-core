@@ -8,6 +8,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [141245]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -17,6 +18,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [158858]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -26,6 +28,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [289897]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -35,6 +38,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [381094]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -44,6 +48,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [394557]
 TEST[DATE|TIME] Hashes:  true
 TEST[DATE|TIME] BigRange:  0
@@ -54,6 +59,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [442738]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -63,6 +69,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [477644]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -72,6 +79,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [599852]
 TEST[DATE|TIME] Hashes:  true
 TEST[DATE|TIME] BigRange:  0
@@ -82,6 +90,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [635557]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -90,6 +99,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [640798]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -98,6 +108,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [723006]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -106,6 +117,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [798397]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -115,6 +127,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [851731]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -124,6 +137,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1025677]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -132,6 +146,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1026962]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -141,6 +156,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1078767]
 TEST[DATE|TIME] Hashes:  true
 TEST[DATE|TIME] BigRange:  0
@@ -151,6 +167,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1152642]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -160,6 +177,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1000000-1001000:100]
 TEST[DATE|TIME] BigRange:  0
 TEST[DATE|TIME] Enabled:  blocks
@@ -168,6 +186,7 @@ TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 ----
 Results in ./cmd_file2_out.file
 {

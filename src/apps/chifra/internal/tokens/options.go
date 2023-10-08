@@ -172,11 +172,12 @@ func GetOptions() *TokensOptions {
 	return &defaultTokensOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultTokensOptions = TokensOptions{}
 	globals.SetDefaults(&defaultTokensOptions.Globals)
+	defaultTokensOptions.Globals.TestMode = testMode
 	defaultTokensOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra tokens
 	// EXISTING_CODE

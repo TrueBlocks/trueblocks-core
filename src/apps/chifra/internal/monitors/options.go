@@ -160,11 +160,12 @@ func GetOptions() *MonitorsOptions {
 	return &defaultMonitorsOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultMonitorsOptions = MonitorsOptions{}
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
+	defaultMonitorsOptions.Globals.TestMode = testMode
 	defaultMonitorsOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra monitors
 	// EXISTING_CODE

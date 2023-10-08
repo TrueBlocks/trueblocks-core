@@ -249,11 +249,12 @@ func GetOptions() *ExportOptions {
 	return &defaultExportOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultExportOptions = ExportOptions{}
 	globals.SetDefaults(&defaultExportOptions.Globals)
+	defaultExportOptions.Globals.TestMode = testMode
 	defaultExportOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra export
 	// EXISTING_CODE

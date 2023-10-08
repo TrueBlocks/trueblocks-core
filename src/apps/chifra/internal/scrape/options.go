@@ -161,11 +161,12 @@ func GetOptions() *ScrapeOptions {
 	return &defaultScrapeOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultScrapeOptions = ScrapeOptions{}
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
+	defaultScrapeOptions.Globals.TestMode = testMode
 	defaultScrapeOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra scrape
 	// EXISTING_CODE

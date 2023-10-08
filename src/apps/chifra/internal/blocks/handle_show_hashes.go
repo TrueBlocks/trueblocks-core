@@ -35,7 +35,7 @@ func (opts *BlocksOptions) HandleHashes() error {
 
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
-			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Enabled: !opts.Globals.TestMode,
 			Total:   int64(len(appMap)),
 		})
 

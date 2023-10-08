@@ -36,7 +36,7 @@ func (opts *ExportOptions) readReceipts(
 
 	bar := logger.NewBar(logger.BarOptions{
 		Prefix:  mon.Address.Hex(),
-		Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+		Enabled: !opts.Globals.TestMode,
 		Total:   mon.Count(),
 	})
 
