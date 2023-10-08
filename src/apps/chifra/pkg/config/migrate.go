@@ -11,8 +11,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-// upgradeConfigs will upgrade the config files to the latest versions
-func UpgradeConfigs(newVersion version.Version) error {
+// migrate will upgrade the config files to the latest versions
+func migrate(oldVersion, newVersion version.Version) error {
 	pathToConfig := PathToRootConfig()
 	pathToChainConfigFile := func(chain, fileName string) string {
 		return filepath.Join(pathToConfig, "config", chain, fileName)
@@ -20,7 +20,7 @@ func UpgradeConfigs(newVersion version.Version) error {
 
 	fn := pathToConfig + "trueBlocks.toml"
 	var cfg ConfigFile
-	if err := ReadConfigFile(fn, &cfg); err != nil {
+	if err := readFile(fn, &cfg); err != nil {
 		return err
 	}
 
@@ -58,7 +58,7 @@ func UpgradeConfigs(newVersion version.Version) error {
 
 	// Re-write the file (after making a backup) with the new version
 	_, _ = file.Copy(fn+".bak", fn)
-	_ = cfg.WriteConfigFile(fn) // updates the version
+	_ = cfg.writeFile(fn, newVersion) // updates the version
 	logger.Fatal(colors.Colored(fmt.Sprintf("Your configuration files were upgraded to {%s}. Rerun your command.", newVersion.String())))
 
 	return nil
@@ -79,7 +79,7 @@ type OldScrape struct {
 
 func MergeScrapeConfig(fn string, scrape *ScrapeSettings) error {
 	var sCfg OldScrape
-	if err := ReadConfigFile(fn, &sCfg); err != nil {
+	if err := readFile(fn, &sCfg); err != nil {
 		return err
 	}
 	if sCfg.Settings.AppsPerChunk > 0 {

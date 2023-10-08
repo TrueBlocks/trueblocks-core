@@ -97,7 +97,7 @@ func GetRootConfig() *ConfigFile {
 	requiredVer := version.NewVersion("v1.0.0-release")
 	currentVer := version.NewVersion(trueBlocksConfig.Version.Current)
 	if currentVer.Uint64() < requiredVer.Uint64() {
-		_ = UpgradeConfigs(requiredVer) // does not return
+		_ = migrate(currentVer, requiredVer) // does not return
 	}
 
 	// clean up the config data
