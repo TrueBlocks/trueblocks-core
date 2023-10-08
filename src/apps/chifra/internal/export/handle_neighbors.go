@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 			} else if !opts.NoZero || cnt > 0 {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
-					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
 				allNeighbors := make([]index.Reason, 0)

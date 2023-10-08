@@ -49,7 +49,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		}
 
 		bar := logger.NewBar(logger.BarOptions{
-			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Enabled: !opts.Globals.TestMode,
 			Total:   int64(len(txMap)),
 		})
 
