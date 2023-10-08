@@ -170,6 +170,7 @@ func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChun
 // SaveManifest writes the manifest to disc in JSON at fileName
 func (m *Manifest) SaveManifest(chain, fileName string) error {
 	m.Config = config.GetScrape(chain)
+	m.Config.ChannelCount = 0 // we don't want this in the manifest
 
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {

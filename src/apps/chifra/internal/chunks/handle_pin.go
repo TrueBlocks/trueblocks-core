@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -11,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -20,32 +22,23 @@ import (
 )
 
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
-	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
-
 	chain := opts.Globals.Chain
+	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
+	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
+
+	man := manifest.Manifest{
+		Version:       version.ManifestVersion,
+		Chain:         chain,
+		Specification: unchained.Specification,
+		Config:        config.GetScrape(chain),
+	}
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		report := simpleChunkPinReport{
 			Version:       version.ManifestVersion,
 			Chain:         chain,
 			Specification: unchained.Specification,
-		}
-
-		if len(blockNums) == 0 {
-			var err error
-			tsPath := config.PathToTimestamps(chain)
-			if report.TsHash, _, err = pinning.PinOneFile(chain, "timestamps", tsPath, config.IpfsRunning(), opts.Remote); err != nil {
-				errorChan <- err
-				cancel()
-				return
-			}
-
-			manPath := config.PathToManifest(chain)
-			if report.ManifestHash, _, err = pinning.PinOneFile(chain, "manifest", manPath, config.IpfsRunning(), opts.Remote); err != nil {
-				errorChan <- err
-				cancel()
-				return
-			}
 		}
 
 		if len(blockNums) != 0 || opts.Deep {
@@ -72,12 +65,19 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 
 				if !pinning.Matches(&local, &remote) {
 					logger.Warn("Local and remote pins do not match")
-					logger.Warn(colors.Yellow+local.BloomHash.String(), "-", local.IndexHash, colors.Off)
-					logger.Warn(colors.Yellow+remote.BloomHash.String(), "-", remote.IndexHash, colors.Off)
+					logger.Warn(local.BloomHash, "-", local.IndexHash)
+					logger.Warn(remote.BloomHash, "-", remote.IndexHash)
 					logger.Fatal("IPFS hashes between local and remote do not match")
 				} else if opts.Remote && config.IpfsRunning() {
 					logger.Info(colors.BrightGreen+"Matches: "+remote.BloomHash.String(), "-", remote.IndexHash, colors.Off)
 				}
+
+				if opts.Remote {
+					man.Chunks = append(man.Chunks, remote)
+				} else {
+					man.Chunks = append(man.Chunks, local)
+				}
+				man.SaveManifest(chain, outPath)
 
 				if opts.Globals.Verbose {
 					if opts.Remote {
@@ -111,6 +111,30 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				cancel()
 				return
 			}
+		}
+
+		if len(blockNums) == 0 {
+			var err error
+			tsPath := config.PathToTimestamps(chain)
+			if report.TsHash, _, err = pinning.PinOneFile(chain, "timestamps", tsPath, config.IpfsRunning(), opts.Remote); err != nil {
+				errorChan <- err
+				cancel()
+				return
+			}
+
+			manPath := config.PathToManifest(chain)
+			if opts.Deep {
+				manPath = outPath
+			}
+			if report.ManifestHash, _, err = pinning.PinOneFile(chain, "manifest", manPath, config.IpfsRunning(), opts.Remote); err != nil {
+				errorChan <- err
+				cancel()
+				return
+			}
+		}
+
+		if opts.Deep {
+			logger.Info("Results places in", colors.BrightGreen, outPath, colors.Off)
 		}
 
 		modelChan <- &report

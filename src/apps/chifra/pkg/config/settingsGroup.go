@@ -8,7 +8,7 @@ type settingsGroup struct {
 	CachePath      string `toml:"cachePath"`
 	IndexPath      string `toml:"indexPath"`
 	DefaultChain   string `toml:"defaultChain"`
-	DefaultGateway string `toml:"defaultGateway"`
+	DefaultGateway string `toml:"defaultGateway,omitempty"`
 }
 
 func GetSettings() settingsGroup {
