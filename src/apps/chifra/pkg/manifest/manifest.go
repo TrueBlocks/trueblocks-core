@@ -92,7 +92,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		if err != nil {
 			return nil, err
 		}
-		return man, man.SaveManifest(chain)
+		return man, man.SaveManifest(chain, config.PathToManifest(chain))
 	}
 
 	contents := file.AsciiFileToString(manifestPath)
@@ -164,14 +164,13 @@ func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChun
 	}
 
 	logger.Info(colors.Magenta+"Updating manifest with", len(man.Chunks), "chunks", spaces, colors.Off)
-	return man.SaveManifest(chain)
+	return man.SaveManifest(chain, config.PathToManifest(chain))
 }
 
-// SaveManifest writes the manifest to disc in JSON
-func (m *Manifest) SaveManifest(chain string) error {
+// SaveManifest writes the manifest to disc in JSON at fileName
+func (m *Manifest) SaveManifest(chain, fileName string) error {
 	m.Config = config.GetScrape(chain)
 
-	fileName := config.PathToManifest(chain)
 	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)

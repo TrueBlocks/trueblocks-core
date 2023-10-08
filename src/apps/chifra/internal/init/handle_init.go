@@ -43,7 +43,7 @@ func (opts *InitOptions) HandleInit() error {
 		return errors.New(msg)
 	}
 
-	err = remoteManifest.SaveManifest(chain)
+	err = remoteManifest.SaveManifest(chain, config.PathToManifest(chain))
 	if err != nil {
 		return err
 	}
