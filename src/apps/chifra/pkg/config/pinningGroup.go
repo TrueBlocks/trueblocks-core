@@ -16,18 +16,15 @@ type pinningGroup struct {
 	RemotePinUrl string `toml:"remotePinUrl"`
 }
 
-// func GetPinning() pinningGroup {
-// 	return GetRootConfig().Pinning
-// }
+func GetPinning() pinningGroup {
+	p := GetRootConfig().Pinning
+	p.LocalPinUrl = "http://localhost:5001"
+	p.RemotePinUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS"
+	return GetRootConfig().Pinning
+}
 
 func IpfsRunning() bool {
-	sh := shell.NewShell(IPFS_URL)
+	sh := shell.NewShell(GetPinning().LocalPinUrl)
 	_, err := sh.Add(strings.NewReader("hello world!"))
 	return err == nil
 }
-
-// TODO: should be configurable (see #2804)
-const (
-	PINATA_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS"
-	IPFS_URL   = "http://localhost:5001"
-)

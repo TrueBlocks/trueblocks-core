@@ -25,6 +25,7 @@ func PinOneFile(chain, dbName, fn string, isLocal, isRemote bool) (base.IpfsHash
 		return hash, 0, fmt.Errorf("no pinning service available")
 	}
 
+	logger.Info(colors.Magenta+"Pinning", dbName, "file", fn, "...", colors.Off)
 	if isLocal {
 		localService, _ := NewPinningService(chain, Local)
 		if hash, err = localService.pinTheFile(fn, true); err != nil {

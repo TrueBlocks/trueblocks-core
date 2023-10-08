@@ -110,7 +110,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 
 	} else if opts.Mode == "manifest" {
 		total = len(theMap) * 2
-		sh = shell.NewShell(config.IPFS_URL)
+		sh = shell.NewShell(config.GetPinning().LocalPinUrl)
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			progressChan <- 1
 			err = checkHashes(item.chunk, "blooom", sh, item)

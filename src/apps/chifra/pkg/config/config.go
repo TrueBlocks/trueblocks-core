@@ -25,6 +25,7 @@ var trueBlocksConfig ConfigFile
 type ConfigFile struct {
 	Version  versionGroup          `toml:"version"`
 	Settings settingsGroup         `toml:"settings"`
+	Pinning  pinningGroup          `toml:"pinning"`
 	Keys     map[string]keyGroup   `toml:"keys"`
 	Chains   map[string]chainGroup `toml:"chains"`
 }
@@ -35,8 +36,10 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.CachePath", PathToRootConfig()+"cache/")
 	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
+	trueBlocksViper.SetDefault("Pinning.GatewayURL", "https://ipfs.unchainedindex.io/ipfs")
+	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
+	trueBlocksViper.SetDefault("Pinning.GatewayUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
 	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
-	trueBlocksViper.SetDefault("Settings.LocalGateway", "http://localhost:5001")
 }
 
 var configMutex sync.Mutex
@@ -113,7 +116,7 @@ func GetRootConfig() *ConfigFile {
 		}
 		ch.Chain = chain
 		if len(ch.IpfsGateway) == 0 {
-			ch.IpfsGateway = clean(trueBlocksConfig.Settings.DefaultGateway)
+			ch.IpfsGateway = clean(trueBlocksConfig.Pinning.GatewayURL)
 		}
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
