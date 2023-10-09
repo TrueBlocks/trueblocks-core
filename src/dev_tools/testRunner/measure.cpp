@@ -438,7 +438,7 @@ CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     node = "TG";
     uint16_t maj, min, build;
     getVersionValues(maj, min, build);
-    epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" + uint_2_Str(min));
+    epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" + uint_2_Str((maj * 100) + min));
     group = g;
     cmd = c;
     type = t;
