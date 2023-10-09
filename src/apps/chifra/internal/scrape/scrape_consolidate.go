@@ -112,6 +112,13 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
+			if err := Notify(Notification{
+				Msg:  ChunkWritten,
+				Meta: bm.meta,
+				Data: nil,
+			}); err != nil {
+				return err, false
+			}
 
 			// reset for next chunk
 			bm.meta, _ = bm.opts.Conn.GetMetaData(bm.IsTestMode())
@@ -149,6 +156,14 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	// Let the user know what happened...
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
+
+	if err := Notify(Notification{
+		Msg:  StageUpdated,
+		Meta: bm.meta,
+		Data: nil,
+	}); err != nil {
+		return err, false
+	}
 
 	// Commit the change by deleting the backup file.
 	os.Remove(backupFn)
