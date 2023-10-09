@@ -72,7 +72,7 @@ func GetRootConfig() *ConfigFile {
 	}
 	cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 	cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
-	if !strings.HasSuffix(cachePath, "/cache") {
+	if !strings.Contains(cachePath, "/cache") {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 	trueBlocksConfig.Settings.CachePath = cachePath
@@ -83,7 +83,7 @@ func GetRootConfig() *ConfigFile {
 	}
 	indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 	indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
-	if !strings.HasSuffix(indexPath, "/unchained") {
+	if !strings.Contains(indexPath, "/unchained") {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
 	trueBlocksConfig.Settings.IndexPath = indexPath

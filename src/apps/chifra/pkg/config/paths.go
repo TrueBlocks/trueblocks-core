@@ -54,7 +54,7 @@ func PathToIndex(chain string) string {
 	}
 
 	// Probably already true, but can't hurt to be sure
-	if !strings.HasSuffix(indexPath, "/unchained") {
+	if !strings.Contains(indexPath, "/unchained") {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
 
@@ -80,7 +80,7 @@ func PathToCache(chain string) string {
 	}
 
 	// Probably already true, but can't hurt to be sure
-	if !strings.HasSuffix(cachePath, "/cache") {
+	if !strings.Contains(cachePath, "/cache") {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 
