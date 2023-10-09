@@ -54,12 +54,12 @@ func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
 	msg := "chifra abis"
 	// EXISTING_CODE
 	handled = true
-	if len(opts.Find) > 0 {
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else if len(opts.Find) > 0 {
 		err = opts.HandleAbiFind()
 	} else if len(opts.Encode) > 0 {
 		err = opts.HandleEncode()
-	} else if opts.Clean {
-		err = opts.HandleClean()
 	} else {
 		err = opts.HandleAddresses()
 	}

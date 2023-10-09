@@ -50,7 +50,7 @@ func (conn *Connection) GetESTransactionByAddress(addr, requestType string, pagi
 	if fromEs.Message == "NOTOK" {
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
-		// remove empty ABIs with chifra abis --clean.
+		// remove empty ABIs with chifra abis --decache.
 		logger.Warn("provider responded with:", url, fromEs.Message)
 		return []types.SimpleSlurp{}, 0, nil
 		// } else if fromEs.Message != "OK" {

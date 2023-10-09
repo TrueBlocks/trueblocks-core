@@ -22,22 +22,22 @@ func (opts *AbisOptions) validateAbis() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	if opts.Clean {
+	if opts.Globals.Decache {
 		if opts.Globals.IsApiMode() {
-			return validate.Usage("The {0} option is not available{1}.", "--clean", " in API mode")
+			return validate.Usage("The {0} option is not available{1}.", "--decache", " in API mode")
 		}
 		if len(opts.Encode) > 0 {
-			return validate.Usage("Please choose only one of {0}.", "--clean or --encode")
+			return validate.Usage("Please choose only one of {0}.", "--decache or --encode")
 		}
 		if len(opts.Find) > 0 {
-			return validate.Usage("Please choose only one of {0}.", "--clean or --find")
+			return validate.Usage("Please choose only one of {0}.", "--decache or --find")
 		}
 		if opts.Known {
-			return validate.Usage("Please choose only one of {0}.", "--clean or --known")
+			return validate.Usage("Please choose only one of {0}.", "--decache or --known")
 		}
 	}
 
-	if len(opts.Globals.File) == 0 && len(opts.Encode) == 0 && len(opts.Find) == 0 && !opts.Known && !opts.Clean {
+	if len(opts.Globals.File) == 0 && len(opts.Encode) == 0 && len(opts.Find) == 0 && !opts.Known && !opts.Globals.Decache {
 		// If we're not find and not known we better have at least one address
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {

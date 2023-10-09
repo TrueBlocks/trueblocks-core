@@ -1,8 +1,9 @@
-chifra abis  --clean --find 0x1aa3a008
+chifra abis  --decache --find 0x1aa3a008
 TEST[DATE|TIME] Find:  [0x1aa3a008]
-TEST[DATE|TIME] Clean:  true
+TEST[DATE|TIME] Decache:  true
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-Error: Please choose only one of --clean or --find.
+Error: Please choose only one of --decache or --find.
 Usage:
   chifra abis [flags] <address> [address...]
 
@@ -14,7 +15,8 @@ Flags:
   -f, --find strings    search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings    for the --find option only, provide hints to speed up the search
   -e, --encode string   generate the 32-byte encoding for a given cannonical function or event signature
-  -C, --clean           remove an abi file for an address or all zero-length files if no address is given
+  -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose output
   -h, --help            display this help screen

@@ -1,5 +1,6 @@
 chifra abis  0xffa93aacf49297d51e211817452839052fdfb961
 TEST[DATE|TIME] Addrs:  [0xffa93aacf49297d51e211817452839052fdfb961]
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 encoding	type	name	signature
 0x05d2035b	function	mintingFinished	mintingFinished()

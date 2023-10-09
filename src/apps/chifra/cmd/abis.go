@@ -53,6 +53,7 @@ Notes:
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra abis
 	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 
 	abisCmd.Flags().SortFlags = false
@@ -61,7 +62,6 @@ func init() {
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Hint, "hint", "n", nil, "for the --find option only, provide hints to speed up the search")
 	abisCmd.Flags().StringVarP(&abisPkg.GetOptions().Encode, "encode", "e", "", "generate the 32-byte encoding for a given cannonical function or event signature")
-	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Clean, "clean", "C", false, "remove an abi file for an address or all zero-length files if no address is given")
 	globals.InitGlobals(abisCmd, &abisPkg.GetOptions().Globals, capabilities)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
