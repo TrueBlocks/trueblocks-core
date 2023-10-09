@@ -4,7 +4,7 @@ TEST[DATE|TIME] File:  signatures.txt
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-Error: Please choose only one of --clean or --encode.
+Error: Please choose only one of --decache or --encode.
 Usage:
   chifra abis [flags] <address> [address...]
 

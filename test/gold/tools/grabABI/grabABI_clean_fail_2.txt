@@ -3,7 +3,7 @@ TEST[DATE|TIME] Find:  [0x1aa3a008]
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-Error: Please choose only one of --clean or --find.
+Error: Please choose only one of --decache or --find.
 Usage:
   chifra abis [flags] <address> [address...]
 

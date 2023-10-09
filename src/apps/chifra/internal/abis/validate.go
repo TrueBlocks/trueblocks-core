@@ -24,16 +24,16 @@ func (opts *AbisOptions) validateAbis() error {
 
 	if opts.Globals.Decache {
 		if opts.Globals.IsApiMode() {
-			return validate.Usage("The {0} option is not available{1}.", "--clean", " in API mode")
+			return validate.Usage("The {0} option is not available{1}.", "--decache", " in API mode")
 		}
 		if len(opts.Encode) > 0 {
-			return validate.Usage("Please choose only one of {0}.", "--clean or --encode")
+			return validate.Usage("Please choose only one of {0}.", "--decache or --encode")
 		}
 		if len(opts.Find) > 0 {
-			return validate.Usage("Please choose only one of {0}.", "--clean or --find")
+			return validate.Usage("Please choose only one of {0}.", "--decache or --find")
 		}
 		if opts.Known {
-			return validate.Usage("Please choose only one of {0}.", "--clean or --known")
+			return validate.Usage("Please choose only one of {0}.", "--decache or --known")
 		}
 	}
 

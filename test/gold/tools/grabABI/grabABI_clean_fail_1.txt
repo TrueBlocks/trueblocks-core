@@ -3,7 +3,7 @@ TEST[DATE|TIME] Known:  true
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-Error: Please choose only one of --clean or --known.
+Error: Please choose only one of --decache or --known.
 Usage:
   chifra abis [flags] <address> [address...]
 
