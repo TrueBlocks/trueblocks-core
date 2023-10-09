@@ -53,9 +53,8 @@ func PathToIndex(chain string) string {
 		indexPath = trueBlocksConfig.Settings.IndexPath
 	}
 
-	// We want the index folder to be named `unchained` and be in
-	// the root of cache path
-	if !strings.Contains(indexPath, "/unchained") {
+	// Probably already true, but can't hurt to be sure
+	if !strings.HasSuffix(indexPath, "/unchained") {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
 
@@ -80,9 +79,8 @@ func PathToCache(chain string) string {
 		cachePath = GetSettings().CachePath
 	}
 
-	// We want the cache folder to be named `cache` and be in
-	// the root of cache path
-	if !strings.Contains(cachePath, "/cache") {
+	// Probably already true, but can't hurt to be sure
+	if !strings.HasSuffix(cachePath, "/cache") {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 

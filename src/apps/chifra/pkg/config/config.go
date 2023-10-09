@@ -12,7 +12,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -73,6 +72,9 @@ func GetRootConfig() *ConfigFile {
 	}
 	cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 	cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
+	if !strings.HasSuffix(cachePath, "/cache") {
+		cachePath = filepath.Join(cachePath, "cache")
+	}
 	trueBlocksConfig.Settings.CachePath = cachePath
 
 	indexPath := trueBlocksConfig.Settings.IndexPath
@@ -81,20 +83,14 @@ func GetRootConfig() *ConfigFile {
 	}
 	indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 	indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
+	if !strings.HasSuffix(indexPath, "/unchained") {
+		indexPath = filepath.Join(indexPath, "unchained")
+	}
 	trueBlocksConfig.Settings.IndexPath = indexPath
 
 	if len(trueBlocksConfig.Settings.DefaultChain) == 0 {
 		trueBlocksConfig.Settings.DefaultChain = "mainnet"
 	}
-
-	// We establish only the top-level folders here. When we figure out
-	// which chain we're on (not until the user tells us on the command line)
-	// only then can we complete these paths. At this point these paths
-	// only point to the top-levl of the cache or index. Also note that
-	// these two calls do not return if they fail, so no need to handle errors
-	defaultChains := []string{"mainnet", "sepolia", trueBlocksConfig.Settings.DefaultChain}
-	_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
-	_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
 
 	// migrate the config file if necessary (note that this does not return if the file is migrated).
 	currentVer := version.NewVersion(trueBlocksConfig.Version.Current)
