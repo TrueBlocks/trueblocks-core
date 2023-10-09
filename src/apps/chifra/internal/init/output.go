@@ -64,6 +64,20 @@ func (opts *InitOptions) InitInternal() (err error, handled bool) {
 	} else {
 		err = opts.HandleInit()
 	}
+
+	if opts.DryRun {
+		logger.Warn("DryRun: no files were changed.")
+	}
+
+	if opts.OnDiscChanged {
+		if opts.DryRun {
+			logger.Warn("")
+			logger.Warn("The process would have modified the index. In that case, you would have")
+			logger.Warn("had to invalidate your monitor cache by removing it.")
+		} else {
+			logger.Warn("The on-disk index has changed. You must invalidate your monitor cache by removing it.")
+		}
+	}
 	// EXISTING_CODE
 	timer.Report(msg)
 

@@ -49,7 +49,11 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	// Get the list of things we need to download
-	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
+	chunksToDownload, nCorrections, onDiscChanged, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
+	if err != nil {
+		return err
+	}
+	opts.OnDiscChanged = onDiscChanged // after this function returns, we report that the user needs to invalidate his/her monitors
 
 	// Tell the user what we're doing
 	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())

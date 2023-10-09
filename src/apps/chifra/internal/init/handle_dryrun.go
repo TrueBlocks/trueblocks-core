@@ -33,7 +33,11 @@ func (opts *InitOptions) HandleDryRun() error {
 
 	// Get the list of things we need to download
 	spec := unchained.Specification
-	chunksToDownload, nCorrections := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
+	chunksToDownload, nCorrections, onDiscChanged, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
+	if err != nil {
+		return err
+	}
+	opts.OnDiscChanged = onDiscChanged // after this function returns, we report that the user needs to invalidate his/her monitors
 	if opts.Globals.TestMode {
 		if len(chunksToDownload) > 10 {
 			chunksToDownload = chunksToDownload[:10]
