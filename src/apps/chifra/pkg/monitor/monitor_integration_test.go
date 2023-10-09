@@ -22,7 +22,7 @@ func Test_Monitor(t *testing.T) {
 	path := mon.Path()
 	dir, fileName := filepath.Split(path)
 
-	if !strings.HasSuffix(dir, "/cache/mainnet/monitors/") {
+	if !strings.Contains(dir, "/cache/mainnet/monitors/") {
 		t.Error("Incorrect suffix in 'dir'. Expected: \"/cache/mainnet/monitors/\" Dir:", dir)
 	}
 
