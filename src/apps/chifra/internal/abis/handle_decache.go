@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-func (opts *AbisOptions) HandleClean() error {
+func (opts *AbisOptions) HandleDecache() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 

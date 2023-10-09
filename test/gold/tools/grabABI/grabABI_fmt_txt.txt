@@ -1,5 +1,6 @@
 chifra abis  0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt txt
 TEST[DATE|TIME] Addrs:  [0xe94327d07fc17907b4db788e5adf2ed424addff6]
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 encoding	type	name	signature
 0x06fdde03	function	name	name()

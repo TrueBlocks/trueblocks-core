@@ -11,7 +11,6 @@ abisOpts = {
     "find": {"hotkey": "-f", "type": "flag"},
     "hint": {"hotkey": "-n", "type": "flag"},
     "encode": {"hotkey": "-e", "type": "flag"},
-    "clean": {"hotkey": "-C", "type": "flag"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},
     "help": {"hotkey": "-h", "type": "switch"},

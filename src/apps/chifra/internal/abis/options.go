@@ -27,7 +27,6 @@ type AbisOptions struct {
 	Find    []string              `json:"find,omitempty"`    // Search for function or event declarations given a four- or 32-byte code(s)
 	Hint    []string              `json:"hint,omitempty"`    // For the --find option only, provide hints to speed up the search
 	Encode  string                `json:"encode,omitempty"`  // Generate the 32-byte encoding for a given cannonical function or event signature
-	Clean   bool                  `json:"clean,omitempty"`   // Remove an abi file for an address or all zero-length files if no address is given
 	Globals globals.GlobalOptions `json:"globals,omitempty"` // The global options
 	Conn    *rpc.Connection       `json:"conn,omitempty"`    // The connection to the RPC server
 	BadFlag error                 `json:"badFlag,omitempty"` // An error flag if needed
@@ -44,7 +43,6 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
-	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -80,8 +78,6 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			}
 		case "encode":
 			opts.Encode = value[0]
-		case "clean":
-			opts.Clean = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
@@ -146,6 +142,7 @@ func ResetOptions(testMode bool) {
 	defaultAbisOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra abis
 	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 	defaultAbisOptions.Globals.Caps = capabilities
 }
