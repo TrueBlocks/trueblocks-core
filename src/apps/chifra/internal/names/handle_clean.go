@@ -135,11 +135,11 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 
 		// update names in-memory cache
 		if opts.Regular {
-			if err = names.UpdateRegularName(&name); err != nil {
+			if err = names.UpdateName(names.DatabaseRegular, &name); err != nil {
 				return wrapErrorWithAddr(&address, err)
 			}
 		} else {
-			if err = names.UpdateCustomName(&name); err != nil {
+			if err = names.UpdateName(names.DatabaseCustom, &name); err != nil {
 				return wrapErrorWithAddr(&address, err)
 			}
 		}

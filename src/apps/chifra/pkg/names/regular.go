@@ -88,7 +88,17 @@ func ReadRegularName(address base.Address) (name *types.SimpleName) {
 	return nil
 }
 
-func UpdateRegularName(name *types.SimpleName) (err error) {
+func UpdateName(dbType DatabaseType, name *types.SimpleName) (err error) {
+	switch dbType {
+	case DatabaseCustom:
+		return updateCustomName(name)
+	case DatabaseRegular:
+		return updateRegularName(name)
+	}
+	return fmt.Errorf("unknown database type: %s", dbType)
+}
+
+func updateRegularName(name *types.SimpleName) (err error) {
 	if _, ok := loadedRegularNames[name.Address]; !ok {
 		err = fmt.Errorf("no name for address: %s", name.Address)
 		return

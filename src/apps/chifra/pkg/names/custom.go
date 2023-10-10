@@ -118,7 +118,7 @@ func ReadCustomName(address base.Address) (name *types.SimpleName) {
 	return nil
 }
 
-func UpdateCustomName(name *types.SimpleName) (err error) {
+func updateCustomName(name *types.SimpleName) (err error) {
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 

@@ -238,7 +238,7 @@ func BenchmarkCleanSync(b *testing.B) {
 			}
 
 			// Update modified (no disk writes yet)
-			if err = names.UpdateRegularName(&name); err != nil {
+			if err = names.UpdateName(names.DatabaseRegular, &name); err != nil {
 				b.Fatal(err)
 			}
 		}
@@ -288,7 +288,7 @@ func BenchmarkCleanConcurrent(b *testing.B) {
 			}
 
 			// Update modified (no disk writes yet)
-			if err = names.UpdateRegularName(&name); err != nil {
+			if err = names.UpdateName(names.DatabaseRegular, &name); err != nil {
 				panic(err)
 			}
 			return nil
