@@ -36,6 +36,7 @@ type StateOptions struct {
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
+	ProxyForAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -100,6 +101,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
+	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	if opts.Call != "" {
@@ -139,6 +141,7 @@ func stateFinishParse(args []string) *StateOptions {
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
+	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	for _, arg := range args {
