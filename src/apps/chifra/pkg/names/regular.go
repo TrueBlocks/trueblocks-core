@@ -57,19 +57,6 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 	return nil
 }
 
-func WriteRegularNames(chain string, overrideDest DatabaseType) (err error) {
-	database := DatabaseRegular
-	if overrideDest != "" {
-		database = overrideDest
-	}
-	return WriteDatabase(
-		chain,
-		Regular,
-		database,
-		loadedRegularNames,
-	)
-}
-
 func ReadRegularName(address base.Address) (name *types.SimpleName) {
 	found, ok := loadedRegularNames[address]
 	if ok {

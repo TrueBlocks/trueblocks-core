@@ -39,5 +39,5 @@ func updateRegularName(chain string, name *types.SimpleName) (err error) {
 		return
 	}
 
-	return createRegularName(name)
+	return regularCreateName(chain, name)
 }

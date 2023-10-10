@@ -25,7 +25,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 		return err
 	}
 
-	err = names.WriteRegularNames(chain, overrideDatabase)
+	err = names.WriteNames(names.DatabaseRegular, chain, overrideDatabase)
 	if err != nil {
 		return err
 	}

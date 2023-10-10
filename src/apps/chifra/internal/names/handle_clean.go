@@ -159,10 +159,10 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 
 	// Write to disk
 	if opts.Regular {
-		return modifiedCount, names.WriteRegularNames(chain, overrideDatabase)
+		return modifiedCount, names.WriteNames(names.DatabaseRegular, chain, overrideDatabase)
 	}
 
-	return modifiedCount, names.WriteCustomNames(chain, overrideDatabase)
+	return modifiedCount, names.WriteNames(names.DatabaseCustom, chain, overrideDatabase)
 }
 
 // wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles

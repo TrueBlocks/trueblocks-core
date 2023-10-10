@@ -2,7 +2,6 @@ package names
 
 import (
 	"encoding/csv"
-	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -14,7 +13,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -243,54 +241,6 @@ func OpenDatabaseFile(chain string, kind DatabaseType, openFlag int) (*os.File, 
 		openFlag,
 		permissions,
 	)
-}
-
-func WriteDatabase(chain string, kind Parts, database DatabaseType, names map[base.Address]types.SimpleName) (err error) {
-	switch kind {
-	case Regular:
-		loadedRegularNamesMutex.Lock()
-		defer loadedRegularNamesMutex.Unlock()
-	case Custom:
-		loadedCustomNamesMutex.Lock()
-		defer loadedCustomNamesMutex.Unlock()
-	default:
-		return errors.New("kind should be Regular or Custom")
-	}
-
-	db, err := OpenDatabaseFile(chain, database, os.O_RDWR|os.O_TRUNC)
-	if err != nil {
-		return
-	}
-	defer db.Close()
-
-	sorted := make([]types.SimpleName, 0, len(names))
-	for _, name := range names {
-		sorted = append(sorted, name)
-	}
-	sort.SliceStable(sorted, func(i, j int) bool {
-		return sorted[i].Address.Hex() < sorted[j].Address.Hex()
-	})
-
-	// Save
-	// Can't lock Stdout (= DatabaseDryRun)
-	if database != DatabaseDryRun {
-		if err = file.Lock(db); err != nil {
-			return err
-		}
-		defer func() {
-			_ = file.Unlock(db)
-		}()
-	}
-
-	writer := NewNameWriter(db)
-	for _, name := range sorted {
-		if err = writer.Write(&name); err != nil {
-			return err
-		}
-	}
-	writer.Flush()
-
-	return writer.Error()
 }
 
 /*

@@ -215,16 +215,3 @@ func writeCustomNames(output *os.File) (err error) {
 
 	return writer.Error()
 }
-
-func WriteCustomNames(chain string, overrideDest DatabaseType) (err error) {
-	database := DatabaseCustom
-	if overrideDest != "" {
-		database = overrideDest
-	}
-	return WriteDatabase(
-		chain,
-		Custom,
-		database,
-		loadedCustomNames,
-	)
-}
