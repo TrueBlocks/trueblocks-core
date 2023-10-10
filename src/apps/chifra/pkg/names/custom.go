@@ -15,20 +15,12 @@ import (
 var loadedCustomNames map[base.Address]types.SimpleName = map[base.Address]types.SimpleName{}
 var loadedCustomNamesMutex sync.Mutex
 
-// We don't want to save test names even in test database
-var testAddresses map[string]bool = map[string]bool{
-	"0x0000000000000000000000000000000000000001": true,
-	"0x0000000000000000000000000000000000000002": true,
-	"0x0000000000000000000000000000000000000003": true,
-	"0x0000000000000000000000000000000000000004": true,
-}
-
-func loadCustomMap(chain string, terms []string, parts Parts, destination *map[base.Address]types.SimpleName) (err error) {
+func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base.Address]types.SimpleName) (err error) {
 	if len(loadedCustomNames) != 0 {
 		// We have already loaded the data
 		for _, name := range loadedCustomNames {
 			if doSearch(&name, terms, parts) {
-				(*destination)[name.Address] = name
+				(*namesMap)[name.Address] = name
 			}
 		}
 		return
@@ -42,17 +34,17 @@ func loadCustomMap(chain string, terms []string, parts Parts, destination *map[b
 	}
 	defer db.Close()
 
-	loadedCustomNames, err = unmarshallCustomNames(db, terms, parts, destination)
+	loadedCustomNames, err = unmarshallCustomNames(db, terms, parts, namesMap)
 	if err != nil {
 		return err
 	}
 	if parts&Testing != 0 {
-		loadTestNames(terms, parts, &loadedCustomNames, destination)
+		loadTestNames(terms, parts, &loadedCustomNames, namesMap)
 	}
 	return
 }
 
-func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, destination *map[base.Address]types.SimpleName) (customNames map[base.Address]types.SimpleName, err error) {
+func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, namesMap *map[base.Address]types.SimpleName) (customNames map[base.Address]types.SimpleName, err error) {
 	customNames = map[base.Address]types.SimpleName{}
 
 	var reader NameReader
@@ -78,13 +70,13 @@ func unmarshallCustomNames(source io.Reader, terms []string, parts Parts, destin
 		}
 		customNames[name.Address] = name
 		if doSearch(&name, terms, parts) {
-			(*destination)[name.Address] = name
+			(*namesMap)[name.Address] = name
 		}
 	}
 	return
 }
 
-func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.SimpleName, destination *map[base.Address]types.SimpleName) {
+func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.SimpleName, namesMap *map[base.Address]types.SimpleName) {
 	for i := 1; i < 5; i++ {
 		addressStr := fmt.Sprintf("0x%040d", i)
 		num := fmt.Sprintf("%d", i)
@@ -103,7 +95,7 @@ func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.Simp
 			(*all)[address] = name
 		}
 		if doSearch(&name, terms, parts) {
-			(*destination)[name.Address] = name
+			(*namesMap)[name.Address] = name
 		}
 	}
 }
@@ -223,6 +215,14 @@ func writeCustomNames(output *os.File) (err error) {
 		_ = file.Unlock(output)
 	}()
 
+	// We don't want to save test names even in test database
+	var testAddresses map[string]bool = map[string]bool{
+		"0x0000000000000000000000000000000000000001": true,
+		"0x0000000000000000000000000000000000000002": true,
+		"0x0000000000000000000000000000000000000003": true,
+		"0x0000000000000000000000000000000000000004": true,
+	}
+
 	writer := NewNameWriter(output)
 	for _, name := range loadedCustomNames {
 		if os.Getenv("TEST_MODE") == "true" {
@@ -240,7 +240,7 @@ func writeCustomNames(output *os.File) (err error) {
 	return writer.Error()
 }
 
-func WriteCustomNames(chain string, overrideDest Database) (err error) {
+func WriteCustomNames(chain string, overrideDest DatabaseType) (err error) {
 	database := DatabaseCustom
 	if overrideDest != "" {
 		database = overrideDest

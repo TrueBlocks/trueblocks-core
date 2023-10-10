@@ -26,6 +26,7 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 		}
 		return nil
 	}
+
 	loadedRegularNamesMutex.Lock()
 	defer loadedRegularNamesMutex.Unlock()
 
@@ -57,7 +58,7 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 	return nil
 }
 
-func WriteRegularNames(chain string, overrideDest Database) (err error) {
+func WriteRegularNames(chain string, overrideDest DatabaseType) (err error) {
 	database := DatabaseRegular
 	if overrideDest != "" {
 		database = overrideDest

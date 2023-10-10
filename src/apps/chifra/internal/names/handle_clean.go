@@ -7,10 +7,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"path/filepath"
 	"strings"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -29,7 +31,7 @@ func (opts *NamesOptions) HandleClean() error {
 		label = "regular"
 		db = names.DatabaseRegular
 	}
-	sourcePath := names.GetDatabasePath(chain, db)
+	sourcePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(db))
 	logger.Info("Processing", label, "names file", "("+sourcePath+")")
 	destinationLabel := sourcePath
 	if opts.DryRun {
@@ -104,7 +106,7 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 	}()
 
 	// For --dry_run, we don't want to write to the real database
-	var overrideDatabase names.Database
+	var overrideDatabase names.DatabaseType
 	if opts.DryRun {
 		overrideDatabase = names.DatabaseDryRun
 	}

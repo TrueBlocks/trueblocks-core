@@ -15,7 +15,7 @@ func (opts *NamesOptions) HandleAutoname() error {
 	chain := opts.Globals.Chain
 
 	// For --dry_run, we don't want to write to the real database
-	var overrideDatabase names.Database
+	var overrideDatabase names.DatabaseType
 	if opts.DryRun {
 		overrideDatabase = names.DatabaseDryRun
 	}
@@ -57,21 +57,15 @@ func (opts *NamesOptions) HandleAutoname() error {
 // readContractAndClean will read contract data and call `cleanName` for the given address
 func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err error) {
 	chain := opts.Globals.Chain
-	converted, ok := opts.Conn.GetEnsAddresses([]string{opts.Autoname})
-	term := opts.Autoname
-	if ok {
-		term = converted[0]
-	}
 
-	address := base.HexToAddress(term)
 	name = &types.SimpleName{
-		Address:  address,
-		Name:     base.AddrToPetname(address.Hex(), "-"),
+		Address:  opts.AutonameAddr,
+		Name:     base.AddrToPetname(opts.AutonameAddr.Hex(), "-"),
 		Source:   "TrueBlocks.io",
 		IsCustom: false,
 	}
 	if _, err = cleanName(chain, name); err != nil {
-		err = fmt.Errorf("autoname %s: %w", &address, err)
+		err = fmt.Errorf("autoname %s: %w", opts.Autoname, err)
 		return
 	}
 
@@ -86,7 +80,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 	}
 
 	if err = names.CreateRegularName(name); err != nil {
-		err = fmt.Errorf("while updating %s: %w", &address, err)
+		err = fmt.Errorf("while updating %s: %w", opts.Autoname, err)
 		return
 	}
 

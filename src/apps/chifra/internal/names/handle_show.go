@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func (opts *NamesOptions) HandleTerms() error {
+func (opts *NamesOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
 

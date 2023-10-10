@@ -65,7 +65,8 @@ func TestNamesOptions_autoname(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			opts := &NamesOptions{
-				Autoname: tt.fields.Autoname,
+				Autoname:     tt.fields.Autoname,
+				AutonameAddr: base.HexToAddress(tt.fields.Autoname),
 				Globals: globals.GlobalOptions{
 					OutputOptions: output.OutputOptions{
 						Chain: utils.GetTestChain(),

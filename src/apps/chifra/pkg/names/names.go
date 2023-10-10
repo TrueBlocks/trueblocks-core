@@ -31,6 +31,7 @@ const (
 	Testing   Parts = 0x8
 	MatchCase Parts = 0x10
 	Expanded  Parts = 0x20
+	Tags      Parts = 0x40
 )
 
 type SortBy int
@@ -115,15 +116,16 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 	return namesMap, nil
 }
 
-// EmptyInMemoryCache removes names that are cached in-memory
-func EmptyInMemoryCache() {
+// ClearCache removes names that are cached in-memory
+func ClearCache() {
 	loadedRegularNamesMutex.Lock()
-	loadedRegularNames = make(map[base.Address]types.SimpleName)
-	loadedRegularNamesMutex.Unlock()
+	defer loadedRegularNamesMutex.Unlock()
 
 	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+
+	loadedRegularNames = make(map[base.Address]types.SimpleName)
 	loadedCustomNames = make(map[base.Address]types.SimpleName)
-	loadedCustomNamesMutex.Unlock()
 }
 
 var requiredColumns = []string{
@@ -167,14 +169,14 @@ func (gr *NameReader) Read() (types.SimpleName, error) {
 	}, nil
 }
 
-type NameReaderMode int
+type nameReaderMode int
 
 const (
-	NameReaderTab NameReaderMode = iota
+	NameReaderTab nameReaderMode = iota
 	NameReaderComma
 )
 
-func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
+func NewNameReader(source io.Reader, mode nameReaderMode) (NameReader, error) {
 	reader := csv.NewReader(source)
 	reader.Comma = '\t'
 	if mode == NameReaderComma {
@@ -207,21 +209,21 @@ func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
 	return r, nil
 }
 
-type Database string
+type DatabaseType string
 
 const (
-	DatabaseRegular Database = "names.tab"
-	DatabaseCustom  Database = "names_custom.tab"
-	DatabasePrefund Database = "allocs.csv"
-	DatabaseDryRun  Database = "<dryrun>"
+	DatabaseRegular DatabaseType = "names.tab"
+	DatabaseCustom  DatabaseType = "names_custom.tab"
+	DatabasePrefund DatabaseType = "allocs.csv"
+	DatabaseDryRun  DatabaseType = "<dryrun>"
 )
 
-func OpenDatabaseFile(chain string, kind Database, openFlag int) (*os.File, error) {
+func OpenDatabaseFile(chain string, kind DatabaseType, openFlag int) (*os.File, error) {
 	if kind == DatabaseDryRun {
 		return os.Stdout, nil
 	}
 
-	filePath := GetDatabasePath(chain, kind)
+	filePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(kind))
 	var permissions fs.FileMode = 0666
 
 	if kind == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
@@ -243,13 +245,7 @@ func OpenDatabaseFile(chain string, kind Database, openFlag int) (*os.File, erro
 	)
 }
 
-func GetDatabasePath(chain string, db Database) string {
-	return filepath.Join(
-		config.MustGetPathToChainConfig(chain), string(db),
-	)
-}
-
-func WriteDatabase(chain string, kind Parts, database Database, names map[base.Address]types.SimpleName) (err error) {
+func WriteDatabase(chain string, kind Parts, database DatabaseType, names map[base.Address]types.SimpleName) (err error) {
 	switch kind {
 	case Regular:
 		loadedRegularNamesMutex.Lock()

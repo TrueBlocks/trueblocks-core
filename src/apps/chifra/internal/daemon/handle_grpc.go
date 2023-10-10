@@ -119,7 +119,8 @@ func (opts *DaemonOptions) HandleGrpc() error {
 		return err
 	}
 
-	if err := names.PrepareRpc(); err != nil {
+	// load the names in the memory cache
+	if _, err := names.LoadNamesMap("mainnet", names.Regular|names.Custom|names.Prefund, nil); err != nil {
 		return err
 	}
 
