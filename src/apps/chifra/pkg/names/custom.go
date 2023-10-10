@@ -100,16 +100,6 @@ func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.Simp
 	}
 }
 
-func CreateCustomName(chain string, name *types.SimpleName) (err error) {
-	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
-	if err != nil {
-		return
-	}
-	defer db.Close()
-	name.IsCustom = true
-	return setCustomNameAndSave(db, name)
-}
-
 func ReadCustomName(address base.Address) (name *types.SimpleName) {
 	found, ok := loadedCustomNames[address]
 	if ok {

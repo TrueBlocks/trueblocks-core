@@ -79,7 +79,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 		return
 	}
 
-	if err = names.CreateRegularName(name); err != nil {
+	if err = names.CreateName(names.DatabaseRegular, chain, name); err != nil {
 		err = fmt.Errorf("while updating %s: %w", opts.Autoname, err)
 		return
 	}

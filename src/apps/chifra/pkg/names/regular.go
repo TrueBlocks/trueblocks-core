@@ -70,15 +70,6 @@ func WriteRegularNames(chain string, overrideDest DatabaseType) (err error) {
 	)
 }
 
-func CreateRegularName(name *types.SimpleName) (err error) {
-	loadedRegularNamesMutex.Lock()
-	defer loadedRegularNamesMutex.Unlock()
-
-	name.IsCustom = false
-	loadedRegularNames[name.Address] = *name
-	return
-}
-
 func ReadRegularName(address base.Address) (name *types.SimpleName) {
 	found, ok := loadedRegularNames[address]
 	if ok {

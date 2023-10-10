@@ -65,7 +65,7 @@ func (g *chifraRpcServer) Create(ctx context.Context, request *proto.CreateReque
 	}
 
 	name := types.NewNameFromGrpc(request.GetName())
-	err := names.CreateCustomName(request.GetChain(), name)
+	err := names.CreateName(names.DatabaseCustom, request.GetChain(), name)
 	var errPointer *string
 	if err != nil {
 		errPointer = utils.PointerOf(err.Error())

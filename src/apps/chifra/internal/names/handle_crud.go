@@ -75,7 +75,7 @@ func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err err
 		Petname:  base.AddrToPetname(data.Address.Value.Hex(), "-"),
 	}
 
-	return name, names.CreateCustomName(chain, name)
+	return name, names.CreateName(names.DatabaseCustom, chain, name)
 }
 
 func handleDelete(chain string, data *CrudData) (*types.SimpleName, error) {
