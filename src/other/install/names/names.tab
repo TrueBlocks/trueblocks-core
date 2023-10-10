@@ -4340,7 +4340,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isCo
 31-Giveth:Project	0x4fa60765f4e9543b10f11e02c95be0364b02c137	Caretakers of the Environment Costa Rica		Tokenomics		reasonably-relative-lacewing	false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x4fa7811bbc4d7446ad0dd3f39538049df2af2ad5	loanbrew		Gitcoin Website		immensely-adequate-dog	false	false	false	false	false	false
 80-Malicious:DaoDrain	0x4fa802324e929786dbda3b8820dc7834e9134a2a	DAO Drain 072		GethSource		basically-vast-lioness	false	false	false	true	false	false
-50-Tokens:ERC20	0x4fabb145d64652a948d72533023f6e7a623c7c53	Binance USD	BUSD	On chain	18	secondly-loving-kangaroo	false	false	false	true	true	false
+50-Tokens:ERC20	0x4fabb145d64652a948d72533023f6e7a623c7c53	BUSD	BUSD	On chain	18	secondly-loving-kangaroo	false	false	false	true	true	false
 90-Individuals:Kickback	0x4faf226ea0437a14ae882fc05df2439029312e3e	pavelkrolevets		https://kickback.events/		adequately-fitting-seahorse	false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x4fafa767c9cb71394875c139d43aee7799748908	okduncan		Gitcoin Website		typically-bright-warthog	false	false	false	false	false	false
 50-Tokens:ERC20	0x4fbb0b4cd8f960ac3428194f1c94c805d5b35836	BigBang Game Coin Token	BBGC	On chain	8	uniformly-right-yeti	false	false	false	true	true	false

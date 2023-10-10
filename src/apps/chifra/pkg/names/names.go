@@ -158,12 +158,12 @@ func (gr *NameReader) Read() (types.SimpleName, error) {
 		Symbol:     record[gr.header["symbol"]],
 		Source:     record[gr.header["source"]],
 		Petname:    record[gr.header["petname"]],
-		IsCustom:   record[gr.header["iscustom"]] == "true",
-		IsPrefund:  record[gr.header["isprefund"]] == "true",
-		IsContract: record[gr.header["iscontract"]] == "true",
-		IsErc20:    record[gr.header["iserc20"]] == "true",
-		IsErc721:   record[gr.header["iserc721"]] == "true",
 		Deleted:    record[gr.header["deleted"]] == "true",
+		IsCustom:   record[gr.header["isCustom"]] == "true",
+		IsPrefund:  record[gr.header["isPrefund"]] == "true",
+		IsContract: record[gr.header["isContract"]] == "true",
+		IsErc20:    record[gr.header["isErc20"]] == "true",
+		IsErc721:   record[gr.header["isErc721"]] == "true",
 	}, nil
 }
 
@@ -187,7 +187,7 @@ func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
 	}
 	header := map[string]int{}
 	for index, columnName := range headerRow {
-		header[strings.ToLower(columnName)] = index
+		header[columnName] = index
 	}
 
 	for _, required := range requiredColumns {
