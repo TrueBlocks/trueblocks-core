@@ -200,6 +200,7 @@ func Test_cleanName_edgeCases(t *testing.T) {
 var benchmarkLimit = 50
 
 func BenchmarkCleanSync(b *testing.B) {
+	chain := utils.GetTestChain()
 	parts := names.Regular
 
 	for i := 0; i < b.N; i++ {
@@ -238,7 +239,7 @@ func BenchmarkCleanSync(b *testing.B) {
 			}
 
 			// Update modified (no disk writes yet)
-			if err = names.UpdateName(names.DatabaseRegular, &name); err != nil {
+			if err = names.UpdateName(names.DatabaseRegular, chain, &name); err != nil {
 				b.Fatal(err)
 			}
 		}
@@ -246,6 +247,7 @@ func BenchmarkCleanSync(b *testing.B) {
 }
 
 func BenchmarkCleanConcurrent(b *testing.B) {
+	chain := utils.GetTestChain()
 	parts := names.Regular
 
 	for i := 0; i < b.N; i++ {
@@ -288,7 +290,7 @@ func BenchmarkCleanConcurrent(b *testing.B) {
 			}
 
 			// Update modified (no disk writes yet)
-			if err = names.UpdateName(names.DatabaseRegular, &name); err != nil {
+			if err = names.UpdateName(names.DatabaseRegular, chain, &name); err != nil {
 				panic(err)
 			}
 			return nil
