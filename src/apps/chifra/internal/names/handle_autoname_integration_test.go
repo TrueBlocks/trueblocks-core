@@ -20,6 +20,7 @@ import (
 )
 
 func TestNamesOptions_autoname(t *testing.T) {
+	chain := utils.GetTestChain()
 	type fields struct {
 		Autoname string
 	}
@@ -36,49 +37,54 @@ func TestNamesOptions_autoname(t *testing.T) {
 				Autoname: "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
 			},
 			expected: &types.SimpleName{
+				Tags:       "50-Tokens:ERC20",
 				Address:    base.HexToAddress("0x6982508145454Ce325dDbE47a25d4ec3d2311933"),
 				Name:       "Pepe",
-				IsContract: true,
-				IsErc20:    true,
-				Source:     "On chain",
 				Symbol:     "PEPE",
+				Source:     "On chain",
 				Decimals:   18,
 				Petname:    "properly-sincere-filly",
-				Tags:       "50-Tokens:ERC20",
+				IsContract: true,
+				IsErc20:    true,
+				IsCustom:   true,
 			},
 		},
 		{
-			name: "contract, not a token",
+			name: "eoa, not a token",
 			fields: fields{
-				// Unchained Index v1
-				Autoname: "0x0c316b7042b419d07d343f2f4f5bd54ff731183d",
+				Autoname: "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
 			},
 			expected: &types.SimpleName{
-				Address:    base.HexToAddress("0x0c316b7042b419d07d343f2f4f5bd54ff731183d"),
-				Name:       "Unchained Index (v1.0)",
-				IsContract: true,
-				Petname:    "brightly-alert-bluegill",
-				Tags:       "30-Contracts",
+				Address:  base.HexToAddress("0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"),
+				Name:     "M-Wallet 0x5499",
+				Petname:  "sadly-settling-anteater",
+				Source:   "EtherScan.io",
+				Tags:     "00-Active",
+				IsCustom: true,
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			opts := &NamesOptions{
-				Autoname: tt.fields.Autoname,
+				Autoname:     tt.fields.Autoname,
+				AutonameAddr: base.HexToAddress(tt.fields.Autoname),
 				Globals: globals.GlobalOptions{
 					OutputOptions: output.OutputOptions{
 						Chain: utils.GetTestChain(),
 					},
 				},
 			}
-			if _, err := opts.readContractAndClean(); (err != nil) != tt.wantErr {
-				t.Errorf("NamesOptions.readContractAndClean() error = %v, wantErr %v", err, tt.wantErr)
+			_, err := opts.readContractAndClean()
+			wanted := tt.wantErr
+			have := err != nil
+			if (wanted && !have) || (have && !wanted) {
+				t.Errorf("TestNamesOptions_autoname error = %v, wantErr %v", err, tt.wantErr)
 			}
 			if tt.expected != nil {
-				name := names.ReadRegularName(base.HexToAddress(tt.fields.Autoname))
+				name := names.ReadName(names.DatabaseCustom, chain, opts.AutonameAddr)
 				if !reflect.DeepEqual(name, tt.expected) {
-					t.Errorf("NamesOptions.readContractAndClean() = %+v, want %+v", name, tt.expected)
+					t.Errorf("TestNamesOptions_autoname = %+v, want %+v", name, tt.expected)
 				}
 			}
 		})

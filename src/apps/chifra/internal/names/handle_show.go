@@ -3,6 +3,7 @@ package namesPkg
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 
@@ -14,7 +15,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func (opts *NamesOptions) HandleTerms() error {
+func (opts *NamesOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 	var fetchData func(modelChan chan types.Modeler[types.RawName], errorChan chan error)
 
@@ -49,7 +50,8 @@ func (opts *NamesOptions) HandleTerms() error {
 			return err
 		}
 		if len(namesArray) == 0 {
-			logNoResults()
+			logger.Warn("No known names found for", opts.Terms)
+			logger.Warn("Original command:", os.Args)
 			return nil
 		}
 
@@ -95,10 +97,6 @@ func (opts *NamesOptions) fetchFromGrpc(client proto.NamesClient, modelChan chan
 		modelChan <- types.NewNameFromGrpc(result)
 	}
 	if !hasResults {
-		logNoResults()
+		errorChan <- fmt.Errorf("no known names found for %v", opts.Terms)
 	}
-}
-
-func logNoResults() {
-	logger.Warn("No results for", os.Args)
 }

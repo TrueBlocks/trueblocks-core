@@ -1,4 +1,5 @@
 chifra names  notathingy.eth
 TEST[DATE|TIME] Terms:  [notathingy.eth]
 TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] No results for [chifra names notathingy.eth]
+WARN[DATE|TIME] No known names found for [notathingy.eth]
+WARN[DATE|TIME] Original command: [chifra names notathingy.eth]

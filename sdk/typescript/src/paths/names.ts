@@ -4,7 +4,7 @@
  * This file was generated with makeClass --sdk. Do not edit it.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { Name } from '../types';
+import { address, Name } from '../types';
 
 export function getNames(
   parameters?: {
@@ -19,7 +19,7 @@ export function getNames(
     clean?: boolean,
     regular?: boolean,
     dryRun?: boolean,
-    autoname?: string,
+    autoname?: address,
     create?: boolean,
     update?: boolean,
     delete?: boolean,

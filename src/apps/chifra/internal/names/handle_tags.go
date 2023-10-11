@@ -27,7 +27,7 @@ func (opts *NamesOptions) HandleTags() error {
 	// Note: Make sure to add an entry to enabledForCmd in src/apps/chifra/pkg/output/helpers.go
 	fetchData := func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 		for _, name := range namesArray {
-			if !tagsMap[name.Tags] {
+			if len(name.Tags) > 0 && !tagsMap[name.Tags] {
 				s := types.SimpleName{
 					Tags: name.Tags,
 				}

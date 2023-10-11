@@ -535,7 +535,7 @@ string_q get_ens_convert1(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isAddress) {
             string_q str = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddress(opts.[{VARIABLE}])";
-            if (containsI(p.longName, "publisher")) {
+            if (containsI(p.real_type, "address_t")) {
                 str += "\n\topts.[{VARIABLE}]Addr = base.HexToAddress(opts.[{VARIABLE}])";
             }
             os << p.Format(str) << endl;
@@ -549,7 +549,7 @@ string_q get_ens_convert2(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isAddressList) {
             string_q str = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddresses(opts.[{VARIABLE}])";
-            if (containsI(p.longName, "publisher")) {
+            if (containsI(p.real_type, "address_t")) {
                 str += "\n\topts.[{VARIABLE}]Addr = base.HexToAddress(opts.[{VARIABLE}])";
             }
             os << p.Format(str) << endl;

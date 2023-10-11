@@ -3,6 +3,7 @@ package names
 import (
 	"encoding/csv"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"path"
@@ -10,9 +11,11 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestCrudIntegration(t *testing.T) {
+	chain := utils.GetTestChain()
 	tmpDirPath := path.Join(os.TempDir(), "trueblocks")
 	if err := os.MkdirAll(tmpDirPath, 0777); err != nil {
 		t.Fatal(err)
@@ -42,8 +45,11 @@ func TestCrudIntegration(t *testing.T) {
 		Address: addr,
 	}
 
-	// Create
-	if err := setCustomNameAndSave(tempFile, &expected); err != nil {
+	expected.IsCustom = true
+	loadedCustomNamesMutex.Lock()
+	loadedCustomNames[expected.Address] = expected
+	loadedCustomNamesMutex.Unlock()
+	if err := writeCustomNames(tempFile); err != nil {
 		t.Fatal(err)
 	}
 
@@ -64,7 +70,7 @@ func TestCrudIntegration(t *testing.T) {
 	}
 
 	// Read
-	read := ReadCustomName(addr)
+	read := ReadName(DatabaseCustom, chain, addr)
 
 	if value := read.Address; value != expected.Address {
 		t.Fatal("read: wrong address", value)
@@ -114,7 +120,7 @@ func TestCrudIntegration(t *testing.T) {
 
 	// Invalid remove
 	// Commented out, because C++ doesn't check it
-	// _, err = RemoveCustomName(tempFile, addr)
+	// _, err = names.RemoveName(names.DatabaseCustom, tempFile, addr)
 	// if err == nil {
 	// 	t.Fatal("remove: expected error")
 	// }
@@ -145,4 +151,28 @@ func TestCrudIntegration(t *testing.T) {
 	if _, ok := testDb[addr]; ok {
 		t.Fatal("record was removed, but it is still present")
 	}
+}
+
+func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleName, err error) {
+	if _, ok := loadedCustomNames[name.Address]; !ok {
+		return nil, fmt.Errorf("no custom name for address %s", name.Address.Hex())
+	}
+
+	name.IsCustom = true
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+	loadedCustomNames[name.Address] = *name
+	return name, writeCustomNames(output)
+}
+
+func removeIfExists(output *os.File, address base.Address) (name *types.SimpleName, err error) {
+	found, ok := loadedCustomNames[address]
+	if !ok {
+		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
+	}
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+
+	delete(loadedCustomNames, address)
+	return &found, writeCustomNames(output)
 }

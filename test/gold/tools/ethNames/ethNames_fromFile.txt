@@ -2,7 +2,8 @@ chifra names  --file names.txt
 TEST[DATE|TIME] Terms:  [LockTrip]
 TEST[DATE|TIME] File:  names.txt
 TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] No results for [chifra names --file names.txt]
+WARN[DATE|TIME] No known names found for [LockTrip]
+WARN[DATE|TIME] Original command: [chifra names --file names.txt]
 TEST[DATE|TIME] Terms:  [UCASH]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] File:  names.txt

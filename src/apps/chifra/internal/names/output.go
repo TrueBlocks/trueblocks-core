@@ -77,7 +77,7 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 	} else if opts.Tags {
 		err = opts.HandleTags()
 	} else {
-		err = opts.HandleTerms()
+		err = opts.HandleShow()
 	}
 
 	// EXISTING_CODE
@@ -126,19 +126,15 @@ func (opts *NamesOptions) getType() names.Parts {
 		ret |= names.Expanded
 	}
 
+	if opts.Tags {
+		ret |= names.Tags
+	}
+
 	if opts.Globals.TestMode {
 		ret |= names.Testing
 	}
 
 	return ret
-}
-
-func (opts *NamesOptions) anyBase() bool {
-	return opts.Expand ||
-		opts.MatchCase ||
-		opts.All ||
-		opts.Prefund ||
-		opts.Clean
 }
 
 func (opts *NamesOptions) anyCrud() bool {
