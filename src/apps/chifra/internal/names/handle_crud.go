@@ -87,5 +87,5 @@ func handleUndelete(chain string, data *CrudData) (*types.SimpleName, error) {
 }
 
 func handleRemove(chain string, data *CrudData) (*types.SimpleName, error) {
-	return names.RemoveCustomName(chain, data.Address.Value)
+	return names.RemoveName(names.DatabaseCustom, chain, data.Address.Value)
 }

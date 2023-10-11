@@ -114,7 +114,7 @@ func TestCrudIntegration(t *testing.T) {
 
 	// Invalid remove
 	// Commented out, because C++ doesn't check it
-	// _, err = RemoveCustomName(tempFile, addr)
+	// _, err = names.RemoveName(names.DatabaseCustom, tempFile, addr)
 	// if err == nil {
 	// 	t.Fatal("remove: expected error")
 	// }

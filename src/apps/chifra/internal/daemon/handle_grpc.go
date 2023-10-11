@@ -103,7 +103,7 @@ func handleNameDeletion(request *proto.DeleteRequest, deleted bool, remove bool)
 	if !remove {
 		_, err = names.ChangeCustomNameDeletedFlag(request.Chain, addr, deleted)
 	} else {
-		_, err = names.RemoveCustomName(request.Chain, addr)
+		_, err = names.RemoveName(names.DatabaseCustom, request.Chain, addr)
 	}
 	return &proto.CRUDResponse{
 		Success: err == nil,
