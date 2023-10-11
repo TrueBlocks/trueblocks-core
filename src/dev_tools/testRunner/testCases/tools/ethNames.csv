@@ -54,6 +54,12 @@ on      ,both ,fast  ,names ,tools/ethNames ,redir_output_csv       ,y    ,terms
 on      ,both ,fast  ,names ,tools/ethNames ,tags                   ,y    ,tags
 on      ,both ,fast  ,names ,tools/ethNames ,tags_custom            ,y    ,tags & custom
 on      ,both ,fast  ,names ,tools/ethNames ,tags_with_addr         ,y    ,tags & addr
+on      ,both ,fast  ,names ,tools/ethNames ,tags_with_term         ,y    ,terms = Exchanges & tags
+on      ,both ,fast  ,names ,tools/ethNames ,tags_with_term_case_1  ,y    ,terms = Exchanges & tags & match_case
+on      ,both ,fast  ,names ,tools/ethNames ,tags_with_term_case_2  ,y    ,terms = exchanges & tags & match_case
+on      ,both ,fast  ,names ,tools/ethNames ,tags_prefund_1         ,y    ,terms = Prefund & tags
+on      ,both ,fast  ,names ,tools/ethNames ,tags_prefund_2         ,y    ,terms = Prefund & tags & prefund
+on      ,both ,fast  ,names ,tools/ethNames ,tags_custom_2          ,y    ,terms = 81 & tags & custom
 on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_all        ,y    ,addr
 on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_all_custom ,y    ,addr & custom
 on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr

@@ -16,6 +16,10 @@ func doSearch(name *types.SimpleName, terms []string, parts Parts) bool {
 	if parts&Expanded != 0 {
 		searchStr += "\t" + name.Source + "\t" + name.Petname
 	}
+	if parts&Tags != 0 {
+		// only search tags
+		searchStr = name.Tags
+	}
 
 	verb := "(?i)"
 	if parts&MatchCase != 0 {

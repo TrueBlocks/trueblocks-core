@@ -137,14 +137,6 @@ func (opts *NamesOptions) getType() names.Parts {
 	return ret
 }
 
-func (opts *NamesOptions) anyBase() bool {
-	return opts.Expand ||
-		opts.MatchCase ||
-		opts.All ||
-		opts.Prefund ||
-		opts.Clean
-}
-
 func (opts *NamesOptions) anyCrud() bool {
 	return opts.Create ||
 		opts.Update ||

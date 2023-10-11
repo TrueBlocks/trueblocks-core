@@ -1,0 +1,7 @@
+chifra names  81 --tags --custom
+TEST[DATE|TIME] Terms:  [81]
+TEST[DATE|TIME] Custom:  true
+TEST[DATE|TIME] Tags:  true
+TEST[DATE|TIME] Format:  txt
+tags
+81-Custom

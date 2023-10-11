@@ -3,6 +3,7 @@ package names
 import (
 	"encoding/csv"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"path"
@@ -46,8 +47,8 @@ func TestCrudIntegration(t *testing.T) {
 
 	expected.IsCustom = true
 	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
 	loadedCustomNames[expected.Address] = expected
+	loadedCustomNamesMutex.Unlock()
 	if err := writeCustomNames(tempFile); err != nil {
 		t.Fatal(err)
 	}
@@ -79,43 +80,43 @@ func TestCrudIntegration(t *testing.T) {
 	}
 
 	// Update
-	// updated, err := setIfExists(tempFile, &types.SimpleName{
-	// 	Name:    "new name",
-	// 	Address: addr,
-	// })
-	// if err != nil {
-	// 	t.Fatal("update:", err)
-	// }
-	// if name := updated.Name; name != "new name" {
-	// 	t.Fatal("wrong name", name)
-	// }
-	// if addr := updated.Address.Hex(); addr != addrStr {
-	// 	t.Fatal("wrong address", addr)
-	// }
+	updated, err := setIfExists(tempFile, &types.SimpleName{
+		Name:    "new name",
+		Address: addr,
+	})
+	if err != nil {
+		t.Fatal("update:", err)
+	}
+	if name := updated.Name; name != "new name" {
+		t.Fatal("wrong name", name)
+	}
+	if addr := updated.Address.Hex(); addr != addrStr {
+		t.Fatal("wrong address", addr)
+	}
 
 	// Delete
-	// deleted, err := changeDeleted(tempFile, addr, true)
-	// if err != nil {
-	// 	t.Fatal("delete:", err)
-	// }
-	// if deleted == nil {
-	// 	t.Fatal("delete: returned name is nil")
-	// }
-	// if !deleted.Deleted {
-	// 	t.Fatal("delete: delete flag not set")
-	// }
+	deleted, err := changeDeleted(tempFile, addr, true)
+	if err != nil {
+		t.Fatal("delete:", err)
+	}
+	if deleted == nil {
+		t.Fatal("delete: returned name is nil")
+	}
+	if !deleted.Deleted {
+		t.Fatal("delete: delete flag not set")
+	}
 
 	// Undelete
-	// undeleted, err := changeDeleted(tempFile, addr, false)
-	// if err != nil {
-	// 	t.Fatal("undelete:", err)
-	// }
-	// if undeleted == nil {
-	// 	t.Fatal("undelete: returned name is nil")
-	// }
-	// if undeleted.Deleted {
-	// 	t.Fatal("undelete: delete flag not unset")
-	// }
+	undeleted, err := changeDeleted(tempFile, addr, false)
+	if err != nil {
+		t.Fatal("undelete:", err)
+	}
+	if undeleted == nil {
+		t.Fatal("undelete: returned name is nil")
+	}
+	if undeleted.Deleted {
+		t.Fatal("undelete: delete flag not unset")
+	}
 
 	// Invalid remove
 	// Commented out, because C++ doesn't check it
@@ -126,20 +127,20 @@ func TestCrudIntegration(t *testing.T) {
 
 	// Remove
 	// Set flag first
-	// _, err = changeDeleted(tempFile, addr, true)
-	// if err != nil {
-	// 	t.Fatal("remove: delete:", err)
-	// }
-	// removed, err := removeIfExists(tempFile, addr)
-	// if err != nil {
-	// 	t.Fatal("remove:", err)
-	// }
-	// if name := removed.Name; name != "new name" {
-	// 	t.Fatal("remove: wrong name", name)
-	// }
-	// if addr := removed.Address.Hex(); addr != addrStr {
-	// 	t.Fatal("remove: wrong address", addr)
-	// }
+	_, err = changeDeleted(tempFile, addr, true)
+	if err != nil {
+		t.Fatal("remove: delete:", err)
+	}
+	removed, err := removeIfExists(tempFile, addr)
+	if err != nil {
+		t.Fatal("remove:", err)
+	}
+	if name := removed.Name; name != "new name" {
+		t.Fatal("remove: wrong name", name)
+	}
+	if addr := removed.Address.Hex(); addr != addrStr {
+		t.Fatal("remove: wrong address", addr)
+	}
 
 	// Check what was written to the file
 	tempFile = loadTestDatabase()
@@ -152,26 +153,26 @@ func TestCrudIntegration(t *testing.T) {
 	}
 }
 
-// func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleName, err error) {
-// 	if _, ok := loadedCustomNames[name.Address]; !ok {
-// 		return nil, fmt.Errorf("no custom name for address %s", name.Address.Hex())
-// 	}
+func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleName, err error) {
+	if _, ok := loadedCustomNames[name.Address]; !ok {
+		return nil, fmt.Errorf("no custom name for address %s", name.Address.Hex())
+	}
 
-// 	name.IsCustom = true
-// 	loadedCustomNamesMutex.Lock()
-// 	defer loadedCustomNamesMutex.Unlock()
-// 	loadedCustomNames[name.Address] = *name
-// 	return name, writeCustomNames(output)
-// }
+	name.IsCustom = true
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+	loadedCustomNames[name.Address] = *name
+	return name, writeCustomNames(output)
+}
 
-// func removeIfExists(output *os.File, address base.Address) (name *types.SimpleName, err error) {
-// 	found, ok := loadedCustomNames[address]
-// 	if !ok {
-// 		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
-// 	}
-// 	loadedCustomNamesMutex.Lock()
-// 	defer loadedCustomNamesMutex.Unlock()
+func removeIfExists(output *os.File, address base.Address) (name *types.SimpleName, err error) {
+	found, ok := loadedCustomNames[address]
+	if !ok {
+		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
+	}
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
 
-// 	delete(loadedCustomNames, address)
-// 	return &found, writeCustomNames(output)
-// }
+	delete(loadedCustomNames, address)
+	return &found, writeCustomNames(output)
+}

@@ -12,14 +12,7 @@ import (
 )
 
 func (opts *NamesOptions) HandleAutoname() error {
-	chain := opts.Globals.Chain
-
 	name, err := opts.readContractAndClean()
-	if err != nil {
-		return err
-	}
-
-	err = names.WriteNames(names.DatabaseRegular, chain, opts.DryRun)
 	if err != nil {
 		return err
 	}
@@ -56,7 +49,7 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 		Address:  opts.AutonameAddr,
 		Name:     base.AddrToPetname(opts.AutonameAddr.Hex(), "-"),
 		Source:   "TrueBlocks.io",
-		IsCustom: false,
+		IsCustom: true,
 	}
 	if _, err = cleanName(chain, name); err != nil {
 		err = fmt.Errorf("autoname %s: %w", opts.Autoname, err)
@@ -64,16 +57,16 @@ func (opts *NamesOptions) readContractAndClean() (name *types.SimpleName, err er
 	}
 
 	if !name.IsErc20 && !name.IsErc721 {
-		logger.Warn("address", name.Address, "is not a token, ignoring")
+		logger.Warn("address", name.Address, "is not a token, ignoring...")
 		name = nil
 		return
 	}
 
-	if _, err = names.LoadNamesMap(chain, names.Regular, []string{}); err != nil {
+	if _, err = names.LoadNamesMap(chain, names.Custom, []string{}); err != nil {
 		return
 	}
 
-	if err = names.CreateName(names.DatabaseRegular, chain, name); err != nil {
+	if err = names.CreateName(names.DatabaseCustom, chain, name); err != nil {
 		err = fmt.Errorf("while updating %s: %w", opts.Autoname, err)
 		return
 	}
