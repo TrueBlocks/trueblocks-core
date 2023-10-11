@@ -38,6 +38,7 @@ on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,versi
 
 on      ,both ,fast  ,names ,tools/ethNames ,ens_test               ,y    ,terms = wolfofethereum.eth
 on      ,both ,fast  ,names ,tools/ethNames ,ens_test_fail          ,y    ,terms = notathingy.eth
+on      ,both ,fast  ,names ,tools/ethNames ,ens_not_in_db          ,y    ,terms = nick.eth
 
 on      ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail1              ,y    ,terms = test
 on      ,cmd  ,fast  ,names ,tools/ethNames ,xdg_fail2              ,y    ,terms = test

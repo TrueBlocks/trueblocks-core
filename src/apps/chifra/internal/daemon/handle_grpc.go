@@ -115,12 +115,13 @@ func (opts *DaemonOptions) HandleGrpc() error {
 	if !opts.Grpc {
 		return nil
 	}
+
 	if err := os.RemoveAll(proto.SocketAddress()); err != nil {
 		return err
 	}
 
 	// load the names in the memory cache
-	if _, err := names.LoadNamesMap("mainnet", names.Regular|names.Custom|names.Prefund, nil); err != nil {
+	if _, err := names.LoadNamesMap(opts.Globals.Chain, names.Regular|names.Custom|names.Prefund, nil); err != nil {
 		return err
 	}
 
