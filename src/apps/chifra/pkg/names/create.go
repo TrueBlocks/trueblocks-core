@@ -20,7 +20,7 @@ func CreateName(dbType DatabaseType, chain string, name *types.SimpleName) (err 
 }
 
 func customCreateName(chain string, name *types.SimpleName) (err error) {
-	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
 	if err != nil {
 		return
 	}

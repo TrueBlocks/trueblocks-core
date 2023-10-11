@@ -28,7 +28,7 @@ func loadCustomMap(chain string, terms []string, parts Parts, namesMap *map[base
 	loadedCustomNamesMutex.Lock()
 	defer loadedCustomNamesMutex.Unlock()
 
-	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_RDONLY)
+	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_RDONLY)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,7 @@ func ReadCustomName(address base.Address) (name *types.SimpleName) {
 }
 
 func UpdateAndSaveCustomName(chain string, name *types.SimpleName) (result *types.SimpleName, err error) {
-	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
 	if err != nil {
 		return
 	}
@@ -126,7 +126,7 @@ func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleN
 }
 
 func ChangeCustomNameDeletedFlag(chain string, address base.Address, deleted bool) (name *types.SimpleName, err error) {
-	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
+	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
 	if err != nil {
 		return
 	}
@@ -145,16 +145,6 @@ func changeDeleted(output *os.File, address base.Address, deleted bool) (name *t
 
 	err = setCustomNameAndSave(output, name)
 	return
-}
-
-func RemoveCustomName(chain string, address base.Address) (name *types.SimpleName, err error) {
-	db, err := OpenDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
-	if err != nil {
-		return
-	}
-	defer db.Close()
-
-	return removeIfExists(db, address)
 }
 
 func removeIfExists(output *os.File, address base.Address) (name *types.SimpleName, err error) {

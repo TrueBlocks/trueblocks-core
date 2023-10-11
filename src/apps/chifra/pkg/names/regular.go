@@ -29,7 +29,7 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 	loadedRegularNamesMutex.Lock()
 	defer loadedRegularNamesMutex.Unlock()
 
-	db, err := OpenDatabaseFile(chain, DatabaseRegular, os.O_RDONLY)
+	db, err := openDatabaseFile(chain, DatabaseRegular, os.O_RDONLY)
 	if err != nil {
 		return err
 	}

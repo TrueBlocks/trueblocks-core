@@ -63,7 +63,7 @@ func writeDatabase(chain string, kind Parts, database DatabaseType, names map[ba
 		return errors.New("kind should be Regular or Custom")
 	}
 
-	db, err := OpenDatabaseFile(chain, database, os.O_RDWR|os.O_TRUNC)
+	db, err := openDatabaseFile(chain, database, os.O_RDWR|os.O_TRUNC)
 	if err != nil {
 		return
 	}

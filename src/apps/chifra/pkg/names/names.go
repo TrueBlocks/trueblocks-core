@@ -216,7 +216,7 @@ const (
 	DatabaseDryRun  DatabaseType = "<dryrun>"
 )
 
-func OpenDatabaseFile(chain string, kind DatabaseType, openFlag int) (*os.File, error) {
+func openDatabaseFile(chain string, kind DatabaseType, openFlag int) (*os.File, error) {
 	if kind == DatabaseDryRun {
 		return os.Stdout, nil
 	}
