@@ -14,18 +14,12 @@ import (
 func (opts *NamesOptions) HandleAutoname() error {
 	chain := opts.Globals.Chain
 
-	// For --dry_run, we don't want to write to the real database
-	var overrideDatabase names.DatabaseType
-	if opts.DryRun {
-		overrideDatabase = names.DatabaseDryRun
-	}
-
 	name, err := opts.readContractAndClean()
 	if err != nil {
 		return err
 	}
 
-	err = names.WriteNames(names.DatabaseRegular, chain, overrideDatabase)
+	err = names.WriteNames(names.DatabaseRegular, chain, opts.DryRun)
 	if err != nil {
 		return err
 	}
