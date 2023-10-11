@@ -105,12 +105,6 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 		}
 	}()
 
-	// For --dry_run, we don't want to write to the real database
-	var overrideDatabase names.DatabaseType
-	if opts.DryRun {
-		overrideDatabase = names.DatabaseDryRun
-	}
-
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	errorChan := make(chan error)
@@ -159,10 +153,10 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 
 	// Write to disk
 	if opts.Regular {
-		return modifiedCount, names.WriteNames(names.DatabaseRegular, chain, overrideDatabase)
+		return modifiedCount, names.WriteNames(names.DatabaseRegular, chain, opts.DryRun)
 	}
 
-	return modifiedCount, names.WriteNames(names.DatabaseCustom, chain, overrideDatabase)
+	return modifiedCount, names.WriteNames(names.DatabaseCustom, chain, opts.DryRun)
 }
 
 // wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles

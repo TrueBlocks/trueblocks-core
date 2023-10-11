@@ -11,22 +11,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func WriteNames(dbType DatabaseType, chain string, overrideDest DatabaseType) (err error) {
+func WriteNames(dbType DatabaseType, chain string, dryRun bool) (err error) {
 	switch dbType {
 	case DatabaseCustom:
-		return customWriteNames(chain, overrideDest)
+		return customWriteNames(chain, dryRun)
 	case DatabaseRegular:
-		return regularWriteNames(chain, overrideDest)
+		return regularWriteNames(chain, dryRun)
 	default:
 		logger.Fatal("unknown database type")
 	}
 	return
 }
 
-func customWriteNames(chain string, overrideDest DatabaseType) (err error) {
+func customWriteNames(chain string, dryRun bool) (err error) {
 	database := DatabaseCustom
-	if overrideDest != "" {
-		database = overrideDest
+	if dryRun {
+		database = DatabaseDryRun
 	}
 
 	return writeDatabase(
@@ -37,10 +37,10 @@ func customWriteNames(chain string, overrideDest DatabaseType) (err error) {
 	)
 }
 
-func regularWriteNames(chain string, overrideDest DatabaseType) (err error) {
+func regularWriteNames(chain string, dryRun bool) (err error) {
 	database := DatabaseRegular
-	if overrideDest != "" {
-		database = overrideDest
+	if dryRun {
+		database = DatabaseDryRun
 	}
 
 	return writeDatabase(
