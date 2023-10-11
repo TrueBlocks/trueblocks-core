@@ -101,7 +101,7 @@ func handleNameDeletion(request *proto.DeleteRequest, deleted bool, remove bool)
 	addr := base.HexToAddress(request.Address)
 	var err error
 	if !remove {
-		_, err = names.ChangeCustomNameDeletedFlag(request.Chain, addr, deleted)
+		_, err = names.SetDeleted(names.DatabaseCustom, request.Chain, addr, deleted)
 	} else {
 		_, err = names.RemoveName(names.DatabaseCustom, request.Chain, addr)
 	}

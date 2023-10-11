@@ -125,28 +125,6 @@ func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleN
 	return name, setCustomNameAndSave(output, name)
 }
 
-func ChangeCustomNameDeletedFlag(chain string, address base.Address, deleted bool) (name *types.SimpleName, err error) {
-	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
-	if err != nil {
-		return
-	}
-	defer db.Close()
-
-	return changeDeleted(db, address, deleted)
-}
-
-func changeDeleted(output *os.File, address base.Address, deleted bool) (name *types.SimpleName, err error) {
-	if found, ok := loadedCustomNames[address]; ok {
-		found.Deleted = deleted
-		name = &found
-	} else {
-		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
-	}
-
-	err = setCustomNameAndSave(output, name)
-	return
-}
-
 func removeIfExists(output *os.File, address base.Address) (name *types.SimpleName, err error) {
 	found, ok := loadedCustomNames[address]
 	if !ok {
@@ -191,17 +169,13 @@ func writeCustomNames(output *os.File) (err error) {
 
 	writer := NewNameWriter(output)
 	for _, name := range loadedCustomNames {
-		if os.Getenv("TEST_MODE") == "true" {
-			// Do not save test addresses
-			if testAddresses[name.Address.Hex()] {
-				continue
-			}
+		if testAddresses[name.Address.Hex()] {
+			continue
 		}
 		if err = writer.Write(&name); err != nil {
 			return
 		}
 	}
 	writer.Flush()
-
 	return writer.Error()
 }

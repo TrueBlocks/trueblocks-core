@@ -79,11 +79,11 @@ func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err err
 }
 
 func handleDelete(chain string, data *CrudData) (*types.SimpleName, error) {
-	return names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, true)
+	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, true)
 }
 
 func handleUndelete(chain string, data *CrudData) (*types.SimpleName, error) {
-	return names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, false)
+	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, false)
 }
 
 func handleRemove(chain string, data *CrudData) (*types.SimpleName, error) {
