@@ -27,8 +27,10 @@ func customCreateName(chain string, name *types.SimpleName) (err error) {
 	defer db.Close()
 
 	name.IsCustom = true
-
-	return setCustomNameAndSave(db, name)
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+	loadedCustomNames[name.Address] = *name
+	return writeCustomNames(db)
 }
 
 func regularCreateName(chain string, name *types.SimpleName) (err error) {

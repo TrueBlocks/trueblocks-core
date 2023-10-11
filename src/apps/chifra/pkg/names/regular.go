@@ -56,11 +56,3 @@ func loadRegularMap(chain string, thePath string, terms []string, parts Parts, r
 
 	return nil
 }
-
-func ReadRegularName(address base.Address) (name *types.SimpleName) {
-	found, ok := loadedRegularNames[address]
-	if ok {
-		return &found
-	}
-	return nil
-}

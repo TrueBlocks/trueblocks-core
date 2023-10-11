@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -100,57 +101,6 @@ func loadTestNames(terms []string, parts Parts, all *map[base.Address]types.Simp
 	}
 }
 
-func ReadCustomName(address base.Address) (name *types.SimpleName) {
-	found, ok := loadedCustomNames[address]
-	if ok {
-		return &found
-	}
-	return nil
-}
-
-func UpdateAndSaveCustomName(chain string, name *types.SimpleName) (result *types.SimpleName, err error) {
-	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
-	if err != nil {
-		return
-	}
-	defer db.Close()
-	return setIfExists(db, name)
-}
-
-func setIfExists(output *os.File, name *types.SimpleName) (result *types.SimpleName, err error) {
-	if _, ok := loadedCustomNames[name.Address]; !ok {
-		return nil, fmt.Errorf("no custom name for address %s", name.Address.Hex())
-	}
-
-	return name, setCustomNameAndSave(output, name)
-}
-
-func removeIfExists(output *os.File, address base.Address) (name *types.SimpleName, err error) {
-	found, ok := loadedCustomNames[address]
-	if !ok {
-		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
-	}
-	// This is commented out to match the behaviour of C++ code
-	// if !found.Deleted {
-	// 	return nil, fmt.Errorf("name for %s is not marked for deletion", address.Hex())
-	// }
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
-
-	delete(loadedCustomNames, address)
-	return &found, writeCustomNames(output)
-}
-
-func setCustomNameAndSave(output *os.File, name *types.SimpleName) (err error) {
-	loadedCustomNamesMutex.Lock()
-	defer loadedCustomNamesMutex.Unlock()
-
-	// Make sure we always set correct value of the flag
-	name.IsCustom = true
-	loadedCustomNames[name.Address] = *name
-	return writeCustomNames(output)
-}
-
 func writeCustomNames(output *os.File) (err error) {
 	if err = file.Lock(output); err != nil {
 		return
@@ -167,8 +117,16 @@ func writeCustomNames(output *os.File) (err error) {
 		"0x0000000000000000000000000000000000000004": true,
 	}
 
-	writer := NewNameWriter(output)
+	sorted := make([]types.SimpleName, 0, len(loadedCustomNames))
 	for _, name := range loadedCustomNames {
+		sorted = append(sorted, name)
+	}
+	sort.Slice(sorted, func(i, j int) bool {
+		return sorted[i].Address.Hex() < sorted[j].Address.Hex()
+	})
+
+	writer := NewNameWriter(output)
+	for _, name := range sorted {
 		if testAddresses[name.Address.Hex()] {
 			continue
 		}

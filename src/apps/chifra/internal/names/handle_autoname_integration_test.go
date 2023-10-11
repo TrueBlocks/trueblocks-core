@@ -20,6 +20,7 @@ import (
 )
 
 func TestNamesOptions_autoname(t *testing.T) {
+	chain := utils.GetTestChain()
 	type fields struct {
 		Autoname string
 	}
@@ -77,7 +78,7 @@ func TestNamesOptions_autoname(t *testing.T) {
 				t.Errorf("NamesOptions.readContractAndClean() error = %v, wantErr %v", err, tt.wantErr)
 			}
 			if tt.expected != nil {
-				name := names.ReadRegularName(base.HexToAddress(tt.fields.Autoname))
+				name := names.ReadName(names.DatabaseRegular, chain, opts.AutonameAddr)
 				if !reflect.DeepEqual(name, tt.expected) {
 					t.Errorf("NamesOptions.readContractAndClean() = %+v, want %+v", name, tt.expected)
 				}

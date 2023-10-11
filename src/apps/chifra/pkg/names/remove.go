@@ -1,6 +1,7 @@
 package names
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -21,12 +22,20 @@ func RemoveName(dbType DatabaseType, chain string, address base.Address) (name *
 	return
 }
 
-func customRemoveName(chain string, address base.Address) (name *types.SimpleName, err error) {
+func customRemoveName(chain string, address base.Address) (*types.SimpleName, error) {
+	name, exists := loadedCustomNames[address]
+	if !exists {
+		return nil, fmt.Errorf("cannot remove non-existant custom name for address %s", address.Hex())
+	}
+
 	db, err := openDatabaseFile(chain, DatabaseCustom, os.O_WRONLY|os.O_TRUNC)
 	if err != nil {
-		return
+		return nil, err
 	}
 	defer db.Close()
 
-	return removeIfExists(db, address)
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+	delete(loadedCustomNames, address)
+	return &name, writeCustomNames(db)
 }

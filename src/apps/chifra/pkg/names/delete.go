@@ -33,11 +33,15 @@ func customSetDeleted(chain string, address base.Address, deleted bool) (name *t
 }
 
 func changeDeleted(output *os.File, address base.Address, deleted bool) (*types.SimpleName, error) {
-	found, ok := loadedCustomNames[address]
+	name, ok := loadedCustomNames[address]
 	if !ok {
 		return nil, fmt.Errorf("no custom name for address %s", address.Hex())
 	}
 
-	found.Deleted = deleted
-	return &found, setCustomNameAndSave(output, &found)
+	name.Deleted = deleted
+	name.IsCustom = true
+	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+	loadedCustomNames[name.Address] = name
+	return &name, writeCustomNames(output)
 }
