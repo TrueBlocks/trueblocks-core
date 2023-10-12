@@ -217,17 +217,17 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	return s, nil
 }
 
-func (s *simpleStatus) toTemplate(w io.Writer, testMode bool, format string) bool {
+func (s *simpleStatus) toTemplate(w io.Writer, logTimerOn bool, format string) bool {
 	if format == "json" {
 		return false
 	}
 
 	var timeDatePart string
-	if testMode {
-		timeDatePart = "INFO[DATE|TIME]"
-	} else {
+	if logTimerOn {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
+	} else {
+		timeDatePart = "INFO[DATE|TIME]"
 	}
 
 	table := strings.Replace(templateStr, "INFO ", "INFO "+colors.Green, -1)
