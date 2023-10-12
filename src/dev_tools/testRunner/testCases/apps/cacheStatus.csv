@@ -59,20 +59,20 @@ cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_traces         ,y    ,modes
 cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_txs            ,y    ,modes = transactions & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_recons         ,y    ,modes = recons & verbose & max_records = 2
 
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_blooms         ,y    ,modes = blooms & verbose & max_records = 2
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_index          ,y    ,modes = index & verbose & max_records = 2
+index   ,both ,fast  ,status ,apps/cacheStatus ,mode_blooms         ,y    ,modes = blooms & verbose & max_records = 2
+index   ,both ,fast  ,status ,apps/cacheStatus ,mode_index          ,y    ,modes = index & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_ripe           ,y    ,modes = ripe & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_staging        ,y    ,modes = staging & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_unripe         ,y    ,modes = unripe & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_maps           ,y    ,modes = maps & verbose & max_records = 2
 
-on      ,both ,fast  ,status ,apps/cacheStatus ,mode_some           ,y    ,modes = some & verbose & max_records = 2
+index   ,both ,fast  ,status ,apps/cacheStatus ,mode_some           ,y    ,modes = some & verbose & max_records = 2
 cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_all            ,y    ,modes = all & verbose & max_records = 2
 cache   ,both ,fast  ,status ,apps/cacheStatus ,mode_three          ,y    ,modes = abis & modes = monitors & modes = transactions & verbose & max_records = 2
 
-on      ,both ,fast  ,status ,apps/cacheStatus ,explorer_1          ,y    ,fmt = json & verbose & max_records = 2
+index   ,both ,fast  ,status ,apps/cacheStatus ,explorer_1          ,y    ,fmt = json & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,explorer_2          ,y    ,modes = monitors & fmt = json & verbose & max_records = 2
-on      ,both ,fast  ,status ,apps/cacheStatus ,explorer_3          ,y    ,modes = index & fmt = json & verbose & max_records = 2
+index   ,both ,fast  ,status ,apps/cacheStatus ,explorer_3          ,y    ,modes = index & fmt = json & verbose & max_records = 2
 
 on      ,both ,slow  ,status ,apps/cacheStatus ,redir_output        ,y    ,modes = names & output = output_test_file & max_records = 2
 on      ,both ,slow  ,status ,apps/cacheStatus ,redir_output_append ,n    ,modes = index & output = output_test_file & no_header & append & max_records = 2

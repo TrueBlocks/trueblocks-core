@@ -12,20 +12,20 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_detail_belong      ,y    ,mode
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,list_check              ,y    ,mode = monitors & check
 
-on      ,both ,fast  ,chunks ,apps/chunkMan ,stats_default           ,y    ,mode = stats
-on      ,both ,fast  ,chunks ,apps/chunkMan ,manifest_default        ,y    ,mode = manifest
-on      ,both ,fast  ,chunks ,apps/chunkMan ,index_default           ,y    ,mode = index
-on      ,both ,fast  ,chunks ,apps/chunkMan ,blooms_default          ,y    ,mode = blooms
+index   ,both ,fast  ,chunks ,apps/chunkMan ,stats_default           ,y    ,mode = stats
+index   ,both ,fast  ,chunks ,apps/chunkMan ,manifest_default        ,y    ,mode = manifest
+index   ,both ,fast  ,chunks ,apps/chunkMan ,index_default           ,y    ,mode = index
+index   ,both ,fast  ,chunks ,apps/chunkMan ,blooms_default          ,y    ,mode = blooms
 on      ,both ,fast  ,chunks ,apps/chunkMan ,header_default          ,y    ,mode = header
-on      ,both ,fast  ,chunks ,apps/chunkMan ,addresses_default       ,y    ,mode = addresses
+index   ,both ,fast  ,chunks ,apps/chunkMan ,addresses_default       ,y    ,mode = addresses
 on      ,both ,fast  ,chunks ,apps/chunkMan ,appearances_default     ,y    ,mode = appearances
 
-on      ,both ,fast  ,chunks ,apps/chunkMan ,stats_txt               ,n    ,mode = stats & fmt = txt
-on      ,both ,fast  ,chunks ,apps/chunkMan ,manifest_csv            ,n    ,mode = manifest & fmt = csv
-on      ,both ,fast  ,chunks ,apps/chunkMan ,index_json              ,y    ,mode = index & fmt = json
-on      ,both ,fast  ,chunks ,apps/chunkMan ,blooms_txt              ,n    ,mode = blooms & fmt = txt
+index   ,both ,fast  ,chunks ,apps/chunkMan ,stats_txt               ,n    ,mode = stats & fmt = txt
+index   ,both ,fast  ,chunks ,apps/chunkMan ,manifest_csv            ,n    ,mode = manifest & fmt = csv
+index   ,both ,fast  ,chunks ,apps/chunkMan ,index_json              ,y    ,mode = index & fmt = json
+index   ,both ,fast  ,chunks ,apps/chunkMan ,blooms_txt              ,n    ,mode = blooms & fmt = txt
 on      ,both ,fast  ,chunks ,apps/chunkMan ,header_csv              ,n    ,mode = header & fmt = csv
-on      ,both ,fast  ,chunks ,apps/chunkMan ,addresses_json          ,y    ,mode = addresses & fmt = json
+index   ,both ,fast  ,chunks ,apps/chunkMan ,addresses_json          ,y    ,mode = addresses & fmt = json
 on      ,both ,fast  ,chunks ,apps/chunkMan ,appearances_txt         ,n    ,mode = appearances & fmt = txt
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,fail_belongs_wrong_mode ,y    ,mode = addresses & belongs = 0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9
@@ -48,8 +48,8 @@ on      ,both ,fast  ,chunks ,apps/chunkMan ,block_not_found         ,y    ,mode
 # Seems to be a lot of 'presistance' issues with this test case
 delay   ,both ,fast  ,chunks ,apps/chunkMan ,check_okay              ,y    ,mode = manifest & check
 
-on      ,both ,fast  ,chunks ,apps/chunkMan ,redir_output            ,y    ,mode = index & blocks = 2000000 & output = output_test_file
-on      ,both ,fast  ,chunks ,apps/chunkMan ,redir_output_append     ,n    ,mode = index & blocks = 3000000 & output = output_test_file & no_header & append
+index   ,both ,fast  ,chunks ,apps/chunkMan ,redir_output            ,y    ,mode = index & blocks = 2000000 & output = output_test_file
+index   ,both ,fast  ,chunks ,apps/chunkMan ,redir_output_append     ,n    ,mode = index & blocks = 3000000 & output = output_test_file & no_header & append
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
