@@ -62,16 +62,16 @@ func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {
 	diffPath := getDiffPath(chain, thisPath)
 
 	logger.Info("Comparing:")
-	logger.Info(fmt.Sprintf("  existing: %s (%d)", thisPath, file.FileSize(thisPath)))
-	logger.Info(fmt.Sprintf("  current:  %s (%d)", diffPath, file.FileSize(diffPath)))
+	logger.Info(fmt.Sprintf("  current (one):  %s (%d)", thisPath, file.FileSize(thisPath)))
+	logger.Info(fmt.Sprintf("  diffPath (two): %s (%d)", diffPath, file.FileSize(diffPath)))
 
 	rng := base.RangeFromFilename(path)
 	outFn := fmt.Sprintf("%d", rng.First+((rng.Last-rng.First)/2))
-	if _, err := opts.exportTo("existing", thisPath, outFn); err != nil {
+	if _, err := opts.exportTo("one", thisPath, outFn); err != nil {
 		return false, err
 	}
 
-	if _, err := opts.exportTo("proposed", diffPath, outFn); err != nil {
+	if _, err := opts.exportTo("two", diffPath, outFn); err != nil {
 		return false, err
 	}
 
