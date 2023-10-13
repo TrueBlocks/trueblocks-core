@@ -268,6 +268,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31953,apps,Admin,chunks,chunkMan,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to process (inclusive)
 31955,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,false,false,true,true,gocmd,flag,<blknum>,the max number of addresses to process in a given chunk
 31956,apps,Admin,chunks,chunkMan,deep,d,,false,false,true,true,gocmd,switch,<boolean>,if true&#44; dig more deeply during checking (manifest only)
+31956,apps,Admin,chunks,chunkMan,rewrite,e,,false,false,true,true,gocmd,switch,<boolean>,for the --pin --deep mode only&#44; writes the manifest back to the index folder (see notes)
 31957,apps,Admin,chunks,chunkMan,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,for --remote pinning only&#44; seconds to sleep between API calls
 31959,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
 31960,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Mode determines which type of data to display or process.
@@ -279,6 +280,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31990,apps,Admin,chunks,chunkMan,n7,,,false,false,false,false,--,note,,The --pin option requires a locally running IPFS node or a pinning service API key.
 31995,apps,Admin,chunks,chunkMan,n8,,,false,false,false,false,--,note,,The --publish option requires a private key.
 31997,apps,Admin,chunks,chunkMan,n9,,,false,false,false,false,--,note,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
+31998,apps,Admin,chunks,chunkMan,n10,,,false,false,false,false,--,note,,Without --rewrite&#44; the manifest is written to the temporary cache. With it&#44; the manifest is rewritten to the index folder.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks (recommended)
 11907,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading

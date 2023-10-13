@@ -19,6 +19,7 @@ export function getChunks(
     lastBlock?: blknum,
     maxAddrs?: blknum,
     deep?: boolean,
+    rewrite?: boolean,
     sleep?: double,
     chain: string,
     noHeader?: boolean,

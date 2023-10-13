@@ -151,6 +151,9 @@ chunks,remote,cmds
 chunks,remote,python
 chunks,remote,readme
 chunks,remote,typescript
+chunks,rewrite,api
+chunks,rewrite,python
+chunks,rewrite,typescript
 chunks,sleep,api
 chunks,sleep,cmds
 chunks,sleep,python
