@@ -72,6 +72,10 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("The {0} options is only available in {1} or {2} mode.", "--pin --publish --remote and --deep", "manifest", "index")
 	}
 
+	if !isDeep && opts.Rewrite {
+		return validate.Usage("The {0} option requires {1}.", "--rewrite", "--deep")
+	}
+
 	if opts.Mode == "manifest" && opts.Remote {
 		// this is okay
 	} else if !isPin && (isRemote || isDeep) {
@@ -172,7 +176,7 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage(msg)
 		}
 		if len(opts.Belongs) == 0 && opts.Mode != "addresses" && opts.Mode != "appearances" {
-			return validate.Usage("some options are only available with {1}.", "the addresses, the appearances, or the index --belongs modes")
+			return validate.Usage("some options are only available with {0}.", "the addresses, the appearances, or the index --belongs modes")
 		}
 		// TODO: We should check that the first and last blocks are inside the ranges implied by the block ids
 		// if len(opts.BlockIds) > 0 {

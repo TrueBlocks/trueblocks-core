@@ -58,7 +58,8 @@ Notes:
   - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
   - The --pin option requires a locally running IPFS node or a pinning service API key.
   - The --publish option requires a private key.
-  - The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.`
+  - The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
+  - Without --rewrite, the manifest is written to the temporary cache. With it, the manifest is rewritten to the index folder.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra chunks
@@ -79,6 +80,7 @@ func init() {
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().MaxAddrs, "max_addrs", "m", 0, "the max number of addresses to process in a given chunk")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Deep, "deep", "d", false, "if true, dig more deeply during checking (manifest only)")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Rewrite, "rewrite", "e", false, "for the --pin --deep mode only, writes the manifest back to the index folder (see notes)")
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, "for --remote pinning only, seconds to sleep between API calls")
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("publisher")

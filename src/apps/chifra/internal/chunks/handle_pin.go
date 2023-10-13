@@ -25,6 +25,9 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
 	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
+	if opts.Rewrite {
+		outPath = config.PathToManifest(chain)
+	}
 
 	man := manifest.Manifest{
 		Version:       version.ManifestVersion,
@@ -134,7 +137,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		}
 
 		if opts.Deep {
-			logger.Info("Results places in", colors.BrightGreen, outPath, colors.Off)
+			logger.Info("The new manifest was written to", colors.BrightGreen, outPath, colors.Off)
 		}
 
 		modelChan <- &report
