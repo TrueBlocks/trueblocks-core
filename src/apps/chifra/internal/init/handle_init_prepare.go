@@ -7,108 +7,94 @@ package initPkg
 import (
 	"fmt"
 	"os"
-	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// prepareDownloadList returns a list of chunks that need to be updated. Upon return, if a chunk is in this
-// list, its bloomHash, its indexHash, or both contains the IPFS hash that needs to be downloaded. Any chunks
-// (or portions thereof) that are not in the list are valid and remain on disc. That means that the chunk
-// is the manifest, has the right file size, has a valid header, and is of the rigth version.
-func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []uint64) ([]types.SimpleChunkRecord, int, bool, error) {
-	// cleanIndex checks that the file is in the manifest, has a valid header, is of the correct version, and is of the right size.
-	// If any of those is not true, we remove that file from disc and add it to the download list. Important note: we only walk the
-	// bloom filter folder because the bloom filters are always present. If the user has specified `--all`, we insist that the
-	// corresponding index portion is also present and valid. If the user has not specified `--all`, then we check the index
-	// portion only if it exists, and then only for the correct header and file size. If a bloom filter is present on disc, but
-	// not in the manifest, then we delete both the bloom filte and the corresponding index portion if it exists.
-	onDiscChanged := false
+// prepareDownloadList returns a list of chunks that need to be modified in some way. There are three cases:
+//
+//  1. The chunk is on disc and agrees with the manifest in fileSize, magic number, and hash. In this
+//     case, we do nothing.
+//  2. The chunk is on disc but does not agree with the manifest for one of the above reasons. In this
+//     case, we delete the chunk from disc and add it to the download list.
+//  3. The chunk is not on disc. In this case, we add it to the download list.
+//
+// Note that in some cases, one part of a chunk may be valid while another part is not. For example,
+// the index portion of a chunk may be valid, but the bloom filter may not be. In this case, we delete
+// the entire chunk from disc and add it to the download list.
+//
+// If DryRun is true, then we do not delete anything from disc, nor do we add anything to the download list,
+// but we do report what would have happened.
+//
+// Upon return, if a chunk is in the download list, then either its indexHash, its bloomHash, or both contains
+// the IPFS hash that needs to be downloaded. Any chunks that are not in the download list are valid and remain
+// on disc.
+func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []uint64) ([]types.SimpleChunkRecord, int, int, error) {
+	// The list of files on disc that need to be removed because they are invalid in some way or not in the manifest
+	deleteMap := make(map[base.FileRange]index.ErrorType, len(man.Chunks))
+
+	// The list of files in the manifest but not on disc so they need to be downloaded
+	downloadMap := make(map[base.FileRange]index.ErrorType, len(man.Chunks))
+
+	// We assume we're going to have download everything...
+	for _, chunk := range man.Chunks {
+		downloadMap[base.RangeFromRangeString(chunk.Range)] = index.FILE_MISSING
+	}
+
+	// Visit each chunk on disc. If the chunk belongs and is of the right size and shape, mark it as OKAY,
+	// otherwise mark it with its reason for being invalid.
 	cleanIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+		// sanity...
 		if path != index.ToBloomPath(path) {
 			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 		}
 
+		// Is the on-disc chunk in the manifest?
 		rng := base.RangeFromFilename(path)
 		chunk := man.ChunkMap[rng.String()]
+
 		if chunk != nil {
-			ch := validate.ChunkSizes{BloomSize: chunk.BloomSize, IndexSize: chunk.IndexSize}
-			bloomStatus, indexStatus, err := validate.IsValidChunk(path, ch, opts.All)
-			switch bloomStatus {
-			case validate.OKAY:
-				chunk.BloomHash = "" // we don't have to download it
-				chunk.BloomSize = 0
-				opts.reportReason("The bloom file", bloomStatus, path)
-			case validate.FILE_ERROR:
-				return false, err // bubble the error up
-			case validate.FILE_MISSING:
-				fallthrough
-			case validate.WRONG_SIZE:
-				fallthrough
-			case validate.WRONG_MAGIC:
-				fallthrough
-			case validate.WRONG_HASH:
-				onDiscChanged = true
-				opts.reportReason("The bloom file", bloomStatus, path)
-			default:
-				logger.Fatal("should not happen ==> unknown return from IsValidChunk")
-			}
+			// Is it valid?
+			bloomStatus, indexStatus, err := index.IsValidChunk(path, index.ChunkSizes{
+				BloomSize: chunk.BloomSize,
+				IndexSize: chunk.IndexSize,
+			}, opts.All)
 
-			switch indexStatus {
-			case validate.OKAY:
-				chunk.IndexHash = "" // we don't have to download it
-				chunk.IndexSize = 0
-				if file.FileExists(index.ToIndexPath(path)) {
-					opts.reportReason("The index file", indexStatus, index.ToIndexPath(path))
+			if err != nil {
+				if bloomStatus != index.FILE_ERROR && indexStatus != index.FILE_ERROR {
+					logger.Fatal("implementation error - should not happen in cleanIndex")
 				}
-			case validate.FILE_ERROR:
 				return false, err // bubble the error up
-			case validate.FILE_MISSING:
-				fallthrough
-			case validate.WRONG_SIZE:
-				fallthrough
-			case validate.WRONG_MAGIC:
-				fallthrough
-			case validate.WRONG_HASH:
-				onDiscChanged = true
-				opts.reportReason("The index file", indexStatus, index.ToIndexPath(path))
-			default:
-				logger.Fatal("should not happen ==> unknown return from IsValidChunk")
 			}
 
-			if chunk.BloomHash == "" && chunk.IndexHash == "" {
-				man.ChunkMap[rng.String()] = nil
+			if bloomStatus == index.OKAY && indexStatus == index.OKAY {
+				// The chunk is valid. We don't need to download it or delete it
+				downloadMap[rng] = index.OKAY
+				return true, nil
+			} else {
+				// one or the other of them is invalid. We need to delete it and download it
+				// Note: we don't need to delete it, it will get downloaded and overwritten
+				if bloomStatus != index.OKAY {
+					// deleteMap[rng] = bloomStatus
+					downloadMap[rng] = bloomStatus
+				} else {
+					// deleteMap[rng] = indexStatus
+					downloadMap[rng] = indexStatus
+				}
 			}
 
 			return true, nil
 
 		} else {
-			// The chunk is not in the manifest. If it's a bloom filter, we delete it. If it's an index, we delete it only if
-			// the user has specified `--all`. If the index is not in the manifest, but the bloom filter is, then we delete
-			// both the index and the bloom filter.
-			onDiscChanged = true
-			opts.reportReason("The bloom file", validate.NOT_IN_MANIFEST, path)
-			if err := os.Remove(path); err != nil {
-				return false, err
-			}
-
-			indexPath := index.ToIndexPath(path)
-			if file.FileExists(indexPath) {
-				opts.reportReason("The index file", validate.NOT_IN_MANIFEST, indexPath)
-				if err := os.Remove(indexPath); err != nil {
-					return false, err
-				}
-			}
-
+			// The chunk is on disc but not in the manifest. We need to delete it.
+			deleteMap[rng] = index.NOT_IN_MANIFEST
 			return true, nil
 		}
 	}
@@ -121,74 +107,87 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	)
 
 	if err := walker.WalkBloomFilters(blockNums); err != nil {
-		return man.Chunks, len(man.Chunks), onDiscChanged, err
+		return nil, 0, 0, err
 	}
 
-	chunksNeeded := make([]types.SimpleChunkRecord, 0, len(man.Chunks))
-	defer func() {
-		// Sort the downloads in reverse order, so the process happens from latest block to earliest
-		sort.Slice(chunksNeeded, func(i, j int) bool {
-			return chunksNeeded[i].Range > chunksNeeded[j].Range
-		})
-	}()
-
-	nCorrections := 0
-	for _, chunk := range man.ChunkMap {
-		if chunk != nil {
-			rng := base.RangeFromRangeString(chunk.Range)
-			if rng.Last < opts.FirstBlock {
-				continue
-			}
+	nDeleted := 0
+	for rng, reason := range deleteMap {
+		if !opts.DryRun {
 			_, indexPath := rng.RangeToFilename(chain)
-			if !opts.All && !file.FileExists(indexPath) {
-				chunk.IndexHash = ""
-				chunk.IndexSize = 0
+			if err := os.Remove(indexPath); err != nil {
+				return nil, 0, nDeleted, err
 			}
-			if chunk.BloomHash != "" {
-				nCorrections++
+			nDeleted++
+			bloomPath := index.ToBloomPath(indexPath)
+			if err := os.Remove(bloomPath); err != nil {
+				return nil, 0, nDeleted, err
 			}
-			if chunk.IndexHash != "" {
-				nCorrections++
-			}
+			nDeleted++
+		}
 
-			chunksNeeded = append(chunksNeeded, *chunk)
-			if opts.Globals.Verbose {
-				msg := fmt.Sprintf("%s%s%s%v", colors.BrightBlack, "The chunk needs to be downloaded", colors.Off, chunk)
-				logger.Info(msg)
-			}
+		if opts.Globals.Verbose || opts.DryRun {
+			opts.reportReason("chunk deleted", reason, rng.String())
 		}
 	}
 
-	return chunksNeeded, nCorrections, onDiscChanged, nil
+	downloadList := make([]types.SimpleChunkRecord, 0, len(man.ChunkMap))
+	nToDownload := 0
+	for _, chunk := range man.ChunkMap {
+		rng := base.RangeFromRangeString(chunk.Range)
+		if downloadMap[rng] == index.OKAY || rng.Last < opts.FirstBlock {
+			continue
+		}
+		_, indexPath := rng.RangeToFilename(chain)
+		bloomStatus, indexStatus, err := index.IsValidChunk(index.ToBloomPath(indexPath), index.ChunkSizes{
+			BloomSize: chunk.BloomSize,
+			IndexSize: chunk.IndexSize,
+		}, opts.All)
+		if err != nil {
+			return nil, 0, nDeleted, err
+		}
+		if bloomStatus == index.OKAY {
+			// if its okay, we don't need to download it
+			chunk.BloomHash = ""
+			chunk.BloomSize = 0
+		} else {
+			nToDownload++
+		}
+		if indexStatus == index.OKAY {
+			// if its okay, we don't need to download it
+			chunk.IndexHash = ""
+			chunk.IndexSize = 0
+		} else {
+			nToDownload++
+		}
+		downloadList = append(downloadList, *chunk)
+		if opts.Globals.Verbose || opts.DryRun {
+			opts.reportReason("chunk downloaded", downloadMap[rng], rng.String())
+		}
+	}
+	return downloadList, nToDownload, nDeleted, nil
 }
 
-var reasons = map[validate.ErrorType]string{
-	validate.OKAY:            "okay",
-	validate.FILE_ERROR:      "file error",
-	validate.FILE_MISSING:    "is file missing",
-	validate.WRONG_SIZE:      "has the wrong size",
-	validate.WRONG_MAGIC:     "has the wrong magic number",
-	validate.WRONG_HASH:      "has the wrong header hash",
-	validate.NOT_IN_MANIFEST: "is not in the manifest",
-}
-
-func (opts *InitOptions) reportReason(prefix string, status validate.ErrorType, path string) {
-	verbose := opts.Globals.Verbose
+func (opts *InitOptions) reportReason(prefix string, status index.ErrorType, path string) {
+	verbose := opts.Globals.Verbose || opts.DryRun
 	if !verbose {
 		return
 	}
 
 	col := colors.BrightGreen
-	if status != validate.OKAY {
-		if status == validate.FILE_ERROR || status == validate.NOT_IN_MANIFEST {
+	if status == index.OKAY {
+		rng := base.RangeFromFilename(path)
+		msg := fmt.Sprintf("%schunk %s%s %s", col, index.Reasons[status], colors.Off, rng)
+		logger.Info(msg)
+	} else {
+		if status == index.FILE_ERROR || status == index.NOT_IN_MANIFEST {
 			col = colors.BrightRed
 		} else if strings.Contains(path, "/blooms/") {
 			col = colors.BrightYellow
 		} else {
 			col = colors.BrightMagenta
 		}
+		rng := base.RangeFromFilename(path)
+		msg := fmt.Sprintf("%s%s [%s]%s %s", col, prefix, index.Reasons[status], colors.Off, rng)
+		logger.Warn(msg)
 	}
-
-	msg := fmt.Sprintf("%s%s %-30.30s%s%s", col, prefix, reasons[status], colors.Off, path)
-	logger.Warn(msg)
 }

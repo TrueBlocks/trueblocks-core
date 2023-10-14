@@ -1,16 +1,14 @@
 package initPkg
 
 import (
-	"context"
 	"errors"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *InitOptions) HandleDryRun() error {
@@ -26,23 +24,25 @@ func (opts *InitOptions) HandleDryRun() error {
 		return errors.New(msg)
 	}
 
-	err = remoteManifest.SaveManifest(chain, config.PathToManifest(chain))
+	// err = remoteManifest.SaveManifest(chain, config.PathToManifest(chain))
+	// if err != nil {
+	// 	return err
+	// }
+
+	// Get the list of things we need to download
+	_, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 	if err != nil {
 		return err
 	}
 
-	// Get the list of things we need to download
 	spec := unchained.Specification
-	chunksToDownload, nCorrections, onDiscChanged, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
-	if err != nil {
-		return err
-	}
-	opts.OnDiscChanged = onDiscChanged // after this function returns, we report that the user needs to invalidate his/her monitors
 	if opts.Globals.TestMode {
-		if len(chunksToDownload) > 10 {
-			chunksToDownload = chunksToDownload[:10]
-		}
+		nToDownload = utils.Min(10, nToDownload)
 		spec = "--testing-hash--"
+	}
+
+	if opts.All {
+		nToDownload *= 2
 	}
 
 	// Tell the user what we're doing
@@ -50,44 +50,17 @@ func (opts *InitOptions) HandleDryRun() error {
 	logger.InfoTable("Specification:", spec)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
-	logger.InfoTable("Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
-	logger.InfoTable("Corrections Needed:", fmt.Sprintf("%d", nCorrections))
+	logger.InfoTable("Chunks in manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+	logger.InfoTable("Files that would be deleted:", fmt.Sprintf("%d", nDeleted))
+	logger.InfoTable("Files that would be downloaded:", fmt.Sprintf("%d", nToDownload))
 
-	ctx := context.Background()
-	if opts.Globals.Format == "txt" || opts.Globals.Format == "csv" {
-		fetchData := func(modelChan chan types.Modeler[types.RawChunkRecord], errorChan chan error) {
-			for _, chunk := range chunksToDownload {
-				s := types.SimpleChunkRecord{
-					Range:     chunk.Range,
-					BloomHash: chunk.BloomHash,
-					BloomSize: chunk.BloomSize,
-					IndexHash: chunk.IndexHash,
-					IndexSize: chunk.IndexSize,
-				}
-				modelChan <- &s
-			}
-		}
-
-		return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-
-	} else {
-		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
-
-			s := types.SimpleManifest{
-				Chain: chain,
-			}
-			for _, chunk := range chunksToDownload {
-				s.Chunks = append(s.Chunks, types.SimpleChunkRecord{
-					Range:     chunk.Range,
-					BloomHash: chunk.BloomHash,
-					BloomSize: chunk.BloomSize,
-					IndexHash: chunk.IndexHash,
-					IndexSize: chunk.IndexSize,
-				})
-			}
-			modelChan <- &s
-		}
-
-		return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	if nDeleted+nToDownload > 0 {
+		logger.Warn("")
+		logger.Warn("DryRun: The process would have modified both the manifest and the index. In that case, you would have")
+		logger.Warn("DryRun: had to invalidate your monitor cache by removing it.")
+		logger.Warn("")
+		logger.Warn("DryRun: No files were modified.")
 	}
+
+	return nil
 }

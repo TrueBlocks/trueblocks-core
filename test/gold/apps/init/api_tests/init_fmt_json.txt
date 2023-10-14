@@ -1,4 +1,4 @@
-init?fmt=json
+init?fmt=json&dryRun&verbose
 {
   "errors": [
     "integration testing was skipped for chifra init"

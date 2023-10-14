@@ -64,6 +64,9 @@ func (walker *CacheWalker) WalkRegularFolder(path string, blockNums []uint64) er
 func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 	filenameChan := make(chan CacheFileInfo)
 
+	// TODO: changing this will probably create data races because we append to slices and/or modify maps
+	// in the visitFunc. We need to make sure that we don't modify the same data structure in two different
+	// goroutines.
 	var nRoutines int = 1
 	go WalkCacheFolder(context.Background(), walker.chain, Index_Bloom, nil, filenameChan)
 

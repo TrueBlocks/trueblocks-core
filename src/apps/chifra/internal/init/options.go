@@ -31,7 +31,6 @@ type InitOptions struct {
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	PublisherAddr base.Address `json:"-"`
-	OnDiscChanged bool         `json:"-"`
 	// EXISTING_CODE
 }
 
