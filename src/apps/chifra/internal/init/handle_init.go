@@ -49,19 +49,19 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	// Get the list of things we need to download
-	chunksToDownload, nCorrections, onDiscChanged, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
+	chunksToDownload, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
 	if err != nil {
 		return err
 	}
-	opts.OnDiscChanged = onDiscChanged // after this function returns, we report that the user needs to invalidate his/her monitors
 
 	// Tell the user what we're doing
 	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
 	logger.InfoTable("Specification:", unchained.Specification)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
-	logger.InfoTable("Chunks in Manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
-	logger.InfoTable("Corrections Needed:", fmt.Sprintf("%d", nCorrections))
+	logger.InfoTable("Chunks in manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+	logger.InfoTable("Files deleted:", fmt.Sprintf("%d", nDeleted))
+	logger.InfoTable("Files downloaded:", fmt.Sprintf("%d", nToDownload))
 
 	// Open a channel to receive a message when all the blooms have been downloaded...
 	bloomsDoneChannel := make(chan bool)
@@ -72,7 +72,7 @@ func (opts *InitOptions) HandleInit() error {
 	defer close(indexDoneChannel)
 
 	getChunks := func(chunkType walk.CacheType) {
-		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType, nCorrections)
+		failedChunks, cancelled := opts.downloadAndReportProgress(chunksToDownload, chunkType, nToDownload)
 		if cancelled {
 			// The user hit the control+c, we don't want to continue...
 			return
@@ -83,7 +83,7 @@ func (opts *InitOptions) HandleInit() error {
 			// ...if there were failed downloads, try them again (3 times if necessary)...
 			retry(failedChunks, 3, func(items []types.SimpleChunkRecord) ([]types.SimpleChunkRecord, bool) {
 				logger.Info("Retrying", len(items), "bloom(s)")
-				return opts.downloadAndReportProgress(items, chunkType, nCorrections)
+				return opts.downloadAndReportProgress(items, chunkType, nToDownload)
 			})
 		}
 	}
@@ -108,6 +108,10 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Wait for the bloom filters to download. This will block until getChunks for blooms returns
 	<-bloomsDoneChannel
+
+	if nDeleted+nToDownload > 0 {
+		logger.Warn("The on-disk index has changed. You must invalidate your monitor cache by removing it.")
+	}
 
 	return nil
 }

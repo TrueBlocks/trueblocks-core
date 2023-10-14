@@ -194,9 +194,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		opts.MaxAddrs = utils.NOPOS
 	}
 	getDef := func(def string) string {
-		if (opts.Mode == "index" && opts.Check) ||
-			(opts.Mode == "manifest" && opts.Check) ||
-			opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
+		if opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
 			return "json"
 		}
 		return def

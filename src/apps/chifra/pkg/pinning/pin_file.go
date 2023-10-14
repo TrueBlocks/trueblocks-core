@@ -28,7 +28,7 @@ func PinOneFile(chain, dbName, fn string, isLocal, isRemote bool) (base.IpfsHash
 	logger.Info(colors.Magenta+"Pinning", dbName, "file", fn, "...", colors.Off)
 	if isLocal {
 		localService, _ := NewPinningService(chain, Local)
-		if hash, err = localService.pinTheFile(fn, true); err != nil {
+		if hash, err = localService.pinTheFile(chain, fn, true); err != nil {
 			return hash, 0, fmt.Errorf("error pinning locally: %s", err)
 		}
 	}
@@ -36,7 +36,7 @@ func PinOneFile(chain, dbName, fn string, isLocal, isRemote bool) (base.IpfsHash
 	if isRemote {
 		remoteService, _ := NewPinningService(chain, Pinata)
 		var remoteHash base.IpfsHash
-		if remoteHash, err = remoteService.pinTheFile(fn, false); err != nil {
+		if remoteHash, err = remoteService.pinTheFile(chain, fn, false); err != nil {
 			return hash, 0, fmt.Errorf("error pinning remotely: %s", err)
 		}
 		if hash == "" {
@@ -59,11 +59,11 @@ func PinOneChunk(chain, bloomFile, indexFile string, isLocal, isRemote bool) (ty
 
 	if isLocal {
 		localService, _ := NewPinningService(chain, Local)
-		if local.BloomHash, err = localService.pinTheFile(bloomFile, true); err != nil {
+		if local.BloomHash, err = localService.pinTheFile(chain, bloomFile, true); err != nil {
 			return local, remote, err
 		}
 		local.BloomSize = file.FileSize(bloomFile)
-		if local.IndexHash, err = localService.pinTheFile(indexFile, true); err != nil {
+		if local.IndexHash, err = localService.pinTheFile(chain, indexFile, true); err != nil {
 			return local, remote, err
 		}
 		local.IndexSize = file.FileSize(indexFile)
@@ -72,11 +72,11 @@ func PinOneChunk(chain, bloomFile, indexFile string, isLocal, isRemote bool) (ty
 
 	if isRemote {
 		remoteService, _ := NewPinningService(chain, Pinata)
-		if remote.BloomHash, err = remoteService.pinTheFile(bloomFile, false); err != nil {
+		if remote.BloomHash, err = remoteService.pinTheFile(chain, bloomFile, false); err != nil {
 			return local, remote, err
 		}
 		remote.BloomSize = file.FileSize(bloomFile)
-		if remote.IndexHash, err = remoteService.pinTheFile(indexFile, false); err != nil {
+		if remote.IndexHash, err = remoteService.pinTheFile(chain, indexFile, false); err != nil {
 			return local, remote, err
 		}
 		remote.IndexSize = file.FileSize(indexFile)
@@ -97,9 +97,9 @@ func Matches(local, remote *types.SimpleChunkRecord) bool {
 }
 
 // pinTheFile pins the file either locally or remotely
-func (s *Service) pinTheFile(filepath string, locally bool) (base.IpfsHash, error) {
+func (s *Service) pinTheFile(chain, filepath string, locally bool) (base.IpfsHash, error) {
 	if locally {
-		return s.pinFileLocally(filepath)
+		return s.pinFileLocally(chain, filepath)
 	}
-	return s.pinFileRemotely(filepath)
+	return s.pinFileRemotely(chain, filepath)
 }

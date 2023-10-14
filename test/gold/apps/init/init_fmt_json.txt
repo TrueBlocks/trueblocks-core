@@ -1,4 +1,4 @@
-chifra init  --fmt json
+chifra init  --fmt json --dry_run --verbose
 Error: 
   unknown flag: --fmt
 
