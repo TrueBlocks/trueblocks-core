@@ -25,6 +25,7 @@ const (
 	WRONG_HASH
 	FILE_ERROR
 	NOT_IN_MANIFEST
+	AFTER_MANIFEST
 )
 
 var Reasons = map[ErrorType]string{
@@ -35,6 +36,7 @@ var Reasons = map[ErrorType]string{
 	WRONG_MAGIC:     "wrong magic number",
 	WRONG_HASH:      "wrong header hash",
 	NOT_IN_MANIFEST: "not in manifest",
+	AFTER_MANIFEST:  "range after manifest",
 }
 
 // IsValidChunk validates the bloom file's header and the index if told to do so. Note that in all cases, it resolves both.

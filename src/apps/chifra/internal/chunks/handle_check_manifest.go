@@ -82,6 +82,8 @@ func (comp *CompareState) checkArrays(report *simpleReportCheck) error {
 		report.CheckedCnt++
 		if !theMap[item] || testId == comp.fail {
 			if len(report.MsgStrings) < 4 || comp.details {
+				parts[0] = strings.ToLower(parts[0])
+				parts[1] = strings.ToLower(parts[1])
 				msg := fmt.Sprintf(comp.msg, item, parts[0], parts[1], marker)
 				report.MsgStrings = append(report.MsgStrings, msg)
 			}

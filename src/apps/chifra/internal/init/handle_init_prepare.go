@@ -43,6 +43,10 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	// The list of files in the manifest but not on disc so they need to be downloaded
 	downloadMap := make(map[base.FileRange]index.ErrorType, len(man.Chunks))
 
+	// The list of files that are on disc and later than the latest entry in the manifest. These are
+	// okay and should not be deleted.
+	afterMap := make(map[base.FileRange]index.ErrorType, len(man.Chunks))
+
 	// We assume we're going to have download everything...
 	for _, chunk := range man.Chunks {
 		downloadMap[base.RangeFromRangeString(chunk.Range)] = index.FILE_MISSING
@@ -93,8 +97,20 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			return true, nil
 
 		} else {
-			// The chunk is on disc but not in the manifest. We need to delete it.
-			deleteMap[rng] = index.NOT_IN_MANIFEST
+			lastInManifest := base.FileRange{}
+			if len(man.Chunks) > 0 {
+				lastChunk := man.Chunks[len(man.Chunks)-1]
+				lastInManifest = base.RangeFromRangeString(lastChunk.Range)
+			}
+
+			// The chunk is on disc but not in the manifest. We need to delete it
+			// unless it's after the latest chunk in the manifest, in which case
+			// the user has presembled scraped it and we should leave it alone.
+			if !rng.LaterThan(lastInManifest) {
+				deleteMap[rng] = index.NOT_IN_MANIFEST
+			} else {
+				afterMap[rng] = index.AFTER_MANIFEST
+			}
 			return true, nil
 		}
 	}
@@ -124,10 +140,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			}
 			nDeleted++
 		}
-
-		if opts.Globals.Verbose || opts.DryRun {
-			opts.reportReason("chunk deleted", reason, rng.String())
-		}
+		opts.reportReason("chunk deleted", reason, rng.String())
 	}
 
 	downloadList := make([]types.SimpleChunkRecord, 0, len(man.ChunkMap))
@@ -160,10 +173,13 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			nToDownload++
 		}
 		downloadList = append(downloadList, *chunk)
-		if opts.Globals.Verbose || opts.DryRun {
-			opts.reportReason("chunk downloaded", downloadMap[rng], rng.String())
-		}
+		opts.reportReason("chunk downloaded", downloadMap[rng], rng.String())
 	}
+
+	for rng, reason := range afterMap {
+		opts.reportReason("chunk scraped", reason, rng.String())
+	}
+
 	return downloadList, nToDownload, nDeleted, nil
 }
 
@@ -173,18 +189,17 @@ func (opts *InitOptions) reportReason(prefix string, status index.ErrorType, pat
 		return
 	}
 
-	col := colors.BrightGreen
-	if status == index.OKAY {
+	if status == index.OKAY || status == index.AFTER_MANIFEST {
+		col := colors.BrightGreen
 		rng := base.RangeFromFilename(path)
 		msg := fmt.Sprintf("%schunk %s%s %s", col, index.Reasons[status], colors.Off, rng)
 		logger.Info(msg)
 	} else {
+		col := colors.BrightMagenta
 		if status == index.FILE_ERROR || status == index.NOT_IN_MANIFEST {
 			col = colors.BrightRed
 		} else if strings.Contains(path, "/blooms/") {
 			col = colors.BrightYellow
-		} else {
-			col = colors.BrightMagenta
 		}
 		rng := base.RangeFromFilename(path)
 		msg := fmt.Sprintf("%s%s [%s]%s %s", col, prefix, index.Reasons[status], colors.Off, rng)
