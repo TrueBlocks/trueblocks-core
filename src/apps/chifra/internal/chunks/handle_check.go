@@ -135,21 +135,21 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	reports = append(reports, sizes)
 
 	// compare with çached manifest with files on disc
-	d2c := simpleReportCheck{Reason: "Disc Files to Cached Manifest"}
+	d2c := simpleReportCheck{Reason: "Disc files to cached manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
 		return err
 	}
 	reports = append(reports, d2c)
 
 	// compare with remote manifest with files on disc
-	d2r := simpleReportCheck{Reason: "Disc Files to Remote Manifest"}
+	d2r := simpleReportCheck{Reason: "Disc files to remote manifest"}
 	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
 		return err
 	}
 	reports = append(reports, d2r)
 
 	// compare remote manifest to cached manifest
-	r2c := simpleReportCheck{Reason: "Remote Manifest to Cached Manifest"}
+	r2c := simpleReportCheck{Reason: "Remote manifest to cached manifest"}
 	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
 		return err
 	}
