@@ -9,7 +9,9 @@ import (
 )
 
 type unchainedGroup struct {
-	Manifest string `toml:"manifest"`
+	Manifest           string `toml:"manifest"`
+	PreferredPublisher string `toml:"preferredPublisher"`
+	UnchainedIndex     string `toml:"unchainedIndex"`
 }
 
 func GetUnchained() unchainedGroup {

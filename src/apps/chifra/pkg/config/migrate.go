@@ -84,6 +84,8 @@ func migrate(currentVer version.Version) error {
 	v16000 := version.NewVersion("v1.6.0-release")
 	if currentVer.Uint64() < v16000.Uint64() {
 		cfg.Unchained.Manifest = version.OldManifestVersion
+		cfg.Unchained.PreferredPublisher = "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+		cfg.Unchained.UnchainedIndex = "0x0c316b7042b419d07d343f2f4f5bd54ff731183d"
 	}
 
 	// Re-write the file (after making a backup) with the new version

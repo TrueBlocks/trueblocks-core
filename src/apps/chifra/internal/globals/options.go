@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -15,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/spf13/cobra"
 )
 
@@ -197,9 +197,8 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
 		// TODO: Why do we need to do this here?
-		publisher := unchained.GetPreferredPublisher()
+		publisher := base.HexToAddress(config.GetUnchained().PreferredPublisher)
 		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
 			logger.Warn(err)
 		}
@@ -226,9 +225,8 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
 		// TODO: Why do we need to do this here?
-		publisher := unchained.GetPreferredPublisher()
+		publisher := base.HexToAddress(config.GetUnchained().PreferredPublisher)
 		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
 			logger.Warn(err)
 		}

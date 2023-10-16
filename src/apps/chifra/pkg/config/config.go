@@ -40,6 +40,8 @@ func init() {
 	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
 	trueBlocksViper.SetDefault("Pinning.GatewayUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
 	trueBlocksViper.SetDefault("Unchained.Manifest", version.OldManifestVersion)
+	trueBlocksViper.SetDefault("Unchained.PreferredPublisher", "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+	trueBlocksViper.SetDefault("Unchained.UnchainedIndex", "0x0c316b7042b419d07d343f2f4f5bd54ff731183d")
 }
 
 var configMutex sync.Mutex

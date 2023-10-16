@@ -12,6 +12,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -55,7 +56,7 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	// Tell the user what we're doing
-	logger.InfoTable("Unchained Index:", unchained.GetUnchainedIndexAddress())
+	logger.InfoTable("Unchained Index:", base.HexToAddress(config.GetUnchained().UnchainedIndex))
 	logger.InfoTable("Specification:", unchained.Specification)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))

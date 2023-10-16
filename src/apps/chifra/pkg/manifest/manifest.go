@@ -85,7 +85,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 	if !file.FileExists(manifestPath) {
 		// basically EstablishManifest
 		if publisher.IsZero() {
-			publisher = unchained.GetPreferredPublisher()
+			publisher = base.HexToAddress(config.GetUnchained().PreferredPublisher)
 		}
 		man, err := ReadManifest(chain, publisher, FromContract)
 		if err != nil {
