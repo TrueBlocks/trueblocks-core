@@ -71,13 +71,11 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 	}
 
 	bl.SizeOnDisc = file.FileSize(path)
-	bl.Range, err = base.RangeFromFilenameE(path)
-	if err != nil {
+	if bl.Range, err = base.RangeFromFilenameE(path); err != nil {
 		return
 	}
 
-	bl.File, err = os.OpenFile(path, os.O_RDONLY, 0644)
-	if err != nil {
+	if bl.File, err = os.OpenFile(path, os.O_RDONLY, 0644); err != nil {
 		return
 	}
 

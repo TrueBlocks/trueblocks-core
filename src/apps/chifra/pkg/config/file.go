@@ -16,7 +16,7 @@ func readFile(inFile string, contents interface{}) error {
 // writeFile writes the toml config file from the given struct
 func (cfg *ConfigFile) writeFile(outFn string, vers version.Version) error {
 	cfg.SetVersionStr(vers.String())
-	if f, err := os.Create(outFn); err != nil {
+	if f, err := os.OpenFile(outFn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666); err != nil {
 		return err
 	} else {
 		defer f.Close()

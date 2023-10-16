@@ -10,7 +10,7 @@ import (
 )
 
 func IsFolderEmpty(folder string) (bool, error) {
-	f, err := os.Open(folder)
+	f, err := os.OpenFile(folder, os.O_RDONLY, 0)
 	if err != nil {
 		return false, err
 	}

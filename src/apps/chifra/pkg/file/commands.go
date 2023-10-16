@@ -29,7 +29,7 @@ type CommandFileLine struct {
 // present on the current line.
 func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, err error) {
 	// TODO: parallelize
-	inputFile, err := os.Open(filePath)
+	inputFile, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}

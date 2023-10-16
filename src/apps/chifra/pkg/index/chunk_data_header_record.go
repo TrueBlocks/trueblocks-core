@@ -30,7 +30,7 @@ func (h *IndexHeaderRecord) String() string {
 	return string(b)
 }
 
-func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
+func ReadIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 	err = binary.Read(fl, binary.LittleEndian, &header)
 	if err != nil {
 		return
@@ -53,7 +53,7 @@ func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord,
 	}
 	defer ff.Close()
 
-	if header, err = readIndexHeader(ff); err != nil {
+	if header, err = ReadIndexHeader(ff); err != nil {
 		return
 	}
 
@@ -93,7 +93,7 @@ func WriteChunkHeaderHash(chain, fileName string, headerHash base.Hash) ( /* cha
 			defer fp.Close() // defers are last in, first out
 
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
-			header, err := readIndexHeader(fp)
+			header, err := ReadIndexHeader(fp)
 			if err != nil {
 				return false, err
 			}
