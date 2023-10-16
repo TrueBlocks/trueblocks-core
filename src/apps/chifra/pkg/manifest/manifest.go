@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // Manifest is a data structure consisting of a list of chunk records (i.e. block ranges, Bloom
@@ -126,7 +125,7 @@ func (m *Manifest) LoadChunkMap() {
 
 func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
 	empty := Manifest{
-		Version:       version.ManifestVersion,
+		Version:       unchained.ManifestVersion,
 		Chain:         chain,
 		Specification: unchained.Specification,
 		Chunks:        []types.SimpleChunkRecord{},
