@@ -7,6 +7,7 @@ package initPkg
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -179,6 +180,10 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	for rng, reason := range afterMap {
 		opts.reportReason("chunk scraped", reason, rng.String())
 	}
+
+	sort.Slice(downloadList, func(i, j int) bool {
+		return downloadList[i].Range > downloadList[j].Range
+	})
 
 	return downloadList, nToDownload, nDeleted, nil
 }
