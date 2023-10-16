@@ -1,0 +1,5 @@
+chifra chunks  index --tag v1.0.0-release
+TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Tag:  v1.0.0-release
+TEST[DATE|TIME] Format:  txt
+WARN[DATE|TIME] Tag option not tested.

@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 func (opts *ChunksOptions) validateChunks() error {
@@ -24,6 +25,19 @@ func (opts *ChunksOptions) validateChunks() error {
 
 	if opts.BadFlag != nil {
 		return opts.BadFlag
+	}
+
+	if opts.Globals.IsApiMode() {
+		if len(opts.Tag) > 0 {
+			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")
+		}
+		if opts.Truncate != utils.NOPOS {
+			return validate.Usage("The {0} option is not available {1}.", "--truncate", "in api mode")
+		}
+	} else if len(opts.Tag) > 0 {
+		if !version.IsValidVersion(opts.Tag) {
+			return validate.Usage("The {0} ({1}) must be a valid version string.", "--tag", opts.Tag)
+		}
 	}
 
 	if !config.IsChainConfigured(chain) {
@@ -109,6 +123,9 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if opts.Mode != "index" {
+		if len(opts.Tag) > 0 {
+			return validate.Usage("The {0} option is only available {1}.", "--tag", "in index mode")
+		}
 		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
 		}

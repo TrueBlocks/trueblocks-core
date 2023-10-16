@@ -265,10 +265,11 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31950,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
 31950,apps,Admin,chunks,chunkMan,diff,f,,false,false,false,false,gocmd,switch,<boolean>,compare two index portions (see notes)
 31951,apps,Admin,chunks,chunkMan,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to process (inclusive)
-31953,apps,Admin,chunks,chunkMan,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to process (inclusive)
-31955,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,false,false,true,true,gocmd,flag,<blknum>,the max number of addresses to process in a given chunk
-31956,apps,Admin,chunks,chunkMan,deep,d,,false,false,true,true,gocmd,switch,<boolean>,if true&#44; dig more deeply during checking (manifest only)
-31956,apps,Admin,chunks,chunkMan,rewrite,e,,false,false,true,true,gocmd,switch,<boolean>,for the --pin --deep mode only&#44; writes the manifest back to the index folder (see notes)
+31952,apps,Admin,chunks,chunkMan,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to process (inclusive)
+31953,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,false,false,true,true,gocmd,flag,<blknum>,the max number of addresses to process in a given chunk
+31954,apps,Admin,chunks,chunkMan,deep,d,,false,false,true,true,gocmd,switch,<boolean>,if true&#44; dig more deeply during checking (manifest only)
+31955,apps,Admin,chunks,chunkMan,rewrite,e,,false,false,true,true,gocmd,switch,<boolean>,for the --pin --deep mode only&#44; writes the manifest back to the index folder (see notes)
+31956,apps,Admin,chunks,chunkMan,tag,t,,false,false,false,false,gocmd,flag,<string>,visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 31957,apps,Admin,chunks,chunkMan,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,for --remote pinning only&#44; seconds to sleep between API calls
 31959,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
 31960,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Mode determines which type of data to display or process.

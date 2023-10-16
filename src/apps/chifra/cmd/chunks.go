@@ -81,11 +81,13 @@ func init() {
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().MaxAddrs, "max_addrs", "m", 0, "the max number of addresses to process in a given chunk")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Deep, "deep", "d", false, "if true, dig more deeply during checking (manifest only)")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Rewrite, "rewrite", "e", false, "for the --pin --deep mode only, writes the manifest back to the index folder (see notes)")
+	chunksCmd.Flags().StringVarP(&chunksPkg.GetOptions().Tag, "tag", "t", "", "visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str) (hidden)")
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, "for --remote pinning only, seconds to sleep between API calls")
 	if os.Getenv("TEST_MODE") != "true" {
 		chunksCmd.Flags().MarkHidden("publisher")
 		chunksCmd.Flags().MarkHidden("truncate")
 		chunksCmd.Flags().MarkHidden("diff")
+		chunksCmd.Flags().MarkHidden("tag")
 	}
 	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals, capabilities)
 

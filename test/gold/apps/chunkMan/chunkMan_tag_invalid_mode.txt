@@ -1,7 +1,8 @@
-chifra chunks  blooms --ether
-Error: 
-  unknown flag: --ether
-
+chifra chunks  manifest --tag v1.0.0-release
+TEST[DATE|TIME] Mode:  manifest
+TEST[DATE|TIME] Tag:  v1.0.0-release
+TEST[DATE|TIME] Format:  txt
+Error: The --tag option is only available in index mode.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 

@@ -40,6 +40,7 @@ type ChunksOptions struct {
 	MaxAddrs   uint64                   `json:"maxAddrs,omitempty"`   // The max number of addresses to process in a given chunk
 	Deep       bool                     `json:"deep,omitempty"`       // If true, dig more deeply during checking (manifest only)
 	Rewrite    bool                     `json:"rewrite,omitempty"`    // For the --pin --deep mode only, writes the manifest back to the index folder (see notes)
+	Tag        string                   `json:"tag,omitempty"`        // Visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
@@ -73,6 +74,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Rewrite, "Rewrite: ", opts.Rewrite)
+	logger.TestLog(len(opts.Tag) > 0, "Tag: ", opts.Tag)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -131,6 +133,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.Deep = true
 		case "rewrite":
 			opts.Rewrite = true
+		case "tag":
+			opts.Tag = value[0]
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:

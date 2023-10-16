@@ -52,6 +52,10 @@ delay   ,both ,fast  ,chunks ,apps/chunkMan ,check_okay              ,y    ,mode
 index   ,both ,fast  ,chunks ,apps/chunkMan ,redir_output            ,y    ,mode = index & blocks = 2000000 & output = output_test_file
 index   ,both ,fast  ,chunks ,apps/chunkMan ,redir_output_append     ,n    ,mode = index & blocks = 3000000 & output = output_test_file & no_header & append
 
+on      ,both ,fast  ,chunks ,apps/chunkMan ,tag_invalid             ,y    ,mode = index & tag = not.a.tag
+on      ,both ,fast  ,chunks ,apps/chunkMan ,tag_invalid_mode        ,y    ,mode = manifest & tag = v1.0.0-release
+on      ,both ,fast  ,chunks ,apps/chunkMan ,tag_test                ,y    ,mode = index & tag = v1.0.0-release
+
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
 on      ,both ,fast  ,chunks ,apps/chunkMan ,caps_allowed            ,y    ,mode = blooms & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose

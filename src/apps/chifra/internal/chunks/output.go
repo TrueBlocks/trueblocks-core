@@ -72,7 +72,10 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 		blockNums = blockNums[:200]
 	}
 
-	if opts.Diff {
+	if len(opts.Tag) > 0 {
+		err = opts.HandleTag(blockNums)
+
+	} else if opts.Diff {
 		err = opts.HandleDiff(blockNums)
 
 	} else if opts.Pin {
