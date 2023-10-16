@@ -13,7 +13,6 @@ import (
 	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -65,7 +64,7 @@ func (bl *ChunkBloom) String() string {
 // have been no errors) and its header data has been read into memory. The array has been created with
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
-func NewChunkBloom(path string) (bl ChunkBloom, err error) {
+func NewChunkBloom(path, tag string, unused bool) (bl ChunkBloom, err error) {
 	if !file.FileExists(path) {
 		return bl, errors.New("required bloom file (" + path + ") missing")
 	}
@@ -79,8 +78,8 @@ func NewChunkBloom(path string) (bl ChunkBloom, err error) {
 		return
 	}
 
-	_, _ = bl.File.Seek(0, io.SeekStart)        // already true, but can't hurt
-	if err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	_, _ = bl.File.Seek(0, io.SeekStart)                                // already true, but can't hurt
+	if err = bl.ReadBloomHeader(tag, unused /* unused */); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return
 	}
 
@@ -102,7 +101,7 @@ func (bl *ChunkBloom) Close() {
 }
 
 // ReadBloom reads the entire contents of the bloom filter
-func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
+func (bl *ChunkBloom) ReadBloom(fileName, tag string, unused bool) (err error) {
 	bl.Range, err = base.RangeFromFilenameE(fileName)
 	if err != nil {
 		return err
@@ -117,8 +116,8 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 		bl.File = nil
 	}()
 
-	_, _ = bl.File.Seek(0, io.SeekStart)        // already true, but can't hurt
-	if err = bl.ReadBloomHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	_, _ = bl.File.Seek(0, io.SeekStart)                   // already true, but can't hurt
+	if err = bl.ReadBloomHeader(tag, unused); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
 	}
 
@@ -144,7 +143,7 @@ func (bl *ChunkBloom) ReadBloom(fileName string) (err error) {
 var ErrInvalidBloomMagic = errors.New("invalid magic number in bloom header")
 var ErrInvalidBloomHash = errors.New("invalid hash in bloom header")
 
-func (bl *ChunkBloom) ReadBloomHeader() error {
+func (bl *ChunkBloom) ReadBloomHeader(tag string, unused bool) error {
 	bl.HeaderSize = 0 // already true, but it makes it explicit
 	err := binary.Read(bl.File, binary.LittleEndian, &bl.Header)
 	if err != nil {
@@ -161,7 +160,7 @@ func (bl *ChunkBloom) ReadBloomHeader() error {
 	}
 
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
-	if bl.Header.Hash.Hex() != config.GetUnchained().HeaderMagic {
+	if bl.Header.Hash.Hex() != tag {
 		return ErrInvalidBloomHash
 	}
 

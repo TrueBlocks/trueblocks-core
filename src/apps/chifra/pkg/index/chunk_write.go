@@ -98,9 +98,9 @@ func WriteChunk(chain, tag string, unused bool, publisher base.Address, fileName
 			// defer fp.Close() // Note -- we don't defer because we want to close the file and possibly pin it below...
 
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
-			header := IndexHeaderRecord{
+			header := IndexHeader{
 				Magic:           file.MagicNumber,
-				Hash:            base.BytesToHash(tag),
+				Hash:            base.BytesToHash([]byte(tag)),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
@@ -116,7 +116,7 @@ func WriteChunk(chain, tag string, unused bool, publisher base.Address, fileName
 				return nil, err
 			}
 
-			if _, err = bl.WriteBloom(chain, ToBloomPath(indexFn)); err != nil {
+			if _, err = bl.WriteBloom(chain, config.GetUnchained().HeaderMagic, ToBloomPath(indexFn), false /* unused */); err != nil {
 				return nil, err
 			}
 
@@ -149,7 +149,7 @@ func WriteChunk(chain, tag string, unused bool, publisher base.Address, fileName
 	}
 }
 
-func UpdateIndexHeader(tag, fileName string, unused bool) error {
+func UpdateIndexHeader(chain, tag, fileName string, unused bool) error {
 	if fp, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err != nil {
 		return err
 

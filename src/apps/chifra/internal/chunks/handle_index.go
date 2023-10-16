@@ -35,7 +35,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 				return true, nil
 			}
 
-			header, err := index.ReadChunkHeader(path, true)
+			header, err := index.ReadChunkHeader("unused", path, true /* unused */, true)
 			if err != nil {
 				return false, err
 			}

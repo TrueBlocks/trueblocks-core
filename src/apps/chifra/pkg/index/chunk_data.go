@@ -30,7 +30,7 @@ const (
 // and Count pairs found in the corresponding AddressTable records.
 type ChunkData struct {
 	File           *os.File
-	Header         IndexHeaderRecord
+	Header         IndexHeader
 	Range          base.FileRange
 	AddrTableStart int64
 	AppTableStart  int64

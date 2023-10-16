@@ -125,7 +125,7 @@ func CheckBackLevelIndex(chain string) {
 	if !file.FileExists(fileName) {
 		return
 	}
-	ok, err := HasValidIndexHeader(fileName)
+	ok, err := HasValidIndexHeader("unused", fileName, true /* unused */)
 	if ok && err == nil {
 		return
 	}
@@ -156,7 +156,7 @@ const BackLevelVersion string = `
 // TODO: There is a header validator in the validate package. Can we use that instead?
 
 func HasValidIndexHeader(tag, fileName string, unused bool) (bool, error) {
-	header, err := ReadChunkHeader(fileName, true)
+	header, err := ReadChunkHeader("unused", fileName, true /* unused */, true)
 	if err != nil {
 		return false, err
 	}

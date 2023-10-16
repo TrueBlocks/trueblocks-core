@@ -58,7 +58,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			_, path := rng.RangeToFilename(chain)
 			bloomFilename := index.ToBloomPath(path)
-			bl, err := bloom.NewChunkBloom(bloomFilename)
+			bl, err := bloom.NewChunkBloom(bloomFilename, config.GetUnchained().HeaderMagic, true /* unused */)
 			if err != nil {
 				return
 			}

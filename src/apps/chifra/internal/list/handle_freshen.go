@@ -238,7 +238,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
 	// check individual bits.
-	bl, err := bloom.NewChunkBloom(bloomFilename)
+	bl, err := bloom.NewChunkBloom(bloomFilename, config.GetUnchained().HeaderMagic, true /* unused */)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		bl.Close()

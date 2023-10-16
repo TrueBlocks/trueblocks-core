@@ -17,6 +17,7 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 )
 
@@ -39,7 +40,8 @@ func NewChunk(path string) (chunk Chunk, err error) {
 		return
 	}
 
-	chunk.Bloom, err = bloom.NewChunkBloom(ToBloomPath(path))
+	bloomFilename := ToBloomPath(path)
+	chunk.Bloom, err = bloom.NewChunkBloom(bloomFilename, config.GetUnchained().HeaderMagic, true /* unused */)
 	if err != nil {
 		return
 	}

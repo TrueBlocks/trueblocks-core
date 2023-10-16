@@ -131,11 +131,11 @@ func tagChunk(chain string, hash string, bloomFn, indexFn string) (err error) {
 		return err
 	}
 
-	if err := index.UpdateIndexHeader(indexFn, hash); err != nil {
+	if err := index.UpdateIndexHeader(chain, "unused", indexFn, true /* unused */); err != nil {
 		return err
 	}
 
-	if err = bloom.UpdateBloomHeader(bloomFn, hash); err != nil {
+	if err = bloom.UpdateBloomHeader(chain, "unused", bloomFn, true /* unused */); err != nil {
 		return err
 	}
 

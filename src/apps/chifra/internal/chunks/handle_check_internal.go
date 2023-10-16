@@ -27,7 +27,7 @@ func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64,
 func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, report *simpleReportCheck) {
 	report.VisitedCnt++
 	report.CheckedCnt++
-	header, err := index.ReadChunkHeader(fileName, true)
+	header, err := index.ReadChunkHeader("unused", fileName, true /* unused */, true)
 	if err != nil {
 		if !strings.Contains(err.Error(), "no such file or directory") {
 			report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
@@ -62,8 +62,8 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 // 	report.CheckedCnt++
 // 	var bl bloom.ChunkBloom
 // 	bPath := index.ToBloomPath(fileName)
-// 	bl.ReadBloom(bPath)
-// 	versioned, err := bl.ReadBloom Header()
+// 	bl..ReadBloom(path, config.GetUnchained().HeaderMagic, true /* unused */)
+// 	versioned, err := bl.ReadBloomHeader(config.GetUnchained().HeaderMagic, true /* unused */)
 // 	if err != nil {
 // 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
 // 	} else if !versioned {
