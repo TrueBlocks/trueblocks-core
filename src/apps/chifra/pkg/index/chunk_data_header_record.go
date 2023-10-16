@@ -44,7 +44,7 @@ func ReadIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 	return
 }
 
-func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
+func ReadChunkHeader(tag, fileName string, unused bool, checkHash bool) (header IndexHeaderRecord, err error) {
 	fileName = ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
@@ -61,7 +61,13 @@ func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord,
 	}
 
 	headerHash := header.Hash.Hex()
-	hasMagicHash := headerHash == config.GetUnchained().HeaderMagic
+	// tagOld := config.GetUnchained().HeaderMagic
+	// tagNew := base.BytesToHash(config.HeaderTag("v2.0.0-release"))
+	// hasMagicHash := headerHash == tagOld || headerHash == tagNew.Hex()
+	// fmt.Println(headerHash)
+	// fmt.Println(tagOld)
+	// fmt.Println(tagNew.Hex())
+	hasMagicHash := headerHash == tag
 	if !hasMagicHash {
 		return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, config.GetUnchained().HeaderMagic, headerHash)
 	}

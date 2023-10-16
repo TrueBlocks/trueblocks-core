@@ -155,18 +155,19 @@ const BackLevelVersion string = `
 
 // TODO: There is a header validator in the validate package. Can we use that instead?
 
-func HasValidIndexHeader(fileName string) (bool, error) {
+func HasValidIndexHeader(tag, fileName string, unused bool) (bool, error) {
 	header, err := ReadChunkHeader(fileName, true)
 	if err != nil {
 		return false, err
 	}
 
 	rng := base.RangeFromFilename(fileName)
+	tagHash := base.BytesToHash([]byte(tag))
 	if header.Magic != file.MagicNumber {
 		msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
 		return false, errors.New(msg)
 
-	} else if header.Hash.Hex() != config.GetUnchained().HeaderMagic {
+	} else if header.Hash != tagHash {
 		msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), config.GetUnchained().HeaderMagic)
 		return false, errors.New(msg)
 	}

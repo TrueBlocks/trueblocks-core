@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -37,7 +38,7 @@ func (c *WriteChunkReport) Report() {
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
+func WriteChunk(chain, tag string, unused bool, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -99,7 +100,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := IndexHeaderRecord{
 				Magic:           file.MagicNumber,
-				Hash:            base.BytesToHash(config.HeaderTag()),
+				Hash:            base.BytesToHash(tag),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
@@ -145,5 +146,49 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 
 	} else {
 		return nil, err
+	}
+}
+
+func UpdateIndexHeader(tag, fileName string, unused bool) error {
+	if fp, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err != nil {
+		return err
+
+	} else {
+		defer fp.Close() // defers are last in, first out
+
+		_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
+		header, err := ReadIndexHeader(fp)
+		if err != nil {
+			return err
+		}
+
+		headerTag := base.BytesToHash([]byte(tag))
+		if header.Hash == headerTag {
+			return nil
+		}
+
+		_, _ = fp.Seek(int64(unsafe.Sizeof(header.Magic)), io.SeekStart)
+		if err = binary.Write(fp, binary.LittleEndian, headerTag); err != nil {
+			return err
+		}
+		_ = fp.Sync() // probably redundant
+	}
+	return nil
+}
+
+// UpdateBloomHeader writes a the header back to the bloom file
+func UpdateBloomHeader(tag, fileName string, unused bool) error {
+	if fp, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err != nil {
+		return err
+	} else {
+		defer fp.Close() // defers are last in, first out
+
+		var header bloom.BloomHeader
+		headerTag := base.BytesToHash([]byte(tag))
+		header.Magic = file.SmallMagicNumber
+		header.Hash = headerTag
+
+		_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
+		return binary.Write(fp, binary.LittleEndian, header)
 	}
 }
