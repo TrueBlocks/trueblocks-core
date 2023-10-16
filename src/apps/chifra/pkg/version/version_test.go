@@ -75,3 +75,41 @@ func TestNewVersion(t *testing.T) {
 		})
 	}
 }
+
+func TestIsValidVersion(t *testing.T) {
+	tests := []struct {
+		test  string
+		valid bool
+	}{
+		{
+			test:  "1.0.0-release",
+			valid: false,
+		},
+		{
+			test:  "v1.0-release",
+			valid: false,
+		},
+		{
+			test:  "va.0.0-release",
+			valid: false,
+		},
+		{
+			test:  "v1.0.0-",
+			valid: false,
+		},
+		{
+			test:  "v1..0-beta",
+			valid: false},
+		{
+			test:  "v1.0.0-release",
+			valid: true,
+		},
+	}
+
+	for _, tt := range tests {
+		res := IsValidVersion(tt.test)
+		if tt.valid != res {
+			t.Errorf("IsValidVersion(%s) = %v, want %v", tt.test, res, tt.valid)
+		}
+	}
+}
