@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 type AddressAppearanceMap map[string][]AppearanceRecord
@@ -100,7 +99,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := IndexHeaderRecord{
 				Magic:           file.MagicNumber,
-				Hash:            unchained.HeaderTag(),
+				Hash:            base.BytesToHash(config.HeaderTag()),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}

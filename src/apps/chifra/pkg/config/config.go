@@ -22,11 +22,12 @@ var trueBlocksViper = viper.New()
 var trueBlocksConfig ConfigFile
 
 type ConfigFile struct {
-	Version  versionGroup          `toml:"version"`
-	Settings settingsGroup         `toml:"settings"`
-	Pinning  pinningGroup          `toml:"pinning"`
-	Keys     map[string]keyGroup   `toml:"keys"`
-	Chains   map[string]chainGroup `toml:"chains"`
+	Version   versionGroup          `toml:"version"`
+	Settings  settingsGroup         `toml:"settings"`
+	Keys      map[string]keyGroup   `toml:"keys"`
+	Pinning   pinningGroup          `toml:"pinning"`
+	Unchained unchainedGroup        `toml:"unchained"`
+	Chains    map[string]chainGroup `toml:"chains"`
 }
 
 // init sets up default values for the given configuration
@@ -38,6 +39,7 @@ func init() {
 	trueBlocksViper.SetDefault("Pinning.GatewayURL", "https://ipfs.unchainedindex.io/ipfs")
 	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
 	trueBlocksViper.SetDefault("Pinning.GatewayUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
+	trueBlocksViper.SetDefault("Unchained.Manifest", version.OldManifestVersion)
 }
 
 var configMutex sync.Mutex

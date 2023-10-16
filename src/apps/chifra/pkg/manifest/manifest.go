@@ -125,7 +125,7 @@ func (m *Manifest) LoadChunkMap() {
 
 func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
 	empty := Manifest{
-		Version:       unchained.ManifestVersion,
+		Version:       config.GetUnchained().Manifest,
 		Chain:         chain,
 		Specification: unchained.Specification,
 		Chunks:        []types.SimpleChunkRecord{},

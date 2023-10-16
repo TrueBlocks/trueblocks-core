@@ -104,6 +104,10 @@ func TestIsValidVersion(t *testing.T) {
 			test:  "v1.0.0-release",
 			valid: true,
 		},
+		{
+			test:  OldManifestVersion, // special case
+			valid: true,
+		},
 	}
 
 	for _, tt := range tests {

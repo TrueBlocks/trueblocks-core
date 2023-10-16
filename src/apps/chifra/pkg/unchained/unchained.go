@@ -2,20 +2,7 @@ package unchained
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/ethereum/go-ethereum/crypto"
 )
-
-// ManifestVersion is the version of the manifest. The keccak256 of this string is inserted
-// into the header each chunk (both the index and the bloom filter). This allows us to verify
-// that the chunks are from the same version of the code. This string matches the version of
-// the specification.
-const ManifestVersion = "trueblocks-core@v0.40.0"
-
-// HeaderTag is inserted into each chunk and each bloom filter as it is produced (or with
-// chifra chunks --tag. It is the keccak256 of the ManifestVersion string.
-func HeaderTag() base.Hash {
-	return base.BytesToHash(crypto.Keccak256([]byte(ManifestVersion)))
-}
 
 const (
 	Specification   = "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb"                     // IPFS hash of the specification for the Unchained Index
