@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 // Manifest is a data structure consisting of a list of chunk records (i.e. block ranges, Bloom
@@ -75,7 +74,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		}
 
 		if man.Specification == "" {
-			man.Specification = unchained.Specification
+			man.Specification = base.IpfsHash(config.GetUnchained().Specification)
 		}
 
 		return man, err
@@ -106,7 +105,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 	}
 
 	if man.Specification == "" {
-		man.Specification = unchained.Specification
+		man.Specification = base.IpfsHash(config.GetUnchained().Specification)
 	}
 
 	man.LoadChunkMap()
@@ -127,7 +126,7 @@ func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChun
 	empty := Manifest{
 		Version:       config.GetUnchained().Manifest,
 		Chain:         chain,
-		Specification: unchained.Specification,
+		Specification: base.IpfsHash(config.GetUnchained().Specification),
 		Chunks:        []types.SimpleChunkRecord{},
 		Config:        config.GetScrape(chain),
 		ChunkMap:      make(map[string]*types.SimpleChunkRecord),

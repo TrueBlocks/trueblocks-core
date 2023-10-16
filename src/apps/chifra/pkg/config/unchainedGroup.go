@@ -12,6 +12,8 @@ type unchainedGroup struct {
 	Manifest           string `toml:"manifest"`
 	PreferredPublisher string `toml:"preferredPublisher"`
 	UnchainedIndex     string `toml:"unchainedIndex"`
+	HeaderMagic        string `toml:"headerMagic"`
+	Specification      string `toml:"specification"`
 }
 
 func GetUnchained() unchainedGroup {

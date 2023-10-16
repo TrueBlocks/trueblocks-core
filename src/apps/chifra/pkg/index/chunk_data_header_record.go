@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 // IndexHeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
@@ -62,9 +61,9 @@ func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord,
 	}
 
 	headerHash := header.Hash.Hex()
-	hasMagicHash := headerHash == unchained.HeaderMagicHash
+	hasMagicHash := headerHash == config.GetUnchained().HeaderMagic
 	if !hasMagicHash {
-		return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, unchained.HeaderMagicHash, headerHash)
+		return header, fmt.Errorf("header has incorrect hash in %s, expected %s, got %s", fileName, config.GetUnchained().HeaderMagic, headerHash)
 	}
 
 	return

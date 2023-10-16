@@ -42,6 +42,8 @@ func init() {
 	trueBlocksViper.SetDefault("Unchained.Manifest", version.OldManifestVersion)
 	trueBlocksViper.SetDefault("Unchained.PreferredPublisher", "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
 	trueBlocksViper.SetDefault("Unchained.UnchainedIndex", "0x0c316b7042b419d07d343f2f4f5bd54ff731183d")
+	trueBlocksViper.SetDefault("Unchained.Specification", "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb")
+	trueBlocksViper.SetDefault("Unchained.HeaderMagic", "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1")
 }
 
 var configMutex sync.Mutex

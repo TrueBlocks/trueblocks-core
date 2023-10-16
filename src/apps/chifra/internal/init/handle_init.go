@@ -12,7 +12,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -20,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -56,8 +54,8 @@ func (opts *InitOptions) HandleInit() error {
 	}
 
 	// Tell the user what we're doing
-	logger.InfoTable("Unchained Index:", base.HexToAddress(config.GetUnchained().UnchainedIndex))
-	logger.InfoTable("Specification:", unchained.Specification)
+	logger.InfoTable("Unchained Index:", config.GetUnchained().UnchainedIndex)
+	logger.InfoTable("Specification:", config.GetUnchained().Specification)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
 	logger.InfoTable("Chunks in manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))

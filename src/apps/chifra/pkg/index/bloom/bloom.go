@@ -13,9 +13,9 @@ import (
 	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 const (
@@ -161,7 +161,7 @@ func (bl *ChunkBloom) ReadBloomHeader() error {
 	}
 
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
-	if bl.Header.Hash.Hex() != unchained.HeaderMagicHash {
+	if bl.Header.Hash.Hex() != config.GetUnchained().HeaderMagic {
 		return ErrInvalidBloomHash
 	}
 

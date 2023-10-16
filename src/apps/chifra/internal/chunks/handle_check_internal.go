@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
@@ -46,8 +46,8 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 			msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
 			report.MsgStrings = append(report.MsgStrings, msg)
 
-		} else if header.Hash.Hex() != unchained.HeaderMagicHash || (testId == 2) {
-			msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
+		} else if header.Hash.Hex() != config.GetUnchained().HeaderMagic || (testId == 2) {
+			msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), config.GetUnchained().HeaderMagic)
 			report.MsgStrings = append(report.MsgStrings, msg)
 
 		} else {
