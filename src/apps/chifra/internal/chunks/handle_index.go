@@ -7,8 +7,10 @@ package chunksPkg
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -35,9 +37,15 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 				return true, nil
 			}
 
-			header, err := index.ReadChunkHeader("unused", path, true /* unused */, true)
+			ff, err := os.OpenFile(path, os.O_RDONLY, 0)
 			if err != nil {
 				return false, err
+			}
+			defer ff.Close()
+
+			header, err := index.X_ReadIndexHeader(ff, config.GetUnchained().HeaderMagic, false /* unused */)
+			if err != nil {
+				return false, fmt.Errorf("%w: %s", err, path)
 			}
 
 			rng, err := base.RangeFromFilenameE(path)

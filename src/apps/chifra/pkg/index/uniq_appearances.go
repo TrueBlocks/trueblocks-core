@@ -25,20 +25,20 @@ func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap Addr
 	for _, receipt := range receipts {
 		created := receipt.ContractAddress
 		addAddressToMaps(created.Hex(), receipt.BlockNumber, receipt.TransactionIndex, addrMap)
-		if err := UniqFromLogs(chain, receipt.Logs, addrMap); err != nil {
+		if err := uniqFromLogs(chain, receipt.Logs, addrMap); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-// UniqFromLogs extracts addresses from the logs
-func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
+// uniqFromLogs extracts addresses from the logs
+func uniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
 	for _, log := range logs {
 		log := log
 		for _, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
-			if IsImplicitAddress(str) {
+			if base.IsImplicitAddress(str) {
 				addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
 			}
 		}
@@ -47,7 +47,7 @@ func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMa
 			inputData := log.Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if IsImplicitAddress(str) {
+				if base.IsImplicitAddress(str) {
 					addAddressToMaps(str, log.BlockNumber, log.TransactionIndex, addrMap)
 				}
 			}
@@ -126,7 +126,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 					initData := trace.Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						str := string(initData[i*64 : (i+1)*64])
-						if IsImplicitAddress(str) {
+						if base.IsImplicitAddress(str) {
 							addAddressToMaps(str, bn, txid, addrMap)
 						}
 					}
@@ -155,7 +155,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 			inputData := trace.Action.Input[10:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if IsImplicitAddress(str) {
+				if base.IsImplicitAddress(str) {
 					addAddressToMaps(str, bn, txid, addrMap)
 				}
 			}
@@ -166,7 +166,7 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 			outputData := trace.Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				str := string(outputData[i*64 : (i+1)*64])
-				if IsImplicitAddress(str) {
+				if base.IsImplicitAddress(str) {
 					addAddressToMaps(str, bn, txid, addrMap)
 				}
 			}

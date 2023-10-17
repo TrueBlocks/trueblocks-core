@@ -51,13 +51,13 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 					return true, nil
 				}
 
-				indexChunk, err := index.NewChunkData(path)
+				indexChunk, err := index.NewChunkIndex(path)
 				if err != nil {
 					return false, err
 				}
 				defer indexChunk.Close()
 
-				_, err = indexChunk.File.Seek(int64(index.HeaderWidth), io.SeekStart)
+				_, err = indexChunk.File1.Seek(int64(index.HeaderWidth), io.SeekStart)
 				if err != nil {
 					return false, err
 				}
@@ -69,7 +69,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 					}
 
 					obj := index.AddressRecord{}
-					err := obj.ReadAddress(indexChunk.File)
+					err := obj.ReadAddress(indexChunk.File1)
 					if err != nil {
 						return false, err
 					}

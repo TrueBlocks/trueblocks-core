@@ -32,13 +32,13 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 				return true, nil
 			}
 
-			indexChunk, err := index.NewChunkData(path)
+			indexChunk, err := index.NewChunkIndex(path)
 			if err != nil {
 				return false, err
 			}
 			defer indexChunk.Close()
 
-			_, err = indexChunk.File.Seek(indexChunk.AppTableStart, io.SeekStart)
+			_, err = indexChunk.File1.Seek(indexChunk.AppTableStart, io.SeekStart)
 			if err != nil {
 				return false, err
 			}
@@ -48,7 +48,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 					continue
 				}
 				rec := index.AppearanceRecord{}
-				err := rec.ReadAppearance(indexChunk.File)
+				err := rec.ReadAppearance(indexChunk.File1)
 				if err != nil {
 					return false, err
 				}

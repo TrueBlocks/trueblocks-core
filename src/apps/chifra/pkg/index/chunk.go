@@ -1,9 +1,9 @@
 // Package index provides tools needed to acquire, read, write and test for set inclusion in an index chunk.
 //
 // An index chunk is a data structure with three parts. A FileRange which indicates the first block
-// and last block of the chunk (inclusive), the ChunkData which carries the list of address appearances
+// and last block of the chunk (inclusive), the ChunkIndex which carries the list of address appearances
 // in the given block range, and a ChunkBloom which allows for rapid queries to determine if a given address
-// appears in the ChunkData without having to read the data from disc.
+// appears in the ChunkIndex without having to read the data from disc.
 //
 // The bloom filter returns true or false indicating either that the address MAY appear in the index or
 // that it definitely does not. (In other words, there are false positives but no false negatives.)
@@ -14,19 +14,16 @@
 package index
 
 import (
-	"encoding/json"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 )
 
-// The Chunk data structure consists of three parts. A FileRange, a ChunkData structure, and a ChunkBloom that
-// carries set membership information for the ChunkData.
+// The Chunk data structure consists of three parts. A FileRange, a ChunkIndex structure, and a ChunkBloom that
+// carries set membership information for the ChunkIndex.
 type Chunk struct {
 	Range base.FileRange
-	Data  ChunkData
-	Bloom bloom.ChunkBloom
+	Data  ChunkIndex
+	Bloom ChunkBloom
 }
 
 // NewChunk returns a fully initialized index chunk. The path argument may point to either a bloom filter file or the
@@ -41,20 +38,20 @@ func NewChunk(path string) (chunk Chunk, err error) {
 	}
 
 	bloomFilename := ToBloomPath(path)
-	chunk.Bloom, err = bloom.NewChunkBloom(bloomFilename, config.GetUnchained().HeaderMagic, true /* unused */)
+	chunk.Bloom, err = X_NewChunkBloom(bloomFilename, config.GetUnchained().HeaderMagic, true /* unused */)
 	if err != nil {
 		return
 	}
 
-	chunk.Data, err = NewChunkData(ToIndexPath(path))
+	chunk.Data, err = NewChunkIndex(ToIndexPath(path))
 	return
 }
 
-// String returns a JSON representation of the Chunk
-func (chunk Chunk) String() string {
-	s, _ := json.MarshalIndent(chunk, "", " ")
-	return string(s)
-}
+// // String returns a JSON representation of the Chunk
+// func (chunk Chunk) String() string {
+// 	s, _ := json.MarshalIndent(chunk, "", " ")
+// 	return string(s)
+// }
 
 // Close closes both the bloom filter file pointer and the index data file pointer (if they are open)
 func (chunk *Chunk) Close() {
@@ -63,8 +60,8 @@ func (chunk *Chunk) Close() {
 		chunk.Bloom.File = nil
 	}
 
-	if chunk.Data.File != nil {
-		chunk.Data.File.Close()
-		chunk.Data.File = nil
+	if chunk.Data.File1 != nil {
+		chunk.Data.File1.Close()
+		chunk.Data.File1 = nil
 	}
 }

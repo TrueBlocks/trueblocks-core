@@ -5,6 +5,7 @@
 package initPkg
 
 import (
+	"encoding/binary"
 	"fmt"
 	"os"
 	"sort"
@@ -12,6 +13,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -67,11 +70,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 
 		if chunk != nil {
 			// Is it valid?
-			bloomStatus, indexStatus, err := index.IsValidChunk(path, index.ChunkSizes{
-				BloomSize: chunk.BloomSize,
-				IndexSize: chunk.IndexSize,
-			}, opts.All)
-
+			bloomStatus, indexStatus, err := isValidChunk(path, chunk.BloomSize, chunk.IndexSize, opts.All)
 			if err != nil {
 				if bloomStatus != index.FILE_ERROR && indexStatus != index.FILE_ERROR {
 					logger.Fatal("implementation error - should not happen in cleanIndex")
@@ -152,10 +151,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			continue
 		}
 		_, indexPath := rng.RangeToFilename(chain)
-		bloomStatus, indexStatus, err := index.IsValidChunk(index.ToBloomPath(indexPath), index.ChunkSizes{
-			BloomSize: chunk.BloomSize,
-			IndexSize: chunk.IndexSize,
-		}, opts.All)
+		bloomStatus, indexStatus, err := isValidChunk(index.ToBloomPath(indexPath), chunk.BloomSize, chunk.IndexSize, opts.All)
 		if err != nil {
 			return nil, 0, nDeleted, err
 		}
@@ -209,5 +205,111 @@ func (opts *InitOptions) reportReason(prefix string, status index.ErrorType, pat
 		rng := base.RangeFromFilename(path)
 		msg := fmt.Sprintf("%s%s [%s]%s %s", col, prefix, index.Reasons[status], colors.Off, rng)
 		logger.Warn(msg)
+	}
+}
+
+// isValidChunk validates the bloom file's header and the index if told to do so. Note that in all cases, it resolves both.
+func isValidChunk(path string, bloomSize, indexSize int64, indexRequired bool) (index.ErrorType, index.ErrorType, error) {
+	if path != index.ToBloomPath(path) {
+		logger.Fatal("should not happen ==> only process bloom folder paths in isValidChunk")
+	}
+
+	var err error
+	indexPath := index.ToIndexPath(path)
+
+	// Resolve the status of the Bloom file first
+	bloom := index.FILE_MISSING
+	if file.FileExists(path) {
+		bloom = checkSize(path, bloomSize)
+		if bloom == index.OKAY {
+			bloom, err = checkHeader(path)
+		}
+	}
+	// The bloom filter is resolved.
+
+	// Determine the status of the index (if it exists)
+	idx := index.OKAY
+	if !file.FileExists(indexPath) {
+		if indexRequired {
+			idx = index.FILE_MISSING
+		}
+	} else {
+		idx = checkSize(indexPath, indexSize)
+		if idx == index.OKAY {
+			idx, err = checkHeader(indexPath)
+		}
+	}
+
+	return bloom, idx, err
+}
+
+func checkSize(path string, expected int64) index.ErrorType {
+	if !file.FileExists(path) {
+		logger.Fatal("should not happen ==> file existence already checked")
+	}
+
+	if file.FileSize(path) != expected {
+		return index.WRONG_SIZE
+	}
+
+	return index.OKAY
+}
+
+func checkHeader(path string) (index.ErrorType, error) {
+	if !file.FileExists(path) {
+		logger.Fatal("should not happen ==> file existence already checked")
+	}
+
+	ff, err := os.OpenFile(path, os.O_RDONLY, 0644)
+	if err != nil {
+		return index.FILE_ERROR, err
+	}
+	defer ff.Close()
+
+	if path == index.ToBloomPath(path) {
+		var magic uint16
+		err = binary.Read(ff, binary.LittleEndian, &magic)
+		if err != nil {
+			return index.FILE_ERROR, err
+		}
+		if magic != file.SmallMagicNumber {
+			return index.WRONG_MAGIC, nil
+		}
+
+		var hash base.Hash
+		err = binary.Read(ff, binary.LittleEndian, &hash)
+		if err != nil {
+			return index.FILE_ERROR, err
+		}
+		if hash.Hex() != config.GetUnchained().HeaderMagic {
+			return index.WRONG_HASH, nil
+		}
+
+		return index.OKAY, nil
+
+	} else if path == index.ToIndexPath(path) {
+		var magic uint32
+		err = binary.Read(ff, binary.LittleEndian, &magic)
+		if err != nil {
+			return index.FILE_ERROR, err
+		}
+		if magic != file.MagicNumber {
+			return index.WRONG_MAGIC, nil
+		}
+
+		var hash base.Hash
+		err = binary.Read(ff, binary.LittleEndian, &hash)
+		if err != nil {
+			return index.FILE_ERROR, err
+		}
+		if hash.Hex() != config.GetUnchained().HeaderMagic {
+			return index.WRONG_HASH, nil
+		}
+
+		return index.OKAY, nil
+
+	} else {
+		logger.Fatal("should not happen ==> unknown type in hasValidHeader")
+		return index.OKAY, nil
 	}
 }

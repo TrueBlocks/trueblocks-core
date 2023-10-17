@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
@@ -21,6 +20,8 @@ import (
 )
 
 func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
+	// x := base.BytesToHash([]byte(config.GetUnchained().Manifest))
+	// fmt.Println("HandleTag", x.Hex())
 	chain := opts.Globals.Chain
 	if opts.Globals.TestMode {
 		logger.Warn("Tag option not tested.")
@@ -51,7 +52,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 			}
 
-			if err := tagChunk(chain, tag, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
+			if err := opts.tagChunk(chain, tag, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 				return false, err
 			}
 
@@ -107,7 +108,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 var tagWarning = `Tag the index with {0}? (Note: this is a non-recoverable change.) (Yy)? `
 
 // tagChunk updates the manifest version in the chunk's header
-func tagChunk(chain string, hash string, bloomFn, indexFn string) (err error) {
+func (opts *ChunksOptions) tagChunk(chain string, hash string, bloomFn, indexFn string) (err error) {
 	indexBackup := indexFn + ".backup"
 	bloomBackup := bloomFn + ".backup"
 
@@ -131,11 +132,11 @@ func tagChunk(chain string, hash string, bloomFn, indexFn string) (err error) {
 		return err
 	}
 
-	if err := index.UpdateIndexHeader(chain, "unused", indexFn, true /* unused */); err != nil {
+	if err := index.X_UpdateIndexHeader(chain, opts.Tag, indexFn, true /* unused */); err != nil {
 		return err
 	}
 
-	if err = bloom.UpdateBloomHeader(chain, "unused", bloomFn, true /* unused */); err != nil {
+	if err = index.X_UpdateBloomHeader(chain, opts.Tag, bloomFn, true /* unused */); err != nil {
 		return err
 	}
 

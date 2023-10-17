@@ -1,4 +1,4 @@
-package bloom
+package index
 
 import (
 	"encoding/binary"
@@ -59,16 +59,17 @@ func (bl *ChunkBloom) WriteBloom(chain, tag, fileName string, unused bool) ( /* 
 	return false, nil
 }
 
-// UpdateBloomHeader writes a the header back to the bloom file
-func UpdateBloomHeader(chain, tag, fileName string, unused bool) error {
+// X_UpdateBloomHeader writes a the header back to the bloom file
+func X_UpdateBloomHeader(chain, tag, fileName string, unused bool) error {
 	if fp, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err != nil {
 		return err
 	} else {
 		defer fp.Close() // defers are last in, first out
 
-		var header BloomHeader
+		var header bloomHeader
+		headerTag := base.BytesToHash([]byte(tag))
 		header.Magic = file.SmallMagicNumber
-		header.Hash = base.BytesToHash([]byte(tag))
+		header.Hash = headerTag
 
 		_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 		return binary.Write(fp, binary.LittleEndian, header)

@@ -201,7 +201,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(chain); err != nil {
+	if err := index.IsIndexInitialized(chain); err != nil {
 		if opts.Globals.IsApiMode() {
 			return err
 		} else {

@@ -1,4 +1,4 @@
-package bloom
+package index
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
@@ -22,24 +22,24 @@ const (
 	BLOOM_WIDTH_IN_BYTES = (BLOOM_WIDTH_IN_BITS / 8)
 	// The number of bits in a single BloomByte structure
 	BLOOM_WIDTH_IN_BITS = (1048576)
-	// The maximum number of addresses to add to a BloomBytes before creating a new one
+	// The maximum number of addresses to add to a bloomBytes before creating a new one
 	MAX_ADDRS_IN_BLOOM = 50000
 )
 
-// BloomBytes store the actual bits of the bloom filter. There is at least one but likely more BloomBytes contained in
+// bloomBytes store the actual bits of the bloom filter. There is at least one but likely more bloomBytes contained in
 // each ChunkBloom. The NInserted value, which is for statistical purposes only, records the number of addresses
 // inserted in the Bytes.
-type BloomBytes struct {
+type bloomBytes struct {
 	NInserted uint32 // Do not change the size of this field, it's stored on disc
 	Bytes     []byte
 }
 
-type BloomHeader struct {
+type bloomHeader struct {
 	Magic uint16    `json:"magic"`
 	Hash  base.Hash `json:"hash"`
 }
 
-// ChunkBloom structures contain an array of BloomBytes each BLOOM_WIDTH_IN_BYTES wide. A new BloomBytes is added to
+// ChunkBloom structures contain an array of bloomBytes each BLOOM_WIDTH_IN_BYTES wide. A new bloomBytes is added to
 // the ChunkBloom when around MAX_ADDRS_IN_BLOOM addresses has been added. These Adaptive Bloom Filters allow us to
 // maintain a near-constant false-positive rate at the expense of slightly larger bloom filters than might be expected.
 type ChunkBloom struct {
@@ -47,9 +47,9 @@ type ChunkBloom struct {
 	SizeOnDisc int64
 	Range      base.FileRange
 	HeaderSize int64
-	Header     BloomHeader
+	Header     bloomHeader
 	Count      uint32 // Do not change the size of this field, it's stored on disc
-	Blooms     []BloomBytes
+	Blooms     []bloomBytes
 }
 
 func (bl *ChunkBloom) String() string {
@@ -60,36 +60,39 @@ func (bl *ChunkBloom) String() string {
 	return fmt.Sprintf("%s\t%d\t%d\t%d", bl.Range, bl.Count, BLOOM_WIDTH_IN_BYTES, nInserted)
 }
 
-// NewChunkBloom returns a newly initialized bloom filter. The bloom filter's file pointer is open (if there
+// X_NewChunkBloom returns a newly initialized bloom filter. The bloom filter's file pointer is open (if there
 // have been no errors) and its header data has been read into memory. The array has been created with
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
-func NewChunkBloom(path, tag string, unused bool) (bl ChunkBloom, err error) {
+func X_NewChunkBloom(path, tag string, unused bool) (ChunkBloom, error) {
+	var err error
+	var bl ChunkBloom
+
 	if !file.FileExists(path) {
 		return bl, errors.New("required bloom file (" + path + ") missing")
 	}
 
 	bl.SizeOnDisc = file.FileSize(path)
 	if bl.Range, err = base.RangeFromFilenameE(path); err != nil {
-		return
+		return bl, err
 	}
 
 	if bl.File, err = os.OpenFile(path, os.O_RDONLY, 0644); err != nil {
-		return
+		return bl, err
 	}
 
-	_, _ = bl.File.Seek(0, io.SeekStart)                                // already true, but can't hurt
-	if err = bl.ReadBloomHeader(tag, unused /* unused */); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
-		return
+	_, _ = bl.File.Seek(0, io.SeekStart)                                  // already true, but can't hurt
+	if err = bl.X_ReadBloomHeader(tag, unused /* unused */); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+		return bl, err
 	}
 
 	if err = binary.Read(bl.File, binary.LittleEndian, &bl.Count); err != nil {
-		return
+		return bl, err
 	}
-	bl.Blooms = make([]BloomBytes, 0, bl.Count)
-	_, _ = bl.File.Seek(int64(bl.HeaderSize), io.SeekStart) // Point to the start of Count
 
-	return
+	bl.Blooms = make([]bloomBytes, 0, bl.Count)
+	_, _ = bl.File.Seek(int64(bl.HeaderSize), io.SeekStart) // Point to the start of Count
+	return bl, nil
 }
 
 // Close closes the file if it's opened
@@ -100,8 +103,8 @@ func (bl *ChunkBloom) Close() {
 	}
 }
 
-// ReadBloom reads the entire contents of the bloom filter
-func (bl *ChunkBloom) ReadBloom(fileName, tag string, unused bool) (err error) {
+// X_ReadBloom reads the entire contents of the bloom filter
+func (bl *ChunkBloom) X_ReadBloom(fileName, tag string, unused bool) (err error) {
 	bl.Range, err = base.RangeFromFilenameE(fileName)
 	if err != nil {
 		return err
@@ -116,8 +119,8 @@ func (bl *ChunkBloom) ReadBloom(fileName, tag string, unused bool) (err error) {
 		bl.File = nil
 	}()
 
-	_, _ = bl.File.Seek(0, io.SeekStart)                   // already true, but can't hurt
-	if err = bl.ReadBloomHeader(tag, unused); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	_, _ = bl.File.Seek(0, io.SeekStart)                     // already true, but can't hurt
+	if err = bl.X_ReadBloomHeader(tag, unused); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
 	}
 
@@ -125,7 +128,7 @@ func (bl *ChunkBloom) ReadBloom(fileName, tag string, unused bool) (err error) {
 		return err
 	}
 
-	bl.Blooms = make([]BloomBytes, bl.Count)
+	bl.Blooms = make([]bloomBytes, bl.Count)
 	for i := uint32(0); i < bl.Count; i++ {
 		if err = binary.Read(bl.File, binary.LittleEndian, &bl.Blooms[i].NInserted); err != nil {
 			return err
@@ -140,28 +143,28 @@ func (bl *ChunkBloom) ReadBloom(fileName, tag string, unused bool) (err error) {
 	return nil
 }
 
-var ErrInvalidBloomMagic = errors.New("invalid magic number in bloom header")
-var ErrInvalidBloomHash = errors.New("invalid hash in bloom header")
+var ErrBloomHeaderDiffMagic = errors.New("invalid magic number in bloom header")
+var ErrBloomHeaderDiffHash = errors.New("invalid hash in bloom header")
 
-func (bl *ChunkBloom) ReadBloomHeader(tag string, unused bool) error {
+func (bl *ChunkBloom) X_ReadBloomHeader(tag string, unused bool) error {
 	bl.HeaderSize = 0 // already true, but it makes it explicit
 	err := binary.Read(bl.File, binary.LittleEndian, &bl.Header)
 	if err != nil {
-		bl.Header = BloomHeader{}
+		bl.Header = bloomHeader{}
 		_, _ = bl.File.Seek(0, io.SeekStart)
 		return err
 	}
 
 	if bl.Header.Magic != file.SmallMagicNumber {
 		// This is an unversioned bloom filter, set back to start of file
-		bl.Header = BloomHeader{}
+		bl.Header = bloomHeader{}
 		_, _ = bl.File.Seek(0, io.SeekStart)
-		return ErrInvalidBloomMagic
+		return ErrBloomHeaderDiffMagic
 	}
 
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
 	if bl.Header.Hash.Hex() != tag {
-		return ErrInvalidBloomHash
+		return ErrBloomHeaderDiffHash
 	}
 
 	return nil
@@ -170,7 +173,7 @@ func (bl *ChunkBloom) ReadBloomHeader(tag string, unused bool) error {
 // AddToSet adds an address to a bloom filter
 func (bl *ChunkBloom) AddToSet(addr base.Address) {
 	if len(bl.Blooms) == 0 {
-		bl.Blooms = append(bl.Blooms, BloomBytes{})
+		bl.Blooms = append(bl.Blooms, bloomBytes{})
 		bl.Blooms[bl.Count].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
 		bl.Count++
 	}
@@ -187,7 +190,7 @@ func (bl *ChunkBloom) AddToSet(addr base.Address) {
 	bl.Blooms[loc].NInserted++
 
 	if bl.Blooms[loc].NInserted > MAX_ADDRS_IN_BLOOM {
-		bl.Blooms = append(bl.Blooms, BloomBytes{})
+		bl.Blooms = append(bl.Blooms, bloomBytes{})
 		bl.Blooms[bl.Count].Bytes = make([]byte, BLOOM_WIDTH_IN_BYTES)
 		bl.Count++
 	}

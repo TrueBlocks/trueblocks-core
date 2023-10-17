@@ -73,8 +73,9 @@ func (opts *ScrapeOptions) validateScrape() error {
 		}
 	}
 
-	// Note this does not return if a migration is needed
-	index.CheckBackLevelIndex(chain)
+	if err := index.IsIndexInitialized(chain); err != nil {
+		return err
+	}
 
 	if len(opts.Publisher) > 0 {
 		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})

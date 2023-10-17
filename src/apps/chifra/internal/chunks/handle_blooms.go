@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -28,8 +27,8 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				return false, fmt.Errorf("should not happen in showBloom")
 			}
 
-			var bl bloom.ChunkBloom
-			_ = bl.ReadBloom(path, config.GetUnchained().HeaderMagic, true /* unused */)
+			var bl index.ChunkBloom
+			_ = bl.X_ReadBloom(path, config.GetUnchained().HeaderMagic, true /* unused */)
 			nInserted := 0
 			for _, bl := range bl.Blooms {
 				nInserted += int(bl.NInserted)
@@ -50,7 +49,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				Size:      stats.BloomSz,
 				Range:     base.RangeFromFilename(path).String(),
 				NBlooms:   stats.NBlooms,
-				ByteWidth: bloom.BLOOM_WIDTH_IN_BYTES,
+				ByteWidth: index.BLOOM_WIDTH_IN_BYTES,
 				NInserted: uint64(nInserted),
 			}
 
@@ -73,7 +72,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-func displayBloom(bl *bloom.ChunkBloom, verbose int) {
+func displayBloom(bl *index.ChunkBloom, verbose int) {
 	var bytesPerLine = (2048 / 16) /* 128 */
 	if verbose > 0 && verbose <= 4 {
 		bytesPerLine = 32
@@ -85,7 +84,7 @@ func displayBloom(bl *bloom.ChunkBloom, verbose int) {
 	}
 	fmt.Println("range:", bl.Range)
 	fmt.Println("nBlooms:", bl.Count)
-	fmt.Println("byteWidth:", bloom.BLOOM_WIDTH_IN_BYTES)
+	fmt.Println("byteWidth:", index.BLOOM_WIDTH_IN_BYTES)
 	fmt.Println("nInserted:", nInserted)
 	if verbose > 0 {
 		for i := uint32(0); i < bl.Count; i++ {

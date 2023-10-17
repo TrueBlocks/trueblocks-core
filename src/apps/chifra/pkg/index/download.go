@@ -39,14 +39,14 @@ type jobResult struct {
 	theChunk *types.SimpleChunkRecord
 }
 
-type ProgressChan chan<- *progress.ProgressMsg
+type progressChan chan<- *progress.ProgressMsg
 
 // WorkerArguments are types meant to hold worker function arguments. We cannot
 // pass the arguments directly, because a worker function is expected to take one
 // parameter of type interface{}.
 type downloadWorkerArguments struct {
 	ctx             context.Context
-	progressChannel ProgressChan
+	progressChannel progressChan
 	gatewayUrl      string
 	downloadWg      *sync.WaitGroup
 	writeChannel    chan *jobResult
@@ -55,7 +55,7 @@ type downloadWorkerArguments struct {
 
 type writeWorkerArguments struct {
 	ctx             context.Context
-	progressChannel ProgressChan
+	progressChannel progressChan
 	cancel          context.CancelFunc
 	writeWg         *sync.WaitGroup
 }
@@ -103,8 +103,8 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				if workerArgs.ctx.Err() != nil {
 					// User hit control + c - clean up both peices for the current chunk
 					chunkPath := config.PathToIndex(chain) + "finalized/" + chunk.Range + ".bin"
-					RemoveLocalFile(ToIndexPath(chunkPath), "user canceled", progressChannel)
-					RemoveLocalFile(ToBloomPath(chunkPath), "user canceled", progressChannel)
+					removeLocalFile(ToIndexPath(chunkPath), "user canceled", progressChannel)
+					removeLocalFile(ToBloomPath(chunkPath), "user canceled", progressChannel)
 					progressChannel <- &progress.ProgressMsg{
 						Payload: &chunk,
 						Event:   progress.Error,
@@ -215,7 +215,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType wal
 
 // DownloadChunks downloads, unzips and saves the chunk of type indicated by chunkType
 // for each chunk in chunks. ProgressMsg is reported to progressChannel.
-func DownloadChunks(chain string, chunksToDownload []types.SimpleChunkRecord, chunkType walk.CacheType, poolSize int, progressChannel ProgressChan) {
+func DownloadChunks(chain string, chunksToDownload []types.SimpleChunkRecord, chunkType walk.CacheType, poolSize int, progressChannel progressChan) {
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
 	defer func() {
@@ -323,7 +323,7 @@ func writeBytesToDisc(chain string, chunkType walk.CacheType, res *jobResult) er
 	return nil
 }
 
-func RemoveLocalFile(fullPath, reason string, progressChannel ProgressChan) bool {
+func removeLocalFile(fullPath, reason string, progressChannel progressChan) bool {
 	if file.FileExists(fullPath) {
 		err := os.Remove(fullPath)
 		if err != nil {
