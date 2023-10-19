@@ -12,6 +12,6 @@ func (opts *ChunksOptions) HandleList(unused []uint64) error {
 		return nil
 	}
 
-	pinning.ListPins(opts.Globals.Chain)
+	_, _ = pinning.ListPins(opts.Globals.Chain)
 	return nil
 }
