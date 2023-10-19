@@ -25,23 +25,23 @@ type Chunk struct {
 	Bloom Bloom
 }
 
-// NewChunk returns a fully initialized index chunk. The path argument may point to either a bloom filter file or the
+// OpenChunk returns a fully initialized index chunk. The path argument may point to either a bloom filter file or the
 // index data file. Either will work. The bloom filter file must exist and will be opened for reading and its header
 // will be read into memory, but the filter itself is not. The index data file need not exist (it will be downloaded
 // later if the bloom indicates that its needed). If the index file does exist, however, it will be opened for reading
 // and its header will be read into memory, but the index data itself will not be.
-func NewChunk(path, expectedTag string, unused bool /* unused */) (chunk Chunk, err error) {
+func OpenChunk(path string) (chunk Chunk, err error) {
 	chunk.Range, err = base.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}
 
-	chunk.Bloom, err = NewBloom(ToBloomPath(path), expectedTag, true /* unused */)
+	chunk.Bloom, err = OpenBloom(ToBloomPath(path))
 	if err != nil {
 		return
 	}
 
-	chunk.Index, err = NewIndex(ToIndexPath(path), expectedTag, false /* unused */)
+	chunk.Index, err = OpenIndex(ToIndexPath(path))
 	return
 }
 

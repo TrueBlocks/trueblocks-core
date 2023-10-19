@@ -7,10 +7,8 @@ package chunksPkg
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -37,18 +35,8 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 				return true, nil
 			}
 
-			var err error
-			var idx index.Index
-			idx.File, err = os.OpenFile(fileName, os.O_RDONLY, 0)
-			if err != nil {
-				return false, err
-			}
-			defer idx.File.Close()
-
-			header, err := idx.ReadHeader(config.HeaderTag(), false /* unused */)
-			if err != nil {
-				return false, fmt.Errorf("%w: %s", err, fileName)
-			}
+			indexChunk, err := index.OpenIndex(fileName)
+			defer indexChunk.File.Close()
 
 			rng, err := base.RangeFromFilenameE(fileName)
 			if err != nil {
@@ -57,10 +45,10 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 
 			s := simpleChunkIndex{
 				Range:        rng.String(),
-				Magic:        fmt.Sprintf("0x%x", header.Magic),
-				Hash:         base.HexToHash(header.Hash.Hex()),
-				NAddresses:   uint64(header.AddressCount),
-				NAppearances: uint64(header.AppearanceCount),
+				Magic:        fmt.Sprintf("0x%x", indexChunk.Header.Magic),
+				Hash:         base.HexToHash(indexChunk.Header.Hash.Hex()),
+				NAddresses:   uint64(indexChunk.Header.AddressCount),
+				NAppearances: uint64(indexChunk.Header.AppearanceCount),
 				Size:         uint64(file.FileSize(fileName)),
 			}
 

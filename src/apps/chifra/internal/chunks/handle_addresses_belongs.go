@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -59,7 +58,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 		return true, nil
 	}
 
-	indexChunk, err := index.NewIndex(path, config.HeaderTag(), false /* unused */)
+	indexChunk, err := index.OpenIndex(path)
 	if err != nil {
 		return false, err
 	}

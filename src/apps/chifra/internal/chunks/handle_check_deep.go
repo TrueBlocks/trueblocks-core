@@ -57,7 +57,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			_, path := rng.RangeToFilename(chain)
-			bl, err := index.NewBloom(index.ToBloomPath(path), config.HeaderTag(), true /* unused */)
+			bl, err := index.OpenBloom(index.ToBloomPath(path))
 			if err != nil {
 				return
 			}
@@ -66,7 +66,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 			misses := 0
 			path = index.ToIndexPath(path) // it may not exist if user did not do chifra init --all for example
 			if file.FileExists(path) {
-				indexChunk, err := index.NewIndex(path, config.HeaderTag(), false /* unused */)
+				indexChunk, err := index.OpenIndex(path)
 				if err != nil {
 					return err
 				}

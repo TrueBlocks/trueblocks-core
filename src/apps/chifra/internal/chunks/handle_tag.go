@@ -58,7 +58,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 			}
 
 			var chunk index.Chunk
-			if err := chunk.Tag(chain, specVersion, false /* unused */, path); err != nil {
+			if err := chunk.Tag(specVersion, path); err != nil {
 				return false, err
 			}
 

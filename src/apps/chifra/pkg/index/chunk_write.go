@@ -13,11 +13,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type AppearanceMap map[string]types.SimpleAppearance
-type writeChunkReport struct {
+type writeReport struct {
 	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
@@ -25,7 +23,7 @@ type writeChunkReport struct {
 	Snapped      bool
 }
 
-func (c *writeChunkReport) Report() {
+func (c *writeReport) Report() {
 	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
 	if c.Snapped {
 		report += ` @(snapped to grid)}`
@@ -34,7 +32,7 @@ func (c *writeChunkReport) Report() {
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func (chunk *Chunk) Write(chain, newTag string, unused bool, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeChunkReport, error) {
+func (chunk *Chunk) Write(chain, newTag string, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -120,14 +118,14 @@ func (chunk *Chunk) Write(chain, newTag string, unused bool, publisher base.Addr
 				return nil, err
 			}
 
-			if _, err = bl.writeBloom(chain, newTag, ToBloomPath(indexFn), false /* unused */); err != nil {
+			if _, err = bl.writeBloom(newTag, ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
 
 			// We're sucessfully written the chunk, so we don't need this any more. If the pin
 			// fails we don't want to have to re-do this chunk, so remove this here.
 			os.Remove(backupFn)
-			return &writeChunkReport{
+			return &writeReport{
 				Range:        base.RangeFromFilename(indexFn),
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
@@ -143,7 +141,7 @@ func (chunk *Chunk) Write(chain, newTag string, unused bool, publisher base.Addr
 }
 
 // Tag updates the manifest version in the chunk's header
-func (chunk *Chunk) Tag(chain, newTag string, unused bool, fileName string) (err error) {
+func (chunk *Chunk) Tag(newTag string, fileName string) (err error) {
 	bloomFn := ToBloomPath(fileName)
 	indexFn := ToIndexPath(fileName)
 	indexBackup := indexFn + ".backup"
@@ -165,11 +163,11 @@ func (chunk *Chunk) Tag(chain, newTag string, unused bool, fileName string) (err
 		return err
 	}
 
-	if err = chunk.Bloom.updateTag(chain, newTag, bloomFn, unused /* unused */); err != nil {
+	if err = chunk.Bloom.updateTag(newTag, bloomFn); err != nil {
 		return err
 	}
 
-	if err = chunk.Index.updateTag(chain, newTag, indexFn, unused /* unused */); err != nil {
+	if err = chunk.Index.updateTag(newTag, indexFn); err != nil {
 		return err
 	}
 

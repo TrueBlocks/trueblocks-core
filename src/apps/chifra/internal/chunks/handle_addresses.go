@@ -52,7 +52,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 					return true, nil
 				}
 
-				indexChunk, err := index.NewIndex(path, config.HeaderTag(), false /* unused */)
+				indexChunk, err := index.OpenIndex(path)
 				if err != nil {
 					return false, err
 				}

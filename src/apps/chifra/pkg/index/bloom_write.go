@@ -13,7 +13,7 @@ import (
 // writeBloom writes a single Bloom filter to file. We do not make a backup copy of the file
 // because the caller is responsible for that. This is because the caller may be writing the
 // entire chunk (both Bloom and Index) and we want either both to succeed or both to fail.
-func (bl *Bloom) writeBloom(chain, newTag, fileName string, unused bool /* unused */) ( /* changed */ bool, error) {
+func (bl *Bloom) writeBloom(newTag, fileName string) ( /* changed */ bool, error) {
 	var err error
 	if bl.File, err = os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0644); err == nil {
 		defer func() {
@@ -49,7 +49,7 @@ func (bl *Bloom) writeBloom(chain, newTag, fileName string, unused bool /* unuse
 }
 
 // updateTag writes a the header back to the bloom file
-func (bl *Bloom) updateTag(chain, newTag, fileName string, unused bool /* unused */) error {
+func (bl *Bloom) updateTag(newTag, fileName string) error {
 	var err error
 	if bl.File, err = os.OpenFile(fileName, os.O_RDWR, 0644); err != nil {
 		return err

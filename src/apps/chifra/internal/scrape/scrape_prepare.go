@@ -57,7 +57,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
 	indexPath := index.ToIndexPath(bloomPath)
 	var chunk index.Chunk
-	if report, err := chunk.Write(chain, config.HeaderTag(), true /* unused */, opts.PublisherAddr, indexPath, appMap, len(prefunds)); err != nil {
+	if report, err := chunk.Write(chain, config.HeaderTag(), opts.PublisherAddr, indexPath, appMap, len(prefunds)); err != nil {
 		return false, err
 	} else if report == nil {
 		logger.Fatal("Should not happen, write chunk returned empty report")

@@ -103,7 +103,7 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 		}
 	}
 
-	indexChunk, err := index.NewIndex(source, config.HeaderTag(), false /* unused */)
+	indexChunk, err := index.OpenIndex(source)
 	if err != nil {
 		return false, err
 	}

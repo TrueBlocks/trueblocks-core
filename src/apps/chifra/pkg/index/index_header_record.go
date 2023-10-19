@@ -6,6 +6,7 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
@@ -22,7 +23,7 @@ type indexHeader struct {
 var ErrIndexHeaderDiffMagic = errors.New("magic number in file is incorrect")
 var ErrIndexHeaderDiffHash = errors.New("magic number in file is incorrect")
 
-func (chunk *Index) ReadHeader(expectedTag string, unused bool) (indexHeader, error) {
+func (chunk *Index) readHeader() (indexHeader, error) {
 	var header indexHeader
 
 	_, _ = chunk.File.Seek(0, io.SeekStart) // already true, but can't hurt
@@ -34,7 +35,7 @@ func (chunk *Index) ReadHeader(expectedTag string, unused bool) (indexHeader, er
 		return header, ErrIndexHeaderDiffMagic
 	}
 
-	if header.Hash.Hex() != expectedTag {
+	if header.Hash.Hex() != config.HeaderTag() { // HeaderTag always shows the current expected value of the manifest hash
 		return header, ErrIndexHeaderDiffHash
 	}
 
