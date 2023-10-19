@@ -102,7 +102,7 @@ func downloadCidToBinary(chain, database, outputFn, cid string) error {
 	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
 
-	ff, err := os.Create(outputFn)
+	ff, err := os.OpenFile(outputFn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return err
 	}
