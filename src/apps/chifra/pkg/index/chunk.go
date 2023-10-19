@@ -17,7 +17,6 @@ import (
 	"encoding/json"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 )
 
 // The Chunk data structure consists of three parts. A FileRange, a ChunkData structure, and a ChunkBloom that
@@ -25,7 +24,7 @@ import (
 type Chunk struct {
 	Range base.FileRange
 	Data  ChunkData
-	Bloom bloom.ChunkBloom
+	Bloom ChunkBloom
 }
 
 // NewChunk returns a fully initialized index chunk. The path argument may point to either a bloom filter file or the
@@ -39,7 +38,7 @@ func NewChunk(path string) (chunk Chunk, err error) {
 		return
 	}
 
-	chunk.Bloom, err = bloom.NewChunkBloom(ToBloomPath(path))
+	chunk.Bloom, err = NewChunkBloom(ToBloomPath(path))
 	if err != nil {
 		return
 	}

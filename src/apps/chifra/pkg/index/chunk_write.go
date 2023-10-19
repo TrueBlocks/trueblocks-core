@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -58,7 +57,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 
 	// We need somewhere to store our progress...
 	offset := uint32(0)
-	bl := bloom.ChunkBloom{}
+	bl := ChunkBloom{}
 
 	// For each address in the sorted list...
 	for _, addrStr := range sorted {
