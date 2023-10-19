@@ -198,7 +198,7 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 
 	if config.IsChainConfigured(opts.Chain) {
 		// TODO: Why do we need to do this here?
-		publisher := base.HexToAddress(config.PreferredPublisher)
+		publisher := base.HexToAddress(config.GetUnchained().PreferredPublisher)
 		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
 			logger.Warn(err)
 		}
@@ -226,7 +226,7 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 
 	if config.IsChainConfigured(opts.Chain) {
 		// TODO: Why do we need to do this here?
-		publisher := base.HexToAddress(config.PreferredPublisher)
+		publisher := base.HexToAddress(config.GetUnchained().PreferredPublisher)
 		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
 			logger.Warn(err)
 		}

@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -35,7 +34,7 @@ func (opts *InitOptions) HandleDryRun() error {
 		return err
 	}
 
-	spec := config.Specification
+	spec := config.GetUnchained().Specification
 	if opts.Globals.TestMode {
 		nToDownload = utils.Min(10, nToDownload)
 		spec = "--testing-hash--"
@@ -46,7 +45,7 @@ func (opts *InitOptions) HandleDryRun() error {
 	}
 
 	// Tell the user what we're doing
-	logger.InfoTable("Unchained Index:", base.HexToAddress(config.Address_V2))
+	logger.InfoTable("Unchained Index:", config.GetUnchained().SmartContract)
 	logger.InfoTable("Specification:", spec)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))

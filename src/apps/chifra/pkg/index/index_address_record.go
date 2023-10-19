@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -21,10 +20,6 @@ type AddressRecord struct {
 	Address base.Address `json:"address"`
 	Offset  uint32       `json:"offset"`
 	Count   uint32       `json:"count"`
-}
-
-func (addressRec *AddressRecord) ReadAddress(file *os.File) (err error) {
-	return binary.Read(file, binary.LittleEndian, addressRec)
 }
 
 func (chunk *Index) searchForAddressRecord(address base.Address) int {
@@ -45,8 +40,7 @@ func (chunk *Index) searchForAddressRecord(address base.Address) int {
 		}
 
 		addressRec := AddressRecord{}
-		err = addressRec.ReadAddress(chunk.File)
-		if err != nil {
+		if err = binary.Read(chunk.File, binary.LittleEndian, &addressRec); err != nil {
 			fmt.Println(err)
 			return false
 		}
@@ -59,8 +53,7 @@ func (chunk *Index) searchForAddressRecord(address base.Address) int {
 	readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
 	_, _ = chunk.File.Seek(readLocation, io.SeekStart)
 	rec := AddressRecord{}
-	err := rec.ReadAddress(chunk.File)
-	if err != nil {
+	if err := binary.Read(chunk.File, binary.LittleEndian, &rec); err != nil {
 		return -1
 	}
 

@@ -6,11 +6,6 @@
     defaultChain = "mainnet"
     indexPath = ""
 
-[pinning]
-    gatewayUrl = "https://ipfs.unchainedindex.io/ipfs/"
-    localPinUrl = "http://localhost:5001"
-    remotePinUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS"
-
 [keys]
     [keys.etherscan]
         apiKey = ""
@@ -24,6 +19,19 @@
     [keys.trueblocks]
         license = ""
         apiKey = ""
+
+[pinning]
+    gatewayUrl = "https://ipfs.unchainedindex.io/ipfs/"
+    localPinUrl = "http://localhost:5001"
+    remotePinUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS"
+
+[unchained]
+    comment = "reserved for system use - do not edit unless instructed to do so"
+    manifest = "trueblocks-core@v0.40.0"
+    preferredPublisher = "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+    unchainedIndex = "0x0c316b7042b419d07d343f2f4f5bd54ff731183d"
+    headerMagic = "0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1"
+    specification = "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb"
 
 [chains]
     [chains.gnosis]

@@ -14,8 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/ethereum/go-ethereum/crypto"
 )
 
 type AppearanceMap map[string]types.SimpleAppearance
@@ -36,7 +34,7 @@ func (c *writeChunkReport) Report() {
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeChunkReport, error) {
+func (chunk *Chunk) Write(chain, newTag string, unused bool, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -98,7 +96,7 @@ func Write(chain string, publisher base.Address, fileName string, addrAppearance
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := indexHeader{
 				Magic:           file.MagicNumber,
-				Hash:            base.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
+				Hash:            base.BytesToHash([]byte(newTag)),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
@@ -114,10 +112,6 @@ func Write(chain string, publisher base.Address, fileName string, addrAppearance
 				return nil, err
 			}
 
-			if _, err = bl.Write(chain, ToBloomPath(indexFn)); err != nil {
-				return nil, err
-			}
-
 			if err := fp.Sync(); err != nil {
 				return nil, err
 			}
@@ -126,17 +120,18 @@ func Write(chain string, publisher base.Address, fileName string, addrAppearance
 				return nil, err
 			}
 
+			if _, err = bl.writeBloom(chain, newTag, ToBloomPath(indexFn), false /* unused */); err != nil {
+				return nil, err
+			}
+
 			// We're sucessfully written the chunk, so we don't need this any more. If the pin
 			// fails we don't want to have to re-do this chunk, so remove this here.
 			os.Remove(backupFn)
-
-			rng := base.RangeFromFilename(indexFn)
-			report := writeChunkReport{ // For use in reporting...
-				Range:        rng,
+			return &writeChunkReport{
+				Range:        base.RangeFromFilename(indexFn),
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
-			}
-			return &report, nil
+			}, nil
 
 		} else {
 			return nil, err
@@ -145,4 +140,41 @@ func Write(chain string, publisher base.Address, fileName string, addrAppearance
 	} else {
 		return nil, err
 	}
+}
+
+// Tag updates the manifest version in the chunk's header
+func (chunk *Chunk) Tag(chain, newTag string, unused bool, fileName string) (err error) {
+	bloomFn := ToBloomPath(fileName)
+	indexFn := ToIndexPath(fileName)
+	indexBackup := indexFn + ".backup"
+	bloomBackup := bloomFn + ".backup"
+
+	defer func() {
+		// If the backup files still exist when the function ends, something went wrong, reset everything
+		if file.FileExists(indexBackup) || file.FileExists(bloomBackup) {
+			_, _ = file.Copy(bloomFn, bloomBackup)
+			_, _ = file.Copy(indexFn, indexBackup)
+			_ = os.Remove(bloomBackup)
+			_ = os.Remove(indexBackup)
+		}
+	}()
+
+	if _, err = file.Copy(indexBackup, indexFn); err != nil {
+		return err
+	} else if _, err = file.Copy(bloomBackup, bloomFn); err != nil {
+		return err
+	}
+
+	if err = chunk.Bloom.updateTag(chain, newTag, bloomFn, unused /* unused */); err != nil {
+		return err
+	}
+
+	if err = chunk.Index.updateTag(chain, newTag, indexFn, unused /* unused */); err != nil {
+		return err
+	}
+
+	_ = os.Remove(indexBackup)
+	_ = os.Remove(bloomBackup)
+
+	return nil
 }

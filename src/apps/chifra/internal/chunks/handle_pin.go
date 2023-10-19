@@ -16,31 +16,36 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
+	lastBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
+	if lastBlock == 0 {
+		lastBlock = utils.NOPOS
+	}
+
 	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
 	if opts.Rewrite {
 		outPath = config.PathToManifest(chain)
 	}
 
 	man := manifest.Manifest{
-		Version:       version.ManifestVersion,
+		Version:       config.GetUnchained().SpecVersion,
 		Chain:         chain,
-		Specification: config.Specification,
+		Specification: base.IpfsHash(config.GetUnchained().Specification),
 		Config:        config.GetScrape(chain),
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		report := simpleChunkPinReport{
-			Version:       version.ManifestVersion,
+			Version:       config.GetUnchained().SpecVersion,
 			Chain:         chain,
-			Specification: config.Specification,
+			Specification: base.IpfsHash(config.GetUnchained().Specification),
 		}
 
 		if len(blockNums) != 0 || opts.Deep {
@@ -49,7 +54,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				if err != nil {
 					return false, err
 				}
-				if rng.First < firstBlock {
+				if rng.First < firstBlock || rng.Last > lastBlock {
 					logger.Info("Skipping", path)
 					return true, nil
 				}

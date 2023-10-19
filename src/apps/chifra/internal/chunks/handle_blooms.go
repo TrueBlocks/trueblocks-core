@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -27,7 +28,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 			}
 
 			var bl index.Bloom
-			_ = bl.Read(path)
+			_ = bl.Read(path, config.HeaderTag(), true /* unused */)
 			nInserted := 0
 			for _, bl := range bl.Blooms {
 				nInserted += int(bl.NInserted)

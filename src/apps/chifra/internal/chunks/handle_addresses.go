@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 	"strings"
@@ -51,7 +52,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 					return true, nil
 				}
 
-				indexChunk, err := index.NewIndex(path)
+				indexChunk, err := index.NewIndex(path, config.HeaderTag(), false /* unused */)
 				if err != nil {
 					return false, err
 				}
@@ -69,8 +70,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 					}
 
 					obj := index.AddressRecord{}
-					err := obj.ReadAddress(indexChunk.File)
-					if err != nil {
+					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
 						return false, err
 					}
 

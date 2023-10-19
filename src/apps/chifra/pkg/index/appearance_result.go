@@ -1,6 +1,7 @@
 package index
 
 import (
+	"encoding/binary"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -31,8 +32,7 @@ func (chunk *Index) ReadAppearances(address base.Address) *AppearanceResult {
 	}
 
 	addressRecord := AddressRecord{}
-	err = addressRecord.ReadAddress(chunk.File)
-	if err != nil {
+	if err := binary.Read(chunk.File, binary.LittleEndian, &addressRecord); err != nil {
 		ret.Err = err
 		return &ret
 	}

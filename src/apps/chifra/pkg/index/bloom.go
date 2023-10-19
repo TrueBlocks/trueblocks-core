@@ -54,7 +54,7 @@ type Bloom struct {
 // have been no errors) and its header data has been read into memory. The array has been created with
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if
 // there is no error) and is positioned at the start of the file.
-func NewBloom(path string) (Bloom, error) {
+func NewBloom(path, expectedTag string, unused bool) (Bloom, error) {
 	var err error
 	var bl Bloom
 
@@ -71,8 +71,8 @@ func NewBloom(path string) (Bloom, error) {
 		return bl, err
 	}
 
-	_, _ = bl.File.Seek(0, io.SeekStart)   // already true, but can't hurt
-	if err = bl.ReadHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	_, _ = bl.File.Seek(0, io.SeekStart)                                   // already true, but can't hurt
+	if err = bl.ReadHeader(expectedTag, unused /* unused */); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return bl, err
 	}
 

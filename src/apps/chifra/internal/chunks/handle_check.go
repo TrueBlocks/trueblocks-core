@@ -155,18 +155,6 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 	}
 	reports = append(reports, r2c)
 
-	// we only check the stage if it exists
-	// TODO: clean this up
-	// stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
-	// stageFn, _ := file.LatestFileInFolder(stagePath)
-	// if file.FileExists(stageFn) {
-	// 	stage := simpleReportCheck{Reason: "Check staging folder"}
-	// 	if err := opts.CheckStaging(0, allowMissing, &stage); err != nil {
-	// 		return err
-	// 	}
-	// 	reports = append(reports, stage)
-	// }
-
 	if opts.Deep {
 		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}
 		if err := opts.CheckDeep(cacheManifest, &deep); err != nil {

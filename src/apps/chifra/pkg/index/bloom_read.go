@@ -8,12 +8,11 @@ import (
 	"unsafe"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 // Read reads the entire contents of the bloom filter
-func (bl *Bloom) Read(fileName string) (err error) {
+func (bl *Bloom) Read(fileName, expectedTag string, unused bool) (err error) {
 	bl.Range, err = base.RangeFromFilenameE(fileName)
 	if err != nil {
 		return err
@@ -28,8 +27,8 @@ func (bl *Bloom) Read(fileName string) (err error) {
 		bl.File = nil
 	}()
 
-	_, _ = bl.File.Seek(0, io.SeekStart)   // already true, but can't hurt
-	if err = bl.ReadHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	_, _ = bl.File.Seek(0, io.SeekStart)                      // already true, but can't hurt
+	if err = bl.ReadHeader(expectedTag, unused); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
 	}
 
@@ -56,7 +55,7 @@ var ErrBloomHeaderDiffMagic = errors.New("invalid magic number in bloom header")
 var ErrBloomHeaderDiffHash = errors.New("invalid hash in bloom header")
 
 // ReadHeader reads a bloom file header into Bloom.
-func (bl *Bloom) ReadHeader() error {
+func (bl *Bloom) ReadHeader(expectedTag string, unused bool) error {
 
 	// Set HeaderSize to 0.
 	bl.HeaderSize = 0
@@ -80,7 +79,7 @@ func (bl *Bloom) ReadHeader() error {
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
 
 	// Validate hash against provided tag.
-	if bl.Header.Hash.Hex() != config.HeaderMagicHash {
+	if bl.Header.Hash.Hex() != expectedTag {
 		return ErrBloomHeaderDiffHash
 	}
 

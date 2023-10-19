@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // Manifest is a data structure consisting of a list of chunk records (i.e. block ranges, Bloom
@@ -73,7 +72,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		if man != nil {
 			man.LoadChunkMap()
 			if man.Specification == "" {
-				man.Specification = config.Specification
+				man.Specification = base.IpfsHash(config.GetUnchained().Specification)
 			}
 		}
 
@@ -84,7 +83,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 	if !file.FileExists(manifestPath) {
 		// basically EstablishManifest
 		if publisher.IsZero() {
-			publisher = base.HexToAddress(config.PreferredPublisher)
+			publisher = base.HexToAddress(config.GetUnchained().PreferredPublisher)
 		}
 		man, err := ReadManifest(chain, publisher, FromContract)
 		if err != nil {
@@ -106,7 +105,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 
 	man.LoadChunkMap()
 	if man.Specification == "" {
-		man.Specification = config.Specification
+		man.Specification = base.IpfsHash(config.GetUnchained().Specification)
 	}
 
 	return man, nil
@@ -123,9 +122,9 @@ func (m *Manifest) LoadChunkMap() {
 
 func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
 	empty := Manifest{
-		Version:       version.ManifestVersion,
+		Version:       config.GetUnchained().SpecVersion,
 		Chain:         chain,
-		Specification: config.Specification,
+		Specification: base.IpfsHash(config.GetUnchained().Specification),
 		Chunks:        []types.SimpleChunkRecord{},
 		Config:        config.GetScrape(chain),
 		ChunkMap:      make(map[string]*types.SimpleChunkRecord),

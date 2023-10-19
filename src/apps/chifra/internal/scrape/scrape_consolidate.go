@@ -103,7 +103,8 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			// Make a chunk - i.e., consolidate
 			chunkPath := indexPath + "finalized/" + chunkRange.String() + ".bin"
 			publisher := base.ZeroAddr
-			if report, err := index.Write(chain, publisher, chunkPath, appMap, nAppearances); err != nil {
+			var chunk index.Chunk
+			if report, err := chunk.Write(chain, config.HeaderTag(), true /* unused */, publisher, chunkPath, appMap, nAppearances); err != nil {
 				return err, false
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")

@@ -1,6 +1,7 @@
 package index
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -37,35 +38,33 @@ type Index struct {
 
 // NewIndex returns an Index with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
-func NewIndex(path string) (chunk Index, err error) {
-	indexPath := ToIndexPath(path)
+func NewIndex(fileName, expectedTag string, unused bool /* unused */) (Index, error) {
+	fileName = ToIndexPath(fileName)
 
-	blkRange, err := base.RangeFromFilenameE(indexPath)
+	blkRange, err := base.RangeFromFilenameE(fileName)
 	if err != nil {
 		return Index{}, err
 	}
 
-	file, err := os.OpenFile(indexPath, os.O_RDONLY, 0)
+	chunk := Index{
+		AddrTableStart: HeaderWidth,
+		Range:          blkRange,
+	}
+	chunk.File, err = os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
 		return Index{}, err
 	}
 	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
+	// defer idx.File.Close()
 
-	header, err := readIndexHeader(file)
+	chunk.Header, err = chunk.ReadHeader(expectedTag, false /* unused */)
 	if err != nil {
-		file.Close()
-		return Index{}, err
+		chunk.File.Close()
+		return Index{}, fmt.Errorf("%w: %s", err, fileName)
 	}
 
-	chunk = Index{
-		File:           file,
-		Header:         header,
-		AddrTableStart: HeaderWidth,
-		AppTableStart:  int64(HeaderWidth + (header.AddressCount * AddrRecordWidth)),
-		Range:          blkRange,
-	}
-
-	return
+	chunk.AppTableStart = int64(HeaderWidth + (chunk.Header.AddressCount * AddrRecordWidth))
+	return chunk, nil
 }
 
 // Close closes the Index's associated File pointer (if opened)

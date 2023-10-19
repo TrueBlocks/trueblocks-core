@@ -281,7 +281,7 @@ func checkHeader(path string) (InitReason, error) {
 		if err != nil {
 			return FILE_ERROR, err
 		}
-		if hash.Hex() != config.HeaderMagicHash {
+		if hash.Hex() != config.HeaderTag() {
 			return WRONG_HASH, nil
 		}
 
@@ -302,7 +302,7 @@ func checkHeader(path string) (InitReason, error) {
 		if err != nil {
 			return FILE_ERROR, err
 		}
-		if hash.Hex() != config.HeaderMagicHash {
+		if hash.Hex() != config.HeaderTag() {
 			return WRONG_HASH, nil
 		}
 

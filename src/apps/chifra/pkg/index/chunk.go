@@ -14,8 +14,6 @@
 package index
 
 import (
-	"encoding/json"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -32,25 +30,19 @@ type Chunk struct {
 // will be read into memory, but the filter itself is not. The index data file need not exist (it will be downloaded
 // later if the bloom indicates that its needed). If the index file does exist, however, it will be opened for reading
 // and its header will be read into memory, but the index data itself will not be.
-func NewChunk(path string) (chunk Chunk, err error) {
+func NewChunk(path, expectedTag string, unused bool /* unused */) (chunk Chunk, err error) {
 	chunk.Range, err = base.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}
 
-	chunk.Bloom, err = NewBloom(ToBloomPath(path))
+	chunk.Bloom, err = NewBloom(ToBloomPath(path), expectedTag, true /* unused */)
 	if err != nil {
 		return
 	}
 
-	chunk.Index, err = NewIndex(ToIndexPath(path))
+	chunk.Index, err = NewIndex(ToIndexPath(path), expectedTag, false /* unused */)
 	return
-}
-
-// String returns a JSON representation of the Chunk
-func (chunk Chunk) String() string {
-	s, _ := json.MarshalIndent(chunk, "", " ")
-	return string(s)
 }
 
 // Close closes both the bloom filter file pointer and the index data file pointer (if they are open)

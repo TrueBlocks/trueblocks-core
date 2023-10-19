@@ -15,9 +15,11 @@ func pathToChainConfigFile(chain, fileName string) string {
 	return filepath.Join(PathToRootConfig(), "config", chain, fileName)
 }
 
+var DesiredConfigVersion = "v1.5.0-release"
+
 // migrate upgrades the config files to the latest versions if necessary
 func migrate(currentVer version.Version) error {
-	minVersion := version.NewVersion("v1.5.0-release")
+	minVersion := version.NewVersion(DesiredConfigVersion)
 	if currentVer.Uint64() >= minVersion.Uint64() {
 		return nil
 	}
@@ -77,6 +79,11 @@ func migrate(currentVer version.Version) error {
 		}
 		cfg.Settings.DefaultGateway = ""
 		cfg.Pinning = pinning
+
+		unchained := unchainedGroup{
+			Comment: "reserved for system use - do not edit unless instructed to do so",
+		}
+		cfg.Unchained = unchained
 	}
 
 	// Re-write the file (after making a backup) with the new version

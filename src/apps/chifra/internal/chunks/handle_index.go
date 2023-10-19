@@ -7,8 +7,10 @@ package chunksPkg
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -24,23 +26,31 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-			if path != index.ToBloomPath(path) {
+		showIndex := func(walker *walk.CacheWalker, fileName string, first bool) (bool, error) {
+			if fileName != index.ToBloomPath(fileName) {
 				return false, fmt.Errorf("should not happen in showIndex")
 			}
 
-			path = index.ToIndexPath(path)
-			if !file.FileExists(path) {
+			fileName = index.ToIndexPath(fileName)
+			if !file.FileExists(fileName) {
 				// Bloom files exist, but index files don't. It's okay.
 				return true, nil
 			}
 
-			header, err := index.ReadChunkHeader(path, true)
+			var err error
+			var idx index.Index
+			idx.File, err = os.OpenFile(fileName, os.O_RDONLY, 0)
 			if err != nil {
 				return false, err
 			}
+			defer idx.File.Close()
 
-			rng, err := base.RangeFromFilenameE(path)
+			header, err := idx.ReadHeader(config.HeaderTag(), false /* unused */)
+			if err != nil {
+				return false, fmt.Errorf("%w: %s", err, fileName)
+			}
+
+			rng, err := base.RangeFromFilenameE(fileName)
 			if err != nil {
 				return false, err
 			}
@@ -51,7 +61,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 				Hash:         base.HexToHash(header.Hash.Hex()),
 				NAddresses:   uint64(header.AddressCount),
 				NAppearances: uint64(header.AppearanceCount),
-				Size:         uint64(file.FileSize(path)),
+				Size:         uint64(file.FileSize(fileName)),
 			}
 
 			modelChan <- &s
