@@ -7,7 +7,7 @@ package index
 // func Test_EstablishValidFilename(t *testing.T) {
 // 	// Such a range should not be listed in manifest, so the function will fail and we can investigate
 // 	r := base.FileRange{First: 0, Last: 1}
-// 	_, err := EstablishIndexChunk("mainnet", r)
+// 	_, err := DownloadOneChunk("mainnet", r)
 // 	if err == nil {
 // 		t.Fatal("error expected")
 // 	}
@@ -39,12 +39,12 @@ package index
 // 		t.Error("remove file did not work for " + path)
 // 	}
 
-// 	_, err = EstablishIndexChunk("mainnet", fileRange)
+// 	_, err = DownloadOneChunk("mainnet", fileRange)
 // 	if err != nil {
-// 		t.Error("EstablishIndexChunk returns error: " + err.Error())
+// 		t.Error("DownloadOneChunk returns error: " + err.Error())
 // 	}
 
 // 	if !file.FileExists(path) {
-// 		t.Error("EstablishIndexChunk did not work for " + path)
+// 		t.Error("DownloadOneChunk did not work for " + path)
 // 	}
 // }

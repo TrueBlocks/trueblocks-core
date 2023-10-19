@@ -79,7 +79,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		if !file.FileExists(ripeFn) {
 			msg := fmt.Sprintf("ripe file not found for block %d", block) + spaces
 			if !bm.AllowMissing() {
-				_ = index.CleanEphemeralIndexFolders(chain)
+				_ = cleanEphemeralIndexFolders(chain)
 				return errors.New(msg), true
 			} else {
 				logger.Warn(msg)
@@ -103,7 +103,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			// Make a chunk - i.e., consolidate
 			chunkPath := indexPath + "finalized/" + chunkRange.String() + ".bin"
 			publisher := base.ZeroAddr
-			if report, err := index.WriteChunk(chain, publisher, chunkPath, appMap, nAppearances); err != nil {
+			if report, err := index.Write(chain, publisher, chunkPath, appMap, nAppearances); err != nil {
 				return err, false
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")
@@ -122,7 +122,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 			// reset for next chunk
 			bm.meta, _ = bm.opts.Conn.GetMetaData(bm.IsTestMode())
-			appMap = make(index.AddressAppearanceMap, 0)
+			appMap = make(map[string][]index.AppearanceRecord, 0)
 			chunkRange.First = chunkRange.Last + 1
 			chunkRange.Last = chunkRange.Last + 1
 			nAppearances = 0
@@ -172,11 +172,11 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
-func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (index.AddressAppearanceMap, base.FileRange, int) {
+func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.AppearanceRecord, base.FileRange, int) {
 	appearances := file.AsciiFileToLines(fn)
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
-	appMap := make(index.AddressAppearanceMap, len(appearances))
+	appMap := make(map[string][]index.AppearanceRecord, len(appearances))
 	fileRange := base.FileRange{First: utils.NOPOS, Last: 0}
 
 	if len(appearances) == 0 {

@@ -237,7 +237,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
 	// check individual bits.
-	bl, err := index.NewChunkBloom(bloomFilename)
+	bl, err := index.NewBloom(bloomFilename)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		bl.Close()
@@ -270,14 +270,14 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 
 	indexFilename := index.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
-		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, updater.Options.PublisherAddr, bl.Range)
+		_, err := index.DownloadOneChunk(updater.Options.Globals.Chain, updater.Options.PublisherAddr, bl.Range)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
 		}
 	}
 
-	indexChunk, err := index.NewChunkData(indexFilename)
+	indexChunk, err := index.NewIndex(indexFilename)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		return
@@ -285,7 +285,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	defer indexChunk.Close()
 
 	for _, mon := range updater.MonitorMap {
-		results = append(results, *indexChunk.GetAppearanceRecords(mon.Address))
+		results = append(results, *indexChunk.ReadAppearances(mon.Address))
 	}
 }
 

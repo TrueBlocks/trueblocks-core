@@ -7,8 +7,6 @@ package index
 import (
 	"errors"
 	"fmt"
-	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -23,9 +21,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// EstablishIndexChunk a filename to an index portion, finds the correspoding CID (hash)
+// DownloadOneChunk a filename to an index portion, finds the correspoding CID (hash)
 // entry in the manifest, and downloads the index chunk to the local drive
-func EstablishIndexChunk(chain string, publisher base.Address, fileRange base.FileRange) (bool, error) {
+func DownloadOneChunk(chain string, publisher base.Address, fileRange base.FileRange) (bool, error) {
 	exists, fileName := fileRange.RangeToFilename(chain)
 
 	chunkManifest, err := manifest.ReadManifest(chain, publisher, manifest.FromCache)
@@ -70,30 +68,7 @@ func EstablishIndexChunk(chain string, publisher base.Address, fileRange base.Fi
 	return file.FileExists(fileName), nil
 }
 
-// CleanEphemeralIndexFolders removes files in ripe and unripe
-func CleanEphemeralIndexFolders(chain string) error {
-	return CleanTempIndexFolders(chain, []string{"ripe", "unripe"})
-}
-
-// CleanTempIndexFolders removes any files that may be partial or incomplete
-func CleanTempIndexFolders(chain string, subFolders []string) error {
-	indexPath := config.PathToIndex(chain)
-
-	for _, f := range subFolders {
-		folder := filepath.Join(indexPath, f)
-		// We want to remove whatever is there...
-		err := os.RemoveAll(folder)
-		if err != nil {
-			return err
-		}
-		// ...but put it back
-		_ = file.EstablishFolder(folder)
-	}
-
-	return nil
-}
-
-func IndexIsInitialized(chain string) error {
+func IsInitialized(chain string) error {
 	CheckBackLevelIndex(chain)
 
 	path := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"

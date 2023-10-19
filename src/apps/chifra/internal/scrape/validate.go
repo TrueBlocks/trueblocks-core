@@ -73,7 +73,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 		}
 	}
 
-	// Note this does not return if a migration is needed
+	// Note that this does not return if the index is not initialized
 	index.CheckBackLevelIndex(chain)
 
 	if len(opts.Publisher) > 0 {

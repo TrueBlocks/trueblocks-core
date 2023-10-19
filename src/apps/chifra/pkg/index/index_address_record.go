@@ -27,7 +27,7 @@ func (addressRec *AddressRecord) ReadAddress(file *os.File) (err error) {
 	return binary.Read(file, binary.LittleEndian, addressRec)
 }
 
-func (chunk *ChunkData) searchForAddressRecord(address base.Address) int {
+func (chunk *Index) searchForAddressRecord(address base.Address) int {
 	compareFunc := func(pos int) bool {
 		if pos == -1 {
 			return false

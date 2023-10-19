@@ -593,16 +593,14 @@ class CIndexArchiveWithNeighborMaps : public CIndexArchive {
 
 */
 
+func GetNeighbors(app *types.SimpleAppearance) ([]Reason, error) {
+	reasons := make([]Reason, 0)
+	reasons = append(reasons, Reason{App: app, Address: &app.Address, Reason: "self"})
+	return reasons, nil
+}
+
 type Reason struct {
 	App     *types.SimpleAppearance
 	Address *base.Address
 	Reason  string
-}
-
-// TODO: BOGUS
-
-func GetNeighbors(app *types.SimpleAppearance) ([]Reason, error) {
-	reasons := make([]Reason, 0)
-	reasons = append(reasons, Reason{app, &app.Address, "self"})
-	return reasons, nil
 }

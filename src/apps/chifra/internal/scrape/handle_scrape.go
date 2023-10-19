@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -182,7 +181,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		// defensive programming - just double checking our own understanding...
 		count := file.NFilesInFolder(bm.RipeFolder())
 		if count != 0 {
-			_ = index.CleanEphemeralIndexFolders(chain)
+			_ = cleanEphemeralIndexFolders(chain)
 			err := fmt.Errorf("%d unexpected ripe files in %s", count, bm.RipeFolder())
 			logger.Error(colors.BrightRed+err.Error(), colors.Off)
 		}
@@ -200,3 +199,8 @@ func (opts *ScrapeOptions) HandleScrape() error {
 }
 
 var spaces = strings.Repeat(" ", 50)
+
+// cleanEphemeralIndexFolders removes files in ripe and unripe
+func cleanEphemeralIndexFolders(chain string) error {
+	return file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe"})
+}

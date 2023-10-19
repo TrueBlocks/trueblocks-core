@@ -18,9 +18,8 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-type AddressAppearanceMap map[string][]AppearanceRecord
 type AppearanceMap map[string]types.SimpleAppearance
-type WriteChunkReport struct {
+type writeChunkReport struct {
 	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
@@ -28,7 +27,7 @@ type WriteChunkReport struct {
 	Snapped      bool
 }
 
-func (c *WriteChunkReport) Report() {
+func (c *writeChunkReport) Report() {
 	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
 	if c.Snapped {
 		report += ` @(snapped to grid)}`
@@ -37,7 +36,7 @@ func (c *WriteChunkReport) Report() {
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
+func Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeChunkReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -56,17 +55,17 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 
 	// We need somewhere to store our progress...
 	offset := uint32(0)
-	bl := ChunkBloom{}
+	bl := Bloom{}
 
 	// For each address in the sorted list...
 	for _, addrStr := range sorted {
-		// ...get its appeances and append them to the appearanceTable....
+		// ...get its appearances and append them to the appearanceTable....
 		apps := addrAppearanceMap[addrStr]
 		appearanceTable = append(appearanceTable, apps...)
 
 		// ...add the address to the bloom filter...
 		address := base.HexToAddress(addrStr)
-		bl.AddToSet(address)
+		bl.InsertAddress(address)
 
 		// ...and append the record to the addressTable.
 		addressTable = append(addressTable, AddressRecord{
@@ -97,7 +96,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 			// defer fp.Close() // Note -- we don't defer because we want to close the file and possibly pin it below...
 
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
-			header := IndexHeaderRecord{
+			header := indexHeader{
 				Magic:           file.MagicNumber,
 				Hash:            base.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
 				AddressCount:    uint32(len(addressTable)),
@@ -115,7 +114,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 				return nil, err
 			}
 
-			if _, err = bl.WriteBloom(chain, ToBloomPath(indexFn)); err != nil {
+			if _, err = bl.Write(chain, ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
 
@@ -132,7 +131,7 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 			os.Remove(backupFn)
 
 			rng := base.RangeFromFilename(indexFn)
-			report := WriteChunkReport{ // For use in reporting...
+			report := writeChunkReport{ // For use in reporting...
 				Range:        rng,
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),

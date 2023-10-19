@@ -51,7 +51,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 					return true, nil
 				}
 
-				indexChunk, err := index.NewChunkData(path)
+				indexChunk, err := index.NewIndex(path)
 				if err != nil {
 					return false, err
 				}

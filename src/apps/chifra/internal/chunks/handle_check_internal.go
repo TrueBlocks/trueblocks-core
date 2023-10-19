@@ -55,28 +55,3 @@ func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, 
 		}
 	}
 }
-
-// TODO: This work is incomplete
-// func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, report *simpleReportCheck) {
-// 	report.VisitedCnt++
-// 	report.CheckedCnt++
-// 	var bl bloom.ChunkBloom
-// 	bPath := index.ToBloomPath(fileName)
-// 	bl.ReadBloom(bPath)
-// 	versioned, err := bl.ReadBloom Header()
-// 	if err != nil {
-// 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
-// 	} else if !versioned {
-// 	} else {
-// 		rng := base.RangeFromFilename(fileName)
-// 		if !opts.Globals.TestMode {
-// 			testId = 0
-// 		}
-// 		if bl.Header.Magic != file.SmallMagicNumber {
-// 			msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, bl.Header.Magic, file.SmallMagicNumber)
-// 			report.MsgStrings = append(report.MsgStrings, msg)
-// 		} else {
-// 			report.PassedCnt++
-// 		}
-// 	}
-// }

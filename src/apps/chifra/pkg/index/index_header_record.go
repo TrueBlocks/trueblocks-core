@@ -2,7 +2,6 @@ package index
 
 import (
 	"encoding/binary"
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -14,22 +13,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-// IndexHeaderRecord is the first 44 bytes of an ChunkData. This structure carries a magic number (4 bytes),
+// indexHeader is the first 44 bytes of an Index. This structure carries a magic number (4 bytes),
 // a version specifier (32 bytes), and two four-byte integers representing the number of records in each
 // of the two tables.
-type IndexHeaderRecord struct {
+type indexHeader struct {
 	Magic           uint32
 	Hash            base.Hash
 	AddressCount    uint32
 	AppearanceCount uint32
 }
 
-func (h *IndexHeaderRecord) String() string {
-	b, _ := json.MarshalIndent(h, "", " ")
-	return string(b)
-}
-
-func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
+func readIndexHeader(fl *os.File) (header indexHeader, err error) {
 	err = binary.Read(fl, binary.LittleEndian, &header)
 	if err != nil {
 		return
@@ -44,11 +38,11 @@ func readIndexHeader(fl *os.File) (header IndexHeaderRecord, err error) {
 	return
 }
 
-func ReadChunkHeader(fileName string, checkHash bool) (header IndexHeaderRecord, err error) {
+func ReadChunkHeader(fileName string, checkHash bool) (header indexHeader, err error) {
 	fileName = ToIndexPath(fileName)
 	ff, err := os.OpenFile(fileName, os.O_RDONLY, 0)
 	if err != nil {
-		return IndexHeaderRecord{}, err
+		return indexHeader{}, err
 	}
 	defer ff.Close()
 

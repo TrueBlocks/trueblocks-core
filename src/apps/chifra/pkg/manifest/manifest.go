@@ -72,10 +72,9 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		man, err := downloadManifest(chain, gatewayUrl, cid)
 		if man != nil {
 			man.LoadChunkMap()
-		}
-
-		if man.Specification == "" {
-			man.Specification = config.Specification
+			if man.Specification == "" {
+				man.Specification = config.Specification
+			}
 		}
 
 		return man, err
@@ -105,11 +104,10 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		return man, err
 	}
 
+	man.LoadChunkMap()
 	if man.Specification == "" {
 		man.Specification = config.Specification
 	}
-
-	man.LoadChunkMap()
 
 	return man, nil
 }

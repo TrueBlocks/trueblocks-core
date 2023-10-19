@@ -1,7 +1,6 @@
 package index
 
 import (
-	"encoding/json"
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -12,9 +11,9 @@ const (
 	HeaderWidth = 44
 )
 
-// ChunkData is one part of the two part Chunk (the other part is the ChunkBloom)
+// Index is one part of the two part Chunk (the other part is the Bloom)
 //
-// Each ChunkData contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
+// Each Index contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
 //
 // The HeaderRecord (44 bytes long) contains a four-byte magic number (`0xdeadbeef` -- to indicate we're reading
 // a file of the correct type), a 32-byte hash representing the file's version, and two 4-byte integers representing
@@ -28,37 +27,37 @@ const (
 //
 // The AppearanceTable contains nAppeeances pairs of <blockNumber.transactionId> pairs arranged by the Offset
 // and Count pairs found in the corresponding AddressTable records.
-type ChunkData struct {
+type Index struct {
 	File           *os.File
-	Header         IndexHeaderRecord
+	Header         indexHeader
 	Range          base.FileRange
 	AddrTableStart int64
 	AppTableStart  int64
 }
 
-// NewChunkData returns an ChunkData with an opened file pointer to the given fileName. The HeaderRecord
+// NewIndex returns an Index with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
-func NewChunkData(path string) (chunk ChunkData, err error) {
+func NewIndex(path string) (chunk Index, err error) {
 	indexPath := ToIndexPath(path)
 
 	blkRange, err := base.RangeFromFilenameE(indexPath)
 	if err != nil {
-		return ChunkData{}, err
+		return Index{}, err
 	}
 
 	file, err := os.OpenFile(indexPath, os.O_RDONLY, 0)
 	if err != nil {
-		return ChunkData{}, err
+		return Index{}, err
 	}
 	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
 
 	header, err := readIndexHeader(file)
 	if err != nil {
 		file.Close()
-		return ChunkData{}, err
+		return Index{}, err
 	}
 
-	chunk = ChunkData{
+	chunk = Index{
 		File:           file,
 		Header:         header,
 		AddrTableStart: HeaderWidth,
@@ -69,14 +68,8 @@ func NewChunkData(path string) (chunk ChunkData, err error) {
 	return
 }
 
-// String returns a JSON representation of the Chunk
-func (chunk ChunkData) String() string {
-	s, _ := json.MarshalIndent(chunk, "", "  ")
-	return string(s)
-}
-
-// Close closes the ChunkData's associated File pointer (if opened)
-func (chunk *ChunkData) Close() error {
+// Close closes the Index's associated File pointer (if opened)
+func (chunk *Index) Close() error {
 	if chunk.File != nil {
 		chunk.File.Close()
 		chunk.File = nil

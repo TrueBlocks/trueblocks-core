@@ -1,9 +1,9 @@
 // Package index provides tools needed to acquire, read, write and test for set inclusion in an index chunk.
 //
 // An index chunk is a data structure with three parts. A FileRange which indicates the first block
-// and last block of the chunk (inclusive), the ChunkData which carries the list of address appearances
-// in the given block range, and a ChunkBloom which allows for rapid queries to determine if a given address
-// appears in the ChunkData without having to read the data from disc.
+// and last block of the chunk (inclusive), the Index which carries the list of address appearances
+// in the given block range, and a Bloom which allows for rapid queries to determine if a given address
+// appears in the Index without having to read the data from disc.
 //
 // The bloom filter returns true or false indicating either that the address MAY appear in the index or
 // that it definitely does not. (In other words, there are false positives but no false negatives.)
@@ -19,12 +19,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-// The Chunk data structure consists of three parts. A FileRange, a ChunkData structure, and a ChunkBloom that
-// carries set membership information for the ChunkData.
+// The Chunk data structure consists of three parts. A FileRange, a Index structure, and a Bloom that
+// carries set membership information for the Index.
 type Chunk struct {
 	Range base.FileRange
-	Data  ChunkData
-	Bloom ChunkBloom
+	Index Index
+	Bloom Bloom
 }
 
 // NewChunk returns a fully initialized index chunk. The path argument may point to either a bloom filter file or the
@@ -38,12 +38,12 @@ func NewChunk(path string) (chunk Chunk, err error) {
 		return
 	}
 
-	chunk.Bloom, err = NewChunkBloom(ToBloomPath(path))
+	chunk.Bloom, err = NewBloom(ToBloomPath(path))
 	if err != nil {
 		return
 	}
 
-	chunk.Data, err = NewChunkData(ToIndexPath(path))
+	chunk.Index, err = NewIndex(ToIndexPath(path))
 	return
 }
 
@@ -60,8 +60,8 @@ func (chunk *Chunk) Close() {
 		chunk.Bloom.File = nil
 	}
 
-	if chunk.Data.File != nil {
-		chunk.Data.File.Close()
-		chunk.Data.File = nil
+	if chunk.Index.File != nil {
+		chunk.Index.File.Close()
+		chunk.Index.File = nil
 	}
 }
