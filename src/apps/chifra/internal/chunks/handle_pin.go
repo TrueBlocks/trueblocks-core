@@ -66,7 +66,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					return true, nil
 				}
 
-				if !pinning.Matches(&local, &remote) {
+				if !matches(&local, &remote) {
 					logger.Warn("Local and remote pins do not match")
 					logger.Warn(local.BloomHash, "-", local.IndexHash)
 					logger.Warn(remote.BloomHash, "-", remote.IndexHash)
@@ -144,4 +144,14 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+// matches returns true if the Result has both local and remote hashes for both the index and the bloom and they match
+func matches(local, remote *types.SimpleChunkRecord) bool {
+	hasLocal := local.IndexHash != "" && local.BloomHash != ""
+	hasRemote := remote.IndexHash != "" && remote.BloomHash != ""
+	if hasLocal && hasRemote {
+		return local.IndexHash == remote.IndexHash && local.BloomHash == remote.BloomHash
+	}
+	return true
 }

@@ -2,6 +2,7 @@ package chunksPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 )
 
 func (opts *ChunksOptions) HandleUnpin(unused []uint64) error {
@@ -11,6 +12,6 @@ func (opts *ChunksOptions) HandleUnpin(unused []uint64) error {
 		return nil
 	}
 
-	// _ = pinning.Unpin(opts.Globals.Chain)
+	_ = pinning.Unpin(opts.Globals.Chain)
 	return nil
 }
