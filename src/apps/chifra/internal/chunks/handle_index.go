@@ -36,6 +36,9 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 			}
 
 			indexChunk, err := index.OpenIndex(fileName)
+			if err != nil {
+				return false, err
+			}
 			defer indexChunk.File.Close()
 
 			rng, err := base.RangeFromFilenameE(fileName)
