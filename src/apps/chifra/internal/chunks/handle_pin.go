@@ -16,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -32,7 +31,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	man := manifest.Manifest{
 		Version:       version.ManifestVersion,
 		Chain:         chain,
-		Specification: unchained.Specification,
+		Specification: config.Specification,
 		Config:        config.GetScrape(chain),
 	}
 
@@ -41,7 +40,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		report := simpleChunkPinReport{
 			Version:       version.ManifestVersion,
 			Chain:         chain,
-			Specification: unchained.Specification,
+			Specification: config.Specification,
 		}
 
 		if len(blockNums) != 0 || opts.Deep {

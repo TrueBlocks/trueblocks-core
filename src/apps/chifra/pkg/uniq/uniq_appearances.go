@@ -1,4 +1,4 @@
-package index
+package uniq
 
 import (
 	"fmt"
@@ -25,15 +25,15 @@ func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap Addr
 	for _, receipt := range receipts {
 		created := receipt.ContractAddress
 		addAddressToMaps(created.Hex(), receipt.BlockNumber, receipt.TransactionIndex, addrMap)
-		if err := UniqFromLogs(chain, receipt.Logs, addrMap); err != nil {
+		if err := uniqFromLogs(chain, receipt.Logs, addrMap); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-// UniqFromLogs extracts addresses from the logs
-func UniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
+// uniqFromLogs extracts addresses from the logs
+func uniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
 	for _, log := range logs {
 		log := log
 		for _, topic := range log.Topics {

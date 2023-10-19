@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 type ChunkSizes struct {
@@ -112,7 +112,7 @@ func checkHeader(path string) (ErrorType, error) {
 		if err != nil {
 			return FILE_ERROR, err
 		}
-		if hash.Hex() != unchained.HeaderMagicHash {
+		if hash.Hex() != config.HeaderMagicHash {
 			return WRONG_HASH, nil
 		}
 
@@ -133,7 +133,7 @@ func checkHeader(path string) (ErrorType, error) {
 		if err != nil {
 			return FILE_ERROR, err
 		}
-		if hash.Hex() != unchained.HeaderMagicHash {
+		if hash.Hex() != config.HeaderMagicHash {
 			return WRONG_HASH, nil
 		}
 
