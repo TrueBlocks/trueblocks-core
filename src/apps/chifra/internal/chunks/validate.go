@@ -28,6 +28,22 @@ func (opts *ChunksOptions) validateChunks() error {
 		return opts.BadFlag
 	}
 
+	if opts.Globals.IsApiMode() {
+		if len(opts.Tag) > 0 {
+			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")
+		}
+		if opts.Truncate != utils.NOPOS {
+			return validate.Usage("The {0} option is not available {1}.", "--truncate", "in api mode")
+		}
+		if opts.Mode == "pins" {
+			return validate.Usage("The {0} mode is not available {1}.", "pins", "in api mode")
+		}
+	} else if len(opts.Tag) > 0 {
+		if !version.IsValidVersion(opts.Tag) {
+			return validate.Usage("The {0} ({1}) must be a valid version string.", "--tag", opts.Tag)
+		}
+	}
+
 	if opts.Mode == "pins" {
 		if !opts.List && !opts.Unpin {
 			return validate.Usage("{0} mode requires {1}.", "pins", "either --list or --unpin")
@@ -52,22 +68,6 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("The {0} option is only available in {1} mode.", "--list", "pins")
 	} else if opts.Unpin {
 		return validate.Usage("The {0} option is only available in {1} mode.", "--unpin", "pins")
-	}
-
-	if opts.Globals.IsApiMode() {
-		if len(opts.Tag) > 0 {
-			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")
-		}
-		if opts.Truncate != utils.NOPOS {
-			return validate.Usage("The {0} option is not available {1}.", "--truncate", "in api mode")
-		}
-		if opts.Mode == "pins" {
-			return validate.Usage("The {0} mode is not available {1}.", "pins", "in api mode")
-		}
-	} else if len(opts.Tag) > 0 {
-		if !version.IsValidVersion(opts.Tag) {
-			return validate.Usage("The {0} ({1}) must be a valid version string.", "--tag", opts.Tag)
-		}
 	}
 
 	if !config.IsChainConfigured(chain) {
