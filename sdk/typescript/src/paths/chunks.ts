@@ -8,7 +8,7 @@ import { address, Appearance, blknum, ChunkAddress, ChunkBloom, ChunkIndex, Chun
 
 export function getChunks(
   parameters?: {
-    mode: 'manifest' | 'index' | 'blooms' | 'addresses' | 'appearances' | 'stats',
+    mode: 'manifest' | 'index' | 'blooms' | 'pins' | 'addresses' | 'appearances' | 'stats',
     blocks?: blknum[],
     check?: boolean,
     pin?: boolean,

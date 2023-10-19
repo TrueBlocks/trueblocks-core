@@ -1,8 +1,8 @@
-chifra chunks  manifest --publish
+chifra chunks  manifest --tag v1.0.0-release
 TEST[DATE|TIME] Mode:  manifest
-TEST[DATE|TIME] Publish:  true
+TEST[DATE|TIME] Tag:  v1.0.0-release
 TEST[DATE|TIME] Format:  txt
-Error: The --publish option is currenlty unavailable.
+Error: The --tag option is only available in index mode.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 

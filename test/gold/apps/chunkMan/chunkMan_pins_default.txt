@@ -1,8 +1,7 @@
-chifra chunks  manifest --publish
-TEST[DATE|TIME] Mode:  manifest
-TEST[DATE|TIME] Publish:  true
+chifra chunks  pins
+TEST[DATE|TIME] Mode:  pins
 TEST[DATE|TIME] Format:  txt
-Error: The --publish option is currenlty unavailable.
+Error: pins mode requires either --list or --unpin.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 

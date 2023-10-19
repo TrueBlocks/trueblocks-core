@@ -776,7 +776,7 @@ string_q clean_positionals(const string_q& progName, const string_q& strIn) {
             os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
 
         } else if (contains(toLower(progName), "chunks")) {
-            os << (strIn == "enum[manifest|index|blooms|addresses|appearances|stats] list<blknum>"
+            os << (strIn == "enum[manifest|index|blooms|pins|addresses|appearances|stats] list<blknum>"
                        ? "<mode> [blocks...] [address...]"
                        : "");
 

@@ -286,7 +286,7 @@ Usage:
 
 Arguments:
   mode - the type of data to process (required)
-	One of [ manifest | index | blooms | addresses | appearances | stats ]
+	One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:

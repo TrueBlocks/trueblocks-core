@@ -1,8 +1,8 @@
-chifra chunks  manifest --publish
-TEST[DATE|TIME] Mode:  manifest
-TEST[DATE|TIME] Publish:  true
+chifra chunks  index --tag not.a.tag
+TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Tag:  not.a.tag
 TEST[DATE|TIME] Format:  txt
-Error: The --publish option is currenlty unavailable.
+Error: The --tag (not.a.tag) must be a valid version string.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
