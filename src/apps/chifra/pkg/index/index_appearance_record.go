@@ -3,7 +3,6 @@ package index
 import (
 	"encoding/binary"
 	"io"
-	"os"
 )
 
 const (
@@ -17,18 +16,18 @@ type AppearanceRecord struct {
 	TransactionId uint32 `json:"transactionIndex"`
 }
 
-func (chunk *ChunkIndex) ReadAppearanceRecordsAndResetOffset(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
-	offset, err := chunk.File1.Seek(0, io.SeekCurrent)
+func (chunk *Index) ReadAppearancesAndReset(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
+	offset, err := chunk.File.Seek(0, io.SeekCurrent)
 	if err != nil {
 		return apps, err
 	}
 
-	apps, err = chunk.ReadAppearanceRecords(addrRecord)
+	apps, err = chunk.readAppearanceRecords(addrRecord)
 	if err != nil {
 		return apps, err
 	}
 
-	_, err = chunk.File1.Seek(offset, io.SeekStart)
+	_, err = chunk.File.Seek(offset, io.SeekStart)
 	if err != nil {
 		return apps, err
 	}
@@ -36,20 +35,16 @@ func (chunk *ChunkIndex) ReadAppearanceRecordsAndResetOffset(addrRecord *Address
 	return apps, nil
 }
 
-func (chunk *ChunkIndex) ReadAppearanceRecords(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
+func (chunk *Index) readAppearanceRecords(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {
 	readLocation := int64(HeaderWidth + AddrRecordWidth*chunk.Header.AddressCount + AppRecordWidth*addrRecord.Offset)
 
-	_, err = chunk.File1.Seek(readLocation, io.SeekStart)
+	_, err = chunk.File.Seek(readLocation, io.SeekStart)
 	if err != nil {
 		return
 	}
 
 	apps = make([]AppearanceRecord, addrRecord.Count)
-	err = binary.Read(chunk.File1, binary.LittleEndian, &apps)
+	err = binary.Read(chunk.File, binary.LittleEndian, &apps)
 
 	return
-}
-
-func (app *AppearanceRecord) ReadAppearance(file *os.File) (err error) {
-	return binary.Read(file, binary.LittleEndian, app)
 }

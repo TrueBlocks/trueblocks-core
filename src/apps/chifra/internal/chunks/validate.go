@@ -45,10 +45,10 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if len(opts.Mode) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[manifest|index|blooms|addresses|appearances|stats]")
+		return validate.Usage("Please choose at least one of {0}.", "[manifest|index|blooms|pins|addresses|appearances|stats]")
 	}
 
-	err := validate.ValidateEnum("mode", opts.Mode, "[manifest|index|blooms|addresses|appearances|stats]")
+	err := validate.ValidateEnum("mode", opts.Mode, "[manifest|index|blooms|pins|addresses|appearances|stats]")
 	if err != nil {
 		return err
 	}
@@ -201,7 +201,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	// Note that this does not return if the index is not initialized
-	if err := index.IsIndexInitialized(chain); err != nil {
+	if err := index.IsInitialized(chain, config.HeaderTag(), false /* unused */); err != nil {
 		if opts.Globals.IsApiMode() {
 			return err
 		} else {

@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -23,11 +22,7 @@ type AddressRecord struct {
 	Count   uint32       `json:"count"`
 }
 
-func (addressRec *AddressRecord) ReadAddress(file *os.File) (err error) {
-	return binary.Read(file, binary.LittleEndian, addressRec)
-}
-
-func (chunk *ChunkIndex) searchForAddressRecord(address base.Address) int {
+func (chunk *Index) searchForAddressRecord(address base.Address) int {
 	compareFunc := func(pos int) bool {
 		if pos == -1 {
 			return false
@@ -38,15 +33,14 @@ func (chunk *ChunkIndex) searchForAddressRecord(address base.Address) int {
 		}
 
 		readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
-		_, err := chunk.File1.Seek(readLocation, io.SeekStart)
+		_, err := chunk.File.Seek(readLocation, io.SeekStart)
 		if err != nil {
 			fmt.Println(err)
 			return false
 		}
 
 		addressRec := AddressRecord{}
-		err = addressRec.ReadAddress(chunk.File1)
-		if err != nil {
+		if err = binary.Read(chunk.File, binary.LittleEndian, &addressRec); err != nil {
 			fmt.Println(err)
 			return false
 		}
@@ -57,10 +51,9 @@ func (chunk *ChunkIndex) searchForAddressRecord(address base.Address) int {
 	pos := sort.Search(int(chunk.Header.AddressCount), compareFunc)
 
 	readLocation := int64(HeaderWidth + pos*AddrRecordWidth)
-	_, _ = chunk.File1.Seek(readLocation, io.SeekStart)
+	_, _ = chunk.File.Seek(readLocation, io.SeekStart)
 	rec := AddressRecord{}
-	err := rec.ReadAddress(chunk.File1)
-	if err != nil {
+	if err := binary.Read(chunk.File, binary.LittleEndian, &rec); err != nil {
 		return -1
 	}
 

@@ -1,13 +1,13 @@
 chifra chunks  remote
 TEST[DATE|TIME] Mode:  remote
 TEST[DATE|TIME] Format:  txt
-Error: The mode option (remote) must be one of [ manifest | index | blooms | addresses | appearances | stats ]
+Error: The mode option (remote) must be one of [ manifest | index | blooms | pins | addresses | appearances | stats ]
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
 Arguments:
   mode - the type of data to process (required)
-	One of [ manifest | index | blooms | addresses | appearances | stats ]
+	One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:
@@ -24,6 +24,7 @@ Flags:
   -m, --max_addrs uint     the max number of addresses to process in a given chunk
   -d, --deep               if true, dig more deeply during checking (manifest only)
   -e, --rewrite            for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
+  -l, --list               for the pins mode only, list the remote pins (hidden)
   -t, --tag string         visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str) (hidden)
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string         export format, one of [none|json*|txt|csv]

@@ -27,8 +27,8 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 				return false, fmt.Errorf("should not happen in showBloom")
 			}
 
-			var bl index.ChunkBloom
-			_ = bl.X_ReadBloom(path, config.GetUnchained().HeaderMagic, true /* unused */)
+			var bl index.Bloom
+			_ = bl.Read(path, config.HeaderTag(), true /* unused */)
 			nInserted := 0
 			for _, bl := range bl.Blooms {
 				nInserted += int(bl.NInserted)
@@ -72,7 +72,7 @@ func (opts *ChunksOptions) HandleBlooms(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-func displayBloom(bl *index.ChunkBloom, verbose int) {
+func displayBloom(bl *index.Bloom, verbose int) {
 	var bytesPerLine = (2048 / 16) /* 128 */
 	if verbose > 0 && verbose <= 4 {
 		bytesPerLine = 32

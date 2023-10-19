@@ -6,16 +6,20 @@ import (
 	"strings"
 )
 
-// Usage accepts an error string and an arbitrary number of additional string parameters. The error string
-// may contain replacement values of the form {N}, where N corresponds to an index into the additional
-// strings. This allows, eventually, for internationalization of the usage strings. An error is returned.
-func Usage(msg string, values ...string) error {
+// Replace accepts an string and an arbitrary number of additional string parameters. It replaces
+// {N} in the string with the Nth additional string.
+func Replace(msg string, values ...string) string {
 	ret := msg
 	for index, val := range values {
 		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
 		ret = strings.Replace(ret, rep, val, -1)
 	}
-	return errors.New(ret)
+	return ret
+}
+
+// Usage returns an error version of the Replace string
+func Usage(msg string, values ...string) error {
+	return errors.New(Replace(msg, values...))
 }
 
 // Deprecated can be used to mark a command option as deprecated.

@@ -4,16 +4,15 @@ import (
 	"encoding/binary"
 	"errors"
 	"io"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-// IndexHeader is the first 44 bytes of an ChunkIndex. This structure carries a magic number (4 bytes),
+// indexHeader is the first 44 bytes of an Index. This structure carries a magic number (4 bytes),
 // a version specifier (32 bytes), and two four-byte integers representing the number of records in each
 // of the two tables.
-type IndexHeader struct {
+type indexHeader struct {
 	Magic           uint32
 	Hash            base.Hash
 	AddressCount    uint32
@@ -23,11 +22,11 @@ type IndexHeader struct {
 var ErrIndexHeaderDiffMagic = errors.New("magic number in file is incorrect")
 var ErrIndexHeaderDiffHash = errors.New("magic number in file is incorrect")
 
-func X_ReadIndexHeader(fp *os.File, tag string, unused bool) (IndexHeader, error) {
-	var header IndexHeader
+func (chunk *Index) ReadHeader(expectedTag string, unused bool) (indexHeader, error) {
+	var header indexHeader
 
-	_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
-	if err := binary.Read(fp, binary.LittleEndian, &header); err != nil {
+	_, _ = chunk.File.Seek(0, io.SeekStart) // already true, but can't hurt
+	if err := binary.Read(chunk.File, binary.LittleEndian, &header); err != nil {
 		return header, err
 	}
 
@@ -35,7 +34,7 @@ func X_ReadIndexHeader(fp *os.File, tag string, unused bool) (IndexHeader, error
 		return header, ErrIndexHeaderDiffMagic
 	}
 
-	if header.Hash.Hex() != tag {
+	if header.Hash.Hex() != expectedTag {
 		return header, ErrIndexHeaderDiffHash
 	}
 

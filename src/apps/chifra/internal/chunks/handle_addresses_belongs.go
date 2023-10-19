@@ -6,9 +6,11 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -57,13 +59,13 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 		return true, nil
 	}
 
-	indexChunk, err := index.NewChunkIndex(path)
+	indexChunk, err := index.NewIndex(path, config.HeaderTag(), false /* unused */)
 	if err != nil {
 		return false, err
 	}
 	defer indexChunk.Close()
 
-	_, err = indexChunk.File1.Seek(int64(index.HeaderWidth), io.SeekStart)
+	_, err = indexChunk.File.Seek(int64(index.HeaderWidth), io.SeekStart)
 	if err != nil {
 		return false, err
 	}
@@ -75,8 +77,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 		}
 
 		s := simpleAppearanceTable{}
-		err := s.AddressRecord.ReadAddress(indexChunk.File1)
-		if err != nil {
+		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
 
@@ -85,7 +86,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 				break
 			}
 
-			if s.Appearances, err = indexChunk.ReadAppearanceRecordsAndResetOffset(&s.AddressRecord); err != nil {
+			if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 				return false, err
 			}
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {

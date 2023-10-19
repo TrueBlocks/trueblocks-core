@@ -3,7 +3,6 @@ package chunksPkg
 import (
 	"context"
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -12,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -20,47 +20,54 @@ import (
 )
 
 func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
-	// x := base.BytesToHash([]byte(config.GetUnchained().Manifest))
-	// fmt.Println("HandleTag", x.Hex())
 	chain := opts.Globals.Chain
 	if opts.Globals.TestMode {
 		logger.Warn("Tag option not tested.")
 		return nil
 	}
 
-	tag := config.GetUnchained().Manifest
+	specVersion := config.GetUnchained().SpecVersion
 	if len(opts.Tag) > 0 {
-		tag = opts.Tag
+		specVersion = opts.Tag
 	}
-	if !opts.Globals.IsApiMode() && !usage.QueryUser(strings.Replace(tagWarning, "{0}", tag, -1), "Not taagged") {
+
+	if !opts.Globals.IsApiMode() && !usage.QueryUser(usage.Replace(tagWarning, specVersion), "Not taagged") {
 		return nil
 	}
 
-	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe", "maps", "staging"})
+	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
 	userHitsCtrlC := false
 	ctx, cancel := context.WithCancel(context.Background())
 
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		nChunksTagged := 0
+		man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromCache)
+		if err != nil {
+			return
+		}
+		bar := logger.NewBar(logger.BarOptions{
+			Enabled: !opts.Globals.TestMode,
+			Total:   int64(len(man.Chunks)),
+		})
 		tagIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-			if strings.HasSuffix(path, ".backup") || strings.HasSuffix(path, ".gz") {
+			if !strings.HasSuffix(path, ".bloom") {
 				logger.Fatal("should not happen ==> walked to a non-bloom file")
-			}
-
-			if path != index.ToBloomPath(path) {
+			} else if path != index.ToBloomPath(path) {
 				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 			}
 
-			if err := opts.tagChunk(chain, tag, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
+			var chunk index.Chunk
+			if err := chunk.Tag(chain, specVersion, false /* unused */, path); err != nil {
 				return false, err
 			}
 
 			nChunksTagged++
 			if opts.Globals.Verbose {
 				rng := base.RangeFromFilename(path)
-				logger.Info(colors.Green+"Tagging chunk at "+rng.String(), colors.Off)
+				logger.Info(colors.Green+"Tagging chunk at "+rng.String()+" with "+specVersion+strings.Repeat(" ", 20), colors.Off)
 			}
+			bar.Tick()
 
 			return true, nil
 		}
@@ -77,7 +84,10 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 			cancel()
 
 		} else {
+			bar.Finish(true)
+
 			// All that's left to do is report on what happened.
+			tag := config.HeaderTag(specVersion)
 			msg := fmt.Sprintf("%d chunks were retagged with %s.", nChunksTagged, tag)
 			if userHitsCtrlC {
 				msg += colors.Yellow + "Finishing work. please wait..." + colors.Off
@@ -105,43 +115,4 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-var tagWarning = `Tag the index with {0}? (Note: this is a non-recoverable change.) (Yy)? `
-
-// tagChunk updates the manifest version in the chunk's header
-func (opts *ChunksOptions) tagChunk(chain string, hash string, bloomFn, indexFn string) (err error) {
-	indexBackup := indexFn + ".backup"
-	bloomBackup := bloomFn + ".backup"
-
-	defer func() {
-		if err != nil {
-			// If the backup files still exist when the function ends, something went wrong, reset everything
-			if file.FileExists(indexBackup) {
-				_, _ = file.Copy(indexFn, indexBackup)
-				_ = os.Remove(indexBackup)
-			}
-			if file.FileExists(bloomBackup) {
-				_, _ = file.Copy(bloomFn, bloomBackup)
-				_ = os.Remove(bloomBackup)
-			}
-		}
-	}()
-
-	if _, err = file.Copy(indexBackup, indexFn); err != nil {
-		return err
-	} else if _, err = file.Copy(bloomBackup, bloomFn); err != nil {
-		return err
-	}
-
-	if err := index.X_UpdateIndexHeader(chain, opts.Tag, indexFn, true /* unused */); err != nil {
-		return err
-	}
-
-	if err = index.X_UpdateBloomHeader(chain, opts.Tag, bloomFn, true /* unused */); err != nil {
-		return err
-	}
-
-	os.Remove(indexBackup)
-	os.Remove(bloomBackup)
-
-	return nil
-}
+var tagWarning = `Tag the index with version {0}? This is a non-recoverable operation. (Yy)? `

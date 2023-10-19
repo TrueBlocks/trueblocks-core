@@ -9,34 +9,36 @@ import (
 type ServiceType int
 
 const (
-	NoType ServiceType = 1 << iota
+	NoType ServiceType = iota
 	Pinata
 	Local
 )
 
 type Service struct {
+	Type       ServiceType
 	Apikey     string
 	Secret     string
 	Jwt        string
-	ResultName string
 	HeaderFunc func(s *Service, contentType string) map[string]string
 }
 
-func NewPinningService(chain string, which ServiceType) (Service, error) {
+func NewService(chain string, serviceType ServiceType) (Service, error) {
 	apiKey, secret, jwt := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret, config.GetKey("pinata").Jwt
-	switch which {
+	switch serviceType {
 	case Local:
-		return Service{}, nil
+		return Service{
+			Type: serviceType,
+		}, nil
 	case Pinata:
 		return Service{
+			Type:       serviceType,
 			Apikey:     apiKey,
 			Secret:     secret,
 			Jwt:        jwt,
-			ResultName: "IpfsHash",
 			HeaderFunc: pinataHeaders,
 		}, nil
 	default:
-		return Service{}, fmt.Errorf("unknown service type %d", which)
+		return Service{}, fmt.Errorf("unknown pinning service type %d", serviceType)
 	}
 }
 

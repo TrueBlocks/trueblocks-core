@@ -7,6 +7,7 @@ package file
 import (
 	"io"
 	"os"
+	"path/filepath"
 )
 
 func IsFolderEmpty(folder string) (bool, error) {
@@ -20,4 +21,20 @@ func IsFolderEmpty(folder string) (bool, error) {
 		return true, nil
 	}
 	return false, err // Either not empty or error, suits both cases
+}
+
+// CleanFolder removes any files that may be partial or incomplete
+func CleanFolder(chain, rootFolder string, subFolders []string) error {
+	for _, f := range subFolders {
+		folder := filepath.Join(rootFolder, f)
+		// We want to remove whatever is there...
+		err := os.RemoveAll(folder)
+		if err != nil {
+			return err
+		}
+		// ...but put it back
+		_ = EstablishFolder(folder)
+	}
+
+	return nil
 }

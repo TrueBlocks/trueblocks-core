@@ -12,6 +12,7 @@ package chunksPkg
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -88,7 +89,7 @@ func (s *simpleChunkStats) Model(chain, format string, verbose bool, extraOption
 
 // EXISTING_CODE
 func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
-	chunk, err := index.NewChunk(path)
+	chunk, err := index.NewChunk(path, config.HeaderTag(), false /* unused */)
 	if err != nil && !os.IsNotExist(err) {
 		return s, err
 	}
@@ -99,8 +100,8 @@ func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
 		Range:    chunk.Range.String(),
 		RangeEnd: utils.FormattedDate(ts),
 		NBlocks:  chunk.Range.Last - chunk.Range.First + 1,
-		NAddrs:   uint64(chunk.Data.Header.AddressCount),
-		NApps:    uint64(chunk.Data.Header.AppearanceCount),
+		NAddrs:   uint64(chunk.Index.Header.AddressCount),
+		NApps:    uint64(chunk.Index.Header.AppearanceCount),
 		NBlooms:  uint64(chunk.Bloom.Count),
 		BloomSz:  uint64(file.FileSize(index.ToBloomPath(path))),
 		ChunkSz:  uint64(file.FileSize(index.ToIndexPath(path))),

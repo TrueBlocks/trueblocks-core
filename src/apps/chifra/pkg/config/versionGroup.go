@@ -11,7 +11,3 @@ type versionGroup struct {
 func GetVersion() versionGroup {
 	return GetRootConfig().Version
 }
-
-func (cfg *ConfigFile) SetVersionStr(current string) {
-	cfg.Version.Current = current
-}

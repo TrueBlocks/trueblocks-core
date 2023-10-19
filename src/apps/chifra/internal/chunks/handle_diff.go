@@ -2,6 +2,7 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 	"os"
@@ -102,13 +103,13 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 		}
 	}
 
-	indexChunk, err := index.NewChunkIndex(source)
+	indexChunk, err := index.NewIndex(source, config.HeaderTag(), false /* unused */)
 	if err != nil {
 		return false, err
 	}
 	defer indexChunk.Close()
 
-	_, err = indexChunk.File1.Seek(int64(index.HeaderWidth), io.SeekStart)
+	_, err = indexChunk.File.Seek(int64(index.HeaderWidth), io.SeekStart)
 	if err != nil {
 		return false, err
 	}
@@ -116,11 +117,10 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 	apps := make([]types.SimpleAppearance, 0, 500000)
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
 		s := simpleAppearanceTable{}
-		err := s.AddressRecord.ReadAddress(indexChunk.File1)
-		if err != nil {
+		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
-		if s.Appearances, err = indexChunk.ReadAppearanceRecordsAndResetOffset(&s.AddressRecord); err != nil {
+		if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 			return false, err
 		}
 		for _, app := range s.Appearances {

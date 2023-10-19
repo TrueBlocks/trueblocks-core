@@ -16,19 +16,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
+	lastBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
+	if lastBlock == 0 {
+		lastBlock = utils.NOPOS
+	}
+
 	outPath := filepath.Join(config.PathToCache(chain), "tmp", "manifest.json")
 	if opts.Rewrite {
 		outPath = config.PathToManifest(chain)
 	}
 
 	man := manifest.Manifest{
-		Version:       config.GetUnchained().Manifest,
+		Version:       config.GetUnchained().SpecVersion,
 		Chain:         chain,
 		Specification: base.IpfsHash(config.GetUnchained().Specification),
 		Config:        config.GetScrape(chain),
@@ -37,7 +43,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		report := simpleChunkPinReport{
-			Version:       config.GetUnchained().Manifest,
+			Version:       config.GetUnchained().SpecVersion,
 			Chain:         chain,
 			Specification: base.IpfsHash(config.GetUnchained().Specification),
 		}
@@ -48,7 +54,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				if err != nil {
 					return false, err
 				}
-				if rng.First < firstBlock {
+				if rng.First < firstBlock || rng.Last > lastBlock {
 					logger.Info("Skipping", path)
 					return true, nil
 				}
@@ -64,7 +70,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 					return true, nil
 				}
 
-				if !pinning.Matches(&local, &remote) {
+				if !matches(&local, &remote) {
 					logger.Warn("Local and remote pins do not match")
 					logger.Warn(local.BloomHash, "-", local.IndexHash)
 					logger.Warn(remote.BloomHash, "-", remote.IndexHash)
@@ -142,4 +148,14 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+// matches returns true if the Result has both local and remote hashes for both the index and the bloom and they match
+func matches(local, remote *types.SimpleChunkRecord) bool {
+	hasLocal := local.IndexHash != "" && local.BloomHash != ""
+	hasRemote := remote.IndexHash != "" && remote.BloomHash != ""
+	if hasLocal && hasRemote {
+		return local.IndexHash == remote.IndexHash && local.BloomHash == remote.BloomHash
+	}
+	return true
 }

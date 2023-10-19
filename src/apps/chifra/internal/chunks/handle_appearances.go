@@ -6,9 +6,11 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -32,13 +34,13 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 				return true, nil
 			}
 
-			indexChunk, err := index.NewChunkIndex(path)
+			indexChunk, err := index.NewIndex(path, config.HeaderTag(), false /* unused */)
 			if err != nil {
 				return false, err
 			}
 			defer indexChunk.Close()
 
-			_, err = indexChunk.File1.Seek(indexChunk.AppTableStart, io.SeekStart)
+			_, err = indexChunk.File.Seek(indexChunk.AppTableStart, io.SeekStart)
 			if err != nil {
 				return false, err
 			}
@@ -48,14 +50,15 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 					continue
 				}
 				rec := index.AppearanceRecord{}
-				err := rec.ReadAppearance(indexChunk.File1)
-				if err != nil {
+				if err := binary.Read(indexChunk.File, binary.LittleEndian, &rec); err != nil {
 					return false, err
 				}
+
 				s := types.SimpleAppearance{
 					BlockNumber:      rec.BlockNumber,
 					TransactionIndex: rec.TransactionId,
 				}
+
 				modelChan <- &s
 			}
 

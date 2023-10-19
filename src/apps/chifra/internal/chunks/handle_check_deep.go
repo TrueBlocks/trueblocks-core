@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 	"sync"
@@ -56,8 +57,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			_, path := rng.RangeToFilename(chain)
-			bloomFilename := index.ToBloomPath(path)
-			bl, err := index.X_NewChunkBloom(bloomFilename, config.GetUnchained().HeaderMagic, true /* unused */)
+			bl, err := index.NewBloom(index.ToBloomPath(path), config.HeaderTag(), true /* unused */)
 			if err != nil {
 				return
 			}
@@ -66,13 +66,13 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 			misses := 0
 			path = index.ToIndexPath(path) // it may not exist if user did not do chifra init --all for example
 			if file.FileExists(path) {
-				indexChunk, err := index.NewChunkIndex(path)
+				indexChunk, err := index.NewIndex(path, config.HeaderTag(), false /* unused */)
 				if err != nil {
 					return err
 				}
 				defer indexChunk.Close()
 
-				_, err = indexChunk.File1.Seek(int64(index.HeaderWidth), io.SeekStart)
+				_, err = indexChunk.File.Seek(int64(index.HeaderWidth), io.SeekStart)
 				if err != nil {
 					return err
 				}
@@ -80,8 +80,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 				total += int(indexChunk.Header.AddressCount)
 				for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
 					obj := index.AddressRecord{}
-					err := obj.ReadAddress(indexChunk.File1)
-					if err != nil {
+					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
 						return err
 					}
 					if !bl.IsMember(obj.Address) {

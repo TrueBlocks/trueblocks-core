@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 const (
@@ -13,9 +12,9 @@ const (
 	HeaderWidth = 44
 )
 
-// ChunkIndex is one part of the two part Chunk (the other part is the ChunkBloom)
+// Index is one part of the two part Chunk (the other part is the Bloom)
 //
-// Each ChunkIndex contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
+// Each Index contains a HeaderRecord followed by two tables: the AddressTable and a related AppearanceTable.
 //
 // The HeaderRecord (44 bytes long) contains a four-byte magic number (`0xdeadbeef` -- to indicate we're reading
 // a file of the correct type), a 32-byte hash representing the file's version, and two 4-byte integers representing
@@ -29,52 +28,51 @@ const (
 //
 // The AppearanceTable contains nAppeeances pairs of <blockNumber.transactionId> pairs arranged by the Offset
 // and Count pairs found in the corresponding AddressTable records.
-type ChunkIndex struct {
-	File1          *os.File
-	Header         IndexHeader
+type Index struct {
+	File           *os.File
+	Header         indexHeader
 	Range          base.FileRange
 	AddrTableStart int64
 	AppTableStart  int64
 }
 
-// NewChunkIndex returns an ChunkIndex with an opened file pointer to the given fileName. The HeaderRecord
+// NewIndex returns an Index with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
-func NewChunkIndex(path string) (chunk ChunkIndex, err error) {
-	indexPath := ToIndexPath(path)
+func NewIndex(fileName, expectedTag string, unused bool /* unused */) (Index, error) {
+	fileName = ToIndexPath(fileName)
 
-	blkRange, err := base.RangeFromFilenameE(indexPath)
-	if err != nil {
-		return ChunkIndex{}, err
+	blkRange, err1 := base.RangeFromFilenameE(fileName)
+	if err1 != nil {
+		return Index{}, err1
 	}
 
-	fp, err := os.OpenFile(indexPath, os.O_RDONLY, 0)
-	if err != nil {
-		return ChunkIndex{}, err
-	}
-	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
-
-	header, err := X_ReadIndexHeader(fp, config.GetUnchained().HeaderMagic, false /* unused */)
-	if err != nil {
-		fp.Close()
-		return ChunkIndex{}, fmt.Errorf("%w: %s", err, indexPath)
-	}
-
-	chunk = ChunkIndex{
-		File1:          fp,
-		Header:         header,
+	var err error
+	chunk := Index{
 		AddrTableStart: HeaderWidth,
-		AppTableStart:  int64(HeaderWidth + (header.AddressCount * AddrRecordWidth)),
 		Range:          blkRange,
 	}
+	chunk.File, err = os.OpenFile(fileName, os.O_RDONLY, 0)
+	if err != nil {
+		return Index{}, err
+	}
+	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
+	// defer idx.File.Close()
 
-	return
+	chunk.Header, err = chunk.ReadHeader(expectedTag, false /* unused */)
+	if err != nil {
+		chunk.File.Close()
+		return Index{}, fmt.Errorf("%w: %s", err, fileName)
+	}
+
+	chunk.AppTableStart = int64(HeaderWidth + (chunk.Header.AddressCount * AddrRecordWidth))
+	return chunk, nil
 }
 
-// Close closes the ChunkIndex's associated File pointer (if opened)
-func (chunk *ChunkIndex) Close() error {
-	if chunk.File1 != nil {
-		chunk.File1.Close()
-		chunk.File1 = nil
+// Close closes the Index's associated File pointer (if opened)
+func (chunk *Index) Close() error {
+	if chunk.File != nil {
+		chunk.File.Close()
+		chunk.File = nil
 	}
 	return nil
 }

@@ -8,8 +8,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-func (bl *ChunkBloom) isMemberBytes(addr base.Address) bool {
-	whichBits := bl.WhichBits(addr)
+func (bl *Bloom) isMemberBytes(addr base.Address) bool {
+	whichBits := bl.AddressToBits(addr)
 	for _, bb := range bl.Blooms {
 		var tester = bitChecker{bytes: bb.Bytes, whichBits: whichBits}
 		if bl.isMember(&tester) {
@@ -19,8 +19,8 @@ func (bl *ChunkBloom) isMemberBytes(addr base.Address) bool {
 	return false
 }
 
-func (bl *ChunkBloom) IsMember(addr base.Address) bool {
-	whichBits := bl.WhichBits(addr)
+func (bl *Bloom) IsMember(addr base.Address) bool {
+	whichBits := bl.AddressToBits(addr)
 	offset := uint32(bl.HeaderSize) + 4 // the end of Count
 	for j := 0; j < int(bl.Count); j++ {
 		offset += uint32(4) // Skip over NInserted
@@ -33,7 +33,7 @@ func (bl *ChunkBloom) IsMember(addr base.Address) bool {
 	return false
 }
 
-func (bl *ChunkBloom) isMember(tester *bitChecker) bool {
+func (bl *Bloom) isMember(tester *bitChecker) bool {
 	for _, bit := range tester.whichBits {
 		tester.bit = bit
 		if !bl.isBitLit(tester) {
@@ -51,7 +51,7 @@ type bitChecker struct {
 }
 
 // isBitLit returns true if the given bit is lit in the given byte array
-func (bl *ChunkBloom) isBitLit(tester *bitChecker) bool {
+func (bl *Bloom) isBitLit(tester *bitChecker) bool {
 	which := uint32(tester.bit / 8)
 	index := uint32(BLOOM_WIDTH_IN_BYTES - which - 1)
 

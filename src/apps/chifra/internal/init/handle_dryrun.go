@@ -45,7 +45,7 @@ func (opts *InitOptions) HandleDryRun() error {
 	}
 
 	// Tell the user what we're doing
-	logger.InfoTable("Unchained Index:", config.GetUnchained().UnchainedIndex)
+	logger.InfoTable("Unchained Index:", config.GetUnchained().SmartContract)
 	logger.InfoTable("Specification:", spec)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))

@@ -71,10 +71,9 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		man, err := downloadManifest(chain, gatewayUrl, cid)
 		if man != nil {
 			man.LoadChunkMap()
-		}
-
-		if man.Specification == "" {
-			man.Specification = base.IpfsHash(config.GetUnchained().Specification)
+			if man.Specification == "" {
+				man.Specification = base.IpfsHash(config.GetUnchained().Specification)
+			}
 		}
 
 		return man, err
@@ -104,11 +103,10 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 		return man, err
 	}
 
+	man.LoadChunkMap()
 	if man.Specification == "" {
 		man.Specification = base.IpfsHash(config.GetUnchained().Specification)
 	}
-
-	man.LoadChunkMap()
 
 	return man, nil
 }
@@ -124,7 +122,7 @@ func (m *Manifest) LoadChunkMap() {
 
 func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
 	empty := Manifest{
-		Version:       config.GetUnchained().Manifest,
+		Version:       config.GetUnchained().SpecVersion,
 		Chain:         chain,
 		Specification: base.IpfsHash(config.GetUnchained().Specification),
 		Chunks:        []types.SimpleChunkRecord{},
