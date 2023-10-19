@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -86,7 +85,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (*Manifes
 	if !file.FileExists(manifestPath) {
 		// basically EstablishManifest
 		if publisher.IsZero() {
-			publisher = unchained.GetPreferredPublisher()
+			publisher = base.HexToAddress(config.PreferredPublisher)
 		}
 		man, err := ReadManifest(chain, publisher, FromContract)
 		if err != nil {
