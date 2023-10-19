@@ -31,7 +31,9 @@ func Enable(ctx context.Context, cancel context.CancelFunc, cleanUp CleanupFunct
 			select {
 			case <-signals:
 				SigintMessageOnce.Do(cleanUp)
-				cancel()
+				if cancel != nil {
+					cancel()
+				}
 				return
 			case <-ctx.Done():
 				return

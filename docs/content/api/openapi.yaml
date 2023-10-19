@@ -2006,6 +2006,7 @@ paths:
               - manifest
               - index
               - blooms
+              - pins
               - addresses
               - appearances
               - stats

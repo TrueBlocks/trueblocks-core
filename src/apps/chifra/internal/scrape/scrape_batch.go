@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -21,7 +20,7 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 		for _, err := range bm.errors {
 			logger.Error(fmt.Sprintf("error at block %d: %v", err.block, err.err))
 		}
-		_ = index.CleanEphemeralIndexFolders(chain)
+		_ = cleanEphemeralIndexFolders(chain)
 		return err, ok
 	}
 
@@ -34,7 +33,7 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 			// We missed a block. We need to clean up and continue
 			// next time around the loop. This may happen if the
 			// node returns an error for example.
-			_ = index.CleanEphemeralIndexFolders(chain)
+			_ = cleanEphemeralIndexFolders(chain)
 			return fmt.Errorf("a block (%d) was not processed", block), true
 		}
 	}
@@ -46,7 +45,7 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 		for _, err := range bm.errors {
 			logger.Error(fmt.Sprintf("error at block %d: %v", err.block, err.err))
 		}
-		_ = index.CleanEphemeralIndexFolders(chain)
+		_ = cleanEphemeralIndexFolders(chain)
 		return fmt.Errorf(`check failed len(blocks): %d len(map): %d nRipe: %d nUnripe: %d nProcessed: %d nTs: %d`,
 			len(blocks),
 			len(bm.processedMap),

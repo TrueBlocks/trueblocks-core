@@ -18,7 +18,7 @@ import (
 )
 
 func main() {
-	// pprofFile, pprofErr := os.Create("cpu.pprof")
+	// pprofFile, pprofErr := os.OpenFile("cpu.pprof", O_RDWR|O_CREATE|O_TRUNC, 0666)
 	// if pprofErr != nil {
 	// 	logger.Fatal(pprofErr)
 	// }

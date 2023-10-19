@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -32,11 +33,11 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	if !opts.Globals.IsApiMode() && !usage.QueryUser(strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncating") {
+	if !opts.Globals.IsApiMode() && !usage.QueryUser(strings.Replace(truncateWarning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncated") {
 		return nil
 	}
 
-	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe", "maps", "staging"})
+	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -69,13 +70,13 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				}
 				nChunksRemoved++
 				if opts.Globals.Verbose {
-					logger.Info(colors.Red, "Removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
+					logger.Info(colors.Red+"Removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
 				}
 			} else {
 				// We did not remove the chunk, so we need to keep track of where the truncated index ends
 				latestChunk = utils.Max(latestChunk, rng.Last)
 				if opts.Globals.Verbose {
-					logger.Info(colors.Green, "Not removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
+					logger.Info(colors.Green+"Not removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
 				}
 			}
 
@@ -141,4 +142,4 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-var warning = `Are sure you want to remove index chunks after and including block {0} (Yy)? `
+var truncateWarning = `Are sure you want to remove index chunks after and including block {0} (Yy)? `

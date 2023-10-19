@@ -16,9 +16,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
 
 // ReadUnchainedIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
@@ -33,7 +33,7 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
 	conn := rpc.TempConnection(unchainedChain)
 
-	if contractCall, _, err := call.NewContractCall(conn, unchained.GetUnchainedIndexAddress(), theCall); err != nil {
+	if contractCall, _, err := call.NewContractCall(conn, base.HexToAddress(config.GetUnchained().SmartContract), theCall); err != nil {
 		return "", err
 	} else {
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()

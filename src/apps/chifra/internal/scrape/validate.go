@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -73,8 +74,14 @@ func (opts *ScrapeOptions) validateScrape() error {
 		}
 	}
 
-	// Note this does not return if a migration is needed
-	index.CheckBackLevelIndex(chain)
+	// Note that this does not return if the index is not initialized
+	if err := index.IsInitialized(chain); err != nil {
+		if opts.Globals.IsApiMode() {
+			return err
+		} else {
+			logger.Fatal(err)
+		}
+	}
 
 	if len(opts.Publisher) > 0 {
 		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})

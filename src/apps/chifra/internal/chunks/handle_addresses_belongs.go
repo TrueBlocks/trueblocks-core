@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 
@@ -57,7 +58,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 		return true, nil
 	}
 
-	indexChunk, err := index.NewChunkData(path)
+	indexChunk, err := index.OpenIndex(path)
 	if err != nil {
 		return false, err
 	}
@@ -75,8 +76,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 		}
 
 		s := simpleAppearanceTable{}
-		err := s.AddressRecord.ReadAddress(indexChunk.File)
-		if err != nil {
+		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
 
@@ -85,7 +85,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 				break
 			}
 
-			if s.Appearances, err = indexChunk.ReadAppearanceRecordsAndResetOffset(&s.AddressRecord); err != nil {
+			if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 				return false, err
 			}
 			if opts.FirstBlock != 0 || opts.LastBlock != utils.NOPOS {

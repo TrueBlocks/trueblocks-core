@@ -19,8 +19,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -238,7 +238,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
 	// check individual bits.
-	bl, err := bloom.NewChunkBloom(bloomFilename)
+	bl, err := index.OpenBloom(bloomFilename)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		bl.Close()
@@ -271,14 +271,22 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 
 	indexFilename := index.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
-		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, updater.Options.PublisherAddr, bl.Range)
+		chain := updater.Options.Globals.Chain
+		var man *manifest.Manifest
+		man, err = manifest.ReadManifest(chain, updater.Options.PublisherAddr, manifest.FromCache)
+		if err != nil {
+			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
+			return
+		}
+
+		_, err = index.DownloadOneChunk(chain, man, bl.Range)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
 		}
 	}
 
-	indexChunk, err := index.NewChunkData(indexFilename)
+	indexChunk, err := index.OpenIndex(indexFilename)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		return
@@ -286,7 +294,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	defer indexChunk.Close()
 
 	for _, mon := range updater.MonitorMap {
-		results = append(results, *indexChunk.GetAppearanceRecords(mon.Address))
+		results = append(results, *indexChunk.ReadAppearances(mon.Address))
 	}
 }
 

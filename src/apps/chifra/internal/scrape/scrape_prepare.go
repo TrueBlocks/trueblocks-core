@@ -23,7 +23,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	chain := opts.Globals.Chain
 
 	// We always clean the temporary folders (other than staging) when starting
-	_ = index.CleanEphemeralIndexFolders(chain)
+	_ = cleanEphemeralIndexFolders(chain)
 
 	// If the file already exists, we're done.
 	bloomPath := config.PathToIndex(chain) + "blooms/000000000-000000000.bloom"
@@ -38,7 +38,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 		return false, err
 	}
 
-	appMap := make(index.AddressAppearanceMap, len(prefunds))
+	appMap := make(map[string][]index.AppearanceRecord, len(prefunds))
 	for i, prefund := range prefunds {
 		addr := prefund.Address.Hex()
 		appMap[addr] = append(appMap[addr], index.AppearanceRecord{
@@ -56,7 +56,8 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 
 	logger.Info("Writing block zero allocations for", len(prefunds), "prefunds, nAddresses:", len(appMap))
 	indexPath := index.ToIndexPath(bloomPath)
-	if report, err := index.WriteChunk(chain, opts.PublisherAddr, indexPath, appMap, len(prefunds)); err != nil {
+	var chunk index.Chunk
+	if report, err := chunk.Write(chain, config.HeaderTag(), opts.PublisherAddr, indexPath, appMap, len(prefunds)); err != nil {
 		return false, err
 	} else if report == nil {
 		logger.Fatal("Should not happen, write chunk returned empty report")

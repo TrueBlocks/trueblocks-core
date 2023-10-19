@@ -6,6 +6,7 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 	"sync"
@@ -16,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -57,8 +57,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			_, path := rng.RangeToFilename(chain)
-			bloomFilename := index.ToBloomPath(path)
-			bl, err := bloom.NewChunkBloom(bloomFilename)
+			bl, err := index.OpenBloom(index.ToBloomPath(path))
 			if err != nil {
 				return
 			}
@@ -67,7 +66,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 			misses := 0
 			path = index.ToIndexPath(path) // it may not exist if user did not do chifra init --all for example
 			if file.FileExists(path) {
-				indexChunk, err := index.NewChunkData(path)
+				indexChunk, err := index.OpenIndex(path)
 				if err != nil {
 					return err
 				}
@@ -81,8 +80,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 				total += int(indexChunk.Header.AddressCount)
 				for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
 					obj := index.AddressRecord{}
-					err := obj.ReadAddress(indexChunk.File)
-					if err != nil {
+					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
 						return err
 					}
 					if !bl.IsMember(obj.Address) {

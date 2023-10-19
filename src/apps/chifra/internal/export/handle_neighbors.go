@@ -11,7 +11,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -38,9 +37,9 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
-				allNeighbors := make([]index.Reason, 0)
+				allNeighbors := make([]Reason, 0)
 				iterFunc := func(app types.SimpleAppearance, unused *bool) error {
-					if neighbors, err := index.GetNeighbors(&app); err != nil {
+					if neighbors, err := GetNeighbors(&app); err != nil {
 						return err
 					} else {
 						allNeighbors = append(allNeighbors, neighbors...)
@@ -593,3 +592,15 @@ class CIndexArchiveWithNeighborMaps : public CIndexArchive {
 };
 
 */
+
+func GetNeighbors(app *types.SimpleAppearance) ([]Reason, error) {
+	reasons := make([]Reason, 0)
+	reasons = append(reasons, Reason{App: app, Address: &app.Address, Reason: "self"})
+	return reasons, nil
+}
+
+type Reason struct {
+	App     *types.SimpleAppearance
+	Address *base.Address
+	Reason  string
+}

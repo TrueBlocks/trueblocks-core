@@ -2,6 +2,7 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 	"os"
@@ -86,7 +87,7 @@ func getDiffPath(chain, path string) (diffPath string) {
 		diffPath = filepath.Join(diffPath, "unchained/", chain, "finalized")
 	}
 	diffPath, _ = filepath.Abs(diffPath)
-	diffPath, _ = index.FindFileByBlockNumber(chain, diffPath, rng.First+(rng.Last-rng.First)/2)
+	diffPath, _ = findFileByBlockNumber(chain, diffPath, rng.First+(rng.Last-rng.First)/2)
 	if !file.FileExists(diffPath) {
 		logger.Fatal(fmt.Sprintf("The diff path does not exist: [%s]", diffPath))
 	}
@@ -102,7 +103,7 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 		}
 	}
 
-	indexChunk, err := index.NewChunkData(source)
+	indexChunk, err := index.OpenIndex(source)
 	if err != nil {
 		return false, err
 	}
@@ -116,11 +117,10 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 	apps := make([]types.SimpleAppearance, 0, 500000)
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
 		s := simpleAppearanceTable{}
-		err := s.AddressRecord.ReadAddress(indexChunk.File)
-		if err != nil {
+		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
-		if s.Appearances, err = indexChunk.ReadAppearanceRecordsAndResetOffset(&s.AddressRecord); err != nil {
+		if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 			return false, err
 		}
 		for _, app := range s.Appearances {
@@ -157,4 +157,22 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 	logger.Info(colors.Colored(fmt.Sprintf("Wrote {%d} lines to {%s}", len(out), outputFile)))
 
 	return true, nil
+}
+
+// findFileByBlockNumber returns the path to a file whose range intersects the given block number.
+func findFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string, err error) {
+	walker := walk.NewCacheWalker(
+		chain,
+		false,
+		10000, /* maxTests */
+		func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			rng := base.RangeFromFilename(path)
+			if rng.IntersectsB(bn) {
+				fileName = index.ToIndexPath(path)
+				return false, nil // stop walking
+			}
+			return true, nil // continue walking
+		},
+	)
+	return fileName, walker.WalkRegularFolder(path, []base.Blknum{bn})
 }

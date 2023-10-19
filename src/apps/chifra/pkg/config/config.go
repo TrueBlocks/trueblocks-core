@@ -22,22 +22,39 @@ var trueBlocksViper = viper.New()
 var trueBlocksConfig ConfigFile
 
 type ConfigFile struct {
-	Version  versionGroup          `toml:"version"`
-	Settings settingsGroup         `toml:"settings"`
-	Pinning  pinningGroup          `toml:"pinning"`
-	Keys     map[string]keyGroup   `toml:"keys"`
-	Chains   map[string]chainGroup `toml:"chains"`
+	Version   versionGroup          `toml:"version"`
+	Settings  settingsGroup         `toml:"settings"`
+	Keys      map[string]keyGroup   `toml:"keys"`
+	Pinning   pinningGroup          `toml:"pinning"`
+	Unchained unchainedGroup        `toml:"unchained"`
+	Chains    map[string]chainGroup `toml:"chains"`
 }
 
 // init sets up default values for the given configuration
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks") // trueBlocks.toml (so we can find it)
+	// The location of the per chain caches
 	trueBlocksViper.SetDefault("Settings.CachePath", PathToRootConfig()+"cache/")
+	// The location of the per chain unchained indexes
 	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
+	// The default chain to use if none is provided
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
+	// The pinning gateway to query when downloading the unchained index
 	trueBlocksViper.SetDefault("Pinning.GatewayURL", "https://ipfs.unchainedindex.io/ipfs")
+	// The local endpoint for the IPFS daemon
 	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
+	// The remote endpoint for pinning on Pinata
 	trueBlocksViper.SetDefault("Pinning.GatewayUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
+	// A warning to the user not to edit the [unchained] section of the config file
+	trueBlocksViper.SetDefault("Unchained.Comment", "reserved for system use - do not edit unless instructed to do so")
+	// The default publisher of the index of none other is provided
+	trueBlocksViper.SetDefault("Unchained.PreferredPublisher", "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+	// V2: The address of the current version of the Unchained Index
+	trueBlocksViper.SetDefault("Unchained.SmartContract", "0x0c316b7042b419d07d343f2f4f5bd54ff731183d")
+	// IPFS hash of the specification for the Unchained Index
+	trueBlocksViper.SetDefault("Unchained.Specification", "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb")
+	// The version of the specification and the pre-image of hash in the header of each chunk
+	trueBlocksViper.SetDefault("Unchained.SpecVersion", version.OldManifestVersion)
 }
 
 var configMutex sync.Mutex
