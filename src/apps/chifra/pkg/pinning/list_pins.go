@@ -43,7 +43,6 @@ var fetchCount = 1000
 
 // ListPins pins a file remotely to the pinning service
 func ListPins(chain string) ([]string, error) {
-	// return []string{}, DeletePins()
 	count, _ := getPins(chain, "pinned", 0, 1)
 	for i := 0; i < count; i += fetchCount {
 		count, pins := getPins(chain, "pinned", i, fetchCount)

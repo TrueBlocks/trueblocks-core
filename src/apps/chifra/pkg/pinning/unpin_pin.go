@@ -10,11 +10,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-var deletePin = "https://api.pinata.cloud/pinning/unpin/%s"
+var unpinPin = "https://api.pinata.cloud/pinning/unpin/%s"
 
 // unpinPin unpins a pin
-func unpinPin(chain string, i int, hash base.IpfsHash) error {
-	url := fmt.Sprintf(deletePin, hash.String())
+func unpinOne(chain string, i int, hash base.IpfsHash) error {
+	url := fmt.Sprintf(unpinPin, hash.String())
 	if req, err := http.NewRequest("DELETE", url, nil); err != nil {
 		return err
 	} else {
@@ -31,20 +31,22 @@ func unpinPin(chain string, i int, hash base.IpfsHash) error {
 			if res.StatusCode != 200 {
 				logger.Error("Error deleting pin", hash, res.StatusCode)
 			} else {
-				logger.Info("Deleted pin", i, hash.String())
+				logger.Info("Unpinned", i, hash.String())
 			}
 			return nil
 		}
 	}
 }
 
-func DeletePins() error {
-	lines := file.AsciiFileToLines("unpins.txt")
+func Unpin(chain string) error {
+	lines := file.AsciiFileToLines("./unpins")
 	for i, line := range lines {
-		if err := unpinPin("sepolia", i, base.IpfsHash(line)); err != nil {
-			return err
+		if IsValid(line) {
+			if err := unpinOne(chain, i, base.IpfsHash(line)); err != nil {
+				return err
+			}
+			time.Sleep(time.Second * 3)
 		}
-		time.Sleep(time.Second)
 	}
 	return nil
 }

@@ -1,0 +1,6 @@
+chunks?mode=pins
+{
+  "errors": [
+    "pins mode requires either --list or --unpin."
+  ]
+}

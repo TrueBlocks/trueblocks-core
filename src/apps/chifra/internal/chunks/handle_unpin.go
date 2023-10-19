@@ -1,0 +1,17 @@
+package chunksPkg
+
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
+)
+
+func (opts *ChunksOptions) HandleUnpin(unused []uint64) error {
+	testMode := opts.Globals.TestMode
+	if testMode {
+		logger.Info("Test mode: unpin not tested")
+		return nil
+	}
+
+	pinning.Unpin(opts.Globals.Chain)
+	return nil
+}

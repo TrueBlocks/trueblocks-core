@@ -1,8 +1,9 @@
-chifra chunks  manifest --publish
-TEST[DATE|TIME] Mode:  manifest
-TEST[DATE|TIME] Publish:  true
+chifra chunks  pins --unpin 12
+TEST[DATE|TIME] Mode:  pins
+TEST[DATE|TIME] Blocks:  [12]
+TEST[DATE|TIME] Unpin:  true
 TEST[DATE|TIME] Format:  txt
-Error: The --publish option is currenlty unavailable.
+Error: The ./unpins file does not exist.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
