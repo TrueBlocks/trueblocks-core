@@ -41,7 +41,7 @@ string_q toGoCall(const CCommandOption& cmd) {
     const char* STR_ONEROUTE =
         "// [{GOROUTEFUNC}] [{DESCRIPTION}]\n"
         "func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {\n"
-        "\tif err, _ := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
+        "\tif err := [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r); err != nil {\n"
         "\t\tRespondWithError(w, http.StatusInternalServerError, err)\n"
         "\t}\n"
         "}";

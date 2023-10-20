@@ -25,49 +25,45 @@ import (
 // EXISTING_CODE
 
 // RunNames handles the names command for the command line. Returns error only as per cobra.
-func RunNames(cmd *cobra.Command, args []string) (err error) {
+func RunNames(cmd *cobra.Command, args []string) error {
 	opts := namesFinishParse(args)
-	outputHelpers.SetEnabledForCmds("names", opts.IsPorted())
+	outputHelpers.EnableCommand("names", true)
+	// EXISTING_CODE
+	var err1 error
+	if err1 = opts.loadCrudDataIfNeeded(nil); err1 != nil {
+		return err1
+	}
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("names", &opts.Globals)
-	// EXISTING_CODE
-	if err = opts.loadCrudDataIfNeeded(nil); err != nil {
-		return
-	}
-	// EXISTING_CODE
-	err, _ = opts.NamesInternal()
-	return
+	return opts.NamesInternal()
 }
 
-// ServeNames handles the names command for the API. Returns error and a bool if handled
-func ServeNames(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeNames handles the names command for the API. Returns an error.
+func ServeNames(w http.ResponseWriter, r *http.Request) error {
 	opts := namesFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("names", opts.IsPorted())
-	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
+	outputHelpers.EnableCommand("names", true)
 	// EXISTING_CODE
-	if err = opts.loadCrudDataIfNeeded(r); err != nil {
-		return
+	var err1 error
+	if err1 = opts.loadCrudDataIfNeeded(r); err1 != nil {
+		return err1
 	}
 	// EXISTING_CODE
-	err, handled = opts.NamesInternal()
+	outputHelpers.InitJsonWriterApi("names", w, &opts.Globals)
+	err := opts.NamesInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("names", err, &opts.Globals)
-	return
+	return err
 }
 
-// NamesInternal handles the internal workings of the names command.  Returns error and a bool if handled
-func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
-	err = opts.validateNames()
-	if err != nil {
-		return err, true
+// NamesInternal handles the internal workings of the names command.  Returns an error.
+func (opts *NamesOptions) NamesInternal() error {
+	var err error
+	if err = opts.validateNames(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra names"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in NamesInternal")
-	}
-
-	handled = true
 	if opts.anyCrud() {
 		err = opts.HandleCrud()
 	} else if len(opts.Autoname) > 0 {
@@ -83,7 +79,7 @@ func (opts *NamesOptions) NamesInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetNamesOptions returns the options for this tool so other tools may use it.
@@ -93,13 +89,6 @@ func GetNamesOptions(args []string, g *globals.GlobalOptions) *NamesOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *NamesOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

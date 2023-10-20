@@ -21,39 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunReceipts handles the receipts command for the command line. Returns error only as per cobra.
-func RunReceipts(cmd *cobra.Command, args []string) (err error) {
+func RunReceipts(cmd *cobra.Command, args []string) error {
 	opts := receiptsFinishParse(args)
-	outputHelpers.SetEnabledForCmds("receipts", opts.IsPorted())
+	outputHelpers.EnableCommand("receipts", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("receipts", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.ReceiptsInternal()
-	return
+	return opts.ReceiptsInternal()
 }
 
-// ServeReceipts handles the receipts command for the API. Returns error and a bool if handled
-func ServeReceipts(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeReceipts handles the receipts command for the API. Returns an error.
+func ServeReceipts(w http.ResponseWriter, r *http.Request) error {
 	opts := receiptsFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("receipts", opts.IsPorted())
+	outputHelpers.EnableCommand("receipts", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("receipts", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.ReceiptsInternal()
+	err := opts.ReceiptsInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("receipts", err, &opts.Globals)
-	return
+	return err
 }
 
-// ReceiptsInternal handles the internal workings of the receipts command.  Returns error and a bool if handled
-func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
-	err = opts.validateReceipts()
-	if err != nil {
-		return err, true
+// ReceiptsInternal handles the internal workings of the receipts command.  Returns an error.
+func (opts *ReceiptsOptions) ReceiptsInternal() error {
+	var err error
+	if err = opts.validateReceipts(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra receipts"
 	// EXISTING_CODE
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else {
@@ -62,7 +60,7 @@ func (opts *ReceiptsOptions) ReceiptsInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetReceiptsOptions returns the options for this tool so other tools may use it.
@@ -72,13 +70,6 @@ func GetReceiptsOptions(args []string, g *globals.GlobalOptions) *ReceiptsOption
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *ReceiptsOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

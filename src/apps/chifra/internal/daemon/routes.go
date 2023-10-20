@@ -47,140 +47,140 @@ import (
 
 // RouteList List every appearance of an address anywhere on the chain.
 func RouteList(w http.ResponseWriter, r *http.Request) {
-	if err, _ := listPkg.ServeList(w, r); err != nil {
+	if err := listPkg.ServeList(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteExport Export full detail of transactions for one or more addresses.
 func RouteExport(w http.ResponseWriter, r *http.Request) {
-	if err, _ := exportPkg.ServeExport(w, r); err != nil {
+	if err := exportPkg.ServeExport(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteMonitors Add, remove, clean, and list address monitors.
 func RouteMonitors(w http.ResponseWriter, r *http.Request) {
-	if err, _ := monitorsPkg.ServeMonitors(w, r); err != nil {
+	if err := monitorsPkg.ServeMonitors(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteNames Query addresses or names of well known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
-	if err, _ := namesPkg.ServeNames(w, r); err != nil {
+	if err := namesPkg.ServeNames(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteAbis Fetches the ABI for a smart contract.
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
-	if err, _ := abisPkg.ServeAbis(w, r); err != nil {
+	if err := abisPkg.ServeAbis(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteBlocks Retrieve one or more blocks from the chain or local cache.
 func RouteBlocks(w http.ResponseWriter, r *http.Request) {
-	if err, _ := blocksPkg.ServeBlocks(w, r); err != nil {
+	if err := blocksPkg.ServeBlocks(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
-	if err, _ := transactionsPkg.ServeTransactions(w, r); err != nil {
+	if err := transactionsPkg.ServeTransactions(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteReceipts Retrieve receipts for the given transaction(s).
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
-	if err, _ := receiptsPkg.ServeReceipts(w, r); err != nil {
+	if err := receiptsPkg.ServeReceipts(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteLogs Retrieve logs for the given transaction(s).
 func RouteLogs(w http.ResponseWriter, r *http.Request) {
-	if err, _ := logsPkg.ServeLogs(w, r); err != nil {
+	if err := logsPkg.ServeLogs(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteTraces Retrieve traces for the given transaction(s).
 func RouteTraces(w http.ResponseWriter, r *http.Request) {
-	if err, _ := tracesPkg.ServeTraces(w, r); err != nil {
+	if err := tracesPkg.ServeTraces(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteWhen Find block(s) based on date, blockNum, timestamp, or 'special'.
 func RouteWhen(w http.ResponseWriter, r *http.Request) {
-	if err, _ := whenPkg.ServeWhen(w, r); err != nil {
+	if err := whenPkg.ServeWhen(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
-	if err, _ := statePkg.ServeState(w, r); err != nil {
+	if err := statePkg.ServeState(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteTokens Retrieve token balance(s) for one or more addresses at given block(s).
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
-	if err, _ := tokensPkg.ServeTokens(w, r); err != nil {
+	if err := tokensPkg.ServeTokens(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteConfig Report on and edit the configuration of the TrueBlocks system.
 func RouteConfig(w http.ResponseWriter, r *http.Request) {
-	if err, _ := configPkg.ServeConfig(w, r); err != nil {
+	if err := configPkg.ServeConfig(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteStatus Report on the state of the internal binary caches.
 func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	if err, _ := statusPkg.ServeStatus(w, r); err != nil {
+	if err := statusPkg.ServeStatus(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteScrape Scan the chain and update the TrueBlocks index of appearances.
 func RouteScrape(w http.ResponseWriter, r *http.Request) {
-	if err, _ := scrapePkg.ServeScrape(w, r); err != nil {
+	if err := scrapePkg.ServeScrape(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteChunks Manage, investigate, and display the Unchained Index.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
-	if err, _ := chunksPkg.ServeChunks(w, r); err != nil {
+	if err := chunksPkg.ServeChunks(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteInit Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
-	if err, _ := initPkg.ServeInit(w, r); err != nil {
+	if err := initPkg.ServeInit(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteExplore Open a local or remote explorer for one or more addresses, blocks, or transactions.
 func RouteExplore(w http.ResponseWriter, r *http.Request) {
-	if err, _ := explorePkg.ServeExplore(w, r); err != nil {
+	if err := explorePkg.ServeExplore(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
 
 // RouteSlurp Fetch data from Etherscan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
-	if err, _ := slurpPkg.ServeSlurp(w, r); err != nil {
+	if err := slurpPkg.ServeSlurp(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 	}
 }
@@ -196,12 +196,12 @@ var routes = Routes{
 	}},
 	Route{"Index", "GET", "/", Index},
 	Route{"CreateName", "POST", "/names", func(w http.ResponseWriter, r *http.Request) {
-		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+		if err := namesPkg.ServeNames(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},
 	Route{"EditName", "PUT", "/names", func(w http.ResponseWriter, r *http.Request) {
-		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+		if err := namesPkg.ServeNames(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},
@@ -216,7 +216,7 @@ var routes = Routes{
 			return
 		}
 
-		if err, _ := namesPkg.ServeNames(w, r); err != nil {
+		if err := namesPkg.ServeNames(w, r); err != nil {
 			RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}},

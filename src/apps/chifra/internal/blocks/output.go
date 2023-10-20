@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
-func RunBlocks(cmd *cobra.Command, args []string) (err error) {
+func RunBlocks(cmd *cobra.Command, args []string) error {
 	opts := blocksFinishParse(args)
-	outputHelpers.SetEnabledForCmds("blocks", opts.IsPorted())
+	outputHelpers.EnableCommand("blocks", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("blocks", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.BlocksInternal()
-	return
+	return opts.BlocksInternal()
 }
 
-// ServeBlocks handles the blocks command for the API. Returns error and a bool if handled
-func ServeBlocks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeBlocks handles the blocks command for the API. Returns an error.
+func ServeBlocks(w http.ResponseWriter, r *http.Request) error {
 	opts := blocksFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("blocks", opts.IsPorted())
+	outputHelpers.EnableCommand("blocks", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("blocks", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.BlocksInternal()
+	err := opts.BlocksInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("blocks", err, &opts.Globals)
-	return
+	return err
 }
 
-// BlocksInternal handles the internal workings of the blocks command.  Returns error and a bool if handled
-func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
-	err = opts.validateBlocks()
-	if err != nil {
-		return err, true
+// BlocksInternal handles the internal workings of the blocks command.  Returns an error.
+func (opts *BlocksOptions) BlocksInternal() error {
+	var err error
+	if err = opts.validateBlocks(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra blocks"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in BlocksInternal")
-	}
-
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 
@@ -88,7 +82,7 @@ func (opts *BlocksOptions) BlocksInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetBlocksOptions returns the options for this tool so other tools may use it.
@@ -98,13 +92,6 @@ func GetBlocksOptions(args []string, g *globals.GlobalOptions) *BlocksOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *BlocksOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE
