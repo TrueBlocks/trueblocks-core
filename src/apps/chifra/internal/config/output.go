@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunConfig handles the config command for the command line. Returns error only as per cobra.
-func RunConfig(cmd *cobra.Command, args []string) (err error) {
+func RunConfig(cmd *cobra.Command, args []string) error {
 	opts := configFinishParse(args)
-	outputHelpers.SetEnabledForCmds("config", opts.IsPorted())
+	outputHelpers.EnableCommand("config", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("config", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.ConfigInternal()
-	return
+	return opts.ConfigInternal()
 }
 
-// ServeConfig handles the config command for the API. Returns error and a bool if handled
-func ServeConfig(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeConfig handles the config command for the API. Returns an error.
+func ServeConfig(w http.ResponseWriter, r *http.Request) error {
 	opts := configFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("config", opts.IsPorted())
+	outputHelpers.EnableCommand("config", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("config", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.ConfigInternal()
+	err := opts.ConfigInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("config", err, &opts.Globals)
-	return
+	return err
 }
 
-// ConfigInternal handles the internal workings of the config command.  Returns error and a bool if handled
-func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
-	err = opts.validateConfig()
-	if err != nil {
-		return err, true
+// ConfigInternal handles the internal workings of the config command.  Returns an error.
+func (opts *ConfigOptions) ConfigInternal() error {
+	var err error
+	if err = opts.validateConfig(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra config"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen.")
-	}
-
-	handled = true
 	if opts.Paths {
 		err = opts.HandlePaths()
 	} else if opts.Mode == "edit" {
@@ -68,7 +62,7 @@ func (opts *ConfigOptions) ConfigInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetConfigOptions returns the options for this tool so other tools may use it.
@@ -78,13 +72,6 @@ func GetConfigOptions(args []string, g *globals.GlobalOptions) *ConfigOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *ConfigOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

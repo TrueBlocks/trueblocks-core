@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
-func RunTraces(cmd *cobra.Command, args []string) (err error) {
+func RunTraces(cmd *cobra.Command, args []string) error {
 	opts := tracesFinishParse(args)
-	outputHelpers.SetEnabledForCmds("traces", opts.IsPorted())
+	outputHelpers.EnableCommand("traces", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("traces", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.TracesInternal()
-	return
+	return opts.TracesInternal()
 }
 
-// ServeTraces handles the traces command for the API. Returns error and a bool if handled
-func ServeTraces(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeTraces handles the traces command for the API. Returns an error.
+func ServeTraces(w http.ResponseWriter, r *http.Request) error {
 	opts := tracesFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("traces", opts.IsPorted())
+	outputHelpers.EnableCommand("traces", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("traces", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.TracesInternal()
+	err := opts.TracesInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("traces", err, &opts.Globals)
-	return
+	return err
 }
 
-// TracesInternal handles the internal workings of the traces command.  Returns error and a bool if handled
-func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
-	err = opts.validateTraces()
-	if err != nil {
-		return err, true
+// TracesInternal handles the internal workings of the traces command.  Returns an error.
+func (opts *TracesOptions) TracesInternal() error {
+	var err error
+	if err = opts.validateTraces(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra traces"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should never happen")
-	}
-
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Count {
@@ -70,7 +64,7 @@ func (opts *TracesOptions) TracesInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetTracesOptions returns the options for this tool so other tools may use it.
@@ -80,13 +74,6 @@ func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *TracesOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

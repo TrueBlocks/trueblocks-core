@@ -25,48 +25,41 @@ import (
 // EXISTING_CODE
 
 // RunChunks handles the chunks command for the command line. Returns error only as per cobra.
-func RunChunks(cmd *cobra.Command, args []string) (err error) {
+func RunChunks(cmd *cobra.Command, args []string) error {
 	opts := chunksFinishParse(args)
-	outputHelpers.SetEnabledForCmds("chunks", opts.IsPorted())
+	outputHelpers.EnableCommand("chunks", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("chunks", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.ChunksInternal()
-	return
+	return opts.ChunksInternal()
 }
 
-// ServeChunks handles the chunks command for the API. Returns error and a bool if handled
-func ServeChunks(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeChunks handles the chunks command for the API. Returns an error.
+func ServeChunks(w http.ResponseWriter, r *http.Request) error {
 	opts := chunksFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("chunks", opts.IsPorted())
+	outputHelpers.EnableCommand("chunks", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("chunks", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.ChunksInternal()
+	err := opts.ChunksInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("chunks", err, &opts.Globals)
-	return
+	return err
 }
 
-// ChunksInternal handles the internal workings of the chunks command.  Returns error and a bool if handled
-func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
-	err = opts.validateChunks()
-	if err != nil {
-		return err, true
+// ChunksInternal handles the internal workings of the chunks command.  Returns an error.
+func (opts *ChunksOptions) ChunksInternal() error {
+	var err error
+	if err = opts.validateChunks(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra chunks"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in NamesInternal")
-	}
-
-	handled = true
-
 	chain := opts.Globals.Chain
 	blockNums, err := identifiers.GetBlockNumbers(chain, opts.BlockIds)
 	if err != nil {
-		return
+		return err
 	}
 	if opts.Globals.TestMode && len(blockNums) > 200 {
 		blockNums = blockNums[:200]
@@ -123,7 +116,7 @@ func (opts *ChunksOptions) ChunksInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetChunksOptions returns the options for this tool so other tools may use it.
@@ -133,13 +126,6 @@ func GetChunksOptions(args []string, g *globals.GlobalOptions) *ChunksOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *ChunksOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

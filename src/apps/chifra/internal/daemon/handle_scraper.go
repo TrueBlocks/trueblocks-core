@@ -9,7 +9,6 @@ func (opts *DaemonOptions) HandleScraper() error {
 	}
 
 	scrapeOpts := scrapePkg.GetScrapeOptions([]string{}, &opts.Globals)
-	// scrapeOpts.Sleep = opts.Sleep
-	err, _ := scrapeOpts.ScrapeInternal()
+	err := scrapeOpts.ScrapeInternal()
 	return err
 }

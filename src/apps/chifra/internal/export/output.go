@@ -22,33 +22,32 @@ import (
 // EXISTING_CODE
 
 // RunExport handles the export command for the command line. Returns error only as per cobra.
-func RunExport(cmd *cobra.Command, args []string) (err error) {
+func RunExport(cmd *cobra.Command, args []string) error {
 	opts := exportFinishParse(args)
-	outputHelpers.SetEnabledForCmds("export", opts.IsPorted())
+	outputHelpers.EnableCommand("export", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("export", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.ExportInternal()
-	return
+	return opts.ExportInternal()
 }
 
-// ServeExport handles the export command for the API. Returns error and a bool if handled
-func ServeExport(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeExport handles the export command for the API. Returns an error.
+func ServeExport(w http.ResponseWriter, r *http.Request) error {
 	opts := exportFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("export", opts.IsPorted())
+	outputHelpers.EnableCommand("export", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("export", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.ExportInternal()
+	err := opts.ExportInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("export", err, &opts.Globals)
-	return
+	return err
 }
 
-// ExportInternal handles the internal workings of the export command.  Returns error and a bool if handled
-func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
-	err = opts.validateExport()
-	if err != nil {
-		return err, true
+// ExportInternal handles the internal workings of the export command.  Returns an error.
+func (opts *ExportOptions) ExportInternal() error {
+	var err error
+	if err = opts.validateExport(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
@@ -56,14 +55,9 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
-		return err, true
+		return err
 	}
 
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in BlocksInternal")
-	}
-
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache(monitorArray)
 	} else if opts.Count {
@@ -90,7 +84,7 @@ func (opts *ExportOptions) ExportInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetExportOptions returns the options for this tool so other tools may use it.
@@ -100,13 +94,6 @@ func GetExportOptions(args []string, g *globals.GlobalOptions) *ExportOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *ExportOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE
