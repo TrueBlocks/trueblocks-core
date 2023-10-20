@@ -56,6 +56,7 @@ Data models produced by this tool:
 - [chunkindex](/data-model/admin/#chunkindex)
 - [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkaddress](/data-model/admin/#chunkaddress)
+- [ipfspin](/data-model/admin/#ipfspin)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [reportcheck](/data-model/admin/#reportcheck)
 - [chunkpinreport](/data-model/admin/#chunkpinreport)

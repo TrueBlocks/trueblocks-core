@@ -1348,6 +1348,26 @@ components:
           type: number
           format: uint64
           description: "the number of records in teh appearance table for this address"
+    ipfsPin:
+      description: "internal-use only data model detailing a single remote or local ipfs pinned file"
+      type: object
+      properties:
+        cid:
+          type: string
+          format: ipfshash
+          description: "the CID of the file"
+        datePinned:
+          type: string
+          description: "the date the CID was first created"
+        status:
+          type: string
+          description: "the status of the file (one of [all|pinned|unpinned|pending])"
+        size:
+          type: int64
+          description: "the size of the file in bytes"
+        fileName:
+          type: string
+          description: "the metadata name of the pinned file"
     chunkStats:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object

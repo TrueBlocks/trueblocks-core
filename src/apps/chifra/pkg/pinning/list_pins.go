@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -39,27 +38,39 @@ func getPins(chain, status string, first, cnt int) (int, []Pin) {
 	}
 }
 
-var fetchCount = 1000
-
 // ListPins pins a file remotely to the pinning service
-func ListPins(chain string) ([]string, error) {
-	count, _ := getPins(chain, "pinned", 0, 1)
-	for i := 0; i < count; i += fetchCount {
-		count, pins := getPins(chain, "pinned", i, fetchCount)
-		for _, pin := range pins {
-			fmt.Println(pin.IpfsPinHash, pin.DatePinned, pin.Metadata.Name)
-		}
-		if count < fetchCount {
-			break
-		}
-		logger.Info("Sleeping...", count, i, fetchCount)
-		time.Sleep(time.Second)
+func ListPins(chain, status string, pageSize int, dur time.Duration) ([]string, error) {
+	count, _ := getPins(chain, status, 0, 1)
+
+	testing := false
+	if pageSize < 0 {
+		pageSize = -1 * pageSize
+		testing = true
 	}
 
-	os.Exit(0)
-	return []string{}, fmt.Errorf("not implemented")
+	bar := logger.NewBar(logger.BarOptions{
+		Enabled: true,
+		Total:   int64(count)/int64(pageSize) + 1,
+	})
+
+	ret := make([]string, 0, count)
+	for i := 0; i < count; i += pageSize {
+		count, pins := getPins(chain, status, i, pageSize)
+		bar.Prefix = fmt.Sprintf("Listing %d '%s' items in %d pages...", count, status, count/pageSize+1)
+		for _, pin := range pins {
+			ret = append(ret, fmt.Sprintf("%s\t%s\t%s\t%d\t%s", pin.IpfsPinHash, pin.DatePinned, pin.Metadata.Name, pin.Size, status))
+		}
+		if testing || count < pageSize {
+			break
+		}
+		bar.Tick()
+		time.Sleep(dur)
+	}
+	bar.Finish(true)
+	return ret, nil
 }
 
+// Pin data type carries information about remote pins
 type Pin struct {
 	Id           string        `json:"id"`
 	IpfsPinHash  base.IpfsHash `json:"ipfs_pin_hash"`
@@ -84,12 +95,3 @@ type PinSet struct {
 	Count int   `json:"count"`
 	Rows  []Pin `json:"rows"`
 }
-
-// func main() {
-// 	req, _ := http.NewRequest("DELETE", url, nil)
-// 	req.Header.Add("accept", "application/json")
-// 	res, _ := http.DefaultClient.Do(req)
-// 	defer res.Body.Close()
-// 	body, _ := io.ReadAll(res.Body)
-// 	fmt.Println(string(body))
-// }

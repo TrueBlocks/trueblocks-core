@@ -176,6 +176,25 @@ ChunkAddress consist of the following fields:
 | offset  | the offset into the appearance table of the first record for this address | uint64   |
 | count   | the number of records in teh appearance table for this address            | uint64   |
 
+## IpfsPin
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`ipfsPin` represents the date, CID and metadata filename of a single IPFS pinned file.
+
+The following commands produce and manage IpfsPins:
+
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+
+IpfsPins consist of the following fields:
+
+| Field      | Description                                                   | Type     |
+| ---------- | ------------------------------------------------------------- | -------- |
+| cid        | the CID of the file                                           | ipfshash |
+| datePinned | the date the CID was first created                            | string   |
+| status     | the status of the file (one of [all|pinned|unpinned|pending]) | string   |
+| size       | the size of the file in bytes                                 | int64    |
+| fileName   | the metadata name of the pinned file                          | string   |
+
 ## ChunkStats
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->

@@ -2127,7 +2127,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#chunkrecord">Chunkrecord</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, <a href="/data-model/admin/#reportcheck">Reportcheck</a>, and/or <a href="/data-model/admin/#chunkpinreport">Chunkpinreport</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#chunkrecord">Chunkrecord</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#ipfspin">Ipfspin</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, <a href="/data-model/admin/#reportcheck">Reportcheck</a>, and/or <a href="/data-model/admin/#chunkpinreport">Chunkpinreport</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -2137,6 +2137,7 @@ paths:
                         - $ref: "#/components/schemas/chunkIndex"
                         - $ref: "#/components/schemas/chunkBloom"
                         - $ref: "#/components/schemas/chunkAddress"
+                        - $ref: "#/components/schemas/ipfsPin"
                         - $ref: "#/components/schemas/chunkStats"
                         - $ref: "#/components/schemas/reportCheck"
                         - $ref: "#/components/schemas/chunkPinReport"
@@ -3696,6 +3697,26 @@ components:
           type: number
           format: uint64
           description: "the number of records in teh appearance table for this address"
+    ipfsPin:
+      description: "internal-use only data model detailing a single remote or local ipfs pinned file"
+      type: object
+      properties:
+        cid:
+          type: string
+          format: ipfshash
+          description: "the CID of the file"
+        datePinned:
+          type: string
+          description: "the date the CID was first created"
+        status:
+          type: string
+          description: "the status of the file (one of [all|pinned|unpinned|pending])"
+        size:
+          type: int64
+          description: "the size of the file in bytes"
+        fileName:
+          type: string
+          description: "the metadata name of the pinned file"
     chunkStats:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object

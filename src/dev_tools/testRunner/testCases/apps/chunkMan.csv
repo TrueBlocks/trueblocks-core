@@ -22,6 +22,7 @@ index   ,both ,fast  ,chunks ,apps/chunkMan ,addresses_default       ,y    ,mode
 on      ,both ,fast  ,chunks ,apps/chunkMan ,appearances_default     ,y    ,mode = appearances
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,not_pins_list           ,y    ,mode = index & list
+on      ,both ,fast  ,chunks ,apps/chunkMan ,pins_list               ,y    ,mode = pins & list
 on      ,both ,fast  ,chunks ,apps/chunkMan ,not_pins_unpin          ,y    ,mode = index & unpin = 12
 on      ,both ,fast  ,chunks ,apps/chunkMan ,pins_bad_hash           ,y    ,mode = pins & unpin = 12
 
