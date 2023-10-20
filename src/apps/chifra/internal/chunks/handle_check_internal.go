@@ -12,7 +12,7 @@ import (
 )
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
-// the hash of the SpecVersion for expected values.
+// the hash of the spec version for expected values.
 func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *simpleReportCheck) error {
 	for _, fileName := range fileNames {
 		opts.checkIndexChunkInternal(fileName, report)

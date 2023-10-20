@@ -34,7 +34,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	}
 
 	man := manifest.Manifest{
-		Version:       config.GetUnchained().SpecVersion,
+		Version:       config.SpecVersionText(),
 		Chain:         chain,
 		Specification: base.IpfsHash(config.GetUnchained().Specification),
 		Config:        config.GetScrape(chain),
@@ -43,7 +43,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		report := simpleChunkPinReport{
-			Version:       config.GetUnchained().SpecVersion,
+			Version:       config.SpecVersionText(),
 			Chain:         chain,
 			Specification: base.IpfsHash(config.GetUnchained().Specification),
 		}

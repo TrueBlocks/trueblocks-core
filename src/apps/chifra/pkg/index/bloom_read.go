@@ -80,7 +80,7 @@ func (bl *Bloom) readHeader() error {
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
 
 	// Validate hash against provided tag.
-	if bl.Header.Hash.Hex() != config.HeaderTag() {
+	if bl.Header.Hash.Hex() != config.SpecVersionHex() {
 		return ErrBloomHeaderDiffHash
 	}
 
