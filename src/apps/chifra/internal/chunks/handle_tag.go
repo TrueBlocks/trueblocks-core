@@ -26,12 +26,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 		return nil
 	}
 
-	specVersion := config.GetUnchained().SpecVersion
-	if len(opts.Tag) > 0 {
-		specVersion = opts.Tag
-	}
-
-	if !opts.Globals.IsApiMode() && !usage.QueryUser(usage.Replace(tagWarning, specVersion), "Not taagged") {
+	if !opts.Globals.IsApiMode() && !usage.QueryUser(usage.Replace(tagWarning, opts.Tag), "Not taagged") {
 		return nil
 	}
 
@@ -58,14 +53,15 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 			}
 
 			var chunk index.Chunk
-			if err := chunk.Tag(specVersion, path); err != nil {
+			config.SetSpecVersion(opts.Tag)
+			if err := chunk.Tag(path); err != nil {
 				return false, err
 			}
 
 			nChunksTagged++
 			if opts.Globals.Verbose {
 				rng := base.RangeFromFilename(path)
-				logger.Info(colors.Green+"Tagging chunk at "+rng.String()+" with "+specVersion+strings.Repeat(" ", 20), colors.Off)
+				logger.Info(colors.Green+"Tagging chunk at "+rng.String()+" with "+opts.Tag+strings.Repeat(" ", 20), colors.Off)
 			}
 			bar.Tick()
 
@@ -87,8 +83,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 			bar.Finish(true)
 
 			// All that's left to do is report on what happened.
-			tag := config.HeaderTag(specVersion)
-			msg := fmt.Sprintf("%d chunks were retagged with %s.", nChunksTagged, tag)
+			msg := fmt.Sprintf("%d chunks were retagged with %s.", nChunksTagged, opts.Tag)
 			if userHitsCtrlC {
 				msg += colors.Yellow + "Finishing work. please wait..." + colors.Off
 			}

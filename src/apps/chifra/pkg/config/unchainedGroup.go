@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -19,35 +18,24 @@ func GetUnchained() unchainedGroup {
 	return GetRootConfig().Unchained
 }
 
-var headerTag = ""
+func SetSpecVersion(newVers string) {
+	cfg := GetRootConfig()
+	cfg.Unchained.SpecVersion = newVers
+	minVersion := version.NewVersion(DesiredConfigVersion)
+	configFile := PathToConfigFile()
+	_ = cfg.writeFile(configFile, minVersion)
+}
 
-// HeaderTag is inserted into each chunk and each bloom filter as it is produced (or with
-// chifra chunks --tag. It is the keccak256 of the SpecVersion string.
-func HeaderTag(a ...interface{}) string {
-	vers := GetUnchained().SpecVersion
-	if len(a) > 0 {
-		vers = a[0].(string)
-		if version.IsValidVersion(vers) {
-			cfg := GetRootConfig()
-			cfg.Unchained.SpecVersion = vers
-			minVersion := version.NewVersion(DesiredConfigVersion)
-			configFile := PathToConfigFile()
-			_ = cfg.writeFile(configFile, minVersion)
-			headerTag = hexutil.Encode(crypto.Keccak256([]byte(vers)))
-		} else {
-			logger.Fatal("Implementation error: HeaderTag was called with an invalid version")
-			return ""
-		}
-	}
+func SpecVersionHex() string {
+	return hexutil.Encode(SpecVersionKeccak())
+}
 
-	if version.IsValidVersion(vers) {
-		if headerTag == "" {
-			headerTag = hexutil.Encode(crypto.Keccak256([]byte(vers)))
-		}
-		return headerTag
-	}
-	logger.Fatal("Implementation error: HeaderTag was called with an invalid version")
-	return ""
+func SpecVersionText() string {
+	return GetUnchained().SpecVersion
+}
+
+func SpecVersionKeccak() []byte {
+	return crypto.Keccak256([]byte(GetUnchained().SpecVersion))
 }
 
 // Specification      = "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb"                     // IPFS hash of the specification for the Unchained Index

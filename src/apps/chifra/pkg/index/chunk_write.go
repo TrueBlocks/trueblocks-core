@@ -32,7 +32,7 @@ func (c *writeReport) Report() {
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func (chunk *Chunk) Write(chain, newTag string, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeReport, error) {
+func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -94,7 +94,7 @@ func (chunk *Chunk) Write(chain, newTag string, publisher base.Address, fileName
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := indexHeader{
 				Magic:           file.MagicNumber,
-				Hash:            base.BytesToHash([]byte(newTag)),
+				Hash:            base.BytesToHash(config.SpecVersionKeccak()),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
@@ -118,7 +118,7 @@ func (chunk *Chunk) Write(chain, newTag string, publisher base.Address, fileName
 				return nil, err
 			}
 
-			if _, err = bl.writeBloom(newTag, ToBloomPath(indexFn)); err != nil {
+			if _, err = bl.writeBloom(ToBloomPath(indexFn)); err != nil {
 				return nil, err
 			}
 
@@ -141,7 +141,7 @@ func (chunk *Chunk) Write(chain, newTag string, publisher base.Address, fileName
 }
 
 // Tag updates the manifest version in the chunk's header
-func (chunk *Chunk) Tag(newTag string, fileName string) (err error) {
+func (chunk *Chunk) Tag(fileName string) (err error) {
 	bloomFn := ToBloomPath(fileName)
 	indexFn := ToIndexPath(fileName)
 	indexBackup := indexFn + ".backup"
@@ -163,11 +163,11 @@ func (chunk *Chunk) Tag(newTag string, fileName string) (err error) {
 		return err
 	}
 
-	if err = chunk.Bloom.updateTag(newTag, bloomFn); err != nil {
+	if err = chunk.Bloom.updateTag(bloomFn); err != nil {
 		return err
 	}
 
-	if err = chunk.Index.updateTag(newTag, indexFn); err != nil {
+	if err = chunk.Index.updateTag(indexFn); err != nil {
 		return err
 	}
 

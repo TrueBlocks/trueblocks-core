@@ -35,7 +35,7 @@ func (chunk *Index) readHeader() (indexHeader, error) {
 		return header, ErrIndexHeaderDiffMagic
 	}
 
-	if header.Hash.Hex() != config.HeaderTag() { // HeaderTag always shows the current expected value of the manifest hash
+	if header.Hash.Hex() != config.SpecVersionHex() {
 		return header, ErrIndexHeaderDiffHash
 	}
 
