@@ -1,0 +1,5 @@
+chifra chunks  pins --list
+TEST[DATE|TIME] Mode:  pins
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Format:  txt
+INFO[DATE|TIME] Test mode: list pins not tested

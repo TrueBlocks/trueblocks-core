@@ -10,44 +10,46 @@ package chunksPkg
 
 // EXISTING_CODE
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // EXISTING_CODE
 
-type simpleChunkPinReport struct {
-	Chain         string        `json:"chain"`
-	ManifestHash  base.IpfsHash `json:"manifestHash"`
-	SpecHash      base.IpfsHash `json:"specHash"`
-	TimestampHash base.IpfsHash `json:"timestampHash"`
-	Version       string        `json:"version"`
+type simpleIpfsPin struct {
+	Cid        base.IpfsHash `json:"cid"`
+	DatePinned string        `json:"datePinned"`
+	FileName   string        `json:"fileName"`
+	Size       int64         `json:"size"`
+	Status     string        `json:"status"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *simpleChunkPinReport) Raw() *types.RawModeler {
+func (s *simpleIpfsPin) Raw() *types.RawModeler {
 	return nil
 }
 
-func (s *simpleChunkPinReport) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *simpleIpfsPin) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
 	// EXISTING_CODE
 	model = map[string]interface{}{
-		"chain":         s.Chain,
-		"version":       s.Version,
-		"manifestHash":  s.ManifestHash,
-		"timestampHash": s.TimestampHash,
-		"specHash":      s.SpecHash,
+		"cid":        s.Cid,
+		"datePinned": cleanDate(s.DatePinned),
+		"status":     s.Status,
+		"size":       s.Size,
+		"fileName":   s.FileName,
 	}
 	order = []string{
-		"chain",
-		"version",
-		"manifestHash",
-		"timestampHash",
-		"specHash",
+		"cid",
+		"datePinned",
+		"status",
+		"size",
+		"fileName",
 	}
 	// EXISTING_CODE
 
@@ -58,4 +60,9 @@ func (s *simpleChunkPinReport) Model(chain, format string, verbose bool, extraOp
 }
 
 // EXISTING_CODE
+func cleanDate(date string) string {
+	parts := strings.Split(date, ".")
+	return parts[0]
+}
+
 // EXISTING_CODE

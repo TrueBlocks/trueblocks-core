@@ -2,8 +2,8 @@ chifra chunks  manifest --pin --rewrite
 TEST[DATE|TIME] Mode:  manifest
 TEST[DATE|TIME] Pin:  true
 TEST[DATE|TIME] Rewrite:  true
-TEST[DATE|TIME] Format:  txt
-Error: The --rewrite option requires --deep.
+TEST[DATE|TIME] Format:  json
+Error: The --pin option requires a locally running IPFS daemon.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
