@@ -2,10 +2,13 @@ package pinning
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -15,45 +18,49 @@ var ErrNoPinningService = fmt.Errorf("no pinning service available")
 // PinOneFile pins the named database given a path to the local and/or remote pinning
 // services if they are available. If the local service is not available, the remote
 // service is used.
-func PinOneFile(chain, dbName, fileName string, local, remote bool) (base.IpfsHash, uint64, error) {
-	var hash base.IpfsHash
+func PinOneFile(chain, dbName, fileName string, remote bool) (base.IpfsHash, base.IpfsHash, error) {
+	var localHash base.IpfsHash
+	var remoteHash base.IpfsHash
 	var err error
 
 	if !file.FileExists(fileName) {
-		return hash, 0, fmt.Errorf(dbName+" file (%s) does not exist", fileName)
+		return localHash, remoteHash, fmt.Errorf(dbName+" file (%s) does not exist", fileName)
 	}
 
+	local := config.IpfsRunning()
 	if !local && !remote {
-		return hash, 0, ErrNoPinningService
+		return localHash, remoteHash, ErrNoPinningService
 	}
 
-	logger.Info(colors.Magenta+"Pinning", dbName, "file", fileName, "...", colors.Off)
+	toShow := filepath.Base(fileName)
 	if local {
 		localService, _ := NewService(chain, Local)
-		if hash, err = localService.pinFileLocally(chain, fileName); err != nil {
-			return hash, 0, fmt.Errorf("error pinning locally: %s", err)
+		if localHash, err = localService.pinFileLocally(chain, fileName); err != nil {
+			return localHash, remoteHash, fmt.Errorf("error pinning locally: %s", err)
 		}
 	}
 
 	if remote {
+		logger.Progress(true, colors.Magenta+"Pinning", dbName, "file", toShow, "remotely...", colors.Off)
 		remoteService, _ := NewService(chain, Pinata)
-		var remoteHash base.IpfsHash
 		if remoteHash, err = remoteService.pinFileRemotely(chain, fileName); err != nil {
-			return hash, 0, fmt.Errorf("error pinning remotely: %s", err)
+			return localHash, remoteHash, fmt.Errorf("error pinning remotely: %s", err)
 		}
-		if hash == "" {
-			hash = remoteHash
-		} else if hash != remoteHash {
-			return hash, 0, fmt.Errorf("local (%s) and remote (%s) hashes differ", hash, remoteHash)
+		if localHash == "" {
+			localHash = remoteHash
 		}
 	}
 
-	logger.Info(colors.Magenta+"Pinned", dbName, "file", fileName, "to", hash, colors.Off)
-	return hash, uint64(file.FileSize(fileName)), nil
+	logger.Info(colors.Magenta+"Pinned", dbName, "file", toShow, "to", localHash, colors.Off)
+	return localHash, remoteHash, nil
 }
 
 // PinOneChunk pins the named chunk given a path to the local and/or remote pinning service
-func PinOneChunk(chain, bloomFile, indexFile string, local, remote bool) (types.SimpleChunkRecord, types.SimpleChunkRecord, error) {
+func PinOneChunk(chain, path string, remote bool) (types.SimpleChunkRecord, types.SimpleChunkRecord, error) {
+	bloomFile := index.ToBloomPath(path)
+	indexFile := index.ToIndexPath(path)
+	local := config.IpfsRunning()
+
 	rng := base.RangeFromFilename(bloomFile)
 	localPin := types.SimpleChunkRecord{Range: rng.String()}
 	remotePin := types.SimpleChunkRecord{Range: rng.String()}
@@ -77,6 +84,7 @@ func PinOneChunk(chain, bloomFile, indexFile string, local, remote bool) (types.
 	}
 
 	if remote {
+		logger.Progress(true, colors.Magenta+"Pinning file", rng.String(), "remotely...", colors.Off)
 		remoteService, _ := NewService(chain, Pinata)
 		if remotePin.BloomHash, err = remoteService.pinFileRemotely(chain, bloomFile); err != nil {
 			return localPin, remotePin, err

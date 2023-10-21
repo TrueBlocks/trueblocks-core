@@ -300,8 +300,8 @@ ChunkPinReports consist of the following fields:
 | ------------- | ------------------------------------------------------- | -------- |
 | version       | the version string hashed into the chunk data           | string   |
 | chain         | the chain to which this manifest belongs                | string   |
-| specification | IPFS cid of the specification                           | ipfshash |
-| tsHash        | IPFS cid of file containing timestamps                  | ipfshash |
+| timestampHash | IPFS cid of file containing timestamps                  | ipfshash |
+| specHash      | IPFS cid of the specification                           | ipfshash |
 | manifestHash  | IPFS cid of file containing CIDs for the various chunks | ipfshash |
 
 ## Chain

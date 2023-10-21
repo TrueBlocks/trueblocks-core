@@ -1516,14 +1516,14 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        specification:
-          type: string
-          format: ipfshash
-          description: "IPFS cid of the specification"
-        tsHash:
+        timestampHash:
           type: string
           format: ipfshash
           description: "IPFS cid of file containing timestamps"
+        specHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of the specification"
         manifestHash:
           type: string
           format: ipfshash
