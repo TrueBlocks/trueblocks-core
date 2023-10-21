@@ -65,12 +65,11 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 				Action:           &traceAction,
 				Result:           &traceResult,
 			}
-			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != uint64(curApp.TransactionIndex) {
+			if trace.TransactionIndex != uint64(curApp.TransactionIndex) {
 				curApp = types.SimpleAppearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
 				idx = 0
 			}
 			trace.TraceIndex = idx
