@@ -131,7 +131,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 				return
 			} else {
 				opts.matchReport(localHash == remoteHash, localHash, remoteHash)
-				report.TimestampHash = remoteHash
+				report.TimestampHash = localHash
 			}
 
 			manPath := config.PathToManifest(chain)
