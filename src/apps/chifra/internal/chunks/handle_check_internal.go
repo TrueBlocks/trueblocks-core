@@ -73,7 +73,7 @@ func (opts *ChunksOptions) checkSnaps(fileName string, indexChunk *index.Index, 
 				report.PassedCnt++
 			}
 		} else {
-			if indexChunk.Header.AppearanceCount < appsPer {
+			if indexChunk.Header.AppearanceCount < appsPer && fR.Last > 0 {
 				// For non-snapped chunks, nApps ≥ apps_per_chunk.
 				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("checkSnap: too few appearances at %s appsPer=%d", fR, appsPer))
 			} else {
