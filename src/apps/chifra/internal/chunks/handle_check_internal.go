@@ -8,7 +8,10 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
@@ -37,5 +40,45 @@ func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, report *simp
 	} else {
 		report.PassedCnt++
 	}
+
+	opts.checkSnaps(fileName, &indexChunk, report)
+
 	indexChunk.Close()
+}
+
+func (opts *ChunksOptions) checkSnaps(fileName string, indexChunk *index.Index, report *simpleReportCheck) {
+	report.VisitedCnt++
+	report.CheckedCnt++
+
+	// we will check the manifest since it's the gold standard
+	isSnap := func(fR base.FileRange, snapMarker, firstSnap uint64) bool {
+		return fR.Last >= firstSnap && fR.Last%snapMarker == 0
+	}
+
+	chain := opts.Globals.Chain
+	firstSnap := utils.MustParseUint(config.GetScrape(chain).FirstSnap)
+	snapMarker := utils.MustParseUint(config.GetScrape(chain).SnapToGrid)
+	appsPer := uint32(utils.MustParseUint(config.GetScrape(chain).AppsPerChunk))
+	if fR, err := base.RangeFromFilenameE(fileName); err != nil {
+		report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: %s", err, fileName))
+	} else {
+		if isSnap(fR, snapMarker, firstSnap) {
+			if fR.Last < firstSnap {
+				// Is there a snap_to_grid after first_snap everywhere it's supposed to be?
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("checkSnap: snap too early %s firstSnap=%d", fR, firstSnap))
+			} else if indexChunk.Header.AppearanceCount >= appsPer {
+				// For snapped chunks, nApps < apps_per_chunk.
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("contract: too many apps at %s appsPer=%d", fR, appsPer))
+			} else {
+				report.PassedCnt++
+			}
+		} else {
+			if indexChunk.Header.AppearanceCount < appsPer {
+				// For non-snapped chunks, nApps ≥ apps_per_chunk.
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("checkSnap: too few appearances at %s appsPer=%d", fR, appsPer))
+			} else {
+				report.PassedCnt++
+			}
+		}
+	}
 }

@@ -11,8 +11,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// CheckSequential checks that the range of blocks in each of three arrays (onDisc, LocalManifest, RemoteManifest)
-// "cover" the range without gaps. (There may be a bug for allow_missing chains where gaps are allowed.)
+// CheckSequential checks that the range of blocks in each of three arrays (onDisc,
+// LocalManifest, RemoteManifest) "cover" the range without gaps. (There may be a bug
+// for allow_missing chains where gaps are allowed.) It also makes sure than snap-to-grids
+// happen where they should and that non-snaps have at least appsPerChunks records and
+// snaps have exactly appsPerChunks records or less.
 func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []string, allowMissing bool, report *simpleReportCheck) error {
 	if err := opts.checkSequential("disc", fnArray, allowMissing, report); err != nil {
 		return err
