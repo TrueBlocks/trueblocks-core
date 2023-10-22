@@ -79,6 +79,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "for the accounting options only, export only statements")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, "traverse the transaction history and show each change in ETH balances")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Withdrawals, "withdrawals", "w", false, "export withdrawals for the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "force the transaction's traces into the cache")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")

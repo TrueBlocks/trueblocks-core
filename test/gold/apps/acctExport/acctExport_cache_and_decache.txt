@@ -25,6 +25,7 @@ Flags:
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
   -b, --balances            traverse the transaction history and show each change in ETH balances
+  -w, --withdrawals         export withdrawals for the given address
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -R, --cache_traces        force the transaction's traces into the cache
   -U, --count               only available for --appearances mode, if present, return only the number of records

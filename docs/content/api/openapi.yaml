@@ -323,6 +323,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: withdrawals
+          description: export withdrawals for the given address
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: articulate
           description: articulate transactions, traces, logs, and outputs
           required: false

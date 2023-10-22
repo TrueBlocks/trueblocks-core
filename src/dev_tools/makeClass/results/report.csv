@@ -161,6 +161,9 @@ export,traces,typescript
 export,unripe,api
 export,unripe,python
 export,unripe,typescript
+export,withdrawals,api
+export,withdrawals,python
+export,withdrawals,typescript
 init,all,api
 init,all,python
 init,all,typescript
