@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"io"
 	"sync"
-	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -43,17 +42,17 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		theMap[chunk.Range] = &reporter{chunk, report, &mutex}
 	}
 
-	total := len(theMap)
-	var done atomic.Int32
-	progressChan := make(chan int)
-	defer close(progressChan)
-	var tick int32 = 10
+	bar := logger.NewBar(logger.BarOptions{
+		Total:   int64(len(theMap)),
+		Enabled: true,
+	})
+
+	addrCnt := 0
 
 	var sh *shell.Shell
 	var procFunc func(rangeStr string, item *reporter) (err error)
 	if opts.Mode == "index" {
-		total = 0
-		tick = 1000
+		logger.Info("Checking each address in each index against its Bloom filter...")
 		procFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			_, path := rng.RangeToFilename(chain)
@@ -77,7 +76,6 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 					return err
 				}
 
-				total += int(indexChunk.Header.AddressCount)
 				for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
 					obj := index.AddressRecord{}
 					if err := binary.Read(indexChunk.File, binary.LittleEndian, &obj); err != nil {
@@ -87,7 +85,11 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 						fmt.Println("X", colors.Yellow, "bloom miss", obj.Address, "in", item.chunk.Range, colors.Off)
 						misses++
 					}
-					progressChan <- 1
+					addrCnt++
+					if i%8000 == 0 {
+						bar.Prefix = fmt.Sprintf("Checked %d addresses againt %d Blooms", addrCnt, len(theMap))
+						bar.Tick()
+					}
 				}
 
 				item.mutex.Lock()
@@ -100,35 +102,23 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 
 				return nil
 			}
-
-			progressChan <- 1
-
+			bar.Finish(true)
 			return nil
 		}
 
 	} else if opts.Mode == "manifest" {
-		total = len(theMap) * 2
 		sh = shell.NewShell(config.GetPinning().LocalPinUrl)
 		procFunc = func(rangeStr string, item *reporter) (err error) {
-			progressChan <- 1
+			bar.Tick()
 			err = checkHashes(item.chunk, "blooom", sh, item)
 			if err != nil {
 				return err
 			}
-			progressChan <- 1
 			return checkHashes(item.chunk, "index", sh, item)
 		}
 	} else {
 		return fmt.Errorf("unknown mode: %s", opts.Mode)
 	}
-
-	// Listen on a channel and whenever it updates, call `reportProgress`
-	go func() {
-		for progress := range progressChan {
-			doneNow := done.Add(int32(progress))
-			logger.PctProgress(doneNow, total, tick)
-		}
-	}()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

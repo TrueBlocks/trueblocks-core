@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -196,7 +197,7 @@ func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() {
+		if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
 			addr, _ := base.AddressFromPath(path, ".mon.bin")
 			if !addr.IsZero() {
 				mon, _ := NewMonitor(chain, addr, true /* create */)
