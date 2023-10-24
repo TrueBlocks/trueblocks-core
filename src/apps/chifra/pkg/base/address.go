@@ -60,7 +60,7 @@ func (a *Address) SetHex(hexStr string) {
 	a.Address = common.HexToAddress(hexStr)
 }
 
-// IsZero returns true if an addres is a zero value or 0x0.
+// IsZero returns true if an address is a zero value or 0x0.
 func (a *Address) IsZero() bool {
 	v := bytesToAddressString(a.Address.Bytes())
 	return v == "0x0000000000000000000000000000000000000000"
