@@ -19,6 +19,7 @@ export function getExport(
     accounting?: boolean,
     statements?: boolean,
     balances?: boolean,
+    withdrawals?: boolean,
     articulate?: boolean,
     cacheTraces?: boolean,
     count?: boolean,

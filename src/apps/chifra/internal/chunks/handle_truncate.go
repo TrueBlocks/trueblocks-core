@@ -102,7 +102,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				if err != nil {
 					return err
 				}
-				if !info.IsDir() {
+				if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
 					addr, _ := base.AddressFromPath(path, ".mon.bin")
 					if !addr.IsZero() {
 						mon, _ := monitor.NewMonitor(chain, addr, false /* create */)

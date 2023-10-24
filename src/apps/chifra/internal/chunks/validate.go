@@ -108,18 +108,19 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	isPin := opts.Pin
+	isCheck := opts.Check
 	isPublish := opts.Publish
 	isRemote := opts.Remote
 	isDeep := opts.Deep
 
-	if !isIndexOrManifest && (isPin || isPublish || isRemote || isDeep) {
-		return validate.Usage("The {0} options is only available in {1} or {2} mode.", "--pin --publish --remote and --deep", "manifest", "index")
+	if !isIndexOrManifest && (isPin || isPublish || isRemote || isDeep || isCheck) {
+		return validate.Usage("The {0} options is only available in {1} or {2} mode.", "--pin, --publish, --remote, --check, and --deep", "manifest", "index")
 	}
 
 	if opts.Mode == "manifest" && opts.Remote {
 		// this is okay
-	} else if !isPin && (isRemote || isDeep) {
-		return validate.Usage("The {0} options require {1}.", "--remote and --deep", "--pin")
+	} else if !isCheck && !isPin && (isRemote || isDeep) {
+		return validate.Usage("The {0} options require {1}.", "--remote and --deep", "--pin or --check")
 	}
 
 	if isPin {

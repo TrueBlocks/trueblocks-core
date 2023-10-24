@@ -65,7 +65,10 @@ func (opts *ChunksOptions) ChunksInternal() error {
 		blockNums = blockNums[:200]
 	}
 
-	if opts.List {
+	if opts.Check {
+		err = opts.HandleCheck(blockNums)
+
+	} else if opts.List {
 		err = opts.HandleList(blockNums)
 
 	} else if opts.Unpin {
@@ -85,9 +88,6 @@ func (opts *ChunksOptions) ChunksInternal() error {
 
 	} else if opts.Truncate != utils.NOPOS {
 		err = opts.HandleTruncate(blockNums)
-
-	} else if opts.Check {
-		err = opts.HandleCheck(blockNums)
 
 	} else {
 		switch opts.Mode {

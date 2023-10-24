@@ -15,6 +15,7 @@ exportOpts = {
     "accounting": {"hotkey": "-C", "type": "switch"},
     "statements": {"hotkey": "-A", "type": "switch"},
     "balances": {"hotkey": "-b", "type": "switch"},
+    "withdrawals": {"hotkey": "-w", "type": "switch"},
     "articulate": {"hotkey": "-a", "type": "switch"},
     "cacheTraces": {"hotkey": "-R", "type": "switch"},
     "count": {"hotkey": "-U", "type": "switch"},
