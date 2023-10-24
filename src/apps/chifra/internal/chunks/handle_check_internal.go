@@ -39,9 +39,8 @@ func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, report *simp
 		}
 	} else {
 		report.PassedCnt++
+		opts.checkSnaps(fileName, &indexChunk, report)
 	}
-
-	opts.checkSnaps(fileName, &indexChunk, report)
 
 	indexChunk.Close()
 }
