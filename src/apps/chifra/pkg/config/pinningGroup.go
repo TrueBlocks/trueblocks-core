@@ -10,6 +10,8 @@ import (
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
+const defaultIpfsGateway = "https://ipfs.unchainedindex.io/ipfs"
+
 type pinningGroup struct {
 	GatewayURL   string `toml:"gatewayUrl"`
 	LocalPinUrl  string `toml:"localPinUrl"`

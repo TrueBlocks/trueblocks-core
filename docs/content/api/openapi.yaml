@@ -2118,6 +2118,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: count
+          description: for the pins mode only, display only the count of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: sleep
           description: for --remote pinning only, seconds to sleep between API calls
           required: false

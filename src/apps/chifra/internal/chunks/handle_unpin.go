@@ -12,6 +12,6 @@ func (opts *ChunksOptions) HandleUnpin(unused []uint64) error {
 		return nil
 	}
 
-	_ = pinning.Unpin(opts.Globals.Chain)
+	_ = pinning.Unpin(opts.Globals.Chain, opts.Count)
 	return nil
 }
