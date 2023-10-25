@@ -18,10 +18,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
+	save := opts.Globals.Format
+	opts.Globals.Format = "txt"
+	if err, ok := opts.check(blockNums, true /* silent */); err != nil {
+		return err
+	} else if !ok {
+		return validate.Usage("Checks failed - run '{0}' for more information.", "chifra chunks index --check")
+	}
+	opts.Globals.Format = save
+
 	chain := opts.Globals.Chain
 	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
 	lastBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))

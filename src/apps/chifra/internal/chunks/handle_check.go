@@ -23,6 +23,12 @@ import (
 // and manifest in the smart contract. It tries to check these three sources for
 // cosnsistency. Smart contract rules, so it is checked more thoroughly.
 func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
+	err, _ := opts.check(blockNums, false /* silent */)
+	return err
+}
+
+// check provides internal checks against the index used from the command line and internally before pinning
+func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) {
 	chain := opts.Globals.Chain
 
 	maxTestItems := 10
@@ -61,7 +67,7 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 
 	if len(fileNames) == 0 {
 		msg := fmt.Sprint("No files found to check in", config.PathToIndex(chain))
-		return errors.New(msg)
+		return errors.New(msg), false
 	}
 
 	sort.Slice(fileNames, func(i, j int) bool {
@@ -70,12 +76,12 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 
 	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromCache)
 	if err != nil {
-		return err
+		return err, false
 	}
 
 	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
 	if err != nil {
-		return err
+		return err, false
 	}
 
 	// a string array of the actual files in the index
@@ -112,57 +118,58 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 
 	seq := simpleReportCheck{Reason: "Filenames sequential"}
 	if err := opts.CheckSequential(fileNames, cacheArray, remoteArray, allowMissing, &seq); err != nil {
-		return err
+		return err, false
 	}
 	reports = append(reports, seq)
 
 	intern := simpleReportCheck{Reason: "Internally consistent"}
 	if err := opts.CheckInternal(fileNames, blockNums, &intern); err != nil {
-		return err
+		return err, false
 	}
 	reports = append(reports, intern)
 
 	con := simpleReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
-		return err
+		return err, false
 	}
 	reports = append(reports, con)
 
 	sizes := simpleReportCheck{Reason: "Check file sizes"}
 	if err := opts.CheckSizes(fileNames, blockNums, cacheManifest, remoteManifest, &sizes); err != nil {
-		return err
+		return err, false
 	}
 	reports = append(reports, sizes)
 
 	// compare with çached manifest with files on disc
 	d2c := simpleReportCheck{Reason: "Disc files to cached manifest"}
 	if err := opts.CheckManifest(fnArray, cacheArray, &d2c); err != nil {
-		return err
+		return err, false
 	}
 	reports = append(reports, d2c)
 
 	// compare with remote manifest with files on disc
 	d2r := simpleReportCheck{Reason: "Disc files to remote manifest"}
 	if err := opts.CheckManifest(fnArray, remoteArray, &d2r); err != nil {
-		return err
+		return err, false
 	}
 	reports = append(reports, d2r)
 
 	// compare remote manifest to cached manifest
 	r2c := simpleReportCheck{Reason: "Remote manifest to cached manifest"}
 	if err := opts.CheckManifest(remoteArray, cacheArray, &r2c); err != nil {
-		return err
+		return err, false
 	}
 	reports = append(reports, r2c)
 
 	if opts.Deep {
 		deep := simpleReportCheck{Reason: "Deep checks for " + opts.Mode}
 		if err := opts.CheckDeep(cacheManifest, &deep); err != nil {
-			return err
+			return err, false
 		}
 		reports = append(reports, deep)
 	}
 
+	nFailed := 0
 	for i := 0; i < len(reports); i++ {
 		reports[i].FailedCnt = reports[i].CheckedCnt - reports[i].PassedCnt
 		if reports[i].FailedCnt == 0 {
@@ -171,15 +178,19 @@ func (opts *ChunksOptions) HandleCheck(blockNums []uint64) error {
 			reports[i].Result = "failed"
 			reports[i].SkippedCnt = reports[i].VisitedCnt - reports[i].CheckedCnt
 		}
+		nFailed += int(reports[i].FailedCnt)
 	}
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, report := range reports {
 			report := report
-			modelChan <- &report
+			if !silent {
+				modelChan <- &report
+			}
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	err = output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	return err, nFailed == 0
 }
