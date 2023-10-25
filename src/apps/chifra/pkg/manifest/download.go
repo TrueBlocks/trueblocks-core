@@ -33,7 +33,8 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 	conn := rpc.TempConnection(unchainedChain)
 
 	if contractCall, _, err := call.NewContractCall(conn, base.HexToAddress(config.GetUnchained().SmartContract), theCall); err != nil {
-		return "", err
+		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall, err)
+		return "", wrapped
 	} else {
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
 		abiCache := articulate.NewAbiCache(chain, true)

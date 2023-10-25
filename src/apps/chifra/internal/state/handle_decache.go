@@ -6,6 +6,7 @@ package statePkg
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -29,7 +30,8 @@ func (opts *StateOptions) HandleDecache() error {
 				callAddress = base.HexToAddress(opts.ProxyFor)
 			}
 			if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-				return err
+				wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
+				return wrapped
 			} else {
 				if items, err := decache.LocationsFromAddressEncodingAndBlockIds(opts.Conn, address, contractCall.Method.Encoding, opts.BlockIds); err != nil {
 					return err
