@@ -20,6 +20,7 @@ export function getChunks(
     maxAddrs?: blknum,
     deep?: boolean,
     rewrite?: boolean,
+    count?: boolean,
     sleep?: double,
     chain: string,
     noHeader?: boolean,

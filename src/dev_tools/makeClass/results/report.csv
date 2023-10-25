@@ -55,6 +55,9 @@ chunks,belongs,typescript
 chunks,check,api
 chunks,check,python
 chunks,check,typescript
+chunks,count,api
+chunks,count,python
+chunks,count,typescript
 chunks,deep,api
 chunks,deep,python
 chunks,deep,typescript
