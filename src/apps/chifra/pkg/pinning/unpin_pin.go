@@ -38,7 +38,7 @@ func unpinOne(chain string, i, total int, hash base.IpfsHash) error {
 	}
 }
 
-func Unpin(chain string, count bool) error {
+func Unpin(chain string, count bool, sleep float64) error {
 	lines := file.AsciiFileToLines("./unpins")
 	if count {
 		logger.Info("There are", len(lines), "pins to unpin.")
@@ -48,7 +48,11 @@ func Unpin(chain string, count bool) error {
 				if err := unpinOne(chain, i, len(lines), base.IpfsHash(line)); err != nil {
 					return err
 				}
-				time.Sleep(time.Second * 1)
+				if sleep > 0 {
+					ms := time.Duration(sleep*1000) * time.Millisecond
+					// logger.Info(fmt.Sprintf("Sleeping for %g seconds", sleep))
+					time.Sleep(ms)
+				}
 			}
 		}
 	}
