@@ -59,17 +59,21 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 	url.Path = filepath.Join(url.Path, cid)
 
-	response, err := http.Get(url.String())
+	resp, err := http.Get(url.String())
 	if err != nil {
 		return nil, err
 	}
 
-	switch response.Header.Get("Content-Type") {
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("feth to pinning service failed: %s", resp.Status)
+	}
+
+	switch resp.Header.Get("Content-Type") {
 	case "application/json":
 		m := &Manifest{}
-		err := json.NewDecoder(response.Body).Decode(m)
+		err := json.NewDecoder(resp.Body).Decode(m)
 		return m, err
 	default:
-		return nil, fmt.Errorf("fetch to %s return unrecognized content type: %s", url.String(), response.Header.Get("Content-Type"))
+		return nil, fmt.Errorf("fetch to %s return unrecognized content type: %s", url.String(), resp.Header.Get("Content-Type"))
 	}
 }

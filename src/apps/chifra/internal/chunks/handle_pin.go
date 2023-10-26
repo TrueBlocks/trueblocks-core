@@ -17,22 +17,27 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+
+	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
-	save := opts.Globals.Format
-	opts.Globals.Format = "txt"
-	if err, ok := opts.check(blockNums, true /* silent */); err != nil {
-		return err
-	} else if !ok {
-		return validate.Usage("Checks failed - run '{0}' for more information.", "chifra chunks index --check")
-	}
-	opts.Globals.Format = save
-
 	chain := opts.Globals.Chain
+
+	if opts.Globals.TestMode {
+		logger.Warn("Truncate option not tested.")
+		return nil
+	}
+
+	if !opts.Globals.IsApiMode() && usage.QueryUser(pinWarning, "Check skipped") {
+		if err := opts.doCheck(blockNums); err != nil {
+			return err
+		}
+	}
+
 	firstBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINFIRSTBLOCK"))
 	lastBlock := mustParseUint(os.Getenv("TB_CHUNKS_PINLASTBLOCK"))
 	if lastBlock == 0 {
@@ -71,7 +76,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in pinChunk")
 			}
-			if opts.Deep || man.ChunkMap[rng.String()] == nil {
+			if opts.Deep || len(blockNums) > 0 || man.ChunkMap[rng.String()] == nil {
 				fileList = append(fileList, path)
 			}
 			return true, nil
@@ -100,8 +105,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			local, remote, err := pinning.PinOneChunk(chain, path, opts.Remote)
 			if err != nil {
 				errorChan <- err
-				cancel() // keep going...
-				return
+				logger.Error("Pin failed:", path, err)
 			}
 
 			blMatches, idxMatches := matches(&local, &remote)
@@ -133,12 +137,11 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 		}
 
-		if len(blockNums) == 0 {
+		if false && len(blockNums) == 0 {
 			tsPath := config.PathToTimestamps(chain)
 			if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err
-				cancel()
-				return
+				logger.Error("Pin failed:", tsPath, err)
 			} else {
 				opts.matchReport(localHash == remoteHash, localHash, remoteHash)
 				report.TimestampHash = localHash
@@ -150,8 +153,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 			if localHash, remoteHash, err := pinning.PinOneFile(chain, "manifest", manPath, opts.Remote); err != nil {
 				errorChan <- err
-				cancel()
-				return
+				logger.Error("Pin failed:", manPath, err)
 			} else {
 				opts.matchReport(localHash == remoteHash, localHash, remoteHash)
 				report.ManifestHash = localHash
@@ -180,6 +182,16 @@ func (opts *ChunksOptions) matchReport(matches bool, localHash, remoteHash base.
 		logger.Info(colors.BrightGreen+"Matches: "+localHash.String(), " ", localHash, colors.Off)
 	} else {
 		logger.Warn("Pins mismatch:", localHash.String(), " ", localHash)
-		logger.Fatal("IPFS hashes between local and remote do not match.")
 	}
 }
+
+func (opts *ChunksOptions) doCheck(blockNums []uint64) error {
+	if err, ok := opts.check(blockNums, false /* silent */); err != nil {
+		return err
+	} else if !ok {
+		return fmt.Errorf("checks failed")
+	}
+	return nil
+}
+
+var pinWarning = `Do you want to run --chain first (Yy)? `

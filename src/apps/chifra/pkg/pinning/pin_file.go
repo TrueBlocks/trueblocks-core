@@ -36,7 +36,7 @@ func PinOneFile(chain, dbName, fileName string, remote bool) (base.IpfsHash, bas
 	if local {
 		localService, _ := NewService(chain, Local)
 		if localHash, err = localService.pinFileLocally(chain, fileName); err != nil {
-			return localHash, remoteHash, fmt.Errorf("error pinning locally: %s", err)
+			return localHash, remoteHash, fmt.Errorf("error pinning locally: %s %s", fileName, err)
 		}
 	}
 
@@ -44,7 +44,7 @@ func PinOneFile(chain, dbName, fileName string, remote bool) (base.IpfsHash, bas
 		logger.Progress(true, colors.Magenta+"Pinning", dbName, "file", toShow, "remotely...", colors.Off)
 		remoteService, _ := NewService(chain, Pinata)
 		if remoteHash, err = remoteService.pinFileRemotely(chain, fileName); err != nil {
-			return localHash, remoteHash, fmt.Errorf("error pinning remotely: %s", err)
+			return localHash, remoteHash, fmt.Errorf("error pinning remotely: %s %s", fileName, err)
 		}
 		if localHash == "" {
 			localHash = remoteHash
