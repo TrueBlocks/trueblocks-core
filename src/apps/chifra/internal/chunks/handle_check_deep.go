@@ -87,7 +87,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 					}
 					addrCnt++
 					if i%8000 == 0 {
-						bar.Prefix = fmt.Sprintf("Checked %d addresses againt %d Blooms", addrCnt, len(theMap))
+						bar.Prefix = fmt.Sprintf("Checked %d addresses against %d Blooms", addrCnt, len(theMap))
 						bar.Tick()
 					}
 				}
