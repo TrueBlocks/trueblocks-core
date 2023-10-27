@@ -54,6 +54,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 
 	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
 	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
+	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, ts)
 	for _, rawTx := range rawBlock.Transactions {
 		// cast transaction to a concrete type
 		rawData, ok := rawTx.(map[string]any)
@@ -64,10 +65,15 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		raw := types.NewRawTransactionFromMap(rawData)
 
 		// Get the receipt
+		idx := utils.MustParseUint(raw.TransactionIndex)
 		var receipt types.SimpleReceipt
-		receipt, err = conn.GetReceipt(bn, utils.MustParseUint(raw.TransactionIndex), ts)
-		if err != nil {
-			return block, err
+		if receiptMap[idx] == nil {
+			receipt, err = conn.GetReceipt(bn, idx, ts)
+			if err != nil {
+				return block, err
+			}
+		} else {
+			receipt = *receiptMap[idx]
 		}
 
 		tx := types.NewSimpleTransaction(raw, &receipt, ts)

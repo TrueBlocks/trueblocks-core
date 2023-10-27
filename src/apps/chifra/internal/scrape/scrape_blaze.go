@@ -91,7 +91,7 @@ func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sy
 		var err error
 		if sd.traces, err = bm.opts.Conn.GetTracesByBlockNumber(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
-		} else if sd.receipts, err = bm.opts.Conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
+		} else if sd.receipts, _, err = bm.opts.Conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else if sd.withdrawals, err = bm.opts.Conn.GetWithdrawalsByNumber(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
