@@ -198,7 +198,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 		if sleep > 0 {
 			ms := time.Duration(sleep*1000) * time.Millisecond
 			if !opts.Globals.TestMode {
-				logger.Info(fmt.Sprintf("Sleeping for %g seconds", sleep))
+				logger.Progress(true, fmt.Sprintf("Sleeping for %g seconds", sleep))
 			}
 			time.Sleep(ms)
 		}
