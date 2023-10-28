@@ -26,7 +26,7 @@ func (opts *ChunksOptions) HandleList(unused []uint64) error {
 		if testMode {
 			pageSize = -100
 		}
-		if array, err := pinning.ListPins(opts.Globals.Chain, "pinned", pageSize, time.Millisecond*500); err != nil {
+		if array, err := pinning.ListPins(opts.Globals.Chain, "pinned", opts.Count, pageSize, time.Millisecond*500); err != nil {
 			errorChan <- err
 		} else {
 			for _, line := range array {

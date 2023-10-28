@@ -42,6 +42,7 @@ type ChunksOptions struct {
 	Rewrite    bool                     `json:"rewrite,omitempty"`    // For the --pin --deep mode only, writes the manifest back to the index folder (see notes)
 	List       bool                     `json:"list,omitempty"`       // For the pins mode only, list the remote pins
 	Unpin      bool                     `json:"unpin,omitempty"`      // For the pins mode only, if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
+	Count      bool                     `json:"count,omitempty"`      // For the pins mode only, display only the count of records
 	Tag        string                   `json:"tag,omitempty"`        // Visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
@@ -78,6 +79,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Rewrite, "Rewrite: ", opts.Rewrite)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Unpin, "Unpin: ", opts.Unpin)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(len(opts.Tag) > 0, "Tag: ", opts.Tag)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
@@ -141,6 +143,8 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.List = true
 		case "unpin":
 			opts.Unpin = true
+		case "count":
+			opts.Count = true
 		case "tag":
 			opts.Tag = value[0]
 		case "sleep":

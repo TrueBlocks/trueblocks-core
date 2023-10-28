@@ -75,7 +75,7 @@ func migrate(currentVer version.Version) error {
 		if cfg.Settings.DefaultGateway != "" {
 			pinning.GatewayURL = cfg.Settings.DefaultGateway
 		} else {
-			pinning.GatewayURL = "https://ipfs.unchainedindex.io/ipfs"
+			pinning.GatewayURL = defaultIpfsGateway
 		}
 		cfg.Settings.DefaultGateway = ""
 		cfg.Pinning = pinning

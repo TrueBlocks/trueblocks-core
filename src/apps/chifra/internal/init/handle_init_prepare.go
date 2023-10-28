@@ -230,7 +230,7 @@ func isValidChunk(path string, bloomSize, indexSize int64, indexRequired bool) (
 	// Determine the status of the index (if it exists)
 	idx := OKAY
 	if !file.FileExists(indexPath) {
-		if indexRequired {
+		if indexRequired || strings.Contains(indexPath, "000000000-000000000") {
 			idx = FILE_MISSING
 		}
 	} else {

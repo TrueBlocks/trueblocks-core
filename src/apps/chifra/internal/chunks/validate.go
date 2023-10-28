@@ -68,6 +68,8 @@ func (opts *ChunksOptions) validateChunks() error {
 		return validate.Usage("The {0} option is only available in {1} mode.", "--list", "pins")
 	} else if opts.Unpin {
 		return validate.Usage("The {0} option is only available in {1} mode.", "--unpin", "pins")
+	} else if opts.Count {
+		return validate.Usage("The {0} option is only available in {1} mode.", "--count", "pins")
 	}
 
 	if !config.IsChainConfigured(chain) {

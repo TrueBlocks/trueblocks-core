@@ -39,34 +39,38 @@ func getPins(chain, status string, first, cnt int) (int, []Pin) {
 }
 
 // ListPins pins a file remotely to the pinning service
-func ListPins(chain, status string, pageSize int, dur time.Duration) ([]string, error) {
+func ListPins(chain, status string, countOnly bool, pageSize int, dur time.Duration) ([]string, error) {
 	count, _ := getPins(chain, status, 0, 1)
-
-	testing := false
-	if pageSize < 0 {
-		pageSize = -1 * pageSize
-		testing = true
-	}
-
-	bar := logger.NewBar(logger.BarOptions{
-		Enabled: true,
-		Total:   int64(count)/int64(pageSize) + 1,
-	})
-
 	ret := make([]string, 0, count)
-	for i := 0; i < count; i += pageSize {
-		count, pins := getPins(chain, status, i, pageSize)
-		bar.Prefix = fmt.Sprintf("Listing %d '%s' items in %d pages...", count, status, count/pageSize+1)
-		for _, pin := range pins {
-			ret = append(ret, fmt.Sprintf("%s\t%s\t%s\t%d\t%s", pin.IpfsPinHash, pin.DatePinned, pin.Metadata.Name, pin.Size, status))
+	if countOnly {
+		logger.Info("There are", count, "pins.")
+
+	} else {
+		testing := false
+		if pageSize < 0 {
+			pageSize = -1 * pageSize
+			testing = true
 		}
-		if testing || count < pageSize {
-			break
+
+		bar := logger.NewBar(logger.BarOptions{
+			Enabled: true,
+			Total:   int64(count)/int64(pageSize) + 1,
+		})
+
+		for i := 0; i < count; i += pageSize {
+			count, pins := getPins(chain, status, i, pageSize)
+			bar.Prefix = fmt.Sprintf("Listing %d '%s' items in %d pages...", count, status, count/pageSize+1)
+			for _, pin := range pins {
+				ret = append(ret, fmt.Sprintf("%s\t%s\t%s\t%d\t%s", pin.IpfsPinHash, pin.DatePinned, pin.Metadata.Name, pin.Size, status))
+			}
+			if testing || count < pageSize {
+				break
+			}
+			bar.Tick()
+			time.Sleep(dur)
 		}
-		bar.Tick()
-		time.Sleep(dur)
+		bar.Finish(true)
 	}
-	bar.Finish(true)
 	return ret, nil
 }
 

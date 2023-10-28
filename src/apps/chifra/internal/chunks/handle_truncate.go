@@ -33,7 +33,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 		return nil
 	}
 
-	if !opts.Globals.IsApiMode() && !usage.QueryUser(strings.Replace(truncateWarning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncated") {
+	if !opts.Globals.IsApiMode() &&
+		!usage.QueryUser(strings.Replace(truncateWarning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncated") {
 		return nil
 	}
 

@@ -2,6 +2,7 @@ package statePkg
 
 import (
 	"context"
+	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
@@ -46,7 +47,8 @@ func (opts *StateOptions) HandleCall() error {
 		nErrors := 0
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleResult) error {
 			if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-				errorChan <- err
+				wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
+				errorChan <- wrapped
 				cancel()
 			} else {
 				contractCall.BlockNumber = app.BlockNumber

@@ -7,10 +7,8 @@ import (
 	"fmt"
 	"os"
 	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -118,51 +116,6 @@ func (m *Manifest) LoadChunkMap() {
 	}
 }
 
-// TODO: Protect against overwriting files on disc
-
-func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
-	empty := Manifest{
-		Version:       config.SpecVersionText(),
-		Chain:         chain,
-		Specification: base.IpfsHash(config.GetUnchained().Specification),
-		Chunks:        []types.SimpleChunkRecord{},
-		Config:        config.GetScrape(chain),
-		ChunkMap:      make(map[string]*types.SimpleChunkRecord),
-	}
-
-	var man *Manifest
-	if !file.FileExists(config.PathToManifest(chain)) {
-		man = &empty
-	} else {
-		var err error
-		man, err = ReadManifest(chain, publisher, FromCache)
-		if err != nil {
-			if err != ErrManifestNotFound {
-				return err
-			}
-			man = &empty
-		}
-	}
-
-	// Make sure this chunk is only added once
-	_, ok := man.ChunkMap[chunk.Range]
-	if ok {
-		// logger.Info("Replacing chunk at", chunk.Range)
-		*man.ChunkMap[chunk.Range] = chunk
-	} else {
-		// Create somewhere to put it if it's not already there
-		// logger.Info("Adding chunk at", chunk.Range)
-		man.Chunks = append(man.Chunks, chunk)
-		man.ChunkMap[chunk.Range] = &chunk
-		sort.Slice(man.Chunks, func(i, j int) bool {
-			return man.Chunks[i].Range < man.Chunks[j].Range
-		})
-	}
-
-	logger.Info(colors.Magenta+"Updating manifest with", len(man.Chunks), "chunks", spaces, colors.Off)
-	return man.SaveManifest(chain, config.PathToManifest(chain))
-}
-
 // SaveManifest writes the manifest to disc in JSON at fileName
 func (m *Manifest) SaveManifest(chain, fileName string) error {
 	m.Config = config.GetScrape(chain)
@@ -183,6 +136,20 @@ func (m *Manifest) SaveManifest(chain, fileName string) error {
 		_ = file.Unlock(w)
 	}()
 
+	// remove dups, last in wins
+	seen := make(map[string]bool)
+	chunks := make([]types.SimpleChunkRecord, 0, len(m.Chunks))
+	for i := len(m.Chunks) - 1; i >= 0; i-- {
+		if !seen[m.Chunks[i].Range] {
+			seen[m.Chunks[i].Range] = true
+			chunks = append(chunks, m.Chunks[i])
+		}
+	}
+	sort.Slice(chunks, func(i, j int) bool {
+		return chunks[i].Range < chunks[j].Range
+	})
+	m.Chunks = chunks
+
 	if outputBytes, err := json.MarshalIndent(m, "", "  "); err != nil {
 		return err
 	} else {
@@ -191,5 +158,5 @@ func (m *Manifest) SaveManifest(chain, fileName string) error {
 	}
 }
 
-// TODO: There's got to be a better way - this should use StreamMany
-var spaces = strings.Repeat(" ", 40)
+// // TODO: There's got to be a better way - this should use StreamMany
+// var spaces = strings.Repeat(" ", 40)
