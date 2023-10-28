@@ -49,6 +49,9 @@ blocks,uncles,typescript
 blocks,uniq,api
 blocks,uniq,python
 blocks,uniq,typescript
+blocks,withdrawals,api
+blocks,withdrawals,python
+blocks,withdrawals,typescript
 chunks,belongs,api
 chunks,belongs,python
 chunks,belongs,typescript
@@ -318,6 +321,9 @@ slurp,sleep,typescript
 slurp,types,api
 slurp,types,python
 slurp,types,typescript
+slurp,withdrawals,api
+slurp,withdrawals,python
+slurp,withdrawals,typescript
 state,articulate,api
 state,articulate,python
 state,articulate,typescript

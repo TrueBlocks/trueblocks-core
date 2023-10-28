@@ -1,0 +1,15 @@
+chifra blocks  18441328 --withdrawals --count
+TEST[DATE|TIME] Blocks:  [18441328]
+TEST[DATE|TIME] Withdrawals:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "blockNumber": 18441328,
+      "transactionsCnt": 157,
+      "withdrawalsCnt": 16
+    }
+  ]
+}

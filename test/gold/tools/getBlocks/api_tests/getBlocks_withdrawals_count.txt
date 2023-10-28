@@ -1,0 +1,20 @@
+blocks?blocks=18441328&withdrawals&count
+{
+  "data": [
+    {
+      "blockNumber": 18441328,
+      "transactionsCnt": 157,
+      "withdrawalsCnt": 16
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

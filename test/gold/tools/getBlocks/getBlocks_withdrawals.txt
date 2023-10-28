@@ -1,0 +1,7 @@
+chifra blocks  18441328 --withdrawals --fmt csv
+TEST[DATE|TIME] Blocks:  [18441328]
+TEST[DATE|TIME] Withdrawals:  true
+TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Format:  csv
+blockNumber,timestamp,date,hash,parentHash,miner,difficulty,baseFeePerGas,gasLimit,gasUsed,transactionsCnt,withdrawalsCnt
+18441328,1698407087,2023-10-27 11:44:47 UTC,0x4dde83c5b3739a3f6f519906e408b7428ccba985a4dc62f9839953e100a4ce0b,0xa00b5720bb9ebd89a1b8793ee14aca0a90de039fd5f4aa2fc1dada95b4082546,0x95222290dd7278aa3ddd389cc1e1d165cc4bafe5,0,0,30000000,12492220,157,16

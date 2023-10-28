@@ -59,7 +59,8 @@ Notes:
   - The --first_record and --max_record options are zero-based (as are the block options).
   - The _block and _record filters are ignored when used with the --count option.
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
-  - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).`
+  - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
+  - The --withdrawals option is only available on certain chains. It is ignored otherwise.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra export
@@ -79,7 +80,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "for the accounting options only, export only statements")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, "traverse the transaction history and show each change in ETH balances")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Withdrawals, "withdrawals", "w", false, "export withdrawals for the given address")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Withdrawals, "withdrawals", "i", false, "export withdrawals for the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "force the transaction's traces into the cache")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")

@@ -1,0 +1,6 @@
+blocks?blocks=18441328&withdrawals&fmt%20Csv
+{
+  "errors": [
+    "Invalid key (fmt Csv) in blocks route."
+  ]
+}
