@@ -225,12 +225,12 @@ func VerifyMigrations() {
 	}
 
 	// We need at least this version...
-	requiredVersion := "v1.5.0-release"
-	if !config.IsAtLeastVersion(requiredVersion) {
-		msg := strings.Replace(backVersion, "{0}", "{"+requiredVersion+"}", -1)
-		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-		msg = strings.Replace(msg, "{", colors.Green, -1)
-		msg = strings.Replace(msg, "}", colors.Off, -1)
-		logger.Fatal(msg)
-	}
+	// requiredVersion := "v1.5.0-release"
+	// if !config.IsAtLeastVersion(requiredVersion) {
+	// 	msg := strings.Replace(backVersion, "{0}", "{"+requiredVersion+"}", -1)
+	// 	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
+	// 	msg = strings.Replace(msg, "{", colors.Green, -1)
+	// 	msg = strings.Replace(msg, "}", colors.Off, -1)
+	// 	logger.Fatal(msg)
+	// }
 }
