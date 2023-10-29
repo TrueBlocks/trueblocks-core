@@ -1,6 +1,6 @@
 chifra blocks  1590000 4000001-4000002 1001001-1001100 1234567
 TEST[DATE|TIME] Blocks:  [1590000 4000001-4000002 1001001-1001100 1234567]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 Error: Specify only a single block range at a time.
 Usage:
@@ -27,6 +27,7 @@ Flags:
       --cache_traces      force a write of the block's traces to the cache (slower) (hidden)
   -L, --list uint         summary list of blocks running backwards from latest block minus num (hidden)
   -C, --list_count uint   the number of blocks to report for --list option (hidden)
+  -H, --ether             specify value in ether
   -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache

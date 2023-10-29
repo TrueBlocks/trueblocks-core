@@ -17,6 +17,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -37,6 +38,8 @@ type SimpleWithdrawal struct {
 	ValidatorIndex uint64         `json:"validatorIndex"`
 	raw            *RawWithdrawal `json:"-"`
 	// EXISTING_CODE
+	BlockNumber      base.Blknum `json:"blockNumber"`
+	TransactionIndex base.Txnum  `json:"transactionIndex"`
 	// EXISTING_CODE
 }
 
@@ -53,9 +56,10 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 	var order = []string{}
 
 	// EXISTING_CODE
+	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"address":        s.Address,
-		"amount":         s.Amount,
+		"amount":         utils.FormattedValue(s.Amount, asEther, 18),
 		"index":          s.Index,
 		"validatorIndex": s.ValidatorIndex,
 	}

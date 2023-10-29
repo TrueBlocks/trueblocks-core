@@ -2291,17 +2291,10 @@ paths:
                 - "1155"
                 - miner
                 - uncles
+                - withdrawals
                 - all
         - name: appearances
           description: show only the blocknumber.tx_id appearances of the exported transactions
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: withdrawals
-          description: show only staking withdrawals
           required: false
           style: form
           in: query

@@ -49,7 +49,7 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option is currenlty disabled.", "--load")
 	}
 
-	if opts.TooManyOptions() {
+	if opts.tooMany() {
 		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.")
 	}
 
@@ -210,7 +210,7 @@ func (opts *ExportOptions) validateExport() error {
 	// return err
 }
 
-func (opts *ExportOptions) TooManyOptions() bool {
+func (opts *ExportOptions) tooMany() bool {
 	cnt := 0
 	if opts.Appearances {
 		cnt++
@@ -228,6 +228,9 @@ func (opts *ExportOptions) TooManyOptions() bool {
 		cnt++
 	}
 	if opts.Accounting {
+		cnt++
+	}
+	if opts.Withdrawals {
 		cnt++
 	}
 	return cnt > 1

@@ -105,6 +105,7 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		"value":       s.Value.String(),
 	}
 
+	// #WITHDRAWALS
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
 		model["from"] = s.From.Hex()
 		s.Input = ""
@@ -154,6 +155,7 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 	if s.BlockHash != base.HexToHash("0xdeadbeef") && !s.BlockHash.IsZero() {
 		model["blockHash"] = s.BlockHash
 	}
+	// #WITHDRAWALS
 	if s.TransactionIndex != EsInternalTx {
 		model["transactionIndex"] = s.TransactionIndex
 	}

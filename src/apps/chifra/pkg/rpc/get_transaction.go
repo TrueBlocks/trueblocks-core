@@ -46,6 +46,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 	return
 }
 
+// #WITHDRAWALS
 func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
@@ -75,11 +76,18 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 			return nil, err
 		}
 	} else if txid == types.BlockReward || txid == types.MisconfigReward || txid == types.ExternalReward {
+		// #WITHDRAWALS
 		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.BlockReward, appearance); err != nil {
 			return nil, err
 		}
 	} else if txid == types.UncleReward {
+		// #WITHDRAWALS
 		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.UncleReward, appearance); err != nil {
+			return nil, err
+		}
+	} else if txid == types.Withdrawal {
+		// #WITHDRAWALS
+		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.Withdrawal, appearance); err != nil {
 			return nil, err
 		}
 	}
@@ -243,6 +251,11 @@ func (conn *Connection) GetTransactionPrefundByApp(appearance *types.RawAppearan
 // TODO: This is not cross-chain correct
 
 func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
+	if rt == types.Withdrawal {
+		// #WITHDRAWALS
+		return nil, errors.New("withdrawals not yet supported")
+	}
+
 	if block, err := conn.GetBlockBodyByNumber(uint64(appearance.BlockNumber)); err != nil {
 		return nil, err
 	} else {
@@ -259,6 +272,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, appearan
 			blockReward = conn.getBlockReward(bn)
 			switch rt {
 			case types.BlockReward:
+				// #WITHDRAWALS - above
 				if block.Miner.Hex() == appearance.Address {
 					sender = base.BlockRewardSender
 					nUncles := len(uncles)
@@ -275,6 +289,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, appearan
 					blockReward = big.NewInt(0)
 				}
 			case types.UncleReward:
+				// #WITHDRAWALS - above
 				for _, uncle := range uncles {
 					if uncle.Miner.Hex() == appearance.Address {
 						sender = base.UncleRewardSender

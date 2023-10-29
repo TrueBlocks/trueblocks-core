@@ -40,8 +40,8 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 		visitAppearance := func(app *types.SimpleAppearance) error {
 			raw := types.RawAppearance{
 				Address:          app.Address.Hex(),
-				BlockNumber:      uint32(app.BlockNumber),
-				TransactionIndex: uint32(app.TransactionIndex),
+				BlockNumber:      app.BlockNumber,
+				TransactionIndex: app.TransactionIndex,
 			}
 			if tx, err := opts.Conn.GetTransactionByAppearance(&raw, false); err != nil {
 				errorChan <- err

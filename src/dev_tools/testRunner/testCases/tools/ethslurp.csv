@@ -16,6 +16,7 @@ on      ,both ,slow  ,slurp ,tools/ethslurp ,type_nft            ,y    ,addrs = 
 on      ,both ,slow  ,slurp ,tools/ethslurp ,type_1155           ,y    ,addrs = 0x83f564d180b58ad9a02a449105568189ee7de8cb & types = 1155 & blocks = 13103657-13255822 & fmt = json
 on      ,both ,slow  ,slurp ,tools/ethslurp ,type_miner          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = miner & blocks = 0-1000 & fmt = json
 on      ,both ,medu  ,slurp ,tools/ethslurp ,type_uncle          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = uncles & blocks = 1-1000 & fmt = json
+on      ,both ,slow  ,slurp ,tools/ethslurp ,type_withdrawal     ,y    ,addrs = 0xdefae2ee3146e258a4383c15bb90239e85ba3cad & types = withdrawals & blocks = 17034900-17034910 & fmt = json
 slow    ,both ,fast  ,slurp ,tools/ethslurp ,type_all            ,y    ,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = all & blocks = 0-3793420 & fmt = json
 
 on      ,both ,slow  ,slurp ,tools/ethslurp ,type_1155_csv       ,n    ,addrs = 0x83f564d180b58ad9a02a449105568189ee7de8cb & types = 1155 & blocks = 13103657-13255822 & fmt = csv

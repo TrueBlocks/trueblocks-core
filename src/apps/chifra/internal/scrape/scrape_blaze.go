@@ -117,6 +117,7 @@ func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, a
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
 		} else if err = uniq.UniqFromWithdrawals(bm.chain, sData.withdrawals, sData.bn, addrMap); err != nil {
+			// #WITHDRAWALS
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
 		} else {

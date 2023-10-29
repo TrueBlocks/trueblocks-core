@@ -108,10 +108,12 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 	}
 
 	s.IsError = rawTx.TxReceiptStatus == "0"
+	// #WITHDRAWALS
 	s.HasToken = requestType == "nfts" || requestType == "token" || requestType == "1155"
 	s.Value.SetString(rawTx.Value, 0)
 	s.ContractAddress = base.HexToAddress(rawTx.ContractAddress)
 
+	// #WITHDRAWALS
 	if requestType == "int" {
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't want to make another RPC call
 		// We tried (see commented code), but EtherScan balks with a weird message
@@ -137,7 +139,16 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 		s.From = base.UncleRewardSender
 		s.Value.SetString("3750000000000000000", 0)
 		s.To = base.HexToAddress(addr)
+	} else if requestType == "withdrawals" {
+		s.BlockHash = base.HexToHash("0xdeadbeef")
+		s.TransactionIndex = types.Withdrawal
+		s.From = base.WithdrawalSender
+		s.Value.SetString("3750000000000000000", 0)
+		s.To = base.HexToAddress(addr)
 	}
+	// #WITHDRAWALS
+	// jrush@desktop:~/D/t/build|feature/withdrawals⚡*?➤ curl "https://api.etherscan.io/api?module=account&action=txsBeaconWithdrawal&address=0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f&startblock=0&endblock=99999999&page=1&offset=100&sort=asc&apikey=68E1BQYW85ETVNHKWV27B8N5HYICEHEPH1" | jq
+
 	s.SetRaw(rawTx)
 	return s, nil
 }
@@ -158,14 +169,16 @@ func (conn *Connection) responseToTransactions(addr, requestType string, rawTxs 
 
 func getEtherscanUrl(value string, requestType string, paginator *Paginator) (string, error) {
 	var actions = map[string]string{
-		"ext":    "txlist",
-		"int":    "txlistinternal",
-		"token":  "tokentx",
-		"nfts":   "tokennfttx",
-		"1155":   "token1155tx",
-		"miner":  "getminedblocks&blocktype=blocks",
-		"uncles": "getminedblocks&blocktype=uncles",
-		"byHash": "eth_getTransactionByHash",
+		"ext":         "txlist",
+		"int":         "txlistinternal",
+		"token":       "tokentx",
+		"nfts":        "tokennfttx",
+		"1155":        "token1155tx",
+		"miner":       "getminedblocks&blocktype=blocks",
+		"uncles":      "getminedblocks&blocktype=uncles",
+		"byHash":      "eth_getTransactionByHash",
+		"withdrawals": "txsBeaconWithdrawal",
+		// #WITHDRAWALS
 	}
 
 	if actions[requestType] == "" {

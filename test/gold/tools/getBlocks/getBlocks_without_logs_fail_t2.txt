@@ -1,7 +1,7 @@
 chifra blocks  4012000-4012001 --topic 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 Error: The topic option (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a) must be 32 bytes long.
 Usage:
@@ -28,6 +28,7 @@ Flags:
       --cache_traces      force a write of the block's traces to the cache (slower) (hidden)
   -L, --list uint         summary list of blocks running backwards from latest block minus num (hidden)
   -C, --list_count uint   the number of blocks to report for --list option (hidden)
+  -H, --ether             specify value in ether
   -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache

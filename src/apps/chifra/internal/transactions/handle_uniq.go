@@ -42,6 +42,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				if trans, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
 					errorChan <- err
 				} else {
+					// #WITHDRAWALS
 					if err = uniq.GetUniqAddressesInTransaction(chain, procFunc, opts.Flow, trans, ts, addrMap, opts.Conn); err != nil {
 						errorChan <- err
 					}

@@ -1,6 +1,6 @@
 chifra blocks  stateclear
 TEST[DATE|TIME] Blocks:  [stateclear]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

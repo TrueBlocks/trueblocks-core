@@ -46,7 +46,8 @@ func (opts *BlocksOptions) HandleList() error {
 	}
 
 	extra := map[string]interface{}{
-		"list": true,
+		"list":  true,
+		"ether": opts.Globals.Ether,
 	}
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

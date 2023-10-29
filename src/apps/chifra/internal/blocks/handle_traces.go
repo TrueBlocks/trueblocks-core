@@ -53,6 +53,7 @@ func (opts *BlocksOptions) HandleTraces() error {
 	extra := map[string]interface{}{
 		"uncles":     opts.Uncles,
 		"logs":       opts.Logs,
+		"ether":      opts.Globals.Ether,
 		"traces":     opts.Traces,
 		"addresses":  opts.Uniq,
 		"articulate": opts.Articulate,

@@ -193,6 +193,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.
 			bn := utils.MustParseUint(strings.TrimLeft(parts[1], "0"))
 			txid := utils.MustParseUint(strings.TrimLeft(parts[2], "0"))
 			// See #3252
+			// #WITHDRAWALS
 			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
 				continue
 			}
