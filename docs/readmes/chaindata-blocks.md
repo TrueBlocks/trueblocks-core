@@ -52,6 +52,7 @@ Notes:
   - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
   - For the --logs option, large block ranges may crash the node, use --big_range to specify a larger range.
   - The --decache option removes the block(s), all transactions in those block(s), and all traces in those transactions from the cache.
+  - The --withdrawals option is only available on certain chains. It is ignored otherwise.
 ```
 
 Data models produced by this tool:
