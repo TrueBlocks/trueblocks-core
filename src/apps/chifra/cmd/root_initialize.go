@@ -76,16 +76,12 @@ const noChains string = `
 
 `
 
-const backVersion string = `
-
-	An outdated version of a configration file was found. Please carefully follow 
-	migration {0} before proceeding.
-
-	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
-
-	[{VERSION}]
-
-`
+// const backVersion string = `
+// 	An outdated version of a configration file was found. Please carefully follow
+// 	migration {0} before proceeding.
+// 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
+// 	[{VERSION}]
+// `
 
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
