@@ -172,7 +172,6 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)
 	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 	defaultTransactionsOptions.Globals.Caps = capabilities
 }

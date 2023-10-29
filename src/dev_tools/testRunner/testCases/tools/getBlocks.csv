@@ -122,7 +122,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,cache_traces          ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,decache_traces        ,y    ,blocks = 12 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
 on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed          ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
 on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1     ,y    ,blocks = 3000000 & ether
 on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_2     ,y    ,blocks = 3000000 & wei

@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Balances:  true
 TEST[DATE|TIME] FirstBlock:  13000000
 TEST[DATE|TIME] LastBlock:  13025000
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
 blockNumber	date	holder	balance	diff	units
 13007494	2021-08-12 01:57:20 UTC	0xf503017d7baf7fbc0fff7492b751025c6a78179b	38.244236609265142365	-0.00199415	38244236609265142365

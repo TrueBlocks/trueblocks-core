@@ -2,7 +2,7 @@ chifra export  0x08166f02313feae18bb044e7877c808b55b5bf58 --statements --last_bl
 TEST[DATE|TIME] Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  4000000
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 Error: The --statements option is only available with the --accounting option.
 Usage:

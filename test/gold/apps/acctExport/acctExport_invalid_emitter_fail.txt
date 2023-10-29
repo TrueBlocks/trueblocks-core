@@ -2,7 +2,7 @@ chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --logs --emitter 0x7d6
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0x7d655c57f71464b6f83811c55d84009cd9f5221]
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
 Error: Invalid emitter: 0x7d655c57f71464b6f83811c55d84009cd9f5221
 Usage:

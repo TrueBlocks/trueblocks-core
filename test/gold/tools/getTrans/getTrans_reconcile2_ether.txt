@@ -2,7 +2,7 @@ chifra transactions  0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c5
 TEST[DATE|TIME] Transactions:  [0x3f095a4b4e1b85e148b8b97aa91841f28280692b6045de8e690db38c59ecc603]
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Ether:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================

@@ -36,7 +36,7 @@ on      ,both ,fast  ,slurp ,tools/ethslurp ,decache_one         ,y    ,addrs = 
 shit    ,both ,fast  ,slurp ,tools/ethslurp ,raw                 ,y    ,addrs = 0x839395e20bbb182fa440d08f850e6c7a8f6f0780 & per_page = 1999 & types = int & cache & raw
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
 on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_allowed        ,y    ,addrs=trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
 on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_1   ,y    ,addrs=trueblocks.eth & ether
 on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_2   ,y    ,addrs=trueblocks.eth & wei
