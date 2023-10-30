@@ -14,7 +14,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,blooms                ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,range                 ,y    ,blocks = 4000001-4000003
 on      ,both ,fast  ,blocks ,tools/getBlocks ,special_1             ,y    ,blocks = stateclear
 on      ,both ,fast  ,blocks ,tools/getBlocks ,special_2             ,y    ,blocks = daofork
-on      ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range       ,y    ,blocks = 1590000 4000001-4000002 1001001 1234567
+on      ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range       ,y    ,blocks = 1590000 4000001-4000002 1001001 1234567 & ether
 on      ,both ,fast  ,blocks ,tools/getBlocks ,combo_two_range       ,y    ,blocks = 1590000 4000001-4000002 1001001-1001100 1234567
 on      ,both ,medi  ,blocks ,tools/getBlocks ,hashes_1              ,y    ,blocks = 4001001 & hashes
 slow    ,both ,medi  ,blocks ,tools/getBlocks ,address_uniqTx1       ,n    ,blocks = 3982128 & uniq
