@@ -1,6 +1,6 @@
 chifra logs  1718400-1718420 transactions 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 TEST[DATE|TIME] Transactions:  [1718400-1718420 transactions 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
-TEST[DATE|TIME] Caps:  cache,decache,raw,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
 Error: The given value '1718400-1718420' is not a valid identifier.
 Usage:
@@ -11,7 +11,6 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
-  -H, --ether        specify value in ether
   -w, --raw          report JSON data from the source with minimal processing
   -o, --cache        force the results of the query into the cache
   -D, --decache      removes related items from the cache
