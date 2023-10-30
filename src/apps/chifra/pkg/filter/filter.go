@@ -22,6 +22,7 @@ type AppearanceFilter struct {
 	nExported   uint64
 	currentBn   uint32
 	currentTs   int64
+	BlocksOnly  bool
 }
 
 func NewFilter(reversed bool, exportRange base.BlockRange, recordRange base.RecordRange) *AppearanceFilter {

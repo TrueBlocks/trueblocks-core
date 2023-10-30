@@ -21,6 +21,7 @@ type mappedType interface {
 		types.SimpleBlock[string] |
 		types.SimpleBlock[types.SimpleTransaction] |
 		types.SimpleAppearance |
+		types.SimpleWithdrawal |
 		types.SimpleResult
 }
 

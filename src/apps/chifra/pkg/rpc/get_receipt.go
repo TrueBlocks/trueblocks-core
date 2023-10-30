@@ -74,19 +74,24 @@ func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.Ra
 }
 
 // GetReceiptsByNumber returns all receipts in a blocks along with their logs
-func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.SimpleReceipt, error) {
+func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.SimpleReceipt, map[base.Txnum]*types.SimpleReceipt, error) {
 	if conn.StoreReadable() {
 		receiptGroup := &types.SimpleReceiptGroup{
 			BlockNumber:      bn,
 			TransactionIndex: utils.NOPOS,
 		}
 		if err := conn.Store.Read(receiptGroup, nil); err == nil {
-			return receiptGroup.Receipts, nil
+			receiptMap := make(map[base.Txnum]*types.SimpleReceipt, len(receiptGroup.Receipts))
+			for index := 0; index < len(receiptGroup.Receipts); index++ {
+				pReceipt := &receiptGroup.Receipts[index]
+				receiptMap[pReceipt.TransactionIndex] = pReceipt
+			}
+			return receiptGroup.Receipts, receiptMap, nil
 		}
 	}
 
 	if receipts, err := conn.getReceiptsSimple(bn); err != nil {
-		return receipts, err
+		return receipts, nil, err
 	} else {
 		if conn.StoreWritable() && conn.EnabledMap["receipts"] && base.IsFinal(conn.LatestBlockTimestamp, ts) {
 			receiptGroup := &types.SimpleReceiptGroup{
@@ -99,7 +104,12 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 			}
 		}
 
-		return receipts, err
+		receiptMap := make(map[base.Txnum]*types.SimpleReceipt, len(receipts))
+		for index := 0; index < len(receipts); index++ {
+			pReceipt := &receipts[index]
+			receiptMap[pReceipt.TransactionIndex] = pReceipt
+		}
+		return receipts, nil, err
 	}
 }
 
