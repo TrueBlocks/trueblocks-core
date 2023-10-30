@@ -4,5 +4,5 @@ TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] FirstRecord:  4
 TEST[DATE|TIME] FirstBlock:  56
 TEST[DATE|TIME] LastBlock:  235
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt

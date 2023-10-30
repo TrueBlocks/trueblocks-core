@@ -83,7 +83,6 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"ether":      opts.Globals.Ether,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

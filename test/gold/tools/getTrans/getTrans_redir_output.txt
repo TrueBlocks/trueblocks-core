@@ -2,7 +2,7 @@ chifra transactions  3657480.12 --verbose --fmt csv --output output_test_file
 TEST[DATE|TIME] Transactions:  [3657480.12]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  csv
 ----
 Results in ./output_test_file

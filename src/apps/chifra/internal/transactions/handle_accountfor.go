@@ -53,8 +53,5 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		}
 	}
 
-	extra := map[string]interface{}{
-		"ether": opts.Globals.Ether,
-	}
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

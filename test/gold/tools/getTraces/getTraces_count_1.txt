@@ -1,7 +1,7 @@
 chifra traces  1001001.0 1001001.0 2462000.* 14000201.0 --fmt csv --count
 TEST[DATE|TIME] Transactions:  [1001001.0 2462000.* 14000201.0]
 TEST[DATE|TIME] Count:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  csv
 blockNumber,transactionIndex,transactionHash,timestamp,tracesCnt
 1001001,0,0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08,1455421883,1

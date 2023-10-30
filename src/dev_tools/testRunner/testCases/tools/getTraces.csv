@@ -26,7 +26,7 @@ on      ,both ,fast  ,traces ,tools/getTraces ,bad_hash_msg        ,n    ,transa
 on      ,both ,fast  ,traces ,tools/getTraces ,bad_blkhash_msg     ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1
 on      ,both ,medi  ,traces ,tools/getTraces ,prev_bug2_1         ,n    ,transactions = 4279119.46 & fmt = txt
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_json            ,y    ,transactions = 2222222.0 2332332.0 & fmt = json
-on      ,both ,fast  ,traces ,tools/getTraces ,star                ,y    ,transactions = 2222221.* & fmt = json
+on      ,both ,fast  ,traces ,tools/getTraces ,star                ,y    ,transactions = 2222221.* & fmt = json & ether
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_default         ,y    ,transactions = 2222222.0 2332332.0
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_txt             ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_csv             ,n    ,transactions = 2222222.0 2332332.0 & fmt = csv
@@ -94,7 +94,6 @@ on      ,both ,fast  ,traces ,tools/getTraces ,cache_one           ,y    ,transa
 on      ,both ,fast  ,traces ,tools/getTraces ,decache_one         ,y    ,transactions = 46147.0 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on      ,both ,fast  ,traces ,tools/getTraces ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
-on      ,both ,fast  ,traces ,tools/getTraces ,caps_disallowed_1   ,y    ,transactions = 12.0 & ether
-on      ,both ,fast  ,traces ,tools/getTraces ,caps_disallowed_2   ,y    ,transactions = 12.0 & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+on      ,both ,fast  ,traces ,tools/getTraces ,caps_allowed        ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & fail_on_purpose
+on      ,both ,fast  ,traces ,tools/getTraces ,caps_disallowed_1   ,y    ,transactions = 12.0 & wei

@@ -87,6 +87,7 @@ Flags:
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -P, --per_page uint   the number of records to request on each page (default 5000)
   -s, --sleep float     seconds to sleep between requests (default 0.25)
+  -H, --ether           specify value in ether
   -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
   -D, --decache         removes related items from the cache

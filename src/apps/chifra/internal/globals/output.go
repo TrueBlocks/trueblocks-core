@@ -9,6 +9,10 @@ import (
 )
 
 func (opts *GlobalOptions) OutputOpts() output.OutputOptions {
+	extra := map[string]interface{}{
+		"ether": opts.Ether,
+	}
+
 	return output.OutputOptions{
 		Writer:     opts.Writer,
 		Chain:      opts.Chain,
@@ -20,10 +24,15 @@ func (opts *GlobalOptions) OutputOpts() output.OutputOptions {
 		OutputFn:   opts.OutputFn,
 		Append:     opts.Append,
 		JsonIndent: "  ",
+		Extra:      extra,
 	}
 }
 
 func (opts *GlobalOptions) OutputOptsWithExtra(extra map[string]interface{}) output.OutputOptions {
+	if extra != nil {
+		extra["ether"] = opts.Ether
+	}
+
 	return output.OutputOptions{
 		Writer:     opts.Writer,
 		Chain:      opts.Chain,

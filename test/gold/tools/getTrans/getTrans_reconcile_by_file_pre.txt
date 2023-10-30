@@ -2,7 +2,7 @@ chifra transactions  0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d4
 TEST[DATE|TIME] Transactions:  [0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33]
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  output_test_file2
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 ----

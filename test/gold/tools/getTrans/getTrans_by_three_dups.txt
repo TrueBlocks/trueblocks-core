@@ -1,6 +1,6 @@
 chifra transactions  0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887 4000002.5 0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372.5 --fmt json
 TEST[DATE|TIME] Transactions:  [0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887 4000002.5 0xe821b0f2752e49d421127f74b14d9a65dd8d5f48ad240b4b592043803f644372.5]
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

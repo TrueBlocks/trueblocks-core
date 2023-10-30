@@ -1,6 +1,6 @@
-receipts?transactions=12.0&ether
+receipts?transactions=12.0&wei
 {
   "errors": [
-    "Invalid key (ether) in receipts route."
+    "Invalid key (wei) in receipts route."
   ]
 }

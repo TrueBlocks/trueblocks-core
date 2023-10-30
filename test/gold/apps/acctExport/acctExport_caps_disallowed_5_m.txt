@@ -1,30 +1,33 @@
-chifra list  trueblocks.eth --decache
+chifra monitors  trueblocks.eth --decache
 Error: 
   unknown flag: --decache
 
 Usage:
-  chifra list [flags] <address> [address...]
+  chifra monitors [flags] <address> [address...]
 
 Arguments:
-  addrs - one or more addresses (0x...) to list (required)
+  addrs - one or more addresses (0x...) to process
 
 Flags:
-  -U, --count               display only the count of records for each monitor
-  -z, --no_zero             for the --count option only, suppress the display of zero appearance accounts
-  -b, --bounds              report first and last block this address appears
-  -u, --unripe              list transactions labeled upripe (i.e. less than 28 blocks old)
-  -s, --silent              freshen the monitor only (no reporting)
-  -c, --first_record uint   the first record to process
-  -e, --max_records uint    the maximum number of records to process (default 250)
-  -E, --reversed            produce results in reverse chronological order
-  -P, --publisher string    for some query options, the publisher of the index (hidden) (default "trueblocks.eth")
-  -F, --first_block uint    first block to export (inclusive, ignored when freshening)
-  -L, --last_block uint     last block to export (inclusive, ignored when freshening)
-  -x, --fmt string          export format, one of [none|json*|txt|csv]
-  -v, --verbose             enable verbose output
-  -h, --help                display this help screen
+      --delete             delete a monitor, but do not remove it
+      --undelete           undelete a previously deleted monitor
+      --remove             remove a previously deleted monitor
+  -C, --clean              clean (i.e. remove duplicate appearances) from monitors
+  -l, --list               list monitors in the cache (--verbose for more detail)
+  -w, --watch              continually scan for new blocks and extract data as per the command file
+  -a, --watchlist string   available with --watch option only, a file containing the addresses to watch
+  -c, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
+  -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
+  -u, --run_count uint     available with --watch option only, run the monitor this many times, then quit (hidden)
+  -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose output
+  -h, --help               display this help screen
 
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
-  - No other options are permitted when --silent is selected.
+  - If no address is presented to the --clean command, all existing monitors will be cleaned.
+  - The --watch option requires two additional parameters to be specified: --watchlist and --commands.
+  - Addresses provided on the command line are ignored in --watch mode.
+  - Providing the value existing to the --watchlist monitors all existing monitor files (see --list).
 

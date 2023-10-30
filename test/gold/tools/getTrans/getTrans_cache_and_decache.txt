@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [46147.0]
 TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Decache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  txt
 Error: The --cache and --decache options are mutually exclusive.
 Usage:

@@ -5,7 +5,7 @@ TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] FirstRecord:  250
 TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] OutputFn:  statements_wei_2_2_out.file
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] 007053572-00054:    7053546    7053572     7243835
