@@ -109,7 +109,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 			pReceipt := &receipts[index]
 			receiptMap[pReceipt.TransactionIndex] = pReceipt
 		}
-		return receipts, nil, err
+		return receipts, receiptMap, err
 	}
 }
 
