@@ -2972,6 +2972,10 @@ components:
           type: string
           format: wei
           description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
         index:
           type: number
           format: uint64

@@ -3,11 +3,12 @@
 /*
  * This file was generated with makeClass --sdk. Do not edit it.
  */
-import { address, uint64, wei } from '.';
+import { address, blknum, uint64, wei } from '.';
 
 export type Withdrawal = {
   address: address
   amount: wei
+  blockNumber: blknum
   index: uint64
   validatorIndex: uint64
 }

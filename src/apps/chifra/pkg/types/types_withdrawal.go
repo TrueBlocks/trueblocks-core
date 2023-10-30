@@ -25,6 +25,7 @@ import (
 type RawWithdrawal struct {
 	Address        string `json:"address"`
 	Amount         string `json:"amount"`
+	BlockNumber    string `json:"blockNumber"`
 	Index          string `json:"index"`
 	ValidatorIndex string `json:"validatorIndex"`
 	// EXISTING_CODE
@@ -34,6 +35,7 @@ type RawWithdrawal struct {
 type SimpleWithdrawal struct {
 	Address        base.Address   `json:"address"`
 	Amount         base.Wei       `json:"amount"`
+	BlockNumber    base.Blknum    `json:"blockNumber"`
 	Index          uint64         `json:"index"`
 	ValidatorIndex uint64         `json:"validatorIndex"`
 	raw            *RawWithdrawal `json:"-"`
@@ -124,6 +126,11 @@ func (s *SimpleWithdrawal) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// BlockNumber
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
 	// Index
 	if err = cache.WriteValue(writer, s.Index); err != nil {
 		return err
@@ -145,6 +152,11 @@ func (s *SimpleWithdrawal) UnmarshalCache(version uint64, reader io.Reader) (err
 
 	// Amount
 	if err = cache.ReadValue(reader, &s.Amount, version); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
 		return err
 	}
 

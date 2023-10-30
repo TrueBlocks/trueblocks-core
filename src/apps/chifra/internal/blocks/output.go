@@ -61,6 +61,9 @@ func (opts *BlocksOptions) BlocksInternal() error {
 	} else if opts.Logs {
 		err = opts.HandleLogs()
 
+	} else if opts.Withdrawals {
+		err = opts.HandleWithdrawals()
+
 	} else if opts.Traces {
 		err = opts.HandleTraces()
 
