@@ -1,4 +1,4 @@
-transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765%204000000.5%200xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4&fmt=json
+transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765%204000000.5%200xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4&fmt=json&ether
 {
   "data": [
     {
@@ -35,7 +35,7 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
       "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
       "traces": [],
       "transactionIndex": 4,
-      "value": "998174500000000000"
+      "value": "0.9981745"
     },
     {
       "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
@@ -121,7 +121,7 @@ transactions?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a07
       "to": "0x11b1f00bccf07754e6f1996864531fa162145cde",
       "traces": [],
       "transactionIndex": 68,
-      "value": "202229176215950944"
+      "value": "0.202229176215950944"
     }
   ],
   "meta": {

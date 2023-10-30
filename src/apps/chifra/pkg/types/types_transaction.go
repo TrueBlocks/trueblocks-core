@@ -116,6 +116,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
+	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
@@ -126,7 +127,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		"date":             s.Date(),
 		"to":               to,
 		"transactionIndex": s.TransactionIndex,
-		"value":            s.Value.String(),
+		"value":            utils.FormattedValue(s.Value, asEther, 18),
 	}
 
 	order = []string{
@@ -183,7 +184,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
 		}
-		model["value"] = s.Value.String()
+		model["value"] = utils.FormattedValue(s.Value, asEther, 18)
 		model["gas"] = s.Gas
 
 		model["ether"] = utils.FormattedValue(s.Value, true, 18)
