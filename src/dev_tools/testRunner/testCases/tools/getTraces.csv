@@ -26,7 +26,7 @@ on      ,both ,fast  ,traces ,tools/getTraces ,bad_hash_msg        ,n    ,transa
 on      ,both ,fast  ,traces ,tools/getTraces ,bad_blkhash_msg     ,y    ,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1
 on      ,both ,medi  ,traces ,tools/getTraces ,prev_bug2_1         ,n    ,transactions = 4279119.46 & fmt = txt
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_json            ,y    ,transactions = 2222222.0 2332332.0 & fmt = json
-on      ,both ,fast  ,traces ,tools/getTraces ,star                ,y    ,transactions = 2222221.* & fmt = json
+on      ,both ,fast  ,traces ,tools/getTraces ,star                ,y    ,transactions = 2222221.* & fmt = json & ether
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_default         ,y    ,transactions = 2222222.0 2332332.0
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_txt             ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
 on      ,both ,fast  ,traces ,tools/getTraces ,fmt_csv             ,n    ,transactions = 2222222.0 2332332.0 & fmt = csv
