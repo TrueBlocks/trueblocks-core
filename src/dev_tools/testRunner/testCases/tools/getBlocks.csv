@@ -14,7 +14,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,blooms                ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,range                 ,y    ,blocks = 4000001-4000003
 on      ,both ,fast  ,blocks ,tools/getBlocks ,special_1             ,y    ,blocks = stateclear
 on      ,both ,fast  ,blocks ,tools/getBlocks ,special_2             ,y    ,blocks = daofork
-on      ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range       ,y    ,blocks = 1590000 4000001-4000002 1001001 1234567
+on      ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range       ,y    ,blocks = 1590000 4000001-4000002 1001001 1234567 & ether
 on      ,both ,fast  ,blocks ,tools/getBlocks ,combo_two_range       ,y    ,blocks = 1590000 4000001-4000002 1001001-1001100 1234567
 on      ,both ,medi  ,blocks ,tools/getBlocks ,hashes_1              ,y    ,blocks = 4001001 & hashes
 slow    ,both ,medi  ,blocks ,tools/getBlocks ,address_uniqTx1       ,n    ,blocks = 3982128 & uniq
@@ -122,7 +122,6 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,cache_traces          ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,decache_traces        ,y    ,blocks = 12 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed          ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1     ,y    ,blocks = 3000000 & ether
-on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_2     ,y    ,blocks = 3000000 & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed          ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & fail_on_purpose
+on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1     ,y    ,blocks = 3000000 & wei

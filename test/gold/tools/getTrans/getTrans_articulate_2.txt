@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [3648669.24]
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Verbose:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

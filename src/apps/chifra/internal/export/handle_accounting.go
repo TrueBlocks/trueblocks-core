@@ -112,7 +112,6 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"ether":      opts.Globals.Ether,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

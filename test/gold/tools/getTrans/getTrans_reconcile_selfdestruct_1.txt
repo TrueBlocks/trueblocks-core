@@ -2,7 +2,7 @@ chifra transactions  0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817f
 TEST[DATE|TIME] Transactions:  [0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] AccountFor:  0x42c8fcbc73d625f1d258a32915b6a573095de93d
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 2608034 is prior to deployment (3684349) of Maker. No fallback pricing method

@@ -6,7 +6,7 @@ TEST[DATE|TIME] FirstBlock:  10277780
 TEST[DATE|TIME] LastBlock:  10278000
 TEST[DATE|TIME] Enabled:  statements, traces, transactions
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
 INFO[DATE|TIME] 010277780-00088:   10277504   10277780    10277781
 TEST[DATE|TIME] Start of trial balance report

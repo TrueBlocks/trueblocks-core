@@ -2,7 +2,7 @@ chifra transactions  9004225.10 --logs --fmt json --emitter 0xbbbbca6a901c926f24
 TEST[DATE|TIME] Transactions:  [9004225.10]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0xbbbbca6a901c926f240b89eacb641d8aec7aeafd]
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

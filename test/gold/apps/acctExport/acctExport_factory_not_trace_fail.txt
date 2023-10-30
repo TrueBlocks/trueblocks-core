@@ -1,7 +1,7 @@
 chifra export  0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory
 TEST[DATE|TIME] Addrs:  [0x8b3b3b624c3c0397d3da8fd861512393d51dcbac]
 TEST[DATE|TIME] Factory:  true
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
 Error: The --factory option is only available with the --traces option.
 Usage:

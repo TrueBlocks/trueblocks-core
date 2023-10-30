@@ -1,6 +1,6 @@
-list?addrs=trueblocks.eth&decache
+monitors?addrs=trueblocks.eth&decache
 {
   "errors": [
-    "Invalid key (decache) in list route."
+    "Invalid key (decache) in monitors route."
   ]
 }

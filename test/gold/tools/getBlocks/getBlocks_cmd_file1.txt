@@ -6,7 +6,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1166008]
@@ -16,7 +16,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1289438]
@@ -26,7 +26,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1399675]
@@ -36,7 +36,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1909113]
@@ -47,7 +47,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [2017468]
@@ -57,7 +57,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [2127401]
@@ -68,7 +68,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [2263030]
@@ -78,7 +78,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [2268412]
@@ -87,7 +87,7 @@ TEST[DATE|TIME] Enabled:  blocks
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [2360712]
@@ -97,7 +97,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [2513942]
@@ -107,7 +107,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [2558337]
@@ -117,7 +117,7 @@ TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [2728501]
@@ -126,7 +126,7 @@ TEST[DATE|TIME] Enabled:  blocks
 TEST[DATE|TIME] File:  cmd_file1
 TEST[DATE|TIME] OutputFn:  cmd_file1_out.file
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 ----

@@ -1,7 +1,7 @@
 chifra transactions  10681057.170 10607241.278 --account_for 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 --fmt json
 TEST[DATE|TIME] Transactions:  [10681057.170 10607241.278]
 TEST[DATE|TIME] AccountFor:  0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Needs correction for eth

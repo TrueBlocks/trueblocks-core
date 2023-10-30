@@ -95,14 +95,14 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
+	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
-		"ether":       s.Ether,
 		"from":        s.From,
 		"timestamp":   s.Timestamp,
 		"date":        s.Date(),
 		"to":          s.To,
-		"value":       s.Value.String(),
+		"value":       utils.FormattedValue(s.Value, asEther, 18),
 	}
 
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
@@ -115,7 +115,6 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 			"from",
 			"to",
 			"value",
-			"ether",
 		}
 
 	} else {
@@ -133,7 +132,6 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 			"gasUsed",
 			"gasCost",
 			"value",
-			"ether",
 			"input",
 		}
 
@@ -150,7 +148,6 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 	if s.IsError {
 		model["isError"] = s.IsError
 	}
-	model["ether"] = utils.FormattedValue(s.Value, true, 18)
 	if s.BlockHash != base.HexToHash("0xdeadbeef") && !s.BlockHash.IsZero() {
 		model["blockHash"] = s.BlockHash
 	}

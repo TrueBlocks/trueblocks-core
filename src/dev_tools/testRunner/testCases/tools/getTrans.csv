@@ -12,7 +12,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,by_txhash                ,n 
 
 on      ,both ,medi  ,transactions ,tools/getTrans ,by_bnun_and_txid         ,n    ,transactions = 4000002.5 & traces & fmt = txt
 on      ,both ,medi  ,transactions ,tools/getTrans ,deprecate_trace_1        ,y    ,transactions = 4000002.5 & trace
-on      ,both ,medi  ,transactions ,tools/getTrans ,keys_combination         ,y    ,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000000.5 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & fmt = json
+on      ,both ,medi  ,transactions ,tools/getTrans ,keys_combination         ,y    ,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000000.5 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & fmt = json & ether
 on      ,both ,fast  ,transactions ,tools/getTrans ,should_be_error          ,y    ,transactions = 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,verbose_blk_idx1         ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,verbose_blk_idx2         ,y    ,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4 & fmt = json
@@ -27,7 +27,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,source_disabled          ,y 
 
 on      ,cmd  ,medi  ,transactions ,tools/getTrans ,core_dump_bug            ,y    ,@avt & transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_default              ,n    ,transactions = 2222222.0 2332332.0
-on      ,both ,fast  ,transactions ,tools/getTrans ,star                     ,y    ,transactions = 2222221.* & fmt = json
+on      ,both ,fast  ,transactions ,tools/getTrans ,star                     ,y    ,transactions = 2222221.* & fmt = json & ether
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_txt                  ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_csv                  ,n    ,transactions = 2222222.0 2332332.0 & fmt = csv
 on      ,both ,medi  ,transactions ,tools/getTrans ,fmt_api                  ,y    ,transactions = 2222222.0 2332332.0 & fmt = api
@@ -158,6 +158,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,cache_traces             ,n 
 on      ,both ,fast  ,transactions ,tools/getTrans ,decache_traces           ,y    ,transactions = 46147.0 & decache
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on      ,both ,fast  ,transactions ,tools/getTrans ,caps_allowed             ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+on      ,both ,fast  ,transactions ,tools/getTrans ,caps_allowed             ,y    ,transactions = 12.0 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & fail_on_purpose
 on      ,both ,fast  ,transactions ,tools/getTrans ,caps_disallowed_1        ,y    ,transactions = 12.0 & fail_on_purpose
+on      ,both ,fast  ,transactions ,tools/getTrans ,caps_disallowed_2        ,y    ,transactions = 12.0 & wei

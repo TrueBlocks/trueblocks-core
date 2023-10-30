@@ -2,7 +2,7 @@ chifra blocks  17900008 --logs --emitter giveth.eth
 TEST[DATE|TIME] Blocks:  [17900008]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0x4d9339dd97db55e3b9bcbe65de39ff9c04d1c2cd]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

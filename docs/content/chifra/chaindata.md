@@ -58,6 +58,7 @@ Flags:
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
   -U, --count             display the number of the lists of appearances for --addrs or --uniq
+  -H, --ether             specify value in ether
   -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
   -D, --decache           removes related items from the cache
@@ -273,6 +274,7 @@ Flags:
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -U, --count           show the number of traces for the transaction only (fast)
+  -H, --ether           specify value in ether
   -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
   -D, --decache         removes related items from the cache

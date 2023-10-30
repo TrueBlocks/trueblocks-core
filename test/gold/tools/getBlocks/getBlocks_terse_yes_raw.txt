@@ -2,7 +2,7 @@ chifra blocks  4001001 --hashes --raw
 TEST[DATE|TIME] Blocks:  [4001001]
 TEST[DATE|TIME] Hashes:  true
 TEST[DATE|TIME] ShowRaw:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
