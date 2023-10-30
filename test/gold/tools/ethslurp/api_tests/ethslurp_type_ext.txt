@@ -1,11 +1,10 @@
-slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-7000000&fmt=json
+slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-7000000&fmt=json&ether
 {
   "data": [
     {
       "blockHash": "0xecf4a4750d4b07ee2d3a69894b095c02b6f193704582c3791555186fa4334d33",
       "blockNumber": 3730547,
       "date": "2017-05-19 03:38:57 UTC",
-      "ether": "26911.71373498",
       "from": "0x731ad2bfae439955054e576692d456a4affe1328",
       "gas": 21001,
       "gasCost": 420000000000000,
@@ -15,13 +14,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1495165137,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "transactionIndex": 16,
-      "value": "26911713734980000000000"
+      "value": "26911.71373498"
     },
     {
       "blockHash": "0xb16325508885d09880efb6111b5e450f934e77155db250e47e4bc0bfb937b8cf",
       "blockNumber": 3730549,
       "date": "2017-05-19 03:39:36 UTC",
-      "ether": "157900.169159979996854272",
       "from": "0x9c6df936c884811b9a6b49f0dd0a62919a6581d4",
       "gas": 21001,
       "gasCost": 420000000000000,
@@ -31,13 +29,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1495165176,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "transactionIndex": 17,
-      "value": "157900169159979996854272"
+      "value": "157900.169159979996854272"
     },
     {
       "blockHash": "0xe89f481688f749769778b42a9a6ce36c38119ac195236067b14bd9f4ee4cdc22",
       "blockNumber": 3730615,
       "date": "2017-05-19 03:57:49 UTC",
-      "ether": "184811",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 500000,
       "gasCost": 8787156000000000,
@@ -48,13 +45,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1495166269,
       "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
       "transactionIndex": 2,
-      "value": "184811000000000000000000"
+      "value": "184811"
     },
     {
       "blockHash": "0x4df7282b34c517f77b2ca33dda9e19b008fdfa3a83513abc6cab7be3a2c2e91f",
       "blockNumber": 3730707,
       "date": "2017-05-19 04:23:36 UTC",
-      "ether": "0",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 200000,
       "gasCost": 1013313000000000,
@@ -71,7 +67,6 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "blockHash": "0x4e1df8783842411230b99f99f532fb5bf7722ed3982a155278d8cd9ecf4508b8",
       "blockNumber": 3790483,
       "date": "2017-05-30 03:00:06 UTC",
-      "ether": "0",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 200000,
       "gasCost": 1783278000000000,
@@ -88,7 +83,6 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "blockHash": "0xe718f525aa103166908d96282f665eb8db760118864fcc3532a1a9de4f834bb7",
       "blockNumber": 3793420,
       "date": "2017-05-30 15:49:05 UTC",
-      "ether": "184761",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 500000,
       "gasCost": 8787156000000000,
@@ -99,13 +93,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1496159345,
       "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
       "transactionIndex": 57,
-      "value": "184761000000000000000000"
+      "value": "184761"
     },
     {
       "blockHash": "0xa697ec9e97b0d424a48209d676d7bc4be05fbf6e8e987b6144f29a93e379c845",
       "blockNumber": 3793710,
       "date": "2017-05-30 16:59:07 UTC",
-      "ether": "0",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 200000,
       "gasCost": 1207626000000000,
@@ -122,7 +115,6 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "blockHash": "0x0836fbac338d703c4a34de8d4dd47e3b8e5a3b015a5b337e36a0b87322572658",
       "blockNumber": 3835659,
       "date": "2017-06-07 16:58:15 UTC",
-      "ether": "0",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 200000,
       "gasCost": 2038032000000000,
@@ -139,7 +131,6 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "blockHash": "0x81c098a8c1fc89ebf01a0d72c5f64ca8220ef4765096e7e3ac6ae36b8b24bb84",
       "blockNumber": 3835711,
       "date": "2017-06-07 17:12:05 UTC",
-      "ether": "184400",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 500000,
       "gasCost": 10042464000000000,
@@ -150,13 +141,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1496855525,
       "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
       "transactionIndex": 8,
-      "value": "184400000000000000000000"
+      "value": "184400"
     },
     {
       "blockHash": "0xfd7b0cca844f99c173ece9156cf34c2f61312b0f784495732e8feb71292e875b",
       "blockNumber": 3839751,
       "date": "2017-06-08 11:50:07 UTC",
-      "ether": "0",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 200000,
       "gasCost": 1158072000000000,
@@ -173,7 +163,6 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "blockHash": "0xe4f0debd362694ca2bb90e9e0c60afc9bfbf3192a5fdb485cf94f630fcda7165",
       "blockNumber": 3912453,
       "date": "2017-06-22 09:30:57 UTC",
-      "ether": "0",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 200000,
       "gasCost": 1783278000000000,
@@ -190,7 +179,6 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "blockHash": "0xa750dc321b824eefb5d53f0fdd0c1fc1f141ad5b3a61b6620399b0b5952a0d65",
       "blockNumber": 4028109,
       "date": "2017-07-16 01:15:43 UTC",
-      "ether": "10000",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 500000,
       "gasCost": 8787156000000000,
@@ -201,13 +189,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1500167743,
       "to": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
       "transactionIndex": 10,
-      "value": "10000000000000000000000"
+      "value": "10000"
     },
     {
       "blockHash": "0x03fc27f0b4b3dd0054a65a64001a361fe6e5304c28b6fa13ae3039db26ff08be",
       "blockNumber": 4031409,
       "date": "2017-07-16 18:45:56 UTC",
-      "ether": "0",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 200000,
       "gasCost": 1013313000000000,
@@ -224,7 +211,6 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "blockHash": "0x74ad9d6a97dc29b8549ab14e2884f6a73c9aac5f817a4c4085c2cd619f526e55",
       "blockNumber": 4373691,
       "date": "2017-10-16 23:12:09 UTC",
-      "ether": "6928",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -234,13 +220,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1508195529,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 4,
-      "value": "6928000000000000000000"
+      "value": "6928"
     },
     {
       "blockHash": "0xc41bdd8e26c0bc5bf5d0a42dff0376a3dd80f14150b74dfb3ec5a73f5882229a",
       "blockNumber": 4436584,
       "date": "2017-10-27 02:17:39 UTC",
-      "ether": "4027",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -250,13 +235,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1509070659,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 28,
-      "value": "4027000000000000000000"
+      "value": "4027"
     },
     {
       "blockHash": "0x1eb21a1bb4be1ab4e1c65818962647f34f4e5d1aec27ec1edd3bdbbe4b667bab",
       "blockNumber": 4483175,
       "date": "2017-11-03 15:08:14 UTC",
-      "ether": "8361",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -266,13 +250,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1509721694,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 49,
-      "value": "8361000000000000000000"
+      "value": "8361"
     },
     {
       "blockHash": "0xda49b6dfab1b72379103a2099f739f9d45c824efcc73fc5b72e43cead0f496d4",
       "blockNumber": 4505108,
       "date": "2017-11-07 03:40:20 UTC",
-      "ether": "300",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -282,13 +265,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1510026020,
       "to": "0x2586e4b30c581ee20af694495dbcf98daecde75e",
       "transactionIndex": 3,
-      "value": "300000000000000000000"
+      "value": "300"
     },
     {
       "blockHash": "0xe3229b673e377163d88769b9ca4481ccd88c61cef785b99b80aff2ed9d67f9a0",
       "blockNumber": 4545170,
       "date": "2017-11-13 13:33:35 UTC",
-      "ether": "5080",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -298,13 +280,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1510580015,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 9,
-      "value": "5080000000000000000000"
+      "value": "5080"
     },
     {
       "blockHash": "0xa6a9821655a6d2293040157eac4d3ae37af849775559af3df6bf2ae4ca7ec12b",
       "blockNumber": 4588830,
       "date": "2017-11-20 14:11:01 UTC",
-      "ether": "7822",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -314,13 +295,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1511187061,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 39,
-      "value": "7822000000000000000000"
+      "value": "7822"
     },
     {
       "blockHash": "0x3cf2b296a883085db99b50cce138b5e8dbaa804cdb3ee4f74055f31698742bc9",
       "blockNumber": 4621583,
       "date": "2017-11-25 21:05:27 UTC",
-      "ether": "11000",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -330,13 +310,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1511643927,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 23,
-      "value": "11000000000000000000000"
+      "value": "11000"
     },
     {
       "blockHash": "0x3a68211d732f2d18a7151205b46d6049cf3a493077abfb80f70c0d14cd1f45d6",
       "blockNumber": 4632834,
       "date": "2017-11-27 17:09:32 UTC",
-      "ether": "0.005",
       "from": "0xdfa30af35b6241a64b2e3c73a56b5cdad7a52b47",
       "gas": 31500,
       "gasCost": 420000000000000,
@@ -346,13 +325,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1511802572,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "transactionIndex": 98,
-      "value": "5000000000000000"
+      "value": "0.005"
     },
     {
       "blockHash": "0xe78966c248935c6bdd5744c37110cbe15c5248ed13b7676d6dc6cb560c2f8039",
       "blockNumber": 4677709,
       "date": "2017-12-05 03:56:33 UTC",
-      "ether": "2000",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -362,13 +340,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1512446193,
       "to": "0xeb31acbf35b4e48ae39c8c62bb5674cf9d7c4fbe",
       "transactionIndex": 174,
-      "value": "2000000000000000000000"
+      "value": "2000"
     },
     {
       "blockHash": "0x34212d3617c451680e91ddd35e84c42028cbc0adc5764725b82d04fd6aa8426b",
       "blockNumber": 4704641,
       "date": "2017-12-09 21:19:55 UTC",
-      "ether": "250",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -378,13 +355,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1512854395,
       "to": "0x2586e4b30c581ee20af694495dbcf98daecde75e",
       "transactionIndex": 93,
-      "value": "250000000000000000000"
+      "value": "250"
     },
     {
       "blockHash": "0xf82e6824e1bbeebcd628973cc7fd6b015299f06bb872b5d6e1fe4cbe9e65434d",
       "blockNumber": 4737922,
       "date": "2017-12-15 16:44:02 UTC",
-      "ether": "2032",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -394,13 +370,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1513356242,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 162,
-      "value": "2032000000000000000000"
+      "value": "2032"
     },
     {
       "blockHash": "0x8aa0ea152242f48eb28fc0f126f6a1749bfd48140769d9af1529ce617c1d0de7",
       "blockNumber": 4745822,
       "date": "2017-12-17 01:29:17 UTC",
-      "ether": "6435",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 22484,
       "gasCost": 472164000000000,
@@ -410,13 +385,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1513474157,
       "to": "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae",
       "transactionIndex": 57,
-      "value": "6435000000000000000000"
+      "value": "6435"
     },
     {
       "blockHash": "0xad361b37175a4048d3a433add061dcf2de464f9d821563fc47be275fea31799c",
       "blockNumber": 4755533,
       "date": "2017-12-18 17:34:34 UTC",
-      "ether": "2713",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -426,13 +400,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1513618474,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 309,
-      "value": "2713000000000000000000"
+      "value": "2713"
     },
     {
       "blockHash": "0xaceaec9812345997c38c62a0b9cdda29fca4af65aaa1f154d54987a09348c254",
       "blockNumber": 4760428,
       "date": "2017-12-19 14:31:52 UTC",
-      "ether": "3883",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -442,13 +415,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1513693912,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 200,
-      "value": "3883000000000000000000"
+      "value": "3883"
     },
     {
       "blockHash": "0x10e04d16f942d5a1e7d0f30b36d2137e87391fa601dcdd92a45059160c70cf08",
       "blockNumber": 4844082,
       "date": "2018-01-02 22:45:32 UTC",
-      "ether": "4023",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -458,13 +430,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1514933132,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 147,
-      "value": "4023000000000000000000"
+      "value": "4023"
     },
     {
       "blockHash": "0x6afbbf73e0b2f40d01ce2ce663026064b6f8ab99d8abebf86be147d0a4d25c79",
       "blockNumber": 4858063,
       "date": "2018-01-05 12:09:10 UTC",
-      "ether": "28.7401",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -474,13 +445,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1515154150,
       "to": "0x53e0f8fdef22017eeb48061e3421d1ad8a102188",
       "transactionIndex": 130,
-      "value": "28740100000000000000"
+      "value": "28.7401"
     },
     {
       "blockHash": "0xb885b734aa40dbd962f2fd0a8a3823186f0b47e1fd975615a5c415be89276ed7",
       "blockNumber": 4879306,
       "date": "2018-01-09 09:56:32 UTC",
-      "ether": "150",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -490,13 +460,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1515491792,
       "to": "0x2586e4b30c581ee20af694495dbcf98daecde75e",
       "transactionIndex": 63,
-      "value": "150000000000000000000"
+      "value": "150"
     },
     {
       "blockHash": "0x0e95c7d65bad6a874d3bd13ead4e62e8c0669e276292078d0fad262f959e2268",
       "blockNumber": 4898851,
       "date": "2018-01-13 00:41:29 UTC",
-      "ether": "4706",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -506,13 +475,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1515804089,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 240,
-      "value": "4706000000000000000000"
+      "value": "4706"
     },
     {
       "blockHash": "0xaa41ccab5c846ee80fa4a1307d31075ba6ae30755b88250169e424eaf8007a1f",
       "blockNumber": 5085423,
       "date": "2018-02-13 22:59:40 UTC",
-      "ether": "7143",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 861000000000000,
@@ -522,13 +490,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1518562780,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 17,
-      "value": "7143000000000000000000"
+      "value": "7143"
     },
     {
       "blockHash": "0xcc4932f900135117aa5e81584707aeda9a1ec7b59f5c8bef51b82cfe48b0b0b2",
       "blockNumber": 5201981,
       "date": "2018-03-05 17:24:50 UTC",
-      "ether": "7560",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -538,13 +505,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1520270690,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 10,
-      "value": "7560000000000000000000"
+      "value": "7560"
     },
     {
       "blockHash": "0xc06f50acb07e6af500d40e15d16832f0b484704e735b0bd802ed0badc1d1c1e7",
       "blockNumber": 5294219,
       "date": "2018-03-21 08:38:04 UTC",
-      "ether": "8950",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -554,13 +520,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1521621484,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 25,
-      "value": "8950000000000000000000"
+      "value": "8950"
     },
     {
       "blockHash": "0xfb90a242a46bf0c82a35b6530522ed853020f4f60b861af5e18f6798a9010869",
       "blockNumber": 5326708,
       "date": "2018-03-26 18:31:21 UTC",
-      "ether": "11702",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -570,13 +535,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1522089081,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 45,
-      "value": "11702000000000000000000"
+      "value": "11702"
     },
     {
       "blockHash": "0xbe651345d0b6ee9ec4e2e11369662710dd85eedc0ce5a7c35aad53d26b3a805c",
       "blockNumber": 5412069,
       "date": "2018-04-09 23:48:42 UTC",
-      "ether": "18735",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -586,13 +550,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1523317722,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 127,
-      "value": "18735000000000000000000"
+      "value": "18735"
     },
     {
       "blockHash": "0xc0e3375228cadd6293426cf10a84cb086e061818ed53c263fc4dacfdf86dd9f5",
       "blockNumber": 5453454,
       "date": "2018-04-16 22:56:16 UTC",
-      "ether": "350",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 441000000000000,
@@ -602,13 +565,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1523919376,
       "to": "0x2586e4b30c581ee20af694495dbcf98daecde75e",
       "transactionIndex": 184,
-      "value": "350000000000000000000"
+      "value": "350"
     },
     {
       "blockHash": "0x3cdd11a7bc9651dd8157c4892abeaa9a9da8b5cad08b8fb3407cb23eee41bc37",
       "blockNumber": 5529877,
       "date": "2018-04-30 03:07:30 UTC",
-      "ether": "1305",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 210000000000000,
@@ -618,13 +580,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1525057650,
       "to": "0x2586e4b30c581ee20af694495dbcf98daecde75e",
       "transactionIndex": 41,
-      "value": "1305000000000000000000"
+      "value": "1305"
     },
     {
       "blockHash": "0x0cd19272663850f22d7a9f2c942acb857527440b0add402b1562ada1e70199a1",
       "blockNumber": 5529907,
       "date": "2018-04-30 03:15:58 UTC",
-      "ether": "3190",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 210000000000000,
@@ -634,13 +595,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1525058158,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "transactionIndex": 110,
-      "value": "3190000000000000000000"
+      "value": "3190"
     },
     {
       "blockHash": "0x151f6b01d862bf57ef7edf093d31764d57f6e80f3e06380398b85aedeb32514b",
       "blockNumber": 5531080,
       "date": "2018-04-30 08:05:16 UTC",
-      "ether": "3190",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 210000000000000,
@@ -650,13 +610,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1525075516,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 168,
-      "value": "3190000000000000000000"
+      "value": "3190"
     },
     {
       "blockHash": "0xf4b57ba085e47720a521f2aa5e4258c2375104f303db43179da4067f4e1a0651",
       "blockNumber": 5570564,
       "date": "2018-05-07 06:21:08 UTC",
-      "ether": "6667",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 210000000000000,
@@ -666,13 +625,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1525674068,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 25,
-      "value": "6667000000000000000000"
+      "value": "6667"
     },
     {
       "blockHash": "0x86f9dcb3dd1d8e14371a19ef69eccfa97d56d94d69e70e9863f367a5f8c994ab",
       "blockNumber": 5657846,
       "date": "2018-05-22 13:59:30 UTC",
-      "ether": "1460",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 210000000000000,
@@ -682,13 +640,12 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1526997570,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 146,
-      "value": "1460000000000000000000"
+      "value": "1460"
     },
     {
       "blockHash": "0xb295fb2d23738b276c3f016dc5e3453e3f63900914c8e6b32820bff7be348042",
       "blockNumber": 5750989,
       "date": "2018-06-08 02:42:09 UTC",
-      "ether": "6000",
       "from": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
       "gas": 21000,
       "gasCost": 210000000000000,
@@ -698,7 +655,7 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=ext&blocks=0-700000
       "timestamp": 1528425729,
       "to": "0xacd5774a14a5624ed9836c6c7025338cb3b7704b",
       "transactionIndex": 88,
-      "value": "6000000000000000000000"
+      "value": "6000"
     }
   ],
   "meta": {

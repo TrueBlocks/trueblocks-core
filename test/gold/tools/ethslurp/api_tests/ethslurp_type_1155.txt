@@ -1,4 +1,4 @@
-slurp?addrs=0x83f564d180b58ad9a02a449105568189ee7de8cb&types=1155&blocks=13103657-13255822&fmt=json
+slurp?addrs=0x83f564d180b58ad9a02a449105568189ee7de8cb&types=1155&blocks=13103657-13255822&fmt=json&ether
 {
   "data": [
     {
@@ -6,7 +6,6 @@ slurp?addrs=0x83f564d180b58ad9a02a449105568189ee7de8cb&types=1155&blocks=1310365
       "blockNumber": 13103658,
       "contractAddress": "0x495f947276749ce646f68ac8c248420045cb7b5e",
       "date": "2021-08-26 22:12:47 UTC",
-      "ether": "0",
       "from": "0x63f6c58be0c97b5cb19c4c92bc73a66eceb738b3",
       "gas": 294076,
       "gasCost": 23442235577859120,
@@ -24,7 +23,6 @@ slurp?addrs=0x83f564d180b58ad9a02a449105568189ee7de8cb&types=1155&blocks=1310365
       "blockNumber": 13255822,
       "contractAddress": "0x236672ed575e1e479b8e101aeeb920f32361f6f9",
       "date": "2021-09-19 11:15:40 UTC",
-      "ether": "0",
       "from": "0xa9fb6355997aae4a717d9bd15e60edf26cf55c8a",
       "gas": 255010,
       "gasCost": 7870976414388780,
