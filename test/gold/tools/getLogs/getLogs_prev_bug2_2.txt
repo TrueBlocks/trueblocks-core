@@ -1,7 +1,7 @@
 chifra logs  4279119.46 --raw
 TEST[DATE|TIME] Transactions:  [4279119.46]
 TEST[DATE|TIME] ShowRaw:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  txt
 {
   "data": [

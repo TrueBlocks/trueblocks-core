@@ -2,7 +2,7 @@ chifra traces  3657480.12 --verbose --fmt json --output output_test_file
 TEST[DATE|TIME] Transactions:  [3657480.12]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 ----

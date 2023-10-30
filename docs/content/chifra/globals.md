@@ -1,3 +1,20 @@
+---
+title: "Accounts"
+description: ""
+lead: ""
+lastmod:
+  - :git
+  - lastmod
+  - publishDate
+draft: false
+aliases:
+ - "/docs/chifra/accounts"
+menu:
+  chifra:
+    parent: commands
+weight: 2200
+toc: true
+---
 ## Global Options
 
 All commands have these globally available options unless removed as shown in the Disabled column below. Some commands have additional globally available features as noted in the Enabled column.
@@ -5,7 +22,6 @@ All commands have these globally available options unless removed as shown in th
 | Option                                                                      |
 | --------------------------------------------------------------------------- |
 | Verbose, Fmt, Version, Noop, NoColor, Chain, NoHeader, File, Output, Append |
-
 
 ### Group 1
 
@@ -43,14 +59,14 @@ These commands produce data, but because they do query the node, the need the ca
 
 These commands produce data, but because they do query the node, the need the cache. They also have wei values which are allowed to use `--ether` option to convert to ether. The `--raw` option shows the underlying data queried directly from the node.
 
-| Group      | Cmd          | Enabled                  | Need       | Disabled |
-| ---------- | ------------ | ------------------------ | ---------- | -------- |
-| chain_data | transactions | Caching, Ether, Wei, Raw |            |
-| chain_data | blocks       | Caching, Raw             | Ether, Wei |
-| chain_data | receipts     | Caching, Raw             | Ether, Wei |
-| chain_data | logs         | Caching, Raw             | Ether, Wei |
-| chain_data | traces       | Caching, Raw             | Ether, Wei |
-| other      | slurp        | Caching, Raw             | Ether, Wei |
+| Group      | Cmd          | Enabled                  | Disabled |
+| ---------- | ------------ | ------------------------ | -------- |
+| chain_data | transactions | Caching, Ether, Wei, Raw |          |
+| chain_data | blocks       | Caching, Ether, Wei, Raw |          |
+| chain_data | receipts     | Caching, Ether, Wei, Raw |          |
+| chain_data | logs         | Caching, Ether, Wei, Raw |          |
+| chain_data | traces       | Caching, Ether, Wei, Raw |          |
+| other      | slurp        | Caching, Ether, Wei, Raw |          |
 
 ### Group 5
 

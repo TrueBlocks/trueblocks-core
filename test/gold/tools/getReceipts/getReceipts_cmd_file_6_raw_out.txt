@@ -3,7 +3,7 @@ TEST[DATE|TIME] Transactions:  [5644782.0]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] ShowRaw:  true
 TEST[DATE|TIME] File:  cmd_file.6
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -25,7 +25,7 @@ TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] ShowRaw:  true
 TEST[DATE|TIME] File:  cmd_file.6
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 ,
     {
@@ -45,7 +45,7 @@ TEST[DATE|TIME] Format:  json
     }TEST[DATE|TIME] Transactions:  [5644782.0 5644882.0]
 TEST[DATE|TIME] ShowRaw:  true
 TEST[DATE|TIME] File:  cmd_file.6
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  txt
 ,
     {
@@ -95,7 +95,7 @@ TEST[DATE|TIME] Format:  txt
     }TEST[DATE|TIME] Transactions:  [5644782.0 5644883.0]
 TEST[DATE|TIME] ShowRaw:  true
 TEST[DATE|TIME] File:  cmd_file.6
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  txt
 ,
     {
@@ -130,7 +130,7 @@ TEST[DATE|TIME] Format:  txt
     }TEST[DATE|TIME] Transactions:  [5644782.0 5644886.0]
 TEST[DATE|TIME] ShowRaw:  true
 TEST[DATE|TIME] File:  cmd_file.6
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  txt
 ,
     {

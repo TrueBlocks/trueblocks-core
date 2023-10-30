@@ -37,6 +37,5 @@ shit    ,both ,fast  ,slurp ,tools/ethslurp ,raw                 ,y    ,addrs = 
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
-on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_allowed        ,y    ,addrs=trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & fail_on_purpose
-on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_1   ,y    ,addrs=trueblocks.eth & ether
-on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_2   ,y    ,addrs=trueblocks.eth & wei
+on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_allowed        ,y    ,addrs=trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & fail_on_purpose
+on      ,both ,fast  ,slurp ,tools/ethslurp ,caps_disallowed_1   ,y    ,addrs=trueblocks.eth & wei

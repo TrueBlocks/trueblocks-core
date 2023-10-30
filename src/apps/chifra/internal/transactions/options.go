@@ -170,8 +170,8 @@ func ResetOptions(testMode bool) {
 	capabilities := caps.Default // Additional global caps for chifra transactions
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
 	capabilities = capabilities.Add(caps.Ether)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	defaultTransactionsOptions.Globals.Caps = capabilities
 }

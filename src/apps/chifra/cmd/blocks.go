@@ -61,6 +61,7 @@ func init() {
 	var capabilities = caps.Default // Additional global caps for chifra blocks
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 
