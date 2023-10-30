@@ -27,7 +27,7 @@ on      ,both ,fast  ,transactions ,tools/getTrans ,source_disabled          ,y 
 
 on      ,cmd  ,medi  ,transactions ,tools/getTrans ,core_dump_bug            ,y    ,@avt & transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_default              ,n    ,transactions = 2222222.0 2332332.0
-on      ,both ,fast  ,transactions ,tools/getTrans ,star                     ,y    ,transactions = 2222221.* & fmt = json
+on      ,both ,fast  ,transactions ,tools/getTrans ,star                     ,y    ,transactions = 2222221.* & fmt = json & ether
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_txt                  ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
 on      ,both ,fast  ,transactions ,tools/getTrans ,fmt_csv                  ,n    ,transactions = 2222222.0 2332332.0 & fmt = csv
 on      ,both ,medi  ,transactions ,tools/getTrans ,fmt_api                  ,y    ,transactions = 2222222.0 2332332.0 & fmt = api
