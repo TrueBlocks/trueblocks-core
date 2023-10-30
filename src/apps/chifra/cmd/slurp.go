@@ -50,7 +50,8 @@ const longSlurp = `Purpose:
 const notesSlurp = `
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
-  - Portions of this software are Powered by Etherscan.io APIs.`
+  - Portions of this software are Powered by Etherscan.io APIs.
+  - The withdrawals option is only available on certain chains. It is ignored otherwise.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra slurp
@@ -63,7 +64,7 @@ func init() {
 	slurpCmd.Flags().SortFlags = false
 
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `which types of transactions to request
-One or more of [ ext | int | token | nfts | 1155 | miner | uncles | all ]`)
+One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, "show only the blocknumber.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 5000, "the number of records to request on each page")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")

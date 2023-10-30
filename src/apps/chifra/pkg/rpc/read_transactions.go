@@ -18,8 +18,8 @@ func (conn *Connection) ReadTransactions(
 	iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 		raw := types.RawAppearance{
 			Address:          app.Address.Hex(),
-			BlockNumber:      uint32(app.BlockNumber),
-			TransactionIndex: uint32(app.TransactionIndex),
+			BlockNumber:      app.BlockNumber,
+			TransactionIndex: app.TransactionIndex,
 		}
 		if tx, err := conn.GetTransactionByAppearance(&raw, readTraces); err != nil {
 			return err

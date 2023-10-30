@@ -74,22 +74,15 @@ func (s *SimpleState) Model(chain, format string, verbose bool, extraOptions map
 		order = []string{"blockNumber", "address", "timestamp", "date"}
 	}
 
-	getEtherBalance := func() string {
-		return utils.FormattedValue(s.Balance, true, 18)
-	}
-	getWeiBalance := func() string {
-		return utils.FormattedValue(s.Balance, false, 18)
-	}
-
 	if extraOptions != nil {
 		if fields, ok := extraOptions["fields"]; ok {
 			if fields, ok := fields.([]string); ok {
 				for _, field := range fields {
 					switch field {
 					case "ether":
-						model["ether"] = getEtherBalance()
+						model["ether"] = utils.FormattedValue(s.Balance, true, 18)
 					case "balance":
-						model["balance"] = getWeiBalance()
+						model["balance"] = utils.FormattedValue(s.Balance, false, 18)
 					case "nonce":
 						model["nonce"] = s.Nonce
 					case "code":
@@ -113,10 +106,10 @@ func (s *SimpleState) Model(chain, format string, verbose bool, extraOptions map
 	if format == "json" {
 		// In JSON format we display both balances
 		if _, ok := model["ether"]; !ok {
-			model["ether"] = getEtherBalance()
+			model["ether"] = utils.FormattedValue(s.Balance, true, 18)
 		}
 		if _, ok := model["balance"]; !ok {
-			model["balance"] = getWeiBalance()
+			model["balance"] = utils.FormattedValue(s.Balance, false, 18)
 		}
 	}
 	// EXISTING_CODE

@@ -17,6 +17,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -24,7 +25,9 @@ import (
 type RawWithdrawal struct {
 	Address        string `json:"address"`
 	Amount         string `json:"amount"`
+	BlockNumber    string `json:"blockNumber"`
 	Index          string `json:"index"`
+	Timestamp      string `json:"timestamp"`
 	ValidatorIndex string `json:"validatorIndex"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -33,7 +36,9 @@ type RawWithdrawal struct {
 type SimpleWithdrawal struct {
 	Address        base.Address   `json:"address"`
 	Amount         base.Wei       `json:"amount"`
+	BlockNumber    base.Blknum    `json:"blockNumber"`
 	Index          uint64         `json:"index"`
+	Timestamp      base.Timestamp `json:"timestamp"`
 	ValidatorIndex uint64         `json:"validatorIndex"`
 	raw            *RawWithdrawal `json:"-"`
 	// EXISTING_CODE
@@ -53,17 +58,24 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 	var order = []string{}
 
 	// EXISTING_CODE
+	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"address":        s.Address,
-		"amount":         s.Amount,
+		"amount":         utils.FormattedValue(s.Amount, asEther, 18),
+		"blockNumber":    s.BlockNumber,
+		"date":           s.Date(),
 		"index":          s.Index,
+		"timestamp":      s.Timestamp,
 		"validatorIndex": s.ValidatorIndex,
 	}
 
 	order = []string{
+		"blockNumber",
+		"timestamp",
+		"date",
+		"index",
 		"address",
 		"amount",
-		"index",
 		"validatorIndex",
 	}
 	// EXISTING_CODE
@@ -72,6 +84,10 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *SimpleWithdrawal) Date() string {
+	return utils.FormattedDate(s.Timestamp)
 }
 
 // --> cacheable by block as group
@@ -122,8 +138,18 @@ func (s *SimpleWithdrawal) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// BlockNumber
+	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
 	// Index
 	if err = cache.WriteValue(writer, s.Index); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
@@ -146,8 +172,18 @@ func (s *SimpleWithdrawal) UnmarshalCache(version uint64, reader io.Reader) (err
 		return err
 	}
 
+	// BlockNumber
+	if err = cache.ReadValue(reader, &s.BlockNumber, version); err != nil {
+		return err
+	}
+
 	// Index
 	if err = cache.ReadValue(reader, &s.Index, version); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = cache.ReadValue(reader, &s.Timestamp, version); err != nil {
 		return err
 	}
 

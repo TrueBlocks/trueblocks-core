@@ -134,12 +134,15 @@ The following commands produce and manage Withdrawals:
 
 Withdrawals consist of the following fields:
 
-| Field          | Description                                                                                                          | Type    |
-| -------------- | -------------------------------------------------------------------------------------------------------------------- | ------- |
-| address        | the recipient for the withdrawn ether                                                                                | address |
-| amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei     |
-| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | uint64  |
-| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | uint64  |
+| Field          | Description                                                                                                          | Type      |
+| -------------- | -------------------------------------------------------------------------------------------------------------------- | --------- |
+| address        | the recipient for the withdrawn ether                                                                                | address   |
+| amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei       |
+| blockNumber    | the number of this block                                                                                             | blknum    |
+| index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | uint64    |
+| timestamp      | the timestamp for this block                                                                                         | timestamp |
+| date           | a calculated field -- the date for this block                                                                        | datetime  |
+| validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | uint64    |
 
 ## Receipt
 

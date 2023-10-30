@@ -4,7 +4,7 @@ TEST[DATE|TIME] Blocks:  [10092000]
 TEST[DATE|TIME] Call:  0x0902f1ad()
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
-Error: the --call value provided (0x0902f1ad()) was not found: abi not found 
+Error: the --call value provided (0x0902f1ad()) was not found: abi not found for 0x0902f1ad(): abi not found 
 Usage:
   chifra state [flags] <address> [address...] [block...]
 

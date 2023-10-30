@@ -97,16 +97,13 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
-	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
-			hasAll = true
+			opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
 			break
 		}
 	}
-	if hasAll {
-		opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles"}
-	} else if len(opts.Types) == 0 {
+	if len(opts.Types) == 0 {
 		opts.Types = []string{"ext"}
 	}
 	// EXISTING_CODE
@@ -142,16 +139,13 @@ func slurpFinishParse(args []string) *SlurpOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	hasAll := false
 	for _, t := range opts.Types {
 		if t == "all" {
-			hasAll = true
+			opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles", "withdrawals"}
 			break
 		}
 	}
-	if hasAll {
-		opts.Types = []string{"ext", "int", "token", "nfts", "1155", "miner", "uncles"}
-	} else if len(opts.Types) == 0 {
+	if len(opts.Types) == 0 {
 		opts.Types = []string{"ext"}
 	}
 	// EXISTING_CODE

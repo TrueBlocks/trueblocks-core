@@ -598,10 +598,22 @@ components:
           type: string
           format: wei
           description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of this block"
         index:
           type: number
           format: uint64
           description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp for this block"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date for this block"
         validatorIndex:
           type: number
           format: uint64
@@ -1677,6 +1689,7 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/function"
+          description: "if present, the function that was called in the transaction"
         compressedTx:
           type: string
           example: "0x3d18b912( )"

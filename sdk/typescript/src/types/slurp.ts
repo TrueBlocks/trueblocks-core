@@ -30,4 +30,6 @@ export type Slurp = {
   cumulativeGasUsed: string
   txReceiptStatus: string
   ether: string
+  withdrawalIndex: uint64
+  validatorIndex: uint64
 }
