@@ -1,7 +1,8 @@
-chifra slurp  0x9519afbc60719a83c470ceec41e32d3e4b8b262e --types token 0-1500000 --fmt json
+chifra slurp  0x9519afbc60719a83c470ceec41e32d3e4b8b262e --types token 0-1500000 --fmt json --ether
 TEST[DATE|TIME] Addrs:  [0x9519afbc60719a83c470ceec41e32d3e4b8b262e]
 TEST[DATE|TIME] Blocks:  [0-1500000]
 TEST[DATE|TIME] Types:  [token]
+TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
@@ -11,7 +12,6 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 1434022,
       "contractAddress": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7",
       "date": "2016-04-30 22:33:28 UTC",
-      "ether": "0.000000000000000001",
       "from": "0xfd23407a31f54413e32043adb7b1ee61a6e04027",
       "gas": 136032,
       "gasCost": 720640000000000,
@@ -22,7 +22,7 @@ TEST[DATE|TIME] Format:  json
       "timestamp": 1462055608,
       "to": "0x9519afbc60719a83c470ceec41e32d3e4b8b262e",
       "transactionIndex": 2,
-      "value": "1"
+      "value": "0.000000000000000001"
     }
   ]
 }
