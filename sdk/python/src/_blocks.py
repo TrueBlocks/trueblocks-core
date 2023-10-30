@@ -15,6 +15,7 @@ blocksOpts = {
     "logs": {"hotkey": "-l", "type": "switch"},
     "emitter": {"hotkey": "-m", "type": "flag"},
     "topic": {"hotkey": "-B", "type": "flag"},
+    "withdrawals": {"hotkey": "-i", "type": "switch"},
     "articulate": {"hotkey": "-a", "type": "switch"},
     "bigRange": {"hotkey": "-r", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
