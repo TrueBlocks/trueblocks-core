@@ -253,6 +253,8 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 			s := types.SimpleWithdrawal{
 				Address:        base.HexToAddress(withdrawal.Address),
 				Amount:         *amt,
+				BlockNumber:    blockNumber,
+				Timestamp:      base.Timestamp(ts),
 				Index:          utils.MustParseUint(withdrawal.Index),
 				ValidatorIndex: utils.MustParseUint(withdrawal.ValidatorIndex),
 			}

@@ -1,10 +1,3 @@
-/*
-  25: 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
-  39: 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-  20: 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-  23: 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
-*/
-
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -29,8 +22,8 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleWithdrawal
-		if appMap, _, err = identifiers.AsMap[types.SimpleWithdrawal](chain, opts.BlockIds); err != nil {
+		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[string]
+		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
@@ -44,18 +37,14 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 			Total:   int64(len(appMap)),
 		})
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleWithdrawal) error {
+		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
 			if block, err := opts.Conn.GetBlockHeaderByNumber(app.BlockNumber); err != nil {
 				errorChan <- err
 				cancel()
 				return nil
 			} else {
 				bar.Tick()
-				for _, withdrawal := range block.Withdrawals {
-					if !withdrawal.Address.IsZero() {
-						*value = withdrawal
-					}
-				}
+				*value = block
 			}
 			return nil
 		}
@@ -72,7 +61,11 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 
 		items := make([]*types.SimpleWithdrawal, 0, len(appMap))
 		for _, item := range appMap {
-			items = append(items, item)
+			for _, w := range item.Withdrawals {
+				w := w
+				w.BlockNumber = item.BlockNumber
+				items = append(items, &w)
+			}
 		}
 		sort.Slice(items, func(i, j int) bool {
 			if items[i].BlockNumber == items[j].BlockNumber {
