@@ -245,7 +245,7 @@ Results in ./accounting_tokens_2_out.file
       "to": "0x001d14804b399c6ef80e64576f657660804fec0b",
       "traces": [],
       "transactionIndex": 2,
-      "value": "4200000000000000000000"
+      "value": "4200"
     },
     {
       "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
@@ -317,7 +317,7 @@ Results in ./accounting_tokens_2_out.file
       "to": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
       "traces": [],
       "transactionIndex": 0,
-      "value": "4199900000000000000000"
+      "value": "4199.9"
     },
     {
       "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
@@ -388,7 +388,7 @@ Results in ./accounting_tokens_2_out.file
       "to": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
       "traces": [],
       "transactionIndex": 2,
-      "value": "74259320489077336"
+      "value": "0.074259320489077336"
     }
   ]
 }
