@@ -19,8 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-
-	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -28,7 +26,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 
 	if opts.Globals.TestMode {
-		logger.Warn("Truncate option not tested.")
+		logger.Warn("Pinning option not tested.")
 		return nil
 	}
 
@@ -137,7 +135,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 		}
 
-		if false && len(blockNums) == 0 {
+		if len(blockNums) == 0 {
 			tsPath := config.PathToTimestamps(chain)
 			if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err

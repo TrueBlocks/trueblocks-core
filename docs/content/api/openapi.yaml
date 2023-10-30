@@ -4051,6 +4051,7 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/function"
+          description: "if present, the function that was called in the transaction"
         compressedTx:
           type: string
           example: "0x3d18b912( )"

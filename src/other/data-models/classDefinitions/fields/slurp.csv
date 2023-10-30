@@ -13,13 +13,15 @@ gas               ,gas       ,           ,       ,      ,        ,          ,   
 gasPrice          ,gas       ,           ,       ,      ,        ,          ,        ,         , 12 ,     ,63525836552   ,the number of wei per unit of gas the sender is willing to spend
 input             ,bytes     ,           ,       ,      ,        ,          ,        ,         , 13 ,     ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
 hasToken          ,bool      ,           ,       ,      ,        ,          ,        ,         , 14 ,     ,              ,`true` if the transaction is token related&#44; `false` otherwise
-articulatedTx     ,Function  ,           ,true   ,      ,        ,          ,        ,         , 15 ,     ,              ,
+articulatedTx     ,Function  ,           ,true   ,      ,        ,          ,        ,         , 15 ,     ,              ,if present&#44; the function that was called in the transaction
 compressedTx      ,string    ,           ,       ,      ,        ,          ,        ,         , 16 ,     ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
 isError           ,bool      ,           ,       ,      ,        ,          ,        ,         , 17 ,     ,              ,`true` if the transaction ended in error&#44; `false` otherwise
-functionName      ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-methodId          ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-gasUsed           ,gas       ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-contractAddress   ,address   ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-cumulativeGasUsed ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-txReceiptStatus   ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
-ether             ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,
+functionName      ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,the name of the articulated function if any
+methodId          ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,the fourbyte of the function
+gasUsed           ,gas       ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,the amount of gas used by the transaction (from the receipt)
+contractAddress   ,address   ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,if created&#44; the address of the newly-created contract
+cumulativeGasUsed ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,a basically unused field showing all gas used
+txReceiptStatus   ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,the status field from the receipt
+ether             ,string    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,an deprecated field that will be removed in future versions
+withdrawalIndex   ,uint64    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,for withdrawal transactions only&#44; the index of the withdrawal since inception
+validatorIndex    ,uint64    ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,for withdrawal transactions only&#44; the index of the validator receiving the withdrawal

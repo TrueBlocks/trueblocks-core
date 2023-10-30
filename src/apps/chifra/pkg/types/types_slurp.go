@@ -43,8 +43,12 @@ type RawSlurp struct {
 	To                string `json:"to"`
 	TransactionIndex  string `json:"transactionIndex"`
 	TxReceiptStatus   string `json:"txReceiptStatus"`
+	ValidatorIndex    string `json:"validatorIndex"`
 	Value             string `json:"value"`
+	WithdrawalIndex   string `json:"withdrawalIndex"`
 	// EXISTING_CODE
+	Address string `json:"address"`
+	Amount  string `json:"amount"`
 	// EXISTING_CODE
 }
 
@@ -71,7 +75,9 @@ type SimpleSlurp struct {
 	To                base.Address    `json:"to"`
 	TransactionIndex  base.Blknum     `json:"transactionIndex"`
 	TxReceiptStatus   string          `json:"txReceiptStatus"`
+	ValidatorIndex    uint64          `json:"validatorIndex"`
 	Value             base.Wei        `json:"value"`
+	WithdrawalIndex   uint64          `json:"withdrawalIndex"`
 	raw               *RawSlurp       `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -110,6 +116,22 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		s.Input = ""
 		order = []string{
 			"blockNumber",
+			"timestamp",
+			"date",
+			"from",
+			"to",
+			"value",
+		}
+
+	} else if s.From == base.WithdrawalSender {
+		model["from"] = s.From.Hex()
+		s.Input = ""
+		model["withdrawalIndex"] = s.WithdrawalIndex
+		model["validatorIndex"] = s.ValidatorIndex
+		order = []string{
+			"blockNumber",
+			"validatorIndex",
+			"withdrawalIndex",
 			"timestamp",
 			"date",
 			"from",
@@ -338,8 +360,18 @@ func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// ValidatorIndex
+	if err = cache.WriteValue(writer, s.ValidatorIndex); err != nil {
+		return err
+	}
+
 	// Value
 	if err = cache.WriteValue(writer, &s.Value); err != nil {
+		return err
+	}
+
+	// WithdrawalIndex
+	if err = cache.WriteValue(writer, s.WithdrawalIndex); err != nil {
 		return err
 	}
 
@@ -461,8 +493,18 @@ func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err erro
 		return err
 	}
 
+	// ValidatorIndex
+	if err = cache.ReadValue(reader, &s.ValidatorIndex, version); err != nil {
+		return err
+	}
+
 	// Value
 	if err = cache.ReadValue(reader, &s.Value, version); err != nil {
+		return err
+	}
+
+	// WithdrawalIndex
+	if err = cache.ReadValue(reader, &s.WithdrawalIndex, version); err != nil {
 		return err
 	}
 

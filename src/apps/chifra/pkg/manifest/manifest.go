@@ -157,6 +157,3 @@ func (m *Manifest) SaveManifest(chain, fileName string) error {
 		return err
 	}
 }
-
-// // TODO: There's got to be a better way - this should use StreamMany
-// var spaces = strings.Repeat(" ", 40)
