@@ -14,7 +14,7 @@ import (
 // UniqFromWithdrawals extracts addresses from an array of receipts
 func UniqFromWithdrawals(chain string, withdrawals []types.SimpleWithdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
 	for _, withdrawal := range withdrawals {
-		// #WITHDRAWAL
+		// #WITHDRAWALS
 		addAddressToMaps(withdrawal.Address.Hex(), bn, types.Withdrawal, addrMap)
 	}
 	return nil
