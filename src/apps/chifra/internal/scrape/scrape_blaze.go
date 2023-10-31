@@ -93,7 +93,7 @@ func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sy
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else if sd.receipts, _, err = bm.opts.Conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
-		} else if sd.withdrawals, err = bm.opts.Conn.GetWithdrawalsByNumber(bn); err != nil {
+		} else if sd.withdrawals, sd.miner, err = bm.opts.Conn.GetMinerAndWithdrawals(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else {
 			appearanceChannel <- sd
@@ -120,6 +120,7 @@ func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, a
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
 		} else {
+			uniq.AddMiner(bm.chain, sData.miner, sData.bn, addrMap)
 			if err = bm.WriteAppearances(sData.bn, addrMap); err != nil {
 				bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 			}
@@ -227,4 +228,5 @@ type scrapedData struct {
 	traces      []types.SimpleTrace
 	receipts    []types.SimpleReceipt
 	withdrawals []types.SimpleWithdrawal
+	miner       base.Address
 }
