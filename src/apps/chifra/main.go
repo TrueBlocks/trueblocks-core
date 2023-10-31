@@ -15,9 +15,11 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 )
 
 func main() {
+	defer Cleanup()
 	// pprofFile, pprofErr := os.OpenFile("cpu.pprof", O_RDWR|O_CREATE|O_TRUNC, 0666)
 	// if pprofErr != nil {
 	// 	logger.Fatal(pprofErr)
@@ -28,4 +30,9 @@ func main() {
 	if cmd.Initialize() {
 		cmd.Execute()
 	}
+}
+
+// Cleanup gets called before main exits.
+func Cleanup() {
+	query.CloseDebugger()
 }

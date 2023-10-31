@@ -12,6 +12,7 @@ import (
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // Params are used during calls to the RPC.
@@ -193,14 +194,30 @@ func debugCurl(payload rpcPayload, rpcProvider string) {
 		return
 	}
 
-	if devDebugMethod != "true" && payload.Method != devDebugMethod {
-		return
-	}
-
 	bytes, _ := json.MarshalIndent(payload, "", "")
 	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
+
+	if devDebugMethod != "true" && devDebugMethod != "testing" && payload.Method != devDebugMethod {
+		return
+	} else if devDebugMethod == "testing" {
+		rpcProvider = "--rpc-provider--"
+		parts := strings.Split(strings.Replace(payloadStr, "]", "[", -1), "[")
+		parts[1] = "[ --params-- ]"
+		payloadStr = strings.Join(parts, "")
+	}
+
 	var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
 	curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
 	curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
-	fmt.Println(curlCmd)
+
+	logger.ToggleDecoration()
+	logger.Info(curlCmd)
+	logger.ToggleDecoration()
+}
+
+func CloseDebugger() {
+	if !devDebug {
+		return
+	}
+	logger.Info("Closing curl debugger")
 }
