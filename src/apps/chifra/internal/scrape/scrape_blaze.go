@@ -120,7 +120,7 @@ func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, a
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
 		} else {
-			uniq.AddMiner(bm.chain, sData.miner, sData.bn, addrMap)
+			_ = uniq.AddMiner(bm.chain, sData.miner, sData.bn, addrMap)
 			if err = bm.WriteAppearances(sData.bn, addrMap); err != nil {
 				bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 			}
