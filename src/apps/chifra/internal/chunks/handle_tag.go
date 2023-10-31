@@ -110,4 +110,4 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-var tagWarning = `Tag the index with version {0}? This is a non-recoverable operation. (Yy)? `
+var tagWarning = `Tag the index with version {0}? This is a non-recoverable operation. (Yn)? `

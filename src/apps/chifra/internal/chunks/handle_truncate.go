@@ -143,4 +143,4 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-var truncateWarning = `Are sure you want to remove index chunks after and including block {0} (Yy)? `
+var truncateWarning = `Are sure you want to remove index chunks after and including block {0} (Yn)? `

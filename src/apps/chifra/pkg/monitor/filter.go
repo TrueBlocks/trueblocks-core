@@ -62,11 +62,6 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 	apps = make([]types.SimpleAppearance, 0, len(fromDisc))
 	for _, app := range fromDisc {
 		app := app
-		if app.TransactionId == uint32(types.Withdrawal) {
-			// #WITHDRAWALS--THIS IS INCORRECT
-			continue
-		}
-
 		if passes, finished := filt.BlockRangeFilter(&app); finished {
 			return apps, len(apps), nil
 		} else if passes {

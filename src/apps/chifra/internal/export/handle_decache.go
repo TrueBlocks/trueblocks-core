@@ -79,7 +79,7 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 }
 
 func getWarning(addr string, count int64) string {
-	var warning = strings.Replace("Are sure you want to decache {0}{1} (Yy)?", "{0}", addr, -1)
+	var warning = strings.Replace("Are sure you want to decache {0}{1} (Yn)?", "{0}", addr, -1)
 	if count > 5000 {
 		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
 	}
