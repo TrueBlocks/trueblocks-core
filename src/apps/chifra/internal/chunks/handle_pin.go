@@ -192,4 +192,4 @@ func (opts *ChunksOptions) doCheck(blockNums []uint64) error {
 	return nil
 }
 
-var pinWarning = `Do you want to run --chain first (Yy)? `
+var pinWarning = `Do you want to run --check first (Yn)? `

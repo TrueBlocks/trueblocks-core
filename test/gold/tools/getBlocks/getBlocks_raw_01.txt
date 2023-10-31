@@ -1,3 +1,4 @@
+Env: TB_DEBUG_CURL=testing-off
 chifra blocks  2768801 1995314 1958017 --raw
 TEST[DATE|TIME] Blocks:  [2768801 1995314 1958017]
 TEST[DATE|TIME] ShowRaw:  true
@@ -205,4 +206,4 @@ TEST[DATE|TIME] Format:  json
       "withdrawals": null
     }
   ]
-}
+}INFO[DATE|TIME] Closing curl debugger

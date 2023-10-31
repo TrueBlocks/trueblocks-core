@@ -12,6 +12,7 @@ import (
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // Params are used during calls to the RPC.
@@ -33,6 +34,9 @@ type eip1474Error struct {
 	Message string `json:"message"`
 }
 
+var devDebug = false
+var devDebugMethod = ""
+
 func init() {
 	// We need to increase MaxIdleConnsPerHost, otherwise chifra will keep trying to open too
 	// many ports. It can lead to bind errors.
@@ -41,6 +45,9 @@ func init() {
 	//
 	// We change DefaultTransport as the whole codebase uses it.
 	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
+
+	devDebugMethod = os.Getenv("TB_DEBUG_CURL")
+	devDebug = len(devDebugMethod) > 0
 }
 
 // Query returns a single result for given method and params.
@@ -53,7 +60,7 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 	}
 
 	provider := config.GetChain(chain).RpcProvider
-	err := FromRpc(provider, &payload, &response)
+	err := fromRpc(provider, &payload, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -73,33 +80,8 @@ type rpcPayload struct {
 	ID      int `json:"id"`
 }
 
-var devDebug = false
-var devDebugMethod = ""
-
-func init() {
-	devDebugMethod = os.Getenv("TB_DEBUG_CURL")
-	devDebug = len(devDebugMethod) > 0
-}
-
-func debugCurl(payload rpcPayload, rpcProvider string) {
-	if !devDebug {
-		return
-	}
-
-	if devDebugMethod != "true" && payload.Method != devDebugMethod {
-		return
-	}
-
-	bytes, _ := json.MarshalIndent(payload, "", "")
-	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
-	var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
-	curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
-	curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
-	fmt.Println(curlCmd)
-}
-
 // fromRpc Returns all traces for a given block.
-func FromRpc(rpcProvider string, payload *Payload, ret any) error {
+func fromRpc(rpcProvider string, payload *Payload, ret any) error {
 	payloadToSend := rpcPayload{
 		Jsonrpc: "2.0",
 		Method:  payload.Method,
@@ -117,22 +99,6 @@ func FromRpc(rpcProvider string, payload *Payload, ret any) error {
 	return sendRpcRequest(rpcProvider, plBytes, ret)
 }
 
-func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
-	body := bytes.NewReader(marshalled)
-	resp, err := http.Post(rpcProvider, "application/json", body)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	theBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(theBytes, result)
-}
-
 // QuerySlice returns a slice of results for given method and params.
 func QuerySlice[T any](chain string, method string, params Params) ([]T, error) {
 	var response rpcResponse[[]T]
@@ -143,7 +109,7 @@ func QuerySlice[T any](chain string, method string, params Params) ([]T, error) 
 	}
 
 	provider := config.GetChain(chain).RpcProvider
-	err := FromRpc(provider, &payload, &response)
+	err := fromRpc(provider, &payload, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -186,22 +152,17 @@ func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T
 }
 
 func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
-	type rpcPayload struct {
-		Jsonrpc string `json:"jsonrpc"`
-		Method  string `json:"method"`
-		Params  `json:"params"`
-		ID      int `json:"id"`
-	}
-
 	payloadToSend := make([]rpcPayload, 0, len(payloads))
 
 	for _, payload := range payloads {
-		payloadToSend = append(payloadToSend, rpcPayload{
+		theLoad := rpcPayload{
 			Jsonrpc: "2.0",
 			Method:  payload.Method,
 			Params:  payload.Params,
 			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
-		})
+		}
+		debugCurl(theLoad, rpcProvider)
+		payloadToSend = append(payloadToSend, theLoad)
 	}
 
 	plBytes, err := json.Marshal(payloadToSend)
@@ -210,4 +171,53 @@ func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error
 	}
 
 	return sendRpcRequest(rpcProvider, plBytes, ret)
+}
+
+func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
+	body := bytes.NewReader(marshalled)
+	resp, err := http.Post(rpcProvider, "application/json", body)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	theBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(theBytes, result)
+}
+
+func debugCurl(payload rpcPayload, rpcProvider string) {
+	if !devDebug {
+		return
+	}
+
+	bytes, _ := json.MarshalIndent(payload, "", "")
+	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
+
+	if devDebugMethod != "true" && devDebugMethod != "testing" && payload.Method != devDebugMethod {
+		return
+	} else if devDebugMethod == "testing" {
+		rpcProvider = "--rpc-provider--"
+		parts := strings.Split(strings.Replace(payloadStr, "]", "[", -1), "[")
+		parts[1] = "[ --params-- ]"
+		payloadStr = strings.Join(parts, "")
+	}
+
+	var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
+	curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
+	curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
+
+	logger.ToggleDecoration()
+	logger.Info(curlCmd)
+	logger.ToggleDecoration()
+}
+
+func CloseDebugger() {
+	if !devDebug {
+		return
+	}
+	logger.Info("Closing curl debugger")
 }

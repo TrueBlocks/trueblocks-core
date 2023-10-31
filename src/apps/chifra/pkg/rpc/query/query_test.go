@@ -29,7 +29,7 @@ func TestFromRpcCounter(t *testing.T) {
 	var result map[string]string
 	for i := 0; i < 20; i++ {
 		// TODO: Use rpc.Query
-		err := FromRpc(
+		err := fromRpc(
 			server.URL,
 			&Payload{},
 			&result,

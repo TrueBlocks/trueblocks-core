@@ -11,6 +11,12 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
+// AddMiner adds the miner address (for use with post-merge)
+func AddMiner(chain string, miner base.Address, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
+	addAddressToMaps(miner.Hex(), bn, types.BlockReward, addrMap)
+	return nil
+}
+
 // UniqFromWithdrawals extracts addresses from an array of receipts
 func UniqFromWithdrawals(chain string, withdrawals []types.SimpleWithdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
 	for _, withdrawal := range withdrawals {

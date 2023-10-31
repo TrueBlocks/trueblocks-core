@@ -240,7 +240,7 @@ func (conn *Connection) GetTransactionPrefundByApp(appearance *types.RawAppearan
 //     return 0;
 // }
 
-// TODO: This is not cross-chain correct
+// TODO: This is not cross-chain correct nor does it work properly for post-merge
 
 func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
 	if block, err := conn.GetBlockBodyByNumber(uint64(appearance.BlockNumber)); err != nil {
