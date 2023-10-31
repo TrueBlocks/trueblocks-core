@@ -12,6 +12,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -43,8 +44,7 @@ func (opts *InitOptions) HandleInit() error {
 		return errors.New(msg)
 	}
 
-	err = remoteManifest.SaveManifest(chain, config.PathToManifest(chain))
-	if err != nil {
+	if err = opts.UpdateLocalManifest(remoteManifest); err != nil {
 		return err
 	}
 
@@ -241,6 +241,37 @@ func retry(failedChunks []types.SimpleChunkRecord, nTimes int, downloadChunksFun
 	}
 
 	return len(chunksToRetry)
+}
+
+// UpdateLocalManifest updates the local manifest with the one downloaded but may add existing chunks if they are later...
+func (opts *InitOptions) UpdateLocalManifest(remoteManifest *manifest.Manifest) error {
+	chain := opts.Globals.Chain
+
+	existingManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromCache)
+	if err != nil {
+		return err
+	}
+
+	// Don't modify the smart contract's manifest -- we want to download from it, so we don't want these extra chunks
+	copy := existingManifest
+
+	lastExisting := base.RangeFromRangeString(existingManifest.Chunks[len(existingManifest.Chunks)-1].Range)
+	lastRemote := base.RangeFromRangeString(remoteManifest.Chunks[len(remoteManifest.Chunks)-1].Range)
+	if !lastExisting.LaterThan(lastRemote) {
+		for _, ch := range existingManifest.Chunks {
+			chRng := base.RangeFromRangeString(ch.Range)
+			if chRng.LaterThan(lastRemote) {
+				copy.Chunks = append(copy.Chunks, ch)
+			}
+		}
+	}
+
+	err = copy.SaveManifest(chain, config.PathToManifest(chain))
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 var spaces = strings.Repeat(" ", 55)
