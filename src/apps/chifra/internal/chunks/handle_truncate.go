@@ -40,9 +40,8 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
 	bar := logger.NewBar(logger.BarOptions{
-		Prefix:  "Truncating chunks...",
 		Enabled: !opts.Globals.TestMode,
-		Total:   500,
+		Total:   128,
 		Type:    logger.Expanding,
 	})
 
@@ -75,13 +74,14 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err
 				}
+				bar.Prefix = fmt.Sprintf("Removing %s     ", rng)
 				nChunksRemoved++
 			} else {
 				// We did not remove the chunk, so we need to keep track of where the truncated index ends
 				latestChunk = utils.Max(latestChunk, rng.Last)
+				bar.Prefix = fmt.Sprintf("Not removing %s", rng)
 			}
 			bar.Tick()
-
 			return true, nil
 		}
 
@@ -96,11 +96,11 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			cancel()
 
 		} else {
+			bar.Prefix = fmt.Sprintf("Truncated to %d                    ", opts.Truncate)
 			bar.Finish(true)
 			bar = logger.NewBar(logger.BarOptions{
-				Prefix:  "Truncating monitors...",
 				Enabled: !opts.Globals.TestMode,
-				Total:   500,
+				Total:   20,
 				Type:    logger.Expanding,
 			})
 
@@ -109,12 +109,12 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			// header to reflect this new lastScanned block.
 			nMonitorsTruncated := 0
 			truncateMonitor := func(path string, info fs.FileInfo, err error) error {
-				bar.Tick()
 				if err != nil {
 					return err
 				}
 				if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
 					addr, _ := base.AddressFromPath(path, ".mon.bin")
+					bar.Prefix = fmt.Sprintf("Truncating monitor for %s", addr.Hex())
 					if !addr.IsZero() {
 						mon, _ := monitor.NewMonitor(chain, addr, false /* create */)
 						var removed bool
@@ -125,10 +125,12 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 							nMonitorsTruncated++
 						}
 					}
+					bar.Tick()
 				}
 				return nil
 			}
 			_ = filepath.Walk(config.PathToCache(chain)+"monitors", truncateMonitor)
+			bar.Prefix = fmt.Sprintf("Truncated monitors to %d                                        ", opts.Truncate)
 			bar.Finish(true)
 
 			// All that's left to do is report on what happened.
