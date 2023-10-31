@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -39,6 +38,13 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	}
 
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
+
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  "Truncating chunks...",
+		Enabled: !opts.Globals.TestMode,
+		Total:   500,
+		Type:    logger.Expanding,
+	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -70,16 +76,11 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 					return false, err
 				}
 				nChunksRemoved++
-				if opts.Globals.Verbose {
-					logger.Info(colors.Red+"Removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
-				}
 			} else {
 				// We did not remove the chunk, so we need to keep track of where the truncated index ends
 				latestChunk = utils.Max(latestChunk, rng.Last)
-				if opts.Globals.Verbose {
-					logger.Info(colors.Green+"Not removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
-				}
 			}
+			bar.Tick()
 
 			return true, nil
 		}
@@ -95,11 +96,20 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			cancel()
 
 		} else {
+			bar.Finish(true)
+			bar = logger.NewBar(logger.BarOptions{
+				Prefix:  "Truncating monitors...",
+				Enabled: !opts.Globals.TestMode,
+				Total:   500,
+				Type:    logger.Expanding,
+			})
+
 			// We've made it this far (removed chunks and updated manifest) now we need to remove appearances
 			// from any monitors that may exist which happen after the truncated block. Also, update the monitors'
 			// header to reflect this new lastScanned block.
 			nMonitorsTruncated := 0
 			truncateMonitor := func(path string, info fs.FileInfo, err error) error {
+				bar.Tick()
 				if err != nil {
 					return err
 				}
@@ -119,6 +129,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				return nil
 			}
 			_ = filepath.Walk(config.PathToCache(chain)+"monitors", truncateMonitor)
+			bar.Finish(true)
 
 			// All that's left to do is report on what happened.
 			fin := "."
