@@ -20,7 +20,6 @@ func AddMiner(chain string, miner base.Address, bn base.Blknum, addrMap AddressB
 // UniqFromWithdrawals extracts addresses from an array of receipts
 func UniqFromWithdrawals(chain string, withdrawals []types.SimpleWithdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
 	for _, withdrawal := range withdrawals {
-		// #WITHDRAWALS
 		addAddressToMaps(withdrawal.Address.Hex(), bn, types.Withdrawal, addrMap)
 	}
 	return nil
