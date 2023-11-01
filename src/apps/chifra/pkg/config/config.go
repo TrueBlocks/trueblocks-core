@@ -129,6 +129,7 @@ func GetRootConfig() *ConfigFile {
 		if isDefaulted {
 			ch.IpfsGateway = trueBlocksConfig.Pinning.GatewayURL
 		}
+		ch.IpfsGateway = strings.Replace(ch.IpfsGateway, "[{CHAIN}]", "ipfs", -1)
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
 		ch.RpcProvider = clean(ch.RpcProvider)
