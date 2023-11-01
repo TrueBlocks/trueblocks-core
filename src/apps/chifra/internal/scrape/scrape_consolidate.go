@@ -77,12 +77,16 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 		ripeFn := filepath.Join(bm.RipeFolder(), fn)
 		if !file.FileExists(ripeFn) {
-			msg := fmt.Sprintf("ripe file not found for block %d", block) + spaces
-			if !bm.AllowMissing() {
-				_ = cleanEphemeralIndexFolders(chain)
-				return errors.New(msg), true
+			if bm.hasNoAddresses(block) {
+				// this is okay -- see comment at the function
 			} else {
-				logger.Warn(msg)
+				msg := fmt.Sprintf("ripe file not found for block %d", block) + spaces
+				if !bm.AllowMissing() {
+					_ = cleanEphemeralIndexFolders(chain)
+					return errors.New(msg), true
+				} else {
+					logger.Warn(msg)
+				}
 			}
 		}
 
@@ -207,4 +211,17 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.
 	}
 
 	return appMap, fileRange, nAdded
+}
+
+// hasNoAddresses returns true if (a) the miner is zero, (b) there are no transactions, uncles, or withdrawals.
+// (It is truly a block with no addresses -- for example block 15537860 on mainnet.)
+func (bm *BlazeManager) hasNoAddresses(bn base.Blknum) bool {
+	if block, err := bm.opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
+		return false
+	} else {
+		return block.Miner.IsZero() &&
+			len(block.Transactions) == 0 &&
+			len(block.Uncles) == 0 &&
+			len(block.Withdrawals) == 0
+	}
 }
