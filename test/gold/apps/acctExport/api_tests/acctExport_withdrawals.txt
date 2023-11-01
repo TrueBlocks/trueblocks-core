@@ -1,0 +1,42 @@
+export?addrs=chasewright.eth&withdrawals&firstBlock=18345580&lastBlock=18409900&fmt=json
+{
+  "data": [
+    {
+      "address": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "amount": "16450576",
+      "blockNumber": 18357136,
+      "date": "2023-10-15 17:01:59 UTC",
+      "index": 21154816,
+      "timestamp": 1697389319,
+      "validatorIndex": 28
+    },
+    {
+      "address": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "amount": "16414259",
+      "blockNumber": 18380620,
+      "date": "2023-10-18 23:49:47 UTC",
+      "index": 21530564,
+      "timestamp": 1697672987,
+      "validatorIndex": 499026
+    },
+    {
+      "address": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "amount": "16550007",
+      "blockNumber": 18409856,
+      "date": "2023-10-23 01:58:35 UTC",
+      "index": 21998338,
+      "timestamp": 1698026315,
+      "validatorIndex": 28
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

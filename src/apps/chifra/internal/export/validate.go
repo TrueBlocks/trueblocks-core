@@ -50,7 +50,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if opts.tooMany() {
-		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.")
+		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.)")
 	}
 
 	if opts.Count {

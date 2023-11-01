@@ -41,7 +41,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 	}
 
 	if opts.tooMany() {
-		return validate.Usage("Please choose only a single mode (--uncles, --logs, --withdrawal, etc.")
+		return validate.Usage("Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)")
 	}
 
 	if opts.ListCount == 0 {

@@ -68,6 +68,9 @@ func (opts *ExportOptions) ExportInternal() error {
 		err = opts.HandleLogs(monitorArray)
 	} else if opts.Traces {
 		err = opts.HandleTraces(monitorArray)
+	} else if opts.Withdrawals {
+		// #WITHDRAWALS
+		err = opts.HandleWithdrawals(monitorArray)
 	} else if opts.Appearances {
 		err = opts.HandleAppearances(monitorArray)
 	} else if opts.Statements {
