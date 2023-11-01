@@ -1,5 +1,5 @@
 enabled ,mode ,speed ,route    ,path/tool       ,filename                 ,post ,options
-on      ,both ,fast  ,export   ,apps/acctExport ,not_withdrawals          ,y    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & first_block = 18345580 & last_block = 18409900 & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,not_withdrawals          ,y    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & first_block = 18345579 & last_block = 18409900 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,withdrawals              ,y    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & withdrawals & first_block = 18345580 & last_block = 18409900 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,1          ,y    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & first_block = 18345580 & last_block = 18409900 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,2              ,y    ,addrs = 0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63 & withdrawals & first_block = 18345580 & last_block = 18409900 & fmt = json
