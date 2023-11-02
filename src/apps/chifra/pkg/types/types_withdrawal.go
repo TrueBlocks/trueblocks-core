@@ -71,12 +71,12 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 
 	order = []string{
 		"blockNumber",
+		"index",
+		"validatorIndex",
+		"address",
 		"timestamp",
 		"date",
-		"index",
-		"address",
 		"amount",
-		"validatorIndex",
 	}
 	// EXISTING_CODE
 
