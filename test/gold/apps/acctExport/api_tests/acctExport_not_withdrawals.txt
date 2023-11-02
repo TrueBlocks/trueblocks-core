@@ -1,0 +1,33 @@
+export?addrs=chasewright.eth&firstBlock=18345580&lastBlock=18409900&fmt=json
+{
+  "data": [
+    {
+      "blockHash": "0xfab03b9303cf1361637ed8c5dfa1e5bc2d0df3824c8b62e1738b6369e3f23056",
+      "blockNumber": 18352497,
+      "date": "2023-10-15 01:28:11 UTC",
+      "ether": "0.137409567661423728",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "timestamp": 1697333291,
+      "to": "0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "137409567661423728"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
