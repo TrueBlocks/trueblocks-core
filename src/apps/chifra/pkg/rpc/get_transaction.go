@@ -46,6 +46,8 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 	return
 }
 
+// TODO: See #3361
+
 func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
@@ -80,6 +82,10 @@ func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearan
 		}
 	} else if txid == types.UncleReward {
 		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.UncleReward, appearance); err != nil {
+			return nil, err
+		}
+	} else if txid == types.Withdrawal {
+		if tx, err = conn.GetTransactionRewardByTypeAndApp(types.Withdrawal, appearance); err != nil {
 			return nil, err
 		}
 	}
@@ -218,34 +224,23 @@ func (conn *Connection) GetTransactionPrefundByApp(appearance *types.RawAppearan
 	return nil, errors.New("not found")
 }
 
-// // This data was taken from Geth ./params/config.go
-// blknum_t hardForkBlock(const string_q& hf) {
-//     if (hf == "byzantium") {
-//         map<string_q, blknum_t> theMap = {
-//             make_pair("mainnet", 4370000),
-//         };
-//         return theMap[getChain()];
-//     } else if (hf == "constantinople") {
-//         map<string_q, blknum_t> theMap = {
-//             make_pair("mainnet", 7280000),
-//         };
-//         return theMap[getChain()];
-//     } else if (hf == "london") {
-//         map<string_q, blknum_t> theMap = {
-//             make_pair("goerli", 5062605),
-//             make_pair("mainnet", 12965000),
-//         };
-//         return theMap[getChain()];
-//     }
-//     return 0;
-// }
-
 // TODO: This is not cross-chain correct nor does it work properly for post-merge
 
 func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, appearance *types.RawAppearance) (*types.SimpleTransaction, error) {
 	if block, err := conn.GetBlockBodyByNumber(uint64(appearance.BlockNumber)); err != nil {
 		return nil, err
 	} else {
+		if rt == types.Withdrawal {
+			tx := &types.SimpleTransaction{
+				BlockNumber:      uint64(appearance.BlockNumber),
+				TransactionIndex: uint64(appearance.TransactionIndex),
+				Timestamp:        block.Timestamp,
+				From:             base.WithdrawalSender,
+				To:               base.HexToAddress(appearance.Address),
+			}
+			return tx, nil
+		}
+
 		if uncles, err := conn.GetUncleBodiesByNumber(uint64(appearance.BlockNumber)); err != nil {
 			return nil, err
 		} else {
@@ -309,8 +304,8 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, appearan
 			rewards, total := types.NewReward(blockReward, nephewReward, feeReward, uncleReward)
 			tx := &types.SimpleTransaction{
 				BlockNumber:      uint64(appearance.BlockNumber),
-				BlockHash:        block.Hash,
 				TransactionIndex: uint64(appearance.TransactionIndex),
+				BlockHash:        block.Hash,
 				Timestamp:        block.Timestamp,
 				From:             sender,
 				To:               base.HexToAddress(appearance.Address),

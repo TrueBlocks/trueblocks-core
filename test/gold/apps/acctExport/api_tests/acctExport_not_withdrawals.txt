@@ -1,0 +1,33 @@
+export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&firstBlock=17013606&lastBlock=17083530&fmt=json
+{
+  "data": [
+    {
+      "blockHash": "0xcecf698db77636cebbbf6ee9c68de9ae117269cccedd8a20f8e951a9982abc90",
+      "blockNumber": 17013606,
+      "date": "2023-04-09 22:15:47 UTC",
+      "ether": "0.395974547020990926",
+      "from": "0x0000000000000000000000000000004d696e6572",
+      "gas": 0,
+      "gasCost": 0,
+      "gasPrice": 0,
+      "gasUsed": 0,
+      "hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "receipt": {},
+      "timestamp": 1681078547,
+      "to": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "traces": [],
+      "transactionIndex": 99999,
+      "value": "395974547020990926"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
