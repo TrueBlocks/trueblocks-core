@@ -47,9 +47,9 @@ func (s *Service) pinFileRemotely(chain, filepath string) (base.IpfsHash, error)
 	}()
 
 	fileSize := file.FileSize(filepath)
-	sleep := time.Duration(((fileSize / (50 * 1024 * 1024)) + 1) * 30) // 30 seconds per 50MB
+	timeout := time.Duration(((fileSize / (50 * 1024 * 1024)) + 1) * 30) // 30 seconds per 50MB
 	client := &http.Client{
-		Timeout: sleep * time.Second,
+		Timeout: timeout * time.Second,
 	}
 
 	req, err := http.NewRequest(http.MethodPost, config.GetPinning().RemotePinUrl, r)
