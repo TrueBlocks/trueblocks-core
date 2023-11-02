@@ -1,0 +1,91 @@
+package manifest
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+)
+
+// ReadManifest reads the manifest from a file or from the Unchained Index smart contract.
+//
+// It first checks if the manifest file exists. If it does, it reads the manifest from the file.
+// If the caller requests the contract or the cached manifest does not exist, it reads the
+// manifest from the contract. It then checks if the new manifest has more chunks than the existing
+// one. If it does (or if the file didn't exist), it saves the new manifest to the file. Finally, it
+// creates a map of chunks for easy lookup and sets the specification if it is not already set.
+func ReadManifest(chain string, publisher base.Address, source Source) (man *Manifest, err error) {
+	manifestFn := config.PathToManifest(chain)
+	exists := file.FileExists(manifestFn)
+
+	if exists {
+		// We will either return this or use it to compare with the downlaoded manifest
+		// to see if we need to update the file.
+		man, err = readManifestFile(manifestFn)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if source == FromContract || !exists {
+		database := chain
+		cid, err := ReadUnchainedIndex(chain, publisher, database)
+		if err != nil {
+			return nil, err
+		} else if len(cid) == 0 {
+			return nil, fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
+		}
+		gatewayUrl := config.GetChain(chain).IpfsGateway
+		logger.InfoTable("Chain:", chain)
+		logger.InfoTable("Gateway:", gatewayUrl)
+		logger.InfoTable("Publisher:", publisher)
+		logger.InfoTable("Database:", database)
+		logger.InfoTable("CID:", cid)
+		newManifest, err := downloadManifest(chain, gatewayUrl, cid)
+		if err != nil {
+			return nil, err
+		}
+
+		if !exists || len(newManifest.Chunks) > len(man.Chunks) {
+			err = newManifest.SaveManifest(chain, manifestFn)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		man = newManifest
+	}
+
+	man.ChunkMap = make(map[string]*types.SimpleChunkRecord)
+	for i := range man.Chunks {
+		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
+	}
+	if man.Specification == "" {
+		man.Specification = base.IpfsHash(config.GetUnchained().Specification)
+	}
+
+	return man, nil
+}
+
+// readManifestFile reads the manifest from a file.
+//
+// It first reads the contents of the file into a string. It then decodes the string into the manifest.
+func readManifestFile(path string) (*Manifest, error) {
+	contents := file.AsciiFileToString(path)
+	if len(contents) == 0 {
+		return nil, ErrManifestNotFound
+	}
+
+	man := &Manifest{}
+	reader := bytes.NewReader([]byte(contents))
+	if err := json.NewDecoder(reader).Decode(man); err != nil {
+		return man, err
+	}
+
+	return man, nil
+}

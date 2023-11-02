@@ -51,7 +51,6 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	if err != nil {
 		return err
 	}
-	man.LoadChunkMap()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {

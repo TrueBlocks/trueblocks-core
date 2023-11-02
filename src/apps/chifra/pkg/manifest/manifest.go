@@ -1,17 +1,10 @@
 package manifest
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
-	"fmt"
-	"os"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -46,114 +39,3 @@ const (
 )
 
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
-
-// ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
-func ReadManifest(chain string, publisher base.Address, source Source) (*Manifest, error) {
-	if source == FromContract {
-		database := chain
-		cid, err := ReadUnchainedIndex(chain, publisher, database)
-		if err != nil {
-			return nil, err
-		} else if len(cid) == 0 {
-			return nil, fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
-		}
-
-		gatewayUrl := config.GetChain(chain).IpfsGateway
-
-		logger.InfoTable("Chain:", chain)
-		logger.InfoTable("Gateway:", gatewayUrl)
-		logger.InfoTable("Publisher:", publisher)
-		logger.InfoTable("Database:", database)
-		logger.InfoTable("CID:", cid)
-
-		man, err := downloadManifest(chain, gatewayUrl, cid)
-		if man != nil {
-			man.LoadChunkMap()
-			if man.Specification == "" {
-				man.Specification = base.IpfsHash(config.GetUnchained().Specification)
-			}
-		}
-
-		return man, err
-	}
-
-	manifestPath := config.PathToManifest(chain)
-	if !file.FileExists(manifestPath) {
-		// basically EstablishManifest
-		if publisher.IsZero() {
-			publisher = base.HexToAddress(config.GetUnchained().PreferredPublisher)
-		}
-		man, err := ReadManifest(chain, publisher, FromContract)
-		if err != nil {
-			return nil, err
-		}
-		return man, man.SaveManifest(chain, config.PathToManifest(chain))
-	}
-
-	contents := file.AsciiFileToString(manifestPath)
-	if len(contents) == 0 {
-		return nil, ErrManifestNotFound
-	}
-
-	man := &Manifest{}
-	reader := bytes.NewReader([]byte(contents))
-	if err := json.NewDecoder(reader).Decode(man); err != nil {
-		return man, err
-	}
-
-	man.LoadChunkMap()
-	if man.Specification == "" {
-		man.Specification = base.IpfsHash(config.GetUnchained().Specification)
-	}
-
-	return man, nil
-}
-
-func (m *Manifest) LoadChunkMap() {
-	m.ChunkMap = make(map[string]*types.SimpleChunkRecord)
-	for i := range m.Chunks {
-		m.ChunkMap[m.Chunks[i].Range] = &m.Chunks[i]
-	}
-}
-
-// SaveManifest writes the manifest to disc in JSON at fileName
-func (m *Manifest) SaveManifest(chain, fileName string) error {
-	m.Config = config.GetScrape(chain)
-	m.Config.ChannelCount = 0 // we don't want this in the manifest
-
-	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		return fmt.Errorf("creating file: %s", err)
-	}
-	defer w.Close()
-
-	// Protect against overwriting files on disc
-	err = file.Lock(w)
-	if err != nil {
-		return fmt.Errorf("locking file: %s", err)
-	}
-	defer func() {
-		_ = file.Unlock(w)
-	}()
-
-	// remove dups, last in wins
-	seen := make(map[string]bool)
-	chunks := make([]types.SimpleChunkRecord, 0, len(m.Chunks))
-	for i := len(m.Chunks) - 1; i >= 0; i-- {
-		if !seen[m.Chunks[i].Range] {
-			seen[m.Chunks[i].Range] = true
-			chunks = append(chunks, m.Chunks[i])
-		}
-	}
-	sort.Slice(chunks, func(i, j int) bool {
-		return chunks[i].Range < chunks[j].Range
-	})
-	m.Chunks = chunks
-
-	if outputBytes, err := json.MarshalIndent(m, "", "  "); err != nil {
-		return err
-	} else {
-		_, err = w.Write(outputBytes)
-		return err
-	}
-}
