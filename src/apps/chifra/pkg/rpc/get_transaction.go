@@ -46,6 +46,8 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 	return
 }
 
+// TODO: See #3361
+
 func (conn *Connection) GetTransactionByAppearance(appearance *types.RawAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
 	bn := uint64(appearance.BlockNumber)
 	txid := uint64(appearance.TransactionIndex)
@@ -230,13 +232,11 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, appearan
 	} else {
 		if rt == types.Withdrawal {
 			tx := &types.SimpleTransaction{
-				BlockHash:        block.Hash,
 				BlockNumber:      uint64(appearance.BlockNumber),
 				TransactionIndex: uint64(appearance.TransactionIndex),
 				Timestamp:        block.Timestamp,
 				From:             base.WithdrawalSender,
 				To:               base.HexToAddress(appearance.Address),
-				// Value:            total,
 			}
 			return tx, nil
 		}
