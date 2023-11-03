@@ -47,7 +47,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		outPath = config.PathToManifest(chain)
 	}
 
-	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromCache)
+	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Cache|manifest.NoUpdate)
 	if err != nil {
 		return err
 	}

@@ -3,6 +3,7 @@ package manifest
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -22,6 +23,7 @@ import (
 func ReadManifest(chain string, publisher base.Address, source Source) (man *Manifest, err error) {
 	manifestFn := config.PathToManifest(chain)
 	exists := file.FileExists(manifestFn)
+	man = &Manifest{}
 
 	if exists {
 		// We will either return this or use it to compare with the downlaoded manifest
@@ -30,9 +32,13 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		if err != nil {
 			return nil, err
 		}
+		if man.Chain != chain {
+			msg := fmt.Sprintf("The remote manifest's chain (%s) does not match the cached manifest's chain (%s).", man.Chain, chain)
+			return man, errors.New(msg)
+		}
 	}
 
-	if source == FromContract || !exists {
+	if (source == Contract || !exists) && source&NoUpdate == 0 {
 		database := chain
 		cid, err := ReadUnchainedIndex(chain, publisher, database)
 		if err != nil {
@@ -49,6 +55,10 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		newManifest, err := downloadManifest(chain, gatewayUrl, cid)
 		if err != nil {
 			return nil, err
+		}
+		if newManifest.Chain != chain {
+			msg := fmt.Sprintf("The remote manifest's chain (%s) does not match the cached manifest's chain (%s).", newManifest.Chain, chain)
+			return newManifest, errors.New(msg)
 		}
 
 		if !exists || len(newManifest.Chunks) > len(man.Chunks) {

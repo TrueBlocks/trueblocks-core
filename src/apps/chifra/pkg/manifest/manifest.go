@@ -31,11 +31,13 @@ type Manifest struct {
 	ChunkMap map[string]*types.SimpleChunkRecord `json:"-"`
 }
 
-type Source uint
+type Source int
 
 const (
-	FromCache Source = iota
-	FromContract
+	None Source = 1 << iota
+	Cache
+	Contract
+	NoUpdate
 )
 
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
