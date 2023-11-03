@@ -5,7 +5,6 @@
 package initPkg
 
 import (
-	"errors"
 	"fmt"
 	"runtime"
 	"strings"
@@ -34,22 +33,22 @@ func (opts *InitOptions) HandleInit() error {
 	// scraper starts, it starts on the correct block.
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
+	existing, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Cache|manifest.NoUpdate)
 	if err != nil {
 		return err
 	}
 
-	if remoteManifest.Chain != chain {
-		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, chain)
-		return errors.New(msg)
+	remote, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Contract)
+	if err != nil {
+		return err
 	}
 
-	if err = opts.UpdateLocalManifest(remoteManifest); err != nil {
+	if err = opts.updateLocalManifest(existing, remote); err != nil {
 		return err
 	}
 
 	// Get the list of things we need to download
-	chunksToDownload, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
+	chunksToDownload, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remote, []uint64{})
 	if err != nil {
 		return err
 	}
@@ -59,7 +58,7 @@ func (opts *InitOptions) HandleInit() error {
 	logger.InfoTable("Specification:", config.GetUnchained().Specification)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
-	logger.InfoTable("Chunks in manifest:", fmt.Sprintf("%d", len(remoteManifest.Chunks)))
+	logger.InfoTable("Chunks in manifest:", fmt.Sprintf("%d", len(remote.Chunks)))
 	logger.InfoTable("Files deleted:", fmt.Sprintf("%d", nDeleted))
 	logger.InfoTable("Files downloaded:", fmt.Sprintf("%d", nToDownload))
 
@@ -243,22 +242,17 @@ func retry(failedChunks []types.SimpleChunkRecord, nTimes int, downloadChunksFun
 	return len(chunksToRetry)
 }
 
-// UpdateLocalManifest updates the local manifest with the one downloaded but may add existing chunks if they are later...
-func (opts *InitOptions) UpdateLocalManifest(remoteManifest *manifest.Manifest) error {
+// updateLocalManifest updates the local manifest with the one downloaded but may add existing chunks if they are later...
+func (opts *InitOptions) updateLocalManifest(existing, remote *manifest.Manifest) error {
 	chain := opts.Globals.Chain
 
-	existingManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromCache)
-	if err != nil {
-		return err
-	}
-
 	// Don't modify the smart contract's manifest -- we want to download from it, so we don't want these extra chunks
-	copy := existingManifest
+	copy := *existing
 
-	lastExisting := base.RangeFromRangeString(existingManifest.Chunks[len(existingManifest.Chunks)-1].Range)
-	lastRemote := base.RangeFromRangeString(remoteManifest.Chunks[len(remoteManifest.Chunks)-1].Range)
+	lastExisting := base.RangeFromRangeString(existing.Chunks[len(existing.Chunks)-1].Range)
+	lastRemote := base.RangeFromRangeString(remote.Chunks[len(remote.Chunks)-1].Range)
 	if !lastExisting.LaterThan(lastRemote) {
-		for _, ch := range existingManifest.Chunks {
+		for _, ch := range existing.Chunks {
 			chRng := base.RangeFromRangeString(ch.Range)
 			if chRng.LaterThan(lastRemote) {
 				copy.Chunks = append(copy.Chunks, ch)
@@ -266,12 +260,7 @@ func (opts *InitOptions) UpdateLocalManifest(remoteManifest *manifest.Manifest) 
 		}
 	}
 
-	err = copy.SaveManifest(chain, config.PathToManifest(chain))
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return copy.SaveManifest(chain, config.PathToManifest(chain))
 }
 
 var spaces = strings.Repeat(" ", 55)

@@ -38,18 +38,18 @@ func (s *simpleIpfsPin) Model(chain, format string, verbose bool, extraOptions m
 
 	// EXISTING_CODE
 	model = map[string]interface{}{
+		"fileName":   s.FileName,
 		"cid":        s.Cid,
 		"datePinned": cleanDate(s.DatePinned),
 		"status":     s.Status,
 		"size":       s.Size,
-		"fileName":   s.FileName,
 	}
 	order = []string{
+		"fileName",
 		"cid",
 		"datePinned",
 		"status",
 		"size",
-		"fileName",
 	}
 	// EXISTING_CODE
 

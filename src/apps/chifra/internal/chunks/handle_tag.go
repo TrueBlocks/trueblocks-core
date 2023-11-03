@@ -37,7 +37,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		nChunksTagged := 0
-		man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromCache)
+		man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Cache|manifest.NoUpdate)
 		if err != nil {
 			return
 		}

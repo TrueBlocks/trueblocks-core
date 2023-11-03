@@ -13,7 +13,7 @@ import (
 func (opts *InitOptions) HandleDryRun() error {
 	chain := opts.Globals.Chain
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Contract|manifest.NoUpdate)
 	if err != nil {
 		return err
 	}
@@ -22,11 +22,6 @@ func (opts *InitOptions) HandleDryRun() error {
 		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, chain)
 		return errors.New(msg)
 	}
-
-	// err = remoteManifest.SaveManifest(chain, config.PathToManifest(chain))
-	// if err != nil {
-	// 	return err
-	// }
 
 	// Get the list of things we need to download
 	_, nToDownload, nDeleted, err := opts.prepareDownloadList(chain, remoteManifest, []uint64{})
