@@ -140,5 +140,5 @@ TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
-blockNumber	transactionIndex	timestamp	date	from	to	ether	gasPrice	gasUsed	gasCost	hash	isError	encoding	compressedTx
-10277780	88	1592323744	2020-06-16 16:09:04 UTC	0x04fe1f0c597fbc65700f4fba6f87501edc20e665	0xdac17f958d2ee523a2206206994597c13d831ec7	0	40000000000	26209	1048360000000000	0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a	false	0xa9059cbb	{name:transfer|inputs:{_to:0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9|_value:381000000}}
+blockNumber	transactionIndex	timestamp	date	from	to	ether	gasPrice	gasUsed	gasCost	hash	isError	encoding	compressedTx	type
+10277780	88	1592323744	2020-06-16 16:09:04 UTC	0x04fe1f0c597fbc65700f4fba6f87501edc20e665	0xdac17f958d2ee523a2206206994597c13d831ec7	0	40000000000	26209	1048360000000000	0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a	false	0xa9059cbb	{name:transfer|inputs:{_to:0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9|_value:381000000}}	

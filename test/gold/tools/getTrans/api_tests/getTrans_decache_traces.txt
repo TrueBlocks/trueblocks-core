@@ -2,7 +2,7 @@ transactions?transactions=46147.0&decache
 {
   "data": [
     {
-      "msg": "1 items totaling 395 bytes were removed from the transactions cache."
+      "msg": "1 items totaling 406 bytes were removed from the transactions cache."
     }
   ],
   "meta": {
