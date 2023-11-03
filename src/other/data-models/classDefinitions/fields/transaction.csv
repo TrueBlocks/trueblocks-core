@@ -24,4 +24,4 @@ articulatedTx        ,Function    ,           ,true   ,      ,        ,         
 compressedTx         ,string      ,           ,       ,      ,true    ,          ,        ,         , 19 ,     ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
 statements           ,Statement   ,           ,true   ,true  ,true    ,          ,        ,         , 15 ,     ,              ,array of reconciliations
 gasUsed              ,gas         ,           ,       ,      ,        ,          ,true    ,true     ,    ,   7 ,              ,
-type                 ,string      ,           ,       ,      ,        ,          ,rawonly ,         ,    ,     ,              ,
+type                 ,string      ,           ,       ,      ,        ,          ,        ,         ,    ,     ,              ,

@@ -89,6 +89,7 @@ type SimpleTransaction struct {
 	To                   base.Address    `json:"to"`
 	Traces               []SimpleTrace   `json:"traces"`
 	TransactionIndex     base.Blknum     `json:"transactionIndex"`
+	TransactionType      string          `json:"type"`
 	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
@@ -194,6 +195,9 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		if s.MaxPriorityFeePerGas > 0 {
 			model["maxPriorityFeePerGas"] = s.MaxPriorityFeePerGas
 		}
+		if len(s.TransactionType) > 0 && s.TransactionType != "0x0" {
+			model["type"] = s.TransactionType
+		}
 		if len(s.Input) > 2 {
 			model["input"] = s.Input
 		}
@@ -268,6 +272,12 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		}
 
 	} else {
+		if s.TransactionType != "0x0" {
+			model["type"] = s.TransactionType
+		} else {
+			model["type"] = ""
+		}
+		order = append(order, "type")
 		model["ether"] = utils.FormattedValue(s.Value, true, 18)
 		ethGasPrice := utils.FormattedValue(*big.NewInt(0).SetUint64(s.GasPrice), true, 18)
 		model["ethGasPrice"] = ethGasPrice
@@ -428,6 +438,11 @@ func (s *SimpleTransaction) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// TransactionType
+	if err = cache.WriteValue(writer, s.TransactionType); err != nil {
+		return err
+	}
+
 	// Value
 	if err = cache.WriteValue(writer, &s.Value); err != nil {
 		return err
@@ -535,6 +550,11 @@ func (s *SimpleTransaction) UnmarshalCache(version uint64, reader io.Reader) (er
 		return err
 	}
 
+	// TransactionType
+	if err = cache.ReadValue(reader, &s.TransactionType, version); err != nil {
+		return err
+	}
+
 	// Value
 	if err = cache.ReadValue(reader, &s.Value, version); err != nil {
 		return err
@@ -576,6 +596,7 @@ func NewRawTransactionFromMap(input map[string]any) (r *RawTransaction) {
 	r.To = fmt.Sprint(input["to"])
 	r.TransactionIndex = fmt.Sprint(input["transactionIndex"])
 	r.Value = fmt.Sprint(input["value"])
+	r.TransactionType = fmt.Sprint(input["type"])
 
 	return
 }
@@ -601,6 +622,7 @@ func NewSimpleTransaction(raw *RawTransaction, receipt *SimpleReceipt, timestamp
 	s.MaxFeePerGas = utils.MustParseUint(raw.MaxFeePerGas)
 	s.MaxPriorityFeePerGas = utils.MustParseUint(raw.MaxPriorityFeePerGas)
 	s.Input = raw.Input
+	s.TransactionType = raw.TransactionType
 
 	s.HasToken = hasToken
 	if receipt != nil {
