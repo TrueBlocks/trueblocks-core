@@ -10,7 +10,7 @@ export function getScrape(
   parameters?: {
     blockCnt?: uint64,
     sleep?: double,
-    startBlock?: uint64,
+    touch?: uint64,
     chain: string,
     noHeader?: boolean,
     fmt?: string,

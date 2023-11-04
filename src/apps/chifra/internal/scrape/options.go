@@ -24,7 +24,7 @@ import (
 type ScrapeOptions struct {
 	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
 	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
-	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	Touch        uint64                `json:"touch,omitempty"`        // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	RunCount     uint64                `json:"runCount,omitempty"`     // Run the scraper this many times, then quit
 	Publisher    string                `json:"publisher,omitempty"`    // For some query options, the publisher of the index
 	DryRun       bool                  `json:"dryRun,omitempty"`       // Show the configuration that would be applied if run,no changes are made
@@ -46,7 +46,7 @@ var defaultScrapeOptions = ScrapeOptions{
 func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
-	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
+	logger.TestLog(opts.Touch != 0, "Touch: ", opts.Touch)
 	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
 	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
@@ -67,7 +67,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts := &copy
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
-	opts.StartBlock = 0
+	opts.Touch = 0
 	opts.RunCount = 0
 	opts.Settings.AppsPerChunk = 2000000
 	opts.Settings.SnapToGrid = 250000
@@ -81,8 +81,8 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.BlockCnt = globals.ToUint64(value[0])
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
-		case "startBlock":
-			opts.StartBlock = globals.ToUint64(value[0])
+		case "touch":
+			opts.Touch = globals.ToUint64(value[0])
 		case "runCount":
 			opts.RunCount = globals.ToUint64(value[0])
 		case "publisher":

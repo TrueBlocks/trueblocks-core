@@ -190,11 +190,14 @@ Usage:
   chifra scrape [flags]
 
 Flags:
-  -n, --block_cnt uint     maximum number of blocks to process per pass (default 2000)
-  -s, --sleep float        seconds to sleep between scraper passes (default 14)
-  -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
-  -v, --verbose            enable verbose output
-  -h, --help               display this help screen
+  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
+  -s, --sleep float      seconds to sleep between scraper passes (default 14)
+  -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -v, --verbose          enable verbose output
+  -h, --help             display this help screen
+
+Notes:
+  - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
 ```
 
 Data models produced by this tool:

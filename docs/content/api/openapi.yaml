@@ -1976,7 +1976,7 @@ paths:
           schema:
             type: number
             format: double
-        - name: startBlock
+        - name: touch
           description: >
             first block to visit when scraping (snapped back to most recent snap_to_grid mark)
           required: false
