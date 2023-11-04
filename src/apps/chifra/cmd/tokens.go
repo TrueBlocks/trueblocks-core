@@ -69,7 +69,7 @@ One or more of [ name | symbol | decimals | totalSupply | version | all ]`)
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
-	globals.InitGlobals(tokensCmd, &tokensPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("tokens", tokensCmd, &tokensPkg.GetOptions().Globals, capabilities)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	tokensCmd.SetOut(os.Stderr)

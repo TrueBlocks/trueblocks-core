@@ -65,7 +65,7 @@ func SetDefaults(opts *GlobalOptions) {
 }
 
 // TODO: These options should be in a data file
-func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
+func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	opts.TestMode = file.IsTestMode()
 	opts.Caps = c
 
@@ -83,7 +83,9 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	}
 
 	if opts.Caps.Has(caps.Caching) {
-		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
+		if whoAmI != "monitors" {
+			cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
+		}
 		cmd.Flags().BoolVarP(&opts.Decache, "decache", "D", false, "removes related items from the cache")
 	}
 

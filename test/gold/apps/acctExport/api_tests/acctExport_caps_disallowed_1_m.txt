@@ -1,6 +1,6 @@
 monitors?addrs=trueblocks.eth&cache
 {
   "errors": [
-    "Invalid key (cache) in monitors route."
+    "Please provide either --clean or one of the CRUD commands."
   ]
 }

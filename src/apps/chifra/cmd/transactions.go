@@ -79,7 +79,7 @@ One of [ from | to ]`)
 		transactionsCmd.Flags().MarkHidden("cache_traces")
 		transactionsCmd.Flags().MarkHidden("source")
 	}
-	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("transactions", transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	transactionsCmd.SetOut(os.Stderr)

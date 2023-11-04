@@ -207,7 +207,6 @@ func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 		return nil
 	}
 
-	logger.Info("Building address list from current monitors")
 	path := config.PathToCache(chain) + "monitors"
 	_ = filepath.Walk(path, walkFunc)
 }

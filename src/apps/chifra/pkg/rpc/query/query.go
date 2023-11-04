@@ -195,12 +195,13 @@ func debugCurl(payload rpcPayload, rpcProvider string) {
 		return
 	}
 
-	var bytes []byte
-	var payloadStr string
-
 	if devDebugMethod != "file" && devDebugMethod != "true" && devDebugMethod != "testing" && payload.Method != devDebugMethod {
 		return
-	} else if devDebugMethod == "testing" {
+	}
+
+	var bytes []byte
+	var payloadStr string
+	if devDebugMethod == "testing" {
 		rpcProvider = "--rpc-provider--"
 		parts := strings.Split(strings.Replace(payloadStr, "]", "[", -1), "[")
 		parts[1] = "[ --params-- ]"
@@ -208,16 +209,17 @@ func debugCurl(payload rpcPayload, rpcProvider string) {
 	} else {
 		bytes, _ = json.MarshalIndent(payload, "", "")
 		payloadStr = strings.Replace(string(bytes), "\n", " ", -1)
-		var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
-		curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
-		curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
-		if devDebugMethod == "file" {
-			file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
-		} else {
-			logger.ToggleDecoration()
-			logger.Info(curlCmd)
-			logger.ToggleDecoration()
-		}
+	}
+
+	var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
+	curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
+	curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
+	if devDebugMethod == "file" {
+		_ = file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
+	} else {
+		logger.ToggleDecoration()
+		logger.Info(curlCmd)
+		logger.ToggleDecoration()
 	}
 }
 
