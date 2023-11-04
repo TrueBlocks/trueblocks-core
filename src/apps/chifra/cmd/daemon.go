@@ -76,7 +76,7 @@ One of [ off | blooms | index ]`)
 		daemonCmd.Flags().MarkHidden("scrape")
 		daemonCmd.Flags().MarkHidden("monitor")
 	}
-	globals.InitGlobals(daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("daemon", daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
 
 	daemonCmd.SetUsageTemplate(UsageWithNotes(notesDaemon))
 	daemonCmd.SetOut(os.Stderr)

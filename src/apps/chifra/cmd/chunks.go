@@ -94,7 +94,7 @@ func init() {
 		chunksCmd.Flags().MarkHidden("unpin")
 		chunksCmd.Flags().MarkHidden("tag")
 	}
-	globals.InitGlobals(chunksCmd, &chunksPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("chunks", chunksCmd, &chunksPkg.GetOptions().Globals, capabilities)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
 	chunksCmd.SetOut(os.Stderr)

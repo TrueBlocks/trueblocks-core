@@ -66,7 +66,6 @@ func unlockForAddress(address string) {
 	if !ok {
 		panic("unlockForAddress called for address that has never been locked: " + address)
 	}
-
 	mutex.Unlock()
 }
 
@@ -341,7 +340,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
 					logger.Error(err)
-				} else if !updater.Options.Globals.TestMode {
+				} else if !updater.Options.Globals.TestMode && !updater.Options.Silent {
 					msg := fmt.Sprintf("%s appended %d apps at %s", mon.Address.Hex(), nWritten, result.Range)
 					logger.Info(msg)
 				}

@@ -24,7 +24,6 @@ import (
 
 func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 	chain := opts.Globals.Chain
-
 	if opts.Globals.TestMode {
 		logger.Warn("Pinning option not tested.")
 		return nil

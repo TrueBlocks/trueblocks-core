@@ -33,17 +33,13 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 		return err
 	}
 
-	// usage.QueryUser(fmt.Sprintf("%d-%d-%d", blocks[0], blocks[len(blocks)-1], nTimestamps), "")
-
 	if blocks[len(blocks)-1] < nTimestamps {
 		// We already have all of these timestamps, leave early
-		// usage.QueryUser("Leaving early", "")
 		return nil
 
 	} else if blocks[0] > nTimestamps {
 		// we need to catch up (for example, the user truncated the timestamps file while debugging)
 		for block := nTimestamps; block < blocks[0]; block++ {
-			// usage.QueryUser(fmt.Sprintf("backfill: %d %d %d %d", block, blocks[0], nTimestamps, blocks[len(blocks)-1]), "")
 			ts := tslib.TimestampRecord{
 				Bn: uint32(block),
 				Ts: uint32(bm.opts.Conn.GetBlockTimestamp(block)),
@@ -53,8 +49,6 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 			}
 		}
 	}
-
-	// usage.QueryUser(fmt.Sprintf("done backfilling: %d-%d-%d", blocks[0], blocks[len(blocks)-1], nTimestamps), "")
 
 	// Append to the timestamps file all the new timestamps but as we do that make sure we're
 	// not skipping anything at the front, in the middle, or at the end of the list
@@ -69,7 +63,6 @@ func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 		}
 
 		ts := bm.timestamps[block]
-		// usage.QueryUser(fmt.Sprintf("writing: %d-%d-%d", block, ts.Bn, ts.Ts), "")
 		if err := writeOne(fp, &ts, block, blocks); err != nil {
 			return err
 		}

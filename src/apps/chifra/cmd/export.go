@@ -101,7 +101,7 @@ One of [ in | out | zero ]`)
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("load")
 	}
-	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("export", exportCmd, &exportPkg.GetOptions().Globals, capabilities)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)

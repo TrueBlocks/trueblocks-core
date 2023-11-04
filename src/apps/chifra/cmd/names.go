@@ -81,7 +81,7 @@ func init() {
 		namesCmd.Flags().MarkHidden("undelete")
 		namesCmd.Flags().MarkHidden("remove")
 	}
-	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("names", namesCmd, &namesPkg.GetOptions().Globals, capabilities)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)

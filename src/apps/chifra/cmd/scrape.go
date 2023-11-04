@@ -80,7 +80,7 @@ func init() {
 		scrapeCmd.Flags().MarkHidden("channel_count")
 		scrapeCmd.Flags().MarkHidden("allow_missing")
 	}
-	globals.InitGlobals(scrapeCmd, &scrapePkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("scrape", scrapeCmd, &scrapePkg.GetOptions().Globals, capabilities)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	scrapeCmd.SetOut(os.Stderr)

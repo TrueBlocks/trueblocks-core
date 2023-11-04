@@ -72,7 +72,7 @@ func init() {
 	if os.Getenv("TEST_MODE") != "true" {
 		listCmd.Flags().MarkHidden("publisher")
 	}
-	globals.InitGlobals(listCmd, &listPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("list", listCmd, &listPkg.GetOptions().Globals, capabilities)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	listCmd.SetOut(os.Stderr)

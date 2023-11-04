@@ -91,7 +91,7 @@ One of [ from | to | reward ]`)
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")
 	}
-	globals.InitGlobals(blocksCmd, &blocksPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("blocks", blocksCmd, &blocksPkg.GetOptions().Globals, capabilities)
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 	blocksCmd.SetOut(os.Stderr)

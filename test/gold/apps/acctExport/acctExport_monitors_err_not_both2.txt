@@ -2,6 +2,7 @@ chifra monitors  0xf503017d7baf7fbc0fff7492b751025c6a78179b --fmt json --delete 
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Delete:  true
 TEST[DATE|TIME] Undelete:  true
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  json
 Error: The --undelete option may not be used with --delete or --remove.
 Usage:
@@ -22,6 +23,7 @@ Flags:
   -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
   -u, --run_count uint     available with --watch option only, run the monitor this many times, then quit (hidden)
   -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
+  -D, --decache            removes related items from the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose output
   -h, --help               display this help screen

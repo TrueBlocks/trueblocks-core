@@ -320,6 +320,7 @@ func (opts *MonitorsOptions) getMonitorList() []monitor.Monitor {
 	for result := range monitorChan {
 		switch result.Address {
 		case base.NotAMonitor:
+			logger.Info(fmt.Sprintf("Loaded %d monitors", len(monitors)))
 			close(monitorChan)
 		default:
 			if result.Count() > 500000 {

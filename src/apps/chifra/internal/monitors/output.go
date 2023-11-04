@@ -27,7 +27,7 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 	opts := monitorsFinishParse(args)
 	outputHelpers.EnableCommand("monitors", true)
 	// EXISTING_CODE
-	outputHelpers.EnableCommand("monitors", opts.List)
+	outputHelpers.EnableCommand("monitors", opts.List || opts.Clean || opts.Globals.Decache)
 	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("monitors", &opts.Globals)
 	return opts.MonitorsInternal()
@@ -40,7 +40,7 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 	// EXISTING_CODE
 	// TODO: can we move this to Validate?
 	var err1 error
-	outputHelpers.EnableCommand("monitors", opts.List)
+	outputHelpers.EnableCommand("monitors", opts.List || opts.Clean || opts.Globals.Decache)
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
 		if r.Method == "DELETE" {
@@ -74,15 +74,14 @@ func (opts *MonitorsOptions) MonitorsInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra monitors"
 	// EXISTING_CODE
-	if opts.Clean {
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else if opts.Clean {
 		err = opts.HandleClean()
-
 	} else if opts.List {
 		err = opts.HandleList()
-
 	} else if opts.Watch {
 		err = opts.HandleWatch()
-
 	} else {
 		err = opts.HandleCrudCommands()
 	}
