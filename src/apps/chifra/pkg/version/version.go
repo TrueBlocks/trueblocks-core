@@ -41,21 +41,18 @@ func NewVersion(str string) Version {
 	return vers
 }
 
-var OldManifestVersion = "trueblocks-core@v0.40.0"
-
 // IsValidVersion returns true if the string is a full version string
 func IsValidVersion(test string) bool {
-	if test == OldManifestVersion {
-		// special case for backwards compatibility
-		return true
-	}
-
+	test = strings.Replace(test, "trueblocks-core@", "", -1)
 	if !strings.HasPrefix(test, "v") {
 		return false
 	}
 	parts := strings.Split(test, "-")
-	if len(parts) != 2 {
+	if len(parts) > 2 {
 		return false
+	}
+	if len(parts) < 2 {
+		parts = append(parts, "beta")
 	}
 	if len(parts[1]) == 0 {
 		return false

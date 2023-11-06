@@ -20,8 +20,8 @@ type indexHeader struct {
 	AppearanceCount uint32
 }
 
-var ErrIndexHeaderDiffMagic = errors.New("magic number in file is incorrect")
-var ErrIndexHeaderDiffHash = errors.New("magic number in file is incorrect")
+var ErrIndexHeaderDiffMagic = errors.New("magic number is incorrect")
+var ErrIndexHeaderDiffHash = errors.New("version hash is incorrect")
 
 func (chunk *Index) readHeader() (indexHeader, error) {
 	var header indexHeader
