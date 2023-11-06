@@ -83,7 +83,6 @@ Manifests consist of the following fields:
 | version       | the version string hashed into the chunk data                         | string                                          |
 | chain         | the chain to which this manifest belongs                              | string                                          |
 | specification | IPFS cid of the specification                                         | ipfshash                                        |
-| databases     | IPFS cid of file containing CIDs for the various databases            | ipfshash                                        |
 | chunks        | a list of the IPFS hashes of all of the chunks in the unchained index | [ChunkRecord[]](/data-model/admin/#chunkrecord) |
 
 ## ChunkRecord

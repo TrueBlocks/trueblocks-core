@@ -113,6 +113,7 @@ func (opts *ChunksOptions) validateChunks() error {
 	isCheck := opts.Check
 	isPublish := opts.Publish
 	isRemote := opts.Remote
+	isRewrite := opts.Rewrite
 	isDeep := opts.Deep
 
 	if !isIndexOrManifest && (isPin || isPublish || isRemote || isDeep || isCheck) {
@@ -145,6 +146,8 @@ func (opts *ChunksOptions) validateChunks() error {
 				return validate.Usage("The {0} option requires {1}.", "--pin", "a localPinUrl")
 			}
 		}
+	} else if isRewrite {
+		return validate.Usage("The {0} option requires {1}.", "--rewrite", "--pin")
 	}
 
 	if opts.Publish {

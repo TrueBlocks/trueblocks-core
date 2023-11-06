@@ -54,9 +54,10 @@ func init() {
 	// IPFS hash of the specification for the Unchained Index
 	trueBlocksViper.SetDefault("Unchained.Specification", "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb")
 	// The version of the specification and the pre-image of hash in the header of each chunk
-	trueBlocksViper.SetDefault("Unchained.SpecVersion", version.OldManifestVersion)
+	trueBlocksViper.SetDefault("Unchained.SpecVersion", OldManifestVersion)
 }
 
+var OldManifestVersion = "trueblocks-core@v0.40.0"
 var configMutex sync.Mutex
 var configLoaded = false
 
@@ -132,7 +133,7 @@ func GetRootConfig() *ConfigFile {
 		ch.IpfsGateway = strings.Replace(ch.IpfsGateway, "[{CHAIN}]", "ipfs", -1)
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
-		ch.RpcProvider = clean(ch.RpcProvider)
+		ch.RpcProvider = strings.Trim(clean(ch.RpcProvider), "/") // Infura, for example, doesn't like the trailing slash
 		ch.IpfsGateway = clean(ch.IpfsGateway)
 		if ch.Scrape.AppsPerChunk == 0 {
 			settings := ScrapeSettings{

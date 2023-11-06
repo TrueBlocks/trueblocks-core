@@ -105,7 +105,7 @@ func TestIsValidVersion(t *testing.T) {
 			valid: true,
 		},
 		{
-			test:  OldManifestVersion, // special case
+			test:  "trueblocks-core@v0.40.0", // special case
 			valid: true,
 		},
 	}

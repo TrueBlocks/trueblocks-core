@@ -128,6 +128,12 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 	}
 	reports = append(reports, intern)
 
+	version := simpleReportCheck{Reason: "Correct version"}
+	if err := opts.CheckVersion(fileNames, blockNums, &version); err != nil {
+		return err, false
+	}
+	reports = append(reports, version)
+
 	con := simpleReportCheck{Reason: "Consistent hashes"}
 	if err := opts.CheckHashes(cacheManifest, remoteManifest, &con); err != nil {
 		return err, false

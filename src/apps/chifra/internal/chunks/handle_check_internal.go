@@ -5,6 +5,7 @@
 package chunksPkg
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -18,13 +19,13 @@ import (
 // the hash of the spec version for expected values.
 func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *simpleReportCheck) error {
 	for _, fileName := range fileNames {
-		opts.checkIndexChunkInternal(fileName, report)
+		opts.checkIndexChunkInternal(fileName, false /* check version */, report)
 		// opts.checkBloomInternal(testId, fileName, report)
 	}
 	return nil
 }
 
-func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, report *simpleReportCheck) {
+func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, checkVersion bool, report *simpleReportCheck) {
 	report.VisitedCnt++
 	report.CheckedCnt++
 
@@ -34,12 +35,16 @@ func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, report *simp
 		if strings.Contains(err.Error(), "no such file or directory") {
 			// This is the case where the user did not download all the index chunks, only blooms
 			report.PassedCnt++
+		} else if !checkVersion && errors.Is(err, index.ErrIndexHeaderDiffHash) {
+			report.PassedCnt++
 		} else {
 			report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: %s", err, fileName))
 		}
 	} else {
 		report.PassedCnt++
-		opts.checkSnaps(fileName, &indexChunk, report)
+		if !checkVersion {
+			opts.checkSnaps(fileName, &indexChunk, report)
+		}
 	}
 
 	indexChunk.Close()
