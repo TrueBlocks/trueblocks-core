@@ -54,7 +54,11 @@ func (opts *ScrapeOptions) ScrapeInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra scrape"
 	// EXISTING_CODE
-	err = opts.HandleScrape() // Note this never returns
+	if opts.Touch > 0 {
+		err = opts.HandleTouch()
+	} else {
+		err = opts.HandleScrape() // Note this never returns
+	}
 	// EXISTING_CODE
 	timer.Report(msg)
 

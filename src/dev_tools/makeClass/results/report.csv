@@ -305,6 +305,9 @@ scrape,sleep,typescript
 scrape,startBlock,api
 scrape,startBlock,python
 scrape,startBlock,typescript
+scrape,touch,api
+scrape,touch,python
+scrape,touch,typescript
 slurp,appearances,api
 slurp,appearances,python
 slurp,appearances,typescript
