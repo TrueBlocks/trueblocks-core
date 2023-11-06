@@ -9,6 +9,5 @@ export type Manifest = {
   version: string
   chain: string
   specification: ipfshash
-  databases: ipfshash
   chunks: ChunkRecord[]
 }

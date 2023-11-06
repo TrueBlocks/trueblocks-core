@@ -18,7 +18,6 @@ import (
 type RawManifest struct {
 	Chain         string `json:"chain"`
 	Chunks        string `json:"chunks"`
-	Databases     string `json:"databases"`
 	Specification string `json:"specification"`
 	Version       string `json:"version"`
 	// EXISTING_CODE
@@ -28,12 +27,10 @@ type RawManifest struct {
 type SimpleManifest struct {
 	Chain         string              `json:"chain"`
 	Chunks        []SimpleChunkRecord `json:"chunks"`
-	Databases     base.IpfsHash       `json:"databases"`
 	Specification base.IpfsHash       `json:"specification"`
 	Version       string              `json:"version"`
 	raw           *RawManifest        `json:"-"`
 	// EXISTING_CODE
-	// Databases base.IpfsHash       `json:"databases"`
 	// EXISTING_CODE
 }
 

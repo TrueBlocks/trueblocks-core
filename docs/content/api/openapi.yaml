@@ -3617,10 +3617,6 @@ components:
           type: string
           format: ipfshash
           description: "IPFS cid of the specification"
-        databases:
-          type: string
-          format: ipfshash
-          description: "IPFS cid of file containing CIDs for the various databases"
         chunks:
           type: array
           items:
