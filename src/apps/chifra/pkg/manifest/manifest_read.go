@@ -33,7 +33,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 			return nil, err
 		}
 		if man.Chain != chain {
-			msg := fmt.Sprintf("The remote manifest's chain (%s) does not match the cached manifest's chain (%s).", man.Chain, chain)
+			msg := fmt.Sprintf("The manifest's chain (%s) does not match the requested chain (%s).", man.Chain, chain)
 			return man, errors.New(msg)
 		}
 	}
@@ -57,7 +57,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 			return nil, err
 		}
 		if newManifest.Chain != chain {
-			msg := fmt.Sprintf("The remote manifest's chain (%s) does not match the cached manifest's chain (%s).", newManifest.Chain, chain)
+			msg := fmt.Sprintf("The new manifest's chain (%s) does not match the requested chain (%s).", newManifest.Chain, chain)
 			return newManifest, errors.New(msg)
 		}
 
