@@ -1,9 +1,8 @@
-chifra chunks  manifest --pin --rewrite
+chifra chunks  manifest --rewrite
 TEST[DATE|TIME] Mode:  manifest
-TEST[DATE|TIME] Pin:  true
 TEST[DATE|TIME] Rewrite:  true
-TEST[DATE|TIME] Format:  json
-Error: The --pin option is not available in test mode.
+TEST[DATE|TIME] Format:  txt
+Error: The --rewrite option requires --pin.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
