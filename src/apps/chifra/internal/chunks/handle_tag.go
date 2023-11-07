@@ -53,7 +53,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 			}
 
 			var chunk index.Chunk
-			config.SetSpecVersion(opts.Tag)
+			_ = config.ChangeSetting("unchained", "specVersion", opts.Tag, true /* writeOut */)
 			if err := chunk.Tag(path); err != nil {
 				return false, err
 			}

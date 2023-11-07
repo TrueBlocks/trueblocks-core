@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 )
@@ -16,14 +15,6 @@ type unchainedGroup struct {
 
 func GetUnchained() unchainedGroup {
 	return GetRootConfig().Unchained
-}
-
-func SetSpecVersion(newVers string) {
-	cfg := GetRootConfig()
-	cfg.Unchained.SpecVersion = newVers
-	minVersion := version.NewVersion(DesiredConfigVersion)
-	configFile := PathToConfigFile()
-	_ = cfg.writeFile(configFile, minVersion)
 }
 
 func SpecVersionHex() string {
