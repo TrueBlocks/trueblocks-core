@@ -62,6 +62,10 @@ func (opts *InitOptions) HandleInit() error {
 	logger.InfoTable("Files deleted:", fmt.Sprintf("%d", nDeleted))
 	logger.InfoTable("Files downloaded:", fmt.Sprintf("%d", nToDownload))
 
+	if opts.All && config.GetHistory().Init != "all" {
+		_ = config.ChangeSetting("history", "init", "all", true /* writeOut */)
+	}
+
 	// Open a channel to receive a message when all the blooms have been downloaded...
 	bloomsDoneChannel := make(chan bool)
 	defer close(bloomsDoneChannel)
