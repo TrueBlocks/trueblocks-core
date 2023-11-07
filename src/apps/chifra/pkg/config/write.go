@@ -21,6 +21,14 @@ func (cfg *ConfigFile) writeFile(outFn string, vers version.Version) error {
 	return nil
 }
 
+func SetSpecVersion(newVers string) {
+	cfg := GetRootConfig()
+	cfg.Unchained.SpecVersion = newVers
+	minVersion := version.NewVersion(minVersionStr)
+	configFile := PathToConfigFile()
+	_ = cfg.writeFile(configFile, minVersion)
+}
+
 func ChangeSetting(group, item, value string, writeOut bool) error {
 	// changed := false
 	// cfg := GetRootConfig()

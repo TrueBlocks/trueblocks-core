@@ -46,7 +46,7 @@ func init() {
 	// The remote endpoint for pinning on Pinata
 	trueBlocksViper.SetDefault("Pinning.GatewayUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
 	// A warning to the user not to edit the [unchained] section of the config file
-	trueBlocksViper.SetDefault("Unchained.Comment", "reserved for system use - do not edit unless instructed to do so")
+	trueBlocksViper.SetDefault("Unchained.Comment", Reserved)
 	// The default publisher of the index of none other is provided
 	trueBlocksViper.SetDefault("Unchained.PreferredPublisher", "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
 	// V2: The address of the current version of the Unchained Index
@@ -54,10 +54,9 @@ func init() {
 	// IPFS hash of the specification for the Unchained Index
 	trueBlocksViper.SetDefault("Unchained.Specification", "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb")
 	// The version of the specification and the pre-image of hash in the header of each chunk
-	trueBlocksViper.SetDefault("Unchained.SpecVersion", OldManifestVersion)
+	trueBlocksViper.SetDefault("Unchained.SpecVersion", "trueblocks-core@v0.40.0")
 }
 
-var OldManifestVersion = "trueblocks-core@v0.40.0"
 var configMutex sync.Mutex
 var configLoaded = false
 
@@ -203,3 +202,5 @@ func pathFromXDG(envVar string) (string, error) {
 
 	return filepath.Join(xdg, "") + "/", nil
 }
+
+var Reserved = "reserved for system use - do not edit unless instructed to do so"

@@ -15,11 +15,11 @@ func pathToChainConfigFile(chain, fileName string) string {
 	return filepath.Join(PathToRootConfig(), "config", chain, fileName)
 }
 
-var DesiredConfigVersion = "v1.5.0-release"
+var minVersionStr = "v1.5.0-release"
 
 // migrate upgrades the config files to the latest versions if necessary
 func migrate(currentVer version.Version) error {
-	minVersion := version.NewVersion(DesiredConfigVersion)
+	minVersion := version.NewVersion(minVersionStr)
 	if currentVer.Uint64() >= minVersion.Uint64() {
 		return nil
 	}
