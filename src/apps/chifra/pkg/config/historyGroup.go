@@ -10,5 +10,5 @@ type historyGroup struct {
 }
 
 func GetHistory() historyGroup {
-	return historyGroup{} // GetRootConfig().History
+	return GetRootConfig().History
 }

@@ -21,38 +21,30 @@ func (cfg *ConfigFile) writeFile(outFn string, vers version.Version) error {
 	return nil
 }
 
-func SetSpecVersion(newVers string) {
-	cfg := GetRootConfig()
-	cfg.Unchained.SpecVersion = newVers
-	minVersion := version.NewVersion(minVersionStr)
-	configFile := PathToConfigFile()
-	_ = cfg.writeFile(configFile, minVersion)
-}
-
 func ChangeSetting(group, item, value string, writeOut bool) error {
-	// changed := false
-	// cfg := GetRootConfig()
+	changed := false
+	cfg := GetRootConfig()
 
-	// switch group {
-	// case "unchained":
-	// 	switch item {
-	// 	case "specVersion":
-	// 		changed = true
-	// 		cfg.Unchained.SpecVersion = value
-	// 	}
-	// case "history":
-	// 	switch item {
-	// 	case "init":
-	// 		changed = true
-	// 		cfg.History.Init = value
-	// 	}
-	// }
+	switch group {
+	case "unchained":
+		switch item {
+		case "specVersion":
+			changed = true
+			cfg.Unchained.SpecVersion = value
+		}
+	case "history":
+		switch item {
+		case "init":
+			changed = true
+			cfg.History.Init = value
+		}
+	}
 
-	// if writeOut && changed {
-	// 	minVersion := version.NewVersion(minVersionStr)
-	// 	configFile := PathToConfigFile()
-	// 	return cfg.writeFile(configFile, minVersion)
-	// }
+	if writeOut && changed {
+		minVersion := version.NewVersion(minVersionStr)
+		configFile := PathToConfigFile()
+		return cfg.writeFile(configFile, minVersion)
+	}
 
 	return nil
 }

@@ -81,9 +81,14 @@ func migrate(currentVer version.Version) error {
 		cfg.Pinning = pinning
 
 		unchained := unchainedGroup{
-			Comment: "reserved for system use - do not edit unless instructed to do so",
+			Comment: Reserved,
 		}
 		cfg.Unchained = unchained
+
+		history := historyGroup{
+			Comment: Reserved,
+		}
+		cfg.History = history
 	}
 
 	// Re-write the file (after making a backup) with the new version

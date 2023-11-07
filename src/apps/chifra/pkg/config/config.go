@@ -28,6 +28,7 @@ type ConfigFile struct {
 	Pinning   pinningGroup          `toml:"pinning"`
 	Unchained unchainedGroup        `toml:"unchained"`
 	Chains    map[string]chainGroup `toml:"chains"`
+	History   historyGroup          `toml:"history"`
 }
 
 // init sets up default values for the given configuration
@@ -39,6 +40,8 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
 	// The default chain to use if none is provided
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
+	// Storage for the last call to particular chifra commands
+	trueBlocksViper.SetDefault("History.Comment", Reserved)
 	// The pinning gateway to query when downloading the unchained index
 	trueBlocksViper.SetDefault("Pinning.GatewayURL", defaultIpfsGateway)
 	// The local endpoint for the IPFS daemon
@@ -52,7 +55,7 @@ func init() {
 	// V2: The address of the current version of the Unchained Index
 	trueBlocksViper.SetDefault("Unchained.SmartContract", "0x0c316b7042b419d07d343f2f4f5bd54ff731183d")
 	// IPFS hash of the specification for the Unchained Index
-	trueBlocksViper.SetDefault("Unchained.Specification", "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb")
+	trueBlocksViper.SetDefault("Unchained.Specification", "QmUyyU8wKW57c3CuwphhMdZb2QA5bsjt9vVfTE6LcBKmE9")
 	// The version of the specification and the pre-image of hash in the header of each chunk
 	trueBlocksViper.SetDefault("Unchained.SpecVersion", "trueblocks-core@v0.40.0")
 }
