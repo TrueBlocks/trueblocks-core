@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -119,7 +120,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	bloomPath := config.PathToIndex(chain) + "blooms/"
+	bloomPath := filepath.Join(config.PathToIndex(chain), "blooms/")
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return canceled, err

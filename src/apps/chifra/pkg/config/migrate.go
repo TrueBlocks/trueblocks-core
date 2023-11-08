@@ -31,8 +31,8 @@ func migrate(currentVer version.Version) error {
 		return err
 	}
 
-	v10000 := version.NewVersion("v1.0.0-release")
-	if currentVer.Uint64() < v10000.Uint64() {
+	vers := version.NewVersion("v1.0.0-release")
+	if currentVer.Uint64() < vers.Uint64() {
 		for chain := range cfg.Chains {
 			ch := cfg.Chains[chain]
 			ch.Chain = chain
@@ -66,8 +66,8 @@ func migrate(currentVer version.Version) error {
 		}
 	}
 
-	v15000 := version.NewVersion("v1.5.0-release")
-	if currentVer.Uint64() < v15000.Uint64() {
+	vers = version.NewVersion("v1.5.0-release")
+	if currentVer.Uint64() < vers.Uint64() {
 		pinning := pinningGroup{
 			LocalPinUrl:  "http://localhost:5001",
 			RemotePinUrl: "https://api.pinata.cloud/pinning/pinFileToIPFS",
