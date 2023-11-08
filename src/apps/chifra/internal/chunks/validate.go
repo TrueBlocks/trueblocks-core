@@ -28,6 +28,12 @@ func (opts *ChunksOptions) validateChunks() error {
 		return opts.BadFlag
 	}
 
+	if len(opts.Tag) == 0 {
+		if err := index.MustGetVersion(chain, config.HeaderVersion); err != nil {
+			return err
+		}
+	}
+
 	if opts.Globals.IsApiMode() {
 		if len(opts.Tag) > 0 {
 			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")

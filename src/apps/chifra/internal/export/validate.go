@@ -24,6 +24,10 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
+	if err := index.MustGetVersion(chain, config.HeaderVersion); err != nil {
+		return err
+	}
+
 	if opts.LastBlock == 0 {
 		opts.LastBlock = utils.NOPOS
 	}

@@ -57,6 +57,8 @@ func init() {
 	trueBlocksViper.SetDefault("Unchained.SpecVersion", "trueblocks-core@v0.40.0")
 }
 
+var HeaderVersion = "trueblocks-core@v0.40.0" // "trueblocks-core@v2.0.0-release"
+
 var configMutex sync.Mutex
 var configLoaded = false
 

@@ -23,6 +23,10 @@ func (opts *ListOptions) validateList() error {
 		return opts.BadFlag
 	}
 
+	if err := index.MustGetVersion(chain, config.HeaderVersion); err != nil {
+		return err
+	}
+
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
