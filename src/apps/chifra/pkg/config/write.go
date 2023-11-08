@@ -32,12 +32,6 @@ func ChangeSetting(group, item, value string, writeOut bool) error {
 			changed = true
 			cfg.Unchained.SpecVersion = value
 		}
-	case "history":
-		switch item {
-		case "init":
-			changed = true
-			cfg.History.Init = value
-		}
 	}
 
 	if writeOut && changed {

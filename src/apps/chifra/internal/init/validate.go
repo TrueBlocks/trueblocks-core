@@ -33,9 +33,9 @@ func (opts *InitOptions) validateInit() error {
 		}
 	}
 
-	if config.GetHistory().Init == "all" && !opts.All {
-		return validate.Usage("You previously called chifra init --all. You must continue to do so.")
-	}
+	// if config.GetHistory().Init == "all" && !opts.All {
+	// 	return validate.Usage("You previously called chifra init --all. You must continue to do so.")
+	// }
 
 	return opts.Globals.Validate()
 }
