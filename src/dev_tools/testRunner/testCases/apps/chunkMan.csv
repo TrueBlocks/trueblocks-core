@@ -61,7 +61,7 @@ index   ,both ,fast  ,chunks ,apps/chunkMan ,redir_output_append     ,n    ,mode
 
 on      ,both ,fast  ,chunks ,apps/chunkMan ,tag_invalid             ,y    ,mode = index & tag = not.a.tag
 on      ,both ,fast  ,chunks ,apps/chunkMan ,tag_invalid_mode        ,y    ,mode = manifest & tag = v1.0.0-release
-on      ,both ,fast  ,chunks ,apps/chunkMan ,tag_test                ,y    ,mode = index & tag = v1.0.0-release
+on      ,both ,fast  ,chunks ,apps/chunkMan ,tag_test                ,y    ,mode = index & tag = v2.0.0-release
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether

@@ -1,4 +1,4 @@
-chunks?mode=index&tag=v1.0.0-release
+chunks?mode=index&tag=v2.0.0-release
 {
   "errors": [
     "The --tag option is not available in api mode."

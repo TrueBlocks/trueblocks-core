@@ -42,7 +42,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		if !version.IsValidVersion(opts.Tag) {
 			return validate.Usage("The {0} ({1}) must be a valid version string.", "--tag", opts.Tag)
 		}
-		if opts.Tag != "trueblocks-core@v2.0.0-release" {
+		if opts.Tag != "v2.0.0-release" && opts.Tag != "trueblocks-core@v2.0.0-release" {
 			return validate.Usage("The only valid value for {0} is {1}.", "--tag", "trueblocks-core@v2.0.0-release")
 		}
 	}
