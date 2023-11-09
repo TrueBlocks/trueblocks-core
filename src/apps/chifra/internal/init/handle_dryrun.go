@@ -29,7 +29,7 @@ func (opts *InitOptions) HandleDryRun() error {
 		return err
 	}
 
-	spec := config.GetUnchained().Specification
+	spec := config.Specification
 	if opts.Globals.TestMode {
 		nToDownload = utils.Min(10, nToDownload)
 		spec = "--testing-hash--"

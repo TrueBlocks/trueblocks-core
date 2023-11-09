@@ -76,7 +76,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
 	}
 	if man.Specification == "" {
-		man.Specification = base.IpfsHash(config.GetUnchained().Specification)
+		man.Specification = base.IpfsHash(config.Specification)
 	}
 
 	return man, nil

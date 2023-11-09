@@ -2,7 +2,6 @@ package index
 
 import (
 	"encoding/binary"
-	"errors"
 	"io"
 	"os"
 	"unsafe"
@@ -51,9 +50,6 @@ func (bl *Bloom) Read(fileName string) (err error) {
 
 	return nil
 }
-
-var ErrBloomHeaderDiffMagic = errors.New("invalid magic number in bloom header")
-var ErrBloomHeaderDiffHash = errors.New("invalid hash in bloom header")
 
 // readHeader reads a bloom file header into Bloom.
 func (bl *Bloom) readHeader() error {

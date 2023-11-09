@@ -39,7 +39,7 @@ func (s *simpleChunkIndex) Model(chain, format string, verbose bool, extraOption
 	model = map[string]interface{}{
 		"range":        s.Range,
 		"magic":        s.Magic,
-		"hash":         FormattedTag(verbose, s.Hash.Hex()),
+		"hash":         FormattedTag(verbose, s.Hash),
 		"nAddresses":   s.NAddresses,
 		"nAppearances": s.NAppearances,
 		"fileSize":     s.Size,

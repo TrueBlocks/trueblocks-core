@@ -13,12 +13,13 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/spf13/cobra"
 )
@@ -143,9 +144,9 @@ func (opts *ChunksOptions) shouldShow(obj index.AddressRecord) bool {
 	return false
 }
 
-func FormattedTag(verbose bool, hash string) string {
-	if tag, ok := version.VersionTags[hash]; !ok {
-		return utils.FormattedHash(verbose, hash)
+func FormattedTag(verbose bool, hash base.Hash) string {
+	if tag, ok := config.VersionTags[hash.Hex()]; !ok {
+		return utils.FormattedHash(verbose, hash.Hex())
 	} else {
 		return tag
 	}

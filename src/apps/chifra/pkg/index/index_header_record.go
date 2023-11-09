@@ -2,7 +2,6 @@ package index
 
 import (
 	"encoding/binary"
-	"errors"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -20,9 +19,6 @@ type indexHeader struct {
 	AppearanceCount uint32
 }
 
-var ErrIndexHeaderDiffMagic = errors.New("magic number is incorrect")
-var ErrIndexHeaderDiffHash = errors.New("version hash is incorrect")
-
 func (chunk *Index) readHeader() (indexHeader, error) {
 	var header indexHeader
 
@@ -36,7 +32,7 @@ func (chunk *Index) readHeader() (indexHeader, error) {
 	}
 
 	if header.Hash.Hex() != config.SpecVersionHex() {
-		return header, ErrIndexHeaderDiffHash
+		return header, ErrIncorrectHash
 	}
 
 	return header, nil
