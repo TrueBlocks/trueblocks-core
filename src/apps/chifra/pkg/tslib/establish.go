@@ -47,6 +47,7 @@ func downloadCidToBinary(chain, database, outputFn, cid string) error {
 	url.Path = filepath.Join(url.Path, cid)
 
 	logger.InfoTable("Chain:", chain)
+	logger.InfoTable("Database:", database)
 	logger.InfoTable("Gateway:", gatewayUrl)
 	logger.InfoTable("URL:", url.String())
 	logger.InfoTable("CID:", cid)

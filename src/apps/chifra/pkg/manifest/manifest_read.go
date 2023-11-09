@@ -48,9 +48,9 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		}
 		gatewayUrl := config.GetChain(chain).IpfsGateway
 		logger.InfoTable("Chain:", chain)
-		logger.InfoTable("Gateway:", gatewayUrl)
-		logger.InfoTable("Publisher:", publisher)
 		logger.InfoTable("Database:", database)
+		logger.InfoTable("Publisher:", publisher)
+		logger.InfoTable("Gateway:", gatewayUrl)
 		logger.InfoTable("CID:", cid)
 		newManifest, err := downloadManifest(chain, gatewayUrl, cid)
 		if err != nil {
