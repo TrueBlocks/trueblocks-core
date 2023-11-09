@@ -2,7 +2,7 @@ chifra chunks  manifest --tag v1.0.0-release
 TEST[DATE|TIME] Mode:  manifest
 TEST[DATE|TIME] Tag:  v1.0.0-release
 TEST[DATE|TIME] Format:  txt
-Error: The --tag option is only available in index mode.
+Error: The only valid value for --tag is trueblocks-core@v2.0.0-release.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 
