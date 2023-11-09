@@ -61,7 +61,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 			return newManifest, errors.New(msg)
 		}
 
-		if !exists || len(newManifest.Chunks) > len(man.Chunks) {
+		if !exists || shouldWrite(man, newManifest) {
 			err = newManifest.SaveManifest(chain, manifestFn)
 			if err != nil {
 				return nil, err
@@ -98,4 +98,11 @@ func readManifestFile(path string) (*Manifest, error) {
 	}
 
 	return man, nil
+}
+
+func shouldWrite(newMan, man *Manifest) bool {
+	diffLen := len(newMan.Chunks) != len(man.Chunks)
+	diffSpec := newMan.Specification != man.Specification
+	diffVers := newMan.Version != man.Version
+	return diffLen || diffSpec || diffVers
 }
