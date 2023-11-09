@@ -2,6 +2,7 @@ package index
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
 	"os"
 	"unsafe"
@@ -69,15 +70,15 @@ func (bl *Bloom) readHeader() error {
 	if bl.Header.Magic != file.SmallMagicNumber {
 		bl.Header = bloomHeader{}
 		_, _ = bl.File.Seek(0, io.SeekStart)
-		return ErrBloomHeaderDiffMagic
+		return fmt.Errorf("Bloom.readHeader: %w %x %x", ErrIncorrectMagic, bl.Header.Magic, file.SmallMagicNumber)
 	}
 
 	// Set HeaderSize.
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
 
 	// Validate hash against provided tag.
-	if bl.Header.Hash.Hex() != config.SpecVersionHex() {
-		return ErrBloomHeaderDiffHash
+	if bl.Header.Hash != base.BytesToHash(config.SpecVersionKeccak()) {
+		return fmt.Errorf("Bloom.readHeader: %w %x %x", ErrIncorrectHash, bl.Header.Hash, base.BytesToHash(config.SpecVersionKeccak()))
 	}
 
 	return nil

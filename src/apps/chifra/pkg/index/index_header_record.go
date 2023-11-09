@@ -2,6 +2,7 @@ package index
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -28,11 +29,11 @@ func (chunk *Index) readHeader() (indexHeader, error) {
 	}
 
 	if header.Magic != file.MagicNumber {
-		return header, ErrIndexHeaderDiffMagic
+		return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectMagic, header.Magic, file.MagicNumber)
 	}
 
-	if header.Hash.Hex() != config.SpecVersionHex() {
-		return header, ErrIncorrectHash
+	if header.Hash != base.BytesToHash(config.SpecVersionKeccak()) {
+		return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectHash, header.Hash, base.BytesToHash(config.SpecVersionKeccak()))
 	}
 
 	return header, nil

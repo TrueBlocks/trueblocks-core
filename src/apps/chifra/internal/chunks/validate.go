@@ -28,12 +28,6 @@ func (opts *ChunksOptions) validateChunks() error {
 		return opts.BadFlag
 	}
 
-	if len(opts.Tag) == 0 {
-		if err := index.MustGetVersion(chain, config.HeaderVersion); err != nil {
-			return err
-		}
-	}
-
 	if opts.Globals.IsApiMode() {
 		if len(opts.Tag) > 0 {
 			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")
@@ -238,13 +232,13 @@ func (opts *ChunksOptions) validateChunks() error {
 		// }
 	}
 
-	// Note that this does not return if the index is not initialized
-	if err := index.IsInitialized(chain); err != nil {
-		if opts.Globals.IsApiMode() {
-			return err
-		} else {
+	if err := index.IsInitialized(chain, config.HeaderVersion); err != nil {
+		if errors.Is(err, index.ErrNotInitialized) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
+		} else if len(opts.Tag) == 0 {
+			return err
 		}
+		// It's okay to mismatch versions if we're tagging
 	}
 
 	return opts.Globals.Validate()

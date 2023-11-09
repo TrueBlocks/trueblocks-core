@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
@@ -9,24 +8,18 @@ type unchainedGroup struct {
 	Comment            string `toml:"comment"`
 	PreferredPublisher string `toml:"preferredPublisher,omitempty"`
 	SmartContract      string `toml:"smartContract,omitempty"`
-	SpecVersion        string `toml:"specVersion,omitempty"`
 }
 
 func GetUnchained() unchainedGroup {
 	return GetRootConfig().Unchained
 }
 
-func SpecVersionHex() string {
-	return hexutil.Encode(SpecVersionKeccak())
-}
-
-func SpecVersionText() string {
-	return GetUnchained().SpecVersion
-}
-
 func SpecVersionKeccak() []byte {
-	return crypto.Keccak256([]byte(GetUnchained().SpecVersion))
+	return crypto.Keccak256([]byte(HeaderVersion))
 }
+
+var HeaderVersion = "trueblocks-core@v0.40.0" // "trueblocks-core@v2.0.0-release"
+var Specification = "QmUyyU8wKW57c3CuwphhMdZb2QA5bsjt9vVfTE6LcBKmE9"
 
 var VersionTags = map[string]string{
 	"0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1": "trueblocks-core@v0.40.0",
