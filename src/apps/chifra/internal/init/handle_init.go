@@ -33,7 +33,7 @@ func (opts *InitOptions) HandleInit() error {
 	// scraper starts, it starts on the correct block.
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
-	existing, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Cache|manifest.NoUpdate)
+	existing, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache|manifest.NoUpdate)
 	if err != nil {
 		return err
 	}

@@ -74,7 +74,7 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Cache|manifest.NoUpdate)
+	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache|manifest.NoUpdate)
 	if err != nil {
 		return err, false
 	}
