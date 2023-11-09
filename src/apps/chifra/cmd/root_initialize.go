@@ -47,7 +47,7 @@ func VerifyOs() {
 
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
-	if isStatusOrConfig() {
+	if isPermitted() {
 		// Allow certain status and config routes to pass so as to aide user in migrating...
 		return
 	}
@@ -55,8 +55,8 @@ func VerifyMigrations() {
 	user, _ := user.Current()
 
 	const doesNotExist string = `0002. A config item ({0}) is missing. See {https://trueblocks.io/docs/install/install-core/}.`
-	const shouldNotExist string = `0002. A config item ({0}) exists but should not. See {https://trueblocks.io/docs/install/install-core/}.`
-	const noChains string = `0003. The configuration file ({0}) contains no chain specifications. See {https://trueblocks.io/docs/install/install-core/}.`
+	const shouldNotExist string = `0003. A config item ({0}) exists but should not. See {https://trueblocks.io/docs/install/install-core/}.`
+	const noChains string = `0004. The configuration file ({0}) contains no chain specifications. See {https://trueblocks.io/docs/install/install-core/}.`
 
 	// The old $HOME/.quickBlocks folder should not exist...
 	if _, err := os.Stat(filepath.Join(user.HomeDir, ".quickBlocks")); err == nil {
@@ -116,7 +116,7 @@ func VerifyMigrations() {
 	}
 }
 
-func isStatusOrConfig() bool {
+func isPermitted() bool {
 	isStatus := false
 	isConfig := false
 	hasPaths := false

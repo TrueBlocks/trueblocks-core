@@ -26,6 +26,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 	ants "github.com/panjf2000/ants/v2"
 )
@@ -85,8 +86,11 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 			if hash != "" {
 
 				// TODO: Do we really need the colored display?
-				msg := fmt.Sprintf("%v", chunk)
-				msg = strings.Replace(msg, hash.String(), colors.BrightCyan+hash.String()+colors.Off, -1)
+				bHash := utils.FormattedHash(false, chunk.BloomHash.String())
+				iHash := utils.FormattedHash(false, chunk.IndexHash.String())
+				tHash := utils.FormattedHash(false, hash.String())
+				msg := fmt.Sprintf("%s %s %s", chunk.Range, bHash, iHash)
+				msg = strings.Replace(msg, tHash, colors.BrightCyan+tHash+colors.Off, -1)
 				progressChannel <- &progress.ProgressMsg{
 					Payload: &chunk,
 					Event:   progress.Start,

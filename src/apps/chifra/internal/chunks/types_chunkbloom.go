@@ -40,7 +40,7 @@ func (s *simpleChunkBloom) Model(chain, format string, verbose bool, extraOption
 	model = map[string]interface{}{
 		"range":     s.Range,
 		"magic":     s.Magic,
-		"hash":      s.Hash,
+		"hash":      FormattedTag(verbose, s.Hash),
 		"nBlooms":   s.NBlooms,
 		"nInserted": s.NInserted,
 		"size":      s.Size,

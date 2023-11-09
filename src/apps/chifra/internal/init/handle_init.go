@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -33,7 +34,7 @@ func (opts *InitOptions) HandleInit() error {
 	// scraper starts, it starts on the correct block.
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
-	existing, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Cache|manifest.NoUpdate)
+	existing, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache|manifest.NoUpdate)
 	if err != nil {
 		return err
 	}
@@ -55,15 +56,15 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Tell the user what we're doing
 	logger.InfoTable("Unchained Index:", config.GetUnchained().SmartContract)
-	logger.InfoTable("Specification:", config.GetUnchained().Specification)
+	logger.InfoTable("Specification:", config.Specification)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
 	logger.InfoTable("Chunks in manifest:", fmt.Sprintf("%d", len(remote.Chunks)))
 	logger.InfoTable("Files deleted:", fmt.Sprintf("%d", nDeleted))
 	logger.InfoTable("Files downloaded:", fmt.Sprintf("%d", nToDownload))
 
-	if opts.All && config.GetHistory().Init != "all" {
-		_ = config.ChangeSetting("history", "init", "all", true /* writeOut */)
+	if opts.All && !history.FromHistoryBool(opts.Globals.Chain, "init") {
+		_ = history.ToHistory(chain, "init", "true")
 	}
 
 	// Open a channel to receive a message when all the blooms have been downloaded...

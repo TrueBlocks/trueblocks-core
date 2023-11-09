@@ -232,13 +232,13 @@ func (opts *ChunksOptions) validateChunks() error {
 		// }
 	}
 
-	// Note that this does not return if the index is not initialized
-	if err := index.IsInitialized(chain); err != nil {
-		if opts.Globals.IsApiMode() {
-			return err
-		} else {
+	if err := index.IsInitialized(chain, config.HeaderVersion); err != nil {
+		if errors.Is(err, index.ErrNotInitialized) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
+		} else if len(opts.Tag) == 0 {
+			return err
 		}
+		// It's okay to mismatch versions if we're tagging
 	}
 
 	return opts.Globals.Validate()

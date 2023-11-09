@@ -48,9 +48,9 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		}
 		gatewayUrl := config.GetChain(chain).IpfsGateway
 		logger.InfoTable("Chain:", chain)
-		logger.InfoTable("Gateway:", gatewayUrl)
-		logger.InfoTable("Publisher:", publisher)
 		logger.InfoTable("Database:", database)
+		logger.InfoTable("Publisher:", publisher)
+		logger.InfoTable("Gateway:", gatewayUrl)
 		logger.InfoTable("CID:", cid)
 		newManifest, err := downloadManifest(chain, gatewayUrl, cid)
 		if err != nil {
@@ -61,7 +61,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 			return newManifest, errors.New(msg)
 		}
 
-		if !exists || len(newManifest.Chunks) > len(man.Chunks) {
+		if !exists || shouldWrite(man, newManifest) {
 			err = newManifest.SaveManifest(chain, manifestFn)
 			if err != nil {
 				return nil, err
@@ -76,7 +76,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
 	}
 	if man.Specification == "" {
-		man.Specification = base.IpfsHash(config.GetUnchained().Specification)
+		man.Specification = base.IpfsHash(config.Specification)
 	}
 
 	return man, nil
@@ -98,4 +98,11 @@ func readManifestFile(path string) (*Manifest, error) {
 	}
 
 	return man, nil
+}
+
+func shouldWrite(newMan, man *Manifest) bool {
+	diffLen := len(newMan.Chunks) != len(man.Chunks)
+	diffSpec := newMan.Specification != man.Specification
+	diffVers := newMan.Version != man.Version
+	return diffLen || diffSpec || diffVers
 }

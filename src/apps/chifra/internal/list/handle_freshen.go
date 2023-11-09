@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -119,7 +120,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	bloomPath := config.PathToIndex(chain) + "blooms/"
+	bloomPath := filepath.Join(config.PathToIndex(chain), "blooms/")
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return canceled, err
@@ -272,7 +273,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	if !file.FileExists(indexFilename) {
 		chain := updater.Options.Globals.Chain
 		var man *manifest.Manifest
-		man, err = manifest.ReadManifest(chain, updater.Options.PublisherAddr, manifest.Cache)
+		man, err = manifest.ReadManifest(chain, updater.Options.PublisherAddr, manifest.LocalCache)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return

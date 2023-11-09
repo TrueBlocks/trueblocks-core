@@ -5,6 +5,7 @@
 package monitorsPkg
 
 import (
+	"errors"
 	"log"
 	"path/filepath"
 
@@ -67,13 +68,11 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				}
 			}
 
-			// Note that this does not return if the index is not initialized
-			if err := index.IsInitialized(chain); err != nil {
-				if opts.Globals.IsApiMode() {
-					return err
-				} else {
+			if err := index.IsInitialized(chain, config.HeaderVersion); err != nil {
+				if errors.Is(err, index.ErrNotInitialized) && !opts.Globals.IsApiMode() {
 					logger.Fatal(err)
 				}
+				return err
 			}
 
 			if opts.BatchSize < 1 {

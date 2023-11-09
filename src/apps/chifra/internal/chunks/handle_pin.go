@@ -46,17 +46,18 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		outPath = config.PathToManifest(chain)
 	}
 
-	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Cache|manifest.NoUpdate)
+	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache|manifest.NoUpdate)
 	if err != nil {
 		return err
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+		hash := base.BytesToHash(config.SpecVersionKeccak())
 		report := simpleChunkPinReport{
-			Version:  config.SpecVersionText(),
+			Version:  config.VersionTags[hash.Hex()],
 			Chain:    chain,
-			SpecHash: base.IpfsHash(config.GetUnchained().Specification),
+			SpecHash: base.IpfsHash(config.Specification),
 		}
 
 		fileList := make([]string, 0, len(man.Chunks))

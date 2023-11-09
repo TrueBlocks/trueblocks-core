@@ -35,7 +35,7 @@ type Source int
 
 const (
 	None Source = 1 << iota
-	Cache
+	LocalCache
 	Contract
 	NoUpdate
 )

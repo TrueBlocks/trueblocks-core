@@ -35,7 +35,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, checkVersion
 		if strings.Contains(err.Error(), "no such file or directory") {
 			// This is the case where the user did not download all the index chunks, only blooms
 			report.PassedCnt++
-		} else if !checkVersion && errors.Is(err, index.ErrIndexHeaderDiffHash) {
+		} else if !checkVersion && errors.Is(err, index.ErrIncorrectHash) {
 			report.PassedCnt++
 		} else {
 			report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: %s", err, fileName))

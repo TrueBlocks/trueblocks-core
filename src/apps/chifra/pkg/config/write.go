@@ -21,30 +21,3 @@ func (cfg *ConfigFile) writeFile(outFn string, vers version.Version) error {
 	return nil
 }
 
-func ChangeSetting(group, item, value string, writeOut bool) error {
-	changed := false
-	cfg := GetRootConfig()
-
-	switch group {
-	case "unchained":
-		switch item {
-		case "specVersion":
-			changed = true
-			cfg.Unchained.SpecVersion = value
-		}
-	case "history":
-		switch item {
-		case "init":
-			changed = true
-			cfg.History.Init = value
-		}
-	}
-
-	if writeOut && changed {
-		minVersion := version.NewVersion(minVersionStr)
-		configFile := PathToConfigFile()
-		return cfg.writeFile(configFile, minVersion)
-	}
-
-	return nil
-}

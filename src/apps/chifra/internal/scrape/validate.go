@@ -72,13 +72,6 @@ func (opts *ScrapeOptions) validateScrape() error {
 		}
 	}
 
-	if len(opts.Publisher) > 0 {
-		err := validate.ValidateExactlyOneAddr([]string{opts.Publisher})
-		if err != nil {
-			return err
-		}
-	}
-
 	ret := opts.Globals.Validate()
 
 	pidPath := filepath.Join(config.PathToCache(chain), "tmp/scrape.pid")
