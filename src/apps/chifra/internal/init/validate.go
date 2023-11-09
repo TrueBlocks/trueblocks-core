@@ -6,6 +6,7 @@ package initPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -33,9 +34,9 @@ func (opts *InitOptions) validateInit() error {
 		}
 	}
 
-	// if config.GetHistory().Init == "all" && !opts.All {
-	// 	return validate.Usage("You previously called chifra init --all. You must continue to do so.")
-	// }
+	if history.FromHistoryBool(opts.Globals.Chain, "init") && !opts.All {
+		return validate.Usage("You previously called chifra init --all. You must continue to do so.")
+	}
 
 	return opts.Globals.Validate()
 }

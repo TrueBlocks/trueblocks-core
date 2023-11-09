@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -62,9 +63,9 @@ func (opts *InitOptions) HandleInit() error {
 	logger.InfoTable("Files deleted:", fmt.Sprintf("%d", nDeleted))
 	logger.InfoTable("Files downloaded:", fmt.Sprintf("%d", nToDownload))
 
-	// if opts.All && config.GetHistory().Init != "all" {
-	// 	_ = config.ChangeSetting("history", "init", "all", true /* writeOut */)
-	// }
+	if opts.All && !history.FromHistoryBool(opts.Globals.Chain, "init") {
+		_ = history.ToHistory(chain, "init", "true")
+	}
 
 	// Open a channel to receive a message when all the blooms have been downloaded...
 	bloomsDoneChannel := make(chan bool)
