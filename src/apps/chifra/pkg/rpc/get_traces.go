@@ -272,14 +272,19 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 				Action:           &action,
 				Result:           result,
 			}
+
+			if trace.BlockNumber != uint64(curApp.BlockNumber) {
+				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
+			}
+
 			if trace.BlockNumber != uint64(curApp.BlockNumber) || trace.TransactionIndex != uint64(curApp.TransactionIndex) {
 				curApp = types.SimpleAppearance{
 					BlockNumber:      uint32(trace.BlockNumber),
 					TransactionIndex: uint32(trace.TransactionIndex),
 				}
-				curTs = conn.GetBlockTimestamp(trace.BlockNumber)
 				idx = 0
 			}
+
 			trace.TraceIndex = idx
 			idx++
 
