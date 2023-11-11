@@ -94,7 +94,7 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
 			header := indexHeader{
 				Magic:           file.MagicNumber,
-				Hash:            base.BytesToHash(config.SpecVersionKeccak()),
+				Hash:            base.BytesToHash(config.HeaderHash(config.ExpectedVersion())),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
@@ -141,7 +141,7 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 }
 
 // Tag updates the manifest version in the chunk's header
-func (chunk *Chunk) Tag(fileName string) (err error) {
+func (chunk *Chunk) Tag(tag, fileName string) (err error) {
 	bloomFn := ToBloomPath(fileName)
 	indexFn := ToIndexPath(fileName)
 	indexBackup := indexFn + ".backup"
@@ -163,11 +163,11 @@ func (chunk *Chunk) Tag(fileName string) (err error) {
 		return err
 	}
 
-	if err = chunk.Bloom.updateTag(bloomFn); err != nil {
+	if err = chunk.Bloom.updateTag(tag, bloomFn); err != nil {
 		return err
 	}
 
-	if err = chunk.Index.updateTag(indexFn); err != nil {
+	if err = chunk.Index.updateTag(tag, indexFn); err != nil {
 		return err
 	}
 

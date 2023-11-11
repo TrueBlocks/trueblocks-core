@@ -23,7 +23,7 @@ func (bl *Bloom) writeBloom(fileName string) ( /* changed */ bool, error) {
 
 		_, _ = bl.File.Seek(0, io.SeekStart) // already true, but can't hurt
 		bl.Header.Magic = file.SmallMagicNumber
-		bl.Header.Hash = base.BytesToHash(config.SpecVersionKeccak())
+		bl.Header.Hash = base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
 
 		if err = binary.Write(bl.File, binary.LittleEndian, bl.Header); err != nil {
 			return false, err
@@ -49,7 +49,7 @@ func (bl *Bloom) writeBloom(fileName string) ( /* changed */ bool, error) {
 }
 
 // updateTag writes a the header back to the bloom file
-func (bl *Bloom) updateTag(fileName string) error {
+func (bl *Bloom) updateTag(tag, fileName string) error {
 	var err error
 	if bl.File, err = os.OpenFile(fileName, os.O_RDWR, 0644); err != nil {
 		return err
@@ -62,7 +62,7 @@ func (bl *Bloom) updateTag(fileName string) error {
 		}()
 
 		bl.Header.Magic = file.SmallMagicNumber
-		bl.Header.Hash = base.BytesToHash(config.SpecVersionKeccak())
+		bl.Header.Hash = base.BytesToHash(config.HeaderHash(tag))
 
 		_, _ = bl.File.Seek(0, io.SeekStart) // already true, but can't hurt
 		return binary.Write(bl.File, binary.LittleEndian, bl.Header)

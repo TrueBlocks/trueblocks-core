@@ -43,7 +43,7 @@ Arguments:
   topics - filter by one or more log topics (only for --logs option)
   fourbytes - filter by one or more fourbytes (only for transactions and trace options)`
 
-const shortExport = "export full detail of transactions for one or more addresses"
+const shortExport = "export full details of transactions for one or more addresses"
 
 const longExport = `Purpose:
   Export full detail of transactions for one or more addresses.`

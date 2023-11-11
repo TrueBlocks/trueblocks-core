@@ -70,7 +70,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12035,apps,Accounts,list,acctExport,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 12040,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 12043,apps,Accounts,list,acctExport,reversed,E,,false,false,true,true,gocmd,switch,<boolean>,produce results in reverse chronological order
-12044,apps,Accounts,list,acctExport,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
+12044,apps,Accounts,list,acctExport,publisher,P,,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
 12045,apps,Accounts,list,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when freshening)
 12050,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when freshening)
 12055,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
@@ -94,7 +94,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12320,tools,Accounts,names,ethNames,delete,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
 12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,gocmd,switch,<boolean>,undelete a previously deleted name
 12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,gocmd,switch,<boolean>,remove a previously deleted name
-12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
+12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well-known accounts.
 12350,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12355,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
 
@@ -226,7 +226,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
 12185,apps,Admin,scrape,blockScrape,touch,l,0,false,false,true,true,gocmd,flag,<uint64>,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
 12187,apps,Admin,scrape,blockScrape,run_count,u,0,false,false,false,false,gocmd,flag,<uint64>,run the scraper this many times&#44; then quit
-12188,apps,Admin,scrape,blockScrape,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
+12188,apps,Admin,scrape,blockScrape,publisher,P,,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
 12189,apps,Admin,scrape,blockScrape,dry_run,d,,false,false,false,false,gocmd,switch,<boolean>,show the configuration that would be applied if run&#44;no changes are made
 12160,apps,Admin,scrape,blockScrape,apps_per_chunk,,2000000,false,false,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
 12170,apps,Admin,scrape,blockScrape,snap_to_grid,,250000,false,false,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
@@ -264,7 +264,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31920,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,check the manifest&#44; index&#44; or blooms for internal consistency
 31935,apps,Admin,chunks,chunkMan,pin,i,,false,false,true,true,gocmd,switch,<boolean>,pin the manifest or each index chunk and bloom
 31940,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,true,gocmd,switch,<boolean>,publish the manifest to the Unchained Index smart contract
-31942,apps,Admin,chunks,chunkMan,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
+31942,apps,Admin,chunks,chunkMan,publisher,P,,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
 31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
 31940,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retreive the manifest from the Unchained Index smart contract
 31942,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
@@ -293,7 +293,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks (recommended)
 11907,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading
-11910,apps,Admin,init,init,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,the publisher of the index to download
+11910,apps,Admin,init,init,publisher,P,,false,false,false,false,gocmd,flag,<address>,the publisher of the index to download
 11915,apps,Admin,init,init,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,do not download any chunks earlier than this block
 11920,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11925,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.

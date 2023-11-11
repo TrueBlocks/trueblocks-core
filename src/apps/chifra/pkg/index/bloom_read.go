@@ -77,8 +77,8 @@ func (bl *Bloom) readHeader() error {
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
 
 	// Validate hash against provided tag.
-	if bl.Header.Hash != base.BytesToHash(config.SpecVersionKeccak()) {
-		return fmt.Errorf("Bloom.readHeader: %w %x %x", ErrIncorrectHash, bl.Header.Hash, base.BytesToHash(config.SpecVersionKeccak()))
+	if bl.Header.Hash != base.BytesToHash(config.HeaderHash(config.ExpectedVersion())) {
+		return fmt.Errorf("Bloom.readHeader: %w %x %x", ErrIncorrectHash, bl.Header.Hash, base.BytesToHash(config.HeaderHash(config.ExpectedVersion())))
 	}
 
 	return nil

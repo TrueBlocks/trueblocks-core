@@ -11,7 +11,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 var ErrNotInitialized = errors.New("index not initialized")
@@ -30,12 +29,7 @@ func IsInitialized(chain, required string) error {
 	  Error: %w
 
 	`
-		msg := strings.Replace(indexNotInitialized, "{0}", "{v0.40.0-beta}", -1)
-		msg = strings.Replace(msg, "[{VERSION}]", version.LibraryVersion, -1)
-		msg = strings.Replace(msg, "[{PATH}]", fileName, -1)
-		msg = strings.Replace(msg, "{", colors.Green, -1)
-		msg = strings.Replace(msg, "}", colors.Off, -1)
-		return fmt.Errorf(msg, ErrNotInitialized)
+		return fmt.Errorf(indexNotInitialized, ErrNotInitialized)
 	}
 
 	var err error

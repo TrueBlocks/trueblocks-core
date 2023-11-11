@@ -381,7 +381,6 @@ string_q get_godefaults(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (!isDef(p)) {
             string_q val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
-            val = substitute(val, "trueblocks.eth", "\"trueblocks.eth\"");
             os << "\t" << padRight(p.Format("[{VARIABLE}]") + ": ", wid + 2, ' ') << val << "," << endl;
         }
     }
@@ -580,10 +579,10 @@ string_q get_base_package(const string_q& fn) {
 }
 
 string_q get_index_package(const string_q& fn) {
-    string_q existing = asciiFileToString(fn);
-    if (contains(existing, "index.")) {
-        return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index\"\n";
-    }
+    // string_q existing = asciiFileToString(fn);
+    // if (contains(existing, "index.")) {
+    //     return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index\"\n";
+    // }
     return "";
 }
 

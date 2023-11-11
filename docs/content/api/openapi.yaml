@@ -685,7 +685,7 @@ paths:
       tags:
         - Accounts
       summary: Names
-      description: Query addresses or names of well known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
+      description: Query addresses or names of well-known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
       operationId: accounts-names
       parameters:
         - name: terms

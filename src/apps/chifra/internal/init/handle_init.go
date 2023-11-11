@@ -56,7 +56,7 @@ func (opts *InitOptions) HandleInit() error {
 
 	// Tell the user what we're doing
 	logger.InfoTable("Unchained Index:", config.GetUnchained().SmartContract)
-	logger.InfoTable("Specification:", config.Specification)
+	logger.InfoTable("Specification:", manifest.Specification())
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))
 	logger.InfoTable("Chunks in manifest:", fmt.Sprintf("%d", len(remote.Chunks)))
@@ -252,6 +252,9 @@ func (opts *InitOptions) updateLocalManifest(existing, remote *manifest.Manifest
 	chain := opts.Globals.Chain
 
 	// Don't modify the smart contract's manifest -- we want to download from it, so we don't want these extra chunks
+	if existing == nil || len(existing.Chunks) == 0 {
+		return nil
+	}
 	copy := *existing
 
 	lastExisting := base.RangeFromRangeString(existing.Chunks[len(existing.Chunks)-1].Range)

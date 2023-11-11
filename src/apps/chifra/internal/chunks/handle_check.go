@@ -79,7 +79,7 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 		return err, false
 	}
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Contract)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Contract|manifest.NoUpdate)
 	if err != nil {
 		return err, false
 	}

@@ -65,7 +65,7 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("feth to pinning service failed: %s", resp.Status)
+		return nil, fmt.Errorf("fetch to pinning service (%s) failed: %s", url.String(), resp.Status)
 	}
 
 	switch resp.Header.Get("Content-Type") {

@@ -49,7 +49,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 			s := simpleChunkIndex{
 				Range:        rng.String(),
 				Magic:        fmt.Sprintf("0x%x", indexChunk.Header.Magic),
-				Hash:         base.HexToHash(indexChunk.Header.Hash.Hex()),
+				Hash:         indexChunk.Header.Hash,
 				NAddresses:   uint64(indexChunk.Header.AddressCount),
 				NAppearances: uint64(indexChunk.Header.AppearanceCount),
 				Size:         uint64(file.FileSize(fileName)),

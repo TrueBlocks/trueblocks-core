@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -35,14 +36,14 @@ type InitOptions struct {
 }
 
 var defaultInitOptions = InitOptions{
-	Publisher: "trueblocks.eth",
+	Publisher: "",
 }
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
+	logger.TestLog(!rpc.IsSame(opts.Publisher, ""), "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
@@ -80,7 +81,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
@@ -107,7 +108,7 @@ func initFinishParse(args []string) *InitOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE

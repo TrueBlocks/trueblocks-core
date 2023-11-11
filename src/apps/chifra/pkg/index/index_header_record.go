@@ -32,8 +32,8 @@ func (chunk *Index) readHeader() (indexHeader, error) {
 		return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectMagic, header.Magic, file.MagicNumber)
 	}
 
-	if header.Hash != base.BytesToHash(config.SpecVersionKeccak()) {
-		return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectHash, header.Hash, base.BytesToHash(config.SpecVersionKeccak()))
+	if header.Hash != base.BytesToHash(config.HeaderHash(config.ExpectedVersion())) {
+		return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectHash, header.Hash, base.BytesToHash(config.HeaderHash(config.ExpectedVersion())))
 	}
 
 	return header, nil
