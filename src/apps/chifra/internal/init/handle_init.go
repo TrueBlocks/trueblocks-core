@@ -26,12 +26,12 @@ func (opts *InitOptions) HandleInit() error {
 	// scraper starts, it starts on the correct block.
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
-	existing, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache|manifest.NoUpdate)
+	existing, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
 		return err
 	}
 
-	remote, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Contract)
+	remote, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.FromContract)
 	if err != nil {
 		return err
 	}
@@ -56,8 +56,9 @@ func (opts *InitOptions) HandleInit() error {
 	logger.InfoTable("Files deleted:", fmt.Sprintf("%d", nDeleted))
 	logger.InfoTable("Files downloaded:", fmt.Sprintf("%d", nToDownload))
 
-	if opts.All && !history.FromHistoryBool(opts.Globals.Chain, "init") {
-		_ = history.ToHistory(chain, "init", "true")
+	historyFile := config.PathToCache(chain) + "tmp/history.txt"
+	if opts.All && !history.FromHistoryBool(historyFile, "init") {
+		_ = history.ToHistory(historyFile, "init", "true")
 	}
 
 	// Open a channel to receive a message when all the blooms have been downloaded...

@@ -22,7 +22,10 @@ func (m *Manifest) SaveManifest(chain, fileName string) error {
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)
 	}
-	defer w.Close()
+	defer func() {
+		w.Close()
+		config.SetExpectedVersion(m.Version)
+	}()
 
 	err = file.Lock(w)
 	if err != nil {

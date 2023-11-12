@@ -238,10 +238,14 @@ func (opts *ChunksOptions) validateChunks() error {
 	if err := index.IsInitialized(chain, config.ExpectedVersion()); err != nil {
 		if errors.Is(err, index.ErrNotInitialized) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
-		} else if len(opts.Tag) == 0 {
-			return err
+		} else {
+			isTag := len(opts.Tag) != 0
+			isRemoteMan := opts.Mode == "manifest" && opts.Remote
+			if !isTag && !isRemoteMan {
+				return err
+			}
 		}
-		// It's okay to mismatch versions if we're tagging
+		// It's okay to mismatch versions if we're tagging or downloading a new manifest
 	}
 
 	return opts.Globals.Validate()

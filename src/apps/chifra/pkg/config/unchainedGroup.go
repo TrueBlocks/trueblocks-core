@@ -2,7 +2,9 @@ package config
 
 import (
 	"strings"
+	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
@@ -20,10 +22,6 @@ func HeaderHash(version string) []byte {
 	return crypto.Keccak256([]byte(version))
 }
 
-func ExpectedVersion() string {
-	return headerVersion
-}
-
 func GetPublisher(value string) string {
 	if value == "" {
 		value = GetUnchained().PreferredPublisher
@@ -33,8 +31,6 @@ func GetPublisher(value string) string {
 	}
 	return value
 }
-
-var headerVersion = "trueblocks-core@v2.0.0-release"
 
 var VersionTags = map[string]string{
 	"0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1": "trueblocks-core@v0.40.0",
@@ -50,3 +46,28 @@ func KnownVersionTag(tag string) bool {
 	}
 	return false
 }
+
+var m sync.Mutex
+
+func ExpectedVersion() string {
+	if headerVersion == "" {
+		m.Lock()
+		historyFile := PathToRootConfig() + "unchained.txt"
+		headerVersion = history.FromHistory(historyFile, "headerVersion")
+		if headerVersion == "" {
+			headerVersion = "trueblocks-core@v2.0.0-release"
+		}
+		m.Unlock()
+	}
+	return headerVersion
+}
+
+func SetExpectedVersion(version string) {
+	m.Lock()
+	historyFile := PathToRootConfig() + "unchained.txt"
+	history.ToHistory(historyFile, "headerVersion", version)
+	headerVersion = version
+	m.Unlock()
+}
+
+var headerVersion = ""

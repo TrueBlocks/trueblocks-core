@@ -35,7 +35,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 	chain := opts.Globals.Chain
 	// TODO: BOGUS
 	sleep := utils.Max(.0125, opts.Sleep)
-	nDownloadedWithoutFailure := 0
+	successCount := 0
 
 	failed := []types.SimpleChunkRecord{}
 	cancelled := false
@@ -77,8 +77,8 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 				failed = append(failed, *chunk)
 				if errors.Is(event.Error, index.ErrWriteToDiscError) {
 					// TODO: BOGUS
-					sleep = utils.Min(4, sleep*2)
-					nDownloadedWithoutFailure = 0
+					sleep = utils.Min(4, sleep*1.2)
+					successCount = 0
 				}
 			}
 
@@ -103,11 +103,17 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 				col = colors.Magenta
 			}
 			// TODO: BOGUS
-			nDownloadedWithoutFailure++
-			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d [%d])", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed, nTotal, nDownloadedWithoutFailure)
+			successCount++
+			pct := float64(nProcessed) / float64(nTotal) * 100
+			sleepStr := ""
+			if sleep > .25 {
+				sleepStr = fmt.Sprintf(" [sleep: %0.2fms]", sleep*1000)
+			}
+			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d %0.1f%%%s)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed, nTotal, pct, sleepStr)
 			logger.Info(msg, spaces)
-			if nDownloadedWithoutFailure%10 == 0 {
-				sleep = utils.Max(.0125, sleep/2)
+			if successCount%10 == 0 {
+				sleep = utils.Max(.0125, sleep/1.2)
+				successCount = 0
 			}
 
 		default:
@@ -117,9 +123,6 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 
 		if sleep > 0 {
 			ms := time.Duration(sleep*1000) * time.Millisecond
-			if sleep >= .25 && !opts.Globals.TestMode {
-				logger.Progress(true, fmt.Sprintf("Sleeping for %g seconds", sleep))
-			}
 			time.Sleep(ms)
 		}
 	}

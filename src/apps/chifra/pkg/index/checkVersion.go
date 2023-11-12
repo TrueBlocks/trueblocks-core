@@ -46,8 +46,13 @@ func IsInitialized(chain, required string) error {
 	_, _ = bl.File.Seek(0, io.SeekStart) // already true, but can't hurt
 	if err = bl.readHeader(true /* check */); err != nil {
 		if errors.Is(err, ErrIncorrectHash) {
-			msg := `Index file outdated (found {FOUND} - wanted {WANT}). See {https://github.com/TrueBlocks/trueblocks-core/blob/master/src/other/migrations/README-v2.0.0.md}.`
+			msg := `
+	Outdate chunk {WHICH}.
+	Found {FOUND} - wanted {WANT}.
+	See {https://github.com/TrueBlocks/trueblocks-core/blob/master/src/other/migrations/README-v2.0.0.md}.
+`
 			msg = colors.ColoredWith(msg, colors.Yellow)
+			msg = strings.Replace(msg, "WHICH", fileName, -1)
 			msg = strings.Replace(msg, "FOUND", config.VersionTags[bl.Header.Hash.Hex()], -1)
 			msg = strings.Replace(msg, "WANT", required, -1)
 			return validate.Usage(msg)

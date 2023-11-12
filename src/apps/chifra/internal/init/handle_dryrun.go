@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -13,10 +14,15 @@ import (
 func (opts *InitOptions) HandleDryRun() error {
 	chain := opts.Globals.Chain
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Contract|manifest.NoUpdate)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)
 	if err != nil {
 		return err
 	}
+	historyFile := config.PathToRootConfig() + "unchained.txt"
+	saved := history.FromHistory(historyFile, "headerVersion")
+	defer history.ToHistory(historyFile, "headerVersion", saved)
+	history.ToHistory(historyFile, "headerVersion", remoteManifest.Version)
+	fmt.Println(saved, remoteManifest.Version)
 
 	if remoteManifest.Chain != chain {
 		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, chain)

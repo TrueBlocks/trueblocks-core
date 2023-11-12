@@ -34,7 +34,8 @@ func (opts *InitOptions) validateInit() error {
 		}
 	}
 
-	if history.FromHistoryBool(opts.Globals.Chain, "init") && !opts.All {
+	historyFile := config.PathToCache(chain) + "tmp/history.txt"
+	if history.FromHistoryBool(historyFile, "init") && !opts.All {
 		return validate.Usage("You previously called chifra init --all. You must continue to do so.")
 	}
 
