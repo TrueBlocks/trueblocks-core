@@ -20,8 +20,10 @@ func (opts *InitOptions) HandleDryRun() error {
 	}
 	historyFile := config.PathToRootConfig() + "unchained.txt"
 	saved := history.FromHistory(historyFile, "headerVersion")
-	defer history.ToHistory(historyFile, "headerVersion", saved)
-	history.ToHistory(historyFile, "headerVersion", remoteManifest.Version)
+	defer func() {
+		_ = history.ToHistory(historyFile, "headerVersion", saved)
+	}()
+	_ = history.ToHistory(historyFile, "headerVersion", remoteManifest.Version)
 	fmt.Println(saved, remoteManifest.Version)
 
 	if remoteManifest.Chain != chain {

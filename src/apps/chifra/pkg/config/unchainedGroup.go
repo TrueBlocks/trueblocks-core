@@ -65,7 +65,7 @@ func ExpectedVersion() string {
 func SetExpectedVersion(version string) {
 	m.Lock()
 	historyFile := PathToRootConfig() + "unchained.txt"
-	history.ToHistory(historyFile, "headerVersion", version)
+	_ = history.ToHistory(historyFile, "headerVersion", version)
 	headerVersion = version
 	m.Unlock()
 }
