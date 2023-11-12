@@ -1,4 +1,5 @@
 chifra scrape  --dry_run
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
 TEST[DATE|TIME] DryRun:  true
 TEST[DATE|TIME] Caps:  -fmt,-noHeader,-file,-output,-append
 TEST[DATE|TIME] Format:  txt

@@ -46,7 +46,6 @@ type ListOptions struct {
 
 var defaultListOptions = ListOptions{
 	MaxRecords: 250,
-	Publisher:  "",
 	LastBlock:  utils.NOPOS,
 }
 
@@ -61,7 +60,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, ""), "Publisher: ", opts.Publisher)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())

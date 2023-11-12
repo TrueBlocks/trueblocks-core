@@ -35,12 +35,9 @@ func (opts *InitOptions) HandleDryRun() error {
 		spec = "--testing-hash--"
 	}
 
-	if opts.All {
-		nToDownload *= 2
-	}
-
 	// Tell the user what we're doing
 	logger.InfoTable("Unchained Index:", config.GetUnchained().SmartContract)
+	logger.InfoTable("PreferredPublisher:", opts.Publisher)
 	logger.InfoTable("Specification:", spec)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))

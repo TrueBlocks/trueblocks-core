@@ -35,15 +35,13 @@ type InitOptions struct {
 	// EXISTING_CODE
 }
 
-var defaultInitOptions = InitOptions{
-	Publisher: "",
-}
+var defaultInitOptions = InitOptions{}
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *InitOptions) testLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, ""), "Publisher: ", opts.Publisher)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())

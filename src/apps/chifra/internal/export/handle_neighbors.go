@@ -333,7 +333,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                     appHere.transactionIndex = found->tx;
                     appHere.address = bytes_2_Addr(theIndex->getAddressAt(i)->bytes);
                     if (assignReason(ledgerManager.name, appHere, trav->trans)) {
-                        trav->nProcessed++;
+                        trav->n Processed++;
                         if (!prog_Log(trav, this))
                             return false;
                         showApp(appHere, this);

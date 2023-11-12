@@ -35,7 +35,7 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 				return true, nil
 			}
 
-			indexChunk, err := index.OpenIndex(fileName)
+			indexChunk, err := index.OpenIndex(fileName, true /* check */)
 			if err != nil {
 				return false, err
 			}

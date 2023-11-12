@@ -46,7 +46,7 @@ Arguments:
 const shortExport = "export full details of transactions for one or more addresses"
 
 const longExport = `Purpose:
-  Export full detail of transactions for one or more addresses.`
+  Export full details of transactions for one or more addresses.`
 
 const notesExport = `
 Notes:

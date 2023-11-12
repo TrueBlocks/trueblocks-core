@@ -142,6 +142,14 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 
 // Tag updates the manifest version in the chunk's header
 func (chunk *Chunk) Tag(tag, fileName string) (err error) {
+	blVers, idxVers, err := versions(fileName)
+	if err != nil {
+		return err
+	}
+	if blVers == tag && idxVers == tag {
+		return nil
+	}
+
 	bloomFn := ToBloomPath(fileName)
 	indexFn := ToIndexPath(fileName)
 	indexBackup := indexFn + ".backup"

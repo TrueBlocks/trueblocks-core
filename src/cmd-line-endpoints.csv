@@ -1,7 +1,7 @@
 num ,group       ,is_visible ,is_visible_docs ,api_group ,api_route    ,tool                     ,summary              ,description
 01  ,Accounts    ,false      ,true            ,          ,             ,                         ,                     ,Access and cache transactional data
 01  ,Accounts    ,true       ,true            ,apps      ,list         ,acctExport --appearances ,List transactions    ,List every appearance of an address anywhere on the chain.
-01  ,Accounts    ,true       ,true            ,apps      ,export       ,acctExport               ,Export details       ,Export full detail of transactions for one or more addresses.
+01  ,Accounts    ,true       ,true            ,apps      ,export       ,acctExport               ,Export details       ,Export full details of transactions for one or more addresses.
 01  ,Accounts    ,true       ,true            ,apps      ,monitors     ,acctExport --appearances ,Manage monitors      ,Add&#44; remove&#44; clean&#44; and list address monitors.
 01  ,Accounts    ,true       ,true            ,tools     ,names        ,ethNames                 ,Names                ,Query addresses or names of well-known accounts.
 01  ,Accounts    ,true       ,true            ,tools     ,abis         ,grabABI                  ,ABIs                 ,Fetches the ABI for a smart contract.
@@ -21,7 +21,7 @@ num ,group       ,is_visible ,is_visible_docs ,api_group ,api_route    ,tool    
 04  ,Admin       ,false      ,true            ,          ,             ,                         ,                     ,Control the scraper and build the index
 04  ,Admin       ,true       ,true            ,apps      ,config       ,config                   ,Manage config        ,Report on and edit the configuration of the TrueBlocks system.
 04  ,Admin       ,true       ,true            ,apps      ,status       ,cacheStatus              ,Get status on caches ,Report on the state of the internal binary caches.
-04  ,Admin       ,true       ,true            ,apps      ,daemon       ,flame                    ,                     ,Initalize and control long-running processes such as the API and the scrapers.
+04  ,Admin       ,true       ,true            ,apps      ,daemon       ,flame                    ,                     ,Initialize and control long-running processes such as the API and the scrapers.
 04  ,Admin       ,true       ,true            ,apps      ,scrape       ,blockScrape              ,Scrape index         ,Scan the chain and update the TrueBlocks index of appearances.
 04  ,Admin       ,true       ,true            ,apps      ,chunks       ,chunkMan                 ,Manage chunks        ,Manage&#44; investigate&#44; and display the Unchained Index.
 04  ,Admin       ,true       ,true            ,apps      ,init         ,init                     ,Initialize index     ,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.

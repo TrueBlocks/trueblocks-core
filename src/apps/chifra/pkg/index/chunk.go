@@ -15,6 +15,7 @@ package index
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 // The Chunk data structure consists of three parts. A FileRange, a Index structure, and a Bloom that
@@ -25,23 +26,35 @@ type Chunk struct {
 	Bloom Bloom
 }
 
+// versions returns the version strings found in both the bloom and the index file.
+func versions(fileName string) (string, string, error) {
+	chunk, err := OpenChunk(fileName, false)
+	if err != nil {
+		return "", "", err
+	}
+	defer chunk.Close()
+	indexVersion := config.VersionTags[chunk.Index.Header.Hash.Hex()]
+	bloomVersion := config.VersionTags[chunk.Bloom.Header.Hash.Hex()]
+	return bloomVersion, indexVersion, nil
+}
+
 // OpenChunk returns a fully initialized index chunk. The path argument may point to either a bloom filter file or the
 // index data file. Either will work. The bloom filter file must exist and will be opened for reading and its header
 // will be read into memory, but the filter itself is not. The index data file need not exist (it will be downloaded
 // later if the bloom indicates that its needed). If the index file does exist, however, it will be opened for reading
 // and its header will be read into memory, but the index data itself will not be.
-func OpenChunk(path string) (chunk Chunk, err error) {
+func OpenChunk(path string, check bool) (chunk Chunk, err error) {
 	chunk.Range, err = base.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}
 
-	chunk.Bloom, err = OpenBloom(ToBloomPath(path))
+	chunk.Bloom, err = OpenBloom(ToBloomPath(path), check /* check */)
 	if err != nil {
 		return
 	}
 
-	chunk.Index, err = OpenIndex(ToIndexPath(path))
+	chunk.Index, err = OpenIndex(ToIndexPath(path), check /* check */)
 	return
 }
 

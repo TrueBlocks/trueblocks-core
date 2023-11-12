@@ -92,7 +92,7 @@ func writeArray(disp, dest, fn string, lines []string) error {
 }
 
 func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (bool, error) {
-	indexChunk, err := index.OpenIndex(source)
+	indexChunk, err := index.OpenIndex(source, true /* check */)
 	if err != nil {
 		return false, err
 	}

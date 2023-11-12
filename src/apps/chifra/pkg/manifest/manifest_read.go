@@ -75,10 +75,6 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 	for i := range man.Chunks {
 		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
 	}
-	// // TODO: BOGUS - SHOULD NOT HAPPEN
-	// if man.Specification == "" {
-	// 	man.Specification = base.IpfsHash(Specification())
-	// }
 
 	return man, nil
 }

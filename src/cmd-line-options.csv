@@ -29,7 +29,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10097,apps,Accounts,export,acctExport,no_zero,z,,false,false,true,true,gocmd,switch,<boolean>,for the --count option only&#44; suppress the display of zero appearance accounts
 10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to process (inclusive)
 10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to process (inclusive)
-10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
+10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full details of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 10470,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
 10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
@@ -242,7 +242,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13112,apps,Admin,daemon,flame,scrape,s,,false,false,false,false,gocmd,flag,enum[off|blooms|index]>,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
 13113,apps,Admin,daemon,flame,monitor,m,,false,false,false,false,gocmd,switch,<boolean>,instruct the node to start the monitors tool
 13118,apps,Admin,daemon,flame,grpc,g,,false,false,true,true,gocmd,switch,<boolean>,run gRPC server to serve names
-13115,apps,Admin,daemon,flame,,,,false,false,true,true,--,description,,Initalize and control long-running processes such as the API and the scrapers.
+13115,apps,Admin,daemon,flame,,,,false,false,true,true,--,description,,Initialize and control long-running processes such as the API and the scrapers.
 13116,apps,Admin,daemon,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra daemon.
 13117,apps,Admin,daemon,flame,n2,,,false,false,false,false,--,note,,See the API documentation (https://trueblocks.io/api) for more information.
 13119,apps,Admin,daemon,flame,a1,,,false,false,false,false,--,alias,,serve

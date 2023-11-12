@@ -55,7 +55,6 @@ type ChunksOptions struct {
 }
 
 var defaultChunksOptions = ChunksOptions{
-	Publisher: "",
 	Truncate:  utils.NOPOS,
 	LastBlock: utils.NOPOS,
 	MaxAddrs:  utils.NOPOS,
@@ -68,7 +67,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, ""), "Publisher: ", opts.Publisher)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)

@@ -38,7 +38,7 @@ type Index struct {
 
 // OpenIndex returns an Index with an opened file pointer to the given fileName. The HeaderRecord
 // for the chunk has been populated and the file position to the two tables are ready for use.
-func OpenIndex(fileName string) (Index, error) {
+func OpenIndex(fileName string, check bool) (Index, error) {
 	fileName = ToIndexPath(fileName)
 
 	blkRange, err := base.RangeFromFilenameE(fileName)
@@ -57,7 +57,7 @@ func OpenIndex(fileName string) (Index, error) {
 	// Note, we don't defer closing here since we want the file to stay opened. Caller must close it.
 	// defer idx.File.Close()
 
-	indexChunk.Header, err = indexChunk.readHeader()
+	indexChunk.Header, err = indexChunk.readHeader(check)
 	if err != nil {
 		indexChunk.Close()
 		return Index{}, fmt.Errorf("%w: %s", err, fileName)

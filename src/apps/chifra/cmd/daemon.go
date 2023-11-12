@@ -44,7 +44,7 @@ const usageDaemon = `daemon [flags]`
 const shortDaemon = "initialize and control long-running processes such as the API and the scrapers"
 
 const longDaemon = `Purpose:
-  Initalize and control long-running processes such as the API and the scrapers.`
+  Initialize and control long-running processes such as the API and the scrapers.`
 
 const notesDaemon = `
 Notes:

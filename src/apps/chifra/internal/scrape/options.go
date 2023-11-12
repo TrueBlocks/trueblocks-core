@@ -22,24 +22,23 @@ import (
 
 // ScrapeOptions provides all command options for the chifra scrape command.
 type ScrapeOptions struct {
-	BlockCnt  uint64                `json:"blockCnt,omitempty"`  // Maximum number of blocks to process per pass
-	Sleep     float64               `json:"sleep,omitempty"`     // Seconds to sleep between scraper passes
-	Touch     uint64                `json:"touch,omitempty"`     // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
-	RunCount  uint64                `json:"runCount,omitempty"`  // Run the scraper this many times, then quit
-	Publisher string                `json:"publisher,omitempty"` // For some query options, the publisher of the index
-	DryRun    bool                  `json:"dryRun,omitempty"`    // Show the configuration that would be applied if run,no changes are made
-	Settings  config.ScrapeSettings `json:"settings,omitempty"`  // Configuration items for the scrape
-	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
-	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
-	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
+	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
+	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
+	Touch        uint64                `json:"touch,omitempty"`        // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	RunCount     uint64                `json:"runCount,omitempty"`     // Run the scraper this many times, then quit
+	Publisher    string                `json:"publisher,omitempty"`    // For some query options, the publisher of the index
+	DryRun       bool                  `json:"dryRun,omitempty"`       // Show the configuration that would be applied if run,no changes are made
+	Settings     config.ScrapeSettings `json:"settings,omitempty"`     // Configuration items for the scrape
+	Globals      globals.GlobalOptions `json:"globals,omitempty"`      // The global options
+	Conn         *rpc.Connection       `json:"conn,omitempty"`         // The connection to the RPC server
+	BadFlag      error                 `json:"badFlag,omitempty"`      // An error flag if needed
 	// EXISTING_CODE
 	PublisherAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
 var defaultScrapeOptions = ScrapeOptions{
-	BlockCnt:  2000,
-	Publisher: "",
+	BlockCnt: 2000,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -48,7 +47,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.Touch != 0, "Touch: ", opts.Touch)
 	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, ""), "Publisher: ", opts.Publisher)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Conn.TestLog(opts.getCaches())

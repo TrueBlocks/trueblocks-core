@@ -30,7 +30,7 @@ func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, checkVersion
 	report.CheckedCnt++
 
 	fileName = index.ToIndexPath(fileName)
-	indexChunk, err := index.OpenIndex(fileName)
+	indexChunk, err := index.OpenIndex(fileName, true /* check */)
 	if err != nil {
 		if strings.Contains(err.Error(), "no such file or directory") {
 			// This is the case where the user did not download all the index chunks, only blooms

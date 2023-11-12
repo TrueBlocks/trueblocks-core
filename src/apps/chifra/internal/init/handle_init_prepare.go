@@ -86,10 +86,10 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 				// one or the other of them is invalid. We need to delete it and download it
 				// Note: we don't need to delete it, it will get downloaded and overwritten
 				if bloomStatus != OKAY {
-					// deleteMap[rng] = bloomStatus
+					deleteMap[rng] = bloomStatus
 					downloadMap[rng] = bloomStatus
 				} else {
-					// deleteMap[rng] = indexStatus
+					deleteMap[rng] = indexStatus
 					downloadMap[rng] = indexStatus
 				}
 			}
@@ -128,19 +128,29 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 
 	nDeleted := 0
 	for rng, reason := range deleteMap {
+		_, indexPath := rng.RangeToFilename(chain)
+		bloomPath := index.ToBloomPath(indexPath)
+		indexExists := file.FileExists(indexPath)
+		bloomExists := file.FileExists(bloomPath)
 		if !opts.DryRun {
-			_, indexPath := rng.RangeToFilename(chain)
-			if err := os.Remove(indexPath); err != nil {
-				return nil, 0, nDeleted, err
+			if indexExists {
+				logger.Info("Removing", indexPath)
+				if err := os.Remove(indexPath); err != nil {
+					return nil, 0, nDeleted, err
+				}
+				nDeleted++
 			}
-			nDeleted++
-			bloomPath := index.ToBloomPath(indexPath)
-			if err := os.Remove(bloomPath); err != nil {
-				return nil, 0, nDeleted, err
+			if bloomExists {
+				logger.Info("Removing", bloomPath)
+				if err := os.Remove(bloomPath); err != nil {
+					return nil, 0, nDeleted, err
+				}
+				nDeleted++
 			}
-			nDeleted++
 		}
-		opts.reportReason("chunk deleted", reason, rng.String())
+		if bloomExists || indexExists {
+			opts.reportReason("chunk deleted", reason, rng.String())
+		}
 	}
 
 	downloadList := make([]types.SimpleChunkRecord, 0, len(man.ChunkMap))

@@ -58,7 +58,7 @@ func (opts *ChunksOptions) handleResolvedRecords(modelChan chan types.Modeler[ty
 		return true, nil
 	}
 
-	indexChunk, err := index.OpenIndex(path)
+	indexChunk, err := index.OpenIndex(path, true /* check */)
 	if err != nil {
 		return false, err
 	}

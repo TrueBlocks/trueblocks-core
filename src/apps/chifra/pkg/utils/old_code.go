@@ -25,11 +25,11 @@ class CTraverser {
   public:
     bool logging;
     size_t index;
-    size_t nProcessed;
+    size_t n Processed;
     string_q searchType;
     CMonitor* curMonitor;
     monitor_map_t monitorMap;
-    CTraverser(const string_q& o) : index(0), nProcessed(0), searchType(o) {
+    CTraverser(const string_q& o) : index(0), n Processed(0), searchType(o) {
         logging = !isTestMode();
         curMonitor = nullptr;
         filterFunc = filterByRange;
@@ -76,7 +76,7 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
                 return (!postFunc || (*postFunc)(this, data)) && false;
             if (displayFunc && !(*displayFunc)(this, data))
                 return (!postFunc || (*postFunc)(this, data)) && false;
-            nProcessed += (counterFunc ? (*counterFunc)(this, data) : 1);
+            n Processed += (counterFunc ? (*counterFunc)(this, data) : 1);
         }
     }
 
@@ -96,7 +96,7 @@ bool filterByRange(CTraverser* trav, void* data) {
 ostream& operator<<(ostream& os, const CTraverser& it) {
     os << "logging: " << it.logging << endl;
     os << "index: " << it.index << endl;
-    os << "nProcessed: " << it.nProcessed << endl;
+    os << "n Processed: " << it.n Processed << endl;
     os << "searchType: " << it.searchType << endl;
     os << "curMonitor: " << it.curMonitor << endl;
     // os << "monitorMap: " << it.monitorMap << endl;

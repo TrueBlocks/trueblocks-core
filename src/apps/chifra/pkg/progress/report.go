@@ -19,6 +19,7 @@ const (
 type ProgressMsg struct {
 	Event   Event
 	Message string
+	Error   error
 	Payload interface{}
 }
 
