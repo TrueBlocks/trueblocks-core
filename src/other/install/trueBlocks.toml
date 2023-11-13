@@ -1,61 +1,105 @@
 [version]
-    current = "v2.0.0-release"
+  current = "v2.0.0-release"
 
 [settings]
-    cachePath = ""
-    defaultChain = "mainnet"
-    indexPath = ""
+  cachePath = ""
+  defaultChain = "mainnet"
+  indexPath = ""
 
 [keys]
-    [keys.etherscan]
-        apiKey = ""
-    [keys.infura]
-        apiKey = ""
-        secret = ""
-    [keys.pinata]
-        apiKey = ""
-        jwt = ""
-        secret = ""
-    [keys.trueblocks]
-        license = ""
-        apiKey = ""
+  [keys.etherscan]
+    apiKey = ""
+  [keys.infura]
+    apiKey = ""
+    secret = ""
+  [keys.pinata]
+    apiKey = ""
+    jwt = ""
+  [keys.trueblocks]
+    license = ""
+    apiKey = ""
 
 [pinning]
-    gatewayUrl = "https://ipfs.unchainedindex.io/ipfs/"
-    localPinUrl = "http://localhost:5001"
-    remotePinUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS"
+  gatewayUrl = "https://ipfs.unchainedindex.io/ipfs/"
+  localPinUrl = "http://localhost:5001"
+  remotePinUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 
 [unchained]
-    comment = "Do not edit these values unless instructed to do so."
+  comment = "Do not edit these values unless instructed to do so."
 
 [chains]
-    [chains.gnosis]
-        chainId = "100"
-        localExplorer = "http://localhost:1234"
-        remoteExplorer = "https://gnosisscan.io/"
-        rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
-        symbol = "XDAI"
-    [chains.mainnet]
-        chainId = "1"
-        localExplorer = "http://localhost:1234"
-        remoteExplorer = "https://etherscan.io"
-        rpcProvider = "http://localhost:8545"
-        symbol = "ETH"
-    [chains.optimism]
-        chainId = "10"
-        localExplorer = "http://localhost:1234"
-        remoteExplorer = "https://optimistic.etherscan.io"
-        rpcProvider = "https://mainnet.optimism.io"
-        symbol = "OPT"
-    [chains.polygon]
-        chainId = "80001"
-        localExplorer = "http://localhost:1234"
-        remoteExplorer = "https://mumbai.polygonscan.com"
-        rpcProvider = "https://rpc-mumbai.maticvigil.com"
-        symbol = "MATIC"
-    [chains.sepolia]
-        chainId = "11155111"
-        localExplorer = "http://localhost:1234"
-        remoteExplorer = "https://sepolia.otterscan.io/"
-        rpcProvider = "http://localhost:8548"
-        symbol = "ETH"
+  [chains.gnosis]
+    chain = "gnosis"
+    chainId = "100"
+    ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
+    localExplorer = "http://localhost:1234/"
+    remoteExplorer = "https://gnosisscan.io/"
+    rpcProvider = "https://gnosischain-rpc.gateway.pokt.network"
+    symbol = "XDAI"
+    [chains.gnosis.scrape]
+      appsPerChunk = 2000000
+      snapToGrid = 250000
+      firstSnap = 2000000
+      unripeDist = 28
+      allowMissing = false
+      channelCount = 20
+  [chains.mainnet]
+    chain = "mainnet"
+    chainId = "1"
+    ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
+    localExplorer = "http://localhost:1234/"
+    remoteExplorer = "https://etherscan.io/"
+    rpcProvider = "http://localhost:8545"
+    symbol = "ETH"
+    [chains.mainnet.scrape]
+      appsPerChunk = 2000000
+      snapToGrid = 100000
+      firstSnap = 2300000
+      unripeDist = 28
+      allowMissing = false
+      channelCount = 20
+  [chains.optimism]
+    chain = "optimism"
+    chainId = "10"
+    ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
+    localExplorer = "http://localhost:1234/"
+    remoteExplorer = "https://optimistic.etherscan.io/"
+    rpcProvider = "https://mainnet.optimism.io"
+    symbol = "OPT"
+    [chains.optimism.scrape]
+      appsPerChunk = 2000000
+      snapToGrid = 250000
+      firstSnap = 2000000
+      unripeDist = 28
+      allowMissing = false
+      channelCount = 20
+  [chains.polygon]
+    chain = "polygon"
+    chainId = "80001"
+    ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
+    localExplorer = "http://localhost:1234/"
+    remoteExplorer = "https://mumbai.polygonscan.com/"
+    rpcProvider = "https://rpc-mumbai.maticvigil.com"
+    symbol = "MATIC"
+    [chains.polygon.scrape]
+      appsPerChunk = 2000000
+      snapToGrid = 250000
+      firstSnap = 2000000
+      unripeDist = 28
+      allowMissing = false
+      channelCount = 20
+  [chains.sepolia]
+    chain = "sepolia"
+    chainId = "11155111"
+    ipfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
+    localExplorer = "http://localhost:1234/"
+    remoteExplorer = "https://sepolia.otterscan.io/"
+    rpcProvider = "http://localhost:8548"
+    symbol = "ETH"
+    [chains.sepolia.scrape]
+      appsPerChunk = 2000000
+      snapToGrid = 250000
+      firstSnap = 2000000
+      unripeDist = 28
+      allowMissing = false
+      channelCount = 20
