@@ -33,7 +33,6 @@ var nStarted int
 // downloadAndReportProgress Downloads the chunks and reports progress to the progressChannel
 func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRecord, chunkType walk.CacheType, nTotal int) ([]types.SimpleChunkRecord, bool) {
 	chain := opts.Globals.Chain
-	// TODO: BOGUS
 	sleep := utils.Max(.0125, opts.Sleep)
 	successCount := 0
 
@@ -76,7 +75,6 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 			if ok {
 				failed = append(failed, *chunk)
 				if errors.Is(event.Error, index.ErrWriteToDiscError) {
-					// TODO: BOGUS
 					sleep = utils.Min(4, sleep*1.2)
 					successCount = 0
 				}
@@ -102,7 +100,6 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 			if event.Message == "bloom" {
 				col = colors.Magenta
 			}
-			// TODO: BOGUS
 			successCount++
 			pct := float64(nProcessed) / float64(nTotal) * 100
 			sleepStr := ""
