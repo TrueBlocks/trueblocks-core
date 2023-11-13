@@ -1,12 +1,13 @@
 package index
 
 import (
+	"encoding/binary"
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-// AppearanceResult carries the appearances found in a single ChunkData for the given address.
+// AppearanceResult carries the appearances found in a single Index for the given address.
 type AppearanceResult struct {
 	Address    base.Address
 	Range      base.FileRange
@@ -14,8 +15,8 @@ type AppearanceResult struct {
 	Err        error
 }
 
-// GetAppearanceRecords searches an already-opened ChunkData for the given address. Returns a AppearanceResult or nil
-func (chunk *ChunkData) GetAppearanceRecords(address base.Address) *AppearanceResult {
+// ReadAppearances searches an already-opened Index for the given address. Returns a AppearanceResult or nil
+func (chunk *Index) ReadAppearances(address base.Address) *AppearanceResult {
 	ret := AppearanceResult{Address: address, Range: chunk.Range}
 
 	foundAt := chunk.searchForAddressRecord(address)
@@ -31,13 +32,12 @@ func (chunk *ChunkData) GetAppearanceRecords(address base.Address) *AppearanceRe
 	}
 
 	addressRecord := AddressRecord{}
-	err = addressRecord.ReadAddress(chunk.File)
-	if err != nil {
+	if err := binary.Read(chunk.File, binary.LittleEndian, &addressRecord); err != nil {
 		ret.Err = err
 		return &ret
 	}
 
-	appearances, err := chunk.ReadAppearanceRecords(&addressRecord)
+	appearances, err := chunk.readAppearanceRecords(&addressRecord)
 	if err != nil {
 		ret.Err = err
 		return &ret

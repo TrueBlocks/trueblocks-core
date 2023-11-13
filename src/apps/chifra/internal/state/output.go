@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunState handles the state command for the command line. Returns error only as per cobra.
-func RunState(cmd *cobra.Command, args []string) (err error) {
+func RunState(cmd *cobra.Command, args []string) error {
 	opts := stateFinishParse(args)
-	outputHelpers.SetEnabledForCmds("state", opts.IsPorted())
+	outputHelpers.EnableCommand("state", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("state", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.StateInternal()
-	return
+	return opts.StateInternal()
 }
 
-// ServeState handles the state command for the API. Returns error and a bool if handled
-func ServeState(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeState handles the state command for the API. Returns an error.
+func ServeState(w http.ResponseWriter, r *http.Request) error {
 	opts := stateFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("state", opts.IsPorted())
+	outputHelpers.EnableCommand("state", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("state", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.StateInternal()
+	err := opts.StateInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("state", err, &opts.Globals)
-	return
+	return err
 }
 
-// StateInternal handles the internal workings of the state command.  Returns error and a bool if handled
-func (opts *StateOptions) StateInternal() (err error, handled bool) {
-	err = opts.validateState()
-	if err != nil {
-		return err, true
+// StateInternal handles the internal workings of the state command.  Returns an error.
+func (opts *StateOptions) StateInternal() error {
+	var err error
+	if err = opts.validateState(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra state"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in StateInternal")
-	}
-
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Call != "" {
@@ -68,7 +62,7 @@ func (opts *StateOptions) StateInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetStateOptions returns the options for this tool so other tools may use it.
@@ -78,13 +72,6 @@ func GetStateOptions(args []string, g *globals.GlobalOptions) *StateOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *StateOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

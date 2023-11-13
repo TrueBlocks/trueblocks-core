@@ -58,9 +58,8 @@ func init() {
 	var capabilities = caps.Default // Additional global caps for chifra transactions
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
 	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Wei)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 
 	transactionsCmd.Flags().SortFlags = false
@@ -80,7 +79,7 @@ One of [ from | to ]`)
 		transactionsCmd.Flags().MarkHidden("cache_traces")
 		transactionsCmd.Flags().MarkHidden("source")
 	}
-	globals.InitGlobals(transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("transactions", transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	transactionsCmd.SetOut(os.Stderr)

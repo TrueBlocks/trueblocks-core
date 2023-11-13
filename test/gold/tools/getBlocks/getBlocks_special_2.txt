@@ -1,6 +1,6 @@
 chifra blocks  daofork
 TEST[DATE|TIME] Blocks:  [daofork]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -117,7 +117,8 @@ TEST[DATE|TIME] Format:  json
           "value": "1022338440000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }

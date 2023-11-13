@@ -13,7 +13,6 @@ export function getAbis(
     find?: string[],
     hint?: string[],
     encode?: string,
-    clean?: boolean,
     chain: string,
     noHeader?: boolean,
     fmt?: string,

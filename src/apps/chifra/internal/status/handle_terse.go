@@ -3,6 +3,7 @@ package statusPkg
 import (
 	"context"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -19,7 +20,7 @@ func (opts *StatusOptions) HandleStatusTerse() error {
 		}
 
 		// We want to short circuit the output in the non-json case
-		if s.toTemplate(opts.Globals.Writer, opts.Globals.TestMode, opts.Globals.Format) {
+		if s.toTemplate(opts.Globals.Writer, logger.LogTimerOn(), opts.Globals.Format) {
 			return
 		}
 

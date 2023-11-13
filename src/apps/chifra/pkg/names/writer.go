@@ -25,16 +25,16 @@ var defaultHeader = []string{
 	"isErc721",
 }
 
-type NameWriterFormat int
+type nameWriterFormat int
 
 const (
-	NameWriterCsv NameWriterFormat = iota
+	NameWriterCsv nameWriterFormat = iota
 	NameWriterTsv
 )
 
 type NameWriter struct {
 	WriteHeader   bool
-	Format        NameWriterFormat
+	Format        nameWriterFormat
 	Header        []string
 	headerWritten bool
 	csvWriter     *csv.Writer
@@ -46,7 +46,7 @@ func NewNameWriter(destWriter io.Writer) *NameWriter {
 		Header:      defaultHeader,
 		csvWriter:   csv.NewWriter(destWriter),
 	}
-	writer.SetFormat(NameWriterTsv)
+	writer.setFormat(NameWriterTsv)
 
 	return writer
 }
@@ -100,7 +100,7 @@ func (w *NameWriter) Error() error {
 	return w.csvWriter.Error()
 }
 
-func (w *NameWriter) SetFormat(format NameWriterFormat) {
+func (w *NameWriter) setFormat(format nameWriterFormat) {
 	comma := ','
 	if format == NameWriterTsv {
 		comma = '\t'

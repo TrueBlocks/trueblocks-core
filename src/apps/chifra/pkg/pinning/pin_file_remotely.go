@@ -13,23 +13,21 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 // pinFileRemotely pins a file remotely to the pinning service
-func (s *Service) pinFileRemotely(filepath string) (base.IpfsHash, error) {
-	if s.PinUrl == "" {
-		return "", fmt.Errorf("empty remote pinning URL")
-	}
-
+func (s *Service) pinFileRemotely(chain, filepath string) (base.IpfsHash, error) {
 	if s.HeaderFunc == nil {
 		return "", fmt.Errorf("header function is nil")
 	}
 
-	file, err := os.OpenFile(filepath, os.O_RDONLY, 0)
+	ff, err := os.OpenFile(filepath, os.O_RDONLY, 0)
 	if err != nil {
 		return "", err
 	}
-	defer file.Close()
+	defer ff.Close()
 
 	r, w := io.Pipe()
 	m := multipart.NewWriter(w)
@@ -38,21 +36,23 @@ func (s *Service) pinFileRemotely(filepath string) (base.IpfsHash, error) {
 		defer w.Close()
 		defer m.Close()
 
-		part, err := m.CreateFormFile("file", fp.Base(file.Name()))
+		part, err := m.CreateFormFile("file", fp.Base(ff.Name()))
 		if err != nil {
 			return
 		}
 
-		if _, err = io.Copy(part, file); err != nil {
+		if _, err = io.Copy(part, ff); err != nil {
 			return
 		}
 	}()
 
+	fileSize := file.FileSize(filepath)
+	timeout := time.Duration(((fileSize / (50 * 1024 * 1024)) + 1) * 30) // 30 seconds per 50MB
 	client := &http.Client{
-		Timeout: 30 * time.Second,
+		Timeout: timeout * time.Second,
 	}
 
-	req, err := http.NewRequest(http.MethodPost, s.PinUrl, r)
+	req, err := http.NewRequest(http.MethodPost, config.GetPinning().RemotePinUrl, r)
 	if err != nil {
 		return "", err
 	}

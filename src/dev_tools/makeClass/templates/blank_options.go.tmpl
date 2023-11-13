@@ -83,7 +83,7 @@ func [{LOWER}]FinishParse(args []string) *[{PROPER}]Options {
 [{ENS_CONVERT1}]
 	// EXISTING_CODE
 	// EXISTING_CODE
-[{ENS_CONVERT2}][{CONFIG_OVERRIDE}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
+[{ENS_CONVERT2}]	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}
 
@@ -96,11 +96,12 @@ func GetOptions() *[{PROPER}]Options {
 	return &default[{PROPER}]Options
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	default[{PROPER}]Options = [{PROPER}]Options{}
 	globals.SetDefaults(&default[{PROPER}]Options.Globals)
+	default[{PROPER}]Options.Globals.TestMode = testMode
 	default[{PROPER}]Options.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra [{ROUTE}]
 	// EXISTING_CODE

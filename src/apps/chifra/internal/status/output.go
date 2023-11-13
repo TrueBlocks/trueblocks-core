@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunStatus handles the status command for the command line. Returns error only as per cobra.
-func RunStatus(cmd *cobra.Command, args []string) (err error) {
+func RunStatus(cmd *cobra.Command, args []string) error {
 	opts := statusFinishParse(args)
-	outputHelpers.SetEnabledForCmds("status", opts.IsPorted())
+	outputHelpers.EnableCommand("status", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("status", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.StatusInternal()
-	return
+	return opts.StatusInternal()
 }
 
-// ServeStatus handles the status command for the API. Returns error and a bool if handled
-func ServeStatus(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeStatus handles the status command for the API. Returns an error.
+func ServeStatus(w http.ResponseWriter, r *http.Request) error {
 	opts := statusFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("status", opts.IsPorted())
+	outputHelpers.EnableCommand("status", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("status", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.StatusInternal()
+	err := opts.StatusInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("status", err, &opts.Globals)
-	return
+	return err
 }
 
-// StatusInternal handles the internal workings of the status command.  Returns error and a bool if handled
-func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
-	err = opts.validateStatus()
-	if err != nil {
-		return err, true
+// StatusInternal handles the internal workings of the status command.  Returns an error.
+func (opts *StatusOptions) StatusInternal() error {
+	var err error
+	if err = opts.validateStatus(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra status"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in NamesInternal")
-	}
-
-	handled = true
 	if len(opts.ModeTypes) > 0 {
 		err = opts.HandleShow()
 	} else {
@@ -66,7 +60,7 @@ func (opts *StatusOptions) StatusInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetStatusOptions returns the options for this tool so other tools may use it.
@@ -76,13 +70,6 @@ func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *StatusOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

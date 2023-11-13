@@ -15,11 +15,9 @@
 
 namespace qblocks {
 
-string_q manifestVersion = "trueblocks-core@v0.40.0";
-
 // Run make generate in order for this to take effect
 // search: change-version
-#define MAJOR 1
+#define MAJOR 2
 #define MINOR 0
 #define BUILD 0
 // Run make generate in order for this to take effect

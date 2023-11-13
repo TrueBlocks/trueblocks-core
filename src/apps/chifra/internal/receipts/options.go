@@ -110,11 +110,12 @@ func GetOptions() *ReceiptsOptions {
 	return &defaultReceiptsOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultReceiptsOptions = ReceiptsOptions{}
 	globals.SetDefaults(&defaultReceiptsOptions.Globals)
+	defaultReceiptsOptions.Globals.TestMode = testMode
 	defaultReceiptsOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra receipts
 	// EXISTING_CODE

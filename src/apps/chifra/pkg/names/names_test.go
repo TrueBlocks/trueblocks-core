@@ -11,7 +11,7 @@ import (
 )
 
 var inputValid = `
-tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	iscontract	iserc20	iserc721
+tags	address	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io		abnormally-able-bee	false	false	false	false	false	false
 50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18	absolutely-normal-hawk	false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	On chain	18	actually-suitable-finch	false	false	false	true	true	false
@@ -20,7 +20,7 @@ tags	address	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	isco
 
 // missing "address" field
 var inputMissingFields = `
-tags	name	symbol	source	decimals	petname	deleted	iscustom	isprefund	iscontract	iserc20	iserc721
+tags	name	symbol	source	decimals	petname	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
 55-Defi	ENS: Burn Address		EtherScan.io		abnormally-able-bee	false	false	false	false	false	false
 50-Tokens:ERC721	HomeWork 🏠🛠️	HWK	On chain	18	absolutely-normal-hawk	false	false	false	true	true	true
 50-Tokens:ERC20	Chi Gastoken by 1inch	CHI	On chain	18	actually-suitable-finch	false	false	false	true	true	false

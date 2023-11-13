@@ -12,6 +12,8 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -19,7 +21,8 @@ import (
 )
 
 func Test_HandleFreshenMonitors(t *testing.T) {
-	tslib.EstablishTsFile(utils.GetTestChain())
+	_ = config.GetRootConfig()
+	tslib.EstablishTsFile(utils.GetTestChain(), base.GetTestPublisher())
 	opts := globals.GlobalOptions{}
 	opts.Chain = "mainnet"
 	listOpts := ListOptions{
@@ -29,7 +32,7 @@ func Test_HandleFreshenMonitors(t *testing.T) {
 	}
 
 	// This is an address that we use for testing...early transactor but not for long so unlikely to be used for real
-	mon := monitor.NewMonitor("mainnet", listOpts.Addrs[0], true)
+	mon, _ := monitor.NewMonitor("mainnet", base.HexToAddress(listOpts.Addrs[0]), true)
 	file.Remove(mon.Path())
 
 	got := mon.String()

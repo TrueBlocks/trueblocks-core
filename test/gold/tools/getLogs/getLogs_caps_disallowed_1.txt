@@ -1,6 +1,6 @@
-chifra logs  12.0 --ether
+chifra logs  12.0 --wei
 Error: 
-  unknown flag: --ether
+  unknown flag: --wei
 
 Usage:
   chifra logs [flags] <tx_id> [tx_id...]

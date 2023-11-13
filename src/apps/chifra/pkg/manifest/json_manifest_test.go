@@ -14,7 +14,7 @@ var manifestSource = `
 {
   "version": "2",
   "chain": "mainnet",
-  "schemas": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
+  "specification": "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
   "chunks": [
     {
       "fileName": "000000000-000000000",
@@ -70,8 +70,8 @@ func TestReadManifest(t *testing.T) {
 			expected: "mainnet",
 		},
 		{
-			name:     "Schemas",
-			field:    m.Schemas.String(),
+			name:     "Specification",
+			field:    m.Specification.String(),
 			expected: "QmUou7zX2g2tY58LP1A2GyP5RF9nbJsoxKTp299ah3svgb",
 		},
 	}

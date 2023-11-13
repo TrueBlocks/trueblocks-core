@@ -20,7 +20,7 @@ blocks?blocks=2222222%202332332&fmt=json
           "ether": "0",
           "from": "0x02fcf30912b6fe2b6452ee19721c6068fe4c7b61",
           "gas": 1000000,
-          "gasCost": 2e+16,
+          "gasCost": 20000000000000000,
           "gasPrice": 20000000000,
           "gasUsed": 1000000,
           "hasToken": true,
@@ -396,7 +396,8 @@ blocks?blocks=2222222%202332332&fmt=json
           "value": "0"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -817,7 +818,8 @@ blocks?blocks=2222222%202332332&fmt=json
           "value": "57474740000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ],
   "meta": {

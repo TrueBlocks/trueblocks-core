@@ -41,10 +41,10 @@ var daemonCmd = &cobra.Command{
 
 const usageDaemon = `daemon [flags]`
 
-const shortDaemon = "initalize and control long-running processes such as the API and the scrapers"
+const shortDaemon = "initialize and control long-running processes such as the API and the scrapers"
 
 const longDaemon = `Purpose:
-  Initalize and control long-running processes such as the API and the scrapers.`
+  Initialize and control long-running processes such as the API and the scrapers.`
 
 const notesDaemon = `
 Notes:
@@ -76,7 +76,7 @@ One of [ off | blooms | index ]`)
 		daemonCmd.Flags().MarkHidden("scrape")
 		daemonCmd.Flags().MarkHidden("monitor")
 	}
-	globals.InitGlobals(daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("daemon", daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
 
 	daemonCmd.SetUsageTemplate(UsageWithNotes(notesDaemon))
 	daemonCmd.SetOut(os.Stderr)

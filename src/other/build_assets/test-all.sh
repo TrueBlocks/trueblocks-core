@@ -7,9 +7,8 @@ export CHIFRA=$QUICKBLOCKS/src/apps/chifra
 export BUILD_FOLDER=$QUICKBLOCKS/build/
 export TEST_FOLDER=$QUICKBLOCKS/test/
 
-# We will use these to replace this data in case it's modified during testing
+# The names.tab file is ours, so we can always replace it for testing
 export NAMES_SOURCE=$QUICKBLOCKS/src/other/install/names/names.tab
-export NAMES_CUSTOM=$QUICKBLOCKS/src/other/install/names/names_custom.tab
 
 cd "$INSTALL"
 echo "Installing config files"
@@ -37,12 +36,6 @@ make -j 8
 ~/.local/bin/chifra/test/test-api.sh --filter all --mode both --report $@
 RESULT=$?
 
-# Special case for customized customized names
-if [[ -f "$HOME/Desktop/names_custom.tab" ]]
-then
-    export NAMES_CUSTOM="$HOME/Desktop/names_custom.tab"
-fi
-
 export DEST_FOLDER="$HOME/Library/Application Support/TrueBlocks/config/mainnet"
 if [[ -d $DEST_FOLDER ]]
 then
@@ -54,9 +47,7 @@ fi
 
 # Put the original data back in place
 cp -f "$NAMES_SOURCE" "$DEST_FOLDER"
-cp -f "$NAMES_CUSTOM" "$DEST_FOLDER"
 touch "$DEST_FOLDER/names.tab"
-touch "$DEST_FOLDER/names_custom.tab"
 
 cd $BUILD_FOLDER
 echo "Done..."

@@ -1,6 +1,6 @@
-abis?clean&known
+abis?decache&known
 {
   "errors": [
-    "The --clean option is not available in API mode."
+    "The --decache option is not available in API mode."
   ]
 }

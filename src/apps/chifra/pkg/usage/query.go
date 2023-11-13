@@ -15,16 +15,16 @@ func QueryUser(prompt, noResponse string) bool {
 	}
 
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Printf(colors.Yellow+"%s"+colors.Off, prompt)
+	fmt.Fprintf(os.Stderr, colors.Yellow+"%s"+colors.Off, prompt)
 	text, _ := reader.ReadString('\n')
 	text = strings.Replace(text, "\n", "", -1)
 	if text != "" && text != "y" && text != "Y" {
 		text = strings.ToLower(text)
 		if text == "q" || text == "quit" {
-			fmt.Printf("Quitting...\n")
+			fmt.Fprintf(os.Stderr, "Quitting...\n")
 			os.Exit(0)
 		}
-		fmt.Printf("%s [%s]\n", noResponse, text)
+		fmt.Fprintf(os.Stderr, "%s [%s]\n", noResponse, text)
 		return false
 	}
 	return true

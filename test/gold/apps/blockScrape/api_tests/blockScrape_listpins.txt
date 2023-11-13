@@ -1,6 +1,0 @@
-scrape?listpins
-{
-  "errors": [
-    "Invalid key (listpins) in scrape route."
-  ]
-}

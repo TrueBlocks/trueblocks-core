@@ -32,7 +32,7 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 				errorChan <- err
 				return
-			} else if !opts.NoZero || cnt > 0 {
+			} else if cnt > 0 {
 				firstTs, _ := tslib.FromBnToTs(chain, uint64(apps[0].BlockNumber))
 				latestTs, _ := tslib.FromBnToTs(chain, uint64(apps[len(apps)-1].BlockNumber))
 				s := simpleBounds{

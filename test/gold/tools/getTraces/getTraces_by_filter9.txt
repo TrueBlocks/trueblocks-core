@@ -1,6 +1,6 @@
 chifra traces  --fmt json --filter 4370000!4370002!!!1!
 TEST[DATE|TIME] Filter:  4370000!4370002!!!1!
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] map[after:1 count:18446744073709551615 fromAddress:0x0 fromBlock:4370000 toAddress:0x0 toBlock:4370002] {4370000 4370002}
 {

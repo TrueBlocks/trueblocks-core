@@ -13,7 +13,7 @@ import (
 func (opts *WhenOptions) HandleTimestampsTruncate() error {
 	chain := opts.Globals.Chain
 
-	if err := tslib.Truncate(chain, opts.Truncate); err != nil {
+	if err := tslib.Truncate(chain, opts.Truncate+1); err != nil {
 		return err
 	}
 

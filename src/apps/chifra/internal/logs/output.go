@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunLogs handles the logs command for the command line. Returns error only as per cobra.
-func RunLogs(cmd *cobra.Command, args []string) (err error) {
+func RunLogs(cmd *cobra.Command, args []string) error {
 	opts := logsFinishParse(args)
-	outputHelpers.SetEnabledForCmds("logs", opts.IsPorted())
+	outputHelpers.EnableCommand("logs", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("logs", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.LogsInternal()
-	return
+	return opts.LogsInternal()
 }
 
-// ServeLogs handles the logs command for the API. Returns error and a bool if handled
-func ServeLogs(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeLogs handles the logs command for the API. Returns an error.
+func ServeLogs(w http.ResponseWriter, r *http.Request) error {
 	opts := logsFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("logs", opts.IsPorted())
+	outputHelpers.EnableCommand("logs", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("logs", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.LogsInternal()
+	err := opts.LogsInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("logs", err, &opts.Globals)
-	return
+	return err
 }
 
-// LogsInternal handles the internal workings of the logs command.  Returns error and a bool if handled
-func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
-	err = opts.validateLogs()
-	if err != nil {
-		return err, true
+// LogsInternal handles the internal workings of the logs command.  Returns an error.
+func (opts *LogsOptions) LogsInternal() error {
+	var err error
+	if err = opts.validateLogs(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra logs"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Panic("Should not happen in chifra logs.")
-	}
-
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else {
@@ -66,7 +60,7 @@ func (opts *LogsOptions) LogsInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetLogsOptions returns the options for this tool so other tools may use it.
@@ -76,13 +70,6 @@ func GetLogsOptions(args []string, g *globals.GlobalOptions) *LogsOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *LogsOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

@@ -22,44 +22,41 @@ import (
 // EXISTING_CODE
 
 // RunList handles the list command for the command line. Returns error only as per cobra.
-func RunList(cmd *cobra.Command, args []string) (err error) {
+func RunList(cmd *cobra.Command, args []string) error {
 	opts := listFinishParse(args)
-	outputHelpers.SetEnabledForCmds("list", opts.IsPorted())
+	outputHelpers.EnableCommand("list", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("list", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.ListInternal()
-	return
+	return opts.ListInternal()
 }
 
-// ServeList handles the list command for the API. Returns error and a bool if handled
-func ServeList(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeList handles the list command for the API. Returns an error.
+func ServeList(w http.ResponseWriter, r *http.Request) error {
 	opts := listFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("list", opts.IsPorted())
+	outputHelpers.EnableCommand("list", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("list", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.ListInternal()
+	err := opts.ListInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("list", err, &opts.Globals)
-	return
+	return err
 }
 
-// ListInternal handles the internal workings of the list command.  Returns error and a bool if handled
-func (opts *ListOptions) ListInternal() (err error, handled bool) {
-	err = opts.validateList()
-	if err != nil {
-		return err, true
+// ListInternal handles the internal workings of the list command.  Returns an error.
+func (opts *ListOptions) ListInternal() error {
+	var err error
+	if err = opts.validateList(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra list"
 	// EXISTING_CODE
-	handled = true // everything is handled even on failure
-
 	// We always freshen the monitors. This call fills the monitors array.
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
 	if canceled, err := opts.HandleFreshenMonitors(&monitorArray); err != nil || canceled {
-		return err, true
+		return err
 	}
 
 	if opts.Count {
@@ -72,7 +69,7 @@ func (opts *ListOptions) ListInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetListOptions returns the options for this tool so other tools may use it.
@@ -82,13 +79,6 @@ func GetListOptions(args []string, g *globals.GlobalOptions) *ListOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *ListOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

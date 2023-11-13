@@ -1,8 +1,464 @@
 <!-- markdownlint-disable MD024 MD036 -->
-
 # History of Changes
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
+
+## v2.0.0 (2023/11/14)
+
+**Withdrawals!**
+
+This version includes many improvements over `version 1.0.0`, including support for reading and indexing CL withdrawal appearances. Because the index now more appearances, we were forced to make a breaking change to the index. Therefore, we bumped the major version number and a migration is required. There are many other new features and improvements listed below.
+
+Complete [the migrations](./MIGRATIONS.md) now if you've not already.
+
+The primary improvements with version 2.0.0 are:
+
+1) Inclusion of previously missing `withdrawal` appearances, and
+2) Much improved `chifra scrape` command which is now more inclusive, more performant, and more complete.
+3) A much better `chifra monitors --watch` command which is now easier to use and easier to automate.
+4) Greatly improved `chifra init` command with better reporting and progressive backoff to avoid rate limiting.
+5) Improved local caching including fixes to certain performance bottlenecks.
+
+Below is an explicit list of all changes.
+
+## Changes to the Specification
+
+We re-wrote the [Specification for the Unchained Index](https://trueblocks.io/papers/2023/specification-for-the-unchained-index-v2.0.0-release.pdf) to include all version 2.0.0 modifications. A reference to this version has been inserted into each chunk in the Unchained Index and included in the manifest (which is why there's the need for a migration).
+
+## Breaking Changes
+
+The following breaking changes were made for this release:
+
+- Bumped version number to v2.0.0.
+- Modifed the contents of the Unchained Index chunks in the following ways:
+  - Updated the header of each chunk to reference `trueblocks-core@v2.0.0-release` (requires regeneration or re-downloading of index),
+  - Includes previously missing `withdrawal` appearances enabled at the Shanghai hard-fork,
+  - Removes `erigon` specific "hacks" required by previous (broken) version of `erigon`.
+  - Includes previously missing appearearances for "misconfigured miners" in very early blocks (prior to block `100,000`).
+- Near complete re-write of `chifra monitors --watch` option including breaking changes to command line functionality.
+- Minor breaking changes to some data models as detailed below.
+- Further removal or deprecation of esoteric, rarely used, and/or redundant options (see below).
+
+## System Wide Changes
+
+- Updated Specification of the Unchained Index v2.0.0.
+- Freshened and re-published the Unchained Index `manifest` for `mainnet` and `sepolia` chains to the latest block.
+- Greatly improved pinning interface including easier pinning of other chains and better management of existing pins.
+- Exposed `--publisher` option to tools for which it makes sense as an aide in using alterative versions of the Unchained Index.
+- Better error handling throughout including much better error handling from the RPC.
+- Improved handling of user cancels (i.e., hitting `Cntl+C`) during caching and other processes to help avoid corrupting the databases.
+- Much better debugging of internal curl calls including generation of `curl` command debugging replay files.
+- Added function level enter/exit tracing for easier debugging.
+- Improved formatting of outputs, expansion of the use of the `--verbose` option.
+- Inclusion in most data output (where applicable) both timestamp and date fields (a user-suggested improvement).
+- Removes `--wei` options from all commands as unnecassary. Breaking change. If used, simply remove it.
+- Added documentation globally available options such as `--fmt`, `--ether`, `--cache`, `--no_header`, etc.
+- Exposed a number of previously hidden options and commands (see below).
+
+## Changes to Data Models
+
+The following data models were either modified, added, removed, or renamed by having their fields added to, removed, or renamed. Please consult the documentation on our website for details. Some of these changes are breaking.
+
+### Modified data models
+
+| model        | description                                                                           | breaking |
+| ------------ | ------------------------------------------------------------------------------------- | -------- |
+| `Block`      | Added `withdrawals` array as per the Shanghai hard-fork.                              |          |
+| `Manifest`   | Renamed `schema` field to `specification`.                                            | yes      |
+| `Manifest`   | Remove previously unused `database` field.                                            | yes      |
+| `Slurp`      | Added `withdrawalIndex` and `validatorIndex` to service the `--withdrawals` option.   |          |
+| `Withdrawal` | Added `timestamp`, `date`, and `blockNumber` to `withdrawal` data model.              |          |
+| `Chain`      | Removed `apiProvider` field from `Chain` data model as unused.                        | yes      |
+| `Config`     | Internal changes to better maintain the `config` data model used in the `.toml` file. |          |
+
+### New data models
+
+| model     | description                                                                                        |
+| --------- | -------------------------------------------------------------------------------------------------- |
+| `IpfsPin` | New model with fields `cid`, `datePinned`, `status`, `size`, `fileName` for use in the `manifest`. |
+
+### Removed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Renamed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+## Tool Specific Changes
+
+**chifra list**
+
+- Added `chifra list --decache` option to remove exising monitors and all associated cached items. Note that there is no corresponding `--cache` option for `chifra list`.
+- Added `chifra init --publisher` option to allow for using alternatively published versions of the Unchained Index.
+
+**chifra export**
+
+- Added `chifra init --publisher` option to allow for using alternatively published versions of the Unchained Index.
+
+**chifra monitors**
+
+- Near complete re-write of the `chifra monitors --watch` tool (including breaking changes).
+- Added `chifra monitors --watch --watch_list` to specify which addresses to watch. Previously the tool looked for a file in the local folder.Improves automation.
+- Added `chifra monitors --watch --commands` option to carry the commands to run against the `watch_list`. Improves on existing poorly functioning and poorly documented commands file which used the `--file`.
+- Added optional `--batch_size` and `--run_count` options to `chifra monitors --watch` to aide in debugging and performance testing.
+- Renamed `--run_once` to `--run_count`. You may get the same behaviour with `chifra monitors --watch --run_count 1`.
+
+**chifra names**
+
+- Updated a (very) few names in the database.
+
+**chifra abis**
+
+- Added `chifra abis --cache` and `chifra abis --decache` options replacing previously available `--clean` option. `--cache` is a no-op as any downloaded ABI files have always been cached by default.
+- Removed `chifra abis --clean` as inconsistent - use `chifra abis --decache` instead.
+
+**chifra blocks**
+
+- Fixed a major bottleneck in the RPC processing for this command to greatly speed up processing time.
+- Added `chifra blocks --withdrawal` to display withdrawal transactions in a block.
+- Added `chifra blocks --ether` to display balances and amounts in Ether (defaults to Wei otherwise).
+
+**chifra transactions**
+
+- Added `chifra transactions --ether` to display balances and amounts in Ether (defaults to Wei otherwise).
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- Added `chifra traces --ether` to display balances and amounts in Ether (defaults to Wei otherwise).
+
+**chifra when**
+
+- Improved `chira when --list` command to be more informative.
+- Added a `chifra when --verbose` mode to be even more informative than that.
+- Added additional `special` blocks and better descriptions for each block.
+- Changed names of some rarely used `special` blocks (mildly breaking).
+
+**chifra state**
+
+- Improvements to the testing and performance of `chifra state --call` option.
+
+**chifra tokens**
+
+- No changes.
+
+**chifra config**
+
+- Near complete re-write of configuration modules and how they work
+- Forces `v2.0.0-release` into the TrueBlocks.toml file (elicits an automatic migration of the toml file to current versions).
+- Added `chifra config show` to dump the `trueBlocks.toml` config file to screen.
+- Enables `chifra config edit` option to open an editor on the toml file (requires EDITOR environment variable to be set).
+- Merges separate `blockScrape.toml` config files into the `per-chain sections` of main config file.
+
+**chifra status**
+
+- Better display of more information.
+
+**chifra daemon**
+
+- Fixed an issue with the server where `Content-Type` was being incorrectly forwarded in certain error conditions.
+
+**chifra scrape**
+
+- Near complete re-write of the scraper and the specification to fix various issues including indexing `withdrawals`.
+- Much easier to understand (and document) unique address identifier, marking of mis-configured addresses, etc.
+- Fixed an issue where scraper was missing certain smart contract addresses created during out of gas transactions in the early chain.
+- Fixes many issues with scraper. It is now more complete, faster, and more consistent when running near the head of the chain.
+- Remove `--pin` and `--remote` options from `chifra scrape`. Use `chifra chunks manifest --pin --remote` (post-de-facto) instead.
+- Replace `chifra scrape --first_block` option with `chifra scrape --touch` 
+- Renamed `--run_once` to `--run_count`. Get same behaviour with `chifra --run_count 1` - aides in debugging scraper.
+- Added `--dry_run` to aide in debugging scraper.
+- Now disallows running `chifra scrape` if the node is not a tracing archive node.
+- Changed the name of the config item `allow_missing` to `allowMissing`.
+- Changed the name of the config item `apps_per_chunk` to `appsPerChunk`.
+- Changed the name of the config item `channel_count` to `channelCount`.
+- Changed the name of the config item `first_snap` to `firstSnap`.
+- Changed the name of the config item `snap_to_grid` to `snapToGrid`.
+- Changed the name of the config item `unripe_dist` to `unripeDist`.
+
+**chifra chunks**
+
+- Added `chifra chunks index --tag` option to mark an Unchained Index with a version tag.
+- Added `chifra chunks index --diff` to compare two versions of the Unchained Index and identify what addresses are new, missing, or modified.
+- Added `chifra chunks manifest --pin [--remote]` option to pin the Unchained Index either locally, remotely, or both.
+- Added `chifra chunks manifest --rewrite` option to rewrite the newly pinned manifest to the Unchained Index folders.
+- Added `chifra chunks manifest --publisher` option to allow for downloading alternatively published versions of the index.
+- Added `chifra chunks pins --list` option to list existing pins on either the local or remote pinning service.
+- Added `chifra chunks pins --unpin` option to remove a list of unused pins from the local or remote pinning service.
+
+**chifra init**
+
+- Improved `chifra init` in various ways including more accurate downloading and better reporting.
+- Added `chifra init --publisher` option to allow for downloading alternatively published versions of the index.
+- Added progressive backoff when the download is rate-limited to avoid banning.
+
+**chifra explore**
+
+- No changes.
+
+**chifra slurp**
+
+- Added `chifra slurp --withdrawal` option to download and show withdrawal transactions.
+- Added `chifra slurp --ether` to display balances and ammounts in Ether.
+
+**makeClass**
+
+- Various changes to support different auto-generation code.
+
+**testRunner**
+
+- No changes.
+
+## Pull Requests (95)
+
+<!-- gh pr list --search "is:pr is:closed closed:>2023-08-13" --limit 300 --state merged | cut -f1,2 | sed 's/^/- #/' -->
+
+- #3378 Final changes to make updated index possible
+- #3375 Very small update to tracing rpc usage to corrent a very small issue
+- #3374 Further improvements 2
+- #3373 Removes history group from toml file.
+- #3372 Further improvements including fix to #3363
+- #3370 Various small improvements
+- #3368 3299 chifra scrape touch
+- #3367 3307 chifra monitors should have a decache option
+- #3366 Display type field in transactions (if non-zero)
+- #3364 Improved chifra index manifest
+- #3362 Allows for adjustible sleep time during pinning based on size.
+- #3360 Implements chifra export --withdrawals
+- #3356 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /src/apps/chifra
+- #3355 Fixes the issue further
+- #3354 Fixes an issue with finding block with no addresses (which is actuall…
+- #3353 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /src/apps/chifra
+- #3352 3324 chifra chunks index truncate should show progress
+- #3351 chifra init --all overwriting valid chunks
+- #3349 Fix/erigon trace change
+- #3345 Adds --withdrawal to various
+- #3344 Removes unused --wei global option
+- #3341 Hot fixes two issues with version and withdrawal txs being in index.
+- #3337 Typos
+- #3336 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /src/apps/chifra
+- #3335 Various improvements to various things
+- #3334 Feature/chunks pins count 1
+- #3328 Fix chifra chunks index --check for chifra init mode
+- #3327 Hot fix to allow for upgrading to 1.5.0 while still allowing downgrades
+- #3326 Feature/withdrawals
+- #3320 Fixes slow scraper?
+- #3318 Partial fix for issue #2928
+- #3317 Updates boxo
+- #3316 Fixes issue #3313
+- #3311 Removes most boilerplate for IsPorted and handled from output.go thro…
+- #3309 Fixes tagging
+- #3308 Allows for managing remote pins and tagging the index
+- #3303 No longer deletes chunks ahead of manifest in chifra init -all
+- #3300 Re-writes chifra init --dry_run
+- #3297 Adds --rewrite option to chifra chunks --pin --deep
+- #3296 Tries to fix testing on develop
+- #3295 Improves debugging of logs and index
+- #3292 Improvements to chifra names and closes various issues.
+- #3285 Closes chifra abis - --clean option should be called --decache #3284
+- #3283 First pass at notification system
+- #3281 Fixes issue chifra init if it changes any files -- should invalidate …
+- #3280 Bumps version to v1.5.0-release
+- #3279 Fix/remote manifest
+- #3278 Fix/3272 file option broken
+- #3277 chifra chunks --pin improvements
+- #3276 Finished this super painful merge
+- #3275 Cleaning
+- #3273 Cleans up a few test cases and temporarily turns off chifra monitors
+- #3271 New scraper and many other things
+- #3270 Various updates to pinning while scraping (removed), withdrawals on blocks (added), other - slight breaking change
+- #3269 Fixes build
+- #3265 Further cleanup in preparation for version 2.0.0
+- #3262 Fix/build fixes
+- #3261 Adds chain to Model interface
+- #3249 Bump get-func-name from 2.0.0 to 2.0.2 in /sdk/typescript
+- #3244 New scraper - pre-merge cleanup 2
+- #3243 New scraper - pre-merge cleanup 1
+- #3237 Implements chifra config edit
+- #3235 Fixes issue #3232
+- #3231 Closed issue #2964
+- #3230 Closed issue chifra scrape do not to run twice against the same chain…
+- #3228 Fixes issue #3014
+- #3203 Overridden MaxIdleConnsPerHost to fix infinite bind
+- #3200 Removes old files
+- #3197 Fix/fix scraper 3
+- #3194 Fix/fix scraper 2
+- #3192 Fixes previously broken IsNodeTracing for non-mainnet chains
+- #3190 Slightly better reporting for chifra chunks
+- #3188 Fixing big int usage
+- #3187 Fixes #3081
+- #3186 Closed #3033
+- #3184 Fixes #3156
+- #3182 3180 chifra sdks links
+- #3178 Better/chifra when
+- #3177 Fixes #2862
+- #3176 2849 chifra monitors watch
+- #3175 Removed previously deprecated stuff
+- #3172 Moved protobufs compilation step to make generate
+- #3171 Bump vite from 4.1.4 to 4.4.9 in /sdk/typescript
+- #3170 Bump word-wrap from 1.2.3 to 1.2.5 in /sdk/typescript
+- #3169 Bump semver from 6.3.0 to 6.3.1 in /sdk/typescript
+- #3168 Bump requests from 2.27.1 to 2.31.0 in /sdk/python
+- #3167 Update to v1.0.0
+- #3166 Bugfix/migration typo
+- #3165 Removes big dogs
+- #3163 Post merge cleanup 1
+- #3162 Fixes issue #2810
+- #3160 Fixes issue #3159
+- #3155 Feature/final golang port 2
+
+## Issues Closed (110)
+
+<!-- gh issue list --search "closed:>2023-08-13 is:closed is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' -->
+
+- #3369 chifra cmd - make this easy one line change
+- #3365 chifra chunks manifest --pin could be concurrent
+- #3363 chifra init
+- #3342 chifra cmd - add --ether to blocks, logs, traces, withdrawals
+- #3340 chifra slurp - is there withdrawal data from Etherscan?
+- #3333 chifra chunks - manifest --pin allows for invalid manifest
+- #3331 cmd chunks - improvements to pins --unpin and pins --list
+- #3330 chifra cmd - pinata
+- #3324 chifra chunks - index --truncate should show progress
+- #3323 chifra scrape - sleep for six seconds which is the expected time before the next block
+- #3322 chifra scrape - better display
+- #3321 chifra scrape - improved bloom filters
+- #3319 chifra chunks - additional --deep checks
+- #3315 chifra chunks - pins --unpin needs a --diff option to compare pinned items to the latest manifest and report on only orphans
+- #3314 chifra chunks - manifest --pin should update the manifest by default and update all with --deep
+- #3313 chifra chunks - pins --list should allow for 'all | pinned | unpinned | pending'
+- #3312 chifra export - reconciliations should be export in an industry standard format
+- #3307 chifra monitors should have a --decache option
+- #3306 Quick look at JSON-RPC batching
+- #3304 chifra chunks - reminder - test cases marked as `index`
+- #3301 Additional `export` command examples
+- #3299 chifra scrape - starting at a given block
+- #3298 chifra init - should do better reporting for --dry_run
+- #3291 chifra names - .eth should always resolve to an address if the name exists
+- #3290 chifra names - incorporate into other tools
+- #3289 chifra names - quality of the data
+- #3288 chifra names -- names database should not be part of the repo
+- #3287 chifra names - ERC20 tokens that are proxied are not identified as ERC20
+- #3284 chifra abis - --clean option should be called --decache
+- #3274 Settings for running a partial archive node?
+- #3272 chifra export --file fails if file has no header
+- #3260 chifra cmd - we need chain in the Model function for per-chain data
+- #3259 chifra serve - should report error if port 8080 is being used
+- #3258 chifra scrape - non-mainnet chains will not pull `withdrawals` because we hard code Shanghia block
+- #3257 chifra init - if IPFS is running locally...
+- #3256 What to do with dependabot warnings
+- #3255 chifra chunks manifest --pin does not re-write the manifest - order of operations?
+- #3254 Upgrade doesn't work
+- #3253 chifra blocks - cache does not preserve withdrawals
+- #3252 chifra scrape - documenting misconfigured miner records
+- #3251 chifra blocks - text format output is weird with withdrawls
+- #3250 chifra cmd - don't write a cache item if the file already exists
+- #3248 chifra scrape - rework first_snap, apps_per_chunk defaults.
+- #3247 chifra scrape - don't do the withdrawals query prior to the shanghia hard fork
+- #3246 chifra cmd - reading from outdated cache should remove unreadable file
+- #3242 chifra scrape - pinning options
+- #3241 chifra scrape - performance
+- #3240 chifra scrape - creation of manifest while scraping vs. chifra chunks --pin
+- #3239 chifra cmd - no error report if tracing is not enabled on the node endpoint
+- #3238 chifra scrape configuration cleanup
+- #3236 chifra scrape crashes if I stop the node
+- #3233 chifra monitors -- does it work?
+- #3232 chifra daemon scrape values invalid
+- #3229 Indexing an unsupported EVM chain
+- #3227 chifra state cores
+- #3226 chifra abis should have a --raw option
+- #3225 Utilize BlockRange on eth_getLogs querys
+- #3223 ABI docs are vague and unclear
+- #3221 chifra blocks reports error incorrectly
+- #3220 Multiple RPC providers
+- #3219 chifra scrape needs configurable publisher
+- #3216 chifra scrape or chifra init creates weird folders
+- #3215 chifra tokens with --verbose produces empty dates
+- #3214 chifra cmd - thoughts from making a tutorial in Berlin
+- #3213 chifra export --trace --count doesn't work
+- #3212 chifra cmd -- any use of `--chain` with a value not found in the array shoudl fail more gracefully
+- #3211 Omission of popular contracts with long vanity addresses
+- #3210 chifra chunks manifest --pin requires ipfs even if the help text says otherwise
+- #3207 chifra blocks no reporting...
+- #3206 chifra when --list on other chains chokes
+- #3205 Could not establish ts file: abi not found
+- #3204 Cntl+C doesn't quite work in chifra scrape
+- #3201 Gaps in index
+- #3199 API sometimes returns blocks with empty transactions Array
+- #3195 chifra scrape - misses
+- #3193 Clean up BlazeOptions
+- #3191 chifra cmd - IsNodeTracing return true for all chains
+- #3189 Feature suggestion: Helm Chart for trueblocks-docker
+- #3185 chifra scrape ignores withdrawl data
+- #3183 Cleanup other folder remove old code
+- #3180 chifra sdks have incorrect links in docs to old repo
+- #3179 chifra scrape - Instable node connection
+- #3174 Remove previously deprecated options from all tools
+- #3164 Remove big dogs
+- #3161 chifra tokens should show date with --verbose
+- #3159 chifra list --verbose reports incorrect dates for transactions in the same block
+- #3158 Auto code generation should export the VERSION file in the docker repo
+- #3157 progress reporting
+- #3156 chifra chunks incorrect behaviour
+- #3153 chifra blocks --uncles does not cache
+- #3146 Error while reading stderr: bufio.Scanner: token too long
+- #3145 "No new blocks at block"
+- #3143 Channel in Connection object
+- #3142 Any array stored in the cache should be protected with a 'present' flag
+- #3141 The use of any and interface doesn't allow us to "break" the build on purpose as a way of searching for a feature
+- #3140 --decache does not report anything in API mode
+- #3136 chifra tokens should have a --no_zero and a --diff
+- #3135 Both chifra state and chifra tokens need to show date when --verbose flag is on
+- #3134 We could probably use the `errcheck` default exclusion for the linter to avoid the `_ =` markers in the code
+- #3132 Need a test for chifra X --cache should control for Control+C for the user.
+- #3130 chifra blocks could easily have an --articulate options (and should)
+- #3119 chifra export needs to be made IterateOverMap -- see chifra export --logs
+- #3116 chifra empty hex string
+- #3115 chifra status does not properly report on new cache locations
+- #3106 chifra blocks Extraneous errors reported by articulation (and elsewhere)
+- #3097 chifra blocks - Can `cacheTx` and `cacheTraces` be made into global capabilities?
+- #3096 `--decache` should be turned on wherever `cache` is enabled.
+- #3095 Remove `log_level` and `wei` throughout (anything else?)
+- #3094 Deprecate global options --ether and --wei and replace with --units and --decimals which make sense for both Eth and tokens.
+
+## Issues Opened (22)
+
+<!-- gh issue list --search "created:>2023-08-13 is:open is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' -->
+
+- #3377 chifra cmd - search for "Why do we need to do this here" for a question about loading the timestamps file
+- #3376 chifra chunks index --tag should update the manifest with the version and the spec
+- #3361 chifra export - fake withdrawal tx is incorrect
+- #3359 chifra when - finalized
+- #3350 Etherscan explorer clones probably have API endpoints
+- #3348 chifra state - fails against Geth
+- #3347 chifra export - example miner txs that doesn't balance
+- #3346 chifra cmd - all cachable items need a function NeedsUpgrade
+- #3343 chifra scrape - should we be scraping access lists?
+- #3338 chifra cmd - notes from call with Dawid
+- #3325 chifra export -- should take dates as well as blocks
+- #3310 chifra cmd - can't kill download of timestamps
+- #3302 chifra transactions - Missing data in output
+- #3282 chifra scrape - tracking issue for Notify
+- #3267 chifra daemon --port issues
+- #3266 chifra cmd - caching could possibly be a configurable option
+- #3245 chifra cmd - the --publisher option should be global
+- #3224 chifra abis - Separate ABIs Response instead of Union
+- #3222 chifra export should handle withdrawals
+- #3217 chifra cmd - every command wants to download timestamps
+- #3209 chifra status - Improve UX of `chifra status` Progress row
+- #3173 chifra state - Allow following proxy in `chifra state --call`
 
 ## v1.0.0 (2023/08/20)
 
@@ -225,7 +681,7 @@ The following existing data models were either added, removed, or modified by ha
 
 **chifra explore**
 
-- No changes
+- No changes.
 
 **chifra slurp**
 
@@ -233,11 +689,11 @@ The following existing data models were either added, removed, or modified by ha
 
 **makeClass**
 
-- No changes
+- No changes.
 
 **testRunner**
 
-- No changes
+- No changes.
 
 ## Pull Requests (46)
 - #3154 Catching up to a lot of cache related code
@@ -1375,4 +1831,3 @@ Changes in this release are in support of [the docker version](https://github.co
 
 - **chifra qoutes:**
   - Officially deprecated
-

@@ -62,7 +62,7 @@ func init() {
 	receiptsCmd.Flags().SortFlags = false
 
 	receiptsCmd.Flags().BoolVarP(&receiptsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	globals.InitGlobals(receiptsCmd, &receiptsPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("receipts", receiptsCmd, &receiptsPkg.GetOptions().Globals, capabilities)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 	receiptsCmd.SetOut(os.Stderr)

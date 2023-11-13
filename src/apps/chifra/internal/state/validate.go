@@ -137,7 +137,6 @@ func (opts *StateOptions) validateState() error {
 		}
 
 		latest := opts.Conn.GetLatestBlockNumber()
-		// TODO: Should be configurable
 		if bounds.First < (latest-250) && !opts.Conn.IsNodeArchive() {
 			return validate.Usage("The {0} requires {1}.", "query for historical state", "an archive node")
 		}

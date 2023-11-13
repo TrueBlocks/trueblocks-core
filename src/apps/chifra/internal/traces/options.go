@@ -118,15 +118,17 @@ func GetOptions() *TracesOptions {
 	return &defaultTracesOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultTracesOptions = TracesOptions{}
 	globals.SetDefaults(&defaultTracesOptions.Globals)
+	defaultTracesOptions.Globals.TestMode = testMode
 	defaultTracesOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra traces
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	defaultTracesOptions.Globals.Caps = capabilities

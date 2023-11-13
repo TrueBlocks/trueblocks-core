@@ -54,6 +54,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 
 	ts, _ := strconv.ParseInt(rawBlock.Timestamp, 0, 64)
 	block.Transactions = make([]types.SimpleTransaction, 0, len(rawBlock.Transactions))
+	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, ts)
 	for _, rawTx := range rawBlock.Transactions {
 		// cast transaction to a concrete type
 		rawData, ok := rawTx.(map[string]any)
@@ -64,10 +65,15 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		raw := types.NewRawTransactionFromMap(rawData)
 
 		// Get the receipt
+		idx := utils.MustParseUint(raw.TransactionIndex)
 		var receipt types.SimpleReceipt
-		receipt, err = conn.GetReceipt(bn, utils.MustParseUint(raw.TransactionIndex), ts)
-		if err != nil {
-			return block, err
+		if receiptMap[idx] == nil {
+			receipt, err = conn.GetReceipt(bn, idx, ts)
+			if err != nil {
+				return block, err
+			}
+		} else {
+			receipt = *receiptMap[idx]
 		}
 
 		tx := types.NewSimpleTransaction(raw, &receipt, ts)
@@ -78,7 +84,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn uint64) (types.SimpleBlock[types
 		}
 	}
 
-	if conn.StoreWritable() && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
+	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
 
@@ -105,7 +111,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 		block.Transactions = append(block.Transactions, fmt.Sprint(txHash))
 	}
 
-	if conn.StoreWritable() && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
+	if conn.StoreWritable() && conn.EnabledMap["blocks"] && base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp) {
 		_ = conn.Store.Write(&block, nil)
 	}
 
@@ -238,6 +244,24 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 		Difficulty:  difficulty,
 		Uncles:      uncles,
 	}
+
+	if len(rawBlock.Withdrawals) > 0 {
+		block.Withdrawals = make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
+		for _, withdrawal := range rawBlock.Withdrawals {
+			amt := big.NewInt(0)
+			amt.SetString(withdrawal.Amount, 0)
+			s := types.SimpleWithdrawal{
+				Address:        base.HexToAddress(withdrawal.Address),
+				Amount:         *amt,
+				BlockNumber:    blockNumber,
+				Timestamp:      base.Timestamp(ts),
+				Index:          utils.MustParseUint(withdrawal.Index),
+				ValidatorIndex: utils.MustParseUint(withdrawal.ValidatorIndex),
+			}
+			block.Withdrawals = append(block.Withdrawals, s)
+		}
+	}
+
 	return
 }
 
@@ -260,14 +284,20 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 	}
 }
 
+// This most likely does not work for non-mainnet chains which don't know
+// anything about the Known blocks.
+
+// getBlockReward returns the block reward for a given block number
 func (conn *Connection) getBlockReward(bn uint64) *big.Int {
 	if bn == 0 {
 		return big.NewInt(0)
-	} else if bn < byzantiumBlock {
+	} else if bn < base.KnownBlock(conn.Chain, base.Byzantium) {
 		return big.NewInt(5000000000000000000)
-	} else if bn < constantinopleBlock {
+	} else if bn < base.KnownBlock(conn.Chain, base.Constantinople) {
 		return big.NewInt(3000000000000000000)
-	} else {
+	} else if bn < base.KnownBlock(conn.Chain, base.Merge) {
 		return big.NewInt(2000000000000000000)
+	} else {
+		return big.NewInt(0)
 	}
 }

@@ -29,7 +29,7 @@ type CommandFileLine struct {
 // present on the current line.
 func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, err error) {
 	// TODO: parallelize
-	inputFile, err := os.Open(filePath)
+	inputFile, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
@@ -91,7 +91,7 @@ func ParseCommandsFile(cmd *cobra.Command, filePath string) (cf CommandsFile, er
 func RunWithFileSupport(
 	mode string,
 	run func(cmd *cobra.Command, args []string) error,
-	resetOptions func(),
+	resetOptions func(testMode bool),
 ) func(cmd *cobra.Command, args []string) error {
 
 	return func(cmd *cobra.Command, args []string) error {
@@ -125,8 +125,9 @@ func RunWithFileSupport(
 			return err
 		}
 
+		testMode := IsTestMode()
 		for _, line := range commandsFile.Lines {
-			resetOptions()
+			resetOptions(testMode)
 			// first, parse flags from the command line
 			_ = cmd.ParseFlags(os.Args[1:])
 			// next, parse flags from the file

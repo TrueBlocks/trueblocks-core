@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  3
 TEST[DATE|TIME] OutputFn:  accounting_wei_1_out.file
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] 000000000-00002:          0          0      202249

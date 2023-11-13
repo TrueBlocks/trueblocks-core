@@ -36,6 +36,7 @@ type StateOptions struct {
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
+	ProxyForAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -100,6 +101,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
+	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	if opts.Call != "" {
@@ -139,6 +141,7 @@ func stateFinishParse(args []string) *StateOptions {
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
+	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	for _, arg := range args {
@@ -178,17 +181,17 @@ func GetOptions() *StateOptions {
 	return &defaultStateOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultStateOptions = StateOptions{}
 	globals.SetDefaults(&defaultStateOptions.Globals)
+	defaultStateOptions.Globals.TestMode = testMode
 	defaultStateOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra state
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 	defaultStateOptions.Globals.Caps = capabilities
 }

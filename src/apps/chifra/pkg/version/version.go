@@ -5,8 +5,10 @@
 package version
 
 import (
-	"strconv"
+	"fmt"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Version struct {
@@ -16,49 +18,68 @@ type Version struct {
 	Aspect string `json:"aspect"`
 }
 
-func NewVersion(str string) (vers Version, err error) {
-	if str[:3] == "GHC" {
-		// First, remove the part that cannot be parsed with ParseInt
-		str = str[len("GHC-TrueBlocks//"):]
-	}
+func NewVersion(str string) Version {
+	str = strings.Replace(str, "GHC-TrueBlocks//", "", -1)
 	str = strings.Replace(strings.Replace(str, "-", ".", -1), "v", "", -1)
 	parts := strings.Split(str, ".")
+
+	var vers Version
 	if len(parts) > 0 {
-		if vers.Major, err = strconv.ParseInt(parts[0], 10, 32); err != nil {
-			return vers, err
-		}
+		vers.Major = utils.MustParseInt(parts[0])
 	}
 	if len(parts) > 1 {
-		if vers.Minor, err = strconv.ParseInt(parts[1], 10, 32); err != nil {
-			return vers, err
-		}
+		vers.Minor = utils.MustParseInt(parts[1])
 	}
 	if len(parts) > 2 {
-		if vers.Build, err = strconv.ParseInt(parts[2], 10, 32); err != nil {
-			return vers, err
-		}
+		vers.Build = utils.MustParseInt(parts[2])
 	}
+
 	if len(parts) > 3 {
 		vers.Aspect = parts[3]
 	}
 
-	return vers, nil
+	return vers
 }
 
-func (ref *Version) IsEarlierThan(test Version) bool {
-	if ref.Major < test.Major {
-		return true
+// IsValidVersion returns true if the string is a full version string
+func IsValidVersion(test string) bool {
+	test = strings.Replace(test, "trueblocks-core@", "", -1)
+	if !strings.HasPrefix(test, "v") {
+		return false
 	}
-	if ref.Minor < test.Minor {
-		return true
+	parts := strings.Split(test, "-")
+	if len(parts) > 2 {
+		return false
 	}
-	if ref.Build < test.Build {
-		return true
+	if len(parts) < 2 {
+		parts = append(parts, "beta")
 	}
-	return false
+	if len(parts[1]) == 0 {
+		return false
+	}
+	parts[0] = strings.Replace(parts[0], "v", "", -1)
+	nums := strings.Split(parts[0], ".")
+	if len(nums) != 3 {
+		return false
+	}
+	for _, n := range nums {
+		if len(n) == 0 {
+			return false
+		}
+		t := strings.Trim(n, "0123456789")
+		if len(t) > 0 {
+			return false
+		}
+	}
+	return true
 }
 
 // Uint64 returns version as a single uint64
 func (ref *Version) Uint64() uint64 {
 	return uint64((ref.Major * 1000000) + (ref.Minor * 1000) + ref.Build)
+}
+
+// String prints the version to a string
+func (ref *Version) String() string {
+	return fmt.Sprintf("v%d.%d.%d-%s", ref.Major, ref.Minor, ref.Build, ref.Aspect)
 }

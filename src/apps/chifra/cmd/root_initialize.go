@@ -45,162 +45,60 @@ func VerifyOs() {
 	}
 }
 
-const shouldNotExist string = `
-
-	A configuration file or folder ({0}) exists in an old location. Please follow
-	all migrations up to {1} to continue.
-
-	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
-
-	[{VERSION}]
-
-`
-
-const notExist string = `
-
-	The configuration file or folder ({0})
-	does not exist. See https://trueblocks.io/docs/install/install-core/.
-
-	[{VERSION}]
-
-`
-
-const noChains string = `
-
-	The root configuration file ({0})
-	does not contain a list of chains. Please follow all migrations up to {1} to continue.
-
-	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
-
-	[{VERSION}]
-
-`
-
-// const backVersion string = `
-// 	An outdated version of a configration file was found. Please carefully follow
-// 	migration {0} before proceeding.
-// 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md
-// 	[{VERSION}]
-// `
-
 // VerifyMigrations will panic if the installation is not properly migrated
 func VerifyMigrations() {
-	// Allow status and config routes to aide user in migrating...
-	isStatus := false
-	isConfigPaths := false
-	for _, arg := range os.Args {
-		if arg == "status" {
-			isStatus = true
-		} else if arg == "config" {
-			isConfigPaths = true
-		} else if arg == "help" {
-			return
-		} else if isStatus {
-			isStatus = false // only chifra status with no options is okay
-		} else if isConfigPaths && arg != "--paths" {
-			isConfigPaths = false // only chifra config --paths is okay
-		}
-	}
-	if isStatus || isConfigPaths {
+	if isPermitted() {
+		// Allow certain status and config routes to pass so as to aide user in migrating...
 		return
 	}
 
 	user, _ := user.Current()
 
+	const doesNotExist string = `0002. A config item ({0}) is missing. See {https://trueblocks.io/docs/install/install-core/}.`
+	const shouldNotExist string = `0003. A config item ({0}) exists but should not. See {https://trueblocks.io/docs/install/install-core/}.`
+	const noChains string = `0004. The configuration file ({0}) contains no chain specifications. See {https://trueblocks.io/docs/install/install-core/}.`
+
 	// The old $HOME/.quickBlocks folder should not exist...
 	if _, err := os.Stat(filepath.Join(user.HomeDir, ".quickBlocks")); err == nil {
 		msg := strings.Replace(shouldNotExist, "{0}", "{~/.quickBlocks}", -1)
-		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-		msg = strings.Replace(msg, "{1}", "{v0.09.0}", -1)
-		msg = strings.Replace(msg, "{", colors.Green, -1)
-		msg = strings.Replace(msg, "}", colors.Off, -1)
+		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
 
 	// Both the config folder...
 	configFolder := config.PathToRootConfig()
 	if _, err := os.Stat(configFolder); err != nil {
-		msg := strings.Replace(notExist, "{0}", "{"+configFolder+"}", -1)
-		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-		msg = strings.Replace(msg, "{", colors.Green, -1)
-		msg = strings.Replace(msg, "}", colors.Off, -1)
+		msg := strings.Replace(doesNotExist, "{0}", "{"+configFolder+"}", -1)
+		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
 
 	// ...and the config file better exist.
 	configFile := filepath.Join(configFolder + "trueBlocks.toml")
 	if _, err := os.Stat(configFile); err != nil {
-		msg := strings.Replace(notExist, "{0}", "{"+configFile+"}", -1)
-		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-		msg = strings.Replace(msg, "{", colors.Green, -1)
-		msg = strings.Replace(msg, "}", colors.Off, -1)
+		msg := strings.Replace(doesNotExist, "{0}", "{"+configFile+"}", -1)
+		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
 
 	// ...and some chains...
-	if !config.HasChains() {
+	chainArray := config.GetChains()
+	if len(chainArray) == 0 {
 		msg := strings.Replace(noChains, "{0}", "{"+configFile+"}", -1)
-		msg = strings.Replace(msg, "{1}", "{v0.25.0}", -1)
-		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-		msg = strings.Replace(msg, "{", colors.Green, -1)
-		msg = strings.Replace(msg, "}", colors.Off, -1)
+		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
-	}
-
-	// If any of the following folders or files exist, the user has not
-	// completed migration 0.25.0. Tell them to do so and quit.
-	// TODO: This can be removed at some point
-	items := []string{
-		"manifest",
-		"mocked",
-		"names",
-		"blockScrape.toml",
-		"ethNames.toml",
-		"ethslurp.toml",
-		"fireStorm.toml",
-		"whenBlock.toml",
-		"ts.bin.gz",
-		"cache/abis/",
-		"cache/blocks/",
-		"cache/monitors/",
-		"cache/names/",
-		"cache/objs/",
-		"cache/recons/",
-		"cache/slurps/",
-		"cache/tmp/",
-		"cache/traces/",
-		"cache/txs/",
-		"unchained/staging/",
-		"unchained/unripe/",
-		"unchained/ripe/",
-		"unchained/finalized/",
-		"unchained/blooms/",
-		"unchained/maps/",
-		"unchained/ts.bin",
-	}
-	for _, item := range items {
-		itemPath := filepath.Join(configFolder + item)
-		if _, err := os.Stat(itemPath); err == nil {
-			msg := strings.Replace(shouldNotExist, "{0}", "{./"+item+"}", -1)
-			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-			msg = strings.Replace(msg, "{1}", "{v0.25.0}", -1)
-			msg = strings.Replace(msg, "{", colors.Green, -1)
-			msg = strings.Replace(msg, "}", colors.Off, -1)
-			logger.Fatal(msg)
-		}
 	}
 
 	// We need to find the chain configuration path
 	chainConfigPath := config.MustGetPathToChainConfig("")
 	if _, err := os.Stat(chainConfigPath); err != nil {
-		msg := strings.Replace(notExist, "{0}", "{"+chainConfigPath+"}", -1)
-		msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-		msg = strings.Replace(msg, "{", colors.Green, -1)
-		msg = strings.Replace(msg, "}", colors.Off, -1)
+		msg := strings.Replace(doesNotExist, "{0}", "{"+chainConfigPath+"}", -1)
+		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
 
-	items = []string{
+	// Make sure they've completed migrations prior to v1.0.0
+	items := []string{
 		"blocks",
 		"objs",
 		"recons",
@@ -212,21 +110,40 @@ func VerifyMigrations() {
 		itemPath := filepath.Join(config.PathToCache(""), item)
 		if _, err := os.Stat(itemPath); err == nil {
 			msg := strings.Replace(shouldNotExist, "{0}", "{"+itemPath+"}", -1)
-			msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-			msg = strings.Replace(msg, "{1}", "{v0.85.0}", -1)
-			msg = strings.Replace(msg, "{", colors.Green, -1)
-			msg = strings.Replace(msg, "}", colors.Off, -1)
+			msg = colors.ColoredWith(msg, colors.Yellow)
 			logger.Fatal(msg)
 		}
 	}
+}
 
-	// We need at least this version...
-	// requiredVersion := "v1.5.0-release"
-	// if !config.IsAtLeastVersion(requiredVersion) {
-	// 	msg := strings.Replace(backVersion, "{0}", "{"+requiredVersion+"}", -1)
-	// 	msg = strings.Replace(msg, "[{VERSION}]", versionText, -1)
-	// 	msg = strings.Replace(msg, "{", colors.Green, -1)
-	// 	msg = strings.Replace(msg, "}", colors.Off, -1)
-	// 	logger.Fatal(msg)
-	// }
+func isPermitted() bool {
+	isStatus := false
+	isConfig := false
+	hasPaths := false
+	hasEdit := false
+	cnt := len(os.Args)
+	for _, arg := range os.Args {
+		if arg == "help" {
+			return false
+		} else if arg == "status" {
+			isStatus = true
+		} else if arg == "config" {
+			isConfig = true
+		} else if arg == "--paths" {
+			hasPaths = true
+		} else if arg == "edit" {
+			hasEdit = true
+		} else if arg != "--verbose" {
+			isStatus = false
+			isConfig = false
+		} else {
+			cnt-- // allow --verbose
+		}
+	}
+
+	if isStatus && cnt == 2 {
+		return true
+	}
+
+	return isConfig && (hasPaths || hasEdit) && cnt < 4
 }

@@ -32,6 +32,7 @@ type BlocksOptions struct {
 	Logs        bool                     `json:"logs,omitempty"`        // Display only the logs found in the block(s)
 	Emitter     []string                 `json:"emitter,omitempty"`     // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic       []string                 `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
+	Withdrawals bool                     `json:"withdrawals,omitempty"` // Export the withdrawals from the block as opposed to the block data
 	Articulate  bool                     `json:"articulate,omitempty"`  // For the --logs option only, articulate the retrieved data if ABIs can be found
 	BigRange    uint64                   `json:"bigRange,omitempty"`    // For the --logs option only, allow for block ranges larger than 500
 	Count       bool                     `json:"count,omitempty"`       // Display the number of the lists of appearances for --addrs or --uniq
@@ -61,6 +62,7 @@ func (opts *BlocksOptions) testLog() {
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
+	logger.TestLog(opts.Withdrawals, "Withdrawals: ", opts.Withdrawals)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.BigRange != 500, "BigRange: ", opts.BigRange)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
@@ -114,6 +116,8 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Topic = append(opts.Topic, s...)
 			}
+		case "withdrawals":
+			opts.Withdrawals = true
 		case "articulate":
 			opts.Articulate = true
 		case "bigRange":
@@ -182,15 +186,17 @@ func GetOptions() *BlocksOptions {
 	return &defaultBlocksOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultBlocksOptions = BlocksOptions{}
 	globals.SetDefaults(&defaultBlocksOptions.Globals)
+	defaultBlocksOptions.Globals.TestMode = testMode
 	defaultBlocksOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra blocks
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	defaultBlocksOptions.Globals.Caps = capabilities
@@ -200,6 +206,7 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
 		"blocks":       !opts.Uncles,
+		"receipts":     !opts.Uncles,
 		"transactions": opts.CacheTxs || opts.Uniq,
 		"traces":       opts.CacheTraces || opts.Uniq,
 		"logs":         opts.Logs,

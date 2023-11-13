@@ -27,13 +27,14 @@ Usage:
   chifra scrape [flags]
 
 Flags:
-  -n, --block_cnt uint     maximum number of blocks to process per pass (default 2000)
-  -i, --pin                pin new chunks (requires locally-running IPFS daemon or --remote)
-  -r, --remote             pin new chunks to the gateway (requires pinning service keys)
-  -s, --sleep float        seconds to sleep between scraper passes (default 14)
-  -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
-  -v, --verbose            enable verbose output
-  -h, --help               display this help screen
+  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
+  -s, --sleep float      seconds to sleep between scraper passes (default 14)
+  -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -v, --verbose          enable verbose output
+  -h, --help             display this help screen
+
+Notes:
+  - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
 ```
 
 Data models produced by this tool:
@@ -45,24 +46,25 @@ Data models produced by this tool:
 
 Each of the following additional configurable command line options are available.
 
-**Configuration file:** `$CONFIG/$CHAIN/blockScrape.toml`  
-**Configuration group:** `[settings]`  
+**Configuration file:** `trueBlocks.toml`  
+**Configuration group:** `[scrape.<chain>]`  
 
 | Item               | Type         | Default      | Description / Default |
 | ------------------ | ------------ | ------------ | --------- |
-| apps&lowbar;per&lowbar;chunk | uint64       | 200000       | the number of appearances to build into a chunk before consolidating it |
-| snap&lowbar;to&lowbar;grid | uint64       | 100000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| first&lowbar;snap  | uint64       | 0            | the first block at which snap_to_grid is enabled |
-| unripe&lowbar;dist | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
-| channel&lowbar;count | uint64       | 20           | number of concurrent processing channels |
-| allow&lowbar;missing | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
+| appsPerChunk       | uint64       | 2000000      | the number of appearances to build into a chunk before consolidating it |
+| snapToGrid         | uint64       | 250000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| firstSnap          | uint64       | 2000000      | the first block at which snap_to_grid is enabled |
+| unripeDist         | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
+| channelCount       | uint64       | 20           | number of concurrent processing channels |
+| allowMissing       | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
 
+Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
 These items may be set in three ways, each overridding the preceeding method:
 
--- in the above configuration file under the `[settings]` group,  
--- in the environment by exporting the configuration item as UPPER&lowbar;CASE, without underbars, and prepended with TB_SETTINGS&lowbar;, or  
--- on the command line using the configuration item with leading dashes (i.e., `--name`).  
+-- in the above configuration file under the `[scrape.<chain>]` group,  
+-- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
+-- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
 
 <!-- markdownlint-disable MD041 -->
 ### further information

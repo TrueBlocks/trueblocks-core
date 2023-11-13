@@ -1,6 +1,6 @@
-blocks?blocks=3000000&ether
+blocks?blocks=3000000&wei
 {
   "errors": [
-    "Invalid key (ether) in blocks route."
+    "Invalid key (wei) in blocks route."
   ]
 }

@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -39,6 +40,11 @@ type ChunksOptions struct {
 	LastBlock  uint64                   `json:"lastBlock,omitempty"`  // Last block to process (inclusive)
 	MaxAddrs   uint64                   `json:"maxAddrs,omitempty"`   // The max number of addresses to process in a given chunk
 	Deep       bool                     `json:"deep,omitempty"`       // If true, dig more deeply during checking (manifest only)
+	Rewrite    bool                     `json:"rewrite,omitempty"`    // For the --pin --deep mode only, writes the manifest back to the index folder (see notes)
+	List       bool                     `json:"list,omitempty"`       // For the pins mode only, list the remote pins
+	Unpin      bool                     `json:"unpin,omitempty"`      // For the pins mode only, if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
+	Count      bool                     `json:"count,omitempty"`      // For the pins mode only, display only the count of records
+	Tag        string                   `json:"tag,omitempty"`        // Visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
@@ -49,7 +55,6 @@ type ChunksOptions struct {
 }
 
 var defaultChunksOptions = ChunksOptions{
-	Publisher: "trueblocks.eth",
 	Truncate:  utils.NOPOS,
 	LastBlock: utils.NOPOS,
 	MaxAddrs:  utils.NOPOS,
@@ -62,7 +67,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Pin, "Pin: ", opts.Pin)
 	logger.TestLog(opts.Publish, "Publish: ", opts.Publish)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.Truncate != utils.NOPOS, "Truncate: ", opts.Truncate)
 	logger.TestLog(opts.Remote, "Remote: ", opts.Remote)
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
@@ -71,6 +76,11 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
+	logger.TestLog(opts.Rewrite, "Rewrite: ", opts.Rewrite)
+	logger.TestLog(opts.List, "List: ", opts.List)
+	logger.TestLog(opts.Unpin, "Unpin: ", opts.Unpin)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	logger.TestLog(len(opts.Tag) > 0, "Tag: ", opts.Tag)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -127,6 +137,16 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			opts.MaxAddrs = globals.ToUint64(value[0])
 		case "deep":
 			opts.Deep = true
+		case "rewrite":
+			opts.Rewrite = true
+		case "list":
+			opts.List = true
+		case "unpin":
+			opts.Unpin = true
+		case "count":
+			opts.Count = true
+		case "tag":
+			opts.Tag = value[0]
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
 		default:
@@ -136,7 +156,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
@@ -164,7 +184,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
@@ -190,9 +210,7 @@ func chunksFinishParse(args []string) *ChunksOptions {
 		opts.MaxAddrs = utils.NOPOS
 	}
 	getDef := func(def string) string {
-		if (opts.Mode == "index" && opts.Check) ||
-			(opts.Mode == "manifest" && opts.Check) ||
-			opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 {
+		if opts.Truncate != utils.NOPOS || len(opts.Belongs) > 0 || opts.Pin {
 			return "json"
 		}
 		return def
@@ -213,11 +231,12 @@ func GetOptions() *ChunksOptions {
 	return &defaultChunksOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultChunksOptions = ChunksOptions{}
 	globals.SetDefaults(&defaultChunksOptions.Globals)
+	defaultChunksOptions.Globals.TestMode = testMode
 	defaultChunksOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra chunks
 	// EXISTING_CODE

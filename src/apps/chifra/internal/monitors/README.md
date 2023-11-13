@@ -64,6 +64,7 @@ Flags:
   -c, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
   -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
   -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
+  -D, --decache            removes related items from the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose output
   -h, --help               display this help screen

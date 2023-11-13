@@ -6,7 +6,6 @@ package manifest
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -17,48 +16,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 )
-
-// fromRemote gets the CID from the smart contract, calls
-// the gateway and returns the parsed manifest
-func fromRemote(chain string) (*Manifest, error) {
-	cid, err := ReadUnchainedIndex(chain, "", unchained.GetPreferredPublisher())
-	if err != nil {
-		return nil, err
-	}
-
-	gatewayUrl := config.GetIpfsGateway(chain)
-
-	logger.InfoTable("Chain:", chain)
-	logger.InfoTable("Gateway:", gatewayUrl)
-	logger.InfoTable("CID:", cid)
-
-	return downloadManifest(chain, gatewayUrl, cid)
-}
 
 // ReadUnchainedIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
 // published by the given publisher
-func ReadUnchainedIndex(chain, reason string, publisher base.Address) (string, error) {
+func ReadUnchainedIndex(chain string, publisher base.Address, database string) (string, error) {
 	cid := os.Getenv("TB_OVERRIDE_CID")
 	if cid != "" {
 		return cid, nil
-	}
-
-	database := chain
-	if reason != "" {
-		database += ("-" + reason)
 	}
 
 	unchainedChain := "mainnet" // the unchained index is on mainnet
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
 	conn := rpc.TempConnection(unchainedChain)
 
-	if contractCall, _, err := call.NewContractCall(conn, unchained.GetUnchainedIndexAddress(), theCall); err != nil {
-		return "", err
+	if contractCall, _, err := call.NewContractCall(conn, base.HexToAddress(config.GetUnchained().SmartContract), theCall); err != nil {
+		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall, err)
+		return "", wrapped
 	} else {
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
 		abiCache := articulate.NewAbiCache(chain, true)
@@ -83,17 +59,21 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 	url.Path = filepath.Join(url.Path, cid)
 
-	response, err := http.Get(url.String())
+	resp, err := http.Get(url.String())
 	if err != nil {
 		return nil, err
 	}
 
-	switch response.Header.Get("content-type") {
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("fetch to pinning service (%s) failed: %s", url.String(), resp.Status)
+	}
+
+	switch resp.Header.Get("Content-Type") {
 	case "application/json":
 		m := &Manifest{}
-		err := json.NewDecoder(response.Body).Decode(m)
+		err := json.NewDecoder(resp.Body).Decode(m)
 		return m, err
 	default:
-		return nil, errors.New("unrecognized content type: " + response.Header.Get("content-type"))
+		return nil, fmt.Errorf("fetch to %s return unrecognized content type: %s", url.String(), resp.Header.Get("Content-Type"))
 	}
 }

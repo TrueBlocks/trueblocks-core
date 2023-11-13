@@ -18,7 +18,7 @@ its destination are up to you.
 
 ```[plaintext]
 Purpose:
-  Export full detail of transactions for one or more addresses.
+  Export full details of transactions for one or more addresses.
 
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
@@ -37,6 +37,7 @@ Flags:
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
   -b, --balances            traverse the transaction history and show each change in ETH balances
+  -i, --withdrawals         export withdrawals for the given address
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -R, --cache_traces        force the transaction's traces into the cache
   -U, --count               only available for --appearances mode, if present, return only the number of records
@@ -72,6 +73,7 @@ Notes:
   - The _block and _record filters are ignored when used with the --count option.
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
   - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
+  - The --withdrawals option is only available on certain chains. It is ignored otherwise.
 ```
 
 Data models produced by this tool:

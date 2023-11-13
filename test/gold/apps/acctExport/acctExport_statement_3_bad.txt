@@ -2,7 +2,7 @@ chifra export  0x08166f02313feae18bb044e7877c808b55b5bf58 --statements --last_bl
 TEST[DATE|TIME] Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  4000000
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 Error: The --statements option is only available with the --accounting option.
 Usage:
@@ -22,6 +22,7 @@ Flags:
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
   -b, --balances            traverse the transaction history and show each change in ETH balances
+  -i, --withdrawals         export withdrawals for the given address
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -R, --cache_traces        force the transaction's traces into the cache
   -U, --count               only available for --appearances mode, if present, return only the number of records
@@ -58,4 +59,5 @@ Notes:
   - The _block and _record filters are ignored when used with the --count option.
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
   - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
+  - The --withdrawals option is only available on certain chains. It is ignored otherwise.
 

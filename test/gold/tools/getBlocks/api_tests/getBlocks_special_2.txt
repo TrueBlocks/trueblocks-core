@@ -114,7 +114,8 @@ blocks?blocks=daofork
           "value": "1022338440000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ],
   "meta": {

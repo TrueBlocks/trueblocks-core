@@ -45,7 +45,8 @@ jobs:
       -
         name: Install prerequistes
         run: |
-          sudo apt-get update
+          sudo apt-mark hold grub-efi-amd64-signed
+          sudo apt-get update --fix-missing
           sudo apt-get upgrade
           sudo apt-get install build-essential git cmake
           sudo apt-get install python3 tree jq

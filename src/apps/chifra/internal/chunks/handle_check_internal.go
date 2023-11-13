@@ -5,78 +5,84 @@
 package chunksPkg
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // CheckInternal reads the header of each chunk on disc looking for the Magic number and
-// the HeaderMagicHash for expected values.
+// the hash of the spec version for expected values.
 func (opts *ChunksOptions) CheckInternal(fileNames []string, blockNums []uint64, report *simpleReportCheck) error {
-	for testId, fileName := range fileNames {
-		opts.checkIndexChunkInternal(testId, fileName, report)
+	for _, fileName := range fileNames {
+		opts.checkIndexChunkInternal(fileName, false /* check version */, report)
 		// opts.checkBloomInternal(testId, fileName, report)
 	}
 	return nil
 }
 
-func (opts *ChunksOptions) checkIndexChunkInternal(testId int, fileName string, report *simpleReportCheck) {
+func (opts *ChunksOptions) checkIndexChunkInternal(fileName string, checkVersion bool, report *simpleReportCheck) {
 	report.VisitedCnt++
 	report.CheckedCnt++
-	header, err := index.ReadChunkHeader(fileName, true)
+
+	fileName = index.ToIndexPath(fileName)
+	indexChunk, err := index.OpenIndex(fileName, true /* check */)
 	if err != nil {
-		if !strings.Contains(err.Error(), "no such file or directory") {
-			report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
-		} else {
+		if strings.Contains(err.Error(), "no such file or directory") {
 			// This is the case where the user did not download all the index chunks, only blooms
 			report.PassedCnt++
-		}
-
-	} else {
-		rng := base.RangeFromFilename(fileName)
-		if !opts.Globals.TestMode {
-			testId = 0
-		}
-
-		if header.Magic != file.MagicNumber || (testId == 1) {
-			msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, header.Magic, file.MagicNumber)
-			report.MsgStrings = append(report.MsgStrings, msg)
-
-		} else if header.Hash.Hex() != unchained.HeaderMagicHash || (testId == 2) {
-			msg := fmt.Sprintf("%s: Header hash expected (%s) got (%s)", rng, header.Hash.Hex(), unchained.HeaderMagicHash)
-			report.MsgStrings = append(report.MsgStrings, msg)
-
-		} else {
+		} else if !checkVersion && errors.Is(err, index.ErrIncorrectHash) {
 			report.PassedCnt++
+		} else {
+			report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: %s", err, fileName))
+		}
+	} else {
+		report.PassedCnt++
+		if !checkVersion {
+			opts.checkSnaps(fileName, &indexChunk, report)
+		}
+	}
+
+	indexChunk.Close()
+}
+
+func (opts *ChunksOptions) checkSnaps(fileName string, indexChunk *index.Index, report *simpleReportCheck) {
+	report.VisitedCnt++
+	report.CheckedCnt++
+
+	// we will check the manifest since it's the gold standard
+	isSnap := func(fR base.FileRange, snapMarker, firstSnap uint64) bool {
+		return fR.Last >= firstSnap && fR.Last%snapMarker == 0
+	}
+
+	chain := opts.Globals.Chain
+	firstSnap := utils.MustParseUint(config.GetScrape(chain).FirstSnap)
+	snapMarker := utils.MustParseUint(config.GetScrape(chain).SnapToGrid)
+	appsPer := uint32(utils.MustParseUint(config.GetScrape(chain).AppsPerChunk))
+	if fR, err := base.RangeFromFilenameE(fileName); err != nil {
+		report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("%s: %s", err, fileName))
+	} else {
+		if isSnap(fR, snapMarker, firstSnap) {
+			if fR.Last < firstSnap {
+				// Is there a snap_to_grid after first_snap everywhere it's supposed to be?
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("checkSnap: snap too early %s firstSnap=%d", fR, firstSnap))
+			} else if indexChunk.Header.AppearanceCount >= appsPer {
+				// For snapped chunks, nApps < apps_per_chunk.
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("contract: too many apps at %s appsPer=%d", fR, appsPer))
+			} else {
+				report.PassedCnt++
+			}
+		} else {
+			if indexChunk.Header.AppearanceCount < appsPer && fR.Last > 0 {
+				// For non-snapped chunks, nApps ≥ apps_per_chunk.
+				report.MsgStrings = append(report.MsgStrings, fmt.Sprintf("checkSnap: too few appearances at %s appsPer=%d", fR, appsPer))
+			} else {
+				report.PassedCnt++
+			}
 		}
 	}
 }
-
-// TODO: This work is incomplete
-// func (opts *ChunksOptions) checkBloomInternal(testId int, fileName string, report *simpleReportCheck) {
-// 	report.VisitedCnt++
-// 	report.CheckedCnt++
-// 	var bl bloom.ChunkBloom
-// 	bPath := index.ToBloomPath(fileName)
-// 	bl.ReadBloom(bPath)
-// 	versioned, err := bl.ReadBloom Header()
-// 	if err != nil {
-// 		report.MsgStrings = append(report.MsgStrings, fmt.Sprint(err))
-// 	} else if !versioned {
-// 	} else {
-// 		rng := base.RangeFromFilename(fileName)
-// 		if !opts.Globals.TestMode {
-// 			testId = 0
-// 		}
-// 		if bl.Header.Magic != file.SmallMagicNumber {
-// 			msg := fmt.Sprintf("%s: Magic number expected (0x%x) got (0x%x)", rng, bl.Header.Magic, file.SmallMagicNumber)
-// 			report.MsgStrings = append(report.MsgStrings, msg)
-// 		} else {
-// 			report.PassedCnt++
-// 		}
-// 	}
-// }

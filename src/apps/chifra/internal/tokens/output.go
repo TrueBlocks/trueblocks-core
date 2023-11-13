@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunTokens handles the tokens command for the command line. Returns error only as per cobra.
-func RunTokens(cmd *cobra.Command, args []string) (err error) {
+func RunTokens(cmd *cobra.Command, args []string) error {
 	opts := tokensFinishParse(args)
-	outputHelpers.SetEnabledForCmds("tokens", opts.IsPorted())
+	outputHelpers.EnableCommand("tokens", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("tokens", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.TokensInternal()
-	return
+	return opts.TokensInternal()
 }
 
-// ServeTokens handles the tokens command for the API. Returns error and a bool if handled
-func ServeTokens(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeTokens handles the tokens command for the API. Returns an error.
+func ServeTokens(w http.ResponseWriter, r *http.Request) error {
 	opts := tokensFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("tokens", opts.IsPorted())
+	outputHelpers.EnableCommand("tokens", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("tokens", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.TokensInternal()
+	err := opts.TokensInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("tokens", err, &opts.Globals)
-	return
+	return err
 }
 
-// TokensInternal handles the internal workings of the tokens command.  Returns error and a bool if handled
-func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
-	err = opts.validateTokens()
-	if err != nil {
-		return err, true
+// TokensInternal handles the internal workings of the tokens command.  Returns an error.
+func (opts *TokensOptions) TokensInternal() error {
+	var err error
+	if err = opts.validateTokens(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra tokens"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in StateInternal")
-	}
-
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if len(opts.Parts) > 0 {
@@ -68,7 +62,7 @@ func (opts *TokensOptions) TokensInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetTokensOptions returns the options for this tool so other tools may use it.
@@ -78,13 +72,6 @@ func GetTokensOptions(args []string, g *globals.GlobalOptions) *TokensOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *TokensOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

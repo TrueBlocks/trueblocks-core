@@ -22,41 +22,38 @@ import (
 // EXISTING_CODE
 
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
-func RunWhen(cmd *cobra.Command, args []string) (err error) {
+func RunWhen(cmd *cobra.Command, args []string) error {
 	opts := whenFinishParse(args)
-	outputHelpers.SetEnabledForCmds("when", opts.IsPorted())
+	outputHelpers.EnableCommand("when", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("when", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.WhenInternal()
-	return
+	return opts.WhenInternal()
 }
 
-// ServeWhen handles the when command for the API. Returns error and a bool if handled
-func ServeWhen(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeWhen handles the when command for the API. Returns an error.
+func ServeWhen(w http.ResponseWriter, r *http.Request) error {
 	opts := whenFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("when", opts.IsPorted())
+	outputHelpers.EnableCommand("when", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("when", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.WhenInternal()
+	err := opts.WhenInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("when", err, &opts.Globals)
-	return
+	return err
 }
 
-// WhenInternal handles the internal workings of the when command.  Returns error and a bool if handled
-func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
-	err = opts.validateWhen()
-	if err != nil {
-		return err, true
+// WhenInternal handles the internal workings of the when command.  Returns an error.
+func (opts *WhenOptions) WhenInternal() error {
+	var err error
+	if err = opts.validateWhen(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra when"
 	// EXISTING_CODE
 	// TODO: This should use StreamMany for all cases
-	handled = true
-
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 
@@ -92,7 +89,7 @@ func (opts *WhenOptions) WhenInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetWhenOptions returns the options for this tool so other tools may use it.
@@ -102,13 +99,6 @@ func GetWhenOptions(args []string, g *globals.GlobalOptions) *WhenOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *WhenOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

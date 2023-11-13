@@ -37,7 +37,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 		apps := make([]types.SimpleAppearance, 0, len(appMap))
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
-			Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+			Enabled: !opts.Globals.TestMode,
 			Total:   int64(len(appMap)),
 		})
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleAppearance) error {

@@ -78,13 +78,12 @@ The following commands produce and manage Manifests:
 
 Manifests consist of the following fields:
 
-| Field     | Description                                                           | Type                                            |
-| --------- | --------------------------------------------------------------------- | ----------------------------------------------- |
-| version   | the version string hashed into the chunk data                         | string                                          |
-| chain     | the chain to which this manifest belongs                              | string                                          |
-| schemas   | IPFS cid of the specification                                         | ipfshash                                        |
-| databases | IPFS cid of file containing CIDs for the various databases            | ipfshash                                        |
-| chunks    | a list of the IPFS hashes of all of the chunks in the unchained index | [ChunkRecord[]](/data-model/admin/#chunkrecord) |
+| Field         | Description                                                           | Type                                            |
+| ------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
+| version       | the version string hashed into the chunk data                         | string                                          |
+| chain         | the chain to which this manifest belongs                              | string                                          |
+| specification | IPFS cid of the specification                                         | ipfshash                                        |
+| chunks        | a list of the IPFS hashes of all of the chunks in the unchained index | [ChunkRecord[]](/data-model/admin/#chunkrecord) |
 
 ## ChunkRecord
 
@@ -175,6 +174,25 @@ ChunkAddress consist of the following fields:
 | range   | the block range of the chunk from which this address record was taken     | blkrange |
 | offset  | the offset into the appearance table of the first record for this address | uint64   |
 | count   | the number of records in teh appearance table for this address            | uint64   |
+
+## IpfsPin
+
+<!-- markdownlint-disable MD033 MD036 MD041 -->
+`ipfsPin` represents the date, CID and metadata filename of a single IPFS pinned file.
+
+The following commands produce and manage IpfsPins:
+
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+
+IpfsPins consist of the following fields:
+
+| Field      | Description                                                   | Type     |
+| ---------- | ------------------------------------------------------------- | -------- |
+| cid        | the CID of the file                                           | ipfshash |
+| datePinned | the date the CID was first created                            | string   |
+| status     | the status of the file (one of [all|pinned|unpinned|pending]) | string   |
+| size       | the size of the file in bytes                                 | int64    |
+| fileName   | the metadata name of the pinned file                          | string   |
 
 ## ChunkStats
 
@@ -277,13 +295,13 @@ The following commands produce and manage ChunkPinReports:
 
 ChunkPinReports consist of the following fields:
 
-| Field        | Description                                             | Type     |
-| ------------ | ------------------------------------------------------- | -------- |
-| version      | the version string hashed into the chunk data           | string   |
-| chain        | the chain to which this manifest belongs                | string   |
-| schemas      | IPFS cid of the specification                           | ipfshash |
-| tsHash       | IPFS cid of file containing timestamps                  | ipfshash |
-| manifestHash | IPFS cid of file containing CIDs for the various chunks | ipfshash |
+| Field         | Description                                             | Type     |
+| ------------- | ------------------------------------------------------- | -------- |
+| version       | the version string hashed into the chunk data           | string   |
+| chain         | the chain to which this manifest belongs                | string   |
+| timestampHash | IPFS cid of file containing timestamps                  | ipfshash |
+| specHash      | IPFS cid of the specification                           | ipfshash |
+| manifestHash  | IPFS cid of file containing CIDs for the various chunks | ipfshash |
 
 ## Chain
 

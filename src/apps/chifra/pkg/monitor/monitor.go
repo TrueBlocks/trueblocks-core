@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Header is the header of the Monitor file. Note that it's the same width as an index.AppearanceRecord
@@ -45,20 +46,19 @@ const (
 
 // NewMonitor returns a Monitor (but has not yet read in the AppearanceRecords). If 'create' is
 // sent, create the Monitor if it does not already exist
-func NewMonitor(chain, addr string, create bool) Monitor {
+func NewMonitor(chain string, addr base.Address, create bool) (Monitor, error) {
 	mon := new(Monitor)
 	mon.Header = Header{Magic: file.SmallMagicNumber}
-	mon.Address = base.HexToAddress(addr)
+	mon.Address = addr
 	mon.Chain = chain
-	_, err := mon.Reload(create)
-	if err != nil {
+	if _, err := mon.Reload(create); err != nil {
 		logger.Error(err)
 	}
-	return *mon
+	return *mon, nil
 }
 
-// NewStagedMonitor returns a Monitor whose path is in the 'staging' folder
-func NewStagedMonitor(chain, addr string) (Monitor, error) {
+// NewMonitorStaged returns a Monitor whose path is in the 'staging' folder
+func NewMonitorStaged(chain, addr string) (Monitor, error) {
 	mon := Monitor{
 		Header:  Header{Magic: file.SmallMagicNumber},
 		Address: base.HexToAddress(addr),
@@ -172,33 +172,23 @@ func (mon *Monitor) Remove() (bool, error) {
 
 // ListMonitors puts a list of Monitors into the monitorChannel. The list of monitors is built from
 // a file called addresses.tsv in the current folder or, if not present, from existing monitors
-func ListMonitors(chain string, monitorChan chan<- Monitor) {
+func ListMonitors(chain, watchList string, monitorChan chan<- Monitor) {
 	defer func() {
-		monitorChan <- Monitor{Address: base.SentinalAddr}
+		monitorChan <- Monitor{Address: base.NotAMonitor}
 	}()
 
-	pwd, _ := os.Getwd()
-	path := filepath.Join(pwd, "addresses.tsv")
-	info, err := os.Stat(path)
-	if err == nil {
-		logger.Info("Reading address list from", path)
-		lines := file.AsciiFileToLines(info.Name())
-		logger.Info("Found", len(lines), "unique addresses in ./addresses.tsv")
-		addrMap := make(map[string]bool)
+	if watchList != "existing" {
+		logger.Info("Reading address list from", watchList)
+		lines := file.AsciiFileToLines(watchList)
+		addrMap := make(map[base.Address]bool)
 		for _, line := range lines {
-			if !strings.HasPrefix(line, "#") {
-				parts := strings.Split(line, "\t")
-				if len(parts) > 0 {
-					addr := strings.Trim(parts[0], " ")
-					a := base.HexToAddress(addr)
-					if !addrMap[addr] && base.IsValidAddress(addr) && !a.IsZero() {
-						monitorChan <- NewMonitor(chain, addr, true /* create */)
-					}
-					addrMap[addr] = true
-				} else {
-					logger.Warn("Invalid line in file", info.Name())
-				}
+			line = utils.StripComments(line)
+			addr := base.HexToAddress(line)
+			if !addrMap[addr] && !addr.IsZero() && base.IsValidAddress(addr.Hex()) {
+				mon, _ := NewMonitor(chain, addr, true /* create */)
+				monitorChan <- mon
 			}
+			addrMap[addr] = true
 		}
 		return
 	}
@@ -207,17 +197,17 @@ func ListMonitors(chain string, monitorChan chan<- Monitor) {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() {
+		if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
 			addr, _ := base.AddressFromPath(path, ".mon.bin")
-			if len(addr) > 0 {
-				monitorChan <- NewMonitor(chain, addr, true /* create */)
+			if !addr.IsZero() {
+				mon, _ := NewMonitor(chain, addr, true /* create */)
+				monitorChan <- mon
 			}
 		}
 		return nil
 	}
 
-	logger.Info("Building address list from current monitors")
-	path = config.PathToCache(chain) + "monitors"
+	path := config.PathToCache(chain) + "monitors"
 	_ = filepath.Walk(path, walkFunc)
 }
 
@@ -251,14 +241,14 @@ func (mon *Monitor) MoveToProduction() error {
 func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
 	monitorChan := make(chan Monitor)
 
-	go ListMonitors(chain, monitorChan)
+	go ListMonitors(chain, "existing", monitorChan)
 
 	monMap := make(map[base.Address]*Monitor)
 	monArray := []*Monitor{}
 	for mon := range monitorChan {
 		mon := mon
 		switch mon.Address {
-		case base.SentinalAddr:
+		case base.NotAMonitor:
 			close(monitorChan)
 		default:
 			monMap[mon.Address] = &mon

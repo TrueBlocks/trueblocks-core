@@ -9,9 +9,9 @@ package cmd
 
 const helpText = `  Accounts:
     list          list every appearance of an address anywhere on the chain
-    export        export full detail of transactions for one or more addresses
+    export        export full details of transactions for one or more addresses
     monitors      add, remove, clean, and list address monitors
-    names         query addresses or names of well known accounts
+    names         query addresses or names of well-known accounts
     abis          fetches the ABI for a smart contract
   Chain Data:
     blocks        retrieve one or more blocks from the chain or local cache
@@ -26,7 +26,7 @@ const helpText = `  Accounts:
   Admin:
     config        report on and edit the configuration of the TrueBlocks system
     status        report on the state of the internal binary caches
-    daemon        initalize and control long-running processes such as the API and the scrapers
+    daemon        initialize and control long-running processes such as the API and the scrapers
     scrape        scan the chain and update the TrueBlocks index of appearances
     chunks        manage, investigate, and display the Unchained Index
     init          initialize the TrueBlocks system by downloading the Unchained Index from IPFS

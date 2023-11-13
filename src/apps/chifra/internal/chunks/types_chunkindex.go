@@ -12,7 +12,6 @@ package chunksPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -40,7 +39,7 @@ func (s *simpleChunkIndex) Model(chain, format string, verbose bool, extraOption
 	model = map[string]interface{}{
 		"range":        s.Range,
 		"magic":        s.Magic,
-		"hash":         utils.FormattedHash(verbose, s.Hash.Hex()),
+		"hash":         FormattedTag(verbose, s.Hash),
 		"nAddresses":   s.NAddresses,
 		"nAppearances": s.NAppearances,
 		"fileSize":     s.Size,

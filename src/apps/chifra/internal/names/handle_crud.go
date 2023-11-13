@@ -75,17 +75,17 @@ func handleCreate(chain string, data *CrudData) (name *types.SimpleName, err err
 		Petname:  base.AddrToPetname(data.Address.Value.Hex(), "-"),
 	}
 
-	return name, names.CreateCustomName(chain, name)
+	return name, names.CreateName(names.DatabaseCustom, chain, name)
 }
 
 func handleDelete(chain string, data *CrudData) (*types.SimpleName, error) {
-	return names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, true)
+	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, true)
 }
 
 func handleUndelete(chain string, data *CrudData) (*types.SimpleName, error) {
-	return names.ChangeCustomNameDeletedFlag(chain, data.Address.Value, false)
+	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, false)
 }
 
 func handleRemove(chain string, data *CrudData) (*types.SimpleName, error) {
-	return names.RemoveCustomName(chain, data.Address.Value)
+	return names.RemoveName(names.DatabaseCustom, chain, data.Address.Value)
 }

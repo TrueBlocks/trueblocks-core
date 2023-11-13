@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunSlurp handles the slurp command for the command line. Returns error only as per cobra.
-func RunSlurp(cmd *cobra.Command, args []string) (err error) {
+func RunSlurp(cmd *cobra.Command, args []string) error {
 	opts := slurpFinishParse(args)
-	outputHelpers.SetEnabledForCmds("slurp", opts.IsPorted())
+	outputHelpers.EnableCommand("slurp", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("slurp", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.SlurpInternal()
-	return
+	return opts.SlurpInternal()
 }
 
-// ServeSlurp handles the slurp command for the API. Returns error and a bool if handled
-func ServeSlurp(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeSlurp handles the slurp command for the API. Returns an error.
+func ServeSlurp(w http.ResponseWriter, r *http.Request) error {
 	opts := slurpFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("slurp", opts.IsPorted())
+	outputHelpers.EnableCommand("slurp", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("slurp", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.SlurpInternal()
+	err := opts.SlurpInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("slurp", err, &opts.Globals)
-	return
+	return err
 }
 
-// SlurpInternal handles the internal workings of the slurp command.  Returns error and a bool if handled
-func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
-	err = opts.validateSlurp()
-	if err != nil {
-		return err, true
+// SlurpInternal handles the internal workings of the slurp command.  Returns an error.
+func (opts *SlurpOptions) SlurpInternal() error {
+	var err error
+	if err = opts.validateSlurp(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra slurp"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen.")
-	}
-
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Appearances {
@@ -68,7 +62,7 @@ func (opts *SlurpOptions) SlurpInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetSlurpOptions returns the options for this tool so other tools may use it.
@@ -78,13 +72,6 @@ func GetSlurpOptions(args []string, g *globals.GlobalOptions) *SlurpOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *SlurpOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

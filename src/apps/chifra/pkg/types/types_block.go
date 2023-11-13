@@ -23,45 +23,47 @@ import (
 // EXISTING_CODE
 
 type RawBlock struct {
-	Author           string   `json:"author"`
-	BaseFeePerGas    string   `json:"baseFeePerGas"`
-	BlockNumber      string   `json:"number"`
-	Difficulty       string   `json:"difficulty"`
-	ExtraData        string   `json:"extraData"`
-	GasLimit         string   `json:"gasLimit"`
-	GasUsed          string   `json:"gasUsed"`
-	Hash             string   `json:"hash"`
-	LogsBloom        string   `json:"logsBloom"`
-	Miner            string   `json:"miner"`
-	MixHash          string   `json:"mixHash"`
-	Nonce            string   `json:"nonce"`
-	ParentHash       string   `json:"parentHash"`
-	ReceiptsRoot     string   `json:"receiptsRoot"`
-	Sha3Uncles       string   `json:"sha3Uncles"`
-	Size             string   `json:"size"`
-	StateRoot        string   `json:"stateRoot"`
-	Timestamp        string   `json:"timestamp"`
-	TotalDifficulty  string   `json:"totalDifficulty"`
-	Transactions     []any    `json:"transactions"`
-	TransactionsRoot string   `json:"transactionsRoot"`
-	Uncles           []string `json:"uncles"`
+	Author           string          `json:"author"`
+	BaseFeePerGas    string          `json:"baseFeePerGas"`
+	BlockNumber      string          `json:"number"`
+	Difficulty       string          `json:"difficulty"`
+	ExtraData        string          `json:"extraData"`
+	GasLimit         string          `json:"gasLimit"`
+	GasUsed          string          `json:"gasUsed"`
+	Hash             string          `json:"hash"`
+	LogsBloom        string          `json:"logsBloom"`
+	Miner            string          `json:"miner"`
+	MixHash          string          `json:"mixHash"`
+	Nonce            string          `json:"nonce"`
+	ParentHash       string          `json:"parentHash"`
+	ReceiptsRoot     string          `json:"receiptsRoot"`
+	Sha3Uncles       string          `json:"sha3Uncles"`
+	Size             string          `json:"size"`
+	StateRoot        string          `json:"stateRoot"`
+	Timestamp        string          `json:"timestamp"`
+	TotalDifficulty  string          `json:"totalDifficulty"`
+	Transactions     []any           `json:"transactions"`
+	TransactionsRoot string          `json:"transactionsRoot"`
+	Uncles           []string        `json:"uncles"`
+	Withdrawals      []RawWithdrawal `json:"withdrawals"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleBlock[Tx string | SimpleTransaction] struct {
-	BaseFeePerGas base.Wei       `json:"baseFeePerGas"`
-	BlockNumber   base.Blknum    `json:"blockNumber"`
-	Difficulty    uint64         `json:"difficulty"`
-	GasLimit      base.Gas       `json:"gasLimit"`
-	GasUsed       base.Gas       `json:"gasUsed"`
-	Hash          base.Hash      `json:"hash"`
-	Miner         base.Address   `json:"miner"`
-	ParentHash    base.Hash      `json:"parentHash"`
-	Timestamp     base.Timestamp `json:"timestamp"`
-	Transactions  []Tx           `json:"transactions"`
-	Uncles        []base.Hash    `json:"uncles,omitempty"`
-	raw           *RawBlock      `json:"-"`
+	BaseFeePerGas base.Wei           `json:"baseFeePerGas"`
+	BlockNumber   base.Blknum        `json:"blockNumber"`
+	Difficulty    uint64             `json:"difficulty"`
+	GasLimit      base.Gas           `json:"gasLimit"`
+	GasUsed       base.Gas           `json:"gasUsed"`
+	Hash          base.Hash          `json:"hash"`
+	Miner         base.Address       `json:"miner"`
+	ParentHash    base.Hash          `json:"parentHash"`
+	Timestamp     base.Timestamp     `json:"timestamp"`
+	Transactions  []Tx               `json:"transactions"`
+	Uncles        []base.Hash        `json:"uncles,omitempty"`
+	Withdrawals   []SimpleWithdrawal `json:"withdrawals,omitempty"`
+	raw           *RawBlock          `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -91,14 +93,13 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 			txHashes = append(txHashes, txs...)
 			// TODO: no error if can't cast?
 		}
-		return Model{
+		model := Model{
 			Data: map[string]interface{}{
 				"hash":        s.Hash,
 				"blockNumber": s.BlockNumber,
 				"parentHash":  s.ParentHash,
 				"timestamp":   s.Timestamp,
 				"date":        s.Date(),
-				"tx_hashes":   txHashes,
 			},
 			Order: []string{
 				"hash",
@@ -106,9 +107,28 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 				"parentHash",
 				"timestamp",
 				"date",
-				"tx_hashes",
 			},
 		}
+
+		if format == "json" {
+			model.Data["tx_hashes"] = txHashes
+			if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
+				withs := make([]map[string]any, 0, len(s.Withdrawals))
+				for _, w := range s.Withdrawals {
+					withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+				}
+				model.Data["withdrawals"] = withs
+			}
+		} else {
+			model.Data["transactionsCnt"] = len(txHashes)
+			model.Order = append(model.Order, "transactionsCnt")
+			if s.BlockNumber > base.KnownBlock(chain, base.Shanghai) {
+				model.Data["withdrawalsCnt"] = len(s.Withdrawals)
+				model.Order = append(model.Order, "withdrawalsCnt")
+			}
+		}
+
+		return model
 	}
 
 	model = map[string]interface{}{
@@ -141,6 +161,7 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 		if extraOptions["list"] == true {
 			model["transactionsCnt"] = len(s.Transactions)
 			model["unclesCnt"] = len(s.Uncles)
+			model["withdrawalsCnt"] = len(s.Withdrawals)
 		} else {
 			// If we wanted just transactions' hashes, we would return earlier. So here we know that we
 			// have transactions as objects and want to load models for them to be able to display them
@@ -161,10 +182,22 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 				model["uncles"] = s.Uncles
 			}
 			order = append(order, "uncles")
+			if len(s.Withdrawals) > 0 {
+				withs := make([]map[string]any, 0, len(s.Withdrawals))
+				for _, w := range s.Withdrawals {
+					withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+				}
+				model["withdrawals"] = withs
+				order = append(order, "withdrawals")
+			} else {
+				model["withdrawals"] = []SimpleWithdrawal{}
+			}
 		}
 	} else {
 		model["transactionsCnt"] = len(s.Transactions)
 		order = append(order, "transactionsCnt")
+		model["withdrawalsCnt"] = len(s.Withdrawals)
+		order = append(order, "withdrawalsCnt")
 		if extraOptions["list"] == true {
 			model["unclesCnt"] = len(s.Uncles)
 			order = append(order, "unclesCnt")
@@ -271,6 +304,16 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Withdrawals
+	withdrawals := make([]cache.Marshaler, 0, len(s.Withdrawals))
+	for _, withdrawal := range s.Withdrawals {
+		withdrawal := withdrawal
+		withdrawals = append(withdrawals, &withdrawal)
+	}
+	if err = cache.WriteValue(writer, withdrawals); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -332,6 +375,12 @@ func (s *SimpleBlock[string]) UnmarshalCache(version uint64, reader io.Reader) (
 		return err
 	}
 
+	// Withdrawals
+	s.Withdrawals = make([]SimpleWithdrawal, 0)
+	if err = cache.ReadValue(reader, &s.Withdrawals, version); err != nil {
+		return err
+	}
+
 	s.FinishUnmarshal()
 
 	return nil
@@ -358,6 +407,7 @@ func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
 	target.Timestamp = s.Timestamp
 	// TODO: This copy of an array possibly doesn't do what we expect
 	target.Uncles = s.Uncles
+	target.Withdrawals = s.Withdrawals
 	target.raw = s.raw
 }
 

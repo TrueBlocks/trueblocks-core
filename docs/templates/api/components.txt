@@ -425,6 +425,11 @@ components:
           items:
             $ref: "#/components/schemas/hash"
           description: "a possibly empty array of uncle hashes"
+        withdrawals:
+          type: array
+          items:
+            $ref: "#/components/schemas/withdrawal"
+          description: "a possibly empty array of withdrawals (post Shanghai)"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
@@ -593,10 +598,22 @@ components:
           type: string
           format: wei
           description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of this block"
         index:
           type: number
           format: uint64
           description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp for this block"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date for this block"
         validatorIndex:
           type: number
           format: uint64
@@ -1222,14 +1239,10 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
+        specification:
           type: string
           format: ipfshash
           description: "IPFS cid of the specification"
-        databases:
-          type: string
-          format: ipfshash
-          description: "IPFS cid of file containing CIDs for the various databases"
         chunks:
           type: array
           items:
@@ -1343,6 +1356,26 @@ components:
           type: number
           format: uint64
           description: "the number of records in teh appearance table for this address"
+    ipfsPin:
+      description: "internal-use only data model detailing a single remote or local ipfs pinned file"
+      type: object
+      properties:
+        cid:
+          type: string
+          format: ipfshash
+          description: "the CID of the file"
+        datePinned:
+          type: string
+          description: "the date the CID was first created"
+        status:
+          type: string
+          description: "the status of the file (one of [all|pinned|unpinned|pending])"
+        size:
+          type: int64
+          description: "the size of the file in bytes"
+        fileName:
+          type: string
+          description: "the metadata name of the pinned file"
     chunkStats:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object
@@ -1491,14 +1524,14 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
-          type: string
-          format: ipfshash
-          description: "IPFS cid of the specification"
-        tsHash:
+        timestampHash:
           type: string
           format: ipfshash
           description: "IPFS cid of file containing timestamps"
+        specHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of the specification"
         manifestHash:
           type: string
           format: ipfshash
@@ -1652,6 +1685,7 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/function"
+          description: "if present, the function that was called in the transaction"
         compressedTx:
           type: string
           example: "0x3d18b912( )"

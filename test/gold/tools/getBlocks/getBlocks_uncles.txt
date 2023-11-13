@@ -1,7 +1,7 @@
 chifra blocks  3 469 --uncles
 TEST[DATE|TIME] Blocks:  [3 469]
 TEST[DATE|TIME] Uncles:  true
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -17,7 +17,8 @@ TEST[DATE|TIME] Format:  json
       "parentHash": "0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3",
       "timestamp": 1438270018,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -31,7 +32,8 @@ TEST[DATE|TIME] Format:  json
       "parentHash": "0x8f266d7906594e639a4c8084284361e27ad1a488f95a355e6c276fe946bad2ee",
       "timestamp": 1438271149,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     },
     {
       "baseFeePerGas": 0,
@@ -45,7 +47,8 @@ TEST[DATE|TIME] Format:  json
       "parentHash": "0x8f266d7906594e639a4c8084284361e27ad1a488f95a355e6c276fe946bad2ee",
       "timestamp": 1438271149,
       "transactions": [],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }

@@ -38,27 +38,26 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 				errorChan <- err
 				continue
 
-			} else if cnt == 0 {
-				continue
-
 			} else {
-				caches := []walk.CacheType{
-					walk.Cache_Statements,
-					walk.Cache_Traces,
-					walk.Cache_Transactions}
-
-				for _, cache := range caches {
-					itemsToRemove, err := decache.LocationsFromAddrAppsAndCacheType(opts.Conn, mon.Address, apps, cache)
-					if err != nil {
-						errorChan <- err
-						continue
+				if cnt > 0 {
+					caches := []walk.CacheType{
+						walk.Cache_Statements,
+						walk.Cache_Traces,
+						walk.Cache_Transactions,
 					}
+					for _, cache := range caches {
+						itemsToRemove, err := decache.LocationsFromAddrAppsAndCacheType(opts.Conn, mon.Address, apps, cache)
+						if err != nil {
+							errorChan <- err
+							continue
+						}
 
-					if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, cache); err != nil {
-						errorChan <- err
+						if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, cache); err != nil {
+							errorChan <- err
 
-					} else {
-						logger.Info(msg)
+						} else {
+							logger.Info(msg)
+						}
 					}
 				}
 
@@ -80,7 +79,7 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 }
 
 func getWarning(addr string, count int64) string {
-	var warning = strings.Replace("Are sure you want to decache {0}{1} (Yy)?", "{0}", addr, -1)
+	var warning = strings.Replace("Are sure you want to decache {0}{1} (Yn)?", "{0}", addr, -1)
 	if count > 5000 {
 		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
 	}

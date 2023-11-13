@@ -1,6 +1,6 @@
 chifra blocks  1001001
 TEST[DATE|TIME] Blocks:  [1001001]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -115,7 +115,8 @@ TEST[DATE|TIME] Format:  json
           "value": "61848232647269079"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }

@@ -45,6 +45,7 @@ func (opts *BlocksOptions) HandleCounts() error {
 					BlockNumber:     block.BlockNumber,
 					Timestamp:       block.Timestamp,
 					TransactionsCnt: uint64(len(block.Transactions)),
+					WithdrawalsCnt:  uint64(len(block.Withdrawals)),
 				}
 
 				if opts.Uncles {

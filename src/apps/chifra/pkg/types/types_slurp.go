@@ -43,8 +43,12 @@ type RawSlurp struct {
 	To                string `json:"to"`
 	TransactionIndex  string `json:"transactionIndex"`
 	TxReceiptStatus   string `json:"txReceiptStatus"`
+	ValidatorIndex    string `json:"validatorIndex"`
 	Value             string `json:"value"`
+	WithdrawalIndex   string `json:"withdrawalIndex"`
 	// EXISTING_CODE
+	Address string `json:"address"`
+	Amount  string `json:"amount"`
 	// EXISTING_CODE
 }
 
@@ -71,7 +75,9 @@ type SimpleSlurp struct {
 	To                base.Address    `json:"to"`
 	TransactionIndex  base.Blknum     `json:"transactionIndex"`
 	TxReceiptStatus   string          `json:"txReceiptStatus"`
+	ValidatorIndex    uint64          `json:"validatorIndex"`
 	Value             base.Wei        `json:"value"`
+	WithdrawalIndex   uint64          `json:"withdrawalIndex"`
 	raw               *RawSlurp       `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -95,14 +101,14 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		to = "0x0" // weird special case to preserve what RPC does
 	}
 
+	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"blockNumber": s.BlockNumber,
-		"ether":       s.Ether,
 		"from":        s.From,
 		"timestamp":   s.Timestamp,
 		"date":        s.Date(),
 		"to":          s.To,
-		"value":       s.Value.String(),
+		"value":       utils.FormattedValue(s.Value, asEther, 18),
 	}
 
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
@@ -115,7 +121,22 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 			"from",
 			"to",
 			"value",
-			"ether",
+		}
+
+	} else if s.From == base.WithdrawalSender {
+		model["from"] = s.From.Hex()
+		s.Input = ""
+		model["withdrawalIndex"] = s.WithdrawalIndex
+		model["validatorIndex"] = s.ValidatorIndex
+		order = []string{
+			"blockNumber",
+			"validatorIndex",
+			"withdrawalIndex",
+			"timestamp",
+			"date",
+			"from",
+			"to",
+			"value",
 		}
 
 	} else {
@@ -133,7 +154,6 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 			"gasUsed",
 			"gasCost",
 			"value",
-			"ether",
 			"input",
 		}
 
@@ -150,11 +170,10 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 	if s.IsError {
 		model["isError"] = s.IsError
 	}
-	model["ether"] = utils.FormattedValue(s.Value, true, 18)
 	if s.BlockHash != base.HexToHash("0xdeadbeef") && !s.BlockHash.IsZero() {
 		model["blockHash"] = s.BlockHash
 	}
-	if s.TransactionIndex != 80809 {
+	if s.TransactionIndex != EsInternalTx {
 		model["transactionIndex"] = s.TransactionIndex
 	}
 
@@ -341,8 +360,18 @@ func (s *SimpleSlurp) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// ValidatorIndex
+	if err = cache.WriteValue(writer, s.ValidatorIndex); err != nil {
+		return err
+	}
+
 	// Value
 	if err = cache.WriteValue(writer, &s.Value); err != nil {
+		return err
+	}
+
+	// WithdrawalIndex
+	if err = cache.WriteValue(writer, s.WithdrawalIndex); err != nil {
 		return err
 	}
 
@@ -464,8 +493,18 @@ func (s *SimpleSlurp) UnmarshalCache(version uint64, reader io.Reader) (err erro
 		return err
 	}
 
+	// ValidatorIndex
+	if err = cache.ReadValue(reader, &s.ValidatorIndex, version); err != nil {
+		return err
+	}
+
 	// Value
 	if err = cache.ReadValue(reader, &s.Value, version); err != nil {
+		return err
+	}
+
+	// WithdrawalIndex
+	if err = cache.ReadValue(reader, &s.WithdrawalIndex, version); err != nil {
 		return err
 	}
 

@@ -6,10 +6,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"runtime"
+	"strings"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // Params are used during calls to the RPC.
@@ -31,6 +35,9 @@ type eip1474Error struct {
 	Message string `json:"message"`
 }
 
+var devDebug = false
+var devDebugMethod = ""
+
 func init() {
 	// We need to increase MaxIdleConnsPerHost, otherwise chifra will keep trying to open too
 	// many ports. It can lead to bind errors.
@@ -39,6 +46,9 @@ func init() {
 	//
 	// We change DefaultTransport as the whole codebase uses it.
 	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
+
+	devDebugMethod = os.Getenv("TB_DEBUG_CURL")
+	devDebug = len(devDebugMethod) > 0
 }
 
 // Query returns a single result for given method and params.
@@ -50,8 +60,8 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 		Params: params,
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
-	err := FromRpc(provider, &payload, &response)
+	provider := config.GetChain(chain).RpcProvider
+	err := fromRpc(provider, &payload, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -64,20 +74,96 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 
 var rpcCounter uint32
 
-// fromRpc Returns all traces for a given block.
-func FromRpc(rpcProvider string, payload *Payload, ret interface{}) error {
-	type rpcPayload struct {
-		Jsonrpc string `json:"jsonrpc"`
-		Method  string `json:"method"`
-		Params  `json:"params"`
-		ID      int `json:"id"`
-	}
+type rpcPayload struct {
+	Jsonrpc string `json:"jsonrpc"`
+	Method  string `json:"method"`
+	Params  `json:"params"`
+	ID      int `json:"id"`
+}
 
+// fromRpc Returns all traces for a given block.
+func fromRpc(rpcProvider string, payload *Payload, ret any) error {
 	payloadToSend := rpcPayload{
 		Jsonrpc: "2.0",
 		Method:  payload.Method,
 		Params:  payload.Params,
 		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
+	}
+
+	debugCurl(payloadToSend, rpcProvider)
+
+	plBytes, err := json.Marshal(payloadToSend)
+	if err != nil {
+		return err
+	}
+
+	return sendRpcRequest(rpcProvider, plBytes, ret)
+}
+
+// QuerySlice returns a slice of results for given method and params.
+func QuerySlice[T any](chain string, method string, params Params) ([]T, error) {
+	var response rpcResponse[[]T]
+
+	payload := Payload{
+		Method: method,
+		Params: params,
+	}
+
+	provider := config.GetChain(chain).RpcProvider
+	err := fromRpc(provider, &payload, &response)
+	if err != nil {
+		return nil, err
+	}
+	if response.Error != nil {
+		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
+	}
+
+	return response.Result, err
+}
+
+// BatchPayload is a wrapper around Payload type that allows us
+// to associate a name (Key) to given request.
+type BatchPayload struct {
+	Key string
+	*Payload
+}
+
+// QueryBatch batches requests to the node. Returned values are stored in map, with the same keys as defined
+// in `batchPayload` (this way we don't have to operate on array indices)
+func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T, error) {
+	var response []rpcResponse[T]
+
+	keys := make([]string, 0, len(batchPayload))
+	payloads := make([]Payload, 0, len(batchPayload))
+	for _, config := range batchPayload {
+		keys = append(keys, config.Key)
+		payloads = append(payloads, *config.Payload)
+	}
+
+	provider := config.GetChain(chain).RpcProvider
+	err := fromRpcBatch(provider, payloads, &response)
+	if err != nil {
+		return nil, err
+	}
+	results := make(map[string]*T, len(batchPayload))
+	for index, key := range keys {
+		results[key] = &response[index].Result
+	}
+	return results, err
+}
+
+func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
+	payloadToSend := make([]rpcPayload, 0, len(payloads))
+
+	for _, payload := range payloads {
+		theLoad := rpcPayload{
+			Jsonrpc: "2.0",
+			Method:  payload.Method,
+			Params:  payload.Params,
+			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
+		}
+		debugCurl(theLoad, rpcProvider)
+		payloadToSend = append(payloadToSend, theLoad)
 	}
 
 	plBytes, err := json.Marshal(payloadToSend)
@@ -104,78 +190,42 @@ func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
 	return json.Unmarshal(theBytes, result)
 }
 
-// QuerySlice returns a slice of results for given method and params.
-func QuerySlice[T any](chain string, method string, params Params) ([]T, error) {
-	var response rpcResponse[[]T]
-
-	payload := Payload{
-		Method: method,
-		Params: params,
+func debugCurl(payload rpcPayload, rpcProvider string) {
+	if !devDebug {
+		return
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
-	err := FromRpc(provider, &payload, &response)
-	if err != nil {
-		return nil, err
+	if devDebugMethod != "file" && devDebugMethod != "true" && devDebugMethod != "testing" && payload.Method != devDebugMethod {
+		return
 	}
 
-	return response.Result, err
+	var bytes []byte
+	var payloadStr string
+	if devDebugMethod == "testing" {
+		rpcProvider = "--rpc-provider--"
+		parts := strings.Split(strings.Replace(payloadStr, "]", "[", -1), "[")
+		parts[1] = "[ --params-- ]"
+		payloadStr = strings.Join(parts, "")
+	} else {
+		bytes, _ = json.MarshalIndent(payload, "", "")
+		payloadStr = strings.Replace(string(bytes), "\n", " ", -1)
+	}
+
+	var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
+	curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
+	curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
+	if devDebugMethod == "file" {
+		_ = file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
+	} else {
+		logger.ToggleDecoration()
+		logger.Info(curlCmd)
+		logger.ToggleDecoration()
+	}
 }
 
-// BatchPayload is a wrapper around Payload type that allows us
-// to associate a name (Key) to given request.
-type BatchPayload struct {
-	Key string
-	*Payload
-}
-
-// QueryBatch batches requests to the node. Returned values are stored in map, with the same keys as defined
-// in `batchPayload` (this way we don't have to operate on array indices)
-func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T, error) {
-	var response []rpcResponse[T]
-
-	keys := make([]string, 0, len(batchPayload))
-	payloads := make([]Payload, 0, len(batchPayload))
-	for _, config := range batchPayload {
-		keys = append(keys, config.Key)
-		payloads = append(payloads, *config.Payload)
+func CloseDebugger() {
+	if !devDebug {
+		return
 	}
-
-	provider, _ := config.GetRpcProvider(chain)
-	err := fromRpcBatch(provider, payloads, &response)
-	if err != nil {
-		return nil, err
-	}
-	results := make(map[string]*T, len(batchPayload))
-	for index, key := range keys {
-		results[key] = &response[index].Result
-	}
-	return results, err
-}
-
-func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
-	type rpcPayload struct {
-		Jsonrpc string `json:"jsonrpc"`
-		Method  string `json:"method"`
-		Params  `json:"params"`
-		ID      int `json:"id"`
-	}
-
-	payloadToSend := make([]rpcPayload, 0, len(payloads))
-
-	for _, payload := range payloads {
-		payloadToSend = append(payloadToSend, rpcPayload{
-			Jsonrpc: "2.0",
-			Method:  payload.Method,
-			Params:  payload.Params,
-			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
-		})
-	}
-
-	plBytes, err := json.Marshal(payloadToSend)
-	if err != nil {
-		return err
-	}
-
-	return sendRpcRequest(rpcProvider, plBytes, ret)
+	logger.Info("Closing curl debugger")
 }

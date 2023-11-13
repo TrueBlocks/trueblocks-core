@@ -50,7 +50,7 @@ func (conn *Connection) GetESTransactionByAddress(addr, requestType string, pagi
 	if fromEs.Message == "NOTOK" {
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
-		// remove empty ABIs with chifra abis --clean.
+		// remove empty ABIs with chifra abis --decache.
 		logger.Warn("provider responded with:", url, fromEs.Message)
 		return []types.SimpleSlurp{}, 0, nil
 		// } else if fromEs.Message != "OK" {
@@ -115,29 +115,42 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 	if requestType == "int" {
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't want to make another RPC call
 		// We tried (see commented code), but EtherScan balks with a weird message
-		s.TransactionIndex = 80809
+		s.TransactionIndex = types.EsInternalTx
 		// s.BlockHash = base.HexToHash("0xdeadbeef")
 		// got, err := conn.GetESTransactionByHash(s.Hash)
 		// if err != nil {
 		// 	logger.Warn("error getting transaction from etherscan:", err)
-		// 	s.TransactionIndex = 80809
+		// 	s.TransactionIndex = EsInternalTx
 		// } else {
 		// 	s.TransactionIndex = utils.MustParseUint(got.TransactionIndex)
 		// }
 	} else if requestType == "miner" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
-		s.TransactionIndex = 99999
+		s.TransactionIndex = types.BlockReward
 		s.From = base.BlockRewardSender
+		// TODO: This is incorrect for mainnet
 		s.Value.SetString("5000000000000000000", 0)
 		s.To = base.HexToAddress(addr)
-
 	} else if requestType == "uncles" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
-		s.TransactionIndex = 99998
+		s.TransactionIndex = types.UncleReward
 		s.From = base.UncleRewardSender
+		// TODO: This is incorrect for mainnet
 		s.Value.SetString("3750000000000000000", 0)
 		s.To = base.HexToAddress(addr)
+	} else if requestType == "withdrawals" {
+		s.BlockHash = base.HexToHash("0xdeadbeef")
+		s.TransactionIndex = types.Withdrawal
+		s.From = base.WithdrawalSender
+		s.ValidatorIndex = utils.MustParseUint(rawTx.ValidatorIndex)
+		s.WithdrawalIndex = utils.MustParseUint(rawTx.WithdrawalIndex)
+		s.Value.SetString(rawTx.Amount, 0)
+		s.To = base.HexToAddress(addr)
+		if s.To != base.HexToAddress(rawTx.Address) {
+			logger.Fatal("Should not happen in rawToSimple", s.To, rawTx.Address)
+		}
 	}
+
 	s.SetRaw(rawTx)
 	return s, nil
 }
@@ -158,21 +171,22 @@ func (conn *Connection) responseToTransactions(addr, requestType string, rawTxs 
 
 func getEtherscanUrl(value string, requestType string, paginator *Paginator) (string, error) {
 	var actions = map[string]string{
-		"ext":    "txlist",
-		"int":    "txlistinternal",
-		"token":  "tokentx",
-		"nfts":   "tokennfttx",
-		"1155":   "token1155tx",
-		"miner":  "getminedblocks&blocktype=blocks",
-		"uncles": "getminedblocks&blocktype=uncles",
-		"byHash": "eth_getTransactionByHash",
+		"ext":         "txlist",
+		"int":         "txlistinternal",
+		"token":       "tokentx",
+		"nfts":        "tokennfttx",
+		"1155":        "token1155tx",
+		"miner":       "getminedblocks&blocktype=blocks",
+		"uncles":      "getminedblocks&blocktype=uncles",
+		"byHash":      "eth_getTransactionByHash",
+		"withdrawals": "txsBeaconWithdrawal&startblock=0&endblock=999999999",
 	}
 
 	if actions[requestType] == "" {
 		logger.Fatal("Should not happen in getEtherscanUrl", requestType)
 	}
 
-	key := config.GetRootConfig().Keys["etherscan"].ApiKey
+	key := config.GetKey("etherscan").ApiKey
 	if key == "" {
 		return "", errors.New("cannot read Etherscan API key")
 	}

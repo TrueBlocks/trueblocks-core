@@ -18,7 +18,6 @@ extern string_q get_aliases(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
-extern string_q get_config_override(const CCommandOption& cmd);
 extern string_q get_ens_convert1(const CCommandOption& cmd);
 extern string_q get_ens_convert2(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
@@ -142,7 +141,6 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
-    replaceAll(source, "[{CONFIG_OVERRIDE}]", get_config_override(p));
     replaceAll(source, "[{ENS_CONVERT1}]", get_ens_convert1(p));
     replaceAll(source, "[{ENS_CONVERT2}]", get_ens_convert2(p));
     replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
@@ -252,7 +250,6 @@ bool COptions::handle_gocmds(void) {
 
     contents = asciiFileToString(getPathToTemplates("version.go.tmpl"));
     replace(contents, "[{VERSION}]", getVersionStr(true, false));
-    replace(contents, "[{MANIFEST_VERSION}]", manifestVersion);
     stringToAsciiFile(getPathToSource("apps/chifra/pkg/version/version_strings.go"), contents);
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
@@ -384,7 +381,6 @@ string_q get_godefaults(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (!isDef(p)) {
             string_q val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
-            val = substitute(val, "trueblocks.eth", "\"trueblocks.eth\"");
             os << "\t" << padRight(p.Format("[{VARIABLE}]") + ": ", wid + 2, ' ') << val << "," << endl;
         }
     }
@@ -454,17 +450,16 @@ string_q get_optfields(const CCommandOption& cmd) {
     string_q configDocs = getDocsPathTemplates(n);
     ::remove(configDocs.c_str());  // remove it if it exists, we will replace it
 
-    bool hasConfig = 0;
     size_t varWidth = 0, typeWidth = 0;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
+        string_q var = p.Format("[{VARIABLE}]");
         if (p.generate == "config") {
-            string_q var = p.Format("Settings");
+            var = toCamelCase(var);
             varWidth = max(var.length(), varWidth);
-            string_q type = cmd.Format("[{API_ROUTE}]Cfg.[{PROPER}]Settings");
+            string_q type = cmd.Format("config.[{PROPER}]Settings");
             typeWidth = max(type.length(), typeWidth);
             continue;
         }
-        string_q var = p.Format("[{VARIABLE}]");
         varWidth = max(var.length(), varWidth);
         string_q type = p.Format("[{GO_INTYPE}]");
         typeWidth = max(type.length(), typeWidth);
@@ -493,6 +488,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     os << "// " << firstUpper(c) << endl;
 
     ostringstream os;
+    bool hasConfig = 0;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.generate == "config") {
             ostringstream dd;
@@ -502,7 +498,7 @@ string_q get_optfields(const CCommandOption& cmd) {
                 dd << "| " << string_q(18, '-') << " | " << string_q(12, '-') << " | " << string_q(12, '-')
                    << " | --------- |" << endl;
             }
-            string_q x = substitute(p.Format("[{LONGNAME}]"), "_", "&lowbar;");
+            string_q x = toCamelCase(p.Format("[{LONGNAME}]"));
             dd << "| " << padRight(x, 18) << " | " << padRight(p.Format("[{GO_INTYPE}]"), 12) << " | "
                << padRight(p.Format("[{DEF_VAL}]"), 12) << " | " << p.Format("[{DESCRIPTION}]") << " |" << endl;
             appendToAsciiFile(configDocs, dd.str());
@@ -521,7 +517,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     }
 
     if (hasConfig) {
-        string type = cmd.Format("[{API_ROUTE}]Cfg.[{PROPER}]Settings");
+        string type = cmd.Format("config.[{PROPER}]Settings");
         ONE(os, "Settings", varWidth, type, typeWidth, "Configuration items for the " + cmd.api_route);
     }
 
@@ -537,8 +533,12 @@ string_q get_ens_convert1(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isAddress) {
             string_q str = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddress(opts.[{VARIABLE}])";
-            if (containsI(p.longName, "publisher")) {
+            if (containsI(p.real_type, "address_t")) {
                 str += "\n\topts.[{VARIABLE}]Addr = base.HexToAddress(opts.[{VARIABLE}])";
+            }
+            if (p.longName % "publisher") {
+                replace(str, "opts.Conn.GetEnsAddress(opts.[{VARIABLE}])",
+                        "opts.Conn.GetEnsAddress(config.GetPublisher(opts.[{VARIABLE}]))");
             }
             os << p.Format(str) << endl;
         }
@@ -551,8 +551,12 @@ string_q get_ens_convert2(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isAddressList) {
             string_q str = "\topts.[{VARIABLE}], _ = opts.Conn.GetEnsAddresses(opts.[{VARIABLE}])";
-            if (containsI(p.longName, "publisher")) {
+            if (containsI(p.real_type, "address_t")) {
                 str += "\n\topts.[{VARIABLE}]Addr = base.HexToAddress(opts.[{VARIABLE}])";
+            }
+            if (p.longName % "publisher") {
+                replace(str, "opts.Conn.GetEnsAddress(opts.[{VARIABLE}])",
+                        "opts.Conn.GetEnsAddress(config.GetPublisher(opts.[{VARIABLE}]))");
             }
             os << p.Format(str) << endl;
         }
@@ -560,22 +564,10 @@ string_q get_ens_convert2(const CCommandOption& cmd) {
     return os.str();
 }
 
-string_q get_config_override(const CCommandOption& cmd) {
-    for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.generate == "config") {
-            ostringstream os;
-            os << "\t"
-               << "opts.Settings, _ = " << cmd.api_route
-               << "Cfg.GetSettings(opts.Globals.Chain, configFn, &" + cmd.api_route + "Cfg.Unset)\n";
-            return os.str();
-        }
-    return "";
-}
-
 string_q get_config_package(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.generate == "config")
-            return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config/" + cmd.api_route + "Cfg\"\n";
+        if (p.longName % "publisher" || p.generate == "config")
+            return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"\n";
     return "";
 }
 
@@ -595,14 +587,21 @@ string_q get_base_package(const string_q& fn) {
 }
 
 string_q get_index_package(const string_q& fn) {
-    string_q existing = asciiFileToString(fn);
-    if (contains(existing, "index.")) {
-        return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index\"\n";
-    }
+    // string_q existing = asciiFileToString(fn);
+    // if (contains(existing, "index.")) {
+    //     return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index\"\n";
+    // }
     return "";
 }
 
 string_q get_defaults_apis(const CCommandOption& cmd) {
+    string_q last = "";
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
+        if (p.generate == "config") {
+            last = p.longName;
+        }
+    }
+
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (p.isDeprecated) {
@@ -624,11 +623,21 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
             }
             os << p.Format(fmt) << endl;
         }
+        if (p.longName == last) {
+            os << "\tconfigs := make(map[string]string, 10)" << endl;
+        }
     }
     return os.str();
 }
 
 string_q get_requestopts(const CCommandOption& cmd) {
+    string_q last = "";
+    for (auto p : *((CCommandOptionArray*)cmd.members)) {
+        if (p.generate == "config") {
+            last = p.longName;
+        }
+    }
+
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         string_q low = toCamelCase(p.Format("[{LOWER}]"));
@@ -639,9 +648,16 @@ string_q get_requestopts(const CCommandOption& cmd) {
             fmt = substitute(STR_REQUEST_CASE1, "++LOWER++", low);
         }
         if (p.generate == "config") {
-            fmt = substitute(fmt, "opts.", "opts.Settings.");
+            if (p.longName == last) {
+                os << "\t\tcase \"" + low + "\":" << endl;
+                os << "\t\t\tconfigs[key] = value[0]" << endl;
+            } else {
+                fmt = substitute(fmt, "opts.[{VARIABLE}] = [{ASSIGN}]", "fallthrough");
+                os << p.Format(fmt) << endl;
+            }
+        } else {
+            os << p.Format(fmt) << endl;
         }
-        os << p.Format(fmt) << endl;
     }
     return os.str();
 }
@@ -734,8 +750,12 @@ string_q get_setopts(const CCommandOption& cmd) {
         if (p.option_type != "positional") {
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
-            os << "(&[{ROUTE}]Pkg.GetOptions()." << (p.isConfig ? "Settings." : "");
-            os << p.Format("[{VARIABLE}]") << ", ";
+            os << "(&[{ROUTE}]Pkg.GetOptions().";
+            if (p.isConfig) {
+                os << "Settings." + p.Format("[{VARIABLE}]") << ", ";
+            } else {
+                os << p.Format("[{VARIABLE}]") << ", ";
+            }
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << get_goDefault(p) << ", ";
@@ -762,7 +782,7 @@ string_q clean_positionals(const string_q& progName, const string_q& strIn) {
             os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
 
         } else if (contains(toLower(progName), "chunks")) {
-            os << (strIn == "enum[manifest|index|blooms|addresses|appearances|stats] list<blknum>"
+            os << (strIn == "enum[manifest|index|blooms|pins|addresses|appearances|stats] list<blknum>"
                        ? "<mode> [blocks...] [address...]"
                        : "");
 

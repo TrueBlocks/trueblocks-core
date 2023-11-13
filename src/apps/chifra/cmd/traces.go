@@ -57,6 +57,7 @@ func init() {
 	var capabilities = caps.Default // Additional global caps for chifra traces
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
+	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 
@@ -65,7 +66,7 @@ func init() {
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	tracesCmd.Flags().StringVarP(&tracesPkg.GetOptions().Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Count, "count", "U", false, "show the number of traces for the transaction only (fast)")
-	globals.InitGlobals(tracesCmd, &tracesPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("traces", tracesCmd, &tracesPkg.GetOptions().Globals, capabilities)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
 	tracesCmd.SetOut(os.Stderr)

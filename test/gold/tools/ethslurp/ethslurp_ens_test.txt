@@ -2,14 +2,13 @@ chifra slurp  wolfofethereum.eth --types int 12524380-13675400 --fmt json
 TEST[DATE|TIME] Addrs:  [0x0559a413a3ab19508a144aeebc474eb14c5e76ce]
 TEST[DATE|TIME] Blocks:  [12524380-13675400]
 TEST[DATE|TIME] Types:  [int]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
       "blockNumber": 12573540,
       "date": "2021-06-05 09:00:03 UTC",
-      "ether": "0.535375575077256861",
       "from": "0xe592427a0aece92de3edee1f18e0157c05861564",
       "gas": 31600,
       "gasCost": 0,
@@ -23,7 +22,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13237992,
       "date": "2021-09-16 16:55:31 UTC",
-      "ether": "1.108526223144894232",
       "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
       "gas": 61500,
       "gasCost": 0,
@@ -37,7 +35,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13504765,
       "date": "2021-10-28 08:57:51 UTC",
-      "ether": "0.000982071181332412",
       "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
       "gas": 30156,
       "gasCost": 0,
@@ -51,7 +48,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13504782,
       "date": "2021-10-28 08:59:56 UTC",
-      "ether": "0.00000004397942723",
       "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
       "gas": 39091,
       "gasCost": 0,
@@ -65,7 +61,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13504795,
       "date": "2021-10-28 09:01:29 UTC",
-      "ether": "0.000079134607067002",
       "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
       "gas": 39093,
       "gasCost": 0,
@@ -79,7 +74,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13504809,
       "date": "2021-10-28 09:04:48 UTC",
-      "ether": "0.000098929662182086",
       "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
       "gas": 39095,
       "gasCost": 0,
@@ -93,7 +87,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13588029,
       "date": "2021-11-10 10:41:17 UTC",
-      "ether": "0.000634208316482001",
       "from": "0x283af0b28c62c092c9727f1ee09c02ca627eb7f5",
       "gas": 2300,
       "gasCost": 0,
@@ -107,7 +100,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13616283,
       "date": "2021-11-14 21:04:47 UTC",
-      "ether": "0.014088069173148217",
       "from": "0x283af0b28c62c092c9727f1ee09c02ca627eb7f5",
       "gas": 2300,
       "gasCost": 0,
@@ -121,7 +113,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13672959,
       "date": "2021-11-23 20:29:08 UTC",
-      "ether": "1.891138061225612052",
       "from": "0xe592427a0aece92de3edee1f18e0157c05861564",
       "gas": 39084,
       "gasCost": 0,
@@ -135,7 +126,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13673025,
       "date": "2021-11-23 20:47:32 UTC",
-      "ether": "3.827879102472904389",
       "from": "0xe592427a0aece92de3edee1f18e0157c05861564",
       "gas": 49433,
       "gasCost": 0,
@@ -149,7 +139,6 @@ TEST[DATE|TIME] Format:  json
     {
       "blockNumber": 13673164,
       "date": "2021-11-23 21:19:33 UTC",
-      "ether": "0.023340146911393484",
       "from": "0xe592427a0aece92de3edee1f18e0157c05861564",
       "gas": 37960,
       "gasCost": 0,

@@ -7,14 +7,11 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 type UniqProcFunc func(s *types.SimpleAppearance) error
@@ -37,29 +34,29 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 		if block, err := conn.GetBlockBodyByNumber(bn); err != nil {
 			return err
 		} else {
-			miner := block.Miner.Hex()
-			txid := uint64(99999)
-			if block.Miner.IsZero() {
-				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-				// burned). We enter a false record with a false tx_id to account for this.
-				miner = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-				txid = 99997
+			author := block.Miner.Hex()
+			fakeId := types.BlockReward
+			if base.IsPrecompile(author) {
+				// Some blocks have a misconfigured miner setting. We process this block, so that
+				// every block gets a record, but it will be excluded from the index. See #3252.
+				author = base.SentinalAddr.Hex()
+				fakeId = types.MisconfigReward
 			}
-			streamAppearance(procFunc, flow, "miner", miner, bn, txid, utils.NOPOS, ts, addrMap)
+			streamAppearance(procFunc, flow, "miner", author, bn, fakeId, utils.NOPOS, ts, addrMap)
 
 			if uncles, err := conn.GetUncleBodiesByNumber(bn); err != nil {
 				return err
 			} else {
 				for _, uncle := range uncles {
-					unc := uncle.Miner.Hex()
-					txid = uint64(99998)
-					if uncle.Miner.IsZero() {
-						// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-						// burned). We enter a false record with a false tx_id to account for this.
-						unc = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-						txid = 99998 // do not change this!
+					author := uncle.Miner.Hex()
+					fakeId := types.UncleReward
+					if base.IsPrecompile(author) {
+						// Some blocks have a misconfigured miner setting. We process this block, so that
+						// every block gets a record, but it will be excluded from the index. See #3252.
+						author = base.SentinalAddr.Hex()
+						fakeId = types.MisconfigReward
 					}
-					streamAppearance(procFunc, flow, "uncle", unc, bn, txid, utils.NOPOS, ts, addrMap)
+					streamAppearance(procFunc, flow, "uncle", author, bn, fakeId, utils.NOPOS, ts, addrMap)
 				}
 			}
 
@@ -70,6 +67,10 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 				if err = GetUniqAddressesInTransaction(chain, procFunc, flow, &trans, ts, addrMap, conn); err != nil {
 					return err
 				}
+			}
+
+			for _, withdrawal := range block.Withdrawals {
+				streamAppearance(procFunc, flow, "withdrawal", withdrawal.Address.Hex(), bn, withdrawal.Index, utils.NOPOS, ts, addrMap)
 			}
 		}
 	}
@@ -97,12 +98,13 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 		inputData := trans.Input[10:]
 		for i := 0; i < len(inputData)/64; i++ {
 			str := string(inputData[i*64 : (i+1)*64])
-			if index.IsImplicitAddress(str) {
+			if IsImplicitAddress(str) {
 				streamAppearance(procFunc, flow, str, reason, bn, txid, traceid, ts, addrMap)
 			}
 		}
 	}
 
+	// TODO: See issue #3195 - there are addresses on the receipt that do not appear in traces
 	if err := uniqFromLogsDetails(chain, procFunc, flow, trans.Receipt.Logs, ts, addrMap); err != nil {
 		return err
 	}
@@ -125,7 +127,7 @@ func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs 
 
 		for t, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
-			if index.IsImplicitAddress(str) {
+			if IsImplicitAddress(str) {
 				reason := fmt.Sprintf("log_%d_topic_%d", l, t)
 				streamAppearance(procFunc, flow, reason, str, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 			}
@@ -136,7 +138,7 @@ func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs 
 			inputData := log.Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(str) {
+				if IsImplicitAddress(str) {
 					streamAppearance(procFunc, flow, reason, str, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 				}
 			}
@@ -202,33 +204,36 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 		} else if trace.TraceType == "reward" {
 			if trace.Action.RewardType == "block" {
 				author := trace.Action.Author.Hex()
-				falseTxid := uint64(99999)
-				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-				// burned). We enter a false record with a false tx_id to account for this.
-				a := base.HexToAddress(author)
-				if a.IsZero() {
-					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					falseTxid = uint64(99997)
+				fakeId := types.BlockReward
+				if base.IsPrecompile(author) {
+					// Some blocks have a misconfigured miner setting. We process this block, so that
+					// every block gets a record, but it will be excluded from the index. See #3252.
+					author = base.SentinalAddr.Hex()
+					fakeId = types.MisconfigReward
 				}
-				streamAppearance(procFunc, flow, "miner", author, bn, falseTxid, traceid, ts, addrMap)
+				streamAppearance(procFunc, flow, "miner", author, bn, fakeId, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "uncle" {
 				author := trace.Action.Author.Hex()
-				falseTxid := uint64(99998)
-				// Early clients allowed misconfigured miner settings with address 0x0 (reward got
-				// burned). We enter a false record with a false tx_id to account for this.
-				a := base.HexToAddress(author)
-				if a.IsZero() {
-					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					falseTxid = uint64(99998) // do not change! it will break the index
+				fakeId := types.UncleReward
+				if base.IsPrecompile(author) {
+					// Some blocks have a misconfigured miner setting. We process this block, so that
+					// every block gets a record, but it will be excluded from the index. See #3252.
+					author = base.SentinalAddr.Hex()
+					fakeId = types.MisconfigReward
 				}
-				streamAppearance(procFunc, flow, "uncle", author, bn, falseTxid, traceid, ts, addrMap)
+				streamAppearance(procFunc, flow, "uncle", author, bn, fakeId, traceid, ts, addrMap)
 
 			} else if trace.Action.RewardType == "external" {
-				// This only happens in xDai as far as we know...
 				author := trace.Action.Author.Hex()
-				falseTxid := uint64(99996)
-				streamAppearance(procFunc, flow, "external", author, bn, falseTxid, traceid, ts, addrMap)
+				fakeId := types.ExternalReward
+				if base.IsPrecompile(author) {
+					// Some blocks have a misconfigured miner setting. We process this block, so that
+					// every block gets a record, but it will be excluded from the index. See #3252.
+					author = base.SentinalAddr.Hex()
+					fakeId = types.MisconfigReward
+				}
+				streamAppearance(procFunc, flow, "external", author, bn, fakeId, traceid, ts, addrMap)
 
 			} else {
 				return errors.New("Unknown reward type" + trace.Action.RewardType)
@@ -256,7 +261,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 					initData := trace.Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						str := string(initData[i*64 : (i+1)*64])
-						if index.IsImplicitAddress(str) {
+						if IsImplicitAddress(str) {
 							streamAppearance(procFunc, flow, traceReason(traceid, &trace, "code"), str, bn, txid, traceid, ts, addrMap)
 						}
 					}
@@ -267,48 +272,9 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 			if trace.Action.To.IsZero() {
 				if trace.Result != nil && trace.Result.Address.IsZero() {
 					if trace.Error != "" {
-						receipt, err := conn.GetReceiptNoTimestamp(bn, txid)
-						if err != nil {
-							msg := fmt.Sprintf("rpcCall failed at block %d, tx %d hash %s err %s", bn, txid, trace.TransactionHash, err)
-							logger.Warn(colors.Red, msg, colors.Off)
-							// TODO: This is possibly an error in Erigon - remove it when they fix this issue:
-							// TODO: https://github.com/ledgerwatch/erigon/issues/6956. It may require a
-							// TODO: full resync. Yes, the problem appears to be this specific. The follow
-							// TODO: hack (which tries to correct the problem) may well not work, but
-							// TODO: the hope is that these will have already been picked up by the traces.
-							// TODO: When fixed, we need to re-scrape from block 16,600,000. This map (which was
-							// TODO: retrieved from Nethermind) tries to repair the missing data by marking (for
-							// TODO: each transaction) any smart contracts created.
-							fixMap := map[string]string{
-								"16616983-242": "0x6784d7583cf2528daa270b555a4cb5376648488f",
-								"16618181-146": "0x86494c70df6d3416bb4f536a82533b6120c52cde",
-								"16618196-18":  "0x40d7b756557d9f7a5655ff70b3253a07f714807a",
-								"16620128-12":  "0xb8fb9a557d19d5266f1ba1724445ee2436e3c626",
-								"16620182-35":  "0x708bf2bf05492a5644787c134cf8a64e82fa4c52",
-								"16621080-107": "0x23c84318fb83ee62e059679cddb3914c923da871",
-								"16623590-179": "0xe88d3857676adf23d8324231eabee6ac390f666e",
-								"16623602-106": "0x473a0524a25c252bc65a023c8b8476b1eb6ac805",
-								"16626181-115": "0x010d9eb886f5b1a0fbef58bca722079e9ac75275",
-								"16627272-125": "0xdfd76821bebdbe589f74d311dff4f5859995cda4",
-								"16628102-66":  "0xddec22d76cfb1aded71c2f7b64ff768d207d615d",
-							}
-							key := fmt.Sprintf("%d-%d", bn, txid)
-							msg = err.Error()
-							if msg != "empty hex string" {
-								// not the error we're looking for
-								return err
-							}
-
-							if len(fixMap[key]) > 0 {
-								// both are true - the error is `empty hex string` and we have a fix
-								msg = fmt.Sprintf("Corrected %d, tx %d adds %s", bn, txid, fixMap[key])
-								logger.Warn(colors.Red, msg, colors.Off)
-								streamAppearance(procFunc, flow, "creation", fixMap[key], bn, txid, traceid, ts, addrMap)
-							}
-
-						} else {
-							addr := hexutil.Encode(receipt.ContractAddress.Bytes())
-							streamAppearance(procFunc, flow, "creation", addr, bn, txid, traceid, ts, addrMap)
+						if receipt, err := conn.GetReceiptNoTimestamp(bn, txid); err == nil {
+							address := receipt.ContractAddress.Hex()
+							streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), address, bn, txid, traceid, ts, addrMap)
 						}
 					}
 				}
@@ -324,7 +290,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 			inputData := trace.Action.Input[10:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(str) {
+				if IsImplicitAddress(str) {
 					streamAppearance(procFunc, flow, traceReason(traceid, &trace, "input"), str, bn, txid, traceid, ts, addrMap)
 				}
 			}
@@ -335,7 +301,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 			outputData := trace.Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				str := string(outputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(str) {
+				if IsImplicitAddress(str) {
 					streamAppearance(procFunc, flow, traceReason(traceid, &trace, "output"), str, bn, txid, traceid, ts, addrMap)
 				}
 			}

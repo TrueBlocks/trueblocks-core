@@ -21,53 +21,47 @@ import (
 // EXISTING_CODE
 
 // RunInit handles the init command for the command line. Returns error only as per cobra.
-func RunInit(cmd *cobra.Command, args []string) (err error) {
+func RunInit(cmd *cobra.Command, args []string) error {
 	opts := initFinishParse(args)
-	outputHelpers.SetEnabledForCmds("init", opts.IsPorted())
+	outputHelpers.EnableCommand("init", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("init", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.InitInternal()
-	return
+	return opts.InitInternal()
 }
 
-// ServeInit handles the init command for the API. Returns error and a bool if handled
-func ServeInit(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeInit handles the init command for the API. Returns an error.
+func ServeInit(w http.ResponseWriter, r *http.Request) error {
 	opts := initFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("init", opts.IsPorted())
+	outputHelpers.EnableCommand("init", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("init", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.InitInternal()
+	err := opts.InitInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("init", err, &opts.Globals)
-	return
+	return err
 }
 
-// InitInternal handles the internal workings of the init command.  Returns error and a bool if handled
-func (opts *InitOptions) InitInternal() (err error, handled bool) {
-	err = opts.validateInit()
-	if err != nil {
-		return err, true
+// InitInternal handles the internal workings of the init command.  Returns an error.
+func (opts *InitOptions) InitInternal() error {
+	var err error
+	if err = opts.validateInit(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra init"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in InitInternal")
-	}
-
-	handled = true
-
 	if opts.DryRun {
 		err = opts.HandleDryRun()
 	} else {
 		err = opts.HandleInit()
 	}
+
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetInitOptions returns the options for this tool so other tools may use it.
@@ -77,13 +71,6 @@ func GetInitOptions(args []string, g *globals.GlobalOptions) *InitOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *InitOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

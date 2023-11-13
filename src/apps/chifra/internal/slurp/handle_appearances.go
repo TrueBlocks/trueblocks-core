@@ -32,7 +32,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
-					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Enabled: !opts.Globals.TestMode,
 					Total:   250, // estimate since we have no idea how many there are
 				})
 

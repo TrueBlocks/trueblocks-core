@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 func (opts *ChunksOptions) validateChunks() error {
@@ -27,15 +28,62 @@ func (opts *ChunksOptions) validateChunks() error {
 		return opts.BadFlag
 	}
 
+	if opts.Globals.IsApiMode() {
+		if len(opts.Tag) > 0 {
+			return validate.Usage("The {0} option is not available {1}.", "--tag", "in api mode")
+		}
+		if opts.Truncate != utils.NOPOS {
+			return validate.Usage("The {0} option is not available {1}.", "--truncate", "in api mode")
+		}
+		if opts.Mode == "pins" {
+			return validate.Usage("The {0} mode is not available {1}.", "pins", "in api mode")
+		}
+	} else if len(opts.Tag) > 0 {
+		if !version.IsValidVersion(opts.Tag) {
+			return validate.Usage("The {0} ({1}) must be a valid version string.", "--tag", opts.Tag)
+		}
+		if !config.KnownVersionTag(opts.Tag) {
+			return validate.Usage("The only valid value for {0} is {1}.", "--tag", "trueblocks-core@v2.0.0-release")
+		}
+	}
+
+	if opts.Mode == "pins" {
+		if !opts.List && !opts.Unpin {
+			return validate.Usage("{0} mode requires {1}.", "pins", "either --list or --unpin")
+		}
+		if opts.Unpin {
+			if !file.FileExists("./unpins") {
+				return validate.Usage("The {0} file does not exist.", "./unpins")
+			}
+			hasOne := false
+			lines := file.AsciiFileToLines("./unpins")
+			for _, line := range lines {
+				if pinning.IsValid(line) {
+					hasOne = true
+					break
+				}
+			}
+			if !hasOne {
+				return validate.Usage("The {0} file does not contain any valid CIDs.", "./unpins")
+			}
+		}
+	} else if opts.List {
+		return validate.Usage("The {0} option is only available in {1} mode.", "--list", "pins")
+	} else if opts.Unpin {
+		return validate.Usage("The {0} option is only available in {1} mode.", "--unpin", "pins")
+	} else if opts.Count {
+		return validate.Usage("The {0} option is only available in {1} mode.", "--count", "pins")
+	}
+
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
 	if len(opts.Mode) == 0 {
-		return validate.Usage("Please choose at least one of {0}.", "[manifest|index|blooms|addresses|appearances|stats]")
+		return validate.Usage("Please choose at least one of {0}.", "[manifest|index|blooms|pins|addresses|appearances|stats]")
 	}
 
-	err := validate.ValidateEnum("mode", opts.Mode, "[manifest|index|blooms|addresses|appearances|stats]")
+	err := validate.ValidateEnum("mode", opts.Mode, "[manifest|index|blooms|pins|addresses|appearances|stats]")
 	if err != nil {
 		return err
 	}
@@ -64,42 +112,55 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
-	if opts.Mode == "manifest" {
-		if opts.Pin {
-			if opts.Remote {
-				pinataKey, pinataSecret, estuaryKey := config.GetPinningKeys(chain)
-				if (pinataKey == "" || pinataSecret == "") && estuaryKey == "" {
-					return validate.Usage("The {0} option requires {1}.", "--pin --remote", "an api key")
-				}
+	isPin := opts.Pin
+	isCheck := opts.Check
+	isPublish := opts.Publish
+	isRemote := opts.Remote
+	isRewrite := opts.Rewrite
+	isDeep := opts.Deep
 
-			} else if !pinning.LocalDaemonRunning() {
-				return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon or --remote")
+	if !isIndexOrManifest && (isPin || isPublish || isRemote || isDeep || isCheck) {
+		return validate.Usage("The {0} options is only available in {1} or {2} mode.", "--pin, --publish, --remote, --check, and --deep", "manifest", "index")
+	}
 
+	if opts.Mode == "manifest" && opts.Remote {
+		// this is okay
+	} else if !isCheck && !isPin && (isRemote || isDeep) {
+		return validate.Usage("The {0} options require {1}.", "--remote and --deep", "--pin or --check")
+	}
+
+	if isPin {
+		if isRemote {
+			apiKey, secret, jwt := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret, config.GetKey("pinata").Jwt
+			if secret == "" && jwt == "" {
+				return validate.Usage("Either the {0} key or the {1} is required.", "secret", "jwt")
 			}
-		}
-	} else {
-		if opts.Publish {
-			return validate.Usage("The {0} option is available only in {1} mode.", "--publish", "index or manifest")
-		}
-	}
-
-	if opts.Pin && opts.Publish {
-		return validate.Usage("The {0} and {1} options are mutually exclusive.", "--pin", "--publish")
-	}
-
-	if opts.Deep {
-		if opts.Mode == "index" {
-			// do nothing
-		} else if opts.Mode == "manifest" {
-			if !opts.Remote && !pinning.LocalDaemonRunning() {
-				return validate.Usage("The {0} option requires {1}.", "manifest --deep", "a locally running IPFS daemon or --remote")
+			if secret != "" && apiKey == "" {
+				return validate.Usage("If the {0} key is present, so must be the {1}.", "secret", "apiKey")
+			}
+			if config.GetPinning().RemotePinUrl == "" {
+				return validate.Usage("The {0} option requires {1}.", "--pin --remote", "a remotePinUrl")
 			}
 		} else {
-			return validate.Usage("The {0} option requires mode {1}.", "--deep", "index or manifest")
+			if !config.IpfsRunning() {
+				return validate.Usage("The {0} option requires {1}.", "--pin", "a locally running IPFS daemon")
+			}
+			if config.GetPinning().LocalPinUrl == "" {
+				return validate.Usage("The {0} option requires {1}.", "--pin", "a localPinUrl")
+			}
 		}
+	} else if isRewrite {
+		return validate.Usage("The {0} option requires {1}.", "--rewrite", "--pin")
+	}
+
+	if opts.Publish {
+		return validate.Usage("The {0} option is currenlty unavailable.", "--publish")
 	}
 
 	if opts.Mode != "index" {
+		if len(opts.Tag) > 0 {
+			return validate.Usage("The {0} option is only available {1}.", "--tag", "in index mode")
+		}
 		if opts.Truncate != utils.NOPOS {
 			return validate.Usage("The {0} option is only available {1}.", "--truncate", "in index mode")
 		}
@@ -167,20 +228,24 @@ func (opts *ChunksOptions) validateChunks() error {
 			return validate.Usage(msg)
 		}
 		if len(opts.Belongs) == 0 && opts.Mode != "addresses" && opts.Mode != "appearances" {
-			return validate.Usage("some options are only available with {1}.", "the addresses, the appearances, or the index --belongs modes")
+			return validate.Usage("some options are only available with {0}.", "the addresses, the appearances, or the index --belongs modes")
 		}
 		// TODO: We should check that the first and last blocks are inside the ranges implied by the block ids
 		// if len(opts.BlockIds) > 0 {
 		// }
 	}
 
-	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(chain); err != nil {
-		if opts.Globals.IsApiMode() {
-			return err
-		} else {
+	if err := index.IsInitialized(chain, config.ExpectedVersion()); err != nil {
+		isTag := len(opts.Tag) != 0
+		isRemoteMan := opts.Mode == "manifest" && opts.Remote
+		if (errors.Is(err, index.ErrNotInitialized) || errors.Is(err, index.ErrIncorrectHash)) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
+		} else {
+			if !isTag && !isRemoteMan {
+				return err
+			}
 		}
+		// It's okay to mismatch versions if we're tagging or downloading a new manifest
 	}
 
 	return opts.Globals.Validate()

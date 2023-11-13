@@ -71,7 +71,7 @@ func init() {
 	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("truncate")
 	}
-	globals.InitGlobals(whenCmd, &whenPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("when", whenCmd, &whenPkg.GetOptions().Globals, capabilities)
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 	whenCmd.SetOut(os.Stderr)

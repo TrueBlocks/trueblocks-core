@@ -4,7 +4,7 @@ on      ,cmd  ,fast  ,daemon ,apps/daemon ,help_long         ,n    ,help
 on      ,both ,fast  ,daemon ,apps/daemon ,bad_cmd           ,n    ,not-an-option
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & raw & ether
 on      ,cmd  ,fast  ,daemon ,apps/daemon ,caps_allowed      ,y    ,nocolor & noop & version & verbose & fail_on_purpose
 on      ,cmd  ,fast  ,daemon ,apps/daemon ,caps_disallowed_1 ,y    ,chain
 on      ,cmd  ,fast  ,daemon ,apps/daemon ,caps_disallowed_2 ,y    ,no_header

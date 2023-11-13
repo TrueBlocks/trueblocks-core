@@ -40,7 +40,7 @@ const notes[{PROPER}] = `[{POSTNOTES}]`
 
 	[{ROUTE}]Cmd.Flags().SortFlags = false
 
-[{SET_OPTS}][{HIDDEN}]	globals.InitGlobals([{ROUTE}]Cmd, &[{ROUTE}]Pkg.GetOptions().Globals, capabilities)
+[{SET_OPTS}][{HIDDEN}]	globals.InitGlobals("[{ROUTE}]", [{ROUTE}]Cmd, &[{ROUTE}]Pkg.GetOptions().Globals, capabilities)
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
 	[{ROUTE}]Cmd.SetOut(os.Stderr)

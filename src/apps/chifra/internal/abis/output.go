@@ -21,52 +21,50 @@ import (
 // EXISTING_CODE
 
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
-func RunAbis(cmd *cobra.Command, args []string) (err error) {
+func RunAbis(cmd *cobra.Command, args []string) error {
 	opts := abisFinishParse(args)
-	outputHelpers.SetEnabledForCmds("abis", opts.IsPorted())
+	outputHelpers.EnableCommand("abis", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("abis", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.AbisInternal()
-	return
+	return opts.AbisInternal()
 }
 
-// ServeAbis handles the abis command for the API. Returns error and a bool if handled
-func ServeAbis(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeAbis handles the abis command for the API. Returns an error.
+func ServeAbis(w http.ResponseWriter, r *http.Request) error {
 	opts := abisFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("abis", opts.IsPorted())
+	outputHelpers.EnableCommand("abis", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("abis", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.AbisInternal()
+	err := opts.AbisInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("abis", err, &opts.Globals)
-	return
+	return err
 }
 
-// AbisInternal handles the internal workings of the abis command.  Returns error and a bool if handled
-func (opts *AbisOptions) AbisInternal() (err error, handled bool) {
-	err = opts.validateAbis()
-	if err != nil {
-		return err, true
+// AbisInternal handles the internal workings of the abis command.  Returns an error.
+func (opts *AbisOptions) AbisInternal() error {
+	var err error
+	if err = opts.validateAbis(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra abis"
 	// EXISTING_CODE
-	handled = true
-	if len(opts.Find) > 0 {
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else if len(opts.Find) > 0 {
 		err = opts.HandleAbiFind()
 	} else if len(opts.Encode) > 0 {
 		err = opts.HandleEncode()
-	} else if opts.Clean {
-		err = opts.HandleClean()
 	} else {
 		err = opts.HandleAddresses()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetAbisOptions returns the options for this tool so other tools may use it.
@@ -76,13 +74,6 @@ func GetAbisOptions(args []string, g *globals.GlobalOptions) *AbisOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *AbisOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

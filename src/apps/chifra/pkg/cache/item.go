@@ -14,6 +14,7 @@ const HeaderByteSize = 4 + 8
 const Magic uint32 = 3735928559 // 0xdeadbeef
 
 var ErrInvalidMagic = errors.New("invalid magic number")
+var ErrBackwardIncompatible = errors.New("backwards incompatible")
 
 type header struct {
 	Magic   uint32
@@ -26,10 +27,7 @@ func init() {
 	// Set currentHeader, so that we don't have to parse version
 	// and build a header each time we want to encode/decode cache
 	// item.
-	ver, err := version.NewVersion(version.LibraryVersion)
-	if err != nil {
-		panic(err)
-	}
+	ver := version.NewVersion(version.LibraryVersion)
 	currentHeader = &header{
 		Magic:   Magic,
 		Version: ver.Uint64(),
@@ -63,6 +61,12 @@ func (i *Item) readHeader() (h *header, err error) {
 		// This should be silently ignored
 		return nil, ErrInvalidMagic
 	}
+
+	// TODO: #3346 We need all cachable items to implement `func (i *Item) NeedsUpgrade() bool`
+	// if i.NeedsUpgrade() {
+	// 	return nil, ErrBackwardIncompatible
+	// }
+
 	return
 }
 

@@ -15,8 +15,10 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -374,7 +376,7 @@ func readFunction(reader *bufio.Reader) (function *types.SimpleFunction, err err
 // getAbis reads all ABIs stored in the cache
 func getAbis(chain string) ([]types.SimpleFunction, error) {
 	fullPath := path.Join(config.PathToCache(chain), walk.CacheTypeToFolder[walk.Cache_Abis], "known.bin")
-	if f, err := os.Open(fullPath); err != nil {
+	if f, err := os.OpenFile(fullPath, os.O_RDONLY, 0); err != nil {
 		return nil, err
 
 	} else {
@@ -767,7 +769,8 @@ func insertAbi(chain string, address base.Address, inputReader io.Reader) error 
 // GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
 func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
 	filePath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], address.Hex()+".json")
-	f, err := os.Open(path.Join(config.PathToCache(chain), filePath))
+	fullPath := path.Join(config.PathToCache(chain), filePath)
+	f, err := os.OpenFile(fullPath, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
@@ -796,6 +799,12 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(chain string, address base.Address, destination *FunctionSyncMap) (err error) {
+	tmp := rpc.TempConnection(chain)
+	if err = tmp.IsContractAt(address, nil); err == rpc.ErrNotAContract {
+		logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
+		return nil
+	}
+
 	// If there was no error, the abi was loaded...
 	err = LoadAbiFromAddress(chain, address, destination)
 	if err == nil {

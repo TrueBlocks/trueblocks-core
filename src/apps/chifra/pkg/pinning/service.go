@@ -2,63 +2,54 @@ package pinning
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	shell "github.com/ipfs/go-ipfs-api"
 )
 
 type ServiceType int
 
 const (
-	NoType ServiceType = 1 << iota
+	NoType ServiceType = iota
 	Pinata
 	Local
 )
 
 type Service struct {
+	Type       ServiceType
 	Apikey     string
 	Secret     string
-	PinUrl     string
-	ResultName string
+	Jwt        string
 	HeaderFunc func(s *Service, contentType string) map[string]string
 }
 
-func LocalDaemonRunning() bool {
-	// TODO: should be configurable (see #2804)
-	sh := shell.NewShell("localhost:5001")
-	_, err := sh.Add(strings.NewReader("hello world!"))
-	return err == nil
-}
-
-// TODO: should be configurable (see #2804)
-const (
-	PINATA_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS"
-)
-
-func NewPinningService(chain string, which ServiceType) (Service, error) {
-	pinataKey, pinataSecret, _ := config.GetPinningKeys(chain)
-
-	switch which {
+func NewService(chain string, serviceType ServiceType) (Service, error) {
+	apiKey, secret, jwt := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret, config.GetKey("pinata").Jwt
+	switch serviceType {
 	case Local:
-		return Service{}, nil
+		return Service{
+			Type: serviceType,
+		}, nil
 	case Pinata:
 		return Service{
-			PinUrl:     PINATA_URL,
-			Apikey:     pinataKey,
-			Secret:     pinataSecret,
-			ResultName: "IpfsHash",
-			HeaderFunc: PinataHeaders,
+			Type:       serviceType,
+			Apikey:     apiKey,
+			Secret:     secret,
+			Jwt:        jwt,
+			HeaderFunc: pinataHeaders,
 		}, nil
 	default:
-		return Service{}, fmt.Errorf("unknown service type %d", which)
+		return Service{}, fmt.Errorf("unknown pinning service type %d", serviceType)
 	}
 }
 
-func PinataHeaders(s *Service, contentType string) map[string]string {
+func pinataHeaders(s *Service, contentType string) map[string]string {
 	headers := make(map[string]string)
 	headers["Content-Type"] = contentType
-	headers["pinata_secret_api_key"] = s.Secret
-	headers["pinata_api_key"] = s.Apikey
+	if s.Secret != "" {
+		headers["pinata_secret_api_key"] = s.Secret
+		headers["pinata_api_key"] = s.Apikey
+	} else {
+		headers["authorization"] = "Bearer " + s.Jwt
+	}
 	return headers
 }

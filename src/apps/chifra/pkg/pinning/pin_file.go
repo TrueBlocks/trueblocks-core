@@ -2,115 +2,100 @@ package pinning
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type PinResult struct {
-	Range   base.FileRange          `json:"range,omitempty"`
-	Local   types.SimpleChunkRecord `json:"local,omitempty"`
-	Remote  types.SimpleChunkRecord `json:"remote,omitempty"`
-	Matches bool                    `json:"matches,omitempty"`
-	err     error
-}
+var ErrNoPinningService = fmt.Errorf("no pinning service available")
 
-// var errNoPinningService = errors.New("no pinning service available")
-
-// PinItem pins the named database given a path to the local and/or remote pinning
+// PinOneFile pins the named database given a path to the local and/or remote pinning
 // services if they are available. If the local service is not available, the remote
 // service is used.
-func PinItem(chain string, dbName, path string, isRemote bool) (hash base.IpfsHash, err error) {
-	isLocal := LocalDaemonRunning()
-	if !isLocal && !isRemote {
-		err = fmt.Errorf("no pinning service available")
-		return
+func PinOneFile(chain, dbName, fileName string, remote bool) (base.IpfsHash, base.IpfsHash, error) {
+	var localHash base.IpfsHash
+	var remoteHash base.IpfsHash
+	var err error
+
+	if !file.FileExists(fileName) {
+		return localHash, remoteHash, fmt.Errorf(dbName+" file (%s) does not exist", fileName)
 	}
 
-	if !file.FileExists(path) {
-		err = fmt.Errorf(dbName+" file (%s) does not exist", path)
-		return
+	local := config.IpfsRunning()
+	if !local && !remote {
+		return localHash, remoteHash, ErrNoPinningService
 	}
 
-	if isLocal {
-		localService, _ := NewPinningService(chain, Local)
-		if hash, err = localService.PinFile(path, true); err != nil {
-			err = fmt.Errorf("error pinning locally: %s", err)
-			return
-		}
-	}
-
-	if isRemote {
-		remoteService, _ := NewPinningService(chain, Pinata)
-		var remoteHash base.IpfsHash
-		if remoteHash, err = remoteService.PinFile(path, false); err != nil {
-			err = fmt.Errorf("error pinning remotely: %s", err)
-			return
-		}
-		if hash == "" {
-			hash = remoteHash
-		} else if hash != remoteHash {
-			err = fmt.Errorf("local (%s) and remote (%s) hashes differ", hash, remoteHash)
-			return
-		}
-	}
-
-	logger.Info(colors.Magenta+"Pinned", dbName, "file", path, "to", hash, colors.Off)
-	return
-}
-
-func PinChunk(chain, bloomFile, indexFile string, isRemote bool) (PinResult, error) {
-	rng := base.RangeFromFilename(bloomFile)
-	result := PinResult{
-		Range:  rng,
-		Local:  types.SimpleChunkRecord{Range: rng.String()},
-		Remote: types.SimpleChunkRecord{Range: rng.String()},
-	}
-
-	localService, _ := NewPinningService(chain, Local)
-	remoteService, _ := NewPinningService(chain, Pinata)
-
-	isLocal := LocalDaemonRunning()
-	if isLocal {
-		if result.Local.BloomHash, result.err = localService.PinFile(bloomFile, true); result.err != nil {
-			return PinResult{}, result.err
-		}
-		result.Local.BloomSize = file.FileSize(bloomFile)
-		if result.Local.IndexHash, result.err = localService.PinFile(indexFile, true); result.err != nil {
-			return PinResult{}, result.err
-		}
-		result.Local.IndexSize = file.FileSize(indexFile)
-		logger.Info(colors.Magenta+"Pinned", rng, "local to ", result.Local.BloomHash, result.Local.IndexHash, colors.Off)
-	}
-
-	if isRemote {
-		if result.Remote.BloomHash, result.err = remoteService.PinFile(bloomFile, false); result.err != nil {
-			return PinResult{}, result.err
-		}
-		result.Remote.BloomSize = file.FileSize(bloomFile)
-		if result.Remote.IndexHash, result.err = remoteService.PinFile(indexFile, false); result.err != nil {
-			return PinResult{}, result.err
-		}
-		result.Remote.IndexSize = file.FileSize(indexFile)
-		logger.Info(colors.Magenta+"Pinned", rng, "remote to", result.Remote.BloomHash, result.Remote.IndexHash, colors.Off)
-	}
-
-	// TODO: We used to use this to report an error between local and remote pinning, but it got turned off. Turn it back on
-	if isLocal && isRemote {
-		result.Matches = result.Local.IndexHash == result.Remote.IndexHash && result.Local.BloomHash == result.Remote.BloomHash
-	} else {
-		result.Matches = true
-	}
-
-	return result, nil
-}
-
-func (s *Service) PinFile(filepath string, local bool) (base.IpfsHash, error) {
+	toShow := filepath.Base(fileName)
 	if local {
-		return s.pinFileLocally(filepath)
+		localService, _ := NewService(chain, Local)
+		if localHash, err = localService.pinFileLocally(chain, fileName); err != nil {
+			return localHash, remoteHash, fmt.Errorf("error pinning locally: %s %s", fileName, err)
+		}
 	}
-	return s.pinFileRemotely(filepath)
+
+	if remote {
+		logger.Progress(true, colors.Magenta+"Pinning", dbName, "file", toShow, "remotely...", colors.Off)
+		remoteService, _ := NewService(chain, Pinata)
+		if remoteHash, err = remoteService.pinFileRemotely(chain, fileName); err != nil {
+			return localHash, remoteHash, fmt.Errorf("error pinning remotely: %s %s", fileName, err)
+		}
+		if localHash == "" {
+			localHash = remoteHash
+		}
+	}
+
+	logger.Info(colors.Magenta+"Pinned", dbName, "file", toShow, "to", localHash, colors.Off)
+	return localHash, remoteHash, nil
+}
+
+// PinOneChunk pins the named chunk given a path to the local and/or remote pinning service
+func PinOneChunk(chain, path string, remote bool) (types.SimpleChunkRecord, types.SimpleChunkRecord, error) {
+	bloomFile := index.ToBloomPath(path)
+	indexFile := index.ToIndexPath(path)
+	local := config.IpfsRunning()
+
+	rng := base.RangeFromFilename(bloomFile)
+	localPin := types.SimpleChunkRecord{Range: rng.String()}
+	remotePin := types.SimpleChunkRecord{Range: rng.String()}
+	var err error
+
+	if !local && !remote {
+		return localPin, remotePin, ErrNoPinningService
+	}
+
+	if local {
+		localService, _ := NewService(chain, Local)
+		if localPin.BloomHash, err = localService.pinFileLocally(chain, bloomFile); err != nil {
+			return localPin, remotePin, err
+		}
+		localPin.BloomSize = file.FileSize(bloomFile)
+		if localPin.IndexHash, err = localService.pinFileLocally(chain, indexFile); err != nil {
+			return localPin, remotePin, err
+		}
+		localPin.IndexSize = file.FileSize(indexFile)
+		logger.Info(colors.Magenta+"Pinned", rng, "local to ", localPin.BloomHash, localPin.IndexHash, colors.Off)
+	}
+
+	if remote {
+		logger.Progress(true, colors.Magenta+"Pinning file", rng.String(), "remotely...", colors.Off)
+		remoteService, _ := NewService(chain, Pinata)
+		if remotePin.BloomHash, err = remoteService.pinFileRemotely(chain, bloomFile); err != nil {
+			return localPin, remotePin, err
+		}
+		remotePin.BloomSize = file.FileSize(bloomFile)
+		if remotePin.IndexHash, err = remoteService.pinFileRemotely(chain, indexFile); err != nil {
+			return localPin, remotePin, err
+		}
+		remotePin.IndexSize = file.FileSize(indexFile)
+		logger.Info(colors.Magenta+"Pinned", rng, "remote to", remotePin.BloomHash, remotePin.IndexHash, colors.Off)
+	}
+
+	return localPin, remotePin, err
 }

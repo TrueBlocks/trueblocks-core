@@ -56,7 +56,7 @@ on      ,both ,fast  ,list     ,apps/acctExport ,128_list_fb_lb_fr_3      ,n    
 on      ,both ,fast  ,list     ,apps/acctExport ,130_list_fb_lb_fr_mr     ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 56 & last_block = 235 & first_record = 1 & max_records = 10
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_allowed_l           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_1_l      ,y    ,addrs = trueblocks.eth & cache
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_2_l      ,y    ,addrs = trueblocks.eth & raw
@@ -76,6 +76,10 @@ on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_no_params       ,y    
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_not_both1   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & remove & undelete
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_not_both2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & delete & undelete
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_sleep       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & sleep
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_batch_size2 ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & batch_size = 1
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_run_once    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & run_count = 1
+on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_err_watch       ,y    ,watch & batch_size = 0 & fmt = json
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_watch           ,y    ,watch & commands = ./command.fil & watchlist = ./watches.txt & run_count = 1 & fmt = json
 
 on      ,both ,fast  ,list     ,apps/acctExport ,list_prepare_1           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json & last_block = 1501460
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_clean           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & clean
@@ -101,13 +105,12 @@ on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list2_v         ,n    
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_list_not_in     ,y    ,addrs = 0x00ad1a7b0ef4d3c5070d73b9412b6ed22efb7512 & list
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on      ,both ,fast  ,monitors ,apps/acctExport ,caps_allowed_m           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+on      ,both ,fast  ,monitors ,apps/acctExport ,caps_allowed_m           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & decache & fail_on_purpose
 on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_1_m      ,y    ,addrs = trueblocks.eth & cache
 on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_2_m      ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_3_m      ,y    ,addrs = trueblocks.eth & ether
 on      ,both ,fast  ,monitors ,apps/acctExport ,caps_disallowed_4_m      ,y    ,addrs = trueblocks.eth & wei
-on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_m      ,y    ,addrs = trueblocks.eth & decache
 
 # Not tested for chifra monitors...
 # chifra monitors --watch
@@ -200,13 +203,17 @@ on      ,both ,fast  ,export   ,apps/acctExport ,fourbytes                ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,fourbytes_trace          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fourbytes = 0xa9059cbb & traces & max_records = 10 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,simple_prefund2          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 3
 
+with    ,both ,fast  ,export   ,apps/acctExport ,not_withdrawals          ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & first_block = 17013606 & last_block = 17083530 & fmt = json
+with    ,both ,fast  ,export   ,apps/acctExport ,withdrawals              ,y    ,addrs = 0x6193f68d97921f4765d72a3e6964fc990c59e0e5 & withdrawals & first_block = 17013606 & last_block = 17083530 & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,withdrawals_fail         ,y    ,addrs = chasewright.eth & withdrawals & logs & first_block = 18345580 & last_block = 18409900 & fmt = json
+
 # Testing general usage
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_key              ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & fmt = json & from
 on      ,both ,fast  ,export   ,apps/acctExport ,simple_data              ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
 on      ,both ,fast  ,export   ,apps/acctExport ,simple_prefund1          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 0 & last_block = 1
 on      ,both ,fast  ,export   ,apps/acctExport ,simple_prefund3          ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 7
 on      ,both ,slow  ,export   ,apps/acctExport ,simple_seed_1            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 9000000 & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,old_bug                  ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 1 & first_record = 212 & fmt = json
+local   ,both ,fast  ,export   ,apps/acctExport ,old_bug                  ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 1 & first_record = 212 & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,export                   ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 2 & fmt = txt
 on      ,both ,fast  ,export   ,apps/acctExport ,ens_test_export          ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_5               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 6 & fmt = json
@@ -298,7 +305,7 @@ local   ,both ,fast  ,export   ,apps/acctExport ,bug_no_api_error_msg     ,y    
 # chifra export --unripe
 
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
-on      ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & wei & fail_on_purpose
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
+on      ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
 on      ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_1_e      ,y    ,addrs = trueblocks.eth & raw
-
+on      ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_2_e      ,y    ,addrs = trueblocks.eth & wei

@@ -1,6 +1,0 @@
-abis?addrs=trueblocks.eth&decache
-{
-  "errors": [
-    "Invalid key (decache) in abis route."
-  ]
-}

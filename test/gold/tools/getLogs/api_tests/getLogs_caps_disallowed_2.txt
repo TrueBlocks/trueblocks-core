@@ -1,6 +1,6 @@
-logs?transactions=12.0&wei
+logs?transactions=12.0&ether
 {
   "errors": [
-    "Invalid key (wei) in logs route."
+    "Invalid key (ether) in logs route."
   ]
 }

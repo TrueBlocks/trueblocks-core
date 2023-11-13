@@ -64,7 +64,8 @@ blocks?blocks=0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
           "value": "1864349710000000000"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ],
   "meta": {

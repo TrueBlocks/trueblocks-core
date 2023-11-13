@@ -124,7 +124,7 @@ func (s *simpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 			}
 			chains = append(chains, ch)
 		} else {
-			chainArray := config.GetChainArray()
+			chainArray := config.GetChains()
 			for _, chain := range chainArray {
 				ch := types.SimpleChain{
 					Chain:          chain.Chain,
@@ -159,7 +159,10 @@ func (s *simpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 //
 
 func ToProgress(chain string, meta *rpc.MetaData) string {
-	nTs, _ := tslib.NTimestamps(chain)
+	nTs, _ := tslib.NTimestamps(chain) // when the file has one record, the block is zero, etc.
+	if nTs > 0 {
+		nTs--
+	}
 	format := "%d, %d, %d, %d ts: %d"
 	return fmt.Sprintf(format, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 }
@@ -178,7 +181,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		return nil, err
 	}
 
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetChain(chain).RpcProvider
 	s := &simpleStatus{
 		ClientVersion: vers,
 		Version:       version.LibraryVersion,
@@ -191,9 +194,9 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     opts.Conn.IsNodeArchive(),
-		IsTracing:     opts.Conn.IsNodeTracing(testMode),
-		HasEsKey:      config.HasEsKeys(chain),
-		HasPinKey:     config.HasPinningKeys(chain),
+		IsTracing:     opts.Conn.IsNodeTracing(),
+		HasEsKey:      len(config.GetKey("etherscan").ApiKey) > 0,
+		HasPinKey:     len(config.GetKey("pinata").ApiKey) > 0 || len(config.GetKey("pinata").Secret) > 0,
 		Chain:         chain,
 		NetworkId:     fmt.Sprint(meta.NetworkId),
 		ChainId:       fmt.Sprint(meta.ChainId),
@@ -214,17 +217,17 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	return s, nil
 }
 
-func (s *simpleStatus) toTemplate(w io.Writer, testMode bool, format string) bool {
+func (s *simpleStatus) toTemplate(w io.Writer, logTimerOn bool, format string) bool {
 	if format == "json" {
 		return false
 	}
 
 	var timeDatePart string
-	if testMode {
-		timeDatePart = "INFO[DATE|TIME]"
-	} else {
+	if logTimerOn {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
+	} else {
+		timeDatePart = "INFO[DATE|TIME]"
 	}
 
 	table := strings.Replace(templateStr, "INFO ", "INFO "+colors.Green, -1)

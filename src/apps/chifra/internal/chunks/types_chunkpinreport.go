@@ -17,13 +17,12 @@ import (
 // EXISTING_CODE
 
 type simpleChunkPinReport struct {
-	Chain        string        `json:"chain"`
-	ManifestHash base.IpfsHash `json:"manifestHash"`
-	Schemas      base.IpfsHash `json:"schemas"`
-	TsHash       base.IpfsHash `json:"tsHash"`
-	Version      string        `json:"version"`
+	Chain         string        `json:"chain"`
+	ManifestHash  base.IpfsHash `json:"manifestHash"`
+	SpecHash      base.IpfsHash `json:"specHash"`
+	TimestampHash base.IpfsHash `json:"timestampHash"`
+	Version       string        `json:"version"`
 	// EXISTING_CODE
-	Pinned []base.IpfsHash `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -37,20 +36,18 @@ func (s *simpleChunkPinReport) Model(chain, format string, verbose bool, extraOp
 
 	// EXISTING_CODE
 	model = map[string]interface{}{
-		"chain":        s.Chain,
-		"manifestHash": s.ManifestHash,
-		"schemas":      s.Schemas,
-		"tsHash":       s.TsHash,
-		"version":      s.Version,
-		"nPinned":      len(s.Pinned),
+		"chain":         s.Chain,
+		"version":       s.Version,
+		"manifestHash":  s.ManifestHash,
+		"timestampHash": s.TimestampHash,
+		"specHash":      s.SpecHash,
 	}
 	order = []string{
 		"chain",
-		"manifestHash",
-		"schemas",
-		"tsHash",
 		"version",
-		"nPinned",
+		"manifestHash",
+		"timestampHash",
+		"specHash",
 	}
 	// EXISTING_CODE
 

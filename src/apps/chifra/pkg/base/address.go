@@ -19,8 +19,10 @@ type Address struct {
 	common.Address
 }
 
-// A few well known address. ZeroAddr, of course, is 0x0. SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
+// A few well-known address. ZeroAddr, of course, is 0x0. NotAMonitor is a marker to signify the end
+// of the monitor list produced by ListMonitors. SentinalAddr is for misconfigured miner appearances
 var (
+	NotAMonitor  = HexToAddress("0x1234deaddeaddead98766789deaddeaddead4321")
 	SentinalAddr = HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
 	ZeroAddr     = HexToAddress("0x0")
 )
@@ -60,7 +62,7 @@ func (a *Address) SetHex(hexStr string) {
 	a.Address = common.HexToAddress(hexStr)
 }
 
-// IsZero returns true if an addres is a zero value or 0x0.
+// IsZero returns true if an address is a zero value or 0x0.
 func (a *Address) IsZero() bool {
 	v := bytesToAddressString(a.Address.Bytes())
 	return v == "0x0000000000000000000000000000000000000000"
@@ -102,7 +104,7 @@ func (a *Address) Pad32() string {
 // a valid address starting with 0x and ends with the fileType. if the path does
 // not contain an address, an error is returned. If the path does not end with the
 // given fileType, it panics.
-func AddressFromPath(path, fileType string) (string, error) {
+func AddressFromPath(path, fileType string) (Address, error) {
 	_, fileName := filepath.Split(path)
 
 	if !strings.HasSuffix(fileName, fileType) {
@@ -114,11 +116,11 @@ func AddressFromPath(path, fileType string) (string, error) {
 	}
 
 	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {
-		return "", errors.New("path does not appear to contain an address")
+		return ZeroAddr, errors.New("path does not appear to contain an address")
 	}
 
 	parts := strings.Split(fileName, ".")
-	return strings.ToLower(parts[0]), nil
+	return HexToAddress(parts[0]), nil
 }
 
 // As per EIP 1352, all addresses less or equal to the following value are reserved for pre-compiles.
@@ -168,3 +170,8 @@ func IsValidAddressE(val string) (bool, error) {
 
 // FAKE_ETH_ADDRESS is the address we use to represent ETH in the ledgers
 var FAKE_ETH_ADDRESS = HexToAddress("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+
+// GetTestPublisher does not get customized per chain. We can only test against mainnet currently
+func GetTestPublisher() Address {
+	return HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+}

@@ -62,10 +62,6 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 	apps = make([]types.SimpleAppearance, 0, len(fromDisc))
 	for _, app := range fromDisc {
 		app := app
-		if app.TransactionId == uint32(types.Withdrawal) {
-			continue
-		}
-
 		if passes, finished := filt.BlockRangeFilter(&app); finished {
 			return apps, len(apps), nil
 		} else if passes {
@@ -75,8 +71,8 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 			filt.OuterBounds.Last = uint64(app.BlockNumber + 1)
 			s := types.SimpleAppearance{
 				Address:          mon.Address,
-				BlockNumber:      uint32(app.BlockNumber),
-				TransactionIndex: uint32(app.TransactionId),
+				BlockNumber:      app.BlockNumber,
+				TransactionIndex: app.TransactionId,
 				Timestamp:        utils.NOPOSI,
 			}
 			apps = append(apps, s)

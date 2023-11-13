@@ -26,51 +26,47 @@ import (
 // EXISTING_CODE
 
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
-func RunDaemon(cmd *cobra.Command, args []string) (err error) {
+func RunDaemon(cmd *cobra.Command, args []string) error {
 	opts := daemonFinishParse(args)
-	outputHelpers.SetEnabledForCmds("daemon", opts.IsPorted())
+	outputHelpers.EnableCommand("daemon", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("daemon", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.DaemonInternal()
-	return
+	return opts.DaemonInternal()
 }
 
-// ServeDaemon handles the daemon command for the API. Returns error and a bool if handled
-func ServeDaemon(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeDaemon handles the daemon command for the API. Returns an error.
+func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	opts := daemonFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("daemon", opts.IsPorted())
+	outputHelpers.EnableCommand("daemon", true)
+	// EXISTING_CODE
+	if true { // defeats linter
+		logger.Fatal("Should not happen. Daemon is an invalid route for server")
+	}
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
-	// EXISTING_CODE
-	logger.Fatal("Should not happen. Daemon is an invalid route for server")
-	// EXISTING_CODE
-	err, handled = opts.DaemonInternal()
+	err := opts.DaemonInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("daemon", err, &opts.Globals)
-	return
+	return err
 }
 
-// DaemonInternal handles the internal workings of the daemon command.  Returns error and a bool if handled
-func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
-	err = opts.validateDaemon()
-	if err != nil {
-		return err, true
+// DaemonInternal handles the internal workings of the daemon command.  Returns an error.
+func (opts *DaemonOptions) DaemonInternal() error {
+	var err error
+	if err = opts.validateDaemon(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra daemon"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in DaemonInternal")
-	}
-
-	handled = true
 	apiUrl := opts.Port
 	if !strings.HasPrefix(apiUrl, "http") {
 		apiUrl = "http://localhost" + apiUrl
 	}
 
 	chain := opts.Globals.Chain
-	provider, _ := config.GetRpcProvider(chain)
+	provider := config.GetChain(chain).RpcProvider
 
 	logger.InfoTable("Server URL:        ", apiUrl)
 	logger.InfoTable("RPC Provider:      ", provider)
@@ -85,7 +81,10 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 		logger.InfoTable("Progress:", msg)
 		logger.Fatal("")
 	} else {
-		nTs, _ := tslib.NTimestamps(chain)
+		nTs, _ := tslib.NTimestamps(chain) // when the file has one record, the block is zero, etc.
+		if nTs > 0 {
+			nTs--
+		}
 		msg := fmt.Sprintf("%d, %d, %d, %d, ts: %d", meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 		logger.InfoTable("Progress:          ", msg)
 	}
@@ -111,7 +110,7 @@ func (opts *DaemonOptions) DaemonInternal() (err error, handled bool) {
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetDaemonOptions returns the options for this tool so other tools may use it.
@@ -121,13 +120,6 @@ func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *DaemonOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

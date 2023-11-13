@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 1.0.0-release
+  version: 2.0.0-release
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -222,7 +222,7 @@ paths:
       tags:
         - Accounts
       summary: Export details
-      description: Export full detail of transactions for one or more addresses. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+      description: Export full details of transactions for one or more addresses. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
       operationId: accounts-export
       parameters:
         - name: addrs
@@ -317,6 +317,14 @@ paths:
             type: boolean
         - name: balances
           description: traverse the transaction history and show each change in ETH balances
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: withdrawals
+          description: export withdrawals for the given address
           required: false
           style: form
           in: query
@@ -677,7 +685,7 @@ paths:
       tags:
         - Accounts
       summary: Names
-      description: Query addresses or names of well known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
+      description: Query addresses or names of well-known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
       operationId: accounts-names
       parameters:
         - name: terms
@@ -891,15 +899,6 @@ paths:
           explode: true
           schema:
             type: string
-        - name: clean
-          description: >
-            remove an abi file for an address or all zero-length files if no address is given
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1050,6 +1049,14 @@ paths:
             items:
               type: string
               format: topic
+        - name: withdrawals
+          description: export the withdrawals from the block as opposed to the block data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: articulate
           description: >
             for the --logs option only, articulate the retrieved data if ABIs can be found
@@ -1960,22 +1967,6 @@ paths:
           schema:
             type: number
             format: uint64
-        - name: pin
-          description: pin new chunks (requires locally-running IPFS daemon or --remote)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: remote
-          description: pin new chunks to the gateway (requires pinning service keys)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: sleep
           description: seconds to sleep between scraper passes
           required: false
@@ -1985,7 +1976,7 @@ paths:
           schema:
             type: number
             format: double
-        - name: startBlock
+        - name: touch
           description: >
             first block to visit when scraping (snapped back to most recent snap_to_grid mark)
           required: false
@@ -2031,6 +2022,7 @@ paths:
               - manifest
               - index
               - blooms
+              - pins
               - addresses
               - appearances
               - stats
@@ -2125,6 +2117,23 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: rewrite
+          description: >
+            for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: for the pins mode only, display only the count of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: sleep
           description: for --remote pinning only, seconds to sleep between API calls
           required: false
@@ -2142,7 +2151,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#chunkrecord">Chunkrecord</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, <a href="/data-model/admin/#reportcheck">Reportcheck</a>, and/or <a href="/data-model/admin/#chunkpinreport">Chunkpinreport</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/admin/#manifest">Manifest</a>, <a href="/data-model/admin/#chunkrecord">Chunkrecord</a>, <a href="/data-model/admin/#chunkindex">Chunkindex</a>, <a href="/data-model/admin/#chunkbloom">Chunkbloom</a>, <a href="/data-model/admin/#chunkaddress">Chunkaddress</a>, <a href="/data-model/admin/#ipfspin">Ipfspin</a>, <a href="/data-model/admin/#chunkstats">Chunkstats</a>, <a href="/data-model/admin/#reportcheck">Reportcheck</a>, and/or <a href="/data-model/admin/#chunkpinreport">Chunkpinreport</a> data. Corresponds to the <a href="/chifra/admin/#chifra-chunks">chifra chunks</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -2152,6 +2161,7 @@ paths:
                         - $ref: "#/components/schemas/chunkIndex"
                         - $ref: "#/components/schemas/chunkBloom"
                         - $ref: "#/components/schemas/chunkAddress"
+                        - $ref: "#/components/schemas/ipfsPin"
                         - $ref: "#/components/schemas/chunkStats"
                         - $ref: "#/components/schemas/reportCheck"
                         - $ref: "#/components/schemas/chunkPinReport"
@@ -2281,6 +2291,7 @@ paths:
                 - "1155"
                 - miner
                 - uncles
+                - withdrawals
                 - all
         - name: appearances
           description: show only the blocknumber.tx_id appearances of the exported transactions
@@ -2788,6 +2799,11 @@ components:
           items:
             $ref: "#/components/schemas/hash"
           description: "a possibly empty array of uncle hashes"
+        withdrawals:
+          type: array
+          items:
+            $ref: "#/components/schemas/withdrawal"
+          description: "a possibly empty array of withdrawals (post Shanghai)"
     transaction:
       description: "transaction data as returned from the RPC (with slight enhancements)"
       type: object
@@ -2956,10 +2972,22 @@ components:
           type: string
           format: wei
           description: "a nonzero amount of ether given in gwei (1e9 wei)"
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of this block"
         index:
           type: number
           format: uint64
           description: "a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp for this block"
+        date:
+          type: string
+          format: datetime
+          description: "a calculated field -- the date for this block"
         validatorIndex:
           type: number
           format: uint64
@@ -3585,14 +3613,10 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
+        specification:
           type: string
           format: ipfshash
           description: "IPFS cid of the specification"
-        databases:
-          type: string
-          format: ipfshash
-          description: "IPFS cid of file containing CIDs for the various databases"
         chunks:
           type: array
           items:
@@ -3706,6 +3730,26 @@ components:
           type: number
           format: uint64
           description: "the number of records in teh appearance table for this address"
+    ipfsPin:
+      description: "internal-use only data model detailing a single remote or local ipfs pinned file"
+      type: object
+      properties:
+        cid:
+          type: string
+          format: ipfshash
+          description: "the CID of the file"
+        datePinned:
+          type: string
+          description: "the date the CID was first created"
+        status:
+          type: string
+          description: "the status of the file (one of [all|pinned|unpinned|pending])"
+        size:
+          type: int64
+          description: "the size of the file in bytes"
+        fileName:
+          type: string
+          description: "the metadata name of the pinned file"
     chunkStats:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
       type: object
@@ -3854,14 +3898,14 @@ components:
         chain:
           type: string
           description: "the chain to which this manifest belongs"
-        schemas:
-          type: string
-          format: ipfshash
-          description: "IPFS cid of the specification"
-        tsHash:
+        timestampHash:
           type: string
           format: ipfshash
           description: "IPFS cid of file containing timestamps"
+        specHash:
+          type: string
+          format: ipfshash
+          description: "IPFS cid of the specification"
         manifestHash:
           type: string
           format: ipfshash
@@ -4015,6 +4059,7 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/function"
+          description: "if present, the function that was called in the transaction"
         compressedTx:
           type: string
           example: "0x3d18b912( )"

@@ -72,7 +72,15 @@ func ReadAppearancesToMap[T any](mon *Monitor, filter *filter.AppearanceFilter) 
 	} else {
 		m := make(map[types.SimpleAppearance]*T, mon.Count())
 		for _, app := range apps {
-			m[app] = new(T)
+			if filter.BlocksOnly {
+				app = types.SimpleAppearance{
+					BlockNumber:      app.BlockNumber,
+					TransactionIndex: uint32(^uint32(0)),
+				}
+				m[app] = new(T)
+			} else {
+				m[app] = new(T)
+			}
 		}
 		return m, len(m), nil
 	}

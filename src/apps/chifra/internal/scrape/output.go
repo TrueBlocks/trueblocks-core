@@ -11,11 +11,11 @@ package scrapePkg
 // EXISTING_CODE
 import (
 	"net/http"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
 	"github.com/spf13/cobra"
 )
@@ -23,48 +23,46 @@ import (
 // EXISTING_CODE
 
 // RunScrape handles the scrape command for the command line. Returns error only as per cobra.
-func RunScrape(cmd *cobra.Command, args []string) (err error) {
+func RunScrape(cmd *cobra.Command, args []string) error {
 	opts := scrapeFinishParse(args)
-	outputHelpers.SetEnabledForCmds("scrape", opts.IsPorted())
+	outputHelpers.EnableCommand("scrape", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("scrape", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.ScrapeInternal()
-	return
+	return opts.ScrapeInternal()
 }
 
-// ServeScrape handles the scrape command for the API. Returns error and a bool if handled
-func ServeScrape(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeScrape handles the scrape command for the API. Returns an error.
+func ServeScrape(w http.ResponseWriter, r *http.Request) error {
 	opts := scrapeFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("scrape", opts.IsPorted())
+	outputHelpers.EnableCommand("scrape", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("scrape", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.ScrapeInternal()
+	err := opts.ScrapeInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("scrape", err, &opts.Globals)
-	return
+	return err
 }
 
-// ScrapeInternal handles the internal workings of the scrape command.  Returns error and a bool if handled
-func (opts *ScrapeOptions) ScrapeInternal() (err error, handled bool) {
-	err = opts.validateScrape()
-	if err != nil {
-		return err, true
+// ScrapeInternal handles the internal workings of the scrape command.  Returns an error.
+func (opts *ScrapeOptions) ScrapeInternal() error {
+	var err error
+	if err = opts.validateScrape(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra scrape"
 	// EXISTING_CODE
-	if opts.Globals.IsApiMode() {
-		return validate.Usage("chifra scrape is not available in API mode"), true
+	if opts.Touch > 0 {
+		err = opts.HandleTouch()
+	} else {
+		err = opts.HandleScrape() // Note this never returns
 	}
-
-	handled = true
-	err = opts.HandleScrape() // Note this never returns
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetScrapeOptions returns the options for this tool so other tools may use it.
@@ -76,12 +74,31 @@ func GetScrapeOptions(args []string, g *globals.GlobalOptions) *ScrapeOptions {
 	return ret
 }
 
-func (opts *ScrapeOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
+// EXISTING_CODE
+func getConfigCmdsFromArgs() map[string]string {
+	configs := make(map[string]string, 10)
+	for i := 0; i < len(os.Args); i++ {
+		arg := os.Args[i]
+		next := ""
+		if i < len(os.Args)-1 {
+			next = os.Args[i+1]
+		}
+		switch arg {
+		case "--apps_per_chunk":
+			configs["appsPerChunk"] = next
+		case "--snap_to_grid":
+			configs["snapToGrid"] = next
+		case "--first_snap":
+			configs["firstSnap"] = next
+		case "--unripe_dist":
+			configs["unripeDist"] = next
+		case "--channel_count":
+			configs["channelCount"] = next
+		case "--allow_missing":
+			configs["allowMissing"] = "true"
+		}
+	}
+	return configs
 }
 
-// EXISTING_CODE
 // EXISTING_CODE

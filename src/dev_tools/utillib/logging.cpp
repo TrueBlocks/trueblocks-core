@@ -24,7 +24,7 @@ bool getLogTiming() {
     static bool set = false;
     static bool logTiming = true;
     if (!set) {
-        logTiming = getEnvStr("LOG_TIMING_OFF").empty();
+        logTiming = getEnvStr("TB_LOGTIMER_OFF").empty();
         set = true;
     }
     return logTiming;

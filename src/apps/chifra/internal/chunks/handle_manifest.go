@@ -13,14 +13,14 @@ import (
 )
 
 var sourceMap = map[bool]manifest.Source{
-	false: manifest.FromCache,
+	false: manifest.LocalCache,
 	true:  manifest.FromContract,
 }
 
 func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	man, err := manifest.ReadManifest(chain, sourceMap[opts.Remote])
+	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])
 	if err != nil {
 		return err
 	}
@@ -28,7 +28,7 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 		if len(man.Chunks) > 10 {
 			man.Chunks = man.Chunks[:10]
 		}
-		man.Schemas = "--testing-hash--"
+		man.Specification = "--testing-hash--"
 	}
 
 	ctx := context.Background()
@@ -51,9 +51,9 @@ func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {
 	} else {
 		fetchData := func(modelChan chan types.Modeler[types.RawManifest], errorChan chan error) {
 			s := types.SimpleManifest{
-				Version: man.Version,
-				Chain:   man.Chain,
-				Schemas: man.Schemas,
+				Version:       man.Version,
+				Chain:         man.Chain,
+				Specification: man.Specification,
 			}
 			for _, chunk := range man.Chunks {
 				s.Chunks = append(s.Chunks, types.SimpleChunkRecord{

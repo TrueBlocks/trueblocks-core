@@ -10,7 +10,13 @@ package chunksPkg
 
 // EXISTING_CODE
 import (
+	"os"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
@@ -81,4 +87,40 @@ func (s *simpleChunkStats) Model(chain, format string, verbose bool, extraOption
 }
 
 // EXISTING_CODE
+func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
+	chunk, err := index.OpenChunk(path, true /* check */)
+	if err != nil && !os.IsNotExist(err) {
+		return s, err
+	}
+	defer chunk.Close()
+
+	ts, _ := tslib.FromBnToTs(chain, chunk.Range.Last)
+	s = simpleChunkStats{
+		Range:    chunk.Range.String(),
+		RangeEnd: utils.FormattedDate(ts),
+		NBlocks:  chunk.Range.Last - chunk.Range.First + 1,
+		NAddrs:   uint64(chunk.Index.Header.AddressCount),
+		NApps:    uint64(chunk.Index.Header.AppearanceCount),
+		NBlooms:  uint64(chunk.Bloom.Count),
+		BloomSz:  uint64(file.FileSize(index.ToBloomPath(path))),
+		ChunkSz:  uint64(file.FileSize(index.ToIndexPath(path))),
+		RecWid:   4 + index.BLOOM_WIDTH_IN_BYTES,
+	}
+
+	if s.NBlocks > 0 {
+		s.AddrsPerBlock = float64(s.NAddrs) / float64(s.NBlocks)
+		s.AppsPerBlock = float64(s.NApps) / float64(s.NBlocks)
+	}
+
+	if s.NAddrs > 0 {
+		s.AppsPerAddr = float64(s.NApps) / float64(s.NAddrs)
+	}
+
+	if s.BloomSz > 0 {
+		s.Ratio = float64(s.ChunkSz) / float64(s.BloomSz)
+	}
+
+	return s, nil
+}
+
 // EXISTING_CODE

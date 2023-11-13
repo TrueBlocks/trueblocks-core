@@ -8,18 +8,12 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,nBProcs_invalid              ,n 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n    ,channel_count = -12
 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,block_cnt = 12
-on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins
-delay   ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
 on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,action = badmode
-delay   ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,sleep = .5 & pin
 on      ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,sleep = .5
 on      ,api  ,fast  ,scrape ,apps/blockScrape ,no_tracing                   ,y    ,chain = non-tracing
 
 off     ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,modes = both & block_cnt = 12
-off     ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,modes = both & pin
 off     ,both ,fast  ,scrape ,apps/blockScrape ,publish                      ,n    ,modes = both & publish
-off     ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish                  ,n    ,modes = both & publish & pin
-off     ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish_list             ,n    ,modes = both & publish & pin
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_02_fail2                ,n    ,modes = both & action = run & action = quit
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_11_stopped_quit_fail    ,n    ,modes = both & action = quit
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_12_stopped_restart_fail ,n    ,modes = both & action = restart
@@ -36,13 +30,17 @@ off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_33_paused_restart_okay  ,n 
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_34_running_pause_3_okay ,n    ,modes = both & action = pause
 off     ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n    ,modes = both & action = quit
 off     ,both ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET
-off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,modes = both & sleep = .5 & pin
 off     ,both ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,modes = both & sleep = .5
 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,by_file_bad                  ,n    ,file = cmd_file_2
 
+on      ,both ,fast  ,scrape ,apps/blockScrape ,options_defaults             ,n    ,dry_run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,options_with_env             ,n    ,dry_run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,options_cmd_line             ,n    ,dry_run & apps_per_chunk = 10000 & snap_to_grid = 10000 & first_snap = 10000 & unripe_dist = 10000 & channel_count = 10000
+local   ,both ,fast  ,scrape ,apps/blockScrape ,options_combo                ,n    ,dry_run & snap_to_grid = 10000 & first_snap = 10000 & chain = sepolia
+
 # Capabilities
-# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & wei
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_allowed                 ,y    ,chain & nocolor & noop & version & verbose & fail_on_purpose
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_1            ,y    ,fmt = json
 on      ,both ,fast  ,scrape ,apps/blockScrape ,caps_disallowed_3            ,y    ,no_header

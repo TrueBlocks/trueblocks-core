@@ -16,6 +16,8 @@
  */
 #include "testcase.h"
 
+extern string_q postProcessor;
+
 namespace qblocks {
 
 //---------------------------------------------------------------------------
@@ -526,10 +528,9 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     if (isCmd)
         isCmd = !contains(path, "dev_tools") && !contains(tool, "chifra");
     fileName = tool + "_" + name + ".txt";
-
     replaceAll(post, "n", "");
-    replaceAll(post, "y", getGlobalConfig("testRunner")->getConfigStr("settings", "json_pretty_print", "jq ."));
-    if (!post.empty() && post != "jq ." && post != "post")
+    replaceAll(post, "y", postProcessor);
+    if (!post.empty() && !contains(post, "gojq") && post != "jq ." && post != "post")
         LOG_WARN("test post processor (", post, ") has unexpected value. Is it correct?");
 
     builtin = prepareBuiltIn(options);

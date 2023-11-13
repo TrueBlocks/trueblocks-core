@@ -8,14 +8,17 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func Test_BlockRanges(t *testing.T) {
-	tslib.EstablishTsFile(utils.GetTestChain())
+	_ = config.GetRootConfig()
+	tslib.EstablishTsFile(utils.GetTestChain(), base.GetTestPublisher())
 	for _, item := range testBlocks {
 		if !item.enabled {
 			continue

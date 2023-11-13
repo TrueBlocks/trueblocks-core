@@ -1,6 +1,6 @@
 chifra blocks  4000001
 TEST[DATE|TIME] Blocks:  [4000001]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -429,7 +429,8 @@ TEST[DATE|TIME] Format:  json
           "value": "500179743164106942"
         }
       ],
-      "uncles": []
+      "uncles": [],
+      "withdrawals": []
     }
   ]
 }
