@@ -23,48 +23,42 @@ import (
 // EXISTING_CODE
 
 // RunExplore handles the explore command for the command line. Returns error only as per cobra.
-func RunExplore(cmd *cobra.Command, args []string) (err error) {
+func RunExplore(cmd *cobra.Command, args []string) error {
 	opts := exploreFinishParse(args)
-	outputHelpers.SetEnabledForCmds("explore", opts.IsPorted())
+	outputHelpers.EnableCommand("explore", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("explore", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.ExploreInternal()
-	return
+	return opts.ExploreInternal()
 }
 
-// ServeExplore handles the explore command for the API. Returns error and a bool if handled
-func ServeExplore(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeExplore handles the explore command for the API. Returns an error.
+func ServeExplore(w http.ResponseWriter, r *http.Request) error {
 	opts := exploreFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("explore", opts.IsPorted())
+	outputHelpers.EnableCommand("explore", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("explore", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.ExploreInternal()
+	err := opts.ExploreInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("explore", err, &opts.Globals)
-	return
+	return err
 }
 
-// ExploreInternal handles the internal workings of the explore command.  Returns error and a bool if handled
-func (opts *ExploreOptions) ExploreInternal() (err error, handled bool) {
-	err = opts.validateExplore()
-	if err != nil {
-		return err, true
+// ExploreInternal handles the internal workings of the explore command.  Returns an error.
+func (opts *ExploreOptions) ExploreInternal() error {
+	var err error
+	if err = opts.validateExplore(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra explore"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should not happen in ExploreInternal")
-	}
-
-	handled = true
 	err = opts.HandleExplore()
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetExploreOptions returns the options for this tool so other tools may use it.
@@ -74,13 +68,6 @@ func GetExploreOptions(args []string, g *globals.GlobalOptions) *ExploreOptions 
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *ExploreOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

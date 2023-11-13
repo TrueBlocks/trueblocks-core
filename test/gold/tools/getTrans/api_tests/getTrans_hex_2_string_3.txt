@@ -29,7 +29,7 @@ transactions?transactions=0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaa
       "ether": "0",
       "from": "0x10d6d2e343281d388291a3e02f3293aaeda67178",
       "gas": 399126,
-      "gasCost": 103387596064884220,
+      "gasCost": 103387596064884222,
       "gasPrice": 259034981597,
       "gasUsed": 399126,
       "hash": "0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaab3c57f6f8f28",
@@ -81,6 +81,7 @@ transactions?transactions=0x1c7022f25f6a069083f112258ec8a9d2c46f648e563ef05a3eaa
       "to": "0xdbd27635a534a3d3169ef0498beb56fb9c937489",
       "traces": [],
       "transactionIndex": 333,
+      "type": "0x2",
       "value": "0"
     }
   ],

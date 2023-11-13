@@ -11,6 +11,23 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+// GetMinerAndWithdrawals returns the miner and withdrawals for a block
+func (conn *Connection) GetMinerAndWithdrawals(bn base.Blknum) ([]types.SimpleWithdrawal, base.Address, error) {
+	if bn < base.KnownBlock(conn.Chain, base.Merge) {
+		return []types.SimpleWithdrawal{}, base.ZeroAddr, nil
+	}
+
+	if block, err := conn.GetBlockHeaderByNumber(bn); err != nil {
+		return []types.SimpleWithdrawal{}, base.ZeroAddr, nil
+	} else {
+		if withdrawals, err := conn.GetWithdrawalsByNumber(bn); err != nil {
+			return []types.SimpleWithdrawal{}, base.ZeroAddr, nil
+		} else {
+			return withdrawals, block.Miner, nil
+		}
+	}
+}
+
 // GetWithdrawalsByNumber returns all withdrawals in a block
 func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.SimpleWithdrawal, error) {
 	if bn < base.KnownBlock(conn.Chain, base.Shanghai) {

@@ -19,8 +19,10 @@ type Address struct {
 	common.Address
 }
 
-// A few well known address. ZeroAddr, of course, is 0x0. SentinalAddr is a marker to signify the end of the monitor list produced by ListMonitors
+// A few well-known address. ZeroAddr, of course, is 0x0. NotAMonitor is a marker to signify the end
+// of the monitor list produced by ListMonitors. SentinalAddr is for misconfigured miner appearances
 var (
+	NotAMonitor  = HexToAddress("0x1234deaddeaddead98766789deaddeaddead4321")
 	SentinalAddr = HexToAddress("0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
 	ZeroAddr     = HexToAddress("0x0")
 )
@@ -60,7 +62,7 @@ func (a *Address) SetHex(hexStr string) {
 	a.Address = common.HexToAddress(hexStr)
 }
 
-// IsZero returns true if an addres is a zero value or 0x0.
+// IsZero returns true if an address is a zero value or 0x0.
 func (a *Address) IsZero() bool {
 	v := bytesToAddressString(a.Address.Bytes())
 	return v == "0x0000000000000000000000000000000000000000"

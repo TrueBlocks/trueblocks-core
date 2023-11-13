@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -26,17 +26,23 @@ import (
 
 func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	chain := opts.Globals.Chain
-
 	if opts.Globals.TestMode {
 		logger.Warn("Truncate option not tested.")
 		return nil
 	}
 
-	if !opts.Globals.IsApiMode() && !usage.QueryUser(strings.Replace(warning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncating") {
+	if !opts.Globals.IsApiMode() &&
+		!usage.QueryUser(strings.Replace(truncateWarning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncated") {
 		return nil
 	}
 
-	_ = index.CleanTempIndexFolders(chain, []string{"ripe", "unripe", "maps", "staging"})
+	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
+
+	bar := logger.NewBar(logger.BarOptions{
+		Enabled: !opts.Globals.TestMode,
+		Total:   128,
+		Type:    logger.Expanding,
+	})
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -67,18 +73,14 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err
 				}
+				bar.Prefix = fmt.Sprintf("Removing %s     ", rng)
 				nChunksRemoved++
-				if opts.Globals.Verbose {
-					logger.Info(colors.Red, "Removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
-				}
 			} else {
 				// We did not remove the chunk, so we need to keep track of where the truncated index ends
 				latestChunk = utils.Max(latestChunk, rng.Last)
-				if opts.Globals.Verbose {
-					logger.Info(colors.Green, "Not removing chunk at "+rng.String(), "max:", latestChunk, colors.Off)
-				}
+				bar.Prefix = fmt.Sprintf("Not removing %s", rng)
 			}
-
+			bar.Tick()
 			return true, nil
 		}
 
@@ -93,6 +95,14 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			cancel()
 
 		} else {
+			bar.Prefix = fmt.Sprintf("Truncated to %d                    ", opts.Truncate)
+			bar.Finish(true)
+			bar = logger.NewBar(logger.BarOptions{
+				Enabled: !opts.Globals.TestMode,
+				Total:   20,
+				Type:    logger.Expanding,
+			})
+
 			// We've made it this far (removed chunks and updated manifest) now we need to remove appearances
 			// from any monitors that may exist which happen after the truncated block. Also, update the monitors'
 			// header to reflect this new lastScanned block.
@@ -101,10 +111,11 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 				if err != nil {
 					return err
 				}
-				if !info.IsDir() {
+				if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
 					addr, _ := base.AddressFromPath(path, ".mon.bin")
+					bar.Prefix = fmt.Sprintf("Truncating monitor for %s", addr.Hex())
 					if !addr.IsZero() {
-						mon := monitor.NewMonitor(chain, addr, false /* create */)
+						mon, _ := monitor.NewMonitor(chain, addr, false /* create */)
 						var removed bool
 						if removed, err = mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
 							return err
@@ -113,10 +124,13 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 							nMonitorsTruncated++
 						}
 					}
+					bar.Tick()
 				}
 				return nil
 			}
 			_ = filepath.Walk(config.PathToCache(chain)+"monitors", truncateMonitor)
+			bar.Prefix = fmt.Sprintf("Truncated monitors to %d                                        ", opts.Truncate)
+			bar.Finish(true)
 
 			// All that's left to do is report on what happened.
 			fin := "."
@@ -141,4 +155,4 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-var warning = `Are sure you want to remove index chunks after and including block {0} (Yy)? `
+var truncateWarning = `Are sure you want to remove index chunks after and including block {0} (Yn)? `

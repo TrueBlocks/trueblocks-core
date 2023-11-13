@@ -130,7 +130,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         replace(codeOut, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
 
     } else {
-        cerr << "Unkown file type for " << fn << endl;
+        cerr << "Unknown file type for " << fn << endl;
     }
 
     opts->counter.nVisited++;

@@ -2,23 +2,25 @@ chifra transactions  --file cmd_file_2 --fmt json
 TEST[DATE|TIME] Transactions:  [0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78]
 TEST[DATE|TIME] File:  cmd_file_2
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  txt
 TEST[DATE|TIME] Transactions:  [3657480.78]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] File:  cmd_file_2
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Transactions:  [0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad]
 TEST[DATE|TIME] File:  cmd_file_2
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Flow:  mt
 TEST[DATE|TIME] File:  cmd_file_2
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 Error: The --flow option is only available with the --uniq option
 Usage:

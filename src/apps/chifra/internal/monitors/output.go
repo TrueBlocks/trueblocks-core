@@ -23,72 +23,72 @@ import (
 // EXISTING_CODE
 
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
-func RunMonitors(cmd *cobra.Command, args []string) (err error) {
+func RunMonitors(cmd *cobra.Command, args []string) error {
 	opts := monitorsFinishParse(args)
-	outputHelpers.SetEnabledForCmds("monitors", opts.IsPorted())
+	outputHelpers.EnableCommand("monitors", true)
+	// EXISTING_CODE
+	outputHelpers.EnableCommand("monitors", opts.List || opts.Clean || opts.Globals.Decache)
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("monitors", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.MonitorsInternal()
-	return
+	return opts.MonitorsInternal()
 }
 
-// ServeMonitors handles the monitors command for the API. Returns error and a bool if handled
-func ServeMonitors(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeMonitors handles the monitors command for the API. Returns an error.
+func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 	opts := monitorsFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("monitors", opts.IsPorted())
-	outputHelpers.InitJsonWriterApi("monitors", w, &opts.Globals)
+	outputHelpers.EnableCommand("monitors", true)
 	// EXISTING_CODE
+	// TODO: can we move this to Validate?
+	var err1 error
+	outputHelpers.EnableCommand("monitors", opts.List || opts.Clean || opts.Globals.Decache)
 	if !opts.Globals.TestMode { // our test harness does not use DELETE
 		delOptions := "--delete, --undelete, or --remove"
 		if r.Method == "DELETE" {
 			if !opts.Delete && !opts.Undelete && !opts.Remove {
-				err = validate.Usage("Specify one of {0} when using the DELETE route.", delOptions)
+				err1 = validate.Usage("Specify one of {0} when using the DELETE route.", delOptions)
 			}
 		} else {
 			if opts.Delete || opts.Undelete || opts.Remove {
 				delOptions = strings.Replace(delOptions, " or ", " and ", -1)
-				err = validate.Usage("The {0} options are not valid when using the GET route.", delOptions)
+				err1 = validate.Usage("The {0} options are not valid when using the GET route.", delOptions)
 			}
 		}
-		if err != nil {
-			return err, true
+		if err1 != nil {
+			return err1
 		}
 	}
 	// EXISTING_CODE
-	err, handled = opts.MonitorsInternal()
+	outputHelpers.InitJsonWriterApi("monitors", w, &opts.Globals)
+	err := opts.MonitorsInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("monitors", err, &opts.Globals)
-	return
+	return err
 }
 
-// MonitorsInternal handles the internal workings of the monitors command.  Returns error and a bool if handled
-func (opts *MonitorsOptions) MonitorsInternal() (err error, handled bool) {
-	err = opts.validateMonitors()
-	if err != nil {
-		return err, true
+// MonitorsInternal handles the internal workings of the monitors command.  Returns an error.
+func (opts *MonitorsOptions) MonitorsInternal() error {
+	var err error
+	if err = opts.validateMonitors(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra monitors"
 	// EXISTING_CODE
-	handled = true // everything is handled even on failure
-
-	if opts.Clean {
+	if opts.Globals.Decache {
+		err = opts.HandleDecache()
+	} else if opts.Clean {
 		err = opts.HandleClean()
-
 	} else if opts.List {
 		err = opts.HandleList()
-
 	} else if opts.Watch {
 		err = opts.HandleWatch()
-
 	} else {
 		err = opts.HandleCrudCommands()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetMonitorsOptions returns the options for this tool so other tools may use it.
@@ -98,13 +98,6 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *MonitorsOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = opts.List // Don't change this line. (Try it. See what happens.)
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -19,8 +20,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -66,7 +67,6 @@ func unlockForAddress(address string) {
 	if !ok {
 		panic("unlockForAddress called for address that has never been locked: " + address)
 	}
-
 	mutex.Unlock()
 }
 
@@ -109,7 +109,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
-			mon, _ := monitor.NewStagedMonitor(chain, addr)
+			mon, _ := monitor.NewMonitorStaged(chain, addr)
 			_ = mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
 				updater.FirstBlock = uint64(mon.LastScanned)
@@ -120,7 +120,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	bloomPath := config.PathToIndex(chain) + "blooms/"
+	bloomPath := filepath.Join(config.PathToIndex(chain), "blooms/")
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return canceled, err
@@ -238,7 +238,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	// We open the bloom filter and read its header but we do not read any of the
 	// actual bits in the blooms. The IsMember function reads individual bytes to
 	// check individual bits.
-	bl, err := bloom.NewChunkBloom(bloomFilename)
+	bl, err := index.OpenBloom(bloomFilename, true /* check */)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		bl.Close()
@@ -271,14 +271,22 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 
 	indexFilename := index.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
-		_, err := index.EstablishIndexChunk(updater.Options.Globals.Chain, updater.Options.PublisherAddr, bl.Range)
+		chain := updater.Options.Globals.Chain
+		var man *manifest.Manifest
+		man, err = manifest.ReadManifest(chain, updater.Options.PublisherAddr, manifest.LocalCache)
+		if err != nil {
+			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
+			return
+		}
+
+		_, err = index.DownloadOneChunk(chain, man, bl.Range)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
 		}
 	}
 
-	indexChunk, err := index.NewChunkData(indexFilename)
+	indexChunk, err := index.OpenIndex(indexFilename, true /* check */)
 	if err != nil {
 		results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 		return
@@ -286,7 +294,7 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 	defer indexChunk.Close()
 
 	for _, mon := range updater.MonitorMap {
-		results = append(results, *indexChunk.GetAppearanceRecords(mon.Address))
+		results = append(results, *indexChunk.ReadAppearances(mon.Address))
 	}
 }
 
@@ -333,7 +341,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
 					logger.Error(err)
-				} else if !updater.Options.Globals.TestMode {
+				} else if !updater.Options.Globals.TestMode && !updater.Options.Silent {
 					msg := fmt.Sprintf("%s appended %d apps at %s", mon.Address.Hex(), nWritten, result.Range)
 					logger.Info(msg)
 				}

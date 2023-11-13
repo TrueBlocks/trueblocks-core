@@ -2,7 +2,6 @@ package names
 
 import (
 	"encoding/csv"
-	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -14,7 +13,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -31,6 +29,7 @@ const (
 	Testing   Parts = 0x8
 	MatchCase Parts = 0x10
 	Expanded  Parts = 0x20
+	Tags      Parts = 0x40
 )
 
 type SortBy int
@@ -115,15 +114,16 @@ func LoadNamesMap(chain string, parts Parts, terms []string) (map[base.Address]t
 	return namesMap, nil
 }
 
-// EmptyInMemoryCache removes names that are cached in-memory
-func EmptyInMemoryCache() {
+// ClearCache removes names that are cached in-memory
+func ClearCache() {
 	loadedRegularNamesMutex.Lock()
-	loadedRegularNames = make(map[base.Address]types.SimpleName)
-	loadedRegularNamesMutex.Unlock()
+	defer loadedRegularNamesMutex.Unlock()
 
 	loadedCustomNamesMutex.Lock()
+	defer loadedCustomNamesMutex.Unlock()
+
+	loadedRegularNames = make(map[base.Address]types.SimpleName)
 	loadedCustomNames = make(map[base.Address]types.SimpleName)
-	loadedCustomNamesMutex.Unlock()
 }
 
 var requiredColumns = []string{
@@ -158,23 +158,23 @@ func (gr *NameReader) Read() (types.SimpleName, error) {
 		Symbol:     record[gr.header["symbol"]],
 		Source:     record[gr.header["source"]],
 		Petname:    record[gr.header["petname"]],
-		IsCustom:   record[gr.header["iscustom"]] == "true",
-		IsPrefund:  record[gr.header["isprefund"]] == "true",
-		IsContract: record[gr.header["iscontract"]] == "true",
-		IsErc20:    record[gr.header["iserc20"]] == "true",
-		IsErc721:   record[gr.header["iserc721"]] == "true",
 		Deleted:    record[gr.header["deleted"]] == "true",
+		IsCustom:   record[gr.header["isCustom"]] == "true",
+		IsPrefund:  record[gr.header["isPrefund"]] == "true",
+		IsContract: record[gr.header["isContract"]] == "true",
+		IsErc20:    record[gr.header["isErc20"]] == "true",
+		IsErc721:   record[gr.header["isErc721"]] == "true",
 	}, nil
 }
 
-type NameReaderMode int
+type nameReaderMode int
 
 const (
-	NameReaderTab NameReaderMode = iota
+	NameReaderTab nameReaderMode = iota
 	NameReaderComma
 )
 
-func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
+func NewNameReader(source io.Reader, mode nameReaderMode) (NameReader, error) {
 	reader := csv.NewReader(source)
 	reader.Comma = '\t'
 	if mode == NameReaderComma {
@@ -187,7 +187,7 @@ func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
 	}
 	header := map[string]int{}
 	for index, columnName := range headerRow {
-		header[strings.ToLower(columnName)] = index
+		header[columnName] = index
 	}
 
 	for _, required := range requiredColumns {
@@ -207,21 +207,21 @@ func NewNameReader(source io.Reader, mode NameReaderMode) (NameReader, error) {
 	return r, nil
 }
 
-type Database string
+type DatabaseType string
 
 const (
-	DatabaseRegular Database = "names.tab"
-	DatabaseCustom  Database = "names_custom.tab"
-	DatabasePrefund Database = "allocs.csv"
-	DatabaseDryRun  Database = "<dryrun>"
+	DatabaseRegular DatabaseType = "names.tab"
+	DatabaseCustom  DatabaseType = "names_custom.tab"
+	DatabasePrefund DatabaseType = "allocs.csv"
+	DatabaseDryRun  DatabaseType = "<dryrun>"
 )
 
-func OpenDatabaseFile(chain string, kind Database, openFlag int) (*os.File, error) {
+func openDatabaseFile(chain string, kind DatabaseType, openFlag int) (*os.File, error) {
 	if kind == DatabaseDryRun {
 		return os.Stdout, nil
 	}
 
-	filePath := GetDatabasePath(chain, kind)
+	filePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(kind))
 	var permissions fs.FileMode = 0666
 
 	if kind == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
@@ -241,60 +241,6 @@ func OpenDatabaseFile(chain string, kind Database, openFlag int) (*os.File, erro
 		openFlag,
 		permissions,
 	)
-}
-
-func GetDatabasePath(chain string, db Database) string {
-	return filepath.Join(
-		config.MustGetPathToChainConfig(chain), string(db),
-	)
-}
-
-func WriteDatabase(chain string, kind Parts, database Database, names map[base.Address]types.SimpleName) (err error) {
-	switch kind {
-	case Regular:
-		loadedRegularNamesMutex.Lock()
-		defer loadedRegularNamesMutex.Unlock()
-	case Custom:
-		loadedCustomNamesMutex.Lock()
-		defer loadedCustomNamesMutex.Unlock()
-	default:
-		return errors.New("kind should be Regular or Custom")
-	}
-
-	db, err := OpenDatabaseFile(chain, database, os.O_RDWR|os.O_TRUNC)
-	if err != nil {
-		return
-	}
-	defer db.Close()
-
-	sorted := make([]types.SimpleName, 0, len(names))
-	for _, name := range names {
-		sorted = append(sorted, name)
-	}
-	sort.SliceStable(sorted, func(i, j int) bool {
-		return sorted[i].Address.Hex() < sorted[j].Address.Hex()
-	})
-
-	// Save
-	// Can't lock Stdout (= DatabaseDryRun)
-	if database != DatabaseDryRun {
-		if err = file.Lock(db); err != nil {
-			return err
-		}
-		defer func() {
-			_ = file.Unlock(db)
-		}()
-	}
-
-	writer := NewNameWriter(db)
-	for _, name := range sorted {
-		if err = writer.Write(&name); err != nil {
-			return err
-		}
-	}
-	writer.Flush()
-
-	return writer.Error()
 }
 
 /*

@@ -5,6 +5,7 @@
 package monitorsPkg
 
 import (
+	"errors"
 	"log"
 	"path/filepath"
 
@@ -67,13 +68,11 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				}
 			}
 
-			// Note that this does not return if the index is not initialized
-			if err := index.IndexIsInitialized(chain); err != nil {
-				if opts.Globals.IsApiMode() {
-					return err
-				} else {
+			if err := index.IsInitialized(chain, config.ExpectedVersion()); err != nil {
+				if (errors.Is(err, index.ErrNotInitialized) || errors.Is(err, index.ErrIncorrectHash)) && !opts.Globals.IsApiMode() {
 					logger.Fatal(err)
 				}
+				return err
 			}
 
 			if opts.BatchSize < 1 {
@@ -106,7 +105,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				return validate.Usage("You must provide at least one Ethereum address for this command.")
 			}
 
-			if !opts.Clean && !opts.Delete && !opts.Undelete && !opts.Remove {
+			if !opts.Clean && !opts.Delete && !opts.Undelete && !opts.Remove && !opts.Globals.Decache {
 				return validate.Usage("Please provide either --clean or one of the CRUD commands.")
 			}
 
@@ -114,7 +113,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 				if len(opts.Globals.File) > 0 {
 					// Do nothing
 				} else {
-					err := validate.ValidateAtLeastOneAddr(opts.Addrs)
+					err := validate.ValidateAtLeastOneNonSentinal(opts.Addrs)
 					if err != nil {
 						return err
 					}

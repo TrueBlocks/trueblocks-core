@@ -22,7 +22,7 @@ func init() {
 var enabledForCmds = map[string]bool{}
 var enabledForCmdsMutex sync.RWMutex
 
-func SetEnabledForCmds(cmd string, enabled bool) {
+func EnableCommand(cmd string, enabled bool) {
 	enabledForCmdsMutex.Lock()
 	defer enabledForCmdsMutex.Unlock()
 	enabledForCmds[cmd] = enabled

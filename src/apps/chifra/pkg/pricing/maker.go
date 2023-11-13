@@ -31,7 +31,8 @@ func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 
 	contractCall, _, err := call.NewContractCall(conn, makerMedianizer, theCall)
 	if err != nil {
-		return 0.0, "not-priced", err
+		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall, err)
+		return 0.0, "not-priced", wrapped
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber

@@ -1,22 +1,11 @@
 package manifest
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
-	"fmt"
-	"os"
-	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
 // Manifest is a data structure consisting of a list of chunk records (i.e. block ranges, Bloom
@@ -42,158 +31,13 @@ type Manifest struct {
 	ChunkMap map[string]*types.SimpleChunkRecord `json:"-"`
 }
 
-type Source uint
+type Source int
 
 const (
-	FromCache Source = iota
+	None Source = 1 << iota
+	LocalCache
 	FromContract
+	TempContract
 )
 
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")
-
-// ReadManifest reads the manifest from either the local cache or the Unchained Index smart contract
-func ReadManifest(chain string, publisher base.Address, source Source) (*Manifest, error) {
-	if source == FromContract {
-		database := chain
-		cid, err := ReadUnchainedIndex(chain, publisher, database)
-		if err != nil {
-			return nil, err
-		} else if len(cid) == 0 {
-			return nil, fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
-		}
-
-		gatewayUrl := config.GetChain(chain).IpfsGateway
-
-		logger.InfoTable("Chain:", chain)
-		logger.InfoTable("Gateway:", gatewayUrl)
-		logger.InfoTable("Publisher:", publisher)
-		logger.InfoTable("Database:", database)
-		logger.InfoTable("CID:", cid)
-
-		man, err := downloadManifest(chain, gatewayUrl, cid)
-		if man != nil {
-			man.LoadChunkMap()
-		}
-
-		if man.Specification == "" {
-			man.Specification = unchained.Specification
-		}
-
-		return man, err
-	}
-
-	manifestPath := config.PathToManifest(chain)
-	if !file.FileExists(manifestPath) {
-		// basically EstablishManifest
-		if publisher.IsZero() {
-			publisher = unchained.GetPreferredPublisher()
-		}
-		man, err := ReadManifest(chain, publisher, FromContract)
-		if err != nil {
-			return nil, err
-		}
-		return man, man.SaveManifest(chain)
-	}
-
-	contents := file.AsciiFileToString(manifestPath)
-	if len(contents) == 0 {
-		return nil, ErrManifestNotFound
-	}
-
-	man := &Manifest{}
-	reader := bytes.NewReader([]byte(contents))
-	if err := json.NewDecoder(reader).Decode(man); err != nil {
-		return man, err
-	}
-
-	if man.Specification == "" {
-		man.Specification = unchained.Specification
-	}
-
-	man.LoadChunkMap()
-
-	return man, nil
-}
-
-func (m *Manifest) LoadChunkMap() {
-	m.ChunkMap = make(map[string]*types.SimpleChunkRecord)
-	for i := range m.Chunks {
-		m.ChunkMap[m.Chunks[i].Range] = &m.Chunks[i]
-	}
-}
-
-// TODO: Protect against overwriting files on disc
-
-func UpdateManifest(chain string, publisher base.Address, chunk types.SimpleChunkRecord) error {
-	empty := Manifest{
-		Version:       version.ManifestVersion,
-		Chain:         chain,
-		Specification: unchained.Specification,
-		Chunks:        []types.SimpleChunkRecord{},
-		Config:        config.GetScrape(chain),
-		ChunkMap:      make(map[string]*types.SimpleChunkRecord),
-	}
-
-	var man *Manifest
-	if !file.FileExists(config.PathToManifest(chain)) {
-		man = &empty
-	} else {
-		var err error
-		man, err = ReadManifest(chain, publisher, FromCache)
-		if err != nil {
-			if err != ErrManifestNotFound {
-				return err
-			}
-			man = &empty
-		}
-	}
-
-	// Make sure this chunk is only added once
-	_, ok := man.ChunkMap[chunk.Range]
-	if ok {
-		// logger.Info("Replacing chunk at", chunk.Range)
-		*man.ChunkMap[chunk.Range] = chunk
-	} else {
-		// Create somewhere to put it if it's not already there
-		// logger.Info("Adding chunk at", chunk.Range)
-		man.Chunks = append(man.Chunks, chunk)
-		man.ChunkMap[chunk.Range] = &chunk
-		sort.Slice(man.Chunks, func(i, j int) bool {
-			return man.Chunks[i].Range < man.Chunks[j].Range
-		})
-	}
-
-	logger.Info(colors.Magenta+"Updating manifest with", len(man.Chunks), "chunks", spaces, colors.Off)
-	return man.SaveManifest(chain)
-}
-
-// SaveManifest writes the manifest to disc in JSON
-func (m *Manifest) SaveManifest(chain string) error {
-	m.Config = config.GetScrape(chain)
-
-	fileName := config.PathToManifest(chain)
-	w, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		return fmt.Errorf("creating file: %s", err)
-	}
-	defer w.Close()
-
-	// Protect against overwriting files on disc
-	err = file.Lock(w)
-	if err != nil {
-		return fmt.Errorf("locking file: %s", err)
-	}
-	defer func() {
-		_ = file.Unlock(w)
-	}()
-
-	if outputBytes, err := json.MarshalIndent(m, "", "  "); err != nil {
-		return err
-	} else {
-		_, err = w.Write(outputBytes)
-		return err
-	}
-}
-
-// TODO: There's got to be a better way - this should use StreamMany
-var spaces = strings.Repeat(" ", 40)

@@ -43,10 +43,10 @@ Arguments:
   topics - filter by one or more log topics (only for --logs option)
   fourbytes - filter by one or more fourbytes (only for transactions and trace options)`
 
-const shortExport = "export full detail of transactions for one or more addresses"
+const shortExport = "export full details of transactions for one or more addresses"
 
 const longExport = `Purpose:
-  Export full detail of transactions for one or more addresses.`
+  Export full details of transactions for one or more addresses.`
 
 const notesExport = `
 Notes:
@@ -59,14 +59,14 @@ Notes:
   - The --first_record and --max_record options are zero-based (as are the block options).
   - The _block and _record filters are ignored when used with the --count option.
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
-  - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).`
+  - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
+  - The --withdrawals option is only available on certain chains. It is ignored otherwise.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra export
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 
 	exportCmd.Flags().SortFlags = false
@@ -79,6 +79,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, "for the accounting options only, export only statements")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, "traverse the transaction history and show each change in ETH balances")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Withdrawals, "withdrawals", "i", false, "export withdrawals for the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "force the transaction's traces into the cache")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
@@ -100,7 +101,7 @@ One of [ in | out | zero ]`)
 	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("load")
 	}
-	globals.InitGlobals(exportCmd, &exportPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("export", exportCmd, &exportPkg.GetOptions().Globals, capabilities)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)

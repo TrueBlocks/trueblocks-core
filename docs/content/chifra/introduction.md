@@ -29,9 +29,9 @@ You will see a long list of commands similar to this
   Where:
   Accounts:
     list          list every appearance of an address anywhere on the chain
-    export        export full detail of transactions for one or more addresses
+    export        export full details of transactions for one or more addresses
     monitors      add, remove, clean, and list address monitors
-    names         query addresses or names of well known accounts
+    names         query addresses or names of well-known accounts
     abis          fetches the ABI for a smart contract
   Chain Data:
     blocks        retrieve one or more blocks from the chain or local cache
@@ -45,7 +45,7 @@ You will see a long list of commands similar to this
     tokens        retrieve token balance(s) for one or more addresses at given block(s)
   Admin:
     config        report on and edit the configuration of the TrueBlocks system
-    daemon        initalize and control long-running processes such as the API and the scrapers
+    daemon        initialize and control long-running processes such as the API and the scrapers
     scrape        scan the chain and update the TrueBlocks index of appearances
     chunks        manage, investigate, and display the Unchained Index
     init          initialize the TrueBlocks system by downloading from IPFS

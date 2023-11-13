@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -15,7 +16,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/unchained"
 	"github.com/spf13/cobra"
 )
 
@@ -65,7 +65,7 @@ func SetDefaults(opts *GlobalOptions) {
 }
 
 // TODO: These options should be in a data file
-func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
+func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	opts.TestMode = file.IsTestMode()
 	opts.Caps = c
 
@@ -83,7 +83,9 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
 	}
 
 	if opts.Caps.Has(caps.Caching) {
-		cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
+		if whoAmI != "monitors" {
+			cmd.Flags().BoolVarP(&opts.Cache, "cache", "o", false, "force the results of the query into the cache")
+		}
 		cmd.Flags().BoolVarP(&opts.Decache, "decache", "D", false, "removes related items from the cache")
 	}
 
@@ -197,13 +199,14 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
 		// TODO: Why do we need to do this here?
-		publisher := unchained.GetPreferredPublisher()
-		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
+		conn := rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		publisher, _ := conn.GetEnsAddress(config.GetPublisher(""))
+		publisherAddr := base.HexToAddress(publisher)
+		if err := tslib.EstablishTsFile(opts.Chain, publisherAddr); err != nil {
 			logger.Warn(err)
 		}
-		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		return conn
 	} else {
 		// the error will be reported by the validator
 		return rpc.TempConnection(opts.Chain)
@@ -226,13 +229,14 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		// TODO: #3219 Either this needs to be an option or PreferredPublisher needs to be configurable
 		// TODO: Why do we need to do this here?
-		publisher := unchained.GetPreferredPublisher()
-		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
+		conn := rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		publisher, _ := conn.GetEnsAddress(config.GetPublisher(""))
+		publisherAddr := base.HexToAddress(publisher)
+		if err := tslib.EstablishTsFile(opts.Chain, publisherAddr); err != nil {
 			logger.Warn(err)
 		}
-		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		return conn
 	} else {
 		// the error will be reported by the validator
 		return rpc.TempConnection(opts.Chain)

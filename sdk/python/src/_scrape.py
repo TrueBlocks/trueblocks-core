@@ -9,7 +9,7 @@ scrapeFmt = "json"
 scrapeOpts = {
     "blockCnt": {"hotkey": "-n", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
-    "startBlock": {"hotkey": "-l", "type": "flag"},
+    "touch": {"hotkey": "-l", "type": "flag"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},
     "help": {"hotkey": "-h", "type": "switch"},

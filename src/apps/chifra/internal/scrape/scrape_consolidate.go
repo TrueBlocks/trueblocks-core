@@ -77,12 +77,16 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 
 		ripeFn := filepath.Join(bm.RipeFolder(), fn)
 		if !file.FileExists(ripeFn) {
-			msg := fmt.Sprintf("ripe file not found for block %d", block) + spaces
-			if !bm.AllowMissing() {
-				_ = index.CleanEphemeralIndexFolders(chain)
-				return errors.New(msg), true
+			if bm.hasNoAddresses(block) {
+				// this is okay -- see comment at the function
 			} else {
-				logger.Warn(msg)
+				msg := fmt.Sprintf("ripe file not found for block %d", block) + spaces
+				if !bm.AllowMissing() {
+					_ = cleanEphemeralIndexFolders(chain)
+					return errors.New(msg), true
+				} else {
+					logger.Warn(msg)
+				}
 			}
 		}
 
@@ -103,7 +107,8 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 			// Make a chunk - i.e., consolidate
 			chunkPath := indexPath + "finalized/" + chunkRange.String() + ".bin"
 			publisher := base.ZeroAddr
-			if report, err := index.WriteChunk(chain, publisher, chunkPath, appMap, nAppearances); err != nil {
+			var chunk index.Chunk
+			if report, err := chunk.Write(chain, publisher, chunkPath, appMap, nAppearances); err != nil {
 				return err, false
 			} else if report == nil {
 				logger.Fatal("Should not happen, write chunk returned empty report")
@@ -112,10 +117,17 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
+			if err := Notify(Notification{
+				Msg:  ChunkWritten,
+				Meta: bm.meta,
+				Data: nil,
+			}); err != nil {
+				return err, false
+			}
 
 			// reset for next chunk
 			bm.meta, _ = bm.opts.Conn.GetMetaData(bm.IsTestMode())
-			appMap = make(index.AddressAppearanceMap, 0)
+			appMap = make(map[string][]index.AppearanceRecord, 0)
 			chunkRange.First = chunkRange.Last + 1
 			chunkRange.Last = chunkRange.Last + 1
 			nAppearances = 0
@@ -150,6 +162,14 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
 
+	if err := Notify(Notification{
+		Msg:  StageUpdated,
+		Meta: bm.meta,
+		Data: nil,
+	}); err != nil {
+		return err, false
+	}
+
 	// Commit the change by deleting the backup file.
 	os.Remove(backupFn)
 
@@ -157,11 +177,11 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
-func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (index.AddressAppearanceMap, base.FileRange, int) {
+func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.AppearanceRecord, base.FileRange, int) {
 	appearances := file.AsciiFileToLines(fn)
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
-	appMap := make(index.AddressAppearanceMap, len(appearances))
+	appMap := make(map[string][]index.AppearanceRecord, len(appearances))
 	fileRange := base.FileRange{First: utils.NOPOS, Last: 0}
 
 	if len(appearances) == 0 {
@@ -191,4 +211,17 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (index.AddressAppear
 	}
 
 	return appMap, fileRange, nAdded
+}
+
+// hasNoAddresses returns true if (a) the miner is zero, (b) there are no transactions, uncles, or withdrawals.
+// (It is truly a block with no addresses -- for example block 15537860 on mainnet.)
+func (bm *BlazeManager) hasNoAddresses(bn base.Blknum) bool {
+	if block, err := bm.opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
+		return false
+	} else {
+		return base.IsPrecompile(block.Miner.Hex()) &&
+			len(block.Transactions) == 0 &&
+			len(block.Uncles) == 0 &&
+			len(block.Withdrawals) == 0
+	}
 }

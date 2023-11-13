@@ -1,6 +1,6 @@
 chifra traces  2222222.0 2332332.0 --fmt json
 TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

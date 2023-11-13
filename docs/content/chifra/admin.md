@@ -123,7 +123,7 @@ their options.
 
 ```[plaintext]
 Purpose:
-  Initalize and control long-running processes such as the API and the scrapers.
+  Initialize and control long-running processes such as the API and the scrapers.
 
 Usage:
   chifra daemon [flags]
@@ -190,11 +190,14 @@ Usage:
   chifra scrape [flags]
 
 Flags:
-  -n, --block_cnt uint     maximum number of blocks to process per pass (default 2000)
-  -s, --sleep float        seconds to sleep between scraper passes (default 14)
-  -l, --start_block uint   first block to visit when scraping (snapped back to most recent snap_to_grid mark)
-  -v, --verbose            enable verbose output
-  -h, --help               display this help screen
+  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
+  -s, --sleep float      seconds to sleep between scraper passes (default 14)
+  -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+  -v, --verbose          enable verbose output
+  -h, --help             display this help screen
+
+Notes:
+  - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
 ```
 
 Data models produced by this tool:
@@ -286,7 +289,7 @@ Usage:
 
 Arguments:
   mode - the type of data to process (required)
-	One of [ manifest | index | blooms | addresses | appearances | stats ]
+	One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
   blocks - an optional list of blocks to intersect with chunk ranges
 
 Flags:
@@ -299,6 +302,8 @@ Flags:
   -L, --last_block uint    last block to process (inclusive)
   -m, --max_addrs uint     the max number of addresses to process in a given chunk
   -d, --deep               if true, dig more deeply during checking (manifest only)
+  -e, --rewrite            for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
+  -U, --count              for the pins mode only, display only the count of records
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose output
@@ -314,6 +319,7 @@ Notes:
   - The --pin option requires a locally running IPFS node or a pinning service API key.
   - The --publish option requires a private key.
   - The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
+  - Without --rewrite, the manifest is written to the temporary cache. With it, the manifest is rewritten to the index folder.
 ```
 
 Data models produced by this tool:
@@ -324,6 +330,7 @@ Data models produced by this tool:
 - [chunkindex](/data-model/admin/#chunkindex)
 - [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkaddress](/data-model/admin/#chunkaddress)
+- [ipfspin](/data-model/admin/#ipfspin)
 - [chunkstats](/data-model/admin/#chunkstats)
 - [reportcheck](/data-model/admin/#reportcheck)
 - [chunkpinreport](/data-model/admin/#chunkpinreport)

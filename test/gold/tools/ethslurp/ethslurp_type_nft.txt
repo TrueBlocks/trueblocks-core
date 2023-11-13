@@ -2,7 +2,7 @@ chifra slurp  0x00a3819199113fc6a6e6ba1298afde7377e2009b --types nfts 0-8500000 
 TEST[DATE|TIME] Addrs:  [0x00a3819199113fc6a6e6ba1298afde7377e2009b]
 TEST[DATE|TIME] Blocks:  [0-8500000]
 TEST[DATE|TIME] Types:  [nfts]
-TEST[DATE|TIME] Caps:  cache,decache,raw
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [
@@ -11,7 +11,6 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 8302300,
       "contractAddress": "0xfac7bea255a6990f749363002136af6556b31e04",
       "date": "2019-08-07 08:01:01 UTC",
-      "ether": "0",
       "from": "0x0",
       "gas": 171980,
       "gasCost": 429950000000000,
@@ -29,7 +28,6 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 8302306,
       "contractAddress": "0xfac7bea255a6990f749363002136af6556b31e04",
       "date": "2019-08-07 08:02:05 UTC",
-      "ether": "0",
       "from": "0x0",
       "gas": 156980,
       "gasCost": 392450000000000,
@@ -47,7 +45,6 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 8302324,
       "contractAddress": "0xfac7bea255a6990f749363002136af6556b31e04",
       "date": "2019-08-07 08:06:49 UTC",
-      "ether": "0",
       "from": "0x0",
       "gas": 156916,
       "gasCost": 392290000000000,

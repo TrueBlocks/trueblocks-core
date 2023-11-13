@@ -113,7 +113,11 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 		if format == "json" {
 			model.Data["tx_hashes"] = txHashes
 			if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
-				model.Data["withdrawals"] = s.Withdrawals
+				withs := make([]map[string]any, 0, len(s.Withdrawals))
+				for _, w := range s.Withdrawals {
+					withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+				}
+				model.Data["withdrawals"] = withs
 			}
 		} else {
 			model.Data["transactionsCnt"] = len(txHashes)
@@ -179,7 +183,11 @@ func (s *SimpleBlock[Tx]) Model(chain, format string, verbose bool, extraOptions
 			}
 			order = append(order, "uncles")
 			if len(s.Withdrawals) > 0 {
-				model["withdrawals"] = s.Withdrawals
+				withs := make([]map[string]any, 0, len(s.Withdrawals))
+				for _, w := range s.Withdrawals {
+					withs = append(withs, w.Model(chain, format, verbose, extraOptions).Data)
+				}
+				model["withdrawals"] = withs
 				order = append(order, "withdrawals")
 			} else {
 				model["withdrawals"] = []SimpleWithdrawal{}

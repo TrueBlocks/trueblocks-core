@@ -22,7 +22,7 @@ their options.
 
 ```[plaintext]
 Purpose:
-  Initalize and control long-running processes such as the API and the scrapers.
+  Initialize and control long-running processes such as the API and the scrapers.
 
 Usage:
   chifra daemon [flags]

@@ -1,6 +1,6 @@
-abis?clean&file=signatures.txt
+abis?decache&file=signatures.txt
 {
   "errors": [
-    "The --clean option is not available in API mode."
+    "The --decache option is not available in API mode."
   ]
 }

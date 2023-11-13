@@ -17,6 +17,7 @@ export function getBlocks(
     logs?: boolean,
     emitter?: address[],
     topic?: topic[],
+    withdrawals?: boolean,
     articulate?: boolean,
     bigRange?: uint64,
     count?: boolean,

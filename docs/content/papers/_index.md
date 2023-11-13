@@ -8,7 +8,8 @@ draft: false
 
 2023
 
-- [Unchained Index Spec v0.51.0-beta](/papers/2023/specification-for-the-unchained-index-v0.51.0-beta.pdf)
+- [Unchained Index Spec v2.0.0-release](/papers/2023/specification-for-the-unchained-index-v2.0.0-release.pdf)
+- [Unchained Index Spec v0.51.0-beta (deprecated)](/papers/2023/specification-for-the-unchained-index-v0.51.0-beta.pdf)
 
 2022
 

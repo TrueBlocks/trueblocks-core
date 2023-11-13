@@ -1,0 +1,5 @@
+chifra names  Prefund --tags
+TEST[DATE|TIME] Terms:  [Prefund]
+TEST[DATE|TIME] Tags:  true
+TEST[DATE|TIME] Format:  txt
+WARN[DATE|TIME] No results for [chifra names Prefund --tags]

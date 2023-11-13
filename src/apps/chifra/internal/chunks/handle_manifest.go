@@ -13,7 +13,7 @@ import (
 )
 
 var sourceMap = map[bool]manifest.Source{
-	false: manifest.FromCache,
+	false: manifest.LocalCache,
 	true:  manifest.FromContract,
 }
 

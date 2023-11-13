@@ -65,7 +65,7 @@ func (g *chifraRpcServer) Create(ctx context.Context, request *proto.CreateReque
 	}
 
 	name := types.NewNameFromGrpc(request.GetName())
-	err := names.CreateCustomName(request.GetChain(), name)
+	err := names.CreateName(names.DatabaseCustom, request.GetChain(), name)
 	var errPointer *string
 	if err != nil {
 		errPointer = utils.PointerOf(err.Error())
@@ -101,9 +101,9 @@ func handleNameDeletion(request *proto.DeleteRequest, deleted bool, remove bool)
 	addr := base.HexToAddress(request.Address)
 	var err error
 	if !remove {
-		_, err = names.ChangeCustomNameDeletedFlag(request.Chain, addr, deleted)
+		_, err = names.SetDeleted(names.DatabaseCustom, request.Chain, addr, deleted)
 	} else {
-		_, err = names.RemoveCustomName(request.Chain, addr)
+		_, err = names.RemoveName(names.DatabaseCustom, request.Chain, addr)
 	}
 	return &proto.CRUDResponse{
 		Success: err == nil,
@@ -115,11 +115,13 @@ func (opts *DaemonOptions) HandleGrpc() error {
 	if !opts.Grpc {
 		return nil
 	}
+
 	if err := os.RemoveAll(proto.SocketAddress()); err != nil {
 		return err
 	}
 
-	if err := names.PrepareRpc(); err != nil {
+	// load the names in the memory cache
+	if _, err := names.LoadNamesMap(opts.Globals.Chain, names.Regular|names.Custom|names.Prefund, nil); err != nil {
 		return err
 	}
 

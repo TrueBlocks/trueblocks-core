@@ -1,4 +1,4 @@
-chifra init  --fmt json
+chifra init  --fmt json --dry_run --verbose
 Error: 
   unknown flag: --fmt
 
@@ -8,7 +8,7 @@ Usage:
 Flags:
   -a, --all                in addition to Bloom filters, download full index chunks (recommended)
   -d, --dry_run            display the results of the download without actually downloading
-  -P, --publisher string   the publisher of the index to download (hidden) (default "trueblocks.eth")
+  -P, --publisher string   the publisher of the index to download (hidden)
   -F, --first_block uint   do not download any chunks earlier than this block
   -s, --sleep float        seconds to sleep between downloads
   -v, --verbose            enable verbose output

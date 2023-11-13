@@ -1,5 +1,6 @@
 chifra abis  0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 encoding	type	name	signature
 0x013cf08b	function	proposals	proposals(uint256)

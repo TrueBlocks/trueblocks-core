@@ -57,6 +57,7 @@ Notes:
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra monitors
 	// EXISTING_CODE
+	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE
 
 	monitorsCmd.Flags().SortFlags = false
@@ -75,7 +76,7 @@ func init() {
 	if os.Getenv("TEST_MODE") != "true" {
 		monitorsCmd.Flags().MarkHidden("run_count")
 	}
-	globals.InitGlobals(monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("monitors", monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 	monitorsCmd.SetOut(os.Stderr)

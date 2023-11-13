@@ -181,16 +181,16 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		if extraOptions["expand"] == true {
 			model["deleted"] = s.Deleted
 			order = append(order, "deleted")
-			model["iscustom"] = s.IsCustom
-			order = append(order, "iscustom")
-			model["isprefund"] = s.IsPrefund
-			order = append(order, "isprefund")
-			model["iscontract"] = s.IsContract
-			order = append(order, "iscontract")
-			model["iserc20"] = s.IsErc20
-			order = append(order, "iserc20")
-			model["iserc721"] = s.IsErc721
-			order = append(order, "iserc721")
+			model["isCustom"] = s.IsCustom
+			order = append(order, "isCustom")
+			model["isPrefund"] = s.IsPrefund
+			order = append(order, "isPrefund")
+			model["isContract"] = s.IsContract
+			order = append(order, "isContract")
+			model["isErc20"] = s.IsErc20
+			order = append(order, "isErc20")
+			model["isErc721"] = s.IsErc721
+			order = append(order, "isErc721")
 		}
 	}
 

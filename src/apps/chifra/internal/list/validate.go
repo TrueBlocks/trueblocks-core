@@ -5,6 +5,7 @@
 package listPkg
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -61,7 +62,7 @@ func (opts *ListOptions) validateList() error {
 	}
 
 	if len(opts.Globals.File) == 0 {
-		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
+		err := validate.ValidateAtLeastOneNonSentinal(opts.Addrs)
 		if err != nil {
 			return err
 		}
@@ -74,13 +75,11 @@ func (opts *ListOptions) validateList() error {
 		}
 	}
 
-	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(chain); err != nil {
-		if opts.Globals.IsApiMode() {
-			return err
-		} else {
+	if err := index.IsInitialized(chain, config.ExpectedVersion()); err != nil {
+		if (errors.Is(err, index.ErrNotInitialized) || errors.Is(err, index.ErrIncorrectHash)) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
 		}
+		return err
 	}
 
 	return nil

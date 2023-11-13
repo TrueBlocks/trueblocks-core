@@ -34,7 +34,8 @@ func Test_ReadTrueBlocks(t *testing.T) {
 			t.Error("IndexPath does not end with a '/'")
 		}
 	}
-	if GetSettings().IndexPath[0] != '/' {
+	settings := GetSettings()
+	if settings.IndexPath[0] != '/' {
 		t.Error("IndexPath is not an absolute path")
 	}
 	if len(GetSettings().DefaultChain) == 0 {

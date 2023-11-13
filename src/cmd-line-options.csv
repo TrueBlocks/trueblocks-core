@@ -11,6 +11,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,gocmd,switch,<boolean>,attach accounting records to the exported data (applies to transactions export only)
 10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,gocmd,switch,<boolean>,for the accounting options only&#44; export only statements
 10290,apps,Accounts,export,acctExport,balances,b,,false,false,true,true,gocmd,switch,<boolean>,traverse the transaction history and show each change in ETH balances
+10295,apps,Accounts,export,acctExport,withdrawals,i,,false,false,true,true,gocmd,switch,<boolean>,export withdrawals for the given address
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,gocmd,switch,<boolean>,force the transaction's traces into the cache
 10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records
@@ -28,7 +29,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10097,apps,Accounts,export,acctExport,no_zero,z,,false,false,true,true,gocmd,switch,<boolean>,for the --count option only&#44; suppress the display of zero appearance accounts
 10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to process (inclusive)
 10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to process (inclusive)
-10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
+10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full details of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 10470,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
 10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
@@ -38,7 +39,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10479,apps,Accounts,export,acctExport,n7,,,false,false,false,false,--,note,,The --first_record and --max_record options are zero-based (as are the block options).
 10479,apps,Accounts,export,acctExport,n8,,,false,false,false,false,--,note,,The _block and _record filters are ignored when used with the --count option.
 10480,apps,Accounts,export,acctExport,n9,,,false,false,false,false,--,note,,If the --reversed option is present&#44; the appearance list is reversed prior to all processing (including filtering).
-10480,apps,Accounts,export,acctExport,n10,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; transactions&#44; traces&#44; etc.) for the given address(es).
+10482,apps,Accounts,export,acctExport,n10,,,false,false,false,false,--,note,,The --decache option will remove all cache items (blocks&#44; transactions&#44; traces&#44; etc.) for the given address(es).
+10484,apps,Accounts,export,acctExport,n11,,,false,false,false,false,--,note,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,false,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) to process
 11087,apps,Accounts,monitors,acctExport,delete,,,false,false,true,true,gocmd,switch,<boolean>,delete a monitor&#44; but do not remove it
@@ -68,7 +70,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12035,apps,Accounts,list,acctExport,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 12040,apps,Accounts,list,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 12043,apps,Accounts,list,acctExport,reversed,E,,false,false,true,true,gocmd,switch,<boolean>,produce results in reverse chronological order
-12044,apps,Accounts,list,acctExport,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
+12044,apps,Accounts,list,acctExport,publisher,P,,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
 12045,apps,Accounts,list,acctExport,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to export (inclusive&#44; ignored when freshening)
 12050,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to export (inclusive&#44; ignored when freshening)
 12055,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
@@ -86,13 +88,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12300,tools,Accounts,names,ethNames,clean,C,,false,false,true,true,gocmd,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
 12301,tools,Accounts,names,ethNames,regular,r,,false,false,true,true,gocmd,switch,<boolean>,only available with --clean&#44; cleans regular names database
 12302,tools,Accounts,names,ethNames,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
-12305,tools,Accounts,names,ethNames,autoname,A,,false,false,true,true,gocmd,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
+12305,tools,Accounts,names,ethNames,autoname,A,,false,false,true,true,gocmd,flag,<address>,an address assumed to be a token&#44; added automatically to names database if true
 12310,tools,Accounts,names,ethNames,create,,,false,false,false,true,gocmd,switch,<boolean>,create a new name record
 12315,tools,Accounts,names,ethNames,update,,,false,false,false,true,gocmd,switch,<boolean>,edit an existing name
 12320,tools,Accounts,names,ethNames,delete,,,false,false,false,true,gocmd,switch,<boolean>,delete a name&#44; but do not remove it
 12325,tools,Accounts,names,ethNames,undelete,,,false,false,false,true,gocmd,switch,<boolean>,undelete a previously deleted name
 12330,tools,Accounts,names,ethNames,remove,,,false,false,false,true,gocmd,switch,<boolean>,remove a previously deleted name
-12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
+12345,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well-known accounts.
 12350,tools,Accounts,names,ethNames,n1,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12355,tools,Accounts,names,ethNames,n2,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
 
@@ -101,7 +103,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,gocmd,flag,list<string>,search for function or event declarations given a four- or 32-byte code(s)
 13865,tools,Accounts,abis,grabABI,hint,n,,false,false,true,true,gocmd,flag,list<string>,for the --find option only&#44; provide hints to speed up the search
 13865,tools,Accounts,abis,grabABI,encode,e,,false,false,true,true,gocmd,flag,<string>,generate the 32-byte encoding for a given cannonical function or event signature
-13865,tools,Accounts,abis,grabABI,clean,C,,false,false,true,true,gocmd,flag,<boolean>,remove an abi file for an address or all zero-length files if no address is given
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,n1,,,false,false,false,false,--,note,,Search for either four byte signatures or event signatures with the --find option.
 
@@ -114,8 +115,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12570,tools,ChainData,blocks,getBlocks,logs,l,,false,false,true,true,gocmd,switch,<boolean>,display only the logs found in the block(s)
 12972,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 12974,tools,ChainData,blocks,getBlocks,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
-12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
-12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,gocmd,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
+12975,tools,ChainData,blocks,getBlocks,withdrawals,i,,false,false,true,true,gocmd,switch,<boolean>,export the withdrawals from the block as opposed to the block data
+12976,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
+12977,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,gocmd,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,gocmd,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,gocmd,switch,<boolean>,force a write of the block's transactions to the cache (slow)
 12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force a write of the block's traces to the cache (slower)
@@ -130,6 +132,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12625,tools,ChainData,blocks,getBlocks,n6,,,false,false,false,false,--,note,,Multiple topics match on topic0&#44; topic1&#44; and so on&#44; not on different topic0's.
 12627,tools,ChainData,blocks,getBlocks,n7,,,false,false,false,false,--,note,,For the --logs option&#44; large block ranges may crash the node&#44; use --big_range to specify a larger range.
 12628,tools,ChainData,blocks,getBlocks,n8,,,false,false,false,false,--,note,,The --decache option removes the block(s)&#44; all transactions in those block(s)&#44; and all traces in those transactions from the cache.
+12630,tools,ChainData,blocks,getBlocks,n9,,,false,false,false,false,--,note,,The --withdrawals option is only available on certain chains. It is ignored otherwise.
 
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
@@ -221,9 +224,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12125,apps,Admin,scrape,blockScrape,block_cnt,n,2000,false,false,true,true,gocmd,flag,<uint64>,maximum number of blocks to process per pass
 12115,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,true,gocmd,flag,<double>,seconds to sleep between scraper passes
-12185,apps,Admin,scrape,blockScrape,start_block,l,0,false,false,true,true,gocmd,flag,<uint64>,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+12185,apps,Admin,scrape,blockScrape,touch,l,0,false,false,true,true,gocmd,flag,<uint64>,first block to visit when scraping (snapped back to most recent snap_to_grid mark)
 12187,apps,Admin,scrape,blockScrape,run_count,u,0,false,false,false,false,gocmd,flag,<uint64>,run the scraper this many times&#44; then quit
-12188,apps,Admin,scrape,blockScrape,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
+12188,apps,Admin,scrape,blockScrape,publisher,P,,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
 12189,apps,Admin,scrape,blockScrape,dry_run,d,,false,false,false,false,gocmd,switch,<boolean>,show the configuration that would be applied if run&#44;no changes are made
 12160,apps,Admin,scrape,blockScrape,apps_per_chunk,,2000000,false,false,false,false,config,flag,<uint64>,the number of appearances to build into a chunk before consolidating it
 12170,apps,Admin,scrape,blockScrape,snap_to_grid,,250000,false,false,false,false,config,flag,<uint64>,an override to apps_per_chunk to snap-to-grid at every modulo of this value&#44; this allows easier corrections to the index
@@ -232,13 +235,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12150,apps,Admin,scrape,blockScrape,channel_count,,20,false,false,false,false,config,flag,<uint64>,number of concurrent processing channels
 12180,apps,Admin,scrape,blockScrape,allow_missing,,true,false,false,false,false,config,flag,<boolean>,do not report errors for blockchains that contain blocks with zero addresses
 12195,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
+12196,apps,Admin,scrape,blockScrape,n1,,,false,false,false,false,--,note,,The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
 
 13111,apps,Admin,daemon,flame,port,p,:8080,false,false,true,true,gocmd,flag,<string>,specify the server's port
 13114,apps,Admin,daemon,flame,api,a,on,false,false,false,false,gocmd,flag,enum[off|on*]>,instruct the node to start the API server
 13112,apps,Admin,daemon,flame,scrape,s,,false,false,false,false,gocmd,flag,enum[off|blooms|index]>,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
 13113,apps,Admin,daemon,flame,monitor,m,,false,false,false,false,gocmd,switch,<boolean>,instruct the node to start the monitors tool
 13118,apps,Admin,daemon,flame,grpc,g,,false,false,true,true,gocmd,switch,<boolean>,run gRPC server to serve names
-13115,apps,Admin,daemon,flame,,,,false,false,true,true,--,description,,Initalize and control long-running processes such as the API and the scrapers.
+13115,apps,Admin,daemon,flame,,,,false,false,true,true,--,description,,Initialize and control long-running processes such as the API and the scrapers.
 13116,apps,Admin,daemon,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra daemon.
 13117,apps,Admin,daemon,flame,n2,,,false,false,false,false,--,note,,See the API documentation (https://trueblocks.io/api) for more information.
 13119,apps,Admin,daemon,flame,a1,,,false,false,false,false,--,alias,,serve
@@ -255,35 +259,41 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 20830,apps,Admin,status,cacheStatus,n1,,,false,false,false,false,--,note,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
 20835,apps,Admin,status,cacheStatus,n2,,,false,false,false,false,--,note,,If no mode is supplied&#44; a terse report is generated.
 
-31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,gocmd,positional,enum[manifest|index|blooms|addresses|appearances|stats],the type of data to process
+31900,apps,Admin,chunks,chunkMan,mode,,,true,false,true,true,gocmd,positional,enum[manifest|index|blooms|pins|addresses|appearances|stats],the type of data to process
 31905,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,gocmd,positional,list<blknum>,an optional list of blocks to intersect with chunk ranges
 31920,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,gocmd,switch,<boolean>,check the manifest&#44; index&#44; or blooms for internal consistency
 31935,apps,Admin,chunks,chunkMan,pin,i,,false,false,true,true,gocmd,switch,<boolean>,pin the manifest or each index chunk and bloom
 31940,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,true,gocmd,switch,<boolean>,publish the manifest to the Unchained Index smart contract
-31942,apps,Admin,chunks,chunkMan,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
+31942,apps,Admin,chunks,chunkMan,publisher,P,,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
 31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
-31945,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retreive the manifest from the Unchained Index smart contract
-31950,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
-31950,apps,Admin,chunks,chunkMan,diff,f,,false,false,false,false,gocmd,switch,<boolean>,compare two index portions (see notes)
-31951,apps,Admin,chunks,chunkMan,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to process (inclusive)
-31953,apps,Admin,chunks,chunkMan,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to process (inclusive)
-31955,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,false,false,true,true,gocmd,flag,<blknum>,the max number of addresses to process in a given chunk
-31956,apps,Admin,chunks,chunkMan,deep,d,,false,false,true,true,gocmd,switch,<boolean>,if true&#44; dig more deeply during checking (manifest only)
-31957,apps,Admin,chunks,chunkMan,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,for --remote pinning only&#44; seconds to sleep between API calls
-31959,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
-31960,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Mode determines which type of data to display or process.
-31965,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Certain options are only available in certain modes.
-31970,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
-31980,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,The --truncate option updates the manifest and removes local data&#44; but does not alter remote pins.
-31985,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,The --belongs option is only available in the index mode.
-31980,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,The --first_block and --last_block options apply only to addresses&#44; appearances&#44; and index --belongs mode.
-31990,apps,Admin,chunks,chunkMan,n7,,,false,false,false,false,--,note,,The --pin option requires a locally running IPFS node or a pinning service API key.
-31995,apps,Admin,chunks,chunkMan,n8,,,false,false,false,false,--,note,,The --publish option requires a private key.
-31997,apps,Admin,chunks,chunkMan,n9,,,false,false,false,false,--,note,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
+31940,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retreive the manifest from the Unchained Index smart contract
+31942,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
+31944,apps,Admin,chunks,chunkMan,diff,f,,false,false,false,false,gocmd,switch,<boolean>,compare two index portions (see notes)
+31946,apps,Admin,chunks,chunkMan,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to process (inclusive)
+31948,apps,Admin,chunks,chunkMan,last_block,L,NOPOS,false,false,true,true,gocmd,flag,<blknum>,last block to process (inclusive)
+31950,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,false,false,true,true,gocmd,flag,<blknum>,the max number of addresses to process in a given chunk
+31952,apps,Admin,chunks,chunkMan,deep,d,,false,false,true,true,gocmd,switch,<boolean>,if true&#44; dig more deeply during checking (manifest only)
+31954,apps,Admin,chunks,chunkMan,rewrite,e,,false,false,true,true,gocmd,switch,<boolean>,for the --pin --deep mode only&#44; writes the manifest back to the index folder (see notes)
+31956,apps,Admin,chunks,chunkMan,list,l,,false,false,false,false,gocmd,switch,<boolean>,for the pins mode only&#44; list the remote pins
+31956,apps,Admin,chunks,chunkMan,unpin,u,,false,false,false,false,gocmd,switch,<boolean>,for the pins mode only&#44; if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
+31957,apps,Admin,chunks,chunkMan,count,U,,false,false,true,true,gocmd,switch,<boolean>,for the pins mode only&#44; display only the count of records
+31958,apps,Admin,chunks,chunkMan,tag,t,,false,false,false,false,gocmd,flag,<string>,visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
+31960,apps,Admin,chunks,chunkMan,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,for --remote pinning only&#44; seconds to sleep between API calls
+31962,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage&#44; investigate&#44; and display the Unchained Index.
+31964,apps,Admin,chunks,chunkMan,n1,,,false,false,false,false,--,note,,Mode determines which type of data to display or process.
+31966,apps,Admin,chunks,chunkMan,n2,,,false,false,false,false,--,note,,Certain options are only available in certain modes.
+31968,apps,Admin,chunks,chunkMan,n3,,,false,false,false,false,--,note,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
+31970,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,The --truncate option updates the manifest and removes local data&#44; but does not alter remote pins.
+31972,apps,Admin,chunks,chunkMan,n6,,,false,false,false,false,--,note,,The --belongs option is only available in the index mode.
+31974,apps,Admin,chunks,chunkMan,n5,,,false,false,false,false,--,note,,The --first_block and --last_block options apply only to addresses&#44; appearances&#44; and index --belongs mode.
+31976,apps,Admin,chunks,chunkMan,n7,,,false,false,false,false,--,note,,The --pin option requires a locally running IPFS node or a pinning service API key.
+31978,apps,Admin,chunks,chunkMan,n8,,,false,false,false,false,--,note,,The --publish option requires a private key.
+31980,apps,Admin,chunks,chunkMan,n9,,,false,false,false,false,--,note,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
+31982,apps,Admin,chunks,chunkMan,n10,,,false,false,false,false,--,note,,Without --rewrite&#44; the manifest is written to the temporary cache. With it&#44; the manifest is rewritten to the index folder.
 
 11905,apps,Admin,init,init,all,a,,false,false,true,true,gocmd,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks (recommended)
 11907,apps,Admin,init,init,dry_run,d,,false,false,true,true,gocmd,switch,<boolean>,display the results of the download without actually downloading
-11910,apps,Admin,init,init,publisher,P,trueblocks.eth,false,false,false,false,gocmd,flag,<address>,the publisher of the index to download
+11910,apps,Admin,init,init,publisher,P,,false,false,false,false,gocmd,flag,<address>,the publisher of the index to download
 11915,apps,Admin,init,init,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,do not download any chunks earlier than this block
 11920,apps,Admin,init,init,sleep,s,0.0,false,false,true,true,gocmd,flag,<double>,seconds to sleep between downloads
 11925,apps,Admin,init,init,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
@@ -298,13 +308,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,gocmd,positional,list<blknum>,an optional range of blocks to slurp
-12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,gocmd,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|all]>,which types of transactions to request
+12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,gocmd,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|all]>,which types of transactions to request
 12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,gocmd,switch,<boolean>,show only the blocknumber.tx_id appearances of the exported transactions
 12200,tools,Other,slurp,ethslurp,per_page,P,5000,false,false,true,true,gocmd,flag,<uint64>,the number of records to request on each page
 12210,tools,Other,slurp,ethslurp,sleep,s,.25,false,false,true,true,gocmd,flag,<double>,seconds to sleep between requests
 12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetch data from Etherscan for any address.
 12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12224,tools,Other,slurp,ethslurp,n2,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
+12226,tools,Other,slurp,ethslurp,n3,,,false,false,false,false,--,note,,The withdrawals option is only available on certain chains. It is ignored otherwise.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,true,gocmd,positional,list<path>,one or more class definition files
 11740,dev_tools,,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder

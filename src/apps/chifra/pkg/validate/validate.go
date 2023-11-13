@@ -63,6 +63,18 @@ func ValidateExactlyOneAddr(args []string) error {
 	return nil
 }
 
+func ValidateAtLeastOneNonSentinal(args []string) error {
+	if err := ValidateAtLeastOneAddr(args); err != nil {
+		return err
+	}
+	for _, arg := range args {
+		if arg == base.NotAMonitor.Hex() {
+			return Usage("The address {0} is reserved for system use.", arg)
+		}
+	}
+	return nil
+}
+
 func ValidateAtLeastOneAddr(args []string) error {
 	hasOne := false
 	for _, arg := range args {

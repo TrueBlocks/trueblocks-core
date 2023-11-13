@@ -7,7 +7,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -69,6 +68,10 @@ func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc 
 					return err
 				}
 			}
+
+			for _, withdrawal := range block.Withdrawals {
+				streamAppearance(procFunc, flow, "withdrawal", withdrawal.Address.Hex(), bn, withdrawal.Index, utils.NOPOS, ts, addrMap)
+			}
 		}
 	}
 
@@ -95,7 +98,7 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 		inputData := trans.Input[10:]
 		for i := 0; i < len(inputData)/64; i++ {
 			str := string(inputData[i*64 : (i+1)*64])
-			if index.IsImplicitAddress(str) {
+			if IsImplicitAddress(str) {
 				streamAppearance(procFunc, flow, str, reason, bn, txid, traceid, ts, addrMap)
 			}
 		}
@@ -124,7 +127,7 @@ func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs 
 
 		for t, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
-			if index.IsImplicitAddress(str) {
+			if IsImplicitAddress(str) {
 				reason := fmt.Sprintf("log_%d_topic_%d", l, t)
 				streamAppearance(procFunc, flow, reason, str, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 			}
@@ -135,7 +138,7 @@ func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs 
 			inputData := log.Data[2:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(str) {
+				if IsImplicitAddress(str) {
 					streamAppearance(procFunc, flow, reason, str, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
 				}
 			}
@@ -258,7 +261,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 					initData := trace.Action.Init[10:]
 					for i := 0; i < len(initData)/64; i++ {
 						str := string(initData[i*64 : (i+1)*64])
-						if index.IsImplicitAddress(str) {
+						if IsImplicitAddress(str) {
 							streamAppearance(procFunc, flow, traceReason(traceid, &trace, "code"), str, bn, txid, traceid, ts, addrMap)
 						}
 					}
@@ -287,7 +290,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 			inputData := trace.Action.Input[10:]
 			for i := 0; i < len(inputData)/64; i++ {
 				str := string(inputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(str) {
+				if IsImplicitAddress(str) {
 					streamAppearance(procFunc, flow, traceReason(traceid, &trace, "input"), str, bn, txid, traceid, ts, addrMap)
 				}
 			}
@@ -298,7 +301,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 			outputData := trace.Result.Output[2:]
 			for i := 0; i < len(outputData)/64; i++ {
 				str := string(outputData[i*64 : (i+1)*64])
-				if index.IsImplicitAddress(str) {
+				if IsImplicitAddress(str) {
 					streamAppearance(procFunc, flow, traceReason(traceid, &trace, "output"), str, bn, txid, traceid, ts, addrMap)
 				}
 			}

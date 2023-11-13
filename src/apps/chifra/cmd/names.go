@@ -41,10 +41,10 @@ const usageNames = `names [flags] <term> [term...]
 Arguments:
   terms - a space separated list of one or more search terms (required)`
 
-const shortNames = "query addresses or names of well known accounts"
+const shortNames = "query addresses or names of well-known accounts"
 
 const longNames = `Purpose:
-  Query addresses or names of well known accounts.`
+  Query addresses or names of well-known accounts.`
 
 const notesNames = `
 Notes:
@@ -81,7 +81,7 @@ func init() {
 		namesCmd.Flags().MarkHidden("undelete")
 		namesCmd.Flags().MarkHidden("remove")
 	}
-	globals.InitGlobals(namesCmd, &namesPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("names", namesCmd, &namesPkg.GetOptions().Globals, capabilities)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)

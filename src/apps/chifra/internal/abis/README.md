@@ -32,7 +32,8 @@ Flags:
   -f, --find strings    search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings    for the --find option only, provide hints to speed up the search
   -e, --encode string   generate the 32-byte encoding for a given cannonical function or event signature
-  -C, --clean           remove an abi file for an address or all zero-length files if no address is given
+  -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose output
   -h, --help            display this help screen

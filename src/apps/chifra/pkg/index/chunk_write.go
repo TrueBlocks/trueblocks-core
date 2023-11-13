@@ -12,17 +12,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index/bloom"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
-	"github.com/ethereum/go-ethereum/crypto"
 )
 
-type AddressAppearanceMap map[string][]AppearanceRecord
-type AddressBooleanMap map[string]bool
-type AppearanceMap map[string]types.SimpleAppearance
-type WriteChunkReport struct {
+type writeReport struct {
 	Range        base.FileRange
 	nAddresses   int
 	nAppearances int
@@ -30,7 +23,7 @@ type WriteChunkReport struct {
 	Snapped      bool
 }
 
-func (c *WriteChunkReport) Report() {
+func (c *writeReport) Report() {
 	report := `Wrote {%d} address and {%d} appearance records to {$INDEX/%s.bin}`
 	if c.Snapped {
 		report += ` @(snapped to grid)}`
@@ -39,7 +32,7 @@ func (c *WriteChunkReport) Report() {
 	logger.Info(colors.ColoredWith(fmt.Sprintf(report, c.nAddresses, c.nAppearances, c.Range, c.FileSize, c.Range.Span()), colors.BrightBlue))
 }
 
-func WriteChunk(chain string, publisher base.Address, fileName string, addrAppearanceMap AddressAppearanceMap, nApps int) (*WriteChunkReport, error) {
+func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string, addrAppearanceMap map[string][]AppearanceRecord, nApps int) (*writeReport, error) {
 	// We're going to build two tables. An addressTable and an appearanceTable. We do this as we spin
 	// through the map
 
@@ -58,17 +51,17 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 
 	// We need somewhere to store our progress...
 	offset := uint32(0)
-	bl := bloom.ChunkBloom{}
+	bl := Bloom{}
 
 	// For each address in the sorted list...
 	for _, addrStr := range sorted {
-		// ...get its appeances and append them to the appearanceTable....
+		// ...get its appearances and append them to the appearanceTable....
 		apps := addrAppearanceMap[addrStr]
 		appearanceTable = append(appearanceTable, apps...)
 
 		// ...add the address to the bloom filter...
 		address := base.HexToAddress(addrStr)
-		bl.AddToSet(address)
+		bl.InsertAddress(address)
 
 		// ...and append the record to the addressTable.
 		addressTable = append(addressTable, AddressRecord{
@@ -99,9 +92,9 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 			// defer fp.Close() // Note -- we don't defer because we want to close the file and possibly pin it below...
 
 			_, _ = fp.Seek(0, io.SeekStart) // already true, but can't hurt
-			header := IndexHeaderRecord{
+			header := indexHeader{
 				Magic:           file.MagicNumber,
-				Hash:            base.BytesToHash(crypto.Keccak256([]byte(version.ManifestVersion))),
+				Hash:            base.BytesToHash(config.HeaderHash(config.ExpectedVersion())),
 				AddressCount:    uint32(len(addressTable)),
 				AppearanceCount: uint32(len(appearanceTable)),
 			}
@@ -117,10 +110,6 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 				return nil, err
 			}
 
-			if _, err = bl.WriteBloom(chain, ToBloomPath(indexFn)); err != nil {
-				return nil, err
-			}
-
 			if err := fp.Sync(); err != nil {
 				return nil, err
 			}
@@ -129,17 +118,18 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 				return nil, err
 			}
 
+			if _, err = bl.writeBloom(ToBloomPath(indexFn)); err != nil {
+				return nil, err
+			}
+
 			// We're sucessfully written the chunk, so we don't need this any more. If the pin
 			// fails we don't want to have to re-do this chunk, so remove this here.
 			os.Remove(backupFn)
-
-			rng := base.RangeFromFilename(indexFn)
-			report := WriteChunkReport{ // For use in reporting...
-				Range:        rng,
+			return &writeReport{
+				Range:        base.RangeFromFilename(indexFn),
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
-			}
-			return &report, nil
+			}, nil
 
 		} else {
 			return nil, err
@@ -148,4 +138,49 @@ func WriteChunk(chain string, publisher base.Address, fileName string, addrAppea
 	} else {
 		return nil, err
 	}
+}
+
+// Tag updates the manifest version in the chunk's header
+func (chunk *Chunk) Tag(tag, fileName string) (err error) {
+	blVers, idxVers, err := versions(fileName)
+	if err != nil {
+		return err
+	}
+	if blVers == tag && idxVers == tag {
+		return nil
+	}
+
+	bloomFn := ToBloomPath(fileName)
+	indexFn := ToIndexPath(fileName)
+	indexBackup := indexFn + ".backup"
+	bloomBackup := bloomFn + ".backup"
+
+	defer func() {
+		// If the backup files still exist when the function ends, something went wrong, reset everything
+		if file.FileExists(indexBackup) || file.FileExists(bloomBackup) {
+			_, _ = file.Copy(bloomFn, bloomBackup)
+			_, _ = file.Copy(indexFn, indexBackup)
+			_ = os.Remove(bloomBackup)
+			_ = os.Remove(indexBackup)
+		}
+	}()
+
+	if _, err = file.Copy(indexBackup, indexFn); err != nil {
+		return err
+	} else if _, err = file.Copy(bloomBackup, bloomFn); err != nil {
+		return err
+	}
+
+	if err = chunk.Bloom.updateTag(tag, bloomFn); err != nil {
+		return err
+	}
+
+	if err = chunk.Index.updateTag(tag, indexFn); err != nil {
+		return err
+	}
+
+	_ = os.Remove(indexBackup)
+	_ = os.Remove(bloomBackup)
+
+	return nil
 }

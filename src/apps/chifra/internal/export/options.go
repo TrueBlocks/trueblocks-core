@@ -33,6 +33,7 @@ type ExportOptions struct {
 	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
 	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
 	Balances    bool                  `json:"balances,omitempty"`    // Traverse the transaction history and show each change in ETH balances
+	Withdrawals bool                  `json:"withdrawals,omitempty"` // Export withdrawals for the given address
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
 	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Force the transaction's traces into the cache
 	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
@@ -75,6 +76,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
 	logger.TestLog(opts.Balances, "Balances: ", opts.Balances)
+	logger.TestLog(opts.Withdrawals, "Withdrawals: ", opts.Withdrawals)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
@@ -143,6 +145,8 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			opts.Statements = true
 		case "balances":
 			opts.Balances = true
+		case "withdrawals":
+			opts.Withdrawals = true
 		case "articulate":
 			opts.Articulate = true
 		case "cacheTraces":
@@ -249,17 +253,17 @@ func GetOptions() *ExportOptions {
 	return &defaultExportOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultExportOptions = ExportOptions{}
 	globals.SetDefaults(&defaultExportOptions.Globals)
+	defaultExportOptions.Globals.TestMode = testMode
 	defaultExportOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra export
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 	defaultExportOptions.Globals.Caps = capabilities
 }

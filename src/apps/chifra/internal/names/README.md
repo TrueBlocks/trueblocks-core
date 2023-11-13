@@ -17,7 +17,7 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 
 ```[plaintext]
 Purpose:
-  Query addresses or names of well known accounts.
+  Query addresses or names of well-known accounts.
 
 Usage:
   chifra names [flags] <term> [term...]

@@ -62,7 +62,7 @@ func init() {
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, "the maximum number of records to process")
 	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Chains, "chains", "a", false, "include a list of chain configurations in the output")
-	globals.InitGlobals(statusCmd, &statusPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("status", statusCmd, &statusPkg.GetOptions().Globals, capabilities)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	statusCmd.SetOut(os.Stderr)

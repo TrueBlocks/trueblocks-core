@@ -16,6 +16,8 @@ chunksOpts = {
     "lastBlock": {"hotkey": "-L", "type": "flag"},
     "maxAddrs": {"hotkey": "-m", "type": "flag"},
     "deep": {"hotkey": "-d", "type": "switch"},
+    "rewrite": {"hotkey": "-e", "type": "switch"},
+    "count": {"hotkey": "-U", "type": "switch"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "fmt": {"hotkey": "-x", "type": "flag"},
     "verbose:": {"hotkey": "-v", "type": "switch"},

@@ -2,6 +2,7 @@ package chunksPkg
 
 import (
 	"context"
+	"encoding/binary"
 	"fmt"
 	"io"
 	"os"
@@ -58,51 +59,40 @@ func (opts *ChunksOptions) HandleDiff(blockNums []uint64) error {
 func (opts *ChunksOptions) handleDiff(chain, path string) (bool, error) {
 	nVisited++
 
-	thisPath := index.ToIndexPath(path)
-	diffPath := getDiffPath(chain, thisPath)
+	srcPath, diffPath, rd := opts.getParams(chain, path)
 
 	logger.Info("Comparing:")
-	logger.Info(fmt.Sprintf("  existing: %s (%d)", thisPath, file.FileSize(thisPath)))
-	logger.Info(fmt.Sprintf("  current:  %s (%d)", diffPath, file.FileSize(diffPath)))
+	logger.Info(fmt.Sprintf("  current (one):  %s (%d)", srcPath, file.FileSize(srcPath)))
+	logger.Info(fmt.Sprintf("  diffPath (two): %s (%d)", diffPath, file.FileSize(diffPath)))
 
-	rng := base.RangeFromFilename(path)
-	outFn := fmt.Sprintf("%d", rng.First+((rng.Last-rng.First)/2))
-	if _, err := opts.exportTo("existing", thisPath, outFn); err != nil {
+	if _, err := opts.exportTo("one", srcPath, rd); err != nil {
 		return false, err
 	}
 
-	if _, err := opts.exportTo("proposed", diffPath, outFn); err != nil {
+	if _, err := opts.exportTo("two", diffPath, rd); err != nil {
 		return false, err
 	}
 
 	return true, nil
 }
 
-// getDiffPath returns the path to the diff folder.
-func getDiffPath(chain, path string) (diffPath string) {
-	rng := base.RangeFromFilename(path)
-	diffPath = os.Getenv("TB_CHUNKS_DIFFPATH")
-	if !strings.Contains(diffPath, "unchained/") {
-		diffPath = filepath.Join(diffPath, "unchained/", chain, "finalized")
-	}
-	diffPath, _ = filepath.Abs(diffPath)
-	diffPath, _ = index.FindFileByBlockNumber(chain, diffPath, rng.First+(rng.Last-rng.First)/2)
-	if !file.FileExists(diffPath) {
-		logger.Fatal(fmt.Sprintf("The diff path does not exist: [%s]", diffPath))
-	}
-
-	return
-}
-
-func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
+func writeArray(disp, dest, fn string, lines []string) error {
 	outputFolder, _ := filepath.Abs("./" + dest)
 	if !file.FolderExists(outputFolder) {
 		if err := os.MkdirAll(outputFolder, os.ModePerm); err != nil {
-			return false, err
+			return err
 		}
 	}
+	outputFile := filepath.Join(outputFolder, fmt.Sprintf("%s_%s.txt", fn, disp))
+	if err := file.LinesToAsciiFile(outputFile, lines); err != nil {
+		return err
+	}
+	logger.Info(colors.Colored(fmt.Sprintf("Wrote {%d} lines to {%s}", len(lines), outputFile)))
+	return nil
+}
 
-	indexChunk, err := index.NewChunkData(source)
+func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (bool, error) {
+	indexChunk, err := index.OpenIndex(source, true /* check */)
 	if err != nil {
 		return false, err
 	}
@@ -116,11 +106,10 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 	apps := make([]types.SimpleAppearance, 0, 500000)
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
 		s := simpleAppearanceTable{}
-		err := s.AddressRecord.ReadAddress(indexChunk.File)
-		if err != nil {
+		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
-		if s.Appearances, err = indexChunk.ReadAppearanceRecordsAndResetOffset(&s.AddressRecord); err != nil {
+		if s.Appearances, err = indexChunk.ReadAppearancesAndReset(&s.AddressRecord); err != nil {
 			return false, err
 		}
 		for _, app := range s.Appearances {
@@ -142,19 +131,101 @@ func (opts *ChunksOptions) exportTo(dest, source, outFn string) (bool, error) {
 		return apps[i].BlockNumber < apps[j].BlockNumber
 	})
 
+	filtered := func(app types.SimpleAppearance) bool {
+		return uint64(app.TransactionIndex) == types.Withdrawal
+		// return false
+	}
+
+	pre := make([]string, 0, len(apps))
 	out := make([]string, 0, len(apps))
+	post := make([]string, 0, len(apps))
 	for _, app := range apps {
-		if app.Address != base.SentinalAddr || uint64(app.TransactionIndex) != types.MisconfigReward {
-			out = append(out, fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address))
+		if !filtered(app) &&
+			(app.Address != base.SentinalAddr || uint64(app.TransactionIndex) != types.MisconfigReward) {
+			line := fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address)
+			bn := uint64(app.BlockNumber)
+			if bn < rd.In {
+				pre = append(pre, line)
+			} else if bn > rd.Out {
+				post = append(post, line)
+			} else {
+				out = append(out, line)
+			}
 		}
 	}
 
-	outputFile := filepath.Join(outputFolder, fmt.Sprintf("%s_apps.txt", outFn))
-	if err = file.LinesToAsciiFile(outputFile, out); err != nil {
+	outFn := os.Getenv("TB_CHUCKS_DIFFOUT")
+	if len(outFn) == 0 {
+		outFn = fmt.Sprintf("%d", rd.Mid)
+	}
+	if err = writeArray("apps", dest, outFn, out); err != nil {
 		return false, err
 	}
 
-	logger.Info(colors.Colored(fmt.Sprintf("Wrote {%d} lines to {%s}", len(out), outputFile)))
+	if len(pre) > 0 {
+		preFn := os.Getenv("TB_CHUNKS_PREOUT")
+		dets := ""
+		if len(preFn) == 0 {
+			preFn = fmt.Sprintf("%d-%d", rd.Min, rd.In-1)
+			dets = "pre"
+		}
+		if err = writeArray(dets, dest, preFn, pre); err != nil {
+			return false, err
+		}
+	}
+
+	if len(post) > 0 {
+		postFn := os.Getenv("TB_CHUNKS_POSTOUT")
+		dets := ""
+		if len(postFn) == 0 {
+			postFn = fmt.Sprintf("%d-%d", rd.Out+1, rd.Max)
+			dets = "post"
+		}
+		if err = writeArray(dets, dest, postFn, post); err != nil {
+			return false, err
+		}
+	}
 
 	return true, nil
+}
+
+// findFileByBlockNumber returns the path to a file whose range intersects the given block number.
+func findFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string, err error) {
+	walker := walk.NewCacheWalker(
+		chain,
+		false,
+		10000, /* maxTests */
+		func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			rng := base.RangeFromFilename(path)
+			if rng.IntersectsB(bn) {
+				fileName = index.ToIndexPath(path)
+				return false, nil // stop walking
+			}
+			return true, nil // continue walking
+		},
+	)
+	return fileName, walker.WalkRegularFolder(path, []base.Blknum{bn})
+}
+
+func (opts *ChunksOptions) getParams(chain, path string) (string, string, base.RangeDiff) {
+	srcPath := index.ToIndexPath(path)
+	thisRange := base.RangeFromFilename(srcPath)
+	tmpMark := thisRange.First + (thisRange.Last-thisRange.First)/2 // this mark is used to find the diffPath
+	diffPath := toDiffPath(chain, tmpMark)
+	diffRange := base.RangeFromFilename(diffPath)
+
+	return srcPath, diffPath, thisRange.Overlaps(diffRange)
+}
+
+func toDiffPath(chain string, tmpMark uint64) string {
+	diffPath := os.Getenv("TB_CHUNKS_DIFFPATH")
+	if !strings.Contains(diffPath, "unchained/") {
+		diffPath = filepath.Join(diffPath, "unchained/", chain, "finalized")
+	}
+	diffPath, _ = filepath.Abs(diffPath)
+	diffPath, _ = findFileByBlockNumber(chain, diffPath, tmpMark)
+	if !file.FileExists(diffPath) {
+		logger.Fatal(fmt.Sprintf("The diff path does not exist: [%s]", diffPath))
+	}
+	return diffPath
 }

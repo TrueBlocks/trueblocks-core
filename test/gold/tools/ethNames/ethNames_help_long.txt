@@ -1,6 +1,6 @@
 chifra names  --help
 Purpose:
-  Query addresses or names of well known accounts.
+  Query addresses or names of well-known accounts.
 
 Usage:
   chifra names [flags] <term> [term...]

@@ -60,23 +60,38 @@ func TestLog(notDefault bool, a ...interface{}) {
 var (
 	timingModeSet = false
 	timingMode    = true
+	decorationOff = false
 )
+
+func LogTimerOn() bool {
+	return timingMode
+}
+
+func ToggleDecoration() {
+	decorationOff = !decorationOff
+}
+
+func init() {
+	if !timingModeSet {
+		on := os.Getenv("TB_LOGTIMER_OFF") == ""
+		testing := os.Getenv("TEST_MODE") == "true"
+		timingMode = on && !testing
+		timingModeSet = true
+	}
+}
 
 // toLog prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <EROR>, etc.)
 func toLog(sev severity, a ...interface{}) {
-	if !timingModeSet {
-		timingModeSet = true
-		timingMode = os.Getenv("LOG_TIMING_OFF") == "" && os.Getenv("TEST_MODE") != "true"
-	}
-
 	timeDatePart := "DATE|TIME"
 	if timingMode {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}
 
-	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
+	if !decorationOff {
+		fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
+	}
 	if sev == progress {
 		for index, aa := range a {
 			if index > 0 {

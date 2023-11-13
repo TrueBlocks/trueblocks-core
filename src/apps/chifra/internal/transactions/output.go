@@ -21,43 +21,37 @@ import (
 // EXISTING_CODE
 
 // RunTransactions handles the transactions command for the command line. Returns error only as per cobra.
-func RunTransactions(cmd *cobra.Command, args []string) (err error) {
+func RunTransactions(cmd *cobra.Command, args []string) error {
 	opts := transactionsFinishParse(args)
-	outputHelpers.SetEnabledForCmds("transactions", opts.IsPorted())
+	outputHelpers.EnableCommand("transactions", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.SetWriterForCommand("transactions", &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, _ = opts.TransactionsInternal()
-	return
+	return opts.TransactionsInternal()
 }
 
-// ServeTransactions handles the transactions command for the API. Returns error and a bool if handled
-func ServeTransactions(w http.ResponseWriter, r *http.Request) (err error, handled bool) {
+// ServeTransactions handles the transactions command for the API. Returns an error.
+func ServeTransactions(w http.ResponseWriter, r *http.Request) error {
 	opts := transactionsFinishParseApi(w, r)
-	outputHelpers.SetEnabledForCmds("transactions", opts.IsPorted())
+	outputHelpers.EnableCommand("transactions", true)
+	// EXISTING_CODE
+	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("transactions", w, &opts.Globals)
-	// EXISTING_CODE
-	// EXISTING_CODE
-	err, handled = opts.TransactionsInternal()
+	err := opts.TransactionsInternal()
 	outputHelpers.CloseJsonWriterIfNeededApi("transactions", err, &opts.Globals)
-	return
+	return err
 }
 
-// TransactionsInternal handles the internal workings of the transactions command.  Returns error and a bool if handled
-func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool) {
-	err = opts.validateTransactions()
-	if err != nil {
-		return err, true
+// TransactionsInternal handles the internal workings of the transactions command.  Returns an error.
+func (opts *TransactionsOptions) TransactionsInternal() error {
+	var err error
+	if err = opts.validateTransactions(); err != nil {
+		return err
 	}
 
 	timer := logger.NewTimer()
 	msg := "chifra transactions"
 	// EXISTING_CODE
-	if !opts.IsPorted() {
-		logger.Fatal("Should never happen")
-	}
-
-	handled = true
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 
@@ -79,7 +73,7 @@ func (opts *TransactionsOptions) TransactionsInternal() (err error, handled bool
 	// EXISTING_CODE
 	timer.Report(msg)
 
-	return
+	return err
 }
 
 // GetTransactionsOptions returns the options for this tool so other tools may use it.
@@ -89,13 +83,6 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 		ret.Globals = *g
 	}
 	return ret
-}
-
-func (opts *TransactionsOptions) IsPorted() (ported bool) {
-	// EXISTING_CODE
-	ported = true
-	// EXISTING_CODE
-	return
 }
 
 // EXISTING_CODE

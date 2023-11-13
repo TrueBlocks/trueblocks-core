@@ -41,6 +41,39 @@ func NewVersion(str string) Version {
 	return vers
 }
 
+// IsValidVersion returns true if the string is a full version string
+func IsValidVersion(test string) bool {
+	test = strings.Replace(test, "trueblocks-core@", "", -1)
+	if !strings.HasPrefix(test, "v") {
+		return false
+	}
+	parts := strings.Split(test, "-")
+	if len(parts) > 2 {
+		return false
+	}
+	if len(parts) < 2 {
+		parts = append(parts, "beta")
+	}
+	if len(parts[1]) == 0 {
+		return false
+	}
+	parts[0] = strings.Replace(parts[0], "v", "", -1)
+	nums := strings.Split(parts[0], ".")
+	if len(nums) != 3 {
+		return false
+	}
+	for _, n := range nums {
+		if len(n) == 0 {
+			return false
+		}
+		t := strings.Trim(n, "0123456789")
+		if len(t) > 0 {
+			return false
+		}
+	}
+	return true
+}
+
 // Uint64 returns version as a single uint64
 func (ref *Version) Uint64() uint64 {
 	return uint64((ref.Major * 1000000) + (ref.Minor * 1000) + ref.Build)
@@ -49,8 +82,4 @@ func (ref *Version) Uint64() uint64 {
 // String prints the version to a string
 func (ref *Version) String() string {
 	return fmt.Sprintf("v%d.%d.%d-%s", ref.Major, ref.Minor, ref.Build, ref.Aspect)
-}
-
-func VersionString() string {
-	return strings.Replace(LibraryVersion, "GHC-TrueBlocks//", "v", -1)
 }

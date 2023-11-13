@@ -2,6 +2,7 @@ chifra abis  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --fmt txt --output outpu
 TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
+TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
 ----
 Results in ./output_test_file

@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -43,6 +44,7 @@ type NamesOptions struct {
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
 	crudData *CrudData
+	AutonameAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -127,6 +129,8 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Autoname, _ = opts.Conn.GetEnsAddress(opts.Autoname)
+	opts.AutonameAddr = base.HexToAddress(opts.Autoname)
 
 	// EXISTING_CODE
 	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)
@@ -153,6 +157,8 @@ func namesFinishParse(args []string) *NamesOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+	opts.Autoname, _ = opts.Conn.GetEnsAddress(opts.Autoname)
+	opts.AutonameAddr = base.HexToAddress(opts.Autoname)
 
 	// EXISTING_CODE
 	opts.Terms = append(opts.Terms, args...)
@@ -171,11 +177,12 @@ func GetOptions() *NamesOptions {
 	return &defaultNamesOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultNamesOptions = NamesOptions{}
 	globals.SetDefaults(&defaultNamesOptions.Globals)
+	defaultNamesOptions.Globals.TestMode = testMode
 	defaultNamesOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra names
 	// EXISTING_CODE

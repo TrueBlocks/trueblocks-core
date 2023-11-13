@@ -1,6 +1,6 @@
 chifra transactions  2222222.0 2332332.0 --fmt api
 TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  api
 Error: The --fmt option (api) must be one of [ json | txt | csv ]
 Usage:

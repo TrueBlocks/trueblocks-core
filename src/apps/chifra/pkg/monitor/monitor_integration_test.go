@@ -18,11 +18,11 @@ import (
 func Test_Monitor(t *testing.T) {
 	testAddr := "0xF503017d7bAf7fbc0fff7492b751025c6a78179b"
 
-	mon := NewMonitor("mainnet", base.HexToAddress(testAddr), true /* create */)
+	mon, _ := NewMonitor("mainnet", base.HexToAddress(testAddr), true /* create */)
 	path := mon.Path()
 	dir, fileName := filepath.Split(path)
 
-	if !strings.HasSuffix(dir, "/cache/mainnet/monitors/") {
+	if !strings.Contains(dir, "/cache/mainnet/monitors/") {
 		t.Error("Incorrect suffix in 'dir'. Expected: \"/cache/mainnet/monitors/\" Dir:", dir)
 	}
 

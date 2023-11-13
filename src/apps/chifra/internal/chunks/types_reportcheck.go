@@ -40,7 +40,6 @@ func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptio
 		"checkedCnt": s.CheckedCnt,
 		"visitedCnt": s.VisitedCnt,
 		"passedCnt":  s.PassedCnt,
-		"reason":     s.Reason,
 	}
 	order = []string{
 		"result",
@@ -48,20 +47,23 @@ func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptio
 		"visitedCnt",
 		"passedCnt",
 	}
-	if s.FailedCnt > 0 {
-		model["failedCnt"] = s.FailedCnt
-		order = append(order, "failedCnt")
-	}
-	if s.SkippedCnt > 0 {
-		model["skippedCnt"] = s.SkippedCnt
-		order = append(order, "skippedCnt")
-	}
-	order = append(order, "reason")
+
 	if format == "json" {
+		if s.FailedCnt > 0 {
+			model["failedCnt"] = s.FailedCnt
+		}
+		if s.SkippedCnt > 0 {
+			model["skippedCnt"] = s.SkippedCnt
+		}
+		model["reason"] = s.Reason
 		if len(s.MsgStrings) > 0 {
 			model["msgStrings"] = s.MsgStrings
-			order = append(order, "msgStrings")
 		}
+	} else {
+		model["skippedCnt"] = s.SkippedCnt
+		model["failedCnt"] = s.FailedCnt
+		model["reason"] = s.Reason
+		order = append(order, []string{"skippedCnt", "failedCnt", "reason"}...)
 	}
 	// EXISTING_CODE
 

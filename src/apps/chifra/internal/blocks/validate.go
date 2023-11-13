@@ -40,6 +40,10 @@ func (opts *BlocksOptions) validateBlocks() error {
 		}
 	}
 
+	if opts.tooMany() {
+		return validate.Usage("Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)")
+	}
+
 	if opts.ListCount == 0 {
 		err := validate.ValidateIdentifiers(
 			chain,
@@ -133,4 +137,24 @@ func (opts *BlocksOptions) validateBlocks() error {
 	}
 
 	return opts.Globals.Validate()
+}
+
+func (opts *BlocksOptions) tooMany() bool {
+	cnt := 0
+	if opts.Uncles {
+		cnt++
+	}
+	if opts.Traces {
+		cnt++
+	}
+	if opts.Uniq {
+		cnt++
+	}
+	if opts.Logs {
+		cnt++
+	}
+	if opts.Withdrawals {
+		cnt++
+	}
+	return !opts.Count && cnt > 1
 }

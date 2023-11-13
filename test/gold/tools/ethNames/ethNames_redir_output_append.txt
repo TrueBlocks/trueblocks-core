@@ -4,7 +4,8 @@ TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
 TEST[DATE|TIME] Format:  txt
-WARN[DATE|TIME] No results for [chifra names 0xf503017d7baf7fbc0fff7492b751025c6a78179b --output output_test_file --no_header --append]
+WARN[DATE|TIME] No known names found for [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+WARN[DATE|TIME] Original command: [chifra names 0xf503017d7baf7fbc0fff7492b751025c6a78179b --output output_test_file --no_header --append]
 ----
 Results in ./output_test_file
 tags	address	name	symbol	source	decimals	petname

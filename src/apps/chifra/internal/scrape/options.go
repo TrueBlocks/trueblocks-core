@@ -24,7 +24,7 @@ import (
 type ScrapeOptions struct {
 	BlockCnt     uint64                `json:"blockCnt,omitempty"`     // Maximum number of blocks to process per pass
 	Sleep        float64               `json:"sleep,omitempty"`        // Seconds to sleep between scraper passes
-	StartBlock   uint64                `json:"startBlock,omitempty"`   // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	Touch        uint64                `json:"touch,omitempty"`        // First block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	RunCount     uint64                `json:"runCount,omitempty"`     // Run the scraper this many times, then quit
 	Publisher    string                `json:"publisher,omitempty"`    // For some query options, the publisher of the index
 	DryRun       bool                  `json:"dryRun,omitempty"`       // Show the configuration that would be applied if run,no changes are made
@@ -38,17 +38,16 @@ type ScrapeOptions struct {
 }
 
 var defaultScrapeOptions = ScrapeOptions{
-	BlockCnt:  2000,
-	Publisher: "trueblocks.eth",
+	BlockCnt: 2000,
 }
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.BlockCnt != 2000, "BlockCnt: ", opts.BlockCnt)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
-	logger.TestLog(opts.StartBlock != 0, "StartBlock: ", opts.StartBlock)
+	logger.TestLog(opts.Touch != 0, "Touch: ", opts.Touch)
 	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Conn.TestLog(opts.getCaches())
@@ -67,7 +66,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts := &copy
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
-	opts.StartBlock = 0
+	opts.Touch = 0
 	opts.RunCount = 0
 	opts.Settings.AppsPerChunk = 2000000
 	opts.Settings.SnapToGrid = 250000
@@ -81,8 +80,8 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			opts.BlockCnt = globals.ToUint64(value[0])
 		case "sleep":
 			opts.Sleep = globals.ToFloat64(value[0])
-		case "startBlock":
-			opts.StartBlock = globals.ToUint64(value[0])
+		case "touch":
+			opts.Touch = globals.ToUint64(value[0])
 		case "runCount":
 			opts.RunCount = globals.ToUint64(value[0])
 		case "publisher":
@@ -108,7 +107,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
@@ -136,7 +135,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
@@ -161,11 +160,12 @@ func GetOptions() *ScrapeOptions {
 	return &defaultScrapeOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultScrapeOptions = ScrapeOptions{}
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
+	defaultScrapeOptions.Globals.TestMode = testMode
 	defaultScrapeOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra scrape
 	// EXISTING_CODE

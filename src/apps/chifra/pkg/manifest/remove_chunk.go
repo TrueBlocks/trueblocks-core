@@ -39,7 +39,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 	}()
 
 	var man *Manifest
-	man, err = ReadManifest(chain, publisher, FromCache)
+	man, err = ReadManifest(chain, publisher, LocalCache)
 	if err != nil {
 		return err
 	}
@@ -81,7 +81,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 		}
 	}
 	man.Chunks = newChunks
-	if err = man.SaveManifest(chain); err != nil {
+	if err = man.SaveManifest(chain, config.PathToManifest(chain)); err != nil {
 		return err
 	}
 

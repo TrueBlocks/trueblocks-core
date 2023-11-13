@@ -376,7 +376,7 @@ func readFunction(reader *bufio.Reader) (function *types.SimpleFunction, err err
 // getAbis reads all ABIs stored in the cache
 func getAbis(chain string) ([]types.SimpleFunction, error) {
 	fullPath := path.Join(config.PathToCache(chain), walk.CacheTypeToFolder[walk.Cache_Abis], "known.bin")
-	if f, err := os.Open(fullPath); err != nil {
+	if f, err := os.OpenFile(fullPath, os.O_RDONLY, 0); err != nil {
 		return nil, err
 
 	} else {
@@ -769,7 +769,8 @@ func insertAbi(chain string, address base.Address, inputReader io.Reader) error 
 // GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
 func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
 	filePath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], address.Hex()+".json")
-	f, err := os.Open(path.Join(config.PathToCache(chain), filePath))
+	fullPath := path.Join(config.PathToCache(chain), filePath)
+	f, err := os.OpenFile(fullPath, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}

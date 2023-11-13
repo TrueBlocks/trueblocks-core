@@ -24,13 +24,13 @@ TEST[DATE|TIME] Format:  json
             {
               "bloomSizeBytes": 131114,
               "fileDate": "--fileDate--",
-              "filename": "$indexPath/finalized/000000001-000590502.bin",
+              "filename": "$indexPath/finalized/000000001-000590510.bin",
               "firstApp": 1,
               "firstTs": 1438269988,
-              "indexSizeBytes": 16821060,
+              "indexSizeBytes": 16821332,
               "itemType": "indexCacheItem",
-              "latestApp": 590502,
-              "latestTs": 1448383558
+              "latestApp": 590510,
+              "latestTs": 1448383789
             }
           ],
           "lastCached": "--lastCached--",

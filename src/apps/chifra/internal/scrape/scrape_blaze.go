@@ -10,10 +10,10 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -91,9 +91,9 @@ func (bm *BlazeManager) ProcessBlocks(blockChannel chan base.Blknum, blockWg *sy
 		var err error
 		if sd.traces, err = bm.opts.Conn.GetTracesByBlockNumber(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
-		} else if sd.receipts, err = bm.opts.Conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
+		} else if sd.receipts, _, err = bm.opts.Conn.GetReceiptsByNumber(bn, base.Timestamp(sd.ts.Ts)); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
-		} else if sd.withdrawals, err = bm.opts.Conn.GetWithdrawalsByNumber(bn); err != nil {
+		} else if sd.withdrawals, sd.miner, err = bm.opts.Conn.GetMinerAndWithdrawals(bn); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 		} else {
 			appearanceChannel <- sd
@@ -109,17 +109,18 @@ func (bm *BlazeManager) ProcessAppearances(appearanceChannel chan scrapedData, a
 	defer appWg.Done()
 
 	for sData := range appearanceChannel {
-		addrMap := make(index.AddressBooleanMap)
-		if err = index.UniqFromTraces(bm.chain, sData.traces, addrMap); err != nil {
+		addrMap := make(uniq.AddressBooleanMap)
+		if err = uniq.UniqFromTraces(bm.chain, sData.traces, addrMap); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
-		} else if err = index.UniqFromReceipts(bm.chain, sData.receipts, addrMap); err != nil {
+		} else if err = uniq.UniqFromReceipts(bm.chain, sData.receipts, addrMap); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
-		} else if err = index.UniqFromWithdrawals(bm.chain, sData.withdrawals, sData.bn, addrMap); err != nil {
+		} else if err = uniq.UniqFromWithdrawals(bm.chain, sData.withdrawals, sData.bn, addrMap); err != nil {
 			bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 
 		} else {
+			_ = uniq.AddMiner(bm.chain, sData.miner, sData.bn, addrMap)
 			if err = bm.WriteAppearances(sData.bn, addrMap); err != nil {
 				bm.errors = append(bm.errors, scrapeError{block: sData.bn, err: err})
 			}
@@ -153,7 +154,7 @@ var writeMutex sync.Mutex
 // processedMap (the pointer would serve that purpose).
 
 // WriteAppearances writes the appearance for a chunk to a file
-func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap index.AddressBooleanMap) (err error) {
+func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBooleanMap) (err error) {
 	ripePath := config.PathToIndex(bm.chain) + "ripe/"
 	unripePath := config.PathToIndex(bm.chain) + "unripe/"
 
@@ -227,4 +228,5 @@ type scrapedData struct {
 	traces      []types.SimpleTrace
 	receipts    []types.SimpleReceipt
 	withdrawals []types.SimpleWithdrawal
+	miner       base.Address
 }

@@ -2,9 +2,9 @@ chifra state  --call '0x0902f1ad()' 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 1
 TEST[DATE|TIME] Addrs:  [0xbb2b8038a1640196fbe3e38816f3e67cba72d940]
 TEST[DATE|TIME] Blocks:  [10092000]
 TEST[DATE|TIME] Call:  0x0902f1ad()
-TEST[DATE|TIME] Caps:  cache,decache,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
-Error: the --call value provided (0x0902f1ad()) was not found: abi not found 
+Error: the --call value provided (0x0902f1ad()) was not found: abi not found for 0x0902f1ad(): abi not found 
 Usage:
   chifra state [flags] <address> [address...] [block...]
 

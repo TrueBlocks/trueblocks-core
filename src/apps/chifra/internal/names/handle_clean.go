@@ -7,10 +7,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"path/filepath"
 	"strings"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -29,7 +31,7 @@ func (opts *NamesOptions) HandleClean() error {
 		label = "regular"
 		db = names.DatabaseRegular
 	}
-	sourcePath := names.GetDatabasePath(chain, db)
+	sourcePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(db))
 	logger.Info("Processing", label, "names file", "("+sourcePath+")")
 	destinationLabel := sourcePath
 	if opts.DryRun {
@@ -103,12 +105,6 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 		}
 	}()
 
-	// For --dry_run, we don't want to write to the real database
-	var overrideDatabase names.Database
-	if opts.DryRun {
-		overrideDatabase = names.DatabaseDryRun
-	}
-
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	errorChan := make(chan error)
@@ -133,11 +129,11 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 
 		// update names in-memory cache
 		if opts.Regular {
-			if err = names.UpdateRegularName(&name); err != nil {
+			if err = names.UpdateName(names.DatabaseRegular, chain, &name); err != nil {
 				return wrapErrorWithAddr(&address, err)
 			}
 		} else {
-			if err = names.UpdateCustomName(&name); err != nil {
+			if err = names.UpdateName(names.DatabaseCustom, chain, &name); err != nil {
 				return wrapErrorWithAddr(&address, err)
 			}
 		}
@@ -157,10 +153,10 @@ func (opts *NamesOptions) cleanNames() (int, error) {
 
 	// Write to disk
 	if opts.Regular {
-		return modifiedCount, names.WriteRegularNames(chain, overrideDatabase)
+		return modifiedCount, names.WriteNames(names.DatabaseRegular, chain, opts.DryRun)
 	}
 
-	return modifiedCount, names.WriteCustomNames(chain, overrideDatabase)
+	return modifiedCount, names.WriteNames(names.DatabaseCustom, chain, opts.DryRun)
 }
 
 // wrapErrorWithAddr prepends `err` with `address`, so that we can learn which name caused troubles

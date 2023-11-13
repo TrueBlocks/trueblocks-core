@@ -5,6 +5,7 @@
 package exportPkg
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -24,6 +25,14 @@ func (opts *ExportOptions) validateExport() error {
 		return opts.BadFlag
 	}
 
+	if opts.LastBlock == 0 {
+		opts.LastBlock = utils.NOPOS
+	}
+
+	if opts.MaxRecords == 0 {
+		opts.MaxRecords = 250
+	}
+
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
@@ -41,8 +50,8 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option is currenlty disabled.", "--load")
 	}
 
-	if opts.TooManyOptions() {
-		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.")
+	if opts.tooMany() {
+		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.)")
 	}
 
 	if opts.Count {
@@ -51,19 +60,23 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if len(opts.Globals.File) == 0 {
-		if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
-			return err
-		}
+	if err := validate.ValidateAtLeastOneAddr(opts.Addrs); err != nil {
 		for _, a := range opts.Addrs {
 			if !base.IsValidAddress(a) {
-				if len(a) < 10 {
-					return validate.Usage("Invalid fourbyte: {0}", a)
-				} else if len(a) > 60 {
-					return validate.Usage("Invalid hash: {0}", a)
-				} else {
-					return validate.Usage("Invalid address: {0}", a)
-				}
+				logger.Error("Invalid address: {0}", a)
+			}
+		}
+		return err
+	}
+
+	for _, a := range opts.Addrs {
+		if !base.IsValidAddress(a) {
+			if len(a) < 10 {
+				return validate.Usage("Invalid fourbyte: {0}", a)
+			} else if len(a) > 60 {
+				return validate.Usage("Invalid hash: {0}", a)
+			} else {
+				return validate.Usage("Invalid address: {0}", a)
 			}
 		}
 	}
@@ -181,13 +194,11 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 	}
 
-	// Note that this does not return if the index is not initialized
-	if err := index.IndexIsInitialized(chain); err != nil {
-		if opts.Globals.IsApiMode() {
-			return err
-		} else {
+	if err := index.IsInitialized(chain, config.ExpectedVersion()); err != nil {
+		if (errors.Is(err, index.ErrNotInitialized) || errors.Is(err, index.ErrIncorrectHash)) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
 		}
+		return err
 	}
 
 	return opts.Globals.Validate()
@@ -198,7 +209,7 @@ func (opts *ExportOptions) validateExport() error {
 	// return err
 }
 
-func (opts *ExportOptions) TooManyOptions() bool {
+func (opts *ExportOptions) tooMany() bool {
 	cnt := 0
 	if opts.Appearances {
 		cnt++
@@ -216,6 +227,9 @@ func (opts *ExportOptions) TooManyOptions() bool {
 		cnt++
 	}
 	if opts.Accounting {
+		cnt++
+	}
+	if opts.Withdrawals {
 		cnt++
 	}
 	return cnt > 1

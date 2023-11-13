@@ -138,3 +138,20 @@ func (r *FileRange) Equals(needle FileRange) bool {
 func (r *FileRange) Span() uint64 {
 	return r.Last - r.First + 1
 }
+
+type RangeDiff struct {
+	Min uint64
+	In  uint64
+	Mid uint64
+	Out uint64
+	Max uint64
+}
+
+func (r *FileRange) Overlaps(test FileRange) (rd RangeDiff) {
+	rd.Min = utils.Min(r.First, test.First)
+	rd.In = utils.Max(r.First, test.First)
+	rd.Out = utils.Min(r.Last, test.Last)
+	rd.Max = utils.Max(r.Last, test.Last)
+	rd.Mid = (rd.Max-rd.Min)/2 + rd.Min
+	return
+}

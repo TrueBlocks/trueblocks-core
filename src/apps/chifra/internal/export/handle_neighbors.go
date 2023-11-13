@@ -11,7 +11,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -35,12 +34,12 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 			} else if !opts.NoZero || cnt > 0 {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
-					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
-				allNeighbors := make([]index.Reason, 0)
+				allNeighbors := make([]Reason, 0)
 				iterFunc := func(app types.SimpleAppearance, unused *bool) error {
-					if neighbors, err := index.GetNeighbors(&app); err != nil {
+					if neighbors, err := GetNeighbors(&app); err != nil {
 						return err
 					} else {
 						allNeighbors = append(allNeighbors, neighbors...)
@@ -334,7 +333,7 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
                     appHere.transactionIndex = found->tx;
                     appHere.address = bytes_2_Addr(theIndex->getAddressAt(i)->bytes);
                     if (assignReason(ledgerManager.name, appHere, trav->trans)) {
-                        trav->nProcessed++;
+                        trav->n Processed++;
                         if (!prog_Log(trav, this))
                             return false;
                         showApp(appHere, this);
@@ -593,3 +592,15 @@ class CIndexArchiveWithNeighborMaps : public CIndexArchive {
 };
 
 */
+
+func GetNeighbors(app *types.SimpleAppearance) ([]Reason, error) {
+	reasons := make([]Reason, 0)
+	reasons = append(reasons, Reason{App: app, Address: &app.Address, Reason: "self"})
+	return reasons, nil
+}
+
+type Reason struct {
+	App     *types.SimpleAppearance
+	Address *base.Address
+	Reason  string
+}

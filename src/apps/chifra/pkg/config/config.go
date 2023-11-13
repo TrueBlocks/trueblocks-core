@@ -12,7 +12,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
@@ -23,20 +22,35 @@ var trueBlocksViper = viper.New()
 var trueBlocksConfig ConfigFile
 
 type ConfigFile struct {
-	Version  versionGroup          `toml:"version"`
-	Settings settingsGroup         `toml:"settings"`
-	Keys     map[string]keyGroup   `toml:"keys"`
-	Chains   map[string]chainGroup `toml:"chains"`
+	Version   versionGroup          `toml:"version"`
+	Settings  settingsGroup         `toml:"settings"`
+	Keys      map[string]keyGroup   `toml:"keys"`
+	Pinning   pinningGroup          `toml:"pinning"`
+	Unchained unchainedGroup        `toml:"unchained"`
+	Chains    map[string]chainGroup `toml:"chains"`
 }
 
 // init sets up default values for the given configuration
 func init() {
 	trueBlocksViper.SetConfigName("trueBlocks") // trueBlocks.toml (so we can find it)
+	// The location of the per chain caches
 	trueBlocksViper.SetDefault("Settings.CachePath", PathToRootConfig()+"cache/")
+	// The location of the per chain unchained indexes
 	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
+	// The default chain to use if none is provided
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
-	trueBlocksViper.SetDefault("Settings.DefaultGateway", "https://ipfs.unchainedindex.io/ipfs")
-	trueBlocksViper.SetDefault("Settings.LocalGateway", "http://localhost:5001")
+	// The pinning gateway to query when downloading the unchained index
+	trueBlocksViper.SetDefault("Pinning.GatewayUrl", defaultIpfsGateway)
+	// The local endpoint for the IPFS daemon
+	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
+	// The remote endpoint for pinning on Pinata
+	trueBlocksViper.SetDefault("Pinning.RemotePinUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
+	// A warning to the user not to edit the [unchained] section of the config file
+	trueBlocksViper.SetDefault("Unchained.Comment", "Use this to customize the Unchained Index")
+	// The default publisher of the index of none other is provided
+	trueBlocksViper.SetDefault("Unchained.PreferredPublisher", "publisher.unchainedindex.eth")
+	// V2: The address of the current version of the Unchained Index
+	trueBlocksViper.SetDefault("Unchained.SmartContract", "0x0c316b7042b419d07d343f2f4f5bd54ff731183d")
 }
 
 var configMutex sync.Mutex
@@ -71,6 +85,9 @@ func GetRootConfig() *ConfigFile {
 	}
 	cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
 	cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
+	if !strings.Contains(cachePath, "/cache") {
+		cachePath = filepath.Join(cachePath, "cache")
+	}
 	trueBlocksConfig.Settings.CachePath = cachePath
 
 	indexPath := trueBlocksConfig.Settings.IndexPath
@@ -79,26 +96,18 @@ func GetRootConfig() *ConfigFile {
 	}
 	indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
 	indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
+	if !strings.Contains(indexPath, "/unchained") {
+		indexPath = filepath.Join(indexPath, "unchained")
+	}
 	trueBlocksConfig.Settings.IndexPath = indexPath
 
 	if len(trueBlocksConfig.Settings.DefaultChain) == 0 {
 		trueBlocksConfig.Settings.DefaultChain = "mainnet"
 	}
 
-	// We establish only the top-level folders here. When we figure out
-	// which chain we're on (not until the user tells us on the command line)
-	// only then can we complete these paths. At this point these paths
-	// only point to the top-levl of the cache or index. Also note that
-	// these two calls do not return if they fail, so no need to handle errors
-	defaultChains := []string{"mainnet", "sepolia", trueBlocksConfig.Settings.DefaultChain}
-	_ = file.EstablishFolders(trueBlocksConfig.Settings.CachePath, defaultChains)
-	_ = file.EstablishFolders(trueBlocksConfig.Settings.IndexPath, defaultChains)
-
-	requiredVer := version.NewVersion("v1.0.0-release")
+	// migrate the config file if necessary (note that this does not return if the file is migrated).
 	currentVer := version.NewVersion(trueBlocksConfig.Version.Current)
-	if currentVer.Uint64() < requiredVer.Uint64() {
-		_ = UpgradeConfigs(requiredVer) // does not return
-	}
+	_ = migrate(currentVer)
 
 	// clean up the config data
 	for chain, ch := range trueBlocksConfig.Chains {
@@ -112,12 +121,14 @@ func GetRootConfig() *ConfigFile {
 			return url
 		}
 		ch.Chain = chain
-		if len(ch.IpfsGateway) == 0 {
-			ch.IpfsGateway = clean(trueBlocksConfig.Settings.DefaultGateway)
+		isDefaulted := len(ch.IpfsGateway) == 0 || strings.Trim(ch.IpfsGateway, "/") == strings.Trim(defaultIpfsGateway, "/")
+		if isDefaulted {
+			ch.IpfsGateway = trueBlocksConfig.Pinning.GatewayUrl
 		}
+		ch.IpfsGateway = strings.Replace(ch.IpfsGateway, "[{CHAIN}]", "ipfs", -1)
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
-		ch.RpcProvider = clean(ch.RpcProvider)
+		ch.RpcProvider = strings.Trim(clean(ch.RpcProvider), "/") // Infura, for example, doesn't like the trailing slash
 		ch.IpfsGateway = clean(ch.IpfsGateway)
 		if ch.Scrape.AppsPerChunk == 0 {
 			settings := ScrapeSettings{
@@ -138,6 +149,12 @@ func GetRootConfig() *ConfigFile {
 	}
 	configLoaded = true
 	return &trueBlocksConfig
+}
+
+// PathToConfigFile returns the path where to find the configuration file
+func PathToConfigFile() string {
+	configFolder := PathToRootConfig()
+	return filepath.Join(configFolder, "trueBlocks.toml")
 }
 
 // PathToRootConfig returns the path where to find configuration files

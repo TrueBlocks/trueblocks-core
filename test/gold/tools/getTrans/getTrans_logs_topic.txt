@@ -2,7 +2,7 @@ chifra transactions  9004225.10 --logs --fmt json --topic 0xddf252ad1be2c89b69c2
 TEST[DATE|TIME] Transactions:  [9004225.10]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
-TEST[DATE|TIME] Caps:  cache,decache,raw,wei,ether
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 {
   "data": [

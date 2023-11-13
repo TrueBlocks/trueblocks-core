@@ -38,7 +38,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 			} else if !opts.NoZero || cnt > 0 {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
-					Enabled: !opts.Globals.TestMode && len(opts.Globals.File) == 0,
+					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
 				if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
@@ -83,7 +83,6 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"ether":      opts.Globals.Ether,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

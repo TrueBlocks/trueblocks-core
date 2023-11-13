@@ -70,7 +70,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 	}
 
 	if function == nil {
-		return nil, suggestions, ErrAbiNotFound
+		return nil, suggestions, fmt.Errorf("abi not found for %s: %s", theCall, ErrAbiNotFound)
 	}
 
 	var args []any

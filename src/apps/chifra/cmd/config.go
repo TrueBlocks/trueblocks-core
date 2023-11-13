@@ -57,7 +57,7 @@ func init() {
 	configCmd.Flags().SortFlags = false
 
 	configCmd.Flags().BoolVarP(&configPkg.GetOptions().Paths, "paths", "a", false, "show the configuration paths for the system")
-	globals.InitGlobals(configCmd, &configPkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("config", configCmd, &configPkg.GetOptions().Globals, capabilities)
 
 	configCmd.SetUsageTemplate(UsageWithNotes(notesConfig))
 	configCmd.SetOut(os.Stderr)

@@ -24,34 +24,35 @@ func (opts *ChunksOptions) HandleIndex(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		showIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-			if path != index.ToBloomPath(path) {
+		showIndex := func(walker *walk.CacheWalker, fileName string, first bool) (bool, error) {
+			if fileName != index.ToBloomPath(fileName) {
 				return false, fmt.Errorf("should not happen in showIndex")
 			}
 
-			path = index.ToIndexPath(path)
-			if !file.FileExists(path) {
+			fileName = index.ToIndexPath(fileName)
+			if !file.FileExists(fileName) {
 				// Bloom files exist, but index files don't. It's okay.
 				return true, nil
 			}
 
-			header, err := index.ReadChunkHeader(path, true)
+			indexChunk, err := index.OpenIndex(fileName, true /* check */)
 			if err != nil {
 				return false, err
 			}
+			defer indexChunk.File.Close()
 
-			rng, err := base.RangeFromFilenameE(path)
+			rng, err := base.RangeFromFilenameE(fileName)
 			if err != nil {
 				return false, err
 			}
 
 			s := simpleChunkIndex{
 				Range:        rng.String(),
-				Magic:        fmt.Sprintf("0x%x", header.Magic),
-				Hash:         base.HexToHash(header.Hash.Hex()),
-				NAddresses:   uint64(header.AddressCount),
-				NAppearances: uint64(header.AppearanceCount),
-				Size:         uint64(file.FileSize(path)),
+				Magic:        fmt.Sprintf("0x%x", indexChunk.Header.Magic),
+				Hash:         indexChunk.Header.Hash,
+				NAddresses:   uint64(indexChunk.Header.AddressCount),
+				NAppearances: uint64(indexChunk.Header.AppearanceCount),
+				Size:         uint64(file.FileSize(fileName)),
 			}
 
 			modelChan <- &s

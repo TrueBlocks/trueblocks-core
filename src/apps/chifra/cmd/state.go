@@ -62,7 +62,6 @@ func init() {
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Wei)
 	// EXISTING_CODE
 
 	stateCmd.Flags().SortFlags = false
@@ -74,7 +73,7 @@ One or more of [ none | some | all | balance | nonce | code | proxy | deployed |
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, "for the --call option only, articulate the retrieved data if ABIs can be found")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation")
-	globals.InitGlobals(stateCmd, &statePkg.GetOptions().Globals, capabilities)
+	globals.InitGlobals("state", stateCmd, &statePkg.GetOptions().Globals, capabilities)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	stateCmd.SetOut(os.Stderr)

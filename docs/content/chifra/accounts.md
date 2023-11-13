@@ -100,7 +100,7 @@ its destination are up to you.
 
 ```[plaintext]
 Purpose:
-  Export full detail of transactions for one or more addresses.
+  Export full details of transactions for one or more addresses.
 
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
@@ -119,6 +119,7 @@ Flags:
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
   -b, --balances            traverse the transaction history and show each change in ETH balances
+  -i, --withdrawals         export withdrawals for the given address
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -R, --cache_traces        force the transaction's traces into the cache
   -U, --count               only available for --appearances mode, if present, return only the number of records
@@ -154,6 +155,7 @@ Notes:
   - The _block and _record filters are ignored when used with the --count option.
   - If the --reversed option is present, the appearance list is reversed prior to all processing (including filtering).
   - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
+  - The --withdrawals option is only available on certain chains. It is ignored otherwise.
 ```
 
 Data models produced by this tool:
@@ -244,6 +246,7 @@ Flags:
   -c, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
   -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
   -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
+  -D, --decache            removes related items from the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose output
   -h, --help               display this help screen
@@ -285,7 +288,7 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 
 ```[plaintext]
 Purpose:
-  Query addresses or names of well known accounts.
+  Query addresses or names of well-known accounts.
 
 Usage:
   chifra names [flags] <term> [term...]
@@ -357,7 +360,8 @@ Flags:
   -f, --find strings    search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings    for the --find option only, provide hints to speed up the search
   -e, --encode string   generate the 32-byte encoding for a given cannonical function or event signature
-  -C, --clean           remove an abi file for an address or all zero-length files if no address is given
+  -o, --cache           force the results of the query into the cache
+  -D, --decache         removes related items from the cache
   -x, --fmt string      export format, one of [none|json*|txt|csv]
   -v, --verbose         enable verbose output
   -h, --help            display this help screen

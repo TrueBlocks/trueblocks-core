@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -38,6 +39,7 @@ type TransactionsOptions struct {
 	Conn           *rpc.Connection          `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
+	AccountForAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -111,6 +113,7 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
+	opts.AccountForAddr = base.HexToAddress(opts.AccountFor)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -138,6 +141,7 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
 	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
+	opts.AccountForAddr = base.HexToAddress(opts.AccountFor)
 
 	// EXISTING_CODE
 	opts.Transactions = args
@@ -156,18 +160,18 @@ func GetOptions() *TransactionsOptions {
 	return &defaultTransactionsOptions
 }
 
-func ResetOptions() {
+func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
 	defaultTransactionsOptions = TransactionsOptions{}
 	globals.SetDefaults(&defaultTransactionsOptions.Globals)
+	defaultTransactionsOptions.Globals.TestMode = testMode
 	defaultTransactionsOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra transactions
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
-	capabilities = capabilities.Add(caps.Raw)
 	capabilities = capabilities.Add(caps.Ether)
-	capabilities = capabilities.Add(caps.Wei)
+	capabilities = capabilities.Add(caps.Raw)
 	// EXISTING_CODE
 	defaultTransactionsOptions.Globals.Caps = capabilities
 }
