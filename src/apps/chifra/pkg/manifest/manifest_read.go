@@ -38,7 +38,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		}
 	}
 
-	if (source == Contract || !exists) && source&NoUpdate == 0 {
+	if source == TempContract || source == FromContract || !exists {
 		database := chain
 		cid, err := ReadUnchainedIndex(chain, publisher, database)
 		if err != nil {
@@ -60,8 +60,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 			msg := fmt.Sprintf("The remote manifest's chain (%s) does not match the cached manifest's chain (%s).", newManifest.Chain, chain)
 			return newManifest, errors.New(msg)
 		}
-
-		if !exists || shouldWrite(man, newManifest) {
+		if source != TempContract {
 			err = newManifest.SaveManifest(chain, manifestFn)
 			if err != nil {
 				return nil, err
@@ -75,11 +74,14 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 	for i := range man.Chunks {
 		man.ChunkMap[man.Chunks[i].Range] = &man.Chunks[i]
 	}
-	if man.Specification == "" {
-		man.Specification = base.IpfsHash(config.Specification)
-	}
 
 	return man, nil
+}
+
+var specification = "QmUyyU8wKW57c3CuwphhMdZb2QA5bsjt9vVfTE6LcBKmE9"
+
+func Specification() string {
+	return specification
 }
 
 // readManifestFile reads the manifest from a file.
@@ -98,11 +100,4 @@ func readManifestFile(path string) (*Manifest, error) {
 	}
 
 	return man, nil
-}
-
-func shouldWrite(newMan, man *Manifest) bool {
-	diffLen := len(newMan.Chunks) != len(man.Chunks)
-	diffSpec := newMan.Specification != man.Specification
-	diffVers := newMan.Version != man.Version
-	return diffLen || diffSpec || diffVers
 }

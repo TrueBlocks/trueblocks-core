@@ -1,25 +1,18 @@
 package history
 
 import (
-	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-func getFilename(chain string) string {
-	return filepath.Join(config.PathToCache(chain), "tmp/history.txt")
-}
-
 // FromHistoryBool retrieves a key/value pair from the history file
-func FromHistoryBool(chain, key string) bool {
-	return strings.ToLower(FromHistory(chain, key)) == "true"
+func FromHistoryBool(historyFile, key string) bool {
+	return strings.ToLower(FromHistory(historyFile, key)) == "true"
 }
 
 // FromHistory retrieves a key/value pair from the history file
-func FromHistory(chain, key string) string {
-	historyFile := getFilename(chain)
+func FromHistory(historyFile, key string) string {
 	lines := file.AsciiFileToLines(historyFile)
 	for _, line := range lines {
 		if strings.HasPrefix(line, key+"=") {
@@ -30,8 +23,7 @@ func FromHistory(chain, key string) string {
 }
 
 // ToHistory stores a key/value pair in the history file
-func ToHistory(chain, key, value string) error {
-	historyFile := getFilename(chain)
+func ToHistory(historyFile, key, value string) error {
 	lines := file.AsciiFileToLines(historyFile)
 	for i, line := range lines {
 		if strings.HasPrefix(line, key+"=") {

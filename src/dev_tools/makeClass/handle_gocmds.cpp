@@ -381,7 +381,6 @@ string_q get_godefaults(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members)) {
         if (!isDef(p)) {
             string_q val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
-            val = substitute(val, "trueblocks.eth", "\"trueblocks.eth\"");
             os << "\t" << padRight(p.Format("[{VARIABLE}]") + ": ", wid + 2, ' ') << val << "," << endl;
         }
     }
@@ -537,6 +536,10 @@ string_q get_ens_convert1(const CCommandOption& cmd) {
             if (containsI(p.real_type, "address_t")) {
                 str += "\n\topts.[{VARIABLE}]Addr = base.HexToAddress(opts.[{VARIABLE}])";
             }
+            if (p.longName % "publisher") {
+                replace(str, "opts.Conn.GetEnsAddress(opts.[{VARIABLE}])",
+                        "opts.Conn.GetEnsAddress(config.GetPublisher(opts.[{VARIABLE}]))");
+            }
             os << p.Format(str) << endl;
         }
     }
@@ -551,6 +554,10 @@ string_q get_ens_convert2(const CCommandOption& cmd) {
             if (containsI(p.real_type, "address_t")) {
                 str += "\n\topts.[{VARIABLE}]Addr = base.HexToAddress(opts.[{VARIABLE}])";
             }
+            if (p.longName % "publisher") {
+                replace(str, "opts.Conn.GetEnsAddress(opts.[{VARIABLE}])",
+                        "opts.Conn.GetEnsAddress(config.GetPublisher(opts.[{VARIABLE}]))");
+            }
             os << p.Format(str) << endl;
         }
     }
@@ -559,7 +566,7 @@ string_q get_ens_convert2(const CCommandOption& cmd) {
 
 string_q get_config_package(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.members))
-        if (p.generate == "config")
+        if (p.longName % "publisher" || p.generate == "config")
             return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config\"\n";
     return "";
 }
@@ -580,10 +587,10 @@ string_q get_base_package(const string_q& fn) {
 }
 
 string_q get_index_package(const string_q& fn) {
-    string_q existing = asciiFileToString(fn);
-    if (contains(existing, "index.")) {
-        return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index\"\n";
-    }
+    // string_q existing = asciiFileToString(fn);
+    // if (contains(existing, "index.")) {
+    //     return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index\"\n";
+    // }
     return "";
 }
 

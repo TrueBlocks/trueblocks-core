@@ -1,5 +1,6 @@
 chifra chunks  index --tag not.a.tag
 TEST[DATE|TIME] Mode:  index
+TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
 TEST[DATE|TIME] Tag:  not.a.tag
 TEST[DATE|TIME] Format:  txt
 Error: The --tag (not.a.tag) must be a valid version string.
@@ -15,7 +16,7 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
-  -P, --publisher string   for some query options, the publisher of the index (hidden) (default "trueblocks.eth")
+  -P, --publisher string   for some query options, the publisher of the index (hidden)
   -n, --truncate uint      truncate the entire index at this block (requires a block identifier) (hidden)
   -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk

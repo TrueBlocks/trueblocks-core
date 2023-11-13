@@ -33,7 +33,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 				return true, nil
 			}
 
-			indexChunk, err := index.OpenIndex(path)
+			indexChunk, err := index.OpenIndex(path, true /* check */)
 			if err != nil {
 				return false, err
 			}

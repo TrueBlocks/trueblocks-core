@@ -88,7 +88,7 @@ func (s *simpleChunkStats) Model(chain, format string, verbose bool, extraOption
 
 // EXISTING_CODE
 func GetChunkStats(chain, path string) (s simpleChunkStats, err error) {
-	chunk, err := index.OpenChunk(path)
+	chunk, err := index.OpenChunk(path, true /* check */)
 	if err != nil && !os.IsNotExist(err) {
 		return s, err
 	}

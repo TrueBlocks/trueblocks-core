@@ -42,6 +42,13 @@ type jobResult struct {
 
 type progressChan chan<- *progress.ProgressMsg
 
+// Types of errors put into the progressChannel
+
+var ErrFailedLocalFileRemoval = errors.New("failed to remove local file")
+var ErrUserHitControlC = errors.New("user hit control + c")
+var ErrDownloadError = errors.New("download error")
+var ErrWriteToDiscError = errors.New("write to disc error")
+
 // WorkerArguments are types meant to hold worker function arguments. We cannot
 // pass the arguments directly, because a worker function is expected to take one
 // parameter of type interface{}.
@@ -112,7 +119,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 					progressChannel <- &progress.ProgressMsg{
 						Payload: &chunk,
 						Event:   progress.Error,
-						Message: workerArgs.ctx.Err().Error(),
+						Error:   fmt.Errorf("%w [%s]", ErrUserHitControlC, workerArgs.ctx.Err().Error()),
 					}
 					return
 				}
@@ -127,7 +134,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 					progressChannel <- &progress.ProgressMsg{
 						Payload: &chunk,
 						Event:   progress.Error,
-						Message: err.Error(),
+						Error:   fmt.Errorf("%w [%s]", ErrDownloadError, err.Error()),
 					}
 				}
 			}
@@ -157,7 +164,6 @@ func fetchFromIpfsGateway(ctx context.Context, gateway, hash string) (*fetchResu
 		return nil, err
 	}
 	if response.StatusCode != 200 {
-		// logger.Fatalln("DefaultClient.Do returned StatusCode not equal to 200 in FetFromGateway with", url)
 		return nil, fmt.Errorf("fetch to %s returned status code: %d", url, response.StatusCode)
 	}
 	body := response.Body
@@ -203,7 +209,7 @@ func getWriteWorker(chain string, workerArgs writeWorkerArguments, chunkType wal
 				progressChannel <- &progress.ProgressMsg{
 					Payload: res.theChunk,
 					Event:   progress.Error,
-					Message: err.Error(),
+					Error:   fmt.Errorf("%w [%s]", ErrWriteToDiscError, err.Error()),
 				}
 				return
 			}
@@ -306,7 +312,7 @@ func writeBytesToDisc(chain string, chunkType walk.CacheType, res *jobResult) er
 		return fmt.Errorf("error creating output file file %s in writeBytesToDisc: [%s]", res.rng, err)
 	}
 
-	// Unzip and save content to a file
+	// Save downloaded bytes to a file
 	_, err = io.Copy(outputFile, res.contents)
 	if err != nil {
 		if file.FileExists(outputFile.Name()) {
@@ -332,8 +338,8 @@ func removeLocalFile(fullPath, reason string, progressChannel progressChan) bool
 		err := os.Remove(fullPath)
 		if err != nil {
 			progressChannel <- &progress.ProgressMsg{
-				Event:   progress.Error,
-				Message: fmt.Sprintf("Failed to remove file %s [%s]", fullPath, err.Error()),
+				Event: progress.Error,
+				Error: fmt.Errorf("%w %s [%s]", ErrFailedLocalFileRemoval, fullPath, err.Error()),
 			}
 		} else {
 			progressChannel <- &progress.ProgressMsg{

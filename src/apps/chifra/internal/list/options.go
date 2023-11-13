@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -45,7 +46,6 @@ type ListOptions struct {
 
 var defaultListOptions = ListOptions{
 	MaxRecords: 250,
-	Publisher:  "trueblocks.eth",
 	LastBlock:  utils.NOPOS,
 }
 
@@ -60,7 +60,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
@@ -117,7 +117,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
@@ -145,7 +145,7 @@ func listFinishParse(args []string) *ListOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE

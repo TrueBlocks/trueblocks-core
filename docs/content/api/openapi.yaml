@@ -222,7 +222,7 @@ paths:
       tags:
         - Accounts
       summary: Export details
-      description: Export full detail of transactions for one or more addresses. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+      description: Export full details of transactions for one or more addresses. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
       operationId: accounts-export
       parameters:
         - name: addrs
@@ -685,7 +685,7 @@ paths:
       tags:
         - Accounts
       summary: Names
-      description: Query addresses or names of well known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
+      description: Query addresses or names of well-known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
       operationId: accounts-names
       parameters:
         - name: terms

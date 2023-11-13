@@ -12,6 +12,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -74,15 +75,21 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 		return fileNames[i] < fileNames[j]
 	})
 
-	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache|manifest.NoUpdate)
+	cacheManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
 		return err, false
 	}
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Contract)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)
 	if err != nil {
 		return err, false
 	}
+	historyFile := config.PathToRootConfig() + "unchained.txt"
+	saved := history.FromHistory(historyFile, "headerVersion")
+	defer func() {
+		_ = history.ToHistory(historyFile, "headerVersion", saved)
+	}()
+	_ = history.ToHistory(historyFile, "headerVersion", remoteManifest.Version)
 
 	// a string array of the actual files in the index
 	fnArray := []string{}

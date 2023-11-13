@@ -42,7 +42,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		if !version.IsValidVersion(opts.Tag) {
 			return validate.Usage("The {0} ({1}) must be a valid version string.", "--tag", opts.Tag)
 		}
-		if opts.Tag != "v2.0.0-release" && opts.Tag != "trueblocks-core@v2.0.0-release" {
+		if !config.KnownVersionTag(opts.Tag) {
 			return validate.Usage("The only valid value for {0} is {1}.", "--tag", "trueblocks-core@v2.0.0-release")
 		}
 	}
@@ -235,13 +235,17 @@ func (opts *ChunksOptions) validateChunks() error {
 		// }
 	}
 
-	if err := index.IsInitialized(chain, config.HeaderVersion); err != nil {
-		if errors.Is(err, index.ErrNotInitialized) && !opts.Globals.IsApiMode() {
+	if err := index.IsInitialized(chain, config.ExpectedVersion()); err != nil {
+		isTag := len(opts.Tag) != 0
+		isRemoteMan := opts.Mode == "manifest" && opts.Remote
+		if (errors.Is(err, index.ErrNotInitialized) || errors.Is(err, index.ErrIncorrectHash)) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
-		} else if len(opts.Tag) == 0 {
-			return err
+		} else {
+			if !isTag && !isRemoteMan {
+				return err
+			}
 		}
-		// It's okay to mismatch versions if we're tagging
+		// It's okay to mismatch versions if we're tagging or downloading a new manifest
 	}
 
 	return opts.Globals.Validate()

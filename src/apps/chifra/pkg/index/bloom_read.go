@@ -28,8 +28,8 @@ func (bl *Bloom) Read(fileName string) (err error) {
 		bl.File = nil
 	}()
 
-	_, _ = bl.File.Seek(0, io.SeekStart)   // already true, but can't hurt
-	if err = bl.readHeader(); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
+	_, _ = bl.File.Seek(0, io.SeekStart)                   // already true, but can't hurt
+	if err = bl.readHeader(true /* check */); err != nil { // Note that it may not find a header, but it leaves the file pointer pointing to the count
 		return err
 	}
 
@@ -53,7 +53,7 @@ func (bl *Bloom) Read(fileName string) (err error) {
 }
 
 // readHeader reads a bloom file header into Bloom.
-func (bl *Bloom) readHeader() error {
+func (bl *Bloom) readHeader(check bool) error {
 
 	// Set HeaderSize to 0.
 	bl.HeaderSize = 0
@@ -77,8 +77,10 @@ func (bl *Bloom) readHeader() error {
 	bl.HeaderSize = int64(unsafe.Sizeof(bl.Header))
 
 	// Validate hash against provided tag.
-	if bl.Header.Hash != base.BytesToHash(config.SpecVersionKeccak()) {
-		return fmt.Errorf("Bloom.readHeader: %w %x %x", ErrIncorrectHash, bl.Header.Hash, base.BytesToHash(config.SpecVersionKeccak()))
+	if check {
+		if bl.Header.Hash != base.BytesToHash(config.HeaderHash(config.ExpectedVersion())) {
+			return fmt.Errorf("Bloom.readHeader: %w %x %x", ErrIncorrectHash, bl.Header.Hash, base.BytesToHash(config.HeaderHash(config.ExpectedVersion())))
+		}
 	}
 
 	return nil

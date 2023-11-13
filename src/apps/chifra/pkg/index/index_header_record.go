@@ -20,7 +20,7 @@ type indexHeader struct {
 	AppearanceCount uint32
 }
 
-func (chunk *Index) readHeader() (indexHeader, error) {
+func (chunk *Index) readHeader(check bool) (indexHeader, error) {
 	var header indexHeader
 
 	_, _ = chunk.File.Seek(0, io.SeekStart) // already true, but can't hurt
@@ -28,12 +28,15 @@ func (chunk *Index) readHeader() (indexHeader, error) {
 		return header, err
 	}
 
+	// always check the magic number
 	if header.Magic != file.MagicNumber {
 		return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectMagic, header.Magic, file.MagicNumber)
 	}
 
-	if header.Hash != base.BytesToHash(config.SpecVersionKeccak()) {
-		return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectHash, header.Hash, base.BytesToHash(config.SpecVersionKeccak()))
+	if check { // check if told to do so
+		if header.Hash != base.BytesToHash(config.HeaderHash(config.ExpectedVersion())) {
+			return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectHash, header.Hash, base.BytesToHash(config.HeaderHash(config.ExpectedVersion())))
+		}
 	}
 
 	return header, nil

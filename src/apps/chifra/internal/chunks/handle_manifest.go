@@ -14,7 +14,7 @@ import (
 
 var sourceMap = map[bool]manifest.Source{
 	false: manifest.LocalCache,
-	true:  manifest.Contract,
+	true:  manifest.FromContract,
 }
 
 func (opts *ChunksOptions) HandleManifest(blockNums []uint64) error {

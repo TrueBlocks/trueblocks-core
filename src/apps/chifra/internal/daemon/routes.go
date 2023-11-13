@@ -52,7 +52,7 @@ func RouteList(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteExport Export full detail of transactions for one or more addresses.
+// RouteExport Export full details of transactions for one or more addresses.
 func RouteExport(w http.ResponseWriter, r *http.Request) {
 	if err := exportPkg.ServeExport(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
@@ -66,7 +66,7 @@ func RouteMonitors(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteNames Query addresses or names of well known accounts.
+// RouteNames Query addresses or names of well-known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
 	if err := namesPkg.ServeNames(w, r); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)

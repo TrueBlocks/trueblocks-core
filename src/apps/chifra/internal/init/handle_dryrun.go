@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -13,10 +14,17 @@ import (
 func (opts *InitOptions) HandleDryRun() error {
 	chain := opts.Globals.Chain
 
-	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.Contract|manifest.NoUpdate)
+	remoteManifest, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.TempContract)
 	if err != nil {
 		return err
 	}
+	historyFile := config.PathToRootConfig() + "unchained.txt"
+	saved := history.FromHistory(historyFile, "headerVersion")
+	defer func() {
+		_ = history.ToHistory(historyFile, "headerVersion", saved)
+	}()
+	_ = history.ToHistory(historyFile, "headerVersion", remoteManifest.Version)
+	fmt.Println(saved, remoteManifest.Version)
 
 	if remoteManifest.Chain != chain {
 		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, chain)
@@ -29,18 +37,15 @@ func (opts *InitOptions) HandleDryRun() error {
 		return err
 	}
 
-	spec := config.Specification
+	spec := manifest.Specification()
 	if opts.Globals.TestMode {
 		nToDownload = utils.Min(10, nToDownload)
 		spec = "--testing-hash--"
 	}
 
-	if opts.All {
-		nToDownload *= 2
-	}
-
 	// Tell the user what we're doing
 	logger.InfoTable("Unchained Index:", config.GetUnchained().SmartContract)
+	logger.InfoTable("PreferredPublisher:", opts.Publisher)
 	logger.InfoTable("Specification:", spec)
 	logger.InfoTable("Config Folder:", config.MustGetPathToChainConfig(chain))
 	logger.InfoTable("Index Folder:", config.PathToIndex(chain))

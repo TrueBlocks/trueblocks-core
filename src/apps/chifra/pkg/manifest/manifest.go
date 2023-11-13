@@ -36,8 +36,8 @@ type Source int
 const (
 	None Source = 1 << iota
 	LocalCache
-	Contract
-	NoUpdate
+	FromContract
+	TempContract
 )
 
 var ErrManifestNotFound = errors.New("could not find manifest.json or it was empty")

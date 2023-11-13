@@ -200,11 +200,13 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 
 	if config.IsChainConfigured(opts.Chain) {
 		// TODO: Why do we need to do this here?
-		publisher := base.HexToAddress(config.GetUnchained().PreferredPublisher)
-		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
+		conn := rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		publisher, _ := conn.GetEnsAddress(config.GetPublisher(""))
+		publisherAddr := base.HexToAddress(publisher)
+		if err := tslib.EstablishTsFile(opts.Chain, publisherAddr); err != nil {
 			logger.Warn(err)
 		}
-		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		return conn
 	} else {
 		// the error will be reported by the validator
 		return rpc.TempConnection(opts.Chain)
@@ -228,11 +230,13 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[string]bool) *r
 
 	if config.IsChainConfigured(opts.Chain) {
 		// TODO: Why do we need to do this here?
-		publisher := base.HexToAddress(config.GetUnchained().PreferredPublisher)
-		if err := tslib.EstablishTsFile(opts.Chain, publisher); err != nil {
+		conn := rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		publisher, _ := conn.GetEnsAddress(config.GetPublisher(""))
+		publisherAddr := base.HexToAddress(publisher)
+		if err := tslib.EstablishTsFile(opts.Chain, publisherAddr); err != nil {
 			logger.Warn(err)
 		}
-		return rpc.NewConnection(opts.Chain, opts.Cache && !opts.ShowRaw, caches)
+		return conn
 	} else {
 		// the error will be reported by the validator
 		return rpc.TempConnection(opts.Chain)

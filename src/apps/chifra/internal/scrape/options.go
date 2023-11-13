@@ -38,8 +38,7 @@ type ScrapeOptions struct {
 }
 
 var defaultScrapeOptions = ScrapeOptions{
-	BlockCnt:  2000,
-	Publisher: "trueblocks.eth",
+	BlockCnt: 2000,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -48,7 +47,7 @@ func (opts *ScrapeOptions) testLog() {
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
 	logger.TestLog(opts.Touch != 0, "Touch: ", opts.Touch)
 	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
-	logger.TestLog(!rpc.IsSame(opts.Publisher, "trueblocks.eth"), "Publisher: ", opts.Publisher)
+	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)
 	opts.Conn.TestLog(opts.getCaches())
@@ -108,7 +107,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE
@@ -136,7 +135,7 @@ func scrapeFinishParse(args []string) *ScrapeOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.Publisher, _ = opts.Conn.GetEnsAddress(opts.Publisher)
+	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 
 	// EXISTING_CODE

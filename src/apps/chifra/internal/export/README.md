@@ -18,7 +18,7 @@ its destination are up to you.
 
 ```[plaintext]
 Purpose:
-  Export full detail of transactions for one or more addresses.
+  Export full details of transactions for one or more addresses.
 
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]

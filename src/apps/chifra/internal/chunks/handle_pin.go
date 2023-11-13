@@ -46,18 +46,18 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		outPath = config.PathToManifest(chain)
 	}
 
-	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache|manifest.NoUpdate)
+	man, err := manifest.ReadManifest(chain, opts.PublisherAddr, manifest.LocalCache)
 	if err != nil {
 		return err
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		hash := base.BytesToHash(config.SpecVersionKeccak())
+		hash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
 		report := simpleChunkPinReport{
 			Version:  config.VersionTags[hash.Hex()],
 			Chain:    chain,
-			SpecHash: base.IpfsHash(config.Specification),
+			SpecHash: base.IpfsHash(manifest.Specification()),
 		}
 
 		fileList := make([]string, 0, len(man.Chunks))
@@ -66,7 +66,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			if err != nil {
 				return false, err
 			}
-			if rng.First < firstBlock || rng.Last > lastBlock {
+			if rng.Last < firstBlock || rng.First > lastBlock {
 				logger.Info("Skipping", path)
 				return true, nil
 			}
@@ -99,6 +99,9 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 		})
 
 		for _, path := range fileList {
+			if opts.Globals.Verbose {
+				logger.Info("pinning path:", path)
+			}
 			local, remote, err := pinning.PinOneChunk(chain, path, opts.Remote)
 			if err != nil {
 				errorChan <- err
@@ -134,7 +137,7 @@ func (opts *ChunksOptions) HandlePin(blockNums []uint64) error {
 			}
 		}
 
-		if len(blockNums) == 0 {
+		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == utils.NOPOS {
 			tsPath := config.PathToTimestamps(chain)
 			if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
 				errorChan <- err
