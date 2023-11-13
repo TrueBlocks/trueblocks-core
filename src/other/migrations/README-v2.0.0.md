@@ -1,37 +1,91 @@
 # v2.0.0 Updated Unchained Index
 
-(November 10, 2023)
+(November 14, 2023)
 
-### Remove old style caches
+## Automatic Migration of Config Files
 
-Version 1.0.0 is here! As part of this accomplishment, we've removed a lot of old code related to caching. We tried very hard to do this in a backward compatible way, but, alas, we could not. For this reason, in order to use release v1.0.0 and later, you must remove the old cache.
+The first time you run any command after downloading, building, and installing version 2.0.0 of `chifra`, you will get a message similar to the following:
 
-You will continue to receive the message that brought you to this migration until you complete it.
-
-The migration is simple. Do this:
-
-```
-chifra config --paths | grep Cache
+```[bash]
+[DATE] Your configuration files were upgraded to v2.0.0-release. Rerun your command.
 ```
 
-This will report the location of your existing cache. You must move (or remove) this folder to a different location. Don't worry, it will be re-created automatically. For example, if the above command reports that your cache is in `/home/you/.chifra/Cache`, then do this:
+## Not-automatic Migration of Unchained Index
 
+The next command you run will (most likely) produce a message similar to the following (and is probably why you're at this page):
+
+```[bash]
+[DATE]
+    Outdated file:  `$UNCHAINED_PATH/<chain>/blooms/000000000-000000000.bloom`
+    Found version:  `trueblocks-core@v0.40.0`
+    Wanted version: `trueblocks-core@v2.0.0-release`
+    Error:          `incorrect header hash`
+
+    See https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v2.0.0.md.
 ```
-mv /home/you/.chifra/Cache /home/you/savedCache
+
+This is indicating that your existing Unchained Index is of a previous version. We're very sorry to have to indicate that you must now complete a migration. It's easy, but annoying. Sorry -- this is what happens when one is dealing with immutable, local data.
+
+If you have gotten the above message, run this command:
+
+```[bash]
+chifra init --all --chain <chain>      # or, if you previously used `chifra init` alone flag, use that.
 ```
 
-Note, that unless you intend to return to a previous version, you do not need to preserve the old cache. You could simply remove it.
+Depending on the speed of your Internet connection and the size of your chain this may take between a few minutes (`sepolia`) to as much as an hour or more (`mainnet`).
 
-## Yeah, but won't that mean I have to re-generate my cache?
+You must allow the command to compete and report sucessfully. If you quit the command (with Control+C, for example) or it fails for any reason, you must re-run the command until it completes successfully.
 
-Unfortunately, yes. There's nothing we can do. If it's any consolation, part of moving to version v1.0.0 means that we will never again create a backwards incompatible change without an automated migration path. The amount of crud that had accumulated over the five year development cycle made it impossible to do that this time. Sorry.
+## Checking the migration
 
-Also, another consolation is that the cache is much faster now. It's also smaller and more capable (caching many more commands). So, it will take less time to re-generate than originally and take up less space to store.
+Run this command to check that the migration completed properly:
+
+```[bash]
+chifra chunks index --check --chain <chain>
+```
+
+You may run this repeatedly until you get a message similar to the following:
+
+```[bash]
+result   checked    visited    passed skipped failed   reason
+passed     12213      12213     12213       0      0   Filenames sequential
+passed      8144       8144      8144       0      0   Internally consistent
+passed      4072       4072      4072       0      0   Correct version
+passed     16288      16288     16288       0      0   Consistent hashes
+passed      4072       4072      4072       0      0   Check file sizes
+passed      8144       8144      8144       0      0   Disc files to cached manifest
+passed      8144       8144      8144       0      0   Disc files to remote manifest
+passed      8144       8144      8144       0      0   Remote manifest to cached manifest
+```
+
+If you do...
 
 ## You're finished
 
-You'll know you're finished if you can run commands without getting the message. Try `chifra blocks 12`.
+You'll know you're finished if you can run the `--check` command with no failed test.
+
+## Migrating the Unchained Index Manually
+
+If you've scraped your own chain, the easiest thing to do is remove the existing index and start over with `chifra scrape`.
+
+However, if you wish not to do that, you may `--tag` your existing index with the correct version. If `withdrawals` are available for your chain, and you know the block at which `withdrawals` were enabled, you may run the following command to truncate your existing index before proceeding. If your chain does not have `withdrawals`, you may skip to the next command.
+
+```[bash]
+chifra chunks index --truncate <bn> --chain <chain>
+```
+
+The above will remove all blocks prior to `bn` from your index.
+
+### Tagging an existing index
+
+After doing this, run this command to `--tag` your index (and remove the above warning messages).
+
+```[bash]
+chifra chunks index --tag trueblocks-core@v2.0.0-release --chain <chain>
+```
+
+You may then run the `--check` command to verify that the migration was successful. If you have trouble, please DM us in Discord.
 
 ## Previous Migration
 
-[Click here](./README-v0.70.0.md) for the previous migration.
+[Click here](./README-v0.85.0.md) for the previous migration.
