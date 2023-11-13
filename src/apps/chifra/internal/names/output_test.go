@@ -43,7 +43,7 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 				r: (func() (r *http.Request) {
 					data := url.Values{}
 					data.Set("address", "0x199d5ed7f45f4ee35960cf22eade2076e95b253f")
-					data.Set("name", "some name")
+					data.Set("name", "some name 1")
 					fmt.Println("encoded", data.Encode())
 					reader := strings.NewReader(data.Encode())
 					r = httptest.NewRequest("POST", "/names", reader)
@@ -57,7 +57,7 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 					Updated: true,
 				},
 				Name: crudDataField[string]{
-					Value:   "some name",
+					Value:   "some name 1",
 					Updated: true,
 				},
 				// Tag:         "",
@@ -73,7 +73,7 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 				r: (func() (r *http.Request) {
 					data := url.Values{}
 
-					data.Set("name", "some name")
+					data.Set("name", "some name 2")
 					fmt.Println("encoded", data.Encode())
 					reader := strings.NewReader(data.Encode())
 					r = httptest.NewRequest("POST", "/names", reader)

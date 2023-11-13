@@ -1,5 +1,5 @@
 [version]
-    current = "v1.5.0-release"
+    current = "v2.0.0-release"
 
 [settings]
     cachePath = ""
@@ -26,7 +26,7 @@
     remotePinUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 
 [unchained]
-    comment = "reserved for system use - do not edit unless instructed to do so"
+    comment = "Do not edit these values unless instructed to do so."
 
 [chains]
     [chains.gnosis]
