@@ -10,21 +10,25 @@ The first time you run any command after downloading, building, and installing v
 [DATE] Your configuration files were upgraded to v2.0.0-release. Rerun your command.
 ```
 
-## Not-automatic Migration of Unchained Index
+You may proceed without furhter ado.
 
-The next command you run will (most likely) produce a message similar to the following (and is probably why you're at this page):
+## Manually Migrating the Unchained Index
+
+The next command you run will produce a message similar to the following (and is probably why you're at this page):
 
 ```[bash]
 [DATE]
     Outdated file:  `$UNCHAINED_PATH/<chain>/blooms/000000000-000000000.bloom`
     Found version:  `trueblocks-core@v0.40.0`
     Wanted version: `trueblocks-core@v2.0.0-release`
-    Error:          `incorrect header hash`
+    Error:          `incorrect header version`
 
     See https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v2.0.0.md.
 ```
 
-This is indicating that your existing Unchained Index is of a previous version. We're very sorry to have to indicate that you must now complete a migration. It's easy, but annoying. Sorry -- this is what happens when one is dealing with immutable, local data.
+This is indicating that your existing Unchained Index is of a previous version. We're sorry to tell you that this requires a migration. Fear not. The migration is easy, but perhaps a little time-consuming. This is one of the downsides of immutable, local-first data.
+
+### Step 1: Downloading an Updated Index
 
 If you have gotten the above message, run this command:
 
@@ -32,19 +36,21 @@ If you have gotten the above message, run this command:
 chifra init --all --chain <chain>      # or, if you previously used `chifra init` alone flag, use that.
 ```
 
-Depending on the speed of your Internet connection and the size of your chain this may take between a few minutes (`sepolia`) to as much as an hour or more (`mainnet`).
+Depending on the speed of your Internet connection and the size of your chain this may take between a few minutes (for `sepolia`, for example) to as much as an hour or more (for `mainnet`).
+
+If the chain you're seeking to migrate is not published to the Unchained Index (only `mainnet` and `sepolia` are), see below.
 
 You must allow the command to compete and report sucessfully. If you quit the command (with Control+C, for example) or it fails for any reason, you must re-run the command until it completes successfully.
 
 ## Checking the migration
 
-Run this command to check that the migration completed properly:
+You may run this command to check that the migration completed properly:
 
 ```[bash]
 chifra chunks index --check --chain <chain>
 ```
 
-You may run this repeatedly until you get a message similar to the following:
+Run this command (interspersed with the one above) repeatedly until you get a message similar to this:
 
 ```[bash]
 result   checked    visited    passed skipped failed   reason
@@ -58,7 +64,7 @@ passed      8144       8144      8144       0      0   Disc files to remote mani
 passed      8144       8144      8144       0      0   Remote manifest to cached manifest
 ```
 
-If you do...
+If you do get this message...
 
 ## You're finished
 
@@ -66,25 +72,27 @@ You'll know you're finished if you can run the `--check` command with no failed 
 
 ## Migrating the Unchained Index Manually
 
-If you've scraped your own chain, the easiest thing to do is remove the existing index and start over with `chifra scrape`.
+If you're working with a different chain or you've scraped the chain's index yourself, the easiest way to upgrade is to remove your existing index and rerun `chifra scrape`.
 
-However, if you wish not to do that, you may `--tag` your existing index with the correct version. If `withdrawals` are available for your chain, and you know the block at which `withdrawals` were enabled, you may run the following command to truncate your existing index before proceeding. If your chain does not have `withdrawals`, you may skip to the next command.
+An alternative is `--tag` your existing index with the correct version (although this is not recommended).
+
+If `withdrawals` are available for your chain, and you know which block `withdrawals` were enabled, you may run the following commands to first truncate your existing index and then re-scraping. If your chain does not have `withdrawals`, you may skip this step.
 
 ```[bash]
 chifra chunks index --truncate <bn> --chain <chain>
 ```
 
-The above will remove all blocks prior to `bn` from your index.
+The above will remove all blocks prior to and including the chunk containing `bn` from your index. You may then re-run `chifar scrape` to catch back up to the head.
 
 ### Tagging an existing index
 
-After doing this, run this command to `--tag` your index (and remove the above warning messages).
+After truncating, please run this command to `--tag` your index (and remove the above warning messages).
 
 ```[bash]
 chifra chunks index --tag trueblocks-core@v2.0.0-release --chain <chain>
 ```
 
-You may then run the `--check` command to verify that the migration was successful. If you have trouble, please DM us in Discord.
+You may then re-run `chifra scrape` (interspersed with `chifra chunks index --check`) to rebuild your index. If you have trouble, please DM us in Discord.
 
 ## Previous Migration
 

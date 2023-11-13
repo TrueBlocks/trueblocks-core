@@ -3,6 +3,7 @@
 | Tag    | Migration                                                                                                          | Date       | Summary                                                                                                                                  |
 | ------ | ------------------------------------------------------------------------------------------------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | v2.0.0 | [Second Release](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v2.0.0.md) | 2023/11/14 | Improvements to `chifra scrape`, `chifra monitors`, `chifra init`, and `chifra chunks`<br>primarily, including certain breaking changes. |
+| v1.0.0 | First Official Release                                                                                             | 2023/09/01 | Feature complete. Our first official release (requires no migration over v0.85.0).                                                       |
 
 ---
 ## For migrations prior to version v1.0.0
@@ -19,8 +20,6 @@ and then removing the folders presented. Do this only if your data is prior to v
 
 | Tag     | Migration                                                                                                                         | Date       | Summary                                                                                                 |
 | ------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
-| v1.0.0  | First Official Release                                                                                                            | 2023/09/01 | Feature complete. Our first official release (requires no migration over v0.85.0).                      |
-| --      | --                                                                                                                                | --         | --                                                                                                      |
 | v0.85.0 | [Release Candidate 1](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.85.0.md)          | 2023/08/15 | Feature complete. Proposed release prior to version v1.0.0.                                             |
 | v0.70.0 | [Update to Unchained Index](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.70.0.md)    | 2023/05/26 | Corrects certain previously incorrect chunks in the unchained index.                                    |
 | v0.60.0 | [Many GoLang Ports](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.60.0.md)            | 2023/03/11 | Two options migrations for two very specific, small edge cases.                                         |

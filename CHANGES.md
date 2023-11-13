@@ -7,114 +7,125 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 **Withdrawals!**
 
-This version includes many improvements over `version 1.0.0`, including support for reading and indexing CL withdrawal appearances. because the index is now more inclusinve, there was a breaking change with this version, and therefore, this version requires a migration. There are many other feature additions and improvements listed below.
+This version includes many improvements over `version 1.0.0`, including support for reading and indexing CL withdrawal appearances. Because the index now more appearances, we were forced to make a breaking change to the index. Therefore, we bumped the major version number and a migration is required. There are many other new features and improvements listed below.
 
-Follow the migrations [here](./MIGRATIONS.md).
+Complete [the migrations](./MIGRATIONS.md) now if you've not already.
 
-The most important improvements with version 2.0.0 are:
+The primary improvements with version 2.0.0 are:
 
-1) Inclusion of previously missing withdrawal appearances, and
-2) A much better `chifra scrape` command which is both more inclusive, more performant and more accurate.
-3) A much better `chifra monitors --watch` command which is now easier to use.
+1) Inclusion of previously missing `withdrawal` appearances, and
+2) Much improved `chifra scrape` command which is now more inclusive, more performant, and more complete.
+3) A much better `chifra monitors --watch` command which is now easier to use and easier to automate.
 4) Greatly improved `chifra init` command with better reporting and progressive backoff to avoid rate limiting.
-5) Much better local caching including fixes for certain performance improvements.
+5) Improved local caching including fixes to certain performance bottlenecks.
 
-Below is an explicit list of each change.
+Below is an explicit list of all changes.
 
-## Specification
+## Changes to the Specification
 
-We re-wrote the [Specification for the Unchained Index](https://trueblocks.io/papers/2023/specification-for-the-unchained-index-v2.0.0-release.pdf) to include all modifications to the software. A reference to this version was inserted into each chunk in the Unchained Index.
+We re-wrote the [Specification for the Unchained Index](https://trueblocks.io/papers/2023/specification-for-the-unchained-index-v2.0.0-release.pdf) to include all version 2.0.0 modifications. A reference to this version has been inserted into each chunk in the Unchained Index and included in the manifest (which is why there's the need for a migration).
 
 ## Breaking Changes
 
 The following breaking changes were made for this release:
 
 - Bumped version number to v2.0.0.
-- Modifed the content of the Unchained Index in three ways:
-  - Updated header of each chunk to reference `v2.0.0-release` of the spec (requires regeneration or re-downloading),
+- Modifed the contents of the Unchained Index chunks in the following ways:
+  - Updated the header of each chunk to reference `trueblocks-core@v2.0.0-release` (requires regeneration or re-downloading of index),
   - Includes previously missing `withdrawal` appearances enabled at the Shanghai hard-fork,
+  - Removes `erigon` specific "hacks" required by previous (broken) version of `erigon`.
   - Includes previously missing appearearances for "misconfigured miners" in very early blocks (prior to block `100,000`).
-- Near complete re-write of `chifra monitors --watch` option including breaking changes.
-- A few minor breaking changes to the data models as detailed below.
-- Further removal or deprecation of esoteric, rarely used, or redundant options (see below).
+- Near complete re-write of `chifra monitors --watch` option including breaking changes to command line functionality.
+- Minor breaking changes to some data models as detailed below.
+- Further removal or deprecation of esoteric, rarely used, and/or redundant options (see below).
 
 ## System Wide Changes
 
 - Updated Specification of the Unchained Index v2.0.0.
-- Updated the content of the Unchained Index `manifest` for `mainnet` and `sepolia` chains to the latest block.
-- Much better support for pinning including easier pinning of other chains and better management of existing pins.
-- Exposed `--publisher` on those tools for which it makes sense to aide in using alterative versions of the Unchained Index.
+- Freshened and re-published the Unchained Index `manifest` for `mainnet` and `sepolia` chains to the latest block.
+- Greatly improved pinning interface including easier pinning of other chains and better management of existing pins.
+- Exposed `--publisher` option to tools for which it makes sense as an aide in using alterative versions of the Unchained Index.
 - Better error handling throughout including much better error handling from the RPC.
-- Improved handling of user hitting `Cntl+C` during caching and other processes to help avoid corrupting the databases.
-- Enabled much better debugging of curl calls.
-- Added function level tracing for easier debugging.
-- Improved formatting of output, expansion of the user of the `--verbose` option.
-- Removes `--wei` options from all commands as unnecassary (it is the default).
-- Added documentation for globally available options such as `--fmt`, `--ether`, `--cache`, etc.
+- Improved handling of user cancels (i.e., hitting `Cntl+C`) during caching and other processes to help avoid corrupting the databases.
+- Much better debugging of internal curl calls including generation of `curl` command debugging replay files.
+- Added function level enter/exit tracing for easier debugging.
+- Improved formatting of outputs, expansion of the use of the `--verbose` option.
+- Inclusion in most data output (where applicable) both timestamp and date fields (a user-suggested improvement).
+- Removes `--wei` options from all commands as unnecassary. Breaking change. If used, simply remove it.
+- Added documentation globally available options such as `--fmt`, `--ether`, `--cache`, `--no_header`, etc.
 - Exposed a number of previously hidden options and commands (see below).
 
 ## Changes to Data Models
 
-The following data models were either added, removed, or modified by having their fields added to, removed, or renamed. Please consult the documentation on our website for details. Some of these are breaking in minor ways.
+The following data models were either modified, added, removed, or renamed by having their fields added to, removed, or renamed. Please consult the documentation on our website for details. Some of these changes are breaking.
 
 ### Modified data models
 
-- `Block`: Added `withdrawals` array as per the Shanghai hard-fork.
-- `Manifest`: Renamed `schema` field to `specification` (mildly breaking change).
-- `Manifest`: Remove previously unused `database` field.
-- `Config`: Internal changes to better maintain the `config` data model used in the `.toml` file.
-- `Slurp`: Added `withdrawalIndex` and `validatorIndex` to service the `--withdrawals` option.
-- `Withdrawal`: Added `timestamp`, `date`, and `blockNumber` to `withdrawal` data model.
-- `Chain`: Removed `apiProvider` field from `Chain` data model as unused.
+| model        | description                                                                           | breaking |
+| ------------ | ------------------------------------------------------------------------------------- | -------- |
+| `Block`      | Added `withdrawals` array as per the Shanghai hard-fork.                              |          |
+| `Manifest`   | Renamed `schema` field to `specification`.                                            | yes      |
+| `Manifest`   | Remove previously unused `database` field.                                            | yes      |
+| `Slurp`      | Added `withdrawalIndex` and `validatorIndex` to service the `--withdrawals` option.   |          |
+| `Withdrawal` | Added `timestamp`, `date`, and `blockNumber` to `withdrawal` data model.              |          |
+| `Chain`      | Removed `apiProvider` field from `Chain` data model as unused.                        | yes      |
+| `Config`     | Internal changes to better maintain the `config` data model used in the `.toml` file. |          |
 
 ### New data models
 
-- `IpfsPin`: Added `ipfsPin` data model with fields `cid`, `datePinned`, `status`, `size`, `fileName` for use in the manifest.
+| model     | description                                                                                        |
+| --------- | -------------------------------------------------------------------------------------------------- |
+| `IpfsPin` | New model with fields `cid`, `datePinned`, `status`, `size`, `fileName` for use in the `manifest`. |
 
 ### Removed data models
 
-- None.
+| model | description |
+| ----- | ----------- |
+| None  |             |
 
 ### Renamed data models
 
-- None.
+| model | description |
+| ----- | ----------- |
+| None  |             |
 
 ## Tool Specific Changes
 
 **chifra list**
 
-- Added `chifra list --decache` option to remove exising monitors and all associated cached items.
+- Added `chifra list --decache` option to remove exising monitors and all associated cached items. Note that there is no corresponding `--cache` option for `chifra list`.
 - Added `chifra init --publisher` option to allow for using alternatively published versions of the Unchained Index.
 
 **chifra export**
 
-- No changes.
+- Added `chifra init --publisher` option to allow for using alternatively published versions of the Unchained Index.
 
 **chifra monitors**
 
-- Near complete re-write of the `chifra monitors` tool (including breaking changes).
-- Added required `--watch_list` and `--commands` to `chifra monitors --watch`. Improves on existing poorly functioning and poorly documented options.
-- Added optional `--batch_size` and `--run_count` options to `chifra monitors --watch`.
-- Renamed `runOnce` to `--run_count`. Get same behaviour with `chifra --run_count 1`.
+- Near complete re-write of the `chifra monitors --watch` tool (including breaking changes).
+- Added `chifra monitors --watch --watch_list` to specify which addresses to watch. Previously the tool looked for a file in the local folder.Improves automation.
+- Added `chifra monitors --watch --commands` option to carry the commands to run against the `watch_list`. Improves on existing poorly functioning and poorly documented commands file which used the `--file`.
+- Added optional `--batch_size` and `--run_count` options to `chifra monitors --watch` to aide in debugging and performance testing.
+- Renamed `--run_once` to `--run_count`. You may get the same behaviour with `chifra monitors --watch --run_count 1`.
 
 **chifra names**
 
-- No changes.
+- Updated a (very) few names in the database.
 
 **chifra abis**
 
-- Added `chifra abis --cache/--decache` options.
+- Added `chifra abis --cache` and `chifra abis --decache` options replacing previously available `--clean` option. `--cache` is a no-op as any downloaded ABI files have always been cached by default.
 - Removed `chifra abis --clean` as inconsistent - use `chifra abis --decache` instead.
 
 **chifra blocks**
 
-- Major modification to the RPC processing for this command to greatly speed up processing time.
-- Added `chifra blocks --withdrawal` to display withdrawal transactions in the block.
+- Fixed a major bottleneck in the RPC processing for this command to greatly speed up processing time.
+- Added `chifra blocks --withdrawal` to display withdrawal transactions in a block.
 - Added `chifra blocks --ether` to display balances and amounts in Ether (defaults to Wei otherwise).
 
 **chifra transactions**
 
-- No changes.
+- Added `chifra transactions --ether` to display balances and amounts in Ether (defaults to Wei otherwise).
 
 **chifra receipts**
 
@@ -130,14 +141,14 @@ The following data models were either added, removed, or modified by having thei
 
 **chifra when**
 
-- Much more informative `chira when --list` command.
-- Added a `chifra when --verbose` mode to be even more informative.
+- Improved `chira when --list` command to be more informative.
+- Added a `chifra when --verbose` mode to be even more informative than that.
 - Added additional `special` blocks and better descriptions for each block.
 - Changed names of some rarely used `special` blocks (mildly breaking).
 
 **chifra state**
 
-- No changes.
+- Improvements to the testing and performance of `chifra state --call` option.
 
 **chifra tokens**
 
@@ -145,52 +156,52 @@ The following data models were either added, removed, or modified by having thei
 
 **chifra config**
 
-- Forces v2.0.0-release into the TrueBlocks.toml file (elicits an automatic upgrade of the toml file).
 - Near complete re-write of configuration modules and how they work
-- Added `chifra config show` to dump the `trueBlocks.toml` config file.
+- Forces `v2.0.0-release` into the TrueBlocks.toml file (elicits an automatic migration of the toml file to current versions).
+- Added `chifra config show` to dump the `trueBlocks.toml` config file to screen.
 - Enables `chifra config edit` option to open an editor on the toml file (requires EDITOR environment variable to be set).
-- Merges previously used separate `blockScrape.toml` config files into per-chain section of main config file.
+- Merges separate `blockScrape.toml` config files into the `per-chain sections` of main config file.
 
 **chifra status**
 
-- No changes.
+- Better display of more information.
 
 **chifra daemon**
 
-- Fixed an issue with `Content-Type` in the server.
+- Fixed an issue with the server where `Content-Type` was being incorrectly forwarded in certain error conditions.
 
 **chifra scrape**
 
-- Near complete rewrite of the scraper and the specification to fix various issues including indexing `withdrawals`.
-- Much easier to understand (and document) unique address identifications, marking of mis-configured addresses, etc.
-- Fixed an issue where scraper was missing certain smart contract addresses created during out of gas transactions.
-- Fixes many issues with scraper, more complete, faster, more consistent at the head of the chain.
-- Remove `--pin` and `--remote` options from `chifra scrape`. Use `chifra chunks manifest --pin --remote` (post-de-facto) insead
+- Near complete re-write of the scraper and the specification to fix various issues including indexing `withdrawals`.
+- Much easier to understand (and document) unique address identifier, marking of mis-configured addresses, etc.
+- Fixed an issue where scraper was missing certain smart contract addresses created during out of gas transactions in the early chain.
+- Fixes many issues with scraper. It is now more complete, faster, and more consistent when running near the head of the chain.
+- Remove `--pin` and `--remote` options from `chifra scrape`. Use `chifra chunks manifest --pin --remote` (post-de-facto) instead.
 - Replace `chifra scrape --first_block` option with `chifra scrape --touch` 
-- Now disallows running `chifra scrape` if the node is not a tracing archive node.
 - Renamed `--run_once` to `--run_count`. Get same behaviour with `chifra --run_count 1` - aides in debugging scraper.
-- Added `--dry_run` to ease debugging scraper.
-- Changed config item `allow_missing` to `allowMissing`.
-- Changed config item `apps_per_chunk` to `appsPerChunk`.
-- Changed config item `channel_count` to `channelCount`.
-- Changed config item `first_snap` to `firstSnap`.
-- Changed config item `snap_to_grid` to `snapToGrid`.
-- Changed config item `unripe_dist` to `unripeDist`.
+- Added `--dry_run` to aide in debugging scraper.
+- Now disallows running `chifra scrape` if the node is not a tracing archive node.
+- Changed the name of the config item `allow_missing` to `allowMissing`.
+- Changed the name of the config item `apps_per_chunk` to `appsPerChunk`.
+- Changed the name of the config item `channel_count` to `channelCount`.
+- Changed the name of the config item `first_snap` to `firstSnap`.
+- Changed the name of the config item `snap_to_grid` to `snapToGrid`.
+- Changed the name of the config item `unripe_dist` to `unripeDist`.
 
 **chifra chunks**
 
 - Added `chifra chunks index --tag` option to mark an Unchained Index with a version tag.
-- Added `chifra chunks index --diff` to compare two collections of the Unchained Index.
+- Added `chifra chunks index --diff` to compare two versions of the Unchained Index and identify what addresses are new, missing, or modified.
 - Added `chifra chunks manifest --pin [--remote]` option to pin the Unchained Index either locally, remotely, or both.
 - Added `chifra chunks manifest --rewrite` option to rewrite the newly pinned manifest to the Unchained Index folders.
-- Added `chifra chunks manifest --publisher` option to allow for downloading alternatively published versions.
-- Added `chifra chunks pins --list` option
-- Added `chifra chunks pins --unpin` option
+- Added `chifra chunks manifest --publisher` option to allow for downloading alternatively published versions of the index.
+- Added `chifra chunks pins --list` option to list existing pins on either the local or remote pinning service.
+- Added `chifra chunks pins --unpin` option to remove a list of unused pins from the local or remote pinning service.
 
 **chifra init**
 
 - Improved `chifra init` in various ways including more accurate downloading and better reporting.
-- Added `chifra init --publisher` option to allow for downloading alternatively published versions.
+- Added `chifra init --publisher` option to allow for downloading alternatively published versions of the index.
 - Added progressive backoff when the download is rate-limited to avoid banning.
 
 **chifra explore**
