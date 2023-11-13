@@ -33,7 +33,7 @@ This is indicating that your existing Unchained Index is of a previous version. 
 If you have gotten the above message, run this command:
 
 ```[bash]
-chifra init --all --chain <chain>      # or, if you previously used `chifra init` alone flag, use that.
+chifra init --all --chain <chain> --sleep .25     # or, if you previously used `chifra init` alone flag, use that.
 ```
 
 Depending on the speed of your Internet connection and the size of your chain this may take between a few minutes (for `sepolia`, for example) to as much as an hour or more (for `mainnet`).
@@ -41,6 +41,8 @@ Depending on the speed of your Internet connection and the size of your chain th
 If the chain you're seeking to migrate is not published to the Unchained Index (only `mainnet` and `sepolia` are), see below.
 
 You must allow the command to compete and report sucessfully. If you quit the command (with Control+C, for example) or it fails for any reason, you must re-run the command until it completes successfully.
+
+You may remove the `--sleep` option, but you may get rate limited.
 
 ## Checking the migration
 
