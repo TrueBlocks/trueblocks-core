@@ -98,7 +98,7 @@ func TestGetState_Erc721(t *testing.T) {
 }
 
 func TestGetState_NonStandard(t *testing.T) {
-	blockNumber := "0x1036640" // 17000000
+	blockNumber := "17000000"
 	chain := utils.GetTestChain()
 	conn := TempConnection(chain)
 
