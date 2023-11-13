@@ -1,26 +1,27 @@
 # Migrations
 
-| Tag     | Migration                                                                                                                      | Date       | Summary                                                              |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------ | ---------- | -------------------------------------------------------------------- |
-| v0.85.0 | [Release Candidate 1](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.85.0.md)       | 2023/08/15 | Feature complete. Proposed release prior to version v1.0.0.          |
-| v0.70.0 | [Update to Unchained Index](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.70.0.md) | 2023/05/26 | Corrects certain previously incorrect chunks in the unchained index. |
-
+| Tag    | Migration                                                                                                          | Date       | Summary                                                                                                                                  |
+| ------ | ------------------------------------------------------------------------------------------------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| v2.0.0 | [Second Release](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v2.0.0.md) | 2023/11/14 | Improvements to `chifra scrape`, `chifra monitors`, `chifra init`, and `chifra chunks`<br>primarily, including certain breaking changes. |
+| v1.0.0 | First Official Release                                                                                             | 2023/09/01 | Feature complete. Our first official release (requires no migration over v0.85.0).                                                       |
 
 ---
-## For migrations prior to version v0.70.0
+## For migrations prior to version v1.0.0
 
-Migrations prior to version v0.70.0 are no longer supported. If your data is this older than v0.70.0, you must remove your existing caches. Do so by running this command:
+Migrations prior to version v1.0.0 are no longer supported. If your data is this older than v1.0.0, you must remove your existing caches and indexes. Do so by running this command:
 
 ```
-chifra config --paths | grep Cache
+chifra config --paths
 ```
 
-and then removing the entire folder presented. You may make a backup if you wish, but these older files are no longer useful for `chifra`.
+and then removing the folders presented. Do this only if your data is prior to version 1.0.0. You may make a backup if you wish, but these older files are no longer useful for `chifra`.
 
 ## Unsupported Migration
 
 | Tag     | Migration                                                                                                                         | Date       | Summary                                                                                                 |
 | ------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
+| v0.85.0 | [Release Candidate 1](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.85.0.md)          | 2023/08/15 | Feature complete. Proposed release prior to version v1.0.0.                                             |
+| v0.70.0 | [Update to Unchained Index](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.70.0.md)    | 2023/05/26 | Corrects certain previously incorrect chunks in the unchained index.                                    |
 | v0.60.0 | [Many GoLang Ports](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.60.0.md)            | 2023/03/11 | Two options migrations for two very specific, small edge cases.                                         |
 | v0.45.0 | [Better Docker](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.45.0.md)                | 2022/12/16 | Much better support for use in the docker version (more coming soon).                                   |
 | v0.44.0 | [Scraper Bug Fix](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.44.0.md)              | 2022/11/25 | Fixes a bug related to scraping at the head of the chain.                                               |
