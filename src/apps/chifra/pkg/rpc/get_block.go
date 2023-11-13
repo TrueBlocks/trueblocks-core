@@ -119,10 +119,9 @@ func (conn *Connection) GetBlockHeaderByNumber(bn uint64) (block types.SimpleBlo
 }
 
 // GetBlockTimestamp returns the timestamp associated with a given block
-func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
+func (conn *Connection) GetBlockTimestampE(bn base.Blknum) (base.Timestamp, error) {
 	if ec, err := conn.getClient(); err != nil {
-		logger.Error("Could not connect to RPC client", err)
-		return 0
+		return 0, err
 	} else {
 		defer ec.Close()
 
@@ -132,19 +131,30 @@ func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
 		}
 		r, err := ec.HeaderByNumber(context.Background(), blockNumber)
 		if err != nil {
-			logger.Error("Could not connect to RPC client", err)
-			return 0
+			return 0, err
 		}
 
 		ts := base.Timestamp(r.Time)
 		if ts == 0 {
-			// The RPC does not return a timestamp for block zero, so we simulate it with ts from block one less 13 seconds
+			ts, err = conn.GetBlockTimestampE(1)
+			if err != nil {
+				return 0, err
+			}
 			// TODO: Chain specific
-			return conn.GetBlockTimestamp(1) - 13
+			return ts - 13, nil
 		}
 
-		return ts
+		return ts, nil
 	}
+}
+
+// GetBlockTimestamp returns the timestamp associated with a given block
+func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
+	ts, err := conn.GetBlockTimestampE(bn)
+	if err != nil {
+		logger.Error("Could not connect to RPC client", err)
+	}
+	return ts
 }
 
 // GetBlockHashByHash returns a block's hash if it's a valid block

@@ -72,8 +72,13 @@ func (settings settings) GetRpcConnection() *Connection {
 		EnabledMap: settings.EnabledMap,
 	}
 
+	ts, err := ret.GetBlockTimestampE(utils.NOPOS)
+	if err != nil {
+		logger.Fatal("Cannot get connect to RPC server:", err)
+	}
+
 	if store != nil && !store.ReadOnly() {
-		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(utils.NOPOS)
+		ret.LatestBlockTimestamp = ts
 	}
 
 	return ret
