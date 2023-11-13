@@ -13,7 +13,7 @@ import (
 const defaultIpfsGateway = "https://ipfs.unchainedindex.io/ipfs/"
 
 type pinningGroup struct {
-	GatewayURL   string `toml:"gatewayUrl"`
+	GatewayUrl   string `toml:"gatewayUrl"`
 	LocalPinUrl  string `toml:"localPinUrl"`
 	RemotePinUrl string `toml:"remotePinUrl"`
 }

@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 var ErrNotInitialized = errors.New("index not initialized")
@@ -47,15 +46,18 @@ func IsInitialized(chain, required string) error {
 	if err = bl.readHeader(true /* check */); err != nil {
 		if errors.Is(err, ErrIncorrectHash) {
 			msg := `
-	Outdate chunk {WHICH}.
-	Found {FOUND} - wanted {WANT}.
-	See {https://github.com/TrueBlocks/trueblocks-core/blob/master/src/other/migrations/README-v2.0.0.md}.
+	Outdated file:  {WHICH}.
+	Found version:  {FOUND}
+	Wanted version: {WANT}
+	Error:          {%w}
+
+	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v2.0.0.md.
 `
 			msg = colors.ColoredWith(msg, colors.Yellow)
 			msg = strings.Replace(msg, "WHICH", fileName, -1)
 			msg = strings.Replace(msg, "FOUND", config.VersionTags[bl.Header.Hash.Hex()], -1)
 			msg = strings.Replace(msg, "WANT", required, -1)
-			return validate.Usage(msg)
+			return fmt.Errorf(msg, ErrIncorrectHash)
 		}
 		return err
 	}

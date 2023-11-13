@@ -15,7 +15,7 @@ func pathToChainConfigFile(chain, fileName string) string {
 	return filepath.Join(PathToRootConfig(), "config", chain, fileName)
 }
 
-var minVersionStr = "v1.5.0-release"
+var minVersionStr = "v2.0.0-release"
 
 // migrate upgrades the config files to the latest versions if necessary
 func migrate(currentVer version.Version) error {
@@ -66,22 +66,22 @@ func migrate(currentVer version.Version) error {
 		}
 	}
 
-	vers = version.NewVersion("v1.5.0-release")
+	vers = version.NewVersion("v2.0.0-release")
 	if currentVer.Uint64() < vers.Uint64() {
 		pinning := pinningGroup{
 			LocalPinUrl:  "http://localhost:5001",
 			RemotePinUrl: "https://api.pinata.cloud/pinning/pinFileToIPFS",
 		}
 		if cfg.Settings.DefaultGateway != "" {
-			pinning.GatewayURL = cfg.Settings.DefaultGateway
+			pinning.GatewayUrl = cfg.Settings.DefaultGateway
 		} else {
-			pinning.GatewayURL = defaultIpfsGateway
+			pinning.GatewayUrl = defaultIpfsGateway
 		}
 		cfg.Settings.DefaultGateway = ""
 		cfg.Pinning = pinning
 
 		unchained := unchainedGroup{
-			Comment: "Use this to customize the Unchained Index",
+			Comment: "Do not edit these values unless instructed to do so.",
 		}
 		cfg.Unchained = unchained
 	}

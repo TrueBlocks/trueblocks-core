@@ -236,11 +236,11 @@ func (opts *ChunksOptions) validateChunks() error {
 	}
 
 	if err := index.IsInitialized(chain, config.ExpectedVersion()); err != nil {
-		if errors.Is(err, index.ErrNotInitialized) && !opts.Globals.IsApiMode() {
+		isTag := len(opts.Tag) != 0
+		isRemoteMan := opts.Mode == "manifest" && opts.Remote
+		if (errors.Is(err, index.ErrNotInitialized) || errors.Is(err, index.ErrIncorrectHash)) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
 		} else {
-			isTag := len(opts.Tag) != 0
-			isRemoteMan := opts.Mode == "manifest" && opts.Remote
 			if !isTag && !isRemoteMan {
 				return err
 			}

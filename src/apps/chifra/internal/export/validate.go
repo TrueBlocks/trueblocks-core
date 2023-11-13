@@ -195,7 +195,7 @@ func (opts *ExportOptions) validateExport() error {
 	}
 
 	if err := index.IsInitialized(chain, config.ExpectedVersion()); err != nil {
-		if errors.Is(err, index.ErrNotInitialized) && !opts.Globals.IsApiMode() {
+		if (errors.Is(err, index.ErrNotInitialized) || errors.Is(err, index.ErrIncorrectHash)) && !opts.Globals.IsApiMode() {
 			logger.Fatal(err)
 		}
 		return err

@@ -84,8 +84,8 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 
 		case progress.Start:
 			nStarted++
-			if nProcessed <= 20 { // we don't need too many of these
-				logger.Info("Started download ", nStarted, " of ", nTotal, " ", event.Message)
+			if nStarted <= 50 { // we don't need too many of these
+				logger.Info("Started download of", event.Message, "[", nStarted, " of ", nTotal, "]")
 			}
 			if nStarted == poolSize*3 {
 				msg := fmt.Sprintf("%sPlease wait...%s", colors.BrightWhite, colors.Off)
@@ -109,7 +109,7 @@ func (opts *InitOptions) downloadAndReportProgress(chunks []types.SimpleChunkRec
 			if sleep > .25 {
 				sleepStr = fmt.Sprintf(" [sleep: %0.2fms]", sleep*1000)
 			}
-			msg := fmt.Sprintf("Unchained %s%s%s file for range %s%s%s (% 4d of %4d %0.1f%%%s)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed, nTotal, pct, sleepStr)
+			msg := fmt.Sprintf("Finished download of %s%s%s %s%s%s (% 4d of %4d %0.1f%%%s)", col, event.Message, colors.Off, col, rng, colors.Off, nProcessed, nTotal, pct, sleepStr)
 			logger.Info(msg, spaces)
 			if successCount%10 == 0 {
 				sleep = utils.Max(.0125, sleep/1.2)

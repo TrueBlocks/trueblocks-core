@@ -40,11 +40,11 @@ func init() {
 	// The default chain to use if none is provided
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
 	// The pinning gateway to query when downloading the unchained index
-	trueBlocksViper.SetDefault("Pinning.GatewayURL", defaultIpfsGateway)
+	trueBlocksViper.SetDefault("Pinning.GatewayUrl", defaultIpfsGateway)
 	// The local endpoint for the IPFS daemon
 	trueBlocksViper.SetDefault("Pinning.LocalPinUrl", "http://localhost:5001")
 	// The remote endpoint for pinning on Pinata
-	trueBlocksViper.SetDefault("Pinning.GatewayUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
+	trueBlocksViper.SetDefault("Pinning.RemotePinUrl", "https://api.pinata.cloud/pinning/pinFileToIPFS")
 	// A warning to the user not to edit the [unchained] section of the config file
 	trueBlocksViper.SetDefault("Unchained.Comment", "Use this to customize the Unchained Index")
 	// The default publisher of the index of none other is provided
@@ -123,7 +123,7 @@ func GetRootConfig() *ConfigFile {
 		ch.Chain = chain
 		isDefaulted := len(ch.IpfsGateway) == 0 || strings.Trim(ch.IpfsGateway, "/") == strings.Trim(defaultIpfsGateway, "/")
 		if isDefaulted {
-			ch.IpfsGateway = trueBlocksConfig.Pinning.GatewayURL
+			ch.IpfsGateway = trueBlocksConfig.Pinning.GatewayUrl
 		}
 		ch.IpfsGateway = strings.Replace(ch.IpfsGateway, "[{CHAIN}]", "ipfs", -1)
 		ch.LocalExplorer = clean(ch.LocalExplorer)
