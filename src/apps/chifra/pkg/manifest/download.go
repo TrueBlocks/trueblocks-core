@@ -29,7 +29,7 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 	}
 
 	unchainedChain := "mainnet" // the unchained index is on mainnet
-	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
+	theCall := fmt.Sprintf("0x7087e4bd(%s, \"%s\")", publisher, database)  // manifestHashMap
 	conn := rpc.TempConnection(unchainedChain)
 
 	if contractCall, _, err := call.NewContractCall(conn, base.HexToAddress(config.GetUnchained().SmartContract), theCall); err != nil {
