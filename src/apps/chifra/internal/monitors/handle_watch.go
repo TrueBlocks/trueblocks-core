@@ -103,7 +103,7 @@ func (c *Command) resolve(addr base.Address, before, after int64) string {
 		c.Cmd += " --append --no_header"
 	}
 	c.Cmd = strings.Replace(c.Cmd, "  ", " ", -1)
-	ret := c.Cmd + " --fmt csv --output " + c.fileName(addr) + " " + addr.Hex()
+	ret := c.Cmd + " --fmt " + c.Fmt + " --output " + c.fileName(addr) + " " + addr.Hex()
 	if c.Cache {
 		ret += " --cache"
 	}
@@ -205,9 +205,14 @@ func GetExportFormat(cmd, def string) string {
 	return "csv"
 }
 
-func (opts *MonitorsOptions) cleanLine(line string) (cmd Command, err error) {
-	line = strings.Replace(line, "--fmt", "--noop", -1)
-	line = strings.Replace(line, "[{ADDRESS}]", "", -1)
+func (opts *MonitorsOptions) cleanLine(lineIn string) (cmd Command, err error) {
+	line := strings.Replace(lineIn, "[{ADDRESS}]", "", -1)
+	if strings.Contains(line, "--fmt") {
+		line = strings.Replace(line, "--fmt", "", -1)
+		line = strings.Replace(line, "json", "", -1)
+		line = strings.Replace(line, "csv", "", -1)
+		line = strings.Replace(line, "txt", "", -1)
+	}
 	line = utils.StripComments(line)
 	if len(line) == 0 {
 		return Command{}, nil
@@ -219,7 +224,7 @@ func (opts *MonitorsOptions) cleanLine(line string) (cmd Command, err error) {
 	}
 
 	_ = file.EstablishFolder(folder)
-	return Command{Cmd: line, Folder: folder, Fmt: "csv", Cache: opts.Globals.Cache}, nil
+	return Command{Cmd: line, Folder: folder, Fmt: GetExportFormat(lineIn, "csv"), Cache: opts.Globals.Cache}, nil
 }
 
 func (opts *MonitorsOptions) getCommands() (ret []Command, err error) {
