@@ -26,7 +26,7 @@ const (
 	// above are stored in cache, do not change
 	NephewReward base.Txnum = 99994
 	TxFeeReward  base.Txnum = 99993
-	EsInternalTx base.Txnum = 99992
+	// EsInternalTx base.Txnum = 99992
 )
 
 // EXISTING_CODE
