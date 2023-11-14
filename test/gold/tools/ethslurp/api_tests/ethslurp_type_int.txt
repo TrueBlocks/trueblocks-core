@@ -12,6 +12,7 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-700000
       "hash": "0xaa5fb607bbb979c6eaebd2b4c5901ef015d12060e14b31ea66978dfd92bbcf08",
       "timestamp": 1496113206,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "transactionIndex": 9,
       "value": "184761000000000000000000"
     },
     {
@@ -25,6 +26,7 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-700000
       "hash": "0x787876caa4486b1b62fdf29ebae0ac10cd9260154131231ccd39083ba718c39f",
       "timestamp": 1496854695,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "transactionIndex": 1,
       "value": "184460000000000000000000"
     },
     {
@@ -38,6 +40,7 @@ slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-700000
       "hash": "0x60b755f51e0b991483c144941b35fddf8677ac10c4be7d46d270cce026cccc57",
       "timestamp": 1498123857,
       "to": "0x1324e7b922b30b49ab8ea81086341cc41c249346",
+      "transactionIndex": 15,
       "value": "184392780000000000000000"
     }
   ],
