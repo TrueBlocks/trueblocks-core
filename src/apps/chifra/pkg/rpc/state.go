@@ -3,6 +3,7 @@ package rpc
 import (
 	"context"
 	"errors"
+	"fmt"
 	"math/big"
 	"strconv"
 
@@ -49,7 +50,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 				Method: "eth_getBalance",
 				Params: query.Params{
 					address,
-					blockNumber,
+					fmt.Sprintf("0x%x", blockNumber),
 				},
 			},
 		},
@@ -62,7 +63,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 				Method: "eth_getTransactionCount",
 				Params: query.Params{
 					address,
-					blockNumber,
+					fmt.Sprintf("0x%x", blockNumber),
 				},
 			},
 		})
@@ -75,7 +76,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 				Method: "eth_getCode",
 				Params: query.Params{
 					address,
-					blockNumber,
+					fmt.Sprintf("0x%x", blockNumber),
 				},
 			},
 		})
