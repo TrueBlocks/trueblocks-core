@@ -13,7 +13,7 @@ import (
 // `true` in `setSomething(true)`
 type ContractArgument struct {
 	Tokens  []lexer.Token // the token that was parsed for this argument
-	String  *string       `parser:"@String"`             // the value if it's a string
+	String  *ArgString    `parser:"@String"`             // the value if it's a string
 	Number  *ArgNumber    `parser:"| @Decimal"`          // the value if it's a number
 	Boolean *ArgBool      `parser:"| @('true'|'false')"` // the value if it's a boolean
 	Hex     *ArgHex       `parser:"| @Hex"`              // the value if it's a hex string
@@ -22,24 +22,29 @@ type ContractArgument struct {
 // Interface returns the value as interface{} (any)
 func (a *ContractArgument) Interface() any {
 	if a.String != nil {
-		return *a.String
+		return string(*a.String)
 	}
+
 	if a.Number != nil {
 		return a.Number.Interface()
 	}
+
 	if a.Boolean != nil {
 		return *a.Boolean
 	}
+
 	if a.Hex != nil {
 		if a.Hex.Address != nil {
 			return *a.Hex.Address
 		}
 		return *a.Hex.String
 	}
+
 	return nil
 }
 
 func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
+	// fmt.Println("AbiType:", colors.Red, abiType, colors.Off)
 	if abiType.T == abi.FixedBytesTy {
 		// We only support fixed bytes as hashes
 		if a.Hex == nil {

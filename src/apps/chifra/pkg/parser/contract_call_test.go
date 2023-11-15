@@ -210,7 +210,7 @@ func TestArgument_AbiType(t *testing.T) {
 	}
 
 	type fields struct {
-		String  *string
+		String  *ArgString
 		Number  *ArgNumber
 		Boolean *ArgBool
 		Hex     *ArgHex
@@ -311,8 +311,9 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+
 	// the second argument is string instead of address
-	parsed, err := ParseCall(`transfer(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
+	parsed, err := ParseCall(`someFunc(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
 	if err != nil {
 		t.Fatal(err)
 	}

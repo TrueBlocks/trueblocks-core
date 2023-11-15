@@ -7,14 +7,24 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
 )
 
 // ArgAddress is a type alias to capture bool values correctly
-type ArgAddress base.Address
+type ArgAddress common.Address
 
 func (b *ArgAddress) Capture(values []string) error {
 	debug("ArgAddress::Capture", values)
-	*b = ArgAddress(base.HexToAddress(values[0]))
+	*b = ArgAddress(common.HexToAddress(values[0]))
+	return nil
+}
+
+// ArgString is a type alias to capture bool values correctly
+type ArgString string
+
+func (b *ArgString) Capture(values []string) error {
+	debug("ArgString::Capture", values)
+	*b = ArgString(values[0])
 	return nil
 }
 
