@@ -19,15 +19,16 @@ var errInvalidSelector = errors.New("expected valid four byte selector")
 // 3. signature + params
 // chifra state --call readMessage("hello", 110)
 
-// Define "tokens" for our lexer
+// Define "tokens" for our lexer (order matters)
 var contractCallLexer = lexer.MustSimple([]lexer.SimpleRule{
-	// https://docs.soliditylang.org/en/v0.8.17/grammar.html#a4.SolidityLexer.Identifier
-	{Name: `SolidityIdent`, Pattern: `[a-zA-Z$_][a-zA-Z0-9$_]*`},
-
 	// Values types
+	{Name: `EnsDomain`, Pattern: `[a-zA-Z0-9]+\.eth`}, // this token does not handle subdomains or dashes
 	{Name: `Hex`, Pattern: `0x[[:xdigit:]]+`},
 	{Name: `String`, Pattern: `"(?:\\.|[^"])*"`},
 	{Name: `Decimal`, Pattern: `[-+]?\d+`},
+
+	// https://docs.soliditylang.org/en/v0.8.17/grammar.html#a4.SolidityLexer.Identifier
+	{Name: `SolidityIdent`, Pattern: `[a-zA-Z$_][a-zA-Z0-9$_]*`},
 
 	// Whitespace and punctuation
 	{Name: `whitespace`, Pattern: `\s+`},
