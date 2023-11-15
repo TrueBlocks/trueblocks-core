@@ -16,7 +16,7 @@ const (
 
 // FindAbiFunction returns either the function to call or a list of suggestions (function
 // signatures with the same name, but different argument count)
-func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.ContractCallArgument, abiMap *FunctionSyncMap) (fn *types.SimpleFunction, suggestions []string, err error) {
+func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.ContractArgument, abiMap *FunctionSyncMap) (fn *types.SimpleFunction, suggestions []string, err error) {
 	functions := abiMap.Values()
 	for _, function := range functions {
 		function := function

@@ -288,7 +288,7 @@ func TestArgument_AbiType(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &ContractCallArgument{
+			a := &ContractArgument{
 				String:  tt.fields.String,
 				Number:  tt.fields.Number,
 				Boolean: tt.fields.Boolean,

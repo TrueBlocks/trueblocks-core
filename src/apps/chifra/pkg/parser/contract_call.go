@@ -55,18 +55,18 @@ type ContractCall struct {
 }
 
 type SelectorContractCall struct {
-	Selector  Selector                `parser:"@Hex '('"`
-	Arguments []*ContractCallArgument `parser:" (@@ (',' @@)*)? ')'"`
+	Selector  Selector            `parser:"@Hex '('"`
+	Arguments []*ContractArgument `parser:" (@@ (',' @@)*)? ')'"`
 }
 
 type FunctionContractCall struct {
-	Name      string                  `parser:"@SolidityIdent '('"`
-	Arguments []*ContractCallArgument `parser:" (@@ (',' @@)*)? ')'"`
+	Name      string              `parser:"@SolidityIdent '('"`
+	Arguments []*ContractArgument `parser:" (@@ (',' @@)*)? ')'"`
 }
 
-// ContractCallArgument represents input to the smart contract method call, e.g.
+// ContractArgument represents input to the smart contract method call, e.g.
 // `true` in `setSomething(true)`
-type ContractCallArgument struct {
+type ContractArgument struct {
 	Tokens []lexer.Token
 
 	String  *string             `parser:"@String"`
@@ -76,7 +76,7 @@ type ContractCallArgument struct {
 }
 
 // Interface returns the value as interface{} (any)
-func (a *ContractCallArgument) Interface() any {
+func (a *ContractArgument) Interface() any {
 	if a.String != nil {
 		return *a.String
 	}
@@ -95,7 +95,7 @@ func (a *ContractCallArgument) Interface() any {
 	return nil
 }
 
-func (a *ContractCallArgument) AbiType(abiType *abi.Type) (any, error) {
+func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 	if abiType.T == abi.FixedBytesTy {
 		// We only support fixed bytes as hashes
 		if a.Hex == nil {

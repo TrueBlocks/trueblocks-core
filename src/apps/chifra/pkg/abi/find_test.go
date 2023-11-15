@@ -114,7 +114,7 @@ func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, destination *FunctionSyncMap
 func Test_findAbiFunction(t *testing.T) {
 	call := &parser.FunctionContractCall{
 		Name: "setShouldReject",
-		Arguments: []*parser.ContractCallArgument{
+		Arguments: []*parser.ContractArgument{
 			{
 				Boolean: utils.PointerOf(parser.Boolean(true)),
 			},
@@ -138,7 +138,7 @@ func Test_findAbiFunction(t *testing.T) {
 	// Expect hints
 	call = &parser.FunctionContractCall{
 		Name:      "setShouldReject",
-		Arguments: []*parser.ContractCallArgument{},
+		Arguments: []*parser.ContractArgument{},
 	}
 
 	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
@@ -162,7 +162,7 @@ func Test_findAbiFunction(t *testing.T) {
 	// Expect no match
 	call = &parser.FunctionContractCall{
 		Name:      "somethingElse",
-		Arguments: []*parser.ContractCallArgument{},
+		Arguments: []*parser.ContractArgument{},
 	}
 
 	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
@@ -184,7 +184,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Selector: parser.Selector{
 			Value: "0xa175b638",
 		},
-		Arguments: []*parser.ContractCallArgument{
+		Arguments: []*parser.ContractArgument{
 			{
 				Boolean: utils.PointerOf(parser.Boolean(true)),
 			},
@@ -210,7 +210,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Selector: parser.Selector{
 			Value: "0xa175b638",
 		},
-		Arguments: []*parser.ContractCallArgument{},
+		Arguments: []*parser.ContractArgument{},
 	}
 
 	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abis)
@@ -236,7 +236,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Selector: parser.Selector{
 			Value: "0xf175b639",
 		},
-		Arguments: []*parser.ContractCallArgument{},
+		Arguments: []*parser.ContractArgument{},
 	}
 
 	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abis)
@@ -271,7 +271,7 @@ func Test_findAbiFunctionMisleading(t *testing.T) {
 
 	call := &parser.FunctionContractCall{
 		Name: "transfer",
-		Arguments: []*parser.ContractCallArgument{
+		Arguments: []*parser.ContractArgument{
 			{
 				Hex: &parser.ContractCallHex{
 					Address: utils.PointerOf(base.HexToAddress("0x6B175474E89094C44Da98b954EedeAC495271d0F")),

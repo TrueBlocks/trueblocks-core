@@ -38,7 +38,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 	}
 
 	var function *types.SimpleFunction
-	var callArguments []*parser.ContractCallArgument
+	var callArguments []*parser.ContractArgument
 	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
 		selector := parsed.Encoded[:10]
@@ -94,7 +94,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 	return contactCall, suggestions, nil
 }
 
-func convertArguments(callArguments []*parser.ContractCallArgument, function *types.SimpleFunction) (args []any, err error) {
+func convertArguments(callArguments []*parser.ContractArgument, function *types.SimpleFunction) (args []any, err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
