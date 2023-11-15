@@ -21,12 +21,11 @@ var errInvalidSelector = errors.New("expected valid four byte selector")
 
 // Define "tokens" for our lexer
 var contractCallLexer = lexer.MustSimple([]lexer.SimpleRule{
-	{Name: `Hex`, Pattern: `0x[[:xdigit:]]+`},
-
 	// https://docs.soliditylang.org/en/v0.8.17/grammar.html#a4.SolidityLexer.Identifier
 	{Name: `SolidityIdent`, Pattern: `[a-zA-Z$_][a-zA-Z0-9$_]*`},
 
 	// Values types
+	{Name: `Hex`, Pattern: `0x[[:xdigit:]]+`},
 	{Name: `String`, Pattern: `"(?:\\.|[^"])*"`},
 	{Name: `Decimal`, Pattern: `[-+]?\d+`},
 

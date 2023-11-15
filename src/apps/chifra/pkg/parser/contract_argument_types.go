@@ -9,6 +9,14 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
+// ArgAddress is a type alias to capture bool values correctly
+type ArgAddress base.Address
+
+func (b *ArgAddress) Capture(values []string) error {
+	*b = ArgAddress(base.HexToAddress(values[0]))
+	return nil
+}
+
 // ArgBool is a type alias to capture bool values correctly
 type ArgBool bool
 
