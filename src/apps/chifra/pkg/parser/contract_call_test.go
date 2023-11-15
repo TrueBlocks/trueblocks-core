@@ -212,7 +212,7 @@ func TestArgument_AbiType(t *testing.T) {
 	type fields struct {
 		String  *string
 		Number  *ArgNumber
-		Boolean *Boolean
+		Boolean *ArgBool
 		Hex     *ContractCallHex
 	}
 	type args struct {

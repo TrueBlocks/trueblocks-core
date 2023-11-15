@@ -71,7 +71,7 @@ type ContractArgument struct {
 
 	String  *string          `parser:"@String"`
 	Number  *ArgNumber       `parser:"| @Decimal"`
-	Boolean *Boolean         `parser:"| @('true'|'false')"`
+	Boolean *ArgBool         `parser:"| @('true'|'false')"`
 	Hex     *ContractCallHex `parser:"| @Hex"`
 }
 
@@ -155,9 +155,9 @@ func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 }
 
 // Boolean is a type alias to capture bool values correctly
-type Boolean bool
+type ArgBool bool
 
-func (b *Boolean) Capture(values []string) error {
+func (b *ArgBool) Capture(values []string) error {
 	*b = values[0] == "true"
 	return nil
 }

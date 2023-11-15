@@ -116,7 +116,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Name: "setShouldReject",
 		Arguments: []*parser.ContractArgument{
 			{
-				Boolean: utils.PointerOf(parser.Boolean(true)),
+				Boolean: utils.PointerOf(parser.ArgBool(true)),
 			},
 		},
 	}
@@ -186,7 +186,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		},
 		Arguments: []*parser.ContractArgument{
 			{
-				Boolean: utils.PointerOf(parser.Boolean(true)),
+				Boolean: utils.PointerOf(parser.ArgBool(true)),
 			},
 		},
 	}
