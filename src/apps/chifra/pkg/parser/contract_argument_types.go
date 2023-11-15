@@ -9,10 +9,20 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
+// ArgAddress is a type alias to capture bool values correctly
+type ArgAddress base.Address
+
+func (b *ArgAddress) Capture(values []string) error {
+	// fmt.Println("ArgAddress::Capture", values)
+	*b = ArgAddress(base.HexToAddress(values[0]))
+	return nil
+}
+
 // ArgBool is a type alias to capture bool values correctly
 type ArgBool bool
 
 func (b *ArgBool) Capture(values []string) error {
+	// fmt.Println("ArgBool::Capture", values)
 	*b = values[0] == "true"
 	return nil
 }
@@ -25,6 +35,7 @@ type ArgHex struct {
 }
 
 func (h *ArgHex) Capture(values []string) error {
+	// fmt.Println("ArgHex::Capture", values)
 	hexLiteral := values[0]
 
 	if valid, _ := base.IsValidHex("", hexLiteral, 20); !valid {
@@ -45,6 +56,7 @@ type ArgNumber struct {
 }
 
 func (n *ArgNumber) Capture(values []string) error {
+	// fmt.Println("ArgNumber::Capture", values)
 	literal := values[0]
 
 	// Atoi parses into `int` type, which is used by go-ethereum
