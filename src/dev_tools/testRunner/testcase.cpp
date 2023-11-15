@@ -541,6 +541,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
         replaceAll(options, "& ", "&");
         replaceAll(options, " @ ", "@");
         replaceAll(options, "@ ", "@");
+        replaceAll(options, "&#44;", ",");
     }
 }
 

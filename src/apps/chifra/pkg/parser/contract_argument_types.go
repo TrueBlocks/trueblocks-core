@@ -13,7 +13,7 @@ import (
 type ArgAddress base.Address
 
 func (b *ArgAddress) Capture(values []string) error {
-	// fmt.Println("ArgAddress::Capture", values)
+	debug("ArgAddress::Capture", values)
 	*b = ArgAddress(base.HexToAddress(values[0]))
 	return nil
 }
@@ -22,7 +22,7 @@ func (b *ArgAddress) Capture(values []string) error {
 type ArgBool bool
 
 func (b *ArgBool) Capture(values []string) error {
-	// fmt.Println("ArgBool::Capture", values)
+	debug("ArgBool::Capture", values)
 	*b = values[0] == "true"
 	return nil
 }
@@ -35,7 +35,7 @@ type ArgHex struct {
 }
 
 func (h *ArgHex) Capture(values []string) error {
-	// fmt.Println("ArgHex::Capture", values)
+	debug("ArgHex::Capture", values)
 	hexLiteral := values[0]
 
 	if valid, _ := base.IsValidHex("", hexLiteral, 20); !valid {
@@ -56,7 +56,7 @@ type ArgNumber struct {
 }
 
 func (n *ArgNumber) Capture(values []string) error {
-	// fmt.Println("ArgNumber::Capture", values)
+	debug("ArgNumber::Capture", values)
 	literal := values[0]
 
 	// Atoi parses into `int` type, which is used by go-ethereum
@@ -125,4 +125,8 @@ func (n *ArgNumber) Convert(abiType *abi.Type) (any, error) {
 	}
 
 	return nil, fmt.Errorf("cannot convert %v to number", n.Interface())
+}
+
+func debug(name string, values []string) {
+	// fmt.Printf("%s%s: %v%s\n", colors.Green, name, values, colors.Off)
 }
