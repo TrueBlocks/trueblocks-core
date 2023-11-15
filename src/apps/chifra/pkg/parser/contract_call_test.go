@@ -52,6 +52,17 @@ func TestParse_Selector(t *testing.T) {
 		}
 	}
 
+	if parsed, err := ParseCall(`0x7087e4bd(trueblocks.eth,"mainnet")`); err != nil {
+		t.Fatal(err)
+	} else {
+		if value := parsed.SelectorCall.Selector.Value; value != `0x7087e4bd` {
+			t.Fatal("wrong selector", value)
+		}
+		if argsLen := len(parsed.SelectorCall.Arguments); argsLen != 2 {
+			t.Fatal("wrong number of arguments", argsLen)
+		}
+	}
+
 	// Arguments
 	if parsed, err := ParseCall(`0xcdba2fd4(1, true, false, 0xbeef, "string")`); err != nil {
 		t.Fatal(err)
@@ -210,7 +221,7 @@ func TestArgument_AbiType(t *testing.T) {
 	}
 
 	type fields struct {
-		String  *string
+		String  *ArgString
 		Number  *ArgNumber
 		Boolean *ArgBool
 		Hex     *ArgHex
@@ -311,8 +322,9 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+
 	// the second argument is string instead of address
-	parsed, err := ParseCall(`transfer(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
+	parsed, err := ParseCall(`someFunc(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -320,9 +332,9 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[1].AbiType(&testAbi.Methods["address"].Inputs[0].Type)
-	expectedError := newWrongTypeError("address", lexer.Token{Value: `0x6982508145454ce325ddbe47a25d4ec3d23119a1`}, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")
-	if err.Error() != expectedError.Error() {
-		t.Fatal("got wrong error:", err, "expected:", expectedError)
+	expected := wrongTypeError("address", lexer.Token{Value: `0x6982508145454ce325ddbe47a25d4ec3d23119a1`}, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")
+	if err.Error() != expected.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expected)
 	}
 
 	parsed, err = ParseCall(`someBool(111)`)
@@ -330,9 +342,9 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["bool"].Inputs[0].Type)
-	expectedError = newWrongTypeError("bool", lexer.Token{Value: `111`}, 111)
-	if err.Error() != expectedError.Error() {
-		t.Fatal("got wrong error:", err, "expected:", expectedError)
+	expected = wrongTypeError("bool", lexer.Token{Value: `111`}, 111)
+	if err.Error() != expected.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expected)
 	}
 
 	parsed, err = ParseCall(`someBytes32("hello")`)
@@ -340,8 +352,8 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["bytes32"].Inputs[0].Type)
-	expectedError = newWrongTypeError("hash", lexer.Token{Value: `hello`}, "hello")
-	if err.Error() != expectedError.Error() {
-		t.Fatal("got wrong error:", err, "expected:", expectedError)
+	expected = wrongTypeError("hash", lexer.Token{Value: `hello`}, "hello")
+	if err.Error() != expected.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expected)
 	}
 }

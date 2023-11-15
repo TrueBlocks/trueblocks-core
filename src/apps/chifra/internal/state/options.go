@@ -104,7 +104,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
-	opts.Call = cleanCall(opts.Call)
+	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -147,7 +147,7 @@ func stateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Call = cleanCall(opts.Call)
+	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -196,38 +196,4 @@ func (opts *StateOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
-var useThis = true
-
-// cleanCall does some hacky string stuff to convert a call's ENS names to addresses. It could have been
-// done with a regex, but I don't know how to do that in Go.
-func cleanCall(call string) string {
-	ret := strings.Replace(strings.Trim(call, "'"), "'", "\"", -1)
-	if !useThis {
-		return ret
-	}
-	if strings.Contains(ret, ".eth") {
-		found := []string{}
-		stripped := strings.Replace(ret, "(", "|", -1)
-		stripped = strings.Replace(stripped, ")", "|", -1)
-		stripped = strings.Replace(stripped, ",", "|", -1)
-		stripped = strings.Replace(stripped, "[", "|", -1)
-		stripped = strings.Replace(stripped, "]", "|", -1)
-		stripped = strings.Replace(stripped, "\"", "|", -1)
-		stripped = strings.Replace(stripped, " ", "|", -1)
-		parts := strings.Split(stripped, "|")
-		for _, part := range parts {
-			if strings.HasSuffix(part, ".eth") {
-				found = append(found, part)
-			}
-		}
-		for _, ens := range found {
-			conn := rpc.TempConnection("mainnet")
-			addr, _ := conn.GetEnsAddress(ens)
-			ret = strings.Replace(ret, "\""+ens+"\"", addr, -1)
-			ret = strings.Replace(ret, ens, addr, -1)
-		}
-	}
-	return ret
-}
-
 // EXISTING_CODE

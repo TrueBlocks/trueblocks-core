@@ -2,6 +2,8 @@ package parser
 
 import (
 	"errors"
+	"fmt"
+	"reflect"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/alecthomas/participle/v2/lexer"
@@ -13,29 +15,38 @@ import (
 // `true` in `setSomething(true)`
 type ContractArgument struct {
 	Tokens  []lexer.Token // the token that was parsed for this argument
-	String  *string       `parser:"@String"`             // the value if it's a string
+	String  *ArgString    `parser:"@String"`             // the value if it's a string
 	Number  *ArgNumber    `parser:"| @Decimal"`          // the value if it's a number
 	Boolean *ArgBool      `parser:"| @('true'|'false')"` // the value if it's a boolean
 	Hex     *ArgHex       `parser:"| @Hex"`              // the value if it's a hex string
+	EnsAddr *ArgAddress   `parser:"| @EnsDomain"`        // the value if it's an ENS domain
 }
 
 // Interface returns the value as interface{} (any)
 func (a *ContractArgument) Interface() any {
+	if a.EnsAddr != nil {
+		return *a.EnsAddr
+	}
+
 	if a.String != nil {
 		return *a.String
 	}
+
 	if a.Number != nil {
 		return a.Number.Interface()
 	}
+
 	if a.Boolean != nil {
 		return *a.Boolean
 	}
+
 	if a.Hex != nil {
 		if a.Hex.Address != nil {
 			return *a.Hex.Address
 		}
 		return *a.Hex.String
 	}
+
 	return nil
 }
 
@@ -43,7 +54,7 @@ func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 	if abiType.T == abi.FixedBytesTy {
 		// We only support fixed bytes as hashes
 		if a.Hex == nil {
-			return nil, newWrongTypeError("hash", a.Tokens[0], a.Interface())
+			return nil, wrongTypeError("hash", a.Tokens[0], a.Interface())
 		}
 		hex := *a.Hex.String
 		if len(hex) == 0 {
@@ -59,7 +70,7 @@ func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 
 	if abiType.T == abi.IntTy {
 		if a.Number == nil {
-			return nil, newWrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
+			return nil, wrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
 		}
 		// We have to convert int64 to a correct int type, otherwise go-ethereum will
 		// return an error. It's not needed for uints, because they handle them differently.
@@ -75,9 +86,13 @@ func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 	}
 
 	if abiType.T == abi.AddressTy {
+		if a.EnsAddr != nil {
+			return a.EnsAddr, nil
+		}
+
 		// We need go-ethereum's Address type, not ours
 		if a.Hex == nil {
-			return nil, newWrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
+			return nil, wrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
 		}
 		address := a.Hex.Address
 		if address == nil {
@@ -92,8 +107,22 @@ func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 	if (abiType.T == abi.UintTy && a.Number == nil) ||
 		(abiType.T == abi.StringTy && a.String == nil) ||
 		(abiType.T == abi.BoolTy && a.Boolean == nil) {
-		return nil, newWrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
+		return nil, wrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
 	}
 
 	return a.Interface(), nil
+}
+
+func wrongTypeError(expectedType string, token lexer.Token, value any) error {
+	t := reflect.TypeOf(value)
+	typeName := t.String()
+	kind := t.Kind()
+	// kinds between this range are all (u)int, called "integer" in Solidity
+	if kind > 1 && kind < 12 {
+		typeName = "integer"
+	}
+	if expectedType == "hash" || expectedType == "address" {
+		typeName = "parser.ArgString"
+	}
+	return fmt.Errorf("expected %s, but got %s \"%s\"", expectedType, typeName, token)
 }

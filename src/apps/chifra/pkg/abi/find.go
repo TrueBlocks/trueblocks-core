@@ -45,10 +45,8 @@ func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.Contr
 				}
 				// address in parsed into argument.Hex.Address
 				if input.InternalType == "address" {
-					if argument.Hex == nil {
-						break
-					}
-					if argument.Hex.Address == nil {
+					// if both ways of finding an address are empty, break
+					if argument.EnsAddr == nil && (argument.Hex == nil || argument.Hex.Address == nil) {
 						break
 					}
 				}

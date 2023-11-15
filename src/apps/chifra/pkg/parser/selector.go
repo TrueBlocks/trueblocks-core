@@ -1,8 +1,12 @@
 package parser
 
 import (
+	"errors"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
+
+var errInvalidSelector = errors.New("expected valid four byte selector")
 
 // Selector captures four byte function selector (e.g. 0xcdba2fd4)
 // It's capture method makes sure that the hex value is a valid selector.
