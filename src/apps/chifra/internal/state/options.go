@@ -196,10 +196,15 @@ func (opts *StateOptions) getCaches() (m map[string]bool) {
 }
 
 // EXISTING_CODE
+var useThis = true
+
 // cleanCall does some hacky string stuff to convert a call's ENS names to addresses. It could have been
 // done with a regex, but I don't know how to do that in Go.
 func cleanCall(call string) string {
 	ret := strings.Replace(strings.Trim(call, "'"), "'", "\"", -1)
+	if !useThis {
+		return ret
+	}
 	if strings.Contains(ret, ".eth") {
 		found := []string{}
 		stripped := strings.Replace(ret, "(", "|", -1)
