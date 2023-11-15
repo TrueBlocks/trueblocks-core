@@ -213,7 +213,7 @@ func TestArgument_AbiType(t *testing.T) {
 		String  *string
 		Number  *ArgNumber
 		Boolean *ArgBool
-		Hex     *ContractCallHex
+		Hex     *ArgHex
 	}
 	type args struct {
 		abiType *abi.Type
@@ -228,7 +228,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "bytes4 argument",
 			fields: fields{
-				Hex: &ContractCallHex{
+				Hex: &ArgHex{
 					String: utils.PointerOf("0x80ac58cd"),
 				},
 			},
@@ -276,7 +276,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "address argument",
 			fields: fields{
-				Hex: &ContractCallHex{
+				Hex: &ArgHex{
 					Address: utils.PointerOf(base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")),
 				},
 			},

@@ -69,10 +69,10 @@ type FunctionContractCall struct {
 type ContractArgument struct {
 	Tokens []lexer.Token
 
-	String  *string          `parser:"@String"`
-	Number  *ArgNumber       `parser:"| @Decimal"`
-	Boolean *ArgBool         `parser:"| @('true'|'false')"`
-	Hex     *ContractCallHex `parser:"| @Hex"`
+	String  *string    `parser:"@String"`
+	Number  *ArgNumber `parser:"| @Decimal"`
+	Boolean *ArgBool   `parser:"| @('true'|'false')"`
+	Hex     *ArgHex    `parser:"| @Hex"`
 }
 
 // Interface returns the value as interface{} (any)
@@ -162,14 +162,14 @@ func (b *ArgBool) Capture(values []string) error {
 	return nil
 }
 
-// ContractCallHex represents anything that starts with 0x. If the value is a valid
+// ArgHex represents anything that starts with 0x. If the value is a valid
 // address, then it's capture into `base.Address` type, `string` otherwise.
-type ContractCallHex struct {
+type ArgHex struct {
 	Address *base.Address
 	String  *string
 }
 
-func (h *ContractCallHex) Capture(values []string) error {
+func (h *ArgHex) Capture(values []string) error {
 	hexLiteral := values[0]
 
 	if valid, _ := base.IsValidHex("", hexLiteral, 20); !valid {

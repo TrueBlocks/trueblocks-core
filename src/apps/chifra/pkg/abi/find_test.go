@@ -273,12 +273,12 @@ func Test_findAbiFunctionMisleading(t *testing.T) {
 		Name: "transfer",
 		Arguments: []*parser.ContractArgument{
 			{
-				Hex: &parser.ContractCallHex{
+				Hex: &parser.ArgHex{
 					Address: utils.PointerOf(base.HexToAddress("0x6B175474E89094C44Da98b954EedeAC495271d0F")),
 				},
 			},
 			{
-				Hex: &parser.ContractCallHex{
+				Hex: &parser.ArgHex{
 					Address: utils.PointerOf(base.HexToAddress("0x6B175474E89094C44Da98b954EedeAC495271d0F")),
 				},
 			},
