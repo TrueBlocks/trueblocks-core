@@ -121,7 +121,6 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 		// want to make another RPC call. We tried (see commented code), but EtherScan balks with a weird message
 		app, _ := conn.GetTransactionAppByHash(s.Hash.Hex())
 		s.TransactionIndex = uint64(app.TransactionIndex)
-		logger.Info(s.TransactionIndex)
 	} else if requestType == "miner" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.BlockReward

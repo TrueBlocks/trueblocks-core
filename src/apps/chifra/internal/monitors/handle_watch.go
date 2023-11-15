@@ -98,8 +98,12 @@ func (c *Command) fileName(addr base.Address) string {
 func (c *Command) resolve(addr base.Address, before, after int64) string {
 	fn := c.fileName(addr)
 	if file.FileExists(fn) {
-		c.Cmd += fmt.Sprintf(" --first_record %d", uint64(before+1))
-		c.Cmd += fmt.Sprintf(" --max_records %d", uint64(after-before+1)) // extra space won't hurt
+		if strings.Contains(c.Cmd, "export") {
+			c.Cmd += fmt.Sprintf(" --first_record %d", uint64(before+1))
+			c.Cmd += fmt.Sprintf(" --max_records %d", uint64(after-before+1)) // extra space won't hurt
+		} else {
+			c.Cmd += fmt.Sprintf(" %d-%d", before+1, after)
+		}
 		c.Cmd += " --append --no_header"
 	}
 	c.Cmd = strings.Replace(c.Cmd, "  ", " ", -1)

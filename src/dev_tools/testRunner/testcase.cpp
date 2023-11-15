@@ -533,7 +533,6 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     if (!post.empty() && !contains(post, "gojq") && post != "jq ." && post != "post")
         LOG_WARN("test post processor (", post, ") has unexpected value. Is it correct?");
 
-    options = substitute(options, "&#44;", ",");
     builtin = prepareBuiltIn(options);
     if (!builtin) {
         replaceAll(options, " = ", "=");
