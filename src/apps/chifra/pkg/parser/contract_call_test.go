@@ -15,7 +15,7 @@ import (
 
 func TestParse_Encoding(t *testing.T) {
 	// Short
-	if p, err := ParseContractCall(`0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69`); err != nil {
+	if p, err := ParseCall(`0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69`); err != nil {
 		t.Fatal(err)
 	} else {
 		if s := p.Encoded; s != `0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69` {
@@ -25,7 +25,7 @@ func TestParse_Encoding(t *testing.T) {
 
 	// Long one
 	long := "0x7087e4bd000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000076d61696e6e657400000000000000000000000000000000000000000000000000"
-	if p, err := ParseContractCall(long); err != nil {
+	if p, err := ParseCall(long); err != nil {
 		t.Fatal(err)
 	} else {
 		if s := p.Encoded; s != long {
@@ -36,12 +36,12 @@ func TestParse_Encoding(t *testing.T) {
 
 func TestParse_Selector(t *testing.T) {
 	// Invalid selector
-	if _, err := ParseContractCall(`0xcdba()`); !strings.Contains(err.Error(), errInvalidSelector.Error()) {
+	if _, err := ParseCall(`0xcdba()`); !strings.Contains(err.Error(), errInvalidSelector.Error()) {
 		t.Fatal("expected errInvalidSelector, got:", err)
 	}
 
 	// No arguments
-	if parsed, err := ParseContractCall(`0xcdba2fd4()`); err != nil {
+	if parsed, err := ParseCall(`0xcdba2fd4()`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.SelectorCall.Selector.Value; value != `0xcdba2fd4` {
@@ -53,7 +53,7 @@ func TestParse_Selector(t *testing.T) {
 	}
 
 	// Arguments
-	if parsed, err := ParseContractCall(`0xcdba2fd4(1, true, false, 0xbeef, "string")`); err != nil {
+	if parsed, err := ParseCall(`0xcdba2fd4(1, true, false, 0xbeef, "string")`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.SelectorCall.Selector.Value; value != `0xcdba2fd4` {
@@ -77,7 +77,7 @@ func TestParse_Selector(t *testing.T) {
 	}
 
 	// Hex parsing
-	if parsed, err := ParseContractCall(`0xcdba2fd4(0xdeadbeef, 0x6982508145454ce325ddbe47a25d4ec3d23119a1)`); err != nil {
+	if parsed, err := ParseCall(`0xcdba2fd4(0xdeadbeef, 0x6982508145454ce325ddbe47a25d4ec3d23119a1)`); err != nil {
 		t.Fatal(err)
 	} else {
 		if argsLen := len(parsed.SelectorCall.Arguments); argsLen != 2 {
@@ -95,12 +95,12 @@ func TestParse_Selector(t *testing.T) {
 
 func TestParse_Function(t *testing.T) {
 	// Invalid selector
-	if _, err := ParseContractCall(`111()`); err == nil {
+	if _, err := ParseCall(`111()`); err == nil {
 		t.Fatal("expected parsing error")
 	}
 
 	// No arguments
-	if parsed, err := ParseContractCall(`transfer()`); err != nil {
+	if parsed, err := ParseCall(`transfer()`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.FunctionNameCall.Name; value != `transfer` {
@@ -112,7 +112,7 @@ func TestParse_Function(t *testing.T) {
 	}
 
 	// Correct Solidity identifiers
-	if parsed, err := ParseContractCall(`$dollar$_underscoreCamelCase125__()`); err != nil {
+	if parsed, err := ParseCall(`$dollar$_underscoreCamelCase125__()`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.FunctionNameCall.Name; value != `$dollar$_underscoreCamelCase125__` {
@@ -121,7 +121,7 @@ func TestParse_Function(t *testing.T) {
 	}
 
 	// Arguments
-	if parsed, err := ParseContractCall(`something(1, true, false, 0xbeef, "string")`); err != nil {
+	if parsed, err := ParseCall(`something(1, true, false, 0xbeef, "string")`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.FunctionNameCall.Name; value != `something` {
@@ -145,7 +145,7 @@ func TestParse_Function(t *testing.T) {
 	}
 
 	// Hex parsing
-	if parsed, err := ParseContractCall(`somethingElse(0xdeadbeef, 0x6982508145454ce325ddbe47a25d4ec3d23119a1)`); err != nil {
+	if parsed, err := ParseCall(`somethingElse(0xdeadbeef, 0x6982508145454ce325ddbe47a25d4ec3d23119a1)`); err != nil {
 		t.Fatal(err)
 	} else {
 		if argsLen := len(parsed.FunctionNameCall.Arguments); argsLen != 2 {
@@ -162,7 +162,7 @@ func TestParse_Function(t *testing.T) {
 }
 
 func TestParse_Numbers(t *testing.T) {
-	if parsed, err := ParseContractCall(`doSomething(1, -2, 115792089237316195423570985008687907853269984665640564039457584007913129639935)`); err != nil {
+	if parsed, err := ParseCall(`doSomething(1, -2, 115792089237316195423570985008687907853269984665640564039457584007913129639935)`); err != nil {
 		t.Fatal(err)
 	} else {
 		if argsLen := len(parsed.FunctionNameCall.Arguments); argsLen != 3 {
@@ -312,7 +312,7 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		panic(err)
 	}
 	// the second argument is string instead of address
-	parsed, err := ParseContractCall(`transfer(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
+	parsed, err := ParseCall(`transfer(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -325,7 +325,7 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal("got wrong error:", err, "expected:", expectedError)
 	}
 
-	parsed, err = ParseContractCall(`someBool(111)`)
+	parsed, err = ParseCall(`someBool(111)`)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -335,7 +335,7 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal("got wrong error:", err, "expected:", expectedError)
 	}
 
-	parsed, err = ParseContractCall(`someBytes32("hello")`)
+	parsed, err = ParseCall(`someBytes32("hello")`)
 	if err != nil {
 		t.Fatal(err)
 	}

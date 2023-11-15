@@ -26,7 +26,7 @@ type ContractCall struct {
 }
 
 func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string) (*ContractCall, []string, error) {
-	parsed, err := parser.ParseContractCall(theCall)
+	parsed, err := parser.ParseCall(theCall)
 	if err != nil {
 		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
 		return nil, []string{}, err

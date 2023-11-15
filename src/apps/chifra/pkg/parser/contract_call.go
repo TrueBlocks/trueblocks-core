@@ -293,10 +293,10 @@ var parser = participle.MustBuild[ContractCall](
 	participle.Unquote("String"),
 )
 
-// ParseContractCall turns smart contract method call string and parses it into
+// ParseCall turns smart contract method call string and parses it into
 // a nice structures, from which we can easily extract the data to
 // make the call.
-func ParseContractCall(source string) (*ContractCall, error) {
+func ParseCall(source string) (*ContractCall, error) {
 	callSpec, err := parser.ParseString("", source)
 
 	return callSpec, err
