@@ -211,7 +211,7 @@ func TestArgument_AbiType(t *testing.T) {
 
 	type fields struct {
 		String  *string
-		Number  *ContractCallNumber
+		Number  *ArgNumber
 		Boolean *Boolean
 		Hex     *ContractCallHex
 	}
@@ -240,7 +240,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "int8 argument",
 			fields: fields{
-				Number: &ContractCallNumber{
+				Number: &ArgNumber{
 					Int: utils.PointerOf(int64(-128)),
 				},
 			},
@@ -252,7 +252,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "int64 argument",
 			fields: fields{
-				Number: &ContractCallNumber{
+				Number: &ArgNumber{
 					Int: utils.PointerOf(int64(-9223372036854775808)),
 				},
 			},
@@ -264,7 +264,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "int256 argument",
 			fields: fields{
-				Number: &ContractCallNumber{
+				Number: &ArgNumber{
 					Big: int256,
 				},
 			},

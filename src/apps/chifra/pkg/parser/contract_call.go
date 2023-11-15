@@ -69,10 +69,10 @@ type FunctionContractCall struct {
 type ContractArgument struct {
 	Tokens []lexer.Token
 
-	String  *string             `parser:"@String"`
-	Number  *ContractCallNumber `parser:"| @Decimal"`
-	Boolean *Boolean            `parser:"| @('true'|'false')"`
-	Hex     *ContractCallHex    `parser:"| @Hex"`
+	String  *string          `parser:"@String"`
+	Number  *ArgNumber       `parser:"| @Decimal"`
+	Boolean *Boolean         `parser:"| @('true'|'false')"`
+	Hex     *ContractCallHex `parser:"| @Hex"`
 }
 
 // Interface returns the value as interface{} (any)
@@ -182,13 +182,13 @@ func (h *ContractCallHex) Capture(values []string) error {
 	return nil
 }
 
-type ContractCallNumber struct {
+type ArgNumber struct {
 	Int  *int64
 	Uint *uint64
 	Big  *big.Int
 }
 
-func (n *ContractCallNumber) Capture(values []string) error {
+func (n *ArgNumber) Capture(values []string) error {
 	literal := values[0]
 
 	// Atoi parses into `int` type, which is used by go-ethereum
@@ -217,7 +217,7 @@ func (n *ContractCallNumber) Capture(values []string) error {
 }
 
 // Interface returns Number value as any
-func (n *ContractCallNumber) Interface() any {
+func (n *ArgNumber) Interface() any {
 	if n.Int != nil {
 		return *n.Int
 	}
@@ -227,7 +227,7 @@ func (n *ContractCallNumber) Interface() any {
 	return n.Big
 }
 
-func (n *ContractCallNumber) Convert(abiType *abi.Type) (any, error) {
+func (n *ArgNumber) Convert(abiType *abi.Type) (any, error) {
 	if abiType.Size > 64 {
 		return n.Big, nil
 	}
