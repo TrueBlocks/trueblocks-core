@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"math/big"
 	"strconv"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -14,8 +16,15 @@ import (
 type ArgAddress common.Address
 
 func (b *ArgAddress) Capture(values []string) error {
-	debug("ArgAddress::Capture", values)
-	*b = ArgAddress(common.HexToAddress(values[0]))
+	if strings.Contains(values[0], ".eth") {
+		debug("ArgAddress::Capture:Ens", values)
+		conn := rpc.TempConnection("mainnet")
+		addrStr, _ := conn.GetEnsAddress(values[0])
+		*b = ArgAddress(common.HexToAddress(addrStr))
+	} else {
+		debug("ArgAddress::Capture:Hex", values)
+		*b = ArgAddress(common.HexToAddress(values[0]))
+	}
 	return nil
 }
 
@@ -45,14 +54,14 @@ type ArgHex struct {
 }
 
 func (h *ArgHex) Capture(values []string) error {
-	debug("ArgHex::Capture", values)
 	hexLiteral := values[0]
-
 	if valid, _ := base.IsValidHex("", hexLiteral, 20); !valid {
+		debug("ArgHex::Capture:String", values)
 		h.String = &hexLiteral
 		return nil
 	}
 
+	debug("ArgHex::Capture:Address", values)
 	address := base.HexToAddress(hexLiteral)
 	h.Address = &address
 	return nil
@@ -138,5 +147,5 @@ func (n *ArgNumber) Convert(abiType *abi.Type) (any, error) {
 }
 
 func debug(name string, values []string) {
-	// fmt.Printf("%s%s: %v%s\n", colors.Green, name, values, colors.Off)
+	// fmt.Printf("%s%s: %v%s\n", colors.BrightGreen, name, values, colors.Off)
 }

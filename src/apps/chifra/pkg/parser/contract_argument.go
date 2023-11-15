@@ -17,12 +17,17 @@ type ContractArgument struct {
 	Number  *ArgNumber    `parser:"| @Decimal"`          // the value if it's a number
 	Boolean *ArgBool      `parser:"| @('true'|'false')"` // the value if it's a boolean
 	Hex     *ArgHex       `parser:"| @Hex"`              // the value if it's a hex string
+	EnsAddr *ArgAddress   `parser:"| @EnsDomain"`        // the value if it's an ENS domain
 }
 
 // Interface returns the value as interface{} (any)
 func (a *ContractArgument) Interface() any {
+	if a.EnsAddr != nil {
+		return *a.EnsAddr
+	}
+
 	if a.String != nil {
-		return string(*a.String)
+		return *a.String
 	}
 
 	if a.Number != nil {
@@ -44,7 +49,6 @@ func (a *ContractArgument) Interface() any {
 }
 
 func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
-	// fmt.Println("AbiType:", colors.Red, abiType, colors.Off)
 	if abiType.T == abi.FixedBytesTy {
 		// We only support fixed bytes as hashes
 		if a.Hex == nil {
@@ -80,6 +84,10 @@ func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 	}
 
 	if abiType.T == abi.AddressTy {
+		if a.EnsAddr != nil {
+			return a.EnsAddr, nil
+		}
+
 		// We need go-ethereum's Address type, not ours
 		if a.Hex == nil {
 			return nil, newWrongTypeError(abiType.String(), a.Tokens[0], a.Interface())
