@@ -30,10 +30,12 @@ var contractCallLexer = lexer.MustSimple([]lexer.SimpleRule{
 
 	// https://docs.soliditylang.org/en/v0.8.17/grammar.html#a4.SolidityLexer.Identifier
 	{Name: `SolidityIdent`, Pattern: `[a-zA-Z$_][a-zA-Z0-9$_]*`},
-	// Values:
+
+	// Values types
 	{Name: `String`, Pattern: `"(?:\\.|[^"])*"`},
 	{Name: `Decimal`, Pattern: `[-+]?\d+`},
 
+	// Whitespace and punctuation
 	{Name: `whitespace`, Pattern: `\s+`},
 	{Name: `Punctation`, Pattern: `[(),]`},
 })
@@ -275,17 +277,6 @@ func (s *Selector) Capture(values []string) error {
 	return nil
 }
 
-func newWrongTypeError(expectedType string, token lexer.Token, value any) error {
-	t := reflect.TypeOf(value)
-	typeName := t.String()
-	kind := t.Kind()
-	// kinds between this range are all (u)int, called "integer" in Solidity
-	if kind > 1 && kind < 12 {
-		typeName = "integer"
-	}
-	return fmt.Errorf("expected %s, but got %s \"%s\"", expectedType, typeName, token)
-}
-
 // Build parser
 var parser = participle.MustBuild[ContractCall](
 	participle.Lexer(contractCallLexer),
@@ -297,7 +288,16 @@ var parser = participle.MustBuild[ContractCall](
 // a nice structures, from which we can easily extract the data to
 // make the call.
 func ParseCall(source string) (*ContractCall, error) {
-	callSpec, err := parser.ParseString("", source)
+	return parser.ParseString("", source)
+}
 
-	return callSpec, err
+func newWrongTypeError(expectedType string, token lexer.Token, value any) error {
+	t := reflect.TypeOf(value)
+	typeName := t.String()
+	kind := t.Kind()
+	// kinds between this range are all (u)int, called "integer" in Solidity
+	if kind > 1 && kind < 12 {
+		typeName = "integer"
+	}
+	return fmt.Errorf("expected %s, but got %s \"%s\"", expectedType, typeName, token)
 }
