@@ -83,7 +83,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 
 			man.Version = opts.Tag
 			man.Specification = base.IpfsHash(config.SpecTags[opts.Tag])
-			man.SaveManifest(chain, config.PathToManifest(chain))
+			_ = man.SaveManifest(chain, config.PathToManifest(chain))
 
 			// All that's left to do is report on what happened.
 			msg := fmt.Sprintf("%d chunks were retagged with %s.", nChunksTagged, opts.Tag)
