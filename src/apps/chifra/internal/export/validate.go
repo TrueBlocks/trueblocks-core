@@ -190,7 +190,7 @@ func (opts *ExportOptions) validateExport() error {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
 	}
 
-	if !validate.CanArticulate(opts.Articulate) {
+	if !validate.HasArticulationKey(opts.Articulate) {
 		return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 	}
 
