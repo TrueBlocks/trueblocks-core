@@ -19,7 +19,7 @@ type ContractArgument struct {
 	Number  *ArgNumber    `parser:"| @Decimal"`          // the value if it's a number
 	Boolean *ArgBool      `parser:"| @('true'|'false')"` // the value if it's a boolean
 	Hex     *ArgHex       `parser:"| @Hex"`              // the value if it's a hex string
-	EnsAddr *ArgAddress   `parser:"| @EnsDomain"`        // the value if it's an ENS domain
+	EnsAddr *ArgEnsDomain `parser:"| @EnsDomain"`        // the value if it's an ENS domain
 }
 
 // Interface returns the value as interface{} (any)
@@ -114,6 +114,7 @@ func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 	return a.Interface(), nil
 }
 
+// wrongTypeError returns user-friendly errors
 func wrongTypeError(expectedType string, token lexer.Token, value any) error {
 	t := reflect.TypeOf(value)
 	typeName := t.String()
