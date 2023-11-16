@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// func LocationsFromAddressEncodingAndBlockIds(conn *rpc.Connection, address base.Address, encoding string, ids []identifiers.Identifier) ([]cache.Locator, error) {
 func (opts *StateOptions) HandleDecache() error {
 	silent := opts.Globals.TestMode || len(opts.Globals.File) > 0
 

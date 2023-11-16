@@ -11,13 +11,16 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	ethAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
 // ReadUnchainedIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
@@ -28,11 +31,15 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 		return cid, nil
 	}
 
-	unchainedChain := "mainnet" // the unchained index is on mainnet
-	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
-	conn := rpc.TempConnection(unchainedChain)
+	callAddress, abiMap, err := getUnchainedAbi()
+	if err != nil {
+		return "", err
+	}
 
-	if contractCall, _, err := call.NewContractCall(conn, base.HexToAddress(config.GetUnchained().SmartContract), theCall); err != nil {
+	unchainedChain := "mainnet" // the unchained index is on mainnet
+	conn := rpc.TempConnection(unchainedChain)
+	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
+	if contractCall, _, err := call.NewContractCallWithAbi(conn, callAddress, theCall, abiMap); err != nil {
 		wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", theCall, err)
 		return "", wrapped
 	} else {
@@ -44,7 +51,7 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 		if result, err := contractCall.Call(artFunc); err != nil {
 			return "", err
 		} else {
-			return result.Values["val_0"], nil
+			return result.Values["hash"], nil
 		}
 	}
 }
@@ -76,4 +83,47 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	default:
 		return nil, fmt.Errorf("fetch to %s return unrecognized content type: %s", url.String(), resp.Header.Get("Content-Type"))
 	}
+}
+
+func getUnchainedAbi() (base.Address, *abi.FunctionSyncMap, error) {
+	abiMap := abi.NewFunctionSyncMap()
+	callAddress := base.HexToAddress(config.GetUnchained().SmartContract)
+
+	var unchainedAbiJson = `[
+  {
+    "name": "manifestHashMap",
+    "type": "function",
+    "signature": "manifestHashMap(address,string)",
+    "encoding": "0x7087e4bd",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "publisher",
+        "internalType": "address"
+      },
+      {
+        "type": "string",
+        "name": "database",
+        "internalType": "string"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "string",
+        "name": "hash",
+        "internalType": "string"
+      }
+    ]
+  }
+]`
+
+	if abi, err := ethAbi.JSON(strings.NewReader(unchainedAbiJson)); err != nil {
+		return base.Address{}, abiMap, err
+	} else {
+		method := abi.Methods["manifestHashMap"]
+		function := types.FunctionFromAbiMethod(&method)
+		abiMap.SetValue(function.Encoding, function)
+	}
+
+	return callAddress, abiMap, nil
 }
