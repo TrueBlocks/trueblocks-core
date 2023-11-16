@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"errors"
 	"math/big"
 	"reflect"
 	"strings"
@@ -8,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/alecthomas/participle/v2/lexer"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -332,7 +332,7 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[1].AbiType(&testAbi.Methods["address"].Inputs[0].Type)
-	expected := wrongTypeError("address", lexer.Token{Value: `0x6982508145454ce325ddbe47a25d4ec3d23119a1`}, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")
+	expected := errors.New(`expected address, but got string "0x6982508145454ce325ddbe47a25d4ec3d23119a1"`)
 	if err.Error() != expected.Error() {
 		t.Fatal("got wrong error:", err, "expected:", expected)
 	}
@@ -342,7 +342,7 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["bool"].Inputs[0].Type)
-	expected = wrongTypeError("bool", lexer.Token{Value: `111`}, 111)
+	expected = errors.New(`expected bool, but got integer "111"`)
 	if err.Error() != expected.Error() {
 		t.Fatal("got wrong error:", err, "expected:", expected)
 	}
@@ -352,7 +352,7 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["bytes32"].Inputs[0].Type)
-	expected = wrongTypeError("hash", lexer.Token{Value: `hello`}, "hello")
+	expected = errors.New(`expected hash, but got string "hello"`)
 	if err.Error() != expected.Error() {
 		t.Fatal("got wrong error:", err, "expected:", expected)
 	}

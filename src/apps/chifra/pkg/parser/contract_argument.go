@@ -29,7 +29,8 @@ func (a *ContractArgument) Interface() any {
 	}
 
 	if a.String != nil {
-		return *a.String
+		value := *a.String
+		return string(value)
 	}
 
 	if a.Number != nil {
@@ -120,9 +121,6 @@ func wrongTypeError(expectedType string, token lexer.Token, value any) error {
 	// kinds between this range are all (u)int, called "integer" in Solidity
 	if kind > 1 && kind < 12 {
 		typeName = "integer"
-	}
-	if expectedType == "hash" || expectedType == "address" {
-		typeName = "parser.ArgString"
 	}
 	return fmt.Errorf("expected %s, but got %s \"%s\"", expectedType, typeName, token)
 }
