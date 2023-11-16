@@ -19,7 +19,7 @@ type ContractArgument struct {
 	Number  *ArgNumber    `parser:"| @Decimal"`          // the value if it's a number
 	Boolean *ArgBool      `parser:"| @('true'|'false')"` // the value if it's a boolean
 	Hex     *ArgHex       `parser:"| @Hex"`              // the value if it's a hex string
-	EnsAddr *ArgAddress   `parser:"| @EnsDomain"`        // the value if it's an ENS domain
+	EnsAddr *ArgEnsDomain `parser:"| @EnsDomain"`        // the value if it's an ENS domain
 }
 
 // Interface returns the value as interface{} (any)
@@ -29,7 +29,8 @@ func (a *ContractArgument) Interface() any {
 	}
 
 	if a.String != nil {
-		return *a.String
+		value := *a.String
+		return string(value)
 	}
 
 	if a.Number != nil {
@@ -113,6 +114,7 @@ func (a *ContractArgument) AbiType(abiType *abi.Type) (any, error) {
 	return a.Interface(), nil
 }
 
+// wrongTypeError returns user-friendly errors
 func wrongTypeError(expectedType string, token lexer.Token, value any) error {
 	t := reflect.TypeOf(value)
 	typeName := t.String()
@@ -120,9 +122,6 @@ func wrongTypeError(expectedType string, token lexer.Token, value any) error {
 	// kinds between this range are all (u)int, called "integer" in Solidity
 	if kind > 1 && kind < 12 {
 		typeName = "integer"
-	}
-	if expectedType == "hash" || expectedType == "address" {
-		typeName = "parser.ArgString"
 	}
 	return fmt.Errorf("expected %s, but got %s \"%s\"", expectedType, typeName, token)
 }

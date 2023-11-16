@@ -12,23 +12,23 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// ArgAddress is a type alias to capture bool values correctly
-type ArgAddress common.Address
+// ArgEnsDomain is a type alias to capture ENS domains
+type ArgEnsDomain common.Address
 
-func (b *ArgAddress) Capture(values []string) error {
+func (b *ArgEnsDomain) Capture(values []string) error {
 	if strings.Contains(values[0], ".eth") {
-		debug("ArgAddress::Capture:Ens", values)
+		debug("ArgEnsDomain::Capture:Ens", values)
 		conn := rpc.TempConnection("mainnet")
 		addrStr, _ := conn.GetEnsAddress(values[0])
-		*b = ArgAddress(common.HexToAddress(addrStr))
+		*b = ArgEnsDomain(common.HexToAddress(addrStr))
 	} else {
-		debug("ArgAddress::Capture:Hex", values)
-		*b = ArgAddress(common.HexToAddress(values[0]))
+		debug("ArgEnsDomain::Capture:Hex", values)
+		*b = ArgEnsDomain(common.HexToAddress(values[0]))
 	}
 	return nil
 }
 
-// ArgString is a type alias to capture bool values correctly
+// ArgString is a type alias to capture strings correctly
 type ArgString string
 
 func (b *ArgString) Capture(values []string) error {

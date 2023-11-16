@@ -15,7 +15,7 @@ import (
 // https://docs.soliditylang.org/en/v0.8.17/grammar.html#a4.SolidityLexer.Identifier
 var ourLexer = lexer.MustSimple([]lexer.SimpleRule{
 	// matched lexer tokens (order matters)
-	{Name: `EnsDomain`, Pattern: `[a-zA-Z0-9]+\.eth`}, // TODO: this token does not handle subdomains or dashes
+	{Name: `EnsDomain`, Pattern: `([a-zA-Z0-9]+)(\.[a-zA-Z0-9]+)*\.eth`}, // TODO: this token does not handle dashes
 	{Name: `Hex`, Pattern: `0x[[:xdigit:]]+`},
 	{Name: `String`, Pattern: `"(?:\\.|[^"])*"`},
 	{Name: `Decimal`, Pattern: `[-+]?\d+`},
