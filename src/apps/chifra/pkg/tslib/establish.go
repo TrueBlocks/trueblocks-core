@@ -40,7 +40,7 @@ func EstablishTimestamps(chain string, publisher base.Address) error {
 	}
 
 	os.Remove(tsPath)
-	os.Rename(tmpTsPath, tsPath)
+	_ = os.Rename(tmpTsPath, tsPath)
 
 	return err
 }
