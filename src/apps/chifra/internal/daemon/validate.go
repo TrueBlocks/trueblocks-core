@@ -5,8 +5,6 @@
 package daemonPkg
 
 import (
-	"strings"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -38,10 +36,6 @@ func (opts *DaemonOptions) validateDaemon() error {
 
 	if opts.Monitor {
 		return validate.Usage("The {0} option is currenlty not available. Use {1} instead.", "--monitor", "chifra monitors --watch")
-	}
-
-	if len(opts.Port) > 0 && !strings.Contains(opts.Port, ":") {
-		opts.Port = ":" + opts.Port
 	}
 
 	return opts.Globals.Validate()
