@@ -60,7 +60,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	if report, err := chunk.Write(chain, opts.PublisherAddr, indexPath, appMap, len(prefunds)); err != nil {
 		return false, err
 	} else if report == nil {
-		logger.Fatal("Should not happen, write chunk returned empty report")
+		logger.Fatal("should not happen ==> write chunk returned empty report")
 	} else {
 		report.Snapped = true // assumes block zero is a snap to grid (which it is in a sense)
 		report.FileSize = file.FileSize(indexPath)

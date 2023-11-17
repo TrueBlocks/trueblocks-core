@@ -7,7 +7,6 @@ package monitorsPkg
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -258,11 +257,11 @@ func (opts *MonitorsOptions) getOutputFolder(orig string) (string, error) {
 	parts := strings.Split(strings.Replace(cmdLine, "  ", " ", -1), " ")
 	if len(parts) < 1 || parts[0] != "chifra" {
 		s := fmt.Sprintf("Invalid command: %s. Must start with 'chifra'.", strings.Trim(orig, " \t\n\r"))
-		log.Fatal(s)
+		logger.Fatal(s)
 	}
 	if len(parts) < 2 || !okMap[parts[1]] {
 		s := fmt.Sprintf("Invalid command: %s. Must start with 'chifra export', 'chifra list', 'chifra state', or 'chifra tokens'.", orig)
-		log.Fatal(s)
+		logger.Fatal(s)
 	}
 
 	cmdLine += " "

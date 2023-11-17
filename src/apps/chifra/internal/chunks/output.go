@@ -112,7 +112,7 @@ func (opts *ChunksOptions) ChunksInternal() error {
 			err = opts.HandleStats(blockNums)
 
 		default:
-			logger.Fatal("Should not happen in NamesInternal")
+			logger.Fatal("should not happen ==> in NamesInternal")
 		}
 	}
 	// EXISTING_CODE

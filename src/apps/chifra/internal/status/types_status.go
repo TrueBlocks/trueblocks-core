@@ -242,7 +242,7 @@ func (s *simpleStatus) toTemplate(w io.Writer, logTimerOn bool, format string) b
 
 	t, err := template.New("status").Parse(table)
 	if err != nil {
-		logger.Fatal("Should not happen. Bad template.", err)
+		logger.Fatal("should not happen ==> bad template.", err)
 		return false
 	}
 
