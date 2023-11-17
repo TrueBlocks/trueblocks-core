@@ -29,7 +29,6 @@ func TestLoadTimestampsPass(t *testing.T) {
 	}
 
 	_ = config.GetRootConfig()
-	EstablishTsFile(utils.GetTestChain(), base.GetTestPublisher())
 	for _, e := range expected {
 		bn, err := FromTsToBn(utils.GetTestChain(), e.ts)
 		if err != nil {

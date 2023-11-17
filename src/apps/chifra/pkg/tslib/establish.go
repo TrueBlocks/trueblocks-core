@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 )
 
-func EstablishTsFile(chain string, publisher base.Address) error {
+func EstablishTimestamps(chain string, publisher base.Address) error {
 	tsPath := config.PathToTimestamps(chain)
 	if file.FileExists(tsPath) {
 		return nil
