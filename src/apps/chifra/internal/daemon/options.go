@@ -20,7 +20,7 @@ import (
 
 // DaemonOptions provides all command options for the chifra daemon command.
 type DaemonOptions struct {
-	Port    string                `json:"port,omitempty"`    // Specify the server's port
+	Url     string                `json:"url,omitempty"`     // Specify the API server's url and optionally its port
 	Api     string                `json:"api,omitempty"`     // Instruct the node to start the API server
 	Scrape  string                `json:"scrape,omitempty"`  // Start the scraper, initialize it with either just blooms or entire index, generate for new blocks
 	Monitor bool                  `json:"monitor,omitempty"` // Instruct the node to start the monitors tool
@@ -33,13 +33,13 @@ type DaemonOptions struct {
 }
 
 var defaultDaemonOptions = DaemonOptions{
-	Port: ":8080",
-	Api:  "on",
+	Url: "localhost:8080",
+	Api: "on",
 }
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *DaemonOptions) testLog() {
-	logger.TestLog(len(opts.Port) > 0 && opts.Port != ":8080", "Port: ", opts.Port)
+	logger.TestLog(len(opts.Url) > 0 && opts.Url != "localhost:8080", "Url: ", opts.Url)
 	logger.TestLog(len(opts.Api) > 0 && opts.Api != "on", "Api: ", opts.Api)
 	logger.TestLog(len(opts.Scrape) > 0, "Scrape: ", opts.Scrape)
 	logger.TestLog(opts.Monitor, "Monitor: ", opts.Monitor)
@@ -60,8 +60,8 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 	opts := &copy
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "port":
-			opts.Port = value[0]
+		case "url":
+			opts.Url = value[0]
 		case "api":
 			opts.Api = value[0]
 		case "scrape":

@@ -9,7 +9,7 @@ Aliases:
   daemon, serve
 
 Flags:
-  -p, --port string     specify the server's port (default ":8080")
+  -u, --url string      specify the API server's url and optionally its port (default "localhost:8080")
   -a, --api string      instruct the node to start the API server (hidden)
                         One of [ off | on ] (default "on")
   -s, --scrape string   start the scraper, initialize it with either just blooms or entire index, generate for new blocks (hidden)
