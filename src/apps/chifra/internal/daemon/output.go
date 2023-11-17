@@ -12,7 +12,6 @@ package daemonPkg
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -41,7 +40,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	outputHelpers.EnableCommand("daemon", true)
 	// EXISTING_CODE
 	if true { // defeats linter
-		logger.Fatal("Should not happen. Daemon is an invalid route for server")
+		logger.Fatal("should not happen ==> Daemon is an invalid route for server")
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
@@ -60,15 +59,10 @@ func (opts *DaemonOptions) DaemonInternal() error {
 	timer := logger.NewTimer()
 	msg := "chifra daemon"
 	// EXISTING_CODE
-	apiUrl := opts.Port
-	if !strings.HasPrefix(apiUrl, "http") {
-		apiUrl = "http://localhost" + apiUrl
-	}
-
 	chain := opts.Globals.Chain
 	provider := config.GetChain(chain).RpcProvider
 
-	logger.InfoTable("Server URL:        ", apiUrl)
+	logger.InfoTable("Server URL:        ", opts.Url)
 	logger.InfoTable("RPC Provider:      ", provider)
 	logger.InfoTable("Root Config Path:  ", config.PathToRootConfig())
 	logger.InfoTable("Chain Config Path: ", config.MustGetPathToChainConfig(chain))
@@ -105,7 +99,7 @@ func (opts *DaemonOptions) DaemonInternal() error {
 	// Start listening to the web sockets
 	RunWebsocketPool()
 	// Start listening for requests
-	logger.Fatal(http.ListenAndServe(opts.Port, NewRouter()))
+	logger.Fatal(http.ListenAndServe(opts.Url, NewRouter()))
 
 	// EXISTING_CODE
 	timer.Report(msg)

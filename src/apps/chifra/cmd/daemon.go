@@ -64,7 +64,7 @@ func init() {
 
 	daemonCmd.Flags().SortFlags = false
 
-	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "specify the server's port")
+	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Url, "url", "u", "localhost:8080", "specify the API server's url and optionally its port")
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Api, "api", "a", "on", `instruct the node to start the API server (hidden)
 One of [ off | on ]`)
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Scrape, "scrape", "s", "", `start the scraper, initialize it with either just blooms or entire index, generate for new blocks (hidden)
@@ -82,6 +82,7 @@ One of [ off | blooms | index ]`)
 	daemonCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
+	daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated. Please use --url instead.") //cmd is the parent/top level command
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(daemonCmd)

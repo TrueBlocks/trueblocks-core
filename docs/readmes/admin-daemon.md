@@ -31,11 +31,11 @@ Aliases:
   daemon, serve
 
 Flags:
-  -p, --port string   specify the server's port (default ":8080")
-  -g, --grpc          run gRPC server to serve names
-  -x, --fmt string    export format, one of [none|json*|txt|csv]
-  -v, --verbose       enable verbose output
-  -h, --help          display this help screen
+  -u, --url string   specify the API server's url and optionally its port (default "localhost:8080")
+  -g, --grpc         run gRPC server to serve names
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
+  -v, --verbose      enable verbose output
+  -h, --help         display this help screen
 
 Notes:
   - To start API open terminal window and run chifra daemon.
