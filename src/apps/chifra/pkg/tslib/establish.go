@@ -33,17 +33,27 @@ func EstablishTimestamps(chain string, publisher base.Address) error {
 		return fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
 	}
 
-	return downloadCidToBinary(chain, database, tsPath, cid)
+	tmpTsPath := tsPath + ".tmp"
+	if err, canceled := downloadTimestamps(chain, database, tmpTsPath, cid); err != nil || canceled {
+		os.Remove(tmpTsPath)
+		return err
+	}
+
+	os.Remove(tsPath)
+	os.Rename(tmpTsPath, tsPath)
+
+	return err
 }
 
-// downloadCidToBinary downloads a CID to a binary file
-func downloadCidToBinary(chain, database, outputFn, cid string) error {
+// downloadTimestamps downloads a CID to a binary file
+func downloadTimestamps(chain, database, outputFn, cid string) (error, bool) {
 	gatewayUrl := config.GetChain(chain).IpfsGateway
 
 	url, err := url.Parse(gatewayUrl)
 	if err != nil {
-		return err
+		return err, false
 	}
+
 	url.Path = filepath.Join(url.Path, cid)
 
 	logger.InfoTable("Chain:", chain)
@@ -55,31 +65,37 @@ func downloadCidToBinary(chain, database, outputFn, cid string) error {
 
 	header, err := http.Head(url.String())
 	if err != nil {
-		return err
+		return err, false
 	}
 	if header.StatusCode != 200 {
-		return fmt.Errorf("CID not found: %d status", header.StatusCode)
+		return fmt.Errorf("CID not found: %d status", header.StatusCode), false
 	}
 
 	if header.ContentLength <= file.FileSize(outputFn) {
 		// The file on disc is larger than the one we will download which means it has more
 		// timestamps in it, so we don't download it.
-		return nil
+		return nil, false
 	}
 
 	//Get the response bytes from the url
 	response, err := http.Get(url.String())
 	if err != nil {
-		return err
+		return err, false
 	}
 	defer response.Body.Close()
 	if response.StatusCode != 200 {
-		return fmt.Errorf("CID not found: %d status", header.StatusCode)
+		return fmt.Errorf("CID not found: %d status", header.StatusCode), false
 	}
 
 	logger.Info(fmt.Sprintf("%sDownloading complete %s (%s). Writing file...%s", colors.Yellow, database, cid, colors.Off))
 
-	userHitsCtrlC := false
+	userHitCtrlC := false
+	ctx, cancel := context.WithCancel(context.Background())
+	cleanOnQuit := func() {
+		userHitCtrlC = true
+		logger.Warn(sigintTrap.TrapMessage)
+	}
+
 	go func() {
 		for {
 			if file.FileSize(outputFn) >= header.ContentLength {
@@ -87,28 +103,24 @@ func downloadCidToBinary(chain, database, outputFn, cid string) error {
 			}
 			pct := int(float64(file.FileSize(outputFn)) / float64(header.ContentLength) * 100)
 			msg := colors.Yellow + fmt.Sprintf("Downloading timestamps. Please wait... %d%%", pct) + colors.Off
-			if userHitsCtrlC {
+			if userHitCtrlC {
 				msg = colors.Yellow + fmt.Sprintf("Finishing work. please wait... %d%%                                 ", pct) + colors.Off
+				cancel()
 			}
 			logger.Progress(true, msg)
 			time.Sleep(500 * time.Microsecond)
 		}
 	}()
 
-	ctx, cancel := context.WithCancel(context.Background())
-	cleanOnQuit := func() {
-		userHitsCtrlC = true
-		logger.Warn(sigintTrap.TrapMessage)
-	}
 	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
 
 	ff, err := os.OpenFile(outputFn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
-		return err
+		return err, userHitCtrlC
 	}
 	defer ff.Close()
 
 	_, err = io.Copy(ff, response.Body)
-	return err
+	return err, userHitCtrlC
 }
