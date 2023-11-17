@@ -355,7 +355,7 @@ func (s *SimpleLog) ContainsAddress(addr base.Address) bool {
 func (r *RawLog) RawToSimple(vals map[string]any) (SimpleLog, error) {
 	hash, ok := vals["hash"].(base.Hash)
 	if !ok {
-		logger.Fatal("Hash not found in raw log values")
+		logger.Fatal("should not happen ==> hash not found in raw log values")
 	}
 
 	log := SimpleLog{

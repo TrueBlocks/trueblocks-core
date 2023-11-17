@@ -144,7 +144,7 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 		s.Value.SetString(rawTx.Amount, 0)
 		s.To = base.HexToAddress(addr)
 		if s.To != base.HexToAddress(rawTx.Address) {
-			logger.Fatal("Should not happen in rawToSimple", s.To, rawTx.Address)
+			logger.Fatal("should not happen ==> in rawToSimple", s.To, rawTx.Address)
 		}
 	}
 
@@ -180,7 +180,7 @@ func getEtherscanUrl(value string, requestType string, paginator *Paginator) (st
 	}
 
 	if actions[requestType] == "" {
-		logger.Fatal("Should not happen in getEtherscanUrl", requestType)
+		logger.Fatal("should not happen ==> in getEtherscanUrl", requestType)
 	}
 
 	key := config.GetKey("etherscan").ApiKey

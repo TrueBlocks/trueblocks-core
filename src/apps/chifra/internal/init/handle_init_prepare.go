@@ -73,7 +73,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			bloomStatus, indexStatus, err := isValidChunk(path, chunk.BloomSize, chunk.IndexSize, opts.All)
 			if err != nil {
 				if bloomStatus != FILE_ERROR && indexStatus != FILE_ERROR {
-					logger.Fatal("implementation error - should not happen in cleanIndex")
+					logger.Fatal("should not happen ==> implementation error in cleanIndex")
 				}
 				return false, err // bubble the error up
 			}

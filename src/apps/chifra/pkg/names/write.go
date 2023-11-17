@@ -18,7 +18,7 @@ func WriteNames(dbType DatabaseType, chain string, dryRun bool) (err error) {
 	case DatabaseRegular:
 		return regularWriteNames(chain, dryRun)
 	default:
-		logger.Fatal("unknown database type")
+		logger.Fatal("should not happen ==> unknown database type")
 	}
 	return
 }

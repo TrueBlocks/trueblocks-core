@@ -188,7 +188,7 @@ func (call *ContractCall) forceEncoding(encoding string) {
 
 func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error) (results *types.SimpleResult, err error) {
 	if artFunc == nil {
-		logger.Fatal("Implementation error: artFunc is nil")
+		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
 	}
 
 	blockTs := base.Timestamp(0)

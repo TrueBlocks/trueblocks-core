@@ -83,7 +83,7 @@ func (settings settings) GetRpcConnection() *Connection {
 // false for nil pointer to Connection
 func (conn *Connection) StoreReadable() bool {
 	if conn == nil {
-		logger.Fatal("Implementation error in StoreReadable.")
+		logger.Fatal("should not happen ==> implementation error in StoreReadable.")
 	}
 
 	return conn.Store != nil

@@ -41,7 +41,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	outputHelpers.EnableCommand("daemon", true)
 	// EXISTING_CODE
 	if true { // defeats linter
-		logger.Fatal("Should not happen. Daemon is an invalid route for server")
+		logger.Fatal("should not happen ==> Daemon is an invalid route for server")
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)

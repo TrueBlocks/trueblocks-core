@@ -62,7 +62,7 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 				close(filenameChan)
 			}
 		default:
-			logger.Fatal("You may only traverse the bloom folder")
+			logger.Fatal("should not happen ==> only traverse the bloom folder")
 		}
 	}
 
