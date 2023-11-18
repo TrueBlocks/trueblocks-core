@@ -25,42 +25,44 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-// Where to find know ABI files
-var knownAbiSubdirectories = []string{
-	"known-000", "known-005", "known-010", "known-015",
-}
-
-
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
-func LoadAbi(chain string, address base.Address, abiMap *FunctionSyncMap) (err error) {
-	tmp := rpc.TempConnection(chain)
-	if err = tmp.IsContractAt(address, nil); err == rpc.ErrNotAContract {
+func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) (error, bool) {
+	var err error
+	chain := conn.Chain
+
+	if err = conn.IsContractAt(address, nil); err == rpc.ErrNotAContract {
 		logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
-		return nil
+		return nil, false
 	}
 
 	// If there was no error, the abi was loaded...
-	err = LoadAbiFromAddress(chain, address, abiMap)
+	err, _ = LoadAbiFromAddress(conn, address, abiMap)
 	if err == nil {
-		return
+		return err, false
 	}
 
 	// If there was an unexpected error (not NotExist or not an empty file), return the error
 	if !os.IsNotExist(err) && err != io.EOF {
-		return fmt.Errorf("while reading %s ABI file: %w", address, err)
+		return fmt.Errorf("while reading %s ABI file: %w", address, err), false
 	}
 
 	// We didn't find the file. Check if the address is a contract
-	conn := rpc.TempConnection(chain)
 	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
-		return err
+		return err, false
 	} else if errors.Is(err, rpc.ErrNotAContract) {
-		return nil
+		return nil, false
 	}
 
-	// Fetch ABI from a provider
-	return DownloadAbi(chain, address, abiMap)
+	// Download the ABI as a last resort
+	err = DownloadAbi(chain, address, abiMap)
+
+	return err, err == nil
 }
+
+// Where to find know ABI files
+// var knownAbiSubdirectories = []string{
+// 	"known-000", "known-005", "known-010", "known-015",
+// }
 
 func fromJson(reader io.Reader, abiMap *FunctionSyncMap) (err error) {
 	// Compute encodings, signatures and parse file
@@ -96,16 +98,6 @@ func loadAbiFromKnownFile(filePath string, abiMap *FunctionSyncMap) (err error) 
 	return fromJson(f, abiMap)
 }
 
-// LoadKnownAbiByName finds known ABI by name
-func LoadKnownAbiByName(name string, abiMap *FunctionSyncMap) (err error) {
-	var filePath string
-	if filePath = findKnownAbi(name); filePath == "" {
-		err = fmt.Errorf("known abi file not found: %s", name)
-		return
-	}
-	return loadAbiFromKnownFile(filePath, abiMap)
-}
-
 // readCString reads cString structure from reader. It has different signature than
 // the rest of `read*` functions in this package, to ease reading values into
 // other structs' fields
@@ -123,7 +115,7 @@ func readCString(reader *bufio.Reader, str *cString) (err error) {
 	return
 }
 
-func ReadCacheHeader(reader *bufio.Reader, target *CacheHeader) (err error) {
+func readCacheHeader(reader *bufio.Reader, target *cacheHeader) (err error) {
 	err = binary.Read(reader, binary.LittleEndian, &target.deleted)
 	if err != nil {
 		return
@@ -222,11 +214,11 @@ func readFromArray[Item arrayItem](
 
 // readAbis reads ABI cache (known.bin)
 func readAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
-	header := &CacheHeader{}
-	if err = ReadCacheHeader(reader, header); err != nil {
+	header := &cacheHeader{}
+	if err = readCacheHeader(reader, header); err != nil {
 		return
 	}
-	if err = ValidateHeader(header); err != nil {
+	if err = validateHeader(header); err != nil {
 		return
 	}
 
@@ -242,12 +234,12 @@ func readAbis(reader *bufio.Reader) (result []types.SimpleFunction, err error) {
 
 func readParameter(reader *bufio.Reader) (param *types.SimpleParameter, err error) {
 	param = &types.SimpleParameter{}
-	header := &CacheHeader{}
-	err = ReadCacheHeader(reader, header)
+	header := &cacheHeader{}
+	err = readCacheHeader(reader, header)
 	if err != nil {
 		return
 	}
-	err = ValidateHeader(header)
+	err = validateHeader(header)
 	if err != nil {
 		return
 	}
@@ -310,7 +302,7 @@ func readParameter(reader *bufio.Reader) (param *types.SimpleParameter, err erro
 // TODO: to calculate this value. We can add a function to the version package.
 var minimumCacheVersion = uint64(41000)
 
-func ValidateHeader(header *CacheHeader) error {
+func validateHeader(header *cacheHeader) error {
 	if header.schema < minimumCacheVersion {
 		return errors.New("invalid schema")
 	}
@@ -321,7 +313,7 @@ type cString struct {
 	size    uint64
 	content []byte
 }
-type CacheHeader struct {
+type cacheHeader struct {
 	deleted   uint64
 	schema    uint64
 	showing   uint64
@@ -341,12 +333,12 @@ func readString(reader *bufio.Reader, target *string) (err error) {
 
 func readFunction(reader *bufio.Reader) (function *types.SimpleFunction, err error) {
 	function = &types.SimpleFunction{}
-	header := &CacheHeader{}
-	err = ReadCacheHeader(reader, header)
+	header := &cacheHeader{}
+	err = readCacheHeader(reader, header)
 	if err != nil {
 		return
 	}
-	err = ValidateHeader(header)
+	err = validateHeader(header)
 	if err != nil {
 		return
 	}
@@ -423,8 +415,8 @@ func getAbis(chain string) ([]types.SimpleFunction, error) {
 	}
 }
 
-// LoadCache loads binary cache of known ABIs
-func LoadCache(chain string, abiMap *FunctionSyncMap) (loaded bool) {
+// loadCache loads binary cache of known ABIs
+func loadCache(chain string, abiMap *FunctionSyncMap) (loaded bool) {
 	functions, cacheErr := getAbis(chain)
 	// We can ignore cache error
 	if cacheErr != nil {
@@ -618,8 +610,8 @@ func writeAbis(writer *bufio.Writer, abis []types.SimpleFunction) (err error) {
 	return
 }
 
-// SetAbis writes ABIs to the cache
-func SetAbis(chain string, abis []types.SimpleFunction) (err error) {
+// setAbis writes ABIs to the cache
+func setAbis(chain string, abis []types.SimpleFunction) (err error) {
 	var abisFilePath = path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], "known.bin")
 	buf := bytes.Buffer{}
 	writer := bufio.NewWriter(&buf)
@@ -687,7 +679,7 @@ func LoadKnownAbis(chain string, abiMap *FunctionSyncMap) (err error) {
 	}
 
 	if useCache {
-		if loaded := LoadCache(chain, abiMap); loaded {
+		if loaded := loadCache(chain, abiMap); loaded {
 			return
 		}
 	}
@@ -705,19 +697,7 @@ func LoadKnownAbis(chain string, abiMap *FunctionSyncMap) (err error) {
 	}
 
 	toCache := abiMap.Values()
-	return SetAbis(chain, toCache)
-}
-
-// findKnownAbi finds known ABI by name in known-* directories
-func findKnownAbi(name string) (filePath string) {
-	for _, subdirName := range knownAbiSubdirectories {
-		testPath := path.Join(config.PathToRootConfig(), "abis", subdirName, name+".json")
-		if file.FileExists(testPath) {
-			filePath = testPath
-			return
-		}
-	}
-	return
+	return setAbis(chain, toCache)
 }
 
 func getKnownAbiPaths() (filePaths []string, err error) {
@@ -748,14 +728,16 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 }
 
 // LoadAbiFromAddress loads ABI from local file or cache
-func LoadAbiFromAddress(chain string, address base.Address, abiMap *FunctionSyncMap) (err error) {
+func LoadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) (error, bool) {
+	var err error
+	chain := conn.Chain
 	localFileName := address.Hex() + ".json"
 	localFile, err := os.OpenFile(localFileName, os.O_RDONLY, 0)
 	if os.IsNotExist(err) {
 		// There's no local file, so we try to load one from cache
-		loadedAbis, err := GetAbi(chain, address)
+		loadedAbis, err := getAbi(chain, address)
 		if err != nil {
-			return err
+			return err, false
 		}
 
 		for _, loadedAbi := range loadedAbis {
@@ -764,24 +746,24 @@ func LoadAbiFromAddress(chain string, address base.Address, abiMap *FunctionSync
 			abiMap.SetValue(loadedAbi.Encoding, &loadedAbi)
 		}
 
-		return nil
+		return nil, true
 	}
 	if err != nil {
 		// There was different error, we may want to report it
-		return
+		return err, false
 	}
 	defer localFile.Close()
 
 	// Local file found
 	if err = fromJson(localFile, abiMap); err != nil {
-		return
+		return err, false
 	}
 	// File is correct, cache it
 	if err = insertAbi(chain, address, localFile); err != nil {
-		return
+		return err, false
 	}
 
-	return
+	return err, true
 }
 
 // insertAbi copies file (e.g. opened local file) into cache
@@ -798,8 +780,8 @@ func insertAbi(chain string, address base.Address, inputReader io.Reader) error 
 	}
 }
 
-// GetAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
-func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
+// getAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
+func getAbi(chain string, address base.Address) (simpleAbis []types.SimpleFunction, err error) {
 	filePath := path.Join(walk.CacheTypeToFolder[walk.Cache_Abis], address.Hex()+".json")
 	fullPath := path.Join(config.PathToCache(chain), filePath)
 	f, err := os.OpenFile(fullPath, os.O_RDONLY, 0)

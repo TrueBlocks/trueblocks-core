@@ -9,7 +9,7 @@ func (abiCache *AbiCache) ArticulateReceipt(receipt *types.SimpleReceipt) (err e
 	for index := range receipt.Logs {
 		address := receipt.Logs[index].Address
 		if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
-			if err := abi.LoadAbi(abiCache.Chain, address, &abiCache.AbiMap); err != nil {
+			if err, _ = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
 				abiCache.skipMap.SetValue(address, true)
 				return err
 			} else {
