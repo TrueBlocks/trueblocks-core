@@ -44,7 +44,7 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 		return "", wrapped
 	} else {
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
-		abiCache := articulate.NewAbiCache(chain, true)
+		abiCache := articulate.NewAbiCache(conn, true)
 		artFunc := func(str string, function *types.SimpleFunction) error {
 			return abiCache.ArticulateFunction(function, "", str[2:])
 		}

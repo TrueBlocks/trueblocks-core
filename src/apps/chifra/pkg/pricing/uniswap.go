@@ -55,7 +55,7 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 
-	abiCache := articulate.NewAbiCache(conn.Chain, true)
+	abiCache := articulate.NewAbiCache(conn, true)
 	artFunc := func(str string, function *types.SimpleFunction) error {
 		return abiCache.ArticulateFunction(function, "", str[2:])
 	}

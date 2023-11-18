@@ -3,6 +3,7 @@ package articulate
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 type AbiCache struct {
@@ -12,7 +13,8 @@ type AbiCache struct {
 	skipMap   abi.AddressSyncMap
 }
 
-func NewAbiCache(chain string, loadKnown bool) *AbiCache {
+func NewAbiCache(conn *rpc.Connection, loadKnown bool) *AbiCache {
+	chain := conn.Chain
 	ret := &AbiCache{
 		Chain:     chain,
 		AbiMap:    abi.FunctionSyncMap{},

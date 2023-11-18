@@ -17,7 +17,7 @@ import (
 
 func (opts *AbisOptions) HandleAddresses() (err error) {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(chain, opts.Known)
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
