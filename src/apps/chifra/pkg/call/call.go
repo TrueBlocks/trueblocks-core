@@ -44,7 +44,7 @@ func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theC
 
 	} else {
 		// Selector or function name call
-		var findAbiMode abi.FindMode
+		findAbiMode := abi.FindByName // default
 		var identifier string
 
 		switch {
@@ -116,7 +116,7 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 
 	} else {
 		// Selector or function name call
-		var findAbiMode abi.FindMode
+		findAbiMode := abi.FindByName
 		var identifier string
 
 		switch {

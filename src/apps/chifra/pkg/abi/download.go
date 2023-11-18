@@ -27,7 +27,7 @@ var AbiNotFound = `[{"name":"AbiNotFound","type":"function"}]`
 // Sourcify or custom ones configured by the user)
 func DownloadAbi(chain string, address base.Address, abiMap *FunctionSyncMap) error {
 	if address.IsZero() {
-		return errors.New("address is 0x0")
+		return errors.New("address is 0x0 in DownloadAbi")
 	}
 
 	// C++ code used do check if the address is contract in 2 places: here and in handle_addresses. We
@@ -90,5 +90,6 @@ func DownloadAbi(chain string, address base.Address, abiMap *FunctionSyncMap) er
 	if err = insertAbi(chain, address, reader); err != nil {
 		return err
 	}
+
 	return nil
 }

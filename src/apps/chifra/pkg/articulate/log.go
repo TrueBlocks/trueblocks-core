@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// ArticulateLog articulates a log by attaching the Articulated log structure if the ABI is found.
 func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) (err error) {
 	address := log.Address
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {

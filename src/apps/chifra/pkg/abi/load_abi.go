@@ -30,6 +30,38 @@ var knownAbiSubdirectories = []string{
 	"known-000", "known-005", "known-010", "known-015",
 }
 
+
+// LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
+func LoadAbi(chain string, address base.Address, abiMap *FunctionSyncMap) (err error) {
+	tmp := rpc.TempConnection(chain)
+	if err = tmp.IsContractAt(address, nil); err == rpc.ErrNotAContract {
+		logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
+		return nil
+	}
+
+	// If there was no error, the abi was loaded...
+	err = LoadAbiFromAddress(chain, address, abiMap)
+	if err == nil {
+		return
+	}
+
+	// If there was an unexpected error (not NotExist or not an empty file), return the error
+	if !os.IsNotExist(err) && err != io.EOF {
+		return fmt.Errorf("while reading %s ABI file: %w", address, err)
+	}
+
+	// We didn't find the file. Check if the address is a contract
+	conn := rpc.TempConnection(chain)
+	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
+		return err
+	} else if errors.Is(err, rpc.ErrNotAContract) {
+		return nil
+	}
+
+	// Fetch ABI from a provider
+	return DownloadAbi(chain, address, abiMap)
+}
+
 func fromJson(reader io.Reader, abiMap *FunctionSyncMap) (err error) {
 	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
@@ -52,9 +84,9 @@ func fromJson(reader io.Reader, abiMap *FunctionSyncMap) (err error) {
 	return
 }
 
-// LoadAbiFromKnownFile loads data from _known_ ABI file, which has encodings and
+// loadAbiFromKnownFile loads data from _known_ ABI file, which has encodings and
 // signatures.
-func LoadAbiFromKnownFile(filePath string, abiMap *FunctionSyncMap) (err error) {
+func loadAbiFromKnownFile(filePath string, abiMap *FunctionSyncMap) (err error) {
 	f, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
 		return
@@ -71,7 +103,7 @@ func LoadKnownAbiByName(name string, abiMap *FunctionSyncMap) (err error) {
 		err = fmt.Errorf("known abi file not found: %s", name)
 		return
 	}
-	return LoadAbiFromKnownFile(filePath, abiMap)
+	return loadAbiFromKnownFile(filePath, abiMap)
 }
 
 // readCString reads cString structure from reader. It has different signature than
@@ -666,7 +698,7 @@ func LoadKnownAbis(chain string, abiMap *FunctionSyncMap) (err error) {
 	}
 
 	for _, filePath := range paths {
-		loadErr := LoadAbiFromKnownFile(filePath, abiMap)
+		loadErr := loadAbiFromKnownFile(filePath, abiMap)
 		if loadErr != nil {
 			return fmt.Errorf("%s: %w", filePath, loadErr)
 		}
@@ -795,35 +827,4 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 
 	simpleAbis = append(functions, events...)
 	return
-}
-
-// LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
-func LoadAbi(chain string, address base.Address, abiMap *FunctionSyncMap) (err error) {
-	tmp := rpc.TempConnection(chain)
-	if err = tmp.IsContractAt(address, nil); err == rpc.ErrNotAContract {
-		logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
-		return nil
-	}
-
-	// If there was no error, the abi was loaded...
-	err = LoadAbiFromAddress(chain, address, abiMap)
-	if err == nil {
-		return
-	}
-
-	// If there was an unexpected error (not NotExist or not an empty file), return the error
-	if !os.IsNotExist(err) && err != io.EOF {
-		return fmt.Errorf("while reading %s ABI file: %w", address, err)
-	}
-
-	// We didn't find the file. Check if the address is a contract
-	conn := rpc.TempConnection(chain)
-	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
-		return err
-	} else if errors.Is(err, rpc.ErrNotAContract) {
-		return nil
-	}
-
-	// Fetch ABI from a provider
-	return DownloadAbi(chain, address, abiMap)
 }
