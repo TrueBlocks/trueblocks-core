@@ -30,7 +30,7 @@ var knownAbiSubdirectories = []string{
 	"known-000", "known-005", "known-010", "known-015",
 }
 
-func fromJson(reader io.Reader, destination *FunctionSyncMap) (err error) {
+func fromJson(reader io.Reader, abiMap *FunctionSyncMap) (err error) {
 	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
 	if err != nil {
@@ -40,13 +40,13 @@ func fromJson(reader io.Reader, destination *FunctionSyncMap) (err error) {
 	for _, method := range loadedAbi.Methods {
 		method := method
 		function := types.FunctionFromAbiMethod(&method)
-		destination.SetValue(function.Encoding, function)
+		abiMap.SetValue(function.Encoding, function)
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
 		ethEvent := ethEvent
 		event := types.FunctionFromAbiEvent(&ethEvent)
-		destination.SetValue(event.Encoding, event)
+		abiMap.SetValue(event.Encoding, event)
 	}
 
 	return
@@ -54,24 +54,24 @@ func fromJson(reader io.Reader, destination *FunctionSyncMap) (err error) {
 
 // LoadAbiFromKnownFile loads data from _known_ ABI file, which has encodings and
 // signatures.
-func LoadAbiFromKnownFile(filePath string, destination *FunctionSyncMap) (err error) {
+func LoadAbiFromKnownFile(filePath string, abiMap *FunctionSyncMap) (err error) {
 	f, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
 		return
 	}
 
 	// We still need abi.Method and abi.Event, so will just use fromJson
-	return fromJson(f, destination)
+	return fromJson(f, abiMap)
 }
 
 // LoadKnownAbiByName finds known ABI by name
-func LoadKnownAbiByName(name string, destination *FunctionSyncMap) (err error) {
+func LoadKnownAbiByName(name string, abiMap *FunctionSyncMap) (err error) {
 	var filePath string
 	if filePath = findKnownAbi(name); filePath == "" {
 		err = fmt.Errorf("known abi file not found: %s", name)
 		return
 	}
-	return LoadAbiFromKnownFile(filePath, destination)
+	return LoadAbiFromKnownFile(filePath, abiMap)
 }
 
 // readCString reads cString structure from reader. It has different signature than
@@ -392,7 +392,7 @@ func getAbis(chain string) ([]types.SimpleFunction, error) {
 }
 
 // LoadCache loads binary cache of known ABIs
-func LoadCache(chain string, destination *FunctionSyncMap) (loaded bool) {
+func LoadCache(chain string, abiMap *FunctionSyncMap) (loaded bool) {
 	functions, cacheErr := getAbis(chain)
 	// We can ignore cache error
 	if cacheErr != nil {
@@ -402,7 +402,7 @@ func LoadCache(chain string, destination *FunctionSyncMap) (loaded bool) {
 	for _, function := range functions {
 		function := function
 		function.Normalize()
-		destination.SetValue(function.Encoding, &function)
+		abiMap.SetValue(function.Encoding, &function)
 	}
 
 	return true
@@ -629,8 +629,8 @@ func save(chain string, filePath string, content io.Reader) (err error) {
 	return
 }
 
-// LoadKnownAbis loads known ABI files into destination, refreshing binary cache if needed
-func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
+// LoadKnownAbis loads known ABI files into abiMap, refreshing binary cache if needed
+func LoadKnownAbis(chain string, abiMap *FunctionSyncMap) (err error) {
 	isUpToDate := func(chain string) (bool, error) {
 		testFn := path.Join(config.PathToCache(chain), "abis/known.bin")
 		testDir := path.Join(config.PathToRootConfig(), "abis")
@@ -655,7 +655,7 @@ func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
 	}
 
 	if useCache {
-		if loaded := LoadCache(chain, destination); loaded {
+		if loaded := LoadCache(chain, abiMap); loaded {
 			return
 		}
 	}
@@ -666,13 +666,13 @@ func LoadKnownAbis(chain string, destination *FunctionSyncMap) (err error) {
 	}
 
 	for _, filePath := range paths {
-		loadErr := LoadAbiFromKnownFile(filePath, destination)
+		loadErr := LoadAbiFromKnownFile(filePath, abiMap)
 		if loadErr != nil {
 			return fmt.Errorf("%s: %w", filePath, loadErr)
 		}
 	}
 
-	toCache := destination.Values()
+	toCache := abiMap.Values()
 	return SetAbis(chain, toCache)
 }
 
@@ -716,7 +716,7 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 }
 
 // LoadAbiFromAddress loads ABI from local file or cache
-func LoadAbiFromAddress(chain string, address base.Address, destination *FunctionSyncMap) (err error) {
+func LoadAbiFromAddress(chain string, address base.Address, abiMap *FunctionSyncMap) (err error) {
 	localFileName := address.Hex() + ".json"
 	localFile, err := os.OpenFile(localFileName, os.O_RDONLY, 0)
 	if os.IsNotExist(err) {
@@ -729,7 +729,7 @@ func LoadAbiFromAddress(chain string, address base.Address, destination *Functio
 		for _, loadedAbi := range loadedAbis {
 			loadedAbi := loadedAbi
 			loadedAbi.Normalize()
-			destination.SetValue(loadedAbi.Encoding, &loadedAbi)
+			abiMap.SetValue(loadedAbi.Encoding, &loadedAbi)
 		}
 
 		return nil
@@ -741,7 +741,7 @@ func LoadAbiFromAddress(chain string, address base.Address, destination *Functio
 	defer localFile.Close()
 
 	// Local file found
-	if err = fromJson(localFile, destination); err != nil {
+	if err = fromJson(localFile, abiMap); err != nil {
 		return
 	}
 	// File is correct, cache it
@@ -798,7 +798,7 @@ func GetAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 }
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
-func LoadAbi(chain string, address base.Address, destination *FunctionSyncMap) (err error) {
+func LoadAbi(chain string, address base.Address, abiMap *FunctionSyncMap) (err error) {
 	tmp := rpc.TempConnection(chain)
 	if err = tmp.IsContractAt(address, nil); err == rpc.ErrNotAContract {
 		logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
@@ -806,7 +806,7 @@ func LoadAbi(chain string, address base.Address, destination *FunctionSyncMap) (
 	}
 
 	// If there was no error, the abi was loaded...
-	err = LoadAbiFromAddress(chain, address, destination)
+	err = LoadAbiFromAddress(chain, address, abiMap)
 	if err == nil {
 		return
 	}
@@ -825,5 +825,5 @@ func LoadAbi(chain string, address base.Address, destination *FunctionSyncMap) (
 	}
 
 	// Fetch ABI from a provider
-	return DownloadAbi(chain, address, destination)
+	return DownloadAbi(chain, address, abiMap)
 }

@@ -103,11 +103,11 @@ func init() {
 	}
 }
 
-func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, destination *FunctionSyncMap) {
+func testHelperLoadAbisFromJson(parsedAbi *abi.ABI, abiMap *FunctionSyncMap) {
 	for _, method := range parsedAbi.Methods {
 		method := method
 		encoding := "0x" + strings.ToLower(base.Bytes2Hex(method.ID))
-		destination.SetValue(encoding, types.FunctionFromAbiMethod(&method))
+		abiMap.SetValue(encoding, types.FunctionFromAbiMethod(&method))
 	}
 }
 
