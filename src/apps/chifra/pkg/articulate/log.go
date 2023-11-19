@@ -8,24 +8,32 @@ import (
 )
 
 // ArticulateLog articulates a log by attaching the Articulated log structure if the ABI is found.
-func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) (err error) {
-	address := log.Address
-	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
-		if err, _ = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
-			abiCache.skipMap.SetValue(address, true)
-			return err
-		} else {
-			abiCache.loadedMap.SetValue(address, true)
-		}
-	}
+func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) error {
+	if found, err := articulateLog(log, &abiCache.AbiMap); err != nil {
+		return err
 
-	if !abiCache.skipMap.GetValue(address) {
-		if log.ArticulatedLog, err = articulateLog(log, &abiCache.AbiMap); err != nil {
-			return err
-		}
-	}
+	} else if found != nil {
+		log.ArticulatedLog = found
+		return nil
 
-	return nil
+	} else {
+		address := log.Address
+		if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
+			if err, _ = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
+				abiCache.skipMap.SetValue(address, true)
+				return err
+			} else {
+				abiCache.loadedMap.SetValue(address, true)
+			}
+		}
+
+		if !abiCache.skipMap.GetValue(address) {
+			if log.ArticulatedLog, err = articulateLog(log, &abiCache.AbiMap); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
 }
 
 func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (articulated *types.SimpleFunction, err error) {

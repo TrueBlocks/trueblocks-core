@@ -1,8 +1,11 @@
 package articulate
 
 import (
+	"errors"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -11,18 +14,17 @@ func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) (er
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
 		if err, _ = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
 			abiCache.skipMap.SetValue(address, true)
-			return err
+			if !errors.Is(err, rpc.ErrNotAContract) {
+				// Not being a contract is not an error because we want to articulate the input in case it's a message
+				return err
+			}
 		} else {
 			abiCache.loadedMap.SetValue(address, true)
 		}
 	}
 
-	if tx.Receipt != nil {
-		for index := range tx.Receipt.Logs {
-			if err = abiCache.ArticulateLog(&tx.Receipt.Logs[index]); err != nil {
-				return err
-			}
-		}
+	if err = abiCache.ArticulateReceipt(tx.Receipt); err != nil {
+		return err
 	}
 
 	for index := range tx.Traces {

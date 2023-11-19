@@ -24,10 +24,6 @@ func (f *FunctionSyncMap) GetValue(encoding string) *types.SimpleFunction {
 	}
 }
 
-func NewFunctionSyncMap() *FunctionSyncMap {
-	return &FunctionSyncMap{}
-}
-
 func (f *FunctionSyncMap) Count() int64 {
 	var cnt atomic.Int64
 	countFunc := func(k any, b any) bool {
