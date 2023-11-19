@@ -33,22 +33,14 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap
 	if err = conn.IsContractAt(address, nil); err == rpc.ErrNotAContract {
 		logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
 		return nil, false
-	}
-
-	err, _ = LoadAbiFromAddress(conn, address, abiMap)
-	if err == nil {
-		// we found it
-		return nil, false
-	}
-
-	if !os.IsNotExist(err) && err != io.EOF {
-		return fmt.Errorf("while reading %s ABI file: %w", address, err), false
-	}
-
-	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
+	} else if err != nil {
 		return err, false
-	} else if errors.Is(err, rpc.ErrNotAContract) {
-		return nil, false
+	}
+
+	if err, _ = LoadAbiFromAddress(conn, address, abiMap); err == nil {
+		return nil, true
+	} else if !os.IsNotExist(err) && err != io.EOF {
+		return fmt.Errorf("while reading %s ABI file: %w", address, err), false
 	}
 
 	// Download the ABI as a last resort
