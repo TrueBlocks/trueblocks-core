@@ -35,18 +35,16 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap
 		return nil, false
 	}
 
-	// If there was no error, the abi was loaded...
 	err, _ = LoadAbiFromAddress(conn, address, abiMap)
 	if err == nil {
-		return err, false
+		// we found it
+		return nil, false
 	}
 
-	// If there was an unexpected error (not NotExist or not an empty file), return the error
 	if !os.IsNotExist(err) && err != io.EOF {
 		return fmt.Errorf("while reading %s ABI file: %w", address, err), false
 	}
 
-	// We didn't find the file. Check if the address is a contract
 	if err := conn.IsContractAt(address, nil); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
 		return err, false
 	} else if errors.Is(err, rpc.ErrNotAContract) {
