@@ -30,7 +30,7 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap
 	err := conn.IsContractAt(address, nil)
 	if err != nil {
 		if errors.Is(err, rpc.ErrNotAContract) {
-			logger.Warn(fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
+			logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
 		}
 		return err
 	}

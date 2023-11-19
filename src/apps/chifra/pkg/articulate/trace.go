@@ -10,26 +10,36 @@ import (
 )
 
 func (abiCache *AbiCache) ArticulateTrace(trace *types.SimpleTrace) (err error) {
-	address := trace.Action.To
-	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
-		if err = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
-			abiCache.skipMap.SetValue(address, true)
-			if !errors.Is(err, rpc.ErrNotAContract) {
-				// Not being a contract is not an error because we want to articulate the input in case it's a message
+	found, err := articulateTrace(trace, &abiCache.AbiMap)
+	if err != nil {
+		return err
+
+	} else if found != nil {
+		trace.ArticulatedTrace = found
+		return nil
+
+	} else {
+		address := trace.Action.To
+		if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
+			if err = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
+				abiCache.skipMap.SetValue(address, true)
+				if !errors.Is(err, rpc.ErrNotAContract) {
+					// Not being a contract is not an error because we want to articulate the input in case it's a message
+					return err
+				}
+			} else {
+				abiCache.loadedMap.SetValue(address, true)
+			}
+		}
+
+		if !abiCache.skipMap.GetValue(address) {
+			if trace.ArticulatedTrace, err = articulateTrace(trace, &abiCache.AbiMap); err != nil {
 				return err
 			}
-		} else {
-			abiCache.loadedMap.SetValue(address, true)
 		}
-	}
 
-	if !abiCache.skipMap.GetValue(address) {
-		if trace.ArticulatedTrace, err = articulateTrace(trace, &abiCache.AbiMap); err != nil {
-			return err
-		}
+		return nil
 	}
-
-	return nil
 }
 
 func articulateTrace(trace *types.SimpleTrace, abiMap *abi.FunctionSyncMap) (articulated *types.SimpleFunction, err error) {

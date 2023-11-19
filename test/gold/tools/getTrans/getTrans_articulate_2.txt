@@ -5,7 +5,6 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-WARN[DATE|TIME] Skipping EOA 0x0
 {
   "data": [
     {
