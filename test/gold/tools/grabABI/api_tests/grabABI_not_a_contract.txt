@@ -10,5 +10,8 @@ abis?addrs=0xf1aa581f353005ba3765b81bf52d6b1c488c2101
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  }
+  },
+  "errors": [
+    "address 0xf1aa581f353005ba3765b81bf52d6b1c488c2101 is not a smart contract"
+  ]
 }

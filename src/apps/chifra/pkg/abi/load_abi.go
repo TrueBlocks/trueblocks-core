@@ -35,13 +35,15 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap
 		return err
 	}
 
-	if err = LoadAbiFromAddress(conn, address, abiMap); err == nil {
-		return nil
-	} else if !os.IsNotExist(err) && err != io.EOF {
-		return fmt.Errorf("while reading %s ABI file: %w", address, err)
+	if err = loadAbiFromAddress(conn, address, abiMap); err != nil {
+		if !os.IsNotExist(err) && err != io.EOF {
+			return fmt.Errorf("while reading %s ABI file: %w", address, err)
+		}
+
+		return DownloadAbi(conn.Chain, address, abiMap)
 	}
 
-	return DownloadAbi(conn.Chain, address, abiMap)
+	return nil
 }
 
 // Where to find know ABI files
@@ -712,8 +714,8 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 	return
 }
 
-// LoadAbiFromAddress loads ABI from local file or cache
-func LoadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) error {
+// loadAbiFromAddress loads ABI from local file or cache
+func loadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) error {
 	var err error
 	chain := conn.Chain
 	localFileName := address.Hex() + ".json"
