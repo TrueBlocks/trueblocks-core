@@ -24,7 +24,7 @@ func (opts *AbisOptions) HandleAddresses() (err error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := base.HexToAddress(addr)
-			if err, _ = abi.LoadAbiFromAddress(opts.Conn, address, &abiCache.AbiMap); err != nil {
+			if err = abi.LoadAbiFromAddress(opts.Conn, address, &abiCache.AbiMap); err != nil {
 				if !os.IsNotExist(err) {
 					// The error was not due to a missing file...
 					errorChan <- err

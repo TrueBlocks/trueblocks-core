@@ -1,7 +1,10 @@
 package articulate
 
 import (
+	"errors"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	goEthAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
@@ -9,9 +12,12 @@ import (
 func (abiCache *AbiCache) ArticulateTrace(trace *types.SimpleTrace) (err error) {
 	address := trace.Action.To
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
-		if err, _ = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
+		if err = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
 			abiCache.skipMap.SetValue(address, true)
-			return err
+			if !errors.Is(err, rpc.ErrNotAContract) {
+				// Not being a contract is not an error because we want to articulate the input in case it's a message
+				return err
+			}
 		} else {
 			abiCache.loadedMap.SetValue(address, true)
 		}

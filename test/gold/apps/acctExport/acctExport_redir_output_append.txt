@@ -7,6 +7,8 @@ TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
+WARN[DATE|TIME] Skipping EOA 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+WARN[DATE|TIME] Skipping EOA 0xb97073b754660bb356dfe12f78ae366d77dbc80f
 ----
 Results in ./output_test_file
 blockNumber	transactionIndex	timestamp	date	from	to	ether	gasPrice	gasUsed	gasCost	hash	isError	encoding	compressedTx	type

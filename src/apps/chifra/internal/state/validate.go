@@ -77,6 +77,7 @@ func (opts *StateOptions) validateState() error {
 			if opts.ProxyFor != "" {
 				callAddress = base.HexToAddress(opts.ProxyFor)
 			}
+			// TODO: Can't we preserve the results of this so we don't have to do it later?
 			if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
 				message := fmt.Sprintf("the --call value provided (%s) was not found: %s", opts.Call, err)
 				if len(suggestions) > 0 {

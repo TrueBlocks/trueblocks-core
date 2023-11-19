@@ -91,7 +91,7 @@ func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theC
 
 func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string) (*ContractCall, []string, error) {
 	abiMap := &abi.FunctionSyncMap{}
-	if err, _ := abi.LoadAbi(conn, callAddress, abiMap); err != nil {
+	if err := abi.LoadAbi(conn, callAddress, abiMap); err != nil {
 		return nil, []string{}, err
 	}
 

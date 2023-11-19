@@ -26,27 +26,22 @@ import (
 )
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
-func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) (error, bool) {
-	var err error
-	chain := conn.Chain
-
-	if err = conn.IsContractAt(address, nil); err == rpc.ErrNotAContract {
-		logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
-		return err, false
-	} else if err != nil {
-		return err, false
+func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) error {
+	err := conn.IsContractAt(address, nil)
+	if err != nil {
+		if errors.Is(err, rpc.ErrNotAContract) {
+			logger.Warn(fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))
+		}
+		return err
 	}
 
-	if err, _ = LoadAbiFromAddress(conn, address, abiMap); err == nil {
-		return nil, true
+	if err = LoadAbiFromAddress(conn, address, abiMap); err == nil {
+		return nil
 	} else if !os.IsNotExist(err) && err != io.EOF {
-		return fmt.Errorf("while reading %s ABI file: %w", address, err), false
+		return fmt.Errorf("while reading %s ABI file: %w", address, err)
 	}
 
-	// Download the ABI as a last resort
-	err = DownloadAbi(chain, address, abiMap)
-
-	return err, err == nil
+	return DownloadAbi(conn.Chain, address, abiMap)
 }
 
 // Where to find know ABI files
@@ -718,7 +713,7 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 }
 
 // LoadAbiFromAddress loads ABI from local file or cache
-func LoadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) (error, bool) {
+func LoadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) error {
 	var err error
 	chain := conn.Chain
 	localFileName := address.Hex() + ".json"
@@ -727,7 +722,7 @@ func LoadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *Func
 		// There's no local file, so we try to load one from cache
 		loadedAbis, err := getAbi(chain, address)
 		if err != nil {
-			return err, false
+			return err
 		}
 
 		for _, loadedAbi := range loadedAbis {
@@ -736,24 +731,24 @@ func LoadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *Func
 			abiMap.SetValue(loadedAbi.Encoding, &loadedAbi)
 		}
 
-		return nil, true
+		return nil
 	}
 	if err != nil {
 		// There was different error, we may want to report it
-		return err, false
+		return err
 	}
 	defer localFile.Close()
 
 	// Local file found
 	if err = fromJson(localFile, abiMap); err != nil {
-		return err, false
+		return err
 	}
 	// File is correct, cache it
 	if err = insertAbi(chain, address, localFile); err != nil {
-		return err, false
+		return err
 	}
 
-	return err, true
+	return err
 }
 
 // insertAbi copies file (e.g. opened local file) into cache
