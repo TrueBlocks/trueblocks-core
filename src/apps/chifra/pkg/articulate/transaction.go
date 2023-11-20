@@ -10,6 +10,9 @@ import (
 )
 
 func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) error {
+	// TODO: This `Articulate` function is different from the other ones (for Log, etc.) because it
+	// TODO: doesn't try to articulate the transaction by selector first.  It should.  But it doesn't.
+	// TODO: The reason it doesn't is because of conflicting four-bytes (for example, `donate`)
 	var err error
 	address := tx.To
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
