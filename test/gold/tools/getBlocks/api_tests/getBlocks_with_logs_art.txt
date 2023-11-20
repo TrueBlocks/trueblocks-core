@@ -28,7 +28,7 @@ blocks?blocks=4012000-4012001&logs&articulate
       "address": "0x4038e930ad78c53dc885a6b3a7d9db0d317c8662",
       "articulatedLog": {
         "inputs": {
-          "sender": "0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
+          "from": "0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
           "value": "25000000000000000000"
         },
         "name": "Deposit"
@@ -237,7 +237,7 @@ blocks?blocks=4012000-4012001&logs&articulate
       "address": "0x4038e930ad78c53dc885a6b3a7d9db0d317c8662",
       "articulatedLog": {
         "inputs": {
-          "sender": "0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
+          "from": "0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
           "value": "9670000000000000000"
         },
         "name": "Deposit"

@@ -20,7 +20,7 @@ import (
 
 func (opts *BlocksOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	emitters := []base.Address{}
 	for _, e := range opts.Emitter {
 		emitters = append(emitters, base.HexToAddress(e))

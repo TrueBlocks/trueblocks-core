@@ -46,9 +46,8 @@ func articulateBytes(byteValue []byte) (strResult string, success bool) {
 		// to check if it's ASCII printable
 		if character >= 20 && character <= 126 {
 			result = append(result, byte(character))
-
-			// ignore space
 			if character > 20 {
+				// ignore space
 				hasPrintableCharacters = true
 			}
 			continue

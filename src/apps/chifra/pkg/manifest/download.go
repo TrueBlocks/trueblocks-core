@@ -44,9 +44,8 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 		return "", wrapped
 	} else {
 		contractCall.BlockNumber = conn.GetLatestBlockNumber()
-		abiCache := articulate.NewAbiCache(chain, true)
 		artFunc := func(str string, function *types.SimpleFunction) error {
-			return abiCache.ArticulateFunction(function, "", str[2:])
+			return articulate.ArticulateFunction(function, "", str[2:])
 		}
 		if result, err := contractCall.Call(artFunc); err != nil {
 			return "", err
@@ -85,8 +84,8 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 }
 
-func getUnchainedAbi() (base.Address, *abi.FunctionSyncMap, error) {
-	abiMap := abi.NewFunctionSyncMap()
+func getUnchainedAbi() (base.Address, *abi.SelectorSyncMap, error) {
+	abiMap := &abi.SelectorSyncMap{}
 	callAddress := base.HexToAddress(config.GetUnchained().SmartContract)
 
 	var unchainedAbiJson = `[

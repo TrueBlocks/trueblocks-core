@@ -2,4 +2,4 @@ chifra abis  0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
 TEST[DATE|TIME] Addrs:  [0x1728039ce0d18a799c081c5c7fa2090dd365a8d0]
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] Address 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 is not a smart contract. Skipping...
+EROR[DATE|TIME] address 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 is not a smart contract

@@ -25,7 +25,7 @@ type ContractCall struct {
 	encoded     string
 }
 
-func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theCall string, abiMap *abi.FunctionSyncMap) (*ContractCall, []string, error) {
+func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theCall string, abiMap *abi.SelectorSyncMap) (*ContractCall, []string, error) {
 	parsed, err := parser.ParseCall(theCall)
 	if err != nil {
 		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
@@ -37,28 +37,28 @@ func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theC
 	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
 		selector := parsed.Encoded[:10]
-		function, _, err = abi.FindAbiFunction(abi.FindBySelector, selector, nil, abiMap)
+		function, _, err = FindAbiFunction(FindBySelector, selector, nil, abiMap)
 		if err != nil {
 			return nil, []string{}, err
 		}
 
 	} else {
 		// Selector or function name call
-		var findAbiMode abi.FindMode
+		findAbiMode := FindByName // default
 		var identifier string
 
 		switch {
 		case parsed.FunctionNameCall != nil:
-			findAbiMode = abi.FindByName
+			findAbiMode = FindByName
 			identifier = parsed.FunctionNameCall.Name
 			callArguments = parsed.FunctionNameCall.Arguments
 		case parsed.SelectorCall != nil:
-			findAbiMode = abi.FindBySelector
+			findAbiMode = FindBySelector
 			identifier = parsed.SelectorCall.Selector.Value
 			callArguments = parsed.SelectorCall.Arguments
 		}
 
-		function, suggestions, err = abi.FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
+		function, suggestions, err = FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
 		if err != nil {
 			return nil, suggestions, err
 		}
@@ -90,8 +90,8 @@ func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theC
 }
 
 func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string) (*ContractCall, []string, error) {
-	abiMap := abi.NewFunctionSyncMap()
-	if err := abi.LoadAbi(conn.Chain, callAddress, abiMap); err != nil {
+	abiMap := &abi.SelectorSyncMap{}
+	if err := abi.LoadAbi(conn, callAddress, abiMap); err != nil {
 		return nil, []string{}, err
 	}
 
@@ -109,28 +109,28 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
 		selector := parsed.Encoded[:10]
-		function, _, err = abi.FindAbiFunction(abi.FindBySelector, selector, nil, abiMap)
+		function, _, err = FindAbiFunction(FindBySelector, selector, nil, abiMap)
 		if err != nil {
 			return nil, []string{}, err
 		}
 
 	} else {
 		// Selector or function name call
-		var findAbiMode abi.FindMode
+		findAbiMode := FindByName
 		var identifier string
 
 		switch {
 		case parsed.FunctionNameCall != nil:
-			findAbiMode = abi.FindByName
+			findAbiMode = FindByName
 			identifier = parsed.FunctionNameCall.Name
 			callArguments = parsed.FunctionNameCall.Arguments
 		case parsed.SelectorCall != nil:
-			findAbiMode = abi.FindBySelector
+			findAbiMode = FindBySelector
 			identifier = parsed.SelectorCall.Selector.Value
 			callArguments = parsed.SelectorCall.Arguments
 		}
 
-		function, suggestions, err = abi.FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
+		function, suggestions, err = FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
 		if err != nil {
 			return nil, suggestions, err
 		}

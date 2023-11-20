@@ -3,25 +3,28 @@ package articulate
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 )
 
 type AbiCache struct {
+	Conn      *rpc.Connection
 	Chain     string
-	AbiMap    abi.FunctionSyncMap
+	AbiMap    abi.SelectorSyncMap
 	loadedMap abi.AddressSyncMap
 	skipMap   abi.AddressSyncMap
 }
 
-func NewAbiCache(chain string, loadKnown bool) *AbiCache {
+func NewAbiCache(conn *rpc.Connection, loadKnown bool) *AbiCache {
 	ret := &AbiCache{
-		Chain:     chain,
-		AbiMap:    abi.FunctionSyncMap{},
+		Conn:      conn,
+		Chain:     conn.Chain,
+		AbiMap:    abi.SelectorSyncMap{},
 		loadedMap: abi.AddressSyncMap{},
 		skipMap:   abi.AddressSyncMap{},
 	}
 
 	if loadKnown {
-		if err := abi.LoadKnownAbis(chain, &ret.AbiMap); err != nil {
+		if err := ret.AbiMap.LoadKnownAbis(conn.Chain); err != nil {
 			// report error, but continue processing
 			logger.Error("error preloading known abis", "error", err)
 		}
