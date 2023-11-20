@@ -9,17 +9,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) (err error) {
-	if err = abiCache.ArticulateReceipt(tx.Receipt); err != nil {
-		return err
-	}
-
-	for index := range tx.Traces {
-		if err = abiCache.ArticulateTrace(&tx.Traces[index]); err != nil {
-			return err
-		}
-	}
-
+func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) error {
+	var err error
 	address := tx.To
 	if !abiCache.loadedMap.GetValue(address) && !abiCache.skipMap.GetValue(address) {
 		if err = abi.LoadAbi(abiCache.Conn, address, &abiCache.AbiMap); err != nil {
@@ -34,26 +25,45 @@ func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) (er
 	}
 
 	var found *types.SimpleFunction
+	var art *types.SimpleFunction
 	var selector string
-	if len(tx.Input) >= 10 {
-		selector = tx.Input[:10]
-		inputData := tx.Input[10:]
+	var input = tx.Input
+	var outputData string
+	if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
+		outputData = tx.Traces[0].Result.Output[2:]
+	}
+
+	if len(input) >= 10 {
+		selector = input[:10]
+		inputData := input[10:]
 		found = abiCache.AbiMap.GetValue(selector)
 		if found != nil {
-			tx.ArticulatedTx = found.Clone()
-			var outputData string
-			if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
-				outputData = tx.Traces[0].Result.Output[2:]
-			}
-			if err = abiCache.ArticulateFunction(tx.ArticulatedTx, inputData, outputData); err != nil {
+			art = found.Clone()
+			if err = abiCache.ArticulateFunction(art, inputData, outputData); err != nil {
 				return err
 			}
 		}
 	}
 
-	if found == nil && len(tx.Input) > 0 {
-		if message, ok := decode.ArticulateString(tx.Input); ok {
-			tx.Message = message
+	var message string
+	if found == nil && len(input) > 0 {
+		var ok bool
+		var msg string
+		if msg, ok = decode.ArticulateString(tx.Input); ok {
+			message = msg
+		}
+	}
+
+	tx.ArticulatedTx = art
+	tx.Message = message
+
+	if err = abiCache.ArticulateReceipt(tx.Receipt); err != nil {
+		return err
+	}
+
+	for index := range tx.Traces {
+		if err = abiCache.ArticulateTrace(&tx.Traces[index]); err != nil {
+			return err
 		}
 	}
 
