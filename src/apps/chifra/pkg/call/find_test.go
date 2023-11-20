@@ -1,14 +1,15 @@
-package abi
+package call
 
 import (
 	"strings"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/accounts/abi"
+	ethAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
 var abiSource = `
@@ -84,26 +85,26 @@ const packTestAbiSource = `
 	{ "type" : "function", "name" : "bytes32", "inputs" : [ { "name" : "inputs", "type" : "bytes32" } ] }
 ]`
 
-var testAbi abi.ABI
-var abis FunctionSyncMap
-var packTestAbi abi.ABI
+var testAbi ethAbi.ABI
+var abiMap abi.SelectorSyncMap
+var packTestAbi ethAbi.ABI
 
 func init() {
 	var err error
-	testAbi, err = abi.JSON(strings.NewReader(abiSource))
+	testAbi, err = ethAbi.JSON(strings.NewReader(abiSource))
 	if err != nil {
 		panic(err)
 	}
 
-	testHelperAbisFromJson(&testAbi, &abis)
+	testHelperAbisFromJson(&testAbi, &abiMap)
 
-	packTestAbi, err = abi.JSON(strings.NewReader(packTestAbiSource))
+	packTestAbi, err = ethAbi.JSON(strings.NewReader(packTestAbiSource))
 	if err != nil {
 		panic(err)
 	}
 }
 
-func testHelperAbisFromJson(parsedAbi *abi.ABI, abiMap *FunctionSyncMap) {
+func testHelperAbisFromJson(parsedAbi *ethAbi.ABI, abiMap *abi.SelectorSyncMap) {
 	for _, method := range parsedAbi.Methods {
 		method := method
 		encoding := "0x" + strings.ToLower(base.Bytes2Hex(method.ID))
@@ -121,7 +122,7 @@ func Test_findAbiFunction(t *testing.T) {
 		},
 	}
 
-	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
+	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, &abiMap)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -141,7 +142,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*parser.ContractArgument{},
 	}
 
-	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
+	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, &abiMap)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -165,7 +166,7 @@ func Test_findAbiFunction(t *testing.T) {
 		Arguments: []*parser.ContractArgument{},
 	}
 
-	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
+	result, hints, err = FindAbiFunction(FindByName, call.Name, call.Arguments, &abiMap)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -191,7 +192,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		},
 	}
 
-	result, hints, err := FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abis)
+	result, hints, err := FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abiMap)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -213,7 +214,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Arguments: []*parser.ContractArgument{},
 	}
 
-	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abis)
+	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abiMap)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -239,7 +240,7 @@ func Test_findAbiFunctionBySelector(t *testing.T) {
 		Arguments: []*parser.ContractArgument{},
 	}
 
-	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abis)
+	result, hints, err = FindAbiFunction(FindBySelector, call.Selector.Value, call.Arguments, &abiMap)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -257,7 +258,7 @@ func Test_findAbiFunctionMisleading(t *testing.T) {
 	// This test makes sure we choose the right function
 	// when given two very similar ones. In this case, it's
 	// transfer(bytes32, address) and transfer(address, address).
-	parsedAbi, err := abi.JSON(strings.NewReader(`
+	parsedAbi, err := ethAbi.JSON(strings.NewReader(`
 		[
 			{ "type" : "function", "name" : "transfer", "inputs" : [ { "name" : "from", "type" : "bytes32" }, { "name" : "to", "type" : "address" } ] },
 			{ "type" : "function", "name" : "transfer", "inputs" : [ { "name" : "from", "type" : "address" }, { "name" : "to", "type" : "address" } ] }
@@ -267,7 +268,7 @@ func Test_findAbiFunctionMisleading(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	testHelperAbisFromJson(&parsedAbi, &abis)
+	testHelperAbisFromJson(&parsedAbi, &abiMap)
 
 	call := &parser.FunctionContractCall{
 		Name: "transfer",
@@ -285,7 +286,7 @@ func Test_findAbiFunctionMisleading(t *testing.T) {
 		},
 	}
 
-	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, &abis)
+	result, hints, err := FindAbiFunction(FindByName, call.Name, call.Arguments, &abiMap)
 	if err != nil {
 		t.Fatal(err)
 	}

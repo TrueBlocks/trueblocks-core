@@ -84,8 +84,8 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 }
 
-func getUnchainedAbi() (base.Address, *abi.FunctionSyncMap, error) {
-	abiMap := &abi.FunctionSyncMap{}
+func getUnchainedAbi() (base.Address, *abi.SelectorSyncMap, error) {
+	abiMap := &abi.SelectorSyncMap{}
 	callAddress := base.HexToAddress(config.GetUnchained().SmartContract)
 
 	var unchainedAbiJson = `[

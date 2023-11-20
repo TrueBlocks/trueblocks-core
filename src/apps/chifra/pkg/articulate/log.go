@@ -41,7 +41,7 @@ func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) error {
 	}
 }
 
-func articulateLogFromMap(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (*types.SimpleFunction, error) {
+func articulateLogFromMap(log *types.SimpleLog, abiMap *abi.SelectorSyncMap) (*types.SimpleFunction, error) {
 	if len(log.Topics) < 1 {
 		return nil, nil
 	}

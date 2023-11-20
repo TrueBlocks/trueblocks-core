@@ -26,7 +26,7 @@ import (
 )
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
-func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) error {
+func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *SelectorSyncMap) error {
 	err := conn.IsContractAt(address, nil)
 	if err != nil {
 		if errors.Is(err, rpc.ErrNotAContract) {
@@ -40,7 +40,7 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap
 			return fmt.Errorf("while reading %s ABI file: %w", address, err)
 		}
 
-		return DownloadAbi(conn.Chain, address, abiMap)
+		return abiMap.downloadAbi(conn.Chain, address)
 	}
 
 	return nil
@@ -51,7 +51,7 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap
 // 	"known-000", "known-005", "known-010", "known-015",
 // }
 
-func fromJson(reader io.Reader, abiMap *FunctionSyncMap) (err error) {
+func fromJson(reader io.Reader, abiMap *SelectorSyncMap) (err error) {
 	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
 	if err != nil {
@@ -75,7 +75,7 @@ func fromJson(reader io.Reader, abiMap *FunctionSyncMap) (err error) {
 
 // loadAbiFromKnownFile loads data from _known_ ABI file, which has encodings and
 // signatures.
-func loadAbiFromKnownFile(filePath string, abiMap *FunctionSyncMap) (err error) {
+func loadAbiFromKnownFile(filePath string, abiMap *SelectorSyncMap) (err error) {
 	f, err := os.OpenFile(filePath, os.O_RDONLY, 0)
 	if err != nil {
 		return
@@ -403,7 +403,7 @@ func getAbis(chain string) ([]types.SimpleFunction, error) {
 }
 
 // loadCache loads binary cache of known ABIs
-func loadCache(chain string, abiMap *FunctionSyncMap) (loaded bool) {
+func loadCache(chain string, abiMap *SelectorSyncMap) (loaded bool) {
 	functions, cacheErr := getAbis(chain)
 	// We can ignore cache error
 	if cacheErr != nil {
@@ -641,7 +641,7 @@ func save(chain string, filePath string, content io.Reader) (err error) {
 }
 
 // LoadKnownAbis loads known ABI files into abiMap, refreshing binary cache if needed
-func LoadKnownAbis(chain string, abiMap *FunctionSyncMap) (err error) {
+func (abiMap *SelectorSyncMap) LoadKnownAbis(chain string) (err error) {
 	isUpToDate := func(chain string) (bool, error) {
 		testFn := path.Join(config.PathToCache(chain), "abis/known.bin")
 		testDir := path.Join(config.PathToRootConfig(), "abis")
@@ -715,7 +715,7 @@ func getKnownAbiPaths() (filePaths []string, err error) {
 }
 
 // loadAbiFromAddress loads ABI from local file or cache
-func loadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *FunctionSyncMap) error {
+func loadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *SelectorSyncMap) error {
 	var err error
 	chain := conn.Chain
 	localFileName := address.Hex() + ".json"

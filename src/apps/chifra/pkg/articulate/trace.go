@@ -42,7 +42,7 @@ func (abiCache *AbiCache) ArticulateTrace(trace *types.SimpleTrace) (err error) 
 	}
 }
 
-func articulateTrace(trace *types.SimpleTrace, abiMap *abi.FunctionSyncMap) (articulated *types.SimpleFunction, err error) {
+func articulateTrace(trace *types.SimpleTrace, abiMap *abi.SelectorSyncMap) (articulated *types.SimpleFunction, err error) {
 	input := trace.Action.Input
 	if len(input) < 10 {
 		return

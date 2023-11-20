@@ -22,12 +22,12 @@ func init() {
 
 var AbiNotFound = `[{"name":"AbiNotFound","type":"function"}]`
 
-// DownloadAbi downloads the ABI for the given address and saves it to the cache.
+// downloadAbi downloads the ABI for the given address and saves it to the cache.
 // TODO: This function should be easy to replace with "ABI providers" (different services like
 // Sourcify or custom ones configured by the user)
-func DownloadAbi(chain string, address base.Address, abiMap *FunctionSyncMap) error {
+func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) error {
 	if address.IsZero() {
-		return errors.New("address is 0x0 in DownloadAbi")
+		return errors.New("address is 0x0 in downloadAbi")
 	}
 
 	// C++ code used do check if the address is contract in 2 places: here and in handle_addresses. We

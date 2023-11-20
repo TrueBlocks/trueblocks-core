@@ -15,11 +15,11 @@ func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) err
 	// TODO: The reason it doesn't is because of conflicting four-bytes (for example, `donate`)
 	// if found, message, err := articulateTx(tx, &abiCache.AbiMap); err != nil {
 	// 	return err
-	// 
+	//
 	// } else if found != nil {
 	// 	tx.ArticulatedTx = found
 	// 	tx.Message = message
-	// 
+	//
 	// } else {
 	var err error
 	address := tx.To
@@ -59,7 +59,7 @@ func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) err
 	return nil
 }
 
-func articulateTx(tx *types.SimpleTransaction, abiMap *abi.FunctionSyncMap) (*types.SimpleFunction, string, error) {
+func articulateTx(tx *types.SimpleTransaction, abiMap *abi.SelectorSyncMap) (*types.SimpleFunction, string, error) {
 	var found *types.SimpleFunction
 	var message string
 	var art *types.SimpleFunction
