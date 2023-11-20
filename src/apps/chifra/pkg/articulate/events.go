@@ -5,10 +5,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// TransferTopic is here because these three topics make up almost all of the logs in the entire history
+// transferTopic is here because these three topics make up almost all of the logs in the entire history
 // of the chain, we get significant speed-ups if we handle these items without
 // regular processing.
-var TransferTopic = base.HexToHash(
+var transferTopic = base.HexToHash(
 	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
 )
 var ensTransferTopic = base.HexToHash(
@@ -19,7 +19,7 @@ var approvalTopic = base.HexToHash(
 )
 
 func parseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
-	if len(log.Topics) < 3 || log.Topics[0] != TransferTopic {
+	if len(log.Topics) < 3 || log.Topics[0] != transferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
 		// TODO: attempt both with and without indexed parameters. See issues/1366.
@@ -29,7 +29,7 @@ func parseTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	function = &types.SimpleFunction{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
-	function.Encoding = TransferTopic.Hex()
+	function.Encoding = transferTopic.Hex()
 	function.Inputs = []types.SimpleParameter{
 		{
 			Name:          "_from",
@@ -61,7 +61,7 @@ func parseEnsTransferEvent(log *types.SimpleLog) (function *types.SimpleFunction
 	function = &types.SimpleFunction{}
 	function.Name = "Transfer"
 	function.FunctionType = "event"
-	function.Encoding = TransferTopic.Hex() // TODO: THIS IS WRONG! SHOULDN'T THIS BE ENSTRANSFERTOPIC?
+	function.Encoding = ensTransferTopic.Hex()
 	function.Inputs = []types.SimpleParameter{
 		{
 			Name:          "_node",
@@ -88,7 +88,7 @@ func parseApprovalEvent(log *types.SimpleLog) (function *types.SimpleFunction) {
 	function = &types.SimpleFunction{}
 	function.Name = "Approval"
 	function.FunctionType = "event"
-	function.Encoding = TransferTopic.Hex() // TODO: THIS IS WRONG! SHOULDN'T THIS BE APPROVALTOPIC?
+	function.Encoding = approvalTopic.Hex()
 	function.Inputs = []types.SimpleParameter{
 		{
 			Name:          "_owner",
