@@ -11,7 +11,7 @@ import (
 
 // ArticulateLog articulates a log by attaching the Articulated log structure if the ABI is found.
 func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) error {
-	if found, err := articulateLog(log, &abiCache.AbiMap); err != nil {
+	if found, err := articulateLogFromMap(log, &abiCache.AbiMap); err != nil {
 		return err
 
 	} else if found != nil {
@@ -33,7 +33,7 @@ func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) error {
 		}
 
 		if !abiCache.skipMap.GetValue(address) {
-			if log.ArticulatedLog, err = articulateLog(log, &abiCache.AbiMap); err != nil {
+			if log.ArticulatedLog, err = articulateLogFromMap(log, &abiCache.AbiMap); err != nil {
 				return err
 			}
 		}
@@ -41,55 +41,51 @@ func (abiCache *AbiCache) ArticulateLog(log *types.SimpleLog) error {
 	}
 }
 
-func articulateLog(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (articulated *types.SimpleFunction, err error) {
+func articulateLogFromMap(log *types.SimpleLog, abiMap *abi.FunctionSyncMap) (*types.SimpleFunction, error) {
 	if len(log.Topics) < 1 {
-		return
+		return nil, nil
 	}
 
 	// Try to articulate the log using some common events
-	articulated = findCommonEvent(log)
+	artLog := findCommonEvent(log)
 
 	// If we couldn't, then try to find the event in `abiMap`
-	if articulated == nil {
+	if artLog == nil {
 		selector := "0x" + hex.EncodeToString(log.Topics[0].Bytes())
 		if found := abiMap.GetValue(selector); found != nil {
-			articulated = found.Clone()
+			artLog = found.Clone()
 		} else {
-			// If articulated is still nil, we don't have ABI for this event
-			return
+			// If artLog is still nil, we don't have ABI for this event
+			return nil, nil
 		}
 	}
 
-	abiEvent, err := articulated.GetAbiEvent()
+	abiEvent, err := artLog.GetAbiEvent()
 	if err != nil {
-		return
+		return artLog, err
 	}
 	data := log.Data
 	if len(log.Data) > 1 {
 		data = log.Data[2:]
 	}
 
-	if err = articulateArguments(
-		abiEvent.Inputs,
-		data,
-		log.Topics,
-		articulated.Inputs,
-	); err != nil {
-		return
+	if err = articulateArguments(abiEvent.Inputs, data, log.Topics, artLog.Inputs); err != nil {
+		return artLog, err
 	}
 
-	return
+	return artLog, nil
 }
 
-func findCommonEvent(log *types.SimpleLog) (articulated *types.SimpleFunction) {
-	if articulated = parseTransferEvent(log); articulated != nil {
-		return
+func findCommonEvent(log *types.SimpleLog) *types.SimpleFunction {
+	if artLog := parseTransferEvent(log); artLog != nil {
+		return artLog
+
+	} else if artLog = parseEnsTransferEvent(log); artLog != nil {
+		return artLog
+
+	} else if artLog = parseApprovalEvent(log); artLog != nil {
+		return artLog
 	}
-	if articulated = parseEnsTransferEvent(log); articulated != nil {
-		return
-	}
-	if articulated = parseApprovalEvent(log); articulated != nil {
-		return
-	}
-	return
+
+	return nil
 }
