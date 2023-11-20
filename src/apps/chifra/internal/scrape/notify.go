@@ -20,8 +20,8 @@ type Message string
 
 const (
 	MessageChunkWritten Message = "chunkWritten"
-	MessageStageUpdated         = "stageUpdated"
-	MessageAppearance           = "asppearance"
+	MessageStageUpdated Message = "stageUpdated"
+	MessageAppearance   Message = "asppearance"
 )
 
 type Notification[Payload notificationPayload] struct {
