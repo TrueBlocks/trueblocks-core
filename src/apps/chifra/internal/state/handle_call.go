@@ -17,9 +17,8 @@ import (
 
 func (opts *StateOptions) HandleCall() error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(opts.Conn, true) // do not change to opts.Articulate, we need known values always
 	artFunc := func(str string, function *types.SimpleFunction) error {
-		return abiCache.ArticulateFunction(function, "", str[2:])
+		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 
 	callAddress := base.HexToAddress(opts.Addrs[0])

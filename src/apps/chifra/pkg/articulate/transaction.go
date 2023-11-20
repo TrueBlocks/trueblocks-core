@@ -24,38 +24,15 @@ func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) err
 		}
 	}
 
-	var found *types.SimpleFunction
-	var art *types.SimpleFunction
-	var selector string
-	var input = tx.Input
-	var outputData string
-	if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
-		outputData = tx.Traces[0].Result.Output[2:]
-	}
-
-	if len(input) >= 10 {
-		selector = input[:10]
-		inputData := input[10:]
-		found = abiCache.AbiMap.GetValue(selector)
-		if found != nil {
-			art = found.Clone()
-			if err = abiCache.ArticulateFunction(art, inputData, outputData); err != nil {
-				return err
-			}
+	if !abiCache.skipMap.GetValue(address) {
+		if tx.ArticulatedTx, tx.Message, err = articulateTx(tx, &abiCache.AbiMap); err != nil {
+			return err
+		}
+	} else {
+		if message, ok := decode.ArticulateString(tx.Input); ok {
+			tx.Message = message
 		}
 	}
-
-	var message string
-	if found == nil && len(input) > 0 {
-		var ok bool
-		var msg string
-		if msg, ok = decode.ArticulateString(tx.Input); ok {
-			message = msg
-		}
-	}
-
-	tx.ArticulatedTx = art
-	tx.Message = message
 
 	if err = abiCache.ArticulateReceipt(tx.Receipt); err != nil {
 		return err
@@ -68,4 +45,38 @@ func (abiCache *AbiCache) ArticulateTransaction(tx *types.SimpleTransaction) err
 	}
 
 	return nil
+}
+
+func articulateTx(tx *types.SimpleTransaction, abiMap *abi.FunctionSyncMap) (*types.SimpleFunction, string, error) {
+	var found *types.SimpleFunction
+	var message string
+	var art *types.SimpleFunction
+	var selector string
+	var input = tx.Input
+	var outputData string
+	if len(tx.Traces) > 0 && tx.Traces[0].Result != nil && len(tx.Traces[0].Result.Output) > 2 {
+		outputData = tx.Traces[0].Result.Output[2:]
+	}
+
+	if len(input) >= 10 {
+		selector = input[:10]
+		inputData := input[10:]
+		found = abiMap.GetValue(selector)
+		if found != nil {
+			art = found.Clone()
+			if err := ArticulateFunction(art, inputData, outputData); err != nil {
+				return found, "", err
+			}
+		}
+	}
+
+	if found == nil && len(input) > 0 {
+		var ok bool
+		var msg string
+		if msg, ok = decode.ArticulateString(tx.Input); ok {
+			message = msg
+		}
+	}
+
+	return art, message, nil
 }

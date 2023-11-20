@@ -2,6 +2,16 @@ transactions?transactions=6409270.108&articulate&fmt=json
 {
   "data": [
     {
+      "articulatedTx": {
+        "inputs": {
+          "destinations": null,
+          "tokens": null
+        },
+        "name": "multiTransfer",
+        "outputs": {
+          "success": null
+        }
+      },
       "blockHash": "0x9e901f01afb3f1745ebca74d5ac4b37a1a6fe4c177e2e88ba0bb20824f107ace",
       "blockNumber": 6409270,
       "date": "2018-09-27 13:21:58 UTC",

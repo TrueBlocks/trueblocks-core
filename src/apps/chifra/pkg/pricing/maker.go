@@ -36,9 +36,8 @@ func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber
-	abiCache := articulate.NewAbiCache(conn, true)
 	artFunc := func(str string, function *types.SimpleFunction) error {
-		return abiCache.ArticulateFunction(function, "", str[2:])
+		return articulate.ArticulateFunction(function, "", str[2:])
 	}
 	result, err := contractCall.Call(artFunc)
 	if err != nil {
