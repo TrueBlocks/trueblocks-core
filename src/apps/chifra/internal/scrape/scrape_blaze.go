@@ -157,11 +157,32 @@ var writeMutex sync.Mutex
 func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBooleanMap) (err error) {
 	ripePath := config.PathToIndex(bm.chain) + "ripe/"
 	unripePath := config.PathToIndex(bm.chain) + "unripe/"
+	appendScrapeError := func(err error) {
+		bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
+	}
 
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {
 			appearanceArray = append(appearanceArray, record)
+			if bn <= bm.ripeBlock {
+				// Only notify about ripe block's appearances
+				payload := NotificationPayloadAppearance{}
+				err := payload.FromString(record)
+				if err != nil {
+					appendScrapeError(err)
+					return err
+				}
+				err = Notify(Notification[NotificationPayloadAppearance]{
+					Msg:     MessageAppearance,
+					Meta:    bm.meta,
+					Payload: payload,
+				})
+				if err != nil {
+					appendScrapeError(err)
+					return err
+				}
+			}
 		}
 		sort.Strings(appearanceArray)
 
@@ -174,7 +195,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 		err = os.WriteFile(fileName, toWrite, 0744) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 		if err != nil {
-			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
+			appendScrapeError(err)
 			return err
 		}
 	}
