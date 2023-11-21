@@ -74,7 +74,7 @@ func (settings settings) GetRpcConnection() *Connection {
 
 	ts, err := ret.GetBlockTimestampE(utils.NOPOS)
 	if err != nil {
-		logger.Fatal("Cannot get connect to RPC server:", err)
+		logger.Fatal("Cannot connect to RPC server:", err)
 	}
 
 	if store != nil && !store.ReadOnly() {
