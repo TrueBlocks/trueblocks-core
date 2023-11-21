@@ -75,12 +75,12 @@ func (opts *TransactionsOptions) validateTransactions() error {
 			}
 		}
 
-		if opts.Traces && !opts.Conn.IsNodeTracing() {
+		if opts.Traces {
+			if !opts.Conn.IsNodeTracing() {
 				return validate.Usage("{0} requires tracing, err: {1}", "chifra transactions --traces", rpc.ErrTraceBlockMissing)
 			}
-		}
 
-		if opts.Traces && opts.Uniq {
+			if opts.Uniq {
 				return validate.Usage("The {0} option is not available{1}.", "--uniq", " with the --traces option")
 			}
 		}
