@@ -24,6 +24,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -195,7 +196,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     opts.Conn.IsNodeArchive(),
 		IsTracing:     opts.Conn.IsNodeTracing(),
-		HasEsKey:      len(config.GetKey("etherscan").ApiKey) > 0,
+		HasEsKey:      validate.HasArticulationKey(true),
 		HasPinKey:     len(config.GetKey("pinata").ApiKey) > 0 || len(config.GetKey("pinata").Secret) > 0,
 		Chain:         chain,
 		NetworkId:     fmt.Sprint(meta.NetworkId),
@@ -241,7 +242,7 @@ func (s *simpleStatus) toTemplate(w io.Writer, logTimerOn bool, format string) b
 
 	t, err := template.New("status").Parse(table)
 	if err != nil {
-		logger.Fatal("Should not happen. Bad template.", err)
+		logger.Fatal("should not happen ==> bad template.", err)
 		return false
 	}
 

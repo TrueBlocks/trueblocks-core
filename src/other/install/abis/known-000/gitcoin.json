@@ -101,6 +101,7 @@
     "type": "event"
   },
   {
+    "encoding": "0x9120491c",
     "inputs": [
       {
         "components": [
@@ -127,7 +128,7 @@
     ],
     "name": "donate",
     "outputs": [],
-    "stateMutability": "payable",
+    "signature": "donate((address,uint256,address)[])",
     "type": "function"
   },
   {

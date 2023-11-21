@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func (abiCache *AbiCache) ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
+func ArticulateFunction(function *types.SimpleFunction, inputData string, outputData string) (err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
@@ -34,7 +34,7 @@ func (abiCache *AbiCache) ArticulateFunction(function *types.SimpleFunction, inp
 	return
 }
 
-func articulateArguments(args abi.Arguments, data string, topics []base.Hash, destination []types.SimpleParameter) (err error) {
+func articulateArguments(args abi.Arguments, data string, topics []base.Hash, abiMap []types.SimpleParameter) (err error) {
 	dataBytes, err := hex.DecodeString(data)
 	if err != nil {
 		return
@@ -44,7 +44,7 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 	// arguments. We will use data for non-indexed ones and topics[1:]
 	// for the indexed.
 	// argNameToIndex will help us keep track on the argument index in
-	// destination, as we will need to update the entry there
+	// abiMap, as we will need to update the entry there
 	argNameToIndex := make(map[string]int, len(args))
 	nameToIndexed := make(map[string]abi.Argument)
 	indexed := make(abi.Arguments, 0, len(args))
@@ -85,17 +85,17 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 		if err != nil {
 			return err
 		}
-		var destinationIndex int
+		var abiMapIndex int
 		if currentArg.Name != "" {
 			var ok bool
-			destinationIndex, ok = argNameToIndex[currentArg.Name]
+			abiMapIndex, ok = argNameToIndex[currentArg.Name]
 			if !ok {
-				return fmt.Errorf("cannot find destination index of argument %s", currentArg.Name)
+				return fmt.Errorf("cannot find abiMap index of argument %s", currentArg.Name)
 			}
 		} else {
-			destinationIndex = index
+			abiMapIndex = index
 		}
-		destination[destinationIndex].Value = result
+		abiMap[abiMapIndex].Value = result
 	}
 
 	// Sometimes there are topics, but no indexed parameters:
@@ -122,11 +122,11 @@ func articulateArguments(args abi.Arguments, data string, topics []base.Hash, de
 		if err != nil {
 			return err
 		}
-		destinationIndex, ok := argNameToIndex[currentArg.Name]
+		abiMapIndex, ok := argNameToIndex[currentArg.Name]
 		if !ok {
-			return fmt.Errorf("cannot find destination index of argument %s", currentArg.Name)
+			return fmt.Errorf("cannot find abiMap index of argument %s", currentArg.Name)
 		}
-		destination[destinationIndex].Value = result
+		abiMap[abiMapIndex].Value = result
 	}
 	return
 }

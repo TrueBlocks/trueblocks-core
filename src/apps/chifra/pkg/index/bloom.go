@@ -135,7 +135,7 @@ func (bl *Bloom) addressToBits(addr base.Address) (bits [5]uint32) {
 
 	// Validate address length.
 	if len(slice) != 20 {
-		logger.Fatal("Should not happen - invalid address length.")
+		logger.Fatal("should not happen ==> invalid address length.")
 	}
 
 	// Split address into five segments and calculate corresponding bits.

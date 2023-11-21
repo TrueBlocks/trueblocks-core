@@ -46,10 +46,10 @@ func IsInitialized(chain, required string) error {
 	if err = bl.readHeader(true /* check */); err != nil {
 		if errors.Is(err, ErrIncorrectHash) {
 			msg := `
-	Outdated file:  {WHICH}.
-	Found version:  {FOUND}
-	Wanted version: {WANT}
-	Error:          {%w}
+	Outdated file:    {WHICH}.
+	File version:     {FOUND}
+	Manifest version: {WANT}
+	Error:            {%w}
 
 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v2.0.0.md.
 `

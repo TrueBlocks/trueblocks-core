@@ -4,11 +4,11 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"log"
 	"math/big"
 	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -108,11 +108,11 @@ func AddressFromPath(path, fileType string) (Address, error) {
 	_, fileName := filepath.Split(path)
 
 	if !strings.HasSuffix(fileName, fileType) {
-		log.Panic("should not happen - path should contain fileType")
+		logger.Fatal("should not happen ==> path should contain fileType")
 	}
 
 	if !strings.HasPrefix(fileType, ".") {
-		log.Panic("should not happen - fileType should have a leading dot")
+		logger.Fatal("should not happen ==> fileType should have a leading dot")
 	}
 
 	if len(fileName) < (42+len(fileType)) || !strings.HasPrefix(fileName, "0x") || !strings.Contains(fileName, ".") {

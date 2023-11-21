@@ -300,18 +300,6 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 			},
 			wantErr: false,
 		},
-		// TODO: Turn off go testing that requires ts.bin
-		// {
-		// 	name: "too early",
-		// 	args: args{
-		// 		identifiers: []string{
-		// 			"2014-01-01",
-		// 		},
-		// 		validTypes: ValidArgumentDate,
-		// 		maxRanges:  1,
-		// 	},
-		// 	wantErr: true,
-		// },
 		{
 			name: "correct special",
 			args: args{

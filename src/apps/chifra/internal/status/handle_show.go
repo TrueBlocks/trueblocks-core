@@ -67,6 +67,8 @@ func (opts *StatusOptions) HandleShow() error {
 				}
 				if testMode && isIndex(cT) && (cT != walk.Index_Bloom && cT != walk.Index_Final) {
 					continue
+				} else if testMode && cT == walk.Cache_Results {
+					continue
 				}
 
 				if walk.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {

@@ -25,45 +25,40 @@ type ContractCall struct {
 	encoded     string
 }
 
-func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string) (*ContractCall, []string, error) {
-	parsed, err := parser.ParseContractCall(theCall)
+func NewContractCallWithAbi(conn *rpc.Connection, callAddress base.Address, theCall string, abiMap *abi.SelectorSyncMap) (*ContractCall, []string, error) {
+	parsed, err := parser.ParseCall(theCall)
 	if err != nil {
 		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
 		return nil, []string{}, err
 	}
 
-	abiMap := abi.NewFunctionSyncMap()
-	if err = abi.LoadAbi(conn.Chain, callAddress, abiMap); err != nil {
-		return nil, []string{}, err
-	}
-
 	var function *types.SimpleFunction
-	var callArguments []*parser.ContractCallArgument
+	var callArguments []*parser.ContractArgument
 	suggestions := make([]string, 0)
 	if parsed.Encoded != "" {
 		selector := parsed.Encoded[:10]
-		function, _, err = abi.FindAbiFunction(abi.FindBySelector, selector, nil, abiMap)
+		function, _, err = FindAbiFunction(FindBySelector, selector, nil, abiMap)
 		if err != nil {
 			return nil, []string{}, err
 		}
 
 	} else {
 		// Selector or function name call
-		var findAbiMode abi.FindMode
+		findAbiMode := FindByName // default
 		var identifier string
 
 		switch {
 		case parsed.FunctionNameCall != nil:
-			findAbiMode = abi.FindByName
+			findAbiMode = FindByName
 			identifier = parsed.FunctionNameCall.Name
 			callArguments = parsed.FunctionNameCall.Arguments
 		case parsed.SelectorCall != nil:
-			findAbiMode = abi.FindBySelector
+			findAbiMode = FindBySelector
 			identifier = parsed.SelectorCall.Selector.Value
 			callArguments = parsed.SelectorCall.Arguments
 		}
 
-		function, suggestions, err = abi.FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
+		function, suggestions, err = FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
 		if err != nil {
 			return nil, suggestions, err
 		}
@@ -94,7 +89,79 @@ func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall str
 	return contactCall, suggestions, nil
 }
 
-func convertArguments(callArguments []*parser.ContractCallArgument, function *types.SimpleFunction) (args []any, err error) {
+func NewContractCall(conn *rpc.Connection, callAddress base.Address, theCall string) (*ContractCall, []string, error) {
+	abiMap := &abi.SelectorSyncMap{}
+	if err := abi.LoadAbi(conn, callAddress, abiMap); err != nil {
+		return nil, []string{}, err
+	}
+
+	// TODO: Why does this not work?
+	// return NewContractCallWithAbis(conn, callAddress, theCall, abiMap)
+
+	parsed, err := parser.ParseCall(theCall)
+	if err != nil {
+		err = fmt.Errorf("the value provided --call (%s) is invalid", theCall)
+		return nil, []string{}, err
+	}
+
+	var function *types.SimpleFunction
+	var callArguments []*parser.ContractArgument
+	suggestions := make([]string, 0)
+	if parsed.Encoded != "" {
+		selector := parsed.Encoded[:10]
+		function, _, err = FindAbiFunction(FindBySelector, selector, nil, abiMap)
+		if err != nil {
+			return nil, []string{}, err
+		}
+
+	} else {
+		// Selector or function name call
+		findAbiMode := FindByName
+		var identifier string
+
+		switch {
+		case parsed.FunctionNameCall != nil:
+			findAbiMode = FindByName
+			identifier = parsed.FunctionNameCall.Name
+			callArguments = parsed.FunctionNameCall.Arguments
+		case parsed.SelectorCall != nil:
+			findAbiMode = FindBySelector
+			identifier = parsed.SelectorCall.Selector.Value
+			callArguments = parsed.SelectorCall.Arguments
+		}
+
+		function, suggestions, err = FindAbiFunction(findAbiMode, identifier, callArguments, abiMap)
+		if err != nil {
+			return nil, suggestions, err
+		}
+	}
+
+	if function == nil {
+		return nil, suggestions, fmt.Errorf("abi not found for %s: %s", theCall, ErrAbiNotFound)
+	}
+
+	var args []any
+	if parsed.Encoded == "" {
+		args, err = convertArguments(callArguments, function)
+		if err != nil {
+			return nil, suggestions, err
+		}
+	}
+
+	contactCall := &ContractCall{
+		Conn:      conn,
+		Address:   callAddress,
+		Method:    function,
+		Arguments: args,
+	}
+	if parsed.Encoded != "" {
+		contactCall.forceEncoding(parsed.Encoded)
+	}
+
+	return contactCall, suggestions, nil
+}
+
+func convertArguments(callArguments []*parser.ContractArgument, function *types.SimpleFunction) (args []any, err error) {
 	abiMethod, err := function.GetAbiMethod()
 	if err != nil {
 		return
@@ -121,7 +188,7 @@ func (call *ContractCall) forceEncoding(encoding string) {
 
 func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error) (results *types.SimpleResult, err error) {
 	if artFunc == nil {
-		logger.Fatal("Implementation error: artFunc is nil")
+		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
 	}
 
 	blockTs := base.Timestamp(0)

@@ -1,22 +1,23 @@
-package abi
+package call
 
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/parser"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type FindMode int
+type findMode int
 
 const (
-	FindByName FindMode = iota
+	FindByName findMode = iota
 	FindBySelector
 )
 
 // FindAbiFunction returns either the function to call or a list of suggestions (function
 // signatures with the same name, but different argument count)
-func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.ContractCallArgument, abiMap *FunctionSyncMap) (fn *types.SimpleFunction, suggestions []string, err error) {
+func FindAbiFunction(mode findMode, identifier string, arguments []*parser.ContractArgument, abiMap *abi.SelectorSyncMap) (fn *types.SimpleFunction, suggestions []string, err error) {
 	functions := abiMap.Values()
 	for _, function := range functions {
 		function := function
@@ -45,10 +46,8 @@ func FindAbiFunction(mode FindMode, identifier string, arguments []*parser.Contr
 				}
 				// address in parsed into argument.Hex.Address
 				if input.InternalType == "address" {
-					if argument.Hex == nil {
-						break
-					}
-					if argument.Hex.Address == nil {
+					// if both ways of finding an address are empty, break
+					if argument.EnsAddr == nil && (argument.Hex == nil || argument.Hex.Address == nil) {
 						break
 					}
 				}

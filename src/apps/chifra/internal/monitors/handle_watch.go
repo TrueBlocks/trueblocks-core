@@ -7,7 +7,6 @@ package monitorsPkg
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -98,12 +97,16 @@ func (c *Command) fileName(addr base.Address) string {
 func (c *Command) resolve(addr base.Address, before, after int64) string {
 	fn := c.fileName(addr)
 	if file.FileExists(fn) {
-		c.Cmd += fmt.Sprintf(" --first_record %d", uint64(before+1))
-		c.Cmd += fmt.Sprintf(" --max_records %d", uint64(after-before+1)) // extra space won't hurt
+		if strings.Contains(c.Cmd, "export") {
+			c.Cmd += fmt.Sprintf(" --first_record %d", uint64(before+1))
+			c.Cmd += fmt.Sprintf(" --max_records %d", uint64(after-before+1)) // extra space won't hurt
+		} else {
+			c.Cmd += fmt.Sprintf(" %d-%d", before+1, after)
+		}
 		c.Cmd += " --append --no_header"
 	}
 	c.Cmd = strings.Replace(c.Cmd, "  ", " ", -1)
-	ret := c.Cmd + " --fmt csv --output " + c.fileName(addr) + " " + addr.Hex()
+	ret := c.Cmd + " --fmt " + c.Fmt + " --output " + c.fileName(addr) + " " + addr.Hex()
 	if c.Cache {
 		ret += " --cache"
 	}
@@ -205,9 +208,14 @@ func GetExportFormat(cmd, def string) string {
 	return "csv"
 }
 
-func (opts *MonitorsOptions) cleanLine(line string) (cmd Command, err error) {
-	line = strings.Replace(line, "--fmt", "--noop", -1)
-	line = strings.Replace(line, "[{ADDRESS}]", "", -1)
+func (opts *MonitorsOptions) cleanLine(lineIn string) (cmd Command, err error) {
+	line := strings.Replace(lineIn, "[{ADDRESS}]", "", -1)
+	if strings.Contains(line, "--fmt") {
+		line = strings.Replace(line, "--fmt", "", -1)
+		line = strings.Replace(line, "json", "", -1)
+		line = strings.Replace(line, "csv", "", -1)
+		line = strings.Replace(line, "txt", "", -1)
+	}
 	line = utils.StripComments(line)
 	if len(line) == 0 {
 		return Command{}, nil
@@ -219,7 +227,7 @@ func (opts *MonitorsOptions) cleanLine(line string) (cmd Command, err error) {
 	}
 
 	_ = file.EstablishFolder(folder)
-	return Command{Cmd: line, Folder: folder, Fmt: "csv", Cache: opts.Globals.Cache}, nil
+	return Command{Cmd: line, Folder: folder, Fmt: GetExportFormat(lineIn, "csv"), Cache: opts.Globals.Cache}, nil
 }
 
 func (opts *MonitorsOptions) getCommands() (ret []Command, err error) {
@@ -249,11 +257,11 @@ func (opts *MonitorsOptions) getOutputFolder(orig string) (string, error) {
 	parts := strings.Split(strings.Replace(cmdLine, "  ", " ", -1), " ")
 	if len(parts) < 1 || parts[0] != "chifra" {
 		s := fmt.Sprintf("Invalid command: %s. Must start with 'chifra'.", strings.Trim(orig, " \t\n\r"))
-		log.Fatal(s)
+		logger.Fatal(s)
 	}
 	if len(parts) < 2 || !okMap[parts[1]] {
 		s := fmt.Sprintf("Invalid command: %s. Must start with 'chifra export', 'chifra list', 'chifra state', or 'chifra tokens'.", orig)
-		log.Fatal(s)
+		logger.Fatal(s)
 	}
 
 	cmdLine += " "

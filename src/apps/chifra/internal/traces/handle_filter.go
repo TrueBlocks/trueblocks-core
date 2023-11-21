@@ -20,7 +20,7 @@ import (
 
 func (opts *TracesOptions) HandleFilter() error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	nErrors := 0
 	traceFilter := types.SimpleTraceFilter{}
 	_, br := traceFilter.ParseBangString(chain, opts.Filter)

@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"errors"
 	"math/big"
 	"reflect"
 	"strings"
@@ -8,14 +9,13 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/alecthomas/participle/v2/lexer"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
 
 func TestParse_Encoding(t *testing.T) {
 	// Short
-	if p, err := ParseContractCall(`0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69`); err != nil {
+	if p, err := ParseCall(`0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69`); err != nil {
 		t.Fatal(err)
 	} else {
 		if s := p.Encoded; s != `0xcdba2fd40000000000000000000000000000000000000000000000000000000000007a69` {
@@ -25,7 +25,7 @@ func TestParse_Encoding(t *testing.T) {
 
 	// Long one
 	long := "0x7087e4bd000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000076d61696e6e657400000000000000000000000000000000000000000000000000"
-	if p, err := ParseContractCall(long); err != nil {
+	if p, err := ParseCall(long); err != nil {
 		t.Fatal(err)
 	} else {
 		if s := p.Encoded; s != long {
@@ -36,12 +36,12 @@ func TestParse_Encoding(t *testing.T) {
 
 func TestParse_Selector(t *testing.T) {
 	// Invalid selector
-	if _, err := ParseContractCall(`0xcdba()`); !strings.Contains(err.Error(), errInvalidSelector.Error()) {
+	if _, err := ParseCall(`0xcdba()`); !strings.Contains(err.Error(), errInvalidSelector.Error()) {
 		t.Fatal("expected errInvalidSelector, got:", err)
 	}
 
 	// No arguments
-	if parsed, err := ParseContractCall(`0xcdba2fd4()`); err != nil {
+	if parsed, err := ParseCall(`0xcdba2fd4()`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.SelectorCall.Selector.Value; value != `0xcdba2fd4` {
@@ -52,8 +52,19 @@ func TestParse_Selector(t *testing.T) {
 		}
 	}
 
+	if parsed, err := ParseCall(`0x7087e4bd(trueblocks.eth,"mainnet")`); err != nil {
+		t.Fatal(err)
+	} else {
+		if value := parsed.SelectorCall.Selector.Value; value != `0x7087e4bd` {
+			t.Fatal("wrong selector", value)
+		}
+		if argsLen := len(parsed.SelectorCall.Arguments); argsLen != 2 {
+			t.Fatal("wrong number of arguments", argsLen)
+		}
+	}
+
 	// Arguments
-	if parsed, err := ParseContractCall(`0xcdba2fd4(1, true, false, 0xbeef, "string")`); err != nil {
+	if parsed, err := ParseCall(`0xcdba2fd4(1, true, false, 0xbeef, "string")`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.SelectorCall.Selector.Value; value != `0xcdba2fd4` {
@@ -77,7 +88,7 @@ func TestParse_Selector(t *testing.T) {
 	}
 
 	// Hex parsing
-	if parsed, err := ParseContractCall(`0xcdba2fd4(0xdeadbeef, 0x6982508145454ce325ddbe47a25d4ec3d23119a1)`); err != nil {
+	if parsed, err := ParseCall(`0xcdba2fd4(0xdeadbeef, 0x6982508145454ce325ddbe47a25d4ec3d23119a1)`); err != nil {
 		t.Fatal(err)
 	} else {
 		if argsLen := len(parsed.SelectorCall.Arguments); argsLen != 2 {
@@ -95,12 +106,12 @@ func TestParse_Selector(t *testing.T) {
 
 func TestParse_Function(t *testing.T) {
 	// Invalid selector
-	if _, err := ParseContractCall(`111()`); err == nil {
+	if _, err := ParseCall(`111()`); err == nil {
 		t.Fatal("expected parsing error")
 	}
 
 	// No arguments
-	if parsed, err := ParseContractCall(`transfer()`); err != nil {
+	if parsed, err := ParseCall(`transfer()`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.FunctionNameCall.Name; value != `transfer` {
@@ -112,7 +123,7 @@ func TestParse_Function(t *testing.T) {
 	}
 
 	// Correct Solidity identifiers
-	if parsed, err := ParseContractCall(`$dollar$_underscoreCamelCase125__()`); err != nil {
+	if parsed, err := ParseCall(`$dollar$_underscoreCamelCase125__()`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.FunctionNameCall.Name; value != `$dollar$_underscoreCamelCase125__` {
@@ -121,7 +132,7 @@ func TestParse_Function(t *testing.T) {
 	}
 
 	// Arguments
-	if parsed, err := ParseContractCall(`something(1, true, false, 0xbeef, "string")`); err != nil {
+	if parsed, err := ParseCall(`something(1, true, false, 0xbeef, "string")`); err != nil {
 		t.Fatal(err)
 	} else {
 		if value := parsed.FunctionNameCall.Name; value != `something` {
@@ -145,7 +156,7 @@ func TestParse_Function(t *testing.T) {
 	}
 
 	// Hex parsing
-	if parsed, err := ParseContractCall(`somethingElse(0xdeadbeef, 0x6982508145454ce325ddbe47a25d4ec3d23119a1)`); err != nil {
+	if parsed, err := ParseCall(`somethingElse(0xdeadbeef, 0x6982508145454ce325ddbe47a25d4ec3d23119a1)`); err != nil {
 		t.Fatal(err)
 	} else {
 		if argsLen := len(parsed.FunctionNameCall.Arguments); argsLen != 2 {
@@ -162,7 +173,7 @@ func TestParse_Function(t *testing.T) {
 }
 
 func TestParse_Numbers(t *testing.T) {
-	if parsed, err := ParseContractCall(`doSomething(1, -2, 115792089237316195423570985008687907853269984665640564039457584007913129639935)`); err != nil {
+	if parsed, err := ParseCall(`doSomething(1, -2, 115792089237316195423570985008687907853269984665640564039457584007913129639935)`); err != nil {
 		t.Fatal(err)
 	} else {
 		if argsLen := len(parsed.FunctionNameCall.Arguments); argsLen != 3 {
@@ -210,10 +221,10 @@ func TestArgument_AbiType(t *testing.T) {
 	}
 
 	type fields struct {
-		String  *string
-		Number  *ContractCallNumber
-		Boolean *Boolean
-		Hex     *ContractCallHex
+		String  *ArgString
+		Number  *ArgNumber
+		Boolean *ArgBool
+		Hex     *ArgHex
 	}
 	type args struct {
 		abiType *abi.Type
@@ -228,7 +239,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "bytes4 argument",
 			fields: fields{
-				Hex: &ContractCallHex{
+				Hex: &ArgHex{
 					String: utils.PointerOf("0x80ac58cd"),
 				},
 			},
@@ -240,7 +251,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "int8 argument",
 			fields: fields{
-				Number: &ContractCallNumber{
+				Number: &ArgNumber{
 					Int: utils.PointerOf(int64(-128)),
 				},
 			},
@@ -252,7 +263,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "int64 argument",
 			fields: fields{
-				Number: &ContractCallNumber{
+				Number: &ArgNumber{
 					Int: utils.PointerOf(int64(-9223372036854775808)),
 				},
 			},
@@ -264,7 +275,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "int256 argument",
 			fields: fields{
-				Number: &ContractCallNumber{
+				Number: &ArgNumber{
 					Big: int256,
 				},
 			},
@@ -276,7 +287,7 @@ func TestArgument_AbiType(t *testing.T) {
 		{
 			name: "address argument",
 			fields: fields{
-				Hex: &ContractCallHex{
+				Hex: &ArgHex{
 					Address: utils.PointerOf(base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")),
 				},
 			},
@@ -288,7 +299,7 @@ func TestArgument_AbiType(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			a := &ContractCallArgument{
+			a := &ContractArgument{
 				String:  tt.fields.String,
 				Number:  tt.fields.Number,
 				Boolean: tt.fields.Boolean,
@@ -311,8 +322,9 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+
 	// the second argument is string instead of address
-	parsed, err := ParseContractCall(`transfer(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
+	parsed, err := ParseCall(`someFunc(0x6982508145454ce325ddbe47a25d4ec3d23119a1, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")`)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -320,28 +332,28 @@ func TestArgument_AbiType_Errors(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[1].AbiType(&testAbi.Methods["address"].Inputs[0].Type)
-	expectedError := newWrongTypeError("address", lexer.Token{Value: `0x6982508145454ce325ddbe47a25d4ec3d23119a1`}, "0x6982508145454ce325ddbe47a25d4ec3d23119a1")
-	if err.Error() != expectedError.Error() {
-		t.Fatal("got wrong error:", err, "expected:", expectedError)
+	expected := errors.New(`expected address, but got string "0x6982508145454ce325ddbe47a25d4ec3d23119a1"`)
+	if err.Error() != expected.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expected)
 	}
 
-	parsed, err = ParseContractCall(`someBool(111)`)
+	parsed, err = ParseCall(`someBool(111)`)
 	if err != nil {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["bool"].Inputs[0].Type)
-	expectedError = newWrongTypeError("bool", lexer.Token{Value: `111`}, 111)
-	if err.Error() != expectedError.Error() {
-		t.Fatal("got wrong error:", err, "expected:", expectedError)
+	expected = errors.New(`expected bool, but got integer "111"`)
+	if err.Error() != expected.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expected)
 	}
 
-	parsed, err = ParseContractCall(`someBytes32("hello")`)
+	parsed, err = ParseCall(`someBytes32("hello")`)
 	if err != nil {
 		t.Fatal(err)
 	}
 	_, err = parsed.FunctionNameCall.Arguments[0].AbiType(&testAbi.Methods["bytes32"].Inputs[0].Type)
-	expectedError = newWrongTypeError("hash", lexer.Token{Value: `hello`}, "hello")
-	if err.Error() != expectedError.Error() {
-		t.Fatal("got wrong error:", err, "expected:", expectedError)
+	expected = errors.New(`expected hash, but got string "hello"`)
+	if err.Error() != expected.Error() {
+		t.Fatal("got wrong error:", err, "expected:", expected)
 	}
 }

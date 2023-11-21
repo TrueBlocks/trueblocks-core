@@ -2,13 +2,16 @@ package rpc
 
 import (
 	"errors"
+	"fmt"
 	"math/big"
 	"strconv"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decode"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // erc721SupportsInterfaceData is the data needed to call the ERC-721 supportsInterface function
@@ -26,9 +29,13 @@ const tokenStateSymbol tokenStateSelector = "0x95d89b41"
 const tokenStateName tokenStateSelector = "0x06fdde03"
 const tokenStateBalanceOf tokenStateSelector = "0x70a08231"
 
-// GetTokenState returns token state for given block. `blockNumber` can be "latest" or "" for the latest block or
-// decimal number or hex number with 0x prefix.
-func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber string) (token *types.SimpleToken, err error) {
+// GetTokenState returns token state for given block. `hexBlockNo` can be "latest" or "" for the latest
+// block or decimal number or hex number with 0x prefix.
+func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo string) (token *types.SimpleToken, err error) {
+	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
+		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
+	}
+
 	results, err := query.QueryBatch[string](
 		conn.Chain,
 		[]query.BatchPayload{
@@ -41,7 +48,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 							"to":   tokenAddress,
 							"data": tokenStateName,
 						},
-						blockNumber,
+						hexBlockNo,
 					},
 				},
 			},
@@ -54,7 +61,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 							"to":   tokenAddress,
 							"data": tokenStateSymbol,
 						},
-						blockNumber,
+						hexBlockNo,
 					},
 				},
 			},
@@ -67,7 +74,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 							"to":   tokenAddress,
 							"data": tokenStateDecimals,
 						},
-						blockNumber,
+						hexBlockNo,
 					},
 				},
 			},
@@ -80,7 +87,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 							"to":   tokenAddress,
 							"data": tokenStateTotalSupply,
 						},
-						blockNumber,
+						hexBlockNo,
 					},
 				},
 			},
@@ -94,7 +101,7 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 							"to":   tokenAddress,
 							"data": erc721SupportsInterfaceData,
 						},
-						blockNumber,
+						hexBlockNo,
 					},
 				},
 			},
@@ -140,9 +147,13 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, blockNumber str
 	return
 }
 
-// GetTokenBalanceAt returns token balance for given block. `blockNumber` can be "latest" or "" for the latest block or
+// GetTokenBalanceAt returns token balance for given block. `hexBlockNo` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func (conn *Connection) GetTokenBalanceAt(token, holder base.Address, blockNumber string) (balance *big.Int, err error) {
+func (conn *Connection) GetTokenBalanceAt(token, holder base.Address, hexBlockNo string) (balance *big.Int, err error) {
+	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
+		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
+	}
+
 	output, err := query.QueryBatch[string](
 		conn.Chain,
 		[]query.BatchPayload{{
@@ -154,7 +165,7 @@ func (conn *Connection) GetTokenBalanceAt(token, holder base.Address, blockNumbe
 						"to":   token.Hex(),
 						"data": tokenStateBalanceOf + holder.Pad32(),
 					},
-					blockNumber,
+					hexBlockNo,
 				},
 			},
 		}},

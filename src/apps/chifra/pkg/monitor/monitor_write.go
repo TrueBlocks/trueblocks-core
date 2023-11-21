@@ -38,10 +38,10 @@ func (mon *Monitor) WriteMonHeader(deleted bool, lastScanned uint32, force bool)
 // be writing to a temporary file.
 func (mon *Monitor) WriteAppearancesAppend(lastScanned uint32, apps *[]index.AppearanceRecord) error {
 	if !mon.Staged {
-		logger.Fatal("Trying to write to a non-staged file. Should not happen.")
+		logger.Fatal("should not happen ==> trying to write to a non-staged file")
 
 	} else if mon == nil {
-		logger.Fatal("Trying to write from a nil monitor. Should not happen.")
+		logger.Fatal("should not happen ==> trying to write from a nil monitor")
 	}
 
 	err := mon.WriteMonHeader(mon.Deleted, lastScanned, false /* force */)
