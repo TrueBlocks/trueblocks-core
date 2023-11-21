@@ -8,6 +8,7 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 )
@@ -28,10 +29,10 @@ func TestNotify(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	newAppNotification := Notification[[]NotificationPayloadAppearance]{
-		Msg:  MessageAppearance,
+	newAppNotification := notify.Notification[[]notify.NotificationPayloadAppearance]{
+		Msg:  notify.MessageAppearance,
 		Meta: &rpc.MetaData{Chain: "ethereum"},
-		Payload: []NotificationPayloadAppearance{
+		Payload: []notify.NotificationPayloadAppearance{
 			{
 				Address:          "0xfffd8963efd1fc6a506488495d951d5263988d25",
 				BlockNumber:      "18509161",
@@ -40,7 +41,7 @@ func TestNotify(t *testing.T) {
 		},
 	}
 
-	if err := notify(ts.URL, newAppNotification); err != nil {
+	if err := notifyEndpoint(ts.URL, newAppNotification); err != nil {
 		t.Fatal(err)
 	}
 
@@ -63,7 +64,7 @@ func TestNotificationDataAppearance_FromString(t *testing.T) {
 		132,
 	)
 
-	n := &NotificationPayloadAppearance{}
+	n := &notify.NotificationPayloadAppearance{}
 	if err := n.FromString(key); err != nil {
 		t.Fatal(err)
 	}

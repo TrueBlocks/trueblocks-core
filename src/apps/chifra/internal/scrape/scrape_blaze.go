@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
@@ -163,7 +164,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 	appendScrapeError := func(err error) {
 		bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 	}
-	notificationPayload := make([]NotificationPayloadAppearance, 0, len(addrMap))
+	notificationPayload := make([]notify.NotificationPayloadAppearance, 0, len(addrMap))
 	payloadFailed := false
 
 	if len(addrMap) > 0 {
@@ -173,7 +174,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 
 			if bn <= bm.ripeBlock {
 				// Only notify about ripe block's appearances
-				payloadItem := NotificationPayloadAppearance{}
+				payloadItem := notify.NotificationPayloadAppearance{}
 				err := payloadItem.FromString(record)
 				if err != nil {
 					reportNotifyErrOnce.Do(func() { appendScrapeError(err) })
@@ -202,8 +203,8 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 	}
 
 	if bn <= bm.ripeBlock && !payloadFailed {
-		err = Notify(Notification[[]NotificationPayloadAppearance]{
-			Msg:     MessageAppearance,
+		err = Notify(notify.Notification[[]notify.NotificationPayloadAppearance]{
+			Msg:     notify.MessageAppearance,
 			Meta:    bm.meta,
 			Payload: notificationPayload,
 		})
