@@ -145,6 +145,9 @@ func (bm *BlazeManager) ProcessTimestamps(tsChannel chan tslib.TimestampRecord, 
 
 var writeMutex sync.Mutex
 
+// Report error only once for this block (e.g. if Notify is returning error)
+var reportNotifyErrOnce sync.Once
+
 // TODO: The original intent of creating files was so that we could start over where we left off
 // if we failed. But this isn't how it works. We cleanup any temp files if we fail, which means
 // we write these files and if we fail, we remove them. If we don't fail, we've written them out,
@@ -160,28 +163,26 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 	appendScrapeError := func(err error) {
 		bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 	}
+	notificationPayload := make([]NotificationPayloadAppearance, 0, len(addrMap))
+	payloadFailed := false
 
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {
 			appearanceArray = append(appearanceArray, record)
+
 			if bn <= bm.ripeBlock {
 				// Only notify about ripe block's appearances
-				payload := NotificationPayloadAppearance{}
-				err := payload.FromString(record)
+				payloadItem := NotificationPayloadAppearance{}
+				err := payloadItem.FromString(record)
 				if err != nil {
-					appendScrapeError(err)
-					return err
+					reportNotifyErrOnce.Do(func() { appendScrapeError(err) })
+					// We don't return err here, because if the file is not written
+					// the scraper will fall into infinite loop
+					payloadFailed = true
+					continue
 				}
-				err = Notify(Notification[NotificationPayloadAppearance]{
-					Msg:     MessageAppearance,
-					Meta:    bm.meta,
-					Payload: payload,
-				})
-				if err != nil {
-					appendScrapeError(err)
-					return err
-				}
+				notificationPayload = append(notificationPayload, payloadItem)
 			}
 		}
 		sort.Strings(appearanceArray)
@@ -194,6 +195,18 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 		err = os.WriteFile(fileName, toWrite, 0744) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
+		if err != nil {
+			appendScrapeError(err)
+			return err
+		}
+	}
+
+	if bn <= bm.ripeBlock && !payloadFailed {
+		err = Notify(Notification[[]NotificationPayloadAppearance]{
+			Msg:     MessageAppearance,
+			Meta:    bm.meta,
+			Payload: notificationPayload,
+		})
 		if err != nil {
 			appendScrapeError(err)
 			return err

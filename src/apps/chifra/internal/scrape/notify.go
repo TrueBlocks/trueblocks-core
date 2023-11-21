@@ -31,7 +31,7 @@ type Notification[Payload notificationPayload] struct {
 }
 
 type notificationPayload interface {
-	NotificationPayloadAppearance |
+	[]NotificationPayloadAppearance |
 		string
 }
 
@@ -73,11 +73,11 @@ func NewStageUpdatedNotification(meta *rpc.MetaData, chunkRange string) *Notific
 	}
 }
 
-func NewAppearanceNotification(meta *rpc.MetaData, appearance NotificationPayloadAppearance) *Notification[NotificationPayloadAppearance] {
-	return &Notification[NotificationPayloadAppearance]{
+func NewAppearanceNotification(meta *rpc.MetaData, appearances []NotificationPayloadAppearance) *Notification[[]NotificationPayloadAppearance] {
+	return &Notification[[]NotificationPayloadAppearance]{
 		Msg:     MessageChunkWritten,
 		Meta:    meta,
-		Payload: appearance,
+		Payload: appearances,
 	}
 }
 
@@ -96,11 +96,16 @@ func notify(endpoint string, notification any) error {
 		return fmt.Errorf("marshalling message: %w", err)
 	}
 
+	// log.Println("POSTing to", endpoint)
+
 	resp, err := http.Post(
 		endpoint,
 		"application/json",
 		bytes.NewReader(encoded),
 	)
+
+	// log.Println("Done POSTing", resp.StatusCode, err)
+
 	if err != nil {
 		if errors.Is(err, syscall.ECONNREFUSED) {
 			return ErrConfiguredButNotRunning

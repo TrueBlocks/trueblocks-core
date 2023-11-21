@@ -28,13 +28,15 @@ func TestNotify(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	newAppNotification := Notification[NotificationPayloadAppearance]{
+	newAppNotification := Notification[[]NotificationPayloadAppearance]{
 		Msg:  MessageAppearance,
 		Meta: &rpc.MetaData{Chain: "ethereum"},
-		Payload: NotificationPayloadAppearance{
-			Address:          "0xfffd8963efd1fc6a506488495d951d5263988d25",
-			BlockNumber:      "18509161",
-			TransactionIndex: 132,
+		Payload: []NotificationPayloadAppearance{
+			{
+				Address:          "0xfffd8963efd1fc6a506488495d951d5263988d25",
+				BlockNumber:      "18509161",
+				TransactionIndex: 132,
+			},
 		},
 	}
 
