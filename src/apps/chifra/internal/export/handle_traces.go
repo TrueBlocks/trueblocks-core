@@ -80,7 +80,7 @@ func (opts *ExportOptions) readTraces(
 			Enabled: !opts.Globals.TestMode,
 			Total:   mon.Count(),
 		})
-		if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, true /* readTraces */); err != nil { // calls IterateOverMap
+		if err := opts.readTransactions(txMap, filter, bar, true /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
 

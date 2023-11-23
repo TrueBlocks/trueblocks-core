@@ -39,6 +39,8 @@ func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.Blo
 		OuterBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
 		sortBy:      sortBy,
 		reversed:    reversed,
+		reverted:    reverted,
+		fourBytes:   fourBytes,
 		nSeen:       -1,
 	}
 }
@@ -93,13 +95,14 @@ func (f *AppearanceFilter) applyCountFilter() (passed, finished bool) {
 
 // ApplyTxFilters applies other filters such as the four byte and reverted filters.
 func (f *AppearanceFilter) ApplyTxFilters(tx *types.SimpleTransaction) (passed, finished bool) {
-	if f.reverted && !tx.IsError {
-		return false, false
-	}
+	matchesReverted := !f.reverted || tx.IsError
+	matchesFourbyte := len(f.fourBytes) == 0
 	for _, fourBytes := range f.fourBytes {
-		if !strings.HasPrefix(tx.Input, fourBytes) {
-			return false, false
+		if strings.HasPrefix(tx.Input, fourBytes) {
+			matchesFourbyte = true
+			break
 		}
 	}
-	return true, false
+	// fmt.Println("len:", len(f.fourBytes), "matchesFourbyte", matchesFourbyte, "matchesReverted", matchesReverted)
+	return matchesFourbyte && matchesReverted, false
 }

@@ -43,7 +43,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
-				if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+				if err := opts.readTransactions(txMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 					errorChan <- err
 					return
 				}

@@ -7,7 +7,6 @@ package exportPkg
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -49,13 +48,8 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 				errorChan <- err
 				return nil
 			} else {
-				matches := len(opts.Fourbytes) == 0 // either there is no four bytes...
-				for _, fb := range opts.Fourbytes {
-					if strings.HasPrefix(tx.Input, fb) {
-						matches = true
-					}
-				}
-				if matches {
+				passes, _ := filter.ApplyTxFilters(tx)
+				if passes {
 					if opts.Articulate {
 						if err = abiCache.ArticulateTransaction(tx); err != nil {
 							errorChan <- err // continue even on error
