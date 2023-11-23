@@ -9,6 +9,7 @@ type settingsGroup struct {
 	IndexPath      string `toml:"indexPath"`
 	DefaultChain   string `toml:"defaultChain"`
 	DefaultGateway string `toml:"defaultGateway,omitempty"`
+	NotifyUrl      string `toml:"notifyUrl" json:"notifyUrl,omitempty"`
 }
 
 func GetSettings() settingsGroup {

@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -117,10 +118,10 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
-			if err := Notify(Notification{
-				Msg:  ChunkWritten,
-				Meta: bm.meta,
-				Data: nil,
+			if err := Notify(notify.Notification[string]{
+				Msg:     notify.MessageChunkWritten,
+				Meta:    bm.meta,
+				Payload: chunkRange.String(),
 			}); err != nil {
 				return err, false
 			}
@@ -135,8 +136,9 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		}
 	}
 
+	var newRange base.FileRange
 	if len(appMap) > 0 { // are there any appearances in this block range?
-		newRange := base.FileRange{First: bm.meta.Finalized + 1, Last: 0}
+		newRange = base.FileRange{First: bm.meta.Finalized + 1, Last: 0}
 
 		// We need an array because we're going to write it back to disc
 		appearances := make([]string, 0, nAppearances)
@@ -162,10 +164,10 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
 
-	if err := Notify(Notification{
-		Msg:  StageUpdated,
-		Meta: bm.meta,
-		Data: nil,
+	if err := Notify(notify.Notification[string]{
+		Msg:     notify.MessageStageUpdated,
+		Meta:    bm.meta,
+		Payload: newRange.String(),
 	}); err != nil {
 		return err, false
 	}
