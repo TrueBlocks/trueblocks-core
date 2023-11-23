@@ -6,4 +6,4 @@ TEST[DATE|TIME] Format:  txt
 The index (3735928560) is ahead of the chain ("0xdeadbeef").
 INFO[DATE|TIME] Scraping:
 INFO[DATE|TIME]   Path:     --unchained-path--
-INFO[DATE|TIME]   Settings: {2000000 100000 2300000 28 false 20 }
+INFO[DATE|TIME]   Settings: {2000000 100000 2300000 28 false 20}
