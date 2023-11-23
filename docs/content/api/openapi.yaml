@@ -395,6 +395,14 @@ paths:
             items:
               type: string
               format: address
+        - name: reverted
+          description: export only transactions that were reverted
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: topic
           description: for log export only, export only logs with this topic(s)
           required: false

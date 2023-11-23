@@ -87,6 +87,7 @@ func init() {
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Relevant, "relevant", "N", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "m", nil, "for log export only, export only logs if emitted by one of these address(es)")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reverted, "reverted", "V", false, "export only transactions that were reverted")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "B", nil, "for log export only, export only logs with this topic(s)")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "P", nil, "for the accounting options only, export statements only for this asset")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export statements with incoming, outgoing, or zero value
