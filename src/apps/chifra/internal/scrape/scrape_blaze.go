@@ -146,9 +146,6 @@ func (bm *BlazeManager) ProcessTimestamps(tsChannel chan tslib.TimestampRecord, 
 
 var writeMutex sync.Mutex
 
-// Report error only once for this block (e.g. if Notify is returning error)
-var reportNotifyErrOnce sync.Once
-
 // TODO: The original intent of creating files was so that we could start over where we left off
 // if we failed. But this isn't how it works. We cleanup any temp files if we fail, which means
 // we write these files and if we fail, we remove them. If we don't fail, we've written them out,
@@ -177,11 +174,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 				payloadItem := notify.NotificationPayloadAppearance{}
 				err := payloadItem.FromString(record)
 				if err != nil {
-					reportNotifyErrOnce.Do(func() { appendScrapeError(err) })
-					// We don't return err here, because if the file is not written
-					// the scraper will fall into infinite loop
-					payloadFailed = true
-					continue
+					logger.Fatal(err)
 				}
 				notificationPayload = append(notificationPayload, payloadItem)
 			}
@@ -209,8 +202,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 			Payload: notificationPayload,
 		})
 		if err != nil {
-			appendScrapeError(err)
-			return err
+			logger.Fatal(err)
 		}
 	}
 

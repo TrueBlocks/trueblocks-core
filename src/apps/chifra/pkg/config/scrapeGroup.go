@@ -17,7 +17,6 @@ type ScrapeSettings struct {
 	UnripeDist   uint64 `toml:"unripeDist" json:"unripeDist"`
 	AllowMissing bool   `toml:"allowMissing" json:"allowMissing,omitempty"`
 	ChannelCount uint64 `toml:"channelCount" json:"channelCount,omitempty"`
-	NotifyUrl    string `toml:"notifyUrl" json:"notifyUrl,omitempty"`
 }
 
 // GetScrape returns the scraper settings per chain

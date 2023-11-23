@@ -16,8 +16,8 @@ import (
 var ErrConfiguredButNotRunning = fmt.Errorf("listener is configured but not running")
 
 // Notify may be used to tell other processes about progress.
-func Notify[Payload notify.NotificationPayload](notification notify.Notification[Payload]) error {
-	endpoint := config.GetScrape(notification.Meta.Chain).NotifyUrl
+func Notify[T notify.NotificationPayload](notification notify.Notification[T]) error {
+	endpoint := config.GetSettings().NotifyUrl
 	if endpoint == "" {
 		return nil
 	}
