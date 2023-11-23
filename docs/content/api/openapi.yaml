@@ -1915,6 +1915,14 @@ paths:
                 - maps
                 - some
                 - all
+        - name: diagnose
+          description: same as the default but with additional diagnostics
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: firstRecord
           description: the first record to process
           required: false
