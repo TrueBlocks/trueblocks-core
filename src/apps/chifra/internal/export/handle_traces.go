@@ -25,6 +25,8 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
+		opts.Reverted,
+		opts.Fourbytes,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
