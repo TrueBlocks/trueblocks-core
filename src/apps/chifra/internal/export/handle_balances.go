@@ -23,28 +23,27 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
+		opts.Reverted,
+		opts.Fourbytes,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-	filter.EnableRr = false
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		currentBn := uint64(0)
 		prevBalance := big.NewInt(0)
-		visitToken := func(index int, item *types.SimpleToken) error {
+		visitToken := func(idx int, item *types.SimpleToken) error {
 			item.PriorBalance = *prevBalance
-			if passes, finished := filter.RecordCountFilter(); passes && !finished {
-				if item.BlockNumber == 0 || item.BlockNumber != currentBn {
-					item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
-				}
-				currentBn = item.BlockNumber
-				if index == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-					item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
-					modelChan <- item
-				}
-				prevBalance = &item.Balance
+			if item.BlockNumber == 0 || item.BlockNumber != currentBn {
+				item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
 			}
+			currentBn = item.BlockNumber
+			if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
+				item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
+				modelChan <- item
+			}
+			prevBalance = &item.Balance
 			return nil
 		}
 
@@ -54,9 +53,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 				continue // on error
 			} else if !opts.NoZero || len(items) > 0 {
 				prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
-				for index, item := range items {
+				for idx, item := range items {
 					item := item
-					if err := visitToken(index, item); err != nil {
+					if err := visitToken(idx, item); err != nil {
 						errorChan <- err
 						return
 					}

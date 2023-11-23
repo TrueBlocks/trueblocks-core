@@ -27,6 +27,7 @@ export function getExport(
     maxRecords?: uint64,
     relevant?: boolean,
     emitter?: address[],
+    reverted?: boolean,
     topic?: topic[],
     asset?: address[],
     flow?: 'in' | 'out' | 'zero',

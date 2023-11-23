@@ -22,6 +22,8 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	chain := opts.Globals.Chain
 	filter := filter.NewFilter(
 		opts.Reversed,
+		false,
+		[]string{},
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)

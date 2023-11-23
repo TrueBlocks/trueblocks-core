@@ -155,6 +155,9 @@ export,relevant,typescript
 export,reversed,api
 export,reversed,python
 export,reversed,typescript
+export,reverted,api
+export,reverted,python
+export,reverted,typescript
 export,statements,api
 export,statements,python
 export,statements,typescript

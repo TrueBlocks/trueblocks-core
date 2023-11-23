@@ -26,7 +26,9 @@ func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
+		opts.Reversed,
 		false,
+		[]string{},
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)

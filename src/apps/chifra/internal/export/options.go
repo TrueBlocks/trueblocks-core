@@ -41,6 +41,7 @@ type ExportOptions struct {
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
 	Emitter     []string              `json:"emitter,omitempty"`     // For log export only, export only logs if emitted by one of these address(es)
+	Reverted    bool                  `json:"reverted,omitempty"`    // Export only transactions that were reverted
 	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
 	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export statements only for this asset
 	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export statements with incoming, outgoing, or zero value
@@ -84,6 +85,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
+	logger.TestLog(opts.Reverted, "Reverted: ", opts.Reverted)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
@@ -164,6 +166,8 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Emitter = append(opts.Emitter, s...)
 			}
+		case "reverted":
+			opts.Reverted = true
 		case "topic":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items

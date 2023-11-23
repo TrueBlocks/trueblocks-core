@@ -22,21 +22,11 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 	first := utils.Max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
 	filter := filter.NewFilter(
 		opts.Reversed,
-		base.BlockRange{
-			First: first,
-			Last:  opts.LastBlock,
-		},
-		base.RecordRange{
-			First: first,
-			Last:  opts.GetMax(),
-		},
+		false,
+		[]string{},
+		base.BlockRange{First: first, Last: opts.LastBlock},
+		base.RecordRange{First: first, Last: opts.GetMax()},
 	)
-	filter.EnableRr = false
-
-	// addrArray := make([]base.Address, 0, len(monitorArray))
-	// for _, mon := range monitorArray {
-	// 	addrArray = append(addrArray, mon.Address)
-	// }
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
