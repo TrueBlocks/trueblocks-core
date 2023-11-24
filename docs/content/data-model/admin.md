@@ -318,13 +318,13 @@ Chains consist of the following fields:
 
 | Field          | Description                                                      | Type   |
 | -------------- | ---------------------------------------------------------------- | ------ |
-| chain          | The common name of the chain                                     | string |
-| chainId        | The chain id as reported by the RPC                              | uint64 |
-| symbol         | The symbol of the base currency on the chain                     | string |
-| rpcProvider    | A valid RPC provider for the chain                               | string |
-| remoteExplorer | A remote explorer for the chain such as Etherscan                | string |
-| localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
-| ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
+| chain          | the common name of the chain                                     | string |
+| chainId        | the chain id as reported by the RPC                              | uint64 |
+| symbol         | the symbol of the base currency on the chain                     | string |
+| rpcProvider    | a valid RPC provider for the chain                               | string |
+| remoteExplorer | a remote explorer for the chain such as Etherscan                | string |
+| localExplorer  | the local explorer for the chain (typically TrueBlocks Explorer) | string |
+| ipfsGateway    | an IPFS gateway for pinning the index if enabled                 | string |
 
 ## Base types
 

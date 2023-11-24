@@ -47,7 +47,6 @@ class CMember : public CBaseNode {
     uint64_t precision;
     uint64_t maxWidth;
     uint64_t doc;
-    string_q example;
     string_q description;
 
   public:
@@ -133,7 +132,6 @@ inline void CMember::initialize(void) {
     precision = 5;
     maxWidth = NOPOS;
     doc = 0;
-    example = "";
     description = "";
 
     // EXISTING_CODE
@@ -156,7 +154,6 @@ inline void CMember::duplicate(const CMember& me) {
     precision = me.precision;
     maxWidth = me.maxWidth;
     doc = me.doc;
-    example = me.example;
     description = me.description;
 
     // EXISTING_CODE

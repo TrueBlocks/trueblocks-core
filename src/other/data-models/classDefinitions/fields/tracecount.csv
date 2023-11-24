@@ -1,7 +1,7 @@
-name             ,type      ,strDefault ,array ,omitempty ,doc ,example ,description
-blockNumber      ,blknum    ,           ,      ,          ,  1 ,     10 ,the block number
-transactionIndex ,blknum    ,           ,      ,          ,  2 ,     10 ,the transaction index
-transactionHash  ,hash      ,           ,      ,          ,  3 ,     10 ,the transaction's hash
-timestamp        ,timestamp ,           ,      ,          ,  4 ,     10 ,the timestamp of the block
-date             ,datetime  ,           ,      ,          ,  5 ,     10 ,a calculated field -- the date of the block
-tracesCnt        ,uint64    ,           ,      ,          ,  6 ,     30 ,the number of traces in the transaction
+name             ,type      ,strDefault ,array ,omitempty ,doc ,description
+blockNumber      ,blknum    ,           ,      ,          ,  1 ,the block number
+transactionIndex ,blknum    ,           ,      ,          ,  2 ,the transaction index
+transactionHash  ,hash      ,           ,      ,          ,  3 ,the transaction's hash
+timestamp        ,timestamp ,           ,      ,          ,  4 ,the timestamp of the block
+date             ,datetime  ,           ,      ,          ,  5 ,a calculated field -- the date of the block
+tracesCnt        ,uint64    ,           ,      ,          ,  6 ,the number of traces in the transaction

@@ -92,11 +92,6 @@ string_q CMember::getValueByName(const string_q& fieldName) const {
                 return description;
             }
             break;
-        case 'e':
-            if (fieldName % "example") {
-                return example;
-            }
-            break;
         case 'i':
             if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
@@ -188,12 +183,6 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             break;
-        case 'e':
-            if (fieldName % "example") {
-                example = fieldValue;
-                return true;
-            }
-            break;
         case 'i':
             if (fieldName % "indexed") {
                 indexed = str_2_Bool(fieldValue);
@@ -282,7 +271,6 @@ bool CMember::Serialize(CArchive& archive) {
     // archive >> precision;
     // archive >> maxWidth;
     // archive >> doc;
-    // archive >> example;
     // archive >> description;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -308,7 +296,6 @@ bool CMember::SerializeC(CArchive& archive) const {
     // archive << precision;
     // archive << maxWidth;
     // archive << doc;
-    // archive << example;
     // archive << description;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -381,8 +368,6 @@ void CMember::registerClass(void) {
     HIDE_FIELD(CMember, "maxWidth");
     ADD_FIELD(CMember, "doc", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "doc");
-    ADD_FIELD(CMember, "example", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CMember, "example");
     ADD_FIELD(CMember, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "description");
 

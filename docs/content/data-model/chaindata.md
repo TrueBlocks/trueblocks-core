@@ -117,7 +117,7 @@ Transfers consist of the following fields:
 | recipient        | the receiver of the transfer (the recipient)                                                   | address   |
 | assetAddr        | 0xeeee...eeee for ETH reconcilations, the token address otherwise                              | address   |
 | assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
-| decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
+| decimals         | equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
 | amount           | the amount of the transfer in the units of the asset                                           | int256    |
 | spotPrice        | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
 | priceSource      | the on-chain source from which the spot price was taken                                        | string    |
@@ -317,7 +317,7 @@ TraceResults consist of the following fields:
 
 | Field   | Description                                                                    | Type    |
 | ------- | ------------------------------------------------------------------------------ | ------- |
-| address | Address of new contract, if any                                                | address |
+| address | address of new contract, if any                                                | address |
 | code    | if this trace is creating a new smart contract, the byte code of that contract | bytes   |
 | gasUsed | the amount of gas used by this trace                                           | gas     |
 | output  | the result of the call of this trace                                           | bytes   |
@@ -355,12 +355,12 @@ TraceFilters consist of the following fields:
 
 | Field       | Description                                                    | Type          |
 | ----------- | -------------------------------------------------------------- | ------------- |
-| fromBlock   | The first block to include in the queried list of traces.      | string        |
-| toBlock     | The last block to include in the queried list of traces.       | string        |
-| fromAddress | If included, only traces `from` this address will be included. | Address       |
-| toAddress   | If included, only traces `to` this address will be included.   | Address       |
-| after       | Only traces after this many traces are included.               | uint64        |
-| count       | Only this many traces are included.                            | uint64        |
+| fromBlock   | the first block to include in the queried list of traces.      | string        |
+| toBlock     | the last block to include in the queried list of traces.       | string        |
+| fromAddress | if included, only traces `from` this address will be included. | Address       |
+| toAddress   | if included, only traces `to` this address will be included.   | Address       |
+| after       | only traces after this many traces are included.               | uint64        |
+| count       | only this many traces are included.                            | uint64        |
 
 ## BlockCount
 
