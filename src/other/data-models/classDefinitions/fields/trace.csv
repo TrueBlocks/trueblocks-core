@@ -1,24 +1,24 @@
-name             ,type        ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example       ,description
-blockHash        ,hash        ,           ,       ,      ,        ,          ,        ,         ,  1 ,     ,0xf128...1e98 ,the hash of the block containing this trace
-blockNumber      ,blknum      ,           ,       ,      ,        ,          ,        ,         ,  2 ,   1 ,10021         ,the number of the block
-subtraces        ,uint64      ,           ,       ,      ,        ,          ,        ,         ,  8 ,     ,              ,the number of children traces that the trace hash
-traceAddress     ,string      ,           ,       ,true  ,        ,          ,        ,         ,  7 ,   3 ,              ,a particular trace's address in the trace tree
-transactionHash  ,hash        ,           ,       ,      ,        ,          ,        ,         ,  5 ,     ,              ,the transaction's hash containing this trace
-transactionIndex ,blknum      ,           ,       ,      ,        ,          ,        ,         ,  6 ,   2 ,305           ,the zero-indexed position of the transaction in the block
-type             ,string      ,           ,       ,      ,        ,true      ,        ,         ,  9 ,     ,              ,the type of the trace
-error            ,string      ,           ,       ,      ,        ,true      ,        ,         ,    ,   5 ,              ,
-action           ,TraceAction ,           ,true   ,      ,        ,          ,        ,         , 10 ,     ,              ,the trace action for this trace
-result           ,TraceResult ,           ,true   ,      ,        ,          ,        ,         , 11 ,     ,              ,the trace result of this trace
-articulatedTrace ,Function    ,           ,true   ,      ,        ,true      ,        ,         , 12 ,     ,              ,human readable version of the trace action input data
-compressedTrace  ,string      ,           ,       ,      ,true    ,true      ,        ,         , 13 ,  13 ,              ,a compressed string version of the articulated trace
-action::callType ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,   4 ,              ,
-action::from     ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,   6 ,              ,
-action::to       ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,   7 ,              ,
-action::value    ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,   8 ,              ,
-action::ether    ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,   9 ,              ,
-action::gas      ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,  10 ,              ,
-result::gasUsed  ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,  11 ,              ,
-action::input    ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,  12 ,              ,
-result::output   ,string      ,           ,       ,      ,        ,          ,true    ,true     ,    ,  14 ,              ,
-timestamp        ,timestamp   ,           ,       ,      ,        ,          ,true    ,         ,  3 ,  15 ,              ,the timestamp of the block
-date             ,datetime    ,           ,       ,      ,        ,          ,true    ,         ,  4 ,  16 ,              ,a calculated value - the date of the block
+name             ,type        ,strDefault ,object ,array ,omitempty ,doc ,disp ,example       ,description
+blockHash        ,hash        ,           ,       ,      ,          ,  1 ,     ,0xf128...1e98 ,the hash of the block containing this trace
+blockNumber      ,blknum      ,           ,       ,      ,          ,  2 ,   1 ,10021         ,the number of the block
+subtraces        ,uint64      ,           ,       ,      ,          ,  8 ,     ,              ,the number of children traces that the trace hash
+traceAddress     ,string      ,           ,       ,true  ,          ,  7 ,   3 ,              ,a particular trace's address in the trace tree
+transactionHash  ,hash        ,           ,       ,      ,          ,  5 ,     ,              ,the transaction's hash containing this trace
+transactionIndex ,blknum      ,           ,       ,      ,          ,  6 ,   2 ,305           ,the zero-indexed position of the transaction in the block
+type             ,string      ,           ,       ,      ,true      ,  9 ,     ,              ,the type of the trace
+error            ,string      ,           ,       ,      ,true      ,    ,   5 ,              ,
+action           ,TraceAction ,           ,true   ,      ,          , 10 ,     ,              ,the trace action for this trace
+result           ,TraceResult ,           ,true   ,      ,          , 11 ,     ,              ,the trace result of this trace
+articulatedTrace ,Function    ,           ,true   ,      ,true      , 12 ,     ,              ,human readable version of the trace action input data
+compressedTrace  ,string      ,           ,       ,      ,true      , 13 ,  13 ,              ,a compressed string version of the articulated trace
+action::callType ,string      ,           ,       ,      ,          ,    ,   4 ,              ,
+action::from     ,string      ,           ,       ,      ,          ,    ,   6 ,              ,
+action::to       ,string      ,           ,       ,      ,          ,    ,   7 ,              ,
+action::value    ,string      ,           ,       ,      ,          ,    ,   8 ,              ,
+action::ether    ,string      ,           ,       ,      ,          ,    ,   9 ,              ,
+action::gas      ,string      ,           ,       ,      ,          ,    ,  10 ,              ,
+result::gasUsed  ,string      ,           ,       ,      ,          ,    ,  11 ,              ,
+action::input    ,string      ,           ,       ,      ,          ,    ,  12 ,              ,
+result::output   ,string      ,           ,       ,      ,          ,    ,  14 ,              ,
+timestamp        ,timestamp   ,           ,       ,      ,          ,  3 ,  15 ,              ,the timestamp of the block
+date             ,datetime    ,           ,       ,      ,          ,  4 ,  16 ,              ,a calculated value - the date of the block

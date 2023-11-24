@@ -703,8 +703,8 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
         CStringArray fields;
         explode(fields, header, ',');
         for (auto& fld : fields) {
-            // note use of is_object, is_array, is_minimal, is_noaddfld, is_nowrite, is_omitempty";
-            string_q isFields = "object,array,minimal,noaddfld,nowrite,omitempty";
+            // note use of is_object, is_array, is_omitempty";
+            string_q isFields = "object,array,omitempty";
             if (contains(isFields, fld)) {
                 fld = "is_" + fld;
             }
@@ -721,7 +721,7 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
             }
 
             bool isRawOnly = contains(line, "rawonly");
-            line = substitute(line, "rawonly", "true");
+            line = substitute(line, "rawonly", "");
 
             CMember tmp;
             tmp.parseCSV(fields, line);

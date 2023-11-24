@@ -277,11 +277,6 @@ bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
     if (field.name % "date") {
         return true;
     }
-    bool noGo =
-        (field.memberFlags & IS_MINIMAL) && (field.memberFlags & IS_NOWRITE) && (field.memberFlags & IS_NOADDFLD);
-    if (noGo) {
-        return true;
-    }
 
     if (!raw && field.memberFlags & IS_RAWONLY) {
         return true;

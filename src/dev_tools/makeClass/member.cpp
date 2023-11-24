@@ -165,9 +165,6 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
     if (fieldName % "is_object")    { BOOL_ASSIGN_MASK(memberFlags, IS_OBJECT);    return true; }
     if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(memberFlags, IS_BUILTIN);   return true; }
     if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(memberFlags, IS_ENABLED);   return true; }
-    if (fieldName % "is_minimal")   { BOOL_ASSIGN_MASK(memberFlags, IS_MINIMAL);   return true; }
-    if (fieldName % "is_noaddfld")  { BOOL_ASSIGN_MASK(memberFlags, IS_NOADDFLD);  return true; }
-    if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(memberFlags, IS_NOWRITE);   return true; }
     if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(memberFlags, IS_OMITEMPTY); return true; }
     // clang-format on
     // EXISTING_CODE
@@ -425,9 +422,6 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 if (fieldIn % "is_object")    return bool_2_Str_t(mem->memberFlags & IS_OBJECT);
                 if (fieldIn % "is_builtin")   return bool_2_Str_t(mem->memberFlags & IS_BUILTIN);
                 if (fieldIn % "is_enabled")   return bool_2_Str_t(mem->memberFlags & IS_ENABLED);
-                if (fieldIn % "is_minimal")   return bool_2_Str_t(mem->memberFlags & IS_MINIMAL);
-                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(mem->memberFlags & IS_NOADDFLD);
-                if (fieldIn % "is_nowrite")   return bool_2_Str_t(mem->memberFlags & IS_NOWRITE);
                 if (fieldIn % "is_omitempty") return bool_2_Str_t(mem->memberFlags & IS_OMITEMPTY);
                 break;
             case 'v':
