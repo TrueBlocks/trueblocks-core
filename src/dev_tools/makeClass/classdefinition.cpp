@@ -659,6 +659,19 @@ void checkSorts(const string_q& className, const CStringArray& fields, const CSt
 }
 
 //------------------------------------------------------------------------------------------------
+bool isFieldTypeAnObject(const CMember& field) {
+    CStringArray objects = {"Member",     "Parameter",   "Chain",       "CacheItem",         "Key",      "Transaction",
+                            "Withdrawal", "TraceAction", "TraceResult", "StringFunctionMap", "Function", "Parameter",
+                            "Log",        "ChunkRecord", "StorageSlot", "Receipt",           "Trace",    "Statement"};
+    for (auto obj : objects) {
+        if (field.type == obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//------------------------------------------------------------------------------------------------
 void CClassDefinition::ReadSettings(const CToml& toml) {
     //------------------------------------------------------------------------------------------------
     class_name = toml.getConfigStr("settings", "class", "");
@@ -725,6 +738,9 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
 
             CMember tmp;
             tmp.parseCSV(fields, line);
+            if (isFieldTypeAnObject(tmp)) {
+                tmp.memberFlags |= IS_OBJECT;
+            }
             if (tmp.memberFlags & IS_ARRAY) {
                 tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
             } else if (tmp.memberFlags & IS_OBJECT) {

@@ -1,8 +1,8 @@
-name         ,type              ,strDefault ,object ,array ,omitempty ,doc ,disp ,example ,description
-address      ,address           ,           ,       ,      ,          ,  1 ,   1 ,        ,the smart contract that implements this abi
-interfaceMap ,StringFunctionMap ,           ,true   ,      ,          ,    ,     ,        ,
-interfaces   ,Function          ,           ,true   ,true  ,          ,  2 ,     ,        ,the list of events and functions on this abi
-encoding     ,hash              ,           ,       ,      ,          ,    ,   2 ,        ,
-type         ,string            ,           ,       ,      ,          ,    ,   3 ,        ,
-name         ,string            ,           ,       ,      ,          ,    ,   4 ,        ,
-signature    ,string            ,           ,       ,      ,          ,    ,   5 ,        ,
+name         ,type              ,strDefault ,array ,omitempty ,doc ,disp ,example ,description
+address      ,address           ,           ,      ,          ,  1 ,   1 ,        ,the smart contract that implements this abi
+interfaceMap ,StringFunctionMap ,           ,      ,          ,    ,     ,        ,
+interfaces   ,Function          ,           ,true  ,          ,  2 ,     ,        ,the list of events and functions on this abi
+encoding     ,hash              ,           ,      ,          ,    ,   2 ,        ,
+type         ,string            ,           ,      ,          ,    ,   3 ,        ,
+name         ,string            ,           ,      ,          ,    ,   4 ,        ,
+signature    ,string            ,           ,      ,          ,    ,   5 ,        ,

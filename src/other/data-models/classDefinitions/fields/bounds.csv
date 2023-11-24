@@ -1,8 +1,8 @@
-name       ,type          ,strDefault ,object ,array ,omitempty ,doc ,disp ,example ,description
-count      ,uint64        ,           ,       ,      ,          ,  1 ,     ,        ,the number of appearances for this address
-firstApp   ,RawAppearance ,           ,       ,      ,          ,  2 ,     ,        ,the block number and transaction id of the first appearance of this address
-firstTs    ,timestamp     ,           ,       ,      ,          ,  3 ,     ,        ,the timestamp of the first appearance of this address
-firstDate  ,datetime      ,           ,       ,      ,          ,  4 ,     ,        ,a calculated field -- the date of the first appearance
-latestApp  ,RawAppearance ,           ,       ,      ,          ,  5 ,     ,        ,the block number and transaction id of the latest appearance of this address
-latestTs   ,timestamp     ,           ,       ,      ,          ,  6 ,     ,        ,the timestamp of the latest appearance of this address
-latestDate ,datetime      ,           ,       ,      ,          ,  7 ,     ,        ,a calculated field -- the date of the latest appearance
+name       ,type          ,strDefault ,array ,omitempty ,doc ,disp ,example ,description
+count      ,uint64        ,           ,      ,          ,  1 ,     ,        ,the number of appearances for this address
+firstApp   ,RawAppearance ,           ,      ,          ,  2 ,     ,        ,the block number and transaction id of the first appearance of this address
+firstTs    ,timestamp     ,           ,      ,          ,  3 ,     ,        ,the timestamp of the first appearance of this address
+firstDate  ,datetime      ,           ,      ,          ,  4 ,     ,        ,a calculated field -- the date of the first appearance
+latestApp  ,RawAppearance ,           ,      ,          ,  5 ,     ,        ,the block number and transaction id of the latest appearance of this address
+latestTs   ,timestamp     ,           ,      ,          ,  6 ,     ,        ,the timestamp of the latest appearance of this address
+latestDate ,datetime      ,           ,      ,          ,  7 ,     ,        ,a calculated field -- the date of the latest appearance

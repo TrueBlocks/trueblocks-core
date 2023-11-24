@@ -519,7 +519,6 @@ bool isObject(const CMember& field) {
     if (containsI(field.type, "topic") || containsI(field.name, "traceaddress") || containsI(field.name, "uncles")) {
         return false;
     }
-
     return (field.memberFlags & IS_OBJECT);
 }
 
