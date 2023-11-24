@@ -13,7 +13,6 @@ import (
 	"fmt"
 	"io"
 	"sort"
-	"strconv"
 	"strings"
 	"text/template"
 	"time"
@@ -24,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
@@ -129,7 +129,7 @@ func (s *simpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 			for _, chain := range chainArray {
 				ch := types.SimpleChain{
 					Chain:          chain.Chain,
-					ChainId:        mustParseUint(chain.ChainId),
+					ChainId:        utils.MustParseUint(chain.ChainId),
 					LocalExplorer:  chain.LocalExplorer,
 					RemoteExplorer: chain.RemoteExplorer,
 					RpcProvider:    chain.RpcProvider,
@@ -283,10 +283,5 @@ INFO Cache Path:        {{.CachePath}}
 INFO Index Path:        {{.IndexPath}}
 INFO Progress:          {{.Progress}}
 `
-
-func mustParseUint(input any) (result uint64) {
-	result, _ = strconv.ParseUint(fmt.Sprint(input), 0, 64)
-	return
-}
 
 // EXISTING_CODE
