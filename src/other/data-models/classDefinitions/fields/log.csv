@@ -1,13 +1,13 @@
-name             ,type      ,strDefault ,array ,omitempty ,doc ,disp ,example                  ,description
-blockNumber      ,blknum    ,           ,      ,          ,  1 ,     ,10021                    ,the number of the block
-transactionIndex ,uint64    ,           ,      ,          ,  2 ,     ,305                      ,the zero-indexed position of the transaction in the block
-logIndex         ,uint64    ,           ,      ,          ,  3 ,     ,354                      ,the zero-indexed position of this log relative to the block
-timestamp        ,timestamp ,           ,      ,true      ,  4 ,     ,                         ,the timestamp of the block this log appears in
-date             ,datetime  ,           ,      ,          ,  5 ,     ,                         ,the date of the block this log appears in (calculated)
-address          ,address   ,           ,      ,          ,  6 ,     ,0xf503...179b            ,the smart contract that emitted this log
-topics           ,topic     ,           ,true  ,true      ,  7 ,     ,                         ,the first topic hashes event signature of the log&#44; up to 3 additional index parameters may appear
-data             ,bytes     ,           ,      ,true      ,  8 ,     ,0x0000...3ff6            ,any remaining un-indexed parameters to the event
-transactionHash  ,hash      ,           ,      ,          ,  9 ,     ,                         ,the hash of the transction
-blockHash        ,hash      ,           ,      ,          , 10 ,     ,                         ,the hash of the block
-articulatedLog   ,Function  ,           ,      ,true      , 11 ,     ,                         ,a human-readable version of the topic and data fields
-compressedLog    ,string    ,           ,      ,true      , 12 ,     ,Transfer(0xcfa...9f54... ,a truncated&#44; more readable version of the articulation
+name             ,type      ,strDefault ,array ,omitempty ,doc ,example                  ,description
+blockNumber      ,blknum    ,           ,      ,          ,  1 ,10021                    ,the number of the block
+transactionIndex ,uint64    ,           ,      ,          ,  2 ,305                      ,the zero-indexed position of the transaction in the block
+logIndex         ,uint64    ,           ,      ,          ,  3 ,354                      ,the zero-indexed position of this log relative to the block
+timestamp        ,timestamp ,           ,      ,true      ,  4 ,                         ,the timestamp of the block this log appears in
+date             ,datetime  ,           ,      ,          ,  5 ,                         ,the date of the block this log appears in (calculated)
+address          ,address   ,           ,      ,          ,  6 ,0xf503...179b            ,the smart contract that emitted this log
+topics           ,topic     ,           ,true  ,true      ,  7 ,                         ,the first topic hashes event signature of the log&#44; up to 3 additional index parameters may appear
+data             ,bytes     ,           ,      ,true      ,  8 ,0x0000...3ff6            ,any remaining un-indexed parameters to the event
+transactionHash  ,hash      ,           ,      ,          ,  9 ,                         ,the hash of the transction
+blockHash        ,hash      ,           ,      ,          , 10 ,                         ,the hash of the block
+articulatedLog   ,Function  ,           ,      ,true      , 11 ,                         ,a human-readable version of the topic and data fields
+compressedLog    ,string    ,           ,      ,true      , 12 ,Transfer(0xcfa...9f54... ,a truncated&#44; more readable version of the articulation

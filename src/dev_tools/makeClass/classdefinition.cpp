@@ -726,7 +726,6 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
         CStringArray lines;
         explode(lines, contents, '\n');
         checkSorts(class_name, fields, lines, "doc");
-        checkSorts(class_name, fields, lines, "disp");
 
         for (auto line : lines) {
             if (trim(line).empty()) {

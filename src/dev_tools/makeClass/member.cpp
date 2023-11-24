@@ -88,9 +88,6 @@ string_q CMember::getValueByName(const string_q& fieldName) const {
             if (fieldName % "doc") {
                 return doc == 0 ? "" : uint_2_Str(doc);
             }
-            if (fieldName % "disp") {
-                return disp == 0 ? "" : uint_2_Str(disp);
-            }
             if (fieldName % "description") {
                 return description;
             }
@@ -184,10 +181,6 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
         case 'd':
             if (fieldName % "doc") {
                 doc = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "disp") {
-                disp = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "description") {
@@ -289,7 +282,6 @@ bool CMember::Serialize(CArchive& archive) {
     // archive >> precision;
     // archive >> maxWidth;
     // archive >> doc;
-    // archive >> disp;
     // archive >> example;
     // archive >> description;
     // EXISTING_CODE
@@ -316,7 +308,6 @@ bool CMember::SerializeC(CArchive& archive) const {
     // archive << precision;
     // archive << maxWidth;
     // archive << doc;
-    // archive << disp;
     // archive << example;
     // archive << description;
     // EXISTING_CODE
@@ -390,8 +381,6 @@ void CMember::registerClass(void) {
     HIDE_FIELD(CMember, "maxWidth");
     ADD_FIELD(CMember, "doc", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "doc");
-    ADD_FIELD(CMember, "disp", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CMember, "disp");
     ADD_FIELD(CMember, "example", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "example");
     ADD_FIELD(CMember, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
