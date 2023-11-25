@@ -52,6 +52,8 @@ type simpleStatus struct {
 	RpcProvider   string          `json:"rpcProvider,omitempty"`
 	Version       string          `json:"version,omitempty"`
 	// EXISTING_CODE
+	Meta  *rpc.MetaData `json:"meta,omitempty"`
+	Diffs *rpc.MetaData `json:"diffs,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -178,6 +180,13 @@ func (opts *StatusOptions) GetSimpleStatus(diagnose bool) (*simpleStatus, error)
 	if err != nil {
 		return nil, err
 	}
+	diffs := &rpc.MetaData{
+		Latest:    0,
+		Finalized: meta.Latest - meta.Finalized,
+		Staging:   meta.Latest - meta.Staging,
+		Unripe:    meta.Latest - meta.Unripe,
+		Ripe:      meta.Latest - meta.Ripe,
+	}
 
 	vers, err := opts.Conn.GetClientVersion()
 	if err != nil {
@@ -203,6 +212,12 @@ func (opts *StatusOptions) GetSimpleStatus(diagnose bool) (*simpleStatus, error)
 		Chain:         chain,
 		NetworkId:     fmt.Sprint(meta.NetworkId),
 		ChainId:       fmt.Sprint(meta.ChainId),
+		Meta:          meta,
+		Diffs:         diffs,
+		// Finalized: meta.Latest - meta.Finalized,
+		// Staging:   meta.Latest - meta.Staging,
+		// Unripe:    meta.Latest - meta.Unripe,
+		// Ripe:      meta.Latest - meta.Ripe,
 	}
 
 	if testMode {
@@ -237,7 +252,7 @@ func (s *simpleStatus) toTemplate(w io.Writer, diagnose, logTimerOn bool, format
 	table = strings.Replace(table, "[CLIENT]", getClientTemplate(), -1)
 	table = strings.Replace(table, "[VERSION]", getVersionTemplate(), -1)
 	table = strings.Replace(table, "[IDS]", getIdTemplate(), -1)
-	table = strings.Replace(table, "[PROGRESS]", getProgress(diagnose), -1)
+	table = strings.Replace(table, "[PROGRESS]", s.getProgress(diagnose), -1)
 	table = strings.Replace(table, "INFO ", timeDatePart+colors.Green, -1)
 	table = strings.Replace(table, "[RED]", colors.Red, -1)
 	table = strings.Replace(table, "[GREEN]", colors.Green, -1)
@@ -273,10 +288,26 @@ func getIdTemplate() string {
 	return networkId + "/" + chainId
 }
 
-func getProgress(diagnose bool) string {
+func (s *simpleStatus) getProgress(diagnose bool) string {
 	if diagnose {
-		diag := "\nINFO {{.Progress}}"
-		return diag
+		nTs, _ := tslib.NTimestamps(s.Meta.Chain) // when the file has one record, the block is zero, etc.
+		if nTs > 0 {
+			nTs--
+		}
+		nTsDiff := s.Meta.Latest - nTs
+		if nTs > s.Meta.Latest {
+			nTsDiff = 0
+		}
+		ret := `
+INFO [OFF]  Chain Head [GREEN]{{.Meta.Latest}}[OFF]
+INFO [OFF]  Finalized  [GREEN]{{.Meta.Finalized}}[OFF] ([GREEN]{{.Diffs.Finalized}}[OFF] behind head)
+INFO [OFF]  Stage      [GREEN]{{.Meta.Staging}}[OFF] ([GREEN]{{.Diffs.Staging}}[OFF] behind head)
+INFO [OFF]  Indexing   [GREEN]{{.Meta.Unripe}}[OFF] ([GREEN]{{.Diffs.Unripe}}[OFF] behind head)
+INFO [OFF]  Timestamps [GREEN]{nTs}[OFF] ([GREEN]{nTsDiff}[OFF] behind head)
+`
+		ret = strings.Replace(ret, "{nTs}", fmt.Sprint(nTs), -1)
+		ret = strings.Replace(ret, "{nTsDiff}", fmt.Sprint(nTsDiff), -1)
+		return ret
 	}
 
 	return "          {{.Progress}}"
@@ -293,35 +324,18 @@ INFO Progress:[PROGRESS]
 `
 
 /*
-Node synced, index up-to-date
-
-07-09|11:02:03.171 Progress:
-07-09|11:02:03.171 Chain head at block 18083530
-07-09|11:02:03.171 Your index is up-to-date with the chain
-07-09|11:02:03.171 Index finalized for block: 18083530. Staging: 18083531. Currently indexing: 18083532
-07-09|11:02:03.171 Timestamps synced up to block: 18083530
-
-Node synced, successfull chifra init but scraper not running
-
-07-09|11:02:03.171 Progress:
-07-09|11:02:03.171 Chain head at block 18083530
-07-09|11:02:03.171 Your index is 340,662 blocks BEHIND the chain
-07-09|11:02:03.171 Index finalized for block: 17742868. Staging: 17742868. Currently indexing: 17742888
-07-09|11:02:03.171 Timestamps synced up to block: 17062507 (1,021,023 blocks BEHIND the chain)
-
-WARN: Index is behind the chain head, but scraper is not running.
-WARN: This means chifra is not aware of latest transactions and can return incomplete data.
-WARN: Run `chifra daemon --scrape index` to solve the issue.
-
-Node is syncing
-
-07-09|11:02:03.171 Progress:
-07-09|11:02:03.171 Chain head at block 0
-07-09|11:02:03.171 Index finalized for block: 0. Staging: 0. Currently indexing: 0
-07-09|11:02:03.171 Timestamps synced up to block: 0
-
-WARN: Your node seems to be syncing. During this state it can refuse queries from chifra
-WARN: or return incomplete data. If you observe such issues, please wait until your node
-WARN: is fully synced and your index catches up to the chain head.
+TODO: Better diagnostics (see #3209)
+TODO: When Node synced, successfull chifra init but scraper not running
+TODO:
+TODO: WARN: Index is behind the chain head, but scraper is not running.
+TODO: WARN: This means chifra is not aware of latest transactions and can return incomplete data.
+TODO: WARN: Run `chifra daemon --scrape index` to solve the issue.
+TODO:
+TODO: Node is not syncing
+TODO:
+TODO: WARN: Your node seems to be syncing. During this state it can refuse queries from chifra
+TODO: WARN: or return incomplete data. If you observe such issues, please wait until your node
+TODO: WARN: is fully synced and your index catches up to the chain head.
 */
+
 // EXISTING_CODE

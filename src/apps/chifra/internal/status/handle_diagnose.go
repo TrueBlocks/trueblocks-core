@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *StatusOptions) HandleStatusTerse() error {
+func (opts *StatusOptions) HandleDiagnose() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
