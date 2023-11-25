@@ -151,7 +151,6 @@ Data models produced by this tool:
 
 - [statement](/data-model/accounts/#statement)
 - [transaction](/data-model/chaindata/#transaction)
-- [transfer](/data-model/chaindata/#transfer)
 
 Links:
 

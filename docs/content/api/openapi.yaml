@@ -514,7 +514,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#transfer">Transfer</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/accounts/#appearancecount">Appearancecount</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">Traceaction</a>, <a href="/data-model/chaindata/#traceresult">Traceresult</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -523,7 +523,6 @@ paths:
                         - $ref: "#/components/schemas/appearanceCount"
                         - $ref: "#/components/schemas/statement"
                         - $ref: "#/components/schemas/transaction"
-                        - $ref: "#/components/schemas/transfer"
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/trace"
@@ -915,11 +914,10 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#abi">Abi</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
+                    description: Produces <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/abi"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/parameter"
                 example:
@@ -1264,13 +1262,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, and/or <a href="/data-model/chaindata/#transfer">Transfer</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
+                    description: Produces <a href="/data-model/accounts/#statement">Statement</a>, and/or <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
                     type: array
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/statement"
                         - $ref: "#/components/schemas/transaction"
-                        - $ref: "#/components/schemas/transfer"
         "400":
           description: bad input parameter
   /receipts:
@@ -1915,6 +1912,14 @@ paths:
                 - maps
                 - some
                 - all
+        - name: diagnose
+          description: same as the default but with additional diagnostics
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: firstRecord
           description: the first record to process
           required: false
@@ -2506,19 +2511,6 @@ components:
         isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    abi:
-      description: "a JSON object describing the functions and events in an Ethereum smart contract"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the smart contract that implements this abi"
-        interfaces:
-          type: array
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the list of events and functions on this abi"
     appearanceCount:
       description: "the number of records, file size, and last visited block for a given monitor"
       type: object
@@ -2864,67 +2856,6 @@ components:
         compressedTx:
           type: string
           description: "truncated, more readable version of the articulation"
-    transfer:
-      description: "the representation of a token transfer"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          description: "the number of the block"
-        transactionIndex:
-          type: number
-          format: blknum
-          description: "the zero-indexed position of the transaction in the block"
-        logIndex:
-          type: number
-          format: blknum
-          description: "the zero-indexed position of the log in the transaction"
-        transactionHash:
-          type: string
-          format: hash
-          description: "the hash of the transaction that triggered this reconciliation"
-        timestamp:
-          type: number
-          format: timestamp
-          description: "the Unix timestamp of the object"
-        date:
-          type: string
-          format: datetime
-          description: "a calculated field -- the date of this transaction"
-        sender:
-          type: string
-          format: address
-          description: "the initiator of the transfer (the sender)"
-        recipient:
-          type: string
-          format: address
-          description: "the receiver of the transfer (the recipient)"
-        assetAddr:
-          type: string
-          format: address
-          description: "0xeeee...eeee for ETH reconcilations, the token address otherwise"
-        assetSymbol:
-          type: string
-          description: "either ETH, WEI or the symbol of the asset being reconciled as queried from the chain"
-        decimals:
-          type: number
-          format: uint64
-          description: "equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
-        amount:
-          type: string
-          format: int256
-          description: "the amount of the transfer in the units of the asset"
-        spotPrice:
-          type: number
-          format: double
-          description: "the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
-        priceSource:
-          type: string
-          description: "the on-chain source from which the spot price was taken"
-        encoding:
-          type: string
-          description: "the four-byte encoding of the transaction's function call"
     withdrawal:
       description: "withdrawal record for post-Shanghai withdrawals from the consensus layer"
       type: object

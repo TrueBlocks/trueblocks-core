@@ -352,6 +352,9 @@ state,proxyFor,typescript
 status,chains,api
 status,chains,python
 status,chains,typescript
+status,diagnose,api
+status,diagnose,python
+status,diagnose,typescript
 status,firstRecord,api
 status,firstRecord,python
 status,firstRecord,typescript

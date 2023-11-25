@@ -1,5 +1,0 @@
-name     ,type   ,strDefault ,omitempty ,doc ,description
-provider ,string ,           ,          ,  1 ,the api provider
-apiKey   ,string ,           ,          ,  2 ,an api key
-jwt      ,string ,           ,true      ,  3 ,a jwt token used for an API
-secret   ,string ,           ,true      ,  4 ,a secret used for an API

@@ -7,6 +7,7 @@ statusCmd = "status"
 statusPos = "modes"
 statusFmt = "json"
 statusOpts = {
+    "diagnose": {"hotkey": "-d", "type": "switch"},
     "firstRecord": {"hotkey": "-c", "type": "flag"},
     "maxRecords": {"hotkey": "-e", "type": "flag"},
     "chains": {"hotkey": "-a", "type": "switch"},

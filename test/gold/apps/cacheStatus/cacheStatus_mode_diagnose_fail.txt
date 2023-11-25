@@ -1,7 +1,8 @@
-chifra status  --junk
-Error: 
-  unknown flag: --junk
-
+chifra status  index --diagnose
+TEST[DATE|TIME] Modes:  [index]
+TEST[DATE|TIME] Diagnose:  true
+TEST[DATE|TIME] Format:  json
+Error: --diagnose may not be used with index
 Usage:
   chifra status <mode> [mode...] [flags]
 

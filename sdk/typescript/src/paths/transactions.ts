@@ -4,7 +4,7 @@
  * This file was generated with makeClass --sdk. Do not edit it.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { address, Statement, topic, Transaction, Transfer, txId } from '../types';
+import { address, Statement, topic, Transaction, txId } from '../types';
 
 export function getTransactions(
   parameters?: {
@@ -27,7 +27,7 @@ export function getTransactions(
   },
   options?: RequestInit,
 ) {
-  return ApiCallers.fetch<Statement[] | Transaction[] | Transfer[]>(
+  return ApiCallers.fetch<Statement[] | Transaction[]>(
     { endpoint: '/transactions', method: 'get', parameters, options },
   );
 }

@@ -23,6 +23,7 @@ import (
 // StatusOptions provides all command options for the chifra status command.
 type StatusOptions struct {
 	Modes       []string              `json:"modes,omitempty"`       // The (optional) name of the binary cache to report on, terse otherwise
+	Diagnose    bool                  `json:"diagnose,omitempty"`    // Same as the default but with additional diagnostics
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Chains      bool                  `json:"chains,omitempty"`      // Include a list of chain configurations in the output
@@ -41,6 +42,7 @@ var defaultStatusOptions = StatusOptions{
 // testLog is used only during testing to export the options for this test case.
 func (opts *StatusOptions) testLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
+	logger.TestLog(opts.Diagnose, "Diagnose: ", opts.Diagnose)
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Chains, "Chains: ", opts.Chains)
@@ -67,6 +69,8 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Modes = append(opts.Modes, s...)
 			}
+		case "diagnose":
+			opts.Diagnose = true
 		case "firstRecord":
 			opts.FirstRecord = globals.ToUint64(value[0])
 		case "maxRecords":
