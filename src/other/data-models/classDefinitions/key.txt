@@ -1,4 +1,4 @@
 [settings]
 class = CKey
 fields = key.csv
-go_output =
+# go_output = documentation only
