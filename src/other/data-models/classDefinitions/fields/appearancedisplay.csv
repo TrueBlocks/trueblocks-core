@@ -1,7 +1,7 @@
-name             ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
-address          ,address   ,           ,       ,      ,        ,          ,        ,         ,  1 ,   1 ,        ,the address of the appearance
-blockNumber      ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  2 ,   2 ,  10021 ,the number of the block
-transactionIndex ,blknum    ,           ,       ,      ,        ,          ,        ,         ,  3 ,   3 ,    305 ,the zero-indexed position of the transaction in the block
-name             ,string    ,           ,       ,      ,        ,          ,        ,         ,  4 ,   4 ,        ,the name of the address&#44; if found
-timestamp        ,timestamp ,           ,       ,      ,        ,          ,        ,         ,  5 ,   5 ,        ,the timestamp for this appearance
-date             ,datetime  ,           ,       ,      ,        ,          ,        ,         ,  6 ,   6 ,        ,a calculated field -- the date represented by the timestamp
+name             ,type      ,strDefault ,omitempty ,doc ,description
+address          ,address   ,           ,          ,  1 ,the address of the appearance
+blockNumber      ,blknum    ,           ,          ,  2 ,the number of the block
+transactionIndex ,blknum    ,           ,          ,  3 ,the zero-indexed position of the transaction in the block
+name             ,string    ,           ,          ,  4 ,the name of the address&#44; if found
+timestamp        ,timestamp ,           ,          ,  5 ,the timestamp for this appearance
+date             ,datetime  ,           ,          ,  6 ,a calculated field -- the date represented by the timestamp

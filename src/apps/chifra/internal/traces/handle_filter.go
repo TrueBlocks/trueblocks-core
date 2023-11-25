@@ -265,13 +265,13 @@ bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_
     return true;
 }
 
-name        ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,noaddfld ,doc ,disp ,example ,description
-fromBlock   ,blknum  ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-toBlock     ,blknum  ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-fromAddress ,address ,           ,       ,true  ,        ,          ,        ,         ,    ,     ,        ,
-toAddress   ,address ,           ,       ,true  ,        ,          ,        ,         ,    ,     ,        ,
-after       ,uint64  ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
-count       ,uint64  ,           ,       ,      ,        ,          ,        ,         ,    ,     ,        ,
+name        ,type    ,strDefault ,array ,omitempty ,doc ,example ,description
+fromBlock   ,blknum  ,           ,      ,          ,    ,        ,
+toBlock     ,blknum  ,           ,      ,          ,    ,        ,
+fromAddress ,address ,           ,true  ,          ,    ,        ,
+toAddress   ,address ,           ,true  ,          ,    ,        ,
+after       ,uint64  ,           ,      ,          ,    ,        ,
+count       ,uint64  ,           ,      ,          ,    ,        ,
 
 // EXISTING_CODE
 // EXISTING_CODE

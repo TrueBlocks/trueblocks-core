@@ -26,11 +26,8 @@ namespace qblocks {
 #define IS_ARRAY (1 << 2)
 #define IS_OBJECT (1 << 3)
 #define IS_BUILTIN (1 << 4)
-#define IS_MINIMAL (1 << 5)
 #define IS_ENABLED (1 << 6)
-#define IS_NOWRITE (1 << 7)
 #define IS_OMITEMPTY (1 << 8)
-#define IS_NOADDFLD (1 << 9)
 #define IS_RAWONLY (1 << 10)
 class CMember;
 typedef vector<CMember> CMemberArray;
@@ -50,8 +47,6 @@ class CMember : public CBaseNode {
     uint64_t precision;
     uint64_t maxWidth;
     uint64_t doc;
-    uint64_t disp;
-    string_q example;
     string_q description;
 
   public:
@@ -137,8 +132,6 @@ inline void CMember::initialize(void) {
     precision = 5;
     maxWidth = NOPOS;
     doc = 0;
-    disp = 0;
-    example = "";
     description = "";
 
     // EXISTING_CODE
@@ -161,8 +154,6 @@ inline void CMember::duplicate(const CMember& me) {
     precision = me.precision;
     maxWidth = me.maxWidth;
     doc = me.doc;
-    disp = me.disp;
-    example = me.example;
     description = me.description;
 
     // EXISTING_CODE
