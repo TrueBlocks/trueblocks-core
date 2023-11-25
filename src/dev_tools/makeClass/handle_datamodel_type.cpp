@@ -686,10 +686,18 @@ string_q get_unmarshal_fields(const CClassDefinition& modelIn) {
 
         os << "\t"
            << "// " << substitute(substitute(name, "&", ""), "s.", "") << endl;
-        if (isArray(field)) {
+
+        if (isArray(field) && !contains(field.type, "uint64")) {
             os << "\t" << name << " = make([]Simple" << type << ", 0)" << endl;
+            os << "\tif err = cache.ReadValue(reader, &" << name << ", version); err != nil {" << endl;
             os << "\t"
-               << "if err = cache.ReadValue(reader, &" << name << ", version); err != nil {" << endl;
+               << "\treturn err" << endl;
+            os << "\t"
+               << "}" << endl;
+            os << endl;
+        } else if (isArray(field) && contains(field.type, "uint64")) {
+            os << "\t" << name << " = make([]uint64, 0)" << endl;
+            os << "\tif err = cache.ReadValue(reader, &" << name << ", version); err != nil {" << endl;
             os << "\t"
                << "\treturn err" << endl;
             os << "\t"

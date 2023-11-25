@@ -659,6 +659,11 @@ void checkSorts(const string_q& className, const CStringArray& fields, const CSt
 }
 
 //------------------------------------------------------------------------------------------------
+bool isFieldAnArray(const CMember& field) {
+    return !(field.name % "MsgStrings") && ((field.memberFlags & IS_ARRAY) || startsWith(field.type, "[]"));
+}
+
+//------------------------------------------------------------------------------------------------
 bool isFieldTypeAnObject(const CMember& field) {
     CStringArray objects = {"Member",     "Parameter",   "Chain",       "CacheItem",         "Key",      "Transaction",
                             "Withdrawal", "TraceAction", "TraceResult", "StringFunctionMap", "Function", "Parameter",
@@ -737,6 +742,10 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
 
             CMember tmp;
             tmp.parseCSV(fields, line);
+            if (isFieldAnArray(tmp)) {
+                tmp.memberFlags |= IS_ARRAY;
+                replace(tmp.type, "[]", "");
+            }
             if (isFieldTypeAnObject(tmp)) {
                 tmp.memberFlags |= IS_OBJECT;
             }
@@ -745,6 +754,7 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
             } else if (tmp.memberFlags & IS_OBJECT) {
                 tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
             }
+            replace(tmp.type, "Uint64", "uint64");
 
             if (isRawOnly) {
                 tmp.memberFlags |= IS_RAWONLY;

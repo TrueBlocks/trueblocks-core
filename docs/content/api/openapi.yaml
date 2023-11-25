@@ -3076,7 +3076,7 @@ components:
         traceAddress:
           type: array
           items:
-            $ref: "#/components/schemas/string"
+            $ref: "#/components/schemas/uint64"
           description: "a particular trace's address in the trace tree"
         subtraces:
           type: number

@@ -232,7 +232,7 @@ Traces consist of the following fields:
 | date             | a calculated value - the date of the block                | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
-| traceAddress     | a particular trace's address in the trace tree            | string[]                                          |
+| traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
 | subtraces        | the number of children traces that the trace hash         | uint64                                            |
 | type             | the type of the trace                                     | string                                            |
 | action           | the trace action for this trace                           | [TraceAction](/data-model/chaindata/#traceaction) |
@@ -268,13 +268,13 @@ The following commands produce and manage LogFilters:
 
 LogFilters consist of the following fields:
 
-| Field     | Description                                                            | Type          |
-| --------- | ---------------------------------------------------------------------- | ------------- |
-| fromBlock | the first block in the block range to query with eth_getLogs           | blknum        |
-| toBlock   | the last block in the range to query with eth_getLogs                  | blknum        |
-| blockHash | an alternative to blocks specification, the hash of the block to query | hash          |
-| emitters  | one or more emitting addresses from which logs were emitted            | Address       |
-| topics    | one or more topics which logs represent                                | topic[]       |
+| Field     | Description                                                            | Type      |
+| --------- | ---------------------------------------------------------------------- | --------- |
+| fromBlock | the first block in the block range to query with eth_getLogs           | blknum    |
+| toBlock   | the last block in the range to query with eth_getLogs                  | blknum    |
+| blockHash | an alternative to blocks specification, the hash of the block to query | hash      |
+| emitters  | one or more emitting addresses from which logs were emitted            | address[] |
+| topics    | one or more topics which logs represent                                | topic[]   |
 
 ## TraceAction
 
@@ -353,14 +353,14 @@ The following commands produce and manage TraceFilters:
 
 TraceFilters consist of the following fields:
 
-| Field       | Description                                                    | Type          |
-| ----------- | -------------------------------------------------------------- | ------------- |
-| fromBlock   | the first block to include in the queried list of traces.      | string        |
-| toBlock     | the last block to include in the queried list of traces.       | string        |
-| fromAddress | if included, only traces `from` this address will be included. | Address       |
-| toAddress   | if included, only traces `to` this address will be included.   | Address       |
-| after       | only traces after this many traces are included.               | uint64        |
-| count       | only this many traces are included.                            | uint64        |
+| Field       | Description                                                    | Type      |
+| ----------- | -------------------------------------------------------------- | --------- |
+| fromBlock   | the first block to include in the queried list of traces.      | string    |
+| toBlock     | the last block to include in the queried list of traces.       | string    |
+| fromAddress | if included, only traces `from` this address will be included. | address[] |
+| toAddress   | if included, only traces `to` this address will be included.   | address[] |
+| after       | only traces after this many traces are included.               | uint64    |
+| count       | only this many traces are included.                            | uint64    |
 
 ## BlockCount
 

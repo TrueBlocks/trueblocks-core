@@ -242,16 +242,19 @@ string_q typeFmt(const CMember& fld) {
     }
 
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
-        fld.type == "uint32")
+        fld.type == "uint32") {
         return "[          type: number\n          format: {TYPE}\n]";
+    }
 
     if (fld.type == "address" || fld.type == "ipfshash" || fld.type == "hash" || fld.type == "bytes" ||
         fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date" ||
-        fld.type == "blkrange" || fld.type == "datetime")
+        fld.type == "blkrange" || fld.type == "datetime") {
         return "[          type: string\n          format: {TYPE}\n]";
+    }
 
-    if (fld.type == "bool" || fld.type == "uint8")
+    if (fld.type == "bool" || fld.type == "uint8") {
         return "[          type: boolean\n]";
+    }
 
     return "[          type: {TYPE}\n]";
 }
@@ -309,6 +312,10 @@ string_q type_2_Link(const CClassDefinitionArray& dataModels, const CMember& mem
         return "string[]";
     } else if (type == "CTopicArray") {
         return "topic[]";
+    } else if (type == "CAddressArray") {
+        return "address[]";
+    } else if (type == "Cuint64Array") {
+        return "uint64[]";
     }
 
     bool isArray = contains(type, "Array");
