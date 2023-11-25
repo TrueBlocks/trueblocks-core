@@ -739,6 +739,9 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
             if (trim(line).empty()) {
                 continue;
             }
+            if (contains(line, "calc_only")) {
+                continue;
+            }
 
             bool isRawOnly = contains(line, "rawonly");
             line = substitute(line, "rawonly", "");
