@@ -665,9 +665,12 @@ bool isFieldAnArray(const CMember& field) {
 
 //------------------------------------------------------------------------------------------------
 bool isFieldTypeAnObject(const CMember& field) {
-    CStringArray objects = {"Member",     "Parameter",   "Chain",       "CacheItem",         "Key",      "Transaction",
-                            "Withdrawal", "TraceAction", "TraceResult", "StringFunctionMap", "Function", "Parameter",
-                            "Log",        "ChunkRecord", "StorageSlot", "Receipt",           "Trace",    "Statement"};
+    CStringArray objects = {"Member",      "Parameter",   "Chain",
+                            "Key",         "Transaction", "Withdrawal",
+                            "TraceAction", "TraceResult", "StringFunctionMap",
+                            "Function",    "Parameter",   "Log",
+                            "ChunkRecord", "StorageSlot", "Receipt",
+                            "Trace",       "Statement"};
     for (auto obj : objects) {
         if (field.type == obj) {
             return true;

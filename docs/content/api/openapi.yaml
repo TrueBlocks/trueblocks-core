@@ -3212,20 +3212,20 @@ components:
       type: object
       properties:
         fromBlock:
-          type: string
+          type: number
+          format: blknum
           description: "the first block to include in the queried list of traces."
         toBlock:
-          type: string
+          type: number
+          format: blknum
           description: "the last block to include in the queried list of traces."
         fromAddress:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
+          type: string
+          format: address
           description: "if included, only traces `from` this address will be included."
         toAddress:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
+          type: string
+          format: address
           description: "if included, only traces `to` this address will be included."
         after:
           type: number
@@ -3464,65 +3464,62 @@ components:
       description: "status-related data about the TrueBlocks system including the server and local binary caches"
       type: object
       properties:
-        clientVersion:
-          type: string
-          description: "the version string as reported by the rpcProvider"
-        clientIds:
-          type: string
-          description: "netword_id and chain_id from the rpcProvider"
-        trueblocksVersion:
-          type: string
-          description: "the TrueBlocks version string"
-        rpcProvider:
-          type: string
-          description: "the current rpcProvider"
-        configPath:
-          type: string
-          description: "the path to config files"
         cachePath:
           type: string
           description: "the path to the local binary caches"
-        indexPath:
-          type: string
-          description: "the path to the local binary indexes"
-        host:
-          type: string
-          description: "the host portion of the local API server"
-        isTesting:
-          type: boolean
-          description: "`true` if the server is running in test mode"
-        isApi:
-          type: boolean
-          description: "`true` if the server is running in API mode"
-        isScraping:
-          type: boolean
-          description: "`true` if the index scraper is running"
-        isArchive:
-          type: boolean
-          description: "`true` if the rpcProvider is an archive node"
-        isTracing:
-          type: boolean
-          description: "`true` if the rpcProvider provides Parity traces"
-        hasEskey:
-          type: boolean
-          description: "`true` if an Etherscan key is present"
-        hasPinkey:
-          type: boolean
-          description: "`true` if a Pinata API key is present"
-        ts:
-          type: number
-          format: timestamp
-          description: "the timestamp when this status data was produced"
-        chains:
-          type: array
-          items:
-            $ref: "#/components/schemas/chain"
-          description: "the list of configured chains"
         caches:
           type: array
           items:
             $ref: "#/components/schemas/cacheItem"
           description: "a collection of information concerning the binary caches"
+        chain:
+          type: string
+          description: "the current chain"
+        chainConfig:
+          type: string
+          description: "the path to the chain configuration folder"
+        clientVersion:
+          type: string
+          description: "the version string as reported by the rpcProvider"
+        chainId:
+          type: string
+          description: "the path to config files"
+        hasEsKey:
+          type: boolean
+          description: "`true` if an Etherscan key is present"
+        hasPinKey:
+          type: boolean
+          description: "`true` if a Pinata API key is present"
+        indexPath:
+          type: string
+          description: "the path to the local binary indexes"
+        isApi:
+          type: boolean
+          description: "`true` if the server is running in API mode"
+        isArchive:
+          type: boolean
+          description: "`true` if the rpcProvider is an archive node"
+        isTesting:
+          type: boolean
+          description: "`true` if the server is running in test mode"
+        isTracing:
+          type: boolean
+          description: "`true` if the rpcProvider provides Parity traces"
+        networkId:
+          type: string
+          description: "the network id as reported by the rpcProvider"
+        progress:
+          type: string
+          description: "the progress string of the system"
+        rootConfig:
+          type: string
+          description: "the path to the root configuration folder"
+        rpcProvider:
+          type: string
+          description: "the current rpcProvider"
+        version:
+          type: string
+          description: "the TrueBlocks version string"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object

@@ -28,27 +28,29 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
+type CCacheItemArray []simpleCacheItem
+
 // EXISTING_CODE
 
 type simpleStatus struct {
-	CachePath     string            `json:"cachePath,omitempty"`
-	Caches        []simpleCacheItem `json:"caches,omitempty"`
-	Chain         string            `json:"chain,omitempty"`
-	ChainConfig   string            `json:"chainConfig,omitempty"`
-	ChainId       string            `json:"chainId,omitempty"`
-	ClientVersion string            `json:"clientVersion,omitempty"`
-	HasEsKey      bool              `json:"hasEsKey,omitempty"`
-	HasPinKey     bool              `json:"hasPinKey,omitempty"`
-	IndexPath     string            `json:"indexPath,omitempty"`
-	IsApi         bool              `json:"isApi,omitempty"`
-	IsArchive     bool              `json:"isArchive,omitempty"`
-	IsTesting     bool              `json:"isTesting,omitempty"`
-	IsTracing     bool              `json:"isTracing,omitempty"`
-	NetworkId     string            `json:"networkId,omitempty"`
-	Progress      string            `json:"progress,omitempty"`
-	RootConfig    string            `json:"rootConfig,omitempty"`
-	RPCProvider   string            `json:"rpcProvider,omitempty"`
-	Version       string            `json:"trueblocksVersion,omitempty"`
+	CachePath     string          `json:"cachePath,omitempty"`
+	Caches        CCacheItemArray `json:"caches,omitempty"`
+	Chain         string          `json:"chain,omitempty"`
+	ChainConfig   string          `json:"chainConfig,omitempty"`
+	ChainId       string          `json:"chainId,omitempty"`
+	ClientVersion string          `json:"clientVersion,omitempty"`
+	HasEsKey      bool            `json:"hasEsKey,omitempty"`
+	HasPinKey     bool            `json:"hasPinKey,omitempty"`
+	IndexPath     string          `json:"indexPath,omitempty"`
+	IsApi         bool            `json:"isApi,omitempty"`
+	IsArchive     bool            `json:"isArchive,omitempty"`
+	IsTesting     bool            `json:"isTesting,omitempty"`
+	IsTracing     bool            `json:"isTracing,omitempty"`
+	NetworkId     string          `json:"networkId,omitempty"`
+	Progress      string          `json:"progress,omitempty"`
+	RootConfig    string          `json:"rootConfig,omitempty"`
+	RpcProvider   string          `json:"rpcProvider,omitempty"`
+	Version       string          `json:"version,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -74,7 +76,7 @@ func (s *simpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 		"isTesting":         s.IsTesting,
 		"isTracing":         s.IsTracing,
 		"rootConfig":        s.RootConfig,
-		"rpcProvider":       s.RPCProvider,
+		"rpcProvider":       s.RpcProvider,
 		"trueblocksVersion": s.Version,
 	}
 	order = []string{
@@ -186,7 +188,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	s := &simpleStatus{
 		ClientVersion: vers,
 		Version:       version.LibraryVersion,
-		RPCProvider:   provider,
+		RpcProvider:   provider,
 		RootConfig:    config.PathToRootConfig(),
 		ChainConfig:   config.MustGetPathToChainConfig(chain),
 		CachePath:     config.PathToCache(chain),
@@ -206,7 +208,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	if testMode {
 		s.ClientVersion = "Client version"
 		s.Version = "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
-		s.RPCProvider = "--providers--"
+		s.RpcProvider = "--providers--"
 		s.RootConfig = "--paths--"
 		s.ChainConfig = "--paths--"
 		s.CachePath = "--paths--"
@@ -276,7 +278,7 @@ func getVersionTemplate() string {
 
 const templateStr = `INFO Client:            {CLIENT_STRING}
 INFO TrueBlocks:        {VERSION_STRING}
-INFO RPC Provider:      {{.RPCProvider}} - {{.Chain}} ({{if eq .NetworkId "0"}}[RED]{{.NetworkId}}[OFF]{{else}}[GREEN]{{.NetworkId}}[OFF]{{end}}/{{if eq .ChainId "0"}}[RED]{{.ChainId}}[OFF]{{else}}[GREEN]{{.ChainId}}[OFF]{{end}})
+INFO RPC Provider:      {{.RpcProvider}} - {{.Chain}} ({{if eq .NetworkId "0"}}[RED]{{.NetworkId}}[OFF]{{else}}[GREEN]{{.NetworkId}}[OFF]{{end}}/{{if eq .ChainId "0"}}[RED]{{.ChainId}}[OFF]{{else}}[GREEN]{{.ChainId}}[OFF]{{end}})
 INFO Root Config Path:  {{.RootConfig}}
 INFO Chain Config Path: {{.ChainConfig}}
 INFO Cache Path:        {{.CachePath}}

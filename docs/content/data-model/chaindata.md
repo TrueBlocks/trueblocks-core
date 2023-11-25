@@ -353,14 +353,14 @@ The following commands produce and manage TraceFilters:
 
 TraceFilters consist of the following fields:
 
-| Field       | Description                                                    | Type      |
-| ----------- | -------------------------------------------------------------- | --------- |
-| fromBlock   | the first block to include in the queried list of traces.      | string    |
-| toBlock     | the last block to include in the queried list of traces.       | string    |
-| fromAddress | if included, only traces `from` this address will be included. | address[] |
-| toAddress   | if included, only traces `to` this address will be included.   | address[] |
-| after       | only traces after this many traces are included.               | uint64    |
-| count       | only this many traces are included.                            | uint64    |
+| Field       | Description                                                    | Type    |
+| ----------- | -------------------------------------------------------------- | ------- |
+| fromBlock   | the first block to include in the queried list of traces.      | blknum  |
+| toBlock     | the last block to include in the queried list of traces.       | blknum  |
+| fromAddress | if included, only traces `from` this address will be included. | address |
+| toAddress   | if included, only traces `to` this address will be included.   | address |
+| after       | only traces after this many traces are included.               | uint64  |
+| count       | only this many traces are included.                            | uint64  |
 
 ## BlockCount
 
