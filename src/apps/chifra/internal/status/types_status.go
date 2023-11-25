@@ -235,7 +235,7 @@ func (opts *StatusOptions) GetSimpleStatus(diagnose bool) (*simpleStatus, error)
 	return s, nil
 }
 
-func (s *simpleStatus) toTemplate(w io.Writer, diagnose, logTimerOn bool, format string) bool {
+func (s *simpleStatus) toTemplate(w io.Writer, testMode, diagnose, logTimerOn bool, format string) bool {
 	if format == "json" {
 		return false
 	}
@@ -252,7 +252,7 @@ func (s *simpleStatus) toTemplate(w io.Writer, diagnose, logTimerOn bool, format
 	table = strings.Replace(table, "[CLIENT]", getClientTemplate(), -1)
 	table = strings.Replace(table, "[VERSION]", getVersionTemplate(), -1)
 	table = strings.Replace(table, "[IDS]", getIdTemplate(), -1)
-	table = strings.Replace(table, "[PROGRESS]", s.getProgress(diagnose), -1)
+	table = strings.Replace(table, "[PROGRESS]", s.getProgress(testMode, diagnose), -1)
 	table = strings.Replace(table, "INFO ", timeDatePart+colors.Green, -1)
 	table = strings.Replace(table, "[RED]", colors.Red, -1)
 	table = strings.Replace(table, "[GREEN]", colors.Green, -1)
@@ -288,8 +288,11 @@ func getIdTemplate() string {
 	return networkId + "/" + chainId
 }
 
-func (s *simpleStatus) getProgress(diagnose bool) string {
+func (s *simpleStatus) getProgress(testMode, diagnose bool) string {
 	if diagnose {
+		if testMode {
+			return "--diagnostics--"
+		}
 		nTs, _ := tslib.NTimestamps(s.Meta.Chain) // when the file has one record, the block is zero, etc.
 		if nTs > 0 {
 			nTs--
