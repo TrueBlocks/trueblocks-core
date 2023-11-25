@@ -88,16 +88,8 @@ string_q CMember::getValueByName(const string_q& fieldName) const {
             if (fieldName % "doc") {
                 return doc == 0 ? "" : uint_2_Str(doc);
             }
-            if (fieldName % "disp") {
-                return disp == 0 ? "" : uint_2_Str(disp);
-            }
             if (fieldName % "description") {
                 return description;
-            }
-            break;
-        case 'e':
-            if (fieldName % "example") {
-                return example;
             }
             break;
         case 'i':
@@ -165,9 +157,6 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
     if (fieldName % "is_object")    { BOOL_ASSIGN_MASK(memberFlags, IS_OBJECT);    return true; }
     if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(memberFlags, IS_BUILTIN);   return true; }
     if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(memberFlags, IS_ENABLED);   return true; }
-    if (fieldName % "is_minimal")   { BOOL_ASSIGN_MASK(memberFlags, IS_MINIMAL);   return true; }
-    if (fieldName % "is_noaddfld")  { BOOL_ASSIGN_MASK(memberFlags, IS_NOADDFLD);  return true; }
-    if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(memberFlags, IS_NOWRITE);   return true; }
     if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(memberFlags, IS_OMITEMPTY); return true; }
     // clang-format on
     // EXISTING_CODE
@@ -189,18 +178,8 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 doc = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "disp") {
-                disp = str_2_Uint(fieldValue);
-                return true;
-            }
             if (fieldName % "description") {
                 description = fieldValue;
-                return true;
-            }
-            break;
-        case 'e':
-            if (fieldName % "example") {
-                example = fieldValue;
                 return true;
             }
             break;
@@ -292,8 +271,6 @@ bool CMember::Serialize(CArchive& archive) {
     // archive >> precision;
     // archive >> maxWidth;
     // archive >> doc;
-    // archive >> disp;
-    // archive >> example;
     // archive >> description;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -319,8 +296,6 @@ bool CMember::SerializeC(CArchive& archive) const {
     // archive << precision;
     // archive << maxWidth;
     // archive << doc;
-    // archive << disp;
-    // archive << example;
     // archive << description;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -393,10 +368,6 @@ void CMember::registerClass(void) {
     HIDE_FIELD(CMember, "maxWidth");
     ADD_FIELD(CMember, "doc", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "doc");
-    ADD_FIELD(CMember, "disp", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CMember, "disp");
-    ADD_FIELD(CMember, "example", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CMember, "example");
     ADD_FIELD(CMember, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMember, "description");
 
@@ -425,9 +396,6 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 if (fieldIn % "is_object")    return bool_2_Str_t(mem->memberFlags & IS_OBJECT);
                 if (fieldIn % "is_builtin")   return bool_2_Str_t(mem->memberFlags & IS_BUILTIN);
                 if (fieldIn % "is_enabled")   return bool_2_Str_t(mem->memberFlags & IS_ENABLED);
-                if (fieldIn % "is_minimal")   return bool_2_Str_t(mem->memberFlags & IS_MINIMAL);
-                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(mem->memberFlags & IS_NOADDFLD);
-                if (fieldIn % "is_nowrite")   return bool_2_Str_t(mem->memberFlags & IS_NOWRITE);
                 if (fieldIn % "is_omitempty") return bool_2_Str_t(mem->memberFlags & IS_OMITEMPTY);
                 break;
             case 'v':

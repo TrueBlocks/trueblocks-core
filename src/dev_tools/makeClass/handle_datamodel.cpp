@@ -24,7 +24,6 @@ extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, co
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CMember& c1, const CMember& c2);
 extern string_q typeFmt(const CMember& fld);
-extern string_q exFmt(const CMember& fld);
 extern string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints);
 extern string_q type_2_Link(const CClassDefinitionArray& dataModels, const CMember& member);
 extern string_q plural(const string_q& in);
@@ -109,7 +108,6 @@ bool COptions::handle_datamodel(void) {
             if (fld.doc) {
                 yamlPropStream << fld.Format("[        {NAME}:\n]");
                 yamlPropStream << fld.Format(typeFmt(fld));
-                yamlPropStream << fld.Format(exFmt(fld));
                 yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
                 fieldStream << markDownRow(fld.name, fld.description, type_2_Link(dataModels, fld), fieldWidths);
                 addToTypeMap(typeMaps, model.doc_group, fld.type);
@@ -244,26 +242,21 @@ string_q typeFmt(const CMember& fld) {
     }
 
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
-        fld.type == "uint32")
+        fld.type == "uint32") {
         return "[          type: number\n          format: {TYPE}\n]";
+    }
 
     if (fld.type == "address" || fld.type == "ipfshash" || fld.type == "hash" || fld.type == "bytes" ||
         fld.type == "gas" || fld.type == "wei" || fld.type == "int256" || fld.type == "uint256" || fld.type == "date" ||
-        fld.type == "blkrange" || fld.type == "datetime")
+        fld.type == "blkrange" || fld.type == "datetime") {
         return "[          type: string\n          format: {TYPE}\n]";
+    }
 
-    if (fld.type == "bool" || fld.type == "uint8")
+    if (fld.type == "bool" || fld.type == "uint8") {
         return "[          type: boolean\n]";
+    }
 
     return "[          type: {TYPE}\n]";
-}
-
-//------------------------------------------------------------------------------------------------------------
-string_q exFmt(const CMember& fld) {
-    if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "bool" ||
-        fld.type == "double")
-        return "[          example: {EXAMPLE}\n]";
-    return "[          example: \"{EXAMPLE}\"\n]";
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -319,6 +312,10 @@ string_q type_2_Link(const CClassDefinitionArray& dataModels, const CMember& mem
         return "string[]";
     } else if (type == "CTopicArray") {
         return "topic[]";
+    } else if (type == "CAddressArray") {
+        return "address[]";
+    } else if (type == "Cuint64Array") {
+        return "uint64[]";
     }
 
     bool isArray = contains(type, "Array");

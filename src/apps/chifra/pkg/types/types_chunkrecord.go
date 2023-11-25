@@ -18,21 +18,21 @@ import (
 // EXISTING_CODE
 
 type RawChunkRecord struct {
-	Range     string `json:"range"`
 	BloomHash string `json:"bloomHash"`
 	BloomSize string `json:"bloomSize"`
 	IndexHash string `json:"indexHash"`
 	IndexSize string `json:"indexSize"`
+	Range     string `json:"range"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleChunkRecord struct {
-	Range     string          `json:"range"`
 	BloomHash base.IpfsHash   `json:"bloomHash"`
 	BloomSize int64           `json:"bloomSize"`
 	IndexHash base.IpfsHash   `json:"indexHash"`
 	IndexSize int64           `json:"indexSize"`
+	Range     string          `json:"range"`
 	raw       *RawChunkRecord `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

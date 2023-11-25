@@ -2475,33 +2475,26 @@ components:
       properties:
         tags:
           type: string
-          example: "31-Gitcoin:Core"
           description: "colon separated list of tags"
         address:
           type: string
           format: address
-          example: "0xabea...fbef"
           description: "the address associated with this name"
         name:
           type: string
-          example: "zkSync"
           description: "the name associated with this address (retrieved from on-chain data if available)"
         symbol:
           type: string
-          example: "GTC"
           description: "the symbol for this address (retrieved from on-chain data if available)"
         source:
           type: string
-          example: "On-chain"
           description: "user supplied source of where this name was found (or on-chain if name is on-chain)"
         decimals:
           type: number
           format: uint64
-          example: 18
           description: "number of decimals retrieved from an ERC20 smart contract, defaults to 18"
         petname:
           type: string
-          example: "ideally-known-locust"
           description: "the petname such as described here http://www.erights.org/elib/capability/pnml.html"
         deleted:
           type: boolean
@@ -2587,17 +2580,14 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the number of the block"
         transactionIndex:
           type: number
           format: blknum
-          example: 305
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
           format: blknum
-          example: 2
           description: "the zero-indexed position the log in the block, if applicable"
         transactionHash:
           type: string
@@ -2606,7 +2596,6 @@ components:
         timestamp:
           type: number
           format: timestamp
-          example: 1438335038
           description: "the Unix timestamp of the object"
         date:
           type: string
@@ -2615,7 +2604,6 @@ components:
         assetAddr:
           type: string
           format: address
-          example: "0x6b17...1d0f"
           description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
         assetSymbol:
           type: string
@@ -2634,17 +2622,14 @@ components:
         accountedFor:
           type: string
           format: address
-          example: "0x1bd0...9ce9"
           description: "the address being accounted for in this reconciliation"
         sender:
           type: string
           format: address
-          example: "0xf503...179b"
           description: "the initiator of the transfer (the sender)"
         recipient:
           type: string
           format: address
-          example: "0x38d1...1310"
           description: "the receiver of the transfer (the recipient)"
         begBal:
           type: string
@@ -2663,7 +2648,6 @@ components:
           description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"
         reconciled:
           type: boolean
-          example: [true|false]
           description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
         totalIn:
           type: string
@@ -2736,7 +2720,6 @@ components:
         prevAppBlk:
           type: number
           format: blknum
-          example: 10021
           description: "the block number of the previous appearance, or 0 if this is the first appearance"
         prevBal:
           type: string
@@ -2764,37 +2747,30 @@ components:
         gasLimit:
           type: string
           format: gas
-          example: "5000"
           description: "the system-wide maximum amount of gas permitted in this block"
         hash:
           type: string
           format: hash
-          example: "0xf128...1e98"
           description: "the hash of the current block"
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the number of the block"
         parentHash:
           type: string
           format: hash
-          example: "0x66fc...31c9"
           description: "hash of previous block"
         miner:
           type: string
           format: address
-          example: "0xf927...2b13"
           description: "address of block's winning miner"
         difficulty:
           type: number
           format: uint64
-          example: 598133194256
           description: "the computational difficulty at this block"
         timestamp:
           type: number
           format: timestamp
-          example: 1438335038
           description: "the Unix timestamp of the object"
         date:
           type: string
@@ -2808,7 +2784,6 @@ components:
         baseFeePerGas:
           type: string
           format: wei
-          example: "120911"
           description: "the base fee for this block"
         uncles:
           type: array
@@ -2827,32 +2802,26 @@ components:
         hash:
           type: string
           format: hash
-          example: "0xf128...1e98"
           description: "the hash of the transaction"
         blockHash:
           type: string
           format: hash
-          example: "0xc421...fb04"
           description: "the hash of the block containing this transaction"
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the number of the block"
         transactionIndex:
           type: number
           format: blknum
-          example: 305
           description: "the zero-indexed position of the transaction in the block"
         nonce:
           type: number
           format: uint64
-          example: 232
           description: "sequence number of the transactions sent by the sender"
         timestamp:
           type: number
           format: timestamp
-          example: 1438335038
           description: "the Unix timestamp of the object"
         date:
           type: string
@@ -2868,22 +2837,18 @@ components:
         value:
           type: string
           format: wei
-          example: "0"
           description: "the amount of wei sent with this transactions"
         gas:
           type: string
           format: gas
-          example: "158660"
           description: "the maximum number of gas allowed for this transaction"
         gasPrice:
           type: string
           format: gas
-          example: "63525836552"
           description: "the number of wei per unit of gas the sender is willing to spend"
         input:
           type: string
           format: bytes
-          example: "0x3d18b912"
           description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
         receipt:
           type: object
@@ -2906,7 +2871,6 @@ components:
           description: "`true` if the transaction ended in error, `false` otherwise"
         compressedTx:
           type: string
-          example: "0x3d18b912( )"
           description: "truncated, more readable version of the articulation"
     transfer:
       description: "the representation of a token transfer"
@@ -2915,17 +2879,14 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the number of the block"
         transactionIndex:
           type: number
           format: blknum
-          example: 305
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
           format: blknum
-          example: 305
           description: "the zero-indexed position of the log in the transaction"
         transactionHash:
           type: string
@@ -2934,7 +2895,6 @@ components:
         timestamp:
           type: number
           format: timestamp
-          example: 1438335038
           description: "the Unix timestamp of the object"
         date:
           type: string
@@ -2943,17 +2903,14 @@ components:
         sender:
           type: string
           format: address
-          example: "0x1bd0...9ce9"
           description: "the initiator of the transfer (the sender)"
         recipient:
           type: string
           format: address
-          example: "0x38d1...1310"
           description: "the receiver of the transfer (the recipient)"
         assetAddr:
           type: string
           format: address
-          example: "0xf503...179b"
           description: "0xeeee...eeee for ETH reconcilations, the token address otherwise"
         assetSymbol:
           type: string
@@ -2961,7 +2918,7 @@ components:
         decimals:
           type: number
           format: uint64
-          description: "Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
+          description: "equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18"
         amount:
           type: string
           format: int256
@@ -3050,17 +3007,14 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the number of the block"
         transactionIndex:
           type: number
           format: uint64
-          example: 305
           description: "the zero-indexed position of the transaction in the block"
         logIndex:
           type: number
           format: uint64
-          example: 354
           description: "the zero-indexed position of this log relative to the block"
         timestamp:
           type: number
@@ -3073,7 +3027,6 @@ components:
         address:
           type: string
           format: address
-          example: "0xf503...179b"
           description: "the smart contract that emitted this log"
         topics:
           type: array
@@ -3083,7 +3036,6 @@ components:
         data:
           type: string
           format: bytes
-          example: "0x0000...3ff6"
           description: "any remaining un-indexed parameters to the event"
         transactionHash:
           type: string
@@ -3100,7 +3052,6 @@ components:
           description: "a human-readable version of the topic and data fields"
         compressedLog:
           type: string
-          example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
@@ -3109,12 +3060,10 @@ components:
         blockHash:
           type: string
           format: hash
-          example: "0xf128...1e98"
           description: "the hash of the block containing this trace"
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the number of the block"
         timestamp:
           type: number
@@ -3131,12 +3080,11 @@ components:
         transactionIndex:
           type: number
           format: blknum
-          example: 305
           description: "the zero-indexed position of the transaction in the block"
         traceAddress:
           type: array
           items:
-            $ref: "#/components/schemas/string"
+            $ref: "#/components/schemas/uint64"
           description: "a particular trace's address in the trace tree"
         subtraces:
           type: number
@@ -3204,7 +3152,6 @@ components:
         gas:
           type: string
           format: gas
-          example: "158660"
           description: "the maximum number of gas allowed for this trace"
         input:
           type: string
@@ -3216,7 +3163,6 @@ components:
         refundAddress:
           type: string
           format: address
-          example: "0xf503...179b"
           description: "if the call type is self-destruct, the address to which the refund is sent"
         rewardType:
           type: string
@@ -3228,8 +3174,7 @@ components:
         address:
           type: string
           format: address
-          example: "0xf503...179b"
-          description: "Address of new contract, if any"
+          description: "address of new contract, if any"
         code:
           type: string
           format: bytes
@@ -3249,61 +3194,55 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10
           description: "the block number"
         transactionIndex:
           type: number
           format: blknum
-          example: 10
           description: "the transaction index"
         transactionHash:
           type: string
           format: hash
-          example: "10"
           description: "the transaction's hash"
         timestamp:
           type: number
           format: timestamp
-          example: 10
           description: "the timestamp of the block"
         date:
           type: string
           format: datetime
-          example: "10"
           description: "a calculated field -- the date of the block"
         tracesCnt:
           type: number
           format: uint64
-          example: 30
           description: "the number of traces in the transaction"
     traceFilter:
       description: "used by chifra traces --filter option to query for traces"
       type: object
       properties:
         fromBlock:
-          type: string
-          description: "The first block to include in the queried list of traces."
+          type: number
+          format: blknum
+          description: "the first block to include in the queried list of traces."
         toBlock:
-          type: string
-          description: "The last block to include in the queried list of traces."
+          type: number
+          format: blknum
+          description: "the last block to include in the queried list of traces."
         fromAddress:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
-          description: "If included, only traces `from` this address will be included."
+          type: string
+          format: address
+          description: "if included, only traces `from` this address will be included."
         toAddress:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
-          description: "If included, only traces `to` this address will be included."
+          type: string
+          format: address
+          description: "if included, only traces `to` this address will be included."
         after:
           type: number
           format: uint64
-          description: "Only traces after this many traces are included."
+          description: "only traces after this many traces are included."
         count:
           type: number
           format: uint64
-          description: "Only this many traces are included."
+          description: "only this many traces are included."
     blockCount:
       description: "counts of various parts of the block data such as tx_count, trace_count, etc."
       type: object
@@ -3311,47 +3250,38 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 1001001
           description: "the block's block number"
         timestamp:
           type: number
           format: timestamp
-          example: 10
           description: "the timestamp of the block"
         date:
           type: string
           format: datetime
-          example: "10"
           description: "a calculated field -- the date of the block"
         transactionsCnt:
           type: number
           format: uint64
-          example: 239
           description: "the number transactions in the block"
         unclesCnt:
           type: number
           format: uint64
-          example: 2
           description: "the number of uncles in the block"
         logsCnt:
           type: number
           format: uint64
-          example: 581
           description: "the number of logs in the block"
         tracesCnt:
           type: number
           format: uint64
-          example: 1295
           description: "the number of traces in the block"
         withdrawalsCnt:
           type: number
           format: uint64
-          example: 12
           description: "the number of withdrawals in the block"
         addressCnt:
           type: number
           format: uint64
-          example: 318
           description: "the number of address appearances in the block"
     namedBlock:
       description: "a block that has been given a particular name such as `first` or `latest`"
@@ -3360,21 +3290,17 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 4370000
           description: "the number of the block"
         timestamp:
           type: number
           format: timestamp
-          example: 1508131331
           description: "the Unix timestamp of the block"
         date:
           type: string
           format: datetime
-          example: "2017-10-16 05:22:11 UTC"
           description: "human readable version of timestamp"
         name:
           type: string
-          example: "byzantium"
           description: "an optional name for the block"
         description:
           type: string
@@ -3386,12 +3312,10 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 4370000
           description: "the number of the block"
         timestamp:
           type: number
           format: timestamp
-          example: 1508131331
           description: "the Unix timestamp of the block"
         date:
           type: string
@@ -3399,7 +3323,6 @@ components:
           description: "a calculated field -- the date of the block"
         diff:
           type: int64
-          example: "12"
           description: "the number of seconds since the last block"
     timestampCount:
       description: "the number of timestamps in the timestamps database"
@@ -3416,7 +3339,6 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the block number at which this call was made"
         timestamp:
           type: number
@@ -3429,7 +3351,6 @@ components:
         address:
           type: string
           format: address
-          example: "0xa1e4...63b4"
           description: "the address of contract being called"
         name:
           type: string
@@ -3455,7 +3376,6 @@ components:
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the block number at which this call was made"
         timestamp:
           type: number
@@ -3468,7 +3388,6 @@ components:
         address:
           type: string
           format: address
-          example: "0xa1e4...63b4"
           description: "the address of contract being called"
         accountType:
           type: string
@@ -3519,12 +3438,10 @@ components:
         address:
           type: string
           format: address
-          example: "0xa1e4...63b4"
           description: "the address of the token contract"
         holder:
           type: string
           format: address
-          example: "0x2910...63d2"
           description: "the holder address for which we are reporting"
         priorBalance:
           type: string
@@ -3533,7 +3450,6 @@ components:
         balance:
           type: string
           format: int256
-          example: "258843698360318500"
           description: "the holder's asset balance at the given block height"
         diff:
           type: string
@@ -3541,84 +3457,77 @@ components:
           description: "the difference#&44; if any#&44; between the prior and current balance"
         name:
           type: string
-          example: "GitCoin"
           description: "the name of the token contract, if available"
         symbol:
           type: string
-          example: "GTC"
           description: "the symbol of the token contract"
         decimals:
           type: number
           format: uint64
-          example: 18
           description: "the number of decimals for the token contract"
         type:
           type: TokenType
-          example: "ERC721"
           description: "the type of token (ERC20 or ERC721) or none"
     config:
       description: "status-related data about the TrueBlocks system including the server and local binary caches"
       type: object
       properties:
-        clientVersion:
-          type: string
-          description: "the version string as reported by the rpcProvider"
-        clientIds:
-          type: string
-          description: "netword_id and chain_id from the rpcProvider"
-        trueblocksVersion:
-          type: string
-          description: "the TrueBlocks version string"
-        rpcProvider:
-          type: string
-          description: "the current rpcProvider"
-        configPath:
-          type: string
-          description: "the path to config files"
         cachePath:
           type: string
           description: "the path to the local binary caches"
-        indexPath:
-          type: string
-          description: "the path to the local binary indexes"
-        host:
-          type: string
-          description: "the host portion of the local API server"
-        isTesting:
-          type: boolean
-          description: "`true` if the server is running in test mode"
-        isApi:
-          type: boolean
-          description: "`true` if the server is running in API mode"
-        isScraping:
-          type: boolean
-          description: "`true` if the index scraper is running"
-        isArchive:
-          type: boolean
-          description: "`true` if the rpcProvider is an archive node"
-        isTracing:
-          type: boolean
-          description: "`true` if the rpcProvider provides Parity traces"
-        hasEskey:
-          type: boolean
-          description: "`true` if an Etherscan key is present"
-        hasPinkey:
-          type: boolean
-          description: "`true` if a Pinata API key is present"
-        ts:
-          type: number
-          format: timestamp
-          description: "the timestamp when this status data was produced"
-        chains:
-          type: array
-          items:
-            $ref: "#/components/schemas/chain"
-          description: "the list of configured chains"
         caches:
           type: array
           items:
             $ref: "#/components/schemas/cacheItem"
           description: "a collection of information concerning the binary caches"
+        chain:
+          type: string
+          description: "the current chain"
+        chainConfig:
+          type: string
+          description: "the path to the chain configuration folder"
+        clientVersion:
+          type: string
+          description: "the version string as reported by the rpcProvider"
+        chainId:
+          type: string
+          description: "the path to config files"
+        hasEsKey:
+          type: boolean
+          description: "`true` if an Etherscan key is present"
+        hasPinKey:
+          type: boolean
+          description: "`true` if a Pinata API key is present"
+        indexPath:
+          type: string
+          description: "the path to the local binary indexes"
+        isApi:
+          type: boolean
+          description: "`true` if the server is running in API mode"
+        isArchive:
+          type: boolean
+          description: "`true` if the rpcProvider is an archive node"
+        isTesting:
+          type: boolean
+          description: "`true` if the server is running in test mode"
+        isTracing:
+          type: boolean
+          description: "`true` if the rpcProvider provides Parity traces"
+        networkId:
+          type: string
+          description: "the network id as reported by the rpcProvider"
+        progress:
+          type: string
+          description: "the progress string of the system"
+        rootConfig:
+          type: string
+          description: "the path to the root configuration folder"
+        rpcProvider:
+          type: string
+          description: "the current rpcProvider"
+        version:
+          type: string
+          description: "the TrueBlocks version string"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object
@@ -3645,17 +3554,14 @@ components:
         range:
           type: string
           format: blkrange
-          example: "013142464-013145212"
           description: "the block range (inclusive) covered by this chunk"
         bloomHash:
           type: string
           format: ipfshash
-          example: "QmXHjjY...HDqvWT"
           description: "the IPFS hash of the bloom filter at that range"
         indexHash:
           type: string
           format: ipfshash
-          example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
         bloomSize:
           type: int64
@@ -3670,7 +3576,6 @@ components:
         range:
           type: string
           format: blkrange
-          example: "013142464-013145212"
           description: "the block range (inclusive) covered by this chunk"
         magic:
           type: string
@@ -3678,7 +3583,6 @@ components:
         hash:
           type: string
           format: hash
-          example: "QmXHjjY...HDqvWT"
           description: "the hash of the specification under which this chunk was generated"
         nAddresses:
           type: number
@@ -3699,7 +3603,6 @@ components:
         range:
           type: string
           format: blkrange
-          example: "013142464-013145212"
           description: "the block range (inclusive) covered by this chunk"
         magic:
           type: string
@@ -3707,7 +3610,6 @@ components:
         hash:
           type: string
           format: hash
-          example: "QmXHjjY...HDqvWT"
           description: "the hash of the specification under which this chunk was generated"
         nBlooms:
           type: number
@@ -3736,7 +3638,6 @@ components:
         range:
           type: string
           format: blkrange
-          example: "013142464-013145212"
           description: "the block range of the chunk from which this address record was taken"
         offset:
           type: number
@@ -3773,7 +3674,6 @@ components:
         range:
           type: string
           format: blkrange
-          example: "013142464-013145212"
           description: "the block range (inclusive) covered by this chunk"
         rangeEnd:
           type: string
@@ -3932,26 +3832,26 @@ components:
       properties:
         chain:
           type: string
-          description: "The common name of the chain"
+          description: "the common name of the chain"
         chainId:
           type: number
           format: uint64
-          description: "The chain id as reported by the RPC"
+          description: "the chain id as reported by the RPC"
         symbol:
           type: string
-          description: "The symbol of the base currency on the chain"
+          description: "the symbol of the base currency on the chain"
         rpcProvider:
           type: string
-          description: "A valid RPC provider for the chain"
+          description: "a valid RPC provider for the chain"
         remoteExplorer:
           type: string
-          description: "A remote explorer for the chain such as Etherscan"
+          description: "a remote explorer for the chain such as Etherscan"
         localExplorer:
           type: string
-          description: "The local explorer for the chain (typically TrueBlocks Explorer)"
+          description: "the local explorer for the chain (typically TrueBlocks Explorer)"
         ipfsGateway:
           type: string
-          description: "An IPFS gateway for pinning the index if enabled"
+          description: "an IPFS gateway for pinning the index if enabled"
     function:
       description: "a human-readable representation of a Solidity function call or event"
       type: object
@@ -4009,32 +3909,26 @@ components:
         hash:
           type: string
           format: hash
-          example: "0xf128...1e98"
           description: "the hash of the transaction"
         blockHash:
           type: string
           format: hash
-          example: "0xc421...fb04"
           description: "the hash of the block containing this transaction"
         blockNumber:
           type: number
           format: blknum
-          example: 10021
           description: "the number of the block"
         transactionIndex:
           type: number
           format: blknum
-          example: 305
           description: "the zero-indexed position of the transaction in the block"
         nonce:
           type: number
           format: uint64
-          example: 232
           description: "sequence number of the transactions sent by the sender"
         timestamp:
           type: number
           format: timestamp
-          example: 1438335038
           description: "the Unix timestamp of the object"
         date:
           type: string
@@ -4051,22 +3945,18 @@ components:
         value:
           type: string
           format: wei
-          example: "0"
           description: "the amount of wei sent with this transactions"
         gas:
           type: string
           format: gas
-          example: "158660"
           description: "the maximum number of gas allowed for this transaction"
         gasPrice:
           type: string
           format: gas
-          example: "63525836552"
           description: "the number of wei per unit of gas the sender is willing to spend"
         input:
           type: string
           format: bytes
-          example: "0x3d18b912"
           description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
         hasToken:
           type: boolean
@@ -4078,7 +3968,6 @@ components:
           description: "if present, the function that was called in the transaction"
         compressedTx:
           type: string
-          example: "0x3d18b912( )"
           description: "truncated, more readable version of the articulation"
         isError:
           type: boolean

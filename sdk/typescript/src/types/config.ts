@@ -3,25 +3,25 @@
 /*
  * This file was generated with makeClass --sdk. Do not edit it.
  */
-import { CacheItem, Chain, timestamp } from '.';
+import { CacheItem } from '.';
 
 export type Config = {
-  clientVersion: string
-  clientIds: string
-  trueblocksVersion: string
-  rpcProvider: string
-  configPath: string
-  cachePath: string
-  indexPath: string
-  host: string
-  isTesting: boolean
-  isApi: boolean
-  isScraping: boolean
-  isArchive: boolean
-  isTracing: boolean
-  hasEskey: boolean
-  hasPinkey: boolean
-  ts: timestamp
-  chains: Chain[]
-  caches: CacheItem[]
+  cachePath?: string
+  caches?: CacheItem[]
+  chain?: string
+  chainConfig?: string
+  clientVersion?: string
+  chainId?: string
+  hasEsKey?: boolean
+  hasPinKey?: boolean
+  indexPath?: string
+  isApi?: boolean
+  isArchive?: boolean
+  isTesting?: boolean
+  isTracing?: boolean
+  networkId?: string
+  progress?: string
+  rootConfig?: string
+  rpcProvider?: string
+  version?: string
 }
