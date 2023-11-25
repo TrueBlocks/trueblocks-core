@@ -87,42 +87,6 @@ Transactions consist of the following fields:
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                          |
 | compressedTx     | truncated, more readable version of the articulation                                                  | string                                         |
 
-## Transfer
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-The `transfer` data model is produced by the reconciliation process of `chifra export`. It
-represents, for all intents and purposes, the asset value transfer produced by nearly all value
-transfers on any blockchain. While the details of various token transfers are varied, the
-underlying mechanism is through token transfers. In our accounting, we focus on the token transfers
-and label each such transfer on the `input` data or `event topic` data. In this way, our accounting
-remains relatively easy (we only reconcile tokens and ETH), but we cover every conceivable token
-asset transfer of any type.
-
-The following commands produce and manage Transfers:
-
-- [chifra transactions](/chifra/chaindata/#chifra-transactions)
-- [chifra export](/chifra/accounts/#chifra-export)
-
-Transfers consist of the following fields:
-
-| Field            | Description                                                                                    | Type      |
-| ---------------- | ---------------------------------------------------------------------------------------------- | --------- |
-| blockNumber      | the number of the block                                                                        | blknum    |
-| transactionIndex | the zero-indexed position of the transaction in the block                                      | blknum    |
-| logIndex         | the zero-indexed position of the log in the transaction                                        | blknum    |
-| transactionHash  | the hash of the transaction that triggered this reconciliation                                 | hash      |
-| timestamp        | the Unix timestamp of the object                                                               | timestamp |
-| date             | a calculated field -- the date of this transaction                                             | datetime  |
-| sender           | the initiator of the transfer (the sender)                                                     | address   |
-| recipient        | the receiver of the transfer (the recipient)                                                   | address   |
-| assetAddr        | 0xeeee...eeee for ETH reconcilations, the token address otherwise                              | address   |
-| assetSymbol      | either ETH, WEI or the symbol of the asset being reconciled as queried from the chain          | string    |
-| decimals         | Equivalent to the queried value of `decimals` from an ERC20 contract or, if ETH or WEI then 18 | uint64    |
-| amount           | the amount of the transfer in the units of the asset                                           | int256    |
-| spotPrice        | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction       | double    |
-| priceSource      | the on-chain source from which the spot price was taken                                        | string    |
-| encoding         | the four-byte encoding of the transaction's function call                                      | string    |
-
 ## Withdrawal
 
 <!-- markdownlint-disable MD033 MD036 MD041 -->
@@ -232,7 +196,7 @@ Traces consist of the following fields:
 | date             | a calculated value - the date of the block                | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
-| traceAddress     | a particular trace's address in the trace tree            | string[]                                          |
+| traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
 | subtraces        | the number of children traces that the trace hash         | uint64                                            |
 | type             | the type of the trace                                     | string                                            |
 | action           | the trace action for this trace                           | [TraceAction](/data-model/chaindata/#traceaction) |
@@ -268,13 +232,13 @@ The following commands produce and manage LogFilters:
 
 LogFilters consist of the following fields:
 
-| Field     | Description                                                            | Type          |
-| --------- | ---------------------------------------------------------------------- | ------------- |
-| fromBlock | the first block in the block range to query with eth_getLogs           | blknum        |
-| toBlock   | the last block in the range to query with eth_getLogs                  | blknum        |
-| blockHash | an alternative to blocks specification, the hash of the block to query | hash          |
-| emitters  | one or more emitting addresses from which logs were emitted            | Address       |
-| topics    | one or more topics which logs represent                                | topic[]       |
+| Field     | Description                                                            | Type      |
+| --------- | ---------------------------------------------------------------------- | --------- |
+| fromBlock | the first block in the block range to query with eth_getLogs           | blknum    |
+| toBlock   | the last block in the range to query with eth_getLogs                  | blknum    |
+| blockHash | an alternative to blocks specification, the hash of the block to query | hash      |
+| emitters  | one or more emitting addresses from which logs were emitted            | address[] |
+| topics    | one or more topics which logs represent                                | topic[]   |
 
 ## TraceAction
 
@@ -317,7 +281,7 @@ TraceResults consist of the following fields:
 
 | Field   | Description                                                                    | Type    |
 | ------- | ------------------------------------------------------------------------------ | ------- |
-| address | Address of new contract, if any                                                | address |
+| address | address of new contract, if any                                                | address |
 | code    | if this trace is creating a new smart contract, the byte code of that contract | bytes   |
 | gasUsed | the amount of gas used by this trace                                           | gas     |
 | output  | the result of the call of this trace                                           | bytes   |
@@ -353,14 +317,14 @@ The following commands produce and manage TraceFilters:
 
 TraceFilters consist of the following fields:
 
-| Field       | Description                                                    | Type          |
-| ----------- | -------------------------------------------------------------- | ------------- |
-| fromBlock   | The first block to include in the queried list of traces.      | string        |
-| toBlock     | The last block to include in the queried list of traces.       | string        |
-| fromAddress | If included, only traces `from` this address will be included. | Address       |
-| toAddress   | If included, only traces `to` this address will be included.   | Address       |
-| after       | Only traces after this many traces are included.               | uint64        |
-| count       | Only this many traces are included.                            | uint64        |
+| Field       | Description                                                    | Type    |
+| ----------- | -------------------------------------------------------------- | ------- |
+| fromBlock   | the first block to include in the queried list of traces.      | blknum  |
+| toBlock     | the last block to include in the queried list of traces.       | blknum  |
+| fromAddress | if included, only traces `from` this address will be included. | address |
+| toAddress   | if included, only traces `to` this address will be included.   | address |
+| after       | only traces after this many traces are included.               | uint64  |
+| count       | only this many traces are included.                            | uint64  |
 
 ## BlockCount
 
@@ -454,10 +418,8 @@ This documentation mentions the following basic data types.
 | bool      | either `true`, `false`, `1`, or `0` |                |
 | bytes     | an arbitrarily long string of bytes |                |
 | datetime  | a JSON formatted date               | as a string    |
-| double    | a double precision float            | 64 bits        |
 | gas       | an unsigned big number              | as a string    |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| int256    | a signed big number                 | as a string    |
 | int64     | a 64-bit signed integer             |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |

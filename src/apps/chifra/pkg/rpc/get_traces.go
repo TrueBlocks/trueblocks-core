@@ -192,13 +192,15 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			ret = append(ret, trace)
 		}
 
-		if conn.StoreWritable() && conn.EnabledMap["traces"] && transaction != nil && base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp) {
-			traceGroup := &types.SimpleTraceGroup{
-				Traces:           ret,
-				BlockNumber:      transaction.BlockNumber,
-				TransactionIndex: transaction.TransactionIndex,
+		if transaction != nil {
+			if conn.StoreWritable() && conn.EnabledMap["traces"] && base.IsFinal(conn.LatestBlockTimestamp, transaction.Timestamp) {
+				traceGroup := &types.SimpleTraceGroup{
+					Traces:           ret,
+					BlockNumber:      transaction.BlockNumber,
+					TransactionIndex: transaction.TransactionIndex,
+				}
+				_ = conn.Store.Write(traceGroup, nil)
 			}
-			_ = conn.Store.Write(traceGroup, nil)
 		}
 
 		return ret, nil
@@ -302,13 +304,4 @@ func (conn *Connection) GetTracesCountInBlock(bn uint64) (uint64, error) {
 	} else {
 		return uint64(len(traces)), nil
 	}
-}
-
-// GetTracesCountInTransaction returns the number of traces in a given transaction
-func (conn *Connection) GetTracesCountInTransaction(txHash string) (uint64, error) {
-	traces, err := conn.GetTracesByTransactionHash(txHash, nil)
-	if err != nil {
-		return 0, err
-	}
-	return uint64(len(traces)), nil
 }

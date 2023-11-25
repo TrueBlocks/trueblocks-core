@@ -19,6 +19,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 10340,apps,Accounts,export,acctExport,relevant,N,,false,false,true,true,gocmd,switch,<boolean>,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
 10342,apps,Accounts,export,acctExport,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for log export only&#44; export only logs if emitted by one of these address(es)
+10342,apps,Accounts,export,acctExport,reverted,V,,false,false,true,true,gocmd,switch,<boolean>,export only transactions that were reverted
 10344,apps,Accounts,export,acctExport,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
 10346,apps,Accounts,export,acctExport,asset,P,,false,false,true,true,gocmd,flag,list<addr>,for the accounting options only&#44; export statements only for this asset
 10346,apps,Accounts,export,acctExport,flow,f,,false,false,true,true,gocmd,flag,enum[in|out|zero],for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
@@ -237,11 +238,12 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12195,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 12196,apps,Admin,scrape,blockScrape,n1,,,false,false,false,false,--,note,,The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
 
-13111,apps,Admin,daemon,flame,port,p,:8080,false,false,true,true,gocmd,flag,<string>,specify the server's port
+13111,apps,Admin,daemon,flame,url,u,localhost:8080,false,false,true,true,gocmd,flag,<string>,specify the API server's url and optionally its port
 13114,apps,Admin,daemon,flame,api,a,on,false,false,false,false,gocmd,flag,enum[off|on*]>,instruct the node to start the API server
 13112,apps,Admin,daemon,flame,scrape,s,,false,false,false,false,gocmd,flag,enum[off|blooms|index]>,start the scraper&#44; initialize it with either just blooms or entire index&#44; generate for new blocks
 13113,apps,Admin,daemon,flame,monitor,m,,false,false,false,false,gocmd,switch,<boolean>,instruct the node to start the monitors tool
 13118,apps,Admin,daemon,flame,grpc,g,,false,false,true,true,gocmd,switch,<boolean>,run gRPC server to serve names
+13119,apps,Admin,daemon,flame,port,p,:8080,false,false,true,true,gocmd,flag,<string>,deprecated please use --url flag instead
 13115,apps,Admin,daemon,flame,,,,false,false,true,true,--,description,,Initialize and control long-running processes such as the API and the scrapers.
 13116,apps,Admin,daemon,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra daemon.
 13117,apps,Admin,daemon,flame,n2,,,false,false,false,false,--,note,,See the API documentation (https://trueblocks.io/api) for more information.
@@ -252,6 +254,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
 
 20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
+20812,apps,Admin,status,cacheStatus,diagnose,d,0,false,false,true,true,gocmd,switch,<boolean>,same as the default but with additional diagnostics
 20815,apps,Admin,status,cacheStatus,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 20820,apps,Admin,status,cacheStatus,max_records,e,10000,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 20820,apps,Admin,status,cacheStatus,chains,a,,false,false,true,true,gocmd,switch,<boolean>,include a list of chain configurations in the output

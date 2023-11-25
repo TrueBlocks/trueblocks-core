@@ -1,8 +1,0 @@
-[settings]
-class = CAbi
-fields = abi.csv
-doc_group = 01-Accounts
-doc_descr = a JSON object describing the functions and events in an Ethereum smart contract
-doc_route = 105-abi
-doc_producer = abis
-go_output =

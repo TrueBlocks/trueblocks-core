@@ -16,7 +16,9 @@ import (
 func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	filter := filter.NewFilter(
+		opts.Reversed,
 		false,
+		[]string{},
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)

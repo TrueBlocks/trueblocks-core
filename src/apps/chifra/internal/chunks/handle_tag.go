@@ -32,7 +32,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 
 	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
 
-	userHitsCtrlC := false
+	userHitCtrlC := false
 	ctx, cancel := context.WithCancel(context.Background())
 
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
@@ -81,9 +81,13 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 		} else {
 			bar.Finish(true)
 
+			man.Version = opts.Tag
+			man.Specification = base.IpfsHash(config.SpecTags[opts.Tag])
+			_ = man.SaveManifest(chain, config.PathToManifest(chain))
+
 			// All that's left to do is report on what happened.
 			msg := fmt.Sprintf("%d chunks were retagged with %s.", nChunksTagged, opts.Tag)
-			if userHitsCtrlC {
+			if userHitCtrlC {
 				msg += colors.Yellow + "Finishing work. please wait..." + colors.Off
 			}
 			if opts.Globals.Format == "json" {
@@ -98,7 +102,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 	}
 
 	cleanOnQuit := func() {
-		userHitsCtrlC = true
+		userHitCtrlC = true
 		logger.Error("Tagging did not complete. The index is in an unknown state. Rerun the command (and")
 		logger.Error("allow it to complete), or run chifra init to correct the inconsistency.")
 	}

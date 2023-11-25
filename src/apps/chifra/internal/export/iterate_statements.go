@@ -2,7 +2,6 @@ package exportPkg
 
 import (
 	"fmt"
-	"log"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
@@ -22,7 +21,7 @@ func (opts *ExportOptions) readStatements(
 ) ([]*types.SimpleStatement, error) {
 
 	if !opts.Accounting {
-		log.Fatal("Accounting is not enabled. Implementation error.")
+		logger.Fatal("should not happen ==> accounting is not enabled. Implementation error.")
 	}
 
 	var cnt int
@@ -45,7 +44,7 @@ func (opts *ExportOptions) readStatements(
 		Total:   mon.Count(),
 	})
 
-	if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+	if err := opts.readTransactions(txMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 		return nil, err
 	}
 

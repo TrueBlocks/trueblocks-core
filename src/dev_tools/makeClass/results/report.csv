@@ -155,6 +155,9 @@ export,relevant,typescript
 export,reversed,api
 export,reversed,python
 export,reversed,typescript
+export,reverted,api
+export,reverted,python
+export,reverted,typescript
 export,statements,api
 export,statements,python
 export,statements,typescript
@@ -349,6 +352,9 @@ state,proxyFor,typescript
 status,chains,api
 status,chains,python
 status,chains,typescript
+status,diagnose,api
+status,diagnose,python
+status,diagnose,typescript
 status,firstRecord,api
 status,firstRecord,python
 status,firstRecord,typescript

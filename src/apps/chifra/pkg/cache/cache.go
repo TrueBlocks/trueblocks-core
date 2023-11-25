@@ -65,7 +65,7 @@ type StoreOptions struct {
 func (s *StoreOptions) location() (loc Storer, err error) {
 	if s == nil {
 		// TODO: s can never be nil, we would have cored already
-		logger.Fatal("Implementation error in location.")
+		logger.Fatal("should not happen ==> implementation error in location.")
 		return
 	}
 	switch s.Location {
@@ -87,7 +87,7 @@ func (s *StoreOptions) rootDir() (dir string) {
 
 	if s == nil {
 		// TODO: s is never nil, we would have cored already
-		logger.Fatal("Implementation error in location.")
+		logger.Fatal("should not happen ==> implementation error in location.")
 	} else if s.RootDir == "" {
 		dir = config.PathToCache(s.Chain)
 	}

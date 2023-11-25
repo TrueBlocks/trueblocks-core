@@ -1,4 +1,0 @@
-[settings]
-class = CKey
-fields = key.csv
-go_output =

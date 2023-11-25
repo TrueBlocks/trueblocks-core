@@ -15,9 +15,9 @@ func RemoveName(dbType DatabaseType, chain string, address base.Address) (name *
 		return customRemoveName(chain, address)
 	case DatabaseRegular:
 		// return regularRemoveName(chain, address)
-		logger.Fatal("remove is not supported for regular database")
+		logger.Fatal("should not happen ==> remove is not supported for regular database")
 	default:
-		logger.Fatal("unknown database type")
+		logger.Fatal("should not happen ==> unknown database type")
 	}
 	return
 }

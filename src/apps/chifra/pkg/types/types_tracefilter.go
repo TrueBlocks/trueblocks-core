@@ -31,11 +31,11 @@ type RawTraceFilter struct {
 }
 
 type SimpleTraceFilter struct {
-	Count       uint64          `json:"count,omitempty"`
 	After       uint64          `json:"after,omitempty"`
+	Count       uint64          `json:"count,omitempty"`
 	FromAddress base.Address    `json:"fromAddress,omitempty"`
-	ToAddress   base.Address    `json:"toAddress,omitempty"`
 	FromBlock   base.Blknum     `json:"fromBlock,omitempty"`
+	ToAddress   base.Address    `json:"toAddress,omitempty"`
 	ToBlock     base.Blknum     `json:"toBlock,omitempty"`
 	raw         *RawTraceFilter `json:"-"`
 	// EXISTING_CODE

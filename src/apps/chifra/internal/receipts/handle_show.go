@@ -15,7 +15,7 @@ import (
 
 func (opts *ReceiptsOptions) HandleShow() error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 

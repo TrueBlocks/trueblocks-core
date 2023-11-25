@@ -27,16 +27,20 @@ import (
 type RawStatement struct {
 	AccountedFor        string `json:"accountedFor"`
 	AmountIn            string `json:"amountIn"`
+	AmountNet           string `json:"amountNet"`
 	AmountOut           string `json:"amountOut"`
 	AssetAddr           string `json:"assetAddr"`
 	AssetSymbol         string `json:"assetSymbol"`
 	BegBal              string `json:"begBal"`
+	BegBalDiff          string `json:"begBalDiff"`
 	BlockNumber         string `json:"blockNumber"`
 	CorrectingIn        string `json:"correctingIn"`
 	CorrectingOut       string `json:"correctingOut"`
 	CorrectingReason    string `json:"correctingReason"`
 	Decimals            string `json:"decimals"`
 	EndBal              string `json:"endBal"`
+	EndBalCalc          string `json:"endBalCalc"`
+	EndBalDiff          string `json:"endBalDiff"`
 	GasOut              string `json:"gasOut"`
 	InternalIn          string `json:"internalIn"`
 	InternalOut         string `json:"internalOut"`
@@ -50,12 +54,16 @@ type RawStatement struct {
 	PrevBal             string `json:"prevBal"`
 	PriceSource         string `json:"priceSource"`
 	Recipient           string `json:"recipient"`
+	Reconciled          string `json:"reconciled"`
 	ReconciliationType  string `json:"reconciliationType"`
 	SelfDestructIn      string `json:"selfDestructIn"`
 	SelfDestructOut     string `json:"selfDestructOut"`
 	Sender              string `json:"sender"`
 	SpotPrice           string `json:"spotPrice"`
 	Timestamp           string `json:"timestamp"`
+	TotalIn             string `json:"totalIn"`
+	TotalOut            string `json:"totalOut"`
+	TotalOutLessGas     string `json:"totalOutLessGas"`
 	TransactionHash     string `json:"transactionHash"`
 	TransactionIndex    string `json:"transactionIndex"`
 	// EXISTING_CODE

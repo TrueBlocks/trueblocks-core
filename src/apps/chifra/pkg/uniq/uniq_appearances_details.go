@@ -14,8 +14,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
+var AppearanceFmt = "%s\t%09d\t%05d"
+
 type UniqProcFunc func(s *types.SimpleAppearance) error
 type AddressBooleanMap map[string]bool
+
+// Insert generates item's key according to `AppearanceFmt` and adds the item to the map
+func (a *AddressBooleanMap) Insert(address string, bn uint64, txid uint64) string {
+	key := fmt.Sprintf(AppearanceFmt, address, bn, txid)
+	v := *a
+	v[key] = true
+	return key
+}
 
 func GetUniqAddressesInBlock(chain, flow string, conn *rpc.Connection, procFunc UniqProcFunc, bn uint64) error {
 	ts := conn.GetBlockTimestamp(bn)

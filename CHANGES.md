@@ -3,6 +3,264 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
+## v2.1.0 (2023/11/25)
+
+**Summary**
+
+No migrations required.
+
+## Changes to the Specification
+
+- None.
+
+## Breaking Changes
+
+- None.
+
+## System Wide Changes
+
+- Improvements to validation code for many commands. None breaking.
+- Fixed a potential bug when articulating token approvals and ENS token transfers in various tools. (Potentially breaking, but corrects a previous bug.)
+- Tries to remove extraneous downloads of timestamps database, plus allow for Control+C to cancel the download.
+
+## Changes to Data Models
+
+The following data models were either modified, added, removed, or renamed by having their fields added to, removed, or renamed. Please consult the documentation on our website for details.
+
+### Modified data models
+
+| model         | description                                                                                                     |
+| ------------- | --------------------------------------------------------------------------------------------------------------- |
+| `ChunkRecord` | Automates previously hand-edited model                                                                          |
+| `Status`      | Automates previously hand-edited model                                                                          |
+| `Trace`       | Docs now report `traceAddress` as an integer array not a string (documentation change only)                     |
+| `TraceFilter` | Automates previously hand-edited model. Corrects this previously undocumented model.                            |
+| `Config`      | Automates previously hand-edited model. Many corrections in support of the `chifra stastus --diagnose` feature. |
+
+- **Note:** The `Config` data model will be removed in a future release. Most of its function is in `Status`.
+
+### New data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Removed data models
+
+| model      | description                                        |
+| ---------- | -------------------------------------------------- |
+| `Abi`      | Removes a documented but never produced data model |
+| `Key`      | Removes a documented but never produced data model |
+| `Transfer` | Removes a documented but never produced data model |
+
+### Renamed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+## Tool Specific Changes
+
+**chifra list**
+
+- No changes.
+
+**chifra export**
+
+- Adds `--reverted` option to `chifra export` to allow for exporting only reverted transactions.
+- Fixed a bug wherein `chifra export --traces --cache` was not caching the traces.
+- Slightly better control of filtering (including `--reverted` option) with `chifra export.` More coming soon...
+- First attempt to avoid downloading huge number of ABI files for `factory` contracts. (Didn't work, but improved code base.)
+
+**chifra monitors**
+
+- Various small improvements to `chifra monitors --watch` including better error handling of output formatting and progress reporting.
+
+**chifra names**
+
+- No changes.
+
+**chifra abis**
+
+- Better handling of downloaded ABI files including versioning.
+
+**chifra blocks**
+
+- No changes.
+
+**chifra transactions**
+
+- No changes.
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- No changes.
+
+**chifra when**
+
+- No changes.
+
+**chifra state**
+
+- Improvements to calling conventions for `chifra state --call` including allowing ENS names in function call parameters.
+- Fixes an issue when querying balances against some nodes due to return of hex when an integer was expected.
+
+**chifra tokens**
+
+- Fixes an issue when querying token balances against some nodes due to return of hex when an integer was expected.
+
+**chifra config**
+
+- No changes.
+
+**chifra status**
+
+- Adds `--diagnose` option to `chifra status` to allow for more detailed reporting of the status of the system.
+
+**chifra daemon**
+
+- Adds `--url` option to `chifra daemon` to allow for specifying the URL of the node to connect to. (Replaces `--port` option.)
+- Deprecates `--port` option in `chifra daemon`. Use `--url` option instead.
+
+**chifra scrape**
+
+- Added `notify` feature to `chifra scrape` to allow for notifying remote servers (for example, AWS) of new appearances.
+- Added new `notifyUrl` configuration item to `[settings]` group in the config file.
+
+**chifra chunks**
+
+- Better control of user hitting Control+C during `chifra chunks --tag` operation. Not breaking.
+
+**chifra init**
+
+- No changes.
+
+**chifra explore**
+
+- No changes.
+
+**chifra slurp**
+
+- No changes.
+
+**makeClass**
+
+- Greatly simplifies (by removing unused features) auto code generation in preparation for port to GoLang.
+
+**testRunner**
+
+- No changes.
+
+## Pull Requests (19)
+
+<!--
+gh pr list --search "is:pr is:closed closed:>2023-11-25" --limit 300 --state merged | cut -f1,2 | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #3419 Bumps version to v2.1.0-release
+- #3417 Improves auto-code gen
+- #3416 chifra status --diagnose
+- #3413 Adds --reverted to chifra export
+- #3412 Fixes issue #2675
+- #3407 Cleaning
+- #3404 Appearance notification
+- #3403 Fix/issue 2847
+- #3402 Fix/other issues
+- #3401 Closes the issue
+- #3399 Allows hitting control+c when downloading timestamps
+- #3397 Fixes issue #3376
+- #3396 Bugfix/call tests
+- #3395 3393 why an etherscan key
+- #3391 Improve state call 3
+- #3390 Adds a few tests for allowing ens names where previously only hex add…
+- #3389 Improve state call 2
+- #3388 Improve state call
+- #3387 Improve monitoring
+
+## Issues Closed (58)
+
+<!--
+gh issue list --search "closed:>2023-11-25 is:closed is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #3409 unchained index - study the characteristics of the appearances
+- #3408 chifra scrape - should allow for building an index that ignore traces
+- #3400 chifra init missing index publisher
+- #3394 chifra init - progress reporting
+- #3393 chifra cmd - WHY DO WE NEED ETHERSCAN KEY ON BRAND NEW INSTALL?
+- #3392 chifra config - use os.UserDir package code
+- #3381 chifra init doesn't download timestamps file even though it's pushed
+- #3377 chifra cmd - search for "Why do we need to do this here" for a question about loading the timestamps file
+- #3376 chifra chunks index --tag should update the manifest with the version and the spec
+- #3361 chifra export - fake withdrawal tx is incorrect
+- #3359 chifra when - finalized
+- #3347 chifra export - example miner txs that doesn't balance
+- #3346 chifra cmd - all cachable items need a function NeedsUpgrade
+- #3343 chifra scrape - should we be scraping access lists?
+- #3338 chifra cmd - notes from call with Dawid
+- #3325 chifra export -- should take dates as well as blocks
+- #3310 chifra cmd - can't kill download of timestamps
+- #3302 chifra transactions - Missing data in output
+- #3282 chifra scrape - tracking issue for Notify
+- #3267 chifra daemon --port issues
+- #3266 chifra cmd - caching could possibly be a configurable option
+- #3245 chifra cmd - the --publisher option should be global
+- #3222 chifra export should handle withdrawals in accounting
+- #3217 chifra cmd - every command wants to download timestamps
+- #3209 chifra status - Improve UX of `chifra status` Progress row
+- #3118 chifra export - decache should remove empty folders
+- #3069 chifra blocks -- if not cached, this routine is very slow for late blocks
+- #3021 chifra state - can we resolve ENS names in function call parameters?
+- #2959 chifra cmd - we need test cases to protect against breaking changes in the RPC data
+- #2934 chifra export - phony transfers
+- #2927 chifra chunks --publish summary of issues
+- #2920 chifra cmd - add http proxy setting for etherscan request.
+- #2882 chifra cmd - first_record/max_records
+- #2847 chifra export creates huge number of abi files when scraping UniSwap contracts
+- #2841 How to integrate gRPC types
+- #2806 chifra caches could be SQLite databases
+- #2769 chifra other - don't forget about four-bytes and known_abi_gen
+- #2675 chifra export --traces doesn't check the cache without --cache_traces
+- #2664 chifra export --neighbours flag incomplete return when providing multiple addresses. (API & Chifra)
+- #2575 chifra cmd - GoLang logging
+- #2568 chifra cmd formatting
+- #2562 chifra export Add filtering on output address for chifra export
+- #2553 chifra export accounting mint/burn
+- #2550 chifra export allow to filter failed transactions for an address
+- #2546 chifra export discrepancies between docs and actuality in returned data
+- #2525 chifra export does chifra export <address> --traces --cache --cache_traces actually work to create trace cache items
+- #2523 chifra cmd - articulation: ABIs download and cache APIs
+- #2453 chifra export customized export formats
+- #2361 chifra cmd don't hide error messages from client
+- #2333 chifra cmd update our code as per this
+- #2322 chifra cmd control+c doesn't work well
+- #2314 chifra cmd possible mode of operation
+- #2306 chifra export control+c doesn't work
+- #2299 chifra config - make this tool more capable
+- #2295 chifra cmd Use of panic vs. fatal
+- #2269 chifra cmd protect against overwriting files on disc
+- #2237 chifra cmd reverse the polarity of the file backup mechanism
+- #2187 chifra monitors --watch allow other commands than export
+
+## Issues Opened (4)
+
+<!--
+gh issue list --search "created:>2023-11-25 is:open is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/'  | tr '\t' ' '
+-->
+
+- #3418 chifra export - unreconciled txs I
+- #3415 notifyUrl should have global default value and per-chain config like defaultGateway
+- #3414 chifra scrape should not die if the listener dies and notifyUrl is not empty
+- #3411 chifra build - add nilaway to our CI
+
 ## v2.0.0 (2023/11/14)
 
 **Withdrawals!**

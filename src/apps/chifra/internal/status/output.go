@@ -53,9 +53,11 @@ func (opts *StatusOptions) StatusInternal() error {
 	msg := "chifra status"
 	// EXISTING_CODE
 	if len(opts.ModeTypes) > 0 {
-		err = opts.HandleShow()
+		err = opts.HandleCaches()
+	} else if opts.Diagnose {
+		err = opts.HandleDiagnose()
 	} else {
-		err = opts.HandleStatusTerse()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

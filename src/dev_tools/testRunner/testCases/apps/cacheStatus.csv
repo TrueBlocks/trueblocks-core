@@ -42,6 +42,8 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,items_blocks_chains ,y    ,modes
 
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_none           ,y    ,
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_fail           ,y    ,modes = junk & verbose
+on      ,both ,fast  ,status ,apps/cacheStatus ,mode_diagnose_fail  ,y    ,modes = index & diagnose
+on      ,both ,fast  ,status ,apps/cacheStatus ,diagnose_ok         ,y    ,diagnose
 
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_abis           ,y    ,modes = abis & verbose & max_records = 2
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_monitors       ,y    ,modes = monitors & verbose & max_records = 2

@@ -36,7 +36,7 @@ func (opts *TracesOptions) validateTraces() error {
 			return validate.Usage("{0} requires tracing, err: {1}", "chifra traces", rpc.ErrTraceBlockMissing)
 		}
 
-		if !validate.CanArticulate(opts.Articulate) {
+		if !validate.HasArticulationKey(opts.Articulate) {
 			return validate.Usage("The {0} option requires an Etherscan API key.", "--articulate")
 		}
 

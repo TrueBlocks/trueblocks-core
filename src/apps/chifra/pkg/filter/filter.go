@@ -5,19 +5,22 @@
 package filter
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type AppearanceFilter struct {
 	OuterBounds base.BlockRange
 	sortBy      AppearanceSort
-	Reversed    bool
+	reversed    bool
+	reverted    bool
+	fourBytes   []string
 	exportRange base.BlockRange
 	recordRange base.RecordRange
-	EnableRr    bool
 	nSeen       int64
 	nExported   uint64
 	currentBn   uint32
@@ -25,7 +28,7 @@ type AppearanceFilter struct {
 	BlocksOnly  bool
 }
 
-func NewFilter(reversed bool, exportRange base.BlockRange, recordRange base.RecordRange) *AppearanceFilter {
+func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.BlockRange, recordRange base.RecordRange) *AppearanceFilter {
 	sortBy := Sorted
 	if reversed {
 		sortBy = Reversed
@@ -35,15 +38,18 @@ func NewFilter(reversed bool, exportRange base.BlockRange, recordRange base.Reco
 		recordRange: recordRange,
 		OuterBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
 		sortBy:      sortBy,
-		Reversed:    reversed,
+		reversed:    reversed,
+		reverted:    reverted,
+		fourBytes:   fourBytes,
 		nSeen:       -1,
-		EnableRr:    true,
 	}
 }
 
 func NewEmptyFilter() *AppearanceFilter {
 	return NewFilter(
 		false,
+		false,
+		[]string{},
 		base.BlockRange{First: 0, Last: utils.NOPOS},
 		base.RecordRange{First: 0, Last: utils.NOPOS},
 	)
@@ -62,34 +68,41 @@ func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
 	return f.OuterBounds
 }
 
-// BlockRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) BlockRangeFilter(app *index.AppearanceRecord) (passed, finished bool) {
+// ApplyFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
+func (f *AppearanceFilter) ApplyFilter(app *index.AppearanceRecord) (passed, finished bool) {
 	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
 	if !appRange.Intersects(base.FileRange(f.exportRange)) {
 		return false, false
 	}
-
-	if f.EnableRr {
-		return f.RecordCountFilter()
-	}
-
-	return true, false
+	return f.applyCountFilter()
 }
 
-// RecordCountFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
-func (f *AppearanceFilter) RecordCountFilter() (passed, finished bool) {
+// applyCountFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
+func (f *AppearanceFilter) applyCountFilter() (passed, finished bool) {
 	f.nSeen++
 
 	if f.nSeen < int64(f.recordRange.First) { // --first_record
-		logger.Progress(true, "Skipping:", f.nExported, f.recordRange.First)
 		return false, false
 	}
 
 	if f.nExported >= f.recordRange.Last { // --max_records
-		logger.Progress(true, "Quitting:", f.nExported, f.recordRange.First)
 		return false, true
 	}
 
 	f.nExported++
 	return true, false
+}
+
+// ApplyTxFilters applies other filters such as the four byte and reverted filters.
+func (f *AppearanceFilter) ApplyTxFilters(tx *types.SimpleTransaction) (passed, finished bool) {
+	matchesReverted := !f.reverted || tx.IsError
+	matchesFourbyte := len(f.fourBytes) == 0
+	for _, fourBytes := range f.fourBytes {
+		if strings.HasPrefix(tx.Input, fourBytes) {
+			matchesFourbyte = true
+			break
+		}
+	}
+	// fmt.Println("len:", len(f.fourBytes), "matchesFourbyte", matchesFourbyte, "matchesReverted", matchesReverted)
+	return matchesFourbyte && matchesReverted, false
 }

@@ -21,10 +21,12 @@ import (
 
 func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
+		opts.Reverted,
+		opts.Fourbytes,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
@@ -41,7 +43,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
-				if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+				if err := opts.readTransactions(txMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 					errorChan <- err
 					return
 				}

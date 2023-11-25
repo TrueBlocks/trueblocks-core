@@ -76,6 +76,7 @@ Arguments:
 	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
 
 Flags:
+  -d, --diagnose            same as the default but with additional diagnostics
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
   -a, --chains              include a list of chain configurations in the output
@@ -132,11 +133,11 @@ Aliases:
   daemon, serve
 
 Flags:
-  -p, --port string   specify the server's port (default ":8080")
-  -g, --grpc          run gRPC server to serve names
-  -x, --fmt string    export format, one of [none|json*|txt|csv]
-  -v, --verbose       enable verbose output
-  -h, --help          display this help screen
+  -u, --url string   specify the API server's url and optionally its port (default "localhost:8080")
+  -g, --grpc         run gRPC server to serve names
+  -x, --fmt string   export format, one of [none|json*|txt|csv]
+  -v, --verbose      enable verbose output
+  -h, --help         display this help screen
 
 Notes:
   - To start API open terminal window and run chifra daemon.

@@ -9,7 +9,7 @@ export type Trace = {
   blockHash: hash
   blockNumber: blknum
   subtraces: uint64
-  traceAddress: string[]
+  traceAddress: uint64[]
   transactionHash: hash
   transactionIndex: blknum
   type?: string

@@ -6,7 +6,6 @@ package monitorsPkg
 
 import (
 	"errors"
-	"log"
 	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -50,7 +49,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 					return validate.Usage("The {0} option requires {1} to exist.", "--watch", opts.Commands)
 				}
 				if file.FileSize(cmdFile) == 0 {
-					log.Fatal(validate.Usage("The file you specified ({0}) was found but contained no commands.", cmdFile).Error())
+					logger.Fatal(validate.Usage("The file you specified ({0}) was found but contained no commands.", cmdFile).Error())
 				}
 			}
 
@@ -63,7 +62,7 @@ func (opts *MonitorsOptions) validateMonitors() error {
 						return validate.Usage("The {0} option requires {1} to exist.", "--watch", opts.Watchlist)
 					}
 					if file.FileSize(watchList) == 0 {
-						log.Fatal(validate.Usage("The file you specified ({0}) was found but contained no addresses.", watchList).Error())
+						logger.Fatal(validate.Usage("The file you specified ({0}) was found but contained no addresses.", watchList).Error())
 					}
 				}
 			}

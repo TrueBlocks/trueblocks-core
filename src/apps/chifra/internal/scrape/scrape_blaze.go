@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
@@ -157,11 +158,26 @@ var writeMutex sync.Mutex
 func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBooleanMap) (err error) {
 	ripePath := config.PathToIndex(bm.chain) + "ripe/"
 	unripePath := config.PathToIndex(bm.chain) + "unripe/"
+	appendScrapeError := func(err error) {
+		bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
+	}
+	notificationPayload := make([]notify.NotificationPayloadAppearance, 0, len(addrMap))
+	payloadFailed := false
 
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {
 			appearanceArray = append(appearanceArray, record)
+
+			if bn <= bm.ripeBlock {
+				// Only notify about ripe block's appearances
+				payloadItem := notify.NotificationPayloadAppearance{}
+				err := payloadItem.FromString(record)
+				if err != nil {
+					logger.Fatal(err)
+				}
+				notificationPayload = append(notificationPayload, payloadItem)
+			}
 		}
 		sort.Strings(appearanceArray)
 
@@ -174,8 +190,19 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		toWrite := []byte(strings.Join(appearanceArray[:], "\n") + "\n")
 		err = os.WriteFile(fileName, toWrite, 0744) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 		if err != nil {
-			bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
+			appendScrapeError(err)
 			return err
+		}
+	}
+
+	if bn <= bm.ripeBlock && !payloadFailed {
+		err = Notify(notify.Notification[[]notify.NotificationPayloadAppearance]{
+			Msg:     notify.MessageAppearance,
+			Meta:    bm.meta,
+			Payload: notificationPayload,
+		})
+		if err != nil {
+			logger.Fatal(err)
 		}
 	}
 

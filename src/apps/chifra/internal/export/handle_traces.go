@@ -21,10 +21,12 @@ import (
 
 func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(chain, opts.Articulate)
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	filter := filter.NewFilter(
 		opts.Reversed,
+		opts.Reverted,
+		opts.Fourbytes,
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
@@ -78,7 +80,7 @@ func (opts *ExportOptions) readTraces(
 			Enabled: !opts.Globals.TestMode,
 			Total:   mon.Count(),
 		})
-		if err := opts.Conn.ReadTransactions(txMap, opts.Fourbytes, bar, true /* readTraces */); err != nil { // calls IterateOverMap
+		if err := opts.readTransactions(txMap, filter, bar, true /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
 

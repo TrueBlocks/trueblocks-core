@@ -54,7 +54,7 @@ func (walker *CacheWalker) WalkRegularFolder(path string, blockNums []uint64) er
 				continue
 			}
 		default:
-			logger.Fatal("should not happen in WalkRegularFolder")
+			logger.Fatal("should not happen ==> in WalkRegularFolder")
 		}
 	}
 
@@ -92,7 +92,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []uint64) error {
 				continue
 			}
 		default:
-			logger.Fatal("You may only traverse the bloom folder")
+			logger.Fatal("should not happen ==> you may only traverse the bloom folder")
 		}
 	}
 

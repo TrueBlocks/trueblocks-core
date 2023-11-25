@@ -41,26 +41,26 @@ The following commands produce and manage Statuses:
 
 Statuses consist of the following fields:
 
-| Field             | Description                                              | Type                                        |
-| ----------------- | -------------------------------------------------------- | ------------------------------------------- |
-| clientVersion     | the version string as reported by the rpcProvider        | string                                      |
-| clientIds         | netword_id and chain_id from the rpcProvider             | string                                      |
-| trueblocksVersion | the TrueBlocks version string                            | string                                      |
-| rpcProvider       | the current rpcProvider                                  | string                                      |
-| configPath        | the path to config files                                 | string                                      |
-| cachePath         | the path to the local binary caches                      | string                                      |
-| indexPath         | the path to the local binary indexes                     | string                                      |
-| host              | the host portion of the local API server                 | string                                      |
-| isTesting         | `true` if the server is running in test mode             | bool                                        |
-| isApi             | `true` if the server is running in API mode              | bool                                        |
-| isScraping        | `true` if the index scraper is running                   | bool                                        |
-| isArchive         | `true` if the rpcProvider is an archive node             | bool                                        |
-| isTracing         | `true` if the rpcProvider provides Parity traces         | bool                                        |
-| hasEskey          | `true` if an Etherscan key is present                    | bool                                        |
-| hasPinkey         | `true` if a Pinata API key is present                    | bool                                        |
-| ts                | the timestamp when this status data was produced         | timestamp                                   |
-| chains            | the list of configured chains                            | [Chain[]](/data-model/admin/#chain)         |
-| caches            | a collection of information concerning the binary caches | [CacheItem[]](/data-model/admin/#cacheitem) |
+| Field         | Description                                              | Type                                        |
+| ------------- | -------------------------------------------------------- | ------------------------------------------- |
+| cachePath     | the path to the local binary caches                      | string                                      |
+| caches        | a collection of information concerning the binary caches | [CacheItem[]](/data-model/admin/#cacheitem) |
+| chain         | the current chain                                        | string                                      |
+| chainConfig   | the path to the chain configuration folder               | string                                      |
+| clientVersion | the version string as reported by the rpcProvider        | string                                      |
+| chainId       | the path to config files                                 | string                                      |
+| hasEsKey      | `true` if an Etherscan key is present                    | bool                                        |
+| hasPinKey     | `true` if a Pinata API key is present                    | bool                                        |
+| indexPath     | the path to the local binary indexes                     | string                                      |
+| isApi         | `true` if the server is running in API mode              | bool                                        |
+| isArchive     | `true` if the rpcProvider is an archive node             | bool                                        |
+| isTesting     | `true` if the server is running in test mode             | bool                                        |
+| isTracing     | `true` if the rpcProvider provides Parity traces         | bool                                        |
+| networkId     | the network id as reported by the rpcProvider            | string                                      |
+| progress      | the progress string of the system                        | string                                      |
+| rootConfig    | the path to the root configuration folder                | string                                      |
+| rpcProvider   | the current rpcProvider                                  | string                                      |
+| version       | the TrueBlocks version string                            | string                                      |
 
 ## Manifest
 
@@ -318,30 +318,29 @@ Chains consist of the following fields:
 
 | Field          | Description                                                      | Type   |
 | -------------- | ---------------------------------------------------------------- | ------ |
-| chain          | The common name of the chain                                     | string |
-| chainId        | The chain id as reported by the RPC                              | uint64 |
-| symbol         | The symbol of the base currency on the chain                     | string |
-| rpcProvider    | A valid RPC provider for the chain                               | string |
-| remoteExplorer | A remote explorer for the chain such as Etherscan                | string |
-| localExplorer  | The local explorer for the chain (typically TrueBlocks Explorer) | string |
-| ipfsGateway    | An IPFS gateway for pinning the index if enabled                 | string |
+| chain          | the common name of the chain                                     | string |
+| chainId        | the chain id as reported by the RPC                              | uint64 |
+| symbol         | the symbol of the base currency on the chain                     | string |
+| rpcProvider    | a valid RPC provider for the chain                               | string |
+| remoteExplorer | a remote explorer for the chain such as Etherscan                | string |
+| localExplorer  | the local explorer for the chain (typically TrueBlocks Explorer) | string |
+| ipfsGateway    | an IPFS gateway for pinning the index if enabled                 | string |
 
 ## Base types
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                         | Notes          |
-| --------- | ----------------------------------- | -------------- |
-| []string  | an array of strings                 |                |
-| address   | an '0x'-prefixed 20-byte hex string | lowercase      |
-| blkrange  | a pair of nine-digit block numbers  | zero padded    |
-| bool      | either `true`, `false`, `1`, or `0` |                |
-| datetime  | a JSON formatted date               | as a string    |
-| double    | a double precision float            | 64 bits        |
-| hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
-| int64     | a 64-bit signed integer             |                |
-| ipfshash  | a multi-hash produced by IPFS       | mixed-case     |
-| string    | a normal character string           |                |
-| timestamp | a 64-bit unsigned integer           | Unix timestamp |
-| uint32    | a 32-bit unsigned integer           |                |
-| uint64    | a 64-bit unsigned integer           |                |
+| Type     | Description                         | Notes       |
+| -------- | ----------------------------------- | ----------- |
+| []string | an array of strings                 |             |
+| address  | an '0x'-prefixed 20-byte hex string | lowercase   |
+| blkrange | a pair of nine-digit block numbers  | zero padded |
+| bool     | either `true`, `false`, `1`, or `0` |             |
+| datetime | a JSON formatted date               | as a string |
+| double   | a double precision float            | 64 bits     |
+| hash     | an '0x'-prefixed 32-byte hex string | lowercase   |
+| int64    | a 64-bit signed integer             |             |
+| ipfshash | a multi-hash produced by IPFS       | mixed-case  |
+| string   | a normal character string           |             |
+| uint32   | a 32-bit unsigned integer           |             |
+| uint64   | a 64-bit unsigned integer           |             |

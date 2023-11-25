@@ -104,11 +104,7 @@ func stateFinishParseApi(w http.ResponseWriter, r *http.Request) *StateOptions {
 	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
-	if opts.Call != "" {
-		// The tests need single quotes
-		unquoted := strings.Trim(opts.Call, "'")
-		opts.Call = unquoted
-	}
+	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}
@@ -151,14 +147,7 @@ func stateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Call = strings.Replace(opts.Call, "|", "!", -1)
-	opts.Call = strings.Replace(opts.Call, " !", "!", -1)
-	opts.Call = strings.Replace(opts.Call, "! ", "!", -1)
-	parts := strings.Split(opts.Call, "!")
-	if len(parts) > 0 {
-		val, _ := opts.Conn.GetEnsAddress(parts[0])
-		opts.Call = strings.Replace(opts.Call, parts[0], val, -1)
-	}
+	opts.Call = strings.Replace(strings.Trim(opts.Call, "'"), "'", "\"", -1)
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
 			opts.Blocks = []string{"17000000"}

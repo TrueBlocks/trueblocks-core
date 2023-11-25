@@ -5,6 +5,7 @@ package scrapePkg
 // be found in the LICENSE file.
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -16,12 +17,13 @@ import (
 func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 	chain := bm.chain
 
-	if err, ok := bm.HandleBlaze(blocks); !ok || err != nil {
+	_, _ = bm.HandleBlaze(blocks)
+	if len(bm.errors) > 0 {
 		for _, err := range bm.errors {
 			logger.Error(fmt.Sprintf("error at block %d: %v", err.block, err.err))
 		}
 		_ = cleanEphemeralIndexFolders(chain)
-		return err, ok
+		return errors.New("encountered errors while scraping"), false
 	}
 
 	// Check to see if we missed any blocks...

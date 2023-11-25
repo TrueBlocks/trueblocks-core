@@ -1,17 +1,17 @@
-package rpc
+package exportPkg
 
 import (
 	"context"
-	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (conn *Connection) ReadTransactions(
+func (opts *ExportOptions) readTransactions(
 	theMap map[types.SimpleAppearance]*types.SimpleTransaction,
-	fourBytes []string,
+	filt *filter.AppearanceFilter,
 	bar *logger.ProgressBar,
 	readTraces bool,
 ) error {
@@ -21,16 +21,11 @@ func (conn *Connection) ReadTransactions(
 			BlockNumber:      app.BlockNumber,
 			TransactionIndex: app.TransactionIndex,
 		}
-		if tx, err := conn.GetTransactionByAppearance(&raw, readTraces); err != nil {
+		if tx, err := opts.Conn.GetTransactionByAppearance(&raw, readTraces); err != nil {
 			return err
 		} else {
-			matchesFourByte := len(fourBytes) == 0 // either there is no four bytes...
-			for _, fb := range fourBytes {
-				if strings.HasPrefix(tx.Input, fb) {
-					matchesFourByte = true // ... or the four bytes match
-				}
-			}
-			if matchesFourByte {
+			passes, _ := filt.ApplyTxFilters(tx)
+			if passes {
 				*value = *tx
 			}
 			if bar != nil {

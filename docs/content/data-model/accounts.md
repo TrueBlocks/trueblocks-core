@@ -137,34 +137,6 @@ Names consist of the following fields:
 | isErc20    | `true` if the address is an ERC20, `false` otherwise                                | bool    |
 | isErc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
-## Abi
-
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-An ABI describes an Application Binary Interface -- in other words, the [Function](/data-model/other/#function)
-and Event signatures for a given smart contract. Along with [Names](/data-model/accounts/#names) the
-use of ABIs goes a very long way towards making your Ethereum data much more understandable.
-
-Similar to names of addresses, ABI files are not available on-chain which means they must be
-acquired somewhere. Unfortunately, the Ethereum community has not yet understand that Etherscan
-is not a good place to store this very important information. For this reason, TrueBlocks uses
-Etherscan to acquire ABI files and therefor one needs to get an Etherscan API key to use this
-function.
-
-The following commands produce and manage Abis:
-
-- [chifra abis](/chifra/accounts/#chifra-abis)
-
-Abis consist of the following fields:
-
-| Field      | Description                                  | Type                                      |
-| ---------- | -------------------------------------------- | ----------------------------------------- |
-| address    | the smart contract that implements this abi  | address                                   |
-| interfaces | the list of events and functions on this abi | [Function[]](/data-model/other/#function) |
-
-### Notes
-
-See the [chifra abis](/chifra/accounts/#chifra-abis) command line for information about getting an Etherscan key.
-
 ## AppearanceCount
 
 <!-- markdownlint-disable MD033 MD036 MD041 MD047 -->

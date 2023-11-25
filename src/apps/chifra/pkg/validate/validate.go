@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 )
 
@@ -119,14 +120,10 @@ func ValidateEnumSlice(field string, values []string, valid string) error {
 	return nil
 }
 
-// TODO: For now, we don't use this, but once we are articulating in the Go code,
-// TODO: we can use this to decide. But, do so way down the call stack, so if the
-// TODO: ABI is present, and the Etherscan key is not, we can still articulate.
-// TODO: Only fail this if we're at the last resort.
-
-func CanArticulate(on bool) bool {
-	// if !on {
-	return true
-	// }
-	// return len(config.GetRootConfig().Settings.EtherscanKey) > 0
+// HasArticulationKey returns true if the articulation key is present
+func HasArticulationKey(on bool) bool {
+	if !on {
+		return true
+	}
+	return len(config.GetKey("etherscan").ApiKey) > 0
 }

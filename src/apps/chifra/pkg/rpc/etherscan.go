@@ -5,11 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -25,6 +27,8 @@ func (conn *Connection) GetESTransactionByAddress(addr, requestType string, pagi
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err
 	}
+
+	debugCurl(url)
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -113,17 +117,10 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 	s.ContractAddress = base.HexToAddress(rawTx.ContractAddress)
 
 	if requestType == "int" {
-		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't want to make another RPC call
-		// We tried (see commented code), but EtherScan balks with a weird message
-		s.TransactionIndex = types.EsInternalTx
-		// s.BlockHash = base.HexToHash("0xdeadbeef")
-		// got, err := conn.GetESTransactionByHash(s.Hash)
-		// if err != nil {
-		// 	logger.Warn("error getting transaction from etherscan:", err)
-		// 	s.TransactionIndex = EsInternalTx
-		// } else {
-		// 	s.TransactionIndex = utils.MustParseUint(got.TransactionIndex)
-		// }
+		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't
+		// want to make another RPC call. We tried (see commented code), but EtherScan balks with a weird message
+		app, _ := conn.GetTransactionAppByHash(s.Hash.Hex())
+		s.TransactionIndex = uint64(app.TransactionIndex)
 	} else if requestType == "miner" {
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.BlockReward
@@ -147,7 +144,7 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 		s.Value.SetString(rawTx.Amount, 0)
 		s.To = base.HexToAddress(addr)
 		if s.To != base.HexToAddress(rawTx.Address) {
-			logger.Fatal("Should not happen in rawToSimple", s.To, rawTx.Address)
+			logger.Fatal("should not happen ==> in rawToSimple", s.To, rawTx.Address)
 		}
 	}
 
@@ -183,7 +180,7 @@ func getEtherscanUrl(value string, requestType string, paginator *Paginator) (st
 	}
 
 	if actions[requestType] == "" {
-		logger.Fatal("Should not happen in getEtherscanUrl", requestType)
+		logger.Fatal("should not happen ==> in getEtherscanUrl", requestType)
 	}
 
 	key := config.GetKey("etherscan").ApiKey
@@ -215,4 +212,28 @@ func getEtherscanUrl(value string, requestType string, paginator *Paginator) (st
 func mustParseInt(input any) (result int64) {
 	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
 	return
+}
+
+var devDebug = false
+var devDebugMethod = ""
+
+func init() {
+	devDebugMethod = os.Getenv("TB_DEBUG_CURL")
+	devDebug = len(devDebugMethod) > 0
+}
+
+func debugCurl(url string) {
+	if !devDebug {
+		return
+	}
+
+	var curlCmd = `curl "[{url}]"`
+	curlCmd = strings.Replace(curlCmd, "[{url}]", url, -1)
+	if devDebugMethod == "file" {
+		_ = file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
+	} else {
+		logger.ToggleDecoration()
+		logger.Info(curlCmd)
+		logger.ToggleDecoration()
+	}
 }

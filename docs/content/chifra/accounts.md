@@ -127,6 +127,7 @@ Flags:
   -e, --max_records uint    the maximum number of records to process (default 250)
   -N, --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
   -m, --emitter strings     for log export only, export only logs if emitted by one of these address(es)
+  -V, --reverted            export only transactions that were reverted
   -B, --topic strings       for log export only, export only logs with this topic(s)
   -P, --asset strings       for the accounting options only, export statements only for this asset
   -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
@@ -165,7 +166,6 @@ Data models produced by this tool:
 - [appearancecount](/data-model/accounts/#appearancecount)
 - [statement](/data-model/accounts/#statement)
 - [transaction](/data-model/chaindata/#transaction)
-- [transfer](/data-model/chaindata/#transfer)
 - [receipt](/data-model/chaindata/#receipt)
 - [log](/data-model/chaindata/#log)
 - [trace](/data-model/chaindata/#trace)
@@ -372,7 +372,6 @@ Notes:
 
 Data models produced by this tool:
 
-- [abi](/data-model/accounts/#abi)
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 

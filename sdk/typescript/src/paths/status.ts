@@ -9,6 +9,7 @@ import { CacheItem, Chain, Config, uint64 } from '../types';
 export function getStatus(
   parameters?: {
     modes?: string[],
+    diagnose?: boolean,
     firstRecord?: uint64,
     maxRecords?: uint64,
     chains?: boolean,
