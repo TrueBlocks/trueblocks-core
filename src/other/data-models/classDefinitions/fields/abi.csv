@@ -1,8 +1,0 @@
-name         ,type              ,strDefault ,omitempty ,doc ,description
-address      ,address           ,           ,          ,  1 ,the smart contract that implements this abi
-interfaceMap ,StringFunctionMap ,           ,          ,    ,
-interfaces   ,[]Function        ,           ,          ,  2 ,the list of events and functions on this abi
-encoding     ,hash              ,           ,          ,    ,
-type         ,string            ,           ,          ,    ,
-name         ,string            ,           ,          ,    ,
-signature    ,string            ,           ,          ,    ,

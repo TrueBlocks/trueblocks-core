@@ -13,14 +13,14 @@ func (opts *StatusOptions) HandleStatusTerse() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		s, err := opts.GetSimpleStatus()
+		s, err := opts.GetSimpleStatus(opts.Diagnose)
 		if err != nil {
 			errorChan <- err
 			return
 		}
 
 		// We want to short circuit the output in the non-json case
-		if s.toTemplate(opts.Globals.Writer, logger.LogTimerOn(), opts.Globals.Format) {
+		if s.toTemplate(opts.Globals.Writer, opts.Diagnose, logger.LogTimerOn(), opts.Globals.Format) {
 			return
 		}
 

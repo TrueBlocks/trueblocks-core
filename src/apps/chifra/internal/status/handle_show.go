@@ -114,7 +114,7 @@ func (opts *StatusOptions) HandleShow() error {
 			}
 		}
 
-		status, err := opts.GetSimpleStatus()
+		status, err := opts.GetSimpleStatus(false)
 		if err != nil {
 			errorChan <- err
 			return

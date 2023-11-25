@@ -166,7 +166,6 @@ Data models produced by this tool:
 - [appearancecount](/data-model/accounts/#appearancecount)
 - [statement](/data-model/accounts/#statement)
 - [transaction](/data-model/chaindata/#transaction)
-- [transfer](/data-model/chaindata/#transfer)
 - [receipt](/data-model/chaindata/#receipt)
 - [log](/data-model/chaindata/#log)
 - [trace](/data-model/chaindata/#trace)
@@ -373,7 +372,6 @@ Notes:
 
 Data models produced by this tool:
 
-- [abi](/data-model/accounts/#abi)
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 

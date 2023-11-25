@@ -1,8 +1,0 @@
-[settings]
-class = CTransfer
-fields = transfer.csv
-doc_group = 02-Chain Data
-doc_descr = the representation of a token transfer
-doc_route = 203-transfer
-doc_producer = transactions, export
-# go_output = documentation only

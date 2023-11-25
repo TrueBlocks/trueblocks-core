@@ -161,7 +161,7 @@ func (s *simpleStatus) Model(chain, format string, verbose bool, extraOptions ma
 // EXISTING_CODE
 //
 
-func ToProgress(chain string, meta *rpc.MetaData) string {
+func ToProgress(chain string, diagnose bool, meta *rpc.MetaData) string {
 	nTs, _ := tslib.NTimestamps(chain) // when the file has one record, the block is zero, etc.
 	if nTs > 0 {
 		nTs--
@@ -170,7 +170,7 @@ func ToProgress(chain string, meta *rpc.MetaData) string {
 	return fmt.Sprintf(format, meta.Latest, meta.Finalized, meta.Staging, meta.Unripe, nTs)
 }
 
-func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
+func (opts *StatusOptions) GetSimpleStatus(diagnose bool) (*simpleStatus, error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
@@ -193,7 +193,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 		ChainConfig:   config.MustGetPathToChainConfig(chain),
 		CachePath:     config.PathToCache(chain),
 		IndexPath:     config.PathToIndex(chain),
-		Progress:      ToProgress(chain, meta),
+		Progress:      ToProgress(chain, diagnose, meta),
 		IsTesting:     testMode,
 		IsApi:         opts.Globals.IsApiMode(),
 		IsArchive:     opts.Conn.IsNodeArchive(),
@@ -220,7 +220,7 @@ func (opts *StatusOptions) GetSimpleStatus() (*simpleStatus, error) {
 	return s, nil
 }
 
-func (s *simpleStatus) toTemplate(w io.Writer, logTimerOn bool, format string) bool {
+func (s *simpleStatus) toTemplate(w io.Writer, diagnose, logTimerOn bool, format string) bool {
 	if format == "json" {
 		return false
 	}
@@ -228,19 +228,21 @@ func (s *simpleStatus) toTemplate(w io.Writer, logTimerOn bool, format string) b
 	var timeDatePart string
 	if logTimerOn {
 		now := time.Now()
-		timeDatePart = now.Format("02-01|15:04:05.000")
+		timeDatePart = now.Format("02-01|15:04:05.000 ")
 	} else {
-		timeDatePart = "INFO[DATE|TIME]"
+		timeDatePart = "INFO[DATE|TIME] "
 	}
 
-	table := strings.Replace(templateStr, "INFO ", "INFO "+colors.Green, -1)
-	table = strings.Replace(table, ":", ":"+colors.Off, -1)
-	table = strings.Replace(table, "{CLIENT_STRING}", getClientTemplate(), -1)
-	table = strings.Replace(table, "{VERSION_STRING}", getVersionTemplate(), -1)
-	table = strings.Replace(table, "INFO", timeDatePart, -1)
+	table := templateStr
+	table = strings.Replace(table, "[CLIENT]", getClientTemplate(), -1)
+	table = strings.Replace(table, "[VERSION]", getVersionTemplate(), -1)
+	table = strings.Replace(table, "[IDS]", getIdTemplate(), -1)
+	table = strings.Replace(table, "[PROGRESS]", getProgress(diagnose), -1)
+	table = strings.Replace(table, "INFO ", timeDatePart+colors.Green, -1)
 	table = strings.Replace(table, "[RED]", colors.Red, -1)
 	table = strings.Replace(table, "[GREEN]", colors.Green, -1)
 	table = strings.Replace(table, "[OFF]", colors.Off, -1)
+	table = strings.Replace(table, ":", ":"+colors.Off, -1)
 
 	t, err := template.New("status").Parse(table)
 	if err != nil {
@@ -252,38 +254,74 @@ func (s *simpleStatus) toTemplate(w io.Writer, logTimerOn bool, format string) b
 	return true
 }
 
-func getBoolTemplate(name string) (ret string) {
-	if strings.HasPrefix(name, "Has") {
-		ret = "{{if .[NAME]}}[GREEN][NAMEL][OFF]{{else}}[RED]no [NAMEL][OFF]{{end}}"
-		ret = strings.Replace(strings.Replace(ret, "[NAMEL]", strings.ToLower(name), -1), "has", "", -1)
-	} else {
-		ret = "{{if .[NAME]}}[GREEN][NAMEL][OFF]{{else}}[RED]not [NAMEL][OFF]{{end}}"
-		ret = strings.Replace(strings.Replace(ret, "[NAMEL]", strings.ToLower(name), -1), "is", "", -1)
-	}
-	ret = strings.Replace(ret, "[NAME]", name, -1)
-	return
-}
-
 func getClientTemplate() string {
-	archive := getBoolTemplate("IsArchive")
-	tracing := getBoolTemplate("IsTracing")
-	return "{{.ClientVersion}} (" + archive + ", {{if .IsTesting}}[GREEN]testing[OFF], {{end}}" + tracing + ")"
+	archive := "{{if .IsArchive}}[GREEN]archive[OFF]{{else}}[RED]no archive[OFF]{{end}}"
+	testing := "{{if .IsTesting}}[GREEN]testing[OFF], {{end}}"
+	tracing := "{{if .IsTracing}}[GREEN]tracing[OFF]{{else}}[RED]no tracing[OFF]{{end}}"
+	return "{{.ClientVersion}} (" + archive + ", " + testing + tracing + ")"
 }
 
 func getVersionTemplate() string {
-	esKey := getBoolTemplate("HasEsKey")
-	pinKey := getBoolTemplate("HasPinKey")
+	esKey := "{{if .HasEsKey}}[GREEN]eskey[OFF]{{else}}[RED]no eskey[OFF]{{end}}"
+	pinKey := "{{if .HasPinKey}}[GREEN]pinkey[OFF]{{else}}[RED]no pinkey[OFF]{{end}}"
 	return "{{.Version}} (" + esKey + ", " + pinKey + ")"
 }
 
-const templateStr = `INFO Client:            {CLIENT_STRING}
-INFO TrueBlocks:        {VERSION_STRING}
-INFO RPC Provider:      {{.RpcProvider}} - {{.Chain}} ({{if eq .NetworkId "0"}}[RED]{{.NetworkId}}[OFF]{{else}}[GREEN]{{.NetworkId}}[OFF]{{end}}/{{if eq .ChainId "0"}}[RED]{{.ChainId}}[OFF]{{else}}[GREEN]{{.ChainId}}[OFF]{{end}})
+func getIdTemplate() string {
+	networkId := "{{if eq .NetworkId \"0\"}}[RED]{{.NetworkId}}[OFF]{{else}}[GREEN]{{.NetworkId}}[OFF]{{end}}"
+	chainId := "{{if eq .ChainId \"0\"}}[RED]{{.ChainId}}[OFF]{{else}}[GREEN]{{.ChainId}}[OFF]{{end}}"
+	return networkId + "/" + chainId
+}
+
+func getProgress(diagnose bool) string {
+	if diagnose {
+		diag := "\nINFO {{.Progress}}"
+		return diag
+	}
+
+	return "          {{.Progress}}"
+}
+
+const templateStr = `INFO Client:            [CLIENT]
+INFO TrueBlocks:        [VERSION]
+INFO RPC Provider:      {{.RpcProvider}} - {{.Chain}} ([IDS])
 INFO Root Config Path:  {{.RootConfig}}
 INFO Chain Config Path: {{.ChainConfig}}
 INFO Cache Path:        {{.CachePath}}
 INFO Index Path:        {{.IndexPath}}
-INFO Progress:          {{.Progress}}
+INFO Progress:[PROGRESS]
 `
 
+/*
+Node synced, index up-to-date
+
+07-09|11:02:03.171 Progress:
+07-09|11:02:03.171 Chain head at block 18083530
+07-09|11:02:03.171 Your index is up-to-date with the chain
+07-09|11:02:03.171 Index finalized for block: 18083530. Staging: 18083531. Currently indexing: 18083532
+07-09|11:02:03.171 Timestamps synced up to block: 18083530
+
+Node synced, successfull chifra init but scraper not running
+
+07-09|11:02:03.171 Progress:
+07-09|11:02:03.171 Chain head at block 18083530
+07-09|11:02:03.171 Your index is 340,662 blocks BEHIND the chain
+07-09|11:02:03.171 Index finalized for block: 17742868. Staging: 17742868. Currently indexing: 17742888
+07-09|11:02:03.171 Timestamps synced up to block: 17062507 (1,021,023 blocks BEHIND the chain)
+
+WARN: Index is behind the chain head, but scraper is not running.
+WARN: This means chifra is not aware of latest transactions and can return incomplete data.
+WARN: Run `chifra daemon --scrape index` to solve the issue.
+
+Node is syncing
+
+07-09|11:02:03.171 Progress:
+07-09|11:02:03.171 Chain head at block 0
+07-09|11:02:03.171 Index finalized for block: 0. Staging: 0. Currently indexing: 0
+07-09|11:02:03.171 Timestamps synced up to block: 0
+
+WARN: Your node seems to be syncing. During this state it can refuse queries from chifra
+WARN: or return incomplete data. If you observe such issues, please wait until your node
+WARN: is fully synced and your index catches up to the chain head.
+*/
 // EXISTING_CODE
