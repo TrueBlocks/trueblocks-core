@@ -106,3 +106,19 @@ func (f *AppearanceFilter) ApplyTxFilters(tx *types.SimpleTransaction) (passed, 
 	// fmt.Println("len:", len(f.fourBytes), "matchesFourbyte", matchesFourbyte, "matchesReverted", matchesReverted)
 	return matchesFourbyte && matchesReverted, false
 }
+
+func (f *AppearanceFilter) ApplyLogFilter(log *types.SimpleLog, addrArray []base.Address) bool {
+	haystack := make([]byte, 66*len(log.Topics)+len(log.Data))
+	haystack = append(haystack, log.Address.Hex()[2:]...)
+	for _, topic := range log.Topics {
+		haystack = append(haystack, topic.Hex()[2:]...)
+	}
+	haystack = append(haystack, log.Data[2:]...)
+
+	for _, addr := range addrArray {
+		if strings.Contains(string(haystack), addr.Hex()[2:]) {
+			return true
+		}
+	}
+	return false
+}

@@ -51,7 +51,7 @@ func (opts *ExportOptions) readLogs(
 		}
 		for _, log := range tx.Receipt.Logs {
 			log := log
-			if log.ContainsAny(addrArray) && opts.matchesFilter(&log) {
+			if filter.ApplyLogFilter(&log, addrArray) && opts.matchesFilter(&log) {
 				if opts.Articulate {
 					if err := abiCache.ArticulateLog(&log); err != nil {
 						errorChan <- fmt.Errorf("error articulating log: %v", err)
