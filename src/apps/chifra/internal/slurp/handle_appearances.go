@@ -37,7 +37,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 				})
 
 				for !done {
-					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(opts.Globals.Chain, addr, tt, &paginator)
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
