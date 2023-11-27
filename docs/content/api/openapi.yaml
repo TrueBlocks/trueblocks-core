@@ -3918,6 +3918,9 @@ components:
       type: string
     string:
       type: string
+    uint64:
+      type: number
+      format: uint64
     topic:
       type: string
       format: bytes
