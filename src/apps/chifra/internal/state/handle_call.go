@@ -45,12 +45,13 @@ func (opts *StateOptions) HandleCall() error {
 
 		nErrors := 0
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleResult) error {
+			bn := uint64(app.BlockNumber)
 			if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
 				wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
 				errorChan <- wrapped
 				cancel()
 			} else {
-				contractCall.BlockNumber = app.BlockNumber
+				contractCall.BlockNumber = bn
 				results, err := contractCall.Call(artFunc)
 				if err != nil {
 					errorChan <- err
@@ -90,7 +91,6 @@ func (opts *StateOptions) HandleCall() error {
 			item := item
 			modelChan <- &item
 		}
-
 	}
 
 	extra := map[string]interface{}{

@@ -41,6 +41,7 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 		NoZero:     noZero,
 		UseTraces:  useTraces,
 	}
+
 	if assetFilters != nil {
 		assets := make([]base.Address, 0, len(*assetFilters))
 		for _, addr := range *assetFilters {

@@ -38,7 +38,8 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 		})
 
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
-			if block, err := opts.Conn.GetBlockHeaderByNumber(app.BlockNumber); err != nil {
+			bn := uint64(app.BlockNumber)
+			if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 				errorChan <- err
 				cancel()
 				return nil

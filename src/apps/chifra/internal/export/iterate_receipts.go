@@ -39,7 +39,7 @@ func (opts *ExportOptions) readReceipts(
 		Total:   mon.Count(),
 	})
 
-	if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+	if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil {
 		return nil, err
 	}
 

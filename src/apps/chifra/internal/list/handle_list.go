@@ -17,7 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *ListOptions) HandleListAppearances(monitorArray []monitor.Monitor) error {
+func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	filter := filter.NewFilter(
 		opts.Reversed,

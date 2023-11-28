@@ -41,7 +41,8 @@ func (opts *BlocksOptions) HandleUncles() error {
 		})
 
 		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[types.SimpleTransaction]) error {
-			if uncs, err := opts.Conn.GetUncleBodiesByNumber(app.BlockNumber); err != nil {
+			bn := uint64(app.BlockNumber)
+			if uncs, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
 					errorChan <- errors.New("uncles not found")

@@ -21,7 +21,9 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
-		if appMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		var err error
+		var appMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 		} else {

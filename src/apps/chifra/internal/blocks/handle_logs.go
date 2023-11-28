@@ -37,7 +37,9 @@ func (opts *BlocksOptions) HandleLogs() error {
 	nErrors := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		appMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds)
+		var err error
+		var appMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
@@ -56,13 +58,14 @@ func (opts *BlocksOptions) HandleLogs() error {
 				value.Receipt = &types.SimpleReceipt{}
 			}
 
-			ts := opts.Conn.GetBlockTimestamp(app.BlockNumber)
-			if logs, err := opts.Conn.GetLogsByNumber(app.BlockNumber, ts); err != nil {
-				errorChan <- fmt.Errorf("block at %d returned an error: %w", app.BlockNumber, err)
+			bn := uint64(app.BlockNumber)
+			ts := opts.Conn.GetBlockTimestamp(bn)
+			if logs, err := opts.Conn.GetLogsByNumber(bn, ts); err != nil {
+				errorChan <- fmt.Errorf("block at %d returned an error: %w", bn, err)
 				return nil
 
 			} else if len(logs) == 0 {
-				errorChan <- fmt.Errorf("block at %d has no logs", app.BlockNumber)
+				errorChan <- fmt.Errorf("block at %d has no logs", bn)
 				return nil
 
 			} else {

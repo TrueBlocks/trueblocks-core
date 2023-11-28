@@ -29,12 +29,13 @@ func (opts *TracesOptions) HandleFilter() error {
 	if _, err := validate.ValidateIdentifiersWithBounds(chain, []string{fmt.Sprintf("%d-%d", br.First, br.Last+1)}, validate.ValidBlockIdWithRangeAndDate, 1, &ids); err != nil {
 		return err
 	}
+	opts.TransactionIds = ids
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		var err error
 		var appMap map[identifiers.ResolvedId]*types.SimpleTransaction
-		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, ids); err != nil {
+		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
