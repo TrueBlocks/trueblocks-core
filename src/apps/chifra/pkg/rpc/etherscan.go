@@ -22,8 +22,8 @@ type Paginator struct {
 	PerPage int
 }
 
-func (conn *Connection) GetESTransactionByAddress(addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
-	url, err := getEtherscanUrl(addr, requestType, paginator)
+func (conn *Connection) GetESTransactionByAddress(chain, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+	url, err := getEtherscanUrl(chain, addr, requestType, paginator)
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err
 	}
@@ -66,7 +66,7 @@ func (conn *Connection) GetESTransactionByAddress(addr, requestType string, pagi
 }
 
 // func (conn *Connection) getESTransactionByHash(txHash base.Hash) (types.SimpleSlurp, error) {
-// 	url, err := getEtherscanUrl(txHash.Hex(), "byHash", &Paginator{Page: 1, PerPage: 10})
+// 	url, err := getEtherscanUrl(chain, txHash.Hex(), "byHash", &Paginator{Page: 1, PerPage: 10})
 // 	if err != nil {
 // 		return types.SimpleSlurp{}, err
 // 	}
@@ -166,7 +166,7 @@ func (conn *Connection) responseToTransactions(addr, requestType string, rawTxs 
 	return ret, len(ret), nil
 }
 
-func getEtherscanUrl(value string, requestType string, paginator *Paginator) (string, error) {
+func getEtherscanUrl(chain, value string, requestType string, paginator *Paginator) (string, error) {
 	var actions = map[string]string{
 		"ext":         "txlist",
 		"int":         "txlistinternal",
