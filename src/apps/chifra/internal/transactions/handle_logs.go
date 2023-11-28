@@ -41,7 +41,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 
 		var err error
-		var txMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		var txMap map[types.SimpleAppearance]*types.SimpleTransaction
 
 		if txMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
@@ -56,15 +56,15 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 			a := &types.RawAppearance{
 				BlockNumber:      uint32(app.BlockNumber),
 				TransactionIndex: uint32(app.TransactionIndex),
 			}
 			if tx, err := opts.Conn.GetTransactionByAppearance(a, opts.Traces /* needsTraces */); err != nil {
-				return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+				return fmt.Errorf("transaction at %s returned an error: %w", app.Reason, err)
 			} else if tx == nil {
-				return fmt.Errorf("transaction at %s has no logs", app.String())
+				return fmt.Errorf("transaction at %s has no logs", app.Reason)
 			} else {
 				if opts.Articulate && tx.ArticulatedTx == nil {
 					if err = abiCache.ArticulateTransaction(tx); err != nil {

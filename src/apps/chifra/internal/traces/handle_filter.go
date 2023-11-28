@@ -33,7 +33,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		var err error
-		var txMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		var txMap map[types.SimpleAppearance]*types.SimpleTransaction
 		if txMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, ids); err != nil {
 			errorChan <- err
 			cancel()
@@ -47,23 +47,23 @@ func (opts *TracesOptions) HandleFilter() error {
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 			a := &types.RawAppearance{
 				BlockNumber: uint32(app.BlockNumber),
 			}
 
 			if block, err := opts.Conn.GetBlockBodyByNumber(uint64(a.BlockNumber)); err != nil {
-				errorChan <- fmt.Errorf("block at %s returned an error: %w", app.String(), err)
+				errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Reason, err)
 				return nil
 			} else {
 				for _, tx := range block.Transactions {
 					tx := tx
 					if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
-						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.String(), err)
+						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Reason, err)
 						return nil
 
 					} else if len(traces) == 0 {
-						errorChan <- fmt.Errorf("block at %s has no traces", app.String())
+						errorChan <- fmt.Errorf("block at %s has no traces", app.Reason)
 						return nil
 
 					} else {

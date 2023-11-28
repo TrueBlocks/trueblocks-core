@@ -70,7 +70,7 @@ func fastWay(conn *rpc.Connection) {
 		fmt.Println(err)
 	}
 
-	var theMap map[identifiers.ResolvedId]*types.SimpleBlock[string]
+	var theMap map[types.SimpleAppearance]*types.SimpleBlock[string]
 	var err error
 
 	if theMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, BlockIds); err != nil {
@@ -81,13 +81,13 @@ func fastWay(conn *rpc.Connection) {
 
 		var firstBlock types.SimpleBlock[string]
 		firstBlock.BlockNumber = utils.NOPOS
-		iterateFunc := func(key identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
+		iterateFunc := func(key types.SimpleAppearance, value *types.SimpleBlock[string]) error {
 			if theBlock, err := conn.GetBlockHeaderByNumber(base.Blknum(key.BlockNumber)); err != nil {
 				return err
 			} else {
 				if len(theBlock.Transactions) > 0 {
 					// fmt.Println("Found", theBlock.Hash.String(), ":", len(theBlock.Transactions), "transactions")
-					if theBlock.BlockNumber > 0 && key.BlockNumber < firstBlock.BlockNumber {
+					if theBlock.BlockNumber > 0 && key.BlockNumber < uint32(firstBlock.BlockNumber) {
 						firstBlock = theBlock
 						fmt.Println("    Set", firstBlock.BlockNumber, firstBlock.Hash.String(), ":", len(firstBlock.Transactions), "transactions             ")
 					}

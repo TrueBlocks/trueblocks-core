@@ -22,7 +22,7 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[string]
+		var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
 		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
@@ -37,8 +37,8 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 			Total:   int64(len(appMap)),
 		})
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
-			if block, err := opts.Conn.GetBlockHeaderByNumber(app.BlockNumber); err != nil {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
+			if block, err := opts.Conn.GetBlockHeaderByNumber(uint64(app.BlockNumber)); err != nil {
 				errorChan <- err
 				cancel()
 				return nil

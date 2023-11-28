@@ -24,7 +24,7 @@ func (opts *TracesOptions) HandleCounts() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		var err error
-		var txMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		var txMap map[types.SimpleAppearance]*types.SimpleTransaction
 		if txMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
@@ -38,18 +38,18 @@ func (opts *TracesOptions) HandleCounts() error {
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 			a := &types.RawAppearance{
 				BlockNumber:      uint32(app.BlockNumber),
 				TransactionIndex: uint32(app.TransactionIndex),
 			}
 
 			if tx, err := opts.Conn.GetTransactionByAppearance(a, true); err != nil {
-				errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+				errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.Reason, err)
 				return nil
 
 			} else if tx == nil || len(tx.Traces) == 0 {
-				errorChan <- fmt.Errorf("transaction at %s has no traces", app.String())
+				errorChan <- fmt.Errorf("transaction at %s has no traces", app.Reason)
 				return nil
 
 			} else {

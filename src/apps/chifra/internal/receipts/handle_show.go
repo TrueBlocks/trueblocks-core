@@ -33,15 +33,15 @@ func (opts *ReceiptsOptions) HandleShow() error {
 			iterCtx, iterCancel := context.WithCancel(context.Background())
 			defer iterCancel()
 
-			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 				a := &types.RawAppearance{
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
 				}
 				if tx, err := opts.Conn.GetTransactionByAppearance(a, false /* needsTraces */); err != nil {
-					return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+					return fmt.Errorf("transaction at %s returned an error: %w", app.Reason, err)
 				} else if tx == nil || tx.Receipt == nil {
-					return fmt.Errorf("transaction at %s has no logs", app.String())
+					return fmt.Errorf("transaction at %s has no logs", app.Reason)
 				} else {
 					if opts.Articulate {
 						if err = abiCache.ArticulateReceipt(tx.Receipt); err != nil {

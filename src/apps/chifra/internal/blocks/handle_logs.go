@@ -51,18 +51,19 @@ func (opts *BlocksOptions) HandleLogs() error {
 		iterCtx, iterCancel := context.WithCancel(context.Background())
 		defer iterCancel()
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 			if value.Receipt == nil {
 				value.Receipt = &types.SimpleReceipt{}
 			}
 
-			ts := opts.Conn.GetBlockTimestamp(app.BlockNumber)
-			if logs, err := opts.Conn.GetLogsByNumber(app.BlockNumber, ts); err != nil {
-				errorChan <- fmt.Errorf("block at %d returned an error: %w", app.BlockNumber, err)
+			bn := uint64(app.BlockNumber)
+			ts := opts.Conn.GetBlockTimestamp(bn)
+			if logs, err := opts.Conn.GetLogsByNumber(bn, ts); err != nil {
+				errorChan <- fmt.Errorf("block at %d returned an error: %w", bn, err)
 				return nil
 
 			} else if len(logs) == 0 {
-				errorChan <- fmt.Errorf("block at %d has no logs", app.BlockNumber)
+				errorChan <- fmt.Errorf("block at %d has no logs", bn)
 				return nil
 
 			} else {

@@ -24,7 +24,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[types.SimpleTransaction]
+		var appMap map[types.SimpleAppearance]*types.SimpleBlock[types.SimpleTransaction]
 		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
@@ -40,8 +40,8 @@ func (opts *BlocksOptions) HandleUncles() error {
 			Total:   int64(len(appMap)),
 		})
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[types.SimpleTransaction]) error {
-			if uncs, err := opts.Conn.GetUncleBodiesByNumber(app.BlockNumber); err != nil {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
+			if uncs, err := opts.Conn.GetUncleBodiesByNumber(uint64(app.BlockNumber)); err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
 					errorChan <- errors.New("uncles not found")
