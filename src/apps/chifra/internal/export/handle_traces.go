@@ -71,7 +71,7 @@ func (opts *ExportOptions) readTraces(
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleTrace, error) {
-	if txMap, cnt, err := monitor.ReadAppearancesAsMap[types.SimpleTransaction](mon, filter); err != nil {
+	if txMap, cnt, err := monitor.AsMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {

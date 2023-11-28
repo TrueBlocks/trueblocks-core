@@ -22,7 +22,7 @@ func (opts *ExportOptions) readWithdrawals(
 	var err error
 	var withdrawalMap map[types.SimpleAppearance]*types.SimpleBlock[string]
 
-	if withdrawalMap, cnt, err = monitor.ReadAppearancesAsMap[types.SimpleBlock[string]](mon, filter); err != nil {
+	if withdrawalMap, cnt, err = monitor.AsMap[types.SimpleBlock[string]](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	}
