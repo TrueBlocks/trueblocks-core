@@ -4,13 +4,18 @@ import (
 	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // GetStatementsFromTransaction returns a statement from a given transaction
-func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types.SimpleTransaction) (statements []*types.SimpleStatement) {
+func (l *Ledger) GetStatementsFromTransaction(
+	conn *rpc.Connection,
+	filter *filter.AppearanceFilter,
+	trans *types.SimpleTransaction,
+) (statements []*types.SimpleStatement) {
 	if false && conn.StoreReadable() {
 		statementGroup := &types.SimpleStatementGroup{
 			Address:          l.AccountFor,
@@ -120,7 +125,8 @@ func (l *Ledger) GetStatementsFromTransaction(conn *rpc.Connection, trans *types
 	if trans.Receipt != nil {
 		for _, log := range trans.Receipt.Logs {
 			log := log
-			if l.assetOfInterest(log.Address) && log.ContainsAddress(l.AccountFor) {
+			addrArray := []base.Address{l.AccountFor}
+			if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {
 				if statement, err := l.getStatementFromLog(conn, &log); statement != nil {
 					if statement.Sender == l.AccountFor || statement.Recipient == l.AccountFor {
 						add := !l.NoZero || statement.MoneyMoved()
