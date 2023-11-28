@@ -21,13 +21,13 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
-		if txMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if appMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
 				Enabled: !opts.Globals.TestMode,
-				Total:   int64(len(txMap)),
+				Total:   int64(len(appMap)),
 			})
 
 			iterCtx, iterCancel := context.WithCancel(context.Background())
@@ -55,7 +55,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 			}
 
 			iterErrorChan := make(chan error)
-			go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 			for err := range iterErrorChan {
 				// TODO: I don't really want to quit looping here. Just report the error and keep going.
 				iterCancel()
@@ -68,8 +68,8 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 			}
 			bar.Finish(true)
 
-			items := make([]types.SimpleTransaction, 0, len(txMap))
-			for _, tx := range txMap {
+			items := make([]types.SimpleTransaction, 0, len(appMap))
+			for _, tx := range appMap {
 				items = append(items, *tx)
 			}
 			sort.Slice(items, func(i, j int) bool {

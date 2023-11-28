@@ -71,7 +71,7 @@ func (opts *ExportOptions) readTraces(
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleTrace, error) {
-	if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
+	if appMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	} else if !opts.NoZero || cnt > 0 {
@@ -80,13 +80,13 @@ func (opts *ExportOptions) readTraces(
 			Enabled: !opts.Globals.TestMode,
 			Total:   mon.Count(),
 		})
-		if err := opts.readTransactions(txMap, filter, bar, true /* readTraces */); err != nil { // calls IterateOverMap
+		if err := opts.readTransactions(appMap, filter, bar, true /* readTraces */); err != nil { // calls IterateOverMap
 			return nil, err
 		}
 
 		// Sort the items back into an ordered array by block number
-		items := make([]*types.SimpleTrace, 0, len(txMap))
-		for _, tx := range txMap {
+		items := make([]*types.SimpleTrace, 0, len(appMap))
+		for _, tx := range appMap {
 			for index, trace := range tx.Traces {
 				trace := trace
 				trace.TraceIndex = uint64(index)

@@ -34,7 +34,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](&mon, filter); err != nil {
+			if appMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
@@ -43,13 +43,13 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
-				if err := opts.readTransactions(txMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+				if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 					errorChan <- err
 					return
 				}
 
-				items := make([]*types.SimpleTransaction, 0, len(txMap))
-				for _, tx := range txMap {
+				items := make([]*types.SimpleTransaction, 0, len(appMap))
+				for _, tx := range appMap {
 					if opts.Articulate {
 						if err = abiCache.ArticulateTransaction(tx); err != nil {
 							errorChan <- err // continue even on error

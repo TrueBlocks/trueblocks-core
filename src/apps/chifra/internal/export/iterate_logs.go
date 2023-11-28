@@ -21,9 +21,8 @@ func (opts *ExportOptions) readLogs(
 ) ([]*types.SimpleLog, error) {
 	var cnt int
 	var err error
-	var txMap map[types.SimpleAppearance]*types.SimpleTransaction
-
-	if txMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleTransaction
+	if appMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	}
@@ -39,13 +38,13 @@ func (opts *ExportOptions) readLogs(
 		Total:   mon.Count(),
 	})
 
-	if err := opts.readTransactions(txMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+	if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
 		return nil, err
 	}
 
 	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleLog, 0, len(txMap))
-	for _, tx := range txMap {
+	items := make([]*types.SimpleLog, 0, len(appMap))
+	for _, tx := range appMap {
 		if tx.Receipt == nil {
 			continue
 		}
