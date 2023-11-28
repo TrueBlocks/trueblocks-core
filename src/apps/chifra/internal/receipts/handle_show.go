@@ -90,9 +90,5 @@ func (opts *ReceiptsOptions) HandleShow() error {
 		}
 	}
 
-	// extra := map[string]interface{}{
-	// 	"articulate": opts.Articulate,
-	// }
-
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }

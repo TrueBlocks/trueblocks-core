@@ -90,7 +90,6 @@ func (opts *StateOptions) HandleCall() error {
 			item := item
 			modelChan <- &item
 		}
-
 	}
 
 	extra := map[string]interface{}{

@@ -22,6 +22,7 @@ import (
 func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	been_here := 0
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
