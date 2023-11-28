@@ -28,7 +28,7 @@ func (opts *ExportOptions) readStatements(
 	var err error
 	var txMap map[types.SimpleAppearance]*types.SimpleTransaction
 
-	if txMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
+	if txMap, cnt, err = monitor.ReadAppearancesAsMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	}

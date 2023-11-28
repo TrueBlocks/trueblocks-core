@@ -34,7 +34,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if txMap, cnt, err := monitor.ReadAppearancesToMap[types.SimpleTransaction](&mon, filter); err != nil {
+			if txMap, cnt, err := monitor.ReadAppearancesAsMap[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
