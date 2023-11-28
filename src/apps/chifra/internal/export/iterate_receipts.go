@@ -22,9 +22,8 @@ func (opts *ExportOptions) readReceipts(
 
 	var cnt int
 	var err error
-	var txMap map[types.SimpleAppearance]*types.SimpleTransaction
-
-	if txMap, cnt, err = monitor.AsMap[types.SimpleTransaction](mon, filter); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleTransaction
+	if appMap, cnt, err = monitor.AsMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	}
@@ -40,12 +39,12 @@ func (opts *ExportOptions) readReceipts(
 		Total:   mon.Count(),
 	})
 
-	if err := opts.readTransactions(txMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+	if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil {
 		return nil, err
 	}
 
-	items := make([]*types.SimpleReceipt, 0, len(txMap))
-	for _, tx := range txMap {
+	items := make([]*types.SimpleReceipt, 0, len(appMap))
+	for _, tx := range appMap {
 		if tx.Receipt == nil {
 			continue
 		}

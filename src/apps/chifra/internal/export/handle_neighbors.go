@@ -30,7 +30,10 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if neighborMap, cnt, err := monitor.AsMap[bool](&mon, filter); err != nil {
+			var cnt int
+			var err error
+			var appMap map[types.SimpleAppearance]*bool
+			if appMap, cnt, err = monitor.AsMap[bool](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
@@ -53,7 +56,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 				ctx, cancel := context.WithCancel(context.Background())
 				defer cancel()
 				errChan := make(chan error)
-				go utils.IterateOverMap(ctx, errChan, neighborMap, iterFunc)
+				go utils.IterateOverMap(ctx, errChan, appMap, iterFunc)
 				if stepErr := <-errChan; stepErr != nil {
 					errorChan <- stepErr
 				} else {
@@ -61,7 +64,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 				}
 
 				// Sort the items back into an ordered array by block number
-				items := make([]types.SimpleAppearance, 0, len(neighborMap))
+				items := make([]types.SimpleAppearance, 0, len(appMap))
 				for _, neighbor := range allNeighbors {
 					app := types.SimpleAppearance{
 						Address:          *neighbor.Address,

@@ -29,15 +29,15 @@ func (opts *StateOptions) HandleCall() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
 		var err error
-		var txMap map[types.SimpleAppearance]*types.SimpleResult
-		if txMap, _, err = identifiers.AsMap[types.SimpleResult](chain, opts.BlockIds); err != nil {
+		var appMap map[types.SimpleAppearance]*types.SimpleResult
+		if appMap, _, err = identifiers.AsMap[types.SimpleResult](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
 
 		bar := logger.NewBar(logger.BarOptions{
 			Enabled: !opts.Globals.TestMode,
-			Total:   int64(len(txMap)),
+			Total:   int64(len(appMap)),
 		})
 
 		iterCtx, iterCancel := context.WithCancel(context.Background())
@@ -64,7 +64,7 @@ func (opts *StateOptions) HandleCall() error {
 		}
 
 		iterErrorChan := make(chan error)
-		go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
 			// TODO: I don't really want to quit looping here. Just report the error and keep going.
 			// iterCancel()
@@ -77,8 +77,8 @@ func (opts *StateOptions) HandleCall() error {
 		}
 		bar.Finish(true)
 
-		items := make([]types.SimpleResult, 0, len(txMap))
-		for _, v := range txMap {
+		items := make([]types.SimpleResult, 0, len(appMap))
+		for _, v := range appMap {
 			v := v
 			items = append(items, *v)
 		}

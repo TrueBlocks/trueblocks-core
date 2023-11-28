@@ -22,9 +22,8 @@ func (opts *ExportOptions) readBalances(
 
 	var cnt int
 	var err error
-	var txMap map[types.SimpleAppearance]*types.SimpleToken
-
-	if txMap, cnt, err = monitor.AsMap[types.SimpleToken](mon, filter); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleToken
+	if appMap, cnt, err = monitor.AsMap[types.SimpleToken](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	}
@@ -61,7 +60,7 @@ func (opts *ExportOptions) readBalances(
 	defer cancel()
 
 	errChan := make(chan error)
-	go utils.IterateOverMap(ctx, errChan, txMap, iterFunc)
+	go utils.IterateOverMap(ctx, errChan, appMap, iterFunc)
 	if stepErr := <-errChan; stepErr != nil {
 		return nil, stepErr
 	} else {
@@ -69,8 +68,8 @@ func (opts *ExportOptions) readBalances(
 	}
 
 	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleToken, 0, len(txMap))
-	for _, tx := range txMap {
+	items := make([]*types.SimpleToken, 0, len(appMap))
+	for _, tx := range appMap {
 		items = append(items, tx)
 	}
 	sort.Slice(items, func(i, j int) bool {

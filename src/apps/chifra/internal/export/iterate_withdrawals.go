@@ -20,9 +20,8 @@ func (opts *ExportOptions) readWithdrawals(
 
 	var cnt int
 	var err error
-	var withdrawalMap map[types.SimpleAppearance]*types.SimpleBlock[string]
-
-	if withdrawalMap, cnt, err = monitor.AsMap[types.SimpleBlock[string]](mon, filter); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
+	if appMap, cnt, err = monitor.AsMap[types.SimpleBlock[string]](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	}
@@ -63,7 +62,7 @@ func (opts *ExportOptions) readWithdrawals(
 	defer cancel()
 
 	errChan := make(chan error)
-	go utils.IterateOverMap(ctx, errChan, withdrawalMap, iterFunc)
+	go utils.IterateOverMap(ctx, errChan, appMap, iterFunc)
 	if stepErr := <-errChan; stepErr != nil {
 		return nil, stepErr
 	} else {
@@ -71,8 +70,8 @@ func (opts *ExportOptions) readWithdrawals(
 	}
 
 	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleWithdrawal, 0, len(withdrawalMap))
-	for _, block := range withdrawalMap {
+	items := make([]*types.SimpleWithdrawal, 0, len(appMap))
+	for _, block := range appMap {
 		for _, with := range block.Withdrawals {
 			items = append(items, &with)
 		}

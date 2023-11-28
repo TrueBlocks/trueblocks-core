@@ -37,7 +37,9 @@ func (opts *BlocksOptions) HandleLogs() error {
 	nErrors := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		txMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds)
+		var err error
+		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
+		appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds)
 		if err != nil {
 			errorChan <- err
 			cancel()
@@ -45,7 +47,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 
 		bar := logger.NewBar(logger.BarOptions{
 			Enabled: !opts.Globals.TestMode,
-			Total:   int64(len(txMap)),
+			Total:   int64(len(appMap)),
 		})
 
 		iterCtx, iterCancel := context.WithCancel(context.Background())
@@ -83,7 +85,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 		}
 
 		iterErrorChan := make(chan error)
-		go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
 			// TODO: I don't really want to quit looping here. Just report the error and keep going.
 			// iterCancel()
@@ -96,8 +98,8 @@ func (opts *BlocksOptions) HandleLogs() error {
 		}
 		bar.Finish(true)
 
-		items := make([]types.SimpleLog, 0, len(txMap))
-		for _, tx := range txMap {
+		items := make([]types.SimpleLog, 0, len(appMap))
+		for _, tx := range appMap {
 			tx := tx
 			items = append(items, tx.Receipt.Logs...)
 		}

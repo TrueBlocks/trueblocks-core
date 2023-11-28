@@ -23,6 +23,7 @@ func (opts *BlocksOptions) HandleHashes() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+		// var cnt int
 		var err error
 		var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
 		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
