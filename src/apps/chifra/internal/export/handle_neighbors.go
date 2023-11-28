@@ -30,7 +30,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if appMap, cnt, err := monitor.ReadAppearancesToMap[bool](&mon, filter); err != nil {
+			if appMap, cnt, err := monitor.AsMap[bool](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {

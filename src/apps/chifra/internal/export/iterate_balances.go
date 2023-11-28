@@ -24,7 +24,7 @@ func (opts *ExportOptions) readBalances(
 	var err error
 	var appMap map[types.SimpleAppearance]*types.SimpleToken
 
-	if appMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleToken](mon, filter); err != nil {
+	if appMap, cnt, err = monitor.AsMap[types.SimpleToken](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	}

@@ -23,7 +23,7 @@ func (opts *ExportOptions) readReceipts(
 	var cnt int
 	var err error
 	var appMap map[types.SimpleAppearance]*types.SimpleTransaction
-	if appMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
+	if appMap, cnt, err = monitor.AsMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
 	}
