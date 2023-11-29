@@ -47,11 +47,11 @@ func (opts *TracesOptions) HandleShow() error {
 			}
 
 			if tx, err := opts.Conn.GetTransactionByAppearance(a, true); err != nil {
-				errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+				errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.Reason, err)
 				return nil
 
 			} else if tx == nil || len(tx.Traces) == 0 {
-				errorChan <- fmt.Errorf("transaction at %s has no traces", app.String())
+				errorChan <- fmt.Errorf("transaction at %s has no traces", app.Reason)
 				return nil
 
 			} else {

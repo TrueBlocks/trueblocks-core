@@ -54,17 +54,17 @@ func (opts *TracesOptions) HandleFilter() error {
 			}
 
 			if block, err := opts.Conn.GetBlockBodyByNumber(uint64(a.BlockNumber)); err != nil {
-				errorChan <- fmt.Errorf("block at %s returned an error: %w", app.String(), err)
+				errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Reason, err)
 				return nil
 			} else {
 				for _, tx := range block.Transactions {
 					tx := tx
 					if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
-						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.String(), err)
+						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Reason, err)
 						return nil
 
 					} else if len(traces) == 0 {
-						errorChan <- fmt.Errorf("block at %s has no traces", app.String())
+						errorChan <- fmt.Errorf("block at %s has no traces", app.Reason)
 						return nil
 
 					} else {

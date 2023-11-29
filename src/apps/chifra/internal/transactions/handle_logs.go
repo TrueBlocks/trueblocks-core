@@ -61,9 +61,9 @@ func (opts *TransactionsOptions) HandleLogs() error {
 				TransactionIndex: uint32(app.TransactionIndex),
 			}
 			if tx, err := opts.Conn.GetTransactionByAppearance(a, opts.Traces /* needsTraces */); err != nil {
-				return fmt.Errorf("transaction at %s returned an error: %w", app.String(), err)
+				return fmt.Errorf("transaction at %s returned an error: %w", app.Reason, err)
 			} else if tx == nil {
-				return fmt.Errorf("transaction at %s has no logs", app.String())
+				return fmt.Errorf("transaction at %s has no logs", app.Reason)
 			} else {
 				if opts.Articulate && tx.ArticulatedTx == nil {
 					if err = abiCache.ArticulateTransaction(tx); err != nil {

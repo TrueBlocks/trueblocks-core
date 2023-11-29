@@ -9,11 +9,7 @@ import (
 type ResolvedId struct {
 	BlockNumber      uint64
 	TransactionIndex uint64
-	Original         string
-}
-
-func (r *ResolvedId) String() string {
-	return r.Original
+	Reason           string
 }
 
 type mappedType interface {
@@ -38,7 +34,7 @@ func AsMap[T mappedType](chain string, ids []Identifier) (map[ResolvedId]*T, int
 				for _, raw := range blockIds {
 					s := ResolvedId{
 						BlockNumber: uint64(raw),
-						Original:    strings.Replace(ids[index].Orig, "-", ".", -1),
+						Reason:      strings.Replace(ids[index].Orig, "-", ".", -1),
 					}
 					ret[s] = new(T)
 				}
@@ -48,7 +44,7 @@ func AsMap[T mappedType](chain string, ids []Identifier) (map[ResolvedId]*T, int
 				s := ResolvedId{
 					BlockNumber:      uint64(raw.BlockNumber),
 					TransactionIndex: uint64(raw.TransactionIndex),
-					Original:         strings.Replace(ids[index].Orig, "-", ".", -1),
+					Reason:           strings.Replace(ids[index].Orig, "-", ".", -1),
 				}
 				ret[s] = new(T)
 			}
