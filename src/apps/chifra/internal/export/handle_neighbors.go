@@ -26,6 +26,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
+	nErrors := 0
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
@@ -42,30 +43,33 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
-				allNeighbors := make([]Reason, 0)
+
+				neighbors := make([]Reason, 0)
 				iterFunc := func(app types.SimpleAppearance, unused *bool) error {
-					if neighbors, err := GetNeighbors(&app); err != nil {
+					if theseNeighbors, err := GetNeighbors(&app); err != nil {
 						return err
 					} else {
-						allNeighbors = append(allNeighbors, neighbors...)
+						neighbors = append(neighbors, theseNeighbors...)
 						return nil
 					}
 				}
 
 				// Set up and interate over the map calling iterFunc for each appearance
-				ctx, cancel := context.WithCancel(context.Background())
-				defer cancel()
 				errChan := make(chan error)
-				go utils.IterateOverMap(ctx, errChan, appMap, iterFunc)
-				if stepErr := <-errChan; stepErr != nil {
-					errorChan <- stepErr
-				} else {
-					bar.Finish(true)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, errChan, appMap, iterFunc)
+				for err := range errChan {
+					if !opts.Globals.TestMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
+					}
 				}
+				bar.Finish(true)
 
 				// Sort the items back into an ordered array by block number
 				items := make([]types.SimpleAppearance, 0, len(appMap))
-				for _, neighbor := range allNeighbors {
+				for _, neighbor := range neighbors {
 					app := types.SimpleAppearance{
 						Address:          *neighbor.Address,
 						BlockNumber:      neighbor.App.BlockNumber,

@@ -21,15 +21,13 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
+		// var cnt int
 		var err error
 		var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
 		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
-
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
 
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
@@ -51,6 +49,8 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 		}
 
 		iterErrorChan := make(chan error)
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
 			if !opts.Globals.TestMode || nErrors == 0 {

@@ -36,10 +36,10 @@ func (opts *ExportOptions) readTransactions(
 	}
 
 	// Set up and interate over the map calling iterFunc for each appearance
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	iterCtx, iterCancel := context.WithCancel(context.Background())
+	defer iterCancel()
 	errChan := make(chan error)
-	go utils.IterateOverMap(ctx, errChan, theMap, iterFunc)
+	go utils.IterateOverMap(iterCtx, errChan, theMap, iterFunc)
 	if stepErr := <-errChan; stepErr != nil {
 		return stepErr
 	} else if bar != nil {

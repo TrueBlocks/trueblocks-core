@@ -24,6 +24,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		// var cnt int
 		var err error
 		var appMap map[types.SimpleAppearance]*types.SimpleAppearance
 		if appMap, _, err = identifiers.AsMap[types.SimpleAppearance](chain, opts.BlockIds); err != nil {
@@ -31,15 +32,13 @@ func (opts *BlocksOptions) HandleUniq() error {
 			cancel()
 		}
 
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
-
-		apps := make([]types.SimpleAppearance, 0, len(appMap))
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
 			Enabled: !opts.Globals.TestMode,
 			Total:   int64(len(appMap)),
 		})
+
+		apps := make([]types.SimpleAppearance, 0, len(appMap))
 		iterFunc := func(app types.SimpleAppearance, value *types.SimpleAppearance) error {
 			bn := uint64(app.BlockNumber)
 			procFunc := func(s *types.SimpleAppearance) error {
@@ -59,6 +58,8 @@ func (opts *BlocksOptions) HandleUniq() error {
 		}
 
 		iterErrorChan := make(chan error)
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
 			if !opts.Globals.TestMode || nErrors == 0 {

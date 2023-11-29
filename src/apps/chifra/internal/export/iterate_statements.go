@@ -19,20 +19,13 @@ func (opts *ExportOptions) readStatements(
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleStatement, error) {
-
-	if !opts.Accounting {
-		logger.Fatal("should not happen ==> accounting is not enabled. Implementation error.")
-	}
-
 	var cnt int
 	var err error
 	var appMap map[types.SimpleAppearance]*types.SimpleTransaction
 	if appMap, cnt, err = monitor.AsMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
-	}
-
-	if opts.NoZero && cnt == 0 {
+	} else if opts.NoZero && cnt == 0 {
 		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 		return nil, nil
 	}

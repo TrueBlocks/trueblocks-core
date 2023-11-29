@@ -33,9 +33,6 @@ func (opts *LogsOptions) HandleShow() error {
 				Total:   int64(len(appMap)),
 			})
 
-			iterCtx, iterCancel := context.WithCancel(context.Background())
-			defer iterCancel()
-
 			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 				a := &types.RawAppearance{
 					BlockNumber:      uint32(app.BlockNumber),
@@ -60,6 +57,8 @@ func (opts *LogsOptions) HandleShow() error {
 			}
 
 			iterErrorChan := make(chan error)
+			iterCtx, iterCancel := context.WithCancel(context.Background())
+			defer iterCancel()
 			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 			for err := range iterErrorChan {
 				// TODO: I don't really want to quit looping here. Just report the error and keep going.

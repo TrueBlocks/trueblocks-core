@@ -33,99 +33,99 @@ func (opts *TracesOptions) HandleFilter() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
+		// var cnt int
 		var err error
 		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
 		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
-		}
+		} else {
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: !opts.Globals.TestMode,
+				Total:   int64(len(appMap)),
+			})
 
-		bar := logger.NewBar(logger.BarOptions{
-			Enabled: !opts.Globals.TestMode,
-			Total:   int64(len(appMap)),
-		})
+			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+				a := &types.RawAppearance{
+					BlockNumber: uint32(app.BlockNumber),
+				}
 
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
+				if block, err := opts.Conn.GetBlockBodyByNumber(uint64(a.BlockNumber)); err != nil {
+					errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
+					return nil
+				} else {
+					for _, tx := range block.Transactions {
+						tx := tx
+						if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
+							errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
+							return nil
 
-		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-			a := &types.RawAppearance{
-				BlockNumber: uint32(app.BlockNumber),
-			}
+						} else if len(traces) == 0 {
+							errorChan <- fmt.Errorf("block at %s has no traces", app.Orig())
+							return nil
 
-			if block, err := opts.Conn.GetBlockBodyByNumber(uint64(a.BlockNumber)); err != nil {
-				errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
-				return nil
-			} else {
-				for _, tx := range block.Transactions {
-					tx := tx
-					if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
-						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
-						return nil
-
-					} else if len(traces) == 0 {
-						errorChan <- fmt.Errorf("block at %s has no traces", app.Orig())
-						return nil
-
-					} else {
-						tr := make([]types.SimpleTrace, 0, len(traces))
-						for index := range traces {
-							if opts.Articulate {
-								if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
-									errorChan <- err // continue even with an error
+						} else {
+							tr := make([]types.SimpleTrace, 0, len(traces))
+							for index := range traces {
+								if opts.Articulate {
+									if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
+										errorChan <- err // continue even with an error
+									}
 								}
+								traces[index].TraceIndex = uint64(index)
+								tr = append(tr, traces[index])
 							}
-							traces[index].TraceIndex = uint64(index)
-							tr = append(tr, traces[index])
+							value.Traces = append(value.Traces, tr...)
 						}
-						value.Traces = append(value.Traces, tr...)
 					}
+					bar.Tick()
+					return nil
 				}
-				bar.Tick()
-				return nil
 			}
-		}
 
-		iterErrorChan := make(chan error)
-		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-		for err := range iterErrorChan {
-			// TODO: I don't really want to quit looping here. Just report the error and keep going.
-			// iterCancel()
-			if !opts.Globals.TestMode || nErrors == 0 {
-				errorChan <- err
-				// Reporting more than one error causes tests to fail because they
-				// appear concurrently so sort differently
-				nErrors++
-			}
-		}
-		bar.Finish(true)
-
-		items := make([]types.SimpleTrace, 0, len(appMap))
-		for _, tx := range appMap {
-			tx := tx
-			items = append(items, tx.Traces...)
-		}
-		sort.Slice(items, func(i, j int) bool {
-			if items[i].BlockNumber == items[j].BlockNumber {
-				if items[i].TransactionIndex == items[j].TransactionIndex {
-					return items[i].TraceIndex < items[j].TraceIndex
+			iterErrorChan := make(chan error)
+			iterCtx, iterCancel := context.WithCancel(context.Background())
+			defer iterCancel()
+			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+			for err := range iterErrorChan {
+				// TODO: I don't really want to quit looping here. Just report the error and keep going.
+				// iterCancel()
+				if !opts.Globals.TestMode || nErrors == 0 {
+					errorChan <- err
+					// Reporting more than one error causes tests to fail because they
+					// appear concurrently so sort differently
+					nErrors++
 				}
-				return items[i].TransactionIndex < items[j].TransactionIndex
 			}
-			return items[i].BlockNumber < items[j].BlockNumber
-		})
+			bar.Finish(true)
 
-		nPassed := uint64(0)
-		nShown := uint64(0)
-		for nTested, item := range items {
-			item := item
-			ok, _ := traceFilter.PassesBasic(&item, uint64(nTested), nPassed)
-			if ok {
-				if (traceFilter.After == 0 || nPassed >= traceFilter.After) && (traceFilter.Count == 0 || uint64(nShown) < traceFilter.Count) {
-					modelChan <- &item
-					nShown++
+			items := make([]types.SimpleTrace, 0, len(appMap))
+			for _, tx := range appMap {
+				tx := tx
+				items = append(items, tx.Traces...)
+			}
+			sort.Slice(items, func(i, j int) bool {
+				if items[i].BlockNumber == items[j].BlockNumber {
+					if items[i].TransactionIndex == items[j].TransactionIndex {
+						return items[i].TraceIndex < items[j].TraceIndex
+					}
+					return items[i].TransactionIndex < items[j].TransactionIndex
 				}
-				nPassed++
+				return items[i].BlockNumber < items[j].BlockNumber
+			})
+
+			nPassed := uint64(0)
+			nShown := uint64(0)
+			for nTested, item := range items {
+				item := item
+				ok, _ := traceFilter.PassesBasic(&item, uint64(nTested), nPassed)
+				if ok {
+					if (traceFilter.After == 0 || nPassed >= traceFilter.After) && (traceFilter.Count == 0 || uint64(nShown) < traceFilter.Count) {
+						modelChan <- &item
+						nShown++
+					}
+					nPassed++
+				}
 			}
 		}
 	}

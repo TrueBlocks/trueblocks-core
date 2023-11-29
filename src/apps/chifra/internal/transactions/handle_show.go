@@ -21,6 +21,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
+		// var cnt int
 		var err error
 		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
 		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
@@ -31,9 +32,6 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 				Enabled: !opts.Globals.TestMode,
 				Total:   int64(len(appMap)),
 			})
-
-			iterCtx, iterCancel := context.WithCancel(context.Background())
-			defer iterCancel()
 
 			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 				a := &types.RawAppearance{
@@ -57,6 +55,8 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 			}
 
 			iterErrorChan := make(chan error)
+			iterCtx, iterCancel := context.WithCancel(context.Background())
+			defer iterCancel()
 			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 			for err := range iterErrorChan {
 				// TODO: I don't really want to quit looping here. Just report the error and keep going.

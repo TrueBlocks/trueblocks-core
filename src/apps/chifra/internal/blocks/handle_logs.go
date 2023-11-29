@@ -20,6 +20,8 @@ import (
 
 func (opts *BlocksOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
+	nErrors := 0
+
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	emitters := []base.Address{}
 	for _, e := range opts.Emitter {
@@ -34,13 +36,12 @@ func (opts *BlocksOptions) HandleLogs() error {
 		Topics:   topics,
 	}
 
-	nErrors := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
+		// var cnt int
 		var err error
 		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
-		appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds)
-		if err != nil {
+		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
@@ -49,9 +50,6 @@ func (opts *BlocksOptions) HandleLogs() error {
 			Enabled: !opts.Globals.TestMode,
 			Total:   int64(len(appMap)),
 		})
-
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
 
 		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 			if value.Receipt == nil {
@@ -85,6 +83,8 @@ func (opts *BlocksOptions) HandleLogs() error {
 		}
 
 		iterErrorChan := make(chan error)
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
 			// TODO: I don't really want to quit looping here. Just report the error and keep going.

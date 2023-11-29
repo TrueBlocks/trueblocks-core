@@ -75,9 +75,6 @@ func fastWay(conn *rpc.Connection) {
 	if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, BlockIds); err != nil {
 		fmt.Println(err)
 	} else {
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-
 		var firstBlock types.SimpleBlock[string]
 		firstBlock.BlockNumber = utils.NOPOS
 		iterateFunc := func(key types.SimpleAppearance, value *types.SimpleBlock[string]) error {
@@ -98,6 +95,8 @@ func fastWay(conn *rpc.Connection) {
 		}
 
 		errorChan := make(chan error)
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
 		go utils.IterateOverMap(ctx, errorChan, appMap, iterateFunc)
 		for err := range errorChan {
 			fmt.Println(err)

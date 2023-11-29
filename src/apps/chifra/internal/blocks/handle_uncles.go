@@ -23,6 +23,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+		// var cnt int
 		var err error
 		var appMap map[types.SimpleAppearance]*types.SimpleBlock[types.SimpleTransaction]
 		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
@@ -30,16 +31,13 @@ func (opts *BlocksOptions) HandleUncles() error {
 			cancel()
 		}
 
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
-
-		uncles := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(appMap))
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
 			Enabled: !opts.Globals.TestMode,
 			Total:   int64(len(appMap)),
 		})
 
+		uncles := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(appMap))
 		iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
 			bn := uint64(app.BlockNumber)
 			if uncs, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
@@ -62,6 +60,8 @@ func (opts *BlocksOptions) HandleUncles() error {
 		}
 
 		iterErrorChan := make(chan error)
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
 			if !opts.Globals.TestMode || nErrors == 0 {

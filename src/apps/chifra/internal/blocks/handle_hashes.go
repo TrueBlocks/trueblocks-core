@@ -31,9 +31,6 @@ func (opts *BlocksOptions) HandleHashes() error {
 			cancel()
 		}
 
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
-
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
 			Enabled: !opts.Globals.TestMode,
@@ -57,6 +54,8 @@ func (opts *BlocksOptions) HandleHashes() error {
 		}
 
 		iterErrorChan := make(chan error)
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
 			if !opts.Globals.TestMode || nErrors == 0 {

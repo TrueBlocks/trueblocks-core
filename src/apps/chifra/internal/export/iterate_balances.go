@@ -19,16 +19,13 @@ func (opts *ExportOptions) readBalances(
 	filter *filter.AppearanceFilter,
 	errorChan chan error,
 ) ([]*types.SimpleToken, error) {
-
 	var cnt int
 	var err error
 	var appMap map[types.SimpleAppearance]*types.SimpleToken
 	if appMap, cnt, err = monitor.AsMap[types.SimpleToken](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
-	}
-
-	if opts.NoZero && cnt == 0 {
+	} else if opts.NoZero && cnt == 0 {
 		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 		return nil, nil
 	}
@@ -56,11 +53,10 @@ func (opts *ExportOptions) readBalances(
 		return nil
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
 	errChan := make(chan error)
-	go utils.IterateOverMap(ctx, errChan, appMap, iterFunc)
+	iterCtx, iterCancel := context.WithCancel(context.Background())
+	defer iterCancel()
+	go utils.IterateOverMap(iterCtx, errChan, appMap, iterFunc)
 	if stepErr := <-errChan; stepErr != nil {
 		return nil, stepErr
 	} else {

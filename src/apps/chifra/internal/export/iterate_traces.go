@@ -28,54 +28,55 @@ func (opts *ExportOptions) readTraces(
 	if appMap, cnt, err = monitor.AsMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
-	} else if !opts.NoZero || cnt > 0 {
-		bar := logger.NewBar(logger.BarOptions{
-			Prefix:  mon.Address.Hex(),
-			Enabled: !opts.Globals.TestMode,
-			Total:   mon.Count(),
-		})
-		if err := opts.readTransactions(appMap, filter, bar, true /* readTraces */); err != nil {
-			return nil, err
-		}
-
-		// Sort the items back into an ordered array by block number
-		items := make([]*types.SimpleTrace, 0, len(appMap))
-		for _, tx := range appMap {
-			for index, trace := range tx.Traces {
-				trace := trace
-				trace.TraceIndex = uint64(index)
-				isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
-				if !opts.Factory || isCreate {
-					if opts.Articulate {
-						if err := abiCache.ArticulateTrace(&trace); err != nil {
-							errorChan <- fmt.Errorf("error articulating trace: %v", err)
-						}
-					}
-					items = append(items, &trace)
-				}
-			}
-		}
-		sort.Slice(items, func(i, j int) bool {
-			if opts.Reversed {
-				i, j = j, i
-			}
-			itemI := items[i]
-			itemJ := items[j]
-			if itemI.BlockNumber == itemJ.BlockNumber {
-				if itemI.TransactionIndex == itemJ.TransactionIndex {
-					return itemI.TraceIndex < itemJ.TraceIndex
-				}
-				return itemI.TransactionIndex < itemJ.TransactionIndex
-			}
-			return itemI.BlockNumber < itemJ.BlockNumber
-		})
-
-		// Return the array of items
-		return items, nil
-	} else {
+	} else if opts.NoZero && cnt == 0 {
 		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 		return nil, nil
 	}
+
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  mon.Address.Hex(),
+		Enabled: !opts.Globals.TestMode,
+		Total:   mon.Count(),
+	})
+
+	if err := opts.readTransactions(appMap, filter, bar, true /* readTraces */); err != nil {
+		return nil, err
+	}
+
+	// Sort the items back into an ordered array by block number
+	items := make([]*types.SimpleTrace, 0, len(appMap))
+	for _, tx := range appMap {
+		for index, trace := range tx.Traces {
+			trace := trace
+			trace.TraceIndex = uint64(index)
+			isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
+			if !opts.Factory || isCreate {
+				if opts.Articulate {
+					if err := abiCache.ArticulateTrace(&trace); err != nil {
+						errorChan <- fmt.Errorf("error articulating trace: %v", err)
+					}
+				}
+				items = append(items, &trace)
+			}
+		}
+	}
+	sort.Slice(items, func(i, j int) bool {
+		if opts.Reversed {
+			i, j = j, i
+		}
+		itemI := items[i]
+		itemJ := items[j]
+		if itemI.BlockNumber == itemJ.BlockNumber {
+			if itemI.TransactionIndex == itemJ.TransactionIndex {
+				return itemI.TraceIndex < itemJ.TraceIndex
+			}
+			return itemI.TransactionIndex < itemJ.TransactionIndex
+		}
+		return itemI.BlockNumber < itemJ.BlockNumber
+	})
+
+	// Return the array of items
+	return items, nil
 }
 
 /*
