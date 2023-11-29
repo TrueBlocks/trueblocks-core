@@ -18,7 +18,7 @@ namespace qblocks {
 // Run make generate in order for this to take effect
 // search: change-version
 #define MAJOR 2
-#define MINOR 1
+#define MINOR 2
 #define BUILD 0
 // Run make generate in order for this to take effect
 
