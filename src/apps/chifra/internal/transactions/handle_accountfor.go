@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -17,6 +18,13 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	testMode := opts.Globals.TestMode
 	ether := opts.Globals.Ether
 	noZero := false // opts.Globals.NoZero
+	filter := filter.NewFilter(
+		false,
+		false,
+		[]string{},
+		base.BlockRange{First: 0, Last: utils.NOPOS},
+		base.RecordRange{First: 0, Last: utils.NOPOS},
+	)
 
 	ledgers := ledger.NewLedger(
 		opts.Conn,
@@ -41,7 +49,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 			}
 
 			for _, app := range txIds {
-				if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, &app); err != nil {
+				if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, filter, &app); err != nil {
 					errorChan <- err
 				} else {
 					for _, statement := range statements {

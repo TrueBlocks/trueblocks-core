@@ -17,17 +17,15 @@ func (opts *ExportOptions) readWithdrawals(
 	filter *filter.AppearanceFilter,
 	errorChan chan error,
 ) ([]*types.SimpleWithdrawal, error) {
-
+	nErrors := 0
+	testMode := opts.Globals.TestMode
 	var cnt int
 	var err error
-	var withdrawalMap map[types.SimpleAppearance]*types.SimpleBlock[string]
-
-	if withdrawalMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleBlock[string]](mon, filter); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
+	if appMap, cnt, err = monitor.AsMap[types.SimpleBlock[string]](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
-	}
-
-	if opts.NoZero && cnt == 0 {
+	} else if opts.NoZero && cnt == 0 {
 		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 		return nil, nil
 	}
@@ -59,20 +57,21 @@ func (opts *ExportOptions) readWithdrawals(
 		return nil
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
-	errChan := make(chan error)
-	go utils.IterateOverMap(ctx, errChan, withdrawalMap, iterFunc)
-	if stepErr := <-errChan; stepErr != nil {
-		return nil, stepErr
-	} else {
-		bar.Finish(true)
+	iterErrorChan := make(chan error)
+	iterCtx, iterCancel := context.WithCancel(context.Background())
+	defer iterCancel()
+	go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+	for err := range iterErrorChan {
+		if !testMode || nErrors == 0 {
+			errorChan <- err
+			nErrors++
+		}
 	}
+	bar.Finish(true)
 
 	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleWithdrawal, 0, len(withdrawalMap))
-	for _, block := range withdrawalMap {
+	items := make([]*types.SimpleWithdrawal, 0, len(appMap))
+	for _, block := range appMap {
 		for _, with := range block.Withdrawals {
 			items = append(items, &with)
 		}

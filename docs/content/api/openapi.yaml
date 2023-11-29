@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 2.1.0-release
+  version: 2.2.0-release
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -3918,6 +3918,9 @@ components:
       type: string
     string:
       type: string
+    uint64:
+      type: number
+      format: uint64
     topic:
       type: string
       format: bytes

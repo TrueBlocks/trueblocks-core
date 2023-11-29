@@ -171,4 +171,8 @@ func (s *SimpleAppearance) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
+func (s *SimpleAppearance) Orig() string {
+	return s.Reason // when converted from an Identifier, this is the original string
+}
+
 // EXISTING_CODE

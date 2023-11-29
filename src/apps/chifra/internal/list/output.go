@@ -64,7 +64,7 @@ func (opts *ListOptions) ListInternal() error {
 	} else if opts.Bounds {
 		err = opts.HandleBounds(monitorArray)
 	} else if !opts.Silent {
-		err = opts.HandleListAppearances(monitorArray)
+		err = opts.HandleShow(monitorArray)
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

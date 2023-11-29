@@ -19,17 +19,15 @@ func (opts *ExportOptions) readBalances(
 	filter *filter.AppearanceFilter,
 	errorChan chan error,
 ) ([]*types.SimpleToken, error) {
-
+	testMode := opts.Globals.TestMode
+	nErrors := 0
 	var cnt int
 	var err error
-	var txMap map[types.SimpleAppearance]*types.SimpleToken
-
-	if txMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleToken](mon, filter); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleToken
+	if appMap, cnt, err = monitor.AsMap[types.SimpleToken](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
-	}
-
-	if opts.NoZero && cnt == 0 {
+	} else if opts.NoZero && cnt == 0 {
 		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 		return nil, nil
 	}
@@ -57,20 +55,21 @@ func (opts *ExportOptions) readBalances(
 		return nil
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
-	errChan := make(chan error)
-	go utils.IterateOverMap(ctx, errChan, txMap, iterFunc)
-	if stepErr := <-errChan; stepErr != nil {
-		return nil, stepErr
-	} else {
-		bar.Finish(true)
+	iterErrorChan := make(chan error)
+	iterCtx, iterCancel := context.WithCancel(context.Background())
+	defer iterCancel()
+	go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+	for err := range iterErrorChan {
+		if !testMode || nErrors == 0 {
+			errorChan <- err
+			nErrors++
+		}
 	}
+	bar.Finish(true)
 
 	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleToken, 0, len(txMap))
-	for _, tx := range txMap {
+	items := make([]*types.SimpleToken, 0, len(appMap))
+	for _, tx := range appMap {
 		items = append(items, tx)
 	}
 	sort.Slice(items, func(i, j int) bool {

@@ -59,7 +59,7 @@ func (opts *AbisOptions) AbisInternal() error {
 	} else if len(opts.Encode) > 0 {
 		err = opts.HandleEncode()
 	} else {
-		err = opts.HandleAddresses()
+		err = opts.HandleShow()
 	}
 	// EXISTING_CODE
 	timer.Report(msg)

@@ -19,19 +19,18 @@ import (
 
 func (opts *BlocksOptions) HandleHashes() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
+		// var cnt int
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[string]
+		var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
 		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
-
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
 
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
@@ -39,8 +38,9 @@ func (opts *BlocksOptions) HandleHashes() error {
 			Total:   int64(len(appMap)),
 		})
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
-			if block, err := opts.Conn.GetBlockHeaderByNumber(app.BlockNumber); err != nil {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
+			bn := uint64(app.BlockNumber)
+			if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
 					errorChan <- errors.New("uncles not found")
@@ -55,9 +55,11 @@ func (opts *BlocksOptions) HandleHashes() error {
 		}
 
 		iterErrorChan := make(chan error)
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
-			if !opts.Globals.TestMode || nErrors == 0 {
+			if !testMode || nErrors == 0 {
 				errorChan <- err
 				nErrors++
 			}

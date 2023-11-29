@@ -19,6 +19,8 @@ import (
 )
 
 func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error {
+	testMode := opts.Globals.TestMode
+	nErrors := 0
 	filter := filter.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
@@ -30,7 +32,10 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if neighborMap, cnt, err := monitor.ReadAppearancesToMap[bool](&mon, filter); err != nil {
+			var cnt int
+			var err error
+			var appMap map[types.SimpleAppearance]*bool
+			if appMap, cnt, err = monitor.AsMap[bool](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
@@ -39,30 +44,32 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 					Enabled: !opts.Globals.TestMode,
 					Total:   mon.Count(),
 				})
-				allNeighbors := make([]Reason, 0)
+
+				neighbors := make([]Reason, 0)
 				iterFunc := func(app types.SimpleAppearance, unused *bool) error {
-					if neighbors, err := GetNeighbors(&app); err != nil {
+					if theseNeighbors, err := GetNeighbors(&app); err != nil {
 						return err
 					} else {
-						allNeighbors = append(allNeighbors, neighbors...)
+						neighbors = append(neighbors, theseNeighbors...)
 						return nil
 					}
 				}
 
-				// Set up and interate over the map calling iterFunc for each appearance
-				ctx, cancel := context.WithCancel(context.Background())
-				defer cancel()
-				errChan := make(chan error)
-				go utils.IterateOverMap(ctx, errChan, neighborMap, iterFunc)
-				if stepErr := <-errChan; stepErr != nil {
-					errorChan <- stepErr
-				} else {
-					bar.Finish(true)
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
+					}
 				}
+				bar.Finish(true)
 
 				// Sort the items back into an ordered array by block number
-				items := make([]types.SimpleAppearance, 0, len(neighborMap))
-				for _, neighbor := range allNeighbors {
+				items := make([]types.SimpleAppearance, 0, len(appMap))
+				for _, neighbor := range neighbors {
 					app := types.SimpleAppearance{
 						Address:          *neighbor.Address,
 						BlockNumber:      neighbor.App.BlockNumber,

@@ -21,14 +21,11 @@ func (opts *ExportOptions) readLogs(
 ) ([]*types.SimpleLog, error) {
 	var cnt int
 	var err error
-	var txMap map[types.SimpleAppearance]*types.SimpleTransaction
-
-	if txMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleTransaction
+	if appMap, cnt, err = monitor.AsMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
-	}
-
-	if opts.NoZero && cnt == 0 {
+	} else if opts.NoZero && cnt == 0 {
 		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 		return nil, nil
 	}
@@ -39,19 +36,19 @@ func (opts *ExportOptions) readLogs(
 		Total:   mon.Count(),
 	})
 
-	if err := opts.readTransactions(txMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+	if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil {
 		return nil, err
 	}
 
 	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleLog, 0, len(txMap))
-	for _, tx := range txMap {
+	items := make([]*types.SimpleLog, 0, len(appMap))
+	for _, tx := range appMap {
 		if tx.Receipt == nil {
 			continue
 		}
 		for _, log := range tx.Receipt.Logs {
 			log := log
-			if log.ContainsAny(addrArray) && opts.matchesFilter(&log) {
+			if filter.ApplyLogFilter(&log, addrArray) && opts.matchesFilter(&log) {
 				if opts.Articulate {
 					if err := abiCache.ArticulateLog(&log); err != nil {
 						errorChan <- fmt.Errorf("error articulating log: %v", err)

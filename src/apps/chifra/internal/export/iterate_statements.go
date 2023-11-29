@@ -19,21 +19,13 @@ func (opts *ExportOptions) readStatements(
 	errorChan chan error,
 	abiCache *articulate.AbiCache,
 ) ([]*types.SimpleStatement, error) {
-
-	if !opts.Accounting {
-		logger.Fatal("should not happen ==> accounting is not enabled. Implementation error.")
-	}
-
 	var cnt int
 	var err error
-	var txMap map[types.SimpleAppearance]*types.SimpleTransaction
-
-	if txMap, cnt, err = monitor.ReadAppearancesToMap[types.SimpleTransaction](mon, filter); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleTransaction
+	if appMap, cnt, err = monitor.AsMap[types.SimpleTransaction](mon, filter); err != nil {
 		errorChan <- err
 		return nil, err
-	}
-
-	if opts.NoZero && cnt == 0 {
+	} else if opts.NoZero && cnt == 0 {
 		errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 		return nil, nil
 	}
@@ -44,12 +36,12 @@ func (opts *ExportOptions) readStatements(
 		Total:   mon.Count(),
 	})
 
-	if err := opts.readTransactions(txMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+	if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil {
 		return nil, err
 	}
 
-	txArray := make([]*types.SimpleTransaction, 0, len(txMap))
-	for _, tx := range txMap {
+	txArray := make([]*types.SimpleTransaction, 0, len(appMap))
+	for _, tx := range appMap {
 		txArray = append(txArray, tx)
 	}
 
@@ -61,7 +53,7 @@ func (opts *ExportOptions) readStatements(
 	})
 
 	// Sort the items back into an ordered array by block number
-	items := make([]*types.SimpleStatement, 0, len(txMap))
+	items := make([]*types.SimpleStatement, 0, len(appMap))
 
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
@@ -77,7 +69,7 @@ func (opts *ExportOptions) readStatements(
 		&opts.Asset,
 	)
 
-	apps := make([]types.SimpleAppearance, 0, len(txMap))
+	apps := make([]types.SimpleAppearance, 0, len(appMap))
 	for _, tx := range txArray {
 		apps = append(apps, types.SimpleAppearance{
 			BlockNumber:      uint32(tx.BlockNumber),
@@ -89,7 +81,7 @@ func (opts *ExportOptions) readStatements(
 	// we need them sorted for the following to work
 	for _, tx := range txArray {
 		ledgers.Tx = tx // we need this below
-		if stmts := ledgers.GetStatementsFromTransaction(opts.Conn, tx); len(stmts) > 0 {
+		if stmts := ledgers.GetStatementsFromTransaction(opts.Conn, filter, tx); len(stmts) > 0 {
 			for _, statement := range stmts {
 				statement := statement
 				items = append(items, statement)
