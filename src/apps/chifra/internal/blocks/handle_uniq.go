@@ -25,7 +25,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleAppearance
+		var appMap map[types.SimpleAppearance]*types.SimpleAppearance
 		if appMap, _, err = identifiers.AsMap[types.SimpleAppearance](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
@@ -40,7 +40,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 			Enabled: !opts.Globals.TestMode,
 			Total:   int64(len(appMap)),
 		})
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleAppearance) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleAppearance) error {
 			bn := uint64(app.BlockNumber)
 			procFunc := func(s *types.SimpleAppearance) error {
 				bar.Tick()

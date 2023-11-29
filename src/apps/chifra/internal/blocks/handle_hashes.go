@@ -25,7 +25,7 @@ func (opts *BlocksOptions) HandleHashes() error {
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		// var cnt int
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[string]
+		var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
 		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
@@ -40,7 +40,7 @@ func (opts *BlocksOptions) HandleHashes() error {
 			Total:   int64(len(appMap)),
 		})
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
 			bn := uint64(app.BlockNumber)
 			if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 				errorChan <- err

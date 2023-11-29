@@ -29,7 +29,7 @@ func (opts *StateOptions) HandleCall() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleResult
+		var appMap map[types.SimpleAppearance]*types.SimpleResult
 		if appMap, _, err = identifiers.AsMap[types.SimpleResult](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
@@ -44,7 +44,7 @@ func (opts *StateOptions) HandleCall() error {
 		defer iterCancel()
 
 		nErrors := 0
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleResult) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleResult) error {
 			bn := uint64(app.BlockNumber)
 			if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
 				wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)

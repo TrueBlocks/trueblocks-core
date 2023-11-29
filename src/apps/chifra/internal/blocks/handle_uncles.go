@@ -24,7 +24,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleBlock[types.SimpleTransaction]
+		var appMap map[types.SimpleAppearance]*types.SimpleBlock[types.SimpleTransaction]
 		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
@@ -40,7 +40,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 			Total:   int64(len(appMap)),
 		})
 
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleBlock[types.SimpleTransaction]) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
 			bn := uint64(app.BlockNumber)
 			if uncs, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
 				errorChan <- err

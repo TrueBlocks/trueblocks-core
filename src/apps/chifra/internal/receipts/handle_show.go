@@ -22,7 +22,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleTransaction
+		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
 		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
@@ -35,7 +35,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 			iterCtx, iterCancel := context.WithCancel(context.Background())
 			defer iterCancel()
 
-			iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 				a := &types.RawAppearance{
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
