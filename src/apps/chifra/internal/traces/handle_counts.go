@@ -45,11 +45,11 @@ func (opts *TracesOptions) HandleCounts() error {
 			}
 
 			if tx, err := opts.Conn.GetTransactionByAppearance(a, true); err != nil {
-				errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.Reason, err)
+				errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
 				return nil
 
 			} else if tx == nil || len(tx.Traces) == 0 {
-				errorChan <- fmt.Errorf("transaction at %s has no traces", app.Reason)
+				errorChan <- fmt.Errorf("transaction at %s has no traces", app.Orig())
 				return nil
 
 			} else {
