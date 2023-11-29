@@ -36,8 +36,8 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		for _, mon := range monitorArray {
 			var cnt int
 			var err error
-			var appMap map[types.SimpleAppearance]*types.SimpleTransaction
-			if appMap, cnt, err = monitor.AsMap[types.SimpleTransaction](&mon, filter); err != nil {
+			var appMap []map[types.SimpleAppearance]*types.SimpleTransaction
+			if appMap, cnt, err = monitor.AsMap2[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
@@ -47,33 +47,40 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					Total:   mon.Count(),
 				})
 
-				if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil {
-					errorChan <- err
-					return
-				}
+				for _, thisMap := range appMap {
+					thisMap := thisMap
+					for app := range thisMap {
+						thisMap[app] = new(types.SimpleTransaction)
+					}
 
-				items := make([]*types.SimpleTransaction, 0, len(appMap))
-				for _, tx := range appMap {
-					if opts.Articulate {
-						if err = abiCache.ArticulateTransaction(tx); err != nil {
-							errorChan <- err // continue even on error
+					if err := opts.readTransactions(thisMap, filter, bar, false /* readTraces */); err != nil {
+						errorChan <- err
+						return
+					}
+
+					items := make([]*types.SimpleTransaction, 0, len(thisMap))
+					for _, tx := range thisMap {
+						if opts.Articulate {
+							if err = abiCache.ArticulateTransaction(tx); err != nil {
+								errorChan <- err // continue even on error
+							}
 						}
+						items = append(items, tx)
 					}
-					items = append(items, tx)
-				}
-				sort.Slice(items, func(i, j int) bool {
-					if opts.Reversed {
-						i, j = j, i
-					}
-					if items[i].BlockNumber == items[j].BlockNumber {
-						return items[i].TransactionIndex < items[j].TransactionIndex
-					}
-					return items[i].BlockNumber < items[j].BlockNumber
-				})
-				for _, item := range items {
-					item := item
-					if !item.BlockHash.IsZero() {
-						modelChan <- item
+					sort.Slice(items, func(i, j int) bool {
+						if opts.Reversed {
+							i, j = j, i
+						}
+						if items[i].BlockNumber == items[j].BlockNumber {
+							return items[i].TransactionIndex < items[j].TransactionIndex
+						}
+						return items[i].BlockNumber < items[j].BlockNumber
+					})
+					for _, item := range items {
+						item := item
+						if !item.BlockHash.IsZero() {
+							modelChan <- item
+						}
 					}
 				}
 
