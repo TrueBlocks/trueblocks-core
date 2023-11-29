@@ -23,7 +23,7 @@ type Ledger struct {
 	AsEther     bool
 	NoZero      bool
 	UseTraces   bool
-	AssetFilter *[]base.Address
+	AssetFilter []base.Address
 	Tx          *types.SimpleTransaction
 	Conn        *rpc.Connection
 }
@@ -41,12 +41,14 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 		NoZero:     noZero,
 		UseTraces:  useTraces,
 	}
+
 	if assetFilters != nil {
-		assets := make([]base.Address, 0, len(*assetFilters))
-		for _, addr := range *assetFilters {
-			assets = append(assets, base.HexToAddress(addr))
+		l.AssetFilter = make([]base.Address, len(*assetFilters))
+		for i, addr := range *assetFilters {
+			l.AssetFilter[i] = base.HexToAddress(addr)
 		}
-		l.AssetFilter = &assets
+	} else {
+		l.AssetFilter = []base.Address{}
 	}
 
 	parts := names.Custom | names.Prefund | names.Regular
@@ -57,11 +59,11 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 
 // assetOfInterest returns true if the asset filter is empty or the asset matches
 func (l *Ledger) assetOfInterest(needle base.Address) bool {
-	if l.AssetFilter == nil || len(*l.AssetFilter) == 0 {
+	if len(l.AssetFilter) == 0 {
 		return true
 	}
 
-	for _, asset := range *l.AssetFilter {
+	for _, asset := range l.AssetFilter {
 		if asset.Hex() == needle.Hex() {
 			return true
 		}

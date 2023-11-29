@@ -14,7 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *AbisOptions) HandleAddresses() (err error) {
+func (opts *AbisOptions) HandleShow() (err error) {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
 
 	ctx, cancel := context.WithCancel(context.Background())

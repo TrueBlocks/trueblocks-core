@@ -63,8 +63,8 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	return
 }
 
-// ReadAppearancesToMap reads all appearances from the monitor and returns a map of the appearances to the given type.
-func ReadAppearancesToMap[T any](mon *Monitor, filter *filter.AppearanceFilter) (theMap map[types.SimpleAppearance]*T, cnt int, err error) {
+// AsMap reads all appearances from the monitor and returns a map of the appearances to the given type.
+func AsMap[T any](mon *Monitor, filter *filter.AppearanceFilter) (theMap map[types.SimpleAppearance]*T, cnt int, err error) {
 	if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 		return nil, 0, err
 	} else if cnt == 0 {

@@ -70,24 +70,21 @@ func fastWay(conn *rpc.Connection) {
 		fmt.Println(err)
 	}
 
-	var theMap map[identifiers.ResolvedId]*types.SimpleBlock[string]
 	var err error
-
-	if theMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, BlockIds); err != nil {
+	var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
+	if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, BlockIds); err != nil {
 		fmt.Println(err)
 	} else {
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-
 		var firstBlock types.SimpleBlock[string]
 		firstBlock.BlockNumber = utils.NOPOS
-		iterateFunc := func(key identifiers.ResolvedId, value *types.SimpleBlock[string]) error {
+		iterateFunc := func(key types.SimpleAppearance, value *types.SimpleBlock[string]) error {
+			bn := uint64(key.BlockNumber)
 			if theBlock, err := conn.GetBlockHeaderByNumber(base.Blknum(key.BlockNumber)); err != nil {
 				return err
 			} else {
 				if len(theBlock.Transactions) > 0 {
 					// fmt.Println("Found", theBlock.Hash.String(), ":", len(theBlock.Transactions), "transactions")
-					if theBlock.BlockNumber > 0 && key.BlockNumber < firstBlock.BlockNumber {
+					if theBlock.BlockNumber > 0 && bn < firstBlock.BlockNumber {
 						firstBlock = theBlock
 						fmt.Println("    Set", firstBlock.BlockNumber, firstBlock.Hash.String(), ":", len(firstBlock.Transactions), "transactions             ")
 					}
@@ -98,7 +95,9 @@ func fastWay(conn *rpc.Connection) {
 		}
 
 		errorChan := make(chan error)
-		go utils.IterateOverMap(ctx, errorChan, theMap, iterateFunc)
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+		go utils.IterateOverMap(ctx, errorChan, appMap, iterateFunc)
 		for err := range errorChan {
 			fmt.Println(err)
 		}

@@ -35,25 +35,27 @@ type reporter struct {
 // actually pinned. The later requires a locally running IPFS node.
 func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simpleReportCheck) error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+	nErrors := 0
 
 	mutex := sync.Mutex{}
-	theMap := make(map[string]*reporter)
+	appMap := make(map[string]*reporter)
 	for _, chunk := range cacheMan.ChunkMap {
-		theMap[chunk.Range] = &reporter{chunk, report, &mutex}
+		appMap[chunk.Range] = &reporter{chunk, report, &mutex}
 	}
 
 	bar := logger.NewBar(logger.BarOptions{
-		Total:   int64(len(theMap)),
+		Total:   int64(len(appMap)),
 		Enabled: true,
 	})
 
 	addrCnt := 0
 
 	var sh *shell.Shell
-	var procFunc func(rangeStr string, item *reporter) (err error)
+	var iterFunc func(rangeStr string, item *reporter) (err error)
 	if opts.Mode == "index" {
 		logger.Info("Checking each address in each index against its Bloom filter...")
-		procFunc = func(rangeStr string, item *reporter) (err error) {
+		iterFunc = func(rangeStr string, item *reporter) (err error) {
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			_, path := rng.RangeToFilename(chain)
 			bl, err := index.OpenBloom(index.ToBloomPath(path), true /* check */)
@@ -87,7 +89,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 					}
 					addrCnt++
 					if i%8000 == 0 {
-						bar.Prefix = fmt.Sprintf("Checked %d addresses against %d Blooms", addrCnt, len(theMap))
+						bar.Prefix = fmt.Sprintf("Checked %d addresses against %d Blooms", addrCnt, len(appMap))
 						bar.Tick()
 					}
 				}
@@ -102,13 +104,12 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 
 				return nil
 			}
-			bar.Finish(true)
 			return nil
 		}
 
 	} else if opts.Mode == "manifest" {
 		sh = shell.NewShell(config.GetPinning().LocalPinUrl)
-		procFunc = func(rangeStr string, item *reporter) (err error) {
+		iterFunc = func(rangeStr string, item *reporter) (err error) {
 			bar.Tick()
 			err = checkHashes(item.chunk, "blooom", sh, item)
 			if err != nil {
@@ -120,16 +121,17 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		return fmt.Errorf("unknown mode: %s", opts.Mode)
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	errorChan := make(chan error)
-	go utils.IterateOverMap(ctx, errorChan, theMap, procFunc)
-
-	// Block until we get an error from any of the iterations or the iteration finishes
-	if stepErr := <-errorChan; stepErr != nil {
-		cancel()
-		return stepErr
+	iterErrorChan := make(chan error)
+	iterCtx, iterCancel := context.WithCancel(context.Background())
+	defer iterCancel()
+	go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+	for err := range iterErrorChan {
+		if !testMode || nErrors == 0 {
+			logger.Fatal(err)
+			nErrors++
+		}
 	}
+	bar.Finish(true)
 
 	return nil
 }

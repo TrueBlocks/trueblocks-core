@@ -327,31 +327,6 @@ func (s *SimpleLog) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleLog) getHaystack() string {
-	haystack := make([]byte, 66*len(s.Topics)+len(s.Data))
-	haystack = append(haystack, s.Address.Hex()[2:]...)
-	for _, topic := range s.Topics {
-		haystack = append(haystack, topic.Hex()[2:]...)
-	}
-	haystack = append(haystack, s.Data[2:]...)
-	return string(haystack)
-}
-
-func (s *SimpleLog) ContainsAny(addrArray []base.Address) bool {
-	haystack := s.getHaystack()
-	for _, addr := range addrArray {
-		if strings.Contains(string(haystack), addr.Hex()[2:]) {
-			return true
-		}
-	}
-	return false
-}
-
-func (s *SimpleLog) ContainsAddress(addr base.Address) bool {
-	haystack := s.getHaystack()
-	return strings.Contains(string(haystack), addr.Hex()[2:])
-}
-
 func (r *RawLog) RawToSimple(vals map[string]any) (SimpleLog, error) {
 	hash, ok := vals["hash"].(base.Hash)
 	if !ok {

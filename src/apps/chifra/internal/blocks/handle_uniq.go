@@ -20,34 +20,35 @@ import (
 
 func (opts *BlocksOptions) HandleUniq() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+		// var cnt int
 		var err error
-		var appMap map[identifiers.ResolvedId]*types.SimpleAppearance
+		var appMap map[types.SimpleAppearance]*types.SimpleAppearance
 		if appMap, _, err = identifiers.AsMap[types.SimpleAppearance](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
 
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
-
-		apps := make([]types.SimpleAppearance, 0, len(appMap))
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
 			Enabled: !opts.Globals.TestMode,
 			Total:   int64(len(appMap)),
 		})
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleAppearance) error {
+
+		apps := make([]types.SimpleAppearance, 0, len(appMap))
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleAppearance) error {
+			bn := uint64(app.BlockNumber)
 			procFunc := func(s *types.SimpleAppearance) error {
 				bar.Tick()
 				apps = append(apps, *s)
 				return nil
 			}
 
-			if err := uniq.GetUniqAddressesInBlock(chain, opts.Flow, opts.Conn, procFunc, app.BlockNumber); err != nil {
+			if err := uniq.GetUniqAddressesInBlock(chain, opts.Flow, opts.Conn, procFunc, bn); err != nil {
 				errorChan <- err
 				if errors.Is(err, ethereum.NotFound) {
 					return nil
@@ -58,9 +59,11 @@ func (opts *BlocksOptions) HandleUniq() error {
 		}
 
 		iterErrorChan := make(chan error)
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
-			if !opts.Globals.TestMode || nErrors == 0 {
+			if !testMode || nErrors == 0 {
 				errorChan <- err
 				nErrors++
 			}

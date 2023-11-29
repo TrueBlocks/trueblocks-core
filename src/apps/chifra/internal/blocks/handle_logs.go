@@ -20,6 +20,9 @@ import (
 
 func (opts *BlocksOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
+	nErrors := 0
+
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	emitters := []base.Address{}
 	for _, e := range opts.Emitter {
@@ -34,35 +37,34 @@ func (opts *BlocksOptions) HandleLogs() error {
 		Topics:   topics,
 	}
 
-	nErrors := 0
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		txMap, _, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds)
-		if err != nil {
+		// var cnt int
+		var err error
+		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
+		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 		}
 
 		bar := logger.NewBar(logger.BarOptions{
 			Enabled: !opts.Globals.TestMode,
-			Total:   int64(len(txMap)),
+			Total:   int64(len(appMap)),
 		})
 
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
-
-		iterFunc := func(app identifiers.ResolvedId, value *types.SimpleTransaction) error {
+		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 			if value.Receipt == nil {
 				value.Receipt = &types.SimpleReceipt{}
 			}
 
-			ts := opts.Conn.GetBlockTimestamp(app.BlockNumber)
-			if logs, err := opts.Conn.GetLogsByNumber(app.BlockNumber, ts); err != nil {
-				errorChan <- fmt.Errorf("block at %d returned an error: %w", app.BlockNumber, err)
+			bn := uint64(app.BlockNumber)
+			ts := opts.Conn.GetBlockTimestamp(bn)
+			if logs, err := opts.Conn.GetLogsByNumber(bn, ts); err != nil {
+				errorChan <- fmt.Errorf("block at %d returned an error: %w", bn, err)
 				return nil
 
 			} else if len(logs) == 0 {
-				errorChan <- fmt.Errorf("block at %d has no logs", app.BlockNumber)
+				errorChan <- fmt.Errorf("block at %d has no logs", bn)
 				return nil
 
 			} else {
@@ -82,11 +84,11 @@ func (opts *BlocksOptions) HandleLogs() error {
 		}
 
 		iterErrorChan := make(chan error)
-		go utils.IterateOverMap(iterCtx, iterErrorChan, txMap, iterFunc)
+		iterCtx, iterCancel := context.WithCancel(context.Background())
+		defer iterCancel()
+		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
-			// TODO: I don't really want to quit looping here. Just report the error and keep going.
-			// iterCancel()
-			if !opts.Globals.TestMode || nErrors == 0 {
+			if !testMode || nErrors == 0 {
 				errorChan <- err
 				// Reporting more than one error causes tests to fail because they
 				// appear concurrently so sort differently
@@ -95,8 +97,8 @@ func (opts *BlocksOptions) HandleLogs() error {
 		}
 		bar.Finish(true)
 
-		items := make([]types.SimpleLog, 0, len(txMap))
-		for _, tx := range txMap {
+		items := make([]types.SimpleLog, 0, len(appMap))
+		for _, tx := range appMap {
 			tx := tx
 			items = append(items, tx.Receipt.Logs...)
 		}
