@@ -20,6 +20,7 @@ import (
 
 func (opts *BlocksOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 	nErrors := 0
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
@@ -87,9 +88,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
-			// TODO: I don't really want to quit looping here. Just report the error and keep going.
-			// iterCancel()
-			if !opts.Globals.TestMode || nErrors == 0 {
+			if !testMode || nErrors == 0 {
 				errorChan <- err
 				// Reporting more than one error causes tests to fail because they
 				// appear concurrently so sort differently

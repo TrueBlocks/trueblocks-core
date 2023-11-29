@@ -19,6 +19,8 @@ func (opts *ExportOptions) readBalances(
 	filter *filter.AppearanceFilter,
 	errorChan chan error,
 ) ([]*types.SimpleToken, error) {
+	testMode := opts.Globals.TestMode
+	nErrors := 0
 	var cnt int
 	var err error
 	var appMap map[types.SimpleAppearance]*types.SimpleToken
@@ -53,15 +55,17 @@ func (opts *ExportOptions) readBalances(
 		return nil
 	}
 
-	errChan := make(chan error)
+	iterErrorChan := make(chan error)
 	iterCtx, iterCancel := context.WithCancel(context.Background())
 	defer iterCancel()
-	go utils.IterateOverMap(iterCtx, errChan, appMap, iterFunc)
-	if stepErr := <-errChan; stepErr != nil {
-		return nil, stepErr
-	} else {
-		bar.Finish(true)
+	go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+	for err := range iterErrorChan {
+		if !testMode || nErrors == 0 {
+			errorChan <- err
+			nErrors++
+		}
 	}
+	bar.Finish(true)
 
 	// Sort the items back into an ordered array by block number
 	items := make([]*types.SimpleToken, 0, len(appMap))

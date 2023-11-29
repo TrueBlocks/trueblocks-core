@@ -20,6 +20,7 @@ import (
 
 func (opts *BlocksOptions) HandleUniq() error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -62,7 +63,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 		defer iterCancel()
 		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 		for err := range iterErrorChan {
-			if !opts.Globals.TestMode || nErrors == 0 {
+			if !testMode || nErrors == 0 {
 				errorChan <- err
 				nErrors++
 			}

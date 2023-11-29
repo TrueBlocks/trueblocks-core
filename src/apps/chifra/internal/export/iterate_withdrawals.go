@@ -17,6 +17,8 @@ func (opts *ExportOptions) readWithdrawals(
 	filter *filter.AppearanceFilter,
 	errorChan chan error,
 ) ([]*types.SimpleWithdrawal, error) {
+	nErrors := 0
+	testMode := opts.Globals.TestMode
 	var cnt int
 	var err error
 	var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
@@ -55,15 +57,17 @@ func (opts *ExportOptions) readWithdrawals(
 		return nil
 	}
 
-	errChan := make(chan error)
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	go utils.IterateOverMap(ctx, errChan, appMap, iterFunc)
-	if stepErr := <-errChan; stepErr != nil {
-		return nil, stepErr
-	} else {
-		bar.Finish(true)
+	iterErrorChan := make(chan error)
+	iterCtx, iterCancel := context.WithCancel(context.Background())
+	defer iterCancel()
+	go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+	for err := range iterErrorChan {
+		if !testMode || nErrors == 0 {
+			errorChan <- err
+			nErrors++
+		}
 	}
+	bar.Finish(true)
 
 	// Sort the items back into an ordered array by block number
 	items := make([]*types.SimpleWithdrawal, 0, len(appMap))

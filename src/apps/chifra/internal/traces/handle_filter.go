@@ -20,8 +20,9 @@ import (
 
 func (opts *TracesOptions) HandleFilter() error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
+	testMode := opts.Globals.TestMode
 	nErrors := 0
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	traceFilter := types.SimpleTraceFilter{}
 	_, br := traceFilter.ParseBangString(chain, opts.Filter)
 
@@ -88,12 +89,8 @@ func (opts *TracesOptions) HandleFilter() error {
 			defer iterCancel()
 			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 			for err := range iterErrorChan {
-				// TODO: I don't really want to quit looping here. Just report the error and keep going.
-				// iterCancel()
-				if !opts.Globals.TestMode || nErrors == 0 {
+				if !testMode || nErrors == 0 {
 					errorChan <- err
-					// Reporting more than one error causes tests to fail because they
-					// appear concurrently so sort differently
 					nErrors++
 				}
 			}

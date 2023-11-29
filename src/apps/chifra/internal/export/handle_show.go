@@ -47,7 +47,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					Total:   mon.Count(),
 				})
 
-				if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil { // calls IterateOverMap
+				if err := opts.readTransactions(appMap, filter, bar, false /* readTraces */); err != nil {
 					errorChan <- err
 					return
 				}

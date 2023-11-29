@@ -19,6 +19,8 @@ import (
 )
 
 func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error {
+	testMode := opts.Globals.TestMode
+	nErrors := 0
 	filter := filter.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
@@ -26,7 +28,6 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
-	nErrors := 0
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
@@ -54,13 +55,12 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 					}
 				}
 
-				// Set up and interate over the map calling iterFunc for each appearance
-				errChan := make(chan error)
+				iterErrorChan := make(chan error)
 				iterCtx, iterCancel := context.WithCancel(context.Background())
 				defer iterCancel()
-				go utils.IterateOverMap(iterCtx, errChan, appMap, iterFunc)
-				for err := range errChan {
-					if !opts.Globals.TestMode || nErrors == 0 {
+				go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
 						errorChan <- err
 						nErrors++
 					}

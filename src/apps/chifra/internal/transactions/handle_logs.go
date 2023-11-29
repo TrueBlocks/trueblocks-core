@@ -77,7 +77,6 @@ func (opts *TransactionsOptions) HandleLogs() error {
 			defer iterCancel()
 			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 			for err := range iterErrorChan {
-				iterCancel()
 				if !testMode || nErrors == 0 {
 					errorChan <- err
 					nErrors++

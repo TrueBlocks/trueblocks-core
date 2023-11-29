@@ -59,12 +59,8 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 			defer iterCancel()
 			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 			for err := range iterErrorChan {
-				// TODO: I don't really want to quit looping here. Just report the error and keep going.
-				iterCancel()
 				if !testMode || nErrors == 0 {
 					errorChan <- err
-					// Reporting more than one error causes tests to fail because they
-					// appear concurrently so sort differently
 					nErrors++
 				}
 			}
