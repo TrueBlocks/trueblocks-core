@@ -84,10 +84,10 @@ func (opts *BlocksOptions) HandleLogs() error {
 							}
 							l = append(l, logs[index])
 						}
-						bar.Tick()
 						value.Receipt.Logs = append(value.Receipt.Logs, l...)
+						bar.Tick()
+						return nil
 					}
-					return nil
 				}
 
 				iterErrorChan := make(chan error)
@@ -97,8 +97,6 @@ func (opts *BlocksOptions) HandleLogs() error {
 				for err := range iterErrorChan {
 					if !testMode || nErrors == 0 {
 						errorChan <- err
-						// Reporting more than one error causes tests to fail because they
-						// appear concurrently so sort differently
 						nErrors++
 					}
 				}

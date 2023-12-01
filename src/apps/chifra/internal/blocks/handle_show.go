@@ -45,6 +45,7 @@ func (opts *BlocksOptions) HandleShow() error {
 					thisMap[app] = new(types.SimpleBlock[types.SimpleTransaction])
 				}
 
+				items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
 					bn := uint64(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
@@ -55,8 +56,8 @@ func (opts *BlocksOptions) HandleShow() error {
 						cancel()
 						return nil
 					} else {
-						bar.Tick()
 						*value = block
+						bar.Tick()
 					}
 					return nil
 				}
@@ -72,7 +73,6 @@ func (opts *BlocksOptions) HandleShow() error {
 					}
 				}
 
-				items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
 				for _, item := range thisMap {
 					items = append(items, item)
 				}

@@ -45,7 +45,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 					thisMap[app] = new(types.SimpleBlock[string])
 				}
 
-				items := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
+				items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
 					bn := uint64(app.BlockNumber)
 					if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
@@ -58,9 +58,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 					} else {
 						for _, uncle := range uncles {
 							uncle := uncle
-							if uncle.BlockNumber > 0 {
-								items = append(items, uncle)
-							}
+							items = append(items, &uncle)
 						}
 						bar.Tick()
 					}
@@ -87,7 +85,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 
 				for _, item := range items {
 					item := item
-					modelChan <- &item
+					modelChan <- item
 				}
 			}
 			bar.Finish(true)

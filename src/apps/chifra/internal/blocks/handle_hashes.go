@@ -45,6 +45,7 @@ func (opts *BlocksOptions) HandleHashes() error {
 					thisMap[app] = new(types.SimpleBlock[string])
 				}
 
+				items := make([]*types.SimpleBlock[string], 0, len(thisMap))
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
 					bn := uint64(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
@@ -55,8 +56,8 @@ func (opts *BlocksOptions) HandleHashes() error {
 						cancel()
 						return nil
 					} else {
-						bar.Tick()
 						*value = block
+						bar.Tick()
 					}
 					return nil
 				}
@@ -72,7 +73,6 @@ func (opts *BlocksOptions) HandleHashes() error {
 					}
 				}
 
-				items := make([]*types.SimpleBlock[string], 0, len(thisMap))
 				for _, item := range thisMap {
 					items = append(items, item)
 				}
