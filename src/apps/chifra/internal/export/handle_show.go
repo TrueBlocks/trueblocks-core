@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
@@ -31,23 +32,25 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		for _, mon := range monitorArray {
-			var cnt int
-			var err error
-			var appMap []map[types.SimpleAppearance]*types.SimpleTransaction
-			if appMap, cnt, err = monitor.SliceOfMaps_AsMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
-				return
-			} else if !opts.NoZero || cnt > 0 {
+				cancel()
+
+			} else if cnt == 0 {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				continue
+
+			} else {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
-					Enabled: !opts.Globals.TestMode,
+					Enabled: !testMode && !utils.IsTerminal(),
 					Total:   mon.Count(),
 				})
 
-				for _, thisMap := range appMap {
+				for _, thisMap := range sliceOfMaps {
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleTransaction)
@@ -55,7 +58,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 
 					if err := opts.readTransactions(thisMap, filter, bar, false /* readTraces */); err != nil {
 						errorChan <- err
-						return
+						cancel()
 					}
 
 					items := make([]*types.SimpleTransaction, 0, len(thisMap))
@@ -83,10 +86,6 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						}
 					}
 				}
-
-			} else {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				return
 			}
 		}
 

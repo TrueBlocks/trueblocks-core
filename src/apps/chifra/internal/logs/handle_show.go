@@ -21,71 +21,80 @@ func (opts *LogsOptions) HandleShow() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		// var cnt int
-		var err error
-		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
-		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
+
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("transaction has no logs")
+			cancel()
+
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !opts.Globals.TestMode,
-				Total:   int64(len(appMap)),
+				Enabled: !testMode && !utils.IsTerminal(),
+				Total:   int64(cnt),
 			})
 
-			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-				if tx, err := opts.Conn.GetTransactionByAppearance(&app, false /* needsTraces */); err != nil {
-					return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
-				} else if tx == nil || tx.Receipt == nil {
-					return fmt.Errorf("transaction at %s has no logs", app.Orig())
-				} else {
-					for index := range tx.Receipt.Logs {
-						if opts.Articulate {
-							if err = abiCache.ArticulateLog(&tx.Receipt.Logs[index]); err != nil {
-								errorChan <- err // continue even with an error
+			for _, thisMap := range sliceOfMaps {
+				thisMap := thisMap
+				for app := range thisMap {
+					thisMap[app] = new(types.SimpleTransaction)
+				}
+
+				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+					if tx, err := opts.Conn.GetTransactionByAppearance(&app, false /* needsTraces */); err != nil {
+						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
+					} else if tx == nil || tx.Receipt == nil || len(tx.Receipt.Logs) == 0 {
+						return fmt.Errorf("transaction at %s has no logs", app.Orig())
+					} else {
+						for index := range tx.Receipt.Logs {
+							if opts.Articulate {
+								if err = abiCache.ArticulateLog(&tx.Receipt.Logs[index]); err != nil {
+									errorChan <- err // continue even with an error
+								}
 							}
 						}
+						*value = *tx
+						bar.Tick()
+						return nil
 					}
-					*value = *tx
-					bar.Tick()
-					return nil
 				}
-			}
 
-			iterErrorChan := make(chan error)
-			iterCtx, iterCancel := context.WithCancel(context.Background())
-			defer iterCancel()
-			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-			for err := range iterErrorChan {
-				if !testMode || nErrors == 0 {
-					errorChan <- err
-					nErrors++
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
+					}
+				}
+
+				items := make([]types.SimpleLog, 0, len(thisMap))
+				for _, tx := range thisMap {
+					if tx.Receipt != nil {
+						items = append(items, tx.Receipt.Logs...)
+					}
+				}
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						if items[i].TransactionIndex == items[j].TransactionIndex {
+							return items[i].LogIndex < items[j].LogIndex
+						}
+						return items[i].TransactionIndex < items[j].TransactionIndex
+					}
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+
+				for _, item := range items {
+					item := item
+					if item.BlockNumber != 0 {
+						modelChan <- &item
+					}
 				}
 			}
 			bar.Finish(true)
-
-			items := make([]types.SimpleLog, 0, len(appMap))
-			for _, tx := range appMap {
-				if tx.Receipt != nil {
-					items = append(items, tx.Receipt.Logs...)
-				}
-			}
-			sort.Slice(items, func(i, j int) bool {
-				if items[i].BlockNumber == items[j].BlockNumber {
-					if items[i].TransactionIndex == items[j].TransactionIndex {
-						return items[i].LogIndex < items[j].LogIndex
-					}
-					return items[i].TransactionIndex < items[j].TransactionIndex
-				}
-				return items[i].BlockNumber < items[j].BlockNumber
-			})
-
-			for _, item := range items {
-				item := item
-				if item.BlockNumber != 0 {
-					modelChan <- &item
-				}
-			}
 		}
 	}
 
