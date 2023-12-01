@@ -185,7 +185,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_topic_fail      ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_relevant_fail   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & relevant
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_emitter_fail     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & emitter = 0x7d655c57f71464b6f83811c55d84009cd9f5221
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_topic_fail       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs  & topic = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
-on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & max_records = 3
+on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & max_records = 3 & cache
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & max_records = 4
 
 on      ,both ,fast  ,export   ,apps/acctExport ,export_logs              ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json

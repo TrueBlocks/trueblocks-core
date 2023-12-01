@@ -24,7 +24,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 		var cnt int
 		var err error
 		var appMap []map[types.SimpleAppearance]*types.SimpleTransaction
-		if appMap, cnt, err = identifiers.AsMap2[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if appMap, cnt, err = identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 		} else {

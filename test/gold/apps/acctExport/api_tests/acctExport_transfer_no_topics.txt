@@ -1,4 +1,4 @@
-export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&logs&maxRecords=3
+export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&logs&maxRecords=3&cache
 {
   "data": [
     {

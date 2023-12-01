@@ -87,7 +87,7 @@ func AsMap[T any](mon *Monitor, filter *filter.AppearanceFilter) (map[types.Simp
 	}
 }
 
-func AsMap2[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
+func SliceOfMaps_AsMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
 	if ret, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 		return nil, 0, err
 	} else if cnt == 0 {

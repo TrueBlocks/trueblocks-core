@@ -37,7 +37,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 			var cnt int
 			var err error
 			var appMap []map[types.SimpleAppearance]*types.SimpleTransaction
-			if appMap, cnt, err = monitor.AsMap2[types.SimpleTransaction](&mon, filter); err != nil {
+			if appMap, cnt, err = monitor.SliceOfMaps_AsMaps[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {

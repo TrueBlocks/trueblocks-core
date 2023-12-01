@@ -49,7 +49,7 @@ func AsMap[T mappedType](chain string, ids []Identifier) (map[types.SimpleAppear
 	return ret, len(ret), nil
 }
 
-func AsMap2[T mappedType](chain string, ids []Identifier) ([]map[types.SimpleAppearance]*T, int, error) {
+func SliceOfMaps_AsMaps[T mappedType](chain string, ids []Identifier) ([]map[types.SimpleAppearance]*T, int, error) {
 	ret := make([]types.SimpleAppearance, 0, 100 /* good guess */)
 	for index, rng := range ids {
 		if rawIds, err := rng.ResolveTxs(chain); err != nil {

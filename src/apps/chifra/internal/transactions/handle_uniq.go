@@ -39,11 +39,9 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 					BlockNumber:      raw.BlockNumber,
 					TransactionIndex: raw.TransactionIndex,
 				}
-
 				bn := uint64(app.BlockNumber)
 				ts := opts.Conn.GetBlockTimestamp(bn)
 				addrMap := make(uniq.AddressBooleanMap)
-
 				if trans, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
 					errorChan <- err
 				} else {
