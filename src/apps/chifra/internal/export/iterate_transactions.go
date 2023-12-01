@@ -37,8 +37,6 @@ func (opts *ExportOptions) readTransactions(
 	go utils.IterateOverMap(iterCtx, errChan, theMap, iterFunc)
 	if stepErr := <-errChan; stepErr != nil {
 		return stepErr
-	} else if bar != nil {
-		bar.Finish(true)
 	}
 
 	return nil

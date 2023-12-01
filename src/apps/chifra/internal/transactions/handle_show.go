@@ -21,19 +21,21 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
-		var cnt int
-		var err error
-		var appMap []map[types.SimpleAppearance]*types.SimpleTransaction
-		if appMap, cnt, err = identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
+
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("transaction not found")
+			cancel()
+
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !opts.Globals.TestMode,
+				Enabled: !testMode && !utils.IsTerminal(),
 				Total:   int64(cnt),
 			})
 
-			for _, thisMap := range appMap {
+			for _, thisMap := range sliceOfMaps {
 				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleTransaction)

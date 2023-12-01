@@ -37,7 +37,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 				if tx, err := opts.Conn.GetTransactionByAppearance(&app, false /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
 				} else if tx == nil || tx.Receipt == nil {
-					return fmt.Errorf("transaction at %s has no logs", app.Orig())
+					return fmt.Errorf("transaction at %s has no receipts", app.Orig())
 				} else {
 					if opts.Articulate {
 						if err = abiCache.ArticulateReceipt(tx.Receipt); err != nil {

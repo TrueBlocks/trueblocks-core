@@ -50,10 +50,13 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid uint64)
 
 func (conn *Connection) GetTransactionByAppearance(app *types.SimpleAppearance, fetchTraces bool) (tx *types.SimpleTransaction, err error) {
 	raw := types.RawAppearance{
-		Address:          app.Address.Hex(),
 		BlockNumber:      app.BlockNumber,
 		TransactionIndex: app.TransactionIndex,
 	}
+	if !app.Address.IsZero() {
+		raw.Address = app.Address.Hex()
+	}
+
 	bn := uint64(raw.BlockNumber)
 	txid := uint64(raw.TransactionIndex)
 

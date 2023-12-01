@@ -134,6 +134,9 @@ func (opts *BlocksOptions) validateBlocks() error {
 		if opts.Globals.Cache && opts.Uncles {
 			return validate.Usage("The {0} option is currently not available{1}.", "--cache", " with the --uncles option")
 		}
+		if opts.Globals.Decache && opts.Uncles {
+			return validate.Usage("The {0} option is currently not available{1}.", "--decache", " with the --uncles option")
+		}
 	}
 
 	return opts.Globals.Validate()
