@@ -56,9 +56,29 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						thisMap[app] = new(types.SimpleTransaction)
 					}
 
-					if err := opts.readTransactions(thisMap, filter, bar, false /* readTraces */); err != nil {
-						errorChan <- err
-						cancel()
+					iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+						if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
+							return err
+						} else {
+							passes, _ := filter.ApplyTxFilters(tx)
+							if passes {
+								*value = *tx
+							}
+							if bar != nil {
+								bar.Tick()
+							}
+							return nil
+						}
+					}
+
+					// Set up and interate over the map calling iterFunc for each appearance
+					iterCtx, iterCancel := context.WithCancel(context.Background())
+					defer iterCancel()
+					errChan := make(chan error)
+					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
+					if stepErr := <-errChan; stepErr != nil {
+						errorChan <- stepErr
+						return
 					}
 
 					items := make([]*types.SimpleTransaction, 0, len(thisMap))

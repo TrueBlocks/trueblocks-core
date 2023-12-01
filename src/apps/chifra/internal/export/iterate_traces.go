@@ -5,6 +5,7 @@
 package exportPkg
 
 import (
+	"context"
 	"fmt"
 	"sort"
 
@@ -13,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ExportOptions) readTraces(
@@ -39,8 +41,29 @@ func (opts *ExportOptions) readTraces(
 		Total:   mon.Count(),
 	})
 
-	if err := opts.readTransactions(appMap, filter, bar, true /* readTraces */); err != nil {
-		return nil, err
+	iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+		if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
+			return err
+		} else {
+			passes, _ := filter.ApplyTxFilters(tx)
+			if passes {
+				*value = *tx
+			}
+			if bar != nil {
+				bar.Tick()
+			}
+			return nil
+		}
+	}
+
+	// Set up and interate over the map calling iterFunc for each appearance
+	iterCtx, iterCancel := context.WithCancel(context.Background())
+	defer iterCancel()
+	errChan := make(chan error)
+	go utils.IterateOverMap(iterCtx, errChan, appMap, iterFunc)
+	if stepErr := <-errChan; stepErr != nil {
+		errorChan <- stepErr
+		return nil, stepErr
 	}
 
 	// Sort the items back into an ordered array by block number

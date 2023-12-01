@@ -8,19 +8,24 @@ import (
 	"context"
 	"fmt"
 	"math/big"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
+	nErrors := 0
+
 	filter := filter.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
@@ -29,7 +34,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		currentBn := uint64(0)
 		prevBalance := big.NewInt(0)
@@ -48,22 +53,76 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		}
 
 		for _, mon := range monitorArray {
-			if items, err := opts.readBalances(&mon, filter, errorChan); err != nil {
+			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[types.SimpleToken](&mon, filter); err != nil {
 				errorChan <- err
-				continue // on error
-			} else if !opts.NoZero || len(items) > 0 {
-				prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
-				for idx, item := range items {
-					item := item
-					if err := visitToken(idx, item); err != nil {
-						errorChan <- err
-						return
+				cancel()
+
+			} else if cnt == 0 {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				cancel()
+
+			} else {
+				bar := logger.NewBar(logger.BarOptions{
+					Prefix:  mon.Address.Hex(),
+					Enabled: !testMode && !utils.IsTerminal(),
+					Total:   mon.Count(),
+				})
+
+				for _, thisMap := range sliceOfMaps {
+					thisMap := thisMap
+					for app := range thisMap {
+						thisMap[app] = new(types.SimpleToken)
+					}
+
+					iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
+						var balance *big.Int
+						if balance, err = opts.Conn.GetBalanceByAppearance(mon.Address, &app); err != nil {
+							return err
+						}
+						value.Address = base.FAKE_ETH_ADDRESS
+						value.Holder = mon.Address
+						value.BlockNumber = uint64(app.BlockNumber)
+						value.TransactionIndex = uint64(app.TransactionIndex)
+						value.Balance = *balance
+						value.Timestamp = app.Timestamp
+						bar.Tick()
+						return nil
+					}
+
+					iterErrorChan := make(chan error)
+					iterCtx, iterCancel := context.WithCancel(context.Background())
+					defer iterCancel()
+					go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+					for err := range iterErrorChan {
+						if !testMode || nErrors == 0 {
+							errorChan <- err
+							nErrors++
+						}
+					}
+
+					// Sort the items back into an ordered array by block number
+					items := make([]*types.SimpleToken, 0, len(thisMap))
+					for _, tx := range thisMap {
+						items = append(items, tx)
+					}
+					sort.Slice(items, func(i, j int) bool {
+						if opts.Reversed {
+							i, j = j, i
+						}
+						return items[i].BlockNumber < items[j].BlockNumber
+					})
+
+					prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
+					for idx, item := range items {
+						item := item
+						if err := visitToken(idx, item); err != nil {
+							errorChan <- err
+							return
+						}
 					}
 				}
 
-			} else {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				continue
+				bar.Finish(true)
 			}
 			prevBalance = big.NewInt(0)
 		}
