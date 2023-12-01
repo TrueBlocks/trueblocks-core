@@ -7,6 +7,7 @@ package blocksPkg
 import (
 	"context"
 	"errors"
+	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
@@ -29,7 +30,7 @@ func (opts *BlocksOptions) HandleShow() error {
 			cancel()
 
 		} else if cnt == 0 {
-			errorChan <- errors.New("no blocks found")
+			errorChan <- fmt.Errorf("no blocks found for the query")
 			cancel()
 
 		} else {
@@ -45,7 +46,8 @@ func (opts *BlocksOptions) HandleShow() error {
 				}
 
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
-					if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {
+					bn := uint64(app.BlockNumber)
+					if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							errorChan <- errors.New("uncles not found")

@@ -34,7 +34,6 @@ func (opts *BlocksOptions) HandleUncles() error {
 			cancel()
 
 		} else {
-
 			bar := logger.NewBar(logger.BarOptions{
 				Enabled: !testMode && !utils.IsTerminal(),
 				Total:   int64(cnt),
@@ -46,10 +45,10 @@ func (opts *BlocksOptions) HandleUncles() error {
 					thisMap[app] = new(types.SimpleBlock[string])
 				}
 
-				uncles := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
+				items := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
 					bn := uint64(app.BlockNumber)
-					if uncs, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
+					if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {
 							errorChan <- errors.New("uncles not found")
@@ -57,13 +56,13 @@ func (opts *BlocksOptions) HandleUncles() error {
 						cancel()
 						return nil
 					} else {
-						for _, uncle := range uncs {
+						for _, uncle := range uncles {
 							uncle := uncle
-							bar.Tick()
 							if uncle.BlockNumber > 0 {
-								uncles = append(uncles, uncle)
+								items = append(items, uncle)
 							}
 						}
+						bar.Tick()
 					}
 					return nil
 				}
@@ -79,14 +78,14 @@ func (opts *BlocksOptions) HandleUncles() error {
 					}
 				}
 
-				sort.Slice(uncles, func(i, j int) bool {
-					if uncles[i].BlockNumber == uncles[j].BlockNumber {
-						return uncles[i].Hash.Hex() < uncles[j].Hash.Hex()
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						return items[i].Hash.Hex() < items[j].Hash.Hex()
 					}
-					return uncles[i].BlockNumber < uncles[j].BlockNumber
+					return items[i].BlockNumber < items[j].BlockNumber
 				})
 
-				for _, item := range uncles {
+				for _, item := range items {
 					item := item
 					modelChan <- &item
 				}
