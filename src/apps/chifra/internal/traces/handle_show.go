@@ -35,7 +35,7 @@ func (opts *TracesOptions) HandleShow() error {
 
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !opts.Globals.TestMode,
+				Enabled: !testMode && !utils.IsTerminal(),
 				Total:   int64(cnt),
 			})
 

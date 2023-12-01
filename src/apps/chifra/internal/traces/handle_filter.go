@@ -34,7 +34,7 @@ func (opts *TracesOptions) HandleFilter() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		if thisMap, cnt, err := identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -48,7 +48,11 @@ func (opts *TracesOptions) HandleFilter() error {
 				Total:   int64(cnt),
 			})
 
-			if true {
+			for _, thisMap := range sliceOfMaps {
+				thisMap := thisMap
+				for app := range thisMap {
+					thisMap[app] = new(types.SimpleTransaction)
+				}
 
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 					if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {

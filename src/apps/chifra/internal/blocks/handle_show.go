@@ -34,8 +34,7 @@ func (opts *BlocksOptions) HandleShow() error {
 
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
-				Type:    logger.Expanding,
-				Enabled: !opts.Globals.TestMode,
+				Enabled: !testMode && !utils.IsTerminal(),
 				Total:   int64(cnt),
 			})
 

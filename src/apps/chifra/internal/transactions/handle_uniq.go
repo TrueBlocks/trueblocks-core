@@ -13,12 +13,13 @@ import (
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
-			Enabled: !opts.Globals.TestMode,
+			Enabled: !testMode,
 			Total:   250, // estimate since we have no idea how many there are
 		})
 		procFunc := func(s *types.SimpleAppearance) error {
