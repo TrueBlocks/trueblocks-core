@@ -34,7 +34,12 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				cancel()
 			}
 
-			for _, app := range txIds {
+			for _, raw := range txIds {
+				app := types.SimpleAppearance{
+					BlockNumber:      raw.BlockNumber,
+					TransactionIndex: raw.TransactionIndex,
+				}
+
 				bn := uint64(app.BlockNumber)
 				ts := opts.Conn.GetBlockTimestamp(bn)
 				addrMap := make(uniq.AddressBooleanMap)

@@ -52,11 +52,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 			})
 
 			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-				a := &types.RawAppearance{
-					BlockNumber:      uint32(app.BlockNumber),
-					TransactionIndex: uint32(app.TransactionIndex),
-				}
-				if tx, err := opts.Conn.GetTransactionByAppearance(a, opts.Traces /* needsTraces */); err != nil {
+				if tx, err := opts.Conn.GetTransactionByAppearance(&app, opts.Traces /* needsTraces */); err != nil {
 					return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
 				} else if tx == nil {
 					return fmt.Errorf("transaction at %s has no logs", app.Orig())

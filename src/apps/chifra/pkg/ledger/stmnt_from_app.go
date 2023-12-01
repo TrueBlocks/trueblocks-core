@@ -10,7 +10,7 @@ import (
 func (l *Ledger) GetStatementsFromAppearance(
 	conn *rpc.Connection,
 	filter *filter.AppearanceFilter,
-	app *types.RawAppearance,
+	app *types.SimpleAppearance,
 ) (statements []types.SimpleStatement, err error) {
 	var tx *types.SimpleTransaction
 	if tx, err = conn.GetTransactionByAppearance(app, false); err != nil {

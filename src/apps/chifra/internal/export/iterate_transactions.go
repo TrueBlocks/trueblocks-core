@@ -16,12 +16,7 @@ func (opts *ExportOptions) readTransactions(
 	readTraces bool,
 ) error {
 	iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-		raw := types.RawAppearance{
-			Address:          app.Address.Hex(),
-			BlockNumber:      app.BlockNumber,
-			TransactionIndex: app.TransactionIndex,
-		}
-		if tx, err := opts.Conn.GetTransactionByAppearance(&raw, readTraces); err != nil {
+		if tx, err := opts.Conn.GetTransactionByAppearance(&app, readTraces); err != nil {
 			return err
 		} else {
 			passes, _ := filt.ApplyTxFilters(tx)

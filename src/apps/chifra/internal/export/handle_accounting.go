@@ -39,12 +39,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		visitAppearance := func(app *types.SimpleAppearance) error {
-			raw := types.RawAppearance{
-				Address:          app.Address.Hex(),
-				BlockNumber:      app.BlockNumber,
-				TransactionIndex: app.TransactionIndex,
-			}
-			if tx, err := opts.Conn.GetTransactionByAppearance(&raw, false); err != nil {
+			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
 			} else {
@@ -57,7 +52,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 					}
 
 					if opts.Accounting {
-						if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, filter, &raw); err != nil {
+						if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, filter, app); err != nil {
 							errorChan <- err
 						} else {
 							tx.Statements = &statements
