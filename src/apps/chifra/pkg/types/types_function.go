@@ -98,7 +98,7 @@ func (s *SimpleFunction) Model(chain, format string, verbose bool, extraOptions 
 
 	if format == "json" {
 		getParameterModels := func(params []SimpleParameter) []map[string]any {
-			result := make([]map[string]any, len(params))
+			result := make([]map[string]any, 0, len(params))
 			for index, param := range params {
 				result[index] = param.Model(chain, format, verbose, extraOptions).Data
 				result[index]["name"] = param.DisplayName(index)

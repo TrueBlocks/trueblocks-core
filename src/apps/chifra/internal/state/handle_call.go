@@ -58,16 +58,15 @@ func (opts *StateOptions) HandleCall() error {
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleResult) error {
 					bn := uint64(app.BlockNumber)
 					if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-						wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
-						errorChan <- wrapped
-						cancel()
+						delete(thisMap, app)
+						return fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
 
 					} else {
 						contractCall.BlockNumber = bn
 						results, err := contractCall.Call(artFunc)
 						if err != nil {
-							errorChan <- err
-							cancel()
+							delete(thisMap, app)
+							return err
 						} else {
 							bar.Tick()
 							*value = *results

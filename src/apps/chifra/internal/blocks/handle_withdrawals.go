@@ -47,9 +47,8 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
 					bn := uint64(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
-						errorChan <- err
-						cancel()
-						return nil
+						delete(thisMap, app)
+						return err
 					} else {
 						*value = block
 						bar.Tick()

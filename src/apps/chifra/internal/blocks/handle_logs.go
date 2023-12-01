@@ -67,12 +67,12 @@ func (opts *BlocksOptions) HandleLogs() error {
 					bn := uint64(app.BlockNumber)
 					ts := opts.Conn.GetBlockTimestamp(bn)
 					if logs, err := opts.Conn.GetLogsByNumber(bn, ts); err != nil {
-						errorChan <- fmt.Errorf("block at %d returned an error: %w", bn, err)
-						return nil
+						delete(thisMap, app)
+						return fmt.Errorf("block at %d returned an error: %w", bn, err)
 
 					} else if len(logs) == 0 {
-						errorChan <- fmt.Errorf("block at %d has no logs", bn)
-						return nil
+						delete(thisMap, app)
+						return fmt.Errorf("block at %d has no logs", bn)
 
 					} else {
 						l := make([]types.SimpleLog, 0, len(logs))

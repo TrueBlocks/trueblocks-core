@@ -6,7 +6,6 @@ package blocksPkg
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"sort"
 
@@ -16,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleUniq() error {
@@ -54,14 +52,11 @@ func (opts *BlocksOptions) HandleUniq() error {
 						return nil
 					}
 
-					bar.Tick()
 					if err := uniq.GetUniqAddressesInBlock(chain, opts.Flow, opts.Conn, procFunc, bn); err != nil {
-						errorChan <- err
-						if errors.Is(err, ethereum.NotFound) {
-							return nil
-						}
-						cancel()
+						delete(thisMap, app)
+						return err
 					}
+					bar.Tick()
 					return nil
 				}
 

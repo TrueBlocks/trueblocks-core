@@ -45,12 +45,12 @@ func (opts *TracesOptions) HandleCounts() error {
 
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 					if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
-						errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
-						return nil
+						delete(thisMap, app)
+						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
 
 					} else if tx == nil || len(tx.Traces) == 0 {
-						errorChan <- fmt.Errorf("transaction at %s has no traces", app.Orig())
-						return nil
+						delete(thisMap, app)
+						return fmt.Errorf("transaction at %s has no traces", app.Orig())
 
 					} else {
 						*value = *tx

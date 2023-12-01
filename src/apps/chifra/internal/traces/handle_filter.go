@@ -64,12 +64,12 @@ func (opts *TracesOptions) HandleFilter() error {
 						for _, tx := range block.Transactions {
 							tx := tx
 							if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
-								errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
-								return nil
+								delete(thisMap, app)
+								return fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
 
 							} else if len(traces) == 0 {
-								errorChan <- fmt.Errorf("block at %s has no traces", app.Orig())
-								return nil
+								delete(thisMap, app)
+								return fmt.Errorf("block at %s has no traces", app.Orig())
 
 							} else {
 								tr := make([]types.SimpleTrace, 0, len(traces))

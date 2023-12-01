@@ -6,7 +6,6 @@ package blocksPkg
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"sort"
 
@@ -15,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleShow() error {
@@ -49,12 +47,8 @@ func (opts *BlocksOptions) HandleShow() error {
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
 					bn := uint64(app.BlockNumber)
 					if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
-						errorChan <- err
-						if errors.Is(err, ethereum.NotFound) {
-							errorChan <- errors.New("uncles not found")
-						}
-						cancel()
-						return nil
+						delete(thisMap, app)
+						return err
 					} else {
 						*value = block
 						bar.Tick()
