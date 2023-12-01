@@ -6,9 +6,12 @@ package exportPkg
 
 import (
 	"context"
+	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -28,18 +31,84 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 		base.RecordRange{First: first, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
 		for _, mon := range monitorArray {
-			mon := mon
-			if items, err := opts.readWithdrawals(&mon, filter, errorChan); err != nil {
+			testMode := opts.Globals.TestMode
+			nErrors := 0
+
+			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[types.SimpleBlock[string]](&mon, filter); err != nil {
 				errorChan <- err
+				cancel()
+
+			} else if cnt == 0 {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				continue
+
 			} else {
-				for _, item := range items {
-					item := item
-					modelChan <- item
+				bar := logger.NewBar(logger.BarOptions{
+					Prefix:  mon.Address.Hex(),
+					Enabled: !testMode,
+					Total:   int64(cnt),
+				})
+
+				for _, thisMap := range sliceOfMaps {
+					thisMap := thisMap
+					for app := range thisMap {
+						thisMap[app] = new(types.SimpleBlock[string])
+					}
+
+					iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
+						var block types.SimpleBlock[string]
+						if block, err = opts.Conn.GetBlockHeaderByNumber(uint64(app.BlockNumber)); err != nil {
+							return err
+						}
+
+						withdrawals := make([]types.SimpleWithdrawal, 0, 16)
+						for _, w := range block.Withdrawals {
+							if w.Address == mon.Address {
+								withdrawals = append(withdrawals, w)
+							}
+						}
+						if len(withdrawals) > 0 {
+							block.Withdrawals = withdrawals
+							*value = block
+						}
+
+						bar.Tick()
+						return nil
+					}
+
+					iterErrorChan := make(chan error)
+					iterCtx, iterCancel := context.WithCancel(context.Background())
+					defer iterCancel()
+					go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+					for err := range iterErrorChan {
+						if !testMode || nErrors == 0 {
+							errorChan <- err
+							nErrors++
+						}
+					}
+
+					// Sort the items back into an ordered array by block number
+					items := make([]*types.SimpleWithdrawal, 0, len(thisMap))
+					for _, block := range thisMap {
+						for _, with := range block.Withdrawals {
+							items = append(items, &with)
+						}
+					}
+					sort.Slice(items, func(i, j int) bool {
+						if opts.Reversed {
+							i, j = j, i
+						}
+						return items[i].BlockNumber < items[j].BlockNumber
+					})
+
+					for _, item := range items {
+						modelChan <- item
+					}
 				}
+				bar.Finish(true)
 			}
 		}
 	}

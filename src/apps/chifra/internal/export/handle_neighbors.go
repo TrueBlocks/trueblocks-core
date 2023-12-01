@@ -29,76 +29,81 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			var cnt int
-			var err error
-			var appMap map[types.SimpleAppearance]*bool
-			if appMap, cnt, err = monitor.AsMap[bool](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[bool](&mon, filter); err != nil {
 				errorChan <- err
-				return
-			} else if !opts.NoZero || cnt > 0 {
+				cancel()
+
+			} else if cnt == 0 {
+				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				cancel()
+
+			} else {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
-					Enabled: !opts.Globals.TestMode,
+					Enabled: !testMode && !utils.IsTerminal(),
 					Total:   mon.Count(),
 				})
 
-				neighbors := make([]Reason, 0)
-				iterFunc := func(app types.SimpleAppearance, unused *bool) error {
-					if theseNeighbors, err := GetNeighbors(&app); err != nil {
-						return err
-					} else {
-						neighbors = append(neighbors, theseNeighbors...)
-						return nil
+				for _, thisMap := range sliceOfMaps {
+					thisMap := thisMap
+					for app := range thisMap {
+						thisMap[app] = new(bool)
 					}
-				}
 
-				iterErrorChan := make(chan error)
-				iterCtx, iterCancel := context.WithCancel(context.Background())
-				defer iterCancel()
-				go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-				for err := range iterErrorChan {
-					if !testMode || nErrors == 0 {
-						errorChan <- err
-						nErrors++
+					neighbors := make([]Reason, 0)
+					iterFunc := func(app types.SimpleAppearance, unused *bool) error {
+						if theseNeighbors, err := GetNeighbors(&app); err != nil {
+							return err
+						} else {
+							neighbors = append(neighbors, theseNeighbors...)
+							return nil
+						}
+					}
+
+					iterErrorChan := make(chan error)
+					iterCtx, iterCancel := context.WithCancel(context.Background())
+					defer iterCancel()
+					go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+					for err := range iterErrorChan {
+						if !testMode || nErrors == 0 {
+							errorChan <- err
+							nErrors++
+						}
+					}
+
+					// Sort the items back into an ordered array by block number
+					items := make([]types.SimpleAppearance, 0, len(thisMap))
+					for _, neighbor := range neighbors {
+						app := types.SimpleAppearance{
+							Address:          *neighbor.Address,
+							BlockNumber:      neighbor.App.BlockNumber,
+							TransactionIndex: neighbor.App.TransactionIndex,
+							Reason:           neighbor.Reason,
+						}
+						items = append(items, app)
+					}
+					sort.Slice(items, func(i, j int) bool {
+						if opts.Reversed {
+							i, j = j, i
+						}
+						if items[i].BlockNumber == items[j].BlockNumber {
+							if items[i].TransactionIndex == items[j].TransactionIndex {
+								return items[i].Address.Hex() < items[j].Address.Hex()
+							}
+							return items[i].TransactionIndex < items[j].TransactionIndex
+						}
+						return items[i].BlockNumber < items[j].BlockNumber
+					})
+
+					for _, n := range items {
+						n := n
+						modelChan <- &n
 					}
 				}
 				bar.Finish(true)
-
-				// Sort the items back into an ordered array by block number
-				items := make([]types.SimpleAppearance, 0, len(appMap))
-				for _, neighbor := range neighbors {
-					app := types.SimpleAppearance{
-						Address:          *neighbor.Address,
-						BlockNumber:      neighbor.App.BlockNumber,
-						TransactionIndex: neighbor.App.TransactionIndex,
-						Reason:           neighbor.Reason,
-					}
-					items = append(items, app)
-				}
-				sort.Slice(items, func(i, j int) bool {
-					if opts.Reversed {
-						i, j = j, i
-					}
-					if items[i].BlockNumber == items[j].BlockNumber {
-						if items[i].TransactionIndex == items[j].TransactionIndex {
-							return items[i].Address.Hex() < items[j].Address.Hex()
-						}
-						return items[i].TransactionIndex < items[j].TransactionIndex
-					}
-					return items[i].BlockNumber < items[j].BlockNumber
-				})
-
-				for _, n := range items {
-					n := n
-					modelChan <- &n
-				}
-
-			} else {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				return
 			}
 		}
 	}
