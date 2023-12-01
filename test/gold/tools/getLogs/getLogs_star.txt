@@ -34,5 +34,8 @@ TEST[DATE|TIME] Format:  json
       "transactionHash": "0x4a40fb5dd32321053e992d72de78f85de0ef70fa68018301787bdd733647ac57",
       "transactionIndex": 3
     }
+  ],
+  "errors": [
+    "transaction at 1428993.0:all has no logs"
   ]
 }

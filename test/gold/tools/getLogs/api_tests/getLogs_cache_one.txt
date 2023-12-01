@@ -10,5 +10,8 @@ logs?transactions=46147.0&cache
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  }
+  },
+  "errors": [
+    "transaction at 46147.0 has no logs"
+  ]
 }
