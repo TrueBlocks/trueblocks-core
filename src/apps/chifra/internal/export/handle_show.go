@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -47,7 +47,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
 					Enabled: !testMode && !utils.IsTerminal(),
-					Total:   mon.Count(),
+					Total:   int64(cnt),
 				})
 
 				for _, thisMap := range sliceOfMaps {

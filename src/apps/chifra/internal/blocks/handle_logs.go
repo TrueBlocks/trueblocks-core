@@ -39,7 +39,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.BlockIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 

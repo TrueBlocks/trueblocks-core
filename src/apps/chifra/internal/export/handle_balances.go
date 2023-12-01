@@ -53,19 +53,19 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		}
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[types.SimpleToken](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleToken](&mon, filter); err != nil {
 				errorChan <- err
 				cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				cancel()
+				continue
 
 			} else {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
 					Enabled: !testMode && !utils.IsTerminal(),
-					Total:   mon.Count(),
+					Total:   int64(cnt),
 				})
 
 				for _, thisMap := range sliceOfMaps {

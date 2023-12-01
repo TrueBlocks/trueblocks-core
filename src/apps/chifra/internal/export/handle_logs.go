@@ -40,13 +40,13 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				cancel()
+				continue
 
 			} else {
 				bar := logger.NewBar(logger.BarOptions{

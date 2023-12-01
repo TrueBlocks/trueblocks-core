@@ -21,7 +21,7 @@ func (opts *ReceiptsOptions) HandleShow() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
 

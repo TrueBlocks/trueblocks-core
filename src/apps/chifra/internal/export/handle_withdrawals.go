@@ -22,6 +22,7 @@ import (
 func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
+	nErrors := 0
 	first := utils.Max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
 	filter := filter.NewFilter(
 		opts.Reversed,
@@ -34,10 +35,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
 		for _, mon := range monitorArray {
-			testMode := opts.Globals.TestMode
-			nErrors := 0
-
-			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[types.SimpleBlock[string]](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleBlock[string]](&mon, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -48,7 +46,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 			} else {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
-					Enabled: !testMode,
+					Enabled: !testMode && !utils.IsTerminal(),
 					Total:   int64(cnt),
 				})
 

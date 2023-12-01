@@ -34,11 +34,11 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				cancel()
 
-			} else if opts.NoZero && cnt == 0 {
+			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				continue
 

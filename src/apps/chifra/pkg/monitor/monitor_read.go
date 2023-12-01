@@ -64,30 +64,7 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	return
 }
 
-// AsMap reads all appearances from the monitor and returns a map of the appearances to the given type.
-func AsMap[T any](mon *Monitor, filter *filter.AppearanceFilter) (map[types.SimpleAppearance]*T, int, error) {
-	if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
-		return nil, 0, err
-	} else if cnt == 0 {
-		return nil, 0, nil
-	} else {
-		m := make(map[types.SimpleAppearance]*T, mon.Count())
-		for _, app := range apps {
-			if filter.BlocksOnly {
-				app = types.SimpleAppearance{
-					BlockNumber:      app.BlockNumber,
-					TransactionIndex: uint32(^uint32(0)),
-				}
-				m[app] = new(T)
-			} else {
-				m[app] = new(T)
-			}
-		}
-		return m, len(m), nil
-	}
-}
-
-func SliceOfMaps_AsMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
+func AsSliceOfMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
 	if ret, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 		return nil, 0, err
 	} else if cnt == 0 {

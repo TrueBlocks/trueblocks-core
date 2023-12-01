@@ -16,7 +16,7 @@ type mappedType interface {
 		types.SimpleResult
 }
 
-func SliceOfMaps_AsMaps[T mappedType](chain string, ids []Identifier) ([]map[types.SimpleAppearance]*T, int, error) {
+func AsSliceOfMaps[T mappedType](chain string, ids []Identifier) ([]map[types.SimpleAppearance]*T, int, error) {
 	ret := make([]types.SimpleAppearance, 0, 100 /* good guess */)
 	for index, rng := range ids {
 		if rawIds, err := rng.ResolveTxs(chain); err != nil {

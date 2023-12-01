@@ -32,19 +32,19 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.SliceOfMaps_AsMaps[bool](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[bool](&mon, filter); err != nil {
 				errorChan <- err
 				cancel()
 
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-				cancel()
+				continue
 
 			} else {
 				bar := logger.NewBar(logger.BarOptions{
 					Prefix:  mon.Address.Hex(),
 					Enabled: !testMode && !utils.IsTerminal(),
-					Total:   mon.Count(),
+					Total:   int64(cnt),
 				})
 
 				for _, thisMap := range sliceOfMaps {
