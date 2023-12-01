@@ -39,85 +39,94 @@ func (opts *BlocksOptions) HandleLogs() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		// var cnt int
-		var err error
-		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
-		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.BlockIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
-		}
 
-		bar := logger.NewBar(logger.BarOptions{
-			Enabled: !opts.Globals.TestMode,
-			Total:   int64(len(appMap)),
-		})
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("no blocks found for the query")
+			cancel()
 
-		iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-			if value.Receipt == nil {
-				value.Receipt = &types.SimpleReceipt{}
-			}
+		} else {
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: !testMode && !utils.IsTerminal(),
+				Total:   int64(cnt),
+			})
 
-			bn := uint64(app.BlockNumber)
-			ts := opts.Conn.GetBlockTimestamp(bn)
-			if logs, err := opts.Conn.GetLogsByNumber(bn, ts); err != nil {
-				errorChan <- fmt.Errorf("block at %d returned an error: %w", bn, err)
-				return nil
+			for _, thisMap := range sliceOfMaps {
+				thisMap := thisMap
+				for app := range thisMap {
+					thisMap[app] = new(types.SimpleTransaction)
+				}
 
-			} else if len(logs) == 0 {
-				errorChan <- fmt.Errorf("block at %d has no logs", bn)
-				return nil
-
-			} else {
-				l := make([]types.SimpleLog, 0, len(logs))
-				for index := range logs {
-					if opts.Articulate {
-						if err = abiCache.ArticulateLog(&logs[index]); err != nil {
-							errorChan <- err // continue even with an error
-						}
+				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+					if value.Receipt == nil {
+						value.Receipt = &types.SimpleReceipt{}
 					}
-					l = append(l, logs[index])
+
+					bn := uint64(app.BlockNumber)
+					ts := opts.Conn.GetBlockTimestamp(bn)
+					if logs, err := opts.Conn.GetLogsByNumber(bn, ts); err != nil {
+						errorChan <- fmt.Errorf("block at %d returned an error: %w", bn, err)
+						return nil
+
+					} else if len(logs) == 0 {
+						errorChan <- fmt.Errorf("block at %d has no logs", bn)
+						return nil
+
+					} else {
+						l := make([]types.SimpleLog, 0, len(logs))
+						for index := range logs {
+							if opts.Articulate {
+								if err = abiCache.ArticulateLog(&logs[index]); err != nil {
+									errorChan <- err // continue even with an error
+								}
+							}
+							l = append(l, logs[index])
+						}
+						bar.Tick()
+						value.Receipt.Logs = append(value.Receipt.Logs, l...)
+					}
+					return nil
 				}
-				bar.Tick()
-				value.Receipt.Logs = append(value.Receipt.Logs, l...)
-			}
-			return nil
-		}
 
-		iterErrorChan := make(chan error)
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
-		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-		for err := range iterErrorChan {
-			if !testMode || nErrors == 0 {
-				errorChan <- err
-				// Reporting more than one error causes tests to fail because they
-				// appear concurrently so sort differently
-				nErrors++
-			}
-		}
-		bar.Finish(true)
-
-		items := make([]types.SimpleLog, 0, len(appMap))
-		for _, tx := range appMap {
-			tx := tx
-			items = append(items, tx.Receipt.Logs...)
-		}
-		sort.Slice(items, func(i, j int) bool {
-			if items[i].BlockNumber == items[j].BlockNumber {
-				if items[i].TransactionIndex == items[j].TransactionIndex {
-					return items[i].LogIndex < items[j].LogIndex
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						// Reporting more than one error causes tests to fail because they
+						// appear concurrently so sort differently
+						nErrors++
+					}
 				}
-				return items[i].TransactionIndex < items[j].TransactionIndex
-			}
-			return items[i].BlockNumber < items[j].BlockNumber
-		})
 
-		for _, item := range items {
-			item := item
-			if !logFilter.PassesFilter(&item) {
-				continue
+				items := make([]types.SimpleLog, 0, len(thisMap))
+				for _, tx := range thisMap {
+					tx := tx
+					items = append(items, tx.Receipt.Logs...)
+				}
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						if items[i].TransactionIndex == items[j].TransactionIndex {
+							return items[i].LogIndex < items[j].LogIndex
+						}
+						return items[i].TransactionIndex < items[j].TransactionIndex
+					}
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+
+				for _, item := range items {
+					item := item
+					if !logFilter.PassesFilter(&item) {
+						continue
+					}
+					modelChan <- &item
+				}
 			}
-			modelChan <- &item
+			bar.Finish(true)
 		}
 	}
 
