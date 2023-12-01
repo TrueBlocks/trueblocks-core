@@ -93,7 +93,7 @@ func (opts *TracesOptions) HandleCounts() error {
 					modelChan <- &counter
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

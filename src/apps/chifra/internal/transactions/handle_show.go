@@ -91,7 +91,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 					modelChan <- &item
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

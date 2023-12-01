@@ -103,7 +103,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						modelChan <- &n
 					}
 				}
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}

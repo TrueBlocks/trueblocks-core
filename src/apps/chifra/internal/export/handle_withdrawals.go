@@ -106,7 +106,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 						modelChan <- item
 					}
 				}
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}

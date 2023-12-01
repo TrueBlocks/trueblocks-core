@@ -122,7 +122,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					}
 				}
 
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 			}
 			prevBalance = big.NewInt(0)
 		}

@@ -151,7 +151,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 					}
 				}
 
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}

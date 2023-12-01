@@ -110,7 +110,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 					}
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

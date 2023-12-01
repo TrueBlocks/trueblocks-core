@@ -88,7 +88,7 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 					modelChan <- item
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

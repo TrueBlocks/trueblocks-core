@@ -126,7 +126,7 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 						modelChan <- item
 					}
 				}
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}

@@ -52,7 +52,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				}
 			}
 		}
-		bar.Finish(true)
+		bar.Finish(true /* newLine */)
 	}
 
 	extra := map[string]interface{}{

@@ -88,7 +88,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 					modelChan <- item
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

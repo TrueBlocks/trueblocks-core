@@ -130,7 +130,7 @@ func (opts *TracesOptions) HandleFilter() error {
 					}
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

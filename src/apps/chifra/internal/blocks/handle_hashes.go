@@ -88,7 +88,7 @@ func (opts *BlocksOptions) HandleHashes() error {
 					modelChan <- item
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

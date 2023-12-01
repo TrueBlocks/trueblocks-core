@@ -32,9 +32,9 @@ func Decache(conn *rpc.Connection, locs []cache.Locator, silent bool, cT walk.Ca
 	}
 
 	if err := conn.Store.Decache(locs, processorFunc); err != nil {
-		bar.Finish(true)
+		bar.Finish(true /* newLine */)
 		return "", err
 	}
-	bar.Finish(true)
+	bar.Finish(true /* newLine */)
 	return fmt.Sprintf("%d items totaling %d bytes were removed from the %s cache.", itemsProcessed, bytesProcessed, cacheName), nil
 }

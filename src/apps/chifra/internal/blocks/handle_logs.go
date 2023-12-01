@@ -124,7 +124,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 					modelChan <- &item
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

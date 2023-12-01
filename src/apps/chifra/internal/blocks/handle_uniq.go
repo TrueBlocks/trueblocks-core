@@ -49,12 +49,12 @@ func (opts *BlocksOptions) HandleUniq() error {
 				apps := make([]types.SimpleAppearance, 0, len(thisMap))
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleAppearance) error {
 					bn := uint64(app.BlockNumber)
-					bar.Tick()
 					procFunc := func(s *types.SimpleAppearance) error {
 						apps = append(apps, *s)
 						return nil
 					}
 
+					bar.Tick()
 					if err := uniq.GetUniqAddressesInBlock(chain, opts.Flow, opts.Conn, procFunc, bn); err != nil {
 						errorChan <- err
 						if errors.Is(err, ethereum.NotFound) {

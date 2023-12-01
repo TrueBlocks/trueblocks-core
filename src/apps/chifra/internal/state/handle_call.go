@@ -1,3 +1,7 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
 package statePkg
 
 import (
@@ -57,6 +61,7 @@ func (opts *StateOptions) HandleCall() error {
 						wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
 						errorChan <- wrapped
 						cancel()
+
 					} else {
 						contractCall.BlockNumber = bn
 						results, err := contractCall.Call(artFunc)
@@ -87,6 +92,7 @@ func (opts *StateOptions) HandleCall() error {
 					v := v
 					items = append(items, *v)
 				}
+
 				sort.Slice(items, func(i, j int) bool {
 					return items[i].BlockNumber < items[j].BlockNumber
 				})
@@ -96,7 +102,7 @@ func (opts *StateOptions) HandleCall() error {
 					modelChan <- &item
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

@@ -98,7 +98,7 @@ func (opts *LogsOptions) HandleShow() error {
 					modelChan <- &item
 				}
 			}
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 		}
 	}
 

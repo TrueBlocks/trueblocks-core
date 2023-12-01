@@ -97,7 +97,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 
 		} else {
 			bar.Prefix = fmt.Sprintf("Truncated to %d                    ", opts.Truncate)
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 			bar = logger.NewBar(logger.BarOptions{
 				Enabled: !testMode,
 				Total:   20,
@@ -131,7 +131,7 @@ func (opts *ChunksOptions) HandleTruncate(blockNums []uint64) error {
 			}
 			_ = filepath.Walk(config.PathToCache(chain)+"monitors", truncateMonitor)
 			bar.Prefix = fmt.Sprintf("Truncated monitors to %d                                        ", opts.Truncate)
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 
 			// All that's left to do is report on what happened.
 			fin := "."

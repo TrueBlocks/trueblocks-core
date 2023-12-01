@@ -62,7 +62,7 @@ func (opts *SlurpOptions) HandleShow() error {
 						time.Sleep(ms)
 					}
 				}
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 			}
 		}
 

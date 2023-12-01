@@ -44,7 +44,7 @@ func slowWay(conn *rpc.Connection) {
 			fmt.Println(err)
 		} else {
 			if len(block.Transactions) > 0 {
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 				done := time.Since(start)
 				fmt.Println("Time taken:", done, "seconds")
 				fmt.Println(i, block.Hash.String(), "in", done, "seconds")
@@ -110,9 +110,9 @@ func fastWay(conn *rpc.Connection) {
 				fmt.Println(err)
 			}
 
-			timeTaken := bar.Finish(true)
+			timeTaken := bar.Finish(true /* newLine */)
 			fmt.Println(firstBlock.BlockNumber, firstBlock.Hash.String(), "in", timeTaken, "seconds")
 		}
-		bar.Finish(true)
+		bar.Finish(true /* newLine */)
 	}
 }

@@ -80,7 +80,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 			cancel()
 
 		} else {
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 
 			man.Version = opts.Tag
 			man.Specification = base.IpfsHash(config.SpecTags[opts.Tag])
