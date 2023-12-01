@@ -25,73 +25,82 @@ func (opts *TracesOptions) HandleShow() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		// var cnt int
-		var err error
-		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
-		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.SliceOfMaps_AsMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
+
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("no transactions found")
+			cancel()
+
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
 				Enabled: !opts.Globals.TestMode,
-				Total:   int64(len(appMap)),
+				Total:   int64(cnt),
 			})
 
-			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-				if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
-					errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
-					return nil
+			for _, thisMap := range sliceOfMaps {
+				thisMap := thisMap
+				for app := range thisMap {
+					thisMap[app] = new(types.SimpleTransaction)
+				}
 
-				} else if tx == nil || len(tx.Traces) == 0 {
-					errorChan <- fmt.Errorf("transaction at %s has no traces", app.Orig())
-					return nil
+				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+					if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
+						errorChan <- fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
+						return nil
 
-				} else {
-					for index := range tx.Traces {
-						if opts.Articulate {
-							if err = abiCache.ArticulateTrace(&tx.Traces[index]); err != nil {
-								errorChan <- err // continue even with an error
+					} else if tx == nil || len(tx.Traces) == 0 {
+						errorChan <- fmt.Errorf("transaction at %s has no traces", app.Orig())
+						return nil
+
+					} else {
+						for index := range tx.Traces {
+							if opts.Articulate {
+								if err = abiCache.ArticulateTrace(&tx.Traces[index]); err != nil {
+									errorChan <- err // continue even with an error
+								}
 							}
 						}
+						*value = *tx
+						bar.Tick()
+						return nil
 					}
-					*value = *tx
-					bar.Tick()
-					return nil
 				}
-			}
 
-			iterErrorChan := make(chan error)
-			iterCtx, iterCancel := context.WithCancel(context.Background())
-			defer iterCancel()
-			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-			for err := range iterErrorChan {
-				if !testMode || nErrors == 0 {
-					errorChan <- err
-					nErrors++
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
+					}
+				}
+
+				items := make([]types.SimpleTrace, 0, len(thisMap))
+				for _, receipt := range thisMap {
+					items = append(items, receipt.Traces...)
+				}
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						if items[i].TransactionIndex == items[j].TransactionIndex {
+							return items[i].GetSortString() < items[j].GetSortString()
+						}
+						return items[i].TransactionIndex < items[j].TransactionIndex
+					}
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+
+				for _, item := range items {
+					item := item
+					if !item.BlockHash.IsZero() {
+						modelChan <- &item
+					}
 				}
 			}
 			bar.Finish(true)
-
-			items := make([]types.SimpleTrace, 0, len(appMap))
-			for _, receipt := range appMap {
-				items = append(items, receipt.Traces...)
-			}
-			sort.Slice(items, func(i, j int) bool {
-				if items[i].BlockNumber == items[j].BlockNumber {
-					if items[i].TransactionIndex == items[j].TransactionIndex {
-						return items[i].GetSortString() < items[j].GetSortString()
-					}
-					return items[i].TransactionIndex < items[j].TransactionIndex
-				}
-				return items[i].BlockNumber < items[j].BlockNumber
-			})
-
-			for _, item := range items {
-				item := item
-				if !item.BlockHash.IsZero() {
-					modelChan <- &item
-				}
-			}
 		}
 	}
 
