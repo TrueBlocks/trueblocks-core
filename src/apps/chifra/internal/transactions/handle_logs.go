@@ -20,10 +20,10 @@ import (
 
 func (opts *TransactionsOptions) HandleLogs() error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	emitters := []base.Address{}
 	for _, e := range opts.Emitter {
 		emitters = append(emitters, base.HexToAddress(e))
@@ -62,8 +62,10 @@ func (opts *TransactionsOptions) HandleLogs() error {
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 					if tx, err := opts.Conn.GetTransactionByAppearance(&app, opts.Traces /* needsTraces */); err != nil {
 						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
+
 					} else if tx == nil {
 						return fmt.Errorf("transaction at %s has no logs", app.Orig())
+
 					} else {
 						if opts.Articulate && tx.ArticulatedTx == nil {
 							if err = abiCache.ArticulateTransaction(tx); err != nil {
@@ -100,12 +102,10 @@ func (opts *TransactionsOptions) HandleLogs() error {
 
 				for _, item := range items {
 					item := item
-					if !item.BlockHash.IsZero() {
-						for _, log := range item.Receipt.Logs {
-							log := log
-							if logFilter.PassesFilter(&log) {
-								modelChan <- &log
-							}
+					for _, log := range item.Receipt.Logs {
+						log := log
+						if logFilter.PassesFilter(&log) {
+							modelChan <- &log
 						}
 					}
 				}
@@ -119,5 +119,6 @@ func (opts *TransactionsOptions) HandleLogs() error {
 		"traces":    opts.Traces,
 		"addresses": opts.Uniq,
 	}
+
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }

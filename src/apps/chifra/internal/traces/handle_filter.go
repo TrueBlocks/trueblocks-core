@@ -22,6 +22,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
+
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	traceFilter := types.SimpleTraceFilter{}
 	_, br := traceFilter.ParseBangString(chain, opts.Filter)
@@ -58,6 +59,7 @@ func (opts *TracesOptions) HandleFilter() error {
 					if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {
 						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
 						return nil
+
 					} else {
 						for _, tx := range block.Transactions {
 							tx := tx

@@ -19,10 +19,10 @@ import (
 
 func (opts *TransactionsOptions) HandleShow() (err error) {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
@@ -48,8 +48,10 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 					if tx, err := opts.Conn.GetTransactionByAppearance(&app, opts.Traces /* needsTraces */); err != nil {
 						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
+
 					} else if tx == nil {
 						return fmt.Errorf("transaction at %s has no logs", app.Orig())
+
 					} else {
 						if opts.Articulate && tx.ArticulatedTx == nil {
 							if err = abiCache.ArticulateTransaction(tx); err != nil {
@@ -86,9 +88,7 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 
 				for _, item := range items {
 					item := item
-					if !item.BlockHash.IsZero() {
-						modelChan <- &item
-					}
+					modelChan <- &item
 				}
 			}
 			bar.Finish(true)

@@ -19,10 +19,10 @@ import (
 
 func (opts *LogsOptions) HandleShow() error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
@@ -48,8 +48,10 @@ func (opts *LogsOptions) HandleShow() error {
 				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
 					if tx, err := opts.Conn.GetTransactionByAppearance(&app, false /* needsTraces */); err != nil {
 						return fmt.Errorf("transaction at %s returned an error: %w", app.Orig(), err)
+
 					} else if tx == nil || tx.Receipt == nil || len(tx.Receipt.Logs) == 0 {
 						return fmt.Errorf("transaction at %s has no logs", app.Orig())
+
 					} else {
 						for index := range tx.Receipt.Logs {
 							if opts.Articulate {
@@ -93,9 +95,7 @@ func (opts *LogsOptions) HandleShow() error {
 
 				for _, item := range items {
 					item := item
-					if item.BlockNumber != 0 {
-						modelChan <- &item
-					}
+					modelChan <- &item
 				}
 			}
 			bar.Finish(true)

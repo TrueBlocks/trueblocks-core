@@ -80,18 +80,17 @@ func (opts *TracesOptions) HandleCounts() error {
 					}
 					return items[i].BlockNumber < items[j].BlockNumber
 				})
+
 				for _, item := range items {
 					item := item
-					if !item.BlockHash.IsZero() {
-						counter := simpleTraceCount{
-							BlockNumber:      uint64(item.BlockNumber),
-							TransactionIndex: uint64(item.TransactionIndex),
-							TransactionHash:  item.Hash,
-							Timestamp:        item.Timestamp,
-							TracesCnt:        uint64(len(item.Traces)),
-						}
-						modelChan <- &counter
+					counter := simpleTraceCount{
+						BlockNumber:      uint64(item.BlockNumber),
+						TransactionIndex: uint64(item.TransactionIndex),
+						TransactionHash:  item.Hash,
+						Timestamp:        item.Timestamp,
+						TracesCnt:        uint64(len(item.Traces)),
 					}
+					modelChan <- &counter
 				}
 			}
 			bar.Finish(true)

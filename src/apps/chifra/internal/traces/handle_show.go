@@ -19,10 +19,10 @@ import (
 
 func (opts *TracesOptions) HandleShow() error {
 	chain := opts.Globals.Chain
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
@@ -95,9 +95,7 @@ func (opts *TracesOptions) HandleShow() error {
 
 				for _, item := range items {
 					item := item
-					if !item.BlockHash.IsZero() {
-						modelChan <- &item
-					}
+					modelChan <- &item
 				}
 			}
 			bar.Finish(true)
