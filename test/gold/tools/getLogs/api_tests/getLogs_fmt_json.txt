@@ -27,5 +27,8 @@ logs?transactions=2222222.0%202332332.0&fmt=json
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  }
+  },
+  "errors": [
+    "transaction at 2222222.0 has no logs"
+  ]
 }

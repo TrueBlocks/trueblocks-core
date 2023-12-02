@@ -23,7 +23,7 @@ func (opts *BlocksOptions) HandleDecache() error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, walk.Cache_Blocks); err != nil {
+		if msg, err := decache.Decache(opts.Conn, itemsToRemove, silent, opts.getCacheType()); err != nil {
 			errorChan <- err
 		} else {
 			s := types.SimpleMessage{
@@ -35,4 +35,14 @@ func (opts *BlocksOptions) HandleDecache() error {
 
 	opts.Globals.NoHeader = true
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+func (opts *BlocksOptions) getCacheType() walk.CacheType {
+	cT := walk.Cache_Blocks
+	if opts.Logs {
+		cT = walk.Cache_Logs
+	} else if opts.Traces {
+		cT = walk.Cache_Traces
+	}
+	return cT
 }

@@ -13,12 +13,13 @@ import (
 
 func (opts *TransactionsOptions) HandleUniq() (err error) {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		bar := logger.NewBar(logger.BarOptions{
 			Type:    logger.Expanding,
-			Enabled: !opts.Globals.TestMode,
+			Enabled: !testMode,
 			Total:   250, // estimate since we have no idea how many there are
 		})
 		procFunc := func(s *types.SimpleAppearance) error {
@@ -34,11 +35,14 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				cancel()
 			}
 
-			for _, app := range txIds {
+			for _, raw := range txIds {
+				app := types.SimpleAppearance{
+					BlockNumber:      raw.BlockNumber,
+					TransactionIndex: raw.TransactionIndex,
+				}
 				bn := uint64(app.BlockNumber)
 				ts := opts.Conn.GetBlockTimestamp(bn)
 				addrMap := make(uniq.AddressBooleanMap)
-
 				if trans, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
 					errorChan <- err
 				} else {
@@ -48,7 +52,7 @@ func (opts *TransactionsOptions) HandleUniq() (err error) {
 				}
 			}
 		}
-		bar.Finish(true)
+		bar.Finish(true /* newLine */)
 	}
 
 	extra := map[string]interface{}{

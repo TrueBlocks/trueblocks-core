@@ -13,6 +13,7 @@ import (
 )
 
 func (opts *SlurpOptions) HandleAppearances() error {
+	testMode := opts.Globals.TestMode
 	paginator := rpc.Paginator{
 		Page:    1,
 		PerPage: int(opts.PerPage),
@@ -32,7 +33,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
-					Enabled: !opts.Globals.TestMode,
+					Enabled: !testMode,
 					Total:   250, // estimate since we have no idea how many there are
 				})
 
@@ -68,7 +69,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 						time.Sleep(ms)
 					}
 				}
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 			}
 		}
 

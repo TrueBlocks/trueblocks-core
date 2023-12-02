@@ -5,6 +5,7 @@ TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
 TEST[DATE|TIME] Caps:  cache,decache,raw
 TEST[DATE|TIME] Format:  txt
+EROR[DATE|TIME] transaction at 3657480.10 has no logs
 ----
 Results in ./output_test_file
 blockNumber	transactionIndex	logIndex	blockHash	transactionHash	timestamp	date	address	topic0	topic1	topic2	topic3	data

@@ -1,3 +1,7 @@
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
 package statePkg
 
 import (
@@ -31,63 +35,73 @@ func (opts *StateOptions) HandleCall() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
-		// var cnt int
-		var err error
-		var appMap map[types.SimpleAppearance]*types.SimpleResult
-		if appMap, _, err = identifiers.AsMap[types.SimpleResult](chain, opts.BlockIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleResult](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
+
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("no blocks found for the query")
+			cancel()
+
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !opts.Globals.TestMode,
-				Total:   int64(len(appMap)),
+				Enabled: !testMode && !utils.IsTerminal(),
+				Total:   int64(cnt),
 			})
 
-			iterFunc := func(app types.SimpleAppearance, value *types.SimpleResult) error {
-				bn := uint64(app.BlockNumber)
-				if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
-					wrapped := fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
-					errorChan <- wrapped
-					cancel()
-				} else {
-					contractCall.BlockNumber = bn
-					results, err := contractCall.Call(artFunc)
-					if err != nil {
-						errorChan <- err
-						cancel()
+			for _, thisMap := range sliceOfMaps {
+				thisMap := thisMap
+				for app := range thisMap {
+					thisMap[app] = new(types.SimpleResult)
+				}
+
+				iterFunc := func(app types.SimpleAppearance, value *types.SimpleResult) error {
+					bn := uint64(app.BlockNumber)
+					if contractCall, _, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
+						delete(thisMap, app)
+						return fmt.Errorf("the --call value provided (%s) was not found: %s", opts.Call, err)
+
 					} else {
-						bar.Tick()
-						*value = *results
+						contractCall.BlockNumber = bn
+						results, err := contractCall.Call(artFunc)
+						if err != nil {
+							delete(thisMap, app)
+							return err
+						} else {
+							bar.Tick()
+							*value = *results
+						}
+					}
+					return nil
+				}
+
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
 					}
 				}
-				return nil
-			}
 
-			iterErrorChan := make(chan error)
-			iterCtx, iterCancel := context.WithCancel(context.Background())
-			defer iterCancel()
-			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-			for err := range iterErrorChan {
-				if !testMode || nErrors == 0 {
-					errorChan <- err
-					nErrors++
+				items := make([]types.SimpleResult, 0, len(thisMap))
+				for _, v := range thisMap {
+					v := v
+					items = append(items, *v)
+				}
+
+				sort.Slice(items, func(i, j int) bool {
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+
+				for _, item := range items {
+					item := item
+					modelChan <- &item
 				}
 			}
-			bar.Finish(true)
-
-			items := make([]types.SimpleResult, 0, len(appMap))
-			for _, v := range appMap {
-				v := v
-				items = append(items, *v)
-			}
-			sort.Slice(items, func(i, j int) bool {
-				return items[i].BlockNumber < items[j].BlockNumber
-			})
-
-			for _, item := range items {
-				item := item
-				modelChan <- &item
-			}
+			bar.Finish(true /* newLine */)
 		}
 	}
 

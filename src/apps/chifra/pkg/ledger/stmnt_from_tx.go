@@ -142,7 +142,7 @@ func (l *Ledger) GetStatementsFromTransaction(
 	}
 
 	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
-		objects := make([]types.SimpleStatement, len(statements))
+		objects := make([]types.SimpleStatement, 0, len(statements))
 		for _, ptr := range statements {
 			objects = append(objects, *ptr)
 		}

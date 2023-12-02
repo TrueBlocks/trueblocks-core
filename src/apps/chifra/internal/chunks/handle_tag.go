@@ -21,6 +21,7 @@ import (
 
 func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 	chain := opts.Globals.Chain
+	testMode := opts.Globals.TestMode
 	if opts.Globals.TestMode {
 		logger.Warn("Tag option not tested.")
 		return nil
@@ -42,7 +43,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 			return
 		}
 		bar := logger.NewBar(logger.BarOptions{
-			Enabled: !opts.Globals.TestMode,
+			Enabled: !testMode,
 			Total:   int64(len(man.Chunks)),
 		})
 		tagIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
@@ -79,7 +80,7 @@ func (opts *ChunksOptions) HandleTag(blockNums []uint64) error {
 			cancel()
 
 		} else {
-			bar.Finish(true)
+			bar.Finish(true /* newLine */)
 
 			man.Version = opts.Tag
 			man.Specification = base.IpfsHash(config.SpecTags[opts.Tag])
