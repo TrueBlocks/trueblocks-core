@@ -22,6 +22,7 @@ func (opts *TracesOptions) HandleFilter() error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
+
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	traceFilter := types.SimpleTraceFilter{}
 	_, br := traceFilter.ParseBangString(chain, opts.Filter)
@@ -34,96 +35,102 @@ func (opts *TracesOptions) HandleFilter() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		// var cnt int
-		var err error
-		var appMap map[types.SimpleAppearance]*types.SimpleTransaction
-		if appMap, _, err = identifiers.AsMap[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
 			errorChan <- err
 			cancel()
+
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("no transactions found")
+			cancel()
+
 		} else {
 			bar := logger.NewBar(logger.BarOptions{
-				Enabled: !opts.Globals.TestMode,
-				Total:   int64(len(appMap)),
+				Enabled: !testMode && !utils.IsTerminal(),
+				Total:   int64(cnt),
 			})
 
-			iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-				a := &types.RawAppearance{
-					BlockNumber: uint32(app.BlockNumber),
+			for _, thisMap := range sliceOfMaps {
+				thisMap := thisMap
+				for app := range thisMap {
+					thisMap[app] = new(types.SimpleTransaction)
 				}
 
-				if block, err := opts.Conn.GetBlockBodyByNumber(uint64(a.BlockNumber)); err != nil {
-					errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
-					return nil
-				} else {
-					for _, tx := range block.Transactions {
-						tx := tx
-						if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
-							errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
-							return nil
+				iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+					if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {
+						errorChan <- fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
+						return nil
 
-						} else if len(traces) == 0 {
-							errorChan <- fmt.Errorf("block at %s has no traces", app.Orig())
-							return nil
+					} else {
+						for _, tx := range block.Transactions {
+							tx := tx
+							if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
+								delete(thisMap, app)
+								return fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
 
-						} else {
-							tr := make([]types.SimpleTrace, 0, len(traces))
-							for index := range traces {
-								if opts.Articulate {
-									if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
-										errorChan <- err // continue even with an error
+							} else if len(traces) == 0 {
+								delete(thisMap, app)
+								return fmt.Errorf("block at %s has no traces", app.Orig())
+
+							} else {
+								tr := make([]types.SimpleTrace, 0, len(traces))
+								for index := range traces {
+									if opts.Articulate {
+										if err = abiCache.ArticulateTrace(&traces[index]); err != nil {
+											errorChan <- err // continue even with an error
+										}
 									}
+									traces[index].TraceIndex = uint64(index)
+									tr = append(tr, traces[index])
 								}
-								traces[index].TraceIndex = uint64(index)
-								tr = append(tr, traces[index])
+								value.Traces = append(value.Traces, tr...)
 							}
-							value.Traces = append(value.Traces, tr...)
 						}
+						bar.Tick()
+						return nil
 					}
-					bar.Tick()
-					return nil
 				}
-			}
 
-			iterErrorChan := make(chan error)
-			iterCtx, iterCancel := context.WithCancel(context.Background())
-			defer iterCancel()
-			go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-			for err := range iterErrorChan {
-				if !testMode || nErrors == 0 {
-					errorChan <- err
-					nErrors++
-				}
-			}
-			bar.Finish(true)
-
-			items := make([]types.SimpleTrace, 0, len(appMap))
-			for _, tx := range appMap {
-				tx := tx
-				items = append(items, tx.Traces...)
-			}
-			sort.Slice(items, func(i, j int) bool {
-				if items[i].BlockNumber == items[j].BlockNumber {
-					if items[i].TransactionIndex == items[j].TransactionIndex {
-						return items[i].TraceIndex < items[j].TraceIndex
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
 					}
-					return items[i].TransactionIndex < items[j].TransactionIndex
 				}
-				return items[i].BlockNumber < items[j].BlockNumber
-			})
 
-			nPassed := uint64(0)
-			nShown := uint64(0)
-			for nTested, item := range items {
-				item := item
-				ok, _ := traceFilter.PassesBasic(&item, uint64(nTested), nPassed)
-				if ok {
-					if (traceFilter.After == 0 || nPassed >= traceFilter.After) && (traceFilter.Count == 0 || uint64(nShown) < traceFilter.Count) {
-						modelChan <- &item
-						nShown++
+				items := make([]types.SimpleTrace, 0, len(thisMap))
+				for _, tx := range thisMap {
+					tx := tx
+					items = append(items, tx.Traces...)
+				}
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						if items[i].TransactionIndex == items[j].TransactionIndex {
+							return items[i].TraceIndex < items[j].TraceIndex
+						}
+						return items[i].TransactionIndex < items[j].TransactionIndex
 					}
-					nPassed++
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+
+				nPassed := uint64(0)
+				nShown := uint64(0)
+				for nTested, item := range items {
+					item := item
+					ok, _ := traceFilter.PassesBasic(&item, uint64(nTested), nPassed)
+					if ok {
+						if (traceFilter.After == 0 || nPassed >= traceFilter.After) && (traceFilter.Count == 0 || uint64(nShown) < traceFilter.Count) {
+							modelChan <- &item
+							nShown++
+						}
+						nPassed++
+					}
 				}
 			}
+			bar.Finish(true /* newLine */)
 		}
 	}
 

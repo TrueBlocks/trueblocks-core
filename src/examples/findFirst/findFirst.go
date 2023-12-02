@@ -44,7 +44,7 @@ func slowWay(conn *rpc.Connection) {
 			fmt.Println(err)
 		} else {
 			if len(block.Transactions) > 0 {
-				bar.Finish(true)
+				bar.Finish(true /* newLine */)
 				done := time.Since(start)
 				fmt.Println("Time taken:", done, "seconds")
 				fmt.Println(i, block.Hash.String(), "in", done, "seconds")
@@ -57,52 +57,62 @@ func slowWay(conn *rpc.Connection) {
 }
 
 func fastWay(conn *rpc.Connection) {
-	bar := logger.NewBar(logger.BarOptions{
-		Type:    logger.Fixed,
-		Prefix:  "Getting stuff",
-		Enabled: true,
-		Start:   40000,
-		Total:   60000,
-	})
-
 	var BlockIds []identifiers.Identifier
 	if err := validate.ValidateIdentifiers(chain, []string{"40000-60000"}, validate.ValidBlockIdWithRange, 1, &BlockIds); err != nil {
 		fmt.Println(err)
 	}
 
-	var err error
-	var appMap map[types.SimpleAppearance]*types.SimpleBlock[string]
-	if appMap, _, err = identifiers.AsMap[types.SimpleBlock[string]](chain, BlockIds); err != nil {
+	if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[string]](chain, BlockIds); err != nil {
 		fmt.Println(err)
+
+	} else if cnt != 0 {
+		fmt.Println("Expected a block")
+
 	} else {
-		var firstBlock types.SimpleBlock[string]
-		firstBlock.BlockNumber = utils.NOPOS
-		iterateFunc := func(key types.SimpleAppearance, value *types.SimpleBlock[string]) error {
-			bn := uint64(key.BlockNumber)
-			if theBlock, err := conn.GetBlockHeaderByNumber(base.Blknum(key.BlockNumber)); err != nil {
-				return err
-			} else {
-				if len(theBlock.Transactions) > 0 {
-					// fmt.Println("Found", theBlock.Hash.String(), ":", len(theBlock.Transactions), "transactions")
-					if theBlock.BlockNumber > 0 && bn < firstBlock.BlockNumber {
-						firstBlock = theBlock
-						fmt.Println("    Set", firstBlock.BlockNumber, firstBlock.Hash.String(), ":", len(firstBlock.Transactions), "transactions             ")
-					}
-				}
-				bar.Tick()
-				return nil
+		bar := logger.NewBar(logger.BarOptions{
+			Type:    logger.Fixed,
+			Prefix:  "Getting stuff",
+			Enabled: true,
+			Start:   40000,
+			Total:   60000,
+		})
+
+		for _, thisMap := range sliceOfMaps {
+			thisMap := thisMap
+			for app := range thisMap {
+				thisMap[app] = new(types.SimpleBlock[string])
 			}
-		}
 
-		errorChan := make(chan error)
-		ctx, cancel := context.WithCancel(context.Background())
-		defer cancel()
-		go utils.IterateOverMap(ctx, errorChan, appMap, iterateFunc)
-		for err := range errorChan {
-			fmt.Println(err)
-		}
+			var firstBlock types.SimpleBlock[string]
+			firstBlock.BlockNumber = utils.NOPOS
+			iterateFunc := func(key types.SimpleAppearance, value *types.SimpleBlock[string]) error {
+				bn := uint64(key.BlockNumber)
+				if theBlock, err := conn.GetBlockHeaderByNumber(base.Blknum(key.BlockNumber)); err != nil {
+					return err
+				} else {
+					if len(theBlock.Transactions) > 0 {
+						// fmt.Println("Found", theBlock.Hash.String(), ":", len(theBlock.Transactions), "transactions")
+						if theBlock.BlockNumber > 0 && bn < firstBlock.BlockNumber {
+							firstBlock = theBlock
+							fmt.Println("    Set", firstBlock.BlockNumber, firstBlock.Hash.String(), ":", len(firstBlock.Transactions), "transactions             ")
+						}
+					}
+					bar.Tick()
+					return nil
+				}
+			}
 
-		timeTaken := bar.Finish(true)
-		fmt.Println(firstBlock.BlockNumber, firstBlock.Hash.String(), "in", timeTaken, "seconds")
+			errorChan := make(chan error)
+			ctx, cancel := context.WithCancel(context.Background())
+			defer cancel()
+			go utils.IterateOverMap(ctx, errorChan, thisMap, iterateFunc)
+			for err := range errorChan {
+				fmt.Println(err)
+			}
+
+			timeTaken := bar.Finish(true /* newLine */)
+			fmt.Println(firstBlock.BlockNumber, firstBlock.Hash.String(), "in", timeTaken, "seconds")
+		}
+		bar.Finish(true /* newLine */)
 	}
 }

@@ -131,7 +131,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 			nErrors++
 		}
 	}
-	bar.Finish(true)
+	bar.Finish(true /* newLine */)
 
 	return nil
 }

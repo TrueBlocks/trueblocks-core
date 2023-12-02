@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
@@ -63,25 +64,33 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	return
 }
 
-// AsMap reads all appearances from the monitor and returns a map of the appearances to the given type.
-func AsMap[T any](mon *Monitor, filter *filter.AppearanceFilter) (theMap map[types.SimpleAppearance]*T, cnt int, err error) {
-	if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+func AsSliceOfMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
+	if ret, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
 		return nil, 0, err
 	} else if cnt == 0 {
 		return nil, 0, nil
 	} else {
-		m := make(map[types.SimpleAppearance]*T, mon.Count())
-		for _, app := range apps {
-			if filter.BlocksOnly {
-				app = types.SimpleAppearance{
-					BlockNumber:      app.BlockNumber,
-					TransactionIndex: uint32(^uint32(0)),
-				}
-				m[app] = new(T)
-			} else {
-				m[app] = new(T)
+		sort.Slice(ret, func(i, j int) bool {
+			if ret[i].BlockNumber == ret[j].BlockNumber {
+				return ret[i].TransactionIndex < ret[j].TransactionIndex
 			}
+			return ret[i].BlockNumber < ret[j].BlockNumber
+		})
+
+		arrayOfMaps := make([]map[types.SimpleAppearance]*T, 0, len(ret))
+		curMap := make(map[types.SimpleAppearance]*T)
+		for i := 0; i < len(ret); i++ {
+			if len(curMap) == 10 {
+				arrayOfMaps = append(arrayOfMaps, curMap)
+				curMap = make(map[types.SimpleAppearance]*T)
+			}
+			curMap[ret[i]] = nil
 		}
-		return m, len(m), nil
+
+		if len(curMap) > 0 {
+			arrayOfMaps = append(arrayOfMaps, curMap)
+		}
+
+		return arrayOfMaps, len(ret), nil
 	}
 }

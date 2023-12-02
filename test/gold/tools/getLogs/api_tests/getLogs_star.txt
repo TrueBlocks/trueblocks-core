@@ -41,5 +41,8 @@ logs?transactions=1428993.*&fmt=json
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  }
+  },
+  "errors": [
+    "transaction at 1428993.0:all has no logs"
+  ]
 }

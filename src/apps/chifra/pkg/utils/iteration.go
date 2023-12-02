@@ -19,19 +19,15 @@ func IterateOverMap[Key comparable, Value any](ctx context.Context, errorChan ch
 	var wg sync.WaitGroup
 	defer close(errorChan)
 
-	itemsPerPool := len(target) / runtime.GOMAXPROCS(0)
-	if itemsPerPool < 1 {
-		// We don't really want this to happen, if target is small then synchronous iteration
-		// will be faster.
-		itemsPerPool = 1
-	}
+	nRoutines := Max(1, runtime.GOMAXPROCS(0))
+	itemsPerPool := Max(1, len(target)/nRoutines)
 
 	type stepArguments struct {
 		key   Key
 		value Value
 	}
 
-	pool, err := ants.NewPoolWithFunc(runtime.GOMAXPROCS(0), func(i interface{}) {
+	pool, err := ants.NewPoolWithFunc(nRoutines, func(i interface{}) {
 		defer wg.Done()
 		select {
 		case <-ctx.Done():

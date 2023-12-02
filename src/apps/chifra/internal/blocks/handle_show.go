@@ -6,7 +6,7 @@ package blocksPkg
 
 import (
 	"context"
-	"errors"
+	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleShow() error {
@@ -24,61 +23,66 @@ func (opts *BlocksOptions) HandleShow() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
-		// var cnt int
-		var err error
-		var appMap map[types.SimpleAppearance]*types.SimpleBlock[types.SimpleTransaction]
-		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
-		}
 
-		bar := logger.NewBar(logger.BarOptions{
-			Type:    logger.Expanding,
-			Enabled: !opts.Globals.TestMode,
-			Total:   int64(len(appMap)),
-		})
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("no blocks found for the query")
+			cancel()
 
-		iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
-			if block, err := opts.Conn.GetBlockBodyByNumber(uint64(app.BlockNumber)); err != nil {
-				errorChan <- err
-				if errors.Is(err, ethereum.NotFound) {
-					errorChan <- errors.New("uncles not found")
+		} else {
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: !testMode && !utils.IsTerminal(),
+				Total:   int64(cnt),
+			})
+
+			for _, thisMap := range sliceOfMaps {
+				thisMap := thisMap
+				for app := range thisMap {
+					thisMap[app] = new(types.SimpleBlock[types.SimpleTransaction])
 				}
-				cancel()
-				return nil
-			} else {
-				bar.Tick()
-				*value = block
-			}
-			return nil
-		}
 
-		iterErrorChan := make(chan error)
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
-		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-		for err := range iterErrorChan {
-			if !testMode || nErrors == 0 {
-				errorChan <- err
-				nErrors++
-			}
-		}
-		bar.Finish(true)
+				items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
+				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
+					bn := uint64(app.BlockNumber)
+					if block, err := opts.Conn.GetBlockBodyByNumber(bn); err != nil {
+						delete(thisMap, app)
+						return err
+					} else {
+						*value = block
+						bar.Tick()
+					}
+					return nil
+				}
 
-		items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(appMap))
-		for _, item := range appMap {
-			items = append(items, item)
-		}
-		sort.Slice(items, func(i, j int) bool {
-			if items[i].BlockNumber == items[j].BlockNumber {
-				return items[i].Hash.Hex() < items[j].Hash.Hex()
-			}
-			return items[i].BlockNumber < items[j].BlockNumber
-		})
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
+					}
+				}
 
-		for _, item := range items {
-			item := item
-			modelChan <- item
+				for _, item := range thisMap {
+					items = append(items, item)
+				}
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						return items[i].Hash.Hex() < items[j].Hash.Hex()
+					}
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
+
+				for _, item := range items {
+					item := item
+					modelChan <- item
+				}
+			}
+			bar.Finish(true /* newLine */)
 		}
 	}
 

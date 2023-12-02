@@ -69,7 +69,7 @@ func ListPins(chain, status string, countOnly bool, pageSize int, dur time.Durat
 			bar.Tick()
 			time.Sleep(dur)
 		}
-		bar.Finish(true)
+		bar.Finish(true /* newLine */)
 	}
 	return ret, nil
 }

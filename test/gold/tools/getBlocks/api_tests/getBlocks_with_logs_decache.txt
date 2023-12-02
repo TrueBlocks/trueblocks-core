@@ -1,6 +1,10 @@
-logs?transactions=46147.0&cache
+blocks?blocks=4012000-4012001&logs&decache
 {
-  "data": [],
+  "data": [
+    {
+      "msg": "1 items totaling 12642 bytes were removed from the logs cache."
+    }
+  ],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
@@ -10,8 +14,5 @@ logs?transactions=46147.0&cache
     "chainId": 1,
     "networkId": 1,
     "chain": "mainnet"
-  },
-  "errors": [
-    "transaction at 46147.0 has no logs"
-  ]
+  }
 }

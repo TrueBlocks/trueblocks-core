@@ -48,7 +48,11 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 				cancel()
 			}
 
-			for _, app := range txIds {
+			for _, raw := range txIds {
+				app := types.SimpleAppearance{
+					BlockNumber:      raw.BlockNumber,
+					TransactionIndex: raw.TransactionIndex,
+				}
 				if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, filter, &app); err != nil {
 					errorChan <- err
 				} else {

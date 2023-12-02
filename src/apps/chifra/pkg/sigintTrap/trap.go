@@ -6,7 +6,6 @@ package sigintTrap
 
 import (
 	"context"
-	"errors"
 	"os"
 	"os/signal"
 	"sync"
@@ -15,8 +14,7 @@ import (
 )
 
 var TrapMessage = colors.Yellow + "Ctrl+C. Finishing..." + colors.Off
-var ErrInterrupted = errors.New("interrupted")
-var SigintMessageOnce sync.Once
+var sigintMessageOnce sync.Once
 
 type CleanupFunction func()
 
@@ -30,7 +28,7 @@ func Enable(ctx context.Context, cancel context.CancelFunc, cleanUp CleanupFunct
 		for {
 			select {
 			case <-signals:
-				SigintMessageOnce.Do(cleanUp)
+				sigintMessageOnce.Do(cleanUp)
 				if cancel != nil {
 					cancel()
 				}

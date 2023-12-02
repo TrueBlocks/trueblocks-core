@@ -6,7 +6,7 @@ package blocksPkg
 
 import (
 	"context"
-	"errors"
+	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
@@ -14,7 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum"
 )
 
 func (opts *BlocksOptions) HandleUncles() error {
@@ -24,64 +23,66 @@ func (opts *BlocksOptions) HandleUncles() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
-		// var cnt int
-		var err error
-		var appMap map[types.SimpleAppearance]*types.SimpleBlock[types.SimpleTransaction]
-		if appMap, _, err = identifiers.AsMap[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
-		}
 
-		bar := logger.NewBar(logger.BarOptions{
-			Type:    logger.Expanding,
-			Enabled: !opts.Globals.TestMode,
-			Total:   int64(len(appMap)),
-		})
+		} else if cnt == 0 {
+			errorChan <- fmt.Errorf("no blocks found for the query")
+			cancel()
 
-		uncles := make([]types.SimpleBlock[types.SimpleTransaction], 0, len(appMap))
-		iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[types.SimpleTransaction]) error {
-			bn := uint64(app.BlockNumber)
-			if uncs, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
-				errorChan <- err
-				if errors.Is(err, ethereum.NotFound) {
-					errorChan <- errors.New("uncles not found")
+		} else {
+			bar := logger.NewBar(logger.BarOptions{
+				Enabled: !testMode && !utils.IsTerminal(),
+				Total:   int64(cnt),
+			})
+
+			for _, thisMap := range sliceOfMaps {
+				thisMap := thisMap
+				for app := range thisMap {
+					thisMap[app] = new(types.SimpleBlock[string])
 				}
-				cancel()
-				return nil
-			} else {
-				for _, uncle := range uncs {
-					uncle := uncle
-					bar.Tick()
-					if uncle.BlockNumber > 0 {
-						uncles = append(uncles, uncle)
+
+				items := make([]*types.SimpleBlock[types.SimpleTransaction], 0, len(thisMap))
+				iterFunc := func(app types.SimpleAppearance, value *types.SimpleBlock[string]) error {
+					bn := uint64(app.BlockNumber)
+					if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
+						delete(thisMap, app)
+						return err
+					} else {
+						for _, uncle := range uncles {
+							uncle := uncle
+							items = append(items, &uncle)
+						}
+						bar.Tick()
+						return nil
 					}
 				}
-			}
-			return nil
-		}
 
-		iterErrorChan := make(chan error)
-		iterCtx, iterCancel := context.WithCancel(context.Background())
-		defer iterCancel()
-		go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
-		for err := range iterErrorChan {
-			if !testMode || nErrors == 0 {
-				errorChan <- err
-				nErrors++
-			}
-		}
-		bar.Finish(true)
+				iterErrorChan := make(chan error)
+				iterCtx, iterCancel := context.WithCancel(context.Background())
+				defer iterCancel()
+				go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+				for err := range iterErrorChan {
+					if !testMode || nErrors == 0 {
+						errorChan <- err
+						nErrors++
+					}
+				}
 
-		sort.Slice(uncles, func(i, j int) bool {
-			if uncles[i].BlockNumber == uncles[j].BlockNumber {
-				return uncles[i].Hash.Hex() < uncles[j].Hash.Hex()
-			}
-			return uncles[i].BlockNumber < uncles[j].BlockNumber
-		})
+				sort.Slice(items, func(i, j int) bool {
+					if items[i].BlockNumber == items[j].BlockNumber {
+						return items[i].Hash.Hex() < items[j].Hash.Hex()
+					}
+					return items[i].BlockNumber < items[j].BlockNumber
+				})
 
-		for _, item := range uncles {
-			item := item
-			modelChan <- &item
+				for _, item := range items {
+					item := item
+					modelChan <- item
+				}
+			}
+			bar.Finish(true /* newLine */)
 		}
 	}
 

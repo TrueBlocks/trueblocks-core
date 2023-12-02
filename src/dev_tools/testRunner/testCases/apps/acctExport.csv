@@ -185,7 +185,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_topic_fail      ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_relevant_fail   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & relevant
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_emitter_fail     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & emitter = 0x7d655c57f71464b6f83811c55d84009cd9f5221
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_topic_fail       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs  & topic = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
-on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & max_records = 3
+on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & max_records = 3 & cache
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & max_records = 4
 
 on      ,both ,fast  ,export   ,apps/acctExport ,export_logs              ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json
@@ -257,7 +257,7 @@ acct    ,both ,fast  ,export   ,apps/acctExport ,accounting_to_cache      ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_filtered       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
 slow    ,both ,fast  ,export   ,apps/acctExport ,failed_statement_2572_2  ,y    ,addrs = 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 & accounting & statements & ether & fmt = json & first_block = 11670418 & last_block = 11670420 & asset = 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 & max_records = 40
 slow    ,both ,fast  ,export   ,apps/acctExport ,statements_wei_2_3       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & statements & fmt = json & first_block = 15700073 & last_block = 15700075
-on      ,both ,fast  ,export   ,apps/acctExport ,failed_statement_2572_1  ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & statements & ether & fmt = json & last_block = 15549163 & asset = 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 & max_records = 40
+local   ,both ,fast  ,export   ,apps/acctExport ,failed_statement_2572_1  ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & statements & ether & fmt = json & last_block = 15549163 & asset = 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 & max_records = 40
 
 # still broken
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_1         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = json
@@ -265,7 +265,7 @@ acct    ,both ,fast  ,export   ,apps/acctExport ,accounting_intra_tokens  ,y    
 acct    ,both ,fast  ,export   ,apps/acctExport ,statements_wei_2_1       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & statements & fmt = json & first_record = 0 & max_records = 15
 
 # Inter-block token transfers don't reconcile
-on      ,both ,fast  ,export   ,apps/acctExport ,statements_wei_2_2       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & statements & fmt = json & first_record = 250 & max_records = 15
+acct    ,both ,fast  ,export   ,apps/acctExport ,statements_wei_2_2       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & statements & fmt = json & first_record = 250 & max_records = 15
 acct    ,both ,fast  ,export   ,apps/acctExport ,statement_token_ibt      ,y    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
 acct    ,both ,fast  ,export   ,apps/acctExport ,statement_token_ibt_2    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = json & max_records = 4000
 

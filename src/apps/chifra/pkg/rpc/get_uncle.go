@@ -18,10 +18,12 @@ import (
 func (conn *Connection) GetUncleBodiesByNumber(bn uint64) ([]types.SimpleBlock[types.SimpleTransaction], error) {
 	if count, err := conn.GetUnclesCountInBlock(bn); err != nil {
 		return nil, err
+
 	} else if count == 0 {
 		return []types.SimpleBlock[types.SimpleTransaction]{}, nil
+
 	} else {
-		ret := make([]types.SimpleBlock[types.SimpleTransaction], count)
+		ret := make([]types.SimpleBlock[types.SimpleTransaction], 0, count)
 		for i := uint64(0); i < count; i++ {
 			method := "eth_getUncleByBlockNumberAndIndex"
 			params := query.Params{
@@ -58,7 +60,7 @@ func (conn *Connection) GetUnclesHashesByNumber(bn uint64) ([]base.Hash, error) 
 	} else if count == 0 {
 		return []base.Hash{}, nil
 	} else {
-		ret := make([]base.Hash, count)
+		ret := make([]base.Hash, 0, count)
 		for i := uint64(0); i < count; i++ {
 			method := "eth_getUncleByBlockNumberAndIndex"
 			params := query.Params{

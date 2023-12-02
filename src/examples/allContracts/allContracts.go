@@ -20,7 +20,7 @@ func main() {
 	conn := rpc.TempConnection(chain)
 	latest := conn.GetLatestBlockNumber()
 	forEveryTrace(46000, latest, visitTrace)
-	bar.Finish(true)
+	bar.Finish(true /* newLine */)
 }
 
 func visitTrace(trace *types.SimpleTrace, data *any) error {

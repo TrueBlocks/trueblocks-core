@@ -68,8 +68,8 @@ on      ,both ,fast  ,traces ,tools/getTraces ,ddos_show           ,y    ,transa
 # These work, but they're slow so we don't run them
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter1          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!1000!100 & cache
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter2          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!
-on      ,both ,fast  ,traces ,tools/getTraces ,by_filter3          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
-on      ,both ,fast  ,traces ,tools/getTraces ,by_filter4          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!1!
+local   ,both ,fast  ,traces ,tools/getTraces ,by_filter3          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
+local   ,both ,fast  ,traces ,tools/getTraces ,by_filter4          ,y    ,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!1!
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter5          ,y    ,fmt = json & filter = 4370000!4370002 & cache
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter6          ,y    ,fmt = json & filter = 0x42ae50!0x42ae52!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111
 on      ,both ,fast  ,traces ,tools/getTraces ,by_filter7          ,y    ,fmt = json & filter = 0x42ae50!4370002!!0xc42209accc14029c1012fb5680d95fbd6036e2a0
