@@ -79,14 +79,14 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		return 0.0, "not-priced", err
 	}
 	reserve0 := new(big.Float)
-	if result.Values != nil && result.Values["_reserve0"] == "" {
+	if result.Values != nil && (result.Values["_reserve0"] == "" || result.Values["_reserve0"] == "0") {
 		reserve0.SetString("1")
 	} else {
 		reserve0.SetString(result.Values["_reserve0"])
 	}
 	reserve1 := new(big.Float)
-	if result.Values != nil && result.Values["_reserve1"] == "" {
-		reserve0.SetString("1")
+	if result.Values != nil && (result.Values["_reserve1"] == "" || result.Values["_reserve1"] == "0") {
+		reserve1.SetString("1")
 	} else {
 		reserve1.SetString(result.Values["_reserve1"])
 	}
