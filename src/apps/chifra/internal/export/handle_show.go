@@ -35,7 +35,8 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps2[types.SimpleTransaction](&mon, 4, filter); err != nil {
+				// if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -50,8 +51,26 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					Total:   int64(cnt),
 				})
 
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
 					thisMap := thisMap
+
+					// n := make(map[types.SimpleAppearance]*types.SimpleTransaction)
+					// for k, v := range thisMap {
+					// 	passes, _ := filter.ApplyCountFilter()
+					// 	if passes {
+					// 		n[k] = v
+					// 	}
+					// }
+					// if len(n) == 0 {
+					// 	finished = true
+					// 	continue
+					// }
+					// thisMap = n
+
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleTransaction)
 					}
@@ -99,11 +118,14 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						}
 						return items[i].BlockNumber < items[j].BlockNumber
 					})
+
 					for _, item := range items {
 						item := item
-						if !item.BlockHash.IsZero() {
+						passes, fin := filter.ApplyCountFilter()
+						if passes && !item.BlockHash.IsZero() {
 							modelChan <- item
 						}
+						finished = fin
 					}
 				}
 			}

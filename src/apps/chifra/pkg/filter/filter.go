@@ -16,7 +16,7 @@ import (
 type AppearanceFilter struct {
 	OuterBounds base.BlockRange
 	sortBy      AppearanceSort
-	reversed    bool
+	Reversed    bool
 	reverted    bool
 	fourBytes   []string
 	exportRange base.BlockRange
@@ -38,7 +38,7 @@ func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.Blo
 		recordRange: recordRange,
 		OuterBounds: base.BlockRange{First: 0, Last: utils.NOPOS},
 		sortBy:      sortBy,
-		reversed:    reversed,
+		Reversed:    reversed,
 		reverted:    reverted,
 		fourBytes:   fourBytes,
 		nSeen:       -1,
@@ -74,11 +74,17 @@ func (f *AppearanceFilter) ApplyFilter(app *index.AppearanceRecord) (passed, fin
 	if !appRange.Intersects(base.FileRange(f.exportRange)) {
 		return false, false
 	}
-	return f.applyCountFilter()
+	return f.ApplyCountFilter()
 }
 
-// applyCountFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
-func (f *AppearanceFilter) applyCountFilter() (passed, finished bool) {
+// ApplyFilter2 checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
+func (f *AppearanceFilter) ApplyFilter2(app *index.AppearanceRecord) (passed, finished bool) {
+	appRange := base.FileRange{First: uint64(app.BlockNumber), Last: uint64(app.BlockNumber)} // --first_block/--last_block
+	return appRange.Intersects(base.FileRange(f.exportRange)), false
+}
+
+// ApplyCountFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
+func (f *AppearanceFilter) ApplyCountFilter() (passed, finished bool) {
 	f.nSeen++
 
 	if f.nSeen < int64(f.recordRange.First) { // --first_record
