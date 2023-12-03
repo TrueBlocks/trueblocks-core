@@ -58,19 +58,6 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 					}
 					thisMap := thisMap
 
-					// n := make(map[types.SimpleAppearance]*types.SimpleTransaction)
-					// for k, v := range thisMap {
-					// 	passes, _ := filter.ApplyCountFilter()
-					// 	if passes {
-					// 		n[k] = v
-					// 	}
-					// }
-					// if len(n) == 0 {
-					// 	finished = true
-					// 	continue
-					// }
-					// thisMap = n
-
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleTransaction)
 					}
