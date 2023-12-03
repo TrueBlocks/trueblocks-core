@@ -38,22 +38,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		currentBn := uint64(0)
 		prevBalance := big.NewInt(0)
-		visitToken := func(idx int, item *types.SimpleToken) error {
-			item.PriorBalance = *prevBalance
-			if item.BlockNumber == 0 || item.BlockNumber != currentBn {
-				item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
-			}
-			currentBn = item.BlockNumber
-			if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-				item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
-				modelChan <- item
-			}
-			prevBalance = &item.Balance
-			return nil
-		}
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleToken](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps2[types.SimpleToken](&mon, 4, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -68,7 +55,13 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleToken)
@@ -100,11 +93,11 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						}
 					}
 
-					// Sort the items back into an ordered array by block number
 					items := make([]*types.SimpleToken, 0, len(thisMap))
 					for _, tx := range thisMap {
 						items = append(items, tx)
 					}
+
 					sort.Slice(items, func(i, j int) bool {
 						if opts.Reversed {
 							i, j = j, i
@@ -115,13 +108,32 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 					for idx, item := range items {
 						item := item
+						visitToken := func(idx int, item *types.SimpleToken) error {
+							item.PriorBalance = *prevBalance
+							if item.BlockNumber == 0 || item.BlockNumber != currentBn || item.Timestamp == 0xdeadbeef {
+								item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
+							}
+							currentBn = item.BlockNumber
+							if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
+								item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
+								var passes bool
+								passes, finished = filter.ApplyCountFilter()
+								if passes {
+									modelChan <- item
+								}
+							}
+							prevBalance = &item.Balance
+							return nil
+						}
 						if err := visitToken(idx, item); err != nil {
 							errorChan <- err
 							return
 						}
+						if finished {
+							break
+						}
 					}
 				}
-
 				bar.Finish(true /* newLine */)
 			}
 			prevBalance = big.NewInt(0)

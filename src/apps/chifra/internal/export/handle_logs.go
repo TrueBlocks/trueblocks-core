@@ -40,7 +40,7 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps2[types.SimpleTransaction](&mon, 4, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -55,7 +55,13 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleTransaction)
@@ -83,11 +89,9 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
 					if stepErr := <-errChan; stepErr != nil {
 						errorChan <- stepErr
-						iterCancel()
 						return
 					}
 
-					// Sort the items back into an ordered array by block number
 					items := make([]*types.SimpleLog, 0, len(thisMap))
 					for _, tx := range thisMap {
 						if tx.Receipt == nil {
@@ -97,7 +101,7 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 							log := log
 							if filter.ApplyLogFilter(&log, addrArray) && opts.matchesFilter(&log) {
 								if opts.Articulate {
-									if err := abiCache.ArticulateLog(&log); err != nil {
+									if err = abiCache.ArticulateLog(&log); err != nil {
 										errorChan <- fmt.Errorf("error articulating log: %v", err)
 									}
 								}
@@ -110,20 +114,25 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 						if opts.Reversed {
 							i, j = j, i
 						}
-						itemI := items[i]
-						itemJ := items[j]
-						if itemI.BlockNumber == itemJ.BlockNumber {
-							if itemI.TransactionIndex == itemJ.TransactionIndex {
-								return itemI.LogIndex < itemJ.LogIndex
+						if items[i].BlockNumber == items[j].BlockNumber {
+							if items[i].TransactionIndex == items[j].TransactionIndex {
+								return items[i].LogIndex < items[j].LogIndex
 							}
-							return itemI.TransactionIndex < itemJ.TransactionIndex
+							return items[i].TransactionIndex < items[j].TransactionIndex
 						}
-						return itemI.BlockNumber < itemJ.BlockNumber
+						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
 					for _, item := range items {
 						item := item
-						modelChan <- item
+						var passes bool
+						passes, finished = filter.ApplyCountFilter()
+						if passes {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)
@@ -132,9 +141,9 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	}
 
 	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"articulate": opts.Articulate,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

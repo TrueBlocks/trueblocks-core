@@ -34,7 +34,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps2[types.SimpleTransaction](&mon, 4, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -49,7 +49,13 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleTransaction)
@@ -77,7 +83,6 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
 					if stepErr := <-errChan; stepErr != nil {
 						errorChan <- stepErr
-						iterCancel()
 						return
 					}
 
@@ -93,7 +98,6 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						return txArray[i].BlockNumber < txArray[j].BlockNumber
 					})
 
-					// Sort the items back into an ordered array by block number
 					items := make([]*types.SimpleStatement, 0, len(thisMap))
 
 					chain := opts.Globals.Chain
@@ -134,23 +138,27 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						if opts.Reversed {
 							i, j = j, i
 						}
-						itemI := items[i]
-						itemJ := items[j]
-						if itemI.BlockNumber == itemJ.BlockNumber {
-							if itemI.TransactionIndex == itemJ.TransactionIndex {
-								return itemI.LogIndex < itemJ.LogIndex
+						if items[i].BlockNumber == items[j].BlockNumber {
+							if items[i].TransactionIndex == items[j].TransactionIndex {
+								return items[i].LogIndex < items[j].LogIndex
 							}
-							return itemI.TransactionIndex < itemJ.TransactionIndex
+							return items[i].TransactionIndex < items[j].TransactionIndex
 						}
-						return itemI.BlockNumber < itemJ.BlockNumber
+						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
-					for _, statement := range items {
-						statement := statement
-						modelChan <- statement
+					for _, item := range items {
+						item := item
+						var passes bool
+						passes, finished = filter.ApplyCountFilter()
+						if passes {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
 					}
 				}
-
 				bar.Finish(true /* newLine */)
 			}
 		}
@@ -164,11 +172,11 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
 		parts := names.Custom | names.Prefund | names.Regular
-		namesMap, err := names.LoadNamesMap(chain, parts, nil)
-		if err != nil {
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
+		} else {
+			extra["namesMap"] = namesMap
 		}
-		extra["namesMap"] = namesMap
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))

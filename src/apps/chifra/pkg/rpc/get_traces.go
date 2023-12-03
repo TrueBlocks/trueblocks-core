@@ -119,7 +119,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 
 	var ret []types.SimpleTrace
 	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
-		return ret, fmt.Errorf("transaction at %s returned an error: %w", txHash, ethereum.NotFound)
+		return ret, ethereum.NotFound
 
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
