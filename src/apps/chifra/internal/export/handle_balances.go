@@ -55,7 +55,14 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
+				prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleToken)
@@ -99,7 +106,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
-					prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 					for idx, item := range items {
 						item := item
 						visitToken := func(idx int, item *types.SimpleToken) error {
@@ -110,7 +116,11 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 							currentBn = item.BlockNumber
 							if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
 								item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
-								modelChan <- item
+								var passes bool
+								passes, finished = filter.ApplyCountFilter()
+								if passes {
+									modelChan <- item
+								}
 							}
 							prevBalance = &item.Balance
 							return nil
@@ -118,6 +128,9 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						if err := visitToken(idx, item); err != nil {
 							errorChan <- err
 							return
+						}
+						if finished {
+							break
 						}
 					}
 				}

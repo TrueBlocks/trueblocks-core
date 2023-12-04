@@ -50,7 +50,13 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleTransaction)
@@ -112,7 +118,17 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 
 					for _, item := range items {
 						item := item
-						modelChan <- item
+						if item.BlockHash.IsZero() {
+							continue
+						}
+						var passes bool
+						passes, finished = filter.ApplyCountFilter()
+						if passes {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)

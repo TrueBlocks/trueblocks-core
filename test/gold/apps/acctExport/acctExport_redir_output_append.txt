@@ -7,7 +7,6 @@ TEST[DATE|TIME] OutputFn:  output_test_file
 TEST[DATE|TIME] Append:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
-EROR[DATE|TIME] no appearances found for 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 ----
 Results in ./output_test_file
 blockNumber	transactionIndex	timestamp	date	from	to	ether	gasPrice	gasUsed	gasCost	hash	isError	encoding	compressedTx	type
