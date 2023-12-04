@@ -64,6 +64,8 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	return
 }
 
+// TODO: nApps should be a configuration item
+
 func AsSliceOfMaps[T any](mon *Monitor, nApps int, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
 	if ret, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 		return nil, 0, err

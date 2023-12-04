@@ -40,7 +40,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		prevBalance := big.NewInt(0)
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleToken](&mon, 4, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleToken](&mon, 30, filter); err != nil {
 				errorChan <- err
 				cancel()
 
