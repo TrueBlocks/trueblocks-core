@@ -16,9 +16,10 @@ type mappedType interface {
 		types.SimpleResult
 }
 
-// TODO: nApps should be a configuration item
+// TODO: Do we want this to be configurable? Maybe, maybe not
+var AppMapSize int = 20
 
-func AsSliceOfMaps[T mappedType](chain string, nApps int, ids []Identifier) ([]map[types.SimpleAppearance]*T, int, error) {
+func AsSliceOfMaps[T mappedType](chain string, ids []Identifier) ([]map[types.SimpleAppearance]*T, int, error) {
 	ret := make([]types.SimpleAppearance, 0, 100 /* good guess */)
 	for index, rng := range ids {
 		if rawIds, err := rng.ResolveTxs(chain); err != nil {
@@ -55,7 +56,8 @@ func AsSliceOfMaps[T mappedType](chain string, nApps int, ids []Identifier) ([]m
 	arrayOfMaps := make([]map[types.SimpleAppearance]*T, 0, len(ret))
 	curMap := make(map[types.SimpleAppearance]*T)
 	for i := 0; i < len(ret); i++ {
-		if len(curMap) == nApps {
+		// TODO: Do we want this to be configurable? Maybe, maybe not
+		if len(curMap) == AppMapSize {
 			arrayOfMaps = append(arrayOfMaps, curMap)
 			curMap = make(map[types.SimpleAppearance]*T)
 		}

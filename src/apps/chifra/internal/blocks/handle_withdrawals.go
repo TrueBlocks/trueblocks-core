@@ -23,7 +23,7 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[string]](chain, 10, opts.BlockIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 

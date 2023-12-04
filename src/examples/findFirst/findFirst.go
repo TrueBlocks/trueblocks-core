@@ -62,7 +62,7 @@ func fastWay(conn *rpc.Connection) {
 		fmt.Println(err)
 	}
 
-	if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[string]](chain, 10, BlockIds); err != nil {
+	if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[string]](chain, BlockIds); err != nil {
 		fmt.Println(err)
 
 	} else if cnt != 0 {
