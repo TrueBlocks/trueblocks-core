@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleBlock[string]](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleBlock[string]](&mon, 10, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -95,6 +95,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 							items = append(items, &with)
 						}
 					}
+
 					sort.Slice(items, func(i, j int) bool {
 						if opts.Reversed {
 							i, j = j, i

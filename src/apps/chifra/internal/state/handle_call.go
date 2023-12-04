@@ -35,7 +35,7 @@ func (opts *StateOptions) HandleCall() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleResult](chain, opts.BlockIds); err != nil {
+		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleResult](chain, 10, opts.BlockIds); err != nil {
 			errorChan <- err
 			cancel()
 

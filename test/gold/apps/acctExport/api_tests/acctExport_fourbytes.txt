@@ -1,4 +1,4 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fourbytes=0xa9059cbb&maxRecords=10&fmt=json
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fourbytes=0xa9059cbb&maxRecords=6&fmt=json
 {
   "data": [
     {
@@ -77,45 +77,6 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fourbytes=0xa9059cbb&max
       "to": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "traces": [],
       "transactionIndex": 161,
-      "value": "0"
-    },
-    {
-      "blockHash": "0xb85f58b16f710a1b26b5715311e7785ec1fc78b8447941b3fe6471a8cc498290",
-      "blockNumber": 8860434,
-      "date": "2019-11-02 18:23:31 UTC",
-      "ether": "0",
-      "from": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
-      "gas": 200000,
-      "gasCost": 223620000000000,
-      "gasPrice": 10000000000,
-      "gasUsed": 22362,
-      "hasToken": true,
-      "hash": "0xf411e204daf3b005c251d506bbbf421de482ea468b1c3b76289e76d33459a083",
-      "input": "0xa9059cbb000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000878678326eac900000",
-      "receipt": {
-        "contractAddress": "0x0",
-        "effectiveGasPrice": 10000000000,
-        "gasUsed": 22362,
-        "logs": [
-          {
-            "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-            "data": "0x0000000000000000000000000000000000000000000000878678326eac900000",
-            "date": "2019-11-02 18:23:31 UTC",
-            "logIndex": 19,
-            "timestamp": 1572719011,
-            "topics": [
-              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-              "0x0000000000000000000000003f1c1e14fd919415010c03f9de29cbafd5866e81",
-              "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
-            ]
-          }
-        ],
-        "status": 1
-      },
-      "timestamp": 1572719011,
-      "to": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "traces": [],
-      "transactionIndex": 21,
       "value": "0"
     }
   ],

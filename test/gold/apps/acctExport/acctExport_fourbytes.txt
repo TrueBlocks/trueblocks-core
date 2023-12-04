@@ -1,7 +1,7 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059cbb --max_records 10 --fmt json
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059cbb --max_records 6 --fmt json
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Fourbytes:  [0xa9059cbb]
-TEST[DATE|TIME] MaxRecords:  10
+TEST[DATE|TIME] MaxRecords:  6
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 {

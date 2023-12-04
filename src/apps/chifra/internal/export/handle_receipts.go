@@ -40,7 +40,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, 10, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -83,7 +83,6 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
 					if stepErr := <-errChan; stepErr != nil {
 						errorChan <- stepErr
-						iterCancel()
 						return
 					}
 
@@ -112,12 +111,10 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 						if opts.Reversed {
 							i, j = j, i
 						}
-						itemI := items[i]
-						itemJ := items[j]
-						if itemI.BlockNumber == itemJ.BlockNumber {
-							return itemI.TransactionIndex < itemJ.TransactionIndex
+						if items[i].BlockNumber == items[j].BlockNumber {
+							return items[i].TransactionIndex < items[j].TransactionIndex
 						}
-						return itemI.BlockNumber < itemJ.BlockNumber
+						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
 					for _, item := range items {
@@ -125,14 +122,15 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 						modelChan <- item
 					}
 				}
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}
 
 	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"articulate": opts.Articulate,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

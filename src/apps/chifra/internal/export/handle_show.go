@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, 10, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -90,6 +90,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						}
 						items = append(items, tx)
 					}
+
 					sort.Slice(items, func(i, j int) bool {
 						if opts.Reversed {
 							i, j = j, i
@@ -99,6 +100,7 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						}
 						return items[i].BlockNumber < items[j].BlockNumber
 					})
+
 					for _, item := range items {
 						item := item
 						if !item.BlockHash.IsZero() {
@@ -106,9 +108,9 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						}
 					}
 				}
+				bar.Finish(true /* newLine */)
 			}
 		}
-
 	}
 
 	extra := map[string]interface{}{
@@ -119,11 +121,11 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
 		parts := names.Custom | names.Prefund | names.Regular
-		namesMap, err := names.LoadNamesMap(chain, parts, nil)
-		if err != nil {
+		if namesMap, err := names.LoadNamesMap(chain, parts, nil); err != nil {
 			return err
+		} else {
+			extra["namesMap"] = namesMap
 		}
-		extra["namesMap"] = namesMap
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))

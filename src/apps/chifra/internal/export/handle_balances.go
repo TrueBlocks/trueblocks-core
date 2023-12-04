@@ -53,7 +53,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 		}
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleToken](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleToken](&mon, 10, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -100,11 +100,11 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						}
 					}
 
-					// Sort the items back into an ordered array by block number
 					items := make([]*types.SimpleToken, 0, len(thisMap))
 					for _, tx := range thisMap {
 						items = append(items, tx)
 					}
+
 					sort.Slice(items, func(i, j int) bool {
 						if opts.Reversed {
 							i, j = j, i
@@ -121,7 +121,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						}
 					}
 				}
-
 				bar.Finish(true /* newLine */)
 			}
 			prevBalance = big.NewInt(0)

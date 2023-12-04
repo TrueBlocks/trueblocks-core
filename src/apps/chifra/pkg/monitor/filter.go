@@ -62,7 +62,10 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 	apps = make([]types.SimpleAppearance, 0, len(fromDisc))
 	for _, app := range fromDisc {
 		app := app
-		if passes, finished := filt.ApplyFilter(&app); finished {
+		var passes bool
+		var finished bool
+		passes, finished = filt.ApplyFilter(&app)
+		if finished {
 			return apps, len(apps), nil
 		} else if passes {
 			if len(apps) == 0 {

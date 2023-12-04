@@ -32,7 +32,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[bool](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[bool](&mon, 10, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -74,7 +74,6 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						}
 					}
 
-					// Sort the items back into an ordered array by block number
 					items := make([]types.SimpleAppearance, 0, len(thisMap))
 					for _, neighbor := range neighbors {
 						app := types.SimpleAppearance{
@@ -85,6 +84,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						}
 						items = append(items, app)
 					}
+
 					sort.Slice(items, func(i, j int) bool {
 						if opts.Reversed {
 							i, j = j, i
@@ -98,9 +98,9 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
-					for _, n := range items {
-						n := n
-						modelChan <- &n
+					for _, item := range items {
+						item := item
+						modelChan <- &item
 					}
 				}
 				bar.Finish(true /* newLine */)

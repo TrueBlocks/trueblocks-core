@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, 10, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -82,7 +82,6 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 						return
 					}
 
-					// Sort the items back into an ordered array by block number
 					items := make([]*types.SimpleTrace, 0, len(thisMap))
 					for _, tx := range thisMap {
 						for index, trace := range tx.Traces {
@@ -103,15 +102,13 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 						if opts.Reversed {
 							i, j = j, i
 						}
-						itemI := items[i]
-						itemJ := items[j]
-						if itemI.BlockNumber == itemJ.BlockNumber {
-							if itemI.TransactionIndex == itemJ.TransactionIndex {
-								return itemI.TraceIndex < itemJ.TraceIndex
+						if items[i].BlockNumber == items[j].BlockNumber {
+							if items[i].TransactionIndex == items[j].TransactionIndex {
+								return items[i].TraceIndex < items[j].TraceIndex
 							}
-							return itemI.TransactionIndex < itemJ.TransactionIndex
+							return items[i].TransactionIndex < items[j].TransactionIndex
 						}
-						return itemI.BlockNumber < itemJ.BlockNumber
+						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
 					for _, item := range items {
@@ -125,9 +122,9 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	}
 
 	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"articulate": opts.Articulate,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

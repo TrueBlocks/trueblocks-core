@@ -16,7 +16,9 @@ type mappedType interface {
 		types.SimpleResult
 }
 
-func AsSliceOfMaps[T mappedType](chain string, ids []Identifier) ([]map[types.SimpleAppearance]*T, int, error) {
+// TODO: nApps should be a configuration item
+
+func AsSliceOfMaps[T mappedType](chain string, nApps int, ids []Identifier) ([]map[types.SimpleAppearance]*T, int, error) {
 	ret := make([]types.SimpleAppearance, 0, 100 /* good guess */)
 	for index, rng := range ids {
 		if rawIds, err := rng.ResolveTxs(chain); err != nil {
@@ -53,7 +55,7 @@ func AsSliceOfMaps[T mappedType](chain string, ids []Identifier) ([]map[types.Si
 	arrayOfMaps := make([]map[types.SimpleAppearance]*T, 0, len(ret))
 	curMap := make(map[types.SimpleAppearance]*T)
 	for i := 0; i < len(ret); i++ {
-		if len(curMap) == 10 {
+		if len(curMap) == nApps {
 			arrayOfMaps = append(arrayOfMaps, curMap)
 			curMap = make(map[types.SimpleAppearance]*T)
 		}
