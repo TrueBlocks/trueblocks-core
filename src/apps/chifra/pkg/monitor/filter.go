@@ -12,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (apps []types.SimpleAppearance, cnt int, err error) {
+func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, withCount bool) (apps []types.SimpleAppearance, cnt int, err error) {
 	readAppearances := func(apps *[]index.AppearanceRecord) (err error) {
 		if int64(len(*apps)) > mon.Count() {
 			err = fmt.Errorf("array is larger than the size of the file (%d,%d)", len(*apps), mon.Count())
@@ -62,7 +62,15 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter) (app
 	apps = make([]types.SimpleAppearance, 0, len(fromDisc))
 	for _, app := range fromDisc {
 		app := app
-		if passes, finished := filt.ApplyFilter(&app); finished {
+		var passes bool
+		var finished bool
+		if withCount {
+			passes, finished = filt.ApplyFilter(&app)
+		} else {
+			passes, finished = filt.ApplyFilter2(&app)
+		}
+
+		if finished {
 			return apps, len(apps), nil
 		} else if passes {
 			if len(apps) == 0 {

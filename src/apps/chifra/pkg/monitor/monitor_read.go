@@ -64,13 +64,16 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	return
 }
 
-func AsSliceOfMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
-	if ret, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+func AsSliceOfMaps[T any](mon *Monitor, nApps int, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
+	if ret, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 		return nil, 0, err
 	} else if cnt == 0 {
 		return nil, 0, nil
 	} else {
 		sort.Slice(ret, func(i, j int) bool {
+			if filter.Reversed {
+				i, j = j, i
+			}
 			if ret[i].BlockNumber == ret[j].BlockNumber {
 				return ret[i].TransactionIndex < ret[j].TransactionIndex
 			}
@@ -80,7 +83,7 @@ func AsSliceOfMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[
 		arrayOfMaps := make([]map[types.SimpleAppearance]*T, 0, len(ret))
 		curMap := make(map[types.SimpleAppearance]*T)
 		for i := 0; i < len(ret); i++ {
-			if len(curMap) == 10 {
+			if len(curMap) == nApps {
 				arrayOfMaps = append(arrayOfMaps, curMap)
 				curMap = make(map[types.SimpleAppearance]*T)
 			}

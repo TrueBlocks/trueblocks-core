@@ -44,7 +44,7 @@ func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 		}
 
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
 				errorChan <- err
 				continue // on error
 			} else if !opts.NoZero || cnt > 0 {

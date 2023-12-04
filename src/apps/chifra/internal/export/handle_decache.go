@@ -34,7 +34,7 @@ func (opts *ExportOptions) HandleDecache(monitorArray []monitor.Monitor) error {
 				continue
 			}
 
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(), true /* withCount */); err != nil {
 				errorChan <- err
 				continue
 
