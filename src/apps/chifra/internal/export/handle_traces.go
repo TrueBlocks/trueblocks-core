@@ -78,7 +78,6 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
 					if stepErr := <-errChan; stepErr != nil {
 						errorChan <- stepErr
-						iterCancel()
 						return
 					}
 
