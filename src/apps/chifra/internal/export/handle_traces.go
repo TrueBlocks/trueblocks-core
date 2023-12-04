@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps2[types.SimpleTransaction](&mon, 4, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -50,7 +50,13 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleTransaction)
@@ -78,11 +84,9 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
 					if stepErr := <-errChan; stepErr != nil {
 						errorChan <- stepErr
-						iterCancel()
 						return
 					}
 
-					// Sort the items back into an ordered array by block number
 					items := make([]*types.SimpleTrace, 0, len(thisMap))
 					for _, tx := range thisMap {
 						for index, trace := range tx.Traces {
@@ -103,20 +107,25 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 						if opts.Reversed {
 							i, j = j, i
 						}
-						itemI := items[i]
-						itemJ := items[j]
-						if itemI.BlockNumber == itemJ.BlockNumber {
-							if itemI.TransactionIndex == itemJ.TransactionIndex {
-								return itemI.TraceIndex < itemJ.TraceIndex
+						if items[i].BlockNumber == items[j].BlockNumber {
+							if items[i].TransactionIndex == items[j].TransactionIndex {
+								return items[i].TraceIndex < items[j].TraceIndex
 							}
-							return itemI.TransactionIndex < itemJ.TransactionIndex
+							return items[i].TransactionIndex < items[j].TransactionIndex
 						}
-						return itemI.BlockNumber < itemJ.BlockNumber
+						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
 					for _, item := range items {
 						item := item
-						modelChan <- item
+						var passes bool
+						passes, finished = filter.ApplyCountFilter()
+						if passes && !item.BlockHash.IsZero() {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)
@@ -125,9 +134,9 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	}
 
 	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"articulate": opts.Articulate,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {
