@@ -57,6 +57,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 
 				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 				finished := false
+				prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 				for _, thisMap := range sliceOfMaps {
 					if finished {
 						continue
@@ -105,7 +106,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
-					prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
 					for idx, item := range items {
 						item := item
 						visitToken := func(idx int, item *types.SimpleToken) error {
