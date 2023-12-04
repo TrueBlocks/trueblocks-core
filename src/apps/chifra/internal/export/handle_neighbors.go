@@ -32,7 +32,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[bool](&mon, 30, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[bool](&mon, 10, filter); err != nil {
 				errorChan <- err
 				cancel()
 

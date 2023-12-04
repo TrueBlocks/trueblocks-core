@@ -35,7 +35,7 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, 30, filter); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, 10, filter); err != nil {
 				errorChan <- err
 				cancel()
 
@@ -118,9 +118,12 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 
 					for _, item := range items {
 						item := item
+						if item.BlockHash.IsZero() {
+							continue
+						}
 						var passes bool
 						passes, finished = filter.ApplyCountFilter()
-						if passes && !item.BlockHash.IsZero() {
+						if passes {
 							modelChan <- item
 						}
 						if finished {
