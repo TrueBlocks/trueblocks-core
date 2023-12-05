@@ -32,6 +32,14 @@ on      ,both ,fast  ,logs  ,tools/getLogs ,bad_blkhash_msg_raw ,y    ,transacti
 on      ,both ,fast  ,logs  ,tools/getLogs ,from_raw            ,y    ,transactions = 4000000.5 & raw
 on      ,both ,medi  ,logs  ,tools/getLogs ,prev_bug2_2         ,y    ,transactions = 4279119.46 & raw
 
+on      ,both ,fast  ,logs  ,tools/getLogs ,filter_none         ,y    ,transactions = 15001001.0 15001001.1 & fmt = json
+on      ,both ,fast  ,logs  ,tools/getLogs ,filter_1_emitter    ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & fmt = json
+on      ,both ,fast  ,logs  ,tools/getLogs ,filter_2_emitter    ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & emitter = 0x9194fbb0363c5dc78bc918f888a5b87781bb9d00 & fmt = json
+on      ,both ,fast  ,logs  ,tools/getLogs ,filter_1_topic      ,y    ,transactions = 15001001.0 15001001.1 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & fmt = json
+on      ,both ,fast  ,logs  ,tools/getLogs ,filter_2_topic      ,y    ,transactions = 15001001.0 15001001.1 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & fmt = json
+on      ,both ,fast  ,logs  ,tools/getLogs ,filter_1_both       ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0xc40d16476380e4037e6b1a2594caf6a6cc8da967 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & fmt = json
+on      ,both ,fast  ,logs  ,tools/getLogs ,filter_2_both       ,y    ,transactions = 15001001.0 15001001.1 & emitter = 0x514910771af9ca656af840dff83e8264ecf986ca & emitter = 0x9194fbb0363c5dc78bc918f888a5b87781bb9d00 & topic = 0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & fmt = json
+
 # This fails for an unknown reason for multiple tools
 delay   ,both ,fast  ,logs  ,tools/getLogs ,multi_articulate    ,y    ,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 

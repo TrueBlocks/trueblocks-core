@@ -18,13 +18,15 @@ Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
-  -a, --articulate   articulate the retrieved data if ABIs can be found
-  -w, --raw          report JSON data from the source with minimal processing
-  -o, --cache        force the results of the query into the cache
-  -D, --decache      removes related items from the cache
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose output
-  -h, --help         display this help screen
+  -m, --emitter strings   filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings     filter logs to show only those with this topic(s)
+  -a, --articulate        articulate the retrieved data if ABIs can be found
+  -w, --raw               report JSON data from the source with minimal processing
+  -o, --cache             force the results of the query into the cache
+  -D, --decache           removes related items from the cache
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
+  -v, --verbose           enable verbose output
+  -h, --help              display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.

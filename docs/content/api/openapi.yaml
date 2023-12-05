@@ -385,7 +385,7 @@ paths:
             type: boolean
         - name: emitter
           description: >
-            for log export only, export only logs if emitted by one of these address(es)
+            for the --logs option only, filter logs to show only those logs emitted by the given address(es)
           required: false
           style: form
           in: query
@@ -395,16 +395,9 @@ paths:
             items:
               type: string
               format: address
-        - name: reverted
-          description: export only transactions that were reverted
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: topic
-          description: for log export only, export only logs with this topic(s)
+          description: >
+            for the --logs option only, filter logs to show only those with this topic(s)
           required: false
           style: form
           in: query
@@ -414,6 +407,14 @@ paths:
             items:
               type: string
               format: topic
+        - name: reverted
+          description: export only transactions that were reverted
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: asset
           description: for the accounting options only, export statements only for this asset
           required: false
@@ -1346,6 +1347,28 @@ paths:
             items:
               type: string
               format: tx_id
+        - name: emitter
+          description: filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topic
+          description: filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
           required: false

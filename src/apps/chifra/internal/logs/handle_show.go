@@ -23,6 +23,8 @@ func (opts *LogsOptions) HandleShow() error {
 	nErrors := 0
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
+	logFilter := types.NewLogFilter(opts.Emitter, opts.Topic)
+
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
@@ -85,6 +87,7 @@ func (opts *LogsOptions) HandleShow() error {
 						items = append(items, tx.Receipt.Logs...)
 					}
 				}
+
 				sort.Slice(items, func(i, j int) bool {
 					if items[i].BlockNumber == items[j].BlockNumber {
 						if items[i].TransactionIndex == items[j].TransactionIndex {
@@ -97,7 +100,9 @@ func (opts *LogsOptions) HandleShow() error {
 
 				for _, item := range items {
 					item := item
-					modelChan <- &item
+					if logFilter.PassesFilter(&item) {
+						modelChan <- &item
+					}
 				}
 			}
 			bar.Finish(true /* newLine */)

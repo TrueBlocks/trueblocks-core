@@ -4,11 +4,13 @@
  * This file was generated with makeClass --sdk. Do not edit it.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { Log, LogFilter, txId } from '../types';
+import { address, Log, LogFilter, topic, txId } from '../types';
 
 export function getLogs(
   parameters?: {
     transactions: txId[],
+    emitter?: address[],
+    topic?: topic[],
     articulate?: boolean,
     chain: string,
     noHeader?: boolean,
