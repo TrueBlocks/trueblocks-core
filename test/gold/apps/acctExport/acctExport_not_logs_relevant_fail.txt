@@ -1,5 +1,6 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --relevant
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --relevant --max_records 100
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] MaxRecords:  100
 TEST[DATE|TIME] Relevant:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt

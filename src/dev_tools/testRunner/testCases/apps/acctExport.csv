@@ -182,7 +182,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_336             ,y    
 
 # Testing --logs
 on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_topic_fail      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & topic = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
-on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_relevant_fail   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & relevant
+on      ,both ,fast  ,export   ,apps/acctExport ,not_logs_relevant_fail   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & relevant & max_records = 100
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_emitter_fail     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & emitter = 0x7d655c57f71464b6f83811c55d84009cd9f5221
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_topic_fail       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs  & topic = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & logs & max_records = 3 & cache
@@ -191,10 +191,10 @@ on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,export_logs              ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_logs_art          ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & first_block = 1429283 & last_block = 1429468 & fmt = json & articulate
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_logs_emit         ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & emitter = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & first_block = 1429283 & last_block = 1429468 & fmt = csv
-slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not      ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = json
-slow    ,both ,fast  ,export   ,apps/acctExport ,export_relevant          ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & relevant & last_block = 10272064 & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,export_relevant_not      ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & last_block = 10272064 & fmt = json & max_records = 100
+on      ,both ,fast  ,export   ,apps/acctExport ,export_relevant          ,y    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & relevant & last_block = 10272064 & fmt = json & max_records = 100
 slow    ,both ,fast  ,export   ,apps/acctExport ,export_emit_not_relev    ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & last_block = 10272064 & fmt = csv
-slow    ,both ,fast  ,export   ,apps/acctExport ,export_emit_relev        ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & relevant & last_block = 10272064 & fmt = csv
+on      ,both ,fast  ,export   ,apps/acctExport ,export_emit_relev        ,n    ,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & logs & emitter = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & relevant & last_block = 10272064 & fmt = csv & max_records = 100
 
 # Testing adding a fourbyte value
 on      ,both ,fast  ,export   ,apps/acctExport ,invalid_fourbyte         ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fourbytes = 0xa9059c & max_records = 10 & fmt = json
