@@ -24,18 +24,7 @@ func (opts *BlocksOptions) HandleLogs() error {
 	nErrors := 0
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	emitters := []base.Address{}
-	for _, e := range opts.Emitter {
-		emitters = append(emitters, base.HexToAddress(e))
-	}
-	topics := []base.Hash{}
-	for _, t := range opts.Topic {
-		topics = append(topics, base.HexToHash(t))
-	}
-	logFilter := types.SimpleLogFilter{
-		Emitters: emitters,
-		Topics:   topics,
-	}
+	logFilter := types.NewLogFilter(opts.Emitter, opts.Topic)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
