@@ -50,7 +50,13 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleBlock[string])
@@ -95,6 +101,7 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 							items = append(items, &with)
 						}
 					}
+
 					sort.Slice(items, func(i, j int) bool {
 						if opts.Reversed {
 							i, j = j, i
@@ -103,7 +110,15 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 					})
 
 					for _, item := range items {
-						modelChan <- item
+						item := item
+						var passes bool
+						passes, finished = filter.ApplyCountFilter()
+						if passes {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)

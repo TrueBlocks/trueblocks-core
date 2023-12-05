@@ -15,7 +15,7 @@ func (mon *Monitor) RemoveDups() (int64, int64, error) {
 	}
 	defer mon.Close()
 
-	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(), true /* withCount */); err != nil {
 		return mon.Count(), mon.Count(), err
 	} else if cnt == 0 {
 		return mon.Count(), mon.Count(), nil

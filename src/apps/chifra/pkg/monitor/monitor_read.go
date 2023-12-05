@@ -13,6 +13,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -65,12 +66,15 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 }
 
 func AsSliceOfMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
-	if ret, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+	if ret, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 		return nil, 0, err
 	} else if cnt == 0 {
 		return nil, 0, nil
 	} else {
 		sort.Slice(ret, func(i, j int) bool {
+			if filter.Reversed {
+				i, j = j, i
+			}
 			if ret[i].BlockNumber == ret[j].BlockNumber {
 				return ret[i].TransactionIndex < ret[j].TransactionIndex
 			}
@@ -80,7 +84,8 @@ func AsSliceOfMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[
 		arrayOfMaps := make([]map[types.SimpleAppearance]*T, 0, len(ret))
 		curMap := make(map[types.SimpleAppearance]*T)
 		for i := 0; i < len(ret); i++ {
-			if len(curMap) == 10 {
+			// TODO: Do we want this to be configurable? Maybe, maybe not
+			if len(curMap) == identifiers.AppMapSize {
 				arrayOfMaps = append(arrayOfMaps, curMap)
 				curMap = make(map[types.SimpleAppearance]*T)
 			}

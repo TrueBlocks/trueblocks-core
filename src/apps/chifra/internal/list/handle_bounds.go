@@ -31,7 +31,7 @@ func (opts *ListOptions) HandleBounds(monitorArray []monitor.Monitor) error {
 		}
 
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
 				errorChan <- err
 				return
 			} else if cnt > 0 {

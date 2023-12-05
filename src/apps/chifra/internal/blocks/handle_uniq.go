@@ -87,9 +87,9 @@ func (opts *BlocksOptions) HandleUniq() error {
 					return items[i].BlockNumber < items[j].BlockNumber
 				})
 
-				for _, s := range items {
-					s := s
-					modelChan <- &s
+				for _, item := range items {
+					item := item
+					modelChan <- &item
 				}
 			}
 			bar.Finish(true /* newLine */)

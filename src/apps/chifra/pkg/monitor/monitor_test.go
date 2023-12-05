@@ -96,7 +96,7 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		t.Error(err)
 	}
 
-	if apps, _, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
+	if apps, _, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(), true /* withCount */); err != nil {
 		t.Error(err)
 	} else {
 		for i, app := range apps {

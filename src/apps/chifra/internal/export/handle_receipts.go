@@ -55,7 +55,13 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(types.SimpleTransaction)
@@ -83,7 +89,6 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
 					if stepErr := <-errChan; stepErr != nil {
 						errorChan <- stepErr
-						iterCancel()
 						return
 					}
 
@@ -112,27 +117,33 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 						if opts.Reversed {
 							i, j = j, i
 						}
-						itemI := items[i]
-						itemJ := items[j]
-						if itemI.BlockNumber == itemJ.BlockNumber {
-							return itemI.TransactionIndex < itemJ.TransactionIndex
+						if items[i].BlockNumber == items[j].BlockNumber {
+							return items[i].TransactionIndex < items[j].TransactionIndex
 						}
-						return itemI.BlockNumber < itemJ.BlockNumber
+						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
 					for _, item := range items {
 						item := item
-						modelChan <- item
+						var passes bool
+						passes, finished = filter.ApplyCountFilter()
+						if passes {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
 					}
 				}
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}
 
 	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"articulate": opts.Articulate,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

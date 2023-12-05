@@ -47,7 +47,13 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 					Total:   int64(cnt),
 				})
 
+				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+				finished := false
 				for _, thisMap := range sliceOfMaps {
+					if finished {
+						continue
+					}
+
 					thisMap := thisMap
 					for app := range thisMap {
 						thisMap[app] = new(bool)
@@ -74,7 +80,6 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						}
 					}
 
-					// Sort the items back into an ordered array by block number
 					items := make([]types.SimpleAppearance, 0, len(thisMap))
 					for _, neighbor := range neighbors {
 						app := types.SimpleAppearance{
@@ -85,6 +90,7 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						}
 						items = append(items, app)
 					}
+
 					sort.Slice(items, func(i, j int) bool {
 						if opts.Reversed {
 							i, j = j, i
@@ -98,9 +104,16 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
-					for _, n := range items {
-						n := n
-						modelChan <- &n
+					for _, item := range items {
+						item := item
+						var passes bool
+						passes, finished = filter.ApplyCountFilter()
+						if passes {
+							modelChan <- &item
+						}
+						if finished {
+							break
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)
