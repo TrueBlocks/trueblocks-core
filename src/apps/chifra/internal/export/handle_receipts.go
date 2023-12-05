@@ -36,6 +36,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 	for _, mon := range monitorArray {
 		addrArray = append(addrArray, mon.Address)
 	}
+	logFilter := types.NewLogFilter(opts.Emitter, opts.Topic)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawReceipt], errorChan chan error) {
@@ -100,7 +101,7 @@ func (opts *ExportOptions) HandleReceipts(monitorArray []monitor.Monitor) error 
 						filteredLogs := make([]types.SimpleLog, 0, len(tx.Receipt.Logs))
 						for _, log := range tx.Receipt.Logs {
 							log := log
-							if filter.ApplyLogFilter(&log, addrArray) && opts.matchesFilter(&log) {
+							if filter.ApplyLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
 								if opts.Articulate {
 									if err := abiCache.ArticulateLog(&log); err != nil {
 										errorChan <- fmt.Errorf("error articulating log: %v", err)

@@ -203,6 +203,20 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
+	if len(opts.Addrs) > 0 {
+		addrs := []string{}
+		for _, addr := range opts.Addrs {
+			if validate.IsValidTopic(addr) {
+				opts.Topic = append(opts.Topic, addr)
+				opts.Topics = append(opts.Topics, addr)
+			} else if validate.IsValidFourByte(addr) {
+				opts.Fourbytes = append(opts.Fourbytes, addr)
+			} else {
+				addrs = append(addrs, addr)
+			}
+		}
+		opts.Addrs = addrs
+	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
@@ -233,6 +247,7 @@ func exportFinishParse(args []string) *ExportOptions {
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidTopic(arg) {
+			opts.Topic = append(opts.Topic, arg)
 			opts.Topics = append(opts.Topics, arg)
 		} else if validate.IsValidFourByte(arg) {
 			opts.Fourbytes = append(opts.Fourbytes, arg)
