@@ -17,6 +17,16 @@ import (
 
 // GetTracesByBlockNumber returns a slice of traces in the given block
 func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, error) {
+	if conn.StoreReadable() {
+		traceGroup := &types.SimpleTraceGroup{
+			BlockNumber:      bn,
+			TransactionIndex: utils.NOPOS,
+		}
+		if err := conn.Store.Read(traceGroup, nil); err == nil {
+			return traceGroup.Traces, nil
+		}
+	}
+
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
@@ -76,6 +86,15 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 			idx++
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
+		}
+
+		if conn.StoreWritable() && conn.EnabledMap["traces"] && base.IsFinal(conn.LatestBlockTimestamp, curTs) {
+			traceGroup := &types.SimpleTraceGroup{
+				Traces:           ret,
+				BlockNumber:      bn,
+				TransactionIndex: utils.NOPOS,
+			}
+			_ = conn.Store.Write(traceGroup, nil)
 		}
 		return ret, nil
 	}

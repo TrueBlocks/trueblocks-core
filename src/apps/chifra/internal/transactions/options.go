@@ -180,7 +180,7 @@ func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
 		"transactions": true,
-		"traces":       opts.CacheTraces,
+		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
 	}
 	// EXISTING_CODE
 	return
