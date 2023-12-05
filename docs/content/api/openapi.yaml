@@ -1347,6 +1347,28 @@ paths:
             items:
               type: string
               format: tx_id
+        - name: emitter
+          description: filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topic
+          description: filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
           required: false

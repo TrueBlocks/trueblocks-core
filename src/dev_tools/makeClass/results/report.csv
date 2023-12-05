@@ -220,8 +220,14 @@ logs,articulate,python
 logs,articulate,typescript
 logs,cache,api
 logs,cache,python
+logs,emitter,api
+logs,emitter,python
+logs,emitter,typescript
 logs,raw,api
 logs,raw,python
+logs,topic,api
+logs,topic,python
+logs,topic,typescript
 monitors,batchSize,api
 monitors,batchSize,python
 monitors,batchSize,typescript

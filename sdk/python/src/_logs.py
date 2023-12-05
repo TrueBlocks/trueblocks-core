@@ -7,6 +7,8 @@ logsCmd = "logs"
 logsPos = "transactions"
 logsFmt = "json"
 logsOpts = {
+    "emitter": {"hotkey": "-m", "type": "flag"},
+    "topic": {"hotkey": "-B", "type": "flag"},
     "articulate": {"hotkey": "-a", "type": "switch"},
     "raw": {"hotkey": "-w", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
