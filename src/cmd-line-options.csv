@@ -101,6 +101,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,gocmd,positional,list<addr>,a list of one or more smart contracts whose ABIs to display
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,true,gocmd,switch,<boolean>,load common 'known' ABIs from cache
+13855,tools,Accounts,abis,grabABI,proxy_for,r,,false,false,true,true,gocmd,flag,<address>,redirects the query to this implementation
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,gocmd,flag,list<string>,search for function or event declarations given a four- or 32-byte code(s)
 13865,tools,Accounts,abis,grabABI,hint,n,,false,false,true,true,gocmd,flag,list<string>,for the --find option only&#44; provide hints to speed up the search
 13865,tools,Accounts,abis,grabABI,encode,e,,false,false,true,true,gocmd,flag,<string>,generate the 32-byte encoding for a given cannonical function or event signature

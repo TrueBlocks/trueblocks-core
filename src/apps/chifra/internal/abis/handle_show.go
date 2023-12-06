@@ -22,6 +22,9 @@ func (opts *AbisOptions) HandleShow() (err error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := base.HexToAddress(addr)
+			if len(opts.ProxyFor) > 0 {
+				address = base.HexToAddress(opts.ProxyFor)
+			}
 			err = abi.LoadAbi(opts.Conn, address, &abiCache.AbiMap)
 			if err != nil {
 				if errors.Is(err, rpc.ErrNotAContract) {
@@ -33,6 +36,8 @@ func (opts *AbisOptions) HandleShow() (err error) {
 					errorChan <- err
 					cancel()
 				}
+				// } else if len(opts.ProxyFor) > 0 {
+				// TODO: We need to copy the proxied-to ABI to the proxy (replacing)
 			}
 		}
 

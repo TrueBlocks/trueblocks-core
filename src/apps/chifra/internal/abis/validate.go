@@ -35,6 +35,9 @@ func (opts *AbisOptions) validateAbis() error {
 		if opts.Known {
 			return validate.Usage("Please choose only one of {0}.", "--decache or --known")
 		}
+		if len(opts.ProxyFor) > 0 {
+			return validate.Usage("Please choose only one of {0}.", "--decache or --proxy_for")
+		}
 	}
 
 	if len(opts.Globals.File) == 0 && len(opts.Encode) == 0 && len(opts.Find) == 0 && !opts.Known && !opts.Globals.Decache {
@@ -47,6 +50,10 @@ func (opts *AbisOptions) validateAbis() error {
 
 	if len(opts.Find) > 0 && len(opts.Encode) > 0 {
 		return validate.Usage("Please choose only one of {0}.", "--find or --encode")
+	}
+
+	if len(opts.Addrs) != 1 && len(opts.ProxyFor) > 0 {
+		return validate.Usage("The {0} option requires exactly one address.", "--proxy_for")
 	}
 
 	for _, term := range opts.Find {

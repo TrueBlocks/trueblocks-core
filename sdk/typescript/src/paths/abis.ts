@@ -10,6 +10,7 @@ export function getAbis(
   parameters?: {
     addrs: address[],
     known?: boolean,
+    proxyFor?: address,
     find?: string[],
     hint?: string[],
     encode?: string,

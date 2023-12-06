@@ -1,7 +1,8 @@
-chifra abis  trueblocks.eth --chain --fmt --nocolor --noop --version --verbose --no_header --file --output --append --cache --decache --fail_on_purpose
-Error: 
-  unknown flag: --fail_on_purpose
-
+chifra abis  --proxy_for 0xd9db270c1b5e3bd161e8c8503c55ceabee709552 --fmt json
+TEST[DATE|TIME] ProxyFor:  0xd9db270c1b5e3bd161e8c8503c55ceabee709552
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  json
+Error: Please specify at least one valid Ethereum address.
 Usage:
   chifra abis [flags] <address> [address...]
 
