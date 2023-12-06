@@ -2345,6 +2345,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: perPage
           description: the number of records to request on each page
           required: false

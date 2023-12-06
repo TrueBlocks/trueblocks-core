@@ -27,6 +27,7 @@ Flags:
   -t, --types strings   which types of transactions to request
                         One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
+  -a, --articulate      articulate the retrieved data if ABIs can be found
   -P, --per_page uint   the number of records to request on each page (default 5000)
   -s, --sleep float     seconds to sleep between requests (default 0.25)
   -H, --ether           specify value in ether

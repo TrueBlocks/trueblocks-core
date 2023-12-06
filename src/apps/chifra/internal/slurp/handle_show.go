@@ -22,6 +22,9 @@ func (opts *SlurpOptions) HandleShow() error {
 		paginator.PerPage = 100
 	}
 
+	// TODO: Turn this back on
+	// abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
+
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawSlurp], errorChan chan error) {
 		totalFetched := 0
@@ -49,8 +52,13 @@ func (opts *SlurpOptions) HandleShow() error {
 						if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
 							continue
 						}
-						bar.Tick()
+						// if opts.Articulate {
+						// 	if err = abiCache.ArticulateSlurp(&tx); err != nil {
+						// 		errorChan <- err // continue even with an error
+						// 	}
+						// }
 						modelChan <- &tx
+						bar.Tick()
 						totalFiltered++
 					}
 
@@ -72,7 +80,11 @@ func (opts *SlurpOptions) HandleShow() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	extra := map[string]interface{}{
+		// "articulate": opts.Articulate,
+	}
+
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
 func (opts *SlurpOptions) isInRange(bn uint, errorChan chan error) bool {

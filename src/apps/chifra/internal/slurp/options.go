@@ -28,6 +28,7 @@ type SlurpOptions struct {
 	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
 	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
 	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
+	Articulate  bool                     `json:"articulate,omitempty"`  // Articulate the retrieved data if ABIs can be found
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
@@ -47,6 +48,7 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
+	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.PerPage != 5000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
@@ -84,6 +86,8 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 			}
 		case "appearances":
 			opts.Appearances = true
+		case "articulate":
+			opts.Articulate = true
 		case "perPage":
 			opts.PerPage = globals.ToUint64(value[0])
 		case "sleep":
