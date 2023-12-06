@@ -10,6 +10,9 @@ abis,hint,typescript
 abis,known,api
 abis,known,python
 abis,known,typescript
+abis,proxyFor,api
+abis,proxyFor,python
+abis,proxyFor,typescript
 blocks,articulate,api
 blocks,articulate,python
 blocks,articulate,typescript

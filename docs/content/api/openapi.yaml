@@ -876,6 +876,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: proxyFor
+          description: redirects the query to this implementation
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: find
           description: search for function or event declarations given a four- or 32-byte code(s)
           required: false
