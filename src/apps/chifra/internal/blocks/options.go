@@ -208,7 +208,7 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 		"blocks":       !opts.Uncles,
 		"receipts":     !opts.Uncles,
 		"transactions": opts.CacheTxs || opts.Uniq,
-		"traces":       opts.CacheTraces || opts.Uniq,
+		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
 		"logs":         opts.Logs,
 	}
 	// EXISTING_CODE
