@@ -14,17 +14,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *AbisOptions) HandleShow() (err error) {
-	if len(opts.Addrs) > 1 && opts.Globals.Format == "json" {
-		return opts.HandleMany()
-	}
-
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
-
+func (opts *AbisOptions) HandleMany() (err error) {
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawFunction], errorChan chan error) {
-		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
+	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, addr := range opts.Addrs {
+			abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
 			address := base.HexToAddress(addr)
 			if len(opts.ProxyFor) > 0 {
 				address = base.HexToAddress(opts.ProxyFor)
@@ -43,14 +37,18 @@ func (opts *AbisOptions) HandleShow() (err error) {
 				// } else if len(opts.ProxyFor) > 0 {
 				// TODO: We need to copy the proxied-to ABI to the proxy (replacing)
 			}
-		}
 
-		names := abiCache.AbiMap.Keys()
-		sort.Strings(names)
-
-		for _, name := range names {
-			function := abiCache.AbiMap.GetValue(name)
-			modelChan <- function
+			abi := simpleAbi{}
+			abi.Address = address
+			names := abiCache.AbiMap.Keys()
+			sort.Strings(names)
+			for _, name := range names {
+				function := abiCache.AbiMap.GetValue(name)
+				if function != nil {
+					abi.Functions = append(abi.Functions, *function)
+				}
+			}
+			modelChan <- &abi
 		}
 	}
 

@@ -1388,6 +1388,19 @@ components:
         ipfsGateway:
           type: string
           description: "an IPFS gateway for pinning the index if enabled"
+    abi:
+      description: "a human-readable representation of a Solidity smart contract"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address for the ABI"
+        functions:
+          type: array
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the functions for this address"
     function:
       description: "a human-readable representation of a Solidity function call or event"
       type: object

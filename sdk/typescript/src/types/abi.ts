@@ -3,13 +3,9 @@
 /*
  * This file was generated with makeClass --sdk. Do not edit it.
  */
-import { address, Function, hash } from '.';
+import { address, Function } from '.';
 
 export type Abi = {
   address: address
-  interfaces: Function[]
-  encoding: hash
-  type: string
-  name: string
-  signature: string
+  functions: Function[]
 }

@@ -923,10 +923,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
+                    description: Produces <a href="/data-model/other/#abi">Abi</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/abi"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/parameter"
                 example:
@@ -3814,6 +3815,19 @@ components:
         ipfsGateway:
           type: string
           description: "an IPFS gateway for pinning the index if enabled"
+    abi:
+      description: "a human-readable representation of a Solidity smart contract"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address for the ABI"
+        functions:
+          type: array
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the functions for this address"
     function:
       description: "a human-readable representation of a Solidity function call or event"
       type: object
