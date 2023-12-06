@@ -66,7 +66,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
 		if !perfTiming {
-			logger.Warn("provider responded with:", address.Hex(), data["message"])
+			logger.Warn("provider responded with:", address.Hex(), data["message"], ss)
 		}
 
 		reader := strings.NewReader(AbiNotFound)
@@ -93,3 +93,5 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 
 	return nil
 }
+
+var ss = strings.Repeat(" ", 40)

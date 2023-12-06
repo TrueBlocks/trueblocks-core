@@ -55,7 +55,7 @@ func (conn *Connection) GetESTransactionByAddress(chain, addr, requestType strin
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --decache.
-		logger.Warn("provider responded with:", url, fromEs.Message)
+		logger.Warn("provider responded with:", url, fromEs.Message, ss)
 		return []types.SimpleSlurp{}, 0, nil
 		// } else if fromEs.Message != "OK" {
 		// 	logger.Warn("URL:", url)
@@ -237,3 +237,5 @@ func debugCurl(url string) {
 		logger.ToggleDecoration()
 	}
 }
+
+var ss = strings.Repeat(" ", 40)

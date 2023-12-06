@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -23,7 +24,8 @@ func (opts *SlurpOptions) HandleShow() error {
 	}
 
 	// TODO: Turn this back on
-	// abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
+	// TODO: ARTICULATE SLURP
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawSlurp], errorChan chan error) {
@@ -52,11 +54,12 @@ func (opts *SlurpOptions) HandleShow() error {
 						if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
 							continue
 						}
-						// if opts.Articulate {
-						// 	if err = abiCache.ArticulateSlurp(&tx); err != nil {
-						// 		errorChan <- err // continue even with an error
-						// 	}
-						// }
+						// TODO: ARTICULATE SLURP
+						if opts.Articulate {
+							if err = abiCache.ArticulateSlurp(&tx); err != nil {
+								errorChan <- err // continue even with an error
+							}
+						}
 						modelChan <- &tx
 						bar.Tick()
 						totalFiltered++
@@ -81,7 +84,8 @@ func (opts *SlurpOptions) HandleShow() error {
 	}
 
 	extra := map[string]interface{}{
-		// "articulate": opts.Articulate,
+		// TODO: ARTICULATE SLURP
+		"articulate": opts.Articulate,
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))

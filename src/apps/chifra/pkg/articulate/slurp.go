@@ -6,7 +6,8 @@ import (
 
 func (abiCache *AbiCache) ArticulateSlurp(slurp *types.SimpleSlurp) error {
 	tx := types.SimpleTransaction{
-		To: slurp.To,
+		To:    slurp.To,
+		Input: slurp.Input,
 	}
 
 	if err := abiCache.ArticulateTransaction(&tx); err != nil {
