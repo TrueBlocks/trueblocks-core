@@ -21,6 +21,9 @@ on       ,both ,fast  ,abis  ,tools/grabABI ,fmt_api             ,y    ,addrs = 
 on       ,both ,fast  ,abis  ,tools/grabABI ,fmt_json            ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on       ,both ,fast  ,abis  ,tools/grabABI ,fmt_junk            ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
 on       ,both ,fast  ,abis  ,tools/grabABI ,ens_test            ,y    ,addrs = uniswap.eth & fmt = json
+on       ,both ,fast  ,abis  ,tools/grabABI ,proxy_fail          ,y    ,proxy_for = 0xd9db270c1b5e3bd161e8c8503c55ceabee709552 & fmt = json
+on       ,both ,fast  ,abis  ,tools/grabABI ,proxy_no            ,y    ,addrs = 0x99b36fdbc582d113af36a21eba06bfeab7b9be12 & fmt = json
+on       ,both ,fast  ,abis  ,tools/grabABI ,proxy_yes           ,y    ,addrs = 0x99b36fdbc582d113af36a21eba06bfeab7b9be12 & proxy_for = 0xd9db270c1b5e3bd161e8c8503c55ceabee709552 & fmt = json
 
 on       ,both ,fast  ,abis  ,tools/grabABI ,findSig_tooshort    ,y    ,find = 0x1aa3a0
 on       ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolong     ,y    ,find = 0x1aa3a00800
