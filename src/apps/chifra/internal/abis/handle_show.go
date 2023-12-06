@@ -36,7 +36,7 @@ func (opts *AbisOptions) HandleShow() (err error) {
 					errorChan <- err
 					cancel()
 				}
-			} else if len(opts.ProxyFor) > 0 {
+				// } else if len(opts.ProxyFor) > 0 {
 				// TODO: We need to copy the proxied-to ABI to the proxy (replacing)
 			}
 		}
