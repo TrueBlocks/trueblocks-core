@@ -45,6 +45,7 @@ Notes:
 
 Data models produced by this tool:
 
+- [abi](/data-model/other/#abi)
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
