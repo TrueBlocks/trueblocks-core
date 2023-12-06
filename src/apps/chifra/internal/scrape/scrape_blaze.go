@@ -168,13 +168,12 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {
 			appearanceArray = append(appearanceArray, record)
-
 			if bn <= bm.ripeBlock {
 				// Only notify about ripe block's appearances
 				payloadItem := notify.NotificationPayloadAppearance{}
 				err := payloadItem.FromString(record)
 				if err != nil {
-					logger.Fatal(err)
+					logger.Fatal(fmt.Errorf("implementation error - unexpected record format: %s", err))
 				}
 				notificationPayload = append(notificationPayload, payloadItem)
 			}
@@ -202,7 +201,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 			Payload: notificationPayload,
 		})
 		if err != nil {
-			logger.Fatal(err)
+			return err
 		}
 	}
 

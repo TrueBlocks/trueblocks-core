@@ -123,7 +123,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				Meta:    bm.meta,
 				Payload: chunkRange.String(),
 			}); err != nil {
-				return err, false
+				return err, true
 			}
 
 			// reset for next chunk
@@ -169,7 +169,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		Meta:    bm.meta,
 		Payload: newRange.String(),
 	}); err != nil {
-		return err, false
+		return err, true
 	}
 
 	// Commit the change by deleting the backup file.
