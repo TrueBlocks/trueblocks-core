@@ -323,6 +323,9 @@ scrape,touch,typescript
 slurp,appearances,api
 slurp,appearances,python
 slurp,appearances,typescript
+slurp,articulate,api
+slurp,articulate,python
+slurp,articulate,typescript
 slurp,cache,api
 slurp,cache,python
 slurp,perPage,api

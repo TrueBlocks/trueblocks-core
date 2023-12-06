@@ -12,6 +12,7 @@ export function getSlurp(
     blocks?: blknum[],
     types?: string[],
     appearances?: boolean,
+    articulate?: boolean,
     perPage?: uint64,
     sleep?: double,
     chain: string,
