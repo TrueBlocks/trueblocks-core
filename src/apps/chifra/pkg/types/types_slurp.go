@@ -175,6 +175,30 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 	}
 	model["transactionIndex"] = s.TransactionIndex
 
+	// TODO: Turn this back on
+	// var articulatedTx map[string]interface{}
+	// isArticulated := extraOptions["articulate"] == true && s.ArticulatedTx != nil
+	// if isArticulated && format != "json" {
+	// 	order = append(order, "compressedTx")
+	// }
+	// if isArticulated {
+	// 	articulatedTx = map[string]interface{}{
+	// 		"name": s.ArticulatedTx.Name,
+	// 	}
+	// 	inputModels := parametersToMap(s.ArticulatedTx.Inputs)
+	// 	if inputModels != nil {
+	// 		articulatedTx["inputs"] = inputModels
+	// 	}
+	// 	outputModels := parametersToMap(s.ArticulatedTx.Outputs)
+	// 	if outputModels != nil {
+	// 		articulatedTx["outputs"] = outputModels
+	// 	}
+	// 	sm := s.ArticulatedTx.StateMutability
+	// 	if sm != "" && sm != "nonpayable" && sm != "view" {
+	// 		articulatedTx["stateMutability"] = sm
+	// 	}
+	// }
+
 	if format == "json" {
 		a := s.ContractAddress.Hex()
 		if strings.HasPrefix(a, "0x") && len(a) == 42 {
@@ -184,6 +208,15 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		if len(s.Input) > 2 && s.Input != "deprecated" {
 			model["input"] = s.Input
 		}
+
+		// if isArticulated {
+		// 	model["articulatedTx"] = articulatedTx
+		// } else {
+		// 	if s.Message != "" {
+		// 		model["message"] = s.Message
+		// 	}
+		// }
+
 	} else {
 		model["hasToken"] = s.HasToken
 		model["isError"] = s.IsError
@@ -192,6 +225,20 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 			s.Input = "0x"
 		}
 		model["input"] = s.Input
+
+		// model["compressedTx"] = ""
+		// enc := s.Input
+		// if len(s.Input) >= 10 {
+		// 	enc = s.Input[:10]
+		// }
+		// model["encoding"] = enc
+
+		// if isArticulated {
+		// 	model["compressedTx"] = makeCompressed(articulatedTx)
+		// } else if s.Message != "" {
+		// 	model["encoding"] = ""
+		// 	model["compressedTx"] = s.Message
+		// }
 	}
 
 	// EXISTING_CODE
