@@ -19,7 +19,7 @@ type Ledger struct {
 	LastBlock   base.Blknum
 	Names       map[base.Address]types.SimpleName
 	TestMode    bool
-	Contexts    map[string]LedgerContext
+	Contexts    map[string]ledgerContext
 	AsEther     bool
 	NoZero      bool
 	UseTraces   bool
@@ -35,7 +35,7 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 		AccountFor: acctFor,
 		FirstBlock: fb,
 		LastBlock:  lb,
-		Contexts:   make(map[string]LedgerContext),
+		Contexts:   make(map[string]ledgerContext),
 		AsEther:    asEther,
 		TestMode:   testMode,
 		NoZero:     noZero,

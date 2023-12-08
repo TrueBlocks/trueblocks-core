@@ -12,9 +12,9 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
-// LedgerContext is a struct to hold the context of a reconciliation (i.e., its
+// ledgerContext is a struct to hold the context of a reconciliation (i.e., its
 // previous and next blocks and whether they are different)
-type LedgerContext struct {
+type ledgerContext struct {
 	PrevBlock  base.Blknum
 	CurBlock   base.Blknum
 	NextBlock  base.Blknum
@@ -23,20 +23,20 @@ type LedgerContext struct {
 	ReconType  string
 }
 
-func (c *LedgerContext) Prev() base.Blknum {
+func (c *ledgerContext) Prev() base.Blknum {
 	return c.PrevBlock
 }
 
-func (c *LedgerContext) Cur() base.Blknum {
+func (c *ledgerContext) Cur() base.Blknum {
 	return c.CurBlock
 }
 
-func (c *LedgerContext) Next() base.Blknum {
+func (c *ledgerContext) Next() base.Blknum {
 	return c.NextBlock
 }
 
-func NewLedgerContext(prev, cur, next base.Blknum) *LedgerContext {
-	c := &LedgerContext{
+func newLedgerContext(prev, cur, next base.Blknum) *ledgerContext {
+	c := &ledgerContext{
 		PrevBlock:  prev,
 		CurBlock:   cur,
 		NextBlock:  next,
@@ -47,7 +47,7 @@ func NewLedgerContext(prev, cur, next base.Blknum) *LedgerContext {
 	return c
 }
 
-func (c *LedgerContext) getReconType() (reconType string) {
+func (c *ledgerContext) getReconType() (reconType string) {
 	if c.CurBlock == 0 {
 		c.IsPrevDiff = true
 		return "genesis"
@@ -79,9 +79,6 @@ const maxTestingBlock = 17000000
 func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerBounds base.BlockRange) error {
 	for i := 0; i < len(apps); i++ {
 		cur := apps[i].BlockNumber
-		// if cur > maxTestingBlock {
-		// 	continue
-		// }
 
 		prev := outerBounds.First
 		if i > 0 {
@@ -98,7 +95,7 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 		}
 
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts[key] = *NewLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
+		l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
 	}
 
 	if l.TestMode {
@@ -142,7 +139,7 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			next := apps[i].BlockNumber + 1
 
 			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = *NewLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
+			l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
 		}
 	}
 	return nil
