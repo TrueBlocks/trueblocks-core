@@ -52,7 +52,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 					}
 
 					if opts.Accounting {
-						if statements, err := ledgers.GetStatementsFromAppearance(opts.Conn, filter, app); err != nil {
+						if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
 							errorChan <- err
 						} else {
 							tx.Statements = &statements

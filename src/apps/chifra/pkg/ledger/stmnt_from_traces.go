@@ -8,14 +8,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) (statements []*types.SimpleStatement) {
-	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
+func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) ([]types.SimpleStatement, error) {
+	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
 	ret.ClearInternal()
 
 	if traces, err := conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
-		logger.Error(err)
+		return statements, err
 
 	} else {
 		// These values accumulate...so we use += instead of =
@@ -85,15 +85,15 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 
 	if l.trialBalance("ETH TRACES", &ret) {
 		if ret.MoneyMoved() {
-			statements = append(statements, &ret)
+			statements = append(statements, ret)
 		} else {
 			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 		}
 	} else {
 		// TODO: BOGUS PERF
 		// logger.Warn("Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not reconcile")
-		statements = append(statements, &ret)
+		statements = append(statements, ret)
 	}
 
-	return
+	return statements, nil
 }

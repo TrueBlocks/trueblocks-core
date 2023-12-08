@@ -17,12 +17,12 @@ var transferTopic = base.HexToHash(
 )
 
 // getStatementFromLog returns a statement from a given log
-func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog) (r *types.SimpleStatement, err error) {
+func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog) (types.SimpleStatement, error) {
 	if len(log.Topics) < 3 || log.Topics[0] != transferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
 		// TODO: attempt both with and without indexed parameters. See issues/1366.
-		return nil, nil
+		return types.SimpleStatement{}, nil
 	}
 
 	sym := log.Address.Prefix(6)
@@ -40,19 +40,20 @@ func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog)
 	key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
 	ctx := l.Contexts[key]
 
+	var err error
 	pBal := new(big.Int)
 	if pBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
-		return nil, err
+		return types.SimpleStatement{}, err
 	}
 
 	bBal := new(big.Int)
 	if bBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
-		return nil, err
+		return types.SimpleStatement{}, err
 	}
 
 	eBal := new(big.Int)
 	if eBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
-		return nil, err
+		return types.SimpleStatement{}, err
 	}
 
 	b := strings.Replace(log.Data, "0x", "", -1)
@@ -100,5 +101,5 @@ func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog)
 		}
 	}
 
-	return &ret, nil
+	return ret, nil
 }

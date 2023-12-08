@@ -98,7 +98,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						return txArray[i].BlockNumber < txArray[j].BlockNumber
 					})
 
-					items := make([]*types.SimpleStatement, 0, len(thisMap))
+					items := make([]types.SimpleStatement, 0, len(thisMap))
 
 					chain := opts.Globals.Chain
 					testMode := opts.Globals.TestMode
@@ -125,12 +125,11 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 
 					// we need them sorted for the following to work
 					for _, tx := range txArray {
-						ledgers.Tx = tx // we need this below
-						if stmts := ledgers.GetStatements(opts.Conn, filter, tx); len(stmts) > 0 {
-							for _, statement := range stmts {
-								statement := statement
-								items = append(items, statement)
-							}
+						if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
+							errorChan <- err
+
+						} else if len(statements) > 0 {
+							items = append(items, statements...)
 						}
 					}
 
@@ -152,7 +151,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						var passes bool
 						passes, finished = filter.ApplyCountFilter()
 						if passes {
-							modelChan <- item
+							modelChan <- &item
 						}
 						if finished {
 							break
