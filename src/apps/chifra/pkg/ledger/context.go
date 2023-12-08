@@ -12,15 +12,45 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
+type reconType int
+
+const (
+	genesis reconType = iota
+	diffDiff
+	sameSame
+	diffSame
+	sameDiff
+	shouldNotHappen
+)
+
+func (r reconType) String() string {
+	switch r {
+	case genesis:
+		return "genesis"
+	case diffDiff:
+		return "diff-diff"
+	case sameSame:
+		return "same-same"
+	case diffSame:
+		return "diff-same"
+	case sameDiff:
+		return "same-diff"
+	case shouldNotHappen:
+		return "should-not-happen"
+	default:
+		return "unknown"
+	}
+}
+
 // ledgerContext is a struct to hold the context of a reconciliation (i.e., its
 // previous and next blocks and whether they are different)
 type ledgerContext struct {
-	PrevBlock  base.Blknum
-	CurBlock   base.Blknum
-	NextBlock  base.Blknum
-	IsPrevDiff bool
-	IsNextDiff bool
-	ReconType  string
+	PrevBlock base.Blknum
+	CurBlock  base.Blknum
+	NextBlock base.Blknum
+	// IsPrevDiff bool
+	// IsNextDiff bool
+	ReconType reconType
 }
 
 func (c *ledgerContext) Prev() base.Blknum {
@@ -37,36 +67,34 @@ func (c *ledgerContext) Next() base.Blknum {
 
 func newLedgerContext(prev, cur, next base.Blknum) *ledgerContext {
 	c := &ledgerContext{
-		PrevBlock:  prev,
-		CurBlock:   cur,
-		NextBlock:  next,
-		IsPrevDiff: prev != cur,
-		IsNextDiff: cur != next,
+		PrevBlock: prev,
+		CurBlock:  cur,
+		NextBlock: next,
 	}
-	c.ReconType = c.getReconType()
+	c.ReconType = c.getReconType(prev != cur, cur != next)
 	return c
 }
 
-func (c *ledgerContext) getReconType() (reconType string) {
+func (c *ledgerContext) getReconType(prevDiff, nextDiff bool) reconType {
 	if c.CurBlock == 0 {
-		c.IsPrevDiff = true
-		return "genesis"
+		return genesis
 	} else {
-		if c.IsPrevDiff && c.IsNextDiff {
-			return "diff-diff"
-		} else if !c.IsPrevDiff && !c.IsNextDiff {
-			return "same-same"
-		} else if c.IsPrevDiff {
-			return "diff-same"
-		} else if c.IsNextDiff {
-			return "same-diff"
+		if prevDiff && nextDiff {
+			return diffDiff
+		} else if !prevDiff && !nextDiff {
+			return sameSame
+		} else if prevDiff {
+			return diffSame
+		} else if nextDiff {
+			return sameDiff
 		} else {
-			return "should-not-happen"
+			return shouldNotHappen
 		}
 	}
 }
 
 func (l *Ledger) ctxKey(bn, txid uint64) string {
+	// TODO: Is having the context per asset necessary?
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
 	return fmt.Sprintf("%09d-%05d", bn, txid)
 }
@@ -110,8 +138,8 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 				continue
 			}
 			msg := ""
-			if !c.IsPrevDiff || !c.IsNextDiff {
-				msg = fmt.Sprintf(" %12.12s %t %t", c.ReconType, c.IsPrevDiff, c.IsNextDiff)
+			if c.ReconType == sameSame {
+				msg = fmt.Sprintf(" %12.12s false false", c.ReconType)
 			}
 			logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
 		}
