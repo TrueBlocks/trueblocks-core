@@ -61,6 +61,7 @@ Statuses consist of the following fields:
 | rootConfig    | the path to the root configuration folder                | string                                      |
 | rpcProvider   | the current rpcProvider                                  | string                                      |
 | version       | the TrueBlocks version string                            | string                                      |
+| chains        | a list of available chains in the config file            | [Chain[]](/data-model/admin/#chain)         |
 
 ## Manifest
 

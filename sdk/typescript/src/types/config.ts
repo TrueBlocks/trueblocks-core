@@ -3,7 +3,7 @@
 /*
  * This file was generated with makeClass --sdk. Do not edit it.
  */
-import { CacheItem } from '.';
+import { CacheItem, Chain } from '.';
 
 export type Config = {
   cachePath?: string
@@ -24,4 +24,5 @@ export type Config = {
   rootConfig?: string
   rpcProvider?: string
   version?: string
+  chains?: Chain[]
 }
