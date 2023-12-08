@@ -3491,6 +3491,11 @@ components:
         version:
           type: string
           description: "the TrueBlocks version string"
+        chains:
+          type: array
+          items:
+            $ref: "#/components/schemas/chain"
+          description: "a list of available chains in the config file"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object

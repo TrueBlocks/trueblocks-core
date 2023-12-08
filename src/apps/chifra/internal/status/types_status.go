@@ -29,7 +29,7 @@ import (
 )
 
 type CCacheItemArray []simpleCacheItem
-
+type CChainArray []types.SimpleChain
 // EXISTING_CODE
 
 type simpleStatus struct {
@@ -38,6 +38,7 @@ type simpleStatus struct {
 	Chain         string          `json:"chain,omitempty"`
 	ChainConfig   string          `json:"chainConfig,omitempty"`
 	ChainId       string          `json:"chainId,omitempty"`
+	Chains        CChainArray     `json:"chains,omitempty"`
 	ClientVersion string          `json:"clientVersion,omitempty"`
 	HasEsKey      bool            `json:"hasEsKey,omitempty"`
 	HasPinKey     bool            `json:"hasPinKey,omitempty"`

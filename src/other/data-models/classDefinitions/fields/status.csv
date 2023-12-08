@@ -17,3 +17,4 @@ progress      ,string      ,           ,true      , 15 ,the progress string of t
 rootConfig    ,string      ,           ,true      , 16 ,the path to the root configuration folder
 rpcProvider   ,string      ,           ,true      , 17 ,the current rpcProvider
 version       ,string      ,           ,true      , 18 ,the TrueBlocks version string
+chains        ,[]Chain     ,           ,true      , 19 ,a list of available chains in the config file

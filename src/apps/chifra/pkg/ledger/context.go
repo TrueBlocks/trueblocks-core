@@ -79,9 +79,9 @@ const maxTestingBlock = 17000000
 func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerBounds base.BlockRange) error {
 	for i := 0; i < len(apps); i++ {
 		cur := apps[i].BlockNumber
-		if cur > maxTestingBlock {
-			continue
-		}
+		// if cur > maxTestingBlock {
+		// 	continue
+		// }
 
 		prev := outerBounds.First
 		if i > 0 {
