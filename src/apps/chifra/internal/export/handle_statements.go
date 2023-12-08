@@ -126,7 +126,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 					// we need them sorted for the following to work
 					for _, tx := range txArray {
 						ledgers.Tx = tx // we need this below
-						if stmts := ledgers.GetStatementsFromTransaction(opts.Conn, filter, tx); len(stmts) > 0 {
+						if stmts := ledgers.GetStatements(opts.Conn, filter, tx); len(stmts) > 0 {
 							for _, statement := range stmts {
 								statement := statement
 								items = append(items, statement)

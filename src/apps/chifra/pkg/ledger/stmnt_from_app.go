@@ -18,7 +18,7 @@ func (l *Ledger) GetStatementsFromAppearance(
 
 	} else {
 		l.Tx = tx // we need this below
-		if stmts := l.GetStatementsFromTransaction(conn, filter, tx); len(stmts) > 0 {
+		if stmts := l.GetStatements(conn, filter, tx); len(stmts) > 0 {
 			for _, statement := range stmts {
 				statement := statement
 				statements = append(statements, *statement)

@@ -10,12 +10,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// GetStatementsFromTransaction returns a statement from a given transaction
-func (l *Ledger) GetStatementsFromTransaction(
-	conn *rpc.Connection,
-	filter *filter.AppearanceFilter,
-	trans *types.SimpleTransaction,
-) (statements []*types.SimpleStatement) {
+// GetStatements returns a statement from a given transaction
+func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.SimpleTransaction) (statements []*types.SimpleStatement) {
 	if false && conn.StoreReadable() {
 		statementGroup := &types.SimpleStatementGroup{
 			Address:          l.AccountFor,
