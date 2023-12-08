@@ -17,12 +17,12 @@ var transferTopic = base.HexToHash(
 )
 
 // getStatementFromLog returns a statement from a given log
-func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog) (r *types.SimpleStatement, err error) {
+func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog) (types.SimpleStatement, error) {
 	if len(log.Topics) < 3 || log.Topics[0] != transferTopic {
 		// TODO: Too short topics happens (sometimes) because the ABI says that the data is not
 		// TODO: index, but it is or visa versa. In either case, we get the same topic0. We need to
 		// TODO: attempt both with and without indexed parameters. See issues/1366.
-		return nil, nil
+		return types.SimpleStatement{}, nil
 	}
 
 	sym := log.Address.Prefix(6)
@@ -37,30 +37,33 @@ func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog)
 		}
 	}
 
+	// TODO: BOGUS PERF - WE HIT GETBALANCE THREE TIMES FOR EACH APPEARANCE. SPIN THROUGH ONCE
+	// TODO: AND CACHE RESULTS IN MEMORY, BUT BE CAREFUL OF MULTIPLE LOGS PER BLOCK (OR TRANSACTION)
 	key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
 	ctx := l.Contexts[key]
 
+	var err error
 	pBal := new(big.Int)
 	if pBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
-		return nil, err
+		return types.SimpleStatement{}, err
 	}
 
 	bBal := new(big.Int)
 	if bBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
-		return nil, err
+		return types.SimpleStatement{}, err
 	}
 
 	eBal := new(big.Int)
 	if eBal, err = conn.GetTokenBalanceAt(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
-		return nil, err
+		return types.SimpleStatement{}, err
 	}
 
-	b := strings.Replace(log.Data, "0x", "", -1)
-	var val *big.Int
-	if val, _ = new(big.Int).SetString(b, 16); val == nil {
-		val = big.NewInt(0)
+	var amt *big.Int
+	if amt, _ = new(big.Int).SetString(strings.Replace(log.Data, "0x", "", -1), 16); amt == nil {
+		amt = big.NewInt(0)
 	}
-	ret := types.SimpleStatement{
+
+	s := types.SimpleStatement{
 		AccountedFor:     l.AccountFor,
 		Sender:           base.HexToAddress(log.Topics[1].Hex()),
 		Recipient:        base.HexToAddress(log.Topics[2].Hex()),
@@ -80,25 +83,28 @@ func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog)
 		EndBal:           *eBal,
 	}
 
-	ofInterst := false
-	if l.AccountFor == ret.Sender {
-		ret.AmountOut = *val
-		ofInterst = true
+	ofInterest := false
+
+	// Do not collapse, may be both
+	if l.AccountFor == s.Sender {
+		s.AmountOut = *amt
+		ofInterest = true
 	}
 
-	// Do not collapse, may be both (self-send)
-	if l.AccountFor == ret.Recipient {
-		ret.AmountIn = *val
-		ofInterst = true
+	// Do not collapse, may be both
+	if l.AccountFor == s.Recipient {
+		s.AmountIn = *amt
+		ofInterest = true
 	}
 
-	if ofInterst {
-		if !l.trialBalance("TOKENS", &ret) {
-			logger.Warn(colors.Yellow+"Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "does not reconcile"+colors.Off)
+	if ofInterest {
+		id := fmt.Sprintf("%d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+		if !l.trialBalance("TOKENS", &s) {
+			logger.Warn(colors.Yellow+"Transaction", id, "does not reconcile"+colors.Off)
 		} else {
-			logger.Progress(true, colors.Green+"Transaction", fmt.Sprintf("%d.%d.%d", ret.BlockNumber, ret.TransactionIndex, ret.LogIndex), "reconciled"+colors.Off)
+			logger.Progress(true, colors.Green+"Transaction", id, "reconciled"+colors.Off)
 		}
 	}
 
-	return &ret, nil
+	return s, nil
 }

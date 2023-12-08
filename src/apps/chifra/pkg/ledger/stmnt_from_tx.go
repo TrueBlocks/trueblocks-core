@@ -10,12 +10,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// GetStatementsFromTransaction returns a statement from a given transaction
-func (l *Ledger) GetStatementsFromTransaction(
-	conn *rpc.Connection,
-	filter *filter.AppearanceFilter,
-	trans *types.SimpleTransaction,
-) (statements []*types.SimpleStatement) {
+// GetStatements returns a statement from a given transaction
+func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.SimpleTransaction) ([]types.SimpleStatement, error) {
+	l.Tx = trans // we need this below
 	if false && conn.StoreReadable() {
 		statementGroup := &types.SimpleStatementGroup{
 			Address:          l.AccountFor,
@@ -23,16 +20,12 @@ func (l *Ledger) GetStatementsFromTransaction(
 			TransactionIndex: trans.TransactionIndex,
 		}
 		if err := conn.Store.Read(statementGroup, nil); err == nil {
-			pointers := []*types.SimpleStatement{}
-			for _, statement := range statementGroup.Statements {
-				pointers = append(pointers, &statement)
-			}
-			return pointers
+			return statementGroup.Statements, nil
 		}
 	}
 
 	// make room for our results
-	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
+	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex)
 	ctx := l.Contexts[key]
@@ -106,7 +99,7 @@ func (l *Ledger) GetStatementsFromTransaction(
 
 		if !l.UseTraces && l.trialBalance("ETH", &ret) {
 			if ret.MoneyMoved() {
-				statements = append(statements, &ret)
+				statements = append(statements, ret)
 			} else {
 				logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 			}
@@ -114,7 +107,7 @@ func (l *Ledger) GetStatementsFromTransaction(
 			if !l.UseTraces {
 				logger.TestLog(!l.UseTraces, "Trial balance failed for ", ret.TransactionHash.Hex(), "need to decend into traces")
 			}
-			if traceStatements := l.getStatementsFromTraces(conn, trans, &ret); len(traceStatements) == 0 {
+			if traceStatements, err := l.getStatementsFromTraces(conn, trans, &ret); err != nil {
 				logger.Warn(l.TestMode, "Error getting statement from traces")
 			} else {
 				statements = append(statements, traceStatements...)
@@ -127,33 +120,30 @@ func (l *Ledger) GetStatementsFromTransaction(
 			log := log
 			addrArray := []base.Address{l.AccountFor}
 			if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {
-				if statement, err := l.getStatementFromLog(conn, &log); statement != nil {
+				if statement, err := l.getStatementFromLog(conn, &log); err != nil {
+					logger.Warn(l.TestMode, "Error getting statement from log: ", err)
+
+				} else {
 					if statement.Sender == l.AccountFor || statement.Recipient == l.AccountFor {
 						add := !l.NoZero || statement.MoneyMoved()
 						if add {
 							statements = append(statements, statement)
 						}
 					}
-				} else if err != nil {
-					logger.Warn(l.TestMode, "Error getting statement from log: ", err)
 				}
 			}
 		}
 	}
 
 	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
-		objects := make([]types.SimpleStatement, 0, len(statements))
-		for _, ptr := range statements {
-			objects = append(objects, *ptr)
-		}
 		statementGroup := &types.SimpleStatementGroup{
 			Address:          l.AccountFor,
 			BlockNumber:      trans.BlockNumber,
 			TransactionIndex: trans.TransactionIndex,
-			Statements:       objects,
+			Statements:       statements,
 		}
 		_ = conn.Store.Write(statementGroup, nil)
 	}
 
-	return
+	return statements, nil
 }
