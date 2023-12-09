@@ -98,10 +98,14 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						return txArray[i].BlockNumber < txArray[j].BlockNumber
 					})
 
-					items := make([]types.SimpleStatement, 0, len(thisMap))
+					apps := make([]types.SimpleAppearance, 0, len(thisMap))
+					for _, tx := range txArray {
+						apps = append(apps, types.SimpleAppearance{
+							BlockNumber:      uint32(tx.BlockNumber),
+							TransactionIndex: uint32(tx.TransactionIndex),
+						})
+					}
 
-					chain := opts.Globals.Chain
-					testMode := opts.Globals.TestMode
 					ledgers := ledger.NewLedger(
 						opts.Conn,
 						mon.Address,
@@ -110,21 +114,14 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						opts.Globals.Ether,
 						testMode,
 						opts.NoZero,
-						opts.Reversed,
 						opts.Traces,
+						opts.Reversed,
 						&opts.Asset,
 					)
 
-					apps := make([]types.SimpleAppearance, 0, len(thisMap))
-					for _, tx := range txArray {
-						apps = append(apps, types.SimpleAppearance{
-							BlockNumber:      uint32(tx.BlockNumber),
-							TransactionIndex: uint32(tx.TransactionIndex),
-						})
-					}
 					_ = ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
 
-					// we need them sorted for the following to work
+					items := make([]types.SimpleStatement, 0, len(thisMap))
 					for _, tx := range txArray {
 						if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
 							errorChan <- err

@@ -52,9 +52,9 @@ type ledgerContext struct {
 	ReconType reconType
 }
 
-func newLedgerContext(prev, cur, next base.Blknum, reversed bool) *ledgerContext {
+func newLedgerContext(prev, cur, next base.Blknum, reversed bool) ledgerContext {
 	if prev > cur || cur > next {
-		return &ledgerContext{
+		return ledgerContext{
 			ReconType: invalid,
 		}
 	}
@@ -79,11 +79,12 @@ func newLedgerContext(prev, cur, next base.Blknum, reversed bool) *ledgerContext
 		}
 	}
 
-	return &ledgerContext{
+	return ledgerContext{
 		PrevBlock: prev,
 		CurBlock:  cur,
 		NextBlock: next,
 		ReconType: reconType,
+		// Reversed:  reversed,
 	}
 }
 
@@ -129,28 +130,10 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 		}
 
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 	}
 
-	if l.TestMode {
-		keys := []string{}
-		for key := range l.Contexts {
-			keys = append(keys, key)
-		}
-		sort.Strings(keys)
-		for _, key := range keys {
-			c := l.Contexts[key]
-			if c.CurBlock > maxTestingBlock {
-				continue
-			}
-			msg := ""
-			if c.ReconType == sameSame {
-				msg = fmt.Sprintf(" %12.12s false false", c.ReconType)
-			}
-			logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
-		}
-	}
-
+	l.DebugContext()
 	return nil
 }
 
@@ -173,8 +156,34 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			next := apps[i].BlockNumber + 1
 
 			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+			l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 		}
 	}
+
+	l.DebugContext()
 	return nil
+}
+
+func (l *Ledger) DebugContext() {
+	if !l.TestMode {
+		return
+	}
+
+	keys := []string{}
+	for key := range l.Contexts {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+
+	for _, key := range keys {
+		c := l.Contexts[key]
+		if c.CurBlock > maxTestingBlock {
+			continue
+		}
+		msg := ""
+		if c.ReconType == sameSame {
+			msg = fmt.Sprintf(" %12.12s false false", c.ReconType)
+		}
+		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
+	}
 }

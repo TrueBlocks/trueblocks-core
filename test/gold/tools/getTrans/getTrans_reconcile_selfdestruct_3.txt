@@ -4,6 +4,7 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] AccountFor:  0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] 002608034-00005:    2608033    2608034     2608035
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 2608034 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================

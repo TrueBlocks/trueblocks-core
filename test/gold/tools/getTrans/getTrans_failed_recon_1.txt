@@ -3,6 +3,7 @@ TEST[DATE|TIME] Transactions:  [0x70c443f1b6e376226a087c2e4512324f135c6ecb2daf6e
 TEST[DATE|TIME] AccountFor:  0x127ac03acfad15f7a49dd037e52d5507260e1425
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] 004634215-00043:    4634214    4634215     4634216
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 4634215 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================

@@ -3,6 +3,7 @@ TEST[DATE|TIME] Transactions:  [0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac9
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] 015828830-00112:   15828829   15828830    15828831
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Needs correction for eth
 TEST[DATE|TIME] Needs correction for eth
