@@ -34,6 +34,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		ether,
 		testMode,
 		noZero,
+		false, /* reversed */
 		opts.Traces,
 		nil,
 	)

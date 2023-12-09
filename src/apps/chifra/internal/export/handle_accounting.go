@@ -78,6 +78,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 					opts.Globals.Ether,
 					testMode,
 					opts.NoZero,
+					opts.Reversed,
 					opts.Traces,
 					&opts.Asset,
 				)

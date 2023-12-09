@@ -6,17 +6,34 @@ package ledger
 
 import (
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 func TestLedgerContext(t *testing.T) {
-	expected := ledgerContext{
-		PrevBlock: 12,
-		CurBlock:  13,
-		NextBlock: 14,
-		ReconType: diffDiff,
+	tests := []struct {
+		prev     base.Blknum
+		cur      base.Blknum
+		next     base.Blknum
+		reversed bool
+		expected reconType
+	}{
+		{0, 0, 0, false, genesis},
+		{0, 0, 1, false, genesis},
+		{1, 0, 1, false, invalid},
+		{12, 13, 14, false, diffDiff},
+		{12, 12, 13, false, sameDiff},
+		{12, 13, 13, false, diffSame},
+		{12, 12, 12, false, sameSame},
+		{10, 9, 9, false, invalid},
+		{10, 10, 9, false, invalid},
+		{10, 9, 8, false, invalid},
 	}
-	got := newLedgerContext(12, 13, 14)
-	if *got != expected {
-		t.Error("expected:", expected, "got:", got)
+
+	for _, test := range tests {
+		got := newLedgerContext(test.prev, test.cur, test.next, test.reversed)
+		if got.ReconType != test.expected {
+			t.Error("expected:", test.expected, "got:", got.ReconType)
+		}
 	}
 }

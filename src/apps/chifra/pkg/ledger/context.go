@@ -15,7 +15,8 @@ import (
 type reconType int
 
 const (
-	genesis reconType = iota
+	invalid reconType = iota
+	genesis
 	diffDiff
 	sameSame
 	diffSame
@@ -35,10 +36,8 @@ func (r reconType) String() string {
 		return "diff-same"
 	case sameDiff:
 		return "same-diff"
-	case shouldNotHappen:
-		return "should-not-happen"
 	default:
-		return "unknown"
+		return "invalid"
 	}
 }
 
@@ -53,6 +52,41 @@ type ledgerContext struct {
 	ReconType reconType
 }
 
+func newLedgerContext(prev, cur, next base.Blknum, reversed bool) *ledgerContext {
+	if prev > cur || cur > next {
+		return &ledgerContext{
+			ReconType: invalid,
+		}
+	}
+
+	reconType := invalid
+	if cur == 0 {
+		reconType = genesis
+	} else {
+		prevDiff := prev != cur
+		nextDiff := cur != next
+		if prevDiff && nextDiff {
+			reconType = diffDiff
+		} else if !prevDiff && !nextDiff {
+			reconType = sameSame
+		} else if prevDiff {
+			reconType = diffSame
+		} else if nextDiff {
+			reconType = sameDiff
+		} else {
+			reconType = invalid
+			logger.Panic("should not happen")
+		}
+	}
+
+	return &ledgerContext{
+		PrevBlock: prev,
+		CurBlock:  cur,
+		NextBlock: next,
+		ReconType: reconType,
+	}
+}
+
 func (c *ledgerContext) Prev() base.Blknum {
 	return c.PrevBlock
 }
@@ -63,34 +97,6 @@ func (c *ledgerContext) Cur() base.Blknum {
 
 func (c *ledgerContext) Next() base.Blknum {
 	return c.NextBlock
-}
-
-func newLedgerContext(prev, cur, next base.Blknum) *ledgerContext {
-	c := &ledgerContext{
-		PrevBlock: prev,
-		CurBlock:  cur,
-		NextBlock: next,
-	}
-	c.ReconType = c.getReconType(prev != cur, cur != next)
-	return c
-}
-
-func (c *ledgerContext) getReconType(prevDiff, nextDiff bool) reconType {
-	if c.CurBlock == 0 {
-		return genesis
-	} else {
-		if prevDiff && nextDiff {
-			return diffDiff
-		} else if !prevDiff && !nextDiff {
-			return sameSame
-		} else if prevDiff {
-			return diffSame
-		} else if nextDiff {
-			return sameDiff
-		} else {
-			return shouldNotHappen
-		}
-	}
 }
 
 func (l *Ledger) ctxKey(bn, txid uint64) string {
@@ -123,7 +129,7 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 		}
 
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
+		l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 	}
 
 	if l.TestMode {
@@ -167,7 +173,7 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			next := apps[i].BlockNumber + 1
 
 			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
+			l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 		}
 	}
 	return nil

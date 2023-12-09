@@ -22,6 +22,7 @@ type Ledger struct {
 	Contexts    map[string]ledgerContext
 	AsEther     bool
 	NoZero      bool
+	Reversed    bool
 	UseTraces   bool
 	AssetFilter []base.Address
 	Tx          *types.SimpleTransaction
@@ -29,7 +30,7 @@ type Ledger struct {
 }
 
 // NewLedger returns a new empty Ledger struct
-func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces bool, assetFilters *[]string) *Ledger {
+func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
 		Conn:       conn,
 		AccountFor: acctFor,
@@ -39,6 +40,7 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 		AsEther:    asEther,
 		TestMode:   testMode,
 		NoZero:     noZero,
+		Reversed:   reversed,
 		UseTraces:  useTraces,
 	}
 
