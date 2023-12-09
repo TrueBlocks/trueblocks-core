@@ -40,7 +40,7 @@ func (l *Ledger) getStatementFromLog(conn *rpc.Connection, log *types.SimpleLog)
 	// TODO: BOGUS PERF - WE HIT GETBALANCE THREE TIMES FOR EACH APPEARANCE. SPIN THROUGH ONCE
 	// TODO: AND CACHE RESULTS IN MEMORY, BUT BE CAREFUL OF MULTIPLE LOGS PER BLOCK (OR TRANSACTION)
 	key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
-	ctx := l.Contexts[key]
+	ctx := l.Contexts1[key]
 
 	var err error
 	pBal := new(big.Int)

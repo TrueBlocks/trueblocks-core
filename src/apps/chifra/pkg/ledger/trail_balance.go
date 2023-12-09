@@ -12,7 +12,7 @@ import (
 // trialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
 func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
 	key := l.ctxKey(r.BlockNumber, r.TransactionIndex)
-	ctx := l.Contexts[key]
+	ctx := l.Contexts1[key]
 
 	r.ReconciliationType = ctx.ReconType.String()
 	if r.AssetAddr == base.FAKE_ETH_ADDRESS {
@@ -50,7 +50,7 @@ func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
 	}
 
 	if l.TestMode {
-		r.Report(&ctx, msg)
+		r.Report(ctx, msg)
 		logger.TestLog(l.TestMode, "End of trial balance report")
 	}
 

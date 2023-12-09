@@ -41,20 +41,20 @@ func (r reconType) String() string {
 	}
 }
 
+type ledgerContextKey string
+
 // ledgerContext is a struct to hold the context of a reconciliation (i.e., its
 // previous and next blocks and whether they are different)
 type ledgerContext struct {
 	PrevBlock base.Blknum
 	CurBlock  base.Blknum
 	NextBlock base.Blknum
-	// IsPrevDiff bool
-	// IsNextDiff bool
 	ReconType reconType
 }
 
-func newLedgerContext(prev, cur, next base.Blknum, reversed bool) ledgerContext {
+func newLedgerContext(prev, cur, next base.Blknum, reversed bool) *ledgerContext {
 	if prev > cur || cur > next {
-		return ledgerContext{
+		return &ledgerContext{
 			ReconType: invalid,
 		}
 	}
@@ -79,7 +79,7 @@ func newLedgerContext(prev, cur, next base.Blknum, reversed bool) ledgerContext 
 		}
 	}
 
-	return ledgerContext{
+	return &ledgerContext{
 		PrevBlock: prev,
 		CurBlock:  cur,
 		NextBlock: next,
@@ -100,10 +100,10 @@ func (c *ledgerContext) Next() base.Blknum {
 	return c.NextBlock
 }
 
-func (l *Ledger) ctxKey(bn, txid uint64) string {
+func (l *Ledger) ctxKey(bn, txid uint64) ledgerContextKey {
 	// TODO: Is having the context per asset necessary?
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
-	return fmt.Sprintf("%09d-%05d", bn, txid)
+	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
 const maxTestingBlock = 17000000
@@ -130,7 +130,7 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 		}
 
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+		l.Contexts1[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 	}
 
 	l.DebugContext()
@@ -156,7 +156,7 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			next := apps[i].BlockNumber + 1
 
 			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+			l.Contexts1[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 		}
 	}
 
@@ -169,14 +169,17 @@ func (l *Ledger) DebugContext() {
 		return
 	}
 
-	keys := []string{}
-	for key := range l.Contexts {
+	keys := make([]ledgerContextKey, 0, len(l.Contexts1))
+	for key := range l.Contexts1 {
 		keys = append(keys, key)
 	}
-	sort.Strings(keys)
+
+	sort.Slice(keys, func(i, j int) bool {
+		return string(keys[i]) < string(keys[j])
+	})
 
 	for _, key := range keys {
-		c := l.Contexts[key]
+		c := l.Contexts1[key]
 		if c.CurBlock > maxTestingBlock {
 			continue
 		}

@@ -28,7 +28,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex)
-	ctx := l.Contexts[key]
+	ctx := l.Contexts1[key]
 
 	if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
