@@ -52,6 +52,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 
 					if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
 						errorChan <- err
+
 					} else {
 						tx.Statements = &statements
 					}
