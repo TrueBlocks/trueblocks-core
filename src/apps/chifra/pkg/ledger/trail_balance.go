@@ -17,7 +17,7 @@ func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
 	r.ReconciliationType = ctx.ReconType.String()
 	if r.AssetAddr == base.FAKE_ETH_ADDRESS {
 		if strings.Contains(msg, "TRACE") {
-			r.ReconciliationType += "trace-eth"
+			r.ReconciliationType += "-trace-eth"
 		} else {
 			r.ReconciliationType += "-eth"
 		}
