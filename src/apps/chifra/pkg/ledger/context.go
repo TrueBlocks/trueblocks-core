@@ -130,7 +130,7 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 		}
 
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts1[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 	}
 
 	l.DebugContext()
@@ -156,7 +156,7 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			next := apps[i].BlockNumber + 1
 
 			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts1[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+			l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 		}
 	}
 
@@ -169,8 +169,8 @@ func (l *Ledger) DebugContext() {
 		return
 	}
 
-	keys := make([]ledgerContextKey, 0, len(l.Contexts1))
-	for key := range l.Contexts1 {
+	keys := make([]ledgerContextKey, 0, len(l.Contexts))
+	for key := range l.Contexts {
 		keys = append(keys, key)
 	}
 
@@ -179,7 +179,7 @@ func (l *Ledger) DebugContext() {
 	})
 
 	for _, key := range keys {
-		c := l.Contexts1[key]
+		c := l.Contexts[key]
 		if c.CurBlock > maxTestingBlock {
 			continue
 		}

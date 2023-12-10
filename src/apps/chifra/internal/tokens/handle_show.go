@@ -36,7 +36,7 @@ func (opts *TokensOptions) HandleShow() error {
 				}
 
 				for _, bn := range blockNums {
-					if bal, err := opts.Conn.GetTokenBalanceAt(tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
+					if bal, err := opts.Conn.GetBalanceAtToken(tokenAddr, addr, fmt.Sprintf("0x%x", bn)); bal == nil {
 						errorChan <- err
 					} else {
 						if opts.Globals.Verbose {

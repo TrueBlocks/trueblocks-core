@@ -12,7 +12,9 @@ import (
 
 // GetStatements returns a statement from a given transaction
 func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.SimpleTransaction) ([]types.SimpleStatement, error) {
-	l.Tx = trans // we need this below
+	// We need this below...
+	l.theTx = trans
+
 	if false && conn.StoreReadable() {
 		statementGroup := &types.SimpleStatementGroup{
 			Address:          l.AccountFor,
@@ -28,11 +30,11 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	key := l.ctxKey(trans.BlockNumber, trans.TransactionIndex)
-	ctx := l.Contexts1[key]
+	ctx := l.Contexts[key]
 
 	if l.assetOfInterest(base.FAKE_ETH_ADDRESS) {
 		// TODO: We ignore errors in the next few lines, but we should not
-		// TODO: performance - This greatly increases the number of times we call into eth_getBalance which is quite slow
+		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
 		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
 			prevBal = new(big.Int)
@@ -90,6 +92,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 				} else {
 					ret.AmountIn = trans.Value
 				}
+				// TODO: BOGUS PERF - WHAT ABOUT WITHDRAWALS?
 			}
 		}
 
@@ -120,7 +123,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			log := log
 			addrArray := []base.Address{l.AccountFor}
 			if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {
-				if statement, err := l.getStatementFromLog(conn, &log); err != nil {
+				if statement, err := l.getStatementsFromLog(conn, &log); err != nil {
 					logger.Warn(l.TestMode, "Error getting statement from log: ", err)
 
 				} else {
