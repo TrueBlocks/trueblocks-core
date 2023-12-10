@@ -33,7 +33,7 @@ transactions?transactions=10681057.170%2010607241.278&accountFor=0x65eab68cdb0da
       "priceSource": "uniswap",
       "recipient": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
       "reconciled": true,
-      "reconciliationType": "trace-eth",
+      "reconciliationType": "diff-diff-trace-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x61edb6b025867c1a5354ed46a13c10b616e32ab0",

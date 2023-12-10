@@ -18,7 +18,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  trace-eth
+TEST[DATE|TIME]    reconciliationType:  diff-diff-trace-eth
 TEST[DATE|TIME]    accountedFor:        0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 TEST[DATE|TIME]    sender:              0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
 TEST[DATE|TIME]    recipient:           0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
@@ -95,7 +95,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "reconciled": true,
-      "reconciliationType": "trace-eth",
+      "reconciliationType": "diff-diff-trace-eth",
       "selfDestructIn": "490372688211999273",
       "selfDestructOut": "0",
       "sender": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
