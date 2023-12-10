@@ -17,7 +17,7 @@ func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
 	r.ReconciliationType = ctx.ReconType.String()
 	if r.AssetAddr == base.FAKE_ETH_ADDRESS {
 		if strings.Contains(msg, "TRACE") {
-			r.ReconciliationType = "trace-eth"
+			r.ReconciliationType += "-trace-eth"
 		} else {
 			r.ReconciliationType += "-eth"
 		}
@@ -25,17 +25,13 @@ func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
 		r.ReconciliationType += "-token"
 	}
 
-	if l.TestMode {
-		logger.TestLog(l.TestMode, "Start of trial balance report")
-	}
+	logger.TestLog(l.TestMode, "Start of trial balance report")
 
 	// TODO: BOGUS PERF
-	okay := r.Reconciled()
-	if !okay {
-		if okay = r.CorrectForNullTransfer(l.Tx); !okay {
-			// TODO: BOGUS PERF
-			// okay = r.CorrectForSomethingElse(l.Tx)
-			r.CorrectForSomethingElse(l.Tx)
+	var okay bool
+	if okay = r.Reconciled(); !okay {
+		if okay = r.CorrectForNullTransfer(l.theTx); !okay {
+			okay = r.CorrectForSomethingElse(l.theTx)
 		}
 	}
 
@@ -49,10 +45,7 @@ func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
 		// 	}
 	}
 
-	if l.TestMode {
-		r.Report(&ctx, msg)
-		logger.TestLog(l.TestMode, "End of trial balance report")
-	}
+	r.Report(l.TestMode, ctx, msg)
 
 	return r.Reconciled()
 }

@@ -19,10 +19,8 @@ import (
 )
 
 func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) error {
-	if opts.Accounting {
-		// TODO: BOGUS - RECONSIDER THIS
-		opts.Articulate = true
-	}
+	// TODO: BOGUS - RECONSIDER THIS
+	opts.Articulate = true
 
 	ledgers := &ledger.Ledger{}
 	chain := opts.Globals.Chain
@@ -42,6 +40,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
+
 			} else {
 				passes, _ := filter.ApplyTxFilters(tx)
 				if passes {
@@ -51,12 +50,11 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 						}
 					}
 
-					if opts.Accounting {
-						if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
-							errorChan <- err
-						} else {
-							tx.Statements = &statements
-						}
+					if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
+						errorChan <- err
+
+					} else {
+						tx.Statements = &statements
 					}
 
 					modelChan <- tx
@@ -69,6 +67,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
 				errorChan <- err
 				return
+
 			} else if !opts.NoZero || cnt > 0 {
 				ledgers = ledger.NewLedger(
 					opts.Conn,
@@ -79,11 +78,11 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 					testMode,
 					opts.NoZero,
 					opts.Traces,
+					opts.Reversed,
 					&opts.Asset,
 				)
-				if opts.Accounting {
-					_ = ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
-				}
+
+				_ = ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
 
 				for _, app := range apps {
 					app := app
@@ -92,6 +91,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 						return
 					}
 				}
+
 			} else {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				continue

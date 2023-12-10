@@ -70,7 +70,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 
 					iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
 						var balance *big.Int
-						if balance, err = opts.Conn.GetBalanceByAppearance(mon.Address, &app); err != nil {
+						if balance, err = opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
 							return err
 						}
 						value.Address = base.FAKE_ETH_ADDRESS

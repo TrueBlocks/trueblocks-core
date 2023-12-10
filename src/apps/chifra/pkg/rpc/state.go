@@ -159,11 +159,6 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	return
 }
 
-// GetBalanceByAppearance returns a balance for an address at a block
-func (conn *Connection) GetBalanceByAppearance(addr base.Address, appearance *types.SimpleAppearance) (*big.Int, error) {
-	return conn.GetBalanceAt(addr, uint64(appearance.BlockNumber))
-}
-
 // GetBalanceAt returns a balance for an address at a block
 func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*big.Int, error) {
 	if ec, err := conn.getClient(); err != nil {

@@ -17,7 +17,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	ether := opts.Globals.Ether
-	noZero := false // opts.Globals.NoZero
+
 	filter := filter.NewFilter(
 		false,
 		false,
@@ -33,8 +33,9 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		utils.NOPOS,
 		ether,
 		testMode,
-		noZero,
+		false, // opts.Globals.NoZero
 		opts.Traces,
+		false, /* reversed */
 		nil,
 	)
 	_ = ledgers.SetContextsFromIds(chain, opts.TransactionIds)
@@ -61,6 +62,7 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 				} else {
 					if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
 						errorChan <- err
+
 					} else {
 						for _, statement := range statements {
 							statement := statement

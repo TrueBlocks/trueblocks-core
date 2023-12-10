@@ -3,6 +3,7 @@ TEST[DATE|TIME] Transactions:  [1433233.8]
 TEST[DATE|TIME] AccountFor:  0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] 001433233-00008:    1433232    1433233     1433234
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1433233 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================

@@ -15,7 +15,8 @@ import (
 type reconType int
 
 const (
-	genesis reconType = iota
+	invalid reconType = iota
+	genesis
 	diffDiff
 	sameSame
 	diffSame
@@ -35,12 +36,12 @@ func (r reconType) String() string {
 		return "diff-same"
 	case sameDiff:
 		return "same-diff"
-	case shouldNotHappen:
-		return "should-not-happen"
 	default:
-		return "unknown"
+		return "invalid"
 	}
 }
+
+type ledgerContextKey string
 
 // ledgerContext is a struct to hold the context of a reconciliation (i.e., its
 // previous and next blocks and whether they are different)
@@ -48,9 +49,43 @@ type ledgerContext struct {
 	PrevBlock base.Blknum
 	CurBlock  base.Blknum
 	NextBlock base.Blknum
-	// IsPrevDiff bool
-	// IsNextDiff bool
 	ReconType reconType
+}
+
+func newLedgerContext(prev, cur, next base.Blknum, reversed bool) *ledgerContext {
+	if prev > cur || cur > next {
+		return &ledgerContext{
+			ReconType: invalid,
+		}
+	}
+
+	reconType := invalid
+	if cur == 0 {
+		reconType = genesis
+	} else {
+		prevDiff := prev != cur
+		nextDiff := cur != next
+		if prevDiff && nextDiff {
+			reconType = diffDiff
+		} else if !prevDiff && !nextDiff {
+			reconType = sameSame
+		} else if prevDiff {
+			reconType = diffSame
+		} else if nextDiff {
+			reconType = sameDiff
+		} else {
+			reconType = invalid
+			logger.Panic("should not happen")
+		}
+	}
+
+	return &ledgerContext{
+		PrevBlock: prev,
+		CurBlock:  cur,
+		NextBlock: next,
+		ReconType: reconType,
+		// Reversed:  reversed,
+	}
 }
 
 func (c *ledgerContext) Prev() base.Blknum {
@@ -65,38 +100,10 @@ func (c *ledgerContext) Next() base.Blknum {
 	return c.NextBlock
 }
 
-func newLedgerContext(prev, cur, next base.Blknum) *ledgerContext {
-	c := &ledgerContext{
-		PrevBlock: prev,
-		CurBlock:  cur,
-		NextBlock: next,
-	}
-	c.ReconType = c.getReconType(prev != cur, cur != next)
-	return c
-}
-
-func (c *ledgerContext) getReconType(prevDiff, nextDiff bool) reconType {
-	if c.CurBlock == 0 {
-		return genesis
-	} else {
-		if prevDiff && nextDiff {
-			return diffDiff
-		} else if !prevDiff && !nextDiff {
-			return sameSame
-		} else if prevDiff {
-			return diffSame
-		} else if nextDiff {
-			return sameDiff
-		} else {
-			return shouldNotHappen
-		}
-	}
-}
-
-func (l *Ledger) ctxKey(bn, txid uint64) string {
+func (l *Ledger) ctxKey(bn, txid uint64) ledgerContextKey {
 	// TODO: Is having the context per asset necessary?
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
-	return fmt.Sprintf("%09d-%05d", bn, txid)
+	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
 const maxTestingBlock = 17000000
@@ -123,28 +130,10 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 		}
 
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
+		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 	}
 
-	if l.TestMode {
-		keys := []string{}
-		for key := range l.Contexts {
-			keys = append(keys, key)
-		}
-		sort.Strings(keys)
-		for _, key := range keys {
-			c := l.Contexts[key]
-			if c.CurBlock > maxTestingBlock {
-				continue
-			}
-			msg := ""
-			if c.ReconType == sameSame {
-				msg = fmt.Sprintf(" %12.12s false false", c.ReconType)
-			}
-			logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
-		}
-	}
-
+	l.DebugContext()
 	return nil
 }
 
@@ -167,8 +156,37 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			next := apps[i].BlockNumber + 1
 
 			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = *newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
+			l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 		}
 	}
+
+	l.DebugContext()
 	return nil
+}
+
+func (l *Ledger) DebugContext() {
+	if !l.TestMode {
+		return
+	}
+
+	keys := make([]ledgerContextKey, 0, len(l.Contexts))
+	for key := range l.Contexts {
+		keys = append(keys, key)
+	}
+
+	sort.Slice(keys, func(i, j int) bool {
+		return string(keys[i]) < string(keys[j])
+	})
+
+	for _, key := range keys {
+		c := l.Contexts[key]
+		if c.CurBlock > maxTestingBlock {
+			continue
+		}
+		msg := ""
+		if c.ReconType == sameSame {
+			msg = fmt.Sprintf(" %12.12s false false", c.ReconType)
+		}
+		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
+	}
 }

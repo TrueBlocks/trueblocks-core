@@ -12,7 +12,24 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
-	ret.ClearInternal()
+	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because
+	// those are at the top level (both the transaction itself and trace '0' have them). We
+	// skip trace '0' because it's the same as the transaction.
+	// ret.AmountIn.SetUint64(0)
+	ret.InternalIn.SetUint64(0)
+	ret.MinerBaseRewardIn.SetUint64(0)
+	ret.MinerNephewRewardIn.SetUint64(0)
+	ret.MinerTxFeeIn.SetUint64(0)
+	ret.MinerUncleRewardIn.SetUint64(0)
+	ret.CorrectingIn.SetUint64(0)
+	ret.PrefundIn.SetUint64(0)
+	ret.SelfDestructIn.SetUint64(0)
+
+	// ret.AmountOut.SetUint64(0)
+	// ret.GasOut.SetUint64(0)
+	ret.InternalOut.SetUint64(0)
+	ret.CorrectingOut.SetUint64(0)
+	ret.SelfDestructOut.SetUint64(0)
 
 	if traces, err := conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		return statements, err
