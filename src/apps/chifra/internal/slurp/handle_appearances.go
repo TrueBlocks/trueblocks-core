@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *SlurpOptions) HandleAppearances() error {
@@ -35,6 +36,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 					Type:    logger.Expanding,
 					Enabled: !testMode,
 					Total:   250, // estimate since we have no idea how many there are
+					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
 				})
 
 				for !done {
