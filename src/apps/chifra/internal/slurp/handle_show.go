@@ -38,8 +38,7 @@ func (opts *SlurpOptions) HandleShow() error {
 				done := false
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
-					Enabled: !testMode,
-					Total:   250, // estimate since we have no idea how many there are
+					Enabled: !testMode && !utils.IsTerminal(),
 					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
 				})
 				for !done {
