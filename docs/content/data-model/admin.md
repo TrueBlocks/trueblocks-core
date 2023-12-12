@@ -56,6 +56,7 @@ Statuses consist of the following fields:
 | isArchive     | `true` if the rpcProvider is an archive node             | bool                                        |
 | isTesting     | `true` if the server is running in test mode             | bool                                        |
 | isTracing     | `true` if the rpcProvider provides Parity traces         | bool                                        |
+| isScraping    | `true` if the scraper is running                         | bool                                        |
 | networkId     | the network id as reported by the rpcProvider            | string                                      |
 | progress      | the progress string of the system                        | string                                      |
 | rootConfig    | the path to the root configuration folder                | string                                      |

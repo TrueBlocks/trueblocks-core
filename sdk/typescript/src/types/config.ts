@@ -7,7 +7,7 @@ import { CacheItem, Chain } from '.';
 
 export type Config = {
   cachePath?: string
-  caches?: CacheItem[]
+  caches: CacheItem[]
   chain?: string
   chainConfig?: string
   clientVersion?: string
@@ -19,10 +19,11 @@ export type Config = {
   isArchive?: boolean
   isTesting?: boolean
   isTracing?: boolean
+  isScraping?: boolean
   networkId?: string
   progress?: string
   rootConfig?: string
   rpcProvider?: string
   version?: string
-  chains?: Chain[]
+  chains: Chain[]
 }

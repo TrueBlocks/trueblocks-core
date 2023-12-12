@@ -1049,6 +1049,9 @@ components:
         isTracing:
           type: boolean
           description: "`true` if the rpcProvider provides Parity traces"
+        isScraping:
+          type: boolean
+          description: "`true` if the scraper is running"
         networkId:
           type: string
           description: "the network id as reported by the rpcProvider"

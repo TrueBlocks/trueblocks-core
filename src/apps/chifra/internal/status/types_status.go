@@ -34,17 +34,18 @@ type CChainArray []types.SimpleChain
 
 type simpleStatus struct {
 	CachePath     string          `json:"cachePath,omitempty"`
-	Caches        CCacheItemArray `json:"caches,omitempty"`
+	Caches        CCacheItemArray `json:"caches"`
 	Chain         string          `json:"chain,omitempty"`
 	ChainConfig   string          `json:"chainConfig,omitempty"`
 	ChainId       string          `json:"chainId,omitempty"`
-	Chains        CChainArray     `json:"chains,omitempty"`
+	Chains        CChainArray     `json:"chains"`
 	ClientVersion string          `json:"clientVersion,omitempty"`
 	HasEsKey      bool            `json:"hasEsKey,omitempty"`
 	HasPinKey     bool            `json:"hasPinKey,omitempty"`
 	IndexPath     string          `json:"indexPath,omitempty"`
 	IsApi         bool            `json:"isApi,omitempty"`
 	IsArchive     bool            `json:"isArchive,omitempty"`
+	IsScraping    bool            `json:"isScraping,omitempty"`
 	IsTesting     bool            `json:"isTesting,omitempty"`
 	IsTracing     bool            `json:"isTracing,omitempty"`
 	NetworkId     string          `json:"networkId,omitempty"`
