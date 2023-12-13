@@ -16,22 +16,29 @@ var transferTopic = base.HexToHash(
 	"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
 )
 
+var ErrNonIndexedTransfer = fmt.Errorf("non-indexed transfer")
+
 // getStatementsFromLog returns a statement from a given log
-func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, log *types.SimpleLog) (types.SimpleStatement, error) {
-	if log.Topics[0] != transferTopic {
+func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleLog) (types.SimpleStatement, error) {
+	if logIn.Topics[0] != transferTopic {
 		// Not a transfer
 		return types.SimpleStatement{}, nil
 	}
 
-	if len(log.Topics) < 3 {
+	if len(logIn.Topics) < 3 {
+		// Transfer(address _from, address _to, uint256 _tokenId) - no indexed topics
+		// Transfer(address indexed _from, address indexed _to, uint256 _value) - two indexed topics
+		// Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId) - three indexed topics
 		// TODO: This may be a transfer. Returning here is wrong. What this means is that
 		// TODO:the some of the transfer's data is not indexed. Too short topics happens
 		// TODO: (sometimes) because the ABI says that the data is not index, but it is
 		// TODO: or visa versa. In either case, we get the same topic0. We need to
 		// TODO: attempt both with and without indexed parameters. See issues/1366.
 		// TODO: We could fix this and call back in recursively...
-		return types.SimpleStatement{}, nil
+		return types.SimpleStatement{}, ErrNonIndexedTransfer
 	}
+
+	log := normalizeTransfer(logIn)
 
 	sym := log.Address.Prefix(6)
 	decimals := uint64(18)
@@ -120,4 +127,8 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, log *types.SimpleLog
 	}
 
 	return s, nil
+}
+
+func normalizeTransfer(log *types.SimpleLog) *types.SimpleLog {
+	return log
 }

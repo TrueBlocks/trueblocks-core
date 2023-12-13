@@ -118,23 +118,10 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		}
 	}
 
-	if trans.Receipt != nil {
-		for _, log := range trans.Receipt.Logs {
-			log := log
-			addrArray := []base.Address{l.AccountFor}
-			if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {
-				if statement, err := l.getStatementsFromLog(conn, &log); err != nil {
-					logger.Warn(l.TestMode, "Error getting statement from log: ", err)
-				} else {
-					if statement.Sender == l.AccountFor || statement.Recipient == l.AccountFor {
-						add := !l.NoZero || statement.MoneyMoved()
-						if add {
-							statements = append(statements, statement)
-						}
-					}
-				}
-			}
-		}
+	if receiptStatements, err := l.getStatementsFromReceipt(conn, filter, trans.Receipt); err != nil {
+		logger.Warn(l.TestMode, "Error getting statement from receipt")
+	} else {
+		statements = append(statements, receiptStatements...)
 	}
 
 	if false && l.Conn.StoreWritable() && l.Conn.EnabledMap["statements"] && base.IsFinal(l.Conn.LatestBlockTimestamp, trans.Timestamp) {
