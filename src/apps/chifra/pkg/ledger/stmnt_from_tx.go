@@ -125,7 +125,6 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {
 				if statement, err := l.getStatementsFromLog(conn, &log); err != nil {
 					logger.Warn(l.TestMode, "Error getting statement from log: ", err)
-
 				} else {
 					if statement.Sender == l.AccountFor || statement.Recipient == l.AccountFor {
 						add := !l.NoZero || statement.MoneyMoved()

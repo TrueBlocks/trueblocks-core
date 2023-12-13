@@ -160,25 +160,22 @@ func (opts *ExportOptions) validateExport() error {
 			return validate.Usage("The {0} option is allows with only a single address.", "--accounting")
 		}
 
+		if !opts.Conn.IsNodeArchive() {
+			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
+		}
+
 		if opts.Globals.Chain != "mainnet" {
 			logger.Warn("The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
 		}
 
-		if opts.Statements {
-			if len(opts.Flow) > 0 {
-				if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
-					return err
-				}
+		if len(opts.Flow) > 0 {
+			if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
+				return err
 			}
 
-		} else {
-			if len(opts.Flow) > 0 {
+			if !opts.Statements {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--statements")
 			}
-		}
-
-		if !opts.Conn.IsNodeArchive() {
-			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
 		}
 
 	} else {
