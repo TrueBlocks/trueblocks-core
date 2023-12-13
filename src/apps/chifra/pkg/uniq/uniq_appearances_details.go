@@ -98,7 +98,7 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 	to := trans.To.Hex()
 	streamAppearance(procFunc, flow, "to", to, bn, txid, traceid, ts, addrMap)
 
-	if !trans.Receipt.ContractAddress.IsZero() {
+	if trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
 		contract := trans.Receipt.ContractAddress.Hex()
 		streamAppearance(procFunc, flow, "creation", contract, bn, txid, traceid, ts, addrMap)
 	}
@@ -115,8 +115,10 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 	}
 
 	// TODO: See issue #3195 - there are addresses on the receipt that do not appear in traces
-	if err := uniqFromLogsDetails(chain, procFunc, flow, trans.Receipt.Logs, ts, addrMap); err != nil {
-		return err
+	if trans.Receipt != nil {
+		if err := uniqFromLogsDetails(chain, procFunc, flow, trans.Receipt.Logs, ts, addrMap); err != nil {
+			return err
+		}
 	}
 
 	if err := uniqFromTracesDetails(chain, procFunc, flow, trans.Traces, ts, addrMap, conn); err != nil {
