@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra
 
 `chifra` is an command line tool for accessing the entire collection of TrueBlocks tools. Enter `chifra <tool> --help` for more information.

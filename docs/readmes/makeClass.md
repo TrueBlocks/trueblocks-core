@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 MD033 -->
 ## makeClass
 
 `makeClass` is development-only tool that aids in various aspects of building TrueBlocks. The program is disabled for most users, but for core developers it can be used to automatically generate help files, API interface specs, command line options parsers and many of the test case files. Generally, regular users will not use `makeClass`.
@@ -26,4 +27,3 @@ Global Flags:
   -h, --help           display this help screen
 
 **Source code**: [`dev_tools/makeClass`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/makeClass)
-

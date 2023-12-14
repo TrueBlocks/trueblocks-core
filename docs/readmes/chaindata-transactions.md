@@ -1,6 +1,6 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra transactions
 
-<!-- markdownlint-disable MD041 -->
 The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
 option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
 per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
@@ -58,4 +58,3 @@ Links:
 
 - [api docs](/api/#operation/chaindata-transactions)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
-

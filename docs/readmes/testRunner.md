@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 MD033 -->
 ## testRunner
 
 The `testRunner` tool runs the TrueBlocks tests. The test cases are stored in CSV files a folder called `./testCases`.
@@ -37,4 +38,3 @@ Global Flags:
   -h, --help           display this help screen
 
 **Source code**: [`dev_tools/testRunner`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner)
-

@@ -11,7 +11,7 @@ although this option is experimental and therefore not recommended for productio
 
 If the default port for the API server is in use, you may change it with the `--port` option.
 
-To get help for any command, please see the API documentation on our website. But, you may 
+To get help for any command, please see the API documentation on our website. But, you may
 also run `chifra --help` or `chifra <cmd> --help` on your command line to get help.
 
 See below for an example of converting command line options to a call to the API. There's a
