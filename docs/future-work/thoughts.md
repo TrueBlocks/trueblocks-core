@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 The Magizine Model
 
 Magazines have exactly the same qualities as immutable data. They publish periodically. They cannot go back and correct
@@ -16,4 +17,3 @@ They can:
 
 1) provide dashboards showing all sorts of information from a raw data viewpoint -- transactions, blocks, traces, logs, neighbors, etc.
 2) they can publish volumes/issues/articles/pages of downloadable data via the Unchained Index
-

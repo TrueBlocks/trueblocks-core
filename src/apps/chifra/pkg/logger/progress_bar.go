@@ -53,6 +53,10 @@ func NewBar(opts BarOptions) (bar *ProgressBar) {
 		bar.graphic += bar.Fill // initial progress position
 	}
 
+	if opts.Type == Expanding && bar.Total == 0 {
+		bar.Total = 1
+	}
+
 	return bar
 }
 
@@ -72,8 +76,8 @@ func (bar *ProgressBar) Tick() {
 
 func (bar *ProgressBar) Finish(newLine bool) time.Duration {
 	if bar.Enabled {
+		atomic.StoreInt64(&bar.Total, bar.cur)
 		if bar.Type == Expanding {
-			bar.Total = (bar.Total / 2) + bar.cur
 			bar.cur = bar.Total
 			bar.percent = 100
 		}

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ## Do Not Edit The Folder
 
 This folder contains README files that are automatically generated during the build.

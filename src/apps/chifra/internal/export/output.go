@@ -73,12 +73,12 @@ func (opts *ExportOptions) ExportInternal() error {
 		err = opts.HandleWithdrawals(monitorArray)
 	} else if opts.Appearances {
 		err = opts.HandleAppearances(monitorArray)
-	} else if opts.Statements {
-		err = opts.HandleStatements(monitorArray)
 	} else if opts.Balances {
 		err = opts.HandleBalances(monitorArray)
 	} else if opts.Neighbors {
 		err = opts.HandleNeighbors(monitorArray)
+	} else if opts.Statements {
+		err = opts.HandleStatements(monitorArray)
 	} else if opts.Accounting {
 		err = opts.HandleAccounting(monitorArray)
 	} else {

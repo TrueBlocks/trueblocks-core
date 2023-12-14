@@ -35,4 +35,3 @@ Notes:
 ```
 
 **Source code**: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
-

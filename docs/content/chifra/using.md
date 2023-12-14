@@ -136,6 +136,3 @@ In the following sections, each command is presented with its options and in mor
 
 * Our [blog has a few longer "tutorials"](/tags/tutorials)for accomplishing various tasks.
 * Our [data model reference](/data-model/intro/) describes the fields that are returned with each command
-
-
-

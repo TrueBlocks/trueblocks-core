@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD033 -->
 # Branching
 
 ## Quick Legend

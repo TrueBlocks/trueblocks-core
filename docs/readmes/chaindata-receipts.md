@@ -1,6 +1,6 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra receipts
 
-<!-- markdownlint-disable MD041 -->
 `chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers
 per invocation.
 
@@ -44,4 +44,3 @@ Links:
 
 - [api docs](/api/#operation/chaindata-receipts)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
-

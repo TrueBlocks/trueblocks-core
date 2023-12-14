@@ -1,6 +1,6 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra monitors
 
-<!-- markdownlint-disable MD041 -->
 `chifra monitors` has two purposes: (1) to display information about the current set of monitors, and (2)
 to `--watch` a set of addresses. The `--watch` function allows one to "follow" an address (or set
 of addresses) and keep an off-chain database fresh.
@@ -22,7 +22,7 @@ for the fact that the cache can be easily re-created with `chifra list <address>
 
 The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`.  The `--watchlist` file is simply a list of addresses or ENS names, one per line:
 
-```
+```[bash]
 0x5e349eca2dc61abcd9dd99ce94d04136151a09ee
 trueblocks.eth
 0x855b26bc8ebabcdbefe82ee5e9d40d20a1a4c11f
@@ -33,7 +33,7 @@ You may monitor as many addresses as you wish, however, if the commands you spec
 
 The `--commands` file may contain a list of any valid `chifra` command that operates on addresses. (Currently `export`, `list`, `state`, `tokens`.) Each command in the `--commands` file is executed once for each address in the `--watchlist` file. The `--commands` file may contain any number of commands, one per line with the above proviso. For example:
 
-```
+```[bash]
 chifra list [{ADDRESS}]
 chifra export --logs [{ADDRESS}]
 etc.
@@ -86,4 +86,3 @@ Links:
 
 - [api docs](/api/#operation/accounts-monitors)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
-

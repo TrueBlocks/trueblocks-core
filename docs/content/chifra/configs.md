@@ -16,6 +16,8 @@ menu:
 weight: 2100
 toc: true
 ---
+<!-- markdownlint-disable MD041 MD033 -->
+
 Many of the `chifra` commands allow you to customize their behaviour through configuration files
 and/or environment variables. These options are documented here.
 

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 ---
 title: "Accounts"
 description: ""
@@ -24,9 +25,9 @@ monitors, and, most importantly, export transactional histories in various forma
 includes re-directing output to remote or local databases.
 
 To the right is a list of commands in this group. Click on a command to see its full documentation.
+
 ## chifra list
 
-<!-- markdownlint-disable MD041 -->
 `chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks
 monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction
 identifiers) representing the history of the address.
@@ -82,7 +83,6 @@ Links:
 
 ## chifra export
 
-<!-- markdownlint-disable MD041 -->
 The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using
 the index of appearances created with `chifra scrape` and the list of transaction identifiers
 created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional
@@ -182,7 +182,6 @@ Links:
 
 ## chifra monitors
 
-<!-- markdownlint-disable MD041 -->
 `chifra monitors` has two purposes: (1) to display information about the current set of monitors, and (2)
 to `--watch` a set of addresses. The `--watch` function allows one to "follow" an address (or set
 of addresses) and keep an off-chain database fresh.
@@ -204,7 +203,7 @@ for the fact that the cache can be easily re-created with `chifra list <address>
 
 The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`.  The `--watchlist` file is simply a list of addresses or ENS names, one per line:
 
-```
+```[bash]
 0x5e349eca2dc61abcd9dd99ce94d04136151a09ee
 trueblocks.eth
 0x855b26bc8ebabcdbefe82ee5e9d40d20a1a4c11f
@@ -215,7 +214,7 @@ You may monitor as many addresses as you wish, however, if the commands you spec
 
 The `--commands` file may contain a list of any valid `chifra` command that operates on addresses. (Currently `export`, `list`, `state`, `tokens`.) Each command in the `--commands` file is executed once for each address in the `--watchlist` file. The `--commands` file may contain any number of commands, one per line with the above proviso. For example:
 
-```
+```[bash]
 chifra list [{ADDRESS}]
 chifra export --logs [{ADDRESS}]
 etc.
@@ -271,7 +270,6 @@ Links:
 
 ## chifra names
 
-<!-- markdownlint-disable MD041 -->
 `chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum
 addresses. One may ask why this is necessary given that ENS exists. The answer is a single
 word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses
@@ -328,7 +326,6 @@ Links:
 
 ## chifra abis
 
-<!-- markdownlint-disable MD041 -->
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
 the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.
@@ -382,7 +379,6 @@ Links:
 - [api docs](/api/#operation/accounts-abis)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 
-<!-- markdownlint-disable MD041 -->
 ### notes
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.
@@ -391,4 +387,3 @@ The `chifra abis --find` option scans the cross product of two sets. The first s
 names. The second set contains approximately 700 function signatures. The cross product of these two sets creates 70,000,000
 combinations of name(signature) each of which is hashed to create either a four-byte or a 32-byte hash. Very infrequently,
 the tool will find matches for an otherwise unknown signatures.
-

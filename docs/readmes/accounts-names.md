@@ -1,6 +1,6 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra names
 
-<!-- markdownlint-disable MD041 -->
 `chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum
 addresses. One may ask why this is necessary given that ENS exists. The answer is a single
 word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses
@@ -54,4 +54,3 @@ Links:
 
 - [api docs](/api/#operation/accounts-names)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
-

@@ -1,6 +1,6 @@
+<!-- markdownlint-disable MD041 -->
 ## chifra daemon
 
-<!-- markdownlint-disable MD041 -->
 `chifra daemon` manages chifra's API server. Each of the `chifra` commands along with all of its options,
 are provided not only by the command line, but also the API server. We call this process the
 `flame` server, which is written in Go. `chifra serve` is an alias for the `chifra daemon` command.
@@ -13,7 +13,7 @@ although this option is experimental and therefore not recommended for productio
 
 If the default port for the API server is in use, you may change it with the `--port` option.
 
-To get help for any command, please see the API documentation on our website. But, you may 
+To get help for any command, please see the API documentation on our website. But, you may
 also run `chifra --help` or `chifra <cmd> --help` on your command line to get help.
 
 See below for an example of converting command line options to a call to the API. There's a
@@ -51,7 +51,6 @@ Links:
 - no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
 
-<!-- markdownlint-disable MD041 -->
 ### notes
 
 To convert the options for a command line tool to an API call, do the following:

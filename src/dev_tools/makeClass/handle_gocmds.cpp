@@ -113,6 +113,7 @@ bool COptions::handle_gocmds_docfile(const CCommandOption& p) {
     contents = substitute(substitute(substitute(contents, "\n", " "), "\t", " "), "\r", " ");
     replaceAll(contents, "  ", " ");
     replaceAll(contents, " <!-- markdownlint-disable MD041 -->", "");
+    replaceAll(contents, "<!-- markdownlint-disable MD041 -->", "");
     replaceAll(contents, "`", "");
     replaceAll(contents, "[{NAME}]", "[chifra {ROUTE}]");
     replaceAll(source, "TEXT_TEMPLATE", contents);
