@@ -811,7 +811,10 @@ func (s *SimpleStatement) Report(testMode bool, ctx Ledgerer, msg string) {
 	logger.TestLog(testMode, "   endBalCalc:         ", s.EndBalCalc().Text(10))
 	logger.TestLog(testMode, "   correctingReason:   ", s.CorrectingReason)
 	logger.TestLog(testMode, "   moneyMoved:         ", s.MoneyMoved())
-	logger.TestLog(testMode, "   trialBalance:       ", s.Reconciled())
+	logger.TestLog(testMode, "   reconciled:         ", s.Reconciled())
+	if !s.Reconciled() {
+		logger.TestLog(testMode, " ^^ need to fix this ^^")
+	}
 	logger.TestLog(testMode, "---------------------------------------------------")
 	logger.TestLog(testMode, "End of trial balance report")
 }

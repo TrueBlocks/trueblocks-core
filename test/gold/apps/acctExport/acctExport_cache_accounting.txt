@@ -8,7 +8,9 @@ TEST[DATE|TIME] Enabled:  statements, traces, transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] 010277780-00088:   10277504   10277780    10277781
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Contexts (1)
+INFO[DATE|TIME] 010277780-00088:   10277504   10277780    10277781    noop-noop
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
@@ -38,7 +40,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
+TEST[DATE|TIME]    reconciliationType:  noop-noop-eth
 TEST[DATE|TIME]    accountedFor:        0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 TEST[DATE|TIME]    sender:              0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 TEST[DATE|TIME]    recipient:           0xdac17f958d2ee523a2206206994597c13d831ec7
@@ -78,7 +80,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          5463122167631885
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
@@ -97,7 +99,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-token
+TEST[DATE|TIME]    reconciliationType:  noop-noop-token
 TEST[DATE|TIME]    accountedFor:        0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 TEST[DATE|TIME]    sender:              0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 TEST[DATE|TIME]    recipient:           0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9
@@ -137,7 +139,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 blockNumber	transactionIndex	timestamp	date	from	to	ether	gasPrice	gasUsed	gasCost	hash	isError	encoding	compressedTx	type

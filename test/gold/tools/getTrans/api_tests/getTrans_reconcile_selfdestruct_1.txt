@@ -33,7 +33,7 @@ transactions?transactions=0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
       "reconciled": true,
-      "reconciliationType": "diff-diff-trace-eth",
+      "reconciliationType": "noop-diff-trace-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x42c8fcbc73d625f1d258a32915b6a573095de93d",

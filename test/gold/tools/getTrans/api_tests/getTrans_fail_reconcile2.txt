@@ -33,7 +33,7 @@ transactions?transactions=0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa
       "priceSource": "uniswap",
       "recipient": "0xe592427a0aece92de3edee1f18e0157c05861564",
       "reconciled": true,
-      "reconciliationType": "diff-diff-eth",
+      "reconciliationType": "noop-diff-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",

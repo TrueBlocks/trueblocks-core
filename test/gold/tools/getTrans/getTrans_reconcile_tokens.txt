@@ -3,7 +3,9 @@ TEST[DATE|TIME] Transactions:  [0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac9
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] 015828830-00112:   15828829   15828830    15828831
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Contexts (1)
+INFO[DATE|TIME] 015828830-00112:   15828829   15828830    15828831    noop-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Needs correction for eth
 TEST[DATE|TIME] Needs correction for eth
@@ -18,7 +20,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
+TEST[DATE|TIME]    reconciliationType:  noop-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xb19feccea1cf597255719a6b8d4e0691ae29e118
 TEST[DATE|TIME]    recipient:           0xc497058d572d188bfce1b9813e7d346c54a20812
@@ -58,7 +60,8 @@ TEST[DATE|TIME]    endBalDiff:          -100000000000000000
 TEST[DATE|TIME]    endBalCalc:          58493539865107179246
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        false
+TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Trial balance failed for  0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508 need to decend into traces
@@ -91,7 +94,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-trace-eth
+TEST[DATE|TIME]    reconciliationType:  noop-diff-trace-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xabea9132b05a70803a4e85094fd0e1800777fbef
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -131,7 +134,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          58593539865107179246
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
@@ -150,7 +153,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-token
+TEST[DATE|TIME]    reconciliationType:  noop-diff-token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xabea9132b05a70803a4e85094fd0e1800777fbef
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -190,7 +193,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          3451897410
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
@@ -209,7 +212,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-token
+TEST[DATE|TIME]    reconciliationType:  noop-diff-token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xabea9132b05a70803a4e85094fd0e1800777fbef
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -249,7 +252,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          402281000
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
@@ -298,7 +301,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-token
+TEST[DATE|TIME]    reconciliationType:  noop-diff-token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xabea9132b05a70803a4e85094fd0e1800777fbef
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -338,7 +341,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          55655920183227912371946
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
@@ -357,7 +360,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-token
+TEST[DATE|TIME]    reconciliationType:  noop-diff-token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0xabea9132b05a70803a4e85094fd0e1800777fbef
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -397,7 +400,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          43495249802867381980799
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 {
@@ -434,7 +437,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "uniswap",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "diff-diff-trace-eth",
+      "reconciliationType": "noop-diff-trace-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xabea9132b05a70803a4e85094fd0e1800777fbef",
@@ -478,7 +481,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "stable-coin",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "diff-diff-token",
+      "reconciliationType": "noop-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xabea9132b05a70803a4e85094fd0e1800777fbef",
@@ -522,7 +525,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "stable-coin",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "diff-diff-token",
+      "reconciliationType": "noop-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xabea9132b05a70803a4e85094fd0e1800777fbef",
@@ -566,7 +569,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "uniswap",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "diff-diff-token",
+      "reconciliationType": "noop-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xabea9132b05a70803a4e85094fd0e1800777fbef",
@@ -610,7 +613,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "stable-coin",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "diff-diff-token",
+      "reconciliationType": "noop-diff-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xabea9132b05a70803a4e85094fd0e1800777fbef",

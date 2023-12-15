@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
@@ -15,29 +16,44 @@ import (
 type reconType int
 
 const (
-	invalid reconType = iota
+	invalid reconType = 1 << iota
 	genesis
 	diffDiff
 	sameSame
 	diffSame
 	sameDiff
 	shouldNotHappen
+	first
+	last
 )
 
 func (r reconType) String() string {
-	switch r {
+	l := func(r reconType, s string) string {
+		if r&first != 0 {
+			s = strings.Replace(s, "diff-", "noop-", 1)
+			s = strings.Replace(s, "same-", "noop-", 1)
+		}
+		if r&last != 0 {
+			s = strings.Replace(s, "-diff", "-noop", 1)
+			s = strings.Replace(s, "-same", "-noop", 1)
+		}
+		return s
+	}
+
+	rr := r &^ (first | last)
+	switch rr {
 	case genesis:
 		return "genesis"
 	case diffDiff:
-		return "diff-diff"
+		return l(r, "diff-diff")
 	case sameSame:
-		return "same-same"
+		return l(r, "same-same")
 	case diffSame:
-		return "diff-same"
+		return l(r, "diff-same")
 	case sameDiff:
-		return "same-diff"
+		return l(r, "same-diff")
 	default:
-		return "invalid"
+		return l(r, "invalid")
 	}
 }
 
@@ -52,7 +68,7 @@ type ledgerContext struct {
 	ReconType reconType
 }
 
-func newLedgerContext(prev, cur, next base.Blknum, reversed bool) *ledgerContext {
+func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *ledgerContext {
 	if prev > cur || cur > next {
 		return &ledgerContext{
 			ReconType: invalid,
@@ -77,6 +93,14 @@ func newLedgerContext(prev, cur, next base.Blknum, reversed bool) *ledgerContext
 			reconType = invalid
 			logger.Panic("should not happen")
 		}
+	}
+
+	if isFirst {
+		reconType |= first
+	}
+
+	if isLast {
+		reconType |= last
 	}
 
 	return &ledgerContext{
@@ -130,8 +154,15 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 		}
 
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
 	}
+
+	// if len(apps) > 0 {
+	// 	c := uint64(apps[len(apps)-1].BlockNumber)
+	// 	n := uint64(apps[len(apps)-1].BlockNumber + 1)
+	// 	key := l.ctxKey(n, utils.NOPOS)
+	// 	l.Contexts[key] = newLedgerContext(c, n, utils.NOPOS, l.Reversed)
+	// }
 
 	l.debugContext()
 	return nil
@@ -156,7 +187,7 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 			next := apps[i].BlockNumber + 1
 
 			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+			l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, false, l.Reversed)
 		}
 	}
 
@@ -178,14 +209,28 @@ func (l *Ledger) debugContext() {
 		return string(keys[i]) < string(keys[j])
 	})
 
+	logger.Info(strings.Repeat("-", 60))
+	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
 	for _, key := range keys {
 		c := l.Contexts[key]
 		if c.CurBlock > maxTestingBlock {
 			continue
 		}
 		msg := ""
-		if c.ReconType == sameSame {
-			msg = fmt.Sprintf(" %12.12s false false", c.ReconType)
+		rr := c.ReconType &^ (first | last)
+		switch rr {
+		case genesis:
+			msg = fmt.Sprintf(" %12.12s", c.ReconType.String()+"-diff")
+		case diffDiff:
+			msg = fmt.Sprintf(" %12.12s", c.ReconType)
+		case sameSame:
+			msg = fmt.Sprintf(" %12.12s", c.ReconType)
+		case diffSame:
+			msg = fmt.Sprintf(" %12.12s", c.ReconType)
+		case sameDiff:
+			msg = fmt.Sprintf(" %12.12s", c.ReconType)
+		default:
+			msg = fmt.Sprintf(" %12.12s should not happen!", c.ReconType)
 		}
 		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
 	}

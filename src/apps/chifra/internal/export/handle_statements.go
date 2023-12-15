@@ -124,7 +124,11 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 							&opts.Asset,
 						)
 
-						_ = ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
+						last := apps[len(apps)-1].BlockNumber
+						bounds := filter.GetOuterBounds()
+						bounds.Last = uint64(last + 1)
+						_ = ledgers.SetContexts(chain, apps, bounds)
+						filter.OuterBounds.First = uint64(apps[len(apps)-1].BlockNumber)
 
 						items := make([]types.SimpleStatement, 0, len(thisMap))
 						for _, tx := range txArray {

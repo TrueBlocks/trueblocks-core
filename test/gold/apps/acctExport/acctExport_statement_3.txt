@@ -7,9 +7,11 @@ TEST[DATE|TIME] OutputFn:  statement_3_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] 000000000-00270:          0          0       46685
-INFO[DATE|TIME] 000046685-00000:          0      46685       46709
-INFO[DATE|TIME] 000046709-00000:      46685      46709       46710
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Contexts (3)
+INFO[DATE|TIME] 000000000-00270:          0          0       46685 genesis-diff
+INFO[DATE|TIME] 000046685-00000:          0      46685       46709    diff-diff
+INFO[DATE|TIME] 000046709-00000:      46685      46709       46710    diff-noop
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -63,7 +65,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          1970000000000000000000
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
@@ -119,7 +121,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          1964989500000000000000
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Start of trial balance report
@@ -135,7 +137,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
+TEST[DATE|TIME]    reconciliationType:  diff-noop-eth
 TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
@@ -175,7 +177,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          89500000000000000
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 ----
@@ -302,7 +304,7 @@ Results in ./statement_3_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
-      "reconciliationType": "diff-diff-eth",
+      "reconciliationType": "diff-noop-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",

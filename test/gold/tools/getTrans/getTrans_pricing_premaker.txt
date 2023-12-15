@@ -3,7 +3,9 @@ TEST[DATE|TIME] Transactions:  [1433233.8]
 TEST[DATE|TIME] AccountFor:  0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] 001433233-00008:    1433232    1433233     1433234
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Contexts (1)
+INFO[DATE|TIME] 001433233-00008:    1433232    1433233     1433234    noop-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1433233 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -17,7 +19,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-eth
+TEST[DATE|TIME]    reconciliationType:  noop-diff-eth
 TEST[DATE|TIME]    accountedFor:        0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME]    sender:              0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME]    recipient:           0xa69217644dc0835daf5547e6975f5cb741fb1508
@@ -57,7 +59,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          358693424617370130430
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 {
@@ -94,7 +96,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xa69217644dc0835daf5547e6975f5cb741fb1508",
       "reconciled": true,
-      "reconciliationType": "diff-diff-eth",
+      "reconciliationType": "noop-diff-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",

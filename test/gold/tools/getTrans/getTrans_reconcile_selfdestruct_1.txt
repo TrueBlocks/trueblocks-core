@@ -4,7 +4,9 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] AccountFor:  0x42c8fcbc73d625f1d258a32915b6a573095de93d
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] 002608034-00005:    2608033    2608034     2608035
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Contexts (1)
+INFO[DATE|TIME] 002608034-00005:    2608033    2608034     2608035    noop-diff
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 2608034 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -18,7 +20,7 @@ TEST[DATE|TIME] isPrevDiff:             true
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-trace-eth
+TEST[DATE|TIME]    reconciliationType:  noop-diff-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x42c8fcbc73d625f1d258a32915b6a573095de93d
 TEST[DATE|TIME]    sender:              0x42c8fcbc73d625f1d258a32915b6a573095de93d
 TEST[DATE|TIME]    recipient:           0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
@@ -58,7 +60,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          515880230408772
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 {
@@ -95,7 +97,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
       "reconciled": true,
-      "reconciliationType": "diff-diff-trace-eth",
+      "reconciliationType": "noop-diff-trace-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x42c8fcbc73d625f1d258a32915b6a573095de93d",
