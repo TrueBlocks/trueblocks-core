@@ -133,7 +133,7 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerB
 		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
 	}
 
-	l.DebugContext()
+	l.debugContext()
 	return nil
 }
 
@@ -160,11 +160,11 @@ func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier
 		}
 	}
 
-	l.DebugContext()
+	l.debugContext()
 	return nil
 }
 
-func (l *Ledger) DebugContext() {
+func (l *Ledger) debugContext() {
 	if !l.TestMode {
 		return
 	}
