@@ -175,4 +175,18 @@ func (s *SimpleAppearance) Orig() string {
 	return s.Reason // when converted from an Identifier, this is the original string
 }
 
+type MappedType interface {
+	SimpleTransaction |
+		SimpleBlock[string] |
+		SimpleBlock[SimpleTransaction] |
+		SimpleAppearance |
+		SimpleWithdrawal |
+		SimpleResult |
+		SimpleToken |
+		bool
+}
+
+// TODO: Do we want this to be configurable? Maybe, maybe not
+var AppMapSize int = 20
+
 // EXISTING_CODE
