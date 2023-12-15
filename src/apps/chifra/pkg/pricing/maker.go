@@ -18,7 +18,7 @@ var (
 	makerDeployment = base.Blknum(3684349)
 )
 
-func PriceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
+func priceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
 	if statement.BlockNumber <= makerDeployment {
 		msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Maker. No fallback pricing method", statement.BlockNumber, makerDeployment)
 		logger.TestLog(true, msg)
