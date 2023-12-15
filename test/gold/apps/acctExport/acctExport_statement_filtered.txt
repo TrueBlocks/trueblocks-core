@@ -12,9 +12,9 @@ TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (3)
-INFO[DATE|TIME] 008860513-00085:    8860511    8860513     8860529    noop-diff
+INFO[DATE|TIME] 008860513-00085:    8860513    8860513     8860529    noop-diff
 INFO[DATE|TIME] 008860529-00145:    8860513    8860529     8860531    diff-diff
-INFO[DATE|TIME] 008860531-00152:    8860529    8860531     8860532    diff-noop
+INFO[DATE|TIME] 008860531-00152:    8860529    8860531     8860531    diff-noop
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
@@ -23,11 +23,11 @@ TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     8860511
-TEST[DATE|TIME] prevBlock:              8860511
+TEST[DATE|TIME] ledger.blockNumber:     8860513
+TEST[DATE|TIME] prevBlock:              8860513
 TEST[DATE|TIME] transfer.blockNumber:   8860513
 TEST[DATE|TIME] nextBlock:              8860529
-TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
@@ -38,7 +38,7 @@ TEST[DATE|TIME]    recipient:           0x30f938fed5de6e06a9a7cd2ac3517131c317b1
 TEST[DATE|TIME]    assetAddr:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 TEST[DATE|TIME]    assetSymbol:         DAI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          8860511
+TEST[DATE|TIME]    prevAppBlk:          8860513
 TEST[DATE|TIME]    hash:                0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 TEST[DATE|TIME]    timestamp:           1572720150
 TEST[DATE|TIME]    blockNumber:         8860513
@@ -46,7 +46,7 @@ TEST[DATE|TIME]    transactionIndex:    85
 TEST[DATE|TIME]    logIndex:            84
 TEST[DATE|TIME]    priceSource:         stable-coin
 TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    prevBal:             7500000000000000000000
+TEST[DATE|TIME]    prevBal:             7000000000000000000000
 TEST[DATE|TIME]    begBal:              7500000000000000000000
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -85,9 +85,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     8860529
 TEST[DATE|TIME] prevBlock:              8860529
 TEST[DATE|TIME] transfer.blockNumber:   8860531
-TEST[DATE|TIME] nextBlock:              8860532
+TEST[DATE|TIME] nextBlock:              8860531
 TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  diff-noop-token
@@ -164,8 +164,8 @@ Results in ./statement_filtered_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8860511,
-      "prevBal": "7500",
+      "prevAppBlk": 8860513,
+      "prevBal": "7000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,

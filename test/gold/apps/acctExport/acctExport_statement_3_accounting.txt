@@ -10,7 +10,7 @@ INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (3)
 INFO[DATE|TIME] 000000000-00270:          0          0       46685 genesis-diff
 INFO[DATE|TIME] 000046685-00000:          0      46685       46709    diff-diff
-INFO[DATE|TIME] 000046709-00000:      46685      46709       46710    diff-noop
+INFO[DATE|TIME] 000046709-00000:      46685      46709       46709    diff-noop
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -131,9 +131,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     46685
 TEST[DATE|TIME] prevBlock:              46685
 TEST[DATE|TIME] transfer.blockNumber:   46709
-TEST[DATE|TIME] nextBlock:              46710
+TEST[DATE|TIME] nextBlock:              46709
 TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  diff-noop-eth

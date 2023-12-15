@@ -13,7 +13,7 @@ TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
-INFO[DATE|TIME] 011670419-00091:   11670405   11670419    11670420    noop-noop
+INFO[DATE|TIME] 011670419-00091:   11670419   11670419    11670419    noop-noop
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             8
@@ -47,12 +47,12 @@ TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     11670405
-TEST[DATE|TIME] prevBlock:              11670405
+TEST[DATE|TIME] ledger.blockNumber:     11670419
+TEST[DATE|TIME] prevBlock:              11670419
 TEST[DATE|TIME] transfer.blockNumber:   11670419
-TEST[DATE|TIME] nextBlock:              11670420
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] nextBlock:              11670419
+TEST[DATE|TIME] isPrevDiff:             false
+TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  noop-noop-token
@@ -62,7 +62,7 @@ TEST[DATE|TIME]    recipient:           0x0
 TEST[DATE|TIME]    assetAddr:           0xc713e5e149d5d0715dcd1c156a020976e7e56b88
 TEST[DATE|TIME]    assetSymbol:         aMKR
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          11670405
+TEST[DATE|TIME]    prevAppBlk:          11670419
 TEST[DATE|TIME]    hash:                0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888
 TEST[DATE|TIME]    timestamp:           1610856118
 TEST[DATE|TIME]    blockNumber:         11670419
@@ -70,7 +70,7 @@ TEST[DATE|TIME]    transactionIndex:    91
 TEST[DATE|TIME]    logIndex:            195
 TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             14922876717902766087
+TEST[DATE|TIME]    prevBal:             0
 TEST[DATE|TIME]    begBal:              14922878205530494041
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -129,8 +129,8 @@ Results in ./failed_statement_2572_2_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 11670405,
-      "prevBal": "14.922876717902766087",
+      "prevAppBlk": 11670419,
+      "prevBal": "0",
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,

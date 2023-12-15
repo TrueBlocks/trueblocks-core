@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum"
 )
 
@@ -135,34 +136,15 @@ const maxTestingBlock = 17000000
 // SetContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
-func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerBounds base.BlockRange) error {
+func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance) error {
 	for i := 0; i < len(apps); i++ {
 		cur := apps[i].BlockNumber
-
-		prev := outerBounds.First
-		if i > 0 {
-			prev = uint64(apps[i-1].BlockNumber)
-		}
-
-		next := outerBounds.Last
-		if i < len(apps)-1 {
-			next = uint64(apps[i+1].BlockNumber)
-		}
-
-		if next < l.FirstBlock || prev > l.LastBlock {
-			continue
-		}
+		prev := uint64(apps[utils.Max(1, i)-1].BlockNumber)
+		next := uint64(apps[utils.Min(i+1, len(apps)-1)].BlockNumber)
 
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
 		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
 	}
-
-	// if len(apps) > 0 {
-	// 	c := uint64(apps[len(apps)-1].BlockNumber)
-	// 	n := uint64(apps[len(apps)-1].BlockNumber + 1)
-	// 	key := l.ctxKey(n, utils.NOPOS)
-	// 	l.Contexts[key] = newLedgerContext(c, n, utils.NOPOS, l.Reversed)
-	// }
 
 	l.debugContext()
 	return nil

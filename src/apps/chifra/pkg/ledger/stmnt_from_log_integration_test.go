@@ -52,11 +52,7 @@ func TestGetStatementFromLog(t *testing.T) {
 		BlockNumber:      uint32(bn),
 		TransactionIndex: uint32(txid),
 	})
-	bounds := base.BlockRange{
-		First: 0,
-		Last:  utils.NOPOS,
-	}
-	l.SetContexts("mainnet", apps, bounds)
+	l.SetContexts("mainnet", apps)
 	s, _ := l.getStatementsFromLog(conn, &log)
 	b, _ := json.MarshalIndent(s, "", "  ")
 	fmt.Println(string(b))

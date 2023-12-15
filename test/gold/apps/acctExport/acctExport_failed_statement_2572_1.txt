@@ -31,7 +31,7 @@ INFO[DATE|TIME] 012697277-00188:   12655959   12697277    12697303    diff-diff
 INFO[DATE|TIME] 012697303-00099:   12697277   12697303    12697322    diff-diff
 INFO[DATE|TIME] 012697322-00281:   12697303   12697322    12697324    diff-diff
 INFO[DATE|TIME] 012697324-00088:   12697322   12697324    13193257    diff-diff
-INFO[DATE|TIME] 013193257-00227:   12697324   13193257    13193258    diff-noop
+INFO[DATE|TIME] 013193257-00227:   12697324   13193257    13269886    diff-diff
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (14)
 INFO[DATE|TIME] 013269886-00045:   13193257   13269886    13269900    diff-diff
@@ -47,7 +47,7 @@ INFO[DATE|TIME] 014366254-00017:   14360361   14366254    14436713    diff-diff
 INFO[DATE|TIME] 014436713-00058:   14366254   14436713    14436713    diff-same
 INFO[DATE|TIME] 014436713-00059:   14436713   14436713    14469880    same-diff
 INFO[DATE|TIME] 014469880-00033:   14436713   14469880    15549162    diff-diff
-INFO[DATE|TIME] 015549162-00083:   14469880   15549162    15549163    diff-noop
+INFO[DATE|TIME] 015549162-00083:   14469880   15549162    15549162    diff-noop
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             1000
@@ -82,9 +82,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     14469880
 TEST[DATE|TIME] prevBlock:              14469880
 TEST[DATE|TIME] transfer.blockNumber:   15549162
-TEST[DATE|TIME] nextBlock:              15549163
+TEST[DATE|TIME] nextBlock:              15549162
 TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  diff-noop-token

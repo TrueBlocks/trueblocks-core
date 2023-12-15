@@ -20,7 +20,7 @@ INFO[DATE|TIME] 000000067-99999:         64         67          78    diff-diff
 INFO[DATE|TIME] 000000078-99999:         67         78          84    diff-diff
 INFO[DATE|TIME] 000000084-99999:         78         84          90    diff-diff
 INFO[DATE|TIME] 000000090-99999:         84         90          94    diff-diff
-INFO[DATE|TIME] 000000094-99999:         90         94          95    diff-noop
+INFO[DATE|TIME] 000000094-99999:         90         94          94    diff-noop
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
@@ -701,9 +701,9 @@ TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     90
 TEST[DATE|TIME] prevBlock:              90
 TEST[DATE|TIME] transfer.blockNumber:   94
-TEST[DATE|TIME] nextBlock:              95
+TEST[DATE|TIME] nextBlock:              94
 TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    reconciliationType:  diff-noop-eth
