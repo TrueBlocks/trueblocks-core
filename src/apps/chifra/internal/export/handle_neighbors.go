@@ -37,16 +37,13 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 				cancel()
 
 			} else if cnt == 0 {
+				errorChan <- fmt.Errorf("no blocks found for the query")
 				continue
 
 			} else {
-				if sliceOfMaps, cnt, err := types.AsSliceOfMaps[bool](apps, filter.Reversed); err != nil {
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[bool](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					cancel()
-
-				} else if cnt == 0 {
-					errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
-					continue
 
 				} else {
 					bar := logger.NewBar(logger.BarOptions{
