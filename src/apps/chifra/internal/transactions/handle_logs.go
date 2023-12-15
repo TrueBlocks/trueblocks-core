@@ -27,7 +27,13 @@ func (opts *TransactionsOptions) HandleLogs() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfAppMaps[types.SimpleTransaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 

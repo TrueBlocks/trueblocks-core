@@ -11,6 +11,7 @@ package types
 // EXISTING_CODE
 import (
 	"fmt"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -188,5 +189,34 @@ type MappedType interface {
 
 // TODO: Do we want this to be configurable? Maybe, maybe not
 var AppMapSize int = 20
+
+func AsSliceOfAppMaps[T MappedType](apps []SimpleAppearance, reversed bool) ([]map[SimpleAppearance]*T, int, error) {
+	sort.Slice(apps, func(i, j int) bool {
+		if reversed {
+			i, j = j, i
+		}
+		if apps[i].BlockNumber == apps[j].BlockNumber {
+			return apps[i].TransactionIndex < apps[j].TransactionIndex
+		}
+		return apps[i].BlockNumber < apps[j].BlockNumber
+	})
+
+	arrayOfMaps := make([]map[SimpleAppearance]*T, 0, len(apps))
+	curMap := make(map[SimpleAppearance]*T)
+	for i := 0; i < len(apps); i++ {
+		// TODO: Do we want this to be configurable? Maybe, maybe not
+		if len(curMap) == AppMapSize {
+			arrayOfMaps = append(arrayOfMaps, curMap)
+			curMap = make(map[SimpleAppearance]*T)
+		}
+		curMap[apps[i]] = nil
+	}
+
+	if len(curMap) > 0 {
+		arrayOfMaps = append(arrayOfMaps, curMap)
+	}
+
+	return arrayOfMaps, len(apps), nil
+}
 
 // EXISTING_CODE

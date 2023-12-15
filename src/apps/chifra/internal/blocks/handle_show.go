@@ -23,7 +23,13 @@ func (opts *BlocksOptions) HandleShow() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawBlock], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[types.SimpleTransaction]](chain, opts.BlockIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfAppMaps[types.SimpleBlock[types.SimpleTransaction]](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 

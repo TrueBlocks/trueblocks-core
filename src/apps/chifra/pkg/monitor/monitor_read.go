@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
@@ -70,31 +69,6 @@ func AsSliceOfMaps[T types.MappedType](mon *Monitor, filter *filter.AppearanceFi
 	} else if cnt == 0 {
 		return nil, 0, nil
 	} else {
-		sort.Slice(apps, func(i, j int) bool {
-			if filter.Reversed {
-				i, j = j, i
-			}
-			if apps[i].BlockNumber == apps[j].BlockNumber {
-				return apps[i].TransactionIndex < apps[j].TransactionIndex
-			}
-			return apps[i].BlockNumber < apps[j].BlockNumber
-		})
-
-		arrayOfMaps := make([]map[types.SimpleAppearance]*T, 0, len(apps))
-		curMap := make(map[types.SimpleAppearance]*T)
-		for i := 0; i < len(apps); i++ {
-			// TODO: Do we want this to be configurable? Maybe, maybe not
-			if len(curMap) == types.AppMapSize {
-				arrayOfMaps = append(arrayOfMaps, curMap)
-				curMap = make(map[types.SimpleAppearance]*T)
-			}
-			curMap[apps[i]] = nil
-		}
-
-		if len(curMap) > 0 {
-			arrayOfMaps = append(arrayOfMaps, curMap)
-		}
-
-		return arrayOfMaps, len(apps), nil
+		return types.AsSliceOfAppMaps[T](apps, filter.Reversed)
 	}
 }

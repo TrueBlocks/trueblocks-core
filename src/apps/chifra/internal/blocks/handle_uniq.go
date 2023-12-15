@@ -24,7 +24,13 @@ func (opts *BlocksOptions) HandleUniq() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleAppearance](chain, opts.BlockIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfAppMaps[types.SimpleAppearance](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
