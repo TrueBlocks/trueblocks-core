@@ -11,9 +11,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // ReadMonitorHeader reads the monitor's header and returns without closing the file
@@ -61,14 +59,4 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	}
 	err = binary.Read(mon.ReadFp, binary.LittleEndian, &app.TransactionId)
 	return
-}
-
-func AsSliceOfMaps[T types.MappedType](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
-	if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
-		return nil, 0, err
-	} else if cnt == 0 {
-		return nil, 0, nil
-	} else {
-		return types.AsSliceOfAppMaps[T](apps, filter.Reversed)
-	}
 }

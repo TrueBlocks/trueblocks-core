@@ -190,7 +190,7 @@ type MappedType interface {
 // TODO: Do we want this to be configurable? Maybe, maybe not
 var AppMapSize int = 20
 
-func AsSliceOfAppMaps[T MappedType](apps []SimpleAppearance, reversed bool) ([]map[SimpleAppearance]*T, int, error) {
+func AsSliceOfMaps[T MappedType](apps []SimpleAppearance, reversed bool) ([]map[SimpleAppearance]*T, int, error) {
 	sort.Slice(apps, func(i, j int) bool {
 		if reversed {
 			i, j = j, i

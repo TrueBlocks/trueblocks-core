@@ -35,103 +35,112 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
 				cancel()
 
 			} else if cnt == 0 {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				continue
 
 			} else {
-				bar := logger.NewBar(logger.BarOptions{
-					Prefix:  mon.Address.Hex(),
-					Enabled: !testMode && !utils.IsTerminal(),
-					Total:   int64(cnt),
-				})
+				if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, filter.Reversed); err != nil {
+					errorChan <- err
+					cancel()
 
-				// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
-				finished := false
-				for _, thisMap := range sliceOfMaps {
-					if finished {
-						continue
-					}
+				} else if cnt == 0 {
+					errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+					continue
 
-					thisMap := thisMap
-					for app := range thisMap {
-						thisMap[app] = new(types.SimpleTransaction)
-					}
-
-					iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-						if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
-							return err
-						} else {
-							passes, _ := filter.ApplyTxFilters(tx)
-							if passes {
-								*value = *tx
-							}
-							if bar != nil {
-								bar.Tick()
-							}
-							return nil
-						}
-					}
-
-					// Set up and interate over the map calling iterFunc for each appearance
-					iterCtx, iterCancel := context.WithCancel(context.Background())
-					defer iterCancel()
-					errChan := make(chan error)
-					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
-					if stepErr := <-errChan; stepErr != nil {
-						errorChan <- stepErr
-						return
-					}
-
-					items := make([]*types.SimpleTrace, 0, len(thisMap))
-					for _, tx := range thisMap {
-						for index, trace := range tx.Traces {
-							trace := trace
-							trace.TraceIndex = uint64(index)
-							isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
-							if !opts.Factory || isCreate {
-								if opts.Articulate {
-									if err := abiCache.ArticulateTrace(&trace); err != nil {
-										errorChan <- fmt.Errorf("error articulating trace: %v", err)
-									}
-								}
-								items = append(items, &trace)
-							}
-						}
-					}
-					sort.Slice(items, func(i, j int) bool {
-						if opts.Reversed {
-							i, j = j, i
-						}
-						if items[i].BlockNumber == items[j].BlockNumber {
-							if items[i].TransactionIndex == items[j].TransactionIndex {
-								return items[i].TraceIndex < items[j].TraceIndex
-							}
-							return items[i].TransactionIndex < items[j].TransactionIndex
-						}
-						return items[i].BlockNumber < items[j].BlockNumber
+				} else {
+					bar := logger.NewBar(logger.BarOptions{
+						Prefix:  mon.Address.Hex(),
+						Enabled: !testMode && !utils.IsTerminal(),
+						Total:   int64(cnt),
 					})
 
-					for _, item := range items {
-						item := item
-						if item.BlockHash.IsZero() {
+					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+					finished := false
+					for _, thisMap := range sliceOfMaps {
+						if finished {
 							continue
 						}
-						var passes bool
-						passes, finished = filter.ApplyCountFilter()
-						if passes {
-							modelChan <- item
+
+						thisMap := thisMap
+						for app := range thisMap {
+							thisMap[app] = new(types.SimpleTransaction)
 						}
-						if finished {
-							break
+
+						iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+							if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
+								return err
+							} else {
+								passes, _ := filter.ApplyTxFilters(tx)
+								if passes {
+									*value = *tx
+								}
+								if bar != nil {
+									bar.Tick()
+								}
+								return nil
+							}
+						}
+
+						// Set up and interate over the map calling iterFunc for each appearance
+						iterCtx, iterCancel := context.WithCancel(context.Background())
+						defer iterCancel()
+						errChan := make(chan error)
+						go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
+						if stepErr := <-errChan; stepErr != nil {
+							errorChan <- stepErr
+							return
+						}
+
+						items := make([]*types.SimpleTrace, 0, len(thisMap))
+						for _, tx := range thisMap {
+							for index, trace := range tx.Traces {
+								trace := trace
+								trace.TraceIndex = uint64(index)
+								isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
+								if !opts.Factory || isCreate {
+									if opts.Articulate {
+										if err := abiCache.ArticulateTrace(&trace); err != nil {
+											errorChan <- fmt.Errorf("error articulating trace: %v", err)
+										}
+									}
+									items = append(items, &trace)
+								}
+							}
+						}
+						sort.Slice(items, func(i, j int) bool {
+							if opts.Reversed {
+								i, j = j, i
+							}
+							if items[i].BlockNumber == items[j].BlockNumber {
+								if items[i].TransactionIndex == items[j].TransactionIndex {
+									return items[i].TraceIndex < items[j].TraceIndex
+								}
+								return items[i].TransactionIndex < items[j].TransactionIndex
+							}
+							return items[i].BlockNumber < items[j].BlockNumber
+						})
+
+						for _, item := range items {
+							item := item
+							if item.BlockHash.IsZero() {
+								continue
+							}
+							var passes bool
+							passes, finished = filter.ApplyCountFilter()
+							if passes {
+								modelChan <- item
+							}
+							if finished {
+								break
+							}
 						}
 					}
+					bar.Finish(true /* newLine */)
 				}
-				bar.Finish(true /* newLine */)
 			}
 		}
 	}

@@ -29,7 +29,7 @@ func (opts *BlocksOptions) HandleUncles() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfAppMaps[types.SimpleBlock[string]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleBlock[string]](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 

@@ -29,7 +29,7 @@ func (opts *BlocksOptions) HandleShow() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfAppMaps[types.SimpleBlock[types.SimpleTransaction]](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleBlock[types.SimpleTransaction]](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 

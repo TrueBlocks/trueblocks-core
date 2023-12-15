@@ -30,7 +30,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfAppMaps[types.SimpleAppearance](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleAppearance](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 

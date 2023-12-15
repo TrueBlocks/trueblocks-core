@@ -41,7 +41,7 @@ func (opts *TracesOptions) HandleFilter() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfAppMaps[types.SimpleTransaction](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 

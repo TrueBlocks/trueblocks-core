@@ -41,7 +41,7 @@ func (opts *StateOptions) HandleCall() error {
 			cancel()
 		}
 
-		if sliceOfMaps, cnt, err := types.AsSliceOfAppMaps[types.SimpleResult](apps, false); err != nil {
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleResult](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
