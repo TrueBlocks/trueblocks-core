@@ -10,42 +10,42 @@ import (
 )
 
 // trialBalance returns true of the reconciliation balances, false otherwise. It also prints the trial balance to the console.
-func (l *Ledger) trialBalance(msg string, r *types.SimpleStatement) bool {
-	key := l.ctxKey(r.BlockNumber, r.TransactionIndex)
+func (l *Ledger) trialBalance(msg string, s *types.SimpleStatement) bool {
+	key := l.ctxKey(s.BlockNumber, s.TransactionIndex)
 	ctx := l.Contexts[key]
 
-	r.ReconciliationType = ctx.ReconType.String()
-	if r.AssetAddr == base.FAKE_ETH_ADDRESS {
+	s.ReconciliationType = ctx.ReconType.String()
+	if s.AssetAddr == base.FAKE_ETH_ADDRESS {
 		if strings.Contains(msg, "TRACE") {
-			r.ReconciliationType += "-trace-eth"
+			s.ReconciliationType += "-trace-eth"
 		} else {
-			r.ReconciliationType += "-eth"
+			s.ReconciliationType += "-eth"
 		}
 	} else {
-		r.ReconciliationType += "-token"
+		s.ReconciliationType += "-token"
 	}
 
 	logger.TestLog(l.TestMode, "Start of trial balance report")
 
 	// TODO: BOGUS PERF
 	var okay bool
-	if okay = r.Reconciled(); !okay {
-		if okay = r.CorrectForNullTransfer(l.theTx); !okay {
-			okay = r.CorrectForSomethingElse(l.theTx)
+	if okay = s.Reconciled(); !okay {
+		if okay = s.CorrectForNullTransfer(l.theTx); !okay {
+			okay = s.CorrectForSomethingElse(l.theTx)
 		}
 	}
 
 	// TODO: BOGUS PERF
-	if okay && r.MoneyMoved() {
+	if okay && s.MoneyMoved() {
 		// var err error
-		r.SpotPrice, r.PriceSource, _ = pricing.PriceUsd(l.Conn, l.TestMode, r)
-		// 	if r.SpotPrice, r.PriceSource, err = pricing.PriceUsd(l.Conn, l.TestMode, r); err != nil {
-		// 		logger.Error("Failed to get price for", r.AssetSymbol, "at", r.BlockNumber, r.TransactionIndex)
+		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(l.Conn, l.TestMode, s)
+		// 	if s.SpotPrice, s.PriceSource, err = pricing.PriceUsd(l.Conn, l.TestMode, s); err != nil {
+		// 		logger.Error("Failed to get price for", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex)
 		// 		logger.Error("Error returned from PriceUsd:", err)
 		// 	}
 	}
 
-	r.Report(l.TestMode, ctx, msg)
+	s.Report(l.TestMode, ctx, msg)
 
-	return r.Reconciled()
+	return s.Reconciled()
 }

@@ -5,7 +5,7 @@ TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
-INFO[DATE|TIME] 015687451-00133:   15687450   15687451    15687452    noop-diff
+INFO[DATE|TIME] 015687451-00133:   15687451   15687451    15687451    noop-noop
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
@@ -27,22 +27,21 @@ TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     15687450
-TEST[DATE|TIME] prevBlock:              15687450
+TEST[DATE|TIME] ledger.blockNumber:     15687451
+TEST[DATE|TIME] prevBlock:              15687451
 TEST[DATE|TIME] transfer.blockNumber:   15687451
-TEST[DATE|TIME] nextBlock:              15687452
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] nextBlock:              15687451
+TEST[DATE|TIME] isPrevDiff:             false
+TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  noop-diff-eth
+TEST[DATE|TIME]    reconciliationType:  noop-noop-eth
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x15069300bf5ed3e653ce309b17d173a8c7589f7f
 TEST[DATE|TIME]    recipient:           0xf55f8aa8f3d777f1ab3a4ae9e269c8d7b73078de
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          15687450
 TEST[DATE|TIME]    hash:                0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd
 TEST[DATE|TIME]    timestamp:           1665039815
 TEST[DATE|TIME]    blockNumber:         15687451
@@ -50,7 +49,6 @@ TEST[DATE|TIME]    transactionIndex:    133
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
 TEST[DATE|TIME]    spotPrice:           1366.4844409283744
-TEST[DATE|TIME]    prevBal:             58497599178185910414
 TEST[DATE|TIME]    begBal:              58497599178185910414
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -109,22 +107,21 @@ TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     15687450
-TEST[DATE|TIME] prevBlock:              15687450
+TEST[DATE|TIME] ledger.blockNumber:     15687451
+TEST[DATE|TIME] prevBlock:              15687451
 TEST[DATE|TIME] transfer.blockNumber:   15687451
-TEST[DATE|TIME] nextBlock:              15687452
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] nextBlock:              15687451
+TEST[DATE|TIME] isPrevDiff:             false
+TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  noop-diff-token
+TEST[DATE|TIME]    reconciliationType:  noop-noop-token
 TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    sender:              0x15069300bf5ed3e653ce309b17d173a8c7589f7f
 TEST[DATE|TIME]    recipient:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME]    assetAddr:           0xf55f8aa8f3d777f1ab3a4ae9e269c8d7b73078de
 TEST[DATE|TIME]    assetSymbol:         This token holders can claim reward token. Please Visit https://abronz.com and claim rewards.
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          15687450
 TEST[DATE|TIME]    hash:                0xf9a11aed09a4be208539a261d8c79567ba9918b4c4e577400ac39b64350b45fd
 TEST[DATE|TIME]    timestamp:           1665039815
 TEST[DATE|TIME]    blockNumber:         15687451
@@ -132,7 +129,6 @@ TEST[DATE|TIME]    transactionIndex:    133
 TEST[DATE|TIME]    logIndex:            2652
 TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             5170000000000000000000
 TEST[DATE|TIME]    begBal:              5170000000000000000000
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -189,12 +185,10 @@ TEST[DATE|TIME] End of trial balance report
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 15687450,
-      "prevBal": "58497599178185910414",
       "priceSource": "uniswap",
       "recipient": "0xf55f8aa8f3d777f1ab3a4ae9e269c8d7b73078de",
       "reconciled": true,
-      "reconciliationType": "noop-diff-eth",
+      "reconciliationType": "noop-noop-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x15069300bf5ed3e653ce309b17d173a8c7589f7f",
@@ -233,12 +227,10 @@ TEST[DATE|TIME] End of trial balance report
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 15687450,
-      "prevBal": "5170000000000000000000",
       "priceSource": "not-priced",
       "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "reconciled": true,
-      "reconciliationType": "noop-diff-token",
+      "reconciliationType": "noop-noop-token",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x15069300bf5ed3e653ce309b17d173a8c7589f7f",

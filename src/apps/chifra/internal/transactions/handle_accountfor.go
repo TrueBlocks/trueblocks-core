@@ -3,9 +3,11 @@ package transactionsPkg
 import (
 	"context"
 	"errors"
+	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -38,7 +40,9 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		false, /* reversed */
 		nil,
 	)
-	_ = ledgers.SetContextsFromIds(chain, opts.TransactionIds)
+	if err = contextsFromIds(ledgers, chain, opts.TransactionIds); err != nil {
+		return err
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
@@ -75,4 +79,29 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+func contextsFromIds(l *ledger.Ledger, chain string, txIds []identifiers.Identifier) error {
+	apps := make([]types.SimpleAppearance, 0, 200)
+	for _, rng := range txIds {
+		rawApps, err := rng.ResolveTxs(chain)
+		if err != nil && !errors.Is(err, ethereum.NotFound) {
+			return err
+		}
+		for _, app := range rawApps {
+			apps = append(apps, types.SimpleAppearance{
+				BlockNumber:      app.BlockNumber,
+				TransactionIndex: app.TransactionIndex,
+			})
+		}
+	}
+
+	sort.Slice(apps, func(i, j int) bool {
+		if apps[i].BlockNumber == apps[j].BlockNumber {
+			return apps[i].TransactionIndex < apps[j].TransactionIndex
+		}
+		return apps[i].BlockNumber < apps[j].BlockNumber
+	})
+
+	return l.SetContexts(chain, apps)
 }

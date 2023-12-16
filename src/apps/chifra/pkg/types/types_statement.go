@@ -106,6 +106,7 @@ type SimpleStatement struct {
 	TransactionIndex    base.Blknum    `json:"transactionIndex"`
 	raw                 *RawStatement  `json:"-"`
 	// EXISTING_CODE
+	ReconType ReconType `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -161,13 +162,20 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"selfDestructOut":     utils.FormattedValue(s.SelfDestructOut, asEther, decimals),
 		"gasOut":              utils.FormattedValue(s.GasOut, asEther, decimals),
 		"totalOutLessGas":     utils.FormattedValue(*s.TotalOutLessGas(), asEther, decimals),
-		"prevAppBlk":          s.PrevAppBlk,
-		"prevBal":             utils.FormattedValue(s.PrevBal, asEther, decimals),
 		"begBalDiff":          utils.FormattedValue(*s.BegBalDiff(), asEther, decimals),
 		"endBalDiff":          utils.FormattedValue(*s.EndBalDiff(), asEther, decimals),
 		"endBalCalc":          utils.FormattedValue(*s.EndBalCalc(), asEther, decimals),
 		"correctingReason":    s.CorrectingReason,
 	}
+
+	if s.ReconType&First > 0 || s.ReconType&Last > 0 {
+		model["prevAppBlk"] = s.PrevAppBlk
+		model["prevBal"] = utils.FormattedValue(s.PrevBal, asEther, decimals)
+	} else if format != "json" {
+		model["prevAppBlk"] = ""
+		model["prevBal"] = ""
+	}
+
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
 		"assetAddr", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
@@ -778,7 +786,9 @@ func (s *SimpleStatement) Report(testMode bool, ctx Ledgerer, msg string) {
 	logger.TestLog(testMode, "   assetAddr:          ", s.AssetAddr)
 	logger.TestLog(testMode, "   assetSymbol:        ", s.AssetSymbol)
 	logger.TestLog(testMode, "   decimals:           ", s.Decimals)
-	logger.TestLog(testMode, "   prevAppBlk:         ", s.PrevAppBlk)
+	if s.ReconType&First > 0 || s.ReconType&Last > 0 {
+		logger.TestLog(testMode, "   prevAppBlk:         ", s.PrevAppBlk)
+	}
 	logger.TestLog(testMode, "   hash:               ", s.TransactionHash)
 	logger.TestLog(testMode, "   timestamp:          ", s.Timestamp)
 	logger.TestLog(testMode, "   blockNumber:        ", s.BlockNumber)
@@ -786,7 +796,9 @@ func (s *SimpleStatement) Report(testMode bool, ctx Ledgerer, msg string) {
 	logger.TestLog(testMode, "   logIndex:           ", s.LogIndex)
 	logger.TestLog(testMode, "   priceSource:        ", s.PriceSource)
 	logger.TestLog(testMode, "   spotPrice:          ", s.SpotPrice)
-	logger.TestLog(testMode, "   prevBal:            ", s.PrevBal.Text(10))
+	if s.ReconType&First > 0 || s.ReconType&Last > 0 {
+		logger.TestLog(testMode, "   prevBal:            ", s.PrevBal.Text(10))
+	}
 	logger.TestLog(testMode, "   begBal:             ", s.BegBal.Text(10))
 	logger.TestLog(testMode, "   amountIn:           ", s.AmountIn.Text(10))
 	logger.TestLog(testMode, "   internalIn:         ", s.InternalIn.Text(10))

@@ -1,62 +1,15 @@
 package ledger
 
 import (
-	"errors"
 	"fmt"
 	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum"
 )
-
-type reconType int
-
-const (
-	invalid reconType = 1 << iota
-	genesis
-	diffDiff
-	sameSame
-	diffSame
-	sameDiff
-	shouldNotHappen
-	first
-	last
-)
-
-func (r reconType) String() string {
-	l := func(r reconType, s string) string {
-		if r&first != 0 {
-			s = strings.Replace(s, "diff-", "noop-", 1)
-			s = strings.Replace(s, "same-", "noop-", 1)
-		}
-		if r&last != 0 {
-			s = strings.Replace(s, "-diff", "-noop", 1)
-			s = strings.Replace(s, "-same", "-noop", 1)
-		}
-		return s
-	}
-
-	rr := r &^ (first | last)
-	switch rr {
-	case genesis:
-		return "genesis"
-	case diffDiff:
-		return l(r, "diff-diff")
-	case sameSame:
-		return l(r, "same-same")
-	case diffSame:
-		return l(r, "diff-same")
-	case sameDiff:
-		return l(r, "same-diff")
-	default:
-		return l(r, "invalid")
-	}
-}
 
 type ledgerContextKey string
 
@@ -66,42 +19,42 @@ type ledgerContext struct {
 	PrevBlock base.Blknum
 	CurBlock  base.Blknum
 	NextBlock base.Blknum
-	ReconType reconType
+	ReconType types.ReconType
 }
 
 func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *ledgerContext {
 	if prev > cur || cur > next {
 		return &ledgerContext{
-			ReconType: invalid,
+			ReconType: types.Invalid,
 		}
 	}
 
-	reconType := invalid
+	reconType := types.Invalid
 	if cur == 0 {
-		reconType = genesis
+		reconType = types.Genesis
 	} else {
 		prevDiff := prev != cur
 		nextDiff := cur != next
 		if prevDiff && nextDiff {
-			reconType = diffDiff
+			reconType = types.DiffDiff
 		} else if !prevDiff && !nextDiff {
-			reconType = sameSame
+			reconType = types.SameSame
 		} else if prevDiff {
-			reconType = diffSame
+			reconType = types.DiffSame
 		} else if nextDiff {
-			reconType = sameDiff
+			reconType = types.SameDiff
 		} else {
-			reconType = invalid
+			reconType = types.Invalid
 			logger.Panic("should not happen")
 		}
 	}
 
 	if isFirst {
-		reconType |= first
+		reconType |= types.First
 	}
 
 	if isLast {
-		reconType |= last
+		reconType |= types.Last
 	}
 
 	return &ledgerContext{
@@ -141,38 +94,9 @@ func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance) error 
 		cur := apps[i].BlockNumber
 		prev := uint64(apps[utils.Max(1, i)-1].BlockNumber)
 		next := uint64(apps[utils.Min(i+1, len(apps)-1)].BlockNumber)
-
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
 		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
 	}
-
-	l.debugContext()
-	return nil
-}
-
-// SetContextsFromIds produces reconciliation contexts for a list of transaction id that
-// most probably won't reconicile since there will be missing gaps in the list. (For example,
-// from chifra transactions --account_for 10 100 1000.)
-func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier) error {
-	for _, rng := range txIds {
-		apps, err := rng.ResolveTxs(chain)
-		if err != nil && !errors.Is(err, ethereum.NotFound) {
-			return err
-		}
-		for i := 0; i < len(apps); i++ {
-			cur := apps[i].BlockNumber
-			prev := uint32(0)
-			if apps[i].BlockNumber > 0 {
-				prev = apps[i].BlockNumber - 1
-			}
-
-			next := apps[i].BlockNumber + 1
-
-			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, false, l.Reversed)
-		}
-	}
-
 	l.debugContext()
 	return nil
 }
@@ -199,17 +123,17 @@ func (l *Ledger) debugContext() {
 			continue
 		}
 		msg := ""
-		rr := c.ReconType &^ (first | last)
+		rr := c.ReconType &^ (types.First | types.Last)
 		switch rr {
-		case genesis:
+		case types.Genesis:
 			msg = fmt.Sprintf(" %12.12s", c.ReconType.String()+"-diff")
-		case diffDiff:
+		case types.DiffDiff:
 			msg = fmt.Sprintf(" %12.12s", c.ReconType)
-		case sameSame:
+		case types.SameSame:
 			msg = fmt.Sprintf(" %12.12s", c.ReconType)
-		case diffSame:
+		case types.DiffSame:
 			msg = fmt.Sprintf(" %12.12s", c.ReconType)
-		case sameDiff:
+		case types.SameDiff:
 			msg = fmt.Sprintf(" %12.12s", c.ReconType)
 		default:
 			msg = fmt.Sprintf(" %12.12s should not happen!", c.ReconType)
