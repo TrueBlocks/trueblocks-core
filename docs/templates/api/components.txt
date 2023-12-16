@@ -33,7 +33,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date for this appearance"
+          description: "a calculated field -- the date represented by the timestamp"
     monitor:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object
@@ -197,7 +197,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of this transaction"
+          description: "a calculated field -- the date represented by the timestamp"
         assetAddr:
           type: string
           format: address
@@ -242,7 +242,7 @@ components:
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
         reconciliationType:
           type: string
-          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"
+          description: "a calculated field -- one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"
         reconciled:
           type: boolean
           description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
@@ -372,7 +372,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the object"
+          description: "a calculated field -- the date represented by the timestamp"
         transactions:
           type: array
           items:
@@ -423,6 +423,7 @@ components:
         date:
           type: string
           format: datetime
+          description: "a calculated field -- the date represented by the timestamp"
         from:
           type: string
           format: address
@@ -794,7 +795,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "a calculated field -- the date represented by the timestamp"
         transactionsCnt:
           type: number
           format: uint64
@@ -834,7 +835,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "human readable version of timestamp"
+          description: "a calculated field -- the date represented by the timestamp"
         name:
           type: string
           description: "an optional name for the block"
@@ -1490,7 +1491,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the object"
+          description: "a calculated field -- the date represented by the timestamp"
         from:
           type: string
           format: address

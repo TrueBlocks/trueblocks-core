@@ -27,20 +27,16 @@ import (
 type RawStatement struct {
 	AccountedFor        string `json:"accountedFor"`
 	AmountIn            string `json:"amountIn"`
-	AmountNet           string `json:"amountNet"`
 	AmountOut           string `json:"amountOut"`
 	AssetAddr           string `json:"assetAddr"`
 	AssetSymbol         string `json:"assetSymbol"`
 	BegBal              string `json:"begBal"`
-	BegBalDiff          string `json:"begBalDiff"`
 	BlockNumber         string `json:"blockNumber"`
 	CorrectingIn        string `json:"correctingIn"`
 	CorrectingOut       string `json:"correctingOut"`
 	CorrectingReason    string `json:"correctingReason"`
 	Decimals            string `json:"decimals"`
 	EndBal              string `json:"endBal"`
-	EndBalCalc          string `json:"endBalCalc"`
-	EndBalDiff          string `json:"endBalDiff"`
 	GasOut              string `json:"gasOut"`
 	InternalIn          string `json:"internalIn"`
 	InternalOut         string `json:"internalOut"`
@@ -54,16 +50,11 @@ type RawStatement struct {
 	PrevBal             string `json:"prevBal"`
 	PriceSource         string `json:"priceSource"`
 	Recipient           string `json:"recipient"`
-	Reconciled          string `json:"reconciled"`
-	ReconciliationType  string `json:"reconciliationType"`
 	SelfDestructIn      string `json:"selfDestructIn"`
 	SelfDestructOut     string `json:"selfDestructOut"`
 	Sender              string `json:"sender"`
 	SpotPrice           string `json:"spotPrice"`
 	Timestamp           string `json:"timestamp"`
-	TotalIn             string `json:"totalIn"`
-	TotalOut            string `json:"totalOut"`
-	TotalOutLessGas     string `json:"totalOutLessGas"`
 	TransactionHash     string `json:"transactionHash"`
 	TransactionIndex    string `json:"transactionIndex"`
 	// EXISTING_CODE
@@ -96,7 +87,6 @@ type SimpleStatement struct {
 	PrevBal             big.Int        `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
-	ReconciliationType  string         `json:"reconciliationType"`
 	SelfDestructIn      big.Int        `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     big.Int        `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
@@ -143,7 +133,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"begBal":              utils.FormattedValue(s.BegBal, asEther, decimals),
 		"amountNet":           utils.FormattedValue(*s.AmountNet(), asEther, decimals),
 		"endBal":              utils.FormattedValue(s.EndBal, asEther, decimals),
-		"reconciliationType":  s.ReconciliationType,
+		"reconciliationType":  s.ReconType.String(),
 		"reconciled":          s.Reconciled(),
 		"totalIn":             utils.FormattedValue(*s.TotalIn(), asEther, decimals),
 		"amountIn":            utils.FormattedValue(s.AmountIn, asEther, decimals),
@@ -361,11 +351,6 @@ func (s *SimpleStatement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// ReconciliationType
-	if err = cache.WriteValue(writer, s.ReconciliationType); err != nil {
-		return err
-	}
-
 	// SelfDestructIn
 	if err = cache.WriteValue(writer, &s.SelfDestructIn); err != nil {
 		return err
@@ -527,11 +512,6 @@ func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err 
 
 	// Recipient
 	if err = cache.ReadValue(reader, &s.Recipient, version); err != nil {
-		return err
-	}
-
-	// ReconciliationType
-	if err = cache.ReadValue(reader, &s.ReconciliationType, version); err != nil {
 		return err
 	}
 
@@ -767,7 +747,7 @@ type Ledgerer interface {
 	Next() base.Blknum
 }
 
-func (s *SimpleStatement) Report(testMode bool, ctx Ledgerer, msg string) {
+func (s *SimpleStatement) Report(testMode bool, rT string, ctx Ledgerer, msg string) {
 	logger.TestLog(testMode, "===================================================")
 	logger.TestLog(testMode, fmt.Sprintf("====> %s", msg))
 	logger.TestLog(testMode, "===================================================")
@@ -779,7 +759,7 @@ func (s *SimpleStatement) Report(testMode bool, ctx Ledgerer, msg string) {
 	logger.TestLog(testMode, "isNextDiff:            ", ctx.Next() != s.BlockNumber)
 	logger.TestLog(testMode, "---------------------------------------------------")
 	logger.TestLog(testMode, "Trial balance:")
-	logger.TestLog(testMode, "   reconciliationType: ", s.ReconciliationType)
+	logger.TestLog(testMode, "   reconciliationType: ", rT)
 	logger.TestLog(testMode, "   accountedFor:       ", s.AccountedFor)
 	logger.TestLog(testMode, "   sender:             ", s.Sender)
 	logger.TestLog(testMode, "   recipient:          ", s.Recipient)

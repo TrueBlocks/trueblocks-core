@@ -5,7 +5,7 @@ blockNumber       ,blknum    ,           ,          ,  3 ,the number of the bloc
 transactionIndex  ,blknum    ,           ,          ,  4 ,the zero-indexed position of the transaction in the block
 nonce             ,uint64    ,           ,          ,  5 ,sequence number of the transactions sent by the sender
 timestamp         ,timestamp ,           ,          ,  6 ,the Unix timestamp of the object
-date              ,datetime  ,           ,          ,  7 ,a calculated field -- the date of the object
+date              ,datetime  ,           ,          ,  7 ,a calculated field -- the date represented by the timestamp
 from              ,address   ,           ,          ,  8 ,address from which the transaction was sent
 to                ,address   ,           ,          ,  9 ,address to which the transaction was sent
 value             ,wei       ,           ,          , 10 ,the amount of wei sent with this transactions

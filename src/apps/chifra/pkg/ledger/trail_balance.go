@@ -14,15 +14,15 @@ func (l *Ledger) trialBalance(msg string, s *types.SimpleStatement) bool {
 	key := l.ctxKey(s.BlockNumber, s.TransactionIndex)
 	ctx := l.Contexts[key]
 
-	s.ReconciliationType = ctx.ReconType.String()
+	rT := ctx.ReconType.String()
 	if s.AssetAddr == base.FAKE_ETH_ADDRESS {
 		if strings.Contains(msg, "TRACE") {
-			s.ReconciliationType += "-trace-eth"
+			rT += "-trace-eth"
 		} else {
-			s.ReconciliationType += "-eth"
+			rT += "-eth"
 		}
 	} else {
-		s.ReconciliationType += "-token"
+		rT += "-token"
 	}
 
 	logger.TestLog(l.TestMode, "Start of trial balance report")
@@ -45,7 +45,7 @@ func (l *Ledger) trialBalance(msg string, s *types.SimpleStatement) bool {
 		// 	}
 	}
 
-	s.Report(l.TestMode, ctx, msg)
+	s.Report(l.TestMode, rT, ctx, msg)
 
 	return s.Reconciled()
 }

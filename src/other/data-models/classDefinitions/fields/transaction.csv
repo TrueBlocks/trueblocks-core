@@ -4,7 +4,7 @@ chainId              ,string        ,           ,rawonly   ,    ,
 blockNumber          ,blknum        ,           ,          ,  3 ,the number of the block
 transactionIndex     ,blknum        ,           ,          ,  4 ,the zero-indexed position of the transaction in the block
 timestamp            ,timestamp     ,           ,          ,  6 ,the Unix timestamp of the object
-date                 ,datetime      ,           ,          ,  7 ,
+date                 ,datetime      ,           ,          ,  7 ,a calculated field -- the date represented by the timestamp
 hash                 ,hash          ,           ,          ,  1 ,the hash of the transaction
 blockHash            ,hash          ,           ,          ,  2 ,the hash of the block containing this transaction
 from                 ,address       ,           ,          ,  8 ,address from which the transaction was sent

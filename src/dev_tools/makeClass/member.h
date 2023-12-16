@@ -69,6 +69,7 @@ class CMember : public CBaseNode {
     explicit CMember(const string_q& n, const string_q& type, const CStringArray& array);
     bool isValid(void) const;
     void postProcessType(void);
+    bool isCalculated(void) const;
     // EXISTING_CODE
     bool operator==(const CMember& it) const;
     bool operator!=(const CMember& it) const {

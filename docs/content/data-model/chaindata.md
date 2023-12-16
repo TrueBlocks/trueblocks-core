@@ -41,7 +41,7 @@ Blocks consist of the following fields:
 | miner         | address of block's winning miner                              | address                                             |
 | difficulty    | the computational difficulty at this block                    | uint64                                              |
 | timestamp     | the Unix timestamp of the object                              | timestamp                                           |
-| date          | a calculated field -- the date of the object                  | datetime                                            |
+| date          | a calculated field -- the date represented by the timestamp   | datetime                                            |
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | wei                                                 |
 | uncles        | a possibly empty array of uncle hashes                        | Hash                                                |
@@ -71,7 +71,7 @@ Transactions consist of the following fields:
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                         |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64                                         |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                                      |
-| date             |                                                                                                       | datetime                                       |
+| date             | a calculated field -- the date represented by the timestamp                                           | datetime                                       |
 | from             | address from which the transaction was sent                                                           | address                                        |
 | to               | address to which the transaction was sent                                                             | address                                        |
 | value            | the amount of wei sent with this transactions                                                         | wei                                            |
@@ -326,17 +326,17 @@ The following commands produce and manage BlockCounts:
 
 BlockCounts consist of the following fields:
 
-| Field           | Description                                    | Type      |
-| --------------- | ---------------------------------------------- | --------- |
-| blockNumber     | the block's block number                       | blknum    |
-| timestamp       | the timestamp of the block                     | timestamp |
-| date            | a calculated field -- the date of the block    | datetime  |
-| transactionsCnt | the number transactions in the block           | uint64    |
-| unclesCnt       | the number of uncles in the block              | uint64    |
-| logsCnt         | the number of logs in the block                | uint64    |
-| tracesCnt       | the number of traces in the block              | uint64    |
-| withdrawalsCnt  | the number of withdrawals in the block         | uint64    |
-| addressCnt      | the number of address appearances in the block | uint64    |
+| Field           | Description                                                 | Type      |
+| --------------- | ----------------------------------------------------------- | --------- |
+| blockNumber     | the block's block number                                    | blknum    |
+| timestamp       | the timestamp of the block                                  | timestamp |
+| date            | a calculated field -- the date represented by the timestamp | datetime  |
+| transactionsCnt | the number transactions in the block                        | uint64    |
+| unclesCnt       | the number of uncles in the block                           | uint64    |
+| logsCnt         | the number of logs in the block                             | uint64    |
+| tracesCnt       | the number of traces in the block                           | uint64    |
+| withdrawalsCnt  | the number of withdrawals in the block                      | uint64    |
+| addressCnt      | the number of address appearances in the block              | uint64    |
 
 ## NamedBlock
 
@@ -353,13 +353,13 @@ The following commands produce and manage NamedBlocks:
 
 NamedBlocks consist of the following fields:
 
-| Field       | Description                          | Type      |
-| ----------- | ------------------------------------ | --------- |
-| blockNumber | the number of the block              | blknum    |
-| timestamp   | the Unix timestamp of the block      | timestamp |
-| date        | human readable version of timestamp  | datetime  |
-| name        | an optional name for the block       | string    |
-| description | an optional description of the block | string    |
+| Field       | Description                                                 | Type      |
+| ----------- | ----------------------------------------------------------- | --------- |
+| blockNumber | the number of the block                                     | blknum    |
+| timestamp   | the Unix timestamp of the block                             | timestamp |
+| date        | a calculated field -- the date represented by the timestamp | datetime  |
+| name        | an optional name for the block                              | string    |
+| description | an optional description of the block                        | string    |
 
 ## Timestamp
 

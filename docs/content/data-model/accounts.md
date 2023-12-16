@@ -48,16 +48,16 @@ The following commands produce and manage Appearances:
 
 Appearances consist of the following fields:
 
-| Field            | Description                                             | Type      |
-| ---------------- | ------------------------------------------------------- | --------- |
-| address          | the address of the appearance                           | address   |
-| blockNumber      | the number of the block                                 | blknum    |
-| transactionIndex | the index of the transaction in the block               | blknum    |
-| traceIndex       | the zero-based index of the trace in the transaction    | blknum    |
-| reason           | the location in the data where the appearance was found | string    |
-| name             | the name of the address, if found                       | string    |
-| timestamp        | the timestamp for this appearance                       | timestamp |
-| date             | a calculated field -- the date for this appearance      | datetime  |
+| Field            | Description                                                 | Type      |
+| ---------------- | ----------------------------------------------------------- | --------- |
+| address          | the address of the appearance                               | address   |
+| blockNumber      | the number of the block                                     | blknum    |
+| transactionIndex | the index of the transaction in the block                   | blknum    |
+| traceIndex       | the zero-based index of the trace in the transaction        | blknum    |
+| reason           | the location in the data where the appearance was found     | string    |
+| name             | the name of the address, if found                           | string    |
+| timestamp        | the timestamp for this appearance                           | timestamp |
+| date             | a calculated field -- the date represented by the timestamp | datetime  |
 
 ## Monitor
 
@@ -204,7 +204,7 @@ Statements consist of the following fields:
 | logIndex            | the zero-indexed position the log in the block, if applicable                                                                                  | blknum    |
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                                                 | hash      |
 | timestamp           | the Unix timestamp of the object                                                                                                               | timestamp |
-| date                | a calculated field -- the date of this transaction                                                                                             | datetime  |
+| date                | a calculated field -- the date represented by the timestamp                                                                                    | datetime  |
 | assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                             | address   |
 | assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                                       | string    |
 | decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                                      | uint64    |
@@ -216,7 +216,7 @@ Statements consist of the following fields:
 | begBal              | the beginning balance of the asset prior to the transaction                                                                                    | int256    |
 | amountNet           | a calculated field -- totalIn - totalOut                                                                                                       | int256    |
 | endBal              | the on-chain balance of the asset (see notes about intra-block reconciliations)                                                                | int256    |
-| reconciliationType  | one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`                                             | string    |
+| reconciliationType  | a calculated field -- one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`                       | string    |
 | reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.                                             | bool      |
 | totalIn             | a calculated field -- the sum of the following `In` fields                                                                                     | int256    |
 | amountIn            | the top-level value of the incoming transfer for the accountedFor address                                                                      | int256    |
