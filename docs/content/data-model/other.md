@@ -122,7 +122,7 @@ Slurps consist of the following fields:
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                  |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64                                  |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                               |
-| date             | a calculated field -- the date represented by the timestamp                                           | datetime                                |
+| date             | the timestamp as a date (calculated)                                                                  | datetime                                |
 | from             | address from which the transaction was sent                                                           | address                                 |
 | to               | address to which the transaction was sent                                                             | address                                 |
 | value            | the amount of wei sent with this transactions                                                         | wei                                     |

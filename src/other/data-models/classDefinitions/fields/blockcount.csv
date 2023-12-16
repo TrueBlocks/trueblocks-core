@@ -1,7 +1,7 @@
 name            ,type      ,strDefault ,omitempty ,doc ,description
 blockNumber     ,blknum    ,           ,          ,  1 ,the block's block number
 timestamp       ,timestamp ,           ,          ,  2 ,the timestamp of the block
-date            ,datetime  ,           ,          ,  3 ,a calculated field -- the date represented by the timestamp
+date            ,datetime  ,           ,calc      ,  3 ,the timestamp as a date
 transactionsCnt ,uint64    ,           ,          ,  4 ,the number transactions in the block
 unclesCnt       ,uint64    ,           ,true      ,  5 ,the number of uncles in the block
 logsCnt         ,uint64    ,           ,true      ,  6 ,the number of logs in the block

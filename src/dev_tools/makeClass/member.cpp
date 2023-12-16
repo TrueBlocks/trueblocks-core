@@ -482,7 +482,7 @@ const char* STR_DISPLAY_MEMBER = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 bool CMember::isCalculated(void) const {
-    return containsI(description, "calculated");
+    return memberFlags & IS_CALCULATED;
 }
 
 void CMember::postProcessType(void) {

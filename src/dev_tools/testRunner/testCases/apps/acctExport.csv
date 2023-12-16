@@ -123,7 +123,6 @@ on      ,both ,fast  ,export   ,apps/acctExport ,cnt_w_receipts           ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,cnt_w_logs               ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & logs
 on      ,both ,fast  ,export   ,apps/acctExport ,cnt_w_traces             ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & traces
 neigh   ,both ,fast  ,export   ,apps/acctExport ,cnt_w_neighbors          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & neighbors
-on      ,both ,fast  ,export   ,apps/acctExport ,cnt_w_accounting         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & accounting
 
 # Testing --appearances and the _record and _block options
 on      ,both ,fast  ,export   ,apps/acctExport ,100_export_n             ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & max_records = 100
@@ -224,19 +223,9 @@ local   ,both ,fast  ,export   ,apps/acctExport ,old_bug                  ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,export                   ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 2 & fmt = txt
 on      ,both ,fast  ,export   ,apps/acctExport ,ens_test_export          ,y    ,addrs = rhyslindmark.eth & first_block = 4037786 & last_block = 4081450
 on      ,both ,fast  ,export   ,apps/acctExport ,old_bug2_5               ,y    ,addrs = 0x000001f568875f378bf6d170b790967fe429c81a & max_records = 1 & first_record = 6 & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx_bad       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & fmt = ofx
-on      ,both ,fast  ,export   ,apps/acctExport ,statement_1              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & last_block = 4000000 & fmt = json
 
-on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_0        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
-on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_1     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
-on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
-on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
-
-# Testing --accounting
-on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = ofx
-on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_1      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & articulate & accounting & last_block = 8860511 & ether & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & articulate & accounting & last_block = 9231343 & ether & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_accounting   ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
+# Tests --load option (disabled)
+on      ,both ,fast  ,export   ,apps/acctExport ,load                     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & ether & load = testModule & fmt = json & max_records = 10
 
 # CONFIRM TESTING FOR
 #   statements      bool
@@ -250,6 +239,39 @@ on      ,both ,fast  ,export   ,apps/acctExport ,balances_decache         ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,balances_into_cache      ,y    ,addrs = meriam.eth & balances & first_block = 10000000 & max_records = 5 & cache
 on      ,both ,fast  ,export   ,apps/acctExport ,balances_out_of_cache    ,y    ,addrs = meriam.eth & balances & first_block = 10000000 & max_records = 5 & cache
 on      ,both ,fast  ,export   ,apps/acctExport ,balances_decache2        ,y    ,addrs = meriam.eth & decache
+
+# other reasons for failing
+local   ,both ,fast  ,export   ,apps/acctExport ,by_file_1                ,n    ,file = cmd_file & fmt = csv
+local   ,both ,fast  ,export   ,apps/acctExport ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,redir_output             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & articulate & output = output_test_file
+on      ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 5 & articulate & output = output_test_file & no_header & append
+
+# correctly reports an error, but should report a not found error instead, it reports a not an integer error. first_block/last_block should accept hashes
+delay   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
+
+on      ,both ,fast  ,export   ,apps/acctExport ,cache_and_decache        ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache & decache
+on      ,both ,fast  ,export   ,apps/acctExport ,cache_one                ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache
+on      ,both ,fast  ,export   ,apps/acctExport ,decache_one              ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & decache
+on      ,both ,fast  ,export   ,apps/acctExport ,cache_traces             ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache & cache_traces
+on      ,both ,fast  ,export   ,apps/acctExport ,decache_traces           ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & decache
+on      ,both ,fast  ,export   ,apps/acctExport ,cache_neighbors          ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & neighbors & cache & cache_traces
+on      ,both ,fast  ,export   ,apps/acctExport ,decache_neighbors        ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & neighbors & decache
+
+# This fail because it doesn't report an error in API mode but it does in cmd line mode
+local   ,both ,fast  ,export   ,apps/acctExport ,bug_no_api_error_msg     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 41740.0 & decache
+
+# Testing --accounting
+on      ,both ,fast  ,export   ,apps/acctExport ,cnt_w_accounting         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & accounting
+on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx_bad       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & fmt = ofx
+on      ,both ,fast  ,export   ,apps/acctExport ,statement_1              ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & last_block = 4000000 & fmt = json
+on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_0        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
+on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_1     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
+on      ,both ,fast  ,list     ,apps/acctExport ,accounting_list_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = json
+on      ,both ,fast  ,monitors ,apps/acctExport ,accounting_cleanup_2     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete & remove & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,accounting_ofx           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & accounting & fmt = ofx
+on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_1      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & articulate & accounting & last_block = 8860511 & ether & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,accounting_tokens_2      ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & articulate & accounting & last_block = 9231343 & ether & fmt = json
+on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_accounting   ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & last_block = 4000000 & fmt = json
 
 # Testing --accounting --statements
 on      ,both ,fast  ,export   ,apps/acctExport ,statement_3_bad          ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
@@ -274,9 +296,6 @@ acct    ,both ,fast  ,export   ,apps/acctExport ,statements_wei_2_2       ,y    
 acct    ,both ,fast  ,export   ,apps/acctExport ,statement_token_ibt      ,y    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
 acct    ,both ,fast  ,export   ,apps/acctExport ,statement_token_ibt_2    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & ether & fmt = json & max_records = 4000
 
-# Tests --load option (disabled)
-on      ,both ,fast  ,export   ,apps/acctExport ,load                     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & ether & load = testModule & fmt = json & max_records = 10
-
 # reversed accounting does not work
 acct    ,both ,fast  ,export   ,apps/acctExport ,statement_forward        ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & last_block = 8769141 & accounting & statements & ether & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,rev_not_rev_not_acct     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10
@@ -284,27 +303,9 @@ on      ,both ,fast  ,export   ,apps/acctExport ,rev_rev_not_acct         ,y    
 acct    ,both ,fast  ,export   ,apps/acctExport ,rev_not_rev_acct         ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & accounting
 acct    ,both ,fast  ,export   ,apps/acctExport ,rev_rev_acct             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & accounting & reversed
 
-# other reasons for failing
-local   ,both ,fast  ,export   ,apps/acctExport ,by_file_1                ,n    ,file = cmd_file & fmt = csv
-local   ,both ,fast  ,export   ,apps/acctExport ,by_file_v                ,n    ,file = cmd_file_2 & fmt = json
-on      ,both ,fast  ,export   ,apps/acctExport ,redir_output             ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 & articulate & output = output_test_file
-on      ,both ,fast  ,export   ,apps/acctExport ,redir_output_append      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 5 & articulate & output = output_test_file & no_header & append
-
-# correctly reports an error, but should report a not found error instead, it reports a not an integer error. first_block/last_block should accept hashes
-delay   ,both ,fast  ,export   ,apps/acctExport ,block_not_found          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b2
-
-on      ,both ,fast  ,export   ,apps/acctExport ,cache_and_decache        ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache & decache
-on      ,both ,fast  ,export   ,apps/acctExport ,cache_one                ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache
-on      ,both ,fast  ,export   ,apps/acctExport ,decache_one              ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & decache
-on      ,both ,fast  ,export   ,apps/acctExport ,cache_traces             ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & cache & cache_traces
-on      ,both ,fast  ,export   ,apps/acctExport ,decache_traces           ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & decache
-on      ,both ,fast  ,export   ,apps/acctExport ,cache_neighbors          ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & neighbors & cache & cache_traces
-on      ,both ,fast  ,export   ,apps/acctExport ,decache_neighbors        ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & neighbors & decache
+# caching accounting
 on      ,both ,fast  ,export   ,apps/acctExport ,cache_accounting         ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & accounting & cache & cache_traces
 on      ,both ,fast  ,export   ,apps/acctExport ,decache_accounting       ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & accounting & decache
-
-# This fail because it doesn't report an error in API mode but it does in cmd line mode
-local   ,both ,fast  ,export   ,apps/acctExport ,bug_no_api_error_msg     ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10278000 41740.0 & decache
 
 # Not tested for chifra export
 # chifra export --cache

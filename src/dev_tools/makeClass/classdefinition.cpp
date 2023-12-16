@@ -739,12 +739,11 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
             if (trim(line).empty()) {
                 continue;
             }
-            if (contains(line, "calc_only")) {
-                continue;
-            }
 
-            bool isRawOnly = contains(line, "rawonly");
+            bool isCalc = contains(line, "calc");
+            bool isRawOnly = contains(line, "rawonly") || isCalc;
             line = substitute(line, "rawonly", "");
+            line = substitute(line, "calc", "");
 
             CMember tmp;
             tmp.parseCSV(fields, line);
@@ -764,6 +763,10 @@ void CClassDefinition::ReadSettings(const CToml& toml) {
 
             if (isRawOnly) {
                 tmp.memberFlags |= IS_RAWONLY;
+            }
+            if (isCalc) {
+                tmp.memberFlags |= IS_CALCULATED;
+                tmp.description = tmp.description + " (calculated)";
             }
 
             tmp.postProcessType();
