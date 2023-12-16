@@ -168,7 +168,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"correctingReason":    s.CorrectingReason,
 	}
 
-	if s.ReconType&First > 0 || s.ReconType&Last > 0 {
+	if s.ReconType&First > 0 {
 		model["prevAppBlk"] = s.PrevAppBlk
 		model["prevBal"] = utils.FormattedValue(s.PrevBal, asEther, decimals)
 	} else if format != "json" {
@@ -786,7 +786,7 @@ func (s *SimpleStatement) Report(testMode bool, ctx Ledgerer, msg string) {
 	logger.TestLog(testMode, "   assetAddr:          ", s.AssetAddr)
 	logger.TestLog(testMode, "   assetSymbol:        ", s.AssetSymbol)
 	logger.TestLog(testMode, "   decimals:           ", s.Decimals)
-	if s.ReconType&First > 0 || s.ReconType&Last > 0 {
+	if s.ReconType&First > 0 {
 		logger.TestLog(testMode, "   prevAppBlk:         ", s.PrevAppBlk)
 	}
 	logger.TestLog(testMode, "   hash:               ", s.TransactionHash)
@@ -796,7 +796,7 @@ func (s *SimpleStatement) Report(testMode bool, ctx Ledgerer, msg string) {
 	logger.TestLog(testMode, "   logIndex:           ", s.LogIndex)
 	logger.TestLog(testMode, "   priceSource:        ", s.PriceSource)
 	logger.TestLog(testMode, "   spotPrice:          ", s.SpotPrice)
-	if s.ReconType&First > 0 || s.ReconType&Last > 0 {
+	if s.ReconType&First > 0 {
 		logger.TestLog(testMode, "   prevBal:            ", s.PrevBal.Text(10))
 	}
 	logger.TestLog(testMode, "   begBal:             ", s.BegBal.Text(10))

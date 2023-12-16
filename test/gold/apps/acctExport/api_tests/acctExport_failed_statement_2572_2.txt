@@ -28,8 +28,6 @@ export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&et
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 11670419,
-      "prevBal": "0",
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,

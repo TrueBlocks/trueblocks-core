@@ -27,8 +27,6 @@
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 11670419,
-      "prevBal": "0",
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,

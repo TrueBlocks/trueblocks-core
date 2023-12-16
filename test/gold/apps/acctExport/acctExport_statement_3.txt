@@ -32,7 +32,6 @@ TEST[DATE|TIME]    recipient:           0x08166f02313feae18bb044e7877c808b55b5bf
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME]    timestamp:           1438269975
 TEST[DATE|TIME]    blockNumber:         0
@@ -40,7 +39,6 @@ TEST[DATE|TIME]    transactionIndex:    270
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             0
 TEST[DATE|TIME]    begBal:              0
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -88,7 +86,6 @@ TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
 TEST[DATE|TIME]    timestamp:           1438927408
 TEST[DATE|TIME]    blockNumber:         46685
@@ -96,7 +93,6 @@ TEST[DATE|TIME]    transactionIndex:    0
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             1970000000000000000000
 TEST[DATE|TIME]    begBal:              1970000000000000000000
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -144,7 +140,6 @@ TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          46685
 TEST[DATE|TIME]    hash:                0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
 TEST[DATE|TIME]    timestamp:           1438927854
 TEST[DATE|TIME]    blockNumber:         46709
@@ -152,7 +147,6 @@ TEST[DATE|TIME]    transactionIndex:    0
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             1964989500000000000000
 TEST[DATE|TIME]    begBal:              1964989500000000000000
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -211,8 +205,6 @@ Results in ./statement_3_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "1970000000000000000000",
-      "prevAppBlk": 0,
-      "prevBal": "0",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "reconciled": true,
@@ -255,8 +247,6 @@ Results in ./statement_3_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 0,
-      "prevBal": "1970000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
@@ -299,8 +289,6 @@ Results in ./statement_3_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 46685,
-      "prevBal": "1964989500000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,

@@ -47,7 +47,6 @@ TEST[DATE|TIME]    recipient:           0xdac17f958d2ee523a2206206994597c13d831e
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          10277780
 TEST[DATE|TIME]    hash:                0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 TEST[DATE|TIME]    timestamp:           1592323744
 TEST[DATE|TIME]    blockNumber:         10277780
@@ -55,7 +54,6 @@ TEST[DATE|TIME]    transactionIndex:    88
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
 TEST[DATE|TIME]    spotPrice:           231.21081182360814
-TEST[DATE|TIME]    prevBal:             5463122167631885
 TEST[DATE|TIME]    begBal:              6511482167631885
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -106,7 +104,6 @@ TEST[DATE|TIME]    recipient:           0x7fc3be02c7f18b24a98870c543fd0ec3c25f3f
 TEST[DATE|TIME]    assetAddr:           0xdac17f958d2ee523a2206206994597c13d831ec7
 TEST[DATE|TIME]    assetSymbol:         USDT
 TEST[DATE|TIME]    decimals:            6
-TEST[DATE|TIME]    prevAppBlk:          10277780
 TEST[DATE|TIME]    hash:                0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 TEST[DATE|TIME]    timestamp:           1592323744
 TEST[DATE|TIME]    blockNumber:         10277780
@@ -114,7 +111,6 @@ TEST[DATE|TIME]    transactionIndex:    88
 TEST[DATE|TIME]    logIndex:            103
 TEST[DATE|TIME]    priceSource:         stable-coin
 TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    prevBal:             0
 TEST[DATE|TIME]    begBal:              381000000
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0

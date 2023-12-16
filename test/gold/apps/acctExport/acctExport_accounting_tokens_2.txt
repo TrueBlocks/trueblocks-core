@@ -33,7 +33,6 @@ TEST[DATE|TIME]    recipient:           0x001d14804b399c6ef80e64576f657660804fec
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME]    timestamp:           1438269975
 TEST[DATE|TIME]    blockNumber:         0
@@ -41,7 +40,6 @@ TEST[DATE|TIME]    transactionIndex:    2
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             0
 TEST[DATE|TIME]    begBal:              0
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -89,7 +87,6 @@ TEST[DATE|TIME]    recipient:           0x2910543af39aba0cd09dbb2d50200b3e800a63
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
 TEST[DATE|TIME]    hash:                0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TEST[DATE|TIME]    timestamp:           1441703356
 TEST[DATE|TIME]    blockNumber:         202249
@@ -97,7 +94,6 @@ TEST[DATE|TIME]    transactionIndex:    0
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             4200000000000000000000
 TEST[DATE|TIME]    begBal:              4200000000000000000000
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -145,7 +141,6 @@ TEST[DATE|TIME]    recipient:           0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb59
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          202249
 TEST[DATE|TIME]    hash:                0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TEST[DATE|TIME]    timestamp:           1463025233
 TEST[DATE|TIME]    blockNumber:         1501459
@@ -153,7 +148,6 @@ TEST[DATE|TIME]    transactionIndex:    2
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             74679320489077336
 TEST[DATE|TIME]    begBal:              74679320489077336
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -225,8 +219,6 @@ Results in ./accounting_tokens_2_out.file
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
           "prefundIn": "4200",
-          "prevAppBlk": 0,
-          "prevBal": "0",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "reconciled": true,
@@ -297,8 +289,6 @@ Results in ./accounting_tokens_2_out.file
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
           "prefundIn": "0",
-          "prevAppBlk": 0,
-          "prevBal": "4200",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
           "reconciled": true,
@@ -368,8 +358,6 @@ Results in ./accounting_tokens_2_out.file
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
           "prefundIn": "0",
-          "prevAppBlk": 202249,
-          "prevBal": "0.074679320489077336",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902",
           "reconciled": true,
