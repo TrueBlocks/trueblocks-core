@@ -35,20 +35,51 @@ TEST[DATE|TIME]    transactionIndex:    112
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    begBal:              58493539865107179246
+TEST[DATE|TIME]    begBal:              58.493539865107179246
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]    endBal:              58593539865107179246
+TEST[DATE|TIME]    endBal:              58.593539865107179246
 TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          -100000000000000000
-TEST[DATE|TIME]    endBalCalc:          58493539865107179246
+TEST[DATE|TIME]    endBalDiff:          -0.1
+TEST[DATE|TIME]    endBalCalc:          58.493539865107179246
 TEST[DATE|TIME]    moneyMoved:          false
 TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ need to fix this ^^
+TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 TEST[DATE|TIME] Trial balance failed for  0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508 need to decend into traces
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x3fbc7c6c2437de24f91b2ca61fc7ad3d2d62f4c8 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf 0
+INFO[DATE|TIME] Skipping delegatecall to 0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf 0
+INFO[DATE|TIME] Skipping delegatecall to 0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x3fbc7c6c2437de24f91b2ca61fc7ad3d2d62f4c8 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x3fbc7c6c2437de24f91b2ca61fc7ad3d2d62f4c8 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x3fbc7c6c2437de24f91b2ca61fc7ad3d2d62f4c8 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x8e972b354e6933275513c355ee14d44a832ad2d9 0
+INFO[DATE|TIME] Skipping delegatecall to 0x3fbc7c6c2437de24f91b2ca61fc7ad3d2d62f4c8 0
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
@@ -93,15 +124,15 @@ TEST[DATE|TIME]    transactionIndex:    112
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
 TEST[DATE|TIME]    spotPrice:           1468.068749902195
-TEST[DATE|TIME]    begBal:              58493539865107179246
-TEST[DATE|TIME]    internalIn:          100000000000000000
-TEST[DATE|TIME]    totalIn:             100000000000000000
+TEST[DATE|TIME]    begBal:              58.493539865107179246
+TEST[DATE|TIME]    internalIn:          0.1
+TEST[DATE|TIME]    totalIn:             0.1
 TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           100000000000000000
-TEST[DATE|TIME]    endBal:              58593539865107179246
+TEST[DATE|TIME]    amountNet:           0.1
+TEST[DATE|TIME]    endBal:              58.593539865107179246
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          58593539865107179246
+TEST[DATE|TIME]    endBalCalc:          58.593539865107179246
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -137,15 +168,15 @@ TEST[DATE|TIME]    transactionIndex:    112
 TEST[DATE|TIME]    logIndex:            314
 TEST[DATE|TIME]    priceSource:         stable-coin
 TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    begBal:              3155004410
-TEST[DATE|TIME]    amountIn:            296893000
-TEST[DATE|TIME]    totalIn:             296893000
+TEST[DATE|TIME]    begBal:              0.00000000315500441
+TEST[DATE|TIME]    amountIn:            0.000000000296893
+TEST[DATE|TIME]    totalIn:             0.000000000296893
 TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           296893000
-TEST[DATE|TIME]    endBal:              3451897410
+TEST[DATE|TIME]    amountNet:           0.000000000296893
+TEST[DATE|TIME]    endBal:              0.00000000345189741
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          3451897410
+TEST[DATE|TIME]    endBalCalc:          0.00000000345189741
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -181,15 +212,15 @@ TEST[DATE|TIME]    transactionIndex:    112
 TEST[DATE|TIME]    logIndex:            316
 TEST[DATE|TIME]    priceSource:         stable-coin
 TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    begBal:              376561000
-TEST[DATE|TIME]    amountIn:            25720000
-TEST[DATE|TIME]    totalIn:             25720000
+TEST[DATE|TIME]    begBal:              0.000000000376561
+TEST[DATE|TIME]    amountIn:            0.00000000002572
+TEST[DATE|TIME]    totalIn:             0.00000000002572
 TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           25720000
-TEST[DATE|TIME]    endBal:              402281000
+TEST[DATE|TIME]    amountNet:           0.00000000002572
+TEST[DATE|TIME]    endBal:              0.000000000402281
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          402281000
+TEST[DATE|TIME]    endBalCalc:          0.000000000402281
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -255,15 +286,15 @@ TEST[DATE|TIME]    transactionIndex:    112
 TEST[DATE|TIME]    logIndex:            318
 TEST[DATE|TIME]    priceSource:         uniswap
 TEST[DATE|TIME]    spotPrice:           0.024161485431197102
-TEST[DATE|TIME]    begBal:              53769320183227912371946
-TEST[DATE|TIME]    amountIn:            1886600000000000000000
-TEST[DATE|TIME]    totalIn:             1886600000000000000000
+TEST[DATE|TIME]    begBal:              53769.320183227912371946
+TEST[DATE|TIME]    amountIn:            1886.6
+TEST[DATE|TIME]    totalIn:             1886.6
 TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           1886600000000000000000
-TEST[DATE|TIME]    endBal:              55655920183227912371946
+TEST[DATE|TIME]    amountNet:           1886.6
+TEST[DATE|TIME]    endBal:              55655.920183227912371946
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          55655920183227912371946
+TEST[DATE|TIME]    endBalCalc:          55655.920183227912371946
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -299,15 +330,15 @@ TEST[DATE|TIME]    transactionIndex:    112
 TEST[DATE|TIME]    logIndex:            320
 TEST[DATE|TIME]    priceSource:         stable-coin
 TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    begBal:              43346313902867381980799
-TEST[DATE|TIME]    amountIn:            148935900000000000000
-TEST[DATE|TIME]    totalIn:             148935900000000000000
+TEST[DATE|TIME]    begBal:              43346.313902867381980799
+TEST[DATE|TIME]    amountIn:            148.9359
+TEST[DATE|TIME]    totalIn:             148.9359
 TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           148935900000000000000
-TEST[DATE|TIME]    endBal:              43495249802867381980799
+TEST[DATE|TIME]    amountNet:           148.9359
+TEST[DATE|TIME]    endBal:              43495.249802867381980799
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          43495249802867381980799
+TEST[DATE|TIME]    endBalCalc:          43495.249802867381980799
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------

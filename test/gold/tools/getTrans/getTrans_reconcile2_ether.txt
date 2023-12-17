@@ -51,15 +51,15 @@ TEST[DATE|TIME]    transactionIndex:    138
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
 TEST[DATE|TIME]    spotPrice:           1334.029601245349
-TEST[DATE|TIME]    begBal:              20757259456276694166
-TEST[DATE|TIME]    amountIn:            14935571680000000000
-TEST[DATE|TIME]    totalIn:             14935571680000000000
+TEST[DATE|TIME]    begBal:              20.757259456276694166
+TEST[DATE|TIME]    amountIn:            14.93557168
+TEST[DATE|TIME]    totalIn:             14.93557168
 TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           14935571680000000000
-TEST[DATE|TIME]    endBal:              35692831136276694166
+TEST[DATE|TIME]    amountNet:           14.93557168
+TEST[DATE|TIME]    endBal:              35.692831136276694166
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          35692831136276694166
+TEST[DATE|TIME]    endBalCalc:          35.692831136276694166
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------

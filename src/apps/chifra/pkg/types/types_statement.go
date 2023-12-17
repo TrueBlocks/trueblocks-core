@@ -780,9 +780,9 @@ func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "   priceSource:        ", s.PriceSource)
 	logger.TestLog(true, "   spotPrice:          ", s.SpotPrice)
 	if s.ReconType&First == 0 {
-		logger.TestLog(true, "   prevBal:            ", &s.PrevBal)
+		logger.TestLog(true, "   prevBal:            ", utils.FormattedValue(s.PrevBal, true, 18))
 	}
-	logger.TestLog(true, "   begBal:             ", &s.BegBal)
+	logger.TestLog(true, "   begBal:             ", utils.FormattedValue(s.BegBal, true, 18))
 	reportOne("   amountIn:           ", &s.AmountIn)
 	reportOne("   internalIn:         ", &s.InternalIn)
 	reportOne("   minerBaseRewardIn:  ", &s.MinerBaseRewardIn)
@@ -792,23 +792,23 @@ func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
 	reportOne("   correctingIn:       ", &s.CorrectingIn)
 	reportOne("   prefundIn:          ", &s.PrefundIn)
 	reportOne("   selfDestructIn:     ", &s.SelfDestructIn)
-	logger.TestLog(true, "   totalIn:            ", s.TotalIn())
+	logger.TestLog(true, "   totalIn:            ", utils.FormattedValue(*s.TotalIn(), true, 18))
 	reportOne("   amountOut:          ", &s.AmountOut)
 	reportOne("   internalOut:        ", &s.InternalOut)
 	reportOne("   correctingOut:      ", &s.CorrectingOut)
 	reportOne("   selfDestructOut:    ", &s.SelfDestructOut)
 	reportOne("   gasOut:             ", &s.GasOut)
-	logger.TestLog(true, "   totalOut:           ", s.TotalOut())
-	logger.TestLog(true, "   amountNet:          ", s.AmountNet())
-	logger.TestLog(true, "   endBal:             ", &s.EndBal)
-	logger.TestLog(true, "   begBalDiff:         ", s.BegBalDiff())
-	logger.TestLog(true, "   endBalDiff:         ", s.EndBalDiff())
-	logger.TestLog(true, "   endBalCalc:         ", s.EndBalCalc())
+	logger.TestLog(true, "   totalOut:           ", utils.FormattedValue(*s.TotalOut(), true, 18))
+	logger.TestLog(true, "   amountNet:          ", utils.FormattedValue(*s.AmountNet(), true, 18))
+	logger.TestLog(true, "   endBal:             ", utils.FormattedValue(s.EndBal, true, 18))
+	logger.TestLog(true, "   begBalDiff:         ", utils.FormattedValue(*s.BegBalDiff(), true, 18))
+	logger.TestLog(true, "   endBalDiff:         ", utils.FormattedValue(*s.EndBalDiff(), true, 18))
+	logger.TestLog(true, "   endBalCalc:         ", utils.FormattedValue(*s.EndBalCalc(), true, 18))
 	logger.TestLog(s.CorrectingReason != "", "   correctingReason:   ", s.CorrectingReason)
 	logger.TestLog(true, "   moneyMoved:         ", s.MoneyMoved())
 	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
 	if !s.Reconciled() {
-		logger.TestLog(true, " ^^ need to fix this ^^")
+		logger.TestLog(true, " ^^ we need to fix this ^^")
 	}
 	logger.TestLog(true, "---------------------------------------------------")
 	logger.TestLog(true, "End of trial balance report")
@@ -819,7 +819,7 @@ func isZero(val *big.Int) bool {
 }
 
 func reportOne(msg string, val *big.Int) {
-	logger.TestLog(!isZero(val), msg, utils.FormattedValue(*val, false, 18))
+	logger.TestLog(!isZero(val), msg, utils.FormattedValue(*val, true, 18))
 }
 
 // EXISTING_CODE

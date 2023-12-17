@@ -55,15 +55,15 @@ TEST[DATE|TIME]    transactionIndex:    88
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
 TEST[DATE|TIME]    spotPrice:           231.21081182360814
-TEST[DATE|TIME]    begBal:              6511482167631885
+TEST[DATE|TIME]    begBal:              0.006511482167631885
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    gasOut:              1048360000000000
-TEST[DATE|TIME]    totalOut:            1048360000000000
-TEST[DATE|TIME]    amountNet:           -1048360000000000
-TEST[DATE|TIME]    endBal:              5463122167631885
+TEST[DATE|TIME]    gasOut:              0.00104836
+TEST[DATE|TIME]    totalOut:            0.00104836
+TEST[DATE|TIME]    amountNet:           -0.00104836
+TEST[DATE|TIME]    endBal:              0.005463122167631885
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          5463122167631885
+TEST[DATE|TIME]    endBalCalc:          0.005463122167631885
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -99,11 +99,11 @@ TEST[DATE|TIME]    transactionIndex:    88
 TEST[DATE|TIME]    logIndex:            103
 TEST[DATE|TIME]    priceSource:         stable-coin
 TEST[DATE|TIME]    spotPrice:           1
-TEST[DATE|TIME]    begBal:              381000000
+TEST[DATE|TIME]    begBal:              0.000000000381
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           381000000
-TEST[DATE|TIME]    totalOut:            381000000
-TEST[DATE|TIME]    amountNet:           -381000000
+TEST[DATE|TIME]    amountOut:           0.000000000381
+TEST[DATE|TIME]    totalOut:            0.000000000381
+TEST[DATE|TIME]    amountNet:           -0.000000000381
 TEST[DATE|TIME]    endBal:              0
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0

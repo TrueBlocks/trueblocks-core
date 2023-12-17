@@ -35,14 +35,14 @@ TEST[DATE|TIME]    transactionIndex:    99
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    begBal:              31419034761192445316
+TEST[DATE|TIME]    begBal:              31.419034761192445316
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]    endBal:              31419034761192445316
+TEST[DATE|TIME]    endBal:              31.419034761192445316
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          31419034761192445316
+TEST[DATE|TIME]    endBalCalc:          31.419034761192445316
 TEST[DATE|TIME]    moneyMoved:          false
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------

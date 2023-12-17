@@ -34,16 +34,16 @@ TEST[DATE|TIME]    transactionIndex:    8
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    begBal:              359699855029506296530
+TEST[DATE|TIME]    begBal:              359.69985502950629653
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           1006010412136166100
-TEST[DATE|TIME]    gasOut:              420000000000000
-TEST[DATE|TIME]    totalOut:            1006430412136166100
-TEST[DATE|TIME]    amountNet:           -1006430412136166100
-TEST[DATE|TIME]    endBal:              358693424617370130430
+TEST[DATE|TIME]    amountOut:           1.0060104121361661
+TEST[DATE|TIME]    gasOut:              0.00042
+TEST[DATE|TIME]    totalOut:            1.0064304121361661
+TEST[DATE|TIME]    amountNet:           -1.0064304121361661
+TEST[DATE|TIME]    endBal:              358.69342461737013043
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          358693424617370130430
+TEST[DATE|TIME]    endBalCalc:          358.69342461737013043
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------

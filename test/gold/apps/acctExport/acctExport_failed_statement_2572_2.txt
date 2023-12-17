@@ -70,12 +70,12 @@ TEST[DATE|TIME]    transactionIndex:    91
 TEST[DATE|TIME]    logIndex:            195
 TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    begBal:              14922878205530494041
+TEST[DATE|TIME]    begBal:              14.922878205530494041
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           14922878243871414864
-TEST[DATE|TIME]    correctingOut:       -38340920823
-TEST[DATE|TIME]    totalOut:            14922878205530494041
-TEST[DATE|TIME]    amountNet:           -14922878205530494041
+TEST[DATE|TIME]    amountOut:           14.922878243871414864
+TEST[DATE|TIME]    correctingOut:       0
+TEST[DATE|TIME]    totalOut:            14.922878205530494041
+TEST[DATE|TIME]    amountNet:           -14.922878205530494041
 TEST[DATE|TIME]    endBal:              0
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0

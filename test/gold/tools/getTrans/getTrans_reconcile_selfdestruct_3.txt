@@ -36,10 +36,10 @@ TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    begBal:              0
-TEST[DATE|TIME]    amountIn:            490372688211999273
-TEST[DATE|TIME]    totalIn:             490372688211999273
-TEST[DATE|TIME]    selfDestructOut:     490372688211999273
-TEST[DATE|TIME]    totalOut:            490372688211999273
+TEST[DATE|TIME]    amountIn:            0.490372688211999273
+TEST[DATE|TIME]    totalIn:             0.490372688211999273
+TEST[DATE|TIME]    selfDestructOut:     0.490372688211999273
+TEST[DATE|TIME]    totalOut:            0.490372688211999273
 TEST[DATE|TIME]    amountNet:           0
 TEST[DATE|TIME]    endBal:              0
 TEST[DATE|TIME]    begBalDiff:          0
