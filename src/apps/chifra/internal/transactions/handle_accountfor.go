@@ -15,6 +15,7 @@ import (
 	"github.com/ethereum/go-ethereum"
 )
 
+// HandleAccounting handles the account_for command
 func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
@@ -40,25 +41,14 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 		false, /* reversed */
 		nil,
 	)
-	if err = contextsFromIds(ledgers, chain, opts.TransactionIds); err != nil {
-		return err
-	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawStatement], errorChan chan error) {
-		for _, rng := range opts.TransactionIds {
-			txIds, err := rng.ResolveTxs(chain)
-			if err != nil && !errors.Is(err, ethereum.NotFound) {
-				errorChan <- err
-				cancel()
-			}
-
-			for _, raw := range txIds {
-				app := types.SimpleAppearance{
-					BlockNumber:      raw.BlockNumber,
-					TransactionIndex: raw.TransactionIndex,
-				}
-
+		if apps, err := contextsFromIds(ledgers, chain, opts.TransactionIds); err != nil {
+			errorChan <- err
+			cancel()
+		} else {
+			for _, app := range apps {
 				if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 					errorChan <- err
 					cancel()
@@ -81,12 +71,12 @@ func (opts *TransactionsOptions) HandleAccounting() (err error) {
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
 
-func contextsFromIds(l *ledger.Ledger, chain string, txIds []identifiers.Identifier) error {
+func contextsFromIds(l *ledger.Ledger, chain string, txIds []identifiers.Identifier) ([]types.SimpleAppearance, error) {
 	apps := make([]types.SimpleAppearance, 0, 200)
 	for _, rng := range txIds {
 		rawApps, err := rng.ResolveTxs(chain)
 		if err != nil && !errors.Is(err, ethereum.NotFound) {
-			return err
+			return nil, err
 		}
 		for _, app := range rawApps {
 			apps = append(apps, types.SimpleAppearance{
@@ -103,5 +93,5 @@ func contextsFromIds(l *ledger.Ledger, chain string, txIds []identifiers.Identif
 		return apps[i].BlockNumber < apps[j].BlockNumber
 	})
 
-	return l.SetContexts(chain, apps)
+	return apps, l.SetContexts(chain, apps)
 }

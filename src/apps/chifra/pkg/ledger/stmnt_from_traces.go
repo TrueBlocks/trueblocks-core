@@ -100,7 +100,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 		}
 	}
 
-	if l.trialBalance("ETH TRACES", &ret) {
+	if l.trialBalance("trace-eth", &ret) {
 		if ret.MoneyMoved() {
 			statements = append(statements, ret)
 		} else {

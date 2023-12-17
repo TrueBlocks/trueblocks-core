@@ -13,7 +13,7 @@ TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
-INFO[DATE|TIME] 011670419-00091:   11670419   11670419    11670419    noop-noop
+INFO[DATE|TIME] 011670419-00091:   11670419   11670419    11670419 first-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             8
@@ -45,7 +45,7 @@ TEST[DATE|TIME] bigPrice:            1237.8129236177362007
 TEST[DATE|TIME] price:               1237.8129236177363
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> TOKENS
+TEST[DATE|TIME] ====> token
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     11670419
 TEST[DATE|TIME] prevBlock:              11670419
@@ -55,7 +55,8 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  noop-noop-token
+TEST[DATE|TIME]    reconciliationType:  first-last
+TEST[DATE|TIME]    assetType:           token
 TEST[DATE|TIME]    accountedFor:        0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
 TEST[DATE|TIME]    sender:              0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
 TEST[DATE|TIME]    recipient:           0x0
@@ -70,21 +71,9 @@ TEST[DATE|TIME]    logIndex:            195
 TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    begBal:              14922878205530494041
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    correctingIn:        0
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           14922878243871414864
-TEST[DATE|TIME]    internalOut:         0
 TEST[DATE|TIME]    correctingOut:       -38340920823
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              0
 TEST[DATE|TIME]    totalOut:            14922878205530494041
 TEST[DATE|TIME]    amountNet:           -14922878205530494041
 TEST[DATE|TIME]    endBal:              0
@@ -107,6 +96,7 @@ Results in ./failed_statement_2572_2_out.file
       "amountOut": "14.922878243871414864",
       "assetAddr": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
       "assetSymbol": "aMKR",
+      "assetType": "token",
       "begBal": "14.922878205530494041",
       "begBalDiff": "0",
       "blockNumber": 11670419,
@@ -130,7 +120,7 @@ Results in ./failed_statement_2572_2_out.file
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,
-      "reconciliationType": "noop-noop-token",
+      "reconciliationType": "first-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",

@@ -5,11 +5,11 @@ TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
-INFO[DATE|TIME] 001433233-00008:    1433233    1433233     1433233    noop-noop
+INFO[DATE|TIME] 001433233-00008:    1433233    1433233     1433233 first-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 1433233 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> ETH
+TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ledger.blockNumber:     1433233
 TEST[DATE|TIME] prevBlock:              1433233
@@ -19,7 +19,8 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  noop-noop-eth
+TEST[DATE|TIME]    reconciliationType:  first-last
+TEST[DATE|TIME]    assetType:           eth
 TEST[DATE|TIME]    accountedFor:        0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME]    sender:              0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME]    recipient:           0xa69217644dc0835daf5547e6975f5cb741fb1508
@@ -34,20 +35,8 @@ TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
 TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    begBal:              359699855029506296530
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    correctingIn:        0
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           1006010412136166100
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    correctingOut:       0
-TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              420000000000000
 TEST[DATE|TIME]    totalOut:            1006430412136166100
 TEST[DATE|TIME]    amountNet:           -1006430412136166100
@@ -55,7 +44,6 @@ TEST[DATE|TIME]    endBal:              358693424617370130430
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          358693424617370130430
-TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -69,6 +57,7 @@ TEST[DATE|TIME] End of trial balance report
       "amountOut": "1006010412136166100",
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "WEI",
+      "assetType": "eth",
       "begBal": "359699855029506296530",
       "begBalDiff": "0",
       "blockNumber": 1433233,
@@ -92,7 +81,7 @@ TEST[DATE|TIME] End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xa69217644dc0835daf5547e6975f5cb741fb1508",
       "reconciled": true,
-      "reconciliationType": "noop-noop-eth",
+      "reconciliationType": "first-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",

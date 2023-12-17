@@ -19,12 +19,12 @@ const (
 func (r ReconType) String() string {
 	l := func(r ReconType, s string) string {
 		if r&First != 0 {
-			s = strings.Replace(s, "diff-", "noop-", 1)
-			s = strings.Replace(s, "same-", "noop-", 1)
+			s = "first-" + s
+			s = strings.Replace(s, "first-same", "first", 1)
 		}
 		if r&Last != 0 {
-			s = strings.Replace(s, "-diff", "-noop", 1)
-			s = strings.Replace(s, "-same", "-noop", 1)
+			s = s + "-last"
+			s = strings.Replace(s, "same-last", "last", 1)
 		}
 		return s
 	}
@@ -42,6 +42,6 @@ func (r ReconType) String() string {
 	case SameDiff:
 		return l(r, "same-diff")
 	default:
-		return l(r, "invalid")
+		return "invalid"
 	}
 }

@@ -126,17 +126,17 @@ func (l *Ledger) debugContext() {
 		rr := c.ReconType &^ (types.First | types.Last)
 		switch rr {
 		case types.Genesis:
-			msg = fmt.Sprintf(" %12.12s", c.ReconType.String()+"-diff")
+			msg = fmt.Sprintf(" %s", c.ReconType.String()+"-diff")
 		case types.DiffDiff:
-			msg = fmt.Sprintf(" %12.12s", c.ReconType)
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
 		case types.SameSame:
-			msg = fmt.Sprintf(" %12.12s", c.ReconType)
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
 		case types.DiffSame:
-			msg = fmt.Sprintf(" %12.12s", c.ReconType)
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
 		case types.SameDiff:
-			msg = fmt.Sprintf(" %12.12s", c.ReconType)
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
 		default:
-			msg = fmt.Sprintf(" %12.12s should not happen!", c.ReconType)
+			msg = fmt.Sprintf(" %s should not happen!", c.ReconType.String())
 		}
 		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
 	}

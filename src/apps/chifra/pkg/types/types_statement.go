@@ -97,6 +97,7 @@ type SimpleStatement struct {
 	raw                 *RawStatement  `json:"-"`
 	// EXISTING_CODE
 	ReconType ReconType `json:"-"`
+	AssetType string    `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -123,6 +124,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"timestamp":           s.Timestamp,
 		"date":                s.Date(),
 		"assetAddr":           s.AssetAddr,
+		"assetType":           s.AssetType,
 		"assetSymbol":         s.AssetSymbol,
 		"decimals":            s.Decimals,
 		"spotPrice":           s.SpotPrice,
@@ -158,7 +160,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"correctingReason":    s.CorrectingReason,
 	}
 
-	if s.ReconType&First > 0 {
+	if s.ReconType&First == 0 {
 		model["prevAppBlk"] = s.PrevAppBlk
 		model["prevBal"] = utils.FormattedValue(s.PrevBal, asEther, decimals)
 	} else if format != "json" {
@@ -168,7 +170,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
-		"assetAddr", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"assetAddr", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
@@ -602,7 +604,7 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 }
 
 func (s *SimpleStatement) MoneyMoved() bool {
-	return s.TotalIn() != new(big.Int).SetUint64(0) || s.TotalOut() != new(big.Int).SetUint64(0)
+	return s.TotalIn().Cmp(new(big.Int)) != 0 || s.TotalOut().Cmp(new(big.Int)) != 0
 }
 
 func (s *SimpleStatement) AmountNet() *big.Int {
@@ -747,68 +749,77 @@ type Ledgerer interface {
 	Next() base.Blknum
 }
 
-func (s *SimpleStatement) Report(testMode bool, rT string, ctx Ledgerer, msg string) {
-	logger.TestLog(testMode, "===================================================")
-	logger.TestLog(testMode, fmt.Sprintf("====> %s", msg))
-	logger.TestLog(testMode, "===================================================")
-	logger.TestLog(testMode, "ledger.blockNumber:    ", ctx.Prev())
-	logger.TestLog(testMode, "prevBlock:             ", ctx.Prev())
-	logger.TestLog(testMode, "transfer.blockNumber:  ", s.BlockNumber)
-	logger.TestLog(testMode, "nextBlock:             ", ctx.Next())
-	logger.TestLog(testMode, "isPrevDiff:            ", ctx.Prev() != s.BlockNumber)
-	logger.TestLog(testMode, "isNextDiff:            ", ctx.Next() != s.BlockNumber)
-	logger.TestLog(testMode, "---------------------------------------------------")
-	logger.TestLog(testMode, "Trial balance:")
-	logger.TestLog(testMode, "   reconciliationType: ", rT)
-	logger.TestLog(testMode, "   accountedFor:       ", s.AccountedFor)
-	logger.TestLog(testMode, "   sender:             ", s.Sender)
-	logger.TestLog(testMode, "   recipient:          ", s.Recipient)
-	logger.TestLog(testMode, "   assetAddr:          ", s.AssetAddr)
-	logger.TestLog(testMode, "   assetSymbol:        ", s.AssetSymbol)
-	logger.TestLog(testMode, "   decimals:           ", s.Decimals)
-	if s.ReconType&First > 0 {
-		logger.TestLog(testMode, "   prevAppBlk:         ", s.PrevAppBlk)
+func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
+	logger.TestLog(true, "===================================================")
+	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
+	logger.TestLog(true, "===================================================")
+	logger.TestLog(true, "ledger.blockNumber:    ", ctx.Prev())
+	logger.TestLog(true, "prevBlock:             ", ctx.Prev())
+	logger.TestLog(true, "transfer.blockNumber:  ", s.BlockNumber)
+	logger.TestLog(true, "nextBlock:             ", ctx.Next())
+	logger.TestLog(true, "isPrevDiff:            ", ctx.Prev() != s.BlockNumber)
+	logger.TestLog(true, "isNextDiff:            ", ctx.Next() != s.BlockNumber)
+	logger.TestLog(true, "---------------------------------------------------")
+	logger.TestLog(true, "Trial balance:")
+	logger.TestLog(true, "   reconciliationType: ", s.ReconType.String())
+	logger.TestLog(true, "   assetType:          ", s.AssetType)
+	logger.TestLog(true, "   accountedFor:       ", s.AccountedFor)
+	logger.TestLog(true, "   sender:             ", s.Sender)
+	logger.TestLog(true, "   recipient:          ", s.Recipient)
+	logger.TestLog(true, "   assetAddr:          ", s.AssetAddr)
+	logger.TestLog(true, "   assetSymbol:        ", s.AssetSymbol)
+	logger.TestLog(true, "   decimals:           ", s.Decimals)
+	if s.ReconType&First == 0 {
+		logger.TestLog(true, "   prevAppBlk:         ", s.PrevAppBlk)
 	}
-	logger.TestLog(testMode, "   hash:               ", s.TransactionHash)
-	logger.TestLog(testMode, "   timestamp:          ", s.Timestamp)
-	logger.TestLog(testMode, "   blockNumber:        ", s.BlockNumber)
-	logger.TestLog(testMode, "   transactionIndex:   ", s.TransactionIndex)
-	logger.TestLog(testMode, "   logIndex:           ", s.LogIndex)
-	logger.TestLog(testMode, "   priceSource:        ", s.PriceSource)
-	logger.TestLog(testMode, "   spotPrice:          ", s.SpotPrice)
-	if s.ReconType&First > 0 {
-		logger.TestLog(testMode, "   prevBal:            ", s.PrevBal.Text(10))
+	logger.TestLog(true, "   hash:               ", s.TransactionHash)
+	logger.TestLog(true, "   timestamp:          ", s.Timestamp)
+	logger.TestLog(true, "   blockNumber:        ", s.BlockNumber)
+	logger.TestLog(true, "   transactionIndex:   ", s.TransactionIndex)
+	logger.TestLog(true, "   logIndex:           ", s.LogIndex)
+	logger.TestLog(true, "   priceSource:        ", s.PriceSource)
+	logger.TestLog(true, "   spotPrice:          ", s.SpotPrice)
+	if s.ReconType&First == 0 {
+		logger.TestLog(true, "   prevBal:            ", &s.PrevBal)
 	}
-	logger.TestLog(testMode, "   begBal:             ", s.BegBal.Text(10))
-	logger.TestLog(testMode, "   amountIn:           ", s.AmountIn.Text(10))
-	logger.TestLog(testMode, "   internalIn:         ", s.InternalIn.Text(10))
-	logger.TestLog(testMode, "   minerBaseRewardIn:  ", s.MinerBaseRewardIn.Text(10))
-	logger.TestLog(testMode, "   minerNephewRewardIn:", s.MinerNephewRewardIn.Text(10))
-	logger.TestLog(testMode, "   minerTxFeeIn:       ", s.MinerTxFeeIn.Text(10))
-	logger.TestLog(testMode, "   minerUncleRewardIn: ", s.MinerUncleRewardIn.Text(10))
-	logger.TestLog(testMode, "   correctingIn:       ", s.CorrectingIn.Text(10))
-	logger.TestLog(testMode, "   prefundIn:          ", s.PrefundIn.Text(10))
-	logger.TestLog(testMode, "   selfDestructIn:     ", s.SelfDestructIn.Text(10))
-	logger.TestLog(testMode, "   totalIn:            ", s.TotalIn().Text(10))
-	logger.TestLog(testMode, "   amountOut:          ", s.AmountOut.Text(10))
-	logger.TestLog(testMode, "   internalOut:        ", s.InternalOut.Text(10))
-	logger.TestLog(testMode, "   correctingOut:      ", s.CorrectingOut.Text(10))
-	logger.TestLog(testMode, "   selfDestructOut:    ", s.SelfDestructOut.Text(10))
-	logger.TestLog(testMode, "   gasOut:             ", s.GasOut.Text(10))
-	logger.TestLog(testMode, "   totalOut:           ", s.TotalOut().Text(10))
-	logger.TestLog(testMode, "   amountNet:          ", s.AmountNet().Text(10))
-	logger.TestLog(testMode, "   endBal:             ", s.EndBal.Text(10))
-	logger.TestLog(testMode, "   begBalDiff:         ", s.BegBalDiff().Text(10))
-	logger.TestLog(testMode, "   endBalDiff:         ", s.EndBalDiff().Text(10))
-	logger.TestLog(testMode, "   endBalCalc:         ", s.EndBalCalc().Text(10))
-	logger.TestLog(testMode, "   correctingReason:   ", s.CorrectingReason)
-	logger.TestLog(testMode, "   moneyMoved:         ", s.MoneyMoved())
-	logger.TestLog(testMode, "   reconciled:         ", s.Reconciled())
+	logger.TestLog(true, "   begBal:             ", &s.BegBal)
+	reportOne("   amountIn:           ", &s.AmountIn)
+	reportOne("   internalIn:         ", &s.InternalIn)
+	reportOne("   minerBaseRewardIn:  ", &s.MinerBaseRewardIn)
+	reportOne("   minerNephewRewardIn:", &s.MinerNephewRewardIn)
+	reportOne("   minerTxFeeIn:       ", &s.MinerTxFeeIn)
+	reportOne("   minerUncleRewardIn: ", &s.MinerUncleRewardIn)
+	reportOne("   correctingIn:       ", &s.CorrectingIn)
+	reportOne("   prefundIn:          ", &s.PrefundIn)
+	reportOne("   selfDestructIn:     ", &s.SelfDestructIn)
+	logger.TestLog(true, "   totalIn:            ", s.TotalIn())
+	reportOne("   amountOut:          ", &s.AmountOut)
+	reportOne("   internalOut:        ", &s.InternalOut)
+	reportOne("   correctingOut:      ", &s.CorrectingOut)
+	reportOne("   selfDestructOut:    ", &s.SelfDestructOut)
+	reportOne("   gasOut:             ", &s.GasOut)
+	logger.TestLog(true, "   totalOut:           ", s.TotalOut())
+	logger.TestLog(true, "   amountNet:          ", s.AmountNet())
+	logger.TestLog(true, "   endBal:             ", &s.EndBal)
+	logger.TestLog(true, "   begBalDiff:         ", s.BegBalDiff())
+	logger.TestLog(true, "   endBalDiff:         ", s.EndBalDiff())
+	logger.TestLog(true, "   endBalCalc:         ", s.EndBalCalc())
+	logger.TestLog(s.CorrectingReason != "", "   correctingReason:   ", s.CorrectingReason)
+	logger.TestLog(true, "   moneyMoved:         ", s.MoneyMoved())
+	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
 	if !s.Reconciled() {
-		logger.TestLog(testMode, " ^^ need to fix this ^^")
+		logger.TestLog(true, " ^^ need to fix this ^^")
 	}
-	logger.TestLog(testMode, "---------------------------------------------------")
-	logger.TestLog(testMode, "End of trial balance report")
+	logger.TestLog(true, "---------------------------------------------------")
+	logger.TestLog(true, "End of trial balance report")
+}
+
+func isZero(val *big.Int) bool {
+	return val.Cmp(big.NewInt(0)) == 0
+}
+
+func reportOne(msg string, val *big.Int) {
+	logger.TestLog(!isZero(val), msg, utils.FormattedValue(*val, false, 18))
 }
 
 // EXISTING_CODE

@@ -125,8 +125,8 @@ cache   ,both ,fast  ,transactions ,tools/getTrans ,pricing_maker            ,y 
 on      ,both ,fast  ,transactions ,tools/getTrans ,pricing_premaker         ,y    ,transactions = 1433233.8 & account_for = 0xea674fdde714fd979de3edf0f56aa9716b898ec8 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,reconcile                ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & account_for = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & articulate
 # Does not reconcile
-on      ,both ,fast  ,transactions ,tools/getTrans ,reconcile_intern_trace   ,y    ,transactions = 10681057.170 10607241.278 & account_for = 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json & traces
-on      ,both ,fast  ,transactions ,tools/getTrans ,reconcile_internal       ,y    ,transactions = 10681057.170 10607241.278 & account_for = 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json
+local   ,both ,fast  ,transactions ,tools/getTrans ,reconcile_intern_trace   ,y    ,transactions = 10681057.170 10607241.278 & account_for = 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json & traces
+local   ,both ,fast  ,transactions ,tools/getTrans ,reconcile_internal       ,y    ,transactions = 10681057.170 10607241.278 & account_for = 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,reconcile_selfdestruct_1 ,y    ,transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 & fmt = json & account_for = 0x42c8fcbc73d625f1d258a32915b6a573095de93d & traces
 on      ,both ,fast  ,transactions ,tools/getTrans ,reconcile_selfdestruct_2 ,y    ,transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 & fmt = json & account_for = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & traces
 on      ,both ,fast  ,transactions ,tools/getTrans ,reconcile_selfdestruct_3 ,y    ,transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 & fmt = json & account_for = 0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c & traces
