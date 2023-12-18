@@ -712,6 +712,7 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 		if s.AssetType == "trace-eth" && s.ReconType&First != 0 && s.ReconType&Last != 0 {
 			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
 				s.EndBal = *s.EndBalCalc()
+				s.CorrectingReason = "per-block-balance"
 			}
 		} else {
 			logger.TestLog(true, "Needs correction for eth")

@@ -301,7 +301,7 @@
       "blockNumber": 12655579,
       "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "",
+      "correctingReason": "per-block-balance",
       "date": "2021-06-18 01:53:30 UTC",
       "decimals": 18,
       "endBal": "6209556.992344378131786565",

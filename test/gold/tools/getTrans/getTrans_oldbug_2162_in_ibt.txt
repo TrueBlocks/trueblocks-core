@@ -127,6 +127,7 @@ TEST[DATE|TIME]    endBal:              568.298827613938491598
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          568.298827613938491598
+TEST[DATE|TIME]    correctingReason:    per-block-balance
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -320,6 +321,7 @@ TEST[DATE|TIME]    endBal:              568.293581338250642905
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          568.293581338250642905
+TEST[DATE|TIME]    correctingReason:    per-block-balance
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -513,6 +515,7 @@ TEST[DATE|TIME]    endBal:              568.299094434430201396
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          568.299094434430201396
+TEST[DATE|TIME]    correctingReason:    per-block-balance
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -722,6 +725,7 @@ TEST[DATE|TIME]    endBal:              568.297037838601116463
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          568.297037838601116463
+TEST[DATE|TIME]    correctingReason:    per-block-balance
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -817,7 +821,7 @@ Results in ./oldbug_2162_in_ibt_out.file
       "blockNumber": 14933657,
       "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "",
+      "correctingReason": "per-block-balance",
       "date": "2022-06-09 16:55:34 UTC",
       "decimals": 18,
       "endBal": "568.298827613938491598",
@@ -903,7 +907,7 @@ Results in ./oldbug_2162_in_ibt_out.file
       "blockNumber": 14933657,
       "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "",
+      "correctingReason": "per-block-balance",
       "date": "2022-06-09 16:55:34 UTC",
       "decimals": 18,
       "endBal": "568.293581338250642905",
@@ -989,7 +993,7 @@ Results in ./oldbug_2162_in_ibt_out.file
       "blockNumber": 14933657,
       "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "",
+      "correctingReason": "per-block-balance",
       "date": "2022-06-09 16:55:34 UTC",
       "decimals": 18,
       "endBal": "568.299094434430201396",
@@ -1075,7 +1079,7 @@ Results in ./oldbug_2162_in_ibt_out.file
       "blockNumber": 14933657,
       "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "",
+      "correctingReason": "per-block-balance",
       "date": "2022-06-09 16:55:34 UTC",
       "decimals": 18,
       "endBal": "568.297037838601116463",
