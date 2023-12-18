@@ -93,5 +93,5 @@ func contextsFromIds(l *ledger.Ledger, chain string, txIds []identifiers.Identif
 		return apps[i].BlockNumber < apps[j].BlockNumber
 	})
 
-	return apps, l.SetContexts(chain, apps)
+	return apps, l.SetContexts(chain, apps, true)
 }

@@ -8,8 +8,8 @@ TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (2)
-INFO[DATE|TIME] 007005737-00027:    7005737    7005737     7005737 first-same
-INFO[DATE|TIME] 007005737-00030:    7005737    7005737     7005737 same-last
+INFO[DATE|TIME] 007005737-00027:    7005737    7005737     7005737 first-last
+INFO[DATE|TIME] 007005737-00030:    7005737    7005737     7005737 first-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
@@ -22,7 +22,7 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  first-same
+TEST[DATE|TIME]    reconciliationType:  first-last
 TEST[DATE|TIME]    assetType:           eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
@@ -75,7 +75,7 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  first-same
+TEST[DATE|TIME]    reconciliationType:  first-last
 TEST[DATE|TIME]    assetType:           token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
@@ -117,7 +117,7 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-last
+TEST[DATE|TIME]    reconciliationType:  first-last
 TEST[DATE|TIME]    assetType:           eth
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
@@ -125,7 +125,6 @@ TEST[DATE|TIME]    recipient:           0x5c2c629feefcc07b338e97e39c73d2db33a855
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         ETH
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          7005737
 TEST[DATE|TIME]    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 TEST[DATE|TIME]    timestamp:           1546555962
 TEST[DATE|TIME]    blockNumber:         7005737
@@ -133,7 +132,6 @@ TEST[DATE|TIME]    transactionIndex:    30
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         not-priced
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             0.0292701576875
 TEST[DATE|TIME]    begBal:              0.0292701576875
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            0
@@ -172,7 +170,7 @@ TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  same-last
+TEST[DATE|TIME]    reconciliationType:  first-last
 TEST[DATE|TIME]    assetType:           token
 TEST[DATE|TIME]    accountedFor:        0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME]    sender:              0x28adfa7a3ab67fb19410beabb1c1bf880fef0541
@@ -180,7 +178,6 @@ TEST[DATE|TIME]    recipient:           0xec3ef464bf821c3b10a18adf9ac7177a628e87
 TEST[DATE|TIME]    assetAddr:           0x5c2c629feefcc07b338e97e39c73d2db33a85548
 TEST[DATE|TIME]    assetSymbol:         0x5c2c
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          7005737
 TEST[DATE|TIME]    hash:                0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 TEST[DATE|TIME]    timestamp:           1546555962
 TEST[DATE|TIME]    blockNumber:         7005737
@@ -188,7 +185,6 @@ TEST[DATE|TIME]    transactionIndex:    30
 TEST[DATE|TIME]    logIndex:            20
 TEST[DATE|TIME]    priceSource:         token-not-priced-pre-uni
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    prevBal:             75843.546632
 TEST[DATE|TIME]    begBal:              71040.040864
 TEST[DATE|TIME]    amountIn:            3016.109787
 TEST[DATE|TIME]    totalIn:             3016.109787
@@ -239,7 +235,7 @@ Results in ./reconcile_token_ibt_out.file
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "reconciled": true,
-      "reconciliationType": "first-same",
+      "reconciliationType": "first-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x28adfa7a3ab67fb19410beabb1c1bf880fef0541",
@@ -279,12 +275,10 @@ Results in ./reconcile_token_ibt_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 7005737,
-      "prevBal": "75843.546632",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "reconciled": true,
-      "reconciliationType": "same-last",
+      "reconciliationType": "first-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x28adfa7a3ab67fb19410beabb1c1bf880fef0541",

@@ -708,7 +708,15 @@ func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
 }
 
 func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
-	if !s.IsEth() {
+	if s.IsEth() {
+		if s.AssetType == "trace-eth" && s.ReconType&First != 0 && s.ReconType&Last != 0 {
+			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
+				s.EndBal = *s.EndBalCalc()
+			}
+		} else {
+			logger.TestLog(true, "Needs correction for eth")
+		}
+	} else {
 		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
 
 		s.CorrectingIn.SetUint64(0)
@@ -736,8 +744,6 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 			s.CorrectingReason += "endbal"
 		}
 		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
-	} else {
-		logger.TestLog(true, "Needs correction for eth")
 	}
 
 	return s.Reconciled()
