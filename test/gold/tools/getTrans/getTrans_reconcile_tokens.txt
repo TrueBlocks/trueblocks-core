@@ -1,8 +1,10 @@
 chifra transactions  0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508 --account_for 0xf503017d7baf7fbc0fff7492b751025c6a78179b --fmt json
 TEST[DATE|TIME] Transactions:  [0x332df8459d5357d05d59c4e186eeb7b0b9380343962ac978d2e539c8f23d0508]
 TEST[DATE|TIME] AccountFor:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] OutputFn:  reconcile_tokens_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
 INFO[DATE|TIME] 015828830-00112:   15828830   15828830    15828830 first-last
@@ -343,6 +345,8 @@ TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+----
+Results in ./reconcile_tokens_out.file
 {
   "data": [
     {
@@ -562,3 +566,4 @@ TEST[DATE|TIME] End of trial balance report
     }
   ]
 }
+

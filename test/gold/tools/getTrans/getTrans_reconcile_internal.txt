@@ -1,8 +1,10 @@
 chifra transactions  10681057.170 10607241.278 --account_for 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 --fmt json
 TEST[DATE|TIME] Transactions:  [10681057.170 10607241.278]
 TEST[DATE|TIME] AccountFor:  0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
+TEST[DATE|TIME] OutputFn:  reconcile_internal_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (2)
 INFO[DATE|TIME] 010607241-00278:   10607241   10607241    10681057 first-diff
@@ -65,51 +67,7 @@ TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
-{
-  "data": [
-    {
-      "accountedFor": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
-      "amountIn": "0",
-      "amountNet": "-2070329590800000000",
-      "amountOut": "2068649590800000000",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "assetType": "eth",
-      "begBal": "2070392590800000000",
-      "begBalDiff": "0",
-      "blockNumber": 10607241,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
-      "date": "2020-08-06 16:05:42 UTC",
-      "decimals": 18,
-      "endBal": "63000000000000",
-      "endBalCalc": "63000000000000",
-      "endBalDiff": "0",
-      "gasOut": "1680000000000000",
-      "internalIn": "0",
-      "internalOut": "0",
-      "logIndex": 0,
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "priceSource": "uniswap",
-      "recipient": "0xc1681e85f8c6b24dff4fdc93b8db88cb0fa77539",
-      "reconciled": true,
-      "reconciliationType": "first-diff",
-      "selfDestructIn": "0",
-      "selfDestructOut": "0",
-      "sender": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
-      "spotPrice": 396.20840254610437,
-      "timestamp": 1596729942,
-      "totalIn": "0",
-      "totalOut": "2070329590800000000",
-      "totalOutLessGas": "2068649590800000000",
-      "transactionHash": "0x9447da655ed79671917701902b028df5c79fe597282ba8e6025d82fb044acacf",
-      "transactionIndex": 278
-    }TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Needs correction for eth
 TEST[DATE|TIME] Needs correction for eth
 TEST[DATE|TIME] ===================================================
@@ -213,7 +171,53 @@ TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
-,
+----
+Results in ./reconcile_internal_out.file
+{
+  "data": [
+    {
+      "accountedFor": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
+      "amountIn": "0",
+      "amountNet": "-2070329590800000000",
+      "amountOut": "2068649590800000000",
+      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetSymbol": "WEI",
+      "assetType": "eth",
+      "begBal": "2070392590800000000",
+      "begBalDiff": "0",
+      "blockNumber": 10607241,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-08-06 16:05:42 UTC",
+      "decimals": 18,
+      "endBal": "63000000000000",
+      "endBalCalc": "63000000000000",
+      "endBalDiff": "0",
+      "gasOut": "1680000000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "priceSource": "uniswap",
+      "recipient": "0xc1681e85f8c6b24dff4fdc93b8db88cb0fa77539",
+      "reconciled": true,
+      "reconciliationType": "first-diff",
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
+      "spotPrice": 396.20840254610437,
+      "timestamp": 1596729942,
+      "totalIn": "0",
+      "totalOut": "2070329590800000000",
+      "totalOutLessGas": "2068649590800000000",
+      "transactionHash": "0x9447da655ed79671917701902b028df5c79fe597282ba8e6025d82fb044acacf",
+      "transactionIndex": 278
+    },
     {
       "accountedFor": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
       "amountIn": "0",
@@ -261,3 +265,4 @@ TEST[DATE|TIME] End of trial balance report
     }
   ]
 }
+

@@ -1,8 +1,10 @@
 chifra transactions  --account_for 0x7cfb89d6df1b89a678dcaf42b9c262593e881e22 0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd --fmt json
 TEST[DATE|TIME] Transactions:  [0x20e4a5279519859c3b8af108fa9b3238f23d5522ceb0f7245080ec79ad8f97fd]
 TEST[DATE|TIME] AccountFor:  0x7cfb89d6df1b89a678dcaf42b9c262593e881e22
+TEST[DATE|TIME] OutputFn:  old_bug_2159_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
 INFO[DATE|TIME] 013029304-00063:   13029304   13029304    13029304 first-last
@@ -157,6 +159,8 @@ TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+----
+Results in ./old_bug_2159_out.file
 {
   "data": [
     {
@@ -247,3 +251,4 @@ TEST[DATE|TIME] End of trial balance report
     }
   ]
 }
+

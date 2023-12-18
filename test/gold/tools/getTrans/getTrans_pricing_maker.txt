@@ -1,8 +1,10 @@
 chifra transactions  5218355.232 --account_for 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad --fmt json
 TEST[DATE|TIME] Transactions:  [5218355.232]
 TEST[DATE|TIME] AccountFor:  0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
+TEST[DATE|TIME] OutputFn:  pricing_maker_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
 INFO[DATE|TIME] 005218355-00232:    5218355    5218355     5218355 first-last
@@ -100,6 +102,8 @@ TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+----
+Results in ./pricing_maker_out.file
 {
   "data": [
     {
@@ -190,3 +194,4 @@ TEST[DATE|TIME] End of trial balance report
     }
   ]
 }
+

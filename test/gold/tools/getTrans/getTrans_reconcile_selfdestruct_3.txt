@@ -2,8 +2,10 @@ chifra transactions  0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817f
 TEST[DATE|TIME] Transactions:  [0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] AccountFor:  0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c
+TEST[DATE|TIME] OutputFn:  reconcile_selfdestruct_3_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
+{ "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
 INFO[DATE|TIME] 002608034-00005:    2608034    2608034     2608034 first-last
@@ -49,6 +51,8 @@ TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
+----
+Results in ./reconcile_selfdestruct_3_out.file
 {
   "data": [
     {
@@ -96,3 +100,4 @@ TEST[DATE|TIME] End of trial balance report
     }
   ]
 }
+
