@@ -17,7 +17,7 @@ logsBloom        ,string        ,           ,rawonly   ,    ,
 mixHash          ,string        ,           ,rawonly   ,    ,
 nonce            ,string        ,           ,rawonly   ,    ,
 timestamp        ,timestamp     ,           ,          ,  7 ,the Unix timestamp of the object
-date             ,datetime      ,           ,          ,  8 ,a calculated field -- the date of the object
+date             ,datetime      ,           ,calc      ,  8 ,the timestamp as a date
 baseFeePerGas    ,wei           ,           ,          , 10 ,the base fee for this block
 transactions     ,[]Transaction ,           ,          ,  9 ,a possibly empty array of transactions or transaction hashes
 transactionsRoot ,hash          ,           ,rawonly   ,    ,

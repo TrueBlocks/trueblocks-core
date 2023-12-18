@@ -14,8 +14,10 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 
 	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(), true /* withCount */); err != nil {
 		return false, err
+
 	} else if cnt == 0 {
 		return false, nil
+
 	} else {
 		var keep []index.AppearanceRecord
 		for _, app := range apps {

@@ -6,6 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) ([]types.SimpleStatement, error) {
@@ -39,6 +40,17 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 		for i, trace := range traces {
 			if i == 0 {
 				// the first trace is identical to the transaction itself, so we can skip it
+				continue
+			}
+			if trace.Action.CallType == "delegatecall" && trace.Action.To != s.AccountedFor {
+				// delegate calls are not included in the transaction's gas cost, so we skip them
+				logger.Info(
+					"Skipping",
+					trace.Action.CallType,
+					"to",
+					trace.Action.To.Hex(),
+					utils.FormattedValue(trace.Action.Value, true, 18),
+				)
 				continue
 			}
 
@@ -100,7 +112,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 		}
 	}
 
-	if l.trialBalance("ETH TRACES", &ret) {
+	if l.trialBalance("trace-eth", &ret) {
 		if ret.MoneyMoved() {
 			statements = append(statements, ret)
 		} else {

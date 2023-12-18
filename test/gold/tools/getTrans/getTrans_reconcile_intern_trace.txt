@@ -4,8 +4,10 @@ TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] AccountFor:  0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] 010607241-00278:   10607240   10607241    10607242
-INFO[DATE|TIME] 010681057-00170:   10681056   10681057    10681058
+INFO[DATE|TIME] ------------------------------------------------------------
+INFO[DATE|TIME] Contexts (2)
+INFO[DATE|TIME] 010607241-00278:   10607241   10607241    10681057 first-same-diff
+INFO[DATE|TIME] 010681057-00170:   10607241   10681057    10681057 diff-same-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
@@ -27,22 +29,21 @@ TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH TRACES
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     10681056
-TEST[DATE|TIME] prevBlock:              10681056
+TEST[DATE|TIME] ledger.blockNumber:     10607241
+TEST[DATE|TIME] prevBlock:              10607241
 TEST[DATE|TIME] transfer.blockNumber:   10681057
-TEST[DATE|TIME] nextBlock:              10681058
+TEST[DATE|TIME] nextBlock:              10681057
 TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
+TEST[DATE|TIME] isNextDiff:             false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-trace-eth
+TEST[DATE|TIME]    reconciliationType:  diff-noop-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME]    sender:              0x61edb6b025867c1a5354ed46a13c10b616e32ab0
 TEST[DATE|TIME]    recipient:           0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          10681056
 TEST[DATE|TIME]    hash:                0x39a7c959c11489f7c0a84ed67f960e441ae5be106a1a42afb75ee9f0119d16bb
 TEST[DATE|TIME]    timestamp:           1597714516
 TEST[DATE|TIME]    blockNumber:         10681057
@@ -50,7 +51,6 @@ TEST[DATE|TIME]    transactionIndex:    170
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
 TEST[DATE|TIME]    spotPrice:           430.4784750805098
-TEST[DATE|TIME]    prevBal:             163750000000000000
 TEST[DATE|TIME]    begBal:              163750000000000000
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          3750000000000000
@@ -75,7 +75,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          167500000000000000
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 {
@@ -107,12 +107,10 @@ TEST[DATE|TIME] End of trial balance report
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 10681056,
-      "prevBal": "163750000000000000",
       "priceSource": "uniswap",
       "recipient": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",
       "reconciled": true,
-      "reconciliationType": "diff-diff-trace-eth",
+      "reconciliationType": "diff-noop-trace-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x61edb6b025867c1a5354ed46a13c10b616e32ab0",
@@ -144,22 +142,21 @@ TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> ETH TRACES
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     10607240
-TEST[DATE|TIME] prevBlock:              10607240
+TEST[DATE|TIME] ledger.blockNumber:     10607241
+TEST[DATE|TIME] prevBlock:              10607241
 TEST[DATE|TIME] transfer.blockNumber:   10607241
-TEST[DATE|TIME] nextBlock:              10607242
-TEST[DATE|TIME] isPrevDiff:             true
+TEST[DATE|TIME] nextBlock:              10681057
+TEST[DATE|TIME] isPrevDiff:             false
 TEST[DATE|TIME] isNextDiff:             true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff-trace-eth
+TEST[DATE|TIME]    reconciliationType:  noop-diff-trace-eth
 TEST[DATE|TIME]    accountedFor:        0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME]    sender:              0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
 TEST[DATE|TIME]    recipient:           0xc1681e85f8c6b24dff4fdc93b8db88cb0fa77539
 TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME]    assetSymbol:         WEI
 TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          10607240
 TEST[DATE|TIME]    hash:                0x9447da655ed79671917701902b028df5c79fe597282ba8e6025d82fb044acacf
 TEST[DATE|TIME]    timestamp:           1596729942
 TEST[DATE|TIME]    blockNumber:         10607241
@@ -167,7 +164,6 @@ TEST[DATE|TIME]    transactionIndex:    278
 TEST[DATE|TIME]    logIndex:            0
 TEST[DATE|TIME]    priceSource:         uniswap
 TEST[DATE|TIME]    spotPrice:           396.20840254610437
-TEST[DATE|TIME]    prevBal:             2070392590800000000
 TEST[DATE|TIME]    begBal:              2070392590800000000
 TEST[DATE|TIME]    amountIn:            0
 TEST[DATE|TIME]    internalIn:          0
@@ -192,7 +188,7 @@ TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          63000000000000
 TEST[DATE|TIME]    correctingReason:    
 TEST[DATE|TIME]    moneyMoved:          true
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
 ,
@@ -223,12 +219,10 @@ TEST[DATE|TIME] End of trial balance report
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 10607240,
-      "prevBal": "2070392590800000000",
       "priceSource": "uniswap",
       "recipient": "0xc1681e85f8c6b24dff4fdc93b8db88cb0fa77539",
       "reconciled": true,
-      "reconciliationType": "diff-diff-trace-eth",
+      "reconciliationType": "noop-diff-trace-eth",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3",

@@ -274,7 +274,7 @@ string_q specialCase(const CClassDefinition& model, const CMember& field, const 
 
 //------------------------------------------------------------------------------------------------------------
 bool skipField(const CClassDefinition& model, const CMember& field, bool raw) {
-    if (field.name % "date") {
+    if (field.isCalculated()) {
         return true;
     }
 

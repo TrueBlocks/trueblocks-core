@@ -33,17 +33,17 @@ The following commands produce and manage Results:
 
 Results consist of the following fields:
 
-| Field            | Description                                        | Type                                    |
-| ---------------- | -------------------------------------------------- | --------------------------------------- |
-| blockNumber      | the block number at which this call was made       | blknum                                  |
-| timestamp        | the timestamp of the block for this call           | timestamp                               |
-| date             | the date of the block for this call (calculated)   | datetime                                |
-| address          | the address of contract being called               | address                                 |
-| name             | the name of the function call                      | string                                  |
-| encoding         | the encoding for the function call                 | string                                  |
-| signature        | the canonical signature of the interface           | string                                  |
-| encodedArguments | the bytes data following the encoding of the call  | string                                  |
-| articulatedOut   | the result of the call articulated as other models | [Function](/data-model/other/#function) |
+| Field            | Description                                               | Type                                    |
+| ---------------- | --------------------------------------------------------- | --------------------------------------- |
+| blockNumber      | the block number at which this call was made              | blknum                                  |
+| timestamp        | the timestamp of the block for this call                  | timestamp                               |
+| date             | the date of the block for this call (ulated) (calculated) | datetime                                |
+| address          | the address of contract being called                      | address                                 |
+| name             | the name of the function call                             | string                                  |
+| encoding         | the encoding for the function call                        | string                                  |
+| signature        | the canonical signature of the interface                  | string                                  |
+| encodedArguments | the bytes data following the encoding of the call         | string                                  |
+| articulatedOut   | the result of the call articulated as other models        | [Function](/data-model/other/#function) |
 
 ## State
 
@@ -60,7 +60,7 @@ States consist of the following fields:
 | ----------- | ----------------------------------------------------------------------------- | --------- |
 | blockNumber | the block number at which this call was made                                  | blknum    |
 | timestamp   | the timestamp of the block for this call                                      | timestamp |
-| date        | the date of the block for this call (calculated)                              | datetime  |
+| date        | the date of the block for this call (ulated) (calculated)                     | datetime  |
 | address     | the address of contract being called                                          | address   |
 | accountType | the type of account at the given block                                        | string    |
 | balance     | the balance of the account at the given block                                 | wei       |
@@ -86,7 +86,7 @@ Tokens consist of the following fields:
 | blockNumber      | the block at which the report is made                                 | blknum    |
 | transactionIndex | the transaction index (if applicable) at which the report is made     | blknum    |
 | timestamp        | the timestamp of the block                                            | timestamp |
-| date             | a calculated field -- the date of the block                           | datetime  |
+| date             | the timestamp as a date (calculated)                                  | datetime  |
 | totalSupply      | the total supply of the token contract                                | int256    |
 | address          | the address of the token contract                                     | address   |
 | holder           | the holder address for which we are reporting                         | address   |

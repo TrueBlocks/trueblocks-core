@@ -33,7 +33,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date for this appearance"
+          description: "the timestamp as a date (calculated)"
     monitor:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object
@@ -158,7 +158,7 @@ components:
         firstDate:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the first appearance"
+          description: "the first appearance timestamp as a date (calculated)"
         latestApp:
           type: RawAppearance
           description: "the block number and transaction id of the latest appearance of this address"
@@ -169,7 +169,7 @@ components:
         latestDate:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the latest appearance"
+          description: "the latest appearance timestamp as a date (calculated)"
     statement:
       description: "a statement, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
       type: object
@@ -197,7 +197,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of this transaction"
+          description: "the timestamp as a date (calculated)"
         assetAddr:
           type: string
           format: address
@@ -235,21 +235,21 @@ components:
         amountNet:
           type: string
           format: int256
-          description: "a calculated field -- totalIn - totalOut"
+          description: "totalIn - totalOut (calculated)"
         endBal:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
         reconciliationType:
           type: string
-          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"
+          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)"
         reconciled:
           type: boolean
-          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
+          description: "true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise. (calculated)"
         totalIn:
           type: string
           format: int256
-          description: "a calculated field -- the sum of the following `In` fields"
+          description: "the sum of the following `In` fields (calculated)"
         amountIn:
           type: string
           format: int256
@@ -289,7 +289,7 @@ components:
         totalOut:
           type: string
           format: int256
-          description: "a calculated field -- the sum of the following `Out` fields"
+          description: "the sum of the following `Out` fields (calculated)"
         amountOut:
           type: string
           format: int256
@@ -313,7 +313,7 @@ components:
         totalOutLessGas:
           type: string
           format: int256
-          description: "a calculated field -- totalOut - gasOut"
+          description: "totalOut - gasOut (calculated)"
         prevAppBlk:
           type: number
           format: blknum
@@ -325,15 +325,15 @@ components:
         begBalDiff:
           type: string
           format: int256
-          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed"
+          description: "difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed (calculated)"
         endBalDiff:
           type: string
           format: int256
-          description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
+          description: "endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)"
         endBalCalc:
           type: string
           format: int256
-          description: "a calculated field -- begBal + amountNet"
+          description: "begBal + amountNet (calculated)"
         correctingReason:
           type: string
           description: "the reason for the correcting entries, if any"
@@ -372,7 +372,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the object"
+          description: "the timestamp as a date (calculated)"
         transactions:
           type: array
           items:
@@ -423,6 +423,7 @@ components:
         date:
           type: string
           format: datetime
+          description: "the timestamp as a date (calculated)"
         from:
           type: string
           format: address
@@ -496,7 +497,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date for this block"
+          description: "the timestamp as a date (calculated)"
         validatorIndex:
           type: number
           format: uint64
@@ -559,7 +560,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the date of the block this log appears in (calculated)"
+          description: "the date of the block this log appears in (ulated) (calculated)"
         address:
           type: string
           format: address
@@ -608,7 +609,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated value - the date of the block"
+          description: "a ulated value - the date of the block (calculated)"
         transactionHash:
           type: string
           format: hash
@@ -746,7 +747,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "the timestamp as a date (calculated)"
         tracesCnt:
           type: number
           format: uint64
@@ -794,7 +795,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "the timestamp as a date (calculated)"
         transactionsCnt:
           type: number
           format: uint64
@@ -834,7 +835,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "human readable version of timestamp"
+          description: "the timestamp as a date (calculated)"
         name:
           type: string
           description: "an optional name for the block"
@@ -856,7 +857,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "the timestamp as a date (calculated)"
         diff:
           type: int64
           description: "the number of seconds since the last block"
@@ -883,7 +884,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the date of the block for this call (calculated)"
+          description: "the date of the block for this call (ulated) (calculated)"
         address:
           type: string
           format: address
@@ -920,7 +921,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the date of the block for this call (calculated)"
+          description: "the date of the block for this call (ulated) (calculated)"
         address:
           type: string
           format: address
@@ -966,7 +967,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "the timestamp as a date (calculated)"
         totalSupply:
           type: string
           format: int256
@@ -1490,7 +1491,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the object"
+          description: "the timestamp as a date (calculated)"
         from:
           type: string
           format: address

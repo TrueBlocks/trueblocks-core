@@ -1,45 +1,15 @@
 package ledger
 
 import (
-	"errors"
 	"fmt"
 	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-type reconType int
-
-const (
-	invalid reconType = iota
-	genesis
-	diffDiff
-	sameSame
-	diffSame
-	sameDiff
-	shouldNotHappen
-)
-
-func (r reconType) String() string {
-	switch r {
-	case genesis:
-		return "genesis"
-	case diffDiff:
-		return "diff-diff"
-	case sameSame:
-		return "same-same"
-	case diffSame:
-		return "diff-same"
-	case sameDiff:
-		return "same-diff"
-	default:
-		return "invalid"
-	}
-}
 
 type ledgerContextKey string
 
@@ -49,34 +19,42 @@ type ledgerContext struct {
 	PrevBlock base.Blknum
 	CurBlock  base.Blknum
 	NextBlock base.Blknum
-	ReconType reconType
+	ReconType types.ReconType
 }
 
-func newLedgerContext(prev, cur, next base.Blknum, reversed bool) *ledgerContext {
+func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *ledgerContext {
 	if prev > cur || cur > next {
 		return &ledgerContext{
-			ReconType: invalid,
+			ReconType: types.Invalid,
 		}
 	}
 
-	reconType := invalid
+	reconType := types.Invalid
 	if cur == 0 {
-		reconType = genesis
+		reconType = types.Genesis
 	} else {
 		prevDiff := prev != cur
 		nextDiff := cur != next
 		if prevDiff && nextDiff {
-			reconType = diffDiff
+			reconType = types.DiffDiff
 		} else if !prevDiff && !nextDiff {
-			reconType = sameSame
+			reconType = types.SameSame
 		} else if prevDiff {
-			reconType = diffSame
+			reconType = types.DiffSame
 		} else if nextDiff {
-			reconType = sameDiff
+			reconType = types.SameDiff
 		} else {
-			reconType = invalid
+			reconType = types.Invalid
 			logger.Panic("should not happen")
 		}
+	}
+
+	if isFirst {
+		reconType |= types.First
+	}
+
+	if isLast {
+		reconType |= types.Last
 	}
 
 	return &ledgerContext{
@@ -111,60 +89,19 @@ const maxTestingBlock = 17000000
 // SetContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
-func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerBounds base.BlockRange) error {
+func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance) error {
 	for i := 0; i < len(apps); i++ {
 		cur := apps[i].BlockNumber
-
-		prev := outerBounds.First
-		if i > 0 {
-			prev = uint64(apps[i-1].BlockNumber)
-		}
-
-		next := outerBounds.Last
-		if i < len(apps)-1 {
-			next = uint64(apps[i+1].BlockNumber)
-		}
-
-		if next < l.FirstBlock || prev > l.LastBlock {
-			continue
-		}
-
+		prev := uint64(apps[utils.Max(1, i)-1].BlockNumber)
+		next := uint64(apps[utils.Min(i+1, len(apps)-1)].BlockNumber)
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
+		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
 	}
-
-	l.DebugContext()
+	l.debugContext()
 	return nil
 }
 
-// SetContextsFromIds produces reconciliation contexts for a list of transaction id that
-// most probably won't reconicile since there will be missing gaps in the list. (For example,
-// from chifra transactions --account_for 10 100 1000.)
-func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier) error {
-	for _, rng := range txIds {
-		apps, err := rng.ResolveTxs(chain)
-		if err != nil && !errors.Is(err, ethereum.NotFound) {
-			return err
-		}
-		for i := 0; i < len(apps); i++ {
-			cur := apps[i].BlockNumber
-			prev := uint32(0)
-			if apps[i].BlockNumber > 0 {
-				prev = apps[i].BlockNumber - 1
-			}
-
-			next := apps[i].BlockNumber + 1
-
-			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), l.Reversed)
-		}
-	}
-
-	l.DebugContext()
-	return nil
-}
-
-func (l *Ledger) DebugContext() {
+func (l *Ledger) debugContext() {
 	if !l.TestMode {
 		return
 	}
@@ -178,14 +115,28 @@ func (l *Ledger) DebugContext() {
 		return string(keys[i]) < string(keys[j])
 	})
 
+	logger.Info(strings.Repeat("-", 60))
+	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
 	for _, key := range keys {
 		c := l.Contexts[key]
 		if c.CurBlock > maxTestingBlock {
 			continue
 		}
 		msg := ""
-		if c.ReconType == sameSame {
-			msg = fmt.Sprintf(" %12.12s false false", c.ReconType)
+		rr := c.ReconType &^ (types.First | types.Last)
+		switch rr {
+		case types.Genesis:
+			msg = fmt.Sprintf(" %s", c.ReconType.String()+"-diff")
+		case types.DiffDiff:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.SameSame:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.DiffSame:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.SameDiff:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		default:
+			msg = fmt.Sprintf(" %s should not happen!", c.ReconType.String())
 		}
 		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
 	}

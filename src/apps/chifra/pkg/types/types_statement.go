@@ -27,20 +27,16 @@ import (
 type RawStatement struct {
 	AccountedFor        string `json:"accountedFor"`
 	AmountIn            string `json:"amountIn"`
-	AmountNet           string `json:"amountNet"`
 	AmountOut           string `json:"amountOut"`
 	AssetAddr           string `json:"assetAddr"`
 	AssetSymbol         string `json:"assetSymbol"`
 	BegBal              string `json:"begBal"`
-	BegBalDiff          string `json:"begBalDiff"`
 	BlockNumber         string `json:"blockNumber"`
 	CorrectingIn        string `json:"correctingIn"`
 	CorrectingOut       string `json:"correctingOut"`
 	CorrectingReason    string `json:"correctingReason"`
 	Decimals            string `json:"decimals"`
 	EndBal              string `json:"endBal"`
-	EndBalCalc          string `json:"endBalCalc"`
-	EndBalDiff          string `json:"endBalDiff"`
 	GasOut              string `json:"gasOut"`
 	InternalIn          string `json:"internalIn"`
 	InternalOut         string `json:"internalOut"`
@@ -54,16 +50,11 @@ type RawStatement struct {
 	PrevBal             string `json:"prevBal"`
 	PriceSource         string `json:"priceSource"`
 	Recipient           string `json:"recipient"`
-	Reconciled          string `json:"reconciled"`
-	ReconciliationType  string `json:"reconciliationType"`
 	SelfDestructIn      string `json:"selfDestructIn"`
 	SelfDestructOut     string `json:"selfDestructOut"`
 	Sender              string `json:"sender"`
 	SpotPrice           string `json:"spotPrice"`
 	Timestamp           string `json:"timestamp"`
-	TotalIn             string `json:"totalIn"`
-	TotalOut            string `json:"totalOut"`
-	TotalOutLessGas     string `json:"totalOutLessGas"`
 	TransactionHash     string `json:"transactionHash"`
 	TransactionIndex    string `json:"transactionIndex"`
 	// EXISTING_CODE
@@ -96,7 +87,6 @@ type SimpleStatement struct {
 	PrevBal             big.Int        `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
-	ReconciliationType  string         `json:"reconciliationType"`
 	SelfDestructIn      big.Int        `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     big.Int        `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
@@ -106,6 +96,8 @@ type SimpleStatement struct {
 	TransactionIndex    base.Blknum    `json:"transactionIndex"`
 	raw                 *RawStatement  `json:"-"`
 	// EXISTING_CODE
+	ReconType ReconType `json:"-"`
+	AssetType string    `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -132,6 +124,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"timestamp":           s.Timestamp,
 		"date":                s.Date(),
 		"assetAddr":           s.AssetAddr,
+		"assetType":           s.AssetType,
 		"assetSymbol":         s.AssetSymbol,
 		"decimals":            s.Decimals,
 		"spotPrice":           s.SpotPrice,
@@ -142,7 +135,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"begBal":              utils.FormattedValue(s.BegBal, asEther, decimals),
 		"amountNet":           utils.FormattedValue(*s.AmountNet(), asEther, decimals),
 		"endBal":              utils.FormattedValue(s.EndBal, asEther, decimals),
-		"reconciliationType":  s.ReconciliationType,
+		"reconciliationType":  s.ReconType.String(),
 		"reconciled":          s.Reconciled(),
 		"totalIn":             utils.FormattedValue(*s.TotalIn(), asEther, decimals),
 		"amountIn":            utils.FormattedValue(s.AmountIn, asEther, decimals),
@@ -161,16 +154,23 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"selfDestructOut":     utils.FormattedValue(s.SelfDestructOut, asEther, decimals),
 		"gasOut":              utils.FormattedValue(s.GasOut, asEther, decimals),
 		"totalOutLessGas":     utils.FormattedValue(*s.TotalOutLessGas(), asEther, decimals),
-		"prevAppBlk":          s.PrevAppBlk,
-		"prevBal":             utils.FormattedValue(s.PrevBal, asEther, decimals),
 		"begBalDiff":          utils.FormattedValue(*s.BegBalDiff(), asEther, decimals),
 		"endBalDiff":          utils.FormattedValue(*s.EndBalDiff(), asEther, decimals),
 		"endBalCalc":          utils.FormattedValue(*s.EndBalCalc(), asEther, decimals),
 		"correctingReason":    s.CorrectingReason,
 	}
+
+	if s.ReconType&First == 0 {
+		model["prevAppBlk"] = s.PrevAppBlk
+		model["prevBal"] = utils.FormattedValue(s.PrevBal, asEther, decimals)
+	} else if format != "json" {
+		model["prevAppBlk"] = ""
+		model["prevBal"] = ""
+	}
+
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
-		"assetAddr", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"assetAddr", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
@@ -353,11 +353,6 @@ func (s *SimpleStatement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// ReconciliationType
-	if err = cache.WriteValue(writer, s.ReconciliationType); err != nil {
-		return err
-	}
-
 	// SelfDestructIn
 	if err = cache.WriteValue(writer, &s.SelfDestructIn); err != nil {
 		return err
@@ -522,11 +517,6 @@ func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err 
 		return err
 	}
 
-	// ReconciliationType
-	if err = cache.ReadValue(reader, &s.ReconciliationType, version); err != nil {
-		return err
-	}
-
 	// SelfDestructIn
 	if err = cache.ReadValue(reader, &s.SelfDestructIn, version); err != nil {
 		return err
@@ -614,7 +604,7 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 }
 
 func (s *SimpleStatement) MoneyMoved() bool {
-	return s.TotalIn() != new(big.Int).SetUint64(0) || s.TotalOut() != new(big.Int).SetUint64(0)
+	return s.TotalIn().Cmp(new(big.Int)) != 0 || s.TotalOut().Cmp(new(big.Int)) != 0
 }
 
 func (s *SimpleStatement) AmountNet() *big.Int {
@@ -759,61 +749,77 @@ type Ledgerer interface {
 	Next() base.Blknum
 }
 
-func (s *SimpleStatement) Report(testMode bool, ctx Ledgerer, msg string) {
-	logger.TestLog(testMode, "===================================================")
-	logger.TestLog(testMode, fmt.Sprintf("====> %s", msg))
-	logger.TestLog(testMode, "===================================================")
-	logger.TestLog(testMode, "ledger.blockNumber:    ", ctx.Prev())
-	logger.TestLog(testMode, "prevBlock:             ", ctx.Prev())
-	logger.TestLog(testMode, "transfer.blockNumber:  ", s.BlockNumber)
-	logger.TestLog(testMode, "nextBlock:             ", ctx.Next())
-	logger.TestLog(testMode, "isPrevDiff:            ", ctx.Prev() != s.BlockNumber)
-	logger.TestLog(testMode, "isNextDiff:            ", ctx.Next() != s.BlockNumber)
-	logger.TestLog(testMode, "---------------------------------------------------")
-	logger.TestLog(testMode, "Trial balance:")
-	logger.TestLog(testMode, "   reconciliationType: ", s.ReconciliationType)
-	logger.TestLog(testMode, "   accountedFor:       ", s.AccountedFor)
-	logger.TestLog(testMode, "   sender:             ", s.Sender)
-	logger.TestLog(testMode, "   recipient:          ", s.Recipient)
-	logger.TestLog(testMode, "   assetAddr:          ", s.AssetAddr)
-	logger.TestLog(testMode, "   assetSymbol:        ", s.AssetSymbol)
-	logger.TestLog(testMode, "   decimals:           ", s.Decimals)
-	logger.TestLog(testMode, "   prevAppBlk:         ", s.PrevAppBlk)
-	logger.TestLog(testMode, "   hash:               ", s.TransactionHash)
-	logger.TestLog(testMode, "   timestamp:          ", s.Timestamp)
-	logger.TestLog(testMode, "   blockNumber:        ", s.BlockNumber)
-	logger.TestLog(testMode, "   transactionIndex:   ", s.TransactionIndex)
-	logger.TestLog(testMode, "   logIndex:           ", s.LogIndex)
-	logger.TestLog(testMode, "   priceSource:        ", s.PriceSource)
-	logger.TestLog(testMode, "   spotPrice:          ", s.SpotPrice)
-	logger.TestLog(testMode, "   prevBal:            ", s.PrevBal.Text(10))
-	logger.TestLog(testMode, "   begBal:             ", s.BegBal.Text(10))
-	logger.TestLog(testMode, "   amountIn:           ", s.AmountIn.Text(10))
-	logger.TestLog(testMode, "   internalIn:         ", s.InternalIn.Text(10))
-	logger.TestLog(testMode, "   minerBaseRewardIn:  ", s.MinerBaseRewardIn.Text(10))
-	logger.TestLog(testMode, "   minerNephewRewardIn:", s.MinerNephewRewardIn.Text(10))
-	logger.TestLog(testMode, "   minerTxFeeIn:       ", s.MinerTxFeeIn.Text(10))
-	logger.TestLog(testMode, "   minerUncleRewardIn: ", s.MinerUncleRewardIn.Text(10))
-	logger.TestLog(testMode, "   correctingIn:       ", s.CorrectingIn.Text(10))
-	logger.TestLog(testMode, "   prefundIn:          ", s.PrefundIn.Text(10))
-	logger.TestLog(testMode, "   selfDestructIn:     ", s.SelfDestructIn.Text(10))
-	logger.TestLog(testMode, "   totalIn:            ", s.TotalIn().Text(10))
-	logger.TestLog(testMode, "   amountOut:          ", s.AmountOut.Text(10))
-	logger.TestLog(testMode, "   internalOut:        ", s.InternalOut.Text(10))
-	logger.TestLog(testMode, "   correctingOut:      ", s.CorrectingOut.Text(10))
-	logger.TestLog(testMode, "   selfDestructOut:    ", s.SelfDestructOut.Text(10))
-	logger.TestLog(testMode, "   gasOut:             ", s.GasOut.Text(10))
-	logger.TestLog(testMode, "   totalOut:           ", s.TotalOut().Text(10))
-	logger.TestLog(testMode, "   amountNet:          ", s.AmountNet().Text(10))
-	logger.TestLog(testMode, "   endBal:             ", s.EndBal.Text(10))
-	logger.TestLog(testMode, "   begBalDiff:         ", s.BegBalDiff().Text(10))
-	logger.TestLog(testMode, "   endBalDiff:         ", s.EndBalDiff().Text(10))
-	logger.TestLog(testMode, "   endBalCalc:         ", s.EndBalCalc().Text(10))
-	logger.TestLog(testMode, "   correctingReason:   ", s.CorrectingReason)
-	logger.TestLog(testMode, "   moneyMoved:         ", s.MoneyMoved())
-	logger.TestLog(testMode, "   trialBalance:       ", s.Reconciled())
-	logger.TestLog(testMode, "---------------------------------------------------")
-	logger.TestLog(testMode, "End of trial balance report")
+func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
+	logger.TestLog(true, "===================================================")
+	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
+	logger.TestLog(true, "===================================================")
+	logger.TestLog(true, "ledger.blockNumber:    ", ctx.Prev())
+	logger.TestLog(true, "prevBlock:             ", ctx.Prev())
+	logger.TestLog(true, "transfer.blockNumber:  ", s.BlockNumber)
+	logger.TestLog(true, "nextBlock:             ", ctx.Next())
+	logger.TestLog(true, "isPrevDiff:            ", ctx.Prev() != s.BlockNumber)
+	logger.TestLog(true, "isNextDiff:            ", ctx.Next() != s.BlockNumber)
+	logger.TestLog(true, "---------------------------------------------------")
+	logger.TestLog(true, "Trial balance:")
+	logger.TestLog(true, "   reconciliationType: ", s.ReconType.String())
+	logger.TestLog(true, "   assetType:          ", s.AssetType)
+	logger.TestLog(true, "   accountedFor:       ", s.AccountedFor)
+	logger.TestLog(true, "   sender:             ", s.Sender)
+	logger.TestLog(true, "   recipient:          ", s.Recipient)
+	logger.TestLog(true, "   assetAddr:          ", s.AssetAddr)
+	logger.TestLog(true, "   assetSymbol:        ", s.AssetSymbol)
+	logger.TestLog(true, "   decimals:           ", s.Decimals)
+	if s.ReconType&First == 0 {
+		logger.TestLog(true, "   prevAppBlk:         ", s.PrevAppBlk)
+	}
+	logger.TestLog(true, "   hash:               ", s.TransactionHash)
+	logger.TestLog(true, "   timestamp:          ", s.Timestamp)
+	logger.TestLog(true, "   blockNumber:        ", s.BlockNumber)
+	logger.TestLog(true, "   transactionIndex:   ", s.TransactionIndex)
+	logger.TestLog(true, "   logIndex:           ", s.LogIndex)
+	logger.TestLog(true, "   priceSource:        ", s.PriceSource)
+	logger.TestLog(true, "   spotPrice:          ", s.SpotPrice)
+	if s.ReconType&First == 0 {
+		logger.TestLog(true, "   prevBal:            ", utils.FormattedValue(s.PrevBal, true, 18))
+	}
+	logger.TestLog(true, "   begBal:             ", utils.FormattedValue(s.BegBal, true, 18))
+	reportOne("   amountIn:           ", &s.AmountIn)
+	reportOne("   internalIn:         ", &s.InternalIn)
+	reportOne("   minerBaseRewardIn:  ", &s.MinerBaseRewardIn)
+	reportOne("   minerNephewRewardIn:", &s.MinerNephewRewardIn)
+	reportOne("   minerTxFeeIn:       ", &s.MinerTxFeeIn)
+	reportOne("   minerUncleRewardIn: ", &s.MinerUncleRewardIn)
+	reportOne("   correctingIn:       ", &s.CorrectingIn)
+	reportOne("   prefundIn:          ", &s.PrefundIn)
+	reportOne("   selfDestructIn:     ", &s.SelfDestructIn)
+	logger.TestLog(true, "   totalIn:            ", utils.FormattedValue(*s.TotalIn(), true, 18))
+	reportOne("   amountOut:          ", &s.AmountOut)
+	reportOne("   internalOut:        ", &s.InternalOut)
+	reportOne("   correctingOut:      ", &s.CorrectingOut)
+	reportOne("   selfDestructOut:    ", &s.SelfDestructOut)
+	reportOne("   gasOut:             ", &s.GasOut)
+	logger.TestLog(true, "   totalOut:           ", utils.FormattedValue(*s.TotalOut(), true, 18))
+	logger.TestLog(true, "   amountNet:          ", utils.FormattedValue(*s.AmountNet(), true, 18))
+	logger.TestLog(true, "   endBal:             ", utils.FormattedValue(s.EndBal, true, 18))
+	logger.TestLog(true, "   begBalDiff:         ", utils.FormattedValue(*s.BegBalDiff(), true, 18))
+	logger.TestLog(true, "   endBalDiff:         ", utils.FormattedValue(*s.EndBalDiff(), true, 18))
+	logger.TestLog(true, "   endBalCalc:         ", utils.FormattedValue(*s.EndBalCalc(), true, 18))
+	logger.TestLog(s.CorrectingReason != "", "   correctingReason:   ", s.CorrectingReason)
+	logger.TestLog(true, "   moneyMoved:         ", s.MoneyMoved())
+	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
+	if !s.Reconciled() {
+		logger.TestLog(true, " ^^ we need to fix this ^^")
+	}
+	logger.TestLog(true, "---------------------------------------------------")
+	logger.TestLog(true, "End of trial balance report")
+}
+
+func isZero(val *big.Int) bool {
+	return val.Cmp(big.NewInt(0)) == 0
+}
+
+func reportOne(msg string, val *big.Int) {
+	logger.TestLog(!isZero(val), msg, utils.FormattedValue(*val, true, 18))
 }
 
 // EXISTING_CODE

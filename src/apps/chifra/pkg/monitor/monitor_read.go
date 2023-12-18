@@ -9,13 +9,9 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // ReadMonitorHeader reads the monitor's header and returns without closing the file
@@ -63,39 +59,4 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	}
 	err = binary.Read(mon.ReadFp, binary.LittleEndian, &app.TransactionId)
 	return
-}
-
-func AsSliceOfMaps[T any](mon *Monitor, filter *filter.AppearanceFilter) ([]map[types.SimpleAppearance]*T, int, error) {
-	if ret, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
-		return nil, 0, err
-	} else if cnt == 0 {
-		return nil, 0, nil
-	} else {
-		sort.Slice(ret, func(i, j int) bool {
-			if filter.Reversed {
-				i, j = j, i
-			}
-			if ret[i].BlockNumber == ret[j].BlockNumber {
-				return ret[i].TransactionIndex < ret[j].TransactionIndex
-			}
-			return ret[i].BlockNumber < ret[j].BlockNumber
-		})
-
-		arrayOfMaps := make([]map[types.SimpleAppearance]*T, 0, len(ret))
-		curMap := make(map[types.SimpleAppearance]*T)
-		for i := 0; i < len(ret); i++ {
-			// TODO: Do we want this to be configurable? Maybe, maybe not
-			if len(curMap) == identifiers.AppMapSize {
-				arrayOfMaps = append(arrayOfMaps, curMap)
-				curMap = make(map[types.SimpleAppearance]*T)
-			}
-			curMap[ret[i]] = nil
-		}
-
-		if len(curMap) > 0 {
-			arrayOfMaps = append(arrayOfMaps, curMap)
-		}
-
-		return arrayOfMaps, len(ret), nil
-	}
 }

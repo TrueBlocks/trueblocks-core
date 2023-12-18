@@ -18,8 +18,8 @@ var (
 	uniswapFactoryV2_deployed = base.Blknum(10000835) // why query for this immutable value each time we need it?
 )
 
-// PriceUsdUniswap returns the price of the given asset in USD as of the given block number.
-func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
+// priceUsdUniswap returns the price of the given asset in USD as of the given block number.
+func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.SimpleStatement) (price float64, source string, err error) {
 	multiplier := float64(1.0)
 	var first base.Address
 	var second base.Address
@@ -31,7 +31,7 @@ func PriceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 		temp := *statement
 		temp.AssetAddr = base.FAKE_ETH_ADDRESS
 		temp.AssetSymbol = "WEI"
-		multiplier, _, err = PriceUsdUniswap(conn, testMode, &temp)
+		multiplier, _, err = priceUsdUniswap(conn, testMode, &temp)
 		if err != nil {
 			return 0.0, "not-priced", err
 		}

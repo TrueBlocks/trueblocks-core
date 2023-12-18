@@ -2,7 +2,7 @@ name             ,type      ,strDefault ,omitempty ,doc ,description
 blockNumber      ,blknum    ,           ,          ,  1 ,the block at which the report is made
 transactionIndex ,blknum    ,           ,true      ,  2 ,the transaction index (if applicable) at which the report is made
 timestamp        ,timestamp ,           ,          ,  3 ,the timestamp of the block
-date             ,datetime  ,           ,          ,  4 ,a calculated field -- the date of the block
+date             ,datetime  ,           ,calc      ,  4 ,the timestamp as a date
 totalSupply      ,int256    ,           ,          ,  5 ,the total supply of the token contract
 address          ,address   ,           ,          ,  6 ,the address of the token contract
 holder           ,address   ,           ,          ,  7 ,the holder address for which we are reporting

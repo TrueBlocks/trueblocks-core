@@ -81,8 +81,7 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 					opts.Reversed,
 					&opts.Asset,
 				)
-
-				_ = ledgers.SetContexts(chain, apps, filter.GetOuterBounds())
+				_ = ledgers.SetContexts(chain, apps)
 
 				for _, app := range apps {
 					app := app

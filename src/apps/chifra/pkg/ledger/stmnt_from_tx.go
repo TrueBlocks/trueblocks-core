@@ -60,6 +60,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			PrevBal:          *prevBal,
 			BegBal:           *begBal,
 			EndBal:           *endBal,
+			ReconType:        ctx.ReconType,
 		}
 
 		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
@@ -100,7 +101,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			ret.AssetSymbol = "ETH"
 		}
 
-		if !l.UseTraces && l.trialBalance("ETH", &ret) {
+		if !l.UseTraces && l.trialBalance("eth", &ret) {
 			if ret.MoneyMoved() {
 				statements = append(statements, ret)
 			} else {

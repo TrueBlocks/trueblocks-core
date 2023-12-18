@@ -23,7 +23,7 @@ func PriceUsd(conn *rpc.Connection, testMode bool, statement *types.SimpleStatem
 
 	if statement.BlockNumber <= uniswapFactoryV2_deployed {
 		if statement.IsEth() {
-			return PriceUsdMaker(conn, testMode, statement)
+			return priceUsdMaker(conn, testMode, statement)
 		} else {
 			msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Uniswap V2. No other source for tokens prior to UniSwap", statement.BlockNumber, uniswapFactoryV2_deployed)
 			logger.TestLog(true, msg)
@@ -31,5 +31,5 @@ func PriceUsd(conn *rpc.Connection, testMode bool, statement *types.SimpleStatem
 		}
 	}
 
-	return PriceUsdUniswap(conn, testMode, statement)
+	return priceUsdUniswap(conn, testMode, statement)
 }
