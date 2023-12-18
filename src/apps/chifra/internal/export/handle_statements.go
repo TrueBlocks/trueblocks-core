@@ -20,13 +20,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type Items struct {
-}
-
-type X struct {
-	Statements []types.SimpleStatement `json:"statements"`
-}
-
 func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode

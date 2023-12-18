@@ -87,15 +87,15 @@ TEST[DATE|TIME]    transactionIndex:    232
 TEST[DATE|TIME]    logIndex:            69
 TEST[DATE|TIME]    priceSource:         token-not-priced-pre-uni
 TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    begBal:              1177081.09
+TEST[DATE|TIME]    begBal:              0.000000000117708109
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           2151.73
-TEST[DATE|TIME]    totalOut:            2151.73
-TEST[DATE|TIME]    amountNet:           -2151.73
-TEST[DATE|TIME]    endBal:              1174929.36
+TEST[DATE|TIME]    amountOut:           0.000000000000215173
+TEST[DATE|TIME]    totalOut:            0.000000000000215173
+TEST[DATE|TIME]    amountNet:           -0.000000000000215173
+TEST[DATE|TIME]    endBal:              0.000000000117492936
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          1174929.36
+TEST[DATE|TIME]    endBalCalc:          0.000000000117492936
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
