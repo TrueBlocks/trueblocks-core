@@ -42,7 +42,6 @@ export type Statement = {
   selfDestructOut?: int256
   gasOut?: int256
   totalOutLessGas: int256
-  prevAppBlk?: blknum
   prevBal?: int256
   begBalDiff?: int256
   endBalDiff?: int256

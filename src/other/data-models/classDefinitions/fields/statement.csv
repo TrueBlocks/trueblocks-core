@@ -35,9 +35,8 @@ correctingOut       ,int256    ,           ,true        , 33 ,for unreconciled t
 selfDestructOut     ,int256    ,           ,true        , 34 ,the value of the self-destructed value out if the accountedFor address was self-destructed
 gasOut              ,int256    ,           ,true        , 35 ,if the transaction's original sender is the accountedFor address&#44; the amount of gas expended
 totalOutLessGas     ,int256    ,           ,calc        , 36 ,totalOut - gasOut
-prevAppBlk          ,blknum    ,           ,true        , 37 ,the block number of the previous appearance&#44; or 0 if this is the first appearance
-prevBal             ,int256    ,           ,true        , 38 ,the account balance for the given asset for the previous reconciliation
-begBalDiff          ,int256    ,           ,truecalc    , 39 ,difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
-endBalDiff          ,int256    ,           ,truecalc    , 40 ,endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
-endBalCalc          ,int256    ,           ,truecalc    , 41 ,begBal + amountNet
-correctingReason    ,string    ,           ,true        , 42 ,the reason for the correcting entries&#44; if any
+prevBal             ,int256    ,           ,true        , 37 ,the account balance for the given asset for the previous reconciliation
+begBalDiff          ,int256    ,           ,truecalc    , 38 ,difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
+endBalDiff          ,int256    ,           ,truecalc    , 39 ,endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
+endBalCalc          ,int256    ,           ,truecalc    , 40 ,begBal + amountNet
+correctingReason    ,string    ,           ,true        , 41 ,the reason for the correcting entries&#44; if any

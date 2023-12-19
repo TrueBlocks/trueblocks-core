@@ -7,7 +7,7 @@ TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
-INFO[DATE|TIME] 005218355-00232:    5218355    5218355     5218355 first-last
+INFO[DATE|TIME] 005218355-00232:    5218354    5218355     5218355 first-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] Block 5218355 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
@@ -25,38 +25,30 @@ TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     5218355
-TEST[DATE|TIME] prevBlock:              5218355
-TEST[DATE|TIME] transfer.blockNumber:   5218355
-TEST[DATE|TIME] nextBlock:              5218355
-TEST[DATE|TIME] isPrevDiff:             false
-TEST[DATE|TIME] isNextDiff:             false
-TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Previous:               5218354
+TEST[DATE|TIME] Current:                5218355
+TEST[DATE|TIME] Next:                   5218355
+TEST[DATE|TIME] reconciliationType:     first-last
+TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] accountedFor:           0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
+TEST[DATE|TIME] sender:                 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad  ==>  0xec7954f452a6473c21c4078501f0bcf8b266bc99
+TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x4973ab1d7be0aa2823946359bbea1831f10ceaa096a4fce9c20b5658cc237f33
+TEST[DATE|TIME] timestamp:              1520510761
+TEST[DATE|TIME] blockNumber:            5218355.232.0
+TEST[DATE|TIME] priceSource:            766.955 (maker)
+TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  first-last
-TEST[DATE|TIME]    assetType:           eth
-TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
-TEST[DATE|TIME]    sender:              0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
-TEST[DATE|TIME]    recipient:           0xec7954f452a6473c21c4078501f0bcf8b266bc99
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    hash:                0x4973ab1d7be0aa2823946359bbea1831f10ceaa096a4fce9c20b5658cc237f33
-TEST[DATE|TIME]    timestamp:           1520510761
-TEST[DATE|TIME]    blockNumber:         5218355
-TEST[DATE|TIME]    transactionIndex:    232
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         maker
-TEST[DATE|TIME]    spotPrice:           766.955
-TEST[DATE|TIME]    begBal:              1.25992528074102204
+TEST[DATE|TIME]    prevBal:             1.25992528074102204
+TEST[DATE|TIME]    begBal:              1.25992528074102204 (0)
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    gasOut:              0.000214832
 TEST[DATE|TIME]    totalOut:            0.000214832
 TEST[DATE|TIME]    amountNet:           -0.000214832
-TEST[DATE|TIME]    endBal:              1.25971044874102204
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1.25971044874102204 (0)
 TEST[DATE|TIME]    endBalCalc:          1.25971044874102204
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    gasOut:              0.000214832
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -66,38 +58,30 @@ TEST[DATE|TIME] Block 5218355 is prior to deployment (10000835) of Uniswap V2. N
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> token
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     5218355
-TEST[DATE|TIME] prevBlock:              5218355
-TEST[DATE|TIME] transfer.blockNumber:   5218355
-TEST[DATE|TIME] nextBlock:              5218355
-TEST[DATE|TIME] isPrevDiff:             false
-TEST[DATE|TIME] isNextDiff:             false
-TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Previous:               5218354
+TEST[DATE|TIME] Current:                5218355
+TEST[DATE|TIME] Next:                   5218355
+TEST[DATE|TIME] reconciliationType:     first-last
+TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] accountedFor:           0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
+TEST[DATE|TIME] sender:                 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad  ==>  0x6b374d334d25cc9c9e15add727fdc6d647c2dc4c
+TEST[DATE|TIME] assetAddr:              0xec7954f452a6473c21c4078501f0bcf8b266bc99 (ADS) decimals: 2
+TEST[DATE|TIME] hash:                   0x4973ab1d7be0aa2823946359bbea1831f10ceaa096a4fce9c20b5658cc237f33
+TEST[DATE|TIME] timestamp:              1520510761
+TEST[DATE|TIME] blockNumber:            5218355.232.69
+TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
+TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  first-last
-TEST[DATE|TIME]    assetType:           token
-TEST[DATE|TIME]    accountedFor:        0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
-TEST[DATE|TIME]    sender:              0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
-TEST[DATE|TIME]    recipient:           0x6b374d334d25cc9c9e15add727fdc6d647c2dc4c
-TEST[DATE|TIME]    assetAddr:           0xec7954f452a6473c21c4078501f0bcf8b266bc99
-TEST[DATE|TIME]    assetSymbol:         ADS
-TEST[DATE|TIME]    decimals:            2
-TEST[DATE|TIME]    hash:                0x4973ab1d7be0aa2823946359bbea1831f10ceaa096a4fce9c20b5658cc237f33
-TEST[DATE|TIME]    timestamp:           1520510761
-TEST[DATE|TIME]    blockNumber:         5218355
-TEST[DATE|TIME]    transactionIndex:    232
-TEST[DATE|TIME]    logIndex:            69
-TEST[DATE|TIME]    priceSource:         token-not-priced-pre-uni
-TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    begBal:              0.000000000117708109
+TEST[DATE|TIME]    prevBal:             0.000000000117708109
+TEST[DATE|TIME]    begBal:              0.000000000117708109 (0)
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           0.000000000000215173
 TEST[DATE|TIME]    totalOut:            0.000000000000215173
 TEST[DATE|TIME]    amountNet:           -0.000000000000215173
-TEST[DATE|TIME]    endBal:              0.000000000117492936
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.000000000117492936 (0)
 TEST[DATE|TIME]    endBalCalc:          0.000000000117492936
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           0.000000000000215173
 TEST[DATE|TIME]    moneyMoved:          true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------

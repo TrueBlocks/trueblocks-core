@@ -71,7 +71,6 @@
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8860529,
       "prevBal": "7000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",

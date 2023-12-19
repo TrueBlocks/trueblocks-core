@@ -56,7 +56,6 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			Decimals:         18,
 			SpotPrice:        0.0,
 			PriceSource:      "not-priced",
-			PrevAppBlk:       ctx.PrevBlock,
 			PrevBal:          *prevBal,
 			BegBal:           *begBal,
 			EndBal:           *endBal,

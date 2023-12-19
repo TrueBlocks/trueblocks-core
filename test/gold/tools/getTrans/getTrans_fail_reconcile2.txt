@@ -9,42 +9,34 @@ TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (1)
-INFO[DATE|TIME] 012697303-00099:   12697303   12697303    12697303 first-last
+INFO[DATE|TIME] 012697303-00099:   12697302   12697303    12697303 first-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     12697303
-TEST[DATE|TIME] prevBlock:              12697303
-TEST[DATE|TIME] transfer.blockNumber:   12697303
-TEST[DATE|TIME] nextBlock:              12697303
-TEST[DATE|TIME] isPrevDiff:             false
-TEST[DATE|TIME] isNextDiff:             false
-TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Previous:               12697302
+TEST[DATE|TIME] Current:                12697303
+TEST[DATE|TIME] Next:                   12697303
+TEST[DATE|TIME] reconciliationType:     first-last
+TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6  ==>  0xe592427a0aece92de3edee1f18e0157c05861564
+TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
+TEST[DATE|TIME] timestamp:              1624544065
+TEST[DATE|TIME] blockNumber:            12697303.99.0
+TEST[DATE|TIME] priceSource:            0 (not-priced)
+TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  first-last
-TEST[DATE|TIME]    assetType:           eth
-TEST[DATE|TIME]    accountedFor:        0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME]    sender:              0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
-TEST[DATE|TIME]    recipient:           0xe592427a0aece92de3edee1f18e0157c05861564
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    hash:                0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
-TEST[DATE|TIME]    timestamp:           1624544065
-TEST[DATE|TIME]    blockNumber:         12697303
-TEST[DATE|TIME]    transactionIndex:    99
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    begBal:              31.419034761192445316
+TEST[DATE|TIME]    prevBal:             31.419034761192445316
+TEST[DATE|TIME]    begBal:              31.419034761192445316 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]    endBal:              31.419034761192445316
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              31.419034761192445316 (0)
 TEST[DATE|TIME]    endBalCalc:          31.419034761192445316
+TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    moneyMoved:          false
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
