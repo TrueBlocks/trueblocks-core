@@ -16,7 +16,6 @@ export function getTransactions(
     logs?: boolean,
     emitter?: address[],
     topic?: topic[],
-    accountFor?: address,
     chain: string,
     noHeader?: boolean,
     fmt?: string,

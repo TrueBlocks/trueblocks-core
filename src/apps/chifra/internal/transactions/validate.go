@@ -5,8 +5,6 @@
 package transactionsPkg
 
 import (
-	"strings"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -24,11 +22,6 @@ func (opts *TransactionsOptions) validateTransactions() error {
 
 	if !config.IsChainConfigured(chain) {
 		return validate.Usage("chain {0} is not properly configured.", chain)
-	}
-
-	key := config.GetKey("trueblocks").License
-	if len(opts.AccountFor) > 0 && !strings.Contains(key, "+accounting") {
-		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
 	}
 
 	if len(opts.Flow) > 0 {
@@ -64,15 +57,6 @@ func (opts *TransactionsOptions) validateTransactions() error {
 
 		if len(opts.Transactions) == 0 {
 			return validate.Usage("Please supply one or more transaction identifiers.")
-		}
-
-		if len(opts.AccountFor) > 0 {
-			if opts.Uniq {
-				return validate.Usage("The {0} option is not available{1}.", "--uniq", " with the --account_for option")
-			}
-			if !base.IsValidAddress(opts.AccountFor) {
-				return validate.Usage("Invalid reconcilation address {0}.", opts.AccountFor)
-			}
 		}
 
 		if opts.Traces {

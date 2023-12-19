@@ -40,8 +40,8 @@ TEST[DATE|TIME] blockNumber:            13.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0 (0)
+TEST[DATE|TIME]    prevBal:             -
+TEST[DATE|TIME]    begBal:              0 (-)
 TEST[DATE|TIME]    totalIn:             5
 TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           5

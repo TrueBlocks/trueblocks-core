@@ -1232,14 +1232,6 @@ paths:
             items:
               type: string
               format: topic
-        - name: accountFor
-          description: reconcile the transaction as per the provided address
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
         - name: ether
           description: export values in ether
           required: false

@@ -37,8 +37,8 @@ TEST[DATE|TIME] blockNumber:            8860513.85.84
 TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             7500
-TEST[DATE|TIME]    begBal:              7500 (0)
+TEST[DATE|TIME]    prevBal:             -
+TEST[DATE|TIME]    begBal:              7500 (-)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            500
 TEST[DATE|TIME]    amountNet:           -500

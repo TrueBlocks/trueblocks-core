@@ -52,7 +52,7 @@ func TestGetStatementFromLog(t *testing.T) {
 		BlockNumber:      uint32(bn),
 		TransactionIndex: uint32(txid),
 	})
-	l.SetContexts("mainnet", apps, false)
+	l.SetContexts("mainnet", apps)
 	s, _ := l.getStatementsFromLog(conn, &log)
 	b, _ := json.MarshalIndent(s, "", "  ")
 	fmt.Println(string(b))

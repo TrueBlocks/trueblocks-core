@@ -123,7 +123,7 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 							opts.Reversed,
 							&opts.Asset,
 						)
-						_ = ledgers.SetContexts(chain, apps, false)
+						_ = ledgers.SetContexts(chain, apps)
 
 						items := make([]types.SimpleStatement, 0, len(thisMap))
 						for _, tx := range txArray {
