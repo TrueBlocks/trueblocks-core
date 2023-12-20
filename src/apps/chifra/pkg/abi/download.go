@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -43,6 +44,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		key,
 	)
 
+	debug.DebugCurl(debug.Basic(url))
 	resp, err := http.Get(url)
 	if err != nil {
 		return err

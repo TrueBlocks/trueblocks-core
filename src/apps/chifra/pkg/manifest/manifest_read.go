@@ -52,6 +52,7 @@ func ReadManifest(chain string, publisher base.Address, source Source) (man *Man
 		logger.InfoTable("Publisher:", publisher)
 		logger.InfoTable("Gateway:", gatewayUrl)
 		logger.InfoTable("CID:", cid)
+
 		newManifest, err := downloadManifest(chain, gatewayUrl, cid)
 		if err != nil {
 			return nil, err

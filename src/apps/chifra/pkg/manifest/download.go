@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	ethAbi "github.com/ethereum/go-ethereum/accounts/abi"
@@ -65,6 +66,7 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 	url.Path = filepath.Join(url.Path, cid)
 
+	debug.DebugCurl(debug.Basic(url.String()))
 	resp, err := http.Get(url.String())
 	if err != nil {
 		return nil, err

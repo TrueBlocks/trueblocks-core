@@ -12,6 +12,8 @@ import (
 func QueryUser(prompt, noResponse string) bool {
 	if os.Getenv("NO_USERQUERY") == "true" {
 		return true
+	} else if len(os.Getenv("NO_USERQUERY")) > 0 {
+		return false
 	}
 
 	reader := bufio.NewReader(os.Stdin)

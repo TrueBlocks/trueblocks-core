@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -14,6 +15,8 @@ var listPins = "https://api.pinata.cloud/data/pinList?status=%s&includesCount=tr
 
 func getPins(chain, status string, first, cnt int) (int, []Pin) {
 	url := fmt.Sprintf(listPins, status, first, cnt)
+
+	debug.DebugCurl(debug.Basic(url))
 	if req, err := http.NewRequest("GET", url, nil); err != nil {
 		return 0, []Pin{}
 	} else {
