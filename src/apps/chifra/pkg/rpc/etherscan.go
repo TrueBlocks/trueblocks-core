@@ -5,13 +5,12 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -28,8 +27,7 @@ func (conn *Connection) GetESTransactionByAddress(chain, addr, requestType strin
 		return []types.SimpleSlurp{}, 0, err
 	}
 
-	debugCurl(url)
-
+	debug.DebugCurl(debug.Basic(url))
 	resp, err := http.Get(url)
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err
@@ -212,30 +210,6 @@ func getEtherscanUrl(chain, value string, requestType string, paginator *Paginat
 func mustParseInt(input any) (result int64) {
 	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
 	return
-}
-
-var devDebug = false
-var devDebugMethod = ""
-
-func init() {
-	devDebugMethod = os.Getenv("TB_DEBUG_CURL")
-	devDebug = len(devDebugMethod) > 0
-}
-
-func debugCurl(url string) {
-	if !devDebug {
-		return
-	}
-
-	var curlCmd = `curl "[{url}]"`
-	curlCmd = strings.Replace(curlCmd, "[{url}]", url, -1)
-	if devDebugMethod == "file" {
-		_ = file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
-	} else {
-		logger.ToggleDecoration()
-		logger.Info(curlCmd)
-		logger.ToggleDecoration()
-	}
 }
 
 var ss = strings.Repeat(" ", 40)

@@ -21,6 +21,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
@@ -153,27 +154,32 @@ type fetchResult struct {
 func fetchFromIpfsGateway(ctx context.Context, gateway, hash string) (*fetchResult, error) {
 	url, _ := url.Parse(gateway)
 	url.Path = filepath.Join(url.Path, hash)
+
+	debug.DebugCurl(debug.Basic(url.String()))
 	request, err := http.NewRequestWithContext(ctx, "GET", url.String(), nil)
 	if err != nil {
-		// logger.Fatalln("NewRequestWithContext failed in FetFromGateway with", url)
-		return nil, err
+		return nil, fmt.Errorf("NewRequestWithContext %s returned error: %w", url, err)
 	}
+
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
-		// logger.Fatalln("DefaultClient.Do failed in FetFromGateway with", url)
-		return nil, err
+		return nil, fmt.Errorf("DefaultClient.Do %s returned error: %w", url, err)
 	}
+
 	if response.StatusCode != 200 {
-		return nil, fmt.Errorf("fetch to %s returned status code: %d", url, response.StatusCode)
+		return nil, fmt.Errorf("fetchFromIpfsGateway %s returned status code: %d", url, response.StatusCode)
 	}
-	body := response.Body
+
+	if len(response.Header.Get("Content-Length")) == 0 {
+		return nil, fmt.Errorf("fetchFromIpfsGateway %s returned zero length header", url)
+	}
 
 	contentLen, err := strconv.ParseInt(response.Header.Get("Content-Length"), 10, 64)
 	if err != nil {
-		// logger.Fatalln("Could not parse Content-Length in FetFromGateway with", url)
-		return nil, err
+		return nil, fmt.Errorf("response.Header.Get %s returned error: %w", url, err)
 	}
 
+	body := response.Body
 	return &fetchResult{
 		Body:       body,
 		ContentLen: contentLen,

@@ -15,7 +15,7 @@ package main
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 )
 
 func main() {
@@ -34,5 +34,5 @@ func main() {
 
 // Cleanup gets called before main exits.
 func Cleanup() {
-	query.CloseDebugger()
+	debug.CloseDebugger()
 }

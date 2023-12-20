@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -15,6 +16,8 @@ var unpinPin = "https://api.pinata.cloud/pinning/unpin/%s"
 // unpinPin unpins a pin
 func unpinOne(chain string, i, total int, hash base.IpfsHash) error {
 	url := fmt.Sprintf(unpinPin, hash.String())
+
+	debug.DebugCurl(debug.Basic(url))
 	if req, err := http.NewRequest("DELETE", url, nil); err != nil {
 		return err
 	} else {

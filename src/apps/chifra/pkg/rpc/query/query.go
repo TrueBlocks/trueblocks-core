@@ -6,14 +6,12 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"runtime"
 	"strings"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 )
 
 // Params are used during calls to the RPC.
@@ -33,22 +31,6 @@ type rpcResponse[T any] struct {
 type eip1474Error struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
-}
-
-var devDebug = false
-var devDebugMethod = ""
-
-func init() {
-	// We need to increase MaxIdleConnsPerHost, otherwise chifra will keep trying to open too
-	// many ports. It can lead to bind errors.
-	// The default value is too low, so Go closes ports too fast. In the meantime, chifra tries
-	// to get new ones and so it can run out of available ports.
-	//
-	// We change DefaultTransport as the whole codebase uses it.
-	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
-
-	devDebugMethod = os.Getenv("TB_DEBUG_CURL")
-	devDebug = len(devDebugMethod) > 0
 }
 
 // Query returns a single result for given method and params.
@@ -90,7 +72,10 @@ func fromRpc(rpcProvider string, payload *Payload, ret any) error {
 		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 	}
 
-	debugCurl(payloadToSend, rpcProvider)
+	debug.DebugCurl(RpcCurl{
+		payload: payloadToSend,
+		url:     rpcProvider},
+	)
 
 	plBytes, err := json.Marshal(payloadToSend)
 	if err != nil {
@@ -162,7 +147,10 @@ func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error
 			Params:  payload.Params,
 			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 		}
-		debugCurl(theLoad, rpcProvider)
+		debug.DebugCurl(RpcCurl{
+			payload: theLoad,
+			url:     rpcProvider},
+		)
 		payloadToSend = append(payloadToSend, theLoad)
 	}
 
@@ -190,42 +178,35 @@ func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
 	return json.Unmarshal(theBytes, result)
 }
 
-func debugCurl(payload rpcPayload, rpcProvider string) {
-	if !devDebug {
-		return
-	}
-
-	if devDebugMethod != "file" && devDebugMethod != "true" && devDebugMethod != "testing" && payload.Method != devDebugMethod {
-		return
-	}
-
-	var bytes []byte
-	var payloadStr string
-	if devDebugMethod == "testing" {
-		rpcProvider = "--rpc-provider--"
-		parts := strings.Split(strings.Replace(payloadStr, "]", "[", -1), "[")
-		parts[1] = "[ --params-- ]"
-		payloadStr = strings.Join(parts, "")
-	} else {
-		bytes, _ = json.MarshalIndent(payload, "", "")
-		payloadStr = strings.Replace(string(bytes), "\n", " ", -1)
-	}
-
-	var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
-	curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
-	curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
-	if devDebugMethod == "file" {
-		_ = file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
-	} else {
-		logger.ToggleDecoration()
-		logger.Info(curlCmd)
-		logger.ToggleDecoration()
-	}
+func init() {
+	// We need to increase MaxIdleConnsPerHost, otherwise chifra will keep trying to open too
+	// many ports. It can lead to bind errors.
+	// The default value is too low, so Go closes ports too fast. In the meantime, chifra tries
+	// to get new ones and so it can run out of available ports.
+	//
+	// We change DefaultTransport as the whole codebase uses it.
+	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
 }
 
-func CloseDebugger() {
-	if !devDebug {
-		return
-	}
-	logger.Info("Closing curl debugger")
+type RpcCurl struct {
+	payload rpcPayload
+	url     string
+}
+
+func (c RpcCurl) Url() string {
+	return c.url
+}
+
+func (c RpcCurl) Body() string {
+	return `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{url}]`
+}
+
+func (c RpcCurl) Method() string {
+	return c.payload.Method
+}
+
+func (c RpcCurl) Payload() string {
+	bytes, _ := json.MarshalIndent(c.payload, "", "")
+	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
+	return payloadStr
 }
