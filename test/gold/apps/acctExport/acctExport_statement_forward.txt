@@ -82,7 +82,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          25000000000000000
 TEST[DATE|TIME]    correctingReason:    
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -150,7 +150,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          25000000000000000
 TEST[DATE|TIME]    correctingReason:    
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -206,7 +206,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          85000000000000000000
 TEST[DATE|TIME]    correctingReason:    
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -263,7 +263,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          702230000000000
 TEST[DATE|TIME]    endBalCalc:          24752820000000000
 TEST[DATE|TIME]    correctingReason:    
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
@@ -322,7 +322,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          24050590000000000
 TEST[DATE|TIME]    correctingReason:    endbal
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -380,7 +380,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          24050590000000000
 TEST[DATE|TIME]    correctingReason:    endbal
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -548,7 +548,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          -450562200000000000
 TEST[DATE|TIME]    endBalCalc:          24050590000000000
 TEST[DATE|TIME]    correctingReason:    
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
@@ -662,7 +662,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          -450562200000000000
 TEST[DATE|TIME]    endBalCalc:          24050590000000000
 TEST[DATE|TIME]    correctingReason:    
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
@@ -889,6 +889,7 @@ TEST[DATE|TIME] price: 173.81
       "amountOut": "0",
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
+      "assetType": "eth",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8769019,
@@ -914,7 +915,7 @@ TEST[DATE|TIME] price: 173.81
       "priceSource": "maker",
       "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "reconciled": true,
-      "reconciliationType": "regular-eth",
+      "reconciliationType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
@@ -933,6 +934,7 @@ TEST[DATE|TIME] price: 173.81
       "amountOut": "0",
       "assetAddr": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "assetSymbol": "TRB",
+      "assetType": "token",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8769029,
@@ -958,7 +960,7 @@ TEST[DATE|TIME] price: 173.81
       "priceSource": "not-priced",
       "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "reconciled": true,
-      "reconciliationType": "regular-token",
+      "reconciliationType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
@@ -977,6 +979,7 @@ TEST[DATE|TIME] price: 173.81
       "amountOut": "0",
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
+      "assetType": "trace-eth",
       "begBal": "0.025",
       "begBalDiff": "0",
       "blockNumber": 8769052,
@@ -1002,11 +1005,11 @@ TEST[DATE|TIME] price: 173.81
       "priceSource": "maker",
       "recipient": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "reconciled": true,
-      "reconciliationType": "traces-prevDiff-same-eth",
+      "reconciliationType": "diff-same",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "spotPrice": 173.76,
+      "spotPrice": 173.765,
       "timestamp": 1571458005,
       "totalIn": "0",
       "totalOut": "0.00024718",
@@ -1021,9 +1024,13 @@ TEST[DATE|TIME] price: 173.81
       "amountOut": "0",
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
+      "assetType": "trace-eth",
       "begBal": "0.02475282",
       "begBalDiff": "0",
       "blockNumber": 8769052,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
       "endBal": "0.02405059",
@@ -1043,11 +1050,11 @@ TEST[DATE|TIME] price: 173.81
       "priceSource": "maker",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
       "reconciled": true,
-      "reconciliationType": "traces-same-same-eth",
+      "reconciliationType": "same-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "spotPrice": 173.76,
+      "spotPrice": 173.765,
       "timestamp": 1571458005,
       "totalIn": "0",
       "totalOut": "0.00070223",
@@ -1062,6 +1069,7 @@ TEST[DATE|TIME] price: 173.81
       "amountOut": "85",
       "assetAddr": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "assetSymbol": "TRB",
+      "assetType": "token",
       "begBal": "85",
       "begBalDiff": "0",
       "blockNumber": 8769052,
@@ -1087,7 +1095,7 @@ TEST[DATE|TIME] price: 173.81
       "priceSource": "not-priced",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
       "reconciled": true,
-      "reconciliationType": "nextDiff-token",
+      "reconciliationType": "same-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
@@ -1106,6 +1114,7 @@ TEST[DATE|TIME] price: 173.81
       "amountOut": "0",
       "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetSymbol": "ETH",
+      "assetType": "trace-eth",
       "begBal": "0.02405059",
       "begBalDiff": "0",
       "blockNumber": 8769064,
@@ -1114,7 +1123,6 @@ TEST[DATE|TIME] price: 173.81
       "correctingReason": "",
       "date": "2019-10-19 04:10:09 UTC",
       "decimals": 18,
-      "encoding": "0x2295115b",
       "endBal": "0.47461279",
       "endBalCalc": "0.47461279",
       "endBalDiff": "0",
@@ -1132,7 +1140,7 @@ TEST[DATE|TIME] price: 173.81
       "priceSource": "maker",
       "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "reconciled": true,
-      "reconciliationType": "trace-eth",
+      "reconciliationType": "same-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",

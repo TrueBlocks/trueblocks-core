@@ -1,4 +1,4 @@
-chifra export  0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 --accounting --statements --ether --fmt json --first_block 11670418 --last_block 11670420 --asset 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 --max_records 40
+chifra export  0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 --accounting --statements --ether --asset 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 --fmt json --first_block 11670418 --last_block 11670420 --max_records 40
 TEST[DATE|TIME] Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
@@ -22,7 +22,7 @@ TEST[DATE|TIME]   Sender.IsZero:     0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 
 TEST[DATE|TIME]   or Sender == To:   false
 TEST[DATE|TIME]     mayBeAirdrop:    --> false
 TEST[DATE|TIME]   EndBal-BegBal:     -1
-TEST[DATE|TIME]   MoneyMoved:        true
+TEST[DATE|TIME]   Material:          true
 TEST[DATE|TIME]     noBalanceChange: --> false
 TEST[DATE|TIME]   ---> Not a nullTransfer
 TEST[DATE|TIME] Needs correction for token transfer
@@ -73,7 +73,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME]    amountOut:           14.922878243871414864
 TEST[DATE|TIME]    correctingOut:       -0.000000038340920823
 TEST[DATE|TIME]    correctingReason:    endbal
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report

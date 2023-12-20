@@ -50,7 +50,7 @@ TEST[DATE|TIME]    endBal:              5 (0)
 TEST[DATE|TIME]    endBalCalc:          5
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -83,7 +83,7 @@ TEST[DATE|TIME]    endBal:              10 (0)
 TEST[DATE|TIME]    endBalCalc:          10
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -116,7 +116,7 @@ TEST[DATE|TIME]    endBal:              13.75 (0)
 TEST[DATE|TIME]    endBalCalc:          13.75
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -149,7 +149,7 @@ TEST[DATE|TIME]    endBal:              18.75 (0)
 TEST[DATE|TIME]    endBalCalc:          18.75
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -182,7 +182,7 @@ TEST[DATE|TIME]    endBal:              23.75 (0)
 TEST[DATE|TIME]    endBalCalc:          23.75
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -215,7 +215,7 @@ TEST[DATE|TIME]    endBal:              28.75 (0)
 TEST[DATE|TIME]    endBalCalc:          28.75
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -248,7 +248,7 @@ TEST[DATE|TIME]    endBal:              32.5 (0)
 TEST[DATE|TIME]    endBalCalc:          32.5
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerUncleRewardIn:  3.75
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -281,7 +281,7 @@ TEST[DATE|TIME]    endBal:              37.5 (0)
 TEST[DATE|TIME]    endBalCalc:          37.5
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -314,7 +314,7 @@ TEST[DATE|TIME]    endBal:              42.5 (0)
 TEST[DATE|TIME]    endBalCalc:          42.5
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -348,7 +348,7 @@ TEST[DATE|TIME]    endBalCalc:          47.65625
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -381,7 +381,7 @@ TEST[DATE|TIME]    endBal:              52.65625 (0)
 TEST[DATE|TIME]    endBalCalc:          52.65625
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -414,7 +414,7 @@ TEST[DATE|TIME]    endBal:              57.65625 (0)
 TEST[DATE|TIME]    endBalCalc:          57.65625
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -448,7 +448,7 @@ TEST[DATE|TIME]    endBalCalc:          62.8125
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report

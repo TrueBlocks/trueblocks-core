@@ -589,7 +589,7 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 	return sum
 }
 
-func (s *SimpleStatement) MoneyMoved() bool {
+func (s *SimpleStatement) IsMaterial() bool {
 	return s.TotalIn().Cmp(new(big.Int)) != 0 || s.TotalOut().Cmp(new(big.Int)) != 0
 }
 
@@ -651,7 +651,7 @@ func (s *SimpleStatement) IsStableCoin() bool {
 func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 	lotsOfLogs := len(tx.Receipt.Logs) > 10
 	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
-	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.MoneyMoved()
+	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.IsMaterial()
 	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
 
 	// TODO: BOGUS PERF
@@ -665,7 +665,7 @@ func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
 
 	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
-	logger.TestLog(true, "  MoneyMoved:       ", s.MoneyMoved())
+	logger.TestLog(true, "  material:         ", s.IsMaterial())
 	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
 
 	if !ret {
@@ -756,7 +756,11 @@ func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "assetAddr:             ", s.AssetAddr, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
-	logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))
+	if s.AssetType == "eth" {
+		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d", s.BlockNumber, s.TransactionIndex))
+	} else {
+		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))
+	}
 	logger.TestLog(true, "priceSource:           ", s.SpotPrice, "("+s.PriceSource+")")
 	reportL("---------------------------------------------------")
 	logger.TestLog(true, "Trial balance:")
@@ -784,7 +788,7 @@ func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
 	reportE("   selfDestructOut:    ", &s.SelfDestructOut)
 	reportE("   gasOut:             ", &s.GasOut)
 	logger.TestLog(s.CorrectingReason != "", "   correctingReason:   ", s.CorrectingReason)
-	logger.TestLog(true, "   moneyMoved:         ", s.MoneyMoved())
+	logger.TestLog(true, "   material:           ", s.IsMaterial())
 	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
 	if !s.Reconciled() {
 		logger.TestLog(true, " ^^ we need to fix this ^^")

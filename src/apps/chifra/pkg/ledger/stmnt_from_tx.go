@@ -101,7 +101,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		}
 
 		if !l.UseTraces && l.trialBalance("eth", &ret) {
-			if ret.MoneyMoved() {
+			if ret.IsMaterial() {
 				statements = append(statements, ret)
 			} else {
 				logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")

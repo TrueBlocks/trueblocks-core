@@ -42,7 +42,7 @@ TEST[DATE|TIME]    endBal:              4200 (0)
 TEST[DATE|TIME]    endBalCalc:          4200
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    prefundIn:           4200
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -76,7 +76,7 @@ TEST[DATE|TIME]    endBalCalc:          0.074679320489077336
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           4199.9
 TEST[DATE|TIME]    gasOut:              0.025320679510922664
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -110,7 +110,7 @@ TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           0.074259320489077336
 TEST[DATE|TIME]    gasOut:              0.00042
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report

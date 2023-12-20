@@ -25,7 +25,7 @@ func (l *Ledger) trialBalance(reason string, s *types.SimpleStatement) bool {
 	}
 
 	// TODO: BOGUS PERF
-	if s.MoneyMoved() {
+	if s.IsMaterial() {
 		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(l.Conn, l.TestMode, s)
 	}
 
