@@ -170,13 +170,12 @@ func fetchFromIpfsGateway(ctx context.Context, gateway, hash string) (*fetchResu
 		return nil, fmt.Errorf("fetchFromIpfsGateway %s returned status code: %d", url, response.StatusCode)
 	}
 
-	if len(response.Header.Get("Content-Length")) == 0 {
-		return nil, fmt.Errorf("fetchFromIpfsGateway %s returned zero length header", url)
-	}
-
-	contentLen, err := strconv.ParseInt(response.Header.Get("Content-Length"), 10, 64)
-	if err != nil {
-		return nil, fmt.Errorf("response.Header.Get %s returned error: %w", url, err)
+	contentLen := int64(0)
+	if len(response.Header.Get("Content-Length")) != 0 {
+		contentLen, err = strconv.ParseInt(response.Header.Get("Content-Length"), 10, 64)
+		if err != nil {
+			return nil, fmt.Errorf("response.Header.Get %s returned error: %w", url, err)
+		}
 	}
 
 	body := response.Body
