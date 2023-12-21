@@ -24,7 +24,8 @@ func (opts *InitOptions) HandleDryRun() error {
 		_ = history.ToHistory(historyFile, "headerVersion", saved)
 	}()
 	_ = history.ToHistory(historyFile, "headerVersion", remoteManifest.Version)
-	fmt.Println(saved, remoteManifest.Version)
+	logger.InfoTable("Existing version:", saved)
+	logger.InfoTable("Remote version:", remoteManifest.Version)
 
 	if remoteManifest.Chain != chain {
 		msg := fmt.Sprintf("The chain value found in the downloaded manifest (%s) does not match the manifest on the command line (%s).", remoteManifest.Chain, chain)
