@@ -16,8 +16,8 @@ weight: 1600
 toc: true
 ---
 <!-- markdownlint-disable MD033 MD036 MD041 -->
-The Admin gourp of commands allows you to query the status of the TrueBlocks system and
-manage various apects including the Unchained Index. You may query the status; query for information
+The Admin group of commands allows you to query the status of the TrueBlocks system and
+manage various aspects including the Unchained Index. You may query the status; query for information
 about TrueBlocks caches; control the creation, sharing, and pinning of the Unchained Index; and even
 serve the data through an API.
 
@@ -160,7 +160,7 @@ To convert the options for a command line tool to an API call, do the following:
 
 1. Any `--snake_case` argument to the command line should be converted to `camelCase`. For example, `--no_header` on the command line should be sent as `&noHeader` to the API server.
 2. Any `switch` on the command line, (i.e., options whose presence indicates `true` and whose absence indicates `false`) should be sent as a `boolean` to the API server. For example, `--no_header` on the command line should be sent as `&noHeader=true` to the API server. If the option is `fales`, you do not need to send it to the API server.
-3. Positionals such as the addresses, topics, and four-bytes for `chifra export`, must be prepended with their positional name. For example, `chifra export <address> <topic>` should be sent as `&addrs=<address>&topics=<topic>` to the API server. For some commands (experiment) you may send more than one value for a positional with `%20` seperating the entries or by sending multiple positionals (i.e., `&addrs=<address1>&addrs=<address2>`).
+3. Positionals such as the addresses, topics, and four-bytes for `chifra export`, must be prepended with their positional name. For example, `chifra export <address> <topic>` should be sent as `&addrs=<address>&topics=<topic>` to the API server. For some commands (experiment) you may send more than one value for a positional with `%20` separating the entries or by sending multiple positionals (i.e., `&addrs=<address1>&addrs=<address2>`).
 
 ## chifra scrape
 
@@ -174,7 +174,7 @@ multiplexer such as `tmux`. You may start and stop `chifra scrape` as needed, bu
 scraper will not be keeping up with the front of the blockchain. The next time it starts, it will
 have to catch up to the chain, a process that may take several hours depending on how long ago it
 was last run. See the section below and the "Papers" section of our website for more information
-on how the scraping process works and prerequisites for it proper operation.
+on how the scraping process works and prerequisites for its proper operation.
 
 You may adjust the speed of the index creation with the `--sleep` and `--block_cnt` options. On
 some machines, or when running against some EVM node software, the scraper may overburden the
@@ -229,7 +229,7 @@ Each of the following additional configurable command line options are available
 
 Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
-These items may be set in three ways, each overridding the preceeding method:
+These items may be set in three ways, each overriding the preceding method:
 
 -- in the above configuration file under the `[scrape.<chain>]` group,  
 -- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
@@ -241,7 +241,7 @@ These items may be set in three ways, each overridding the preceeding method:
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
 each pass, the scraper descends as deeply as is possible into each block's data. (This is why
 TrueBlocks requires a `--tracing` node.) As the scraper encounters appearances of address in the
-block's data, it adds those appearance to a growing index. Periodically (after processing the the
+block's data, it adds those appearances to a growing index. Periodically (after processing the
 block that contains the 2,000,000th appearance), the system consolidates an **index chunk**.
 
 An **index chunk** is a portion of the index containing approximately 2,000,000 records (although,
@@ -276,7 +276,7 @@ more information about running the scraper and building and sharing the index of
 
 <!-- markdownlint-disable MD041 -->
 The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
-and analyizing the Unchained Index. It provides options to list pins, the Manifest, summary data
+and analyzing the Unchained Index. It provides options to list pins, the Manifest, summary data
 on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
 tool will eventually allow users to clean their local index, clean their remote index, study
 the indexes, etc. Stay tuned.
@@ -297,7 +297,7 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
-  -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
+  -r, --remote             prior to processing, retrieve the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
   -F, --first_block uint   first block to process (inclusive)
   -L, --last_block uint    last block to process (inclusive)
@@ -358,7 +358,7 @@ time you run it.
 
 Certain parts of the system (`chifra list` and `chifra export` for example) if you have not
 previously run `chifra init` or `chifra scrape`. You will be warned by the system until it's
-satified.
+satisfied.
 
 If you run `chifra init` and allow it to complete, the next time you run `chifra scrape`, it will
 start where `init` finished. This means that only the blooms will be stored on your hard drive.
