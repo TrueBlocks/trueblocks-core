@@ -10,7 +10,7 @@ multiplexer such as `tmux`. You may start and stop `chifra scrape` as needed, bu
 scraper will not be keeping up with the front of the blockchain. The next time it starts, it will
 have to catch up to the chain, a process that may take several hours depending on how long ago it
 was last run. See the section below and the "Papers" section of our website for more information
-on how the scraping process works and prerequisites for it proper operation.
+on how the scraping process works and prerequisites for its proper operation.
 
 You may adjust the speed of the index creation with the `--sleep` and `--block_cnt` options. On
 some machines, or when running against some EVM node software, the scraper may overburden the
@@ -65,7 +65,7 @@ Each of the following additional configurable command line options are available
 
 Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
-These items may be set in three ways, each overridding the preceeding method:
+These items may be set in three ways, each overriding the preceding method:
 
 -- in the above configuration file under the `[scrape.<chain>]` group,  
 -- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
@@ -77,7 +77,7 @@ These items may be set in three ways, each overridding the preceeding method:
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
 each pass, the scraper descends as deeply as is possible into each block's data. (This is why
 TrueBlocks requires a `--tracing` node.) As the scraper encounters appearances of address in the
-block's data, it adds those appearance to a growing index. Periodically (after processing the the
+block's data, it adds those appearances to a growing index. Periodically (after processing the
 block that contains the 2,000,000th appearance), the system consolidates an **index chunk**.
 
 An **index chunk** is a portion of the index containing approximately 2,000,000 records (although,
