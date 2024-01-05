@@ -55,7 +55,9 @@ func (opts *ListOptions) ListInternal() error {
 	// EXISTING_CODE
 	// We always freshen the monitors. This call fills the monitors array.
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	if canceled, err := opts.HandleFreshenMonitors(&monitorArray); err != nil || canceled {
+	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, true, opts.Addrs)
+	updater.PublisherAddr = opts.PublisherAddr
+	if canceled, err := updater.FreshenMonitors(&monitorArray); err != nil || canceled {
 		return err
 	}
 
