@@ -1232,14 +1232,6 @@ paths:
             items:
               type: string
               format: topic
-        - name: accountFor
-          description: reconcile the transaction as per the provided address
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
         - name: ether
           description: export values in ether
           required: false
@@ -2741,10 +2733,6 @@ components:
           type: string
           format: int256
           description: "totalOut - gasOut (calculated)"
-        prevAppBlk:
-          type: number
-          format: blknum
-          description: "the block number of the previous appearance, or 0 if this is the first appearance"
         prevBal:
           type: string
           format: int256

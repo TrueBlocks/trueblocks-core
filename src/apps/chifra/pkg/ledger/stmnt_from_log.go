@@ -85,7 +85,6 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 		// TODO: AND CACHE RESULTS IN MEMORY, BUT BE CAREFUL OF MULTIPLE LOGS PER BLOCK (OR TRANSACTION)
 		key := l.ctxKey(log.BlockNumber, log.TransactionIndex)
 		ctx := l.Contexts[key]
-		s.PrevAppBlk = ctx.PrevBlock
 
 		if ofInterest {
 			var err error

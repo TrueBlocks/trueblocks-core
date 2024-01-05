@@ -64,9 +64,6 @@ func (opts *TransactionsOptions) TransactionsInternal() error {
 	} else if opts.Uniq {
 		err = opts.HandleUniq()
 
-	} else if len(opts.AccountFor) > 0 {
-		err = opts.HandleAccounting()
-
 	} else {
 		err = opts.HandleShow()
 	}

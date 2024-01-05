@@ -75,7 +75,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
 TEST[DATE|TIME]    correctingReason:    
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    trialBalance:        true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -88,7 +88,7 @@ TEST[DATE|TIME]   Sender.IsZero:     0x8c492d5f763841767362d716e3e69511f0527791 
 TEST[DATE|TIME]   or Sender == To:   false
 TEST[DATE|TIME]     mayBeAirdrop:    --> false
 TEST[DATE|TIME]   EndBal-BegBal:     0
-TEST[DATE|TIME]   MoneyMoved:        true
+TEST[DATE|TIME]   Material:          true
 TEST[DATE|TIME]     noBalanceChange: --> true
 TEST[DATE|TIME]   ---> Not a nullTransfer
 TEST[DATE|TIME] Needs correction for token transfer
@@ -143,7 +143,7 @@ TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          9998000000000000000000
 TEST[DATE|TIME]    endBalCalc:          9998000000000000000000
 TEST[DATE|TIME]    correctingReason:    endbal
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    trialBalance:        false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report

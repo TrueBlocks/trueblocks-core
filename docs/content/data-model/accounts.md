@@ -235,7 +235,6 @@ Statements consist of the following fields:
 | selfDestructOut     | the value of the self-destructed value out if the accountedFor address was self-destructed                                            | int256    |
 | gasOut              | if the transaction's original sender is the accountedFor address, the amount of gas expended                                          | int256    |
 | totalOutLessGas     | totalOut - gasOut (calculated)                                                                                                        | int256    |
-| prevAppBlk          | the block number of the previous appearance, or 0 if this is the first appearance                                                     | blknum    |
 | prevBal             | the account balance for the given asset for the previous reconciliation                                                               | int256    |
 | begBalDiff          | difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed (calculated) | int256    |
 | endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256    |

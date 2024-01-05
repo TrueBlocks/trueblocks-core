@@ -113,7 +113,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 	}
 
 	if l.trialBalance("trace-eth", &ret) {
-		if ret.MoneyMoved() {
+		if ret.IsMaterial() {
 			statements = append(statements, ret)
 		} else {
 			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")

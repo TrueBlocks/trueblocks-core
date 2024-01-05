@@ -2,30 +2,32 @@ chunks?mode=manifest&check
 {
   "data": [
     {
-      "checkedCnt": 7640,
-      "passedCnt": 7640,
+      "checkedCnt": 8152,
+      "passedCnt": 8152,
       "reason": "Filenames sequential",
       "result": "passed",
-      "visitedCnt": 7640
+      "visitedCnt": 8152
+    },
+    {
+      "checkedCnt": 22,
+      "passedCnt": 22,
+      "reason": "Internally consistent",
+      "result": "passed",
+      "visitedCnt": 22
     },
     {
       "checkedCnt": 11,
-      "failedCnt": 2,
-      "msgStrings": [
-        "000000001-000590502: Magic number expected (0xdeadbeef) got (0xdeadbeef)",
-        "000590503-000864335: Header hash expected (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1) got (0x81ae14ba68e372bc9bd4a295b844abd8e72b1de10fcd706e624647701d911da1)"
-      ],
-      "passedCnt": 9,
-      "reason": "Internally consistent",
-      "result": "failed",
+      "passedCnt": 11,
+      "reason": "Correct version",
+      "result": "passed",
       "visitedCnt": 11
     },
     {
-      "checkedCnt": 15264,
-      "passedCnt": 15264,
+      "checkedCnt": 16288,
+      "passedCnt": 16288,
       "reason": "Consistent hashes",
       "result": "passed",
-      "visitedCnt": 15264
+      "visitedCnt": 16288
     },
     {
       "checkedCnt": 11,
@@ -38,11 +40,11 @@ chunks?mode=manifest&check
       "checkedCnt": 22,
       "failedCnt": 2,
       "msgStrings": [
-        "000864336-001076298: The chunk is in the Disc Files array but not the Cached Manifest array (testing)",
-        "001076299-001229769: The chunk is in the Disc Files array but not the Cached Manifest array (testing)"
+        "000864346-001076302: The chunk is in the disc files array but not the cached manifest array (testing)",
+        "001076303-001229773: The chunk is in the disc files array but not the cached manifest array (testing)"
       ],
       "passedCnt": 20,
-      "reason": "Disc Files to Cached Manifest",
+      "reason": "Disc files to cached manifest",
       "result": "failed",
       "visitedCnt": 22
     },
@@ -50,25 +52,25 @@ chunks?mode=manifest&check
       "checkedCnt": 22,
       "failedCnt": 2,
       "msgStrings": [
-        "000864336-001076298: The chunk is in the Disc Files array but not the Remote Manifest array (testing)",
-        "001076299-001229769: The chunk is in the Disc Files array but not the Remote Manifest array (testing)"
+        "000864346-001076302: The chunk is in the disc files array but not the remote manifest array (testing)",
+        "001076303-001229773: The chunk is in the disc files array but not the remote manifest array (testing)"
       ],
       "passedCnt": 20,
-      "reason": "Disc Files to Remote Manifest",
+      "reason": "Disc files to remote manifest",
       "result": "failed",
       "visitedCnt": 22
     },
     {
-      "checkedCnt": 7632,
+      "checkedCnt": 8144,
       "failedCnt": 2,
       "msgStrings": [
-        "000864336-001076298: The chunk is in the Remote Manifest array but not the Cached Manifest array (testing)",
-        "001076299-001229769: The chunk is in the Remote Manifest array but not the Cached Manifest array (testing)"
+        "000864346-001076302: The chunk is in the remote manifest array but not the cached manifest array (testing)",
+        "001076303-001229773: The chunk is in the remote manifest array but not the cached manifest array (testing)"
       ],
-      "passedCnt": 7630,
-      "reason": "Remote Manifest to Cached Manifest",
+      "passedCnt": 8142,
+      "reason": "Remote manifest to cached manifest",
       "result": "failed",
-      "visitedCnt": 7632
+      "visitedCnt": 8144
     }
   ],
   "meta": {

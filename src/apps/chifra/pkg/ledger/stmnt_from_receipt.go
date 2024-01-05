@@ -22,7 +22,7 @@ func (l *Ledger) getStatementsFromReceipt(conn *rpc.Connection, filter *filter.A
 				return statements, err
 			} else {
 				if statement.Sender == l.AccountFor || statement.Recipient == l.AccountFor {
-					add := !l.NoZero || statement.MoneyMoved()
+					add := !l.NoZero || statement.IsMaterial()
 					if add {
 						statements = append(statements, statement)
 					}

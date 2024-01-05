@@ -1,4 +1,4 @@
-chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --accounting --statements --ether --fmt json --last_block 15549163 --asset 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 --max_records 40
+chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --accounting --statements --ether --asset 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 --fmt json --last_block 15549163 --max_records 40
 TEST[DATE|TIME] Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
@@ -12,42 +12,42 @@ TEST[DATE|TIME] Format:  json
 { "outputFilename": "--output_filename--" }
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (20)
-INFO[DATE|TIME] 010277683-00200:   10277683   10277683    10277711    noop-diff
-INFO[DATE|TIME] 010277711-00064:   10277683   10277711    10277776    diff-diff
-INFO[DATE|TIME] 010277776-00094:   10277711   10277776    10277780    diff-diff
-INFO[DATE|TIME] 010277780-00102:   10277776   10277780    10367593    diff-diff
-INFO[DATE|TIME] 010367593-00194:   10277780   10367593    10367608    diff-diff
-INFO[DATE|TIME] 010367608-00023:   10367593   10367608    10958509    diff-diff
-INFO[DATE|TIME] 010958509-00072:   10367608   10958509    10958518    diff-diff
-INFO[DATE|TIME] 010958518-00077:   10958509   10958518    10972535    diff-diff
-INFO[DATE|TIME] 010972535-00102:   10958518   10972535    10972735    diff-diff
-INFO[DATE|TIME] 010972735-00084:   10972535   10972735    11472274    diff-diff
-INFO[DATE|TIME] 011472274-00222:   10972735   11472274    11947926    diff-diff
-INFO[DATE|TIME] 011947926-00077:   11472274   11947926    12110203    diff-diff
-INFO[DATE|TIME] 012110203-00088:   11947926   12110203    12517694    diff-diff
-INFO[DATE|TIME] 012517694-00073:   12110203   12517694    12655959    diff-diff
-INFO[DATE|TIME] 012655959-00195:   12517694   12655959    12697277    diff-diff
-INFO[DATE|TIME] 012697277-00188:   12655959   12697277    12697303    diff-diff
-INFO[DATE|TIME] 012697303-00099:   12697277   12697303    12697322    diff-diff
-INFO[DATE|TIME] 012697322-00281:   12697303   12697322    12697324    diff-diff
-INFO[DATE|TIME] 012697324-00088:   12697322   12697324    13193257    diff-diff
-INFO[DATE|TIME] 013193257-00227:   12697324   13193257    13269886    diff-diff
+INFO[DATE|TIME] 010277683-00200:   10277683   10277683    10277711 first-diff
+INFO[DATE|TIME] 010277711-00064:   10277683   10277711    10277776 diff-diff
+INFO[DATE|TIME] 010277776-00094:   10277711   10277776    10277780 diff-diff
+INFO[DATE|TIME] 010277780-00102:   10277776   10277780    10367593 diff-diff
+INFO[DATE|TIME] 010367593-00194:   10277780   10367593    10367608 diff-diff
+INFO[DATE|TIME] 010367608-00023:   10367593   10367608    10958509 diff-diff
+INFO[DATE|TIME] 010958509-00072:   10367608   10958509    10958518 diff-diff
+INFO[DATE|TIME] 010958518-00077:   10958509   10958518    10972535 diff-diff
+INFO[DATE|TIME] 010972535-00102:   10958518   10972535    10972735 diff-diff
+INFO[DATE|TIME] 010972735-00084:   10972535   10972735    11472274 diff-diff
+INFO[DATE|TIME] 011472274-00222:   10972735   11472274    11947926 diff-diff
+INFO[DATE|TIME] 011947926-00077:   11472274   11947926    12110203 diff-diff
+INFO[DATE|TIME] 012110203-00088:   11947926   12110203    12517694 diff-diff
+INFO[DATE|TIME] 012517694-00073:   12110203   12517694    12655959 diff-diff
+INFO[DATE|TIME] 012655959-00195:   12517694   12655959    12697277 diff-diff
+INFO[DATE|TIME] 012697277-00188:   12655959   12697277    12697303 diff-diff
+INFO[DATE|TIME] 012697303-00099:   12697277   12697303    12697322 diff-diff
+INFO[DATE|TIME] 012697322-00281:   12697303   12697322    12697324 diff-diff
+INFO[DATE|TIME] 012697324-00088:   12697322   12697324    13193257 diff-diff
+INFO[DATE|TIME] 013193257-00227:   12697324   13193257    13193257 diff-last
 INFO[DATE|TIME] ------------------------------------------------------------
 INFO[DATE|TIME] Contexts (14)
-INFO[DATE|TIME] 013269886-00045:   13193257   13269886    13269900    diff-diff
-INFO[DATE|TIME] 013269900-00177:   13269886   13269900    13269973    diff-diff
-INFO[DATE|TIME] 013269973-00178:   13269900   13269973    13772984    diff-diff
-INFO[DATE|TIME] 013772984-00129:   13269973   13772984    14359849    diff-diff
-INFO[DATE|TIME] 014359849-00140:   13772984   14359849    14359857    diff-diff
-INFO[DATE|TIME] 014359857-00202:   14359849   14359857    14359877    diff-diff
-INFO[DATE|TIME] 014359877-00153:   14359857   14359877    14360325    diff-diff
-INFO[DATE|TIME] 014360325-00141:   14359877   14360325    14360361    diff-diff
-INFO[DATE|TIME] 014360361-00080:   14360325   14360361    14366254    diff-diff
-INFO[DATE|TIME] 014366254-00017:   14360361   14366254    14436713    diff-diff
-INFO[DATE|TIME] 014436713-00058:   14366254   14436713    14436713    diff-same
-INFO[DATE|TIME] 014436713-00059:   14436713   14436713    14469880    same-diff
-INFO[DATE|TIME] 014469880-00033:   14436713   14469880    15549162    diff-diff
-INFO[DATE|TIME] 015549162-00083:   14469880   15549162    15549162    diff-noop
+INFO[DATE|TIME] 013269886-00045:   13269886   13269886    13269900 first-diff
+INFO[DATE|TIME] 013269900-00177:   13269886   13269900    13269973 diff-diff
+INFO[DATE|TIME] 013269973-00178:   13269900   13269973    13772984 diff-diff
+INFO[DATE|TIME] 013772984-00129:   13269973   13772984    14359849 diff-diff
+INFO[DATE|TIME] 014359849-00140:   13772984   14359849    14359857 diff-diff
+INFO[DATE|TIME] 014359857-00202:   14359849   14359857    14359877 diff-diff
+INFO[DATE|TIME] 014359877-00153:   14359857   14359877    14360325 diff-diff
+INFO[DATE|TIME] 014360325-00141:   14359877   14360325    14360361 diff-diff
+INFO[DATE|TIME] 014360361-00080:   14360325   14360361    14366254 diff-diff
+INFO[DATE|TIME] 014366254-00017:   14360361   14366254    14436713 diff-diff
+INFO[DATE|TIME] 014436713-00058:   14366254   14436713    14436713 diff-same
+INFO[DATE|TIME] 014436713-00059:   14436713   14436713    14469880 same-diff
+INFO[DATE|TIME] 014469880-00033:   14436713   14469880    15549162 diff-diff
+INFO[DATE|TIME] 015549162-00083:   14469880   15549162    15549162 diff-last
 TEST[DATE|TIME] Start of trial balance report
 TEST[DATE|TIME] A possible nullTransfer
 TEST[DATE|TIME]   nLogs:             1000
@@ -56,7 +56,7 @@ TEST[DATE|TIME]   Sender.IsZero:     0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f 
 TEST[DATE|TIME]   or Sender == To:   false
 TEST[DATE|TIME]     mayBeAirdrop:    --> false
 TEST[DATE|TIME]   EndBal-BegBal:     0
-TEST[DATE|TIME]   MoneyMoved:        true
+TEST[DATE|TIME]   Material:          true
 TEST[DATE|TIME]     noBalanceChange: --> true
 TEST[DATE|TIME] Correcting token transfer for a null transfer
 TEST[DATE|TIME] =========================================================
@@ -77,56 +77,35 @@ TEST[DATE|TIME] bigPrice:            1440.1112570636812698
 TEST[DATE|TIME] price:               1440.1112570636813
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> TOKENS
+TEST[DATE|TIME] ====> token
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     14469880
-TEST[DATE|TIME] prevBlock:              14469880
-TEST[DATE|TIME] transfer.blockNumber:   15549162
-TEST[DATE|TIME] nextBlock:              15549162
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             false
-TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Previous:               14469880
+TEST[DATE|TIME] Current:                15549162
+TEST[DATE|TIME] Next:                   15549162
+TEST[DATE|TIME] reconciliationType:     diff-last
+TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME] sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME] assetAddr:              0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
+TEST[DATE|TIME] hash:                   0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
+TEST[DATE|TIME] timestamp:              1663367531
+TEST[DATE|TIME] blockNumber:            15549162.83.1774
+TEST[DATE|TIME] priceSource:            0 (not-priced)
+TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-noop-token
-TEST[DATE|TIME]    accountedFor:        0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
-TEST[DATE|TIME]    sender:              0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f
-TEST[DATE|TIME]    recipient:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
-TEST[DATE|TIME]    assetAddr:           0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
-TEST[DATE|TIME]    assetSymbol:         mdai.io
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          14469880
-TEST[DATE|TIME]    hash:                0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
-TEST[DATE|TIME]    timestamp:           1663367531
-TEST[DATE|TIME]    blockNumber:         15549162
-TEST[DATE|TIME]    transactionIndex:    83
-TEST[DATE|TIME]    logIndex:            1774
-TEST[DATE|TIME]    priceSource:         not-priced
-TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              2017044745122853478376
-TEST[DATE|TIME]    amountIn:            0
-TEST[DATE|TIME]    internalIn:          0
-TEST[DATE|TIME]    minerBaseRewardIn:   0
-TEST[DATE|TIME]    minerNephewRewardIn: 0
-TEST[DATE|TIME]    minerTxFeeIn:        0
-TEST[DATE|TIME]    minerUncleRewardIn:  0
-TEST[DATE|TIME]    correctingIn:        2017000000000000000000
-TEST[DATE|TIME]    prefundIn:           0
-TEST[DATE|TIME]    selfDestructIn:      0
-TEST[DATE|TIME]    totalIn:             2017000000000000000000
-TEST[DATE|TIME]    amountOut:           0
-TEST[DATE|TIME]    internalOut:         0
-TEST[DATE|TIME]    correctingOut:       2017000000000000000000
-TEST[DATE|TIME]    selfDestructOut:     0
-TEST[DATE|TIME]    gasOut:              0
-TEST[DATE|TIME]    totalOut:            2017000000000000000000
+TEST[DATE|TIME]    begBal:              2017.044745122853478376 (0)
+TEST[DATE|TIME]    totalIn:             2017
+TEST[DATE|TIME]    totalOut:            2017
 TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]    endBal:              2017044745122853478376
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
-TEST[DATE|TIME]    endBalCalc:          2017044745122853478376
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              2017.044745122853478376 (0)
+TEST[DATE|TIME]    endBalCalc:          2017.044745122853478376
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    correctingIn:        2017
+TEST[DATE|TIME]    correctingOut:       2017
 TEST[DATE|TIME]    correctingReason:    null-transfer
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -141,6 +120,7 @@ Results in ./failed_statement_2572_1_out.file
       "amountOut": "0",
       "assetAddr": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
       "assetSymbol": "mdai.io",
+      "assetType": "token",
       "begBal": "2017.044745122853478376",
       "begBalDiff": "0",
       "blockNumber": 15549162,
@@ -161,12 +141,11 @@ Results in ./failed_statement_2572_1_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 14469880,
       "prevBal": "0",
       "priceSource": "not-priced",
       "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
       "reconciled": true,
-      "reconciliationType": "diff-noop-token",
+      "reconciliationType": "diff-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f",

@@ -16,39 +16,31 @@ TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback p
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     0
-TEST[DATE|TIME] prevBlock:              0
-TEST[DATE|TIME] transfer.blockNumber:   0
-TEST[DATE|TIME] nextBlock:              46685
-TEST[DATE|TIME] isPrevDiff:             false
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Previous:               0
+TEST[DATE|TIME] Current:                0
+TEST[DATE|TIME] Next:                   46685
+TEST[DATE|TIME] reconciliationType:     genesis
+TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+TEST[DATE|TIME] timestamp:              1438269975
+TEST[DATE|TIME] blockNumber:            0.270.0
+TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
+TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  genesis
-TEST[DATE|TIME]    assetType:           eth
-TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME]    sender:              0x0000000000000000000000000050726566756e64
-TEST[DATE|TIME]    recipient:           0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    hash:                0x0000000000000000000000000000000000000000000000000000000000000000
-TEST[DATE|TIME]    timestamp:           1438269975
-TEST[DATE|TIME]    blockNumber:         0
-TEST[DATE|TIME]    transactionIndex:    270
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
-TEST[DATE|TIME]    spotPrice:           0
-TEST[DATE|TIME]    begBal:              0
-TEST[DATE|TIME]    prefundIn:           1970
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0 (0)
 TEST[DATE|TIME]    totalIn:             1970
 TEST[DATE|TIME]    totalOut:            0
 TEST[DATE|TIME]    amountNet:           1970
-TEST[DATE|TIME]    endBal:              1970
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1970 (0)
 TEST[DATE|TIME]    endBalCalc:          1970
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    prefundIn:           1970
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -57,42 +49,32 @@ TEST[DATE|TIME] Block 46685 is prior to deployment (3684349) of Maker. No fallba
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     0
-TEST[DATE|TIME] prevBlock:              0
-TEST[DATE|TIME] transfer.blockNumber:   46685
-TEST[DATE|TIME] nextBlock:              46709
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             true
-TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Previous:               0
+TEST[DATE|TIME] Current:                46685
+TEST[DATE|TIME] Next:                   46709
+TEST[DATE|TIME] reconciliationType:     diff-diff
+TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
+TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
+TEST[DATE|TIME] timestamp:              1438927408
+TEST[DATE|TIME] blockNumber:            46685.0.0
+TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
+TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-diff
-TEST[DATE|TIME]    assetType:           eth
-TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          0
-TEST[DATE|TIME]    hash:                0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
-TEST[DATE|TIME]    timestamp:           1438927408
-TEST[DATE|TIME]    blockNumber:         46685
-TEST[DATE|TIME]    transactionIndex:    0
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
-TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             1970
-TEST[DATE|TIME]    begBal:              1970
+TEST[DATE|TIME]    begBal:              1970 (0)
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           5
-TEST[DATE|TIME]    gasOut:              0.0105
 TEST[DATE|TIME]    totalOut:            5.0105
 TEST[DATE|TIME]    amountNet:           -5.0105
-TEST[DATE|TIME]    endBal:              1964.9895
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1964.9895 (0)
 TEST[DATE|TIME]    endBalCalc:          1964.9895
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           5
+TEST[DATE|TIME]    gasOut:              0.0105
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -101,42 +83,32 @@ TEST[DATE|TIME] Block 46709 is prior to deployment (3684349) of Maker. No fallba
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> eth
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ledger.blockNumber:     46685
-TEST[DATE|TIME] prevBlock:              46685
-TEST[DATE|TIME] transfer.blockNumber:   46709
-TEST[DATE|TIME] nextBlock:              46709
-TEST[DATE|TIME] isPrevDiff:             true
-TEST[DATE|TIME] isNextDiff:             false
-TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Previous:               46685
+TEST[DATE|TIME] Current:                46709
+TEST[DATE|TIME] Next:                   46709
+TEST[DATE|TIME] reconciliationType:     diff-last
+TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
+TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
+TEST[DATE|TIME] timestamp:              1438927854
+TEST[DATE|TIME] blockNumber:            46709.0.0
+TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
+TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    reconciliationType:  diff-last
-TEST[DATE|TIME]    assetType:           eth
-TEST[DATE|TIME]    accountedFor:        0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME]    sender:              0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME]    recipient:           0xad00b7a324f31351d397408c8c3952ea198317eb
-TEST[DATE|TIME]    assetAddr:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME]    assetSymbol:         WEI
-TEST[DATE|TIME]    decimals:            18
-TEST[DATE|TIME]    prevAppBlk:          46685
-TEST[DATE|TIME]    hash:                0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
-TEST[DATE|TIME]    timestamp:           1438927854
-TEST[DATE|TIME]    blockNumber:         46709
-TEST[DATE|TIME]    transactionIndex:    0
-TEST[DATE|TIME]    logIndex:            0
-TEST[DATE|TIME]    priceSource:         eth-not-priced-pre-maker
-TEST[DATE|TIME]    spotPrice:           0
 TEST[DATE|TIME]    prevBal:             1964.9895
-TEST[DATE|TIME]    begBal:              1964.9895
+TEST[DATE|TIME]    begBal:              1964.9895 (0)
 TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    amountOut:           1964.8895
-TEST[DATE|TIME]    gasOut:              0.0105
 TEST[DATE|TIME]    totalOut:            1964.9
 TEST[DATE|TIME]    amountNet:           -1964.9
-TEST[DATE|TIME]    endBal:              0.0895
-TEST[DATE|TIME]    begBalDiff:          0
-TEST[DATE|TIME]    endBalDiff:          0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.0895 (0)
 TEST[DATE|TIME]    endBalCalc:          0.0895
-TEST[DATE|TIME]    moneyMoved:          true
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           1964.8895
+TEST[DATE|TIME]    gasOut:              0.0105
+TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] End of trial balance report
@@ -254,7 +226,6 @@ Results in ./statement_3_accounting_out.file
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
           "prefundIn": "0",
-          "prevAppBlk": 0,
           "prevBal": "1970000000000000000000",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
@@ -326,7 +297,6 @@ Results in ./statement_3_accounting_out.file
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
           "prefundIn": "0",
-          "prevAppBlk": 46685,
           "prevBal": "1964989500000000000000",
           "priceSource": "eth-not-priced-pre-maker",
           "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",

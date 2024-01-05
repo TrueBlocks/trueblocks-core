@@ -163,7 +163,7 @@ func IsValidAddress(val string) bool {
 
 func IsValidAddressE(val string) (bool, error) {
 	if strings.HasSuffix(val, ".eth") {
-		return true, nil
+		return strings.Replace(val, "\t\n\r", "", -1) == val, nil
 	}
 	return isValidHex("address", val, 20)
 }

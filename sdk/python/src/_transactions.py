@@ -14,7 +14,6 @@ transactionsOpts = {
     "logs": {"hotkey": "-l", "type": "switch"},
     "emitter": {"hotkey": "-m", "type": "flag"},
     "topic": {"hotkey": "-B", "type": "flag"},
-    "accountFor": {"hotkey": "-A", "type": "flag"},
     "cacheTraces": {"hotkey": "", "type": "switch"},
     "ether": {"hotkey": "-H", "type": "switch"},
     "raw": {"hotkey": "-w", "type": "switch"},

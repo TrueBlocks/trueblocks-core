@@ -32,7 +32,6 @@ type TransactionsOptions struct {
 	Logs           bool                     `json:"logs,omitempty"`           // Display only the logs found in the transaction(s)
 	Emitter        []string                 `json:"emitter,omitempty"`        // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic          []string                 `json:"topic,omitempty"`          // For the --logs option only, filter logs to show only those with this topic(s)
-	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	CacheTraces    bool                     `json:"cacheTraces,omitempty"`    // Force the transaction's traces into the cache
 	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
@@ -55,7 +54,6 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
-	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
 	logger.TestLog(opts.Source, "Source: ", opts.Source)
 	opts.Conn.TestLog(opts.getCaches())
@@ -99,8 +97,6 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Topic = append(opts.Topic, s...)
 			}
-		case "accountFor":
-			opts.AccountFor = value[0]
 		case "cacheTraces":
 			opts.CacheTraces = true
 		case "source":
@@ -112,8 +108,6 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
-	opts.AccountForAddr = base.HexToAddress(opts.AccountFor)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -140,8 +134,6 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
-	opts.AccountForAddr = base.HexToAddress(opts.AccountFor)
 
 	// EXISTING_CODE
 	opts.Transactions = args
