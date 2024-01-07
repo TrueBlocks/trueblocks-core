@@ -15,7 +15,7 @@ time you run it.
 
 Certain parts of the system (`chifra list` and `chifra export` for example) if you have not
 previously run `chifra init` or `chifra scrape`. You will be warned by the system until it's
-satified.
+satisfied.
 
 If you run `chifra init` and allow it to complete, the next time you run `chifra scrape`, it will
 start where `init` finished. This means that only the blooms will be stored on your hard drive.

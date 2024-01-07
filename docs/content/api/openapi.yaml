@@ -2100,7 +2100,7 @@ paths:
             type: boolean
         - name: remote
           description: >
-            prior to processing, retreive the manifest from the Unchained Index smart contract
+            prior to processing, retrieve the manifest from the Unchained Index smart contract
           required: false
           style: form
           in: query
