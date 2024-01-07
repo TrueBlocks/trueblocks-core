@@ -1,4 +1,4 @@
-package listPkg
+package monitor
 
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
@@ -22,22 +22,35 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// AddressMonitorMap carries arrays of appearances that have not yet been written to the monitor file
-type AddressMonitorMap map[base.Address]*monitor.Monitor
-
 // MonitorUpdate stores the original 'chifra list' command line options plus
 type MonitorUpdate struct {
-	MaxTasks   int
-	MonitorMap AddressMonitorMap
-	Options    *ListOptions
-	FirstBlock uint64
+	MaxTasks      int
+	MonitorMap    map[base.Address]*Monitor
+	Chain         string
+	PublisherAddr base.Address
+	TestMode      bool
+	Silent        bool
+	FirstBlock    uint64
+	Addrs         []string
+}
+
+func NewUpdater(chain string, testMode, silent bool, addrs []string) MonitorUpdate {
+	return MonitorUpdate{
+		MaxTasks:      12,
+		FirstBlock:    utils.NOPOS,
+		Chain:         chain,
+		PublisherAddr: base.Address{},
+		TestMode:      testMode,
+		Silent:        silent,
+		Addrs:         addrs,
+		MonitorMap:    make(map[base.Address]*Monitor, len(addrs)),
+	}
 }
 
 const maxTestingBlock = 17000000
@@ -70,15 +83,14 @@ func unlockForAddress(address string) {
 	mutex.Unlock()
 }
 
-func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) (bool, error) {
-	chain := opts.Globals.Chain
+func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, error) {
 
 	// TODO: There are special case addresses for the sender of mining rewards and
 	// TODO: prefund allocations that get ignored here because they are baddresses.
 	// TODO: We could, if we wished, create special cases here to (for example) report
 	// TODO: the balance sheet for "Ethereum" as a whole. How much has been spent on mining?
 	// TODO: How much was the original allocation worth?
-	for _, address := range opts.Addrs {
+	for _, address := range updater.Addrs {
 		lockForAddress(address)
 		defer unlockForAddress(address) // reminder: this defers until the function returns, not this loop
 	}
@@ -94,22 +106,15 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
 	defer sigintTrap.Disable(trapChannel)
 
-	var updater = MonitorUpdate{
-		MaxTasks:   12,
-		MonitorMap: make(AddressMonitorMap, len(opts.Addrs)),
-		Options:    opts,
-		FirstBlock: utils.NOPOS,
-	}
-
 	// This removes dups and keeps a map from address to a pointer to the monitors
-	for _, addr := range opts.Addrs {
+	for _, addr := range updater.Addrs {
 		err := needsMigration(addr)
 		if err != nil {
 			return canceled, err
 		}
 
 		if updater.MonitorMap[base.HexToAddress(addr)] == nil {
-			mon, _ := monitor.NewMonitorStaged(chain, addr)
+			mon, _ := NewMonitorStaged(updater.Chain, addr)
 			_ = mon.ReadMonitorHeader()
 			if uint64(mon.LastScanned) < updater.FirstBlock {
 				updater.FirstBlock = uint64(mon.LastScanned)
@@ -120,7 +125,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	bloomPath := filepath.Join(config.PathToIndex(chain), "blooms/")
+	bloomPath := filepath.Join(config.PathToIndex(updater.Chain), "blooms/")
 	files, err := os.ReadDir(bloomPath)
 	if err != nil {
 		return canceled, err
@@ -155,7 +160,7 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 				}
 			}
 
-			if opts.Globals.TestMode && fileRange.Last > maxTestingBlock {
+			if updater.TestMode && fileRange.Last > maxTestingBlock {
 				continue
 			}
 
@@ -187,9 +192,9 @@ func (opts *ListOptions) HandleFreshenMonitors(monitorArray *[]monitor.Monitor) 
 		}
 	}
 
-	if !opts.Globals.TestMode {
+	if !updater.TestMode {
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
-		stagePath := index.ToStagingPath(config.PathToIndex(chain) + "staging")
+		stagePath := index.ToStagingPath(config.PathToIndex(updater.Chain) + "staging")
 		stageFn, _ := file.LatestFileInFolder(stagePath)
 		rng := base.RangeFromFilename(stageFn)
 		lines := []string{}
@@ -271,9 +276,9 @@ func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultCh
 
 	indexFilename := index.ToIndexPath(fileName)
 	if !file.FileExists(indexFilename) {
-		chain := updater.Options.Globals.Chain
+		chain := updater.Chain
 		var man *manifest.Manifest
-		man, err = manifest.ReadManifest(chain, updater.Options.PublisherAddr, manifest.LocalCache)
+		man, err = manifest.ReadManifest(chain, updater.PublisherAddr, manifest.LocalCache)
 		if err != nil {
 			results = append(results, index.AppearanceResult{Range: bl.Range, Err: err})
 			return
@@ -341,7 +346,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 				_, err := mon.WriteAppearances(*result.AppRecords, true /* append */)
 				if err != nil {
 					logger.Error(err)
-				} else if !updater.Options.Globals.TestMode && !updater.Options.Silent {
+				} else if !updater.TestMode && !updater.Silent {
 					msg := fmt.Sprintf("%s appended %d apps at %s", mon.Address.Hex(), nWritten, result.Range)
 					logger.Info(msg)
 				}
@@ -351,7 +356,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 }
 
 func needsMigration(addr string) error {
-	mon := monitor.Monitor{Address: base.HexToAddress(addr)}
+	mon := Monitor{Address: base.HexToAddress(addr)}
 	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
 	if file.FileExists(path) {
 		path = strings.Replace(path, config.PathToCache(mon.Chain), "./", -1)
@@ -390,4 +395,16 @@ func getAppearances(addrStr string, lines []string, lastVisited uint32, found in
 		return nil
 	}
 	return &results
+}
+
+// moveAllToProduction completes the update by moving the monitor files from ./cache/<chain>/monitors/staging to
+// ./cache/<chain>/monitors.
+func (updater *MonitorUpdate) moveAllToProduction() error {
+	for _, mon := range updater.MonitorMap {
+		err := mon.MoveToProduction()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
