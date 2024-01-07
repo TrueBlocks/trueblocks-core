@@ -2,7 +2,7 @@
 ## chifra chunks
 
 The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
-and analyizing the Unchained Index. It provides options to list pins, the Manifest, summary data
+and analyzing the Unchained Index. It provides options to list pins, the Manifest, summary data
 on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
 tool will eventually allow users to clean their local index, clean their remote index, study
 the indexes, etc. Stay tuned.
@@ -23,7 +23,7 @@ Flags:
   -c, --check              check the manifest, index, or blooms for internal consistency
   -i, --pin                pin the manifest or each index chunk and bloom
   -p, --publish            publish the manifest to the Unchained Index smart contract
-  -r, --remote             prior to processing, retreive the manifest from the Unchained Index smart contract
+  -r, --remote             prior to processing, retrieve the manifest from the Unchained Index smart contract
   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
   -F, --first_block uint   first block to process (inclusive)
   -L, --last_block uint    last block to process (inclusive)

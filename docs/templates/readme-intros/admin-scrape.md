@@ -8,7 +8,7 @@ multiplexer such as `tmux`. You may start and stop `[{NAME}]` as needed, but doi
 scraper will not be keeping up with the front of the blockchain. The next time it starts, it will
 have to catch up to the chain, a process that may take several hours depending on how long ago it
 was last run. See the section below and the "Papers" section of our website for more information
-on how the scraping process works and prerequisites for it proper operation.
+on how the scraping process works and prerequisites for its proper operation.
 
 You may adjust the speed of the index creation with the `--sleep` and `--block_cnt` options. On
 some machines, or when running against some EVM node software, the scraper may overburden the

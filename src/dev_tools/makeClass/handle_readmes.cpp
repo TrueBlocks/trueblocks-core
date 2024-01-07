@@ -214,7 +214,7 @@ const char* STR_CONFIG =
     "Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 "
     "respectively. See the specification for a justification of these values.\n"
     "\n"
-    "These items may be set in three ways, each overridding the preceeding method:\n"
+    "These items may be set in three ways, each overriding the preceding method:\n"
     "\n"
     "-- in the above configuration file under the `[scrape.<chain>]` group,  \n"
     "-- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and "
