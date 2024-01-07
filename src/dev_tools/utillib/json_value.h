@@ -38,7 +38,7 @@ enum ValueType {
 //--------------------------------------------------------------------------------
 /** \brief Lightweight wrapper to tag static string.
  *
- * Value constructor and objValType member assignment takes advantage of the
+ * Value constructor and objValType member assignment take advantage of the
  * StaticString and avoid the cost of string duplication when storing the
  * string or the member name.
  *
@@ -511,7 +511,7 @@ class ValueIterator : public ValueIteratorBase {
     }
 
     /*! The return value of non-const iterators can be
-     *  changed, so the these functions are not const
+     *  changed, so these functions are not const
      *  because the returned references/pointers can be used
      *  to change state of the base class.
      */

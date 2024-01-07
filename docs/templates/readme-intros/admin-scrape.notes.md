@@ -4,7 +4,7 @@
 Each time `[{NAME}]` runs, it begins at the last block it completed processing (plus one). With
 each pass, the scraper descends as deeply as is possible into each block's data. (This is why
 TrueBlocks requires a `--tracing` node.) As the scraper encounters appearances of address in the
-block's data, it adds those appearance to a growing index. Periodically (after processing the the
+block's data, it adds those appearances to a growing index. Periodically (after processing the
 block that contains the 2,000,000th appearance), the system consolidates an **index chunk**.
 
 An **index chunk** is a portion of the index containing approximately 2,000,000 records (although,
