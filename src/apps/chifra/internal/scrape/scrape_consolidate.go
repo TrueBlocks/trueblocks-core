@@ -118,10 +118,22 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
-			if err := Notify(notify.Notification[string]{
-				Msg:     notify.MessageChunkWritten,
-				Meta:    bm.meta,
-				Payload: chunkRange.String(),
+			var cidString string
+			if ok, _ := NotifyConfigured(); ok {
+				if cid, err := index.ChunkCid(chunkPath); err != nil {
+					return err, true
+				} else {
+					cidString = cid.String()
+				}
+			}
+			if err := Notify(notify.Notification[notify.NotificationPayloadChunkWritten]{
+				Msg:  notify.MessageChunkWritten,
+				Meta: bm.meta,
+				Payload: notify.NotificationPayloadChunkWritten{
+					Cid:    cidString,
+					Range:  chunkRange.String(),
+					Author: config.GetRootConfig().Settings.Notify.Author,
+				},
 			}); err != nil {
 				return err, true
 			}

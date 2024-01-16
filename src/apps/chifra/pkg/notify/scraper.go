@@ -10,7 +10,7 @@ import (
 const (
 	MessageChunkWritten Message = "chunkWritten"
 	MessageStageUpdated Message = "stageUpdated"
-	MessageAppearance   Message = "asppearance"
+	MessageAppearance   Message = "appearance"
 )
 
 type NotificationPayloadAppearance struct {
@@ -18,7 +18,7 @@ type NotificationPayloadAppearance struct {
 	// We use string for block number to ensure it's never
 	// too big
 	BlockNumber      string `json:"blockNumber"`
-	TransactionIndex uint32
+	TransactionIndex uint32 `json:"txid"`
 }
 
 func (n *NotificationPayloadAppearance) FromString(s string) (err error) {
@@ -57,4 +57,10 @@ func NewAppearanceNotification(meta *rpc.MetaData, appearances []NotificationPay
 		Meta:    meta,
 		Payload: appearances,
 	}
+}
+
+type NotificationPayloadChunkWritten struct {
+	Cid    string `json:"cid"`
+	Range  string `json:"range"`
+	Author string `json:"author"`
 }
