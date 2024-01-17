@@ -20,7 +20,7 @@ on      ,both ,fast  ,logs  ,tools/getLogs ,by_txhash           ,y    ,transacti
 on      ,both ,fast  ,logs  ,tools/getLogs ,by_bnun_and_txid    ,y    ,transactions = 4000000.5 & fmt = json
 on      ,both ,medi  ,logs  ,tools/getLogs ,by_blk_hash_good    ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose
 on      ,both ,fast  ,logs  ,tools/getLogs ,by_blk_hash_bad     ,y    ,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
-on      ,both ,medi  ,logs  ,tools/getLogs ,star                ,y    ,transactions = 1428993.* & fmt = json
+local   ,both ,medi  ,logs  ,tools/getLogs ,star                ,y    ,transactions = 1428993.* & fmt = json
 on      ,both ,fast  ,logs  ,tools/getLogs ,fmt_default         ,n    ,transactions = 2222222.0 2332332.0
 on      ,both ,slow  ,logs  ,tools/getLogs ,fmt_txt             ,n    ,transactions = 2222222.0 2332332.0 & fmt = txt
 on      ,both ,fast  ,logs  ,tools/getLogs ,fmt_csv             ,n    ,transactions = 2222222.0 2332332.0 & fmt = csv
