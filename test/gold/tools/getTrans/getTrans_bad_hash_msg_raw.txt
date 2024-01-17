@@ -5,6 +5,7 @@ TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  txt
 {
   "data": [
+    null,
     {
       "accessList": [],
       "blockHash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
@@ -23,8 +24,5 @@ TEST[DATE|TIME] Format:  txt
       "type": "0x0",
       "value": "0xdbbaa3d0ed1ad7"
     }
-  ],
-  "errors": [
-    "transaction at 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 returned an error: not found"
   ]
 }
