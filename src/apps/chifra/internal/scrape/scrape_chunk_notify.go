@@ -9,10 +9,8 @@ import (
 func NotifyChunkWritten(chunk index.Chunk, chunkPath string) (err error) {
 	var cidString string
 	if ok, _ := NotifyConfigured(); ok {
-		if cid, err := index.ChunkCid(chunkPath); err != nil {
+		if cidString, err = index.ChunkCid(chunkPath); err != nil {
 			return err
-		} else {
-			cidString = cid.String()
 		}
 	}
 	return Notify(notify.Notification[[]notify.NotificationPayloadChunkWritten]{
