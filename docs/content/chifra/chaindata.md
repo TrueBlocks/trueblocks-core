@@ -21,9 +21,9 @@ block data, transactional data, receipts, logs, traces, and other information. E
 set of options, allowing you to get exactly the data you need.
 
 To the right is a list of commands in this group. Click on a command to see its full documentation.
-
 ## chifra blocks
 
+<!-- markdownlint-disable MD041 -->
 The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the
 TrueBlocks cache. You may specify multiple blocks per invocation.
 
@@ -98,6 +98,7 @@ Links:
 
 ## chifra transactions
 
+<!-- markdownlint-disable MD041 -->
 The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
 option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
 per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
@@ -154,9 +155,9 @@ Links:
 - [api docs](/api/#operation/chaindata-transactions)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
 
-
 ## chifra receipts
 
+<!-- markdownlint-disable MD041 -->
 `chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers
 per invocation.
 
@@ -203,6 +204,7 @@ Links:
 
 ## chifra logs
 
+<!-- markdownlint-disable MD041 -->
 `chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers
 per invocation.
 
@@ -249,6 +251,7 @@ Links:
 
 ## chifra traces
 
+<!-- markdownlint-disable MD041 -->
 The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
 identifiers per invocation.
 
@@ -302,6 +305,7 @@ Links:
 
 ## chifra when
 
+<!-- markdownlint-disable MD041 -->
 The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block
 occur?" or (2) "What block occurred at or before a given date and time?"
 
@@ -355,3 +359,4 @@ Links:
 
 - [api docs](/api/#operation/chaindata-when)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/when)
+

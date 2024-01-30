@@ -1,6 +1,6 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra scrape
 
+<!-- markdownlint-disable MD041 -->
 The `chifra scrape` application creates TrueBlocks' chunked index of address appearances -- the
 fundamental data structure of the entire system. It also, optionally, pins each chunk of the index
 to IPFS.
@@ -71,6 +71,7 @@ These items may be set in three ways, each overriding the preceding method:
 -- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
 -- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
 
+<!-- markdownlint-disable MD041 -->
 ### further information
 
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
@@ -106,3 +107,4 @@ node and its support of the required `trace_` endpoint routines, is highly recom
 
 Please [see this article](https://trueblocks.io/blog/a-long-winded-explanation-of-trueblocks/) for
 more information about running the scraper and building and sharing the index of appearances.
+

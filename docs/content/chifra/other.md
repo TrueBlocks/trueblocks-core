@@ -24,9 +24,9 @@ The commands in the Other group provide useful miscellaneous features.
 To the right is a list of commands in this group. Click on a command to see its full documentation.
 
 Note: Some of these tools, such as `ethslurp`, require an API key. [Follow these instructions](/docs/install/install-core/#3-update-the-configs-for-your-rpc-and-api-keys) to add a key to your config.
-
 ## chifra explore
 
+<!-- markdownlint-disable MD041 -->
 `chifra explore` opens Etherscan (and other explorers -- including our own) to the block identifier,
 transaction identifier, or address you specify. It's a handy (configurable) way to open an explorer
 from the command line, nothing more.
@@ -58,6 +58,7 @@ Links:
 
 ## chifra slurp
 
+<!-- markdownlint-disable MD041 -->
 `chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
 
 While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
@@ -109,3 +110,4 @@ Links:
 
 - [api docs](/api/#operation/other-slurp)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
+

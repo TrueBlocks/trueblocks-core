@@ -1,6 +1,6 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra logs
 
+<!-- markdownlint-disable MD041 -->
 `chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers
 per invocation.
 

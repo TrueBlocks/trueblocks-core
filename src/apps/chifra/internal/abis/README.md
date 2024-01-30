@@ -1,6 +1,6 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra abis
 
+<!-- markdownlint-disable MD041 -->
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
 the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.
@@ -49,6 +49,7 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
+<!-- markdownlint-disable MD041 -->
 ### notes
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.
