@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ---
 title: "Accounts"
 description: ""
@@ -14,6 +13,7 @@ menu:
 weight: 1000
 toc: true
 ---
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 
 The primary tool of TrueBlocks is `chifra export`. This tool extracts, directly from the chain,
 entire transactional histories for one or more addresses and presents that information for use

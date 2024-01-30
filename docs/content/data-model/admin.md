@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ---
 title: "Admin"
 description: ""
@@ -14,6 +13,7 @@ menu:
 weight: 1700
 toc: true
 ---
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 
 The data models produced by the tools in the Admin category relate to scraping the chain, producing
 the Unchained Index, and querying the configuration of the system. Additional data related to

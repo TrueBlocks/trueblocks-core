@@ -1,5 +1,5 @@
 ---
-title: "Accounts"
+title: "Globals"
 description: ""
 lead: ""
 lastmod:

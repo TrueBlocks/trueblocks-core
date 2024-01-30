@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ---
 title: "Chain data"
 description: ""
@@ -14,6 +13,7 @@ menu:
 weight: 1200
 toc: true
 ---
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 
 The following data structures describe the output of various TrueBlocks blockchain queries. These
 data structures basically mimic the data available directly from the RPC.

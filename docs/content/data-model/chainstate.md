@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ---
 title: "Chain state"
 description: ""
@@ -14,6 +13,7 @@ menu:
 weight: 1400
 toc: true
 ---
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 
 The data structures produced by tools in the Chain State category provide details on the balances
 (ERC20 or ETH) of an address against a particular token or block. Additionally, direct access to

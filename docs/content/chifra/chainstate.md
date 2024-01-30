@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 ---
 title: "Chain state"
 description: ""

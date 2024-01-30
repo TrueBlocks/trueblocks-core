@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 ---
 title: "Accounts"
 description: ""

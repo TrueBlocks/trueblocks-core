@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ---
 title: "Other"
 description: ""
@@ -14,6 +13,7 @@ menu:
 weight: 1800
 toc: true
 ---
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 
 The following commands provide useful miscellaneous tools:
 
