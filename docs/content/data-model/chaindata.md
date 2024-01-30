@@ -13,8 +13,8 @@ menu:
 weight: 1200
 toc: true
 ---
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The following data structures describe the output of various TrueBlocks blockchain queries. These
 data structures basically mimic the data available directly from the RPC.
 
@@ -22,6 +22,7 @@ Each data structure is created by one or more tools which are detailed below.
 
 ## Block
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 `chifra blocks` returns top level data specified block. You can also include an array for the
 blocks' transactions.
 
@@ -49,6 +50,7 @@ Blocks consist of the following fields:
 
 ## Transaction
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Transactions represent eth transfers to and from other addresses.
 
 Most of the fields that TrueBlocks returns are standard to all eth transaction. However, one field
@@ -87,6 +89,7 @@ Transactions consist of the following fields:
 
 ## Withdrawal
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 `withdrawals` is an array present in post-Shanghai blocks representing Consensys layer staking reward withdrawals. Note that the amount present is in Gwei. The `withdrawals` array is not present in pre-Shanghai blocks.
 
 The following commands produce and manage Withdrawals:
@@ -107,6 +110,7 @@ Withdrawals consist of the following fields:
 
 ## Receipt
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Receipts record the amount of gas used for a transaction among other things. If the transaction
 succeeded, a receipt might also have logs.
 
@@ -135,6 +139,7 @@ Receipts consist of the following fields:
 
 ## Log
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Logs appear in a possibly empty array in the transaction's receipt. They are only created if the
 underlying transaction suceeded. In the case where the transaction failed, no logs will appear in
 the receipt. Logs are only ever generated during transactions whose `to` address is a smart
@@ -154,7 +159,7 @@ Logs consist of the following fields:
 | transactionIndex | the zero-indexed position of the transaction in the block                                         | uint64                                  |
 | logIndex         | the zero-indexed position of this log relative to the block                                       | uint64                                  |
 | timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
-| date             | the date of the block this log appears in (ulated) (calculated)                                   | datetime                                |
+| date             | the timestamp as a date (calculated)                                                              | datetime                                |
 | address          | the smart contract that emitted this log                                                          | address                                 |
 | topics           | the first topic hashes event signature of the log, up to 3 additional index parameters may appear | topic[]                                 |
 | data             | any remaining un-indexed parameters to the event                                                  | bytes                                   |
@@ -165,6 +170,7 @@ Logs consist of the following fields:
 
 ## Trace
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which
 is itself a record of the transaction. If the `to` address of the transaction is a smart contract,
 other traces may appear, if, for example, that smart contract calls other smart contracts.
@@ -187,7 +193,7 @@ Traces consist of the following fields:
 | blockHash        | the hash of the block containing this trace               | hash                                              |
 | blockNumber      | the number of the block                                   | blknum                                            |
 | timestamp        | the timestamp of the block                                | timestamp                                         |
-| date             | a ulated value - the date of the block (calculated)       | datetime                                          |
+| date             | the timestamp as a date (calculated)                      | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
 | traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
@@ -217,6 +223,7 @@ Fields that change during self-destruct transaction:
 
 ## LogFilter
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Log filters are used to speed up querying of the node when searching for logs.
 
 The following commands produce and manage LogFilters:
@@ -236,6 +243,7 @@ LogFilters consist of the following fields:
 
 ## TraceAction
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Other than the first trace which is the trace of the transaction itself, traces represent calls
 into smart contracts. Because of this, `trace actions` closely resemble the fields of the
 [transaction](#transactions).
@@ -260,6 +268,7 @@ TraceActions consist of the following fields:
 
 ## TraceResult
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 As mentioned above, other than the first trace, traces represent calls into other smart contracts.
 Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
 
@@ -280,6 +289,7 @@ TraceResults consist of the following fields:
 
 ## TraceCount
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 `chifra trace --count` returns the number of traces the given transaction.
 
 The following commands produce and manage TraceCounts:
@@ -299,6 +309,7 @@ TraceCounts consist of the following fields:
 
 ## TraceFilter
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
 
 The following commands produce and manage TraceFilters:
@@ -318,6 +329,7 @@ TraceFilters consist of the following fields:
 
 ## BlockCount
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 `chifra blocks --count` returns the number of various types of data in a block. For example, `transactionCnt` is the number of transactions in the block, and so on.
 
 The following commands produce and manage BlockCounts:
@@ -340,6 +352,7 @@ BlockCounts consist of the following fields:
 
 ## NamedBlock
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Left to its own devices, the blockchain would try to convince us that only hashes and bytes are
 important, but being human beings we know that this is not true. TrueBlocks `articulates` various
 types of data with [chifra names](/chifra/accounts/#chifra-names) detailing the names for
@@ -363,6 +376,7 @@ NamedBlocks consist of the following fields:
 
 ## Timestamp
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Shows the blockNumber, timestamp and difference in seconds between blocks found in the timestamp database.
 
 The following commands produce and manage Timestamps:
@@ -380,6 +394,7 @@ Timestamps consist of the following fields:
 
 ## TimestampCount
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 Shows the number of timestamps in the timestamps database.
 
 The following commands produce and manage TimestampCounts:

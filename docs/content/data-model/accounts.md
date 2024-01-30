@@ -13,8 +13,8 @@ menu:
 weight: 1000
 toc: true
 ---
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The primary tool of TrueBlocks is `chifra export`. This tool extracts, directly from the chain,
 entire transactional histories for one or more addresses and presents that information for use
 outside the blockchain. The results of this extraction is stored in a data structure called a
@@ -31,6 +31,7 @@ Each data structure is created by one or more tools which are detailed below.
 
 ## Appearance
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 An appearance is a pointer (`blknum, tx_id` pair) into the blockchain indicating where a
 particular address appears. This includes obvious locations such as `to` or `from` as well
 as esoteric locations such as deep inside a tenth-level trace or as the miner of an uncle block.
@@ -61,6 +62,7 @@ Appearances consist of the following fields:
 
 ## Monitor
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given
 address along with various details about those appearances. A monitor is created when a user
 expresses interest in an address by calling either [chifra list](/chifra/accounts/#chifra-list)
@@ -97,6 +99,7 @@ Monitors consist of the following fields:
 
 ## Name
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 TrueBlocks allows you to associate a human-readable name with an address. This feature goes a long
 way towards making the blockchain data one extracts with a [Monitor](/data-model/accounts/#monitor)
 much more readable.
@@ -155,6 +158,7 @@ AppearanceCounts consist of the following fields:
 
 ## Bounds
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 The Bounds data model displays information about a given address including how many times it's appeared on the chain and when the first and most recent blocks, timestamps, and dates are.
 
 The following commands produce and manage Bounds:
@@ -175,6 +179,7 @@ Bounds consist of the following fields:
 
 ## Statement
 
+<!-- markdownlint-disable MD033 MD036 MD041 -->
 When exported with the `--accounting` option from `chifra export`, each transaction will have field
 called `statements`. Statements are an array for reconciliations. All such exported transactions
 will have at least one reconciliation (for ETH), however, many will have additional reconciliations

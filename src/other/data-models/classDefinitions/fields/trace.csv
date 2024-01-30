@@ -21,4 +21,4 @@ result::gasUsed  ,string      ,           ,          ,    ,
 action::input    ,string      ,           ,          ,    ,
 result::output   ,string      ,           ,          ,    ,
 timestamp        ,timestamp   ,           ,          ,  3 ,the timestamp of the block
-date             ,datetime    ,           ,          ,  4 ,a calculated value - the date of the block
+date             ,datetime    ,           ,calc      ,  4 ,the timestamp as a date

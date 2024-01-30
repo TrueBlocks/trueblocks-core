@@ -1,6 +1,6 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra traces
 
+<!-- markdownlint-disable MD041 -->
 The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
 identifiers per invocation.
 
@@ -51,3 +51,4 @@ Links:
 
 - [api docs](/api/#operation/chaindata-traces)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
+

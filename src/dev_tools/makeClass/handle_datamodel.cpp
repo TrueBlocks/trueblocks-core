@@ -27,7 +27,6 @@ extern string_q typeFmt(const CMember& fld);
 extern string_q get_producer_table(const CClassDefinition& model, const CCommandOptionArray& endpoints);
 extern string_q type_2_Link(const CClassDefinitionArray& dataModels, const CMember& member);
 extern string_q plural(const string_q& in);
-extern string_q cleanReadme(const string_q& in, const string_q& of, bool nl);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_datamodel(void) {
@@ -149,7 +148,6 @@ bool COptions::handle_datamodel(void) {
 
     yamlStream << STR_YAML_TAIL;
     string_q doc = substitute(yamlStream.str(), "&#44;", ",");
-    doc = cleanReadme(doc, "<!-- markdownlint-disable MD033 MD036 MD041 -->", true);
     writeIfDifferent(getDocsPathTemplates("api/components.txt"), doc);
 
     for (auto document : documentMap) {
@@ -182,7 +180,6 @@ bool COptions::handle_datamodel(void) {
         document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tailStream.str());
         string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
         if (!contains(outFn, "/.md")) {
-            document.second = cleanReadme(document.second, "<!-- markdownlint-disable MD033 MD036 MD041 -->", false);
             writeIfDifferent(outFn, substitute(document.second, "\n\n\n", "\n\n"));
         }
     }

@@ -1,6 +1,6 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra logs
 
+<!-- markdownlint-disable MD041 -->
 `chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers
 per invocation.
 
@@ -44,3 +44,4 @@ Links:
 
 - [api docs](/api/#operation/chaindata-logs)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/logs)
+

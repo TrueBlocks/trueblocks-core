@@ -1,6 +1,6 @@
-<!-- markdownlint-disable MD041 -->
 ## chifra daemon
 
+<!-- markdownlint-disable MD041 -->
 `chifra daemon` manages chifra's API server. Each of the `chifra` commands along with all of its options,
 are provided not only by the command line, but also the API server. We call this process the
 `flame` server, which is written in Go. `chifra serve` is an alias for the `chifra daemon` command.
@@ -46,6 +46,7 @@ Data models produced by this tool:
 
 - none
 
+<!-- markdownlint-disable MD041 -->
 ### notes
 
 To convert the options for a command line tool to an API call, do the following:

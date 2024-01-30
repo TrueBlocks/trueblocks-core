@@ -75,17 +75,6 @@ string_q get_models(const CClassDefinitionArray& models, const string_q& route) 
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q cleanReadme(const string_q& in, const string_q& of, bool nl) {
-    if (!contains(in, of)) {
-        return in;
-    }
-    ostringstream os;
-    os << of << endl;
-    os << substitute(in, of + (nl ? "\n" : ""), "");
-    return os.str();
-}
-
-//------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
     CToml config(rootConfigToml_makeClass);
     bool enabled = config.getConfigBool("enabled", "readmes", false);
@@ -117,7 +106,6 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{NOTES}]", get_readme_notes(ep));
                 replaceAll(docContents, "[{MODELS}]", get_models(dataModels, ep.api_route));
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
-                docContents = cleanReadme(docContents, "<!-- markdownlint-disable MD041 -->", true);
                 writeIfDifferent(getDocsPathReadmes(docFn),
                                  substitute(substitute(docContents, "[{LINKS}]", get_links(ep)), "[{FOOTER}]", "\n"));
 
@@ -155,7 +143,7 @@ bool COptions::handle_readmes(void) {
         }
 
         string_q outFn = getDocsPathContent("chifra/" + group + ".md");
-        string_q out = cleanReadme(os.str(), "<!-- markdownlint-disable MD041 -->", false);
+        string_q out = os.str();
         writeIfDifferent(outFn, out);
     }
 
