@@ -145,7 +145,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13613,tools,ChainData,transactions,getTrans,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 13615,tools,ChainData,transactions,getTrans,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 13629,tools,ChainData,transactions,getTrans,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force the transaction's traces into the cache
-13622,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
+13622,tools,ChainData,transactions,getTrans,seed,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
 13623,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13626,tools,ChainData,transactions,getTrans,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
