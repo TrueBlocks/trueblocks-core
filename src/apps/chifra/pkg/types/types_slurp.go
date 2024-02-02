@@ -575,3 +575,4 @@ func (s *SimpleSlurp) GasCost() base.Gas {
 }
 
 // EXISTING_CODE
+

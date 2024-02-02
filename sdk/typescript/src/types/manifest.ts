@@ -11,3 +11,4 @@ export type Manifest = {
   specification: ipfshash
   chunks: ChunkRecord[]
 }
+

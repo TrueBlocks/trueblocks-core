@@ -15,3 +15,4 @@ export type ReportCheck = {
   msgStrings: string[]
   reason: string
 }
+

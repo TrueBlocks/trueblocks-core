@@ -154,3 +154,4 @@ func (s *SimpleTraceResult) FinishUnmarshal() {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

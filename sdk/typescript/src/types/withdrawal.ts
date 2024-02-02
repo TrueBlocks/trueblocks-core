@@ -14,3 +14,4 @@ export type Withdrawal = {
   date: datetime
   validatorIndex: uint64
 }
+

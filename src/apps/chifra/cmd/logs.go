@@ -75,3 +75,4 @@ func init() {
 
 	chifraCmd.AddCommand(logsCmd)
 }
+

@@ -87,3 +87,4 @@ One of [ from | to ]`)
 
 	chifraCmd.AddCommand(transactionsCmd)
 }
+

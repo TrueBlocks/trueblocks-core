@@ -24,3 +24,4 @@ export function getConfig(
     { endpoint: '/config', method: 'get', parameters, options },
   );
 }
+

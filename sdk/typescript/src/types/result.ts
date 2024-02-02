@@ -16,3 +16,4 @@ export type Result = {
   encodedArguments: string
   articulatedOut: Function
 }
+

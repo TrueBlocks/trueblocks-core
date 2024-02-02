@@ -8,3 +8,4 @@ import { uint64 } from '.';
 export type TimestampCount = {
   count: uint64
 }
+

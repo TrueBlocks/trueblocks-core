@@ -13,3 +13,4 @@ export type TraceCount = {
   date: datetime
   tracesCnt: uint64
 }
+

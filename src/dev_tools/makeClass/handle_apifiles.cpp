@@ -408,7 +408,6 @@ bool COptions::writeOpenApiFile(void) {
         goPkgStream << pkg.first << " " << pkg.second << endl;
 
     writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/routes.go"));
-    writeCodeOut(this, getPathToSource("apps/chifra/internal/daemon/handle_calls.go"));
     writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,

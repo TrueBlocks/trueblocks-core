@@ -12,3 +12,4 @@ export type IpfsPin = {
   size: int64
   fileName: string
 }
+

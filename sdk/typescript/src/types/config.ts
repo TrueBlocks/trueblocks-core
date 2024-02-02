@@ -27,3 +27,4 @@ export type Config = {
   version?: string
   chains: Chain[]
 }
+

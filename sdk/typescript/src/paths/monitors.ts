@@ -33,3 +33,4 @@ export function getMonitors(
     { endpoint: '/monitors', method: 'get', parameters, options },
   );
 }
+

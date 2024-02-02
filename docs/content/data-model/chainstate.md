@@ -115,3 +115,4 @@ This documentation mentions the following basic data types.
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint64    | a 64-bit unsigned integer           |                |
 | wei       | an unsigned big number              | as a string    |
+

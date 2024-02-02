@@ -163,7 +163,17 @@ bool isDifferent(const string_q& fn, const string_q& codeIn) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+void finalCleaning(const string_q& outFn) {
+    string_q contents = asciiFileToString(outFn);
+    replaceAll(contents, "\n\n\n", "\n\n");
+    stringToAsciiFile(outFn, trim(contents, '\n') + "\n\n");
+}
+
+//------------------------------------------------------------------------------------------------------------
 bool writeIfDifferent(const string_q& outFn, const string_q& orig) {
+    if (!contains(outFn, ".yaml")) {
+        finalCleaning(outFn);
+    }
     if (!isDifferent(outFn, orig)) {
         return false;
     }

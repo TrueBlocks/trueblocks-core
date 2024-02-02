@@ -21,3 +21,4 @@ export type Trace = {
   timestamp: timestamp
   date: datetime
 }
+

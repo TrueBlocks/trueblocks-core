@@ -94,3 +94,4 @@ func (filter *SimpleLogFilter) PassesFilter(log *SimpleLog) bool {
 }
 
 // EXISTING_CODE
+

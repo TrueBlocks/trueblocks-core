@@ -246,3 +246,4 @@ func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
 }
 
 // EXISTING_CODE
+

@@ -266,3 +266,4 @@ func (s *SimpleResult) FinishUnmarshal() {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

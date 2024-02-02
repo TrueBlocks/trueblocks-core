@@ -30,3 +30,4 @@ export function getWhen(
     { endpoint: '/when', method: 'get', parameters, options },
   );
 }
+

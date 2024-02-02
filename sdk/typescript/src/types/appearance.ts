@@ -15,3 +15,4 @@ export type Appearance = {
   timestamp: timestamp
   date: datetime
 }
+

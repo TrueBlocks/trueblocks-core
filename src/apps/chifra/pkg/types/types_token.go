@@ -181,3 +181,4 @@ func (t TokenType) IsErc721() bool {
 }
 
 // EXISTING_CODE
+

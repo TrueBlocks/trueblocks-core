@@ -14,3 +14,4 @@ export type Bounds = {
   latestTs: timestamp
   latestDate: datetime
 }
+

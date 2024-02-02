@@ -33,3 +33,4 @@ export function getList(
     { endpoint: '/list', method: 'get', parameters, options },
   );
 }
+

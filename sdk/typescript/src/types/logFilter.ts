@@ -12,3 +12,4 @@ export type LogFilter = {
   emitters: address[]
   topics: topic[]
 }
+
