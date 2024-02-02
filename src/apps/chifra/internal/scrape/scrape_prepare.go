@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	shell "github.com/ipfs/go-ipfs-api"
 )
 
 // Prepare performs actions that need to be done prior to entering the
@@ -23,13 +22,10 @@ import (
 func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	chain := opts.Globals.Chain
 
-	// Notify feature requires IPFS daemon to be running. We send
-	// a simple query (Version) to check if it's there
+	// Notify feature requires IPFS daemon to be running.
 	if ok, _ := NotifyConfigured(); ok {
-		sh := shell.NewShell(config.GetPinning().LocalPinUrl)
-		_, _, err = sh.Version()
-		if err != nil {
-			logger.Fatal("error from IPFS daemon:", err)
+		if !config.IpfsRunning() {
+			logger.Fatal("notify requires IPFS daemon")
 		}
 	}
 
