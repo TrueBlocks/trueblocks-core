@@ -9,3 +9,4 @@ export type Abi = {
   address: address
   functions: Function[]
 }
+

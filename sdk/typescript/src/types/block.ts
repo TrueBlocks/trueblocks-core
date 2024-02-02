@@ -31,3 +31,4 @@ export type Block = {
   uncles?: hash[]
   withdrawals?: Withdrawal[]
 }
+

@@ -75,3 +75,4 @@ func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptio
 
 // EXISTING_CODE
 // EXISTING_CODE
+

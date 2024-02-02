@@ -39,3 +39,4 @@ export function getNames(
     { endpoint: '/names', method: 'get', parameters, options },
   );
 }
+

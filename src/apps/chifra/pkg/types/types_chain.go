@@ -78,3 +78,4 @@ func (s *SimpleChain) Model(chain, format string, verbose bool, extraOptions map
 
 // EXISTING_CODE
 // EXISTING_CODE
+

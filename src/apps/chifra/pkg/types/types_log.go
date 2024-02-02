@@ -355,3 +355,4 @@ func (r *RawLog) RawToSimple(vals map[string]any) (SimpleLog, error) {
 }
 
 // EXISTING_CODE
+

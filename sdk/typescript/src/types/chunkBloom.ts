@@ -14,3 +14,4 @@ export type ChunkBloom = {
   size: uint64
   byteWidth: uint64
 }
+

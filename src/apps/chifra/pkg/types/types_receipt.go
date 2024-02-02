@@ -375,3 +375,4 @@ func (r *RawReceipt) RawToSimple(vals map[string]any) (SimpleReceipt, error) {
 }
 
 // EXISTING_CODE
+

@@ -262,3 +262,4 @@ This documentation mentions the following basic data types.
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint64    | a 64-bit unsigned integer           |                |
+

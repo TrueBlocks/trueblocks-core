@@ -79,3 +79,4 @@ One or more of [ name | symbol | decimals | totalSupply | version | all ]`)
 
 	chifraCmd.AddCommand(tokensCmd)
 }
+

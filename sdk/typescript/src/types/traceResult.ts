@@ -11,3 +11,4 @@ export type TraceResult = {
   gasUsed?: gas
   output?: bytes
 }
+

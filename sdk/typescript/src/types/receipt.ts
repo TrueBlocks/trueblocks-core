@@ -21,3 +21,4 @@ export type Receipt = {
   transactionHash: hash
   transactionIndex: blknum
 }
+

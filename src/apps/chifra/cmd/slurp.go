@@ -79,3 +79,4 @@ One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals 
 
 	chifraCmd.AddCommand(slurpCmd)
 }
+

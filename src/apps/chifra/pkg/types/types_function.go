@@ -496,3 +496,4 @@ func (s *SimpleFunction) Pack(callArguments []any) (packed []byte, err error) {
 }
 
 // EXISTING_CODE
+

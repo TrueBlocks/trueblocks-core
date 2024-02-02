@@ -12,3 +12,4 @@ export type Parameter = {
   internalType?: string
   components?: Parameter[]
 }
+

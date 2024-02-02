@@ -12,3 +12,4 @@ export type ChunkPinReport = {
   manifestHash: ipfshash
   specHash: ipfshash
 }
+

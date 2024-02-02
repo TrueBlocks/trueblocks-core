@@ -8,3 +8,4 @@
 
 // Package slurpPkg handles the chifra slurp command. It  is the first tool we built in the Ethereum space. It even has its  has its shortcomings, it does provides some nice features. You may use it to pull any transaction initiated by an EOA for example or to explore mining rewards. Visit the above referenced website for more information. 
 package slurpPkg
+

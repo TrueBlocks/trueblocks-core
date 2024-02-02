@@ -20,3 +20,4 @@ export type Name = {
   isErc721?: boolean
   deleted?: boolean
 }
+

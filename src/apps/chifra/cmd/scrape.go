@@ -92,3 +92,4 @@ func init() {
 
 	chifraCmd.AddCommand(scrapeCmd)
 }
+

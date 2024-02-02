@@ -14,3 +14,4 @@ export type Chain = {
   localExplorer: string
   ipfsGateway: string
 }
+

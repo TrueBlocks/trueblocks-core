@@ -88,3 +88,4 @@ One of [ off | blooms | index ]`)
 
 	chifraCmd.AddCommand(daemonCmd)
 }
+

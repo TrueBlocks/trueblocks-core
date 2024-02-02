@@ -26,3 +26,4 @@ export function getLogs(
     { endpoint: '/logs', method: 'get', parameters, options },
   );
 }
+

@@ -30,3 +30,4 @@ export function getTransactions(
     { endpoint: '/transactions', method: 'get', parameters, options },
   );
 }
+

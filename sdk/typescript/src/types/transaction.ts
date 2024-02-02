@@ -32,3 +32,4 @@ export type Transaction = {
   gasUsed: gas
   type: string
 }
+
