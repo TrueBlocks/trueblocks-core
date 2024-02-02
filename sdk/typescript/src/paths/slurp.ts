@@ -13,7 +13,7 @@ export function getSlurp(
     types?: string[],
     appearances?: boolean,
     articulate?: boolean,
-    source?: 'etherscan' | 'key',
+    source?: 'etherscan*' | 'key',
     perPage?: uint64,
     sleep?: double,
     chain: string,

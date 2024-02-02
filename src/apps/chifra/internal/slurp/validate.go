@@ -35,13 +35,15 @@ func (opts *SlurpOptions) validateSlurp() error {
 		return err
 	}
 
-	if len(opts.Source) > 0 {
-		err := validate.ValidateEnum("source", opts.Source, "[etherscan|key]")
-		if err != nil {
-			return err
+	err = validate.ValidateEnum("source", opts.Source, "[etherscan|key]")
+	if err != nil {
+		return err
+	}
+
+	if opts.Source == "key" {
+		if !opts.Appearances {
+			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "--appearances")
 		}
-	} else {
-		opts.Source = "etherscan"
 	}
 
 	if chain != "mainnet" {

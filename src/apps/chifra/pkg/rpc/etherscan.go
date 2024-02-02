@@ -21,7 +21,25 @@ type Paginator struct {
 	PerPage int
 }
 
-func (conn *Connection) GetESTransactionByAddress(chain, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+type SlurpSource int
+
+const (
+	Etherscan SlurpSource = iota
+	Key
+)
+
+func (conn *Connection) GetSlurpedTxsByAddress(chain string, source SlurpSource, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+	switch source {
+	case Key:
+		return []types.SimpleSlurp{}, 0, nil
+	case Etherscan:
+		return conn.getESTransactionsByAddress(chain, addr, requestType, paginator)
+	default:
+		return []types.SimpleSlurp{}, 0, fmt.Errorf("unknown source: %d", source)
+	}
+}
+
+func (conn *Connection) getESTransactionsByAddress(chain, addr string, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	url, err := getEtherscanUrl(chain, addr, requestType, paginator)
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err

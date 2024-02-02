@@ -315,14 +315,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,gocmd,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|all]>,which types of transactions to request
 12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,gocmd,switch,<boolean>,show only the blocknumber.tx_id appearances of the exported transactions
 12185,tools,Other,slurp,ethslurp,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
-12200,tools,Other,slurp,ethslurp,source,S,,false,false,true,true,gocmd,flag,enum[etherscan|key],the API url to use as the source of the data
+12200,tools,Other,slurp,ethslurp,source,S,,false,false,true,true,gocmd,flag,enum[etherscan*|key],the API url to use as the source of the data
 12205,tools,Other,slurp,ethslurp,per_page,P,5000,false,false,true,true,gocmd,flag,<uint64>,the number of records to request on each page
 12210,tools,Other,slurp,ethslurp,sleep,s,.25,false,false,true,true,gocmd,flag,<double>,seconds to sleep between requests
 12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetch data from Etherscan for any address.
 12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12224,tools,Other,slurp,ethslurp,n2,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 12226,tools,Other,slurp,ethslurp,n3,,,false,false,false,false,--,note,,The withdrawals option is only available on certain chains. It is ignored otherwise.
-12228,tools,Other,slurp,ethslurp,n4,,,false,false,false,false,--,note,,--source defaults to etherscan if not provided.
+12228,tools,Other,slurp,ethslurp,n4,,,false,false,false,false,--,note,,If the value of --source is key&#44; --types is ignored and only appearances are returned.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,true,gocmd,positional,list<path>,one or more class definition files
 11740,dev_tools,,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder

@@ -32,7 +32,19 @@ transaction identifier, or address you specify. It's a handy (configurable) way 
 from the command line, nothing more.
 
 ```[plaintext]
+Purpose:
+  Open a local or remote explorer for one or more addresses, blocks, or transactions.
 
+Usage:
+  chifra explore [flags] <term> [term...]
+
+Arguments:
+  terms - one or more address, name, block, or transaction identifier
+
+Flags:
+  -l, --local    open the local TrueBlocks explorer
+  -g, --google   search google excluding popular blockchain explorers
+  -h, --help     display this help screen
 ```
 
 Data models produced by this tool:
@@ -90,7 +102,7 @@ Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
-  - --source defaults to etherscan if not provided.
+  - If the value of --source is key, --types is ignored and only appearances are returned.
 ```
 
 Data models produced by this tool:

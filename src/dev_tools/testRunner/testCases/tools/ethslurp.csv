@@ -27,6 +27,11 @@ on      ,both ,slow  ,slurp ,tools/ethslurp ,type_1155_csv       ,n    ,addrs = 
 on      ,both ,slow  ,slurp ,tools/ethslurp ,type_miner_csv      ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = miner & blocks = 0-1000 & fmt = csv
 on      ,both ,slow  ,slurp ,tools/ethslurp ,appearances         ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & types = token & blocks = 0-1500000 & appearances & fmt = json
 on      ,both ,slow  ,slurp ,tools/ethslurp ,appearances_csv     ,n    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & types = token & blocks = 0-1500000 & appearances & fmt = csv
+on      ,both ,slow  ,slurp ,tools/ethslurp ,not_apps_es         ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & source = etherscan & fmt = json
+on      ,both ,slow  ,slurp ,tools/ethslurp ,not_apps_key        ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & source = key & fmt = json
+on      ,both ,slow  ,slurp ,tools/ethslurp ,apps_es             ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = etherscan & fmt = json
+local   ,both ,slow  ,slurp ,tools/ethslurp ,apps_key_type       ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & types = ext & appearances & source = key & fmt = json
+local   ,both ,slow  ,slurp ,tools/ethslurp ,apps_key            ,y    ,addrs = 0x9519afbc60719a83c470ceec41e32d3e4b8b262e & blocks = 0-1500000 & appearances & source = key & fmt = json
 
 on      ,both ,medi  ,slurp ,tools/ethslurp ,ens_test            ,y    ,addrs = wolfofethereum.eth & types = int & blocks = 12524380-13675400 & fmt = json
 on      ,both ,medi  ,slurp ,tools/ethslurp ,block_range         ,y    ,addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279-4186301 & fmt = json

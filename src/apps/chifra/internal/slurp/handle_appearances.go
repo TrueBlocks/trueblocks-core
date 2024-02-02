@@ -39,7 +39,11 @@ func (opts *SlurpOptions) HandleAppearances() error {
 				})
 
 				for !done {
-					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(opts.Globals.Chain, addr, tt, &paginator)
+					source := rpc.Etherscan
+					if opts.Source == "key" {
+						source = rpc.Key
+					}
+					txs, nFetched, err := opts.Conn.GetSlurpedTxsByAddress(opts.Globals.Chain, source, addr, tt, &paginator)
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {

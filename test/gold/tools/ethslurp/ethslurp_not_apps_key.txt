@@ -1,7 +1,11 @@
-chifra slurp   -h
-Purpose:
-  Fetch data from Etherscan for any address.
-
+chifra slurp  0x9519afbc60719a83c470ceec41e32d3e4b8b262e 0-1500000 --source key --fmt json
+TEST[DATE|TIME] Addrs:  [0x9519afbc60719a83c470ceec41e32d3e4b8b262e]
+TEST[DATE|TIME] Blocks:  [0-1500000]
+TEST[DATE|TIME] Types:  [ext]
+TEST[DATE|TIME] Source:  key
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
+TEST[DATE|TIME] Format:  json
+Error: The --source=key option is only available with --appearances.
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
 
@@ -31,3 +35,4 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
   - If the value of --source is key, --types is ignored and only appearances are returned.
+
