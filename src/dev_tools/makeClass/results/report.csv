@@ -336,6 +336,9 @@ slurp,raw,python
 slurp,sleep,api
 slurp,sleep,python
 slurp,sleep,typescript
+slurp,source,api
+slurp,source,python
+slurp,source,typescript
 slurp,types,api
 slurp,types,python
 slurp,types,typescript

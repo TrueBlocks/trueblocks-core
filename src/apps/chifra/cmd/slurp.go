@@ -51,7 +51,8 @@ const notesSlurp = `
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
-  - The withdrawals option is only available on certain chains. It is ignored otherwise.`
+  - The withdrawals option is only available on certain chains. It is ignored otherwise.
+  - --source defaults to etherscan if not provided.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra slurp
@@ -67,6 +68,8 @@ func init() {
 One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, "show only the blocknumber.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "", `the API url to use as the source of the data
+One of [ etherscan | key ]`)
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 5000, "the number of records to request on each page")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)

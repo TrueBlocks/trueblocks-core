@@ -35,6 +35,15 @@ func (opts *SlurpOptions) validateSlurp() error {
 		return err
 	}
 
+	if len(opts.Source) > 0 {
+		err := validate.ValidateEnum("source", opts.Source, "[etherscan|key]")
+		if err != nil {
+			return err
+		}
+	} else {
+		opts.Source = "etherscan"
+	}
+
 	if chain != "mainnet" {
 		return validate.Usage("The {0} command is currently available only on the {1} chain.", "slurp", "mainnet")
 	}

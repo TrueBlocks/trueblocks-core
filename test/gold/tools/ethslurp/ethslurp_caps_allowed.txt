@@ -14,6 +14,8 @@ Flags:
                         One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -a, --articulate      articulate the retrieved data if ABIs can be found
+  -S, --source string   the API url to use as the source of the data
+                        One of [ etherscan | key ]
   -P, --per_page uint   the number of records to request on each page (default 5000)
   -s, --sleep float     seconds to sleep between requests (default 0.25)
   -H, --ether           specify value in ether
@@ -28,4 +30,5 @@ Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
+  - --source defaults to etherscan if not provided.
 
