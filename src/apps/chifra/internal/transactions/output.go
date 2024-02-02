@@ -58,8 +58,8 @@ func (opts *TransactionsOptions) TransactionsInternal() error {
 	} else if opts.Logs {
 		err = opts.HandleLogs()
 
-	} else if opts.Source {
-		err = opts.HandleSource()
+	} else if opts.Seed {
+		err = opts.HandleSeed()
 
 	} else if opts.Uniq {
 		err = opts.HandleUniq()
