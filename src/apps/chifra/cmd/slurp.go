@@ -70,6 +70,7 @@ One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals 
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "", `the API url to use as the source of the data
 One of [ etherscan | key ]`)
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode when --source==key, return only the number of records")
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 5000, "the number of records to request on each page")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)

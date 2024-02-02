@@ -44,6 +44,8 @@ func (opts *SlurpOptions) validateSlurp() error {
 		if !opts.Appearances {
 			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "--appearances")
 		}
+	} else if opts.Count {
+		return validate.Usage("The {0} option is only available with {1}.", "--count", "--source=key")
 	}
 
 	if chain != "mainnet" {

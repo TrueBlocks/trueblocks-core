@@ -11,6 +11,7 @@ slurpOpts = {
     "appearances": {"hotkey": "-p", "type": "switch"},
     "articulate": {"hotkey": "-a", "type": "switch"},
     "source": {"hotkey": "-S", "type": "flag"},
+    "count": {"hotkey": "-U", "type": "switch"},
     "perPage": {"hotkey": "-P", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "raw": {"hotkey": "-w", "type": "switch"},
