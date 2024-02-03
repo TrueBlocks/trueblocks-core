@@ -5,7 +5,7 @@ TEST[DATE|TIME] Types:  [ext]
 TEST[DATE|TIME] Source:  bad
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-Error: The source option (bad) must be one of [ etherscan | key ]
+Error: The --source option (bad) must be one of [ etherscan | key ]
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
 

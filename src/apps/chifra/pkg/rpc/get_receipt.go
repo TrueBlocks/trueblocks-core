@@ -65,6 +65,7 @@ func (conn *Connection) getReceiptRaw(bn uint64, txid uint64) (receipt *types.Ra
 	} else {
 		method := "eth_getTransactionReceipt"
 		params := query.Params{txHash}
+
 		if receipt, err := query.Query[types.RawReceipt](conn.Chain, method, params); err != nil {
 			return nil, base.Hash{}, err
 		} else {
@@ -119,17 +120,17 @@ func (conn *Connection) getReceiptsSimple(bn base.Blknum) ([]types.SimpleReceipt
 	method := "eth_getBlockReceipts"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawReceipts, err := query.QuerySlice[types.RawReceipt](conn.Chain, method, params); err != nil {
+	if rawReceipts, err := query.Query[[]types.RawReceipt](conn.Chain, method, params); err != nil {
 		return []types.SimpleReceipt{}, err
 
-	} else if len(rawReceipts) == 0 {
+	} else if rawReceipts == nil || len(*rawReceipts) == 0 {
 		return []types.SimpleReceipt{}, nil
 
 	} else {
 		curBlock := utils.NOPOS
 		curTs := utils.NOPOSI
 		var ret []types.SimpleReceipt
-		for _, rawReceipt := range rawReceipts {
+		for _, rawReceipt := range *rawReceipts {
 			rawReceipt := rawReceipt
 			bn := utils.MustParseUint(rawReceipt.BlockNumber)
 			if bn != curBlock {

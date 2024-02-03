@@ -65,14 +65,17 @@ func (conn *Connection) GetContractProxyAt(address base.Address, blockNumber bas
 	} else {
 		defer ec.Close()
 
-		proxyAddr, err := query.Query[string](conn.Chain, "eth_call", query.Params{
+		method := "eth_call"
+		params := query.Params{
 			map[string]any{
 				"to": address,
 				// implementation()
 				"data": "0x59679b0f",
 			},
 			blockNumber,
-		})
+		}
+
+		proxyAddr, err := query.Query[string](conn.Chain, method, params)
 		var proxy base.Address
 		if proxyAddr != nil {
 			proxy = base.HexToAddress(*proxyAddr)

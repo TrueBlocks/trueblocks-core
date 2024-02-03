@@ -43,7 +43,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 					if opts.Source == "key" {
 						source = rpc.Key
 					}
-					txs, nFetched, err := opts.Conn.GetSlurpedTxsByAddress(opts.Globals.Chain, source, addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, source, addr, tt, &paginator)
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {

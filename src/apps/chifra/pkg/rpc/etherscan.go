@@ -28,18 +28,83 @@ const (
 	Key
 )
 
-func (conn *Connection) GetSlurpedTxsByAddress(chain string, source SlurpSource, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+func (conn *Connection) SlurpTxsByAddress(chain string, source SlurpSource, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	switch source {
 	case Key:
-		return []types.SimpleSlurp{}, 0, nil
+		return conn.getTxsByAddressKey(chain, addr, paginator)
 	case Etherscan:
-		return conn.getESTransactionsByAddress(chain, addr, requestType, paginator)
+		return conn.getTxsByAddressEs(chain, addr, requestType, paginator)
 	default:
 		return []types.SimpleSlurp{}, 0, fmt.Errorf("unknown source: %d", source)
 	}
 }
 
-func (conn *Connection) getESTransactionsByAddress(chain, addr string, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+func (conn *Connection) getKeyUrl(chain, addr string, paginator *Paginator) (string, error) {
+	key := config.GetKey("trueblocks").ApiKey
+	if key == "" {
+		return "", errors.New("cannot read API key")
+	}
+
+	const str = `curl -X POST https://1fc17zhbqd.execute-api.us-east-1.amazonaws.com/prod/rpc
+-H "Content-Type: application/json"
+-H "x-quicknode-id: test-trueblocks-1"
+-H "x-instance-id: foobar"
+-H "x-qn-chain: ethereum"
+-H "x-qn-network: mainnet"
+-H "Authorization: Basic {{.ApiKey}}"
+-d '{
+	"jsonrpc": "2.0",
+	"method": "tb_getAppearances",
+	"params": [{
+		"address": "{{.Address}}",
+		"page": {{.Page}},
+		"pageSize": {{.PerPage}}
+	}]}' >shit`
+	url := strings.Replace(str, "\n", " ", -1)
+	url = strings.Replace(url, "{{.ApiKey}}", key, -1)
+	url = strings.Replace(url, "{{.Address}}", addr, -1)
+	url = strings.Replace(url, "{{.Page}}", fmt.Sprintf("%d", paginator.Page), -1)
+	url = strings.Replace(url, "{{.PerPage}}", fmt.Sprintf("%d", paginator.PerPage), -1)
+	return url, nil
+}
+
+func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+	url, err := conn.getKeyUrl(chain, addr, paginator)
+	if err != nil {
+		return []types.SimpleSlurp{}, 0, err
+	}
+
+	debug.DebugCurl(debug.Basic(url))
+	resp, err := http.Get(url)
+	if err != nil {
+		return []types.SimpleSlurp{}, 0, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return []types.SimpleSlurp{}, 0, fmt.Errorf("API error: %s", resp.Status)
+	}
+
+	decoder := json.NewDecoder(resp.Body)
+	fromEs := struct {
+		Result []types.RawSlurp `json:"result"`
+	}{}
+	if err = decoder.Decode(&fromEs); err != nil {
+		return []types.SimpleSlurp{}, 0, err
+	}
+
+	ret := make([]types.SimpleSlurp, len(fromEs.Result))
+	for _, raw := range fromEs.Result {
+		if s, err := conn.rawToSimple(addr, "ext", &raw); err != nil {
+			return []types.SimpleSlurp{}, 0, err
+		} else {
+			// s.Address
+			ret = append(ret, s)
+		}
+	}
+	return ret, len(ret), nil
+}
+
+func (conn *Connection) getTxsByAddressEs(chain, addr string, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	url, err := getEtherscanUrl(chain, addr, requestType, paginator)
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err
@@ -80,36 +145,6 @@ func (conn *Connection) getESTransactionsByAddress(chain, addr string, requestTy
 
 	return conn.responseToTransactions(addr, requestType, fromEs.Result)
 }
-
-// func (conn *Connection) getESTransactionByHash(txHash base.Hash) (types.SimpleSlurp, error) {
-// 	url, err := getEtherscanUrl(chain, txHash.Hex(), "byHash", &Paginator{Page: 1, PerPage: 10})
-// 	if err != nil {
-// 		return types.SimpleSlurp{}, err
-// 	}
-
-// 	resp, err := http.Get(url)
-// 	if err != nil {
-// 		return types.SimpleSlurp{}, err
-// 	}
-// 	defer resp.Body.Close()
-
-// 	// Check server response
-// 	if resp.StatusCode != http.StatusOK {
-// 		return types.SimpleSlurp{}, fmt.Errorf("etherscan API error: %s", resp.Status)
-// 	}
-
-// 	decoder := json.NewDecoder(resp.Body)
-// 	fromEs := struct {
-// 		JsonRpc string             `json:"jsonrpc"`
-// 		Id      int                `json:"id"`
-// 		Result  types.RawSlurp `json:"result"`
-// 	}{}
-// 	if err = decoder.Decode(&fromEs); err != nil {
-// 		return types.SimpleSlurp{}, err
-// 	}
-
-// 	return conn.rawToSimple("", "byHash", &fromEs.Result)
-// }
 
 // responseToTransaction converts one RawEtherscan to SimpleSlurp.
 func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
