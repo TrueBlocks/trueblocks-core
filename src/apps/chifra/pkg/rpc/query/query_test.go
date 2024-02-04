@@ -1,3 +1,6 @@
+//go:build integration
+// +build integration
+
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
@@ -9,6 +12,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func TestFromRpcCounter(t *testing.T) {
@@ -26,14 +31,12 @@ func TestFromRpcCounter(t *testing.T) {
 	}))
 	defer server.Close()
 
-	var result map[string]string
 	for i := 0; i < 20; i++ {
-		// TODO: Use rpc.Query
-		err := fromRpc(
-			server.URL,
-			&Payload{},
-			&result,
-		)
+		payload := Payload{
+			Method: "eth_blockNumber",
+			Params: []interface{}{},
+		}
+		_, err := Query[string](utils.GetTestChain(), payload.Method, payload.Params)
 		if err != nil {
 			t.Fatal(err)
 		}

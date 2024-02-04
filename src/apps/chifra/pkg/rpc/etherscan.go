@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -39,69 +40,110 @@ func (conn *Connection) SlurpTxsByAddress(chain string, source SlurpSource, addr
 	}
 }
 
-func (conn *Connection) getKeyUrl(chain, addr string, paginator *Paginator) (string, error) {
+func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+	url := "https://1fc17zhbqd.execute-api.us-east-1.amazonaws.com/prod/rpc"
+
 	key := config.GetKey("trueblocks").ApiKey
 	if key == "" {
-		return "", errors.New("cannot read API key")
+		return []types.SimpleSlurp{}, 0, errors.New("cannot read API key")
 	}
 
-	const str = `curl -X POST https://1fc17zhbqd.execute-api.us-east-1.amazonaws.com/prod/rpc
--H "Content-Type: application/json"
--H "x-quicknode-id: test-trueblocks-1"
--H "x-instance-id: foobar"
--H "x-qn-chain: ethereum"
--H "x-qn-network: mainnet"
--H "Authorization: Basic {{.ApiKey}}"
--d '{
-	"jsonrpc": "2.0",
-	"method": "tb_getAppearances",
-	"params": [{
-		"address": "{{.Address}}",
-		"page": {{.Page}},
-		"pageSize": {{.PerPage}}
-	}]}' >shit`
-	url := strings.Replace(str, "\n", " ", -1)
-	url = strings.Replace(url, "{{.ApiKey}}", key, -1)
-	url = strings.Replace(url, "{{.Address}}", addr, -1)
-	url = strings.Replace(url, "{{.Page}}", fmt.Sprintf("%d", paginator.Page), -1)
-	url = strings.Replace(url, "{{.PerPage}}", fmt.Sprintf("%d", paginator.PerPage), -1)
-	return url, nil
-}
+	type keyParam struct {
+		Address  string `json:"Address"`
+		Page     int    `json:"Page"`
+		PageSize int    `json:"PageSize"`
+	}
 
-func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
-	url, err := conn.getKeyUrl(chain, addr, paginator)
-	if err != nil {
+	method := "tb_getAppearances"
+	params := query.Params{keyParam{
+		Address:  addr,
+		Page:     paginator.Page,
+		PageSize: paginator.PerPage,
+	}}
+	headers := map[string]string{
+		"x-quicknode-id": "test-trueblocks-1",
+		"x-instance-id":  "foobar",
+		"x-qn-chain":     "ethereum",
+		"x-qn-network":   "mainnet",
+		"Authorization":  "Basic " + key,
+	}
+
+	debug.DebugCurl(query.RpcCurl{
+		Url1: url,
+		Payload1: query.RpcPayload{
+			Jsonrpc: "2.0",
+			Method:  method,
+			Params:  params,
+			ID:      1,
+		},
+		Headers1: headers,
+	})
+
+	if apps, err := query.QueryWithHeaders[[]types.SimpleSlurp](url, headers, method, params); err != nil {
 		return []types.SimpleSlurp{}, 0, err
+	} else {
+		return *apps, len(*apps), nil
 	}
 
-	debug.DebugCurl(debug.Basic(url))
-	resp, err := http.Get(url)
-	if err != nil {
-		return []types.SimpleSlurp{}, 0, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return []types.SimpleSlurp{}, 0, fmt.Errorf("API error: %s", resp.Status)
-	}
+	// url, err := conn.getKeyUrl(chain, addr, paginator)
+	// if err != nil {
+	// 	return []types.SimpleSlurp{}, 0, err
+	// }
 
-	decoder := json.NewDecoder(resp.Body)
-	fromEs := struct {
-		Result []types.RawSlurp `json:"result"`
-	}{}
-	if err = decoder.Decode(&fromEs); err != nil {
-		return []types.SimpleSlurp{}, 0, err
-	}
+	// url := fmt.Sprintf(listPins, status, first, cnt)
 
-	ret := make([]types.SimpleSlurp, len(fromEs.Result))
-	for _, raw := range fromEs.Result {
-		if s, err := conn.rawToSimple(addr, "ext", &raw); err != nil {
-			return []types.SimpleSlurp{}, 0, err
-		} else {
-			// s.Address
-			ret = append(ret, s)
-		}
-	}
-	return ret, len(ret), nil
+	// debug.DebugCurl(debug.Basic(url))
+	// if req, err := http.NewRequest("GET", url, nil); err != nil {
+	// 	return 0, []Pin{}
+	// } else {
+	// 	s, _ := NewService(chain, Pinata)
+	// 	if s.HeaderFunc != nil {
+	// 		headers := s.HeaderFunc(&s, "application/json")
+	// 		for key, value := range headers {
+	// 			req.Header.Add(key, value)
+	// 		}
+	// 	}
+	// 	if res, err := http.DefaultClient.Do(req); err != nil {
+	// 		return 0, []Pin{}
+	// 	} else {
+	// 		defer res.Body.Close()
+	// 		data := PinSet{}
+	// 		decoder := json.NewDecoder(res.Body)
+	// 		if err = decoder.Decode(&data); err != nil {
+	// 			return 0, []Pin{}
+	// 		}
+	// 		return data.Count, data.Rows
+	// 	}
+	// }
+
+	// debug.DebugCurl(debug.Basic(url))
+	// resp, err := http.Get(url)
+	// if err != nil {
+	// 	return []types.SimpleSlurp{}, 0, err
+	// }
+	// defer resp.Body.Close()
+	// if resp.StatusCode != http.StatusOK {
+	// 	return []types.SimpleSlurp{}, 0, fmt.Errorf("API error: %s", resp.Status)
+	// }
+
+	// decoder := json.NewDecoder(resp.Body)
+	// fromEs := struct {
+	// 	Result []types.RawSlurp `json:"result"`
+	// }{}
+	// if err = decoder.Decode(&fromEs); err != nil {
+	// 	return []types.SimpleSlurp{}, 0, err
+	// }
+
+	// ret := make([]types.SimpleSlurp, len(fromEs.Result))
+	// for _, raw := range fromEs.Result {
+	// 	if s, err := conn.rawToSimple(addr, "ext", &raw); err != nil {
+	// 		return []types.SimpleSlurp{}, 0, err
+	// 	} else {
+	// 		// s.Address
+	// 		ret = append(ret, s)
+	// 	}
+	// }
+	// return ret, len(ret), nil
 }
 
 func (conn *Connection) getTxsByAddressEs(chain, addr string, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {

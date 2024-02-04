@@ -19,6 +19,7 @@ func init() {
 type Debuggable interface {
 	Url() string
 	Body() string
+	Headers() string
 	Method() string
 	Payload() string
 }
@@ -55,6 +56,10 @@ func (c Basic) Body() string {
 	return `curl "[{url}]"`
 }
 
+func (c Basic) Headers() string {
+	return ``
+}
+
 func (c Basic) Method() string {
 	return ""
 }
@@ -70,13 +75,16 @@ func DebugCurl(debuggable Debuggable) {
 
 	url := "--url--"
 	payload := "--payload--"
+	headers := "--headers--"
 	if devDebugMethod != "testing" {
 		url = debuggable.Url()
 		payload = debuggable.Payload()
+		headers = debuggable.Headers()
 	}
 
 	var curlCmd = debuggable.Body()
 	curlCmd = strings.Replace(curlCmd, "[{url}]", url, -1)
+	curlCmd = strings.Replace(curlCmd, "[{headers}]", headers, -1)
 	curlCmd = strings.Replace(curlCmd, "[{payload}]", payload, -1)
 	if devDebugMethod == "file" {
 		_ = file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
