@@ -81,7 +81,6 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 
 	// url := fmt.Sprintf(listPins, status, first, cnt)
 
-	// 	debug.DebugCurlStr(url)
 	// if req, err := http.NewRequest("GET", url, nil); err != nil {
 	// 	return 0, []Pin{}
 	// } else {
@@ -105,7 +104,6 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 	// 	}
 	// }
 
-	// debug.DebugCurlStr(url)
 	// resp, err := http.Get(url)
 	// if err != nil {
 	// 	return []types.SimpleSlurp{}, 0, err
