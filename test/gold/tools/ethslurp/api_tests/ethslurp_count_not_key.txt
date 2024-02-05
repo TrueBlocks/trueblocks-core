@@ -1,0 +1,6 @@
+slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&blocks=0-1500000&appearances&source=etherscan&count&fmt=json
+{
+  "errors": [
+    "The --count option is only available with --source=key."
+  ]
+}
