@@ -82,7 +82,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Withdrawals, "withdrawals", "i", false, "export withdrawals for the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "force the transaction's traces into the cache")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "for --appearances mode only, display only the count of records")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Relevant, "relevant", "N", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
