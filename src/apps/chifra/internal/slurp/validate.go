@@ -35,6 +35,21 @@ func (opts *SlurpOptions) validateSlurp() error {
 		return err
 	}
 
+	err = validate.ValidateEnum("--source", opts.Source, "[etherscan|key]")
+	if err != nil {
+		return err
+	}
+
+	if opts.Source == "key" {
+		if !opts.Appearances && !opts.Count {
+			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "--appearances or --count")
+		}
+		key := config.GetKey("trueblocks").Jwt
+		if len(key) == 0 {
+			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "a valid api key")
+		}
+	}
+
 	if chain != "mainnet" {
 		return validate.Usage("The {0} command is currently available only on the {1} chain.", "slurp", "mainnet")
 	}

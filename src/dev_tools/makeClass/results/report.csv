@@ -328,6 +328,9 @@ slurp,articulate,python
 slurp,articulate,typescript
 slurp,cache,api
 slurp,cache,python
+slurp,count,api
+slurp,count,python
+slurp,count,typescript
 slurp,perPage,api
 slurp,perPage,python
 slurp,perPage,typescript
@@ -336,6 +339,9 @@ slurp,raw,python
 slurp,sleep,api
 slurp,sleep,python
 slurp,sleep,typescript
+slurp,source,api
+slurp,source,python
+slurp,source,typescript
 slurp,types,api
 slurp,types,python
 slurp,types,typescript
