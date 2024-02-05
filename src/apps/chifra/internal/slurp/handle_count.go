@@ -38,11 +38,7 @@ func (opts *SlurpOptions) HandleCount() error {
 				})
 
 				for !done {
-					source := rpc.Etherscan
-					if opts.Source == "key" {
-						source = rpc.Key
-					}
-					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, source, addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
