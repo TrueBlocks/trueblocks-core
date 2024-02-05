@@ -228,13 +228,16 @@ func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error
 		encodedArguments = packedHex[10:]
 	}
 
-	rawBytes, err := query.Query[string](call.Conn.Chain, "eth_call", query.Params{
+	method := "eth_call"
+	params := query.Params{
 		map[string]any{
 			"to":   call.Address.Hex(),
 			"data": packedHex,
 		},
 		blockNumberHex,
-	})
+	}
+
+	rawBytes, err := query.Query[string](call.Conn.Chain, method, params)
 	if err != nil {
 		return nil, err
 	}

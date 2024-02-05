@@ -85,27 +85,6 @@ func fromRpc(rpcProvider string, payload *Payload, ret any) error {
 	return sendRpcRequest(rpcProvider, plBytes, ret)
 }
 
-// QuerySlice returns a slice of results for given method and params.
-func QuerySlice[T any](chain string, method string, params Params) ([]T, error) {
-	var response rpcResponse[[]T]
-
-	payload := Payload{
-		Method: method,
-		Params: params,
-	}
-
-	provider := config.GetChain(chain).RpcProvider
-	err := fromRpc(provider, &payload, &response)
-	if err != nil {
-		return nil, err
-	}
-	if response.Error != nil {
-		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
-	}
-
-	return response.Result, err
-}
-
 // BatchPayload is a wrapper around Payload type that allows us
 // to associate a name (Key) to given request.
 type BatchPayload struct {

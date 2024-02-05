@@ -63,36 +63,6 @@ func (conn *Connection) GetESTransactionByAddress(chain, addr, requestType strin
 	return conn.responseToTransactions(addr, requestType, fromEs.Result)
 }
 
-// func (conn *Connection) getESTransactionByHash(txHash base.Hash) (types.SimpleSlurp, error) {
-// 	url, err := getEtherscanUrl(chain, txHash.Hex(), "byHash", &Paginator{Page: 1, PerPage: 10})
-// 	if err != nil {
-// 		return types.SimpleSlurp{}, err
-// 	}
-
-// 	resp, err := http.Get(url)
-// 	if err != nil {
-// 		return types.SimpleSlurp{}, err
-// 	}
-// 	defer resp.Body.Close()
-
-// 	// Check server response
-// 	if resp.StatusCode != http.StatusOK {
-// 		return types.SimpleSlurp{}, fmt.Errorf("etherscan API error: %s", resp.Status)
-// 	}
-
-// 	decoder := json.NewDecoder(resp.Body)
-// 	fromEs := struct {
-// 		JsonRpc string             `json:"jsonrpc"`
-// 		Id      int                `json:"id"`
-// 		Result  types.RawSlurp `json:"result"`
-// 	}{}
-// 	if err = decoder.Decode(&fromEs); err != nil {
-// 		return types.SimpleSlurp{}, err
-// 	}
-
-// 	return conn.rawToSimple("", "byHash", &fromEs.Result)
-// }
-
 // responseToTransaction converts one RawEtherscan to SimpleSlurp.
 func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
 	s := types.SimpleSlurp{

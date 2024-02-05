@@ -78,13 +78,13 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 	method := "eth_getLogs"
 	params := query.Params{p}
 
-	if rawLogs, err := query.QuerySlice[types.RawLog](conn.Chain, method, params); err != nil {
+	if rawLogs, err := query.Query[[]types.RawLog](conn.Chain, method, params); err != nil {
 		return []types.SimpleLog{}, err
 	} else {
 		curBlock := utils.NOPOS
 		curTs := utils.NOPOSI
 		var ret []types.SimpleLog
-		for _, rawLog := range rawLogs {
+		for _, rawLog := range *rawLogs {
 			bn := utils.MustParseUint(rawLog.BlockNumber)
 			if bn != curBlock {
 				curTs = conn.GetBlockTimestamp(bn)
