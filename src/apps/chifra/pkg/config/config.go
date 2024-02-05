@@ -39,6 +39,9 @@ func init() {
 	trueBlocksViper.SetDefault("Settings.IndexPath", PathToRootConfig()+"unchained/")
 	// The default chain to use if none is provided
 	trueBlocksViper.SetDefault("Settings.DefaultChain", "mainnet")
+	// Declare defaults for Notify so that it is read from env variables
+	trueBlocksViper.SetDefault("Settings.Notify.Url", "")
+	trueBlocksViper.SetDefault("Settings.Notify.Author", "")
 	// The pinning gateway to query when downloading the unchained index
 	trueBlocksViper.SetDefault("Pinning.GatewayUrl", defaultIpfsGateway)
 	// The local endpoint for the IPFS daemon

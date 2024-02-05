@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"syscall"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -18,8 +19,9 @@ var ErrConfiguredButNotRunning = fmt.Errorf("listener is configured but not runn
 // NotifyConfigured returns true if notification feature is configured
 func NotifyConfigured() (bool, string) {
 	endpoint := config.GetSettings().Notify.Url
+
 	// If protocol is not specified, use http by default
-	if endpoint[:4] != "http" {
+	if endpoint != "" && !strings.HasPrefix(endpoint, "http") {
 		endpoint = "http://" + endpoint
 	}
 	return endpoint != "", endpoint
