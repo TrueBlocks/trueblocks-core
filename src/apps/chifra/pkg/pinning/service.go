@@ -15,7 +15,6 @@ const (
 )
 
 type Service struct {
-	Type       ServiceType
 	Apikey     string
 	Secret     string
 	Jwt        string
@@ -26,12 +25,9 @@ func NewService(chain string, serviceType ServiceType) (Service, error) {
 	apiKey, secret, jwt := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret, config.GetKey("pinata").Jwt
 	switch serviceType {
 	case Local:
-		return Service{
-			Type: serviceType,
-		}, nil
+		return Service{}, nil
 	case Pinata:
 		return Service{
-			Type:       serviceType,
 			Apikey:     apiKey,
 			Secret:     secret,
 			Jwt:        jwt,

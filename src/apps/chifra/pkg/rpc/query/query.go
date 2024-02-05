@@ -72,7 +72,7 @@ func fromRpc(rpcProvider string, payload *Payload, ret any) error {
 		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 	}
 
-	debug.DebugCurl(RpcCurl{
+	debug.DebugCurl(rpcDebug{
 		payload: payloadToSend,
 		url:     rpcProvider},
 	)
@@ -147,7 +147,7 @@ func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error
 			Params:  payload.Params,
 			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 		}
-		debug.DebugCurl(RpcCurl{
+		debug.DebugCurl(rpcDebug{
 			payload: theLoad,
 			url:     rpcProvider},
 		)
@@ -188,24 +188,29 @@ func init() {
 	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
 }
 
-type RpcCurl struct {
+type rpcDebug struct {
 	payload rpcPayload
 	url     string
 }
 
-func (c RpcCurl) Url() string {
+func (c rpcDebug) Url() string {
 	return c.url
 }
 
-func (c RpcCurl) Body() string {
-	return `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{url}]`
+func (c rpcDebug) Body() string {
+	return `curl -X POST [{headers}] --data '[{payload}]' [{url}]`
 }
 
-func (c RpcCurl) Method() string {
+func (c rpcDebug) Headers() string {
+	ret := `-H "Content-Type: application/json"`
+	return ret
+}
+
+func (c rpcDebug) Method() string {
 	return c.payload.Method
 }
 
-func (c RpcCurl) Payload() string {
+func (c rpcDebug) Payload() string {
 	bytes, _ := json.MarshalIndent(c.payload, "", "")
 	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
 	return payloadStr
