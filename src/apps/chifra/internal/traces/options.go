@@ -26,7 +26,7 @@ type TracesOptions struct {
 	TransactionIds []identifiers.Identifier `json:"transactionIds,omitempty"` // Transaction identifiers
 	Articulate     bool                     `json:"articulate,omitempty"`     // Articulate the retrieved data if ABIs can be found
 	Filter         string                   `json:"filter,omitempty"`         // Call the node's trace_filter routine with bang-separated filter
-	Count          bool                     `json:"count,omitempty"`          // Show the number of traces for the transaction only (fast)
+	Count          bool                     `json:"count,omitempty"`          // Display only the number of traces for the transaction (fast)
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	Conn           *rpc.Connection          `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
@@ -146,4 +146,3 @@ func (opts *TracesOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

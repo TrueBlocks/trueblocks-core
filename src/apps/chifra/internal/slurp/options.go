@@ -29,8 +29,8 @@ type SlurpOptions struct {
 	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
 	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
 	Articulate  bool                     `json:"articulate,omitempty"`  // Articulate the retrieved data if ABIs can be found
-	Source      string                   `json:"source,omitempty"`      // The API url to use as the source of the data
-	Count       bool                     `json:"count,omitempty"`       // Only available for --appearances mode when --source==key, return only the number of records
+	Source      string                   `json:"source,omitempty"`      // The source of the slurped data
+	Count       bool                     `json:"count,omitempty"`       // For --appearances mode only, display only the count of records
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
@@ -202,4 +202,3 @@ func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

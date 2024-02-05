@@ -48,9 +48,6 @@ func (opts *SlurpOptions) validateSlurp() error {
 		if len(key) == 0 {
 			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "a valid api key")
 		}
-
-		// } else if opts.Count {
-		// 	return validate.Usage("The {0} option is only available with {1}.", "--count", "--source=key")
 	}
 
 	if chain != "mainnet" {

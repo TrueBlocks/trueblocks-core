@@ -348,8 +348,7 @@ paths:
           schema:
             type: boolean
         - name: count
-          description: >
-            only available for --appearances mode, if present, return only the number of records
+          description: for --appearances mode only, display only the count of records
           required: false
           style: form
           in: query
@@ -1092,7 +1091,7 @@ paths:
             type: number
             format: uint64
         - name: count
-          description: display the number of the lists of appearances for --addrs or --uniq
+          description: display only the count of appearances for --addrs or --uniq
           required: false
           style: form
           in: query
@@ -1446,7 +1445,7 @@ paths:
           schema:
             type: string
         - name: count
-          description: show the number of traces for the transaction only (fast)
+          description: display only the number of traces for the transaction (fast)
           required: false
           style: form
           in: query
@@ -2347,7 +2346,7 @@ paths:
           schema:
             type: boolean
         - name: source
-          description: the API url to use as the source of the data
+          description: the source of the slurped data
           required: false
           style: form
           in: query
@@ -2358,8 +2357,7 @@ paths:
               - etherscan
               - key
         - name: count
-          description: >
-            only available for --appearances mode when --source==key, return only the number of records
+          description: for --appearances mode only, display only the count of records
           required: false
           style: form
           in: query

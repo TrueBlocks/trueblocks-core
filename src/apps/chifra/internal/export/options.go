@@ -36,7 +36,7 @@ type ExportOptions struct {
 	Withdrawals bool                  `json:"withdrawals,omitempty"` // Export withdrawals for the given address
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
 	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Force the transaction's traces into the cache
-	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
+	Count       bool                  `json:"count,omitempty"`       // For --appearances mode only, display only the count of records
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
@@ -301,4 +301,3 @@ func (opts *ExportOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
