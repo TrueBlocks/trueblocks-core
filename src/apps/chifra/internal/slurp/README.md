@@ -28,15 +28,9 @@ Flags:
                         One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -a, --articulate      articulate the retrieved data if ABIs can be found
-<<<<<<< HEAD
-  -S, --source string   the API url to use as the source of the data
-                        One of [ etherscan | key ]
-  -U, --count           only available for --appearances mode when --source==key, return only the number of records
-=======
   -S, --source string   the source of the slurped data
                         One of [ etherscan | key ]
   -U, --count           for --appearances mode only, display only the count of records
->>>>>>> develop
   -P, --per_page uint   the number of records to request on each page (default 5000)
   -s, --sleep float     seconds to sleep between requests (default 0.25)
   -H, --ether           specify value in ether
@@ -51,11 +45,7 @@ Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
-<<<<<<< HEAD
-  - If the value of --source is key, --types is ignored and only appearances are returned.
-=======
   - If the value of --source is key, --types is ignored and only appearances or counts are returned.
->>>>>>> develop
 ```
 
 Data models produced by this tool:
