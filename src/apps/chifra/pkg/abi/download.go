@@ -44,7 +44,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		key,
 	)
 
-	debug.DebugCurl(debug.Basic(url))
+	debug.DebugCurlStr(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return err

@@ -27,7 +27,7 @@ func (conn *Connection) GetESTransactionByAddress(chain, addr, requestType strin
 		return []types.SimpleSlurp{}, 0, err
 	}
 
-	debug.DebugCurl(debug.Basic(url))
+	debug.DebugCurlStr(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err

@@ -17,7 +17,7 @@ var unpinPin = "https://api.pinata.cloud/pinning/unpin/%s"
 func unpinOne(chain string, i, total int, hash base.IpfsHash) error {
 	url := fmt.Sprintf(unpinPin, hash.String())
 
-	debug.DebugCurl(debug.Basic(url))
+	debug.DebugCurlStr(url)
 	if req, err := http.NewRequest("DELETE", url, nil); err != nil {
 		return err
 	} else {

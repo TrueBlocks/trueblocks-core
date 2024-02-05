@@ -155,7 +155,7 @@ func fetchFromIpfsGateway(ctx context.Context, gateway, hash string) (*fetchResu
 	url, _ := url.Parse(gateway)
 	url.Path = filepath.Join(url.Path, hash)
 
-	debug.DebugCurl(debug.Basic(url.String()))
+	debug.DebugCurlStr(url.String())
 	request, err := http.NewRequestWithContext(ctx, "GET", url.String(), nil)
 	if err != nil {
 		return nil, fmt.Errorf("NewRequestWithContext %s returned error: %w", url, err)
