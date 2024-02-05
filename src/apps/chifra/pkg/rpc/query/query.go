@@ -58,50 +58,39 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 
 // QueryWithHeaders returns a single result for given method and params.
 func QueryWithHeaders[T any](url string, headers map[string]string, method string, params Params) (*T, error) {
-	var response rpcResponse[T]
-
-	payload := Payload{
-		Method:  method,
-		Params:  params,
-		Headers: headers,
-	}
-
 	payloadToSend := RpcPayload{
 		Jsonrpc: "2.0",
-		Method:  payload.Method,
-		Params:  payload.Params,
+		Method:  method,
+		Params:  params,
 		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 	}
 
-	debug.DebugCurl(RpcCurl{
-		Payload1: payloadToSend,
+	debug.DebugCurl(rpcDebug{
 		Url1:     url,
+		Payload1: payloadToSend,
+		Headers1: headers,
 	})
 
-	if err := fromRpc(url, &payload, payloadToSend, &response); err != nil {
+	if plBytes, err := json.Marshal(payloadToSend); err != nil {
 		return nil, err
 	} else {
-		if response.Error != nil {
-			return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
-		}
-		return &response.Result, nil
-	}
-}
-
-// fromRpc Returns all traces for a given block.
-func fromRpc(url string, payload *Payload, payloadToSend RpcPayload, result any) error {
-	if plBytes, err := json.Marshal(payloadToSend); err != nil {
-		return err
-	} else {
+		var result rpcResponse[T]
 		body := bytes.NewReader(plBytes)
 		if response, err := http.Post(url, "application/json", body); err != nil {
-			return err
+			return nil, err
 		} else {
 			defer response.Body.Close()
 			if theBytes, err := io.ReadAll(response.Body); err != nil {
-				return err
+				return nil, err
 			} else {
-				return json.Unmarshal(theBytes, result)
+				err = json.Unmarshal(theBytes, &result)
+				if err != nil {
+					return nil, err
+				}
+				if result.Error != nil {
+					return nil, fmt.Errorf("%d: %s", result.Error.Code, result.Error.Message)
+				}
+				return &result.Result, nil
 			}
 		}
 	}
@@ -130,9 +119,10 @@ func QueryBatchWithHeaders[T any](chain string, headers map[string]string, batch
 			Params:  payload.Params,
 			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 		}
-		debug.DebugCurl(RpcCurl{
+		debug.DebugCurl(rpcDebug{
 			Payload1: theLoad,
 			Url1:     url,
+			Headers1: headers,
 		})
 		payloadToSend = append(payloadToSend, theLoad)
 	}
@@ -173,21 +163,21 @@ func init() {
 	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
 }
 
-type RpcCurl struct {
+type rpcDebug struct {
 	Payload1 RpcPayload
 	Url1     string
 	Headers1 map[string]string
 }
 
-func (c RpcCurl) Url() string {
+func (c rpcDebug) Url() string {
 	return c.Url1
 }
 
-func (c RpcCurl) Body() string {
+func (c rpcDebug) Body() string {
 	return `curl -X POST [{headers}] --data '[{payload}]' [{url}]`
 }
 
-func (c RpcCurl) Headers() string {
+func (c rpcDebug) Headers() string {
 	ret := `-H "Content-Type: application/json"`
 	for key, value := range c.Headers1 {
 		ret += fmt.Sprintf(` -H "%s: %s"`, key, value)
@@ -195,11 +185,11 @@ func (c RpcCurl) Headers() string {
 	return ret
 }
 
-func (c RpcCurl) Method() string {
+func (c rpcDebug) Method() string {
 	return c.Payload1.Method
 }
 
-func (c RpcCurl) Payload() string {
+func (c rpcDebug) Payload() string {
 	bytes, _ := json.MarshalIndent(c.Payload1, "", "")
 	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
 	return payloadStr

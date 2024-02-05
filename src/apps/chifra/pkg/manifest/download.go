@@ -66,7 +66,7 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 	url.Path = filepath.Join(url.Path, cid)
 
-	debug.DebugCurl(debug.Basic(url.String()))
+	debug.DebugCurlStr(url.String())
 	resp, err := http.Get(url.String())
 	if err != nil {
 		return nil, err

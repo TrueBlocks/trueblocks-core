@@ -43,7 +43,7 @@ func (conn *Connection) SlurpTxsByAddress(chain string, source SlurpSource, addr
 func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	url := "https://1fc17zhbqd.execute-api.us-east-1.amazonaws.com/prod/rpc"
 
-	key := config.GetKey("trueblocks").ApiKey
+	key := config.GetKey("trueblocks").Jwt
 	if key == "" {
 		return []types.SimpleSlurp{}, 0, errors.New("cannot read API key")
 	}
@@ -68,17 +68,6 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 		"Authorization":  "Basic " + key,
 	}
 
-	debug.DebugCurl(query.RpcCurl{
-		Url1: url,
-		Payload1: query.RpcPayload{
-			Jsonrpc: "2.0",
-			Method:  method,
-			Params:  params,
-			ID:      1,
-		},
-		Headers1: headers,
-	})
-
 	if apps, err := query.QueryWithHeaders[[]types.SimpleSlurp](url, headers, method, params); err != nil {
 		return []types.SimpleSlurp{}, 0, err
 	} else {
@@ -92,7 +81,7 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 
 	// url := fmt.Sprintf(listPins, status, first, cnt)
 
-	// debug.DebugCurl(debug.Basic(url))
+	// 	debug.DebugCurlStr(url)
 	// if req, err := http.NewRequest("GET", url, nil); err != nil {
 	// 	return 0, []Pin{}
 	// } else {
@@ -116,7 +105,7 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 	// 	}
 	// }
 
-	// debug.DebugCurl(debug.Basic(url))
+	// debug.DebugCurlStr(url)
 	// resp, err := http.Get(url)
 	// if err != nil {
 	// 	return []types.SimpleSlurp{}, 0, err
@@ -152,7 +141,7 @@ func (conn *Connection) getTxsByAddressEs(chain, addr string, requestType string
 		return []types.SimpleSlurp{}, 0, err
 	}
 
-	debug.DebugCurl(debug.Basic(url))
+	debug.DebugCurlStr(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err
