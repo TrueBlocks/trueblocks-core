@@ -30,7 +30,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
 		return []types.SimpleTrace{}, err
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
@@ -39,7 +39,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		var ret []types.SimpleTrace
-		for _, rawTrace := range rawTraces {
+		for _, rawTrace := range *rawTraces {
 			traceAction := types.SimpleTraceAction{
 				Address:        base.HexToAddress(rawTrace.Action.Address),
 				Author:         base.HexToAddress(rawTrace.Action.Author),
@@ -137,14 +137,14 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 	params := query.Params{txHash}
 
 	var ret []types.SimpleTrace
-	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, ethereum.NotFound
 
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
 		var idx uint64
 
-		for _, rawTrace := range rawTraces {
+		for _, rawTrace := range *rawTraces {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			rawTrace := rawTrace
 
@@ -235,7 +235,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 	params := query.Params{ff}
 
 	var ret []types.SimpleTrace
-	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
@@ -243,7 +243,7 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way load Blocks works
-		for _, rawTrace := range rawTraces {
+		for _, rawTrace := range *rawTraces {
 			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
 			rawTrace := rawTrace
 

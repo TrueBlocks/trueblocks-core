@@ -56,7 +56,7 @@ func downloadTimestamps(chain, database, outputFn, cid string) (error, bool) {
 	}
 	url.Path = filepath.Join(url.Path, cid)
 
-	debug.DebugCurl(debug.Basic(url.String()))
+	debug.DebugCurlStr(url.String())
 
 	logger.InfoTable("Chain:", chain)
 	logger.InfoTable("Database:", database)

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -13,7 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *SlurpOptions) HandleAppearances() error {
+func (opts *SlurpOptions) HandleCount() error {
 	testMode := opts.Globals.TestMode
 	paginator := rpc.Paginator{
 		Page:    1,
@@ -24,7 +23,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 	}
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawMonitor], errorChan chan error) {
 		totalFetched := 0
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
@@ -34,7 +33,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
-					Enabled: !testMode && !utils.IsTerminal(),
+					Enabled: !testMode, // && !utils.IsTerminal(),
 					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
 				})
 
@@ -53,12 +52,6 @@ func (opts *SlurpOptions) HandleAppearances() error {
 							continue
 						}
 						bar.Tick()
-						modelChan <- &types.SimpleAppearance{
-							Address:          base.HexToAddress(addr),
-							BlockNumber:      uint32(tx.BlockNumber),
-							TransactionIndex: uint32(tx.TransactionIndex),
-							Timestamp:        tx.Timestamp,
-						}
 						totalFiltered++
 					}
 
@@ -72,13 +65,25 @@ func (opts *SlurpOptions) HandleAppearances() error {
 				}
 				bar.Finish(true /* newLine */)
 			}
-		}
 
-		if totalFiltered == 0 {
-			msg := fmt.Sprintf("zero transactions reported, %d fetched", totalFetched)
-			errorChan <- fmt.Errorf(msg)
+			if totalFiltered == 0 {
+				msg := fmt.Sprintf("zero transactions reported, %d fetched", totalFetched)
+				errorChan <- fmt.Errorf(msg)
+			} else {
+				s := types.SimpleMonitor{
+					Address:  addr,
+					NRecords: totalFiltered,
+					FileSize: int64(totalFetched),
+				}
+				if testMode {
+					s.FileSize = 0xdead
+				}
+				modelChan <- &s
+			}
 		}
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
 }
+
+// const maxTestingBlock = 17000000

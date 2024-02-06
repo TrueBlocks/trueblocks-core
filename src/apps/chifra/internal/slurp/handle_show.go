@@ -42,7 +42,7 @@ func (opts *SlurpOptions) HandleShow() error {
 					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
 				})
 				for !done {
-					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(opts.Globals.Chain, addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
