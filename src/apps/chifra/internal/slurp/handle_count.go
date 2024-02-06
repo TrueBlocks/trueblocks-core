@@ -73,10 +73,6 @@ func (opts *SlurpOptions) HandleCount() error {
 				s := types.SimpleMonitor{
 					Address:  addr,
 					NRecords: totalFiltered,
-					FileSize: int64(totalFetched),
-				}
-				if testMode {
-					s.FileSize = 0xdead
 				}
 				modelChan <- &s
 			}

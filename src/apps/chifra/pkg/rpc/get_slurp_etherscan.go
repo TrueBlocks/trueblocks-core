@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -15,22 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-type Paginator struct {
-	Page    int
-	PerPage int
-}
-
-func (conn *Connection) SlurpTxsByAddress(chain, source, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
-	switch source {
-	case "key":
-		return []types.SimpleSlurp{}, 0, nil
-	case "etherscan":
-		fallthrough
-	default:
-		return conn.getTxsByAddressEs(chain, addr, requestType, paginator)
-	}
-}
 
 func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	url, err := getEtherscanUrl(chain, addr, requestType, paginator)
@@ -187,10 +170,3 @@ func getEtherscanUrl(chain, value string, requestType string, paginator *Paginat
 
 	return ret, nil
 }
-
-func mustParseInt(input any) (result int64) {
-	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
-	return
-}
-
-var ss = strings.Repeat(" ", 40)
