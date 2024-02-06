@@ -227,6 +227,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.SimpleFunction) error
 	if len(packedHex) > 10 {
 		encodedArguments = packedHex[10:]
 	}
+
 	method := "eth_call"
 	params := query.Params{
 		map[string]any{

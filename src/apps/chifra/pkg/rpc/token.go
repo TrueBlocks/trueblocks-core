@@ -151,6 +151,7 @@ func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
 	}
+
 	payloads := []query.BatchPayload{{
 		Key: "balance",
 		Payload: &query.Payload{

@@ -36,7 +36,7 @@ type eip1474Error struct {
 
 var rpcCounter uint32
 
-type RpcPayload struct {
+type rpcPayload struct {
 	Jsonrpc string `json:"jsonrpc"`
 	Method  string `json:"method"`
 	Params  `json:"params"`
@@ -58,7 +58,7 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 
 // QueryWithHeaders returns a single result for given method and params.
 func QueryWithHeaders[T any](url string, headers map[string]string, method string, params Params) (*T, error) {
-	payloadToSend := RpcPayload{
+	payloadToSend := rpcPayload{
 		Jsonrpc: "2.0",
 		Method:  method,
 		Params:  params,
@@ -111,9 +111,10 @@ func QueryBatchWithHeaders[T any](chain string, headers map[string]string, batch
 	}
 
 	url := config.GetChain(chain).RpcProvider
-	payloadToSend := make([]RpcPayload, 0, len(payloads))
+	payloadToSend := make([]rpcPayload, 0, len(payloads))
+
 	for _, payload := range payloads {
-		theLoad := RpcPayload{
+		theLoad := rpcPayload{
 			Jsonrpc: "2.0",
 			Method:  payload.Method,
 			Params:  payload.Params,
@@ -164,13 +165,13 @@ func init() {
 }
 
 type rpcDebug struct {
-	Payload1 RpcPayload
-	Url1     string
-	Headers1 map[string]string
+	payload rpcPayload
+	url     string
+	headers map[string]string
 }
 
 func (c rpcDebug) Url() string {
-	return c.Url1
+	return c.url
 }
 
 func (c rpcDebug) Body() string {
@@ -179,18 +180,18 @@ func (c rpcDebug) Body() string {
 
 func (c rpcDebug) Headers() string {
 	ret := `-H "Content-Type: application/json"`
-	for key, value := range c.Headers1 {
+	for key, value := range c.headers {
 		ret += fmt.Sprintf(` -H "%s: %s"`, key, value)
 	}
 	return ret
 }
 
 func (c rpcDebug) Method() string {
-	return c.Payload1.Method
+	return c.payload.Method
 }
 
 func (c rpcDebug) Payload() string {
-	bytes, _ := json.MarshalIndent(c.Payload1, "", "")
+	bytes, _ := json.MarshalIndent(c.payload, "", "")
 	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
 	return payloadStr
 }
