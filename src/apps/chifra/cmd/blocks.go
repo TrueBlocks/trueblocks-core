@@ -101,3 +101,4 @@ One of [ from | to | reward ]`)
 
 	chifraCmd.AddCommand(blocksCmd)
 }
+

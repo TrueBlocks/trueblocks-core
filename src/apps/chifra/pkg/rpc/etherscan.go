@@ -27,9 +27,9 @@ func (conn *Connection) SlurpTxsByAddress(chain, source, addr, requestType strin
 	case "key":
 		return conn.getTxsByAddressKey(chain, addr, paginator)
 	case "etherscan":
-		return conn.getTxsByAddressEs(chain, addr, requestType, paginator)
+		fallthrough
 	default:
-		return []types.SimpleSlurp{}, 0, fmt.Errorf("unknown source: %s", source)
+		return conn.getTxsByAddressEs(chain, addr, requestType, paginator)
 	}
 }
 

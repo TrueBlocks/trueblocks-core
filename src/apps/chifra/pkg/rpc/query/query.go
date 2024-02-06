@@ -66,9 +66,9 @@ func QueryWithHeaders[T any](url string, headers map[string]string, method strin
 	}
 
 	debug.DebugCurl(rpcDebug{
-		Url1:     url,
-		Payload1: payloadToSend,
-		Headers1: headers,
+		url:     url,
+		payload: payloadToSend,
+		headers: headers,
 	})
 
 	if plBytes, err := json.Marshal(payloadToSend); err != nil {
@@ -121,9 +121,9 @@ func QueryBatchWithHeaders[T any](chain string, headers map[string]string, batch
 			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 		}
 		debug.DebugCurl(rpcDebug{
-			Payload1: theLoad,
-			Url1:     url,
-			Headers1: headers,
+			url:     url,
+			payload: theLoad,
+			headers: headers,
 		})
 		payloadToSend = append(payloadToSend, theLoad)
 	}
