@@ -315,7 +315,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,gocmd,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|all]>,which types of transactions to request
 12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,gocmd,switch,<boolean>,show only the blocknumber.tx_id appearances of the exported transactions
 12185,tools,Other,slurp,ethslurp,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
-12200,tools,Other,slurp,ethslurp,source,S,,false,false,true,true,gocmd,flag,enum[etherscan*|key],the source of the slurped data
+12200,tools,Other,slurp,ethslurp,source,S,etherscan,false,false,true,true,gocmd,flag,enum[etherscan*|key],the source of the slurped data
 12202,tools,Other,slurp,ethslurp,count,U,,false,false,true,true,gocmd,switch,<boolean>,for --appearances mode only&#44; display only the count of records
 12205,tools,Other,slurp,ethslurp,per_page,P,5000,false,false,true,true,gocmd,flag,<uint64>,the number of records to request on each page
 12210,tools,Other,slurp,ethslurp,sleep,s,.25,false,false,true,true,gocmd,flag,<double>,seconds to sleep between requests
