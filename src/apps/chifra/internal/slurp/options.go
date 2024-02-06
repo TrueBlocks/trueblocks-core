@@ -41,6 +41,7 @@ type SlurpOptions struct {
 }
 
 var defaultSlurpOptions = SlurpOptions{
+	Source:  "etherscan",
 	PerPage: 5000,
 }
 
@@ -51,7 +52,7 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	logger.TestLog(len(opts.Source) > 0, "Source: ", opts.Source)
+	logger.TestLog(len(opts.Source) > 0 && opts.Source != "etherscan", "Source: ", opts.Source)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.PerPage != 5000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
