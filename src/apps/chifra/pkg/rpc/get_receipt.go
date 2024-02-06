@@ -123,7 +123,7 @@ func (conn *Connection) getReceiptsSimple(bn base.Blknum) ([]types.SimpleReceipt
 	if rawReceipts, err := query.Query[[]types.RawReceipt](conn.Chain, method, params); err != nil {
 		return []types.SimpleReceipt{}, err
 
-	} else if len(*rawReceipts) == 0 {
+	} else if rawReceipts == nil || len(*rawReceipts) == 0 {
 		return []types.SimpleReceipt{}, nil
 
 	} else {

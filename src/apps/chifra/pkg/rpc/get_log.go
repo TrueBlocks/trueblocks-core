@@ -80,6 +80,10 @@ func (conn *Connection) getLogsSimple(filter types.SimpleLogFilter) ([]types.Sim
 
 	if rawLogs, err := query.Query[[]types.RawLog](conn.Chain, method, params); err != nil {
 		return []types.SimpleLog{}, err
+
+	} else if rawLogs == nil || len(*rawLogs) == 0 {
+		return []types.SimpleLog{}, nil
+
 	} else {
 		curBlock := utils.NOPOS
 		curTs := utils.NOPOSI

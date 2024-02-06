@@ -19,8 +19,9 @@ type Params []interface{}
 
 // Payload is used to make calls to the RPC.
 type Payload struct {
-	Method string `json:"method"`
-	Params `json:"params"`
+	Headers map[string]string `json:"headers,omitempty"`
+	Method  string            `json:"method"`
+	Params  `json:"params"`
 }
 
 type rpcResponse[T any] struct {
@@ -33,27 +34,6 @@ type eip1474Error struct {
 	Message string `json:"message"`
 }
 
-// Query returns a single result for given method and params.
-func Query[T any](chain string, method string, params Params) (*T, error) {
-	var response rpcResponse[T]
-
-	payload := Payload{
-		Method: method,
-		Params: params,
-	}
-
-	provider := config.GetChain(chain).RpcProvider
-	err := fromRpc(provider, &payload, &response)
-	if err != nil {
-		return nil, err
-	}
-	if response.Error != nil {
-		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
-	}
-
-	return &response.Result, err
-}
-
 var rpcCounter uint32
 
 type rpcPayload struct {
@@ -63,28 +43,6 @@ type rpcPayload struct {
 	ID      int `json:"id"`
 }
 
-// fromRpc Returns all traces for a given block.
-func fromRpc(rpcProvider string, payload *Payload, ret any) error {
-	payloadToSend := rpcPayload{
-		Jsonrpc: "2.0",
-		Method:  payload.Method,
-		Params:  payload.Params,
-		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
-	}
-
-	debug.DebugCurl(rpcDebug{
-		payload: payloadToSend,
-		url:     rpcProvider},
-	)
-
-	plBytes, err := json.Marshal(payloadToSend)
-	if err != nil {
-		return err
-	}
-
-	return sendRpcRequest(rpcProvider, plBytes, ret)
-}
-
 // BatchPayload is a wrapper around Payload type that allows us
 // to associate a name (Key) to given request.
 type BatchPayload struct {
@@ -92,31 +50,67 @@ type BatchPayload struct {
 	*Payload
 }
 
+// Query returns a single result for given method and params.
+func Query[T any](chain string, method string, params Params) (*T, error) {
+	url := config.GetChain(chain).RpcProvider
+	return QueryWithHeaders[T](url, map[string]string{}, method, params)
+}
+
+// QueryWithHeaders returns a single result for given method and params.
+func QueryWithHeaders[T any](url string, headers map[string]string, method string, params Params) (*T, error) {
+	payloadToSend := rpcPayload{
+		Jsonrpc: "2.0",
+		Method:  method,
+		Params:  params,
+		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
+	}
+
+	debug.DebugCurl(rpcDebug{
+		url:     url,
+		payload: payloadToSend,
+		headers: headers,
+	})
+
+	if plBytes, err := json.Marshal(payloadToSend); err != nil {
+		return nil, err
+	} else {
+		var result rpcResponse[T]
+		body := bytes.NewReader(plBytes)
+		if response, err := http.Post(url, "application/json", body); err != nil {
+			return nil, err
+		} else {
+			defer response.Body.Close()
+			if theBytes, err := io.ReadAll(response.Body); err != nil {
+				return nil, err
+			} else {
+				err = json.Unmarshal(theBytes, &result)
+				if err != nil {
+					return nil, err
+				}
+				if result.Error != nil {
+					return nil, fmt.Errorf("%d: %s", result.Error.Code, result.Error.Message)
+				}
+				return &result.Result, nil
+			}
+		}
+	}
+}
+
 // QueryBatch batches requests to the node. Returned values are stored in map, with the same keys as defined
 // in `batchPayload` (this way we don't have to operate on array indices)
 func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T, error) {
-	var response []rpcResponse[T]
-
-	keys := make([]string, 0, len(batchPayload))
-	payloads := make([]Payload, 0, len(batchPayload))
-	for _, config := range batchPayload {
-		keys = append(keys, config.Key)
-		payloads = append(payloads, *config.Payload)
-	}
-
-	provider := config.GetChain(chain).RpcProvider
-	err := fromRpcBatch(provider, payloads, &response)
-	if err != nil {
-		return nil, err
-	}
-	results := make(map[string]*T, len(batchPayload))
-	for index, key := range keys {
-		results[key] = &response[index].Result
-	}
-	return results, err
+	return QueryBatchWithHeaders[T](chain, map[string]string{}, batchPayload)
 }
 
-func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
+func QueryBatchWithHeaders[T any](chain string, headers map[string]string, batchPayload []BatchPayload) (map[string]*T, error) {
+	keys := make([]string, 0, len(batchPayload))
+	payloads := make([]Payload, 0, len(batchPayload))
+	for _, bpl := range batchPayload {
+		keys = append(keys, bpl.Key)
+		payloads = append(payloads, *bpl.Payload)
+	}
+
+	url := config.GetChain(chain).RpcProvider
 	payloadToSend := make([]rpcPayload, 0, len(payloads))
 
 	for _, payload := range payloads {
@@ -127,34 +121,37 @@ func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error
 			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 		}
 		debug.DebugCurl(rpcDebug{
+			url:     url,
 			payload: theLoad,
-			url:     rpcProvider},
-		)
+			headers: headers,
+		})
 		payloadToSend = append(payloadToSend, theLoad)
 	}
 
 	plBytes, err := json.Marshal(payloadToSend)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return sendRpcRequest(rpcProvider, plBytes, ret)
-}
-
-func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
-	body := bytes.NewReader(marshalled)
-	resp, err := http.Post(rpcProvider, "application/json", body)
-	if err != nil {
-		return err
+	var result []rpcResponse[T]
+	body := bytes.NewReader(plBytes)
+	if response, err := http.Post(url, "application/json", body); err != nil {
+		return nil, err
+	} else {
+		defer response.Body.Close()
+		if theBytes, err := io.ReadAll(response.Body); err != nil {
+			return nil, err
+		} else {
+			if err = json.Unmarshal(theBytes, &result); err != nil {
+				return nil, err
+			}
+			results := make(map[string]*T, len(batchPayload))
+			for index, key := range keys {
+				results[key] = &result[index].Result
+			}
+			return results, err
+		}
 	}
-	defer resp.Body.Close()
-
-	theBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(theBytes, result)
 }
 
 func init() {
@@ -170,6 +167,7 @@ func init() {
 type rpcDebug struct {
 	payload rpcPayload
 	url     string
+	headers map[string]string
 }
 
 func (c rpcDebug) Url() string {
@@ -182,6 +180,9 @@ func (c rpcDebug) Body() string {
 
 func (c rpcDebug) Headers() string {
 	ret := `-H "Content-Type: application/json"`
+	for key, value := range c.headers {
+		ret += fmt.Sprintf(` -H "%s: %s"`, key, value)
+	}
 	return ret
 }
 

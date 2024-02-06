@@ -32,6 +32,10 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 
 	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
 		return []types.SimpleTrace{}, err
+
+	} else if rawTraces == nil || len(*rawTraces) == 0 {
+		return []types.SimpleTrace{}, nil
+
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(bn)
@@ -140,6 +144,9 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, ethereum.NotFound
 
+	} else if rawTraces == nil || len(*rawTraces) == 0 {
+		return []types.SimpleTrace{}, nil
+
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
 		var idx uint64
@@ -237,6 +244,10 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 	var ret []types.SimpleTrace
 	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
+
+	} else if rawTraces == nil || len(*rawTraces) == 0 {
+		return []types.SimpleTrace{}, nil
+
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(utils.MustParseUint(f.FromBlock))
