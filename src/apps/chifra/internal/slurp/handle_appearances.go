@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -23,7 +22,6 @@ func (opts *SlurpOptions) HandleAppearances() error {
 	if opts.Globals.TestMode {
 		paginator.PerPage = 100
 	}
-	// filter := filter.NewEmptyFilter()
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
