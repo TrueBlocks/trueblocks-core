@@ -1,10 +1,6 @@
 package rpc
 
 import (
-	"fmt"
-	"strconv"
-	"strings"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -24,9 +20,14 @@ func (conn *Connection) SlurpTxsByAddress(chain, source, addr, requestType strin
 	}
 }
 
-func mustParseInt(input any) (result int64) {
-	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
-	return
+func (conn *Connection) SlurpTxCountByAddress(chain, source, addr, requestType string, paginator *Paginator) (int, error) {
+	switch source {
+	case "key":
+		return conn.getTxCountByAddressKey(chain, addr, paginator)
+	case "etherscan":
+		fallthrough
+	default:
+		_, cnt, err := conn.getTxsByAddressEs(chain, addr, requestType, paginator)
+		return cnt, err
+	}
 }
-
-var ss = strings.Repeat(" ", 40)

@@ -7,3 +7,7 @@ import (
 func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	return []types.SimpleSlurp{}, 0, nil
 }
+
+func (conn *Connection) getTxCountByAddressKey(chain, addr string, paginator *Paginator) (int, error) {
+	return 0, nil
+}

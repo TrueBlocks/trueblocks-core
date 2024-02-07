@@ -1178,7 +1178,7 @@ bool ::forEveryBlockNumber(UINT64VISITFUNC func, void* data) const {
 }
 
 //--------------------------------------------------------------------------------
-bool ::isInRange(blknum_t bn) const {
+bool ::is InRange(blknum_t bn) const {
     if (start <= bn && bn < stop)
         return true;
     for (size_t i = 0; i < numList.size(); i++)
@@ -1221,7 +1221,7 @@ class  {
         forEveryBlockNumber(listBlocks, &nums);
         return nums[offset];
     }
-    bool isInRange(blknum_t bn) const;
+    bool is InRange(blknum_t bn) const;
     blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset, bool& hasZero) const;
 
   private:

@@ -47,7 +47,7 @@ func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, pagin
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --decache.
-		logger.Warn("provider responded with:", url, fromEs.Message, ss)
+		logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
 		return []types.SimpleSlurp{}, 0, nil
 		// } else if fromEs.Message != "OK" {
 		// 	logger.Warn("URL:", url)
@@ -64,7 +64,7 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      utils.MustParseUint(rawTx.BlockNumber),
 		TransactionIndex: utils.MustParseUint(rawTx.TransactionIndex),
-		Timestamp:        mustParseInt(rawTx.Timestamp),
+		Timestamp:        utils.MustParseInt(rawTx.Timestamp),
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
 		Gas:              utils.MustParseUint(rawTx.Gas),
