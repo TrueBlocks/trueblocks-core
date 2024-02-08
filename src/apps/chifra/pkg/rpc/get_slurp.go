@@ -27,7 +27,6 @@ func (conn *Connection) SlurpTxCountByAddress(chain, source, addr, requestType s
 	case "etherscan":
 		fallthrough
 	default:
-		_, cnt, err := conn.getTxsByAddressEs(chain, addr, requestType, paginator)
-		return cnt, err
+		return conn.getTxCountByAddressEs(chain, addr, requestType, paginator)
 	}
 }

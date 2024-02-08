@@ -170,3 +170,8 @@ func getEtherscanUrl(chain, value string, requestType string, paginator *Paginat
 
 	return ret, nil
 }
+
+func (conn *Connection) getTxCountByAddressEs(chain, addr, requestType string, paginator *Paginator) (int, error) {
+	_, cnt, err := conn.getTxsByAddressEs(chain, addr, requestType, paginator)
+	return cnt, err
+}

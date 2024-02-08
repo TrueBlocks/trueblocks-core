@@ -44,7 +44,7 @@ func (opts *SlurpOptions) validateSlurp() error {
 		if !opts.Appearances && !opts.Count {
 			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "--appearances or --count")
 		}
-		key := config.GetKey("trueblocks").Jwt
+		key := config.GetKey("trueblocks").ApiKey
 		if len(key) == 0 {
 			return validate.Usage("The {0} option is only available with {1}.", "--source=key", "a valid api key")
 		}
