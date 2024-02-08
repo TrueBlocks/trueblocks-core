@@ -71,22 +71,33 @@ func QueryWithHeaders[T any](url string, headers map[string]string, method strin
 		return nil, err
 	} else {
 		body := bytes.NewReader(plBytes)
-		if response, err := http.Post(url, "application/json", body); err != nil {
+		if request, err := http.NewRequest("POST", url, body); err != nil {
 			return nil, err
 		} else {
-			defer response.Body.Close()
-			if theBytes, err := io.ReadAll(response.Body); err != nil {
+			request.Header.Set("Content-Type", "application/json")
+			for key, value := range headers {
+				request.Header.Set(key, value)
+			}
+
+			client := &http.Client{}
+			if response, err := client.Do(request); err != nil {
 				return nil, err
 			} else {
-				var result rpcResponse[T]
-				err = json.Unmarshal(theBytes, &result)
-				if err != nil {
+				defer response.Body.Close()
+
+				if theBytes, err := io.ReadAll(response.Body); err != nil {
 					return nil, err
+				} else {
+					var result rpcResponse[T]
+					if err = json.Unmarshal(theBytes, &result); err != nil {
+						return nil, err
+					} else {
+						if result.Error != nil {
+							return nil, fmt.Errorf("%d: %s", result.Error.Code, result.Error.Message)
+						}
+						return &result.Result, nil
+					}
 				}
-				if result.Error != nil {
-					return nil, fmt.Errorf("%d: %s", result.Error.Code, result.Error.Message)
-				}
-				return &result.Result, nil
 			}
 		}
 	}
