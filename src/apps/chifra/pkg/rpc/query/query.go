@@ -56,25 +56,20 @@ func Query[T any](chain string, method string, params Params) (*T, error) {
 	return QueryWithHeaders[T](url, map[string]string{}, method, params)
 }
 
-// QueryWithHeaders returns a single result for given method and params.
+// QueryWithHeaders returns a single result for a given method and params.
 func QueryWithHeaders[T any](url string, headers map[string]string, method string, params Params) (*T, error) {
 	payloadToSend := rpcPayload{
 		Jsonrpc: "2.0",
 		Method:  method,
 		Params:  params,
-		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
+		ID:      int(uint32(atomic.AddUint32(&rpcCounter, 1))),
 	}
 
-	debug.DebugCurl(rpcDebug{
-		url:     url,
-		payload: payloadToSend,
-		headers: headers,
-	})
+	debug.DebugCurl(rpcDebug{url: url, payload: payloadToSend, headers: headers})
 
 	if plBytes, err := json.Marshal(payloadToSend); err != nil {
 		return nil, err
 	} else {
-		var result rpcResponse[T]
 		body := bytes.NewReader(plBytes)
 		if response, err := http.Post(url, "application/json", body); err != nil {
 			return nil, err
@@ -83,6 +78,7 @@ func QueryWithHeaders[T any](url string, headers map[string]string, method strin
 			if theBytes, err := io.ReadAll(response.Body); err != nil {
 				return nil, err
 			} else {
+				var result rpcResponse[T]
 				err = json.Unmarshal(theBytes, &result)
 				if err != nil {
 					return nil, err
