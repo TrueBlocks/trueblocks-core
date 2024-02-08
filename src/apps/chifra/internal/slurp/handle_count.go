@@ -48,7 +48,10 @@ func (opts *SlurpOptions) HandleCount() error {
 
 					for _, tx := range txs {
 						tx := tx
-						if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
+						if ok, err := opts.isInRange(tx.BlockNumber); !ok {
+							if err != nil {
+								errorChan <- err
+							}
 							continue
 						}
 						bar.Tick()
@@ -73,10 +76,6 @@ func (opts *SlurpOptions) HandleCount() error {
 				s := types.SimpleMonitor{
 					Address:  addr,
 					NRecords: totalFiltered,
-					FileSize: int64(totalFetched),
-				}
-				if testMode {
-					s.FileSize = 0xdead
 				}
 				modelChan <- &s
 			}

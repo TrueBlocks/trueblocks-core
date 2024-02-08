@@ -49,7 +49,11 @@ func (opts *SlurpOptions) HandleAppearances() error {
 
 					for _, tx := range txs {
 						tx := tx
-						if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
+						if ok, err := opts.isInRange(tx.BlockNumber); !ok {
+							if err != nil {
+								errorChan <- err
+							}
+
 							continue
 						}
 						bar.Tick()
