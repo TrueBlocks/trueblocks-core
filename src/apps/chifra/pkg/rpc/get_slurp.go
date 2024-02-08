@@ -12,7 +12,7 @@ type Paginator struct {
 func (conn *Connection) SlurpTxsByAddress(chain, source, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	switch source {
 	case "key":
-		return []types.SimpleSlurp{}, 0, nil
+		return conn.getTxsByAddressKey(chain, addr, paginator)
 	case "etherscan":
 		fallthrough
 	default:
@@ -23,7 +23,7 @@ func (conn *Connection) SlurpTxsByAddress(chain, source, addr, requestType strin
 func (conn *Connection) SlurpTxCountByAddress(chain, source, addr, requestType string, paginator *Paginator) (int, error) {
 	switch source {
 	case "key":
-		return 0, nil
+		return conn.getTxCountByAddressKey(chain, addr, paginator)
 	case "etherscan":
 		fallthrough
 	default:
