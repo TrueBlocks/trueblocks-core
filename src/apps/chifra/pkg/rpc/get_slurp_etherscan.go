@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -15,22 +14,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
-
-type Paginator struct {
-	Page    int
-	PerPage int
-}
-
-func (conn *Connection) SlurpTxsByAddress(chain, source, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
-	switch source {
-	case "key":
-		return []types.SimpleSlurp{}, 0, nil
-	case "etherscan":
-		fallthrough
-	default:
-		return conn.getTxsByAddressEs(chain, addr, requestType, paginator)
-	}
-}
 
 func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	url, err := getEtherscanUrl(chain, addr, requestType, paginator)
@@ -64,7 +47,7 @@ func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, pagin
 		// Etherscan sends 200 OK responses even if there's an error. We want to cache the error
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --decache.
-		logger.Warn("provider responded with:", url, fromEs.Message, ss)
+		logger.Warn("provider responded with:", url, fromEs.Message, strings.Repeat(" ", 40))
 		return []types.SimpleSlurp{}, 0, nil
 		// } else if fromEs.Message != "OK" {
 		// 	logger.Warn("URL:", url)
@@ -81,7 +64,7 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
 		BlockNumber:      utils.MustParseUint(rawTx.BlockNumber),
 		TransactionIndex: utils.MustParseUint(rawTx.TransactionIndex),
-		Timestamp:        mustParseInt(rawTx.Timestamp),
+		Timestamp:        utils.MustParseInt(rawTx.Timestamp),
 		From:             base.HexToAddress(rawTx.From),
 		To:               base.HexToAddress(rawTx.To),
 		Gas:              utils.MustParseUint(rawTx.Gas),
@@ -188,9 +171,7 @@ func getEtherscanUrl(chain, value string, requestType string, paginator *Paginat
 	return ret, nil
 }
 
-func mustParseInt(input any) (result int64) {
-	result, _ = strconv.ParseInt(fmt.Sprint(input), 0, 64)
-	return
+func (conn *Connection) getTxCountByAddressEs(chain, addr, requestType string, paginator *Paginator) (int, error) {
+	_, cnt, err := conn.getTxsByAddressEs(chain, addr, requestType, paginator)
+	return cnt, err
 }
-
-var ss = strings.Repeat(" ", 40)
