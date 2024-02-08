@@ -39,13 +39,17 @@ func (s *SimpleMonitor) Model(chain, format string, verbose bool, extraOptions m
 	model = map[string]any{
 		"address":  s.Address,
 		"nRecords": s.NRecords,
-		"fileSize": s.FileSize,
 	}
 	order = []string{
 		"address",
 		"nRecords",
-		"fileSize",
 	}
+
+	if s.FileSize > 0 {
+		model["fileSize"] = s.FileSize
+		order = append(order, "fileSize")
+	}
+
 	if verbose {
 		model["lastScanned"] = s.LastScanned
 		model["deleted"] = s.Deleted
