@@ -90,11 +90,11 @@ func (opts *SlurpOptions) HandleAppearances() error {
 
 func (opts *SlurpOptions) FirstPage() int {
 	switch opts.Source {
-	case "key":
-		return 0
 	case "etherscan":
+		return 1
+	case "key":
 		fallthrough
 	default:
-		return 1
+		return 0
 	}
 }
