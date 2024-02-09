@@ -42,9 +42,9 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 	}
 
 	type keyParam struct {
-		Address  string `json:"address"`
-		Page     int    `json:"page"`
-		PageSize int    `json:"pageSize"`
+		Address string `json:"address"`
+		Page    int    `json:"page"`
+		PerPage int    `json:"perPage"`
 	}
 
 	// TODO: Use types.SimpleSlurp as soon as https://github.com/TrueBlocks/trueblocks-key/issues/82
@@ -56,9 +56,9 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 
 	method := "tb_getAppearances"
 	params := query.Params{keyParam{
-		Address:  addr,
-		Page:     paginator.Page,
-		PageSize: paginator.PerPage,
+		Address: addr,
+		Page:    paginator.Page,
+		PerPage: paginator.PerPage,
 	}}
 
 	if apps, err := query.QueryWithHeaders[[]Shit](url, headers, method, params); err != nil {
