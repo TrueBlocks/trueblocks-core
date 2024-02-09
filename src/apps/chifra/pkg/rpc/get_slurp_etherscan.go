@@ -162,8 +162,6 @@ func getEtherscanUrl(chain, value string, requestType string, paginator *Paginat
 	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage), -1)
 	ret = ret + "&apikey=" + key
 
-	paginator.Page++
-
 	return ret, nil
 }
 

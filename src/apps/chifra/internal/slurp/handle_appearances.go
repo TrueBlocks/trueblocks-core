@@ -16,7 +16,7 @@ import (
 func (opts *SlurpOptions) HandleAppearances() error {
 	testMode := opts.Globals.TestMode
 	paginator := rpc.Paginator{
-		Page:    1,
+		Page:    opts.FirstPage(),
 		PerPage: int(opts.PerPage),
 	}
 	if opts.Globals.TestMode {
@@ -29,7 +29,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
-				paginator.Page = 1
+				paginator.Page = opts.FirstPage()
 				done := false
 
 				bar := logger.NewBar(logger.BarOptions{
@@ -40,6 +40,7 @@ func (opts *SlurpOptions) HandleAppearances() error {
 
 				for !done {
 					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
+					paginator.Page++ // order matters
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
@@ -85,4 +86,15 @@ func (opts *SlurpOptions) HandleAppearances() error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+func (opts *SlurpOptions) FirstPage() int {
+	switch opts.Source {
+	case "key":
+		return 0
+	case "etherscan":
+		fallthrough
+	default:
+		return 1
+	}
 }

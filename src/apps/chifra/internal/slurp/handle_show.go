@@ -18,7 +18,7 @@ import (
 func (opts *SlurpOptions) HandleShow() error {
 	testMode := opts.Globals.TestMode
 	paginator := rpc.Paginator{
-		Page:    1,
+		Page:    opts.FirstPage(),
 		PerPage: int(opts.PerPage),
 	}
 	if opts.Globals.TestMode {
@@ -33,7 +33,7 @@ func (opts *SlurpOptions) HandleShow() error {
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
-				paginator.Page = 1
+				paginator.Page = opts.FirstPage()
 				done := false
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
@@ -43,6 +43,7 @@ func (opts *SlurpOptions) HandleShow() error {
 
 				for !done {
 					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
+					paginator.Page++ // order matters
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
