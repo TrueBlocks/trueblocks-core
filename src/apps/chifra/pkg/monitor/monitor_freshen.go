@@ -384,8 +384,8 @@ func getAppearances(addrStr string, lines []string, lastVisited uint32, found in
 			break
 		}
 		r := index.AppearanceRecord{
-			BlockNumber:   uint32(globals.ToUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
-			TransactionId: uint32(globals.ToUint64(lines[idx][startOfTxId:endOfTxId])),
+			BlockNumber:      uint32(globals.ToUint64(lines[idx][startOfBlockNum:endOfBlockNum])),
+			TransactionIndex: uint32(globals.ToUint64(lines[idx][startOfTxId:endOfTxId])),
 		}
 		if r.BlockNumber > lastVisited {
 			results = append(results, r)

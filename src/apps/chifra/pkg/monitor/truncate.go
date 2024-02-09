@@ -23,8 +23,8 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 		for _, app := range apps {
 			if app.BlockNumber <= num {
 				keep = append(keep, index.AppearanceRecord{
-					BlockNumber:   app.BlockNumber,
-					TransactionId: app.TransactionIndex,
+					BlockNumber:      app.BlockNumber,
+					TransactionIndex: app.TransactionIndex,
 				})
 			}
 		}

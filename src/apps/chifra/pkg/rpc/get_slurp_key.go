@@ -63,7 +63,7 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 		for _, a := range *apps {
 			v = append(v, types.SimpleSlurp{
 				BlockNumber:      a.BlockNumber,
-				TransactionIndex: a.TransactionId,
+				TransactionIndex: a.TempTransactionId,
 			})
 		}
 		return v, len(v), nil

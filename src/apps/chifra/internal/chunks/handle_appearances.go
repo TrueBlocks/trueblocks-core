@@ -55,7 +55,7 @@ func (opts *ChunksOptions) HandleAppearances(blockNums []uint64) error {
 
 				s := types.SimpleAppearance{
 					BlockNumber:      rec.BlockNumber,
-					TransactionIndex: rec.TransactionId,
+					TransactionIndex: rec.TransactionIndex,
 				}
 
 				modelChan <- &s
