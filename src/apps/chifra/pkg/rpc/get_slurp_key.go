@@ -26,7 +26,7 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 	// lines are not as expected, we use the default values above.
 	if file.FileExists("./.key") {
 		lines := file.AsciiFileToLines(".key")
-		if len(lines) == 6 {
+		if len(lines) < 6 {
 			myUrl := lines[0]
 			myHeaders := map[string]string{}
 			for i := 1; i < len(lines); i++ {
