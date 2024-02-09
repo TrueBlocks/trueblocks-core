@@ -26,7 +26,7 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 	// lines are not as expected, we use the default values above.
 	if file.FileExists("./.key") {
 		lines := file.AsciiFileToLines(".key")
-		if len(lines) != 6 {
+		if len(lines) == 6 {
 			myUrl := lines[0]
 			myHeaders := map[string]string{}
 			for i := 1; i < len(lines); i++ {
@@ -47,13 +47,6 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 		PerPage int    `json:"perPage"`
 	}
 
-	// TODO: Use types.SimpleSlurp as soon as https://github.com/TrueBlocks/trueblocks-key/issues/82
-	// TODO: is resolved.
-	type Shit struct {
-		BlockNumber      int `json:"blockNumber"`
-		TransactionIndex int `json:"transactionId"`
-	}
-
 	method := "tb_getAppearances"
 	params := query.Params{keyParam{
 		Address: addr,
@@ -61,18 +54,19 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 		PerPage: paginator.PerPage,
 	}}
 
-	if apps, err := query.QueryWithHeaders[[]Shit](url, headers, method, params); err != nil {
+	if apps, err := query.QueryWithHeaders[[]types.SimpleSlurp](url, headers, method, params); err != nil {
 		return []types.SimpleSlurp{}, 0, err
 	} else {
-		// TODO: This can be removed when we fix https://github.com/TrueBlocks/trueblocks-key/issues/82
+		// TODO: This can be removed when we fix
+		// TODO: https://github.com/TrueBlocks/trueblocks-key/issues/82
 		v := make([]types.SimpleSlurp, 0, len(*apps))
 		for _, a := range *apps {
 			v = append(v, types.SimpleSlurp{
-				BlockNumber:      uint64(a.BlockNumber),
-				TransactionIndex: uint64(a.TransactionIndex),
+				BlockNumber:      a.BlockNumber,
+				TransactionIndex: a.TransactionId,
 			})
 		}
-		return v, len(*apps), nil
+		return v, len(v), nil
 	}
 }
 

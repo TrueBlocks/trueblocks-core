@@ -80,6 +80,7 @@ type SimpleSlurp struct {
 	WithdrawalIndex   uint64          `json:"withdrawalIndex"`
 	raw               *RawSlurp       `json:"-"`
 	// EXISTING_CODE
+	TransactionId base.Blknum `json:"transactionId"`
 	// EXISTING_CODE
 }
 
