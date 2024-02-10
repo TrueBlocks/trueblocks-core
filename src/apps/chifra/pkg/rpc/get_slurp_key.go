@@ -24,6 +24,7 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 	// If a local file called ./.key exists, we use it. This is only needed for testing. We do
 	// not document this file here because we don't want to expose the file's content. If any
 	// lines are not as expected, we use the default values above.
+	isDev := false
 	if file.FileExists("./.key") {
 		lines := file.AsciiFileToLines(".key")
 		if len(lines) < 6 {
@@ -36,6 +37,7 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 				}
 				myHeaders[parts[0]] = parts[1]
 			}
+			isDev = true
 			url = myUrl
 			headers = myHeaders
 		}
@@ -61,10 +63,14 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 		// TODO: https://github.com/TrueBlocks/trueblocks-key/issues/82
 		v := make([]types.SimpleSlurp, 0, len(*apps))
 		for _, a := range *apps {
-			v = append(v, types.SimpleSlurp{
+			s := types.SimpleSlurp{
 				BlockNumber:      a.BlockNumber,
-				TransactionIndex: a.TempTransactionId,
-			})
+				TransactionIndex: a.TransactionIndex,
+			}
+			if isDev {
+				s.TransactionIndex = a.TempTransactionId
+			}
+			v = append(v, s)
 		}
 		return v, len(v), nil
 	}
