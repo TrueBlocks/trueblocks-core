@@ -133,7 +133,7 @@ bool COptions::handle_readmes(void) {
 
         ostringstream os;
         os << front;
-        os << asciiFileToString(getDocsPathTemplates("readme-groups/" + group + ".md"));
+        os << endl << asciiFileToString(getDocsPathTemplates("readme-groups/" + group + ".md")) << endl;
 
         CStringArray paths;
         explode(paths, tool, ',');
