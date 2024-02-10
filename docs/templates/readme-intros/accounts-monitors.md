@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 `[{NAME}]` has two purposes: (1) to display information about the current set of monitors, and (2)
 to `--watch` a set of addresses. The `--watch` function allows one to "follow" an address (or set
 of addresses) and keep an off-chain database fresh.

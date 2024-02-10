@@ -1,5 +1,4 @@
-## chifra 
-
+## chifra
 
 ```[plaintext]
 Purpose:
@@ -36,7 +35,6 @@ Purpose:
   Use "chifra [command] --help" for more information about a command.
 ```
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

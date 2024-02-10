@@ -1,6 +1,5 @@
 ## chifra config
 
-<!-- markdownlint-disable MD041 -->
 The `chifra config` program allows you to manage the various TrueBlocks caches. You may list all of the
 caches, some of the cache, or even individual caches either in terse or full detail. The cache of
 interest is specified with the `modes` option.
@@ -30,7 +29,6 @@ Data models produced by this tool:
 
 - [chain](/data-model/admin/#chain)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

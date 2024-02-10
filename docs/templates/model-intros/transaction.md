@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 Transactions represent eth transfers to and from other addresses.
 
 Most of the fields that TrueBlocks returns are standard to all eth transaction. However, one field

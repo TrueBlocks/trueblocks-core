@@ -1,6 +1,5 @@
 ## chifra list
 
-<!-- markdownlint-disable MD041 -->
 `chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks
 monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionIndex pairs (transaction
 identifiers) representing the history of the address.

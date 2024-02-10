@@ -1,6 +1,5 @@
 ## chifra init
 
-<!-- markdownlint-disable MD041 -->
 When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**
 (0x0c316b7042b419d07d343f2f4f5bd54ff731183d).
 
@@ -48,7 +47,6 @@ Data models produced by this tool:
 - [manifest](/data-model/admin/#manifest)
 - [chunkrecord](/data-model/admin/#chunkrecord)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

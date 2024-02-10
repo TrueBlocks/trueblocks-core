@@ -14,7 +14,6 @@ weight: 1800
 toc: true
 ---
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The following commands provide useful miscellaneous tools:
 
 - `chifra explore` a quick way to open a blockchain explorer,
@@ -27,7 +26,6 @@ Each data structure is created by one or more tools which are detailed below.
 
 ## Abi
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 An ABI describes an Application Binary Interface -- in other words, the [Function](/data-model/other/#function)
 and Event signatures for a given smart contract. Along with [Names](/data-model/accounts/#names) the
 use of ABIs goes a very long way towards making your Ethereum data much more understandable.
@@ -51,12 +49,10 @@ Abis consist of the following fields:
 
 ### Notes
 
-<!-- markdownlint-disable MD041 -->
 See the [chifra abis](/chifra/accounts/#chifra-abis) command line for information about getting an Etherscan key.
 
 ## Function
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ABI files are derived from the Solidity source code of a smart contract by extracting the canonical
 function and event signatures in a JSON structure. The function signatures are hashed (using
 keccak) into four-byte encodings for functions and 32-byte encodings for events. Because the
@@ -82,7 +78,6 @@ Functions consist of the following fields:
 
 ## Parameter
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 Parameters are a constituent part of a [Function or Event](/data-model/accounts/#function). The
 parameters of a function are each individual value passed into the function. Along with the
 function's name, the parameters types (once canonicalized) are used to create a function's four
@@ -108,7 +103,6 @@ Parameters consist of the following fields:
 
 ## Slurp
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 THIS SHOULD BE ETHERSCAN DATA RELATED, BUT IT'S NOT TIED IN, SO IT DOESN'T DO ANYTHING
 The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
 

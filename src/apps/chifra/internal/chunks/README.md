@@ -1,6 +1,5 @@
 ## chifra chunks
 
-<!-- markdownlint-disable MD041 -->
 The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
 and analyzing the Unchained Index. It provides options to list pins, the Manifest, summary data
 on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
@@ -62,7 +61,6 @@ Data models produced by this tool:
 - [reportcheck](/data-model/admin/#reportcheck)
 - [chunkpinreport](/data-model/admin/#chunkpinreport)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 An ABI describes an Application Binary Interface -- in other words, the [Function](/data-model/other/#function)
 and Event signatures for a given smart contract. Along with [Names](/data-model/accounts/#names) the
 use of ABIs goes a very long way towards making your Ethereum data much more understandable.

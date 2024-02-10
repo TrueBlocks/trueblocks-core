@@ -1,5 +1,4 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-<h1>TrueBlocks SDKs</h1>
+# TrueBlocks SDKs
 
 **IMPORTANT NOTE**
 

@@ -1,6 +1,5 @@
 ## chifra traces
 
-<!-- markdownlint-disable MD041 -->
 The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
 identifiers per invocation.
 
@@ -47,7 +46,6 @@ Data models produced by this tool:
 - [tracecount](/data-model/chaindata/#tracecount)
 - [tracefilter](/data-model/chaindata/#tracefilter)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

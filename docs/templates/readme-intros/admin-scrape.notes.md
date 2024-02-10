@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 ### further information
 
 Each time `[{NAME}]` runs, it begins at the last block it completed processing (plus one). With

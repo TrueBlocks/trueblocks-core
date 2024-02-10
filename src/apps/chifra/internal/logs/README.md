@@ -1,6 +1,5 @@
 ## chifra logs
 
-<!-- markdownlint-disable MD041 -->
 `chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers
 per invocation.
 
@@ -40,7 +39,6 @@ Data models produced by this tool:
 - [log](/data-model/chaindata/#log)
 - [logfilter](/data-model/chaindata/#logfilter)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

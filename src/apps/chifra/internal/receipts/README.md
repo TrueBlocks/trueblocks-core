@@ -1,6 +1,5 @@
 ## chifra receipts
 
-<!-- markdownlint-disable MD041 -->
 `chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers
 per invocation.
 
@@ -40,7 +39,6 @@ Data models produced by this tool:
 
 - [receipt](/data-model/chaindata/#receipt)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

@@ -14,7 +14,6 @@ weight: 1400
 toc: true
 ---
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The data structures produced by tools in the Chain State category provide details on the balances
 (ERC20 or ETH) of an address against a particular token or block. Additionally, direct access to
 a smart contract's state may be queries with the `chirfa state` tool. Data structures in that case
@@ -24,7 +23,6 @@ Each data structure is created by one or more tools which are detailed below.
 
 ## Result
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
 contract. This is the decoded `output` value of the smart contract call.
 
@@ -48,7 +46,6 @@ Results consist of the following fields:
 
 ## State
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 For the `chifra state --call` tool, the `result` is the result returned by the call to the smart
 contract. This is the decoded `output` value of the smart contract call.
 
@@ -73,7 +70,6 @@ States consist of the following fields:
 
 ## Token
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `token` data model represents the name, decmials, token symbol, and optionally the totalSupply
 of an ERC-20 token.
 

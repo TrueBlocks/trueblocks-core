@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 `[{NAME}]` retrieves ABI files for the given address(es). It searches for the ABI in this order:
 the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.

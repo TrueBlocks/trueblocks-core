@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The Accounts group of commands is at the heart of TrueBlocks. They allow you to produce and analyze
 transactional histories for one or more Ethereum addresses.
 

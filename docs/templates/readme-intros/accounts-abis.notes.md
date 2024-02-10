@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 ### notes
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.
