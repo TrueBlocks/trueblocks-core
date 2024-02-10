@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given
 address along with various details about those appearances. A monitor is created when a user
 expresses interest in an address by calling either [chifra list](/chifra/accounts/#chifra-list)

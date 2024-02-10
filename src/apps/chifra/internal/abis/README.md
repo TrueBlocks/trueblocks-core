@@ -1,6 +1,5 @@
 ## chifra abis
 
-<!-- markdownlint-disable MD041 -->
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
 the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.
@@ -49,7 +48,6 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
-<!-- markdownlint-disable MD041 -->
 ### notes
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.
@@ -59,7 +57,6 @@ names. The second set contains approximately 700 function signatures. The cross 
 combinations of name(signature) each of which is hashed to create either a four-byte or a 32-byte hash. Very infrequently,
 the tool will find matches for an otherwise unknown signatures.
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

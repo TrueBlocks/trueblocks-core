@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 The `[{NAME}]` application creates TrueBlocks' chunked index of address appearances -- the
 fundamental data structure of the entire system. It also, optionally, pins each chunk of the index
 to IPFS.

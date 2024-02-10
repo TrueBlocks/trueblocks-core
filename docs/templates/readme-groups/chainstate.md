@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The two tools in this group deal with the Chain State. As chain state data concerns balances and
 byte code. it is distinct from Chain Data, which concerns things like blocks, transactions, or
 traces.

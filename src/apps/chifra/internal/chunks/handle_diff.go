@@ -116,7 +116,7 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 			apps = append(apps, types.SimpleAppearance{
 				Address:          s.AddressRecord.Address,
 				BlockNumber:      app.BlockNumber,
-				TransactionIndex: app.TransactionId,
+				TransactionIndex: app.TransactionIndex,
 			})
 		}
 	}

@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 Receipts record the amount of gas used for a transaction among other things. If the transaction
 succeeded, a receipt might also have logs.
 

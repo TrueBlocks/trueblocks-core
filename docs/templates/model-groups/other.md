@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The following commands provide useful miscellaneous tools:
 
 - `chifra explore` a quick way to open a blockchain explorer,

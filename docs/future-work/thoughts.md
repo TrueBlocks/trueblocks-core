@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 The Magizine Model
 
 Magazines have exactly the same qualities as immutable data. They publish periodically. They cannot go back and correct

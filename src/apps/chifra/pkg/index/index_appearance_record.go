@@ -12,8 +12,8 @@ const (
 
 // AppearanceRecord is a single record in the Appearance table
 type AppearanceRecord struct {
-	BlockNumber   uint32 `json:"blockNumber"`
-	TransactionId uint32 `json:"transactionIndex"`
+	BlockNumber      uint32 `json:"blockNumber"`
+	TransactionIndex uint32 `json:"transactionIndex"`
 }
 
 func (chunk *Index) ReadAppearancesAndReset(addrRecord *AddressRecord) (apps []AppearanceRecord, err error) {

@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
+<!-- markdownlint-disable MD012 MD034 -->
 The primary tool of TrueBlocks is `chifra export`. This tool extracts, directly from the chain,
 entire transactional histories for one or more addresses and presents that information for use
 outside the blockchain. The results of this extraction is stored in a data structure called a

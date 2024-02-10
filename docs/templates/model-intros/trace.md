@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which
 is itself a record of the transaction. If the `to` address of the transaction is a smart contract,
 other traces may appear, if, for example, that smart contract calls other smart contracts.

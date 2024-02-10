@@ -87,7 +87,7 @@ func (mon *Monitor) WriteAppearances(apps []index.AppearanceRecord, append bool)
 			f.Close()
 			return 0, err
 		}
-		binary.LittleEndian.PutUint32(b, app.TransactionId)
+		binary.LittleEndian.PutUint32(b, app.TransactionIndex)
 		_, err = f.Write(b)
 		if err != nil {
 			f.Close()

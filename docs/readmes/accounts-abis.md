@@ -1,6 +1,5 @@
 ## chifra abis
 
-<!-- markdownlint-disable MD041 -->
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
 the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.
@@ -54,7 +53,6 @@ Links:
 - [api docs](/api/#operation/accounts-abis)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 
-<!-- markdownlint-disable MD041 -->
 ### notes
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.

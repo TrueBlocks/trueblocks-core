@@ -14,7 +14,6 @@ weight: 1700
 toc: true
 ---
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The data models produced by the tools in the Admin category relate to scraping the chain, producing
 the Unchained Index, and querying the configuration of the system. Additional data related to
 sharing the indexes via IPFS and pinning the same are also produced by tools in this category.
@@ -23,7 +22,6 @@ Each data structure is created by one or more tools which are detailed below.
 
 ## Status
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The [chifra config](/chifra/admin/#chifra-config) tool reports on the state (and size) of the
 various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`,
 `monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `transactions`. In general practice, these caches
@@ -66,7 +64,6 @@ Statuses consist of the following fields:
 
 ## Manifest
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The Manifest details the portions of the index of appearances which are called ChunkRecords. Each record in the
 Manifest details the block range represented by the chunk as well as the IPFS hash of the index chunk along with
 the associated IPFS hash for the Bloom filter of the chunk. The manifest itself is also pushed to IPFS and the
@@ -89,7 +86,6 @@ Manifests consist of the following fields:
 
 ## ChunkRecord
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The TrueBlocks index scraper periodically creates a chunked portion of the index so that it can
 be more easily stored in a content-addresable data store such as IPFS. We call these
 periodically-created chunks ChunkRecords. The format of said item is described here. A pinned
@@ -114,7 +110,6 @@ ChunkRecords consist of the following fields:
 
 ## ChunkIndex
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `indexchunk` data model represents internal information about each Unchained Index index chunk.
 It is used mostly interenally to study the characteristics of the Unchained Index.
 
@@ -135,7 +130,6 @@ ChunkIndexes consist of the following fields:
 
 ## ChunkBloom
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `blooms` data model represents the bloom filter files that front the Unchained Index index
 portions. The information here is mostly for internal use only as it includes the size and number
 of the bloom filters present as well as the number of addresses inserted into the bloom. This
@@ -159,7 +153,6 @@ ChunkBlooms consist of the following fields:
 
 ## ChunkAddress
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `addresses` data model is produced by `chifra chunks` and represents the records found in the
 addresses table of each Unchained Index chunk. The `offset` and `count` fields represent the
 location and number of records in the `appearances` table to which the address table is related.
@@ -179,7 +172,6 @@ ChunkAddress consist of the following fields:
 
 ## IpfsPin
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 `ipfsPin` represents the date, CID and metadata filename of a single IPFS pinned file.
 
 The following commands produce and manage IpfsPins:
@@ -198,7 +190,6 @@ IpfsPins consist of the following fields:
 
 ## ChunkStats
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `stats` data model is produced by `chifra chunks` and brings together various statistical
 information such as average number of addresses in an Unchained Index chunk among other information.
 
@@ -226,7 +217,6 @@ ChunkStats consist of the following fields:
 
 ## MonitorClean
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 MonitorClean is a report on removing duplicates from monitors.
 
 The following commands produce and manage MonitorCleans:
@@ -244,7 +234,6 @@ MonitorCleans consist of the following fields:
 
 ## CacheItem
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `cacheItem` data model is used to display various caches displayed from the `chifra config`
 tool.
 
@@ -266,7 +255,6 @@ CacheItems consist of the following fields:
 
 ## ReportCheck
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ChunkCheck reports on the results of tests conducted under chifra chunks --check
 
 The following commands produce and manage ReportChecks:
@@ -288,7 +276,6 @@ ReportChecks consist of the following fields:
 
 ## ChunkPinReport
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 Reports on the result of the command `chifra chunks manifest --pin [--deep]`.
 
 The following commands produce and manage ChunkPinReports:
@@ -307,7 +294,6 @@ ChunkPinReports consist of the following fields:
 
 ## Chain
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `chain` data model represents the configured chain data found in the `trueBlocks.toml`
 configuration file.
 

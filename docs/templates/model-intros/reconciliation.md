@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 When exported with the `--accounting` option from `chifra export`, each transaction will have field
 called `statements`. Statements are an array for reconciliations. All such exported transactions
 will have at least one reconciliation (for ETH), however, many will have additional reconciliations

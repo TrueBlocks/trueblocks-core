@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The `transfer` data model is produced by the reconciliation process of `chifra export`. It
 represents, for all intents and purposes, the asset value transfer produced by nearly all value
 transfers on any blockchain. While the details of various token transfers are varied, the

@@ -40,7 +40,7 @@ func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, pagin
 		Status  string           `json:"status"`
 	}{}
 	if err = decoder.Decode(&fromEs); err != nil {
-		return []types.SimpleSlurp{}, 0, err
+		return []types.SimpleSlurp{}, 0, fmt.Errorf("decoder failed: %w", err)
 	}
 
 	if fromEs.Message == "NOTOK" {
@@ -54,11 +54,21 @@ func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, pagin
 		// 	logger.Warn("provider responded with:", url, fromEs.Message)
 	}
 
-	return conn.responseToTransactions(addr, requestType, fromEs.Result)
+	var ret []types.SimpleSlurp
+	for _, rawTx := range fromEs.Result {
+		rawTx := rawTx
+		if transaction, err := conn.rawSlurpToSimple(addr, requestType, &rawTx); err != nil {
+			return nil, 0, err
+		} else {
+			ret = append(ret, transaction)
+		}
+	}
+
+	return ret, len(ret), nil
 }
 
-// responseToTransaction converts one RawEtherscan to SimpleSlurp.
-func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
+// rawSlurpToSimple converts one RawEtherscan to SimpleSlurp.
+func (conn *Connection) rawSlurpToSimple(addr, requestType string, rawTx *types.RawSlurp) (types.SimpleSlurp, error) {
 	s := types.SimpleSlurp{
 		Hash:             base.HexToHash(rawTx.Hash),
 		BlockHash:        base.HexToHash(rawTx.BlockHash),
@@ -106,26 +116,12 @@ func (conn *Connection) rawToSimple(addr, requestType string, rawTx *types.RawSl
 		s.Value.SetString(rawTx.Amount, 0)
 		s.To = base.HexToAddress(addr)
 		if s.To != base.HexToAddress(rawTx.Address) {
-			logger.Fatal("should not happen ==> in rawToSimple", s.To, rawTx.Address)
+			logger.Fatal("should not happen ==> in rawSlurpToSimple", s.To, rawTx.Address)
 		}
 	}
 
 	s.SetRaw(rawTx)
 	return s, nil
-}
-
-// responseToTransactions converts RawEtherscans to SimpleSlurp. It also returns the number of results.
-func (conn *Connection) responseToTransactions(addr, requestType string, rawTxs []types.RawSlurp) ([]types.SimpleSlurp, int, error) {
-	var ret []types.SimpleSlurp
-	for _, rawTx := range rawTxs {
-		rawTx := rawTx
-		if transaction, err := conn.rawToSimple(addr, requestType, &rawTx); err != nil {
-			return nil, 0, err
-		} else {
-			ret = append(ret, transaction)
-		}
-	}
-	return ret, len(ret), nil
 }
 
 func getEtherscanUrl(chain, value string, requestType string, paginator *Paginator) (string, error) {
@@ -165,8 +161,6 @@ func getEtherscanUrl(chain, value string, requestType string, paginator *Paginat
 	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.Page), -1)
 	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage), -1)
 	ret = ret + "&apikey=" + key
-
-	paginator.Page++
 
 	return ret, nil
 }

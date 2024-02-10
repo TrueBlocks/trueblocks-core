@@ -112,8 +112,6 @@ bool COptions::handle_gocmds_docfile(const CCommandOption& p) {
     string_q contents = STR_WHAT + asciiFileToString(docSource);
     contents = substitute(substitute(substitute(contents, "\n", " "), "\t", " "), "\r", " ");
     replaceAll(contents, "  ", " ");
-    replaceAll(contents, " <!-- markdownlint-disable MD041 -->", "");
-    replaceAll(contents, "<!-- markdownlint-disable MD041 -->", "");
     replaceAll(contents, "`", "");
     replaceAll(contents, "[{NAME}]", "[chifra {ROUTE}]");
     replaceAll(source, "TEXT_TEMPLATE", contents);

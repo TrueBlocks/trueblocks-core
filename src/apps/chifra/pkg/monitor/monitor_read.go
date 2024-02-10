@@ -57,6 +57,6 @@ func (mon *Monitor) ReadAppearanceAt(idx int64, app *index.AppearanceRecord) (er
 	if err != nil {
 		return
 	}
-	err = binary.Read(mon.ReadFp, binary.LittleEndian, &app.TransactionId)
+	err = binary.Read(mon.ReadFp, binary.LittleEndian, &app.TransactionIndex)
 	return
 }

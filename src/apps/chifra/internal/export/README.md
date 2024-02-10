@@ -1,6 +1,5 @@
 ## chifra export
 
-<!-- markdownlint-disable MD041 -->
 The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using
 the index of appearances created with `chifra scrape` and the list of transaction identifiers
 created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional
@@ -93,7 +92,6 @@ Data models produced by this tool:
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

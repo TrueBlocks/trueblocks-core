@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The [chifra config](/chifra/admin/#chifra-config) tool reports on the state (and size) of the
 various TrueBlocks local binary caches. TrueBlocks produces nine difference caches: `abis`, `blocks`,
 `monitors`, `names`, `objs`, `recons`, `slurps`, `traces`, `transactions`. In general practice, these caches

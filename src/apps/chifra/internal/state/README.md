@@ -1,6 +1,5 @@
 ## chifra state
 
-<!-- markdownlint-disable MD041 -->
 The `chifra state` tool retrieves the balance of an address (or list of addresses) at the given block
 (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify
 at least one address. If no block is specified, the latest block is reported.
@@ -49,7 +48,6 @@ Data models produced by this tool:
 - [result](/data-model/chainstate/#result)
 - [state](/data-model/chainstate/#state)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

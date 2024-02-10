@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD024 MD036 -->
+<!-- markdownlint-disable MD007 MD009 MD022 MD024 MD026 MD032 -->
 # History of Changes
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.

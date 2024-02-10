@@ -1,6 +1,5 @@
 ## chifra when
 
-<!-- markdownlint-disable MD041 -->
 The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block
 occur?" or (2) "What block occurred at or before a given date and time?"
 
@@ -50,7 +49,6 @@ Data models produced by this tool:
 - [timestamp](/data-model/chaindata/#timestamp)
 - [timestampcount](/data-model/chaindata/#timestampcount)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

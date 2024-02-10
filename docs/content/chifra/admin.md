@@ -15,7 +15,7 @@ menu:
 weight: 1600
 toc: true
 ---
-<!-- markdownlint-disable MD033 MD036 MD041 -->
+
 The Admin group of commands allows you to query the status of the TrueBlocks system and
 manage various aspects including the Unchained Index. You may query the status; query for information
 about TrueBlocks caches; control the creation, sharing, and pinning of the Unchained Index; and even
@@ -24,9 +24,9 @@ serve the data through an API.
 See [the API documentation](/api) for all information about using the API.
 
 To the right is a list of commands in this group. Click on a command to see its full documentation.
+
 ## chifra config
 
-<!-- markdownlint-disable MD041 -->
 The `chifra config` program allows you to manage the various TrueBlocks caches. You may list all of the
 caches, some of the cache, or even individual caches either in terse or full detail. The cache of
 interest is specified with the `modes` option.
@@ -63,7 +63,6 @@ Links:
 
 ## chifra status
 
-<!-- markdownlint-disable MD041 -->
 The `chifra status` program allows you to manage the various TrueBlocks caches. You may list all of the
 caches, some of the cache, or even individual caches either in terse or full detail. The cache of
 interest is specified with the `modes` option.
@@ -109,7 +108,6 @@ Links:
 
 ## chifra daemon
 
-<!-- markdownlint-disable MD041 -->
 `chifra daemon` manages chifra's API server. Each of the `chifra` commands along with all of its options,
 are provided not only by the command line, but also the API server. We call this process the
 `flame` server, which is written in Go. `chifra serve` is an alias for the `chifra daemon` command.
@@ -160,7 +158,6 @@ Links:
 - no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
 
-<!-- markdownlint-disable MD041 -->
 ### notes
 
 To convert the options for a command line tool to an API call, do the following:
@@ -171,7 +168,6 @@ To convert the options for a command line tool to an API call, do the following:
 
 ## chifra scrape
 
-<!-- markdownlint-disable MD041 -->
 The `chifra scrape` application creates TrueBlocks' chunked index of address appearances -- the
 fundamental data structure of the entire system. It also, optionally, pins each chunk of the index
 to IPFS.
@@ -242,7 +238,6 @@ These items may be set in three ways, each overriding the preceding method:
 -- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
 -- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
 
-<!-- markdownlint-disable MD041 -->
 ### further information
 
 Each time `chifra scrape` runs, it begins at the last block it completed processing (plus one). With
@@ -281,7 +276,6 @@ more information about running the scraper and building and sharing the index of
 
 ## chifra chunks
 
-<!-- markdownlint-disable MD041 -->
 The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
 and analyzing the Unchained Index. It provides options to list pins, the Manifest, summary data
 on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
@@ -350,7 +344,6 @@ Links:
 
 ## chifra init
 
-<!-- markdownlint-disable MD041 -->
 When invoked, `chifra init` reads a value from a smart contract called **The Unchained Index**
 (0x0c316b7042b419d07d343f2f4f5bd54ff731183d).
 

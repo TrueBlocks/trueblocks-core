@@ -1,6 +1,5 @@
 ## chifra tokens
 
-<!-- markdownlint-disable MD041 -->
 Given the address of an ERC20 token contract, the `chifra tokens` tool reports token balances for one or
 more additional addresses. Alternatively, the tool can report the token balances for multiple ERC20
 tokens for a single addresses.
@@ -51,7 +50,6 @@ Data models produced by this tool:
 
 - [token](/data-model/chainstate/#token)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

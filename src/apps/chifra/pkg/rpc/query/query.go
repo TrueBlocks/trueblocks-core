@@ -82,6 +82,8 @@ func QueryWithHeaders[T any](url string, headers map[string]string, method strin
 			client := &http.Client{}
 			if response, err := client.Do(request); err != nil {
 				return nil, err
+			} else if response.StatusCode != 200 {
+				return nil, fmt.Errorf("%s: %d", response.Status, response.StatusCode)
 			} else {
 				defer response.Body.Close()
 

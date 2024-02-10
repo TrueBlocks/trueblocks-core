@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The commands in the Other group provide useful miscellaneous features.
 
 - `chifra explore` provides a quick way to open the configured blockchain explorer,

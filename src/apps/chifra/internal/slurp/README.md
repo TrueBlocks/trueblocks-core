@@ -1,6 +1,5 @@
 ## chifra slurp
 
-<!-- markdownlint-disable MD041 -->
 `chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
 
 While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
@@ -52,7 +51,6 @@ Data models produced by this tool:
 
 - [slurp](/data-model/other/#slurp)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

@@ -80,7 +80,7 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, with
 			s := types.SimpleAppearance{
 				Address:          mon.Address,
 				BlockNumber:      app.BlockNumber,
-				TransactionIndex: app.TransactionId,
+				TransactionIndex: app.TransactionIndex,
 				Timestamp:        utils.NOPOSI,
 			}
 			apps = append(apps, s)

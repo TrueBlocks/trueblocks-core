@@ -29,10 +29,10 @@ func (mon *Monitor) RemoveDups() (int64, int64, error) {
 		deDupped := make([]index.AppearanceRecord, 0, mon.Count())
 		for i, app := range apps {
 			iApp := index.AppearanceRecord{
-				BlockNumber:   app.BlockNumber,
-				TransactionId: app.TransactionIndex,
+				BlockNumber:      app.BlockNumber,
+				TransactionIndex: app.TransactionIndex,
 			}
-			if i == 0 || (prev.BlockNumber != iApp.BlockNumber || prev.TransactionId != iApp.TransactionId) {
+			if i == 0 || (prev.BlockNumber != iApp.BlockNumber || prev.TransactionIndex != iApp.TransactionIndex) {
 				deDupped = append(deDupped, iApp)
 			}
 			prev = iApp

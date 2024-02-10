@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 ## README Templates
 
 Each tool and application has a corresponding template file in this folder. You may edit these
