@@ -29,7 +29,6 @@ func (opts *SlurpOptions) HandleCount() error {
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
 				paginator.Page = opts.FirstPage()
-				done := false
 
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
@@ -37,12 +36,13 @@ func (opts *SlurpOptions) HandleCount() error {
 					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
 				})
 
+				done := false
 				for !done {
 					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
-					paginator.Page++ // order matters
-					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
-					if err != nil {
+					paginator.Page++                    // order matters
+					done = nFetched < paginator.PerPage // order matters
+					if err != nil {                     // order matters
 						errorChan <- err
 						continue
 					}
@@ -60,11 +60,13 @@ func (opts *SlurpOptions) HandleCount() error {
 					}
 
 					// Without this Etherscan chokes
-					sleep := opts.Sleep
-					if sleep > 0 {
-						ms := time.Duration(sleep*1000) * time.Millisecond
-						logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
-						time.Sleep(ms)
+					if !done {
+						sleep := opts.Sleep
+						if sleep > 0 {
+							ms := time.Duration(sleep*1000) * time.Millisecond
+							logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
+							time.Sleep(ms)
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)

@@ -69,12 +69,14 @@ func (opts *SlurpOptions) HandleShow() error {
 						totalFiltered++
 					}
 
-					// Without this Etherscan chokes
-					sleep := opts.Sleep
-					if sleep > 0 {
-						ms := time.Duration(sleep*1000) * time.Millisecond
-						logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
-						time.Sleep(ms)
+					if !done {
+						// Without this Etherscan chokes
+						sleep := opts.Sleep
+						if sleep > 0 {
+							ms := time.Duration(sleep*1000) * time.Millisecond
+							logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
+							time.Sleep(ms)
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)

@@ -10,10 +10,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+func getUrlAndHeaders() (string, map[string]string, bool, error) {
 	key := config.GetKey("trueblocks").ApiKey
 	if key == "" {
-		return []types.SimpleSlurp{}, 0, errors.New("cannot read API key")
+		return "", map[string]string{}, false, errors.New("cannot read API key")
 	}
 
 	url := "https://trueblocks.io/api/rpc"
@@ -21,11 +21,9 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 		"Authorization": "Bearer " + key,
 	}
 
-	// If a local file called ./.key exists, we use it. This is only needed for testing. We do
-	// not document this file here because we don't want to expose the file's content. If any
-	// lines are not as expected, we use the default values above.
 	isDev := false
 	if file.FileExists("./.key") {
+		// TODO: This can be removed at some point
 		lines := file.AsciiFileToLines(".key")
 		if len(lines) < 6 {
 			myUrl := lines[0]
@@ -43,10 +41,19 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 		}
 	}
 
-	type keyParam struct {
-		Address string `json:"address"`
-		Page    int    `json:"page"`
-		PerPage int    `json:"perPage"`
+	return url, headers, isDev, nil
+}
+
+type keyParam struct {
+	Address string `json:"address"`
+	Page    int    `json:"page"`
+	PerPage int    `json:"perPage"`
+}
+
+func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
+	url, headers, isDev, err := getUrlAndHeaders()
+	if err != nil {
+		return []types.SimpleSlurp{}, 0, err
 	}
 
 	method := "tb_getAppearances"
@@ -76,8 +83,20 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 	}
 }
 
-func (conn *Connection) getTxCountByAddressKey(chain, addr string, paginator *Paginator) (int, error) {
-	// TODO: Use the tb_getAppearanceCount instead
-	_, cnt, err := conn.getTxsByAddressKey(chain, addr, paginator)
-	return cnt, err
+func (conn *Connection) getTxCountByAddressKey(chain, addr string) (int, error) {
+	url, headers, _, err := getUrlAndHeaders()
+	if err != nil {
+		return 0, err
+	}
+
+	method := "tb_getAppearanceCount"
+	params := query.Params{keyParam{
+		Address: addr,
+	}}
+
+	if cntPtr, err := query.QueryWithHeaders[int](url, headers, method, params); err != nil {
+		return 0, err
+	} else {
+		return *cntPtr, err
+	}
 }

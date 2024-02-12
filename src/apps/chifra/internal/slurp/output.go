@@ -55,9 +55,17 @@ func (opts *SlurpOptions) SlurpInternal() error {
 	if opts.Globals.Decache {
 		err = opts.HandleDecache()
 	} else if opts.Count {
-		err = opts.HandleCount()
+		if opts.Source == "key" {
+			err = opts.HandleCountKey()
+		} else {
+			err = opts.HandleCount()
+		}
 	} else if opts.Appearances {
-		err = opts.HandleAppearances()
+		if opts.Source == "key" {
+			err = opts.HandleAppearancesKey()
+		} else {
+			err = opts.HandleAppearances()
+		}
 	} else {
 		err = opts.HandleShow()
 	}
@@ -78,4 +86,3 @@ func GetSlurpOptions(args []string, g *globals.GlobalOptions) *SlurpOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
