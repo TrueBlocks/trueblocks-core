@@ -23,7 +23,7 @@ func (conn *Connection) SlurpTxsByAddress(chain, source, addr, requestType strin
 func (conn *Connection) SlurpTxCountByAddress(chain, source, addr, requestType string, paginator *Paginator) (int, error) {
 	switch source {
 	case "key":
-		return conn.getTxCountByAddressKey(chain, addr, paginator)
+		return conn.getTxCountByAddressKey(chain, addr)
 	case "etherscan":
 		fallthrough
 	default:

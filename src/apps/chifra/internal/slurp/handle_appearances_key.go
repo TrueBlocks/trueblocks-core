@@ -13,7 +13,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (opts *SlurpOptions) HandleAppearances() error {
+func (opts *SlurpOptions) HandleAppearancesKey() error {
+	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	paginator := rpc.Paginator{
 		Page:    opts.FirstPage(),
@@ -28,20 +29,24 @@ func (opts *SlurpOptions) HandleAppearances() error {
 		totalFetched := 0
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
-			for _, tt := range opts.Types {
-				paginator.Page = opts.FirstPage()
-				done := false
+			paginator.Page = opts.FirstPage()
 
-				bar := logger.NewBar(logger.BarOptions{
-					Type:    logger.Expanding,
-					Enabled: !testMode && !utils.IsTerminal(),
-					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
-				})
+			bar := logger.NewBar(logger.BarOptions{
+				Type:    logger.Expanding,
+				Enabled: !testMode && !utils.IsTerminal(),
+				Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), "all"),
+			})
 
+			if wanted, err := opts.Conn.SlurpTxCountByAddress(chain, opts.Source, addr, "not-used", nil); err != nil {
+				errorChan <- err
+			} else {
+				retreived := 0
+				done := retreived >= wanted
 				for !done {
-					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, "not-used", &paginator)
 					paginator.Page++ // order matters
-					done = nFetched < paginator.PerPage
+					retreived += nFetched
+					done = retreived >= wanted
 					totalFetched += nFetched
 					if err != nil {
 						errorChan <- err
@@ -77,8 +82,8 @@ func (opts *SlurpOptions) HandleAppearances() error {
 						}
 					}
 				}
-				bar.Finish(true /* newLine */)
 			}
+			bar.Finish(true /* newLine */)
 		}
 
 		if totalFiltered == 0 {
@@ -88,15 +93,4 @@ func (opts *SlurpOptions) HandleAppearances() error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
-}
-
-func (opts *SlurpOptions) FirstPage() int {
-	switch opts.Source {
-	case "etherscan":
-		fallthrough
-	case "key":
-		fallthrough
-	default:
-		return 1
-	}
 }
