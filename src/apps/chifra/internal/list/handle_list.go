@@ -49,7 +49,6 @@ func (opts *ListOptions) HandleShow(monitorArray []monitor.Monitor) error {
 				continue // on error
 			} else if !opts.NoZero || cnt > 0 {
 				for _, app := range apps {
-					app := app
 					if err := visitAppearance(&app); err != nil {
 						errorChan <- err
 						return

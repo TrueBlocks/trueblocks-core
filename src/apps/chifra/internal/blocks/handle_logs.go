@@ -48,7 +48,6 @@ func (opts *BlocksOptions) HandleLogs() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleTransaction)
 				}
@@ -97,7 +96,6 @@ func (opts *BlocksOptions) HandleLogs() error {
 
 				items := make([]types.SimpleLog, 0, len(thisMap))
 				for _, tx := range thisMap {
-					tx := tx
 					items = append(items, tx.Receipt.Logs...)
 				}
 				sort.Slice(items, func(i, j int) bool {
@@ -111,7 +109,6 @@ func (opts *BlocksOptions) HandleLogs() error {
 				})
 
 				for _, item := range items {
-					item := item
 					if !logFilter.PassesFilter(&item) {
 						continue
 					}

@@ -148,7 +148,6 @@ func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 	// Inputs
 	inputs := make([]cache.Marshaler, 0, len(s.Inputs))
 	for _, input := range s.Inputs {
-		input := input
 		inputs = append(inputs, &input)
 	}
 	if err = cache.WriteValue(writer, inputs); err != nil {
@@ -168,7 +167,6 @@ func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 	// Outputs
 	outputs := make([]cache.Marshaler, 0, len(s.Outputs))
 	for _, output := range s.Outputs {
-		output := output
 		outputs = append(outputs, &output)
 	}
 	if err = cache.WriteValue(writer, outputs); err != nil {

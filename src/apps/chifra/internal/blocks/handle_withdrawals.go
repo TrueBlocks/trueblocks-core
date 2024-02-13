@@ -44,7 +44,6 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleBlock[string])
 				}
@@ -75,7 +74,6 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 
 				for _, item := range thisMap {
 					for _, w := range item.Withdrawals {
-						w := w
 						w.BlockNumber = item.BlockNumber
 						items = append(items, &w)
 					}
@@ -89,7 +87,6 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- item
 				}
 			}

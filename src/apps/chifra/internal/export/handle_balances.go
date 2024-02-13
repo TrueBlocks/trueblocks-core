@@ -68,7 +68,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 							continue
 						}
 
-						thisMap := thisMap
 						for app := range thisMap {
 							thisMap[app] = new(types.SimpleToken)
 						}
@@ -112,7 +111,6 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						})
 
 						for idx, item := range items {
-							item := item
 							visitToken := func(idx int, item *types.SimpleToken) error {
 								item.PriorBalance = *prevBalance
 								if item.BlockNumber == 0 || item.BlockNumber != currentBn || item.Timestamp == 0xdeadbeef {

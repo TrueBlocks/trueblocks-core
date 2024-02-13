@@ -614,7 +614,6 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
             const char* STR_ARRAY_CODE =
                 "\t[{LOWER}] := make([]cache.Marshaler, 0, len([{FIELD_NAME}]))\n"
                 "\tfor _, [{SINGULAR}] := range [{FIELD_NAME}] {\n"
-                "\t\t[{SINGULAR}] := [{SINGULAR}]\n"
                 "\t\t[{LOWER}] = append([{LOWER}], &[{SINGULAR}])\n"
                 "\t}\n"
                 "\tif err = cache.WriteValue(writer, [{LOWER}]); err != nil {\n"

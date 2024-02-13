@@ -52,7 +52,6 @@ func (opts *SlurpOptions) HandleShow() error {
 					}
 
 					for _, tx := range txs {
-						tx := tx
 						if ok, err := opts.isInRange(tx.BlockNumber); !ok {
 							if err != nil {
 								errorChan <- err

@@ -44,7 +44,6 @@ func (opts *BlocksOptions) HandleShow() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleBlock[types.SimpleTransaction])
 				}
@@ -84,7 +83,6 @@ func (opts *BlocksOptions) HandleShow() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- item
 				}
 			}

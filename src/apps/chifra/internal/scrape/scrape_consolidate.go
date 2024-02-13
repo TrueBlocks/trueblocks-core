@@ -188,7 +188,6 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.
 
 	nAdded := 0
 	for _, line := range appearances {
-		line := line
 		parts := strings.Split(line, "\t")
 		if len(parts) == 3 { // shouldn't be needed, but just in case...
 			addr := strings.ToLower(parts[0])

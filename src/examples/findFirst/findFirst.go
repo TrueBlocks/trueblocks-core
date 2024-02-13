@@ -83,7 +83,6 @@ func fastWay(conn *rpc.Connection) {
 		})
 
 		for _, thisMap := range sliceOfMaps {
-			thisMap := thisMap
 			for app := range thisMap {
 				thisMap[app] = new(types.SimpleBlock[string])
 			}

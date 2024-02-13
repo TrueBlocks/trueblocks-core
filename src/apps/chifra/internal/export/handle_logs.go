@@ -68,7 +68,6 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 							continue
 						}
 
-						thisMap := thisMap
 						for app := range thisMap {
 							thisMap[app] = new(types.SimpleTransaction)
 						}
@@ -104,7 +103,6 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 								continue
 							}
 							for _, log := range tx.Receipt.Logs {
-								log := log
 								if filter.ApplyLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
 									if opts.Articulate {
 										if err = abiCache.ArticulateLog(&log); err != nil {
@@ -130,7 +128,6 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 						})
 
 						for _, item := range items {
-							item := item
 							var passes bool
 							passes, finished = filter.ApplyCountFilter()
 							if passes {

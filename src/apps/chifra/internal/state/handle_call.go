@@ -56,7 +56,6 @@ func (opts *StateOptions) HandleCall() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleResult)
 				}
@@ -94,7 +93,6 @@ func (opts *StateOptions) HandleCall() error {
 
 				items := make([]types.SimpleResult, 0, len(thisMap))
 				for _, v := range thisMap {
-					v := v
 					items = append(items, *v)
 				}
 
@@ -103,7 +101,6 @@ func (opts *StateOptions) HandleCall() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- &item
 				}
 			}

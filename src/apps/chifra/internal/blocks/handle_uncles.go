@@ -44,7 +44,6 @@ func (opts *BlocksOptions) HandleUncles() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleBlock[string])
 				}
@@ -57,7 +56,6 @@ func (opts *BlocksOptions) HandleUncles() error {
 						return err
 					} else {
 						for _, uncle := range uncles {
-							uncle := uncle
 							items = append(items, &uncle)
 						}
 						bar.Tick()
@@ -84,7 +82,6 @@ func (opts *BlocksOptions) HandleUncles() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- item
 				}
 			}

@@ -57,7 +57,6 @@ func (opts *NamesOptions) HandleShow() error {
 
 		fetchData = func(modelChan chan types.Modeler[types.RawName], errorChan chan error) {
 			for _, name := range namesArray {
-				name := name
 				modelChan <- &name
 			}
 		}

@@ -62,7 +62,6 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 							continue
 						}
 
-						thisMap := thisMap
 						for app := range thisMap {
 							thisMap[app] = new(types.SimpleBlock[string])
 						}
@@ -115,7 +114,6 @@ func (opts *ExportOptions) HandleWithdrawals(monitorArray []monitor.Monitor) err
 						})
 
 						for _, item := range items {
-							item := item
 							var passes bool
 							passes, finished = filter.ApplyCountFilter()
 							if passes {

@@ -62,7 +62,6 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 							continue
 						}
 
-						thisMap := thisMap
 						for app := range thisMap {
 							thisMap[app] = new(types.SimpleTransaction)
 						}
@@ -113,7 +112,6 @@ func (opts *ExportOptions) HandleShow(monitorArray []monitor.Monitor) error {
 						})
 
 						for _, item := range items {
-							item := item
 							if item.BlockHash.IsZero() {
 								continue
 							}

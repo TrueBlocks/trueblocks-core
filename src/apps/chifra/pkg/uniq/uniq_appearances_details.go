@@ -132,7 +132,6 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs []types.SimpleLog, ts int64, addrMap AddressBooleanMap) (err error) {
 	traceid := utils.NOPOS
 	for l, log := range logs {
-		log := log
 		generator := log.Address.Hex()
 		reason := fmt.Sprintf("log_%d_generator", l)
 		streamAppearance(procFunc, flow, reason, generator, log.BlockNumber, log.TransactionIndex, traceid, ts, addrMap)
@@ -199,7 +198,6 @@ func traceReason(i uint64, trace *types.SimpleTrace, r string) string {
 // uniqFromTracesDetails extracts addresses from traces
 func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.SimpleTrace, ts int64, addrMap AddressBooleanMap, conn *rpc.Connection) (err error) {
 	for _, trace := range traces {
-		trace := trace
 		traceid := trace.TraceIndex
 		bn := base.Blknum(trace.BlockNumber)
 		txid := uint64(trace.TransactionIndex)

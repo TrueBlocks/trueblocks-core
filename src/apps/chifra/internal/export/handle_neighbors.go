@@ -59,7 +59,6 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 							continue
 						}
 
-						thisMap := thisMap
 						for app := range thisMap {
 							thisMap[app] = new(bool)
 						}
@@ -110,7 +109,6 @@ func (opts *ExportOptions) HandleNeighbors(monitorArray []monitor.Monitor) error
 						})
 
 						for _, item := range items {
-							item := item
 							var passes bool
 							passes, finished = filter.ApplyCountFilter()
 							if passes {

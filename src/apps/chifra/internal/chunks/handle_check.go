@@ -199,7 +199,6 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, report := range reports {
-			report := report
 			if !silent {
 				modelChan <- &report
 			}

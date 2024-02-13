@@ -109,7 +109,6 @@ func TestPack(t *testing.T) {
 
 	functions := make(map[string]SimpleFunction)
 	for _, abiMethod := range abi.Methods {
-		abiMethod := abiMethod
 		functions[abiMethod.Name] = *FunctionFromAbiMethod(&abiMethod)
 	}
 
