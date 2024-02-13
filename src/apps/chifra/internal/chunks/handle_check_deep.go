@@ -111,7 +111,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *simple
 		sh = shell.NewShell(config.GetPinning().LocalPinUrl)
 		iterFunc = func(rangeStr string, item *reporter) (err error) {
 			bar.Tick()
-			err = checkHashes(item.chunk, "blooom", sh, item)
+			err = checkHashes(item.chunk, "bloom", sh, item)
 			if err != nil {
 				return err
 			}
