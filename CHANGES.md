@@ -4,6 +4,9 @@ This file details changes made to TrueBlocks over time. See the [migration notes
 
 ## v2.5.2 (2024/02/09)
 
+- Bumped version number to v2.5.2.
+- Bumped required GoLang version to ^1.22.
+
 **bug fixes**
 
 - Fixes very slow `chifra blocks --traces` command. Up to 10x faster.
