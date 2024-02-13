@@ -84,7 +84,6 @@ func (opts *ExportOptions) HandleAccounting(monitorArray []monitor.Monitor) erro
 				_ = ledgers.SetContexts(chain, apps)
 
 				for _, app := range apps {
-					app := app
 					if err := visitAppearance(&app); err != nil {
 						errorChan <- err
 						return

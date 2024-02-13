@@ -1,4 +1,5 @@
-FROM golang:1.20-buster as builder
+# Go Version
+FROM golang:1.22.0-bullseye as builder
 
 ARG repo
 ARG commit_sha

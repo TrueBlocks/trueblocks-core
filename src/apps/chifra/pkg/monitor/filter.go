@@ -61,7 +61,6 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, with
 	prev := fromDisc[0]
 	apps = make([]types.SimpleAppearance, 0, len(fromDisc))
 	for _, app := range fromDisc {
-		app := app
 		var passes bool
 		var finished bool
 		if withCount {

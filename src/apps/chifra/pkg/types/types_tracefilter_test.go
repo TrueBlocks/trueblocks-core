@@ -8,7 +8,6 @@ func TestTraceFilter(t *testing.T) {
 	// seen := uint64(0)
 	// for traceIndex, trace := range traces {
 	// 	fmt.Println(strings.Repeat("-", 80))
-	// 	trace := trace
 	// 	for _, filter := range filters {
 	// 		f := SimpleTraceFilter{}
 	// 		f.ParseBangString(chain, filter.bang)

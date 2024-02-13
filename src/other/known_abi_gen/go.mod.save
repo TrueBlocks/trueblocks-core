@@ -1,6 +1,7 @@
 module github.com/TrueBlocks/trueblocks-core/src/other/known_abi_gen
 
-go 1.18
+// Go Version
+go 1.22
 
 require (
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20221222013739-c2f810ceed7d // indirect

@@ -131,7 +131,6 @@ func (conn *Connection) getReceiptsSimple(bn base.Blknum) ([]types.SimpleReceipt
 		curTs := utils.NOPOSI
 		var ret []types.SimpleReceipt
 		for _, rawReceipt := range *rawReceipts {
-			rawReceipt := rawReceipt
 			bn := utils.MustParseUint(rawReceipt.BlockNumber)
 			if bn != curBlock {
 				curTs = conn.GetBlockTimestamp(bn)

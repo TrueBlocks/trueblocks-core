@@ -62,7 +62,6 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 							continue
 						}
 
-						thisMap := thisMap
 						for app := range thisMap {
 							thisMap[app] = new(types.SimpleTransaction)
 						}
@@ -95,7 +94,6 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 						items := make([]*types.SimpleTrace, 0, len(thisMap))
 						for _, tx := range thisMap {
 							for index, trace := range tx.Traces {
-								trace := trace
 								trace.TraceIndex = uint64(index)
 								isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
 								if !opts.Factory || isCreate {
@@ -122,7 +120,6 @@ func (opts *ExportOptions) HandleTraces(monitorArray []monitor.Monitor) error {
 						})
 
 						for _, item := range items {
-							item := item
 							if item.BlockHash.IsZero() {
 								continue
 							}

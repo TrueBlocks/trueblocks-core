@@ -61,7 +61,6 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 							continue
 						}
 
-						thisMap := thisMap
 						for app := range thisMap {
 							thisMap[app] = new(types.SimpleTransaction)
 						}
@@ -149,7 +148,6 @@ func (opts *ExportOptions) HandleStatements(monitorArray []monitor.Monitor) erro
 						})
 
 						for _, item := range items {
-							item := item
 							var passes bool
 							passes, finished = filter.ApplyCountFilter()
 							if passes {

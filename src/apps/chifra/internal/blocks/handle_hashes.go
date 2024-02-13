@@ -44,7 +44,6 @@ func (opts *BlocksOptions) HandleHashes() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleBlock[string])
 				}
@@ -84,7 +83,6 @@ func (opts *BlocksOptions) HandleHashes() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- item
 				}
 			}

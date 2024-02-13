@@ -45,7 +45,6 @@ func (opts *BlocksOptions) HandleUniq() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleAppearance)
 				}
@@ -78,10 +77,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 				}
 
 				items := make([]types.SimpleAppearance, 0, len(thisMap))
-				for _, app := range apps {
-					app := app
-					items = append(items, app)
-				}
+				items = append(items, apps...)
 
 				sort.Slice(items, func(i, j int) bool {
 					if items[i].BlockNumber == items[j].BlockNumber {
@@ -94,7 +90,6 @@ func (opts *BlocksOptions) HandleUniq() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- &item
 				}
 			}

@@ -61,7 +61,6 @@ func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, pagin
 
 	var ret []types.SimpleSlurp
 	for _, rawTx := range fromEs.Result {
-		rawTx := rawTx
 		if transaction, err := conn.rawSlurpToSimple(addr, requestType, &rawTx); err != nil {
 			return nil, 0, err
 		} else {

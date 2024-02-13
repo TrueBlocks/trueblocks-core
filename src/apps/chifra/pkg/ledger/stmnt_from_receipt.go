@@ -15,7 +15,6 @@ func (l *Ledger) getStatementsFromReceipt(conn *rpc.Connection, filter *filter.A
 
 	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 	for _, log := range receipt.Logs {
-		log := log
 		addrArray := []base.Address{l.AccountFor}
 		if filter.ApplyLogFilter(&log, addrArray) && l.assetOfInterest(log.Address) {
 			if statement, err := l.getStatementsFromLog(conn, &log); err != nil {

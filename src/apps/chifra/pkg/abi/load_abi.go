@@ -59,13 +59,11 @@ func fromJson(reader io.Reader, abiMap *SelectorSyncMap) (err error) {
 	}
 
 	for _, method := range loadedAbi.Methods {
-		method := method
 		function := types.FunctionFromAbiMethod(&method)
 		abiMap.SetValue(function.Encoding, function)
 	}
 
 	for _, ethEvent := range loadedAbi.Events {
-		ethEvent := ethEvent
 		event := types.FunctionFromAbiEvent(&ethEvent)
 		abiMap.SetValue(event.Encoding, event)
 	}
@@ -411,7 +409,6 @@ func loadCache(chain string, abiMap *SelectorSyncMap) (loaded bool) {
 	}
 
 	for _, function := range functions {
-		function := function
 		function.Normalize()
 		abiMap.SetValue(function.Encoding, &function)
 	}
@@ -728,7 +725,6 @@ func loadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *Sele
 		}
 
 		for _, loadedAbi := range loadedAbis {
-			loadedAbi := loadedAbi
 			loadedAbi.Normalize()
 			abiMap.SetValue(loadedAbi.Encoding, &loadedAbi)
 		}
@@ -784,13 +780,11 @@ func getAbi(chain string, address base.Address) (simpleAbis []types.SimpleFuncti
 
 	functions := make([]types.SimpleFunction, 0, len(ethAbi.Methods))
 	for _, method := range ethAbi.Methods {
-		method := method
 		functions = append(functions, *types.FunctionFromAbiMethod(&method))
 	}
 
 	events := make([]types.SimpleFunction, 0, len(ethAbi.Events))
 	for _, event := range ethAbi.Events {
-		event := event
 		events = append(events, *types.FunctionFromAbiEvent(&event))
 	}
 

@@ -46,7 +46,6 @@ func (opts *ReceiptsOptions) HandleShow() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleTransaction)
 				}
@@ -97,7 +96,6 @@ func (opts *ReceiptsOptions) HandleShow() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- &item
 				}
 			}

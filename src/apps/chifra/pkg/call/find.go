@@ -20,8 +20,6 @@ const (
 func FindAbiFunction(mode findMode, identifier string, arguments []*parser.ContractArgument, abiMap *abi.SelectorSyncMap) (fn *types.SimpleFunction, suggestions []string, err error) {
 	functions := abiMap.Values()
 	for _, function := range functions {
-		function := function
-
 		if (mode == FindByName && function.Name != identifier) ||
 			(mode == FindBySelector && function.Encoding != strings.ToLower(identifier)) {
 			continue

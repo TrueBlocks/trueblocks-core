@@ -152,9 +152,6 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 		var idx uint64
 
 		for _, rawTrace := range *rawTraces {
-			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
-			rawTrace := rawTrace
-
 			value := big.NewInt(0)
 			value.SetString(rawTrace.Action.Value, 0)
 			balance := big.NewInt(0)
@@ -255,9 +252,6 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		for _, rawTrace := range *rawTraces {
-			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
-			rawTrace := rawTrace
-
 			value := big.NewInt(0)
 			value.SetString(rawTrace.Action.Value, 0)
 			balance := big.NewInt(0)

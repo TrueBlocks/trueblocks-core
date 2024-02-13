@@ -48,7 +48,6 @@ func (opts *TransactionsOptions) HandleLogs() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleTransaction)
 				}
@@ -97,9 +96,7 @@ func (opts *TransactionsOptions) HandleLogs() error {
 				})
 
 				for _, item := range items {
-					item := item
 					for _, log := range item.Receipt.Logs {
-						log := log
 						if logFilter.PassesFilter(&log) {
 							modelChan <- &log
 						}
