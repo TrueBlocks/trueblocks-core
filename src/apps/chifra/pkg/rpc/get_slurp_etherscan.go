@@ -40,8 +40,6 @@ func (conn *Connection) getTxsByAddressEs(chain, addr, requestType string, pagin
 		Status  string           `json:"status"`
 	}{}
 	if err = decoder.Decode(&fromEs); err != nil {
-		// logger.Error("url:", url)
-		// logger.Error("fromEs:", fromEs)
 		if fromEs.Message == "NOTOK" {
 			return []types.SimpleSlurp{}, 0, fmt.Errorf("provider responded with: %s %s", url, fromEs.Message)
 		}
