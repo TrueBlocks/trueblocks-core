@@ -46,6 +46,7 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
   - If the value of --source is key, --types is ignored and only appearances or counts are returned.
+  - For --source = etherscan, the --page option defaults to 1.
 ```
 
 Data models produced by this tool:

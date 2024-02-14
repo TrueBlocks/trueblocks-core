@@ -31,7 +31,7 @@ type SlurpOptions struct {
 	Articulate  bool                     `json:"articulate,omitempty"`  // Articulate the retrieved data if ABIs can be found
 	Source      string                   `json:"source,omitempty"`      // The source of the slurped data
 	Count       bool                     `json:"count,omitempty"`       // For --appearances mode only, display only the count of records
-	Page        uint64                   `json:"page,omitempty"`        // the page to retrieve
+	Page        uint64                   `json:"page,omitempty"`        // The page to retrieve
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
@@ -43,7 +43,7 @@ type SlurpOptions struct {
 
 var defaultSlurpOptions = SlurpOptions{
 	Source:  "etherscan",
-	PerPage: 5000,
+	PerPage: 3000,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -56,7 +56,7 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Source) > 0 && opts.Source != "etherscan", "Source: ", opts.Source)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Page != 0, "Page: ", opts.Page)
-	logger.TestLog(opts.PerPage != 5000, "PerPage: ", opts.PerPage)
+	logger.TestLog(opts.PerPage != 3000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -73,7 +73,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	copy := defaultSlurpOptions
 	opts := &copy
 	opts.Page = 0
-	opts.PerPage = 5000
+	opts.PerPage = 3000
 	opts.Sleep = .25
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -208,3 +208,4 @@ func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

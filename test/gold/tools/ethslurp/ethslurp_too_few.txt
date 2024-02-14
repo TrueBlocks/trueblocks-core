@@ -1,20 +1,11 @@
-## chifra slurp
-
-`chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
-
-While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
-[http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction
-for a given account. This is actually a shortcoming with Etherscan. It's too complicated to explain
-here, but see our blog.
-
-While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull
-any transaction initiated by an EOA for example or to explore mining rewards. Visit the above
-referenced website for more information.
-
-```[plaintext]
-Purpose:
-  Fetch data from Etherscan for any address.
-
+chifra slurp  0x9519afbc60719a83c470ceec41e32d3e4b8b262e 0-1500000 --per_page 2 --fmt json
+TEST[DATE|TIME] Addrs:  [0x9519afbc60719a83c470ceec41e32d3e4b8b262e]
+TEST[DATE|TIME] Blocks:  [0-1500000]
+TEST[DATE|TIME] Types:  [ext]
+TEST[DATE|TIME] PerPage:  2
+TEST[DATE|TIME] Caps:  cache,decache,raw,ether
+TEST[DATE|TIME] Format:  json
+Error: The --per_page option (2) must be at least 10.
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
 
@@ -47,14 +38,4 @@ Notes:
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
   - If the value of --source is key, --types is ignored and only appearances or counts are returned.
   - For --source = etherscan, the --page option defaults to 1.
-```
-
-Data models produced by this tool:
-
-- [slurp](/data-model/other/#slurp)
-
-Links:
-
-- [api docs](/api/#operation/other-slurp)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
 

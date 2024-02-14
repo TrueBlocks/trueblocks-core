@@ -325,7 +325,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12224,tools,Other,slurp,ethslurp,n2,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 12226,tools,Other,slurp,ethslurp,n3,,,false,false,false,false,--,note,,The withdrawals option is only available on certain chains. It is ignored otherwise.
 12228,tools,Other,slurp,ethslurp,n4,,,false,false,false,false,--,note,,If the value of --source is key&#44; --types is ignored and only appearances or counts are returned.
-12229,tools,Other,slurp,ethslurp,n4,,,false,false,false,false,--,note,,For --source = etherscan&#44; the --page option defaults to 1 and the --per_page option defaults to 5000.
+12229,tools,Other,slurp,ethslurp,n4,,,false,false,false,false,--,note,,For --source = etherscan&#44; the --page option defaults to 1.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,true,gocmd,positional,list<path>,one or more class definition files
 11740,dev_tools,,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder

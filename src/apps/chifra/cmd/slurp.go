@@ -52,7 +52,8 @@ Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
-  - If the value of --source is key, --types is ignored and only appearances or counts are returned.`
+  - If the value of --source is key, --types is ignored and only appearances or counts are returned.
+  - For --source = etherscan, the --page option defaults to 1.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra slurp
@@ -72,7 +73,7 @@ One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals 
 One of [ etherscan | key ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, "for --appearances mode only, display only the count of records")
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, "the page to retrieve")
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 5000, "the number of records to request on each page")
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 3000, "the number of records to request on each page")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)
 
@@ -84,3 +85,4 @@ One of [ etherscan | key ]`)
 
 	chifraCmd.AddCommand(slurpCmd)
 }
+
