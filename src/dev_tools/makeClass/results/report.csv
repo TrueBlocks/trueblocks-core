@@ -331,6 +331,9 @@ slurp,cache,python
 slurp,count,api
 slurp,count,python
 slurp,count,typescript
+slurp,page,api
+slurp,page,python
+slurp,page,typescript
 slurp,perPage,api
 slurp,perPage,python
 slurp,perPage,typescript

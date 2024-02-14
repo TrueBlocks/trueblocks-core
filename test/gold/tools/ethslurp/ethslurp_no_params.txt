@@ -18,7 +18,7 @@ Flags:
   -S, --source string   the source of the slurped data
                         One of [ etherscan | key ] (default "etherscan")
   -U, --count           for --appearances mode only, display only the count of records
-  -P, --per_page uint   the number of records to request on each page (default 5000)
+  -P, --per_page uint   the number of records to request on each page (default 3000)
   -s, --sleep float     seconds to sleep between requests (default 0.25)
   -H, --ether           specify value in ether
   -w, --raw             report JSON data from the source with minimal processing

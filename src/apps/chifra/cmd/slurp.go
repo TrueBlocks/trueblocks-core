@@ -71,6 +71,7 @@ One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals 
 	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "etherscan", `the source of the slurped data
 One of [ etherscan | key ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, "for --appearances mode only, display only the count of records")
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, "the page to retrieve")
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 5000, "the number of records to request on each page")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)
@@ -83,4 +84,3 @@ One of [ etherscan | key ]`)
 
 	chifraCmd.AddCommand(slurpCmd)
 }
-
