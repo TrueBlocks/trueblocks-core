@@ -10,10 +10,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func getUrlAndHeaders() (string, map[string]string, bool, error) {
+func getUrlAndHeaders() (string, map[string]string, error) {
 	key := config.GetKey("trueblocks").ApiKey
 	if key == "" {
-		return "", map[string]string{}, false, errors.New("cannot read API key")
+		return "", map[string]string{}, errors.New("cannot read API key")
 	}
 
 	url := "https://trueblocks.io/api/rpc"
@@ -21,7 +21,6 @@ func getUrlAndHeaders() (string, map[string]string, bool, error) {
 		"Authorization": "Bearer " + key,
 	}
 
-	isDev := false
 	if file.FileExists("./.key") {
 		// TODO: This can be removed at some point
 		lines := file.AsciiFileToLines(".key")
@@ -35,13 +34,12 @@ func getUrlAndHeaders() (string, map[string]string, bool, error) {
 				}
 				myHeaders[parts[0]] = parts[1]
 			}
-			isDev = true
 			url = myUrl
 			headers = myHeaders
 		}
 	}
 
-	return url, headers, isDev, nil
+	return url, headers, nil
 }
 
 type keyParam struct {
@@ -51,7 +49,7 @@ type keyParam struct {
 }
 
 func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
-	url, headers, isDev, err := getUrlAndHeaders()
+	url, headers, err := getUrlAndHeaders()
 	if err != nil {
 		return []types.SimpleSlurp{}, 0, err
 	}
@@ -66,16 +64,11 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 	if apps, err := query.QueryWithHeaders[[]types.SimpleSlurp](url, headers, method, params); err != nil {
 		return []types.SimpleSlurp{}, 0, err
 	} else {
-		// TODO: This can be removed when we fix
-		// TODO: https://github.com/TrueBlocks/trueblocks-key/issues/82
 		v := make([]types.SimpleSlurp, 0, len(*apps))
 		for _, a := range *apps {
 			s := types.SimpleSlurp{
 				BlockNumber:      a.BlockNumber,
 				TransactionIndex: a.TransactionIndex,
-			}
-			if isDev {
-				s.TransactionIndex = a.TempTransactionId
 			}
 			v = append(v, s)
 		}
@@ -84,7 +77,7 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 }
 
 func (conn *Connection) getTxCountByAddressKey(chain, addr string) (int, error) {
-	url, headers, _, err := getUrlAndHeaders()
+	url, headers, err := getUrlAndHeaders()
 	if err != nil {
 		return 0, err
 	}
