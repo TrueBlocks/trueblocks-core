@@ -15,6 +15,7 @@ export function getSlurp(
     articulate?: boolean,
     source?: 'etherscan*' | 'key',
     count?: boolean,
+    page?: uint64,
     perPage?: uint64,
     sleep?: double,
     chain: string,

@@ -22,6 +22,7 @@ extern string_q get_ens_convert1(const CCommandOption& cmd);
 extern string_q get_ens_convert2(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
 extern string_q get_walk_package(const CCommandOption& cmd);
+extern string_q get_os_package(const string_q& fn);
 extern string_q get_base_package(const string_q& fn);
 extern string_q get_index_package(const string_q& fn);
 extern string_q get_setopts(const CCommandOption& cmd);
@@ -145,6 +146,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{CONFIGPKG}]", get_config_package(p));
     replaceAll(source, "[{WALKPKG}]", get_walk_package(p));
     replaceAll(source, "[{BASEPKG}]", get_base_package(fn));
+    replaceAll(source, "[{OS}]", get_os_package(fn));
     replaceAll(source, "[{INDEXPKG}]", get_index_package(fn));
 
     string_q req = get_requestopts(p);
@@ -581,6 +583,14 @@ string_q get_base_package(const string_q& fn) {
     string_q existing = asciiFileToString(fn);
     if (contains(existing, "base.")) {
         return "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base\"\n";
+    }
+    return "";
+}
+
+string_q get_os_package(const string_q& fn) {
+    string_q existing = asciiFileToString(fn);
+    if (contains(existing, "os.")) {
+        return "\t\"os\"\n";
     }
     return "";
 }
