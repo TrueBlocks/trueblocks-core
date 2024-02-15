@@ -2,9 +2,9 @@
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
 
-## v2.5.2 (2024/02/09)
+## v2.5.8 (2024/02/09)
 
-- Bumped version number to v2.5.2.
+- Bumped version number to v2.5.8.
 - Bumped required GoLang version to ^1.22.
 
 **bug fixes**
