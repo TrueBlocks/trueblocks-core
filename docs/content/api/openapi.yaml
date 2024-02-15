@@ -2364,24 +2364,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: page
-          description: the page to retrieve
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-            format: uint64
-        - name: perPage
-          description: the number of records to request on each page
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: number
-            format: uint64
         - name: sleep
           description: seconds to sleep between requests
           required: false

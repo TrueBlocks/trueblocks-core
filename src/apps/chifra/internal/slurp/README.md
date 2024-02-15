@@ -30,8 +30,6 @@ Flags:
   -S, --source string   the source of the slurped data
                         One of [ etherscan | key ] (default "etherscan")
   -U, --count           for --appearances mode only, display only the count of records
-  -g, --page uint       the page to retrieve
-  -P, --per_page uint   the number of records to request on each page (default 3000)
   -s, --sleep float     seconds to sleep between requests (default 0.25)
   -H, --ether           specify value in ether
   -w, --raw             report JSON data from the source with minimal processing
@@ -46,7 +44,6 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
   - If the value of --source is key, --types is ignored and only appearances or counts are returned.
-  - For --source = etherscan, the --page option defaults to 1.
 ```
 
 Data models produced by this tool:

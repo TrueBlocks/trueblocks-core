@@ -12,8 +12,6 @@ slurpOpts = {
     "articulate": {"hotkey": "-a", "type": "switch"},
     "source": {"hotkey": "-S", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
-    "page": {"hotkey": "-g", "type": "flag"},
-    "perPage": {"hotkey": "-P", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "raw": {"hotkey": "-w", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
