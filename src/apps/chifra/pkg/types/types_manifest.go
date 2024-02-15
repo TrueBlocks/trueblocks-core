@@ -69,3 +69,4 @@ func (s *SimpleManifest) Model(chain, format string, verbose bool, extraOptions 
 
 // EXISTING_CODE
 // EXISTING_CODE
+

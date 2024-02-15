@@ -17,11 +17,25 @@ import (
 
 // GetTracesByBlockNumber returns a slice of traces in the given block
 func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, error) {
+	if conn.StoreReadable() {
+		traceGroup := &types.SimpleTraceGroup{
+			BlockNumber:      bn,
+			TransactionIndex: utils.NOPOS,
+		}
+		if err := conn.Store.Read(traceGroup, nil); err == nil {
+			return traceGroup.Traces, nil
+		}
+	}
+
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
-	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
 		return []types.SimpleTrace{}, err
+
+	} else if rawTraces == nil || len(*rawTraces) == 0 {
+		return []types.SimpleTrace{}, nil
+
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(bn)
@@ -29,7 +43,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		var ret []types.SimpleTrace
-		for _, rawTrace := range rawTraces {
+		for _, rawTrace := range *rawTraces {
 			traceAction := types.SimpleTraceAction{
 				Address:        base.HexToAddress(rawTrace.Action.Address),
 				Author:         base.HexToAddress(rawTrace.Action.Author),
@@ -77,6 +91,15 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 			trace.SetRaw(&rawTrace)
 			ret = append(ret, trace)
 		}
+
+		if conn.StoreWritable() && conn.EnabledMap["traces"] && base.IsFinal(conn.LatestBlockTimestamp, curTs) {
+			traceGroup := &types.SimpleTraceGroup{
+				Traces:           ret,
+				BlockNumber:      bn,
+				TransactionIndex: utils.NOPOS,
+			}
+			_ = conn.Store.Write(traceGroup, nil)
+		}
 		return ret, nil
 	}
 }
@@ -118,17 +141,17 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 	params := query.Params{txHash}
 
 	var ret []types.SimpleTrace
-	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
-		return ret, fmt.Errorf("transaction at %s returned an error: %w", txHash, ethereum.NotFound)
+	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
+		return ret, ethereum.NotFound
+
+	} else if rawTraces == nil || len(*rawTraces) == 0 {
+		return []types.SimpleTrace{}, nil
 
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
 		var idx uint64
 
-		for _, rawTrace := range rawTraces {
-			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
-			rawTrace := rawTrace
-
+		for _, rawTrace := range *rawTraces {
 			value := big.NewInt(0)
 			value.SetString(rawTrace.Action.Value, 0)
 			balance := big.NewInt(0)
@@ -216,18 +239,19 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 	params := query.Params{ff}
 
 	var ret []types.SimpleTrace
-	if rawTraces, err := query.QuerySlice[types.RawTrace](conn.Chain, method, params); err != nil {
+	if rawTraces, err := query.Query[[]types.RawTrace](conn.Chain, method, params); err != nil {
 		return ret, fmt.Errorf("trace filter %s returned an error: %w", filter, ethereum.NotFound)
+
+	} else if rawTraces == nil || len(*rawTraces) == 0 {
+		return []types.SimpleTrace{}, nil
+
 	} else {
 		curApp := types.SimpleAppearance{BlockNumber: uint32(^uint32(0))}
 		curTs := conn.GetBlockTimestamp(utils.MustParseUint(f.FromBlock))
 		var idx uint64
 
 		// TODO: This could be loadTrace in the same way load Blocks works
-		for _, rawTrace := range rawTraces {
-			// Note: This is needed because of a GoLang bug when taking the pointer of a loop variable
-			rawTrace := rawTrace
-
+		for _, rawTrace := range *rawTraces {
 			value := big.NewInt(0)
 			value.SetString(rawTrace.Action.Value, 0)
 			balance := big.NewInt(0)

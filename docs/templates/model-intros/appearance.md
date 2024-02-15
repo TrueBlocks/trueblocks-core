@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 An appearance is a pointer (`blknum, tx_id` pair) into the blockchain indicating where a
 particular address appears. This includes obvious locations such as `to` or `from` as well
 as esoteric locations such as deep inside a tenth-level trace or as the miner of an uncle block.

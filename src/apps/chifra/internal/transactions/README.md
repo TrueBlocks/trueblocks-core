@@ -1,6 +1,5 @@
 ## chifra transactions
 
-<!-- markdownlint-disable MD041 -->
 The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
 option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
 per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
@@ -24,28 +23,26 @@ Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
-  -a, --articulate           articulate the retrieved data if ABIs can be found
-  -t, --traces               include the transaction's traces in the results
-  -u, --uniq                 display a list of uniq addresses found in the transaction
-  -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
-                             One of [ from | to ]
-  -l, --logs                 display only the logs found in the transaction(s)
-  -m, --emitter strings      for the --logs option only, filter logs to show only those logs emitted by the given address(es)
-  -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
-  -A, --account_for string   reconcile the transaction as per the provided address
-  -H, --ether                specify value in ether
-  -w, --raw                  report JSON data from the source with minimal processing
-  -o, --cache                force the results of the query into the cache
-  -D, --decache              removes related items from the cache
-  -x, --fmt string           export format, one of [none|json*|txt|csv]
-  -v, --verbose              enable verbose output
-  -h, --help                 display this help screen
+  -a, --articulate        articulate the retrieved data if ABIs can be found
+  -t, --traces            include the transaction's traces in the results
+  -u, --uniq              display a list of uniq addresses found in the transaction
+  -f, --flow string       for the uniq option only, export only from or to (including trace from or to)
+                          One of [ from | to ]
+  -l, --logs              display only the logs found in the transaction(s)
+  -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
+  -H, --ether             specify value in ether
+  -w, --raw               report JSON data from the source with minimal processing
+  -o, --cache             force the results of the query into the cache
+  -D, --decache           removes related items from the cache
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
+  -v, --verbose           enable verbose output
+  -h, --help              display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-  - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.
   - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 ```
 
@@ -54,7 +51,6 @@ Data models produced by this tool:
 - [statement](/data-model/accounts/#statement)
 - [transaction](/data-model/chaindata/#transaction)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

@@ -23,7 +23,13 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawWithdrawal], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleBlock[string]](chain, opts.BlockIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleBlock[string]](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -38,7 +44,6 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleBlock[string])
 				}
@@ -69,7 +74,6 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 
 				for _, item := range thisMap {
 					for _, w := range item.Withdrawals {
-						w := w
 						w.BlockNumber = item.BlockNumber
 						items = append(items, &w)
 					}
@@ -83,7 +87,6 @@ func (opts *BlocksOptions) HandleWithdrawals() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- item
 				}
 			}

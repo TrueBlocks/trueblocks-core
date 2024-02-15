@@ -6,14 +6,12 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"runtime"
 	"strings"
 	"sync/atomic"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 )
 
 // Params are used during calls to the RPC.
@@ -21,8 +19,9 @@ type Params []interface{}
 
 // Payload is used to make calls to the RPC.
 type Payload struct {
-	Method string `json:"method"`
-	Params `json:"params"`
+	Headers map[string]string `json:"headers,omitempty"`
+	Method  string            `json:"method"`
+	Params  `json:"params"`
 }
 
 type rpcResponse[T any] struct {
@@ -35,43 +34,6 @@ type eip1474Error struct {
 	Message string `json:"message"`
 }
 
-var devDebug = false
-var devDebugMethod = ""
-
-func init() {
-	// We need to increase MaxIdleConnsPerHost, otherwise chifra will keep trying to open too
-	// many ports. It can lead to bind errors.
-	// The default value is too low, so Go closes ports too fast. In the meantime, chifra tries
-	// to get new ones and so it can run out of available ports.
-	//
-	// We change DefaultTransport as the whole codebase uses it.
-	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
-
-	devDebugMethod = os.Getenv("TB_DEBUG_CURL")
-	devDebug = len(devDebugMethod) > 0
-}
-
-// Query returns a single result for given method and params.
-func Query[T any](chain string, method string, params Params) (*T, error) {
-	var response rpcResponse[T]
-
-	payload := Payload{
-		Method: method,
-		Params: params,
-	}
-
-	provider := config.GetChain(chain).RpcProvider
-	err := fromRpc(provider, &payload, &response)
-	if err != nil {
-		return nil, err
-	}
-	if response.Error != nil {
-		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
-	}
-
-	return &response.Result, err
-}
-
 var rpcCounter uint32
 
 type rpcPayload struct {
@@ -81,46 +43,6 @@ type rpcPayload struct {
 	ID      int `json:"id"`
 }
 
-// fromRpc Returns all traces for a given block.
-func fromRpc(rpcProvider string, payload *Payload, ret any) error {
-	payloadToSend := rpcPayload{
-		Jsonrpc: "2.0",
-		Method:  payload.Method,
-		Params:  payload.Params,
-		ID:      int(atomic.AddUint32(&rpcCounter, 1)),
-	}
-
-	debugCurl(payloadToSend, rpcProvider)
-
-	plBytes, err := json.Marshal(payloadToSend)
-	if err != nil {
-		return err
-	}
-
-	return sendRpcRequest(rpcProvider, plBytes, ret)
-}
-
-// QuerySlice returns a slice of results for given method and params.
-func QuerySlice[T any](chain string, method string, params Params) ([]T, error) {
-	var response rpcResponse[[]T]
-
-	payload := Payload{
-		Method: method,
-		Params: params,
-	}
-
-	provider := config.GetChain(chain).RpcProvider
-	err := fromRpc(provider, &payload, &response)
-	if err != nil {
-		return nil, err
-	}
-	if response.Error != nil {
-		return nil, fmt.Errorf("%d: %s", response.Error.Code, response.Error.Message)
-	}
-
-	return response.Result, err
-}
-
 // BatchPayload is a wrapper around Payload type that allows us
 // to associate a name (Key) to given request.
 type BatchPayload struct {
@@ -128,31 +50,76 @@ type BatchPayload struct {
 	*Payload
 }
 
+// Query returns a single result for given method and params.
+func Query[T any](chain string, method string, params Params) (*T, error) {
+	url := config.GetChain(chain).RpcProvider
+	return QueryWithHeaders[T](url, map[string]string{}, method, params)
+}
+
+// QueryWithHeaders returns a single result for a given method and params.
+func QueryWithHeaders[T any](url string, headers map[string]string, method string, params Params) (*T, error) {
+	payloadToSend := rpcPayload{
+		Jsonrpc: "2.0",
+		Method:  method,
+		Params:  params,
+		ID:      int(uint32(atomic.AddUint32(&rpcCounter, 1))),
+	}
+
+	debug.DebugCurl(rpcDebug{url: url, payload: payloadToSend, headers: headers})
+
+	if plBytes, err := json.Marshal(payloadToSend); err != nil {
+		return nil, err
+	} else {
+		body := bytes.NewReader(plBytes)
+		if request, err := http.NewRequest("POST", url, body); err != nil {
+			return nil, err
+		} else {
+			request.Header.Set("Content-Type", "application/json")
+			for key, value := range headers {
+				request.Header.Set(key, value)
+			}
+
+			client := &http.Client{}
+			if response, err := client.Do(request); err != nil {
+				return nil, err
+			} else if response.StatusCode != 200 {
+				return nil, fmt.Errorf("%s: %d", response.Status, response.StatusCode)
+			} else {
+				defer response.Body.Close()
+
+				if theBytes, err := io.ReadAll(response.Body); err != nil {
+					return nil, err
+				} else {
+					var result rpcResponse[T]
+					if err = json.Unmarshal(theBytes, &result); err != nil {
+						return nil, err
+					} else {
+						if result.Error != nil {
+							return nil, fmt.Errorf("%d: %s", result.Error.Code, result.Error.Message)
+						}
+						return &result.Result, nil
+					}
+				}
+			}
+		}
+	}
+}
+
 // QueryBatch batches requests to the node. Returned values are stored in map, with the same keys as defined
 // in `batchPayload` (this way we don't have to operate on array indices)
 func QueryBatch[T any](chain string, batchPayload []BatchPayload) (map[string]*T, error) {
-	var response []rpcResponse[T]
-
-	keys := make([]string, 0, len(batchPayload))
-	payloads := make([]Payload, 0, len(batchPayload))
-	for _, config := range batchPayload {
-		keys = append(keys, config.Key)
-		payloads = append(payloads, *config.Payload)
-	}
-
-	provider := config.GetChain(chain).RpcProvider
-	err := fromRpcBatch(provider, payloads, &response)
-	if err != nil {
-		return nil, err
-	}
-	results := make(map[string]*T, len(batchPayload))
-	for index, key := range keys {
-		results[key] = &response[index].Result
-	}
-	return results, err
+	return QueryBatchWithHeaders[T](chain, map[string]string{}, batchPayload)
 }
 
-func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error {
+func QueryBatchWithHeaders[T any](chain string, headers map[string]string, batchPayload []BatchPayload) (map[string]*T, error) {
+	keys := make([]string, 0, len(batchPayload))
+	payloads := make([]Payload, 0, len(batchPayload))
+	for _, bpl := range batchPayload {
+		keys = append(keys, bpl.Key)
+		payloads = append(payloads, *bpl.Payload)
+	}
+
+	url := config.GetChain(chain).RpcProvider
 	payloadToSend := make([]rpcPayload, 0, len(payloads))
 
 	for _, payload := range payloads {
@@ -162,70 +129,78 @@ func fromRpcBatch(rpcProvider string, payloads []Payload, ret interface{}) error
 			Params:  payload.Params,
 			ID:      int(atomic.AddUint32(&rpcCounter, 1)),
 		}
-		debugCurl(theLoad, rpcProvider)
+		debug.DebugCurl(rpcDebug{
+			url:     url,
+			payload: theLoad,
+			headers: headers,
+		})
 		payloadToSend = append(payloadToSend, theLoad)
 	}
 
 	plBytes, err := json.Marshal(payloadToSend)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return sendRpcRequest(rpcProvider, plBytes, ret)
-}
-
-func sendRpcRequest(rpcProvider string, marshalled []byte, result any) error {
-	body := bytes.NewReader(marshalled)
-	resp, err := http.Post(rpcProvider, "application/json", body)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	theBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(theBytes, result)
-}
-
-func debugCurl(payload rpcPayload, rpcProvider string) {
-	if !devDebug {
-		return
-	}
-
-	if devDebugMethod != "file" && devDebugMethod != "true" && devDebugMethod != "testing" && payload.Method != devDebugMethod {
-		return
-	}
-
-	var bytes []byte
-	var payloadStr string
-	if devDebugMethod == "testing" {
-		rpcProvider = "--rpc-provider--"
-		parts := strings.Split(strings.Replace(payloadStr, "]", "[", -1), "[")
-		parts[1] = "[ --params-- ]"
-		payloadStr = strings.Join(parts, "")
+	var result []rpcResponse[T]
+	body := bytes.NewReader(plBytes)
+	if response, err := http.Post(url, "application/json", body); err != nil {
+		return nil, err
 	} else {
-		bytes, _ = json.MarshalIndent(payload, "", "")
-		payloadStr = strings.Replace(string(bytes), "\n", " ", -1)
-	}
-
-	var curlCmd = `curl -X POST -H "Content-Type: application/json" --data '[{payload}]' [{rpcProvider}]`
-	curlCmd = strings.Replace(curlCmd, "[{payload}]", payloadStr, -1)
-	curlCmd = strings.Replace(curlCmd, "[{rpcProvider}]", rpcProvider, -1)
-	if devDebugMethod == "file" {
-		_ = file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
-	} else {
-		logger.ToggleDecoration()
-		logger.Info(curlCmd)
-		logger.ToggleDecoration()
+		defer response.Body.Close()
+		if theBytes, err := io.ReadAll(response.Body); err != nil {
+			return nil, err
+		} else {
+			if err = json.Unmarshal(theBytes, &result); err != nil {
+				return nil, err
+			}
+			results := make(map[string]*T, len(batchPayload))
+			for index, key := range keys {
+				results[key] = &result[index].Result
+			}
+			return results, err
+		}
 	}
 }
 
-func CloseDebugger() {
-	if !devDebug {
-		return
+func init() {
+	// We need to increase MaxIdleConnsPerHost, otherwise chifra will keep trying to open too
+	// many ports. It can lead to bind errors.
+	// The default value is too low, so Go closes ports too fast. In the meantime, chifra tries
+	// to get new ones and so it can run out of available ports.
+	//
+	// We change DefaultTransport as the whole codebase uses it.
+	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = runtime.GOMAXPROCS(0) * 4
+}
+
+type rpcDebug struct {
+	payload rpcPayload
+	url     string
+	headers map[string]string
+}
+
+func (c rpcDebug) Url() string {
+	return c.url
+}
+
+func (c rpcDebug) Body() string {
+	return `curl -X POST [{headers}] --data '[{payload}]' [{url}]`
+}
+
+func (c rpcDebug) Headers() string {
+	ret := `-H "Content-Type: application/json"`
+	for key, value := range c.headers {
+		ret += fmt.Sprintf(` -H "%s: %s"`, key, value)
 	}
-	logger.Info("Closing curl debugger")
+	return ret
+}
+
+func (c rpcDebug) Method() string {
+	return c.payload.Method
+}
+
+func (c rpcDebug) Payload() string {
+	bytes, _ := json.MarshalIndent(c.payload, "", "")
+	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
+	return payloadStr
 }

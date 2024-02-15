@@ -28,6 +28,10 @@ type SlurpOptions struct {
 	BlockIds    []identifiers.Identifier `json:"blockIds,omitempty"`    // Block identifiers
 	Types       []string                 `json:"types,omitempty"`       // Which types of transactions to request
 	Appearances bool                     `json:"appearances,omitempty"` // Show only the blocknumber.tx_id appearances of the exported transactions
+	Articulate  bool                     `json:"articulate,omitempty"`  // Articulate the retrieved data if ABIs can be found
+	Source      string                   `json:"source,omitempty"`      // The source of the slurped data
+	Count       bool                     `json:"count,omitempty"`       // For --appearances mode only, display only the count of records
+	Page        uint64                   `json:"page,omitempty"`        // The page to retrieve
 	PerPage     uint64                   `json:"perPage,omitempty"`     // The number of records to request on each page
 	Sleep       float64                  `json:"sleep,omitempty"`       // Seconds to sleep between requests
 	Globals     globals.GlobalOptions    `json:"globals,omitempty"`     // The global options
@@ -38,7 +42,8 @@ type SlurpOptions struct {
 }
 
 var defaultSlurpOptions = SlurpOptions{
-	PerPage: 5000,
+	Source:  "etherscan",
+	PerPage: 3000,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -47,7 +52,11 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
-	logger.TestLog(opts.PerPage != 5000, "PerPage: ", opts.PerPage)
+	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
+	logger.TestLog(len(opts.Source) > 0 && opts.Source != "etherscan", "Source: ", opts.Source)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	logger.TestLog(opts.Page != 0, "Page: ", opts.Page)
+	logger.TestLog(opts.PerPage != 3000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
@@ -63,7 +72,8 @@ func (opts *SlurpOptions) String() string {
 func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	copy := defaultSlurpOptions
 	opts := &copy
-	opts.PerPage = 5000
+	opts.Page = 0
+	opts.PerPage = 3000
 	opts.Sleep = .25
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -84,6 +94,14 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 			}
 		case "appearances":
 			opts.Appearances = true
+		case "articulate":
+			opts.Articulate = true
+		case "source":
+			opts.Source = value[0]
+		case "count":
+			opts.Count = true
+		case "page":
+			opts.Page = globals.ToUint64(value[0])
 		case "perPage":
 			opts.PerPage = globals.ToUint64(value[0])
 		case "sleep":
@@ -190,3 +208,4 @@ func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

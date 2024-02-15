@@ -6,22 +6,51 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) (statements []*types.SimpleStatement) {
-	statements = make([]*types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
+func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.SimpleTransaction, s *types.SimpleStatement) ([]types.SimpleStatement, error) {
+	statements := make([]types.SimpleStatement, 0, 20) // a high estimate of the number of statements we'll need
 
 	ret := *s
-	ret.ClearInternal()
+	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because
+	// those are at the top level (both the transaction itself and trace '0' have them). We
+	// skip trace '0' because it's the same as the transaction.
+	// ret.AmountIn.SetUint64(0)
+	ret.InternalIn.SetUint64(0)
+	ret.MinerBaseRewardIn.SetUint64(0)
+	ret.MinerNephewRewardIn.SetUint64(0)
+	ret.MinerTxFeeIn.SetUint64(0)
+	ret.MinerUncleRewardIn.SetUint64(0)
+	ret.CorrectingIn.SetUint64(0)
+	ret.PrefundIn.SetUint64(0)
+	ret.SelfDestructIn.SetUint64(0)
+
+	// ret.AmountOut.SetUint64(0)
+	// ret.GasOut.SetUint64(0)
+	ret.InternalOut.SetUint64(0)
+	ret.CorrectingOut.SetUint64(0)
+	ret.SelfDestructOut.SetUint64(0)
 
 	if traces, err := conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
-		logger.Error(err)
+		return statements, err
 
 	} else {
 		// These values accumulate...so we use += instead of =
 		for i, trace := range traces {
 			if i == 0 {
 				// the first trace is identical to the transaction itself, so we can skip it
+				continue
+			}
+			if trace.Action.CallType == "delegatecall" && trace.Action.To != s.AccountedFor {
+				// delegate calls are not included in the transaction's gas cost, so we skip them
+				logger.Info(
+					"Skipping",
+					trace.Action.CallType,
+					"to",
+					trace.Action.To.Hex(),
+					utils.FormattedValue(trace.Action.Value, true, 18),
+				)
 				continue
 			}
 
@@ -83,17 +112,17 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 		}
 	}
 
-	if l.trialBalance("ETH TRACES", &ret) {
-		if ret.MoneyMoved() {
-			statements = append(statements, &ret)
+	if l.trialBalance("trace-eth", &ret) {
+		if ret.IsMaterial() {
+			statements = append(statements, ret)
 		} else {
 			logger.TestLog(true, "Tx reconciled with a zero value net amount. It's okay.")
 		}
 	} else {
 		// TODO: BOGUS PERF
 		// logger.Warn("Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not reconcile")
-		statements = append(statements, &ret)
+		statements = append(statements, ret)
 	}
 
-	return
+	return statements, nil
 }

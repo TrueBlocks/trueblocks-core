@@ -1,7 +1,47 @@
-<!-- markdownlint-disable MD024 MD036 -->
 # History of Changes
 
 This file details changes made to TrueBlocks over time. See the [migration notes](./MIGRATIONS.md) for any required actions you must take to stay up to date.
+
+## v2.5.2 (2024/02/09)
+
+- Bumped version number to v2.5.2.
+- Bumped required GoLang version to ^1.22.
+
+**bug fixes**
+
+- Fixes very slow `chifra blocks --traces` command. Up to 10x faster.
+- Complete re-write `--accounting` reconciliation code. Still a work in progress, but improved.
+
+**chifra export**
+
+- Significant speedup due to fully using goLang concurrency better. Up to 10x faster in some cases.
+
+**chifra scrape**
+
+- Added the notify feature (currently undocumented) to help enable TrueBlocks Key.
+
+**chifra abis**
+
+- Added `--proxyFor` option to allow for redirecting query for ABI files to the implementation.
+
+**chifra transactions**
+
+- Removed previously unused `accountFor` option.
+- Changed previously (and still) unused `--source` option to `--seed`. `--seed` option traces the source of funds.
+
+**chifra slurp**
+
+- Added `--articulate` option to attempt to articulate transactions.
+- Added `--count` option to return the count of transactions found for an address.
+- Added `--source` option to allow for both Etherscan and Key as sourcef for data.
+
+**chifra logs**
+
+- Added `--emitter` and `--topic` options to allow for filtering logs by emitter and topic. Now agrees with `chifra export`.
+
+data models
+
+- Added `ReconType` and `AssetType` to `SimpleReconciliation` data models.
 
 ## v2.1.0 (2023/11/25)
 

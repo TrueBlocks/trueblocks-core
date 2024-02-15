@@ -14,7 +14,6 @@ weight: 1800
 toc: true
 ---
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The following commands provide useful miscellaneous tools:
 
 - `chifra explore` a quick way to open a blockchain explorer,
@@ -25,9 +24,35 @@ to add a key to your config](/docs/install/install-core/#3-update-the-configs-fo
 
 Each data structure is created by one or more tools which are detailed below.
 
+## Abi
+
+An ABI describes an Application Binary Interface -- in other words, the [Function](/data-model/other/#function)
+and Event signatures for a given smart contract. Along with [Names](/data-model/accounts/#names) the
+use of ABIs goes a very long way towards making your Ethereum data much more understandable.
+
+Similar to names of addresses, ABI files are not available on-chain which means they must be
+acquired somewhere. Unfortunately, the Ethereum community has not yet understand that Etherscan
+is not a good place to store this very important information. For this reason, TrueBlocks uses
+Etherscan to acquire ABI files and therefor one needs to get an Etherscan API key to use this
+function.
+
+The following commands produce and manage Abis:
+
+- [chifra abis](/chifra/accounts/#chifra-abis)
+
+Abis consist of the following fields:
+
+| Field     | Description                    | Type                                      |
+| --------- | ------------------------------ | ----------------------------------------- |
+| address   | the address for the ABI        | address                                   |
+| functions | the functions for this address | [Function[]](/data-model/other/#function) |
+
+### Notes
+
+See the [chifra abis](/chifra/accounts/#chifra-abis) command line for information about getting an Etherscan key.
+
 ## Function
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ABI files are derived from the Solidity source code of a smart contract by extracting the canonical
 function and event signatures in a JSON structure. The function signatures are hashed (using
 keccak) into four-byte encodings for functions and 32-byte encodings for events. Because the
@@ -53,7 +78,6 @@ Functions consist of the following fields:
 
 ## Parameter
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 Parameters are a constituent part of a [Function or Event](/data-model/accounts/#function). The
 parameters of a function are each individual value passed into the function. Along with the
 function's name, the parameters types (once canonicalized) are used to create a function's four
@@ -79,7 +103,6 @@ Parameters consist of the following fields:
 
 ## Slurp
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 THIS SHOULD BE ETHERSCAN DATA RELATED, BUT IT'S NOT TIED IN, SO IT DOESN'T DO ANYTHING
 The `traceFilter` is an internal data structure used to query using the `chifra traces --filter` command. Its use may, in the future, be expanded for other use cases. Note that all fields are optional, but not all may be empty at the same time.
 
@@ -97,7 +120,7 @@ Slurps consist of the following fields:
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum                                  |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64                                  |
 | timestamp        | the Unix timestamp of the object                                                                      | timestamp                               |
-| date             | a calculated field -- the date of the object                                                          | datetime                                |
+| date             | the timestamp as a date (calculated)                                                                  | datetime                                |
 | from             | address from which the transaction was sent                                                           | address                                 |
 | to               | address to which the transaction was sent                                                             | address                                 |
 | value            | the amount of wei sent with this transactions                                                         | wei                                     |
@@ -126,3 +149,4 @@ This documentation mentions the following basic data types.
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint64    | a 64-bit unsigned integer           |                |
 | wei       | an unsigned big number              | as a string    |
+

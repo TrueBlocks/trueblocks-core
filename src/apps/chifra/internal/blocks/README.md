@@ -1,6 +1,5 @@
 ## chifra blocks
 
-<!-- markdownlint-disable MD041 -->
 The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the
 TrueBlocks cache. You may specify multiple blocks per invocation.
 
@@ -35,7 +34,7 @@ Flags:
   -i, --withdrawals       export the withdrawals from the block as opposed to the block data
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
-  -U, --count             display the number of the lists of appearances for --addrs or --uniq
+  -U, --count             display only the count of appearances for --addrs or --uniq
   -H, --ether             specify value in ether
   -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
@@ -68,7 +67,6 @@ Data models produced by this tool:
 - [traceresult](/data-model/chaindata/#traceresult)
 - [blockcount](/data-model/chaindata/#blockcount)
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

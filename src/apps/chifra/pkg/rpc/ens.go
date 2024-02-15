@@ -7,7 +7,9 @@ package rpc
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum/common"
 	ensGo "github.com/wealdtech/go-ens/v3"
 )
 
@@ -49,8 +51,27 @@ func (conn *Connection) GetEnsAddresses(addrs []string) (out []string, found boo
 
 // GetEnsAddress converts a single string, if it contains .eth, into an address. Note, we take
 // chain parameter, but ignore it choosing to look at mainnet ENS only
-func (conn *Connection) GetEnsAddress(addr string) (string, bool) {
-	if !strings.Contains(addr, ".eth") {
+func (conn *Connection) GetEnsAddress(addrOrEns string) (string, bool) {
+	if !strings.Contains(addrOrEns, ".eth") {
+		return utils.LowerIfHex(addrOrEns), false
+	}
+
+	// Note: we use ENS on mainnet always
+	tc := TempConnection("mainnet")
+	if ec, err := tc.getClient(); err != nil {
+		return "", false
+	} else {
+		defer ec.Close()
+		if val, err := ensGo.Resolve(ec, addrOrEns); err == nil && len(val) > 0 {
+			return utils.LowerIfHex(val.Hex()), true
+		}
+		return utils.LowerIfHex(addrOrEns), false
+	}
+}
+
+// GetEnsName converts an address into an ens name if registered, returns the address otherwise.
+func (conn *Connection) GetEnsName(addr string) (string, bool) {
+	if !base.IsValidAddress(addr) {
 		return utils.LowerIfHex(addr), false
 	}
 
@@ -60,8 +81,8 @@ func (conn *Connection) GetEnsAddress(addr string) (string, bool) {
 		return "", false
 	} else {
 		defer ec.Close()
-		if val, err := ensGo.Resolve(ec, addr); err == nil && len(val) > 0 {
-			return utils.LowerIfHex(val.Hex()), true
+		if val, err := ensGo.ReverseResolve(ec, common.HexToAddress(addr)); err == nil && len(val) > 0 {
+			return utils.LowerIfHex(val), true
 		}
 		return utils.LowerIfHex(addr), false
 	}

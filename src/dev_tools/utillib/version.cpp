@@ -19,7 +19,7 @@ namespace qblocks {
 // search: change-version
 #define MAJOR 2
 #define MINOR 5
-#define BUILD 0
+#define BUILD 2
 // Run make generate in order for this to take effect
 
 #define SUBVERS "release"

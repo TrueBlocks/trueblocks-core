@@ -35,78 +35,76 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
 	}
-
-	results, err := query.QueryBatch[string](
-		conn.Chain,
-		[]query.BatchPayload{
-			{
-				Key: "name",
-				Payload: &query.Payload{
-					Method: "eth_call",
-					Params: query.Params{
-						map[string]any{
-							"to":   tokenAddress,
-							"data": tokenStateName,
-						},
-						hexBlockNo,
+	payloads := []query.BatchPayload{
+		{
+			Key: "name",
+			Payload: &query.Payload{
+				Method: "eth_call",
+				Params: query.Params{
+					map[string]any{
+						"to":   tokenAddress,
+						"data": tokenStateName,
 					},
-				},
-			},
-			{
-				Key: "symbol",
-				Payload: &query.Payload{
-					Method: "eth_call",
-					Params: query.Params{
-						map[string]any{
-							"to":   tokenAddress,
-							"data": tokenStateSymbol,
-						},
-						hexBlockNo,
-					},
-				},
-			},
-			{
-				Key: "decimals",
-				Payload: &query.Payload{
-					Method: "eth_call",
-					Params: query.Params{
-						map[string]any{
-							"to":   tokenAddress,
-							"data": tokenStateDecimals,
-						},
-						hexBlockNo,
-					},
-				},
-			},
-			{
-				Key: "totalSupply",
-				Payload: &query.Payload{
-					Method: "eth_call",
-					Params: query.Params{
-						map[string]any{
-							"to":   tokenAddress,
-							"data": tokenStateTotalSupply,
-						},
-						hexBlockNo,
-					},
-				},
-			},
-			// Supports interface: ERC 721
-			{
-				Key: "erc721",
-				Payload: &query.Payload{
-					Method: "eth_call",
-					Params: query.Params{
-						map[string]any{
-							"to":   tokenAddress,
-							"data": erc721SupportsInterfaceData,
-						},
-						hexBlockNo,
-					},
+					hexBlockNo,
 				},
 			},
 		},
-	)
+		{
+			Key: "symbol",
+			Payload: &query.Payload{
+				Method: "eth_call",
+				Params: query.Params{
+					map[string]any{
+						"to":   tokenAddress,
+						"data": tokenStateSymbol,
+					},
+					hexBlockNo,
+				},
+			},
+		},
+		{
+			Key: "decimals",
+			Payload: &query.Payload{
+				Method: "eth_call",
+				Params: query.Params{
+					map[string]any{
+						"to":   tokenAddress,
+						"data": tokenStateDecimals,
+					},
+					hexBlockNo,
+				},
+			},
+		},
+		{
+			Key: "totalSupply",
+			Payload: &query.Payload{
+				Method: "eth_call",
+				Params: query.Params{
+					map[string]any{
+						"to":   tokenAddress,
+						"data": tokenStateTotalSupply,
+					},
+					hexBlockNo,
+				},
+			},
+		},
+		// Supports interface: ERC 721
+		{
+			Key: "erc721",
+			Payload: &query.Payload{
+				Method: "eth_call",
+				Params: query.Params{
+					map[string]any{
+						"to":   tokenAddress,
+						"data": erc721SupportsInterfaceData,
+					},
+					hexBlockNo,
+				},
+			},
+		},
+	}
+
+	results, err := query.QueryBatch[string](conn.Chain, payloads)
 	if err != nil {
 		return
 	}
@@ -147,30 +145,28 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 	return
 }
 
-// GetTokenBalanceAt returns token balance for given block. `hexBlockNo` can be "latest" or "" for the latest block or
+// GetBalanceAtToken returns token balance for given block. `hexBlockNo` can be "latest" or "" for the latest block or
 // decimal number or hex number with 0x prefix.
-func (conn *Connection) GetTokenBalanceAt(token, holder base.Address, hexBlockNo string) (balance *big.Int, err error) {
+func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo string) (balance *big.Int, err error) {
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", utils.MustParseUint(hexBlockNo))
 	}
 
-	output, err := query.QueryBatch[string](
-		conn.Chain,
-		[]query.BatchPayload{{
-			Key: "balance",
-			Payload: &query.Payload{
-				Method: "eth_call",
-				Params: query.Params{
-					map[string]any{
-						"to":   token.Hex(),
-						"data": tokenStateBalanceOf + holder.Pad32(),
-					},
-					hexBlockNo,
+	payloads := []query.BatchPayload{{
+		Key: "balance",
+		Payload: &query.Payload{
+			Method: "eth_call",
+			Params: query.Params{
+				map[string]any{
+					"to":   token.Hex(),
+					"data": tokenStateBalanceOf + holder.Pad32(),
 				},
+				hexBlockNo,
 			},
-		}},
-	)
+		},
+	}}
 
+	output, err := query.QueryBatch[string](conn.Chain, payloads)
 	if err != nil {
 		return nil, err
 	}

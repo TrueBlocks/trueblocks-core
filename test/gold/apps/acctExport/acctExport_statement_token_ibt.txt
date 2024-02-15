@@ -5,6 +5,8 @@ TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] FirstBlock:  7005600
 TEST[DATE|TIME] LastBlock:  7005780
 TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  statement_token_ibt_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 { "data": [
 TEST[DATE|TIME] ===================================================
@@ -54,7 +56,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE ETH
@@ -90,11 +92,13 @@ TEST[DATE|TIME]    minerBaseRewardIn:   0
 TEST[DATE|TIME]    minerNephewRewardIn: 0
 TEST[DATE|TIME]    minerTxFeeIn:        0
 TEST[DATE|TIME]    minerUncleRewardIn:  0
+TEST[DATE|TIME]    correctingIn:        0
 TEST[DATE|TIME]    prefundIn:           0
 TEST[DATE|TIME]    selfDestructIn:      0
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    amountOut:           0
 TEST[DATE|TIME]    internalOut:         0
+TEST[DATE|TIME]    correctingOut:       0
 TEST[DATE|TIME]    selfDestructOut:     0
 TEST[DATE|TIME]    gasOut:              0
 TEST[DATE|TIME]    totalOut:            0
@@ -103,7 +107,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
@@ -152,7 +156,7 @@ TEST[DATE|TIME]    endBal:              67679392659000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE TOKEN
@@ -201,7 +205,7 @@ TEST[DATE|TIME]    endBal:              67679392659000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Call to a smart contract (0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f) at block 7005646 prior to its deployment 10000835
 TEST[DATE|TIME] doEthCall in CUniPrice::findPair returned false
@@ -294,7 +298,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE ETH
@@ -343,7 +347,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
@@ -392,7 +396,7 @@ TEST[DATE|TIME]    endBal:              69662377341000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE TOKEN
@@ -441,7 +445,7 @@ TEST[DATE|TIME]    endBal:              69662377341000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 , {
   "blockNumber": 7005654,
@@ -532,7 +536,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE ETH
@@ -581,7 +585,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
@@ -630,7 +634,7 @@ TEST[DATE|TIME]    endBal:              71040040864000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE TOKEN
@@ -679,7 +683,7 @@ TEST[DATE|TIME]    endBal:              71040040864000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 , {
   "blockNumber": 7005662,
@@ -770,7 +774,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE ETH
@@ -819,7 +823,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
@@ -868,7 +872,7 @@ TEST[DATE|TIME]    endBal:              75843546632000000000000
 TEST[DATE|TIME]    begBalDiff:          71040040864000000000000
 TEST[DATE|TIME]    endBalDiff:          -3016109787000000000000
 TEST[DATE|TIME]    endBalCalc:          72827436845000000000000
-TEST[DATE|TIME]    trialBalance:        false
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE TOKEN
@@ -917,7 +921,7 @@ TEST[DATE|TIME]    endBal:              72827436845000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 , {
   "blockNumber": 7005737,
@@ -1008,7 +1012,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE ETH
@@ -1057,7 +1061,7 @@ TEST[DATE|TIME]    endBal:              29270157687500000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> TOKENS
@@ -1106,7 +1110,7 @@ TEST[DATE|TIME]    endBal:              75843546632000000000000
 TEST[DATE|TIME]    begBalDiff:          71040040864000000000000
 TEST[DATE|TIME]    endBalDiff:          -1787395981000000000000
 TEST[DATE|TIME]    endBalCalc:          74056150651000000000000
-TEST[DATE|TIME]    trialBalance:        false
+TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] ====> BALANCE TOKEN
@@ -1155,7 +1159,7 @@ TEST[DATE|TIME]    endBal:              75843546632000000000000
 TEST[DATE|TIME]    begBalDiff:          0
 TEST[DATE|TIME]    endBalDiff:          0
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    trialBalance:        true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 , {
   "blockNumber": 7005737,

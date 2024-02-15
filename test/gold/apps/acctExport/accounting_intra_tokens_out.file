@@ -87,7 +87,7 @@
           "priceSource": "not-priced",
           "recipient": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
           "reconciled": false,
-          "reconciliationType": "trace-eth",
+          "reconciliationType": "noop-same-trace-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -131,7 +131,7 @@
           "priceSource": "uniswap",
           "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
           "reconciled": true,
-          "reconciliationType": "same-same-token",
+          "reconciliationType": "noop-same-token",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -148,6 +148,7 @@
       "to": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
       "traces": [],
       "transactionIndex": 302,
+      "type": "0x2",
       "value": "0"
     },
     {
@@ -237,7 +238,7 @@
           "priceSource": "not-priced",
           "recipient": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
           "reconciled": false,
-          "reconciliationType": "trace-eth",
+          "reconciliationType": "same-same-trace-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -298,6 +299,7 @@
       "to": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
       "traces": [],
       "transactionIndex": 303,
+      "type": "0x2",
       "value": "0"
     },
     {
@@ -387,7 +389,7 @@
           "priceSource": "not-priced",
           "recipient": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
           "reconciled": false,
-          "reconciliationType": "trace-eth",
+          "reconciliationType": "same-noop-trace-eth",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -431,7 +433,7 @@
           "priceSource": "uniswap",
           "recipient": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d",
           "reconciled": true,
-          "reconciliationType": "same-diff-token",
+          "reconciliationType": "same-noop-token",
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
@@ -448,6 +450,7 @@
       "to": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
       "traces": [],
       "transactionIndex": 304,
+      "type": "0x2",
       "value": "0"
     }
   ]

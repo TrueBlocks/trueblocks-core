@@ -58,6 +58,17 @@ func (s *SimpleLogFilter) Model(chain, format string, verbose bool, extraOptions
 }
 
 // EXISTING_CODE
+func NewLogFilter(emitters []string, topics []string) *SimpleLogFilter {
+	logFilter := &SimpleLogFilter{}
+	for _, e := range emitters {
+		logFilter.Emitters = append(logFilter.Emitters, base.HexToAddress(e))
+	}
+	for _, t := range topics {
+		logFilter.Topics = append(logFilter.Topics, base.HexToHash(t))
+	}
+	return logFilter
+}
+
 func (filter *SimpleLogFilter) PassesFilter(log *SimpleLog) bool {
 	foundEmitter := false
 	for _, e := range filter.Emitters {
@@ -77,9 +88,10 @@ func (filter *SimpleLogFilter) PassesFilter(log *SimpleLog) bool {
 	}
 
 	passesEmitter := len(filter.Emitters) == 0 || foundEmitter
-	passesTopic := len(filter.Topics) == 0 || topicsFound >= len(filter.Topics)
+	passesTopic := len(filter.Topics) == 0 || topicsFound > 0
 
 	return passesEmitter && passesTopic
 }
 
 // EXISTING_CODE
+

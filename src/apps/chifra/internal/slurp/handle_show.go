@@ -6,21 +6,26 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *SlurpOptions) HandleShow() error {
 	testMode := opts.Globals.TestMode
 	paginator := rpc.Paginator{
-		Page:    1,
+		Page:    opts.FirstPage(),
 		PerPage: int(opts.PerPage),
 	}
 	if opts.Globals.TestMode {
 		paginator.PerPage = 100
 	}
+
+	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawSlurp], errorChan chan error) {
@@ -28,15 +33,17 @@ func (opts *SlurpOptions) HandleShow() error {
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
-				paginator.Page = 1
+				paginator.Page = opts.FirstPage()
 				done := false
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
-					Enabled: !testMode,
-					Total:   250, // estimate since we have no idea how many there are
+					Enabled: !testMode && !utils.IsTerminal(),
+					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
 				})
+
 				for !done {
-					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(opts.Globals.Chain, addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
+					paginator.Page++ // order matters
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
@@ -45,21 +52,30 @@ func (opts *SlurpOptions) HandleShow() error {
 					}
 
 					for _, tx := range txs {
-						tx := tx
-						if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
+						if ok, err := opts.isInRange(tx.BlockNumber); !ok {
+							if err != nil {
+								errorChan <- err
+							}
 							continue
 						}
-						bar.Tick()
+						if opts.Articulate {
+							if err = abiCache.ArticulateSlurp(&tx); err != nil {
+								errorChan <- err // continue even with an error
+							}
+						}
 						modelChan <- &tx
+						bar.Tick()
 						totalFiltered++
 					}
 
-					// Without this Etherscan chokes
-					sleep := opts.Sleep
-					if sleep > 0 {
-						ms := time.Duration(sleep*1000) * time.Millisecond
-						logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
-						time.Sleep(ms)
+					if !done {
+						// Without this Etherscan chokes
+						sleep := opts.Sleep
+						if sleep > 0 {
+							ms := time.Duration(sleep*1000) * time.Millisecond
+							logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
+							time.Sleep(ms)
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)
@@ -72,33 +88,32 @@ func (opts *SlurpOptions) HandleShow() error {
 		}
 	}
 
-	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
+	}
+
+	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOptsWithExtra(extra))
 }
 
-func (opts *SlurpOptions) isInRange(bn uint, errorChan chan error) bool {
-	chain := opts.Globals.Chain
-
-	// Note that validation ensures that there is only a single range
+func (opts *SlurpOptions) isInRange(bn base.Blknum) (bool, error) {
 	if len(opts.BlockIds) == 0 {
-		return true
+		return true, nil
 	}
 
 	br := opts.BlockIds[0]
 	if strings.Contains(br.Orig, "-") && !strings.Contains(br.Orig, ":") {
-		// a plain block range
-		return br.Start.Number <= bn && bn <= br.End.Number
+		return br.Start.Number <= uint(bn) && uint(bn) <= br.End.Number, nil
 	}
 
-	blockNums, err := br.ResolveBlocks(chain)
-	if err != nil {
-		errorChan <- err
-		return false
-	}
-	for _, num := range blockNums {
-		if uint(num) == bn {
-			return true
+	chain := opts.Globals.Chain
+	if blockNums, err := br.ResolveBlocks(chain); err != nil {
+		return false, err
+	} else {
+		for _, num := range blockNums {
+			if num == bn {
+				return true, nil
+			}
 		}
+		return false, nil
 	}
-
-	return false
 }

@@ -4,7 +4,7 @@
  * This file was generated with makeClass --sdk. Do not edit it.
  */
 import * as ApiCallers from '../lib/api_callers';
-import { address, blknum, double, Slurp, uint64 } from '../types';
+import { address, blknum, double, Slurp } from '../types';
 
 export function getSlurp(
   parameters?: {
@@ -12,7 +12,9 @@ export function getSlurp(
     blocks?: blknum[],
     types?: string[],
     appearances?: boolean,
-    perPage?: uint64,
+    articulate?: boolean,
+    source?: 'etherscan*' | 'key',
+    count?: boolean,
     sleep?: double,
     chain: string,
     noHeader?: boolean,
@@ -28,3 +30,4 @@ export function getSlurp(
     { endpoint: '/slurp', method: 'get', parameters, options },
   );
 }
+

@@ -19,36 +19,38 @@ type Ledger struct {
 	LastBlock   base.Blknum
 	Names       map[base.Address]types.SimpleName
 	TestMode    bool
-	Contexts    map[string]LedgerContext
+	Contexts    map[ledgerContextKey]*ledgerContext
 	AsEther     bool
 	NoZero      bool
+	Reversed    bool
 	UseTraces   bool
-	AssetFilter []base.Address
-	Tx          *types.SimpleTransaction
 	Conn        *rpc.Connection
+	assetFilter []base.Address
+	theTx       *types.SimpleTransaction
 }
 
 // NewLedger returns a new empty Ledger struct
-func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces bool, assetFilters *[]string) *Ledger {
+func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, asEther, testMode, noZero, useTraces, reversed bool, assetFilters *[]string) *Ledger {
 	l := &Ledger{
 		Conn:       conn,
 		AccountFor: acctFor,
 		FirstBlock: fb,
 		LastBlock:  lb,
-		Contexts:   make(map[string]LedgerContext),
+		Contexts:   make(map[ledgerContextKey]*ledgerContext),
 		AsEther:    asEther,
 		TestMode:   testMode,
 		NoZero:     noZero,
+		Reversed:   reversed,
 		UseTraces:  useTraces,
 	}
 
 	if assetFilters != nil {
-		l.AssetFilter = make([]base.Address, len(*assetFilters))
+		l.assetFilter = make([]base.Address, len(*assetFilters))
 		for i, addr := range *assetFilters {
-			l.AssetFilter[i] = base.HexToAddress(addr)
+			l.assetFilter[i] = base.HexToAddress(addr)
 		}
 	} else {
-		l.AssetFilter = []base.Address{}
+		l.assetFilter = []base.Address{}
 	}
 
 	parts := names.Custom | names.Prefund | names.Regular
@@ -59,11 +61,11 @@ func NewLedger(conn *rpc.Connection, acctFor base.Address, fb, lb base.Blknum, a
 
 // assetOfInterest returns true if the asset filter is empty or the asset matches
 func (l *Ledger) assetOfInterest(needle base.Address) bool {
-	if len(l.AssetFilter) == 0 {
+	if len(l.assetFilter) == 0 {
 		return true
 	}
 
-	for _, asset := range l.AssetFilter {
+	for _, asset := range l.assetFilter {
 		if asset.Hex() == needle.Hex() {
 			return true
 		}

@@ -246,7 +246,6 @@ func GetMonitorMap(chain string) (map[base.Address]*Monitor, []*Monitor) {
 	monMap := make(map[base.Address]*Monitor)
 	monArray := []*Monitor{}
 	for mon := range monitorChan {
-		mon := mon
 		switch mon.Address {
 		case base.NotAMonitor:
 			close(monitorChan)

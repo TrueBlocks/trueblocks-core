@@ -32,12 +32,11 @@ func (opts *ExportOptions) HandleAppearances(monitorArray []monitor.Monitor) err
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
 		currentBn := uint32(0)
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
 				errorChan <- err
 				return
 			} else if !opts.NoZero || cnt > 0 {
 				for _, app := range apps {
-					app := app
 					if opts.Globals.Verbose {
 						if app.BlockNumber == 0 || app.BlockNumber != currentBn {
 							app.Timestamp, _ = tslib.FromBnToTs(chain, uint64(app.BlockNumber))

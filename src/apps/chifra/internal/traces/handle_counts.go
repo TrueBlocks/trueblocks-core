@@ -23,7 +23,13 @@ func (opts *TracesOptions) HandleCounts() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -38,7 +44,6 @@ func (opts *TracesOptions) HandleCounts() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleTransaction)
 				}
@@ -82,7 +87,6 @@ func (opts *TracesOptions) HandleCounts() error {
 				})
 
 				for _, item := range items {
-					item := item
 					counter := simpleTraceCount{
 						BlockNumber:      uint64(item.BlockNumber),
 						TransactionIndex: uint64(item.TransactionIndex),

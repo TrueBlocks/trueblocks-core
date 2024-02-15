@@ -35,7 +35,13 @@ func (opts *TracesOptions) HandleFilter() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTrace], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -50,7 +56,6 @@ func (opts *TracesOptions) HandleFilter() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleTransaction)
 				}
@@ -62,7 +67,6 @@ func (opts *TracesOptions) HandleFilter() error {
 
 					} else {
 						for _, tx := range block.Transactions {
-							tx := tx
 							if traces, err := opts.Conn.GetTracesByTransactionHash(tx.Hash.Hex(), &tx); err != nil {
 								delete(thisMap, app)
 								return fmt.Errorf("block at %s returned an error: %w", app.Orig(), err)
@@ -103,7 +107,6 @@ func (opts *TracesOptions) HandleFilter() error {
 
 				items := make([]types.SimpleTrace, 0, len(thisMap))
 				for _, tx := range thisMap {
-					tx := tx
 					items = append(items, tx.Traces...)
 				}
 				sort.Slice(items, func(i, j int) bool {
@@ -119,7 +122,6 @@ func (opts *TracesOptions) HandleFilter() error {
 				nPassed := uint64(0)
 				nShown := uint64(0)
 				for nTested, item := range items {
-					item := item
 					ok, _ := traceFilter.PassesBasic(&item, uint64(nTested), nPassed)
 					if ok {
 						if (traceFilter.After == 0 || nPassed >= traceFilter.After) && (traceFilter.Count == 0 || uint64(nShown) < traceFilter.Count) {

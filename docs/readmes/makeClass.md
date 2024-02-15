@@ -26,4 +26,3 @@ Global Flags:
   -h, --help           display this help screen
 
 **Source code**: [`dev_tools/makeClass`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/makeClass)
-

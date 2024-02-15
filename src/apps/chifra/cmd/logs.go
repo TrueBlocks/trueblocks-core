@@ -62,6 +62,8 @@ func init() {
 
 	logsCmd.Flags().SortFlags = false
 
+	logsCmd.Flags().StringSliceVarP(&logsPkg.GetOptions().Emitter, "emitter", "m", nil, "filter logs to show only those logs emitted by the given address(es)")
+	logsCmd.Flags().StringSliceVarP(&logsPkg.GetOptions().Topic, "topic", "B", nil, "filter logs to show only those with this topic(s)")
 	logsCmd.Flags().BoolVarP(&logsPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	globals.InitGlobals("logs", logsCmd, &logsPkg.GetOptions().Globals, capabilities)
 
@@ -73,3 +75,4 @@ func init() {
 
 	chifraCmd.AddCommand(logsCmd)
 }
+

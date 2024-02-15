@@ -79,3 +79,4 @@ func init() {
 
 	chifraCmd.AddCommand(initCmd)
 }
+

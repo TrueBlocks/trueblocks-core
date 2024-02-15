@@ -15,15 +15,15 @@ menu:
 weight: 1200
 toc: true
 ---
-<!-- markdownlint-disable MD033 MD036 MD041 -->
+
 The Chain Data group of tools extract raw blockchain data directly from the node. You may extract
 block data, transactional data, receipts, logs, traces, and other information. Each tool has it own
 set of options, allowing you to get exactly the data you need.
 
 To the right is a list of commands in this group. Click on a command to see its full documentation.
+
 ## chifra blocks
 
-<!-- markdownlint-disable MD041 -->
 The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the
 TrueBlocks cache. You may specify multiple blocks per invocation.
 
@@ -58,7 +58,7 @@ Flags:
   -i, --withdrawals       export the withdrawals from the block as opposed to the block data
   -a, --articulate        for the --logs option only, articulate the retrieved data if ABIs can be found
   -r, --big_range uint    for the --logs option only, allow for block ranges larger than 500 (default 500)
-  -U, --count             display the number of the lists of appearances for --addrs or --uniq
+  -U, --count             display only the count of appearances for --addrs or --uniq
   -H, --ether             specify value in ether
   -w, --raw               report JSON data from the source with minimal processing
   -o, --cache             force the results of the query into the cache
@@ -98,7 +98,6 @@ Links:
 
 ## chifra transactions
 
-<!-- markdownlint-disable MD041 -->
 The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw`
 option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
 per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
@@ -122,28 +121,26 @@ Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
-  -a, --articulate           articulate the retrieved data if ABIs can be found
-  -t, --traces               include the transaction's traces in the results
-  -u, --uniq                 display a list of uniq addresses found in the transaction
-  -f, --flow string          for the uniq option only, export only from or to (including trace from or to)
-                             One of [ from | to ]
-  -l, --logs                 display only the logs found in the transaction(s)
-  -m, --emitter strings      for the --logs option only, filter logs to show only those logs emitted by the given address(es)
-  -B, --topic strings        for the --logs option only, filter logs to show only those with this topic(s)
-  -A, --account_for string   reconcile the transaction as per the provided address
-  -H, --ether                specify value in ether
-  -w, --raw                  report JSON data from the source with minimal processing
-  -o, --cache                force the results of the query into the cache
-  -D, --decache              removes related items from the cache
-  -x, --fmt string           export format, one of [none|json*|txt|csv]
-  -v, --verbose              enable verbose output
-  -h, --help                 display this help screen
+  -a, --articulate        articulate the retrieved data if ABIs can be found
+  -t, --traces            include the transaction's traces in the results
+  -u, --uniq              display a list of uniq addresses found in the transaction
+  -f, --flow string       for the uniq option only, export only from or to (including trace from or to)
+                          One of [ from | to ]
+  -l, --logs              display only the logs found in the transaction(s)
+  -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
+  -H, --ether             specify value in ether
+  -w, --raw               report JSON data from the source with minimal processing
+  -o, --cache             force the results of the query into the cache
+  -D, --decache           removes related items from the cache
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
+  -v, --verbose           enable verbose output
+  -h, --help              display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-  - The --traces option, when used with --account_for, will descend into traces to complete reconciliations.
   - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 ```
 
@@ -159,7 +156,6 @@ Links:
 
 ## chifra receipts
 
-<!-- markdownlint-disable MD041 -->
 `chifra receipts` returns the given transaction's receipt. You may specify multiple transaction identifiers
 per invocation.
 
@@ -206,7 +202,6 @@ Links:
 
 ## chifra logs
 
-<!-- markdownlint-disable MD041 -->
 `chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers
 per invocation.
 
@@ -224,13 +219,15 @@ Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
-  -a, --articulate   articulate the retrieved data if ABIs can be found
-  -w, --raw          report JSON data from the source with minimal processing
-  -o, --cache        force the results of the query into the cache
-  -D, --decache      removes related items from the cache
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
-  -v, --verbose      enable verbose output
-  -h, --help         display this help screen
+  -m, --emitter strings   filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings     filter logs to show only those with this topic(s)
+  -a, --articulate        articulate the retrieved data if ABIs can be found
+  -w, --raw               report JSON data from the source with minimal processing
+  -o, --cache             force the results of the query into the cache
+  -D, --decache           removes related items from the cache
+  -x, --fmt string        export format, one of [none|json*|txt|csv]
+  -v, --verbose           enable verbose output
+  -h, --help              display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
@@ -251,7 +248,6 @@ Links:
 
 ## chifra traces
 
-<!-- markdownlint-disable MD041 -->
 The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
 identifiers per invocation.
 
@@ -274,7 +270,7 @@ Arguments:
 Flags:
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
-  -U, --count           show the number of traces for the transaction only (fast)
+  -U, --count           display only the number of traces for the transaction (fast)
   -H, --ether           specify value in ether
   -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache
@@ -305,7 +301,6 @@ Links:
 
 ## chifra when
 
-<!-- markdownlint-disable MD041 -->
 The `chifra when` tool answers one of two questions: (1) "At what date and time did a given block
 occur?" or (2) "What block occurred at or before a given date and time?"
 

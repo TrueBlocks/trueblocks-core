@@ -147,7 +147,8 @@ bool COptions::handle_datamodel(void) {
     }
 
     yamlStream << STR_YAML_TAIL;
-    writeIfDifferent(getDocsPathTemplates("api/components.txt"), substitute(yamlStream.str(), "&#44;", ","));
+    string_q doc = substitute(yamlStream.str(), "&#44;", ",");
+    writeIfDifferent(getDocsPathTemplates("api/components.txt"), doc);
 
     for (auto document : documentMap) {
         ostringstream tailStream;
@@ -178,9 +179,8 @@ bool COptions::handle_datamodel(void) {
 
         document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tailStream.str());
         string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
-        string_q doc = substitute(document.second, "\n\n\n", "\n\n");
         if (!contains(outFn, "/.md")) {
-            writeIfDifferent(outFn, doc);
+            writeIfDifferent(outFn, substitute(document.second, "\n\n\n", "\n\n"));
         }
     }
 

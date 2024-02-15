@@ -15,7 +15,7 @@ menu:
 weight: 1400
 toc: true
 ---
-<!-- markdownlint-disable MD033 MD036 MD041 -->
+
 The two tools in this group deal with the Chain State. As chain state data concerns balances and
 byte code. it is distinct from Chain Data, which concerns things like blocks, transactions, or
 traces.
@@ -29,9 +29,9 @@ To the right is a list of commands in this group. Click on a command to see its 
 Note: The amount of information you can retrieve depends on the type of node you run. Archive nodes
 and tracing allow you to query historical state (that is, all the way back to the genesis block).
 TrueBlocks works with non-archive nodes, but they are much less informative.
+
 ## chifra state
 
-<!-- markdownlint-disable MD041 -->
 The `chifra state` tool retrieves the balance of an address (or list of addresses) at the given block
 (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify
 at least one address. If no block is specified, the latest block is reported.
@@ -87,7 +87,6 @@ Links:
 
 ## chifra tokens
 
-<!-- markdownlint-disable MD041 -->
 Given the address of an ERC20 token contract, the `chifra tokens` tool reports token balances for one or
 more additional addresses. Alternatively, the tool can report the token balances for multiple ERC20
 tokens for a single addresses.

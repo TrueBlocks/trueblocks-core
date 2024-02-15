@@ -30,3 +30,4 @@ export function getState(
     { endpoint: '/state', method: 'get', parameters, options },
   );
 }
+

@@ -41,7 +41,6 @@ func UniqFromReceipts(chain string, receipts []types.SimpleReceipt, addrMap Addr
 // uniqFromLogs extracts addresses from the logs
 func uniqFromLogs(chain string, logs []types.SimpleLog, addrMap AddressBooleanMap) (err error) {
 	for _, log := range logs {
-		log := log
 		for _, topic := range log.Topics {
 			str := string(topic.Hex()[2:])
 			if IsImplicitAddress(str) {
@@ -68,7 +67,6 @@ func UniqFromTraces(chain string, traces []types.SimpleTrace, addrMap AddressBoo
 	conn := rpc.TempConnection(chain)
 
 	for _, trace := range traces {
-		trace := trace
 		bn := base.Blknum(trace.BlockNumber)
 		txid := uint64(trace.TransactionIndex)
 

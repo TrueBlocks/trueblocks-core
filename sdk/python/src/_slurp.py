@@ -9,7 +9,9 @@ slurpFmt = "json"
 slurpOpts = {
     "types": {"hotkey": "-t", "type": "flag"},
     "appearances": {"hotkey": "-p", "type": "switch"},
-    "perPage": {"hotkey": "-P", "type": "flag"},
+    "articulate": {"hotkey": "-a", "type": "switch"},
+    "source": {"hotkey": "-S", "type": "flag"},
+    "count": {"hotkey": "-U", "type": "switch"},
     "sleep": {"hotkey": "-s", "type": "flag"},
     "raw": {"hotkey": "-w", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},

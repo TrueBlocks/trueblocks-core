@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 ABI files are derived from the Solidity source code of a smart contract by extracting the canonical
 function and event signatures in a JSON structure. The function signatures are hashed (using
 keccak) into four-byte encodings for functions and 32-byte encodings for events. Because the

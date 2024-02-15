@@ -22,11 +22,11 @@ func (opts *ChunksOptions) HandleList(unused []uint64) error {
 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
-		var pageSize = 1000
+		var perPage = 1000
 		if testMode {
-			pageSize = -100
+			perPage = -100
 		}
-		if array, err := pinning.ListPins(opts.Globals.Chain, "pinned", opts.Count, pageSize, time.Millisecond*500); err != nil {
+		if array, err := pinning.ListPins(opts.Globals.Chain, "pinned", opts.Count, perPage, time.Millisecond*500); err != nil {
 			errorChan <- err
 		} else {
 			for _, line := range array {

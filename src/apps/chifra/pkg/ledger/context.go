@@ -1,74 +1,87 @@
 package ledger
 
 import (
-	"errors"
 	"fmt"
 	"sort"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/ethereum/go-ethereum"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// LedgerContext is a struct to hold the context of a reconciliation (i.e., its
+type ledgerContextKey string
+
+// ledgerContext is a struct to hold the context of a reconciliation (i.e., its
 // previous and next blocks and whether they are different)
-type LedgerContext struct {
-	PrevBlock  base.Blknum
-	CurBlock   base.Blknum
-	NextBlock  base.Blknum
-	IsPrevDiff bool
-	IsNextDiff bool
-	ReconType  string
+type ledgerContext struct {
+	PrevBlock base.Blknum
+	CurBlock  base.Blknum
+	NextBlock base.Blknum
+	ReconType types.ReconType
 }
 
-func (c *LedgerContext) Prev() base.Blknum {
+func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed bool) *ledgerContext {
+	if prev > cur || cur > next {
+		return &ledgerContext{
+			ReconType: types.Invalid,
+		}
+	}
+
+	reconType := types.Invalid
+	if cur == 0 {
+		reconType = types.Genesis
+	} else {
+		prevDiff := prev != cur
+		nextDiff := cur != next
+		if prevDiff && nextDiff {
+			reconType = types.DiffDiff
+		} else if !prevDiff && !nextDiff {
+			reconType = types.SameSame
+		} else if prevDiff {
+			reconType = types.DiffSame
+		} else if nextDiff {
+			reconType = types.SameDiff
+		} else {
+			reconType = types.Invalid
+			logger.Panic("should not happen")
+		}
+	}
+
+	if isFirst {
+		reconType |= types.First
+	}
+
+	if isLast {
+		reconType |= types.Last
+	}
+
+	return &ledgerContext{
+		PrevBlock: prev,
+		CurBlock:  cur,
+		NextBlock: next,
+		ReconType: reconType,
+		// Reversed:  reversed,
+	}
+}
+
+func (c *ledgerContext) Prev() base.Blknum {
 	return c.PrevBlock
 }
 
-func (c *LedgerContext) Cur() base.Blknum {
+func (c *ledgerContext) Cur() base.Blknum {
 	return c.CurBlock
 }
 
-func (c *LedgerContext) Next() base.Blknum {
+func (c *ledgerContext) Next() base.Blknum {
 	return c.NextBlock
 }
 
-func NewLedgerContext(prev, cur, next base.Blknum) *LedgerContext {
-	c := &LedgerContext{
-		PrevBlock:  prev,
-		CurBlock:   cur,
-		NextBlock:  next,
-		IsPrevDiff: prev != cur,
-		IsNextDiff: cur != next,
-	}
-	c.ReconType = c.getReconType()
-	return c
-}
-
-func (c *LedgerContext) getReconType() (reconType string) {
-	if c.CurBlock == 0 {
-		c.IsPrevDiff = true
-		return "genesis"
-	} else {
-		if c.IsPrevDiff && c.IsNextDiff {
-			return "diff-diff"
-		} else if !c.IsPrevDiff && !c.IsNextDiff {
-			return "same-same"
-		} else if c.IsPrevDiff {
-			return "diff-same"
-		} else if c.IsNextDiff {
-			return "same-diff"
-		} else {
-			return "should-not-happen"
-		}
-	}
-}
-
-func (l *Ledger) ctxKey(bn, txid uint64) string {
+func (l *Ledger) ctxKey(bn, txid uint64) ledgerContextKey {
+	// TODO: Is having the context per asset necessary?
 	// return fmt.Sprintf("%s-%09d-%05d", l.AccountFor.Hex(), bn, txid)
-	return fmt.Sprintf("%09d-%05d", bn, txid)
+	return ledgerContextKey(fmt.Sprintf("%09d-%05d", bn, txid))
 }
 
 const maxTestingBlock = 17000000
@@ -76,74 +89,55 @@ const maxTestingBlock = 17000000
 // SetContexts visits the list of appearances and notes the block numbers of the next and previous
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
-func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance, outerBounds base.BlockRange) error {
+func (l *Ledger) SetContexts(chain string, apps []types.SimpleAppearance) error {
 	for i := 0; i < len(apps); i++ {
 		cur := apps[i].BlockNumber
-		if cur > maxTestingBlock {
-			continue
-		}
-
-		prev := outerBounds.First
-		if i > 0 {
-			prev = uint64(apps[i-1].BlockNumber)
-		}
-
-		next := outerBounds.Last
-		if i < len(apps)-1 {
-			next = uint64(apps[i+1].BlockNumber)
-		}
-
-		if next < l.FirstBlock || prev > l.LastBlock {
-			continue
-		}
-
+		prev := uint64(apps[utils.Max(1, i)-1].BlockNumber)
+		next := uint64(apps[utils.Min(i+1, len(apps)-1)].BlockNumber)
 		key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-		l.Contexts[key] = *NewLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
+		l.Contexts[key] = newLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next), i == 0, i == (len(apps)-1), l.Reversed)
 	}
-
-	if l.TestMode {
-		keys := []string{}
-		for key := range l.Contexts {
-			keys = append(keys, key)
-		}
-		sort.Strings(keys)
-		for _, key := range keys {
-			c := l.Contexts[key]
-			if c.CurBlock > maxTestingBlock {
-				continue
-			}
-			msg := ""
-			if !c.IsPrevDiff || !c.IsNextDiff {
-				msg = fmt.Sprintf(" %12.12s %t %t", c.ReconType, c.IsPrevDiff, c.IsNextDiff)
-			}
-			logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
-		}
-	}
-
+	l.debugContext()
 	return nil
 }
 
-// SetContextsFromIds produces reconciliation contexts for a list of transaction id that
-// most probably won't reconicile since there will be missing gaps in the list. (For example,
-// from chifra transactions --account_for 10 100 1000.)
-func (l *Ledger) SetContextsFromIds(chain string, txIds []identifiers.Identifier) error {
-	for _, rng := range txIds {
-		apps, err := rng.ResolveTxs(chain)
-		if err != nil && !errors.Is(err, ethereum.NotFound) {
-			return err
-		}
-		for i := 0; i < len(apps); i++ {
-			cur := apps[i].BlockNumber
-			prev := uint32(0)
-			if apps[i].BlockNumber > 0 {
-				prev = apps[i].BlockNumber - 1
-			}
-
-			next := apps[i].BlockNumber + 1
-
-			key := l.ctxKey(uint64(apps[i].BlockNumber), uint64(apps[i].TransactionIndex))
-			l.Contexts[key] = *NewLedgerContext(base.Blknum(prev), base.Blknum(cur), base.Blknum(next))
-		}
+func (l *Ledger) debugContext() {
+	if !l.TestMode {
+		return
 	}
-	return nil
+
+	keys := make([]ledgerContextKey, 0, len(l.Contexts))
+	for key := range l.Contexts {
+		keys = append(keys, key)
+	}
+
+	sort.Slice(keys, func(i, j int) bool {
+		return string(keys[i]) < string(keys[j])
+	})
+
+	logger.Info(strings.Repeat("-", 60))
+	logger.Info(fmt.Sprintf("Contexts (%d)", len(keys)))
+	for _, key := range keys {
+		c := l.Contexts[key]
+		if c.CurBlock > maxTestingBlock {
+			continue
+		}
+		msg := ""
+		rr := c.ReconType &^ (types.First | types.Last)
+		switch rr {
+		case types.Genesis:
+			msg = fmt.Sprintf(" %s", c.ReconType.String()+"-diff")
+		case types.DiffDiff:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.SameSame:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.DiffSame:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		case types.SameDiff:
+			msg = fmt.Sprintf(" %s", c.ReconType.String())
+		default:
+			msg = fmt.Sprintf(" %s should not happen!", c.ReconType.String())
+		}
+		logger.Info(fmt.Sprintf("%s: % 10d % 10d % 11d%s", key, c.PrevBlock, c.CurBlock, c.NextBlock, msg))
+	}
 }

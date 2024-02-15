@@ -73,7 +73,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Publish, "publish", "p", false, "publish the manifest to the Unchained Index smart contract")
 	chunksCmd.Flags().StringVarP(&chunksPkg.GetOptions().Publisher, "publisher", "P", "", "for some query options, the publisher of the index (hidden)")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().Truncate, "truncate", "n", 0, "truncate the entire index at this block (requires a block identifier) (hidden)")
-	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "r", false, "prior to processing, retreive the manifest from the Unchained Index smart contract")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Remote, "remote", "r", false, "prior to processing, retrieve the manifest from the Unchained Index smart contract")
 	chunksCmd.Flags().StringSliceVarP(&chunksPkg.GetOptions().Belongs, "belongs", "b", nil, "in index mode only, checks the address(es) for inclusion in the given index chunk")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Diff, "diff", "f", false, "compare two index portions (see notes) (hidden)")
 	chunksCmd.Flags().Uint64VarP(&chunksPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
@@ -104,3 +104,4 @@ func init() {
 
 	chifraCmd.AddCommand(chunksCmd)
 }
+

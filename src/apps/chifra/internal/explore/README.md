@@ -1,6 +1,5 @@
 ## chifra explore
 
-<!-- markdownlint-disable MD041 -->
 `chifra explore` opens Etherscan (and other explorers -- including our own) to the block identifier,
 transaction identifier, or address you specify. It's a handy (configurable) way to open an explorer
 from the command line, nothing more.
@@ -25,7 +24,6 @@ Data models produced by this tool:
 
 - none
 
-<!-- markdownlint-disable MD041 -->
 ### Other Options
 
 All tools accept the following additional flags, although in some cases, they have no meaning.

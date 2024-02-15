@@ -25,3 +25,4 @@ export function getScrape(
     { endpoint: '/scrape', method: 'get', parameters, options },
   );
 }
+

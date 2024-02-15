@@ -33,3 +33,4 @@ export type Slurp = {
   withdrawalIndex: uint64
   validatorIndex: uint64
 }
+

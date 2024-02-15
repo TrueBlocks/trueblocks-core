@@ -11,6 +11,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -43,6 +44,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		key,
 	)
 
+	debug.DebugCurlStr(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
@@ -66,7 +68,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		// response so we don't keep asking Etherscan for the same address. The user may later
 		// remove empty ABIs with chifra abis --clean.
 		if !perfTiming {
-			logger.Warn("provider responded with:", address.Hex(), data["message"])
+			logger.Warn("provider responded with:", address.Hex(), data["message"], ss)
 		}
 
 		reader := strings.NewReader(AbiNotFound)
@@ -93,3 +95,5 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 
 	return nil
 }
+
+var ss = strings.Repeat(" ", 40)

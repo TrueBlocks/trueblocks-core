@@ -678,3 +678,4 @@ func (s *SimpleTransaction) GasCost() base.Gas {
 }
 
 // EXISTING_CODE
+

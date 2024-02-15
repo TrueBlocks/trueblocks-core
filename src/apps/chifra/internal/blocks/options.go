@@ -35,7 +35,7 @@ type BlocksOptions struct {
 	Withdrawals bool                     `json:"withdrawals,omitempty"` // Export the withdrawals from the block as opposed to the block data
 	Articulate  bool                     `json:"articulate,omitempty"`  // For the --logs option only, articulate the retrieved data if ABIs can be found
 	BigRange    uint64                   `json:"bigRange,omitempty"`    // For the --logs option only, allow for block ranges larger than 500
-	Count       bool                     `json:"count,omitempty"`       // Display the number of the lists of appearances for --addrs or --uniq
+	Count       bool                     `json:"count,omitempty"`       // Display only the count of appearances for --addrs or --uniq
 	CacheTxs    bool                     `json:"cacheTxs,omitempty"`    // Force a write of the block's transactions to the cache (slow)
 	CacheTraces bool                     `json:"cacheTraces,omitempty"` // Force a write of the block's traces to the cache (slower)
 	List        uint64                   `json:"list,omitempty"`        // Summary list of blocks running backwards from latest block minus num
@@ -208,7 +208,7 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 		"blocks":       !opts.Uncles,
 		"receipts":     !opts.Uncles,
 		"transactions": opts.CacheTxs || opts.Uniq,
-		"traces":       opts.CacheTraces || opts.Uniq,
+		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
 		"logs":         opts.Logs,
 	}
 	// EXISTING_CODE
@@ -217,3 +217,4 @@ func (opts *BlocksOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

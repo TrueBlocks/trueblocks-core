@@ -11,9 +11,7 @@ func System(cmd string) int {
 	c.Stdin = os.Stdin
 	c.Stdout = os.Stdout
 	c.Stderr = os.Stderr
-	err := c.Run()
-
-	if err == nil {
+	if err := c.Run(); err == nil {
 		return 0
 	}
 

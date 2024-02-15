@@ -24,7 +24,13 @@ func (opts *BlocksOptions) HandleUniq() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawAppearance], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleAppearance](chain, opts.BlockIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleAppearance](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -39,7 +45,6 @@ func (opts *BlocksOptions) HandleUniq() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleAppearance)
 				}
@@ -72,10 +77,7 @@ func (opts *BlocksOptions) HandleUniq() error {
 				}
 
 				items := make([]types.SimpleAppearance, 0, len(thisMap))
-				for _, app := range apps {
-					app := app
-					items = append(items, app)
-				}
+				items = append(items, apps...)
 
 				sort.Slice(items, func(i, j int) bool {
 					if items[i].BlockNumber == items[j].BlockNumber {
@@ -87,9 +89,8 @@ func (opts *BlocksOptions) HandleUniq() error {
 					return items[i].BlockNumber < items[j].BlockNumber
 				})
 
-				for _, s := range items {
-					s := s
-					modelChan <- &s
+				for _, item := range items {
+					modelChan <- &item
 				}
 			}
 			bar.Finish(true /* newLine */)

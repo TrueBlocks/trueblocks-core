@@ -10,12 +10,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *SlurpOptions) HandleAppearances() error {
 	testMode := opts.Globals.TestMode
 	paginator := rpc.Paginator{
-		Page:    1,
+		Page:    opts.FirstPage(),
 		PerPage: int(opts.PerPage),
 	}
 	if opts.Globals.TestMode {
@@ -28,17 +29,18 @@ func (opts *SlurpOptions) HandleAppearances() error {
 		totalFiltered := 0
 		for _, addr := range opts.Addrs {
 			for _, tt := range opts.Types {
-				paginator.Page = 1
+				paginator.Page = opts.FirstPage()
 				done := false
 
 				bar := logger.NewBar(logger.BarOptions{
 					Type:    logger.Expanding,
-					Enabled: !testMode,
-					Total:   250, // estimate since we have no idea how many there are
+					Enabled: !testMode && !utils.IsTerminal(),
+					Prefix:  fmt.Sprintf("%s %s", utils.FormattedHash(false, addr), tt),
 				})
 
 				for !done {
-					txs, nFetched, err := opts.Conn.GetESTransactionByAddress(opts.Globals.Chain, addr, tt, &paginator)
+					txs, nFetched, err := opts.Conn.SlurpTxsByAddress(opts.Globals.Chain, opts.Source, addr, tt, &paginator)
+					paginator.Page++ // order matters
 					done = nFetched < paginator.PerPage
 					totalFetched += nFetched
 					if err != nil {
@@ -47,8 +49,11 @@ func (opts *SlurpOptions) HandleAppearances() error {
 					}
 
 					for _, tx := range txs {
-						tx := tx
-						if !opts.isInRange(uint(tx.BlockNumber), errorChan) {
+						if ok, err := opts.isInRange(tx.BlockNumber); !ok {
+							if err != nil {
+								errorChan <- err
+							}
+
 							continue
 						}
 						bar.Tick()
@@ -62,11 +67,13 @@ func (opts *SlurpOptions) HandleAppearances() error {
 					}
 
 					// Without this Etherscan chokes
-					sleep := opts.Sleep
-					if sleep > 0 {
-						ms := time.Duration(sleep*1000) * time.Millisecond
-						logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
-						time.Sleep(ms)
+					if !done {
+						sleep := opts.Sleep
+						if sleep > 0 {
+							ms := time.Duration(sleep*1000) * time.Millisecond
+							logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
+							time.Sleep(ms)
+						}
 					}
 				}
 				bar.Finish(true /* newLine */)
@@ -80,4 +87,15 @@ func (opts *SlurpOptions) HandleAppearances() error {
 	}
 
 	return output.StreamMany(ctx, fetchData, opts.Globals.OutputOpts())
+}
+
+func (opts *SlurpOptions) FirstPage() int {
+	switch opts.Source {
+	case "etherscan":
+		fallthrough
+	case "key":
+		fallthrough
+	default:
+		return 1
+	}
 }

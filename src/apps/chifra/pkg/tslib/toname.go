@@ -20,7 +20,6 @@ func FromBnToName(chain string, bn uint64) (string, error) {
 func FromBnToNamedBlock(chain string, bn uint64) (*types.SimpleNamedBlock, error) {
 	specials, _ := GetSpecials(chain)
 	for _, value := range specials {
-		value := value
 		if value.BlockNumber == bn {
 			return &value, nil
 		}

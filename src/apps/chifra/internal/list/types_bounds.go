@@ -20,13 +20,11 @@ import (
 // EXISTING_CODE
 
 type simpleBounds struct {
-	Count      uint64              `json:"count"`
-	FirstApp   types.RawAppearance `json:"firstApp"`
-	FirstDate  string              `json:"firstDate"`
-	FirstTs    base.Timestamp      `json:"firstTs"`
-	LatestApp  types.RawAppearance `json:"latestApp"`
-	LatestDate string              `json:"latestDate"`
-	LatestTs   base.Timestamp      `json:"latestTs"`
+	Count     uint64              `json:"count"`
+	FirstApp  types.RawAppearance `json:"firstApp"`
+	FirstTs   base.Timestamp      `json:"firstTs"`
+	LatestApp types.RawAppearance `json:"latestApp"`
+	LatestTs  base.Timestamp      `json:"latestTs"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -74,3 +72,4 @@ func (s *simpleBounds) Model(chain, format string, verbose bool, extraOptions ma
 
 // EXISTING_CODE
 // EXISTING_CODE
+

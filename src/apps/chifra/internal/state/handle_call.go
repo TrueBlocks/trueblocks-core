@@ -35,7 +35,13 @@ func (opts *StateOptions) HandleCall() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawResult], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleResult](chain, opts.BlockIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.BlockIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleResult](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -50,7 +56,6 @@ func (opts *StateOptions) HandleCall() error {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleResult)
 				}
@@ -88,7 +93,6 @@ func (opts *StateOptions) HandleCall() error {
 
 				items := make([]types.SimpleResult, 0, len(thisMap))
 				for _, v := range thisMap {
-					v := v
 					items = append(items, *v)
 				}
 
@@ -97,7 +101,6 @@ func (opts *StateOptions) HandleCall() error {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- &item
 				}
 			}

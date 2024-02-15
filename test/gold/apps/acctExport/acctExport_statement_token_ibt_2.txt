@@ -6,6 +6,8 @@ TEST[DATE|TIME] MaxRecords:  4000
 TEST[DATE|TIME] FirstBlock:  12704456
 TEST[DATE|TIME] LastBlock:  12705893
 TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  statement_token_ibt_2_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 { "data": [
 TEST[DATE|TIME] ===================================================

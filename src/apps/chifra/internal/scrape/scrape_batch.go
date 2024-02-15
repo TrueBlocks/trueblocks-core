@@ -23,7 +23,7 @@ func (bm *BlazeManager) ScrapeBatch(blocks []base.Blknum) (error, bool) {
 			logger.Error(fmt.Sprintf("error at block %d: %v", err.block, err.err))
 		}
 		_ = cleanEphemeralIndexFolders(chain)
-		return errors.New("encountered errors while scraping"), false
+		return errors.New("encountered errors while scraping"), true
 	}
 
 	// Check to see if we missed any blocks...

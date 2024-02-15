@@ -2,9 +2,9 @@ package transactionsPkg
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
-func (opts *TransactionsOptions) HandleSource() (err error) {
+func (opts *TransactionsOptions) HandleSeed() (err error) {
 	// logger.Warn("Sourcing of funds is currently not implemented. Please come back soon.")
-	return validate.Usage("The --source flag is currently disabled.")
+	return validate.Usage("The --seed flag is currently disabled.")
 }
 
 /*

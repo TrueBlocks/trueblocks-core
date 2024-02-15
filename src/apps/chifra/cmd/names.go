@@ -91,3 +91,4 @@ func init() {
 
 	chifraCmd.AddCommand(namesCmd)
 }
+

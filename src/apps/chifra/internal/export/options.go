@@ -36,13 +36,13 @@ type ExportOptions struct {
 	Withdrawals bool                  `json:"withdrawals,omitempty"` // Export withdrawals for the given address
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
 	CacheTraces bool                  `json:"cacheTraces,omitempty"` // Force the transaction's traces into the cache
-	Count       bool                  `json:"count,omitempty"`       // Only available for --appearances mode, if present, return only the number of records
+	Count       bool                  `json:"count,omitempty"`       // For --appearances mode only, display only the count of records
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Relevant    bool                  `json:"relevant,omitempty"`    // For log and accounting export only, export only logs relevant to one of the given export addresses
-	Emitter     []string              `json:"emitter,omitempty"`     // For log export only, export only logs if emitted by one of these address(es)
+	Emitter     []string              `json:"emitter,omitempty"`     // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
+	Topic       []string              `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
 	Reverted    bool                  `json:"reverted,omitempty"`    // Export only transactions that were reverted
-	Topic       []string              `json:"topic,omitempty"`       // For log export only, export only logs with this topic(s)
 	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export statements only for this asset
 	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export statements with incoming, outgoing, or zero value
 	Factory     bool                  `json:"factory,omitempty"`     // For --traces only, report addresses created by (or self-destructed by) the given address(es)
@@ -85,8 +85,8 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
-	logger.TestLog(opts.Reverted, "Reverted: ", opts.Reverted)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
+	logger.TestLog(opts.Reverted, "Reverted: ", opts.Reverted)
 	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
 	logger.TestLog(len(opts.Flow) > 0, "Flow: ", opts.Flow)
 	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
@@ -166,13 +166,13 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Emitter = append(opts.Emitter, s...)
 			}
-		case "reverted":
-			opts.Reverted = true
 		case "topic":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Topic = append(opts.Topic, s...)
 			}
+		case "reverted":
+			opts.Reverted = true
 		case "asset":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
@@ -203,6 +203,20 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
 
 	// EXISTING_CODE
+	if len(opts.Addrs) > 0 {
+		addrs := []string{}
+		for _, addr := range opts.Addrs {
+			if validate.IsValidTopic(addr) {
+				opts.Topic = append(opts.Topic, addr)
+				opts.Topics = append(opts.Topics, addr)
+			} else if validate.IsValidFourByte(addr) {
+				opts.Fourbytes = append(opts.Fourbytes, addr)
+			} else {
+				addrs = append(addrs, addr)
+			}
+		}
+		opts.Addrs = addrs
+	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
 	opts.Emitter, _ = opts.Conn.GetEnsAddresses(opts.Emitter)
@@ -233,6 +247,7 @@ func exportFinishParse(args []string) *ExportOptions {
 	// EXISTING_CODE
 	for _, arg := range args {
 		if validate.IsValidTopic(arg) {
+			opts.Topic = append(opts.Topic, arg)
 			opts.Topics = append(opts.Topics, arg)
 		} else if validate.IsValidFourByte(arg) {
 			opts.Fourbytes = append(opts.Fourbytes, arg)
@@ -278,7 +293,7 @@ func (opts *ExportOptions) getCaches() (m map[string]bool) {
 		// TODO: Enabled neighbors cache
 		"transactions": true,
 		"statements":   opts.Accounting,
-		"traces":       opts.CacheTraces || (opts.Globals.Cache && opts.Traces),
+		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Neighbors)),
 	}
 	// EXISTING_CODE
 	return
@@ -286,3 +301,4 @@ func (opts *ExportOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

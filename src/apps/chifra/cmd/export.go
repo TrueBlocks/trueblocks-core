@@ -82,13 +82,13 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Withdrawals, "withdrawals", "i", false, "export withdrawals for the given address")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().CacheTraces, "cache_traces", "R", false, "force the transaction's traces into the cache")
-	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Count, "count", "U", false, "for --appearances mode only, display only the count of records")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstRecord, "first_record", "c", 0, "the first record to process")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().MaxRecords, "max_records", "e", 250, "the maximum number of records to process")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Relevant, "relevant", "N", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
-	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "m", nil, "for log export only, export only logs if emitted by one of these address(es)")
+	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)")
+	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "B", nil, "for the --logs option only, filter logs to show only those with this topic(s)")
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Reverted, "reverted", "V", false, "export only transactions that were reverted")
-	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Topic, "topic", "B", nil, "for log export only, export only logs with this topic(s)")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.GetOptions().Asset, "asset", "P", nil, "for the accounting options only, export statements only for this asset")
 	exportCmd.Flags().StringVarP(&exportPkg.GetOptions().Flow, "flow", "f", "", `for the accounting options only, export statements with incoming, outgoing, or zero value
 One of [ in | out | zero ]`)
@@ -116,3 +116,4 @@ One of [ in | out | zero ]`)
 
 	chifraCmd.AddCommand(exportCmd)
 }
+

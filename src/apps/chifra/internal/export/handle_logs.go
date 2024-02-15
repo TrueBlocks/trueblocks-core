@@ -36,105 +36,118 @@ func (opts *ExportOptions) HandleLogs(monitorArray []monitor.Monitor) error {
 	for _, mon := range monitorArray {
 		addrArray = append(addrArray, mon.Address)
 	}
+	logFilter := types.NewLogFilter(opts.Emitter, opts.Topic)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawLog], errorChan chan error) {
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleTransaction](&mon, filter); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
 				cancel()
 
 			} else if cnt == 0 {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				errorChan <- fmt.Errorf("no blocks found for the query")
 				continue
 
 			} else {
-				bar := logger.NewBar(logger.BarOptions{
-					Prefix:  mon.Address.Hex(),
-					Enabled: !testMode && !utils.IsTerminal(),
-					Total:   int64(cnt),
-				})
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, filter.Reversed); err != nil {
+					errorChan <- err
+					cancel()
 
-				for _, thisMap := range sliceOfMaps {
-					thisMap := thisMap
-					for app := range thisMap {
-						thisMap[app] = new(types.SimpleTransaction)
-					}
-
-					iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
-						if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
-							return err
-						} else {
-							passes, _ := filter.ApplyTxFilters(tx)
-							if passes {
-								*value = *tx
-							}
-							if bar != nil {
-								bar.Tick()
-							}
-							return nil
-						}
-					}
-
-					// Set up and interate over the map calling iterFunc for each appearance
-					iterCtx, iterCancel := context.WithCancel(context.Background())
-					defer iterCancel()
-					errChan := make(chan error)
-					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
-					if stepErr := <-errChan; stepErr != nil {
-						errorChan <- stepErr
-						iterCancel()
-						return
-					}
-
-					// Sort the items back into an ordered array by block number
-					items := make([]*types.SimpleLog, 0, len(thisMap))
-					for _, tx := range thisMap {
-						if tx.Receipt == nil {
-							continue
-						}
-						for _, log := range tx.Receipt.Logs {
-							log := log
-							if filter.ApplyLogFilter(&log, addrArray) && opts.matchesFilter(&log) {
-								if opts.Articulate {
-									if err := abiCache.ArticulateLog(&log); err != nil {
-										errorChan <- fmt.Errorf("error articulating log: %v", err)
-									}
-								}
-								items = append(items, &log)
-							}
-						}
-					}
-
-					sort.Slice(items, func(i, j int) bool {
-						if opts.Reversed {
-							i, j = j, i
-						}
-						itemI := items[i]
-						itemJ := items[j]
-						if itemI.BlockNumber == itemJ.BlockNumber {
-							if itemI.TransactionIndex == itemJ.TransactionIndex {
-								return itemI.LogIndex < itemJ.LogIndex
-							}
-							return itemI.TransactionIndex < itemJ.TransactionIndex
-						}
-						return itemI.BlockNumber < itemJ.BlockNumber
+				} else {
+					bar := logger.NewBar(logger.BarOptions{
+						Prefix:  mon.Address.Hex(),
+						Enabled: !testMode && !utils.IsTerminal(),
+						Total:   int64(cnt),
 					})
 
-					for _, item := range items {
-						item := item
-						modelChan <- item
+					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+					finished := false
+					for _, thisMap := range sliceOfMaps {
+						if finished {
+							continue
+						}
+
+						for app := range thisMap {
+							thisMap[app] = new(types.SimpleTransaction)
+						}
+
+						iterFunc := func(app types.SimpleAppearance, value *types.SimpleTransaction) error {
+							if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
+								return err
+							} else {
+								passes, _ := filter.ApplyTxFilters(tx)
+								if passes {
+									*value = *tx
+								}
+								if bar != nil {
+									bar.Tick()
+								}
+								return nil
+							}
+						}
+
+						// Set up and interate over the map calling iterFunc for each appearance
+						iterCtx, iterCancel := context.WithCancel(context.Background())
+						defer iterCancel()
+						errChan := make(chan error)
+						go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
+						if stepErr := <-errChan; stepErr != nil {
+							errorChan <- stepErr
+							return
+						}
+
+						items := make([]*types.SimpleLog, 0, len(thisMap))
+						for _, tx := range thisMap {
+							if tx.Receipt == nil {
+								continue
+							}
+							for _, log := range tx.Receipt.Logs {
+								if filter.ApplyLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
+									if opts.Articulate {
+										if err = abiCache.ArticulateLog(&log); err != nil {
+											errorChan <- fmt.Errorf("error articulating log: %v", err)
+										}
+									}
+									items = append(items, &log)
+								}
+							}
+						}
+
+						sort.Slice(items, func(i, j int) bool {
+							if opts.Reversed {
+								i, j = j, i
+							}
+							if items[i].BlockNumber == items[j].BlockNumber {
+								if items[i].TransactionIndex == items[j].TransactionIndex {
+									return items[i].LogIndex < items[j].LogIndex
+								}
+								return items[i].TransactionIndex < items[j].TransactionIndex
+							}
+							return items[i].BlockNumber < items[j].BlockNumber
+						})
+
+						for _, item := range items {
+							var passes bool
+							passes, finished = filter.ApplyCountFilter()
+							if passes {
+								modelChan <- item
+							}
+							if finished {
+								break
+							}
+						}
 					}
+					bar.Finish(true /* newLine */)
 				}
-				bar.Finish(true /* newLine */)
 			}
 		}
 	}
 
 	extra := map[string]interface{}{
+		"articulate": opts.Articulate,
 		"testMode":   testMode,
 		"export":     true,
-		"articulate": opts.Articulate,
 	}
 
 	if opts.Globals.Verbose || opts.Globals.Format == "json" {

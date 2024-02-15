@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 TrueBlocks allows you to associate a human-readable name with an address. This feature goes a long
 way towards making the blockchain data one extracts with a [Monitor](/data-model/accounts/#monitor)
 much more readable.

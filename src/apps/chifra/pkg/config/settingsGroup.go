@@ -5,11 +5,11 @@
 package config
 
 type settingsGroup struct {
-	CachePath      string `toml:"cachePath"`
-	IndexPath      string `toml:"indexPath"`
-	DefaultChain   string `toml:"defaultChain"`
-	DefaultGateway string `toml:"defaultGateway,omitempty"`
-	NotifyUrl      string `toml:"notifyUrl" json:"notifyUrl,omitempty"`
+	CachePath      string      `toml:"cachePath"`
+	IndexPath      string      `toml:"indexPath"`
+	DefaultChain   string      `toml:"defaultChain"`
+	DefaultGateway string      `toml:"defaultGateway,omitempty"`
+	Notify         notifyGroup `toml:"notify"`
 }
 
 func GetSettings() settingsGroup {

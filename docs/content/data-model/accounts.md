@@ -14,7 +14,7 @@ weight: 1000
 toc: true
 ---
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
+<!-- markdownlint-disable MD012 MD034 -->
 The primary tool of TrueBlocks is `chifra export`. This tool extracts, directly from the chain,
 entire transactional histories for one or more addresses and presents that information for use
 outside the blockchain. The results of this extraction is stored in a data structure called a
@@ -31,7 +31,6 @@ Each data structure is created by one or more tools which are detailed below.
 
 ## Appearance
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 An appearance is a pointer (`blknum, tx_id` pair) into the blockchain indicating where a
 particular address appears. This includes obvious locations such as `to` or `from` as well
 as esoteric locations such as deep inside a tenth-level trace or as the miner of an uncle block.
@@ -58,11 +57,10 @@ Appearances consist of the following fields:
 | reason           | the location in the data where the appearance was found | string    |
 | name             | the name of the address, if found                       | string    |
 | timestamp        | the timestamp for this appearance                       | timestamp |
-| date             | a calculated field -- the date for this appearance      | datetime  |
+| date             | the timestamp as a date (calculated)                    | datetime  |
 
 ## Monitor
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given
 address along with various details about those appearances. A monitor is created when a user
 expresses interest in an address by calling either [chifra list](/chifra/accounts/#chifra-list)
@@ -99,7 +97,6 @@ Monitors consist of the following fields:
 
 ## Name
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 TrueBlocks allows you to associate a human-readable name with an address. This feature goes a long
 way towards making the blockchain data one extracts with a [Monitor](/data-model/accounts/#monitor)
 much more readable.
@@ -139,7 +136,6 @@ Names consist of the following fields:
 
 ## AppearanceCount
 
-<!-- markdownlint-disable MD033 MD036 MD041 MD047 -->
 The `appearanceCount` data model is used mostly by the frontend explorer application. It carries
 various information about the monitor data for an address.
 
@@ -158,7 +154,6 @@ AppearanceCounts consist of the following fields:
 
 ## Bounds
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 The Bounds data model displays information about a given address including how many times it's appeared on the chain and when the first and most recent blocks, timestamps, and dates are.
 
 The following commands produce and manage Bounds:
@@ -172,14 +167,13 @@ Bounds consist of the following fields:
 | count      | the number of appearances for this address                                   | uint64        |
 | firstApp   | the block number and transaction id of the first appearance of this address  | RawAppearance |
 | firstTs    | the timestamp of the first appearance of this address                        | timestamp     |
-| firstDate  | a calculated field -- the date of the first appearance                       | datetime      |
+| firstDate  | the first appearance timestamp as a date (calculated)                        | datetime      |
 | latestApp  | the block number and transaction id of the latest appearance of this address | RawAppearance |
 | latestTs   | the timestamp of the latest appearance of this address                       | timestamp     |
-| latestDate | a calculated field -- the date of the latest appearance                      | datetime      |
+| latestDate | the latest appearance timestamp as a date (calculated)                       | datetime      |
 
 ## Statement
 
-<!-- markdownlint-disable MD033 MD036 MD041 -->
 When exported with the `--accounting` option from `chifra export`, each transaction will have field
 called `statements`. Statements are an array for reconciliations. All such exported transactions
 will have at least one reconciliation (for ETH), however, many will have additional reconciliations
@@ -202,50 +196,49 @@ The following commands produce and manage Statements:
 
 Statements consist of the following fields:
 
-| Field               | Description                                                                                                                                    | Type      |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| blockNumber         | the number of the block                                                                                                                        | blknum    |
-| transactionIndex    | the zero-indexed position of the transaction in the block                                                                                      | blknum    |
-| logIndex            | the zero-indexed position the log in the block, if applicable                                                                                  | blknum    |
-| transactionHash     | the hash of the transaction that triggered this reconciliation                                                                                 | hash      |
-| timestamp           | the Unix timestamp of the object                                                                                                               | timestamp |
-| date                | a calculated field -- the date of this transaction                                                                                             | datetime  |
-| assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                             | address   |
-| assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                                       | string    |
-| decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                                      | uint64    |
-| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                                       | double    |
-| priceSource         | the on-chain source from which the spot price was taken                                                                                        | string    |
-| accountedFor        | the address being accounted for in this reconciliation                                                                                         | address   |
-| sender              | the initiator of the transfer (the sender)                                                                                                     | address   |
-| recipient           | the receiver of the transfer (the recipient)                                                                                                   | address   |
-| begBal              | the beginning balance of the asset prior to the transaction                                                                                    | int256    |
-| amountNet           | a calculated field -- totalIn - totalOut                                                                                                       | int256    |
-| endBal              | the on-chain balance of the asset (see notes about intra-block reconciliations)                                                                | int256    |
-| reconciliationType  | one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`                                             | string    |
-| reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise.                                             | bool      |
-| totalIn             | a calculated field -- the sum of the following `In` fields                                                                                     | int256    |
-| amountIn            | the top-level value of the incoming transfer for the accountedFor address                                                                      | int256    |
-| internalIn          | the internal value of the incoming transfer for the accountedFor address                                                                       | int256    |
-| selfDestructIn      | the incoming value of a self-destruct if recipient is the accountedFor address                                                                 | int256    |
-| minerBaseRewardIn   | the base fee reward if the miner is the accountedFor address                                                                                   | int256    |
-| minerNephewRewardIn | the nephew reward if the miner is the accountedFor address                                                                                     | int256    |
-| minerTxFeeIn        | the transaction fee reward if the miner is the accountedFor address                                                                            | int256    |
-| minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the accountedFor address                                                              | int256    |
-| correctingIn        | for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances                                       | int256    |
-| prefundIn           | at block zero (0) only, the amount of genesis income for the accountedFor address                                                              | int256    |
-| totalOut            | a calculated field -- the sum of the following `Out` fields                                                                                    | int256    |
-| amountOut           | the amount (in units of the asset) of regular outflow during this transaction                                                                  | int256    |
-| internalOut         | the value of any internal value transfers out of the accountedFor account                                                                      | int256    |
-| correctingOut       | for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances                                       | int256    |
-| selfDestructOut     | the value of the self-destructed value out if the accountedFor address was self-destructed                                                     | int256    |
-| gasOut              | if the transaction's original sender is the accountedFor address, the amount of gas expended                                                   | int256    |
-| totalOutLessGas     | a calculated field -- totalOut - gasOut                                                                                                        | int256    |
-| prevAppBlk          | the block number of the previous appearance, or 0 if this is the first appearance                                                              | blknum    |
-| prevBal             | the account balance for the given asset for the previous reconciliation                                                                        | int256    |
-| begBalDiff          | a calculated field -- difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed | int256    |
-| endBalDiff          | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed                                                              | int256    |
-| endBalCalc          | a calculated field -- begBal + amountNet                                                                                                       | int256    |
-| correctingReason    | the reason for the correcting entries, if any                                                                                                  | string    |
+| Field               | Description                                                                                                                           | Type      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| blockNumber         | the number of the block                                                                                                               | blknum    |
+| transactionIndex    | the zero-indexed position of the transaction in the block                                                                             | blknum    |
+| logIndex            | the zero-indexed position the log in the block, if applicable                                                                         | blknum    |
+| transactionHash     | the hash of the transaction that triggered this reconciliation                                                                        | hash      |
+| timestamp           | the Unix timestamp of the object                                                                                                      | timestamp |
+| date                | the timestamp as a date (calculated)                                                                                                  | datetime  |
+| assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address   |
+| assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                              | string    |
+| decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | uint64    |
+| spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | double    |
+| priceSource         | the on-chain source from which the spot price was taken                                                                               | string    |
+| accountedFor        | the address being accounted for in this reconciliation                                                                                | address   |
+| sender              | the initiator of the transfer (the sender)                                                                                            | address   |
+| recipient           | the receiver of the transfer (the recipient)                                                                                          | address   |
+| begBal              | the beginning balance of the asset prior to the transaction                                                                           | int256    |
+| amountNet           | totalIn - totalOut (calculated)                                                                                                       | int256    |
+| endBal              | the on-chain balance of the asset (see notes about intra-block reconciliations)                                                       | int256    |
+| reconciliationType  | one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)                       | string    |
+| reconciled          | true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise. (calculated)                                             | bool      |
+| totalIn             | the sum of the following `In` fields (calculated)                                                                                     | int256    |
+| amountIn            | the top-level value of the incoming transfer for the accountedFor address                                                             | int256    |
+| internalIn          | the internal value of the incoming transfer for the accountedFor address                                                              | int256    |
+| selfDestructIn      | the incoming value of a self-destruct if recipient is the accountedFor address                                                        | int256    |
+| minerBaseRewardIn   | the base fee reward if the miner is the accountedFor address                                                                          | int256    |
+| minerNephewRewardIn | the nephew reward if the miner is the accountedFor address                                                                            | int256    |
+| minerTxFeeIn        | the transaction fee reward if the miner is the accountedFor address                                                                   | int256    |
+| minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the accountedFor address                                                     | int256    |
+| correctingIn        | for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances                              | int256    |
+| prefundIn           | at block zero (0) only, the amount of genesis income for the accountedFor address                                                     | int256    |
+| totalOut            | the sum of the following `Out` fields (calculated)                                                                                    | int256    |
+| amountOut           | the amount (in units of the asset) of regular outflow during this transaction                                                         | int256    |
+| internalOut         | the value of any internal value transfers out of the accountedFor account                                                             | int256    |
+| correctingOut       | for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances                              | int256    |
+| selfDestructOut     | the value of the self-destructed value out if the accountedFor address was self-destructed                                            | int256    |
+| gasOut              | if the transaction's original sender is the accountedFor address, the amount of gas expended                                          | int256    |
+| totalOutLessGas     | totalOut - gasOut (calculated)                                                                                                        | int256    |
+| prevBal             | the account balance for the given asset for the previous reconciliation                                                               | int256    |
+| begBalDiff          | difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed (calculated) | int256    |
+| endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256    |
+| endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256    |
+| correctingReason    | the reason for the correcting entries, if any                                                                                         | string    |
 
 ## Base types
 
@@ -263,3 +256,4 @@ This documentation mentions the following basic data types.
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint64    | a 64-bit unsigned integer           |                |
+

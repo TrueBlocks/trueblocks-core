@@ -90,6 +90,8 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 		_ = history.ToHistory(historyFile, "headerVersion", saved)
 	}()
 	_ = history.ToHistory(historyFile, "headerVersion", remoteManifest.Version)
+	logger.InfoTable("Existing version:", saved)
+	logger.InfoTable("Remote version:", remoteManifest.Version)
 
 	// a string array of the actual files in the index
 	fnArray := []string{}
@@ -197,7 +199,6 @@ func (opts *ChunksOptions) check(blockNums []uint64, silent bool) (error, bool) 
 	ctx := context.Background()
 	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
 		for _, report := range reports {
-			report := report
 			if !silent {
 				modelChan <- &report
 			}

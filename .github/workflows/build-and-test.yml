@@ -3,7 +3,8 @@ on: [pull_request, workflow_dispatch]
 
 env:
   CHIFRA_PATH: src/apps/chifra
-  GO_VERSION: ^1.21
+  # Go Version
+  GO_VERSION: ^1.22
 
 jobs:
   golangci:

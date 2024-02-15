@@ -14,13 +14,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10295,apps,Accounts,export,acctExport,withdrawals,i,,false,false,true,true,gocmd,switch,<boolean>,export withdrawals for the given address
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,gocmd,switch,<boolean>,force the transaction's traces into the cache
-10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records
+10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,gocmd,switch,<boolean>,for --appearances mode only&#44; display only the count of records
 10336,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 10340,apps,Accounts,export,acctExport,relevant,N,,false,false,true,true,gocmd,switch,<boolean>,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
-10342,apps,Accounts,export,acctExport,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for log export only&#44; export only logs if emitted by one of these address(es)
+10342,apps,Accounts,export,acctExport,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
+10344,apps,Accounts,export,acctExport,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 10342,apps,Accounts,export,acctExport,reverted,V,,false,false,true,true,gocmd,switch,<boolean>,export only transactions that were reverted
-10344,apps,Accounts,export,acctExport,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
 10346,apps,Accounts,export,acctExport,asset,P,,false,false,true,true,gocmd,flag,list<addr>,for the accounting options only&#44; export statements only for this asset
 10346,apps,Accounts,export,acctExport,flow,f,,false,false,true,true,gocmd,flag,enum[in|out|zero],for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
 10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,true,gocmd,switch,<boolean>,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
@@ -101,6 +101,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,gocmd,positional,list<addr>,a list of one or more smart contracts whose ABIs to display
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,true,gocmd,switch,<boolean>,load common 'known' ABIs from cache
+13855,tools,Accounts,abis,grabABI,proxy_for,r,,false,false,true,true,gocmd,flag,<address>,redirects the query to this implementation
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,gocmd,flag,list<string>,search for function or event declarations given a four- or 32-byte code(s)
 13865,tools,Accounts,abis,grabABI,hint,n,,false,false,true,true,gocmd,flag,list<string>,for the --find option only&#44; provide hints to speed up the search
 13865,tools,Accounts,abis,grabABI,encode,e,,false,false,true,true,gocmd,flag,<string>,generate the 32-byte encoding for a given cannonical function or event signature
@@ -119,7 +120,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12975,tools,ChainData,blocks,getBlocks,withdrawals,i,,false,false,true,true,gocmd,switch,<boolean>,export the withdrawals from the block as opposed to the block data
 12976,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
 12977,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,true,true,gocmd,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
-12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,gocmd,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
+12578,tools,ChainData,blocks,getBlocks,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the count of appearances for --addrs or --uniq
 12591,tools,ChainData,blocks,getBlocks,cache_txs,,,false,false,false,false,gocmd,switch,<boolean>,force a write of the block's transactions to the cache (slow)
 12592,tools,ChainData,blocks,getBlocks,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force a write of the block's traces to the cache (slower)
 12582,tools,ChainData,blocks,getBlocks,list,L,0,false,false,false,false,gocmd,flag,<blknum>,summary list of blocks running backwards from latest block minus num
@@ -143,14 +144,12 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13611,tools,ChainData,transactions,getTrans,logs,l,,false,false,true,true,gocmd,switch,<boolean>,display only the logs found in the transaction(s)
 13613,tools,ChainData,transactions,getTrans,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 13615,tools,ChainData,transactions,getTrans,topic,B,,false,false,true,true,gocmd,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
-13617,tools,ChainData,transactions,getTrans,account_for,A,,false,false,true,true,gocmd,flag,<address>,reconcile the transaction as per the provided address
 13629,tools,ChainData,transactions,getTrans,cache_traces,,,false,false,false,false,gocmd,switch,<boolean>,force the transaction's traces into the cache
-13622,tools,ChainData,transactions,getTrans,source,s,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
+13622,tools,ChainData,transactions,getTrans,seed,S,,false,false,false,false,gocmd,switch,<boolean>,find the source of the funds sent to the receiver
 13623,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13624,tools,ChainData,transactions,getTrans,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13626,tools,ChainData,transactions,getTrans,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13628,tools,ChainData,transactions,getTrans,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
-13630,tools,ChainData,transactions,getTrans,n4,,,false,false,false,false,--,note,,The --traces option&#44; when used with --account_for&#44; will descend into traces to complete reconciliations.
 13631,tools,ChainData,transactions,getTrans,n5,,,false,false,false,false,--,note,,The --decache option removes the all transaction(s) and all traces in those transactions from the cache.
 
 13000,tools,ChainData,receipts,getReceipts,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
@@ -161,6 +160,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13070,tools,ChainData,receipts,getReceipts,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 
 12920,tools,ChainData,logs,getLogs,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
+12925,tools,ChainData,logs,getLogs,emitter,m,,false,false,true,true,gocmd,flag,list<addr>,filter logs to show only those logs emitted by the given address(es)
+12930,tools,ChainData,logs,getLogs,topic,B,,false,false,true,true,gocmd,flag,list<topic>,filter logs to show only those with this topic(s)
 12940,tools,ChainData,logs,getLogs,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
 12960,tools,ChainData,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve logs for the given transaction(s).
 12962,tools,ChainData,logs,getLogs,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
@@ -171,7 +172,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,gocmd,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13490,tools,ChainData,traces,getTraces,filter,f,,false,false,true,true,gocmd,flag,<string>,call the node's trace_filter routine with bang-separated filter
-13440,tools,ChainData,traces,getTraces,count,U,,false,false,true,true,gocmd,switch,<boolean>,show the number of traces for the transaction only (fast)
+13440,tools,ChainData,traces,getTraces,count,U,,false,false,true,true,gocmd,switch,<boolean>,display only the number of traces for the transaction (fast)
 13500,tools,ChainData,traces,getTraces,,,,false,false,true,true,--,description,,Retrieve traces for the given transaction(s).
 13622,tools,ChainData,traces,getTraces,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more transaction hashes&#44; blockNumber.transactionID pairs&#44; or a blockHash.transactionID pairs.
 13624,tools,ChainData,traces,getTraces,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
@@ -269,7 +270,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31940,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,true,gocmd,switch,<boolean>,publish the manifest to the Unchained Index smart contract
 31942,apps,Admin,chunks,chunkMan,publisher,P,,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
 31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
-31940,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retreive the manifest from the Unchained Index smart contract
+31940,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retrieve the manifest from the Unchained Index smart contract
 31942,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
 31944,apps,Admin,chunks,chunkMan,diff,f,,false,false,false,false,gocmd,switch,<boolean>,compare two index portions (see notes)
 31946,apps,Admin,chunks,chunkMan,first_block,F,0,false,false,true,true,gocmd,flag,<blknum>,first block to process (inclusive)
@@ -313,12 +314,17 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,gocmd,positional,list<blknum>,an optional range of blocks to slurp
 12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,gocmd,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|all]>,which types of transactions to request
 12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,gocmd,switch,<boolean>,show only the blocknumber.tx_id appearances of the exported transactions
-12200,tools,Other,slurp,ethslurp,per_page,P,5000,false,false,true,true,gocmd,flag,<uint64>,the number of records to request on each page
+12185,tools,Other,slurp,ethslurp,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
+12200,tools,Other,slurp,ethslurp,source,S,etherscan,false,false,true,true,gocmd,flag,enum[etherscan*|key],the source of the slurped data
+12202,tools,Other,slurp,ethslurp,count,U,,false,false,true,true,gocmd,switch,<boolean>,for --appearances mode only&#44; display only the count of records
+12203,tools,Other,slurp,ethslurp,page,g,0,false,false,false,false,gocmd,flag,<uint64>,the page to retrieve
+12205,tools,Other,slurp,ethslurp,per_page,P,3000,false,false,false,false,gocmd,flag,<uint64>,the number of records to request on each page
 12210,tools,Other,slurp,ethslurp,sleep,s,.25,false,false,true,true,gocmd,flag,<double>,seconds to sleep between requests
 12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetch data from Etherscan for any address.
 12222,tools,Other,slurp,ethslurp,n1,,,false,false,false,false,--,note,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 12224,tools,Other,slurp,ethslurp,n2,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 12226,tools,Other,slurp,ethslurp,n3,,,false,false,false,false,--,note,,The withdrawals option is only available on certain chains. It is ignored otherwise.
+12228,tools,Other,slurp,ethslurp,n4,,,false,false,false,false,--,note,,If the value of --source is key&#44; --types is ignored and only appearances or counts are returned.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,true,gocmd,positional,list<path>,one or more class definition files
 11740,dev_tools,,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder

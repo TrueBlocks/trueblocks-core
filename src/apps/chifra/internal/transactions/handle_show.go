@@ -25,7 +25,13 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawTransaction], errorChan chan error) {
-		if sliceOfMaps, cnt, err := identifiers.AsSliceOfMaps[types.SimpleTransaction](chain, opts.TransactionIds); err != nil {
+		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
+		if err != nil {
+			errorChan <- err
+			cancel()
+		}
+
+		if sliceOfMaps, cnt, err := types.AsSliceOfMaps[types.SimpleTransaction](apps, false); err != nil {
 			errorChan <- err
 			cancel()
 
@@ -40,7 +46,6 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 			})
 
 			for _, thisMap := range sliceOfMaps {
-				thisMap := thisMap
 				for app := range thisMap {
 					thisMap[app] = new(types.SimpleTransaction)
 				}
@@ -89,7 +94,6 @@ func (opts *TransactionsOptions) HandleShow() (err error) {
 				})
 
 				for _, item := range items {
-					item := item
 					modelChan <- &item
 				}
 			}

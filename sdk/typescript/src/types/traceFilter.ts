@@ -13,3 +13,4 @@ export type TraceFilter = {
   after?: uint64
   count?: uint64
 }
+

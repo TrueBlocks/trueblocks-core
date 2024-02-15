@@ -58,14 +58,11 @@ func (opts *TransactionsOptions) TransactionsInternal() error {
 	} else if opts.Logs {
 		err = opts.HandleLogs()
 
-	} else if opts.Source {
-		err = opts.HandleSource()
+	} else if opts.Seed {
+		err = opts.HandleSeed()
 
 	} else if opts.Uniq {
 		err = opts.HandleUniq()
-
-	} else if len(opts.AccountFor) > 0 {
-		err = opts.HandleAccounting()
 
 	} else {
 		err = opts.HandleShow()
@@ -87,3 +84,4 @@ func GetTransactionsOptions(args []string, g *globals.GlobalOptions) *Transactio
 
 // EXISTING_CODE
 // EXISTING_CODE
+

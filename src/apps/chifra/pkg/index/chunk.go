@@ -14,8 +14,12 @@
 package index
 
 import (
+	"io"
+	"os"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	shell "github.com/ipfs/go-ipfs-api"
 )
 
 // The Chunk data structure consists of three parts. A FileRange, a Index structure, and a Bloom that
@@ -69,4 +73,19 @@ func (chunk *Chunk) Close() {
 		chunk.Index.File.Close()
 		chunk.Index.File = nil
 	}
+}
+
+// ChunkCid returns IPFS CID for the chunk without uploading it
+func ChunkCid(path string) (chunkCid string, err error) {
+	file, err := os.OpenFile(path, os.O_RDONLY, 0)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+	return calculateCid(file)
+}
+
+func calculateCid(r io.Reader) (chunkCid string, err error) {
+	sh := shell.NewShell(config.GetPinning().LocalPinUrl)
+	return sh.AddNoPin(r)
 }

@@ -27,3 +27,4 @@ export function getStatus(
     { endpoint: '/status', method: 'get', parameters, options },
   );
 }
+

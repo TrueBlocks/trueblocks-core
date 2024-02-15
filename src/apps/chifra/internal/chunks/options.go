@@ -33,7 +33,7 @@ type ChunksOptions struct {
 	Publish    bool                     `json:"publish,omitempty"`    // Publish the manifest to the Unchained Index smart contract
 	Publisher  string                   `json:"publisher,omitempty"`  // For some query options, the publisher of the index
 	Truncate   uint64                   `json:"truncate,omitempty"`   // Truncate the entire index at this block (requires a block identifier)
-	Remote     bool                     `json:"remote,omitempty"`     // Prior to processing, retreive the manifest from the Unchained Index smart contract
+	Remote     bool                     `json:"remote,omitempty"`     // Prior to processing, retrieve the manifest from the Unchained Index smart contract
 	Belongs    []string                 `json:"belongs,omitempty"`    // In index mode only, checks the address(es) for inclusion in the given index chunk
 	Diff       bool                     `json:"diff,omitempty"`       // Compare two index portions (see notes)
 	FirstBlock uint64                   `json:"firstBlock,omitempty"` // First block to process (inclusive)
@@ -252,3 +252,4 @@ func (opts *ChunksOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

@@ -26,10 +26,11 @@ const (
 	Regular   Parts = 0x1
 	Custom    Parts = 0x2
 	Prefund   Parts = 0x4
-	Testing   Parts = 0x8
-	MatchCase Parts = 0x10
-	Expanded  Parts = 0x20
-	Tags      Parts = 0x40
+	Baddress  Parts = 0x8
+	Testing   Parts = 0x10
+	MatchCase Parts = 0x20
+	Expanded  Parts = 0x40
+	Tags      Parts = 0x80
 )
 
 type SortBy int

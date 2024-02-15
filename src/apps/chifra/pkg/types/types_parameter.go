@@ -94,7 +94,6 @@ func (s *SimpleParameter) MarshalCache(writer io.Writer) (err error) {
 	// Components
 	components := make([]cache.Marshaler, 0, len(s.Components))
 	for _, component := range s.Components {
-		component := component
 		components = append(components, &component)
 	}
 	if err = cache.WriteValue(writer, components); err != nil {
@@ -216,3 +215,4 @@ func parametersToMap(params []SimpleParameter) (result map[string]any) {
 }
 
 // EXISTING_CODE
+

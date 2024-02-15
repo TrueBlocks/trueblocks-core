@@ -29,3 +29,4 @@ export type Monitor = {
   tags: string
   deleted: boolean
 }
+

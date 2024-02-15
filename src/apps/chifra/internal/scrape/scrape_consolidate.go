@@ -118,12 +118,8 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 				report.FileSize = file.FileSize(chunkPath)
 				report.Report()
 			}
-			if err := Notify(notify.Notification[string]{
-				Msg:     notify.MessageChunkWritten,
-				Meta:    bm.meta,
-				Payload: chunkRange.String(),
-			}); err != nil {
-				return err, false
+			if err = NotifyChunkWritten(chunk, chunkPath); err != nil {
+				return err, true
 			}
 
 			// reset for next chunk
@@ -144,7 +140,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		appearances := make([]string, 0, nAppearances)
 		for addr, apps := range appMap {
 			for _, app := range apps {
-				record := fmt.Sprintf("%s\t%09d\t%05d", addr, app.BlockNumber, app.TransactionId)
+				record := fmt.Sprintf("%s\t%09d\t%05d", addr, app.BlockNumber, app.TransactionIndex)
 				appearances = append(appearances, record)
 				newRange.Last = utils.Max(newRange.Last, uint64(app.BlockNumber))
 			}
@@ -169,7 +165,7 @@ func (bm *BlazeManager) Consolidate(blocks []base.Blknum) (error, bool) {
 		Meta:    bm.meta,
 		Payload: newRange.String(),
 	}); err != nil {
-		return err, false
+		return err, true
 	}
 
 	// Commit the change by deleting the backup file.
@@ -192,7 +188,6 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.
 
 	nAdded := 0
 	for _, line := range appearances {
-		line := line
 		parts := strings.Split(line, "\t")
 		if len(parts) == 3 { // shouldn't be needed, but just in case...
 			addr := strings.ToLower(parts[0])
@@ -205,8 +200,8 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]index.
 			fileRange.First = utils.Min(fileRange.First, bn)
 			fileRange.Last = utils.Max(fileRange.Last, bn)
 			appMap[addr] = append(appMap[addr], index.AppearanceRecord{
-				BlockNumber:   uint32(bn),
-				TransactionId: uint32(txid),
+				BlockNumber:      uint32(bn),
+				TransactionIndex: uint32(txid),
 			})
 			nAdded++
 		}

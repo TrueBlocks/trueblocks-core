@@ -29,6 +29,7 @@ namespace qblocks {
 #define IS_ENABLED (1 << 6)
 #define IS_OMITEMPTY (1 << 8)
 #define IS_RAWONLY (1 << 10)
+#define IS_CALCULATED (1 << 12)
 class CMember;
 typedef vector<CMember> CMemberArray;
 // EXISTING_CODE
@@ -69,6 +70,7 @@ class CMember : public CBaseNode {
     explicit CMember(const string_q& n, const string_q& type, const CStringArray& array);
     bool isValid(void) const;
     void postProcessType(void);
+    bool isCalculated(void) const;
     // EXISTING_CODE
     bool operator==(const CMember& it) const;
     bool operator!=(const CMember& it) const {

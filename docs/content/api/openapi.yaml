@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 2.5.0-release
+  version: 2.5.2-release
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra daemon`, you can
@@ -348,8 +348,7 @@ paths:
           schema:
             type: boolean
         - name: count
-          description: >
-            only available for --appearances mode, if present, return only the number of records
+          description: for --appearances mode only, display only the count of records
           required: false
           style: form
           in: query
@@ -385,7 +384,7 @@ paths:
             type: boolean
         - name: emitter
           description: >
-            for log export only, export only logs if emitted by one of these address(es)
+            for the --logs option only, filter logs to show only those logs emitted by the given address(es)
           required: false
           style: form
           in: query
@@ -395,16 +394,9 @@ paths:
             items:
               type: string
               format: address
-        - name: reverted
-          description: export only transactions that were reverted
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: topic
-          description: for log export only, export only logs with this topic(s)
+          description: >
+            for the --logs option only, filter logs to show only those with this topic(s)
           required: false
           style: form
           in: query
@@ -414,6 +406,14 @@ paths:
             items:
               type: string
               format: topic
+        - name: reverted
+          description: export only transactions that were reverted
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: asset
           description: for the accounting options only, export statements only for this asset
           required: false
@@ -875,6 +875,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: proxyFor
+          description: redirects the query to this implementation
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
         - name: find
           description: search for function or event declarations given a four- or 32-byte code(s)
           required: false
@@ -914,10 +922,11 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
+                    description: Produces <a href="/data-model/other/#abi">Abi</a>, <a href="/data-model/other/#function">Function</a>, and/or <a href="/data-model/other/#parameter">Parameter</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
                     type: array
                     items:
                       oneOf:
+                        - $ref: "#/components/schemas/abi"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/parameter"
                 example:
@@ -1082,7 +1091,7 @@ paths:
             type: number
             format: uint64
         - name: count
-          description: display the number of the lists of appearances for --addrs or --uniq
+          description: display only the count of appearances for --addrs or --uniq
           required: false
           style: form
           in: query
@@ -1222,14 +1231,6 @@ paths:
             items:
               type: string
               format: topic
-        - name: accountFor
-          description: reconcile the transaction as per the provided address
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: string
         - name: ether
           description: export values in ether
           required: false
@@ -1346,6 +1347,28 @@ paths:
             items:
               type: string
               format: tx_id
+        - name: emitter
+          description: filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address
+        - name: topic
+          description: filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
           required: false
@@ -1422,7 +1445,7 @@ paths:
           schema:
             type: string
         - name: count
-          description: show the number of traces for the transaction only (fast)
+          description: display only the number of traces for the transaction (fast)
           required: false
           style: form
           in: query
@@ -2076,7 +2099,7 @@ paths:
             type: boolean
         - name: remote
           description: >
-            prior to processing, retreive the manifest from the Unchained Index smart contract
+            prior to processing, retrieve the manifest from the Unchained Index smart contract
           required: false
           style: form
           in: query
@@ -2314,15 +2337,33 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: perPage
-          description: the number of records to request on each page
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: number
-            format: uint64
+            type: boolean
+        - name: source
+          description: the source of the slurped data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - etherscan
+              - key
+        - name: count
+          description: for --appearances mode only, display only the count of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: sleep
           description: seconds to sleep between requests
           required: false
@@ -2420,7 +2461,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date for this appearance"
+          description: "the timestamp as a date (calculated)"
     monitor:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object
@@ -2545,7 +2586,7 @@ components:
         firstDate:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the first appearance"
+          description: "the first appearance timestamp as a date (calculated)"
         latestApp:
           type: RawAppearance
           description: "the block number and transaction id of the latest appearance of this address"
@@ -2556,7 +2597,7 @@ components:
         latestDate:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the latest appearance"
+          description: "the latest appearance timestamp as a date (calculated)"
     statement:
       description: "a statement, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
       type: object
@@ -2584,7 +2625,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of this transaction"
+          description: "the timestamp as a date (calculated)"
         assetAddr:
           type: string
           format: address
@@ -2622,21 +2663,21 @@ components:
         amountNet:
           type: string
           format: int256
-          description: "a calculated field -- totalIn - totalOut"
+          description: "totalIn - totalOut (calculated)"
         endBal:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
         reconciliationType:
           type: string
-          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token`"
+          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)"
         reconciled:
           type: boolean
-          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise."
+          description: "true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise. (calculated)"
         totalIn:
           type: string
           format: int256
-          description: "a calculated field -- the sum of the following `In` fields"
+          description: "the sum of the following `In` fields (calculated)"
         amountIn:
           type: string
           format: int256
@@ -2676,7 +2717,7 @@ components:
         totalOut:
           type: string
           format: int256
-          description: "a calculated field -- the sum of the following `Out` fields"
+          description: "the sum of the following `Out` fields (calculated)"
         amountOut:
           type: string
           format: int256
@@ -2700,11 +2741,7 @@ components:
         totalOutLessGas:
           type: string
           format: int256
-          description: "a calculated field -- totalOut - gasOut"
-        prevAppBlk:
-          type: number
-          format: blknum
-          description: "the block number of the previous appearance, or 0 if this is the first appearance"
+          description: "totalOut - gasOut (calculated)"
         prevBal:
           type: string
           format: int256
@@ -2712,15 +2749,15 @@ components:
         begBalDiff:
           type: string
           format: int256
-          description: "a calculated field -- difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed"
+          description: "difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed (calculated)"
         endBalDiff:
           type: string
           format: int256
-          description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
+          description: "endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)"
         endBalCalc:
           type: string
           format: int256
-          description: "a calculated field -- begBal + amountNet"
+          description: "begBal + amountNet (calculated)"
         correctingReason:
           type: string
           description: "the reason for the correcting entries, if any"
@@ -2759,7 +2796,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the object"
+          description: "the timestamp as a date (calculated)"
         transactions:
           type: array
           items:
@@ -2810,6 +2847,7 @@ components:
         date:
           type: string
           format: datetime
+          description: "the timestamp as a date (calculated)"
         from:
           type: string
           format: address
@@ -2883,7 +2921,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date for this block"
+          description: "the timestamp as a date (calculated)"
         validatorIndex:
           type: number
           format: uint64
@@ -2946,7 +2984,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the date of the block this log appears in (calculated)"
+          description: "the timestamp as a date (calculated)"
         address:
           type: string
           format: address
@@ -2995,7 +3033,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated value - the date of the block"
+          description: "the timestamp as a date (calculated)"
         transactionHash:
           type: string
           format: hash
@@ -3133,7 +3171,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "the timestamp as a date (calculated)"
         tracesCnt:
           type: number
           format: uint64
@@ -3181,7 +3219,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "the timestamp as a date (calculated)"
         transactionsCnt:
           type: number
           format: uint64
@@ -3221,7 +3259,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "human readable version of timestamp"
+          description: "the timestamp as a date (calculated)"
         name:
           type: string
           description: "an optional name for the block"
@@ -3243,7 +3281,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "the timestamp as a date (calculated)"
         diff:
           type: int64
           description: "the number of seconds since the last block"
@@ -3270,7 +3308,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the date of the block for this call (calculated)"
+          description: "the timestamp as a date (calculated)"
         address:
           type: string
           format: address
@@ -3307,7 +3345,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "the date of the block for this call (calculated)"
+          description: "the timestamp as a date (calculated)"
         address:
           type: string
           format: address
@@ -3353,7 +3391,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the block"
+          description: "the timestamp as a date (calculated)"
         totalSupply:
           type: string
           format: int256
@@ -3436,6 +3474,9 @@ components:
         isTracing:
           type: boolean
           description: "`true` if the rpcProvider provides Parity traces"
+        isScraping:
+          type: boolean
+          description: "`true` if the scraper is running"
         networkId:
           type: string
           description: "the network id as reported by the rpcProvider"
@@ -3451,6 +3492,11 @@ components:
         version:
           type: string
           description: "the TrueBlocks version string"
+        chains:
+          type: array
+          items:
+            $ref: "#/components/schemas/chain"
+          description: "a list of available chains in the config file"
     manifest:
       description: "a JSON object containing records for each bloom filter and index chunk in the Unchained Index"
       type: object
@@ -3775,6 +3821,19 @@ components:
         ipfsGateway:
           type: string
           description: "an IPFS gateway for pinning the index if enabled"
+    abi:
+      description: "a human-readable representation of a Solidity smart contract"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address for the ABI"
+        functions:
+          type: array
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the functions for this address"
     function:
       description: "a human-readable representation of a Solidity function call or event"
       type: object
@@ -3856,7 +3915,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "a calculated field -- the date of the object"
+          description: "the timestamp as a date (calculated)"
         from:
           type: string
           format: address

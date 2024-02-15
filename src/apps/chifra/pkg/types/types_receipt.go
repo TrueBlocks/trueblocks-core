@@ -225,7 +225,6 @@ func (s *SimpleReceipt) MarshalCache(writer io.Writer) (err error) {
 	// Logs
 	logs := make([]cache.Marshaler, 0, len(s.Logs))
 	for _, log := range s.Logs {
-		log := log
 		logs = append(logs, &log)
 	}
 	if err = cache.WriteValue(writer, logs); err != nil {
@@ -346,7 +345,6 @@ func (s *SimpleReceipt) IsDefault() bool {
 func (r *RawReceipt) RawToSimple(vals map[string]any) (SimpleReceipt, error) {
 	logs := []SimpleLog{}
 	for _, rawLog := range r.Logs {
-		rawLog := rawLog
 		simpleLog, _ := rawLog.RawToSimple(vals)
 		logs = append(logs, simpleLog)
 	}
@@ -375,3 +373,4 @@ func (r *RawReceipt) RawToSimple(vals map[string]any) (SimpleReceipt, error) {
 }
 
 // EXISTING_CODE
+

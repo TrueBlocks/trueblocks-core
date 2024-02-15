@@ -20,8 +20,8 @@ func (f *AppearanceFilter) Sort(fromDisc []index.AppearanceRecord) {
 			if f.sortBy == Reversed {
 				i, j = j, i
 			}
-			si := (uint64(fromDisc[i].BlockNumber) << 32) + uint64(fromDisc[i].TransactionId)
-			sj := (uint64(fromDisc[j].BlockNumber) << 32) + uint64(fromDisc[j].TransactionId)
+			si := (uint64(fromDisc[i].BlockNumber) << 32) + uint64(fromDisc[i].TransactionIndex)
+			sj := (uint64(fromDisc[j].BlockNumber) << 32) + uint64(fromDisc[j].TransactionIndex)
 			return si < sj
 		})
 	}

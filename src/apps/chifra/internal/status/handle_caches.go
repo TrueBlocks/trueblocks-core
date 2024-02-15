@@ -31,7 +31,6 @@ func (opts *StatusOptions) HandleCaches() error {
 		counterMap := make(map[walk.CacheType]*simpleCacheItem)
 		nRoutines = len(opts.ModeTypes)
 		for _, mT := range opts.ModeTypes {
-			mT := mT
 			counterMap[mT] = &simpleCacheItem{
 				CacheItemType: walk.CacheName(mT),
 				Items:         make([]any, 0),
@@ -121,7 +120,6 @@ func (opts *StatusOptions) HandleCaches() error {
 
 		totalRecords := uint64(0)
 		for _, mT := range opts.ModeTypes {
-			mT := mT
 			if counterMap[mT] != nil {
 				status.Caches = append(status.Caches, *counterMap[mT])
 				totalRecords += counterMap[mT].NFiles

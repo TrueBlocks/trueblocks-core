@@ -481,6 +481,10 @@ const char* STR_DISPLAY_MEMBER = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
+bool CMember::isCalculated(void) const {
+    return memberFlags & IS_CALCULATED;
+}
+
 void CMember::postProcessType(void) {
     if (startsWith(type, "double")) {
         precision = str_2_Uint(substitute(type, "double", "") == "" ? "5" : substitute(type, "double", ""));

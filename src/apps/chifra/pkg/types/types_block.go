@@ -307,7 +307,6 @@ func (s *SimpleBlock[Tx]) MarshalCache(writer io.Writer) (err error) {
 	// Withdrawals
 	withdrawals := make([]cache.Marshaler, 0, len(s.Withdrawals))
 	for _, withdrawal := range s.Withdrawals {
-		withdrawal := withdrawal
 		withdrawals = append(withdrawals, &withdrawal)
 	}
 	if err = cache.WriteValue(writer, withdrawals); err != nil {
@@ -412,3 +411,4 @@ func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
 }
 
 // EXISTING_CODE
+

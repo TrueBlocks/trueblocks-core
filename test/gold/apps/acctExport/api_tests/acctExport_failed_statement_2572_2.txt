@@ -1,4 +1,4 @@
-export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&ether&fmt=json&firstBlock=11670418&lastBlock=11670420&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&maxRecords=40
+export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&ether&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&fmt=json&firstBlock=11670418&lastBlock=11670420&maxRecords=40
 {
   "data": [
     {
@@ -8,6 +8,7 @@ export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&et
       "amountOut": "14.922878243871414864",
       "assetAddr": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
       "assetSymbol": "aMKR",
+      "assetType": "token",
       "begBal": "14.922878205530494041",
       "begBalDiff": "0",
       "blockNumber": 11670419,
@@ -28,12 +29,10 @@ export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&et
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 11670405,
-      "prevBal": "14.922876717902766087",
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,
-      "reconciliationType": "diff-diff-token",
+      "reconciliationType": "first-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",

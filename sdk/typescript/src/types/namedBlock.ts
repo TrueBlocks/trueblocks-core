@@ -13,3 +13,4 @@ export type NamedBlock = {
   name?: string
   description?: string
 }
+

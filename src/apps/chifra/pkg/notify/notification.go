@@ -12,5 +12,7 @@ type Notification[T NotificationPayload] struct {
 
 type NotificationPayload interface {
 	[]NotificationPayloadAppearance |
+		[]NotificationPayloadChunkWritten |
+		NotificationPayloadChunkWritten |
 		string
 }

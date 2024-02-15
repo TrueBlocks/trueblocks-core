@@ -12,3 +12,4 @@ export type ChunkRecord = {
   bloomSize: int64
   indexSize: int64
 }
+

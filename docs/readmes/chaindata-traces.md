@@ -1,6 +1,5 @@
 ## chifra traces
 
-<!-- markdownlint-disable MD041 -->
 The `chifra traces` tool retrieves a transaction's traces. You may specify multiple transaction
 identifiers per invocation.
 
@@ -23,7 +22,7 @@ Arguments:
 Flags:
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -f, --filter string   call the node's trace_filter routine with bang-separated filter
-  -U, --count           show the number of traces for the transaction only (fast)
+  -U, --count           display only the number of traces for the transaction (fast)
   -H, --ether           specify value in ether
   -w, --raw             report JSON data from the source with minimal processing
   -o, --cache           force the results of the query into the cache

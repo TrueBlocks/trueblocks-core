@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -14,6 +15,8 @@ var listPins = "https://api.pinata.cloud/data/pinList?status=%s&includesCount=tr
 
 func getPins(chain, status string, first, cnt int) (int, []Pin) {
 	url := fmt.Sprintf(listPins, status, first, cnt)
+
+	debug.DebugCurlStr(url)
 	if req, err := http.NewRequest("GET", url, nil); err != nil {
 		return 0, []Pin{}
 	} else {
@@ -39,7 +42,7 @@ func getPins(chain, status string, first, cnt int) (int, []Pin) {
 }
 
 // ListPins pins a file remotely to the pinning service
-func ListPins(chain, status string, countOnly bool, pageSize int, dur time.Duration) ([]string, error) {
+func ListPins(chain, status string, countOnly bool, perPage int, dur time.Duration) ([]string, error) {
 	count, _ := getPins(chain, status, 0, 1)
 	ret := make([]string, 0, count)
 	if countOnly {
@@ -47,23 +50,23 @@ func ListPins(chain, status string, countOnly bool, pageSize int, dur time.Durat
 
 	} else {
 		testing := false
-		if pageSize < 0 {
-			pageSize = -1 * pageSize
+		if perPage < 0 {
+			perPage = -1 * perPage
 			testing = true
 		}
 
 		bar := logger.NewBar(logger.BarOptions{
 			Enabled: true,
-			Total:   int64(count)/int64(pageSize) + 1,
+			Total:   int64(count)/int64(perPage) + 1,
 		})
 
-		for i := 0; i < count; i += pageSize {
-			count, pins := getPins(chain, status, i, pageSize)
-			bar.Prefix = fmt.Sprintf("Listing %d '%s' items in %d pages...", count, status, count/pageSize+1)
+		for i := 0; i < count; i += perPage {
+			count, pins := getPins(chain, status, i, perPage)
+			bar.Prefix = fmt.Sprintf("Listing %d '%s' items in %d pages...", count, status, count/perPage+1)
 			for _, pin := range pins {
 				ret = append(ret, fmt.Sprintf("%s\t%s\t%s\t%d\t%s", pin.IpfsPinHash, pin.DatePinned, pin.Metadata.Name, pin.Size, status))
 			}
-			if testing || count < pageSize {
+			if testing || count < perPage {
 				break
 			}
 			bar.Tick()

@@ -1,6 +1,5 @@
-<!-- markdownlint-disable MD033 MD036 MD041 -->
-The Admin gourp of commands allows you to query the status of the TrueBlocks system and
-manage various apects including the Unchained Index. You may query the status; query for information
+The Admin group of commands allows you to query the status of the TrueBlocks system and
+manage various aspects including the Unchained Index. You may query the status; query for information
 about TrueBlocks caches; control the creation, sharing, and pinning of the Unchained Index; and even
 serve the data through an API.
 

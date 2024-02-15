@@ -15,6 +15,10 @@ import (
 )
 
 func (opts *AbisOptions) HandleShow() (err error) {
+	if len(opts.Addrs) > 1 && opts.Globals.Format == "json" {
+		return opts.HandleMany()
+	}
+
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -22,6 +26,9 @@ func (opts *AbisOptions) HandleShow() (err error) {
 		// Note here, that known ABIs are not downloaded. They are only loaded from the local cache.
 		for _, addr := range opts.Addrs {
 			address := base.HexToAddress(addr)
+			if len(opts.ProxyFor) > 0 {
+				address = base.HexToAddress(opts.ProxyFor)
+			}
 			err = abi.LoadAbi(opts.Conn, address, &abiCache.AbiMap)
 			if err != nil {
 				if errors.Is(err, rpc.ErrNotAContract) {
@@ -33,6 +40,8 @@ func (opts *AbisOptions) HandleShow() (err error) {
 					errorChan <- err
 					cancel()
 				}
+				// } else if len(opts.ProxyFor) > 0 {
+				// TODO: We need to copy the proxied-to ABI to the proxy (replacing)
 			}
 		}
 

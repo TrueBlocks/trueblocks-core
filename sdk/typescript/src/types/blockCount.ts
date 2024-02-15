@@ -16,3 +16,4 @@ export type BlockCount = {
   withdrawalsCnt?: uint64
   addressCnt?: uint64
 }
+

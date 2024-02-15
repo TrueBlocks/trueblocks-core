@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD041 -->
 ### Test cases
 
 Test cases contain the following fields:

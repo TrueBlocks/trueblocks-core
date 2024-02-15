@@ -15,7 +15,7 @@ menu:
 weight: 1800
 toc: true
 ---
-<!-- markdownlint-disable MD033 MD036 MD041 -->
+
 The commands in the Other group provide useful miscellaneous features.
 
 - `chifra explore` provides a quick way to open the configured blockchain explorer,
@@ -24,9 +24,9 @@ The commands in the Other group provide useful miscellaneous features.
 To the right is a list of commands in this group. Click on a command to see its full documentation.
 
 Note: Some of these tools, such as `ethslurp`, require an API key. [Follow these instructions](/docs/install/install-core/#3-update-the-configs-for-your-rpc-and-api-keys) to add a key to your config.
+
 ## chifra explore
 
-<!-- markdownlint-disable MD041 -->
 `chifra explore` opens Etherscan (and other explorers -- including our own) to the block identifier,
 transaction identifier, or address you specify. It's a handy (configurable) way to open an explorer
 from the command line, nothing more.
@@ -58,7 +58,6 @@ Links:
 
 ## chifra slurp
 
-<!-- markdownlint-disable MD041 -->
 `chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
 
 While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from
@@ -85,7 +84,10 @@ Flags:
   -t, --types strings   which types of transactions to request
                         One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
-  -P, --per_page uint   the number of records to request on each page (default 5000)
+  -a, --articulate      articulate the retrieved data if ABIs can be found
+  -S, --source string   the source of the slurped data
+                        One of [ etherscan | key ] (default "etherscan")
+  -U, --count           for --appearances mode only, display only the count of records
   -s, --sleep float     seconds to sleep between requests (default 0.25)
   -H, --ether           specify value in ether
   -w, --raw             report JSON data from the source with minimal processing
@@ -99,6 +101,7 @@ Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
   - The withdrawals option is only available on certain chains. It is ignored otherwise.
+  - If the value of --source is key, --types is ignored and only appearances or counts are returned.
 ```
 
 Data models produced by this tool:

@@ -15,7 +15,7 @@ menu:
 weight: 1000
 toc: true
 ---
-<!-- markdownlint-disable MD033 MD036 MD041 -->
+
 The Accounts group of commands is at the heart of TrueBlocks. They allow you to produce and analyze
 transactional histories for one or more Ethereum addresses.
 
@@ -24,11 +24,11 @@ monitors, and, most importantly, export transactional histories in various forma
 includes re-directing output to remote or local databases.
 
 To the right is a list of commands in this group. Click on a command to see its full documentation.
+
 ## chifra list
 
-<!-- markdownlint-disable MD041 -->
 `chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks
-monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction
+monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionIndex pairs (transaction
 identifiers) representing the history of the address.
 
 Because TrueBlocks only extracts data from the Ethereum node when it's requested, the first time
@@ -82,7 +82,6 @@ Links:
 
 ## chifra export
 
-<!-- markdownlint-disable MD041 -->
 The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using
 the index of appearances created with `chifra scrape` and the list of transaction identifiers
 created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional
@@ -122,13 +121,13 @@ Flags:
   -i, --withdrawals         export withdrawals for the given address
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -R, --cache_traces        force the transaction's traces into the cache
-  -U, --count               only available for --appearances mode, if present, return only the number of records
+  -U, --count               for --appearances mode only, display only the count of records
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 250)
   -N, --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
-  -m, --emitter strings     for log export only, export only logs if emitted by one of these address(es)
+  -m, --emitter strings     for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+  -B, --topic strings       for the --logs option only, filter logs to show only those with this topic(s)
   -V, --reverted            export only transactions that were reverted
-  -B, --topic strings       for log export only, export only logs with this topic(s)
   -P, --asset strings       for the accounting options only, export statements only for this asset
   -f, --flow string         for the accounting options only, export statements with incoming, outgoing, or zero value
                             One of [ in | out | zero ]
@@ -182,7 +181,6 @@ Links:
 
 ## chifra monitors
 
-<!-- markdownlint-disable MD041 -->
 `chifra monitors` has two purposes: (1) to display information about the current set of monitors, and (2)
 to `--watch` a set of addresses. The `--watch` function allows one to "follow" an address (or set
 of addresses) and keep an off-chain database fresh.
@@ -204,7 +202,7 @@ for the fact that the cache can be easily re-created with `chifra list <address>
 
 The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`.  The `--watchlist` file is simply a list of addresses or ENS names, one per line:
 
-```
+```[bash]
 0x5e349eca2dc61abcd9dd99ce94d04136151a09ee
 trueblocks.eth
 0x855b26bc8ebabcdbefe82ee5e9d40d20a1a4c11f
@@ -215,7 +213,7 @@ You may monitor as many addresses as you wish, however, if the commands you spec
 
 The `--commands` file may contain a list of any valid `chifra` command that operates on addresses. (Currently `export`, `list`, `state`, `tokens`.) Each command in the `--commands` file is executed once for each address in the `--watchlist` file. The `--commands` file may contain any number of commands, one per line with the above proviso. For example:
 
-```
+```[bash]
 chifra list [{ADDRESS}]
 chifra export --logs [{ADDRESS}]
 etc.
@@ -271,7 +269,6 @@ Links:
 
 ## chifra names
 
-<!-- markdownlint-disable MD041 -->
 `chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum
 addresses. One may ask why this is necessary given that ENS exists. The answer is a single
 word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses
@@ -328,7 +325,6 @@ Links:
 
 ## chifra abis
 
-<!-- markdownlint-disable MD041 -->
 `chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
 the current local folder, the TrueBlocks cache, Etherscan, or (in the
 future) ENS and Sourcify.
@@ -356,15 +352,16 @@ Arguments:
   addrs - a list of one or more smart contracts whose ABIs to display (required)
 
 Flags:
-  -k, --known           load common 'known' ABIs from cache
-  -f, --find strings    search for function or event declarations given a four- or 32-byte code(s)
-  -n, --hint strings    for the --find option only, provide hints to speed up the search
-  -e, --encode string   generate the 32-byte encoding for a given cannonical function or event signature
-  -o, --cache           force the results of the query into the cache
-  -D, --decache         removes related items from the cache
-  -x, --fmt string      export format, one of [none|json*|txt|csv]
-  -v, --verbose         enable verbose output
-  -h, --help            display this help screen
+  -k, --known              load common 'known' ABIs from cache
+  -r, --proxy_for string   redirects the query to this implementation
+  -f, --find strings       search for function or event declarations given a four- or 32-byte code(s)
+  -n, --hint strings       for the --find option only, provide hints to speed up the search
+  -e, --encode string      generate the 32-byte encoding for a given cannonical function or event signature
+  -o, --cache              force the results of the query into the cache
+  -D, --decache            removes related items from the cache
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+  -v, --verbose            enable verbose output
+  -h, --help               display this help screen
 
 Notes:
   - Search for either four byte signatures or event signatures with the --find option.
@@ -372,6 +369,7 @@ Notes:
 
 Data models produced by this tool:
 
+- [abi](/data-model/other/#abi)
 - [function](/data-model/other/#function)
 - [parameter](/data-model/other/#parameter)
 
@@ -380,7 +378,6 @@ Links:
 - [api docs](/api/#operation/accounts-abis)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 
-<!-- markdownlint-disable MD041 -->
 ### notes
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.

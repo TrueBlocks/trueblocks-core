@@ -57,19 +57,19 @@ func Test_Monitor_ReadApp(t *testing.T) {
 		t.Error("Should have been 'index out of range in ReadAppearanceAt[0]' error")
 	}
 
-	expected := index.AppearanceRecord{BlockNumber: 1001001, TransactionId: 0}
+	expected := index.AppearanceRecord{BlockNumber: 1001001, TransactionIndex: 0}
 	err = mon.ReadAppearanceAt(1, &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
 
-	expected = index.AppearanceRecord{BlockNumber: 1001002, TransactionId: 1}
+	expected = index.AppearanceRecord{BlockNumber: 1001002, TransactionIndex: 1}
 	err = mon.ReadAppearanceAt(2, &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
 	}
 
-	expected = index.AppearanceRecord{BlockNumber: 1001003, TransactionId: 2}
+	expected = index.AppearanceRecord{BlockNumber: 1001003, TransactionIndex: 2}
 	err = mon.ReadAppearanceAt(mon.Count(), &got)
 	if got != expected || err != nil {
 		t.Error("Expected:", expected, "Got:", got, err)
@@ -96,14 +96,14 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		t.Error(err)
 	}
 
-	if apps, _, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter()); err != nil {
+	if apps, _, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(), true /* withCount */); err != nil {
 		t.Error(err)
 	} else {
 		for i, app := range apps {
 			tA := app
 			tA.Address = mon.Address
 			tA.BlockNumber = testApps[i].BlockNumber
-			tA.TransactionIndex = testApps[i].TransactionId
+			tA.TransactionIndex = testApps[i].TransactionIndex
 			if tA != app {
 				t.Error("Record", i, "as read (", app, ") is not equal to testApp", tA)
 			}
@@ -230,9 +230,9 @@ func RemoveTestMonitor(mon *Monitor, t *testing.T) {
 const nTests = 3
 
 var testApps = []index.AppearanceRecord{
-	{BlockNumber: 1001001, TransactionId: 0},
-	{BlockNumber: 1001002, TransactionId: 1},
-	{BlockNumber: 1001003, TransactionId: 2},
+	{BlockNumber: 1001001, TransactionIndex: 0},
+	{BlockNumber: 1001002, TransactionIndex: 1},
+	{BlockNumber: 1001003, TransactionIndex: 2},
 }
 
 func testClean(s string) string {

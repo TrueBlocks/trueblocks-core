@@ -23,6 +23,14 @@ func LocationsFromBlockIds(conn *rpc.Connection, ids []identifiers.Identifier, l
 					TransactionIndex: utils.NOPOS,
 				}
 				locations = append(locations, logGroup)
+
+			} else if trace {
+				traceGroup := &types.SimpleTraceGroup{
+					BlockNumber:      bn,
+					TransactionIndex: utils.NOPOS,
+				}
+				locations = append(locations, traceGroup)
+
 			} else {
 				rawBlock, err := conn.GetBlockHeaderByNumber(bn)
 				if err != nil {

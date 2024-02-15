@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
@@ -53,8 +54,9 @@ func downloadTimestamps(chain, database, outputFn, cid string) (error, bool) {
 	if err != nil {
 		return err, false
 	}
-
 	url.Path = filepath.Join(url.Path, cid)
+
+	debug.DebugCurlStr(url.String())
 
 	logger.InfoTable("Chain:", chain)
 	logger.InfoTable("Database:", database)

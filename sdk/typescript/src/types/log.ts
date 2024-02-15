@@ -19,3 +19,4 @@ export type Log = {
   articulatedLog?: Function
   compressedLog?: string
 }
+

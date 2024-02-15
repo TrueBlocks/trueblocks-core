@@ -162,19 +162,17 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		bm.errors = append(bm.errors, scrapeError{block: bn, err: err})
 	}
 	notificationPayload := make([]notify.NotificationPayloadAppearance, 0, len(addrMap))
-	payloadFailed := false
 
 	if len(addrMap) > 0 {
 		appearanceArray := make([]string, 0, len(addrMap))
 		for record := range addrMap {
 			appearanceArray = append(appearanceArray, record)
-
 			if bn <= bm.ripeBlock {
 				// Only notify about ripe block's appearances
 				payloadItem := notify.NotificationPayloadAppearance{}
 				err := payloadItem.FromString(record)
 				if err != nil {
-					logger.Fatal(err)
+					return fmt.Errorf("implementation error - unexpected record format: %s", err)
 				}
 				notificationPayload = append(notificationPayload, payloadItem)
 			}
@@ -195,14 +193,14 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		}
 	}
 
-	if bn <= bm.ripeBlock && !payloadFailed {
+	if bn <= bm.ripeBlock {
 		err = Notify(notify.Notification[[]notify.NotificationPayloadAppearance]{
 			Msg:     notify.MessageAppearance,
 			Meta:    bm.meta,
 			Payload: notificationPayload,
 		})
 		if err != nil {
-			logger.Fatal(err)
+			return err
 		}
 	}
 

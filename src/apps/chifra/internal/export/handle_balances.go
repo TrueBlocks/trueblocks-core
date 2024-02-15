@@ -38,93 +38,110 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		currentBn := uint64(0)
 		prevBalance := big.NewInt(0)
-		visitToken := func(idx int, item *types.SimpleToken) error {
-			item.PriorBalance = *prevBalance
-			if item.BlockNumber == 0 || item.BlockNumber != currentBn {
-				item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
-			}
-			currentBn = item.BlockNumber
-			if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-				item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
-				modelChan <- item
-			}
-			prevBalance = &item.Balance
-			return nil
-		}
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfMaps[types.SimpleToken](&mon, filter); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
 				cancel()
 
 			} else if cnt == 0 {
-				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
+				errorChan <- fmt.Errorf("no blocks found for the query")
 				continue
 
 			} else {
-				bar := logger.NewBar(logger.BarOptions{
-					Prefix:  mon.Address.Hex(),
-					Enabled: !testMode && !utils.IsTerminal(),
-					Total:   int64(cnt),
-				})
+				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.SimpleToken](apps, filter.Reversed); err != nil {
+					errorChan <- err
+					cancel()
 
-				for _, thisMap := range sliceOfMaps {
-					thisMap := thisMap
-					for app := range thisMap {
-						thisMap[app] = new(types.SimpleToken)
-					}
-
-					iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
-						var balance *big.Int
-						if balance, err = opts.Conn.GetBalanceByAppearance(mon.Address, &app); err != nil {
-							return err
-						}
-						value.Address = base.FAKE_ETH_ADDRESS
-						value.Holder = mon.Address
-						value.BlockNumber = uint64(app.BlockNumber)
-						value.TransactionIndex = uint64(app.TransactionIndex)
-						value.Balance = *balance
-						value.Timestamp = app.Timestamp
-						bar.Tick()
-						return nil
-					}
-
-					iterErrorChan := make(chan error)
-					iterCtx, iterCancel := context.WithCancel(context.Background())
-					defer iterCancel()
-					go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
-					for err := range iterErrorChan {
-						if !testMode || nErrors == 0 {
-							errorChan <- err
-							nErrors++
-						}
-					}
-
-					// Sort the items back into an ordered array by block number
-					items := make([]*types.SimpleToken, 0, len(thisMap))
-					for _, tx := range thisMap {
-						items = append(items, tx)
-					}
-					sort.Slice(items, func(i, j int) bool {
-						if opts.Reversed {
-							i, j = j, i
-						}
-						return items[i].BlockNumber < items[j].BlockNumber
+				} else {
+					bar := logger.NewBar(logger.BarOptions{
+						Prefix:  mon.Address.Hex(),
+						Enabled: !testMode && !utils.IsTerminal(),
+						Total:   int64(cnt),
 					})
 
+					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
+					finished := false
 					prevBalance, _ = opts.Conn.GetBalanceAt(mon.Address, filter.GetOuterBounds().First)
-					for idx, item := range items {
-						item := item
-						if err := visitToken(idx, item); err != nil {
-							errorChan <- err
-							return
+					for _, thisMap := range sliceOfMaps {
+						if finished {
+							continue
+						}
+
+						for app := range thisMap {
+							thisMap[app] = new(types.SimpleToken)
+						}
+
+						iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
+							var balance *big.Int
+							if balance, err = opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
+								return err
+							}
+							value.Address = base.FAKE_ETH_ADDRESS
+							value.Holder = mon.Address
+							value.BlockNumber = uint64(app.BlockNumber)
+							value.TransactionIndex = uint64(app.TransactionIndex)
+							value.Balance = *balance
+							value.Timestamp = app.Timestamp
+							bar.Tick()
+							return nil
+						}
+
+						iterErrorChan := make(chan error)
+						iterCtx, iterCancel := context.WithCancel(context.Background())
+						defer iterCancel()
+						go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+						for err := range iterErrorChan {
+							if !testMode || nErrors == 0 {
+								errorChan <- err
+								nErrors++
+							}
+						}
+
+						items := make([]*types.SimpleToken, 0, len(thisMap))
+						for _, tx := range thisMap {
+							items = append(items, tx)
+						}
+
+						sort.Slice(items, func(i, j int) bool {
+							if opts.Reversed {
+								i, j = j, i
+							}
+							return items[i].BlockNumber < items[j].BlockNumber
+						})
+
+						for idx, item := range items {
+							visitToken := func(idx int, item *types.SimpleToken) error {
+								item.PriorBalance = *prevBalance
+								if item.BlockNumber == 0 || item.BlockNumber != currentBn || item.Timestamp == 0xdeadbeef {
+									item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
+								}
+								currentBn = item.BlockNumber
+								if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
+									item.Diff = *big.NewInt(0).Sub(&item.Balance, &item.PriorBalance)
+									var passes bool
+									passes, finished = filter.ApplyCountFilter()
+									if passes {
+										modelChan <- item
+									}
+								}
+								prevBalance = &item.Balance
+								return nil
+							}
+							if err := visitToken(idx, item); err != nil {
+								errorChan <- err
+								return
+							}
+							if finished {
+								break
+							}
 						}
 					}
+					bar.Finish(true /* newLine */)
 				}
-
-				bar.Finish(true /* newLine */)
+				prevBalance = big.NewInt(0)
 			}
-			prevBalance = big.NewInt(0)
+
 		}
 	}
 

@@ -133,7 +133,7 @@ bool COptions::handle_readmes(void) {
 
         ostringstream os;
         os << front;
-        os << asciiFileToString(getDocsPathTemplates("readme-groups/" + group + ".md"));
+        os << endl << asciiFileToString(getDocsPathTemplates("readme-groups/" + group + ".md")) << endl;
 
         CStringArray paths;
         explode(paths, tool, ',');
@@ -143,7 +143,8 @@ bool COptions::handle_readmes(void) {
         }
 
         string_q outFn = getDocsPathContent("chifra/" + group + ".md");
-        writeIfDifferent(outFn, os.str());
+        string_q out = os.str();
+        writeIfDifferent(outFn, out);
     }
 
     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
@@ -201,7 +202,7 @@ const char* STR_CONFIG =
     "Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 "
     "respectively. See the specification for a justification of these values.\n"
     "\n"
-    "These items may be set in three ways, each overridding the preceeding method:\n"
+    "These items may be set in three ways, each overriding the preceding method:\n"
     "\n"
     "-- in the above configuration file under the `[scrape.<chain>]` group,  \n"
     "-- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and "

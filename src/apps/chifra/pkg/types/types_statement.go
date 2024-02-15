@@ -27,20 +27,16 @@ import (
 type RawStatement struct {
 	AccountedFor        string `json:"accountedFor"`
 	AmountIn            string `json:"amountIn"`
-	AmountNet           string `json:"amountNet"`
 	AmountOut           string `json:"amountOut"`
 	AssetAddr           string `json:"assetAddr"`
 	AssetSymbol         string `json:"assetSymbol"`
 	BegBal              string `json:"begBal"`
-	BegBalDiff          string `json:"begBalDiff"`
 	BlockNumber         string `json:"blockNumber"`
 	CorrectingIn        string `json:"correctingIn"`
 	CorrectingOut       string `json:"correctingOut"`
 	CorrectingReason    string `json:"correctingReason"`
 	Decimals            string `json:"decimals"`
 	EndBal              string `json:"endBal"`
-	EndBalCalc          string `json:"endBalCalc"`
-	EndBalDiff          string `json:"endBalDiff"`
 	GasOut              string `json:"gasOut"`
 	InternalIn          string `json:"internalIn"`
 	InternalOut         string `json:"internalOut"`
@@ -50,20 +46,14 @@ type RawStatement struct {
 	MinerTxFeeIn        string `json:"minerTxFeeIn"`
 	MinerUncleRewardIn  string `json:"minerUncleRewardIn"`
 	PrefundIn           string `json:"prefundIn"`
-	PrevAppBlk          string `json:"prevAppBlk"`
 	PrevBal             string `json:"prevBal"`
 	PriceSource         string `json:"priceSource"`
 	Recipient           string `json:"recipient"`
-	Reconciled          string `json:"reconciled"`
-	ReconciliationType  string `json:"reconciliationType"`
 	SelfDestructIn      string `json:"selfDestructIn"`
 	SelfDestructOut     string `json:"selfDestructOut"`
 	Sender              string `json:"sender"`
 	SpotPrice           string `json:"spotPrice"`
 	Timestamp           string `json:"timestamp"`
-	TotalIn             string `json:"totalIn"`
-	TotalOut            string `json:"totalOut"`
-	TotalOutLessGas     string `json:"totalOutLessGas"`
 	TransactionHash     string `json:"transactionHash"`
 	TransactionIndex    string `json:"transactionIndex"`
 	// EXISTING_CODE
@@ -92,11 +82,9 @@ type SimpleStatement struct {
 	MinerTxFeeIn        big.Int        `json:"minerTxFeeIn,omitempty"`
 	MinerUncleRewardIn  big.Int        `json:"minerUncleRewardIn,omitempty"`
 	PrefundIn           big.Int        `json:"prefundIn,omitempty"`
-	PrevAppBlk          base.Blknum    `json:"prevAppBlk,omitempty"`
 	PrevBal             big.Int        `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
-	ReconciliationType  string         `json:"reconciliationType"`
 	SelfDestructIn      big.Int        `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     big.Int        `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
@@ -106,6 +94,8 @@ type SimpleStatement struct {
 	TransactionIndex    base.Blknum    `json:"transactionIndex"`
 	raw                 *RawStatement  `json:"-"`
 	// EXISTING_CODE
+	ReconType ReconType `json:"-"`
+	AssetType string    `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -132,6 +122,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"timestamp":           s.Timestamp,
 		"date":                s.Date(),
 		"assetAddr":           s.AssetAddr,
+		"assetType":           s.AssetType,
 		"assetSymbol":         s.AssetSymbol,
 		"decimals":            s.Decimals,
 		"spotPrice":           s.SpotPrice,
@@ -142,7 +133,7 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"begBal":              utils.FormattedValue(s.BegBal, asEther, decimals),
 		"amountNet":           utils.FormattedValue(*s.AmountNet(), asEther, decimals),
 		"endBal":              utils.FormattedValue(s.EndBal, asEther, decimals),
-		"reconciliationType":  s.ReconciliationType,
+		"reconciliationType":  s.ReconType.String(),
 		"reconciled":          s.Reconciled(),
 		"totalIn":             utils.FormattedValue(*s.TotalIn(), asEther, decimals),
 		"amountIn":            utils.FormattedValue(s.AmountIn, asEther, decimals),
@@ -161,20 +152,25 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"selfDestructOut":     utils.FormattedValue(s.SelfDestructOut, asEther, decimals),
 		"gasOut":              utils.FormattedValue(s.GasOut, asEther, decimals),
 		"totalOutLessGas":     utils.FormattedValue(*s.TotalOutLessGas(), asEther, decimals),
-		"prevAppBlk":          s.PrevAppBlk,
-		"prevBal":             utils.FormattedValue(s.PrevBal, asEther, decimals),
 		"begBalDiff":          utils.FormattedValue(*s.BegBalDiff(), asEther, decimals),
 		"endBalDiff":          utils.FormattedValue(*s.EndBalDiff(), asEther, decimals),
 		"endBalCalc":          utils.FormattedValue(*s.EndBalCalc(), asEther, decimals),
 		"correctingReason":    s.CorrectingReason,
 	}
+
+	if s.ReconType&First == 0 {
+		model["prevBal"] = utils.FormattedValue(s.PrevBal, asEther, decimals)
+	} else if format != "json" {
+		model["prevBal"] = ""
+	}
+
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
-		"assetAddr", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
+		"assetAddr", "assetType", "assetSymbol", "decimals", "spotPrice", "priceSource", "accountedFor",
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciliationType", "reconciled",
 		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
-		"selfDestructOut", "gasOut", "totalOutLessGas", "prevAppBlk", "prevBal", "begBalDiff",
+		"selfDestructOut", "gasOut", "totalOutLessGas", "prevBal", "begBalDiff",
 		"endBalDiff", "endBalCalc", "correctingReason",
 	}
 	// EXISTING_CODE
@@ -333,11 +329,6 @@ func (s *SimpleStatement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// PrevAppBlk
-	if err = cache.WriteValue(writer, s.PrevAppBlk); err != nil {
-		return err
-	}
-
 	// PrevBal
 	if err = cache.WriteValue(writer, &s.PrevBal); err != nil {
 		return err
@@ -350,11 +341,6 @@ func (s *SimpleStatement) MarshalCache(writer io.Writer) (err error) {
 
 	// Recipient
 	if err = cache.WriteValue(writer, s.Recipient); err != nil {
-		return err
-	}
-
-	// ReconciliationType
-	if err = cache.WriteValue(writer, s.ReconciliationType); err != nil {
 		return err
 	}
 
@@ -502,11 +488,6 @@ func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err 
 		return err
 	}
 
-	// PrevAppBlk
-	if err = cache.ReadValue(reader, &s.PrevAppBlk, version); err != nil {
-		return err
-	}
-
 	// PrevBal
 	if err = cache.ReadValue(reader, &s.PrevBal, version); err != nil {
 		return err
@@ -519,11 +500,6 @@ func (s *SimpleStatement) UnmarshalCache(version uint64, reader io.Reader) (err 
 
 	// Recipient
 	if err = cache.ReadValue(reader, &s.Recipient, version); err != nil {
-		return err
-	}
-
-	// ReconciliationType
-	if err = cache.ReadValue(reader, &s.ReconciliationType, version); err != nil {
 		return err
 	}
 
@@ -613,8 +589,8 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 	return sum
 }
 
-func (s *SimpleStatement) MoneyMoved() bool {
-	return s.TotalIn() != new(big.Int).SetUint64(0) || s.TotalOut() != new(big.Int).SetUint64(0)
+func (s *SimpleStatement) IsMaterial() bool {
+	return s.TotalIn().Cmp(new(big.Int)) != 0 || s.TotalOut().Cmp(new(big.Int)) != 0
 }
 
 func (s *SimpleStatement) AmountNet() *big.Int {
@@ -651,27 +627,6 @@ func (s *SimpleStatement) Reconciled() bool {
 	return (s.EndBalDiff().Cmp(zero) == 0 && s.BegBalDiff().Cmp(zero) == 0)
 }
 
-// ClearInternal clears all the internal accounting values. Keeps AmountIn, AmountOut and GasOut
-// because those are at the top level (both the transaction itself and trace '0' have them). We
-// skip trace '0' because it's the same as the transaction.
-func (s *SimpleStatement) ClearInternal() {
-	// s.AmountIn.SetUint64(0)
-	s.InternalIn.SetUint64(0)
-	s.MinerBaseRewardIn.SetUint64(0)
-	s.MinerNephewRewardIn.SetUint64(0)
-	s.MinerTxFeeIn.SetUint64(0)
-	s.MinerUncleRewardIn.SetUint64(0)
-	s.CorrectingIn.SetUint64(0)
-	s.PrefundIn.SetUint64(0)
-	s.SelfDestructIn.SetUint64(0)
-
-	// s.AmountOut.SetUint64(0)
-	// s.GasOut.SetUint64(0)
-	s.InternalOut.SetUint64(0)
-	s.CorrectingOut.SetUint64(0)
-	s.SelfDestructOut.SetUint64(0)
-}
-
 func (s *SimpleStatement) IsEth() bool {
 	return s.AssetAddr == base.FAKE_ETH_ADDRESS
 }
@@ -696,7 +651,7 @@ func (s *SimpleStatement) IsStableCoin() bool {
 func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 	lotsOfLogs := len(tx.Receipt.Logs) > 10
 	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
-	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.MoneyMoved()
+	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.IsMaterial()
 	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
 
 	// TODO: BOGUS PERF
@@ -710,7 +665,7 @@ func (s *SimpleStatement) isNullTransfer(tx *SimpleTransaction) bool {
 	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
 
 	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
-	logger.TestLog(true, "  MoneyMoved:       ", s.MoneyMoved())
+	logger.TestLog(true, "  material:         ", s.IsMaterial())
 	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
 
 	if !ret {
@@ -739,7 +694,16 @@ func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
 }
 
 func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
-	if !s.IsEth() {
+	if s.IsEth() {
+		if s.AssetType == "trace-eth" && s.ReconType&First != 0 && s.ReconType&Last != 0 {
+			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {
+				s.EndBal = *s.EndBalCalc()
+				s.CorrectingReason = "per-block-balance"
+			}
+		} else {
+			logger.TestLog(true, "Needs correction for eth")
+		}
+	} else {
 		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
 
 		s.CorrectingIn.SetUint64(0)
@@ -767,8 +731,6 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 			s.CorrectingReason += "endbal"
 		}
 		s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
-	} else {
-		logger.TestLog(true, "Needs correction for eth")
 	}
 
 	return s.Reconciled()
@@ -780,62 +742,87 @@ type Ledgerer interface {
 	Next() base.Blknum
 }
 
-func (r *SimpleStatement) Report(ctx Ledgerer, msg string) {
+func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "===================================================")
-	logger.TestLog(true, fmt.Sprintf("====> %s", msg))
+	logger.TestLog(true, fmt.Sprintf("====> %s", s.AssetType))
 	logger.TestLog(true, "===================================================")
-	logger.TestLog(true, "ledger.blockNumber:    ", ctx.Prev())
-	logger.TestLog(true, "prevBlock:             ", ctx.Prev())
-	logger.TestLog(true, "transfer.blockNumber:  ", r.BlockNumber)
-	logger.TestLog(true, "nextBlock:             ", ctx.Next())
-	logger.TestLog(true, "isPrevDiff:            ", ctx.Prev() != r.BlockNumber)
-	logger.TestLog(true, "isNextDiff:            ", ctx.Next() != r.BlockNumber)
-	logger.TestLog(true, "---------------------------------------------------")
+	logger.TestLog(true, "Previous:              ", ctx.Prev())
+	logger.TestLog(true, "Current:               ", s.BlockNumber)
+	logger.TestLog(true, "Next:                  ", ctx.Next())
+	logger.TestLog(true, "reconciliationType:    ", s.ReconType.String())
+	logger.TestLog(true, "assetType:             ", s.AssetType)
+	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
+	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
+	logger.TestLog(true, "assetAddr:             ", s.AssetAddr, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
+	logger.TestLog(true, "hash:                  ", s.TransactionHash)
+	logger.TestLog(true, "timestamp:             ", s.Timestamp)
+	if s.AssetType == "eth" {
+		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d", s.BlockNumber, s.TransactionIndex))
+	} else {
+		logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))
+	}
+	logger.TestLog(true, "priceSource:           ", s.SpotPrice, "("+s.PriceSource+")")
+	reportL("---------------------------------------------------")
 	logger.TestLog(true, "Trial balance:")
-	logger.TestLog(true, "   reconciliationType: ", r.ReconciliationType)
-	logger.TestLog(true, "   accountedFor:       ", r.AccountedFor)
-	logger.TestLog(true, "   sender:             ", r.Sender)
-	logger.TestLog(true, "   recipient:          ", r.Recipient)
-	logger.TestLog(true, "   assetAddr:          ", r.AssetAddr)
-	logger.TestLog(true, "   assetSymbol:        ", r.AssetSymbol)
-	logger.TestLog(true, "   decimals:           ", r.Decimals)
-	logger.TestLog(true, "   prevAppBlk:         ", r.PrevAppBlk)
-	logger.TestLog(true, "   hash:               ", r.TransactionHash)
-	logger.TestLog(true, "   timestamp:          ", r.Timestamp)
-	logger.TestLog(true, "   blockNumber:        ", r.BlockNumber)
-	logger.TestLog(true, "   transactionIndex:   ", r.TransactionIndex)
-	logger.TestLog(true, "   logIndex:           ", r.LogIndex)
-	logger.TestLog(true, "   priceSource:        ", r.PriceSource)
-	logger.TestLog(true, "   spotPrice:          ", r.SpotPrice)
-	logger.TestLog(true, "   prevBal:            ", r.PrevBal.Text(10))
-	logger.TestLog(true, "   begBal:             ", r.BegBal.Text(10))
-	logger.TestLog(true, "   amountIn:           ", r.AmountIn.Text(10))
-	logger.TestLog(true, "   internalIn:         ", r.InternalIn.Text(10))
-	logger.TestLog(true, "   minerBaseRewardIn:  ", r.MinerBaseRewardIn.Text(10))
-	logger.TestLog(true, "   minerNephewRewardIn:", r.MinerNephewRewardIn.Text(10))
-	logger.TestLog(true, "   minerTxFeeIn:       ", r.MinerTxFeeIn.Text(10))
-	logger.TestLog(true, "   minerUncleRewardIn: ", r.MinerUncleRewardIn.Text(10))
-	logger.TestLog(true, "   correctingIn:       ", r.CorrectingIn.Text(10))
-	logger.TestLog(true, "   prefundIn:          ", r.PrefundIn.Text(10))
-	logger.TestLog(true, "   selfDestructIn:     ", r.SelfDestructIn.Text(10))
-	logger.TestLog(true, "   totalIn:            ", r.TotalIn().Text(10))
-	logger.TestLog(true, "   amountOut:          ", r.AmountOut.Text(10))
-	logger.TestLog(true, "   internalOut:        ", r.InternalOut.Text(10))
-	logger.TestLog(true, "   correctingOut:      ", r.CorrectingOut.Text(10))
-	logger.TestLog(true, "   selfDestructOut:    ", r.SelfDestructOut.Text(10))
-	logger.TestLog(true, "   gasOut:             ", r.GasOut.Text(10))
-	logger.TestLog(true, "   totalOut:           ", r.TotalOut().Text(10))
-	logger.TestLog(true, "   amountNet:          ", r.AmountNet().Text(10))
-	logger.TestLog(true, "   endBal:             ", r.EndBal.Text(10))
-	logger.TestLog(true, "   begBalDiff:         ", r.BegBalDiff().Text(10))
-	logger.TestLog(true, "   endBalDiff:         ", r.EndBalDiff().Text(10))
-	logger.TestLog(true, "   endBalCalc:         ", r.EndBalCalc().Text(10))
-	logger.TestLog(true, "   correctingReason:   ", r.CorrectingReason)
-	logger.TestLog(true, "   moneyMoved:         ", r.MoneyMoved())
-	logger.TestLog(true, "   trialBalance:       ", r.Reconciled())
+	report1("   prevBal:            ", &s.PrevBal)
+	report2("   begBal:             ", &s.BegBal, s.EndBalDiff())
+	report1("   totalIn:            ", s.TotalIn())
+	report1("   totalOut:           ", s.TotalOut())
+	report1("   amountNet:          ", s.AmountNet())
+	reportL("                       =======================")
+	report2("   endBal:             ", &s.EndBal, s.BegBalDiff())
+	report1("   endBalCalc:         ", s.EndBalCalc())
+	reportL("---------------------------------------------------")
+	reportE("   amountIn:           ", &s.AmountIn)
+	reportE("   internalIn:         ", &s.InternalIn)
+	reportE("   minerBaseRewardIn:  ", &s.MinerBaseRewardIn)
+	reportE("   minerNephewRewardIn:", &s.MinerNephewRewardIn)
+	reportE("   minerTxFeeIn:       ", &s.MinerTxFeeIn)
+	reportE("   minerUncleRewardIn: ", &s.MinerUncleRewardIn)
+	reportE("   correctingIn:       ", &s.CorrectingIn)
+	reportE("   prefundIn:          ", &s.PrefundIn)
+	reportE("   selfDestructIn:     ", &s.SelfDestructIn)
+	reportE("   amountOut:          ", &s.AmountOut)
+	reportE("   internalOut:        ", &s.InternalOut)
+	reportE("   correctingOut:      ", &s.CorrectingOut)
+	reportE("   selfDestructOut:    ", &s.SelfDestructOut)
+	reportE("   gasOut:             ", &s.GasOut)
+	logger.TestLog(s.CorrectingReason != "", "   correctingReason:   ", s.CorrectingReason)
+	logger.TestLog(true, "   material:           ", s.IsMaterial())
+	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
+	if !s.Reconciled() {
+		logger.TestLog(true, " ^^ we need to fix this ^^")
+	}
 	logger.TestLog(true, "---------------------------------------------------")
+	logger.TestLog(true, "End of trial balance report")
 }
 
-// PATH: recons/0549/93ab/0f2b1acc0fdc65405ee203b4271bebe6/010277776.00094.bin
+func isZero(val *big.Int) bool {
+	return val.Cmp(big.NewInt(0)) == 0
+}
+
+func reportE(msg string, val *big.Int) {
+	logger.TestLog(!isZero(val), msg, utils.FormattedValue(*val, true, 18))
+}
+
+func report2(msg string, v1 *big.Int, v2 *big.Int) {
+	s := ""
+	if v1 != nil {
+		s = utils.FormattedValue(*v1, true, 18)
+	}
+	if v2 != nil {
+		s += " (" + utils.FormattedValue(*v2, true, 18) + ")"
+	}
+	logger.TestLog(true, msg, s)
+}
+
+func reportL(msg string) {
+	report2(msg, nil, nil)
+}
+
+func report1(msg string, val *big.Int) {
+	report2(msg, val, nil)
+}
 
 // EXISTING_CODE
+

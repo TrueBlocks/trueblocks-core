@@ -51,7 +51,8 @@ const notesSlurp = `
 Notes:
   - An address must be either an ENS name or start with '0x' and be forty-two characters long.
   - Portions of this software are Powered by Etherscan.io APIs.
-  - The withdrawals option is only available on certain chains. It is ignored otherwise.`
+  - The withdrawals option is only available on certain chains. It is ignored otherwise.
+  - If the value of --source is key, --types is ignored and only appearances or counts are returned.`
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra slurp
@@ -66,8 +67,17 @@ func init() {
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.GetOptions().Types, "types", "t", nil, `which types of transactions to request
 One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Appearances, "appearances", "p", false, "show only the blocknumber.tx_id appearances of the exported transactions")
-	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 5000, "the number of records to request on each page")
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	slurpCmd.Flags().StringVarP(&slurpPkg.GetOptions().Source, "source", "S", "etherscan", `the source of the slurped data
+One of [ etherscan | key ]`)
+	slurpCmd.Flags().BoolVarP(&slurpPkg.GetOptions().Count, "count", "U", false, "for --appearances mode only, display only the count of records")
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().Page, "page", "g", 0, "the page to retrieve (hidden)")
+	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 3000, "the number of records to request on each page (hidden)")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
+	if os.Getenv("TEST_MODE") != "true" {
+		slurpCmd.Flags().MarkHidden("page")
+		slurpCmd.Flags().MarkHidden("per_page")
+	}
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
@@ -78,3 +88,4 @@ One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals 
 
 	chifraCmd.AddCommand(slurpCmd)
 }
+

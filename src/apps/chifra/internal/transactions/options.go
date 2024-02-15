@@ -32,9 +32,8 @@ type TransactionsOptions struct {
 	Logs           bool                     `json:"logs,omitempty"`           // Display only the logs found in the transaction(s)
 	Emitter        []string                 `json:"emitter,omitempty"`        // For the --logs option only, filter logs to show only those logs emitted by the given address(es)
 	Topic          []string                 `json:"topic,omitempty"`          // For the --logs option only, filter logs to show only those with this topic(s)
-	AccountFor     string                   `json:"accountFor,omitempty"`     // Reconcile the transaction as per the provided address
 	CacheTraces    bool                     `json:"cacheTraces,omitempty"`    // Force the transaction's traces into the cache
-	Source         bool                     `json:"source,omitempty"`         // Find the source of the funds sent to the receiver
+	Seed           bool                     `json:"seed,omitempty"`           // Find the source of the funds sent to the receiver
 	Globals        globals.GlobalOptions    `json:"globals,omitempty"`        // The global options
 	Conn           *rpc.Connection          `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
@@ -55,9 +54,8 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
-	logger.TestLog(len(opts.AccountFor) > 0, "AccountFor: ", opts.AccountFor)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	logger.TestLog(opts.Source, "Source: ", opts.Source)
+	logger.TestLog(opts.Seed, "Seed: ", opts.Seed)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
@@ -99,12 +97,10 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Topic = append(opts.Topic, s...)
 			}
-		case "accountFor":
-			opts.AccountFor = value[0]
 		case "cacheTraces":
 			opts.CacheTraces = true
-		case "source":
-			opts.Source = true
+		case "seed":
+			opts.Seed = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
@@ -112,8 +108,6 @@ func transactionsFinishParseApi(w http.ResponseWriter, r *http.Request) *Transac
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
-	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
-	opts.AccountForAddr = base.HexToAddress(opts.AccountFor)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -140,8 +134,6 @@ func transactionsFinishParse(args []string) *TransactionsOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
-	opts.AccountFor, _ = opts.Conn.GetEnsAddress(opts.AccountFor)
-	opts.AccountForAddr = base.HexToAddress(opts.AccountFor)
 
 	// EXISTING_CODE
 	opts.Transactions = args
@@ -180,7 +172,7 @@ func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	m = map[string]bool{
 		"transactions": true,
-		"traces":       opts.CacheTraces,
+		"traces":       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
 	}
 	// EXISTING_CODE
 	return
@@ -188,3 +180,4 @@ func (opts *TransactionsOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+
