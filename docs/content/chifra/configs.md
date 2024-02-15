@@ -48,14 +48,15 @@ This feature comes in handy when build shell scripts to automate various tasks w
 
 ## Where are configs stored?
 
-Please see [TODO: PLACE_HODLER](#) for more information.
+The configuration files for `chifra` are stored in the operating system specific locations in the
+`TrueBlocks` folder.
 
 ## Separate files
 
 A single global configuration, called `trueBlocks.toml`, is stored at the root of the configuration
 folder.
 
-In addition, each individual tool has its own configuration file with items peculuar to that tool.
+In addition, each individual tool may have its own configuration file with items peculuar to that tool.
 If a configuration item is found in a particular file, it applies only to that tool.
 
 If, however, one of the items documented below under `trueBlocks.toml` is found in a tool's
@@ -70,6 +71,8 @@ If you're running against mutliple chains, you may place any of these files in t
 chain's configuration folder, and the values found there will replace any values found at the
 top level. In this way, you may configure all chains for certain values, but customize your
 configuration per chain.
+
+Note: As of version 2.5.2, this is no longer true.
 
 ## Configuration files
 
