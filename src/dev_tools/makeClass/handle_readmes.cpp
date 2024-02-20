@@ -15,7 +15,8 @@
 
 //------------------------------------------------------------------------------------------------------------
 string_q get_usage(const string_q& route) {
-    return "```[plaintext]\n" + doCommand("chifra " + route + " --help", true /* stderr */) + "\n```";
+    string_q plainText = doCommand("chifra " + route + " --help", true /* stderr */);
+    return "```[plaintext]\n" + plainText + "\n```";
 }
 
 extern const char* STR_CONFIG;
@@ -46,19 +47,23 @@ string_q get_links(const CCommandOption& ep) {
         "- [source code]([{SOURCEURL}]/[{ROUTE}])\n"
         "- [tests]([{TESTURL}]/[{API_GROUP}]/[{TOOL}].csv)";
 
+    // cout << "X: " << ep.api_route << endl;
+    if (ep.api_route == "daemon" || ep.api_route == "explore") {
+        // cout << "X: 1: " << ret << endl;
+        replace(ret, "- [api docs](/api/#operation/[{GROUP}]-[{ROUTE}])", "- no api for this command");
+        // cout << "X: 2: " << ret << endl;
+        if (ep.api_route == "daemon") {
+            // cout << "X: 3: " << ret << endl;
+            replace(ret, "- [tests]([{TESTURL}]/[{API_GROUP}]/[{TOOL}].csv)", "- no tests for this command");
+        }
+        // cout << "X: 4: " << ret << endl;
+    }
+
     string_q gitUrl = "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/";
     string_q sourceUrl = gitUrl + "apps/chifra/internal";
     string_q testUrl = gitUrl + "dev_tools/testRunner/testCases";
-
     replace(ret, "[{TESTURL}]", testUrl);
     replace(ret, "[{SOURCEURL}]", sourceUrl);
-
-    if (ep.api_route == "daemon") {
-        replace(ret, "- [tests]([{TESTURL}]/[{API_GROUP}]/[{TOOL}].csv)", "- no tests for this command");
-        if (ep.api_route == "explore") {
-            replace(ret, "- [api docs](/api/#operation/[{GROUP}]-[{ROUTE}])", "- no api for this command");
-        }
-    }
 
     replaceAll(ret, "[{GROUP}]", toLower(substitute(ep.group, " ", "")));
     replaceAll(ret, "[{API_GROUP}]", toLower(substitute(ep.api_group, " ", "")));

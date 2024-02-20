@@ -27,7 +27,6 @@ info:
       on your machine, change your configs as needed.
     2. Run `chifra daemon`
 
-
       ### Example queries
 
      By default, all calls are to `localhost:8080`.
