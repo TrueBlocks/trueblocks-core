@@ -38,12 +38,28 @@ string_q get_readme_notes(const CCommandOption& ep) {
 //------------------------------------------------------------------------------------------------------------
 string_q get_links(const CCommandOption& ep) {
     bool noApi = !(ep.api_route != "daemon" && ep.api_route != "explore");
-    string_q url = "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/";
+    string_q gitUrl = "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/";
+    string_q sourceUrl = gitUrl + "apps/chifra/internal";
+    string_q testUrl = gitUrl + "dev_tools/testRunner/testCases";
 
-    string_q ret = "\n\nLinks:\n\n[{API}]\n- [source code](" + url + "[{ROUTE}])";
+    string_q ret =
+        "\n"
+        "\n"
+        "Links:\n"
+        "\n"
+        "[{API}]\n"
+        "- [source code]([{SOURCEURL}]/[{ROUTE}])\n"
+        "- [tests]([{TESTURL}]/[{API_GROUP}]/[{TOOL}].csv)";
+
     replace(ret, "[{API}]", noApi ? "- no api for this command" : "- [api docs](/api/#operation/[{GROUP}]-[{ROUTE}])");
+    replace(ret, "[{TESTURL}]", testUrl);
+    replace(ret, "[{SOURCEURL}]", sourceUrl);
+
     replaceAll(ret, "[{GROUP}]", toLower(substitute(ep.group, " ", "")));
+    replaceAll(ret, "[{API_GROUP}]", toLower(substitute(ep.api_group, " ", "")));
     replaceAll(ret, "[{ROUTE}]", ep.api_route);
+    replaceAll(ret, "[{TOOL}]", ep.tool);
+
     return ret;
 }
 

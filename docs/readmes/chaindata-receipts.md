@@ -43,4 +43,5 @@ Links:
 
 - [api docs](/api/#operation/chaindata-receipts)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getReceipts.csv)
 
