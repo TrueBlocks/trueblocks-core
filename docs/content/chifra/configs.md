@@ -123,7 +123,6 @@ Note: As of version 2.5.2, this is no longer true.
 | enabled             | If `true`, exclude addresses in `list` from extractions<br />false                                                                  |
 | list                | If `[exclusions]enabled` is `true`, exclude this list of addresses from extractions<br />empty                                      |
 
-<a href="#C4"></a>
 <div style="padding:2px;padding-left:10px;background-color:green;color:white">blockScrape.toml for chifra scrape</div>
 
 **Configuration group:** `[settings]`  
