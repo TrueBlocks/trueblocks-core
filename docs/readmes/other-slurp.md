@@ -54,4 +54,5 @@ Links:
 
 - [api docs](/api/#operation/other-slurp)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/ethslurp.csv)
 

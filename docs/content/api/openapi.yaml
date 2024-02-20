@@ -10,23 +10,22 @@ info:
   version: 2.5.8-release
   description: >
 
-    A REST layer over the TrueBlocks application. With `chifra daemon`, you can
+    A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
 
     ## How to use this API effectively
 
-    This API's endpoints are exact translations of the commands used by the chifra
+    The endpoints in this API are exact translations of the commands used by the chifra
     CLI application, and the query parameters mirror the commands' options and
     flags. If you want details, [the commands have their own documentation page](/chifra/introduction/).
 
-    For detailed descriptions of fields, see [the data model reference](/data-model/intro/).
+    For detailed descriptions of data returned by each command, see [the data model reference](/data-model/intro/).
 
       ### Before you begin
 
     1. [Install the trueblocks-core application](/docs/install/install-core/)
       on your machine, change your configs as needed.
     2. Run `chifra daemon`
-
 
       ### Example queries
 
