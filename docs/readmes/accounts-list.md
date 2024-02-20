@@ -52,5 +52,5 @@ Links:
 
 - [api docs](/api/#operation/accounts-list)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport --appearances.csv)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 

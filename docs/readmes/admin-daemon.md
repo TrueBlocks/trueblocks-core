@@ -49,7 +49,7 @@ Links:
 
 - no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/flame.csv)
+- no tests for this command
 
 ### notes
 

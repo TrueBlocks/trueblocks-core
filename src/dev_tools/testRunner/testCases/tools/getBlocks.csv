@@ -24,6 +24,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,blockByHash           ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,miner                 ,y    ,blocks = 1 & uniq & fmt = json
 on      ,both ,fast  ,blocks ,tools/getBlocks ,addrMisconfig         ,y    ,blocks = 32279 & uniq & verbose
 on      ,both ,fast  ,blocks ,tools/getBlocks ,addrBlockZero         ,y    ,blocks = 0 & uniq
+
 slow    ,both ,medi  ,blocks ,tools/getBlocks ,uniqTxCnt1            ,y    ,blocks = 3982128 & uniq & count & fmt = json & verbose
 on      ,both ,fast  ,blocks ,tools/getBlocks ,addrCntFail           ,y    ,blocks = 3982128 & count
 on      ,both ,fast  ,blocks ,tools/getBlocks ,uncles_count          ,y    ,blocks = 3 469 & uncles & count
@@ -41,6 +42,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,list_fail             ,y    ,list
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_list_count       ,y    ,list = 1000 & list_count = 10
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_count_block_fail ,y    ,list_count = 10 & blocks = 1000
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_all              ,y    ,list_count = 2 & list = 1030000 & blocks = 10010
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,fmt_default           ,n    ,blocks = 2222222 2332332
 on      ,both ,fast  ,blocks ,tools/getBlocks ,fmt_txt               ,n    ,blocks = 2222222 2332332 & fmt = txt
 on      ,both ,fast  ,blocks ,tools/getBlocks ,fmt_csv               ,n    ,blocks = 2222222 2332332 & fmt = csv & no_header
@@ -56,6 +58,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,logs_emitter_w_ens    ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_e2  ,y    ,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b7
 on      ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_t1  ,y    ,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 on      ,both ,fast  ,blocks ,tools/getBlocks ,without_logs_fail_t2  ,y    ,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,withdrawals_sepolia_f ,y    ,blocks = 4001001 & chain = sepolia & hashes
 on      ,both ,fast  ,blocks ,tools/getBlocks ,withdrawals_sepolia   ,y    ,blocks = 4001001 & chain = sepolia & hashes & withdrawals
 sep     ,both ,fast  ,blocks ,tools/getBlocks ,withdrawals_sepolia_u ,y    ,blocks = 2990908-2990913 & chain = sepolia & hashes & uniq
@@ -64,6 +67,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,withdrawals           ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,withdrawals_ether     ,y    ,blocks = 17034900 & hashes & withdrawals & ether
 on      ,both ,fast  ,blocks ,tools/getBlocks ,withdrawals_count     ,y    ,blocks = 17034900 & hashes & withdrawals & count
 on      ,both ,fast  ,blocks ,tools/getBlocks ,withdrawals_fail      ,y    ,blocks = 17034900 & hashes & withdrawals & logs
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs             ,y    ,blocks = 4012000-4012001 & logs
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv         ,n    ,blocks = 4012000-4012001 & logs & fmt = csv
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_topic       ,y    ,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
@@ -74,6 +78,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_into_cache  ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_outof_cache ,y    ,blocks = 4012000-4012001 & logs
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_decache     ,y    ,blocks = 4012000-4012001 & logs & decache
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_into_cache2 ,y    ,blocks = 4012000-4012001 & logs & cache
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_uniq_uncles        ,y    ,blocks = 4012000-4012001 & uniq & uncles
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles       ,y    ,blocks = 4012000-4012001 & cache & uncles
 on      ,both ,fast  ,blocks ,tools/getBlocks ,cache                 ,y    ,blocks = 1152642 & cache
@@ -83,27 +88,42 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,decache               ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_hashes       ,y    ,blocks = 4012000-4012001 & traces & hashes
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_uniq         ,y    ,blocks = 4012000-4012001 & traces & uniq
 on      ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs     ,y    ,blocks = 4012000-4012001 & big_range = 100
+
 slow    ,both ,fast  ,blocks ,tools/getBlocks ,access_list           ,y    ,blocks = 16500011 & fmt = json & raw
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,flow_error_1          ,n    ,blocks = 4102000 & fmt = txt & flow = to
 slow    ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_from        ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = from
 slow    ,both ,fast  ,blocks ,tools/getBlocks ,flow_uniq_reward      ,n    ,blocks = 4102000 & fmt = txt & uniq & flow = reward
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,list_block_fail       ,y    ,list = 1000 & blocks = 1000
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_tracing            ,y    ,blocks = 12 & traces & chain = non-tracing
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,raw_01                ,y    ,blocks = 2768801 1995314 1958017 & raw
 on      ,both ,slow  ,blocks ,tools/getBlocks ,terse_no_raw          ,y    ,blocks = 4001001-4001003 & hashes
 on      ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw         ,y    ,blocks = 4001001 & hashes & raw
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,artic_not_logs        ,y    ,blocks = 4012000-4012001 & articulate
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_traces_art       ,y    ,blocks = 4012000-4012001 & traces & articulate
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_uncles_art       ,y    ,blocks = 4012000-4012001 & uncles & articulate
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_hashes_art       ,y    ,blocks = 4012000-4012001 & hashes & articulate
+
+# These two test cases fail in an odd way. They vacilate between two articulations. This is possibly because the
+# abiCache.AbiMap is unordered and since we started using IterateOverMap it is now getting filled on alternative orderings.
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art         ,y    ,blocks = 4012000-4012001 & logs & articulate
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art     ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
+
+# These report no such option (account_for) in the help text
 on      ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_miner       ,y    ,blocks = 3 & fmt = json & account_for = 0x5088d623ba0fcf0131e0897a91734a4d83596aa0
 on      ,both ,fast  ,blocks ,tools/getBlocks ,reconcile_uncle       ,y    ,blocks = 3 & fmt = json & account_for = 0xc8ebccc5f5689fa8659d83713341e5ad19349448
+
+# These fail because they do not create value JSON
 on      ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file1             ,n    ,file = cmd_file1 & cache
 on      ,cmd  ,fast  ,blocks ,tools/getBlocks ,cmd_file2             ,n    ,file = cmd_file2 & cache
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,redir_output          ,n    ,blocks = 1001001-1001005 & fmt = csv & output = output_test_file
 on      ,both ,fast  ,blocks ,tools/getBlocks ,redir_output_append   ,n    ,blocks = 1001005-1001010 & fmt = csv & output = output_test_file & no_header & append
+
 on      ,both ,fast  ,blocks ,tools/getBlocks ,cache_and_decache     ,y    ,blocks = 12 & cache & decache
 on      ,both ,fast  ,blocks ,tools/getBlocks ,cache_one             ,y    ,blocks = 12 & cache
 on      ,both ,fast  ,blocks ,tools/getBlocks ,decache_one           ,y    ,blocks = 12 & decache
@@ -111,5 +131,8 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,cache_txs             ,y    ,bloc
 on      ,both ,fast  ,blocks ,tools/getBlocks ,decache_txs           ,y    ,blocks = 12 & decache
 on      ,both ,fast  ,blocks ,tools/getBlocks ,cache_traces          ,y    ,blocks = 12 & cache & cache_txs & cache_traces
 on      ,both ,fast  ,blocks ,tools/getBlocks ,decache_traces        ,y    ,blocks = 12 & decache
+
+# Capabilities
+# chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
 on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_allowed          ,y    ,blocks = 3000000 & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether & fail_on_purpose
 on      ,both ,fast  ,blocks ,tools/getBlocks ,caps_disallowed_1     ,y    ,blocks = 3000000 & wei
