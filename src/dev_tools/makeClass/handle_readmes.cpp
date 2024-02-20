@@ -132,8 +132,9 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{NOTES}]", get_readme_notes(ep));
                 replaceAll(docContents, "[{MODELS}]", get_models(dataModels, ep.api_route));
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
+                string_q noTicks = substitute(docContents, "'", "'");
                 writeIfDifferent(getDocsPathReadmes(docFn),
-                                 substitute(substitute(docContents, "[{LINKS}]", get_links(ep)), "[{FOOTER}]", "\n"));
+                                 substitute(substitute(noTicks, "[{LINKS}]", get_links(ep)), "[{FOOTER}]", "\n"));
 
                 string_q footerFn = getDocsPathTemplates("readme-intros/README.footer.md");
                 string_q sourceFooter = "\n\n" + trim(asciiFileToString(footerFn), '\n') + "\n";
