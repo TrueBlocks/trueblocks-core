@@ -1262,12 +1262,10 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#statement">Statement</a>, and/or <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
+                    description: Transaction data as returned from the RPC (with slight enhancements). Produces <a href="/data-model/chaindata/#transaction">Transaction</a> data. Corresponds to the <a href="/chifra/chaindata/#chifra-transactions">chifra transactions</a> command line.
                     type: array
                     items:
-                      oneOf:
-                        - $ref: "#/components/schemas/statement"
-                        - $ref: "#/components/schemas/transaction"
+                      $ref: "#/components/schemas/transaction"
         "400":
           description: bad input parameter
   /receipts:
