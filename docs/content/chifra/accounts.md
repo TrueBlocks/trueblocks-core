@@ -79,6 +79,7 @@ Links:
 
 - [api docs](/api/#operation/accounts-list)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 
 ## chifra export
 
@@ -178,6 +179,7 @@ Links:
 
 - [api docs](/api/#operation/accounts-export)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 
 ## chifra monitors
 
@@ -266,6 +268,7 @@ Links:
 
 - [api docs](/api/#operation/accounts-monitors)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 
 ## chifra names
 
@@ -322,22 +325,30 @@ Links:
 
 - [api docs](/api/#operation/accounts-names)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/ethNames.csv)
 
 ## chifra abis
 
-`chifra abis` retrieves ABI files for the given address(es). It searches for the ABI in this order:
-the current local folder, the TrueBlocks cache, Etherscan, or (in the
-future) ENS and Sourcify.
+The `chifra abis` tool retrieves one or more ABI files for the given address(es). It searches
+for ABIs, sequentially, in the following locations:
 
-While this tool may be used from the command line and the API, its primary purpose is in support of
-tools such as `chifra export` to support the `--articulate` option.
+- the current working folder,
+- the TrueBlocks local cache,
+- Etherscan,
+- (in the future) ENS and Sourcify.
+
+While this tool may be used from the command line, its primary purpose is in support of
+the `--articulate` option for tools such as `chifra export` and `chifra logs`.
+
+If possible, the tool will follow proxied addresses searching for the ABI, but that does not
+always work. In that case, you may use the `--proxy_for` option.
 
 The `--known` option prints a list of semi-standard function signatures such as the ERC20 standard,
 ERC 721 standard, various functions from OpenZeppelin, various Uniswap functions, etc. As an
 optimization, the `known` signatures are searched first during articulation.
 
-The `--sol` option converts the provided Solidity file into an ABI json file. The results are
-dropped into the current working folder.
+The `--encode` option generates a 32-byte encoding for a given cannonical function or event signature. For
+functions, you may manually extract the first four bytes of the hash.
 
 The `--find` option is experimental. Please see the notes below for more information.
 
@@ -377,6 +388,7 @@ Links:
 
 - [api docs](/api/#operation/accounts-abis)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/grabABI.csv)
 
 ### notes
 

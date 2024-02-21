@@ -12,7 +12,7 @@ weight: 1000
 toc: true
 ---
 
-Similar to `git`, TrueBlocks has an overarching command called `chifra` that gives you access to all of the other subcommands.
+Like `git`, TrueBlocks has a command called `chifra` that gives you access to all of the other subcommands.
 
 Type:
 

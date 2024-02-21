@@ -192,7 +192,6 @@ is always present as the `assetAddress` in the first reconciliation of the state
 The following commands produce and manage Statements:
 
 - [chifra export](/chifra/accounts/#chifra-export)
-- [chifra transactions](/chifra/chaindata/#chifra-transactions)
 
 Statements consist of the following fields:
 
@@ -256,4 +255,3 @@ This documentation mentions the following basic data types.
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
 | uint64    | a 64-bit unsigned integer           |                |
-

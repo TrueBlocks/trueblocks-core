@@ -45,6 +45,7 @@ Links:
 
 - [api docs](/api/#operation/admin-scrape)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/blockScrape.csv)
 
 ### configuration
 

@@ -15,7 +15,8 @@
 
 //------------------------------------------------------------------------------------------------------------
 string_q get_usage(const string_q& route) {
-    return "```[plaintext]\n" + doCommand("chifra " + route + " --help", true /* stderr */) + "\n```";
+    string_q plainText = doCommand("chifra " + route + " --help", true /* stderr */);
+    return "```[plaintext]\n" + plainText + "\n```";
 }
 
 extern const char* STR_CONFIG;
@@ -37,13 +38,38 @@ string_q get_readme_notes(const CCommandOption& ep) {
 
 //------------------------------------------------------------------------------------------------------------
 string_q get_links(const CCommandOption& ep) {
-    bool noApi = !(ep.api_route != "daemon" && ep.api_route != "explore");
-    string_q url = "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/";
+    string_q ret =
+        "\n"
+        "\n"
+        "Links:\n"
+        "\n"
+        "- [api docs](/api/#operation/[{GROUP}]-[{ROUTE}])\n"
+        "- [source code]([{SOURCEURL}]/[{ROUTE}])\n"
+        "- [tests]([{TESTURL}]/[{API_GROUP}]/[{TOOL}].csv)";
 
-    string_q ret = "\n\nLinks:\n\n[{API}]\n- [source code](" + url + "[{ROUTE}])";
-    replace(ret, "[{API}]", noApi ? "- no api for this command" : "- [api docs](/api/#operation/[{GROUP}]-[{ROUTE}])");
+    // cout << "X: " << ep.api_route << endl;
+    if (ep.api_route == "daemon" || ep.api_route == "explore") {
+        // cout << "X: 1: " << ret << endl;
+        replace(ret, "- [api docs](/api/#operation/[{GROUP}]-[{ROUTE}])", "- no api for this command");
+        // cout << "X: 2: " << ret << endl;
+        if (ep.api_route == "daemon") {
+            // cout << "X: 3: " << ret << endl;
+            replace(ret, "- [tests]([{TESTURL}]/[{API_GROUP}]/[{TOOL}].csv)", "- no tests for this command");
+        }
+        // cout << "X: 4: " << ret << endl;
+    }
+
+    string_q gitUrl = "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/";
+    string_q sourceUrl = gitUrl + "apps/chifra/internal";
+    string_q testUrl = gitUrl + "dev_tools/testRunner/testCases";
+    replace(ret, "[{TESTURL}]", testUrl);
+    replace(ret, "[{SOURCEURL}]", sourceUrl);
+
     replaceAll(ret, "[{GROUP}]", toLower(substitute(ep.group, " ", "")));
+    replaceAll(ret, "[{API_GROUP}]", toLower(substitute(ep.api_group, " ", "")));
     replaceAll(ret, "[{ROUTE}]", ep.api_route);
+    replaceAll(ret, "[{TOOL}]", substitute(ep.tool, " --appearances", ""));
+
     return ret;
 }
 
@@ -106,8 +132,9 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{NOTES}]", get_readme_notes(ep));
                 replaceAll(docContents, "[{MODELS}]", get_models(dataModels, ep.api_route));
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
+                string_q noTicks = substitute(docContents, "'", "'");
                 writeIfDifferent(getDocsPathReadmes(docFn),
-                                 substitute(substitute(docContents, "[{LINKS}]", get_links(ep)), "[{FOOTER}]", "\n"));
+                                 substitute(substitute(noTicks, "[{LINKS}]", get_links(ep)), "[{FOOTER}]", "\n"));
 
                 string_q footerFn = getDocsPathTemplates("readme-intros/README.footer.md");
                 string_q sourceFooter = "\n\n" + trim(asciiFileToString(footerFn), '\n') + "\n";

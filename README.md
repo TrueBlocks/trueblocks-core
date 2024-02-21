@@ -13,6 +13,7 @@
 - [Introduction](#introduction)
 - [Installing](#installing)
 - [Command line](#command-line)
+- [Chifra Serve](#chifra-serve)
 - [Troubleshooting](#troubleshooting)
 - [The unchained index](#the-unchained-index)
 - [Docker version](#docker-version)
@@ -73,6 +74,20 @@ The TrueBlocks command-line tool is called `chifra`. This gives you access to al
 ```[shell]
 chifra --help
 ```
+
+Get more help on any sub-command with `chifra <cmd> --help`. Full documentation is available on [our website](https://trueblocks.io).
+
+## Chifra Serve
+
+One of `chifra's` command line tools is called `serve`. This tool provides a simple API mimicing the command line. It is intended to be used only for single user enviroments.
+
+To start the server, run:  
+
+```[shell]
+chifra server
+```
+
+<span style="size: -2; background-color: #febfc1; color: black; display: block; padding: 4px">Chifra was built for the command line, a fact we purposefully take advantage of to ensure continued operation on small machines. As such, this tool is not intended to serve multiple end users in a cloud-based server environment. This is by design. Be forewarned.</span>
 
 Get more help on any sub-command with `chifra <cmd> --help`. Full documentation is available on [our website](https://trueblocks.io).
 
