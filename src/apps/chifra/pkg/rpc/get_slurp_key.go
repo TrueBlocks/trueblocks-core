@@ -48,6 +48,17 @@ type keyParam struct {
 	PerPage int    `json:"perPage"`
 }
 
+type Meta struct {
+	LastIndexedBlock int    `json:"lastIndexedBlock,omitempty"`
+	Address          string `json:"address,omitempty"`
+}
+
+type Data interface{ int | []types.SimpleSlurp }
+type keyResponse[D Data] struct {
+	Data D    `json:"data"`
+	Meta Meta `json:"meta"`
+}
+
 func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Paginator) ([]types.SimpleSlurp, int, error) {
 	url, headers, err := getUrlAndHeaders()
 	if err != nil {
@@ -61,11 +72,11 @@ func (conn *Connection) getTxsByAddressKey(chain, addr string, paginator *Pagina
 		PerPage: paginator.PerPage,
 	}}
 
-	if apps, err := query.QueryWithHeaders[[]types.SimpleSlurp](url, headers, method, params); err != nil {
+	if response, err := query.QueryWithHeaders[keyResponse[[]types.SimpleSlurp]](url, headers, method, params); err != nil {
 		return []types.SimpleSlurp{}, 0, err
 	} else {
-		v := make([]types.SimpleSlurp, 0, len(*apps))
-		for _, a := range *apps {
+		v := make([]types.SimpleSlurp, 0, len(response.Data))
+		for _, a := range response.Data {
 			s := types.SimpleSlurp{
 				BlockNumber:      a.BlockNumber,
 				TransactionIndex: a.TransactionIndex,
@@ -87,9 +98,9 @@ func (conn *Connection) getTxCountByAddressKey(chain, addr string) (int, error) 
 		Address: addr,
 	}}
 
-	if cntPtr, err := query.QueryWithHeaders[int](url, headers, method, params); err != nil {
+	if response, err := query.QueryWithHeaders[keyResponse[int]](url, headers, method, params); err != nil {
 		return 0, err
 	} else {
-		return *cntPtr, err
+		return response.Data, err
 	}
 }
