@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// When does chifra when
+// When provides an interface to the command line chifra when through the SDK.
 func When(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func When(w io.Writer, options map[string]string) error {
 	}
 
 	when.ResetOptions(false)
-	opts := when.WhenFinishParseInternal(os.Stdout, values)
+	opts := when.WhenFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("when", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

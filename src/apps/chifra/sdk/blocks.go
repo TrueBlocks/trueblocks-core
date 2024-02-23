@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Blocks does chifra blocks
+// Blocks provides an interface to the command line chifra blocks through the SDK.
 func Blocks(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Blocks(w io.Writer, options map[string]string) error {
 	}
 
 	blocks.ResetOptions(false)
-	opts := blocks.BlocksFinishParseInternal(os.Stdout, values)
+	opts := blocks.BlocksFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("blocks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

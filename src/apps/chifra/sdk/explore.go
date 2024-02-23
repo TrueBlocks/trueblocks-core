@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	explore "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Explore does chifra explore
+// Explore provides an interface to the command line chifra explore through the SDK.
 func Explore(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Explore(w io.Writer, options map[string]string) error {
 	}
 
 	explore.ResetOptions(false)
-	opts := explore.ExploreFinishParseInternal(os.Stdout, values)
+	opts := explore.ExploreFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("explore", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Config does chifra config
+// Config provides an interface to the command line chifra config through the SDK.
 func Config(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Config(w io.Writer, options map[string]string) error {
 	}
 
 	config.ResetOptions(false)
-	opts := config.ConfigFinishParseInternal(os.Stdout, values)
+	opts := config.ConfigFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("config", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

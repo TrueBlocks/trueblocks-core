@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Traces does chifra traces
+// Traces provides an interface to the command line chifra traces through the SDK.
 func Traces(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Traces(w io.Writer, options map[string]string) error {
 	}
 
 	traces.ResetOptions(false)
-	opts := traces.TracesFinishParseInternal(os.Stdout, values)
+	opts := traces.TracesFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("traces", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

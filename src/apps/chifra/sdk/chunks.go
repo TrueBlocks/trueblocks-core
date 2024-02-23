@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Chunks does chifra chunks
+// Chunks provides an interface to the command line chifra chunks through the SDK.
 func Chunks(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Chunks(w io.Writer, options map[string]string) error {
 	}
 
 	chunks.ResetOptions(false)
-	opts := chunks.ChunksFinishParseInternal(os.Stdout, values)
+	opts := chunks.ChunksFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("chunks", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

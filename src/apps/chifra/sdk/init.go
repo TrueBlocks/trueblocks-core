@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Init does chifra init
+// Init provides an interface to the command line chifra init through the SDK.
 func Init(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Init(w io.Writer, options map[string]string) error {
 	}
 
 	initPkg.ResetOptions(false)
-	opts := initPkg.InitFinishParseInternal(os.Stdout, values)
+	opts := initPkg.InitFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("init", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

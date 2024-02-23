@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Status does chifra status
+// Status provides an interface to the command line chifra status through the SDK.
 func Status(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Status(w io.Writer, options map[string]string) error {
 	}
 
 	status.ResetOptions(false)
-	opts := status.StatusFinishParseInternal(os.Stdout, values)
+	opts := status.StatusFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("status", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

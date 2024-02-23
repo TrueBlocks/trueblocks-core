@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Names does chifra names
+// Names provides an interface to the command line chifra names through the SDK.
 func Names(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Names(w io.Writer, options map[string]string) error {
 	}
 
 	names.ResetOptions(false)
-	opts := names.NamesFinishParseInternal(os.Stdout, values)
+	opts := names.NamesFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("names", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/daemon"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Daemon does chifra daemon
+// Daemon provides an interface to the command line chifra daemon through the SDK.
 func Daemon(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Daemon(w io.Writer, options map[string]string) error {
 	}
 
 	daemon.ResetOptions(false)
-	opts := daemon.DaemonFinishParseInternal(os.Stdout, values)
+	opts := daemon.DaemonFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("daemon", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Export does chifra export
+// Export provides an interface to the command line chifra export through the SDK.
 func Export(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Export(w io.Writer, options map[string]string) error {
 	}
 
 	export.ResetOptions(false)
-	opts := export.ExportFinishParseInternal(os.Stdout, values)
+	opts := export.ExportFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("export", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

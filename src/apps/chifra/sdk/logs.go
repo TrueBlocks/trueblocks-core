@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// Logs does chifra logs
+// Logs provides an interface to the command line chifra logs through the SDK.
 func Logs(w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func Logs(w io.Writer, options map[string]string) error {
 	}
 
 	logs.ResetOptions(false)
-	opts := logs.LogsFinishParseInternal(os.Stdout, values)
+	opts := logs.LogsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("logs", true)
 	// EXISTING_CODE
 	// EXISTING_CODE

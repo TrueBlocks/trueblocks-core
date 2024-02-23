@@ -11,13 +11,12 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	[{PKG}] "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{LOWER}]"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
 )
 
-// [{PROPER}] does chifra [{LOWER}]
+// [{PROPER}] provides an interface to the command line chifra [{LOWER}] through the SDK.
 func [{PROPER}](w io.Writer, options map[string]string) error {
 	values := make(url.Values)
 	for key, val := range options {
@@ -25,7 +24,7 @@ func [{PROPER}](w io.Writer, options map[string]string) error {
 	}
 
 	[{PKG}].ResetOptions(false)
-	opts := [{PKG}].[{PROPER}]FinishParseInternal(os.Stdout, values)
+	opts := [{PKG}].[{PROPER}]FinishParseInternal(w, values)
 	outputHelpers.EnableCommand("[{LOWER}]", true)
 	// EXISTING_CODE
 	// EXISTING_CODE
