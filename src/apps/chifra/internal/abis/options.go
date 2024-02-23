@@ -9,7 +9,9 @@ package abisPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -58,9 +60,17 @@ func (opts *AbisOptions) String() string {
 
 // abisFinishParseApi finishes the parsing for server invocations. Returns a new AbisOptions.
 func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return AbisFinishParseInternal(w, values)
+}
+
+func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 	copy := defaultAbisOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -89,7 +99,7 @@ func abisFinishParseApi(w http.ResponseWriter, r *http.Request) *AbisOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 

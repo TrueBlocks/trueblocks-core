@@ -9,7 +9,9 @@ package configPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
@@ -47,9 +49,17 @@ func (opts *ConfigOptions) String() string {
 
 // configFinishParseApi finishes the parsing for server invocations. Returns a new ConfigOptions.
 func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ConfigFinishParseInternal(w, values)
+}
+
+func ConfigFinishParseInternal(w io.Writer, values url.Values) *ConfigOptions {
 	copy := defaultConfigOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "mode":
 			opts.Mode = value[0]
@@ -61,7 +71,7 @@ func configFinishParseApi(w http.ResponseWriter, r *http.Request) *ConfigOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE

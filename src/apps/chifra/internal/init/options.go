@@ -9,7 +9,9 @@ package initPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -56,11 +58,19 @@ func (opts *InitOptions) String() string {
 
 // initFinishParseApi finishes the parsing for server invocations. Returns a new InitOptions.
 func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return InitFinishParseInternal(w, values)
+}
+
+func InitFinishParseInternal(w io.Writer, values url.Values) *InitOptions {
 	copy := defaultInitOptions
 	opts := &copy
 	opts.FirstBlock = 0
 	opts.Sleep = 0.0
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "all":
 			opts.All = true
@@ -78,7 +88,7 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 

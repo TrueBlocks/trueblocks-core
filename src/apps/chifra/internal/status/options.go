@@ -9,7 +9,9 @@ package statusPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -58,11 +60,19 @@ func (opts *StatusOptions) String() string {
 
 // statusFinishParseApi finishes the parsing for server invocations. Returns a new StatusOptions.
 func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return StatusFinishParseInternal(w, values)
+}
+
+func StatusFinishParseInternal(w io.Writer, values url.Values) *StatusOptions {
 	copy := defaultStatusOptions
 	opts := &copy
 	opts.FirstRecord = 0
 	opts.MaxRecords = 10000
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "modes":
 			for _, val := range value {
@@ -83,7 +93,7 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	if len(opts.Modes) == 0 && opts.Globals.Verbose {

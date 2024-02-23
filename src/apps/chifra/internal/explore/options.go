@@ -9,7 +9,9 @@ package explorePkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -50,9 +52,17 @@ func (opts *ExploreOptions) String() string {
 
 // exploreFinishParseApi finishes the parsing for server invocations. Returns a new ExploreOptions.
 func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ExploreFinishParseInternal(w, values)
+}
+
+func ExploreFinishParseInternal(w io.Writer, values url.Values) *ExploreOptions {
 	copy := defaultExploreOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "terms":
 			for _, val := range value {
@@ -69,7 +79,7 @@ func exploreFinishParseApi(w http.ResponseWriter, r *http.Request) *ExploreOptio
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	opts.Terms, _ = opts.Conn.GetEnsAddresses(opts.Terms)

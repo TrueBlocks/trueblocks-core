@@ -9,7 +9,9 @@ package whenPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -67,10 +69,18 @@ func (opts *WhenOptions) String() string {
 
 // whenFinishParseApi finishes the parsing for server invocations. Returns a new WhenOptions.
 func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return WhenFinishParseInternal(w, values)
+}
+
+func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 	copy := defaultWhenOptions
 	opts := &copy
 	opts.Truncate = utils.NOPOS
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "blocks":
 			for _, val := range value {
@@ -99,7 +109,7 @@ func whenFinishParseApi(w http.ResponseWriter, r *http.Request) *WhenOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE

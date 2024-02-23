@@ -95,7 +95,7 @@ func (c Capability) Text() string {
 }
 
 func (c Capability) HasKey(key string) bool {
-	if key == "fmt" || key == "file" {
+	if key == "fmt" || key == "file" || key == "testRunner" {
 		return true
 	}
 

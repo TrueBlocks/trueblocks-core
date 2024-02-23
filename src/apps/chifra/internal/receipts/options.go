@@ -9,7 +9,9 @@ package receiptsPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -50,9 +52,17 @@ func (opts *ReceiptsOptions) String() string {
 
 // receiptsFinishParseApi finishes the parsing for server invocations. Returns a new ReceiptsOptions.
 func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ReceiptsFinishParseInternal(w, values)
+}
+
+func ReceiptsFinishParseInternal(w io.Writer, values url.Values) *ReceiptsOptions {
 	copy := defaultReceiptsOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "transactions":
 			for _, val := range value {
@@ -67,7 +77,7 @@ func receiptsFinishParseApi(w http.ResponseWriter, r *http.Request) *ReceiptsOpt
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE
