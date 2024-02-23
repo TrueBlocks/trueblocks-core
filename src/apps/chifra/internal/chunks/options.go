@@ -9,7 +9,9 @@ package chunksPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -94,6 +96,14 @@ func (opts *ChunksOptions) String() string {
 
 // chunksFinishParseApi finishes the parsing for server invocations. Returns a new ChunksOptions.
 func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ChunksFinishParseInternal(w, values)
+}
+
+func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 	copy := defaultChunksOptions
 	opts := &copy
 	opts.Truncate = utils.NOPOS
@@ -101,7 +111,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 	opts.LastBlock = utils.NOPOS
 	opts.MaxAddrs = utils.NOPOS
 	opts.Sleep = 0.0
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "mode":
 			opts.Mode = value[0]
@@ -155,7 +165,7 @@ func chunksFinishParseApi(w http.ResponseWriter, r *http.Request) *ChunksOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 

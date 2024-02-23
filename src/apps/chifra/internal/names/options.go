@@ -9,7 +9,9 @@ package namesPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -81,9 +83,17 @@ func (opts *NamesOptions) String() string {
 
 // namesFinishParseApi finishes the parsing for server invocations. Returns a new NamesOptions.
 func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return NamesFinishParseInternal(w, values)
+}
+
+func NamesFinishParseInternal(w io.Writer, values url.Values) *NamesOptions {
 	copy := defaultNamesOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "terms":
 			for _, val := range value {
@@ -128,7 +138,7 @@ func namesFinishParseApi(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Autoname, _ = opts.Conn.GetEnsAddress(opts.Autoname)
 	opts.AutonameAddr = base.HexToAddress(opts.Autoname)
 

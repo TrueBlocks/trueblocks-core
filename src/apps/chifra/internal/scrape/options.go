@@ -9,7 +9,9 @@ package scrapePkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -62,6 +64,14 @@ func (opts *ScrapeOptions) String() string {
 
 // scrapeFinishParseApi finishes the parsing for server invocations. Returns a new ScrapeOptions.
 func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ScrapeFinishParseInternal(w, values)
+}
+
+func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 	copy := defaultScrapeOptions
 	opts := &copy
 	opts.BlockCnt = 2000
@@ -74,7 +84,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 	opts.Settings.UnripeDist = 28
 	opts.Settings.ChannelCount = 20
 	configs := make(map[string]string, 10)
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
@@ -106,7 +116,7 @@ func scrapeFinishParseApi(w http.ResponseWriter, r *http.Request) *ScrapeOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 

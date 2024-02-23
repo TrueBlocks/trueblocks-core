@@ -9,7 +9,9 @@ package tokensPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -59,9 +61,17 @@ func (opts *TokensOptions) String() string {
 
 // tokensFinishParseApi finishes the parsing for server invocations. Returns a new TokensOptions.
 func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return TokensFinishParseInternal(w, values)
+}
+
+func TokensFinishParseInternal(w io.Writer, values url.Values) *TokensOptions {
 	copy := defaultTokensOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -90,7 +100,7 @@ func tokensFinishParseApi(w http.ResponseWriter, r *http.Request) *TokensOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	if len(opts.Addrs) == 1 && len(opts.Parts) == 0 {

@@ -5,7 +5,8 @@
 package globals
 
 import (
-	"net/http"
+	"io"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -142,11 +143,10 @@ func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.
 	SetDefaults(opts)
 }
 
-func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request, caches map[string]bool) *rpc.Connection {
-	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
+func (opts *GlobalOptions) FinishParseApi(w io.Writer, values url.Values, caches map[string]bool) *rpc.Connection {
 	opts.Writer = w
 
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "append":
 			opts.Append = true
@@ -178,6 +178,8 @@ func (opts *GlobalOptions) FinishParseApi(w http.ResponseWriter, r *http.Request
 			opts.Version = true
 		case "wei":
 			opts.Wei = true
+		case "testRunner":
+			opts.TestMode = true
 		}
 	}
 

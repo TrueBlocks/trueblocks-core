@@ -10,7 +10,9 @@ package [{ROUTE}]Pkg
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"net/url"
 [{OS}]	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -44,9 +46,17 @@ func (opts *[{PROPER}]Options) String() string {
 
 // [{LOWER}]FinishParseApi finishes the parsing for server invocations. Returns a new [{PROPER}]Options.
 func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return [{PROPER}]FinishParseInternal(w, values)
+}
+
+func [{PROPER}]FinishParseInternal(w io.Writer, values url.Values) *[{PROPER}]Options {
 	copy := default[{PROPER}]Options
 	opts := &copy
-[{DEFAULTS_API}]	for key, value := range r.URL.Query() {
+[{DEFAULTS_API}]	for key, value := range values {
 		switch key {
 [{REQUEST_OPTS}]		default:
 			if !copy.Globals.Caps.HasKey(key) {
@@ -54,7 +64,7 @@ func [{LOWER}]FinishParseApi(w http.ResponseWriter, r *http.Request) *[{PROPER}]
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 [{ENS_CONVERT1}]
 	// EXISTING_CODE
 	// EXISTING_CODE
