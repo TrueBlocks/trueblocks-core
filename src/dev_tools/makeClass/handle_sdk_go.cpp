@@ -16,10 +16,10 @@
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_go(void) {
     string_q goSdkPath1 = getCWD() + "apps/chifra/sdk/";
-    string_q goSdkPath2 = getCWD() + "../sdk/go/";
+    // string_q goSdkPath2 = getCWD() + "../sdk/go/";
 
     establishFolder(goSdkPath1);
-    establishFolder(goSdkPath2);
+    // establishFolder(goSdkPath2);
 
     for (auto ep : endpointArray) {
         if (ep.api_route == "") {
@@ -34,11 +34,11 @@ bool COptions::handle_sdk_go(void) {
         contents = substitute(contents, "[{PKG}]", package);
         writeIfDifferent(goSdkPath1 + ep.api_route + ".go", contents);
 
-        contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
-        contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
-        contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
-        contents = substitute(contents, "[{PKG}]", package);
-        writeIfDifferent(goSdkPath2 + ep.api_route + ".go", contents);
+        // contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
+        // contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
+        // contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
+        // contents = substitute(contents, "[{PKG}]", package);
+        // writeIfDifferent(goSdkPath2 + ep.api_route + ".go", contents);
     }
 
     return true;

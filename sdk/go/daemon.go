@@ -19,3 +19,6 @@ func Daemon(w io.Writer, options map[string]string) error {
 	return daemon.Daemon(w, options)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+

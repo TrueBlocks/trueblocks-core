@@ -19,3 +19,6 @@ func Scrape(w io.Writer, options map[string]string) error {
 	return scrape.Scrape(w, options)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
