@@ -4,3 +4,5 @@ go 1.22
 use ./src/apps/chifra
 
 use ./src/examples/usesSDK
+
+use ./sdk/go
