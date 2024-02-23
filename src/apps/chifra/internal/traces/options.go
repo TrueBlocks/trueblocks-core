@@ -9,7 +9,9 @@ package tracesPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -54,9 +56,17 @@ func (opts *TracesOptions) String() string {
 
 // tracesFinishParseApi finishes the parsing for server invocations. Returns a new TracesOptions.
 func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return TracesFinishParseInternal(w, values)
+}
+
+func TracesFinishParseInternal(w io.Writer, values url.Values) *TracesOptions {
 	copy := defaultTracesOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "transactions":
 			for _, val := range value {
@@ -75,7 +85,7 @@ func tracesFinishParseApi(w http.ResponseWriter, r *http.Request) *TracesOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE

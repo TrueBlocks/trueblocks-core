@@ -9,7 +9,9 @@ package slurpPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -70,12 +72,20 @@ func (opts *SlurpOptions) String() string {
 
 // slurpFinishParseApi finishes the parsing for server invocations. Returns a new SlurpOptions.
 func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return SlurpFinishParseInternal(w, values)
+}
+
+func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	copy := defaultSlurpOptions
 	opts := &copy
 	opts.Page = 0
 	opts.PerPage = 3000
 	opts.Sleep = .25
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -112,7 +122,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	for _, t := range opts.Types {

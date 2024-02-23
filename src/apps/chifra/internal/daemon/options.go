@@ -9,7 +9,9 @@ package daemonPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
@@ -59,9 +61,17 @@ func (opts *DaemonOptions) String() string {
 
 // daemonFinishParseApi finishes the parsing for server invocations. Returns a new DaemonOptions.
 func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return DaemonFinishParseInternal(w, values)
+}
+
+func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 	copy := defaultDaemonOptions
 	opts := &copy
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "url":
 			opts.Url = value[0]
@@ -81,7 +91,7 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	if len(opts.Port) > 0 && opts.Port != ":8080" && opts.Url == "localhost:8080" {

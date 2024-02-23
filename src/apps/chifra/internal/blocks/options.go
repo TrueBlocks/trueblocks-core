@@ -9,7 +9,9 @@ package blocksPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -82,12 +84,20 @@ func (opts *BlocksOptions) String() string {
 
 // blocksFinishParseApi finishes the parsing for server invocations. Returns a new BlocksOptions.
 func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return BlocksFinishParseInternal(w, values)
+}
+
+func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 	copy := defaultBlocksOptions
 	opts := &copy
 	opts.BigRange = 500
 	opts.List = 0
 	opts.ListCount = 0
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "blocks":
 			for _, val := range value {
@@ -138,7 +148,7 @@ func blocksFinishParseApi(w http.ResponseWriter, r *http.Request) *BlocksOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE

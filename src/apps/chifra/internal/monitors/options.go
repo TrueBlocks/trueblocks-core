@@ -9,7 +9,9 @@ package monitorsPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -71,12 +73,20 @@ func (opts *MonitorsOptions) String() string {
 
 // monitorsFinishParseApi finishes the parsing for server invocations. Returns a new MonitorsOptions.
 func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return MonitorsFinishParseInternal(w, values)
+}
+
+func MonitorsFinishParseInternal(w io.Writer, values url.Values) *MonitorsOptions {
 	copy := defaultMonitorsOptions
 	opts := &copy
 	opts.BatchSize = 8
 	opts.RunCount = 0
 	opts.Sleep = 14
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -111,7 +121,7 @@ func monitorsFinishParseApi(w http.ResponseWriter, r *http.Request) *MonitorsOpt
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	// EXISTING_CODE

@@ -9,7 +9,9 @@ package listPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -75,13 +77,21 @@ func (opts *ListOptions) String() string {
 
 // listFinishParseApi finishes the parsing for server invocations. Returns a new ListOptions.
 func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ListFinishParseInternal(w, values)
+}
+
+func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 	copy := defaultListOptions
 	opts := &copy
 	opts.FirstRecord = 0
 	opts.MaxRecords = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -116,7 +126,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 	opts.Publisher, _ = opts.Conn.GetEnsAddress(config.GetPublisher(opts.Publisher))
 	opts.PublisherAddr = base.HexToAddress(opts.Publisher)
 

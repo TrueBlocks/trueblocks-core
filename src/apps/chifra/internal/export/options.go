@@ -9,7 +9,9 @@ package exportPkg
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -108,13 +110,21 @@ func (opts *ExportOptions) String() string {
 
 // exportFinishParseApi finishes the parsing for server invocations. Returns a new ExportOptions.
 func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions {
+	values := r.URL.Query()
+	if r.Header.Get("User-Agent") == "testRunner" {
+		values.Set("testRunner", "true")
+	}
+	return ExportFinishParseInternal(w, values)
+}
+
+func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 	copy := defaultExportOptions
 	opts := &copy
 	opts.FirstRecord = 0
 	opts.MaxRecords = 250
 	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
-	for key, value := range r.URL.Query() {
+	for key, value := range values {
 		switch key {
 		case "addrs":
 			for _, val := range value {
@@ -200,7 +210,7 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 			}
 		}
 	}
-	opts.Conn = opts.Globals.FinishParseApi(w, r, opts.getCaches())
+	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
 	if len(opts.Addrs) > 0 {
