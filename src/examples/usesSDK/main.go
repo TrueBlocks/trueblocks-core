@@ -22,7 +22,7 @@ func main() {
 	// 	logger.Fatal(err)
 	// }
 	opts := sdk.BlocksOptions{
-		Blocks: []base.Blknum{1, 2, 3},
+		Blocks: []base.Blknum{1, 2, 15000001},
 		Hashes: true,
 	}
 	if err := sdk.BlockCmd(&buf, opts); err != nil {
