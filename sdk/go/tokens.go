@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Tokens does chifra tokens
-func Tokens(w io.Writer, options map[string]string) error {
+func TokensCmd(w io.Writer, options map[string]string) error {
 	return tokens.Tokens(w, options)
 }
 

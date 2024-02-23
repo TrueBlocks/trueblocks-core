@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Names does chifra names
-func Names(w io.Writer, options map[string]string) error {
+func NamesCmd(w io.Writer, options map[string]string) error {
 	return names.Names(w, options)
 }
 

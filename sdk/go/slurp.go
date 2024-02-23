@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Slurp does chifra slurp
-func Slurp(w io.Writer, options map[string]string) error {
+func SlurpCmd(w io.Writer, options map[string]string) error {
 	return slurp.Slurp(w, options)
 }
 

@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Abis does chifra abis
-func Abis(w io.Writer, options map[string]string) error {
+func AbisCmd(w io.Writer, options map[string]string) error {
 	return abis.Abis(w, options)
 }
 

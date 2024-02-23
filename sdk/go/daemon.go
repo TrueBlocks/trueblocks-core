@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Daemon does chifra daemon
-func Daemon(w io.Writer, options map[string]string) error {
+func DaemonCmd(w io.Writer, options map[string]string) error {
 	return daemon.Daemon(w, options)
 }
 

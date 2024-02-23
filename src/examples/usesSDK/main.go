@@ -9,24 +9,36 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-func main() {
-	// options := map[string]string{
-	// 	"addrs":      "trueblocks.eth",
-	// 	"logs":       "true",
-	// 	"articulate": "true",
-	// 	"cache":      "true",
-	// }
-
+// DoBlocks tests the Blocks sdk function
+func DoBlocks() {
 	var buf bytes.Buffer
-	// if err := sdk.Export(&buf, options); err != nil {
-	// 	logger.Fatal(err)
-	// }
-	opts := sdk.BlocksOptions{
-		Blocks: []base.Blknum{1, 2, 15000001},
+	if err := sdk.Blocks(&buf, sdk.BlocksOptions{
+		Blocks: testBlocks,
 		Hashes: true,
-	}
-	if err := sdk.BlockCmd(&buf, opts); err != nil {
+	}); err != nil {
 		logger.Fatal(err)
 	}
+
 	fmt.Println(buf.String())
 }
+
+// DoWhen tests the When sdk function
+func DoWhen() {
+	var buf bytes.Buffer
+	if err := sdk.When(&buf, sdk.WhenOptions{
+		Blocks:     testBlocks,
+		Timestamps: true,
+		Globals:    sdk.Globals{Fmt: sdk.Csv, NoHeader: true},
+	}); err != nil {
+		logger.Fatal(err)
+	}
+
+	fmt.Println(buf.String())
+}
+
+func main() {
+	DoBlocks()
+	DoWhen()
+}
+
+var testBlocks = []base.Blknum{1, 1001001, 15000001}

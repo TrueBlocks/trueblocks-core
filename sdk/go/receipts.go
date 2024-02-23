@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Receipts does chifra receipts
-func Receipts(w io.Writer, options map[string]string) error {
+func ReceiptsCmd(w io.Writer, options map[string]string) error {
 	return receipts.Receipts(w, options)
 }
 

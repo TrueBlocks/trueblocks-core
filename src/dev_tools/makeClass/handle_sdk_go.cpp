@@ -16,12 +16,16 @@
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_go(void) {
     string_q goSdkPath1 = getCWD() + "apps/chifra/sdk/";
-    // string_q goSdkPath2 = getCWD() + "../sdk/go/";
+    string_q goSdkPath2 = getCWD() + "../sdk/go/";
 
     establishFolder(goSdkPath1);
-    // establishFolder(goSdkPath2);
+    establishFolder(goSdkPath2);
 
     for (auto ep : endpointArray) {
+        // We don't do options here, but once we do, we should report on them to make sure all auto-gen code generates
+        // the same thing
+        // reportOneOption(apiRoute, optionName, "api");
+
         if (ep.api_route == "") {
             continue;
         }
@@ -32,14 +36,30 @@ bool COptions::handle_sdk_go(void) {
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);
-        writeIfDifferent(goSdkPath1 + ep.api_route + ".go", contents);
+        {
+            codewrite_t cw(goSdkPath1 + ep.api_route + ".go", contents);
+            cw.nSpaces = 0;
+            cw.stripEOFNL = false;
+            counter.nProcessed += writeCodeIn(this, cw);
+        }
 
-        // contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
-        // contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
-        // contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
-        // contents = substitute(contents, "[{PKG}]", package);
-        // writeIfDifferent(goSdkPath2 + ep.api_route + ".go", contents);
+        contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
+        contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
+        contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
+        contents = substitute(contents, "[{PKG}]", package);
+        {
+            codewrite_t cw(goSdkPath2 + ep.api_route + ".go", contents);
+            cw.nSpaces = 0;
+            cw.stripEOFNL = false;
+            counter.nProcessed += writeCodeIn(this, cw);
+        }
     }
+
+    ostringstream log;
+    log << cYellow << "makeClass --sdk (go)" << cOff;
+    log << " processed " << counter.routeCount << "/" << counter.cmdCount;
+    log << " paths (changed " << counter.nProcessed << ")." << string_q(40, ' ');
+    LOG_INFO(log.str());
 
     return true;
 }

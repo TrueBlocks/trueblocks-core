@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Chunks does chifra chunks
-func Chunks(w io.Writer, options map[string]string) error {
+func ChunksCmd(w io.Writer, options map[string]string) error {
 	return chunks.Chunks(w, options)
 }
 

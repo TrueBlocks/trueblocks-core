@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Init does chifra init
-func Init(w io.Writer, options map[string]string) error {
+func InitCmd(w io.Writer, options map[string]string) error {
 	return initPkg.Init(w, options)
 }
 

@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Logs does chifra logs
-func Logs(w io.Writer, options map[string]string) error {
+func LogsCmd(w io.Writer, options map[string]string) error {
 	return logs.Logs(w, options)
 }
 

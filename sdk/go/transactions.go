@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Transactions does chifra transactions
-func Transactions(w io.Writer, options map[string]string) error {
+func TransactionsCmd(w io.Writer, options map[string]string) error {
 	return transactions.Transactions(w, options)
 }
 

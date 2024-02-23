@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Monitors does chifra monitors
-func Monitors(w io.Writer, options map[string]string) error {
+func MonitorsCmd(w io.Writer, options map[string]string) error {
 	return monitors.Monitors(w, options)
 }
 

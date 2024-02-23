@@ -9,16 +9,18 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"fmt"
 	"io"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Blocks does chifra blocks
-func Blocks(w io.Writer, options map[string]string) error {
+func BlocksCmd(w io.Writer, options map[string]string) error {
 	return blocks.Blocks(w, options)
 }
 
@@ -30,15 +32,6 @@ const (
 	From
 	To
 	Reward
-)
-
-type Fmt int
-
-const (
-	NoFmt Fmt = iota
-	Json
-	Txt
-	Csv
 )
 
 type BlocksOptions struct {
@@ -55,16 +48,18 @@ type BlocksOptions struct {
 	Flow        BlocksFlow
 	Emitter     []base.Address
 	Topic       []base.Topic
-	Ether       bool
-	Raw         bool
-	Cache       bool
-	Decache     bool
-	Fmt         Fmt
-	Verbose     bool
+	Globals     Globals
 }
 
-func BlockCmd(w io.Writer, opts BlocksOptions) error {
+func Blocks(w io.Writer, opts BlocksOptions) error {
 	options := make(map[string]string, 0)
+
+	blkIds := make([]string, 0, len(opts.Blocks))
+	for _, bn := range opts.Blocks {
+		blkIds = append(blkIds, fmt.Sprintf("%d", bn))
+	}
+	options["blocks"] = strings.Join(blkIds, " ")
+
 	if opts.Hashes {
 		options["hashes"] = "true"
 	}
@@ -111,37 +106,10 @@ func BlockCmd(w io.Writer, opts BlocksOptions) error {
 	if len(opts.Topic) > 0 {
 		options["topic"] = strings.Join(opts.Topic, " ")
 	}
-	if opts.Ether {
-		options["ether"] = "true"
-	}
-	if opts.Raw {
-		options["raw"] = "true"
-	}
-	if opts.Cache {
-		options["cache"] = "true"
-	}
-	if opts.Decache {
-		options["decache"] = "true"
-	}
-	if opts.Fmt == Json {
-		options["fmt"] = "json"
-	}
-	if opts.Fmt == Txt {
-		options["fmt"] = "txt"
-	}
-	if opts.Fmt == Csv {
-		options["fmt"] = "csv"
-	}
-	if opts.Verbose {
-		options["verbose"] = "true"
-	}
-	blocks := make([]string, 0, len(opts.Blocks))
-	for _, bn := range opts.Blocks {
-		blocks = append(blocks, fmt.Sprintf("%d", bn))
-	}
-	options["blocks"] = strings.Join(blocks, " ")
+	opts.Globals.mapGlobals(options)
 
-	return Blocks(w, options)
+	return blocks.Blocks(w, options)
 }
 
 // EXISTING_CODE
+

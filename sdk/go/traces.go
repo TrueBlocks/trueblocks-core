@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Traces does chifra traces
-func Traces(w io.Writer, options map[string]string) error {
+func TracesCmd(w io.Writer, options map[string]string) error {
 	return traces.Traces(w, options)
 }
 

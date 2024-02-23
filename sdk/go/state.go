@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // State does chifra state
-func State(w io.Writer, options map[string]string) error {
+func StateCmd(w io.Writer, options map[string]string) error {
 	return state.State(w, options)
 }
 

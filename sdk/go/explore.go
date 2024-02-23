@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	explore "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Explore does chifra explore
-func Explore(w io.Writer, options map[string]string) error {
+func ExploreCmd(w io.Writer, options map[string]string) error {
 	return explore.Explore(w, options)
 }
 

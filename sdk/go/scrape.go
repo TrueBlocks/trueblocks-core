@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Scrape does chifra scrape
-func Scrape(w io.Writer, options map[string]string) error {
+func ScrapeCmd(w io.Writer, options map[string]string) error {
 	return scrape.Scrape(w, options)
 }
 

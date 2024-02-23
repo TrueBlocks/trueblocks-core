@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // Config does chifra config
-func Config(w io.Writer, options map[string]string) error {
+func ConfigCmd(w io.Writer, options map[string]string) error {
 	return config.Config(w, options)
 }
 

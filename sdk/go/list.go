@@ -9,13 +9,15 @@
 package sdk
 
 import (
+	// EXISTING_CODE
 	"io"
 
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
+	// EXISTING_CODE
 )
 
 // List does chifra list
-func List(w io.Writer, options map[string]string) error {
+func ListCmd(w io.Writer, options map[string]string) error {
 	return list.List(w, options)
 }
 
