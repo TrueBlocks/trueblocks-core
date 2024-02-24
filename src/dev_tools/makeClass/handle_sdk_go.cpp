@@ -75,7 +75,7 @@ bool COptions::handle_sdk_go(void) {
         // cout << members << endl;
 
         contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
-        contents = substitute(contents, "[{FIEDLS}]", ""); // fields.str());
+        contents = substitute(contents, "[{FIEDLS}]", "");  // fields.str());
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);

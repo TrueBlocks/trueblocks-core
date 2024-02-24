@@ -285,8 +285,8 @@ string_q get_use(const CCommandOption& cmd) {
                 ostringstream os;
                 forEveryEnum(visitEnumItem2, member.data_type, &os);
                 os << " ]";
-                string_q str =
-                    substitute(os.str(), "One of", contains(member.data_type, "list") ? "\tOne or more of" : "\tOne of");
+                string_q str = substitute(os.str(), "One of",
+                                          contains(member.data_type, "list") ? "\tOne or more of" : "\tOne of");
                 // replace(str, "", "");
                 arguments << str;
             }
@@ -405,8 +405,8 @@ string_q get_testlogs(const CCommandOption& cmd) {
                     "\tlogger.TestLog(opts.[{VARIABLE}], \"[{VARIABLE}]: \", opts.[{VARIABLE}])";
                 os << member.Format(STR_TESTLOG_BOOL) << endl;
 
-            } else if (startsWith(member.data_type, "list<") || member.data_type == "<string>" || member.data_type == "<address>" ||
-                       contains(member.data_type, "enum")) {
+            } else if (startsWith(member.data_type, "list<") || member.data_type == "<string>" ||
+                       member.data_type == "<address>" || contains(member.data_type, "enum")) {
                 if (!member.def_val.empty() && member.def_val != "\"\"" && member.def_val != "utils.NOPOS") {
                     string_q STR_TESTLOG_STRING =
                         "\tlogger.TestLog(len(opts.[{VARIABLE}]) > 0 && opts.[{VARIABLE}] != \"[{DEF_VAL}]\", "
@@ -502,7 +502,8 @@ string_q get_optfields(const CCommandOption& cmd) {
             }
             string_q x = toCamelCase(member.Format("[{LONGNAME}]"));
             dd << "| " << padRight(x, 18) << " | " << padRight(member.Format("[{GO_INTYPE}]"), 12) << " | "
-               << padRight(member.Format("[{DEF_VAL}]"), 12) << " | " << member.Format("[{DESCRIPTION}]") << " |" << endl;
+               << padRight(member.Format("[{DEF_VAL}]"), 12) << " | " << member.Format("[{DESCRIPTION}]") << " |"
+               << endl;
             appendToAsciiFile(configDocs, dd.str());
             hasConfig = true;
             continue;
