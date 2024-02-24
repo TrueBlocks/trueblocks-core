@@ -18,12 +18,12 @@ import (
 )
 
 type ExploreOptions struct {
+	// EXISTING_CODE
 	Terms  []string
 	Local  bool
 	Google bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

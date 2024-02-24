@@ -19,6 +19,7 @@ import (
 )
 
 type InitOptions struct {
+	// EXISTING_CODE
 	All         bool
 	Dry_Run     bool
 	Publisher   base.Address
@@ -26,7 +27,6 @@ type InitOptions struct {
 	Sleep       float64
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

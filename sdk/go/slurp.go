@@ -19,6 +19,7 @@ import (
 )
 
 type SlurpOptions struct {
+	// EXISTING_CODE
 	Addrs       []base.Address
 	Blocks      []base.Blknum
 	Types       string
@@ -31,7 +32,6 @@ type SlurpOptions struct {
 	Sleep       float64
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

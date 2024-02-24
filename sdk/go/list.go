@@ -19,6 +19,7 @@ import (
 )
 
 type ListOptions struct {
+	// EXISTING_CODE
 	Addrs       []base.Address
 	Count       bool
 	No_Zero     bool
@@ -33,7 +34,6 @@ type ListOptions struct {
 	LastBlock   base.Blknum
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

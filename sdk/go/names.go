@@ -19,6 +19,7 @@ import (
 )
 
 type NamesOptions struct {
+	// EXISTING_CODE
 	Terms     []string
 	Expand    bool
 	MatchCase bool
@@ -38,7 +39,6 @@ type NamesOptions struct {
 	Remove    bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

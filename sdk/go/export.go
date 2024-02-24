@@ -19,6 +19,7 @@ import (
 )
 
 type ExportOptions struct {
+	// EXISTING_CODE
 	Addrs       []base.Address
 	Topics      []base.Topic
 	Fourbytes   []string
@@ -51,7 +52,6 @@ type ExportOptions struct {
 	LastBlock   base.Blknum
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

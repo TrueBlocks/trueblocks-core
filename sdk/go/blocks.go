@@ -20,6 +20,7 @@ import (
 )
 
 type BlocksOptions struct {
+	// EXISTING_CODE
 	BlockIds    []string
 	Hashes      bool
 	Uncles      bool
@@ -39,7 +40,6 @@ type BlocksOptions struct {
 	ListCount   base.Blknum
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

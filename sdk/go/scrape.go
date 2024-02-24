@@ -19,6 +19,7 @@ import (
 )
 
 type ScrapeOptions struct {
+	// EXISTING_CODE
 	Block_Cnt uint64
 	Sleep     float64
 	Touch     uint64
@@ -27,7 +28,6 @@ type ScrapeOptions struct {
 	Dry_Run   bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

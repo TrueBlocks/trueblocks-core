@@ -19,13 +19,13 @@ import (
 )
 
 type LogsOptions struct {
+	// EXISTING_CODE
 	Transactions []string
 	Emitter      []base.Address
 	Topic        []base.Topic
 	Articulate   bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

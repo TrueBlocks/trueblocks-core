@@ -19,6 +19,7 @@ import (
 )
 
 type AbisOptions struct {
+	// EXISTING_CODE
 	Addrs     []base.Address
 	Known     bool
 	Proxy_For base.Address
@@ -26,7 +27,6 @@ type AbisOptions struct {
 	Hint      []string
 	Encode    string
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

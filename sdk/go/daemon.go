@@ -18,6 +18,7 @@ import (
 )
 
 type DaemonOptions struct {
+	// EXISTING_CODE
 	Url     string
 	Api     string
 	Scrape  string
@@ -26,7 +27,6 @@ type DaemonOptions struct {
 	Port    string
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

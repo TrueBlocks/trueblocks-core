@@ -19,6 +19,7 @@ import (
 )
 
 type TransactionsOptions struct {
+	// EXISTING_CODE
 	TransactionIds []string
 	Articulate     bool
 	Traces         bool
@@ -31,7 +32,6 @@ type TransactionsOptions struct {
 	Seed           bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

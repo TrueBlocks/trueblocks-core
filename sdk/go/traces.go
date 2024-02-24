@@ -18,13 +18,13 @@ import (
 )
 
 type TracesOptions struct {
+	// EXISTING_CODE
 	TransactionIds []string
 	Articulate     bool
 	Filter         string
 	Count          bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

@@ -19,6 +19,7 @@ import (
 )
 
 type WhenOptions struct {
+	// EXISTING_CODE
 	BlockIds   []string
 	List       bool
 	Timestamps bool
@@ -30,7 +31,6 @@ type WhenOptions struct {
 	Deep       bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

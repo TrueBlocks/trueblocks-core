@@ -18,11 +18,11 @@ import (
 )
 
 type ReceiptsOptions struct {
+	// EXISTING_CODE
 	Transactions []string
 	Articulate   bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

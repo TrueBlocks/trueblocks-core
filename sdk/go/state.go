@@ -19,6 +19,7 @@ import (
 )
 
 type StateOptions struct {
+	// EXISTING_CODE
 	Addrs      []base.Address
 	Blocks     []base.Blknum
 	Parts      string
@@ -29,7 +30,6 @@ type StateOptions struct {
 	Proxy_For  base.Address
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

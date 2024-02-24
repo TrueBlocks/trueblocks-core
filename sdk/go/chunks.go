@@ -19,6 +19,7 @@ import (
 )
 
 type ChunksOptions struct {
+	// EXISTING_CODE
 	Mode        string
 	Blocks      []base.Blknum
 	Check       bool
@@ -39,7 +40,7 @@ type ChunksOptions struct {
 	Count       bool
 	Tag         string
 	Sleep       float64
-	// EXISTING_CODE
+
 	// EXISTING_CODE
 }
 

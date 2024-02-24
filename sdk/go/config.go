@@ -18,9 +18,11 @@ import (
 )
 
 type ConfigOptions struct {
+	// EXISTING_CODE
 	Mode  string
 	Paths bool
-	// EXISTING_CODE
+	Globals
+
 	// EXISTING_CODE
 }
 
@@ -36,3 +38,4 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

@@ -19,6 +19,7 @@ import (
 )
 
 type TokensOptions struct {
+	// EXISTING_CODE
 	Addrs   []base.Address
 	Blocks  []base.Blknum
 	Parts   string
@@ -27,7 +28,6 @@ type TokensOptions struct {
 	No_Zero bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

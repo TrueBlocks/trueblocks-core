@@ -18,6 +18,7 @@ import (
 )
 
 type StatusOptions struct {
+	// EXISTING_CODE
 	Modes       string
 	Diagnose    bool
 	FirstRecord uint64
@@ -25,7 +26,6 @@ type StatusOptions struct {
 	Chains      bool
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 

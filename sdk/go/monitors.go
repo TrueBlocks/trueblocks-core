@@ -19,6 +19,7 @@ import (
 )
 
 type MonitorsOptions struct {
+	// EXISTING_CODE
 	Addrs      []base.Address
 	Delete     bool
 	Undelete   bool
@@ -33,7 +34,6 @@ type MonitorsOptions struct {
 	Sleep      float64
 	Globals
 
-	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
