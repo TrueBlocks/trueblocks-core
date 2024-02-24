@@ -17,12 +17,7 @@ import (
 )
 
 // Abis provides an interface to the command line chifra abis through the SDK.
-func Abis(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Abis(w io.Writer, values url.Values) error {
 	abis.ResetOptions(false)
 	opts := abis.AbisFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("abis", true)
@@ -34,4 +29,7 @@ func Abis(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

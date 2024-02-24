@@ -11,14 +11,30 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
 	explore "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Explore does chifra explore
-func ExploreCmd(w io.Writer, options map[string]string) error {
-	return explore.Explore(w, options)
+type ExploreOptions struct {
+	Terms  []string
+	Local  bool
+	Google bool
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Explore implements the chifra explore command for the SDK.
+func (opts *ExploreOptions) Explore(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return explore.Explore(w, values)
 }
 
 // EXISTING_CODE

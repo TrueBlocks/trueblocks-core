@@ -17,12 +17,7 @@ import (
 )
 
 // Explore provides an interface to the command line chifra explore through the SDK.
-func Explore(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Explore(w io.Writer, values url.Values) error {
 	explore.ResetOptions(false)
 	opts := explore.ExploreFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("explore", true)
@@ -34,4 +29,7 @@ func Explore(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

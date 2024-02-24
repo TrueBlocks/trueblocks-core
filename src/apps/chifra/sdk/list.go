@@ -17,12 +17,7 @@ import (
 )
 
 // List provides an interface to the command line chifra list through the SDK.
-func List(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func List(w io.Writer, values url.Values) error {
 	list.ResetOptions(false)
 	opts := list.ListFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("list", true)
@@ -34,4 +29,7 @@ func List(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

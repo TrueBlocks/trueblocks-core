@@ -11,14 +11,36 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// State does chifra state
-func StateCmd(w io.Writer, options map[string]string) error {
-	return state.State(w, options)
+type StateOptions struct {
+	Addrs      []base.Address
+	Blocks     []base.Blknum
+	Parts      string
+	Changes    bool
+	No_Zero    bool
+	Call       string
+	Articulate bool
+	Proxy_For  base.Address
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// State implements the chifra state command for the SDK.
+func (opts *StateOptions) State(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return state.State(w, values)
 }
 
 // EXISTING_CODE

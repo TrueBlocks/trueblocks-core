@@ -17,12 +17,7 @@ import (
 )
 
 // Init provides an interface to the command line chifra init through the SDK.
-func Init(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Init(w io.Writer, values url.Values) error {
 	initPkg.ResetOptions(false)
 	opts := initPkg.InitFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("init", true)
@@ -34,4 +29,7 @@ func Init(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

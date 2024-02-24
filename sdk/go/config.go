@@ -11,16 +11,28 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Config does chifra config
-func ConfigCmd(w io.Writer, options map[string]string) error {
-	return config.Config(w, options)
+type ConfigOptions struct {
+	Mode  string
+	Paths bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Config implements the chifra config command for the SDK.
+func (opts *ConfigOptions) Config(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return config.Config(w, values)
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
-

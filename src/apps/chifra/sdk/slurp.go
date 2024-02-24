@@ -17,12 +17,7 @@ import (
 )
 
 // Slurp provides an interface to the command line chifra slurp through the SDK.
-func Slurp(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Slurp(w io.Writer, values url.Values) error {
 	slurp.ResetOptions(false)
 	opts := slurp.SlurpFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("slurp", true)
@@ -34,4 +29,7 @@ func Slurp(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

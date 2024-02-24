@@ -11,58 +11,64 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
-	"strings"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// When does chifra when
-func WhenCmd(w io.Writer, options map[string]string) error {
-	return when.When(w, options)
-}
-
-// EXISTING_CODE
 type WhenOptions struct {
 	BlockIds   []string
 	List       bool
 	Timestamps bool
 	Count      bool
+	Truncate   base.Blknum
 	Repair     bool
 	Check      bool
 	Update     bool
 	Deep       bool
 	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
+// When implements the chifra when command for the SDK.
 func (opts *WhenOptions) When(w io.Writer) error {
-	options := map[string]string{}
+	values := make(url.Values)
 
-	options["blocks"] = strings.Join(opts.BlockIds, " ")
+	// EXISTING_CODE
+	for _, blockId := range opts.BlockIds {
+		values.Add("blocks", blockId)
+	}
 	if opts.List {
-		options["list"] = "true"
+		values.Set("list", "true")
 	}
 	if opts.Timestamps {
-		options["timestamps"] = "true"
+		values.Set("timestamps", "true")
 	}
 	if opts.Count {
-		options["count"] = "true"
+		values.Set("count", "true")
 	}
 	if opts.Repair {
-		options["repair"] = "true"
+		values.Set("repair", "true")
 	}
 	if opts.Check {
-		options["check"] = "true"
+		values.Set("check", "true")
 	}
 	if opts.Update {
-		options["update"] = "true"
+		values.Set("update", "true")
 	}
 	if opts.Deep {
-		options["deep"] = "true"
+		values.Set("deep", "true")
 	}
-	opts.Globals.mapGlobals(options)
+	opts.Globals.mapGlobals(values)
+	// EXISTING_CODE
 
-	return when.When(w, options)
+	return when.When(w, values)
 }
 
 // EXISTING_CODE
+// EXISTING_CODE
+

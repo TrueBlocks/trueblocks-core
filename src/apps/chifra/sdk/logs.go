@@ -17,12 +17,7 @@ import (
 )
 
 // Logs provides an interface to the command line chifra logs through the SDK.
-func Logs(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Logs(w io.Writer, values url.Values) error {
 	logs.ResetOptions(false)
 	opts := logs.LogsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("logs", true)
@@ -34,4 +29,7 @@ func Logs(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

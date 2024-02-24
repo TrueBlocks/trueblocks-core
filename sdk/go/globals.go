@@ -1,5 +1,7 @@
 package sdk
 
+import "net/url"
+
 type Fmt int
 
 const (
@@ -31,26 +33,26 @@ type Globals struct {
 	Verbose  bool
 }
 
-func (g Globals) mapGlobals(options map[string]string) {
+func (g Globals) mapGlobals(values url.Values) {
 	if g.Ether {
-		options["ether"] = "true"
+		values.Set("ether", "true")
 	}
 	if g.Raw {
-		options["raw"] = "true"
+		values.Set("raw", "true")
 	}
 	if g.NoHeader {
-		options["noHeader"] = "true"
+		values.Set("noHeader", "true")
 	}
 	if g.Cache {
-		options["cache"] = "true"
+		values.Set("cache", "true")
 	}
 	if g.Decache {
-		options["decache"] = "true"
+		values.Set("decache", "true")
 	}
 	if g.Fmt != NoFmt {
-		options["fmt"] = g.Fmt.String()
+		values.Set("fmt", g.Fmt.String())
 	}
 	if g.Verbose {
-		options["verbose"] = "true"
+		values.Set("verbose", "true")
 	}
 }

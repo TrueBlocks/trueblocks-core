@@ -11,14 +11,33 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
 	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Daemon does chifra daemon
-func DaemonCmd(w io.Writer, options map[string]string) error {
-	return daemon.Daemon(w, options)
+type DaemonOptions struct {
+	Url     string
+	Api     string
+	Scrape  string
+	Monitor bool
+	Grpc    bool
+	Port    string
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Daemon implements the chifra daemon command for the SDK.
+func (opts *DaemonOptions) Daemon(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return daemon.Daemon(w, values)
 }
 
 // EXISTING_CODE

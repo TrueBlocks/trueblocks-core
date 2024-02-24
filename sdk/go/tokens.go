@@ -11,14 +11,34 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Tokens does chifra tokens
-func TokensCmd(w io.Writer, options map[string]string) error {
-	return tokens.Tokens(w, options)
+type TokensOptions struct {
+	Addrs   []base.Address
+	Blocks  []base.Blknum
+	Parts   string
+	By_Acct bool
+	Changes bool
+	No_Zero bool
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Tokens implements the chifra tokens command for the SDK.
+func (opts *TokensOptions) Tokens(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return tokens.Tokens(w, values)
 }
 
 // EXISTING_CODE

@@ -11,14 +11,33 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Abis does chifra abis
-func AbisCmd(w io.Writer, options map[string]string) error {
-	return abis.Abis(w, options)
+type AbisOptions struct {
+	Addrs     []base.Address
+	Known     bool
+	Proxy_For base.Address
+	Find      []string
+	Hint      []string
+	Encode    string
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Abis implements the chifra abis command for the SDK.
+func (opts *AbisOptions) Abis(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return abis.Abis(w, values)
 }
 
 // EXISTING_CODE

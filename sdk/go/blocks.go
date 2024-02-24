@@ -12,26 +12,11 @@ import (
 	// EXISTING_CODE
 	"fmt"
 	"io"
-	"strings"
+	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
-)
-
-// Blocks does chifra blocks
-func BlocksCmd(w io.Writer, options map[string]string) error {
-	return blocks.Blocks(w, options)
-}
-
-// EXISTING_CODE
-type BlocksFlow int
-
-const (
-	NoFlow BlocksFlow = iota
-	From
-	To
-	Reward
 )
 
 type BlocksOptions struct {
@@ -40,70 +25,99 @@ type BlocksOptions struct {
 	Uncles      bool
 	Traces      bool
 	Uniq        bool
+	Flow        FlowEnum
 	Logs        bool
-	Withdrawals bool
-	Articulate  bool
-	Count       bool
-	BigRange    uint
-	Flow        BlocksFlow
 	Emitter     []base.Address
 	Topic       []base.Topic
+	Withdrawals bool
+	Articulate  bool
+	BigRange    uint64
+	Count       bool
+	CacheTxs    bool
+	CacheTraces bool
+	List        base.Blknum
+	ListCount   base.Blknum
 	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
+// Blocks implements the chifra blocks command for the SDK.
 func (opts *BlocksOptions) Blocks(w io.Writer) error {
-	options := make(map[string]string, 0)
+	values := make(url.Values)
 
-	options["blocks"] = strings.Join(opts.BlockIds, " ")
+	// EXISTING_CODE
+	for _, blockId := range opts.BlockIds {
+		values.Add("blocks", blockId)
+	}
 	if opts.Hashes {
-		options["hashes"] = "true"
+		values.Set("hashes", "true")
 	}
 	if opts.Uncles {
-		options["uncles"] = "true"
+		values.Set("uncles", "true")
 	}
 	if opts.Traces {
-		options["traces"] = "true"
+		values.Set("traces", "true")
 	}
 	if opts.Uniq {
-		options["uniq"] = "true"
+		values.Set("uniq", "true")
 	}
 	if opts.Logs {
-		options["logs"] = "true"
+		values.Set("logs", "true")
 	}
 	if opts.Withdrawals {
-		options["withdrawals"] = "true"
+		values.Set("withdrawals", "true")
 	}
 	if opts.Articulate {
-		options["articulate"] = "true"
+		values.Set("articulate", "true")
 	}
 	if opts.Count {
-		options["count"] = "true"
+		values.Set("count", "true")
 	}
 	if opts.BigRange > 0 {
-		options["bigRange"] = fmt.Sprintf("%d", opts.BigRange)
+		values.Set("bigRange", fmt.Sprintf("%d", opts.BigRange))
 	}
-	if opts.Flow == From {
-		options["flow"] = "from"
-	}
-	if opts.Flow == To {
-		options["flow"] = "to"
-	}
-	if opts.Flow == Reward {
-		options["flow"] = "reward"
+	if opts.Flow != NoFlow {
+		values.Set("flow", opts.Flow.String())
 	}
 	if len(opts.Emitter) > 0 {
-		emitters := make([]string, 0)
 		for _, emitter := range opts.Emitter {
-			emitters = append(emitters, emitter.Hex())
+			values.Add("emitter", emitter.Hex())
 		}
-		options["emitter"] = strings.Join(emitters, " ")
 	}
 	if len(opts.Topic) > 0 {
-		options["topic"] = strings.Join(opts.Topic, " ")
+		for _, topic := range opts.Topic {
+			values.Add("topic", topic)
+		}
 	}
-	opts.Globals.mapGlobals(options)
+	opts.Globals.mapGlobals(values)
+	// EXISTING_CODE
 
-	return blocks.Blocks(w, options)
+	return blocks.Blocks(w, values)
 }
 
 // EXISTING_CODE
+type FlowEnum int
+
+const (
+	NoFlow FlowEnum = iota
+	From
+	To
+	Reward
+)
+
+func (e FlowEnum) String() string {
+	switch e {
+	case From:
+		return "from"
+	case To:
+		return "to"
+	case Reward:
+		return "reward"
+	}
+	return ""
+}
+
+// EXISTING_CODE
+

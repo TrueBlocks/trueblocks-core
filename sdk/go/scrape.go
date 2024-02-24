@@ -11,14 +11,34 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Scrape does chifra scrape
-func ScrapeCmd(w io.Writer, options map[string]string) error {
-	return scrape.Scrape(w, options)
+type ScrapeOptions struct {
+	Block_Cnt uint64
+	Sleep     float64
+	Touch     uint64
+	Run_Count uint64
+	Publisher base.Address
+	Dry_Run   bool
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Scrape implements the chifra scrape command for the SDK.
+func (opts *ScrapeOptions) Scrape(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return scrape.Scrape(w, values)
 }
 
 // EXISTING_CODE

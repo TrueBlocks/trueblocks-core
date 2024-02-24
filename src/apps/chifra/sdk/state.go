@@ -17,12 +17,7 @@ import (
 )
 
 // State provides an interface to the command line chifra state through the SDK.
-func State(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func State(w io.Writer, values url.Values) error {
 	state.ResetOptions(false)
 	opts := state.StateFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("state", true)
@@ -34,4 +29,7 @@ func State(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

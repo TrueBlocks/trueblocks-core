@@ -17,12 +17,7 @@ import (
 )
 
 // Status provides an interface to the command line chifra status through the SDK.
-func Status(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Status(w io.Writer, values url.Values) error {
 	status.ResetOptions(false)
 	opts := status.StatusFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("status", true)
@@ -34,4 +29,7 @@ func Status(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

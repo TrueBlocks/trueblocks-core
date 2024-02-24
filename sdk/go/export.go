@@ -11,14 +11,58 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Export does chifra export
-func ExportCmd(w io.Writer, options map[string]string) error {
-	return export.Export(w, options)
+type ExportOptions struct {
+	Addrs       []base.Address
+	Topics      []base.Topic
+	Fourbytes   []string
+	Appearances bool
+	Receipts    bool
+	Logs        bool
+	Traces      bool
+	Neighbors   bool
+	Accounting  bool
+	Statements  bool
+	Balances    bool
+	Withdrawals bool
+	Articulate  bool
+	CacheRraces bool
+	Count       bool
+	FirstRecord uint64
+	MaxRecords  uint64
+	Relevant    bool
+	Emitter     []base.Address
+	Topic       []base.Topic
+	Reverted    bool
+	Asset       []base.Address
+	Flow        string
+	Factory     bool
+	Unripe      bool
+	Load        string
+	Reversed    bool
+	No_Zero     bool
+	FirstBlock  base.Blknum
+	LastBlock   base.Blknum
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Export implements the chifra export command for the SDK.
+func (opts *ExportOptions) Export(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return export.Export(w, values)
 }
 
 // EXISTING_CODE

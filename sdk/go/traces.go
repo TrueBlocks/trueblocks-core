@@ -11,14 +11,31 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Traces does chifra traces
-func TracesCmd(w io.Writer, options map[string]string) error {
-	return traces.Traces(w, options)
+type TracesOptions struct {
+	TransactionIds []string
+	Articulate     bool
+	Filter         string
+	Count          bool
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Traces implements the chifra traces command for the SDK.
+func (opts *TracesOptions) Traces(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return traces.Traces(w, values)
 }
 
 // EXISTING_CODE

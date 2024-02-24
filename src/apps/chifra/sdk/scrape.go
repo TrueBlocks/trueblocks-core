@@ -17,12 +17,7 @@ import (
 )
 
 // Scrape provides an interface to the command line chifra scrape through the SDK.
-func Scrape(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Scrape(w io.Writer, values url.Values) error {
 	scrape.ResetOptions(false)
 	opts := scrape.ScrapeFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("scrape", true)
@@ -34,4 +29,7 @@ func Scrape(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

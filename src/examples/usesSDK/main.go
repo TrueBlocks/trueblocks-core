@@ -49,6 +49,6 @@ func main() {
 }
 
 var testBlocks = []string{
-	"0-19000000:monthly",
+	"13800-1000000:monthly",
 	"14011011",
 }

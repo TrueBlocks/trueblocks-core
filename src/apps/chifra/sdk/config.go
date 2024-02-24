@@ -17,12 +17,7 @@ import (
 )
 
 // Config provides an interface to the command line chifra config through the SDK.
-func Config(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Config(w io.Writer, values url.Values) error {
 	config.ResetOptions(false)
 	opts := config.ConfigFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("config", true)
@@ -34,4 +29,7 @@ func Config(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

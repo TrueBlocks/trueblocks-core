@@ -11,14 +11,45 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Names does chifra names
-func NamesCmd(w io.Writer, options map[string]string) error {
-	return names.Names(w, options)
+type NamesOptions struct {
+	Terms     []string
+	Expand    bool
+	MatchCase bool
+	All       bool
+	Custom    bool
+	Prefund   bool
+	Addr      bool
+	Tags      bool
+	Clean     bool
+	Regular   bool
+	Dry_Run   bool
+	Autoname  base.Address
+	Create    bool
+	Update    bool
+	Delete    bool
+	Undelete  bool
+	Remove    bool
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Names implements the chifra names command for the SDK.
+func (opts *NamesOptions) Names(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return names.Names(w, values)
 }
 
 // EXISTING_CODE

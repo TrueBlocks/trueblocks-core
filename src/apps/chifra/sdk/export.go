@@ -17,12 +17,7 @@ import (
 )
 
 // Export provides an interface to the command line chifra export through the SDK.
-func Export(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Export(w io.Writer, values url.Values) error {
 	export.ResetOptions(false)
 	opts := export.ExportFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("export", true)
@@ -34,4 +29,7 @@ func Export(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

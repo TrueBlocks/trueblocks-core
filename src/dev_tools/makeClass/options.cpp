@@ -344,12 +344,12 @@ string_q getPathToTemplates(const string_q& part) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool parseEndpointsFile(const char* str, void* data) {
-    if (startsWith(str, ';'))
-        return true;
-
-    string_q line = str;
+bool parseEndpointsFile(const char* linePtr, void* data) {
+    string_q line = linePtr;
     replaceAny(line, "\n\r", "");
+
+    if (startsWith(line, ';'))
+        return true;
 
     /* The first row is the field names */
     static CStringArray fields;

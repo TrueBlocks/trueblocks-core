@@ -80,10 +80,10 @@ class COptions : public COptionsBase {
     bool handle_sdk_py_types(CStringArray& typesOut);
     bool handle_sdk_go(void);
 
-    bool handle_gocmds_cmd(const CCommandOption& cmd);
-    bool handle_gocmds_options(const CCommandOption& cmd);
-    bool handle_gocmds_docfile(const CCommandOption& cmd);
-    bool handle_gocmds_output(const CCommandOption& cmd);
+    bool handle_gocmds_cmd(const CCommandOption& ep);
+    bool handle_gocmds_options(const CCommandOption& ep);
+    bool handle_gocmds_docfile(const CCommandOption& ep);
+    bool handle_gocmds_output(const CCommandOption& ep);
     void verifyGoEnumValidators(void);
 
     bool writeOpenApiFile(void);

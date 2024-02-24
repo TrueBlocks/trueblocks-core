@@ -11,14 +11,33 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Init does chifra init
-func InitCmd(w io.Writer, options map[string]string) error {
-	return initPkg.Init(w, options)
+type InitOptions struct {
+	All         bool
+	Dry_Run     bool
+	Publisher   base.Address
+	First_Block base.Blknum
+	Sleep       float64
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Init implements the chifra init command for the SDK.
+func (opts *InitOptions) Init(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return initPkg.Init(w, values)
 }
 
 // EXISTING_CODE

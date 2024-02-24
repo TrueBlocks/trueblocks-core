@@ -41,9 +41,41 @@ bool COptions::handle_sdk_go(void) {
             cw.nSpaces = 0;
             cw.stripEOFNL = false;
             counter.nProcessed += writeCodeIn(this, cw);
+            counter.nVisited++;
         }
 
+        ostringstream fields;
+        CCommandOptionArray members;
+        for (auto option : routeOptionArray) {
+            bool isOne = option.api_route == ep.api_route && option.isChifraRoute(true);
+            if (isOne) {
+                /*
+                  "num": "12210",
+                  "group": "tools",
+                  "api_route": "slurp",
+                  "tool": "ethslurp",
+                  "longName": "sleep",
+                  "hotKey": "s",
+                  "def_val": ".25",
+                  "is_visible": true,
+                  "is_visible_docs": true,
+                  "generate": "gocmd",
+                  "option_type": "flag",
+                  "data_type": "<double>",
+                  "real_type": "double",
+                  "go_intype": "float64",
+                  "go_flagtype": "Float64VarP",
+                  "description": "seconds to sleep between requests"
+                */
+                fields << "\t" << toProper(option.longName) << " " << option.real_type << endl;
+                // cout << option << endl;
+            }
+        }
+        // ep.members = &members;
+        // cout << members << endl;
+
         contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
+        contents = substitute(contents, "[{FIEDLS}]", ""); // fields.str());
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);
@@ -52,6 +84,7 @@ bool COptions::handle_sdk_go(void) {
             cw.nSpaces = 0;
             cw.stripEOFNL = false;
             counter.nProcessed += writeCodeIn(this, cw);
+            counter.nVisited++;
         }
     }
 

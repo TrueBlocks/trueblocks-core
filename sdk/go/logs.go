@@ -11,14 +11,32 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Logs does chifra logs
-func LogsCmd(w io.Writer, options map[string]string) error {
-	return logs.Logs(w, options)
+type LogsOptions struct {
+	Transactions []string
+	Emitter      []base.Address
+	Topic        []base.Topic
+	Articulate   bool
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Logs implements the chifra logs command for the SDK.
+func (opts *LogsOptions) Logs(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return logs.Logs(w, values)
 }
 
 // EXISTING_CODE

@@ -17,12 +17,7 @@ import (
 )
 
 // Names provides an interface to the command line chifra names through the SDK.
-func Names(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Names(w io.Writer, values url.Values) error {
 	names.ResetOptions(false)
 	opts := names.NamesFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("names", true)
@@ -34,4 +29,7 @@ func Names(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

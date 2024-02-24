@@ -17,12 +17,7 @@ import (
 )
 
 // Daemon provides an interface to the command line chifra daemon through the SDK.
-func Daemon(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Daemon(w io.Writer, values url.Values) error {
 	daemon.ResetOptions(false)
 	opts := daemon.DaemonFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("daemon", true)
@@ -34,4 +29,7 @@ func Daemon(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

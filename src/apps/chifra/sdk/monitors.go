@@ -17,12 +17,7 @@ import (
 )
 
 // Monitors provides an interface to the command line chifra monitors through the SDK.
-func Monitors(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Monitors(w io.Writer, values url.Values) error {
 	monitors.ResetOptions(false)
 	opts := monitors.MonitorsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("monitors", true)
@@ -34,4 +29,7 @@ func Monitors(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

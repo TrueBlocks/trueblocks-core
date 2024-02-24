@@ -11,14 +11,40 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// List does chifra list
-func ListCmd(w io.Writer, options map[string]string) error {
-	return list.List(w, options)
+type ListOptions struct {
+	Addrs       []base.Address
+	Count       bool
+	No_Zero     bool
+	Bounds      bool
+	Unripe      bool
+	Silent      bool
+	FirstRecord uint64
+	MaxRecords  uint64
+	Reversed    bool
+	Publisher   base.Address
+	FirstBlock  base.Blknum
+	LastBlock   base.Blknum
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// List implements the chifra list command for the SDK.
+func (opts *ListOptions) List(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return list.List(w, values)
 }
 
 // EXISTING_CODE

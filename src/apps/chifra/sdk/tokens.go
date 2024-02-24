@@ -17,12 +17,7 @@ import (
 )
 
 // Tokens provides an interface to the command line chifra tokens through the SDK.
-func Tokens(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Tokens(w io.Writer, values url.Values) error {
 	tokens.ResetOptions(false)
 	opts := tokens.TokensFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("tokens", true)
@@ -34,4 +29,7 @@ func Tokens(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

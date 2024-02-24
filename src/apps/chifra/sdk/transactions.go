@@ -17,12 +17,7 @@ import (
 )
 
 // Transactions provides an interface to the command line chifra transactions through the SDK.
-func Transactions(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func Transactions(w io.Writer, values url.Values) error {
 	transactions.ResetOptions(false)
 	opts := transactions.TransactionsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("transactions", true)
@@ -34,4 +29,7 @@ func Transactions(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 

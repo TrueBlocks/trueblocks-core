@@ -11,14 +11,29 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Receipts does chifra receipts
-func ReceiptsCmd(w io.Writer, options map[string]string) error {
-	return receipts.Receipts(w, options)
+type ReceiptsOptions struct {
+	Transactions []string
+	Articulate   bool
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Receipts implements the chifra receipts command for the SDK.
+func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return receipts.Receipts(w, values)
 }
 
 // EXISTING_CODE

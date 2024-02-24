@@ -13,9 +13,19 @@ import (
 	// EXISTING_CODE
 )
 
-// [{PROPER}] does chifra [{LOWER}]
-func [{PROPER}]Cmd(w io.Writer, options map[string]string) error {
-	return [{PKG}].[{PROPER}](w, options)
+type [{PROPER}]Options struct {
+[{FIEDLS}]	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// [{PROPER}] implements the chifra [{LOWER}] command for the SDK.
+func (opts *[{PROPER}]Options) [{PROPER}](w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return [{PKG}].[{PROPER}](w, values)
 }
 
 // EXISTING_CODE

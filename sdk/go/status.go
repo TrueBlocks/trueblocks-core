@@ -11,14 +11,32 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Status does chifra status
-func StatusCmd(w io.Writer, options map[string]string) error {
-	return status.Status(w, options)
+type StatusOptions struct {
+	Modes       string
+	Diagnose    bool
+	FirstRecord uint64
+	MaxRecords  uint64
+	Chains      bool
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Status implements the chifra status command for the SDK.
+func (opts *StatusOptions) Status(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return status.Status(w, values)
 }
 
 // EXISTING_CODE

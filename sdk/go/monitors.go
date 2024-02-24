@@ -11,14 +11,40 @@ package sdk
 import (
 	// EXISTING_CODE
 	"io"
+	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
-// Monitors does chifra monitors
-func MonitorsCmd(w io.Writer, options map[string]string) error {
-	return monitors.Monitors(w, options)
+type MonitorsOptions struct {
+	Addrs      []base.Address
+	Delete     bool
+	Undelete   bool
+	Remove     bool
+	Clean      bool
+	List       bool
+	Watch      bool
+	Watchlist  string
+	Commands   string
+	Batch_Size uint64
+	Run_Count  uint64
+	Sleep      float64
+	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// Monitors implements the chifra monitors command for the SDK.
+func (opts *MonitorsOptions) Monitors(w io.Writer) error {
+	values := make(url.Values)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return monitors.Monitors(w, values)
 }
 
 // EXISTING_CODE

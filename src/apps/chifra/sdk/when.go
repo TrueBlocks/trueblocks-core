@@ -17,12 +17,7 @@ import (
 )
 
 // When provides an interface to the command line chifra when through the SDK.
-func When(w io.Writer, options map[string]string) error {
-	values := make(url.Values)
-	for key, val := range options {
-		values.Set(key, val)
-	}
-
+func When(w io.Writer, values url.Values) error {
 	when.ResetOptions(false)
 	opts := when.WhenFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("when", true)
@@ -34,4 +29,7 @@ func When(w io.Writer, options map[string]string) error {
 
 	return err
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
