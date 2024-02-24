@@ -4,18 +4,20 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/sdk/v1"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
 // DoBlocks tests the Blocks sdk function
 func DoBlocks() {
 	var buf bytes.Buffer
-	if err := sdk.Blocks(&buf, sdk.BlocksOptions{
-		Blocks: testBlocks,
-		Hashes: true,
-	}); err != nil {
+
+	opts := sdk.BlocksOptions{
+		BlockIds: testBlocks,
+		Hashes:   true,
+	}
+
+	if err := opts.Blocks(&buf); err != nil {
 		logger.Fatal(err)
 	}
 
@@ -24,12 +26,17 @@ func DoBlocks() {
 
 // DoWhen tests the When sdk function
 func DoWhen() {
-	var buf bytes.Buffer
-	if err := sdk.When(&buf, sdk.WhenOptions{
-		Blocks:     testBlocks,
-		Timestamps: true,
-		Globals:    sdk.Globals{Fmt: sdk.Csv, NoHeader: true},
-	}); err != nil {
+	opts := sdk.WhenOptions{
+		Globals: sdk.Globals{
+			Fmt:     sdk.Csv,
+			Verbose: true,
+		},
+		BlockIds: testBlocks,
+		// Timestamps: true,
+	}
+
+	buf := bytes.Buffer{}
+	if err := opts.When(&buf); err != nil {
 		logger.Fatal(err)
 	}
 
@@ -41,4 +48,7 @@ func main() {
 	DoWhen()
 }
 
-var testBlocks = []base.Blknum{1, 1001001, 15000001}
+var testBlocks = []string{
+	"0-19000000:monthly",
+	"14011011",
+}

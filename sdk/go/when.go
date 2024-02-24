@@ -10,11 +10,9 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
 	"io"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -26,7 +24,7 @@ func WhenCmd(w io.Writer, options map[string]string) error {
 
 // EXISTING_CODE
 type WhenOptions struct {
-	Blocks     []base.Blknum
+	BlockIds   []string
 	List       bool
 	Timestamps bool
 	Count      bool
@@ -34,17 +32,13 @@ type WhenOptions struct {
 	Check      bool
 	Update     bool
 	Deep       bool
-	Globals    Globals
+	Globals
 }
 
-func When(w io.Writer, opts WhenOptions) error {
+func (opts *WhenOptions) When(w io.Writer) error {
 	options := map[string]string{}
 
-	blkIds := make([]string, 0, len(opts.Blocks))
-	for _, bn := range opts.Blocks {
-		blkIds = append(blkIds, fmt.Sprintf("%d", bn))
-	}
-	options["blocks"] = strings.Join(blkIds, " ")
+	options["blocks"] = strings.Join(opts.BlockIds, " ")
 	if opts.List {
 		options["list"] = "true"
 	}
@@ -72,4 +66,3 @@ func When(w io.Writer, opts WhenOptions) error {
 }
 
 // EXISTING_CODE
-

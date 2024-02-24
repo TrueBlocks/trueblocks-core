@@ -35,7 +35,7 @@ const (
 )
 
 type BlocksOptions struct {
-	Blocks      []base.Blknum
+	BlockIds    []string
 	Hashes      bool
 	Uncles      bool
 	Traces      bool
@@ -48,18 +48,13 @@ type BlocksOptions struct {
 	Flow        BlocksFlow
 	Emitter     []base.Address
 	Topic       []base.Topic
-	Globals     Globals
+	Globals
 }
 
-func Blocks(w io.Writer, opts BlocksOptions) error {
+func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	options := make(map[string]string, 0)
 
-	blkIds := make([]string, 0, len(opts.Blocks))
-	for _, bn := range opts.Blocks {
-		blkIds = append(blkIds, fmt.Sprintf("%d", bn))
-	}
-	options["blocks"] = strings.Join(blkIds, " ")
-
+	options["blocks"] = strings.Join(opts.BlockIds, " ")
 	if opts.Hashes {
 		options["hashes"] = "true"
 	}
@@ -112,4 +107,3 @@ func Blocks(w io.Writer, opts BlocksOptions) error {
 }
 
 // EXISTING_CODE
-
