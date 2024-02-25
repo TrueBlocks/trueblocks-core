@@ -178,6 +178,7 @@ func ResetOptions(testMode bool) {
 	defaultScrapeOptions.Globals.TestMode = testMode
 	defaultScrapeOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra scrape
+	// verbose|version|noop|nocolor|chain
 	// EXISTING_CODE
 	capabilities = capabilities.Remove(caps.Append)
 	capabilities = capabilities.Remove(caps.File)

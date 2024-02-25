@@ -170,6 +170,7 @@ func ResetOptions(testMode bool) {
 	defaultTransactionsOptions.Globals.TestMode = testMode
 	defaultTransactionsOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra transactions
+	// default|caching|ether|raw
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)

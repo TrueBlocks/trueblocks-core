@@ -151,6 +151,7 @@ func ResetOptions(testMode bool) {
 	defaultDaemonOptions.Globals.TestMode = testMode
 	defaultDaemonOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra daemon
+	// verbose|version|noop|nocolor
 	// EXISTING_CODE
 	// capabilities = capabilities.Remove(caps.File)
 	// capabilities = capabilities.Remove(caps.Fmt)

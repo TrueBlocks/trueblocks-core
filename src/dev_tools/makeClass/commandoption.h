@@ -45,6 +45,7 @@ class CCommandOption : public CBaseNode {
     string_q go_intype;
     string_q go_flagtype;
     string_q summary;
+    string_q capabilities;
     string_q description;
 
   public:
@@ -158,6 +159,7 @@ inline void CCommandOption::initialize(void) {
     go_intype = "";
     go_flagtype = "";
     summary = "";
+    capabilities = "";
     description = "";
 
     // EXISTING_CODE
@@ -207,6 +209,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     go_intype = co.go_intype;
     go_flagtype = co.go_flagtype;
     summary = co.summary;
+    capabilities = co.capabilities;
     description = co.description;
 
     // EXISTING_CODE

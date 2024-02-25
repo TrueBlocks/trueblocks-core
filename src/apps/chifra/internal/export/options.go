@@ -290,6 +290,7 @@ func ResetOptions(testMode bool) {
 	defaultExportOptions.Globals.TestMode = testMode
 	defaultExportOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra export
+	// default|caching|ether
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)

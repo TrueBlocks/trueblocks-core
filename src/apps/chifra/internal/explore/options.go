@@ -132,6 +132,7 @@ func ResetOptions(testMode bool) {
 	defaultExploreOptions.Globals.TestMode = testMode
 	defaultExploreOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra explore
+	// verbose|version|noop|nocolor|chain|file
 	// EXISTING_CODE
 	capabilities = capabilities.Remove(caps.Append)
 	capabilities = capabilities.Remove(caps.Fmt)

@@ -56,6 +56,7 @@ Notes:
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra slurp
+	// default|caching|ether|raw
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)

@@ -249,6 +249,7 @@ func ResetOptions(testMode bool) {
 	defaultChunksOptions.Globals.TestMode = testMode
 	defaultChunksOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra chunks
+	// default
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultChunksOptions.Globals.Caps = capabilities

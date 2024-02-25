@@ -145,6 +145,7 @@ func ResetOptions(testMode bool) {
 	defaultInitOptions.Globals.TestMode = testMode
 	defaultInitOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra init
+	// verbose|version|noop|nocolor|chain
 	// EXISTING_CODE
 	capabilities = capabilities.Remove(caps.Append)
 	capabilities = capabilities.Remove(caps.File)

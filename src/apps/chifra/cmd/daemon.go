@@ -53,6 +53,7 @@ Notes:
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra daemon
+	// verbose|version|noop|nocolor
 	// EXISTING_CODE
 	// capabilities = capabilities.Remove(caps.File)
 	// capabilities = capabilities.Remove(caps.Fmt)

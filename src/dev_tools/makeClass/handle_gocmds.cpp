@@ -20,6 +20,7 @@ extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
 extern string_q get_ens_convert1(const CCommandOption& cmd);
 extern string_q get_ens_convert2(const CCommandOption& cmd);
+extern string_q get_capabilities(const CCommandOption& cmd);
 extern string_q get_config_package(const CCommandOption& cmd);
 extern string_q get_walk_package(const CCommandOption& cmd);
 extern string_q get_os_package(const string_q& fn);
@@ -50,6 +51,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& ep) {
     replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
     replaceAll(source, "[{POSTNOTES}]", get_notes2(ep));
     replaceAll(source, "[{ALIASES}]", get_aliases(ep));
+    replaceAll(source, "[{CAPABILITIES}]", get_capabilities(ep));
     string_q descr = firstLower(ep.description);
     if (endsWith(descr, "."))
         replaceReverse(descr, ".", "");
@@ -149,6 +151,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& ep) {
     replaceAll(source, "[{BASEPKG}]", get_base_package(fn));
     replaceAll(source, "[{OS}]", get_os_package(fn));
     replaceAll(source, "[{INDEXPKG}]", get_index_package(fn));
+    replaceAll(source, "[{CAPABILITIES}]", get_capabilities(ep));
 
     string_q req = get_requestopts(ep);
     replaceAll(source, "[{REQUEST_OPTS}]", req);
@@ -546,6 +549,12 @@ string_q get_ens_convert1(const CCommandOption& cmd) {
             os << member.Format(str) << endl;
         }
     }
+    return os.str();
+}
+
+string_q get_capabilities(const CCommandOption& ep) {
+    ostringstream os;
+    os << "\t// " << ep.capabilities << endl;
     return os.str();
 }
 

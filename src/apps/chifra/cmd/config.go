@@ -51,6 +51,7 @@ const notesConfig = ``
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra config
+	// default
 	// EXISTING_CODE
 	// EXISTING_CODE
 

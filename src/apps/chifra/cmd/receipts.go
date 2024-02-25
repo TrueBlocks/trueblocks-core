@@ -54,6 +54,7 @@ Notes:
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra receipts
+	// default|caching|raw
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)

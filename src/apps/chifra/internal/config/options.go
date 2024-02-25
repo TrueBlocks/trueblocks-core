@@ -130,6 +130,7 @@ func ResetOptions(testMode bool) {
 	defaultConfigOptions.Globals.TestMode = testMode
 	defaultConfigOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra config
+	// default
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultConfigOptions.Globals.Caps = capabilities

@@ -163,6 +163,7 @@ func ResetOptions(testMode bool) {
 	defaultWhenOptions.Globals.TestMode = testMode
 	defaultWhenOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra when
+	// default|caching
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE

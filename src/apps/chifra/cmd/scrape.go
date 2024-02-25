@@ -49,6 +49,7 @@ Notes:
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra scrape
+	// verbose|version|noop|nocolor|chain
 	// EXISTING_CODE
 	capabilities = capabilities.Remove(caps.Append)
 	capabilities = capabilities.Remove(caps.File)

@@ -54,6 +54,7 @@ Notes:
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra status
+	// default
 	// EXISTING_CODE
 	// EXISTING_CODE
 

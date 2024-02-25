@@ -77,6 +77,11 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
                 return api_route;
             }
             break;
+        case 'c':
+            if (fieldName % "capabilities") {
+                return capabilities;
+            }
+            break;
         case 'd':
             if (fieldName % "def_val") {
                 return def_val;
@@ -181,6 +186,12 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             }
             if (fieldName % "api_route") {
                 api_route = fieldValue;
+                return true;
+            }
+            break;
+        case 'c':
+            if (fieldName % "capabilities") {
+                capabilities = fieldValue;
                 return true;
             }
             break;
@@ -321,6 +332,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> go_intype;
     archive >> go_flagtype;
     archive >> summary;
+    archive >> capabilities;
     archive >> description;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -354,6 +366,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << go_intype;
     archive << go_flagtype;
     archive << summary;
+    archive << capabilities;
     archive << description;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -423,6 +436,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "go_intype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "go_flagtype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "summary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "capabilities", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

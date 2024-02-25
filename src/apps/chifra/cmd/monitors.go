@@ -56,6 +56,7 @@ Notes:
 
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra monitors
+	// default|caching
 	// EXISTING_CODE
 	capabilities = capabilities.Add(caps.Caching)
 	// EXISTING_CODE

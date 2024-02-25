@@ -187,6 +187,7 @@ func ResetOptions(testMode bool) {
 	defaultListOptions.Globals.TestMode = testMode
 	defaultListOptions.Globals.Writer = w
 	capabilities := caps.Default // Additional global caps for chifra list
+	// default
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultListOptions.Globals.Caps = capabilities
