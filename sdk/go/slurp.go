@@ -26,8 +26,6 @@ type SlurpOptions struct {
 	Articulate  bool
 	Source      SlurpSource
 	Count       bool
-	Page        uint64
-	PerPage     uint64
 	Sleep       float64
 	Globals
 
@@ -118,3 +116,4 @@ func (v SlurpSource) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

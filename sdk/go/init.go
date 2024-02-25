@@ -22,7 +22,6 @@ import (
 type InitOptions struct {
 	All        bool
 	DryRun     bool
-	Publisher  base.Address
 	FirstBlock base.Blknum
 	Sleep      float64
 	Globals
@@ -42,9 +41,6 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	if opts.DryRun {
 		values.Set("dry_run", "true")
 	}
-	if !opts.Publisher.IsZero() {
-		values.Set("publisher", opts.Publisher.Hex())
-	}
 	if opts.FirstBlock != 0 {
 		values.Set("first_block", fmt.Sprintf("%d", opts.FirstBlock))
 	}
@@ -56,8 +52,6 @@ func (opts *InitOptions) Init(w io.Writer) error {
 
 	return initPkg.Init(w, values)
 }
-
-// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

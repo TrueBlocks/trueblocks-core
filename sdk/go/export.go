@@ -45,7 +45,6 @@ type ExportOptions struct {
 	Flow        ExportFlow
 	Factory     bool
 	Unripe      bool
-	Load        string
 	Reversed    bool
 	NoZero      bool
 	FirstBlock  base.Blknum
@@ -174,3 +173,4 @@ func (v ExportFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

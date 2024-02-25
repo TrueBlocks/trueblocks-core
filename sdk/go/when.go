@@ -13,7 +13,6 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -23,7 +22,6 @@ type WhenOptions struct {
 	List       bool
 	Timestamps bool
 	Count      bool
-	Truncate   base.Blknum
 	Repair     bool
 	Check      bool
 	Update     bool
@@ -69,7 +67,6 @@ func (opts *WhenOptions) When(w io.Writer) error {
 	return when.When(w, values)
 }
 
-// no enums
+// EXISTING_CODE
+// EXISTING_CODE
 
-// EXISTING_CODE
-// EXISTING_CODE

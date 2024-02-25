@@ -14,7 +14,6 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -33,10 +32,6 @@ type BlocksOptions struct {
 	Articulate  bool
 	BigRange    uint64
 	Count       bool
-	CacheTxs    bool
-	CacheTraces bool
-	List        base.Blknum
-	ListCount   base.Blknum
 	Globals
 
 	// EXISTING_CODE

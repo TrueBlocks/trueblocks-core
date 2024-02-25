@@ -51,7 +51,6 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 	return traces.Traces(w, values)
 }
 
-// no enums
+// EXISTING_CODE
+// EXISTING_CODE
 
-// EXISTING_CODE
-// EXISTING_CODE

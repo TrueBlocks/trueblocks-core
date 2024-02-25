@@ -29,7 +29,6 @@ type ListOptions struct {
 	FirstRecord uint64
 	MaxRecords  uint64
 	Reversed    bool
-	Publisher   base.Address
 	FirstBlock  base.Blknum
 	LastBlock   base.Blknum
 	Globals
@@ -70,9 +69,6 @@ func (opts *ListOptions) List(w io.Writer) error {
 	if opts.Reversed {
 		values.Set("reversed", "true")
 	}
-	if !opts.Publisher.IsZero() {
-		values.Set("publisher", opts.Publisher.String())
-	}
 	if opts.FirstBlock > 0 {
 		values.Set("first_block", fmt.Sprint(opts.FirstBlock))
 	}
@@ -84,8 +80,6 @@ func (opts *ListOptions) List(w io.Writer) error {
 
 	return list.List(w, values)
 }
-
-// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

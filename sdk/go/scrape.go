@@ -14,7 +14,6 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -23,9 +22,6 @@ type ScrapeOptions struct {
 	BlockCnt  uint64
 	Sleep     float64
 	Touch     uint64
-	RunCount  uint64
-	Publisher base.Address
-	DryRun    bool
 	Globals
 
 	// EXISTING_CODE
@@ -52,7 +48,6 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 	return scrape.Scrape(w, values)
 }
 
-// no enums
+// EXISTING_CODE
+// EXISTING_CODE
 
-// EXISTING_CODE
-// EXISTING_CODE

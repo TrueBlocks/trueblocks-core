@@ -43,7 +43,6 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 	return receipts.Receipts(w, values)
 }
 
-// no enums
+// EXISTING_CODE
+// EXISTING_CODE
 
-// EXISTING_CODE
-// EXISTING_CODE

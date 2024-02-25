@@ -26,8 +26,6 @@ type TransactionsOptions struct {
 	Logs           bool
 	Emitter        []string // allow for ENS names and addresses
 	Topic          []string // topics are strings
-	CacheTraces    bool
-	Seed           bool
 	Globals
 
 	// EXISTING_CODE
@@ -87,3 +85,4 @@ func (v TransactionsFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

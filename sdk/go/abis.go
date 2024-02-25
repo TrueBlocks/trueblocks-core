@@ -60,8 +60,6 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 	return abis.Abis(w, values)
 }
 
-// no enums
-
 // EXISTING_CODE
 // EXISTING_CODE
 

@@ -51,7 +51,6 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 	return logs.Logs(w, values)
 }
 
-// no enums
+// EXISTING_CODE
+// EXISTING_CODE
 
-// EXISTING_CODE
-// EXISTING_CODE

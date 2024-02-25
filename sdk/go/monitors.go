@@ -29,7 +29,6 @@ type MonitorsOptions struct {
 	Watchlist string
 	Commands  string
 	BatchSize uint64
-	RunCount  uint64
 	Sleep     float64
 	Globals
 
@@ -72,9 +71,6 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 	if opts.BatchSize > 0 {
 		values.Set("batch_size", fmt.Sprint(opts.BatchSize))
 	}
-	if opts.RunCount > 0 {
-		values.Set("run_count", fmt.Sprint(opts.RunCount))
-	}
 	if opts.Sleep > 0 {
 		values.Set("sleep", fmt.Sprint(opts.Sleep))
 	}
@@ -83,8 +79,6 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 
 	return monitors.Monitors(w, values)
 }
-
-// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

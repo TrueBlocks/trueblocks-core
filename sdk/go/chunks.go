@@ -25,20 +25,14 @@ type ChunksOptions struct {
 	Check      bool
 	Pin        bool
 	Publish    bool
-	Publisher  base.Address
-	Truncate   base.Blknum
 	Remote     bool
 	Belongs    []string // allow for ENS names and addresses
-	Diff       bool
 	FirstBlock base.Blknum
 	LastBlock  base.Blknum
 	MaxAddrs   base.Blknum
 	Deep       bool
 	Rewrite    bool
-	List       bool
-	Unpin      bool
 	Count      bool
-	Tag        string
 	Sleep      float64
 	Globals
 
@@ -127,3 +121,4 @@ func (v ChunksMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+
