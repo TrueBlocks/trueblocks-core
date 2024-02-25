@@ -51,10 +51,10 @@ const notesExplore = ``
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra explore
 	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Append)
 	capabilities = capabilities.Remove(caps.Fmt)
 	capabilities = capabilities.Remove(caps.NoHeader)
 	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 
 	exploreCmd.Flags().SortFlags = false

@@ -50,11 +50,11 @@ Notes:
 func init() {
 	var capabilities = caps.Default // Additional global caps for chifra scrape
 	// EXISTING_CODE
+	capabilities = capabilities.Remove(caps.Append)
+	capabilities = capabilities.Remove(caps.File)
 	capabilities = capabilities.Remove(caps.Fmt)
 	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
 	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 
 	scrapeCmd.Flags().SortFlags = false
