@@ -127,11 +127,11 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultReceiptsOptions.Globals)
 	defaultReceiptsOptions.Globals.TestMode = testMode
 	defaultReceiptsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra receipts
-	// default|caching|raw
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra receipts
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultReceiptsOptions.Globals.Caps = capabilities
 }

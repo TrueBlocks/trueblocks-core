@@ -177,14 +177,13 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultScrapeOptions.Globals)
 	defaultScrapeOptions.Globals.TestMode = testMode
 	defaultScrapeOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra scrape
-	// verbose|version|noop|nocolor|chain
+	var capabilities caps.Capability // capabilities for chifra scrape
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.Nocolor)
+	capabilities = capabilities.Add(caps.Chain)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Append)
-	capabilities = capabilities.Remove(caps.File)
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.Output)
 	// EXISTING_CODE
 	defaultScrapeOptions.Globals.Caps = capabilities
 }

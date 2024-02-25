@@ -143,11 +143,11 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultLogsOptions.Globals)
 	defaultLogsOptions.Globals.TestMode = testMode
 	defaultLogsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra logs
-	// default|caching|raw
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra logs
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultLogsOptions.Globals.Caps = capabilities
 }

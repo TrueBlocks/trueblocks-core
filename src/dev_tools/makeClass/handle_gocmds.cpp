@@ -40,6 +40,8 @@ extern const char* STR_CHIFRA_HELP_END;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& ep) {
     string_q source = asciiFileToString(getPathToTemplates("blank.go.tmpl"));
+
+    replaceAll(source, "[{CAPABILITIES}]", get_capabilities(ep));
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
     replaceAll(source, "[{OPT_DEF}]", "");
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
@@ -51,7 +53,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& ep) {
     replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
     replaceAll(source, "[{POSTNOTES}]", get_notes2(ep));
     replaceAll(source, "[{ALIASES}]", get_aliases(ep));
-    replaceAll(source, "[{CAPABILITIES}]", get_capabilities(ep));
     string_q descr = firstLower(ep.description);
     if (endsWith(descr, "."))
         replaceReverse(descr, ".", "");
@@ -139,6 +140,9 @@ bool COptions::handle_gocmds_options(const CCommandOption& ep) {
     bool hasRpc = contains(asciiFileToString(fn), "rpc.");
 
     string_q source = asciiFileToString(getPathToTemplates("blank_options.go.tmpl"));
+
+    replaceAll(source, "[{CAPABILITIES}]", get_capabilities(ep));
+
     replaceAll(source, "[{ROUTE}]", ep.api_route);
     replaceAll(source, "[{LOWER}]", toLower(ep.api_route));
     replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
@@ -151,7 +155,6 @@ bool COptions::handle_gocmds_options(const CCommandOption& ep) {
     replaceAll(source, "[{BASEPKG}]", get_base_package(fn));
     replaceAll(source, "[{OS}]", get_os_package(fn));
     replaceAll(source, "[{INDEXPKG}]", get_index_package(fn));
-    replaceAll(source, "[{CAPABILITIES}]", get_capabilities(ep));
 
     string_q req = get_requestopts(ep);
     replaceAll(source, "[{REQUEST_OPTS}]", req);
@@ -554,7 +557,14 @@ string_q get_ens_convert1(const CCommandOption& cmd) {
 
 string_q get_capabilities(const CCommandOption& ep) {
     ostringstream os;
-    os << "\t// " << ep.capabilities << endl;
+    os << "var capabilities caps.Capability // capabilities for chifra [{ROUTE}]" << endl;
+
+    CStringArray caps;
+    explode(caps, ep.capabilities, '|');
+    for (auto cap : caps) {
+        os << "\tcapabilities = capabilities.Add(caps." << toProper(cap) << ")" << endl;
+    }
+
     return os.str();
 }
 

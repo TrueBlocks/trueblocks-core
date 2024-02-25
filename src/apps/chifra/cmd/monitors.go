@@ -55,10 +55,10 @@ Notes:
   - Providing the value existing to the --watchlist monitors all existing monitor files (see --list).`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra monitors
-	// default|caching
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra monitors
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	monitorsCmd.Flags().SortFlags = false

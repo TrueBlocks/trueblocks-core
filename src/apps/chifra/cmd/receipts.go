@@ -53,11 +53,11 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra receipts
-	// default|caching|raw
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra receipts
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	receiptsCmd.Flags().SortFlags = false

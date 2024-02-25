@@ -159,10 +159,10 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultAbisOptions.Globals)
 	defaultAbisOptions.Globals.TestMode = testMode
 	defaultAbisOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra abis
-	// default|caching
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra abis
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultAbisOptions.Globals.Caps = capabilities
 }

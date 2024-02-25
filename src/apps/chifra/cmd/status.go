@@ -53,8 +53,8 @@ Notes:
   - If no mode is supplied, a terse report is generated.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra status
-	// default
+	var capabilities caps.Capability // capabilities for chifra status
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

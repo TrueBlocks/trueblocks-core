@@ -55,12 +55,12 @@ Notes:
   - If the value of --source is key, --types is ignored and only appearances or counts are returned.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra slurp
-	// default|caching|ether|raw
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra slurp
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	slurpCmd.Flags().SortFlags = false

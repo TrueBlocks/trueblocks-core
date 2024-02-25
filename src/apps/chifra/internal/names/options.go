@@ -194,8 +194,8 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultNamesOptions.Globals)
 	defaultNamesOptions.Globals.TestMode = testMode
 	defaultNamesOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra names
-	// default
+	var capabilities caps.Capability // capabilities for chifra names
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultNamesOptions.Globals.Caps = capabilities

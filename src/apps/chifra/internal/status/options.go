@@ -154,8 +154,8 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultStatusOptions.Globals)
 	defaultStatusOptions.Globals.TestMode = testMode
 	defaultStatusOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra status
-	// default
+	var capabilities caps.Capability // capabilities for chifra status
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultStatusOptions.Globals.Caps = capabilities

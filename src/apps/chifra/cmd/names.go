@@ -52,8 +52,8 @@ Notes:
   - The --match_case option enables case sensitive matching.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra names
-	// default
+	var capabilities caps.Capability // capabilities for chifra names
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

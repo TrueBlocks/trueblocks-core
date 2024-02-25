@@ -54,11 +54,11 @@ Notes:
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if it is not, the hash will be used as a topic.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra logs
-	// default|caching|raw
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra logs
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	logsCmd.Flags().SortFlags = false

@@ -49,13 +49,14 @@ const longExplore = `Purpose:
 const notesExplore = ``
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra explore
-	// verbose|version|noop|nocolor|chain|file
+	var capabilities caps.Capability // capabilities for chifra explore
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.Nocolor)
+	capabilities = capabilities.Add(caps.Chain)
+	capabilities = capabilities.Add(caps.File)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Append)
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.Output)
 	// EXISTING_CODE
 
 	exploreCmd.Flags().SortFlags = false
