@@ -14,6 +14,23 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
+extern string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option);
+
+//------------------------------------------------------------------------------------------------------------
+bool COptions::handle_sdk_go(void) {
+    handle_sdk_go_innersdk();
+    handle_sdk_go_outersdk();
+
+    ostringstream log;
+    log << cYellow << "makeClass --sdk (go)" << cOff;
+    log << " processed " << counter.routeCount << "/" << counter.cmdCount;
+    log << " paths (changed " << counter.nProcessed << ")." << string_q(40, ' ');
+    LOG_INFO(log.str());
+
+    return true;
+}
+
+//------------------------------------------------------------------------------------------------------------
 string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option) {
     string_q ret = option.data_type;
     replace(ret, "list<", "");
@@ -61,45 +78,51 @@ string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCo
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool COptions::handle_sdk_go(void) {
-    string_q goSdkPath1 = getCWD() + "apps/chifra/sdk/";
-    string_q goSdkPath2 = getCWD() + "../sdk/go/";
-
-    establishFolder(goSdkPath1);
-    establishFolder(goSdkPath2);
+bool COptions::handle_sdk_go_innersdk(void) {
+    string_q path = getCWD() + "apps/chifra/sdk/";
+    establishFolder(path);
 
     for (auto ep : endpointArray) {
-        // We don't do options here, but once we do, we should report on them to make sure all auto-gen code generates
-        // the same thing
-        // reportOneOption(apiRoute, optionName, "api");
-
-        if (ep.api_route == "") {
+        if (!isApiRoute(ep.api_route)) {
             continue;
         }
-
-        string_q package = toLower(ep.api_route) + (toLower(ep.api_route) == "init" ? "Pkg" : "");
 
         string_q contents = asciiFileToString(getPathToTemplates("blank_sdk.go.tmpl"));
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
+
+        string_q package = toLower(ep.api_route) + (toLower(ep.api_route) == "init" ? "Pkg" : "");
         contents = substitute(contents, "[{PKG}]", package);
-        {
-            codewrite_t cw(goSdkPath1 + ep.api_route + ".go", contents);
-            cw.nSpaces = 0;
-            cw.stripEOFNL = false;
-            counter.nProcessed += writeCodeIn(this, cw);
-            counter.nVisited++;
+
+        codewrite_t cw(path + ep.api_route + ".go", contents);
+        cw.nSpaces = 0;
+        cw.stripEOFNL = false;
+        counter.nProcessed += writeCodeIn(this, cw);
+        counter.nVisited++;
+    }
+
+    return true;
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool COptions::handle_sdk_go_outersdk(void) {
+    string_q path = getCWD() + "../sdk/go/";
+    establishFolder(path);
+
+    for (auto ep : endpointArray) {
+        if (!isApiRoute(ep.api_route)) {
+            continue;
         }
 
         size_t maxWidth = 0;
         ostringstream fields, enums;
-        for (auto option : routeOptionArray) {
-            if (option.generate == "config") {
+        for (auto member : routeOptionArray) {
+            if (member.generate == "config") {
                 continue;
             }
-            bool isOne = option.api_route == ep.api_route && option.isChifraRoute(true);
+            bool isOne = member.api_route == ep.api_route && member.isChifraRoute(true);
             if (isOne) {
-                string_q fn = substitute(toProper(option.longName), "_", "");
+                string_q fn = substitute(toProper(member.longName), "_", "");
                 if (fn == "Blocks") {
                     fn = "BlockIds";
                 } else if (fn == "Transactions") {
@@ -109,64 +132,69 @@ bool COptions::handle_sdk_go(void) {
             }
         }
 
-        for (auto option : routeOptionArray) {
-            if (option.generate == "config") {
+        for (auto member : routeOptionArray) {
+            if (!member.is_visible_docs) {  //  && !containsI(member.longName, "cache")) {
                 continue;
             }
-            bool isOne = option.api_route == ep.api_route && option.isChifraRoute(true);
+
+            bool isOne = member.api_route == ep.api_route && member.isChifraRoute(true);
             if (isOne) {
-                string_q fn = substitute(toProper(option.longName), "_", "");
+                string_q fn = substitute(toProper(member.longName), "_", "");
                 if (fn == "Blocks") {
                     fn = "BlockIds";
                 } else if (fn == "Transactions") {
                     fn = "TransactionIds";
                 }
-                string_q t = option.go_intype;
-                if (option.data_type == "<blknum>" || option.data_type == "<txnum>") {
+                string_q t = member.go_intype;
+                if (member.data_type == "<blknum>" || member.data_type == "<txnum>") {
                     t = "base.Blknum";
-                } else if (option.data_type == "list<addr>") {
+                } else if (member.data_type == "list<addr>") {
                     t = "[]string // allow for ENS names and addresses";
-                } else if (option.data_type == "list<blknum>") {
+                } else if (member.data_type == "list<blknum>") {
                     t = "[]string // allow for block ranges and steps";
-                } else if (option.data_type == "list<topic>") {
+                } else if (member.data_type == "list<topic>") {
                     t = "[]string // topics are strings";
-                } else if (contains(option.data_type, "enum")) {
-                    t = toProper(option.api_route) + toProper(option.longName);
-                    enums << handle_sdk_go_enum(ep.api_route, fn, option) << endl;
-                } else if (contains(option.data_type, "address")) {
+                } else if (contains(member.data_type, "enum")) {
+                    t = toProper(member.api_route) + toProper(member.longName);
+                    enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
+                } else if (contains(member.data_type, "address")) {
                     t = "base.Address";
-                } else if (contains(option.data_type, "topic")) {
+                } else if (contains(member.data_type, "topic")) {
                     t = "base.Topic";
                 }
                 fields << "\t" << padRight(fn + " ", maxWidth) << t << endl;
+                if (!(member.option_type % "positional")) {
+                    reportOneOption(ep.api_route, toCamelCase(member.longName), "go-sdk");
+                }
             }
         }
         fields << "\t" << toProper("Globals") << endl << endl;
 
-        contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
-        contents = substitute(contents, "[{FIELDS}]", fields.str());
-        if (enums.str().size() > 0) {
-            contents = substitute(contents, "[{ENUMS}]", enums.str());
-        } else {
-            contents = substitute(contents, "[{ENUMS}]", "// no enums\n\n");
+        // Just for reporting...
+        CStringArray globals = getGlobalsArray();
+        for (auto global : globals) {
+            global = nextTokenClear(global, ':');
+            string_q g = getGlobalFeature(ep.api_route, global);
+            if (g.empty())
+                continue;
+            reportOneOption(ep.api_route, global, "go-sdk");
         }
+
+        string_q package = toLower(ep.api_route) + (toLower(ep.api_route) == "init" ? "Pkg" : "");
+        string_q contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
+        contents = substitute(contents, "[{CODE}]", "");
+        contents = substitute(contents, "[{FIELDS}]", fields.str());
+        contents = substitute(contents, "[{ENUMS}]", enums.str());
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);
-        {
-            codewrite_t cw(goSdkPath2 + ep.api_route + ".go", contents);
-            cw.nSpaces = 0;
-            cw.stripEOFNL = false;
-            counter.nProcessed += writeCodeIn(this, cw);
-            counter.nVisited++;
-        }
-    }
 
-    ostringstream log;
-    log << cYellow << "makeClass --sdk (go)" << cOff;
-    log << " processed " << counter.routeCount << "/" << counter.cmdCount;
-    log << " paths (changed " << counter.nProcessed << ")." << string_q(40, ' ');
-    LOG_INFO(log.str());
+        codewrite_t cw(path + ep.api_route + ".go", contents);
+        cw.nSpaces = 0;
+        cw.stripEOFNL = false;
+        counter.nProcessed += writeCodeIn(this, cw);
+        counter.nVisited++;
+    }
 
     return true;
 }

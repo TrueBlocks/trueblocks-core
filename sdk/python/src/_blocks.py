@@ -19,8 +19,6 @@ blocksOpts = {
     "articulate": {"hotkey": "-a", "type": "switch"},
     "bigRange": {"hotkey": "-r", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
-    "cacheTxs": {"hotkey": "", "type": "switch"},
-    "cacheTraces": {"hotkey": "", "type": "switch"},
     "raw": {"hotkey": "-w", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},

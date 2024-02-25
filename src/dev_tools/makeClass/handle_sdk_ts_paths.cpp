@@ -68,7 +68,21 @@ string_q toTsType(const string_q& in, map<string_q, string_q>& map) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q getGlobalParams(void) {
+CStringArray getGlobalsArray() {
+    CStringArray globals;
+    globals.push_back("chain:string");
+    globals.push_back("noHeader:boolean");
+    globals.push_back("fmt:string");
+    globals.push_back("verbose:boolean");
+    globals.push_back("ether:boolean");
+    globals.push_back("raw:boolean");
+    globals.push_back("cache:boolean");
+    globals.push_back("decache:boolean");
+    return globals;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q getGlobalParams(const string_q& route) {
     return "    chain: string,\n"
            "    noHeader?: boolean,\n"
            "    fmt?: string,\n"
@@ -114,18 +128,18 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
         }
 
         ostringstream params;
-        for (auto p : members) {
-            if (!p.is_visible_docs) {
+        for (auto member : members) {
+            if (!member.is_visible_docs) {
                 continue;
             }
-            string_q optionName = toCamelCase(p.longName);
+            string_q optionName = toCamelCase(member.longName);
             params << "    " << optionName;
-            params << (p.is_required ? "" : "?") << ": ";
-            params << toTsType(p.data_type, imports) << ",";
+            params << (member.is_required ? "" : "?") << ": ";
+            params << toTsType(member.data_type, imports) << ",";
             params << endl;
 
-            if (p.option_type != "positional") {
-                reportOneOption(apiRoute, optionName, "typescript");
+            if (member.option_type != "positional") {
+                reportOneOption(apiRoute, optionName, "typescript-sdk");
             }
         }
 
@@ -147,7 +161,7 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
         replaceAll(source, "[{RETTYPE}]", trim(returns.str(), '\n'));
         replaceAll(source, "[{TYPES}]", trim(typeImports.str(), '\n'));
         replaceAll(source, "[{PARAMS}]", trim(params.str(), '\n'));
-        replaceAll(source, "[{GLOBALS}]", getGlobalParams());
+        replaceAll(source, "[{GLOBALS}]", getGlobalParams(apiRoute));
 
         pathsOut.push_back(apiRoute);
         writeIfDifferent(filename.str(), source);

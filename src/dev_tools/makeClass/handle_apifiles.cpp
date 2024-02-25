@@ -18,7 +18,7 @@
 
 //---------------------------------------------------------------------------------------------------
 bool isApiRoute(const string_q& route) {
-    if (route == "daemon" || route == "blaze")
+    if (route == "daemon" || route == "blaze" || route == "explore")
         return false;
     return !route.empty();
 }
@@ -178,10 +178,11 @@ string_q getSchema(const string_q& data_type, const CCommandOption* cmd = NULL) 
 
 //---------------------------------------------------------------------------------------------------
 string_q getGlobalFeature(const string_q& route, const string_q& feature) {
+    // TODO: This should use whatever technique we use for GoLang Capabilities
     if (feature == "raw") {
         if (route == "blocks" || route == "logs" || route == "receipts" || route == "slurp" || route == "traces" ||
             route == "transactions") {
-            return "raw|report raw data direclty from the source|boolean|-w";
+            return "raw|report raw data directly from the source|boolean|-w";
         }
     } else if (feature == "cache") {
         if (route == "blocks" || route == "export" || route == "logs" || route == "receipts" || route == "slurp" ||
@@ -238,21 +239,14 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
             memberStream << yp << endl;
             fieldCnt++;
             if (!(member.option_type % "positional")) {
-                // if (optionName == "addrs") {
-                //     cerr << member.longName << ":" << member.option_type << endl;
-                // }
                 reportOneOption(apiRoute, optionName, "api");
-                // } else {
-                //     cerr << member.longName << ":" << member.option_type << endl;
             }
         }
     }
 
-    CStringArray globals;
-    globals.push_back("ether");
-    globals.push_back("raw");
-    globals.push_back("cache");
+    CStringArray globals = getGlobalsArray();
     for (auto global : globals) {
+        global = nextTokenClear(global, ':');
         string_q g = getGlobalFeature(apiRoute, global);
         if (g.empty())
             continue;

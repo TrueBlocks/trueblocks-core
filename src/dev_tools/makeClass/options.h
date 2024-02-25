@@ -79,6 +79,8 @@ class COptions : public COptionsBase {
     bool handle_sdk_py_paths(CStringArray& pathsOut);
     bool handle_sdk_py_types(CStringArray& typesOut);
     bool handle_sdk_go(void);
+    bool handle_sdk_go_innersdk(void);
+    bool handle_sdk_go_outersdk(void);
 
     bool handle_gocmds_cmd(const CCommandOption& ep);
     bool handle_gocmds_options(const CCommandOption& ep);
@@ -154,3 +156,5 @@ extern string_q getAliases(COptions* opts, const string_q& group, const string_q
 
 //---------------------------------------------------------------------------------------------------
 extern void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase);
+extern string_q getGlobalFeature(const string_q& route, const string_q& feature);
+extern CStringArray getGlobalsArray(void);

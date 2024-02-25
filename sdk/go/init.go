@@ -55,3 +55,4 @@ func (opts *InitOptions) Init(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
+
