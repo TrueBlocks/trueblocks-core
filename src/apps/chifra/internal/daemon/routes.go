@@ -21,6 +21,7 @@ import (
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	configPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
+	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
@@ -170,6 +171,13 @@ func RouteInit(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// RouteExplore Open a local or remote explorer for one or more addresses, blocks, or transactions.
+func RouteExplore(w http.ResponseWriter, r *http.Request) {
+	if err := explorePkg.ServeExplore(w, r); err != nil {
+		RespondWithError(w, http.StatusInternalServerError, err)
+	}
+}
+
 // RouteSlurp Fetch data from Etherscan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 	if err := slurpPkg.ServeSlurp(w, r); err != nil {
@@ -232,6 +240,7 @@ var routes = Routes{
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
 	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
+	Route{"RouteExplore", "GET", "/explore", RouteExplore},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
 	Route{"DeleteMonitors", "DELETE", "/monitors", RouteMonitors},

@@ -18,7 +18,7 @@
 
 //---------------------------------------------------------------------------------------------------
 bool isApiRoute(const string_q& route) {
-    if (route == "daemon" || route == "blaze" || route == "explore")
+    if (route == "daemon" || route == "blaze")
         return false;
     return !route.empty();
 }

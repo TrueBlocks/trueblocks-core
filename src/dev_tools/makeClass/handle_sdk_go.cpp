@@ -83,7 +83,7 @@ bool COptions::handle_sdk_go_innersdk(void) {
     establishFolder(path);
 
     for (auto ep : endpointArray) {
-        if (!isApiRoute(ep.api_route)) {
+        if (!isApiRoute(ep.api_route) || ep.api_route == "explore") {
             continue;
         }
 
@@ -110,7 +110,7 @@ bool COptions::handle_sdk_go_outersdk(void) {
     establishFolder(path);
 
     for (auto ep : endpointArray) {
-        if (!isApiRoute(ep.api_route)) {
+        if (!isApiRoute(ep.api_route) || ep.api_route == "explore") {
             continue;
         }
 

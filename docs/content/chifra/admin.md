@@ -142,7 +142,6 @@ Aliases:
 Flags:
   -u, --url string   specify the API server's url and optionally its port (default "localhost:8080")
   -g, --grpc         run gRPC server to serve names
-  -x, --fmt string   export format, one of [none|json*|txt|csv]
   -v, --verbose      enable verbose output
   -h, --help         display this help screen
 

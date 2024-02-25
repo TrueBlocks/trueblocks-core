@@ -135,7 +135,7 @@ func ResetOptions(testMode bool) {
 	capabilities = capabilities.Add(caps.Verbose)
 	capabilities = capabilities.Add(caps.Version)
 	capabilities = capabilities.Add(caps.Noop)
-	capabilities = capabilities.Add(caps.Nocolor)
+	capabilities = capabilities.Add(caps.NoColor)
 	capabilities = capabilities.Add(caps.Chain)
 	capabilities = capabilities.Add(caps.File)
 	// EXISTING_CODE

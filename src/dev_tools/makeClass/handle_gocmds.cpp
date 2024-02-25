@@ -562,7 +562,7 @@ string_q get_capabilities(const CCommandOption& ep) {
     CStringArray caps;
     explode(caps, ep.capabilities, '|');
     for (auto cap : caps) {
-        os << "\tcapabilities = capabilities.Add(caps." << toProper(cap) << ")" << endl;
+        os << "\tcapabilities = capabilities.Add(caps." << firstUpper(cap) << ")" << endl;
     }
 
     return os.str();

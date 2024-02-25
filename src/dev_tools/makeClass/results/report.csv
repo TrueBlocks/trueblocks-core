@@ -156,6 +156,8 @@ config,paths,python-sdk
 config,paths,typescript-sdk
 config,raw,typescript-sdk
 config,verbose,typescript-sdk
+explore,google,go-sdk
+explore,local,go-sdk
 export,accounting,api
 export,accounting,go-sdk
 export,accounting,python-sdk
