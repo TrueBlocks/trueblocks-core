@@ -18,11 +18,11 @@ import (
 )
 
 type ReceiptsOptions struct {
-	// EXISTING_CODE
-	Transactions []string
-	Articulate   bool
+	TransactionIds []string
+	Articulate     bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -35,6 +35,8 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 
 	return receipts.Receipts(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

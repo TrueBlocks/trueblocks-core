@@ -13,25 +13,24 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type SlurpOptions struct {
-	// EXISTING_CODE
-	Addrs       []base.Address
-	Blocks      []base.Blknum
-	Types       string
+	Addrs       []string // allow for ENS names and addresses
+	BlockIds    []string // allow for block ranges and steps
+	Types       SlurpTypes
 	Appearances bool
 	Articulate  bool
-	Source      string
+	Source      SlurpSource
 	Count       bool
 	Page        uint64
-	Per_Page    uint64
+	PerPage     uint64
 	Sleep       float64
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -43,6 +42,52 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 	// EXISTING_CODE
 
 	return slurp.Slurp(w, values)
+}
+
+type SlurpTypes int
+
+const (
+	NoST SlurpTypes = iota
+	STExt
+	STInt
+	STToken
+	STNfts
+	ST1155
+	STMiner
+	STUncles
+	STWithdrawals
+	STAll
+)
+
+func (v SlurpTypes) String() string {
+	return []string{
+		"nost",
+		"ext",
+		"int",
+		"token",
+		"nfts",
+		"1155",
+		"miner",
+		"uncles",
+		"withdrawals",
+		"all",
+	}[v]
+}
+
+type SlurpSource int
+
+const (
+	NoSS SlurpSource = iota
+	SSEtherscan
+	SSKey
+)
+
+func (v SlurpSource) String() string {
+	return []string{
+		"noss",
+		"etherscan",
+		"key",
+	}[v]
 }
 
 // EXISTING_CODE

@@ -13,21 +13,20 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type TokensOptions struct {
-	// EXISTING_CODE
-	Addrs   []base.Address
-	Blocks  []base.Blknum
-	Parts   string
-	By_Acct bool
-	Changes bool
-	No_Zero bool
+	Addrs    []string // allow for ENS names and addresses
+	BlockIds []string // allow for block ranges and steps
+	Parts    TokensParts
+	ByAcct   bool
+	Changes  bool
+	NoZero   bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -39,6 +38,30 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 	// EXISTING_CODE
 
 	return tokens.Tokens(w, values)
+}
+
+type TokensParts int
+
+const (
+	NoTP TokensParts = iota
+	TPName
+	TPSymbol
+	TPDecimals
+	TPTotalSupply
+	TPVersion
+	TPAll
+)
+
+func (v TokensParts) String() string {
+	return []string{
+		"notp",
+		"name",
+		"symbol",
+		"decimals",
+		"totalsupply",
+		"version",
+		"all",
+	}[v]
 }
 
 // EXISTING_CODE

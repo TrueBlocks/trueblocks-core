@@ -13,25 +13,24 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type TransactionsOptions struct {
-	// EXISTING_CODE
 	TransactionIds []string
 	Articulate     bool
 	Traces         bool
 	Uniq           bool
-	Flow           string
+	Flow           TransactionsFlow
 	Logs           bool
-	Emitter        []base.Address
-	Topic          []base.Topic
+	Emitter        []string // allow for ENS names and addresses
+	Topic          []string // topics are strings
 	CacheTraces    bool
 	Seed           bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -43,6 +42,22 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 	// EXISTING_CODE
 
 	return transactions.Transactions(w, values)
+}
+
+type TransactionsFlow int
+
+const (
+	NoTF TransactionsFlow = iota
+	TFFrom
+	TFTo
+)
+
+func (v TransactionsFlow) String() string {
+	return []string{
+		"notf",
+		"from",
+		"to",
+	}[v]
 }
 
 // EXISTING_CODE

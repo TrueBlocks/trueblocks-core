@@ -19,28 +19,29 @@ import (
 )
 
 type ChunksOptions struct {
-	// EXISTING_CODE
-	Mode        string
-	Blocks      []base.Blknum
-	Check       bool
-	Pin         bool
-	Publish     bool
-	Publisher   base.Address
-	Truncate    base.Blknum
-	Remote      bool
-	Belongs     []base.Address
-	Diff        bool
-	First_Block base.Blknum
-	Last_Block  base.Blknum
-	Max_Addrs   base.Blknum
-	Deep        bool
-	Rewrite     bool
-	List        bool
-	Unpin       bool
-	Count       bool
-	Tag         string
-	Sleep       float64
+	Mode       ChunksMode
+	BlockIds   []string // allow for block ranges and steps
+	Check      bool
+	Pin        bool
+	Publish    bool
+	Publisher  base.Address
+	Truncate   base.Blknum
+	Remote     bool
+	Belongs    []string // allow for ENS names and addresses
+	Diff       bool
+	FirstBlock base.Blknum
+	LastBlock  base.Blknum
+	MaxAddrs   base.Blknum
+	Deep       bool
+	Rewrite    bool
+	List       bool
+	Unpin      bool
+	Count      bool
+	Tag        string
+	Sleep      float64
+	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -52,6 +53,32 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	// EXISTING_CODE
 
 	return chunks.Chunks(w, values)
+}
+
+type ChunksMode int
+
+const (
+	NoCM2 ChunksMode = iota
+	CMManifest
+	CMIndex
+	CMBlooms
+	CMPins
+	CMAddresses
+	CMAppearances
+	CMStats
+)
+
+func (v ChunksMode) String() string {
+	return []string{
+		"nocm2",
+		"manifest",
+		"index",
+		"blooms",
+		"pins",
+		"addresses",
+		"appearances",
+		"stats",
+	}[v]
 }
 
 // EXISTING_CODE

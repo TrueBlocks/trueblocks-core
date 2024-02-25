@@ -19,17 +19,17 @@ import (
 )
 
 type StateOptions struct {
-	// EXISTING_CODE
-	Addrs      []base.Address
-	Blocks     []base.Blknum
-	Parts      string
+	Addrs      []string // allow for ENS names and addresses
+	BlockIds   []string // allow for block ranges and steps
+	Parts      StateParts
 	Changes    bool
-	No_Zero    bool
+	NoZero     bool
 	Call       string
 	Articulate bool
-	Proxy_For  base.Address
+	ProxyFor   base.Address
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -41,6 +41,36 @@ func (opts *StateOptions) State(w io.Writer) error {
 	// EXISTING_CODE
 
 	return state.State(w, values)
+}
+
+type StateParts int
+
+const (
+	NoSP StateParts = iota
+	SPNone
+	SPSome
+	SPAll
+	SPBalance
+	SPNonce
+	SPCode
+	SPProxy
+	SPDeployed
+	SPAccttype
+)
+
+func (v StateParts) String() string {
+	return []string{
+		"nosp",
+		"none",
+		"some",
+		"all",
+		"balance",
+		"nonce",
+		"code",
+		"proxy",
+		"deployed",
+		"accttype",
+	}[v]
 }
 
 // EXISTING_CODE

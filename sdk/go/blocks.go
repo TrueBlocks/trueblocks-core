@@ -20,16 +20,15 @@ import (
 )
 
 type BlocksOptions struct {
-	// EXISTING_CODE
-	BlockIds    []string
+	BlockIds    []string // allow for block ranges and steps
 	Hashes      bool
 	Uncles      bool
 	Traces      bool
 	Uniq        bool
-	Flow        FlowEnum
+	Flow        BlocksFlow
 	Logs        bool
-	Emitter     []base.Address
-	Topic       []base.Topic
+	Emitter     []string // allow for ENS names and addresses
+	Topic       []string // topics are strings
 	Withdrawals bool
 	Articulate  bool
 	BigRange    uint64
@@ -40,6 +39,7 @@ type BlocksOptions struct {
 	ListCount   base.Blknum
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -78,12 +78,12 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	if opts.BigRange > 0 {
 		values.Set("bigRange", fmt.Sprintf("%d", opts.BigRange))
 	}
-	if opts.Flow != NoFlow {
+	if opts.Flow != NoBF {
 		values.Set("flow", opts.Flow.String())
 	}
 	if len(opts.Emitter) > 0 {
 		for _, emitter := range opts.Emitter {
-			values.Add("emitter", emitter.Hex())
+			values.Add("emitter", emitter)
 		}
 	}
 	if len(opts.Topic) > 0 {
@@ -97,27 +97,24 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	return blocks.Blocks(w, values)
 }
 
-// EXISTING_CODE
-type FlowEnum int
+type BlocksFlow int
 
 const (
-	NoFlow FlowEnum = iota
-	From
-	To
-	Reward
+	NoBF BlocksFlow = iota
+	BFFrom
+	BFTo
+	BFReward
 )
 
-func (e FlowEnum) String() string {
-	switch e {
-	case From:
-		return "from"
-	case To:
-		return "to"
-	case Reward:
-		return "reward"
-	}
-	return ""
+func (v BlocksFlow) String() string {
+	return []string{
+		"nobf",
+		"from",
+		"to",
+		"reward",
+	}[v]
 }
 
+// EXISTING_CODE
 // EXISTING_CODE
 

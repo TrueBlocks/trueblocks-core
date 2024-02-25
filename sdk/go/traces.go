@@ -18,13 +18,13 @@ import (
 )
 
 type TracesOptions struct {
-	// EXISTING_CODE
 	TransactionIds []string
 	Articulate     bool
 	Filter         string
 	Count          bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -37,6 +37,8 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 
 	return traces.Traces(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

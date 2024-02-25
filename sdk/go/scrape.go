@@ -19,15 +19,15 @@ import (
 )
 
 type ScrapeOptions struct {
-	// EXISTING_CODE
-	Block_Cnt uint64
+	BlockCnt  uint64
 	Sleep     float64
 	Touch     uint64
-	Run_Count uint64
+	RunCount  uint64
 	Publisher base.Address
-	Dry_Run   bool
+	DryRun    bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -40,6 +40,8 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 
 	return scrape.Scrape(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

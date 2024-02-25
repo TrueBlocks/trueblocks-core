@@ -19,7 +19,6 @@ import (
 )
 
 type NamesOptions struct {
-	// EXISTING_CODE
 	Terms     []string
 	Expand    bool
 	MatchCase bool
@@ -30,7 +29,7 @@ type NamesOptions struct {
 	Tags      bool
 	Clean     bool
 	Regular   bool
-	Dry_Run   bool
+	DryRun    bool
 	Autoname  base.Address
 	Create    bool
 	Update    bool
@@ -39,6 +38,7 @@ type NamesOptions struct {
 	Remove    bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -51,6 +51,8 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 
 	return names.Names(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

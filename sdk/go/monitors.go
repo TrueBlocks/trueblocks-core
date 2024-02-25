@@ -13,27 +13,26 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type MonitorsOptions struct {
-	// EXISTING_CODE
-	Addrs      []base.Address
-	Delete     bool
-	Undelete   bool
-	Remove     bool
-	Clean      bool
-	List       bool
-	Watch      bool
-	Watchlist  string
-	Commands   string
-	Batch_Size uint64
-	Run_Count  uint64
-	Sleep      float64
+	Addrs     []string // allow for ENS names and addresses
+	Delete    bool
+	Undelete  bool
+	Remove    bool
+	Clean     bool
+	List      bool
+	Watch     bool
+	Watchlist string
+	Commands  string
+	BatchSize uint64
+	RunCount  uint64
+	Sleep     float64
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -46,6 +45,8 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 
 	return monitors.Monitors(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

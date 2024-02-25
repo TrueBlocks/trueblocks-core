@@ -13,19 +13,18 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type LogsOptions struct {
-	// EXISTING_CODE
-	Transactions []string
-	Emitter      []base.Address
-	Topic        []base.Topic
-	Articulate   bool
+	TransactionIds []string
+	Emitter        []string // allow for ENS names and addresses
+	Topic          []string // topics are strings
+	Articulate     bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -38,6 +37,8 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 
 	return logs.Logs(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

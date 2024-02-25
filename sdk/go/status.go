@@ -18,14 +18,14 @@ import (
 )
 
 type StatusOptions struct {
-	// EXISTING_CODE
-	Modes       string
+	Modes       StatusModes
 	Diagnose    bool
 	FirstRecord uint64
 	MaxRecords  uint64
 	Chains      bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -37,6 +37,56 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 	// EXISTING_CODE
 
 	return status.Status(w, values)
+}
+
+type StatusModes int
+
+const (
+	NoSM StatusModes = iota
+	SMIndex
+	SMBlooms
+	SMBlocks
+	SMTransactions
+	SMTraces
+	SMLogs
+	SMStatements
+	SMResults
+	SMState
+	SMTokens
+	SMMonitors
+	SMNames
+	SMAbis
+	SMSlurps
+	SMStaging
+	SMUnripe
+	SMMaps
+	SMSome
+	SMAll
+)
+
+func (v StatusModes) String() string {
+	return []string{
+		"nosm",
+		"index",
+		"blooms",
+		"blocks",
+		"transactions",
+		"traces",
+		"logs",
+		"statements",
+		"results",
+		"state",
+		"tokens",
+		"monitors",
+		"names",
+		"abis",
+		"slurps",
+		"staging",
+		"unripe",
+		"maps",
+		"some",
+		"all",
+	}[v]
 }
 
 // EXISTING_CODE

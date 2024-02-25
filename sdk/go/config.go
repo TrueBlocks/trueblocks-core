@@ -18,11 +18,11 @@ import (
 )
 
 type ConfigOptions struct {
-	// EXISTING_CODE
-	Mode  string
+	Mode  ConfigMode
 	Paths bool
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -34,6 +34,22 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 	// EXISTING_CODE
 
 	return config.Config(w, values)
+}
+
+type ConfigMode int
+
+const (
+	NoCM1 ConfigMode = iota
+	CMShow
+	CMEdit
+)
+
+func (v ConfigMode) String() string {
+	return []string{
+		"nocm1",
+		"show",
+		"edit",
+	}[v]
 }
 
 // EXISTING_CODE

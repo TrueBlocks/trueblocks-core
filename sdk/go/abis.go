@@ -19,14 +19,15 @@ import (
 )
 
 type AbisOptions struct {
-	// EXISTING_CODE
-	Addrs     []base.Address
-	Known     bool
-	Proxy_For base.Address
-	Find      []string
-	Hint      []string
-	Encode    string
+	Addrs    []string // allow for ENS names and addresses
+	Known    bool
+	ProxyFor base.Address
+	Find     []string
+	Hint     []string
+	Encode   string
+	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -39,6 +40,8 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 
 	return abis.Abis(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

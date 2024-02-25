@@ -40,7 +40,7 @@ func DoWhen() {
 		logger.Fatal(err)
 	}
 
-	fmt.Println(buf.String())
+	fmt.Print(buf.String())
 }
 
 func main() {

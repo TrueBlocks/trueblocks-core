@@ -19,10 +19,9 @@ import (
 )
 
 type ListOptions struct {
-	// EXISTING_CODE
-	Addrs       []base.Address
+	Addrs       []string // allow for ENS names and addresses
 	Count       bool
-	No_Zero     bool
+	NoZero      bool
 	Bounds      bool
 	Unripe      bool
 	Silent      bool
@@ -35,6 +34,7 @@ type ListOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // List implements the chifra list command for the SDK.
@@ -46,6 +46,8 @@ func (opts *ListOptions) List(w io.Writer) error {
 
 	return list.List(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

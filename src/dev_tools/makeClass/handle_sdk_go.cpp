@@ -14,6 +14,53 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
+string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option) {
+    string_q ret = option.data_type;
+    replace(ret, "list<", "");
+    replace(ret, "enum[", "");
+    replace(ret, "]", "");
+    replace(ret, ">", "");
+    replaceAll(ret, "*", "");
+
+    CStringArray parts;
+    explode(parts, ret, '|');
+
+    ostringstream os;
+    os << "type " << toProper(route) << fn << " int" << endl;
+    os << endl;
+    os << "const (\n";
+    string_q r(1, route[0]);
+    r = toProper(r) + fn[0];
+    string_q a = "";
+    if (r == "CM") {
+        static int cnt = 1;
+        if (cnt == 1) {
+            a = "1";
+        } else {
+            a = "2";
+        }
+        cnt = 2;
+    }
+    os << "\t"
+       << "No" << r << a << " " << toProper(route) << fn << " = iota" << endl;
+    for (auto& part : parts) {
+        os << "\t" << r << firstUpper(part) << endl;
+    }
+    os << ")" << endl;
+    os << endl;
+    os << "func (v " << toProper(route) << fn << ") String() string {" << endl;
+    os << "\treturn []string{" << endl;
+    os << "\t\t\"no" << toLower(r) << toLower(a) << "\"," << endl;
+    for (auto& part : parts) {
+        os << "\t\t\"" << toLower(part) << "\"," << endl;
+    }
+    os << "\t}[v]" << endl;
+    os << "}" << endl;
+
+    return os.str();
+}
+
+//------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_go(void) {
     string_q goSdkPath1 = getCWD() + "apps/chifra/sdk/";
     string_q goSdkPath2 = getCWD() + "../sdk/go/";
@@ -44,38 +91,65 @@ bool COptions::handle_sdk_go(void) {
             counter.nVisited++;
         }
 
-        ostringstream fields;
-        CCommandOptionArray members;
+        size_t maxWidth = 0;
+        ostringstream fields, enums;
         for (auto option : routeOptionArray) {
+            if (option.generate == "config") {
+                continue;
+            }
             bool isOne = option.api_route == ep.api_route && option.isChifraRoute(true);
             if (isOne) {
-                /*
-                  "num": "12210",
-                  "group": "tools",
-                  "api_route": "slurp",
-                  "tool": "ethslurp",
-                  "longName": "sleep",
-                  "hotKey": "s",
-                  "def_val": ".25",
-                  "is_visible": true,
-                  "is_visible_docs": true,
-                  "generate": "gocmd",
-                  "option_type": "flag",
-                  "data_type": "<double>",
-                  "real_type": "double",
-                  "go_intype": "float64",
-                  "go_flagtype": "Float64VarP",
-                  "description": "seconds to sleep between requests"
-                */
-                fields << "\t" << toProper(option.longName) << " " << option.real_type << endl;
-                // cout << option << endl;
+                string_q fn = substitute(toProper(option.longName), "_", "");
+                if (fn == "Blocks") {
+                    fn = "BlockIds";
+                } else if (fn == "Transactions") {
+                    fn = "TransactionIds";
+                }
+                maxWidth = max(maxWidth, (fn + " ").size());
             }
         }
-        // ep.members = &members;
-        // cout << members << endl;
+
+        for (auto option : routeOptionArray) {
+            if (option.generate == "config") {
+                continue;
+            }
+            bool isOne = option.api_route == ep.api_route && option.isChifraRoute(true);
+            if (isOne) {
+                string_q fn = substitute(toProper(option.longName), "_", "");
+                if (fn == "Blocks") {
+                    fn = "BlockIds";
+                } else if (fn == "Transactions") {
+                    fn = "TransactionIds";
+                }
+                string_q t = option.go_intype;
+                if (option.data_type == "<blknum>" || option.data_type == "<txnum>") {
+                    t = "base.Blknum";
+                } else if (option.data_type == "list<addr>") {
+                    t = "[]string // allow for ENS names and addresses";
+                } else if (option.data_type == "list<blknum>") {
+                    t = "[]string // allow for block ranges and steps";
+                } else if (option.data_type == "list<topic>") {
+                    t = "[]string // topics are strings";
+                } else if (contains(option.data_type, "enum")) {
+                    t = toProper(option.api_route) + toProper(option.longName);
+                    enums << handle_sdk_go_enum(ep.api_route, fn, option) << endl;
+                } else if (contains(option.data_type, "address")) {
+                    t = "base.Address";
+                } else if (contains(option.data_type, "topic")) {
+                    t = "base.Topic";
+                }
+                fields << "\t" << padRight(fn + " ", maxWidth) << t << endl;
+            }
+        }
+        fields << "\t" << toProper("Globals") << endl << endl;
 
         contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
-        contents = substitute(contents, "[{FIEDLS}]", "");  // fields.str());
+        contents = substitute(contents, "[{FIELDS}]", fields.str());
+        if (enums.str().size() > 0) {
+            contents = substitute(contents, "[{ENUMS}]", enums.str());
+        } else {
+            contents = substitute(contents, "[{ENUMS}]", "// no enums\n\n");
+        }
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);

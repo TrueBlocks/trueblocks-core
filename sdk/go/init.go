@@ -19,14 +19,14 @@ import (
 )
 
 type InitOptions struct {
-	// EXISTING_CODE
-	All         bool
-	Dry_Run     bool
-	Publisher   base.Address
-	First_Block base.Blknum
-	Sleep       float64
+	All        bool
+	DryRun     bool
+	Publisher  base.Address
+	FirstBlock base.Blknum
+	Sleep      float64
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -39,6 +39,8 @@ func (opts *InitOptions) Init(w io.Writer) error {
 
 	return initPkg.Init(w, values)
 }
+
+// no enums
 
 // EXISTING_CODE
 // EXISTING_CODE

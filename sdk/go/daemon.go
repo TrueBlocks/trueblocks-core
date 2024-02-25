@@ -18,15 +18,15 @@ import (
 )
 
 type DaemonOptions struct {
-	// EXISTING_CODE
 	Url     string
-	Api     string
-	Scrape  string
+	Api     DaemonApi
+	Scrape  DaemonScrape
 	Monitor bool
 	Grpc    bool
 	Port    string
 	Globals
 
+	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
@@ -38,6 +38,40 @@ func (opts *DaemonOptions) Daemon(w io.Writer) error {
 	// EXISTING_CODE
 
 	return daemon.Daemon(w, values)
+}
+
+type DaemonApi int
+
+const (
+	NoDA DaemonApi = iota
+	DAOff
+	DAOn
+)
+
+func (v DaemonApi) String() string {
+	return []string{
+		"noda",
+		"off",
+		"on",
+	}[v]
+}
+
+type DaemonScrape int
+
+const (
+	NoDS DaemonScrape = iota
+	DSOff
+	DSBlooms
+	DSIndex
+)
+
+func (v DaemonScrape) String() string {
+	return []string{
+		"nods",
+		"off",
+		"blooms",
+		"index",
+	}[v]
 }
 
 // EXISTING_CODE
