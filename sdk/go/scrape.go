@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -36,9 +37,15 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
-	//   -s, --sleep float      seconds to sleep between scraper passes (default 14)
-	//   -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
+	if opts.BlockCnt != 0 {
+		values.Set("block_cnt", fmt.Sprint(opts.BlockCnt))
+	}
+	if opts.Sleep != 0 {
+		values.Set("sleep", fmt.Sprint(opts.Sleep))
+	}
+	if opts.Touch != 0 {
+		values.Set("touch", fmt.Sprint(opts.Touch))
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -49,4 +56,3 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

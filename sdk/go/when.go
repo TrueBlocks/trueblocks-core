@@ -39,14 +39,6 @@ func (opts *WhenOptions) When(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
-	//   -l, --list         export a list of the 'special' blocks
-	//   -t, --timestamps   display or process timestamps
-	//   -U, --count        with --timestamps only, returns the number of timestamps in the cache
-	//   -r, --repair       with --timestamps only, repairs block(s) in the block range by re-querying from the chain
-	//   -c, --check        with --timestamps only, checks the validity of the timestamp data
-	//   -u, --update       with --timestamps only, bring the timestamp database forward to the latest block
-	//   -d, --deep         with --timestamps --check only, verifies timestamps from on chain (slow)
 	for _, blockId := range opts.BlockIds {
 		values.Add("blocks", blockId)
 	}
@@ -81,4 +73,3 @@ func (opts *WhenOptions) When(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -41,17 +42,42 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   addrs - one or more addresses (0x...) to process
-	//       --delete             delete a monitor, but do not remove it
-	//       --undelete           undelete a previously deleted monitor
-	//       --remove             remove a previously deleted monitor
-	//   -C, --clean              clean (i.e. remove duplicate appearances) from monitors
-	//   -l, --list               list monitors in the cache (--verbose for more detail)
-	//   -w, --watch              continually scan for new blocks and extract data as per the command file
-	//   -a, --watchlist string   available with --watch option only, a file containing the addresses to watch
-	//   -c, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
-	//   -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
-	//   -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
+	for _, v := range opts.Addrs {
+		values.Add("addrs", v)
+	}
+	if opts.Delete {
+		values.Set("delete", "true")
+	}
+	if opts.Undelete {
+		values.Set("undelete", "true")
+	}
+	if opts.Remove {
+		values.Set("remove", "true")
+	}
+	if opts.Clean {
+		values.Set("clean", "true")
+	}
+	if opts.List {
+		values.Set("list", "true")
+	}
+	if opts.Watch {
+		values.Set("watch", "true")
+	}
+	if opts.Watchlist != "" {
+		values.Set("watchlist", opts.Watchlist)
+	}
+	if opts.Commands != "" {
+		values.Set("commands", opts.Commands)
+	}
+	if opts.BatchSize > 0 {
+		values.Set("batch_size", fmt.Sprint(opts.BatchSize))
+	}
+	if opts.RunCount > 0 {
+		values.Set("run_count", fmt.Sprint(opts.RunCount))
+	}
+	if opts.Sleep > 0 {
+		values.Set("sleep", fmt.Sprint(opts.Sleep))
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -62,4 +88,3 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -31,9 +31,12 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   mode - either show or edit the configuration
-	// 	One of [ show | edit ]
-	//   -a, --paths        show the configuration paths for the system
+	if opts.Mode != NoCM1 {
+		values.Set("mode", opts.Mode.String())
+	}
+	if opts.Paths {
+		values.Set("paths", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -58,4 +61,3 @@ func (v ConfigMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

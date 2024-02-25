@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -34,12 +35,21 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   modes - the (optional) name of the binary cache to report on, terse otherwise
-	// 	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
-	//   -d, --diagnose            same as the default but with additional diagnostics
-	//   -c, --first_record uint   the first record to process
-	//   -e, --max_records uint    the maximum number of records to process (default 10000)
-	//   -a, --chains              include a list of chain configurations in the output
+	if opts.Modes != NoSM {
+		values.Set("modes", opts.Modes.String())
+	}
+	if opts.Diagnose {
+		values.Set("diagnose", "true")
+	}
+	if opts.FirstRecord != 0 {
+		values.Set("first_record", fmt.Sprint(opts.FirstRecord))
+	}
+	if opts.MaxRecords != 0 {
+		values.Set("max_records", fmt.Sprint(opts.MaxRecords))
+	}
+	if opts.Chains {
+		values.Set("chains", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -98,4 +108,3 @@ func (v StatusModes) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

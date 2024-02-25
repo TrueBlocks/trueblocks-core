@@ -35,8 +35,12 @@ func (opts *DaemonOptions) Daemon(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   -u, --url string   specify the API server's url and optionally its port (default "localhost:8080")
-	//   -g, --grpc         run gRPC server to serve names
+	if opts.Url != "" {
+		values.Set("url", opts.Url)
+	}
+	if opts.Grpc {
+		values.Set("grpc", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -79,4 +83,3 @@ func (v DaemonScrape) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

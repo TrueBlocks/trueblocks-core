@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -39,16 +40,30 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   addrs - one or more addresses to slurp from Etherscan (required)
-	//   blocks - an optional range of blocks to slurp
-	//   -t, --types strings   which types of transactions to request
-	//                         One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]
-	//   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
-	//   -a, --articulate      articulate the retrieved data if ABIs can be found
-	//   -S, --source string   the source of the slurped data
-	//                         One of [ etherscan | key ] (default "etherscan")
-	//   -U, --count           for --appearances mode only, display only the count of records
-	//   -s, --sleep float     seconds to sleep between requests (default 0.25)
+	for _, v := range opts.Addrs {
+		values.Add("addrs", v)
+	}
+	for _, v := range opts.BlockIds {
+		values.Add("blocks", v)
+	}
+	if opts.Types != NoST {
+		values.Set("types", opts.Types.String())
+	}
+	if opts.Appearances {
+		values.Set("appearances", "true")
+	}
+	if opts.Articulate {
+		values.Set("articulate", "true")
+	}
+	if opts.Source != NoSS {
+		values.Set("source", opts.Source.String())
+	}
+	if opts.Count {
+		values.Set("count", "true")
+	}
+	if opts.Sleep > 0 {
+		values.Set("sleep", fmt.Sprint(opts.Sleep))
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -103,4 +118,3 @@ func (v SlurpSource) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -33,10 +33,18 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   transactions - a space-separated list of one or more transaction identifiers (required)
-	//   -a, --articulate      articulate the retrieved data if ABIs can be found
-	//   -f, --filter string   call the node's trace_filter routine with bang-separated filter
-	//   -U, --count           display only the number of traces for the transaction (fast)
+	for _, v := range opts.TransactionIds {
+		values.Add("transactions", v)
+	}
+	if opts.Articulate {
+		values.Set("articulate", "true")
+	}
+	if opts.Filter != "" {
+		values.Set("filter", opts.Filter)
+	}
+	if opts.Count {
+		values.Set("count", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -47,4 +55,3 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

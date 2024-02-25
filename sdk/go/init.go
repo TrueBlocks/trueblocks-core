@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -35,11 +36,21 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   chifra init [flags]
-	//   -a, --all                in addition to Bloom filters, download full index chunks (recommended)
-	//   -d, --dry_run            display the results of the download without actually downloading
-	//   -F, --first_block uint   do not download any chunks earlier than this block
-	//   -s, --sleep float        seconds to sleep between downloads
+	if opts.All {
+		values.Set("all", "true")
+	}
+	if opts.DryRun {
+		values.Set("dry_run", "true")
+	}
+	if !opts.Publisher.IsZero() {
+		values.Set("publisher", opts.Publisher.Hex())
+	}
+	if opts.FirstBlock != 0 {
+		values.Set("first_block", fmt.Sprintf("%d", opts.FirstBlock))
+	}
+	if opts.Sleep != 0 {
+		values.Set("sleep", fmt.Sprint(opts.Sleep))
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -50,4 +61,3 @@ func (opts *InitOptions) Init(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

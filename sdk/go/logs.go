@@ -33,10 +33,18 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   transactions - a space-separated list of one or more transaction identifiers (required)
-	//   -m, --emitter strings   filter logs to show only those logs emitted by the given address(es)
-	//   -B, --topic strings     filter logs to show only those with this topic(s)
-	//   -a, --articulate        articulate the retrieved data if ABIs can be found
+	for _, v := range opts.TransactionIds {
+		values.Add("transactions", v)
+	}
+	for _, v := range opts.Emitter {
+		values.Add("emitter", v)
+	}
+	for _, v := range opts.Topic {
+		values.Add("topic", v)
+	}
+	if opts.Articulate {
+		values.Set("articulate", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -47,4 +55,3 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

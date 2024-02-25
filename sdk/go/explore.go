@@ -32,9 +32,15 @@ func (opts *ExploreOptions) Explore(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   terms - one or more address, name, block, or transaction identifier
-	//   -l, --local    open the local TrueBlocks explorer
-	//   -g, --google   search google excluding popular blockchain explorers
+	for _, v := range opts.Terms {
+		values.Add("terms", v)
+	}
+	if opts.Local {
+		values.Set("local", "true")
+	}
+	if opts.Google {
+		values.Set("google", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -45,4 +51,3 @@ func (opts *ExploreOptions) Explore(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

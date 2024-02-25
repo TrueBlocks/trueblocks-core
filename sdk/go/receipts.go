@@ -31,8 +31,12 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   transactions - a space-separated list of one or more transaction identifiers (required)
-	//   -a, --articulate   articulate the retrieved data if ABIs can be found
+	for _, v := range opts.TransactionIds {
+		values.Add("transactions", v)
+	}
+	if opts.Articulate {
+		values.Set("articulate", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -43,4 +47,3 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

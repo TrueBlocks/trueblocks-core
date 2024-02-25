@@ -35,13 +35,24 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
-	//   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
-	//   -p, --parts strings   which parts of the token information to retrieve
-	//                         One or more of [ name | symbol | decimals | totalSupply | version | all ]
-	//   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
-	//   -c, --changes         only report a balance when it changes from one block to the next
-	//   -z, --no_zero         suppress the display of zero balance accounts
+	for _, v := range opts.Addrs {
+		values.Add("addrs", v)
+	}
+	for _, v := range opts.BlockIds {
+		values.Add("blocks", v)
+	}
+	if opts.Parts != NoTP {
+		values.Set("parts", opts.Parts.String())
+	}
+	if opts.ByAcct {
+		values.Set("by_acct", "true")
+	}
+	if opts.Changes {
+		values.Set("changes", "true")
+	}
+	if opts.NoZero {
+		values.Set("no_zero", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -74,4 +85,3 @@ func (v TokensParts) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -50,21 +51,48 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	//   mode - the type of data to process (required)
-	// 	One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
-	//   blocks - an optional list of blocks to intersect with chunk ranges
-	//   -c, --check              check the manifest, index, or blooms for internal consistency
-	//   -i, --pin                pin the manifest or each index chunk and bloom
-	//   -p, --publish            publish the manifest to the Unchained Index smart contract
-	//   -r, --remote             prior to processing, retrieve the manifest from the Unchained Index smart contract
-	//   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
-	//   -F, --first_block uint   first block to process (inclusive)
-	//   -L, --last_block uint    last block to process (inclusive)
-	//   -m, --max_addrs uint     the max number of addresses to process in a given chunk
-	//   -d, --deep               if true, dig more deeply during checking (manifest only)
-	//   -e, --rewrite            for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
-	//   -U, --count              for the pins mode only, display only the count of records
-	//   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
+	if opts.Mode != NoCM2 {
+		values.Set("mode", opts.Mode.String())
+	}
+	for _, v := range opts.BlockIds {
+		values.Add("blocks", v)
+	}
+	if opts.Check {
+		values.Set("check", "true")
+	}
+	if opts.Pin {
+		values.Set("pin", "true")
+	}
+	if opts.Publish {
+		values.Set("publish", "true")
+	}
+	if opts.Remote {
+		values.Set("remote", "true")
+	}
+	for _, v := range opts.Belongs {
+		values.Add("belongs", v)
+	}
+	if opts.FirstBlock > 0 {
+		values.Set("first_block", fmt.Sprint(opts.FirstBlock))
+	}
+	if opts.LastBlock > 0 {
+		values.Set("last_block", fmt.Sprint(opts.LastBlock))
+	}
+	if opts.MaxAddrs > 0 {
+		values.Set("max_addrs", fmt.Sprint(opts.MaxAddrs))
+	}
+	if opts.Deep {
+		values.Set("deep", "true")
+	}
+	if opts.Rewrite {
+		values.Set("rewrite", "true")
+	}
+	if opts.Count {
+		values.Set("count", "true")
+	}
+	if opts.Sleep > 0 {
+		values.Set("sleep", fmt.Sprint(opts.Sleep))
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -99,4 +127,3 @@ func (v ChunksMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
