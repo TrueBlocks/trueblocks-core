@@ -31,7 +31,11 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	//   mode - either show or edit the configuration
+	// 	One of [ show | edit ]
+	//   -a, --paths        show the configuration paths for the system
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return config.Config(w, values)
 }

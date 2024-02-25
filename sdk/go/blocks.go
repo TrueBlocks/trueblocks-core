@@ -63,8 +63,17 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	if opts.Uniq {
 		values.Set("uniq", "true")
 	}
+	if opts.Flow != NoBF {
+		values.Set("flow", opts.Flow.String())
+	}
 	if opts.Logs {
 		values.Set("logs", "true")
+	}
+	for _, emitter := range opts.Emitter {
+		values.Add("emitter", emitter)
+	}
+	for _, topic := range opts.Topic {
+		values.Add("topic", topic)
 	}
 	if opts.Withdrawals {
 		values.Set("withdrawals", "true")
@@ -72,27 +81,14 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	if opts.Articulate {
 		values.Set("articulate", "true")
 	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
 	if opts.BigRange > 0 {
 		values.Set("bigRange", fmt.Sprintf("%d", opts.BigRange))
 	}
-	if opts.Flow != NoBF {
-		values.Set("flow", opts.Flow.String())
+	if opts.Count {
+		values.Set("count", "true")
 	}
-	if len(opts.Emitter) > 0 {
-		for _, emitter := range opts.Emitter {
-			values.Add("emitter", emitter)
-		}
-	}
-	if len(opts.Topic) > 0 {
-		for _, topic := range opts.Topic {
-			values.Add("topic", topic)
-		}
-	}
-	opts.Globals.mapGlobals(values)
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return blocks.Blocks(w, values)
 }

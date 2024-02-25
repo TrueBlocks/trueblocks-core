@@ -24,6 +24,7 @@ func (opts *[{PROPER}]Options) [{PROPER}](w io.Writer) error {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return [{PKG}].[{PROPER}](w, values)
 }

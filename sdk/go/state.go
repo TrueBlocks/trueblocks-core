@@ -38,7 +38,17 @@ func (opts *StateOptions) State(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	//   addrs - one or more addresses (0x...) from which to retrieve balances (required)
+	//   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	//   -p, --parts strings      control which state to export
+	//                            One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
+	//   -c, --changes            only report a balance when it changes from one block to the next
+	//   -z, --no_zero            suppress the display of zero balance accounts
+	//   -l, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data
+	//   -a, --articulate         for the --call option only, articulate the retrieved data if ABIs can be found
+	//   -r, --proxy_for string   for the --call option only, redirects calls to this implementation
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return state.State(w, values)
 }

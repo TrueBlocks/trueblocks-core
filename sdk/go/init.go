@@ -35,7 +35,13 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	//   chifra init [flags]
+	//   -a, --all                in addition to Bloom filters, download full index chunks (recommended)
+	//   -d, --dry_run            display the results of the download without actually downloading
+	//   -F, --first_block uint   do not download any chunks earlier than this block
+	//   -s, --sleep float        seconds to sleep between downloads
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return initPkg.Init(w, values)
 }

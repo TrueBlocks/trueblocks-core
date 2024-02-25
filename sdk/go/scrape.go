@@ -36,7 +36,11 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	//   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
+	//   -s, --sleep float      seconds to sleep between scraper passes (default 14)
+	//   -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return scrape.Scrape(w, values)
 }

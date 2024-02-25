@@ -39,7 +39,17 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	//   transactions - a space-separated list of one or more transaction identifiers (required)
+	//   -a, --articulate        articulate the retrieved data if ABIs can be found
+	//   -t, --traces            include the transaction's traces in the results
+	//   -u, --uniq              display a list of uniq addresses found in the transaction
+	//   -f, --flow string       for the uniq option only, export only from or to (including trace from or to)
+	//                           One of [ from | to ]
+	//   -l, --logs              display only the logs found in the transaction(s)
+	//   -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+	//   -B, --topic strings     for the --logs option only, filter logs to show only those with this topic(s)
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return transactions.Transactions(w, values)
 }

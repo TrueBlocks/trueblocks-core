@@ -36,7 +36,26 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	for _, addr := range opts.Addrs {
+		values.Add("addrs", addr)
+	}
+	if opts.Known {
+		values.Set("known", "true")
+	}
+	if !opts.ProxyFor.IsZero() {
+		values.Set("proxy_for", opts.ProxyFor.Hex())
+	}
+	for _, find := range opts.Find {
+		values.Add("find", find)
+	}
+	for _, hint := range opts.Hint {
+		values.Add("hint", hint)
+	}
+	if opts.Encode != "" {
+		values.Set("encode", opts.Encode)
+	}
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return abis.Abis(w, values)
 }

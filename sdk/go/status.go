@@ -34,7 +34,14 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	//   modes - the (optional) name of the binary cache to report on, terse otherwise
+	// 	One or more of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]
+	//   -d, --diagnose            same as the default but with additional diagnostics
+	//   -c, --first_record uint   the first record to process
+	//   -e, --max_records uint    the maximum number of records to process (default 10000)
+	//   -a, --chains              include a list of chain configurations in the output
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return status.Status(w, values)
 }

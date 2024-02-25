@@ -50,7 +50,23 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	//   mode - the type of data to process (required)
+	// 	One of [ manifest | index | blooms | pins | addresses | appearances | stats ]
+	//   blocks - an optional list of blocks to intersect with chunk ranges
+	//   -c, --check              check the manifest, index, or blooms for internal consistency
+	//   -i, --pin                pin the manifest or each index chunk and bloom
+	//   -p, --publish            publish the manifest to the Unchained Index smart contract
+	//   -r, --remote             prior to processing, retrieve the manifest from the Unchained Index smart contract
+	//   -b, --belongs strings    in index mode only, checks the address(es) for inclusion in the given index chunk
+	//   -F, --first_block uint   first block to process (inclusive)
+	//   -L, --last_block uint    last block to process (inclusive)
+	//   -m, --max_addrs uint     the max number of addresses to process in a given chunk
+	//   -d, --deep               if true, dig more deeply during checking (manifest only)
+	//   -e, --rewrite            for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
+	//   -U, --count              for the pins mode only, display only the count of records
+	//   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return chunks.Chunks(w, values)
 }

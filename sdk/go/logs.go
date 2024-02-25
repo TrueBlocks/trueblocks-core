@@ -33,7 +33,12 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	//   transactions - a space-separated list of one or more transaction identifiers (required)
+	//   -m, --emitter strings   filter logs to show only those logs emitted by the given address(es)
+	//   -B, --topic strings     filter logs to show only those with this topic(s)
+	//   -a, --articulate        articulate the retrieved data if ABIs can be found
 	// EXISTING_CODE
+	opts.Globals.mapGlobals(values)
 
 	return logs.Logs(w, values)
 }
