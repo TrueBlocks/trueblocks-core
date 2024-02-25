@@ -26,6 +26,7 @@ export function getList(
     ether?: boolean,
     raw?: boolean,
     cache?: boolean,
+    decache?: boolean,
   },
   options?: RequestInit,
 ) {

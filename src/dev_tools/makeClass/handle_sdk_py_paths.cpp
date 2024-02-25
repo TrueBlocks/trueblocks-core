@@ -15,18 +15,16 @@
 
 //------------------------------------------------------------------------------------------------------------
 string_q getGlobals(const string_q& apiRoute) {
-    CStringArray globals;
-    globals.push_back("ether");
-    globals.push_back("raw");
-    globals.push_back("cache");
-
     ostringstream os;
+
+    CStringArray globals = getGlobalsArray();
     for (auto global : globals) {
+        global = nextTokenClear(global, ':');
         string_q g = getGlobalFeature(apiRoute, global);
-        if (g.empty())
-            continue;
         CStringArray parts;
         explode(parts, g, '|');
+        if (parts.size() < 4)
+            continue;
         string_q line = "    \"[{LONGNAME}]\": {\"hotkey\": \"[{HOTKEY}]\", \"type\": \"[{TYPE}]\"},";
         ;
 

@@ -83,13 +83,15 @@ CStringArray getGlobalsArray() {
 
 //------------------------------------------------------------------------------------------------------------
 string_q getGlobalParams(const string_q& route) {
-    return "    chain: string,\n"
-           "    noHeader?: boolean,\n"
-           "    fmt?: string,\n"
-           "    verbose?: boolean,\n"
-           "    ether?: boolean,\n"
-           "    raw?: boolean,\n"
-           "    cache?: boolean,\n";
+    string_q ret = "";
+    CStringArray globals = getGlobalsArray();
+    for (auto global : globals) {
+        CStringArray parts;
+        explode(parts, global, ':');
+        ret += "    " + parts[0] + (parts[0] == "chain" ? "" : "?") + ": " + parts[1] + ",\n";
+        reportOneOption(route, parts[0], "typescript-sdk");
+    }
+    return ret;
 }
 
 //------------------------------------------------------------------------------------------------------------

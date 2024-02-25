@@ -44,6 +44,7 @@ export function getExport(
     ether?: boolean,
     raw?: boolean,
     cache?: boolean,
+    decache?: boolean,
   },
   options?: RequestInit,
 ) {

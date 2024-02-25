@@ -32,6 +32,7 @@ export function getNames(
     ether?: boolean,
     raw?: boolean,
     cache?: boolean,
+    decache?: boolean,
   },
   options?: RequestInit,
 ) {
