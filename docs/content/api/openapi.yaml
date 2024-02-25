@@ -1098,7 +1098,7 @@ paths:
           schema:
             type: boolean
         - name: raw
-          description: report raw data direclty from the source
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1239,7 +1239,7 @@ paths:
           schema:
             type: boolean
         - name: raw
-          description: report raw data direclty from the source
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1296,7 +1296,7 @@ paths:
           schema:
             type: boolean
         - name: raw
-          description: report raw data direclty from the source
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1375,7 +1375,7 @@ paths:
           schema:
             type: boolean
         - name: raw
-          description: report raw data direclty from the source
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1450,7 +1450,7 @@ paths:
           schema:
             type: boolean
         - name: raw
-          description: report raw data direclty from the source
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -2371,7 +2371,7 @@ paths:
             type: number
             format: double
         - name: raw
-          description: report raw data direclty from the source
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
