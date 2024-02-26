@@ -68,14 +68,35 @@ string_q toTsType(const string_q& in, map<string_q, string_q>& map) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q getGlobalParams(void) {
-    return "    chain: string,\n"
-           "    noHeader?: boolean,\n"
-           "    fmt?: string,\n"
-           "    verbose?: boolean,\n"
-           "    ether?: boolean,\n"
-           "    raw?: boolean,\n"
-           "    cache?: boolean,\n";
+string_q get_corrected_caps(const string_q& capsIn) {
+    string_q x = "fmt|chain|noHeader";
+    string_q capsOut = substitute(capsIn, "default", x);
+    replace(capsOut, "caching", "cache|decache");
+    replace(capsOut, "verbose|", "");
+    replace(capsOut, "version|", "");
+    replace(capsOut, "noop|", "");
+    replace(capsOut, "noColor|", "");
+    replace(capsOut, "help|", "");
+    return capsOut;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q getGlobalParams(const string_q& s1, const string_q& route) {
+    string_q caps = get_corrected_caps(s1);
+    CStringArray globals;
+    explode(globals, caps, '|');
+
+    ostringstream os;
+    for (auto global : globals) {
+        os << "    " << global << (global == "chain" ? "" : "?") << ": ";
+        if (global == "chain" || global == "fmt") {
+            os << "string,\n";
+        } else {
+            os << "boolean,\n";
+        }
+        reportOneOption(route, global, "typescript-sdk");
+    }
+    return os.str();
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -114,18 +135,18 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
         }
 
         ostringstream params;
-        for (auto p : members) {
-            if (!p.is_visible_docs) {
+        for (auto member : members) {
+            if (!member.is_visible_docs) {
                 continue;
             }
-            string_q optionName = toCamelCase(p.longName);
+            string_q optionName = toCamelCase(member.longName);
             params << "    " << optionName;
-            params << (p.is_required ? "" : "?") << ": ";
-            params << toTsType(p.data_type, imports) << ",";
+            params << (member.is_required ? "" : "?") << ": ";
+            params << toTsType(member.data_type, imports) << ",";
             params << endl;
 
-            if (p.option_type != "positional") {
-                reportOneOption(apiRoute, optionName, "typescript");
+            if (member.option_type != "positional") {
+                reportOneOption(apiRoute, optionName, "typescript-sdk");
             }
         }
 
@@ -147,7 +168,7 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
         replaceAll(source, "[{RETTYPE}]", trim(returns.str(), '\n'));
         replaceAll(source, "[{TYPES}]", trim(typeImports.str(), '\n'));
         replaceAll(source, "[{PARAMS}]", trim(params.str(), '\n'));
-        replaceAll(source, "[{GLOBALS}]", getGlobalParams());
+        replaceAll(source, "[{GLOBALS}]", getGlobalParams(ep.capabilities, apiRoute));
 
         pathsOut.push_back(apiRoute);
         writeIfDifferent(filename.str(), source);

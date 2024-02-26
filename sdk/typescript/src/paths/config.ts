@@ -10,13 +10,9 @@ export function getConfig(
   parameters?: {
     mode?: 'show*' | 'edit',
     paths?: boolean,
+    fmt?: string,
     chain: string,
     noHeader?: boolean,
-    fmt?: string,
-    verbose?: boolean,
-    ether?: boolean,
-    raw?: boolean,
-    cache?: boolean,
   },
   options?: RequestInit,
 ) {

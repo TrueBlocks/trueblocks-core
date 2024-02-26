@@ -203,11 +203,12 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultBlocksOptions.Globals)
 	defaultBlocksOptions.Globals.TestMode = testMode
 	defaultBlocksOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra blocks
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra blocks
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultBlocksOptions.Globals.Caps = capabilities
 }

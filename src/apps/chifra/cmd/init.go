@@ -50,13 +50,13 @@ Notes:
   - You may re-run the tool as often as you wish. It will repair or freshen the index.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra init
+	var capabilities caps.Capability // capabilities for chifra init
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 
 	initCmd.Flags().SortFlags = false

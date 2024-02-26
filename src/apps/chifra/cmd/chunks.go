@@ -62,7 +62,8 @@ Notes:
   - Without --rewrite, the manifest is written to the temporary cache. With it, the manifest is rewritten to the index folder.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra chunks
+	var capabilities caps.Capability // capabilities for chifra chunks
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

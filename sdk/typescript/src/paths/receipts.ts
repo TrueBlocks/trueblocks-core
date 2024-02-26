@@ -10,13 +10,12 @@ export function getReceipts(
   parameters?: {
     transactions: txId[],
     articulate?: boolean,
+    fmt?: string,
     chain: string,
     noHeader?: boolean,
-    fmt?: string,
-    verbose?: boolean,
-    ether?: boolean,
-    raw?: boolean,
     cache?: boolean,
+    decache?: boolean,
+    raw?: boolean,
   },
   options?: RequestInit,
 ) {

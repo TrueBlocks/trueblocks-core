@@ -48,13 +48,13 @@ Notes:
   - The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra scrape
+	var capabilities caps.Capability // capabilities for chifra scrape
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
+	capabilities = capabilities.Add(caps.Chain)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Fmt)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.File)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
 	// EXISTING_CODE
 
 	scrapeCmd.Flags().SortFlags = false

@@ -5,7 +5,7 @@ const string_q reportPath = "../src/dev_tools/makeClass/results/report.csv";
 
 void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase) {
     ostringstream newLine;
-    newLine << route << "," << option << "," << codebase;
+    newLine << route << "," << (option % "noheader" ? "noheader" : option) << "," << codebase;
 
     CStringArray lines, out;
     asciiFileToLines(reportPath, lines);

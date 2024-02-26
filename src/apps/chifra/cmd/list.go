@@ -52,7 +52,8 @@ Notes:
   - No other options are permitted when --silent is selected.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra list
+	var capabilities caps.Capability // capabilities for chifra list
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

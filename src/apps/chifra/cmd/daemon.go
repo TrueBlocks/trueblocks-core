@@ -52,14 +52,12 @@ Notes:
   - See the API documentation (https://trueblocks.io/api) for more information.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra daemon
+	var capabilities caps.Capability // capabilities for chifra daemon
+	capabilities = capabilities.Add(caps.Verbose)
+	capabilities = capabilities.Add(caps.Version)
+	capabilities = capabilities.Add(caps.Noop)
+	capabilities = capabilities.Add(caps.NoColor)
 	// EXISTING_CODE
-	capabilities = capabilities.Remove(caps.Chain)
-	capabilities = capabilities.Remove(caps.NoHeader)
-	capabilities = capabilities.Remove(caps.Output)
-	capabilities = capabilities.Remove(caps.Append)
-	// capabilities = capabilities.Remove(caps.Fmt)
-	// capabilities = capabilities.Remove(caps.File)
 	// EXISTING_CODE
 
 	daemonCmd.Flags().SortFlags = false

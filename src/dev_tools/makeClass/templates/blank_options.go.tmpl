@@ -113,8 +113,7 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&default[{PROPER}]Options.Globals)
 	default[{PROPER}]Options.Globals.TestMode = testMode
 	default[{PROPER}]Options.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra [{ROUTE}]
-	// EXISTING_CODE
+	[{CAPABILITIES}]	// EXISTING_CODE
 	// EXISTING_CODE
 	default[{PROPER}]Options.Globals.Caps = capabilities
 }

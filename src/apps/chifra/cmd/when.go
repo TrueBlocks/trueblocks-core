@@ -53,9 +53,10 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra when
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra when
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	whenCmd.Flags().SortFlags = false

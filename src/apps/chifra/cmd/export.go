@@ -63,10 +63,11 @@ Notes:
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra export
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra export
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	exportCmd.Flags().SortFlags = false

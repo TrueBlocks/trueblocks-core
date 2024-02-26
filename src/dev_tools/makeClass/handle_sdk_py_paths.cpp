@@ -15,19 +15,20 @@
 
 //------------------------------------------------------------------------------------------------------------
 extern string_q getGlobalFeature(const string_q& route, const string_q& feature);
-string_q getGlobals(const string_q& apiRoute) {
-    CStringArray globals;
-    globals.push_back("ether");
-    globals.push_back("raw");
-    globals.push_back("cache");
 
+//------------------------------------------------------------------------------------------------------------
+string_q getGlobals(const CCommandOption& ep) {
     ostringstream os;
+
+    string_q caps = get_corrected_caps(ep.capabilities);
+    CStringArray globals;
+    explode(globals, caps, '|');
     for (auto global : globals) {
-        string_q g = getGlobalFeature(apiRoute, global);
-        if (g.empty())
-            continue;
+        string_q g = getGlobalFeature(ep.api_route, global);
         CStringArray parts;
         explode(parts, g, '|');
+        if (parts.size() < 4)
+            continue;
         string_q line = "    \"[{LONGNAME}]\": {\"hotkey\": \"[{HOTKEY}]\", \"type\": \"[{TYPE}]\"},";
         ;
 
@@ -37,7 +38,7 @@ string_q getGlobals(const string_q& apiRoute) {
         replace(line, "[{TYPE}]", parts[2] == "boolean" ? "switch" : "flag");
         os << line << endl;
 
-        reportOneOption(apiRoute, optionName, "python");
+        reportOneOption(ep.api_route, optionName, "python-sdk");
     }
     return os.str();
 }
@@ -73,27 +74,27 @@ bool COptions::handle_sdk_py_paths(CStringArray& pathsOut) {
         if (apiRoute != "daemon" && apiRoute != "explore") {
             string_q firstPos;
             ostringstream params;
-            for (auto p : members) {
+            for (auto member : members) {
                 string_q line = "    \"[{LONGNAME}]\": {\"hotkey\": \"[{HOTKEY}]\", \"type\": \"[{TYPE}]\"},\n";
-                string_q optionName = toCamelCase(p.longName);
-                if (!p.is_visible_docs && !contains(optionName, "cache")) {
+                string_q optionName = toCamelCase(member.longName);
+                if (!member.is_visible_docs) {
                     continue;
                 }
 
                 replace(line, "[{LONGNAME}]", optionName);
-                replace(line, "[{HOTKEY}]", p.hotKey.empty() ? "" : "-" + p.hotKey);
-                replace(line, "[{TYPE}]", p.option_type);
-                if (p.option_type == "positional") {
+                replace(line, "[{HOTKEY}]", member.hotKey.empty() ? "" : "-" + member.hotKey);
+                replace(line, "[{TYPE}]", member.option_type);
+                if (member.option_type == "positional") {
                     if (firstPos.empty()) {
-                        firstPos = p.longName;
+                        firstPos = member.longName;
                     }
                 } else {
                     params << line;
-                    reportOneOption(apiRoute, optionName, "python");
+                    reportOneOption(apiRoute, optionName, "python-sdk");
                 }
             }
 
-            replace(source, "[{GLOBALS}]", getGlobals(apiRoute));
+            replace(source, "[{GLOBALS}]", getGlobals(ep));
             replace(source, "[{OPTIONS}]", params.str());
             replace(source, "[{FIRST}]", firstPos);
         }

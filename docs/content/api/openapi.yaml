@@ -182,6 +182,30 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -489,8 +513,24 @@ paths:
           schema:
             type: number
             format: blknum
-        - name: ether
-          description: export values in ether
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
           required: false
           style: form
           in: query
@@ -499,6 +539,22 @@ paths:
             type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
           required: false
           style: form
           in: query
@@ -646,6 +702,46 @@ paths:
           schema:
             type: number
             format: double
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: delete
           description: delete the item, but do not remove it
           required: false
@@ -797,6 +893,30 @@ paths:
           explode: true
           schema:
             type: string
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: delete
           description: delete the item, but do not remove it
           required: false
@@ -913,6 +1033,46 @@ paths:
           explode: true
           schema:
             type: string
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1097,8 +1257,24 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data direclty from the source
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
           required: false
           style: form
           in: query
@@ -1107,6 +1283,30 @@ paths:
             type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: raw
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1230,6 +1430,46 @@ paths:
             items:
               type: string
               format: topic
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: ether
           description: export values in ether
           required: false
@@ -1239,15 +1479,7 @@ paths:
           schema:
             type: boolean
         - name: raw
-          description: report raw data direclty from the source
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: cache
-          description: force the results of the query into the cache
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1295,8 +1527,24 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data direclty from the source
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
           required: false
           style: form
           in: query
@@ -1305,6 +1553,22 @@ paths:
             type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: raw
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1374,8 +1638,24 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data direclty from the source
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
           required: false
           style: form
           in: query
@@ -1384,6 +1664,22 @@ paths:
             type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: raw
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1449,8 +1745,24 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: raw
-          description: report raw data direclty from the source
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
           required: false
           style: form
           in: query
@@ -1459,6 +1771,30 @@ paths:
             type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: raw
+          description: report raw data directly from the source
           required: false
           style: form
           in: query
@@ -1553,8 +1889,40 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
           required: false
           style: form
           in: query
@@ -1672,8 +2040,24 @@ paths:
           explode: true
           schema:
             type: string
-        - name: ether
-          description: export values in ether
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
           required: false
           style: form
           in: query
@@ -1682,6 +2066,22 @@ paths:
             type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
           required: false
           style: form
           in: query
@@ -1796,8 +2196,40 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
           required: false
           style: form
           in: query
@@ -1854,6 +2286,30 @@ paths:
               - edit
         - name: paths
           description: show the configuration paths for the system
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
           required: false
           style: form
           in: query
@@ -1966,6 +2422,30 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -2019,6 +2499,14 @@ paths:
           schema:
             type: number
             format: uint64
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: returns the requested data
@@ -2176,6 +2664,30 @@ paths:
           schema:
             type: number
             format: double
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -2260,6 +2772,14 @@ paths:
           schema:
             type: number
             format: double
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: returns the requested data
@@ -2370,8 +2890,24 @@ paths:
           schema:
             type: number
             format: double
-        - name: raw
-          description: report raw data direclty from the source
+        - name: fmt
+          description: export format, one of [none
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: chain
+          description: the chain to use
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: noheader
+          description: suppress the header in the output
           required: false
           style: form
           in: query
@@ -2380,6 +2916,30 @@ paths:
             type: boolean
         - name: cache
           description: force the results of the query into the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: decache
+          description: removes related items from the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: ether
+          description: export values in ether
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: raw
+          description: report raw data directly from the source
           required: false
           style: form
           in: query

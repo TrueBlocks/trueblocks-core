@@ -177,9 +177,10 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultMonitorsOptions.Globals)
 	defaultMonitorsOptions.Globals.TestMode = testMode
 	defaultMonitorsOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra monitors
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra monitors
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultMonitorsOptions.Globals.Caps = capabilities
 }

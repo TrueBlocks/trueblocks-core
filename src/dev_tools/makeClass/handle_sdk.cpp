@@ -34,6 +34,10 @@ bool COptions::handle_sdk(void) {
         return false;
     }
 
+    if (!handle_sdk_go()) {
+        return false;
+    }
+
     return true;
 }
 

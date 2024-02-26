@@ -12,12 +12,6 @@ export function getScrape(
     sleep?: double,
     touch?: uint64,
     chain: string,
-    noHeader?: boolean,
-    fmt?: string,
-    verbose?: boolean,
-    ether?: boolean,
-    raw?: boolean,
-    cache?: boolean,
   },
   options?: RequestInit,
 ) {

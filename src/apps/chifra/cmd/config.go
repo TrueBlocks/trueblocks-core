@@ -50,7 +50,8 @@ const longConfig = `Purpose:
 const notesConfig = ``
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra config
+	var capabilities caps.Capability // capabilities for chifra config
+	capabilities = capabilities.Add(caps.Default)
 	// EXISTING_CODE
 	// EXISTING_CODE
 

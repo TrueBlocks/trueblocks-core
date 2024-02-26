@@ -57,9 +57,10 @@ Notes:
   - If the --parts option is not empty, all addresses are considered tokens and each token's attributes are presented.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra tokens
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra tokens
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	tokensCmd.Flags().SortFlags = false

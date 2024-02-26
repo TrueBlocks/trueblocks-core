@@ -54,11 +54,12 @@ Notes:
   - The --decache option removes the all transaction(s) and all traces in those transactions from the cache.`
 
 func init() {
-	var capabilities = caps.Default // Additional global caps for chifra transactions
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra transactions
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 
 	transactionsCmd.Flags().SortFlags = false

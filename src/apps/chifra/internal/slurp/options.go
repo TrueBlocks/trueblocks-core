@@ -198,11 +198,12 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultSlurpOptions.Globals)
 	defaultSlurpOptions.Globals.TestMode = testMode
 	defaultSlurpOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra slurp
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra slurp
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultSlurpOptions.Globals.Caps = capabilities
 }

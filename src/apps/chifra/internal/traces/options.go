@@ -135,11 +135,12 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&defaultTracesOptions.Globals)
 	defaultTracesOptions.Globals.TestMode = testMode
 	defaultTracesOptions.Globals.Writer = w
-	capabilities := caps.Default // Additional global caps for chifra traces
-	// EXISTING_CODE
+	var capabilities caps.Capability // capabilities for chifra traces
+	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
+	// EXISTING_CODE
 	// EXISTING_CODE
 	defaultTracesOptions.Globals.Caps = capabilities
 }
