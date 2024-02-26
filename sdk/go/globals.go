@@ -31,6 +31,7 @@ type Globals struct {
 	Decache  bool
 	Fmt      Fmt
 	Verbose  bool
+	Chain    string
 }
 
 func (g Globals) mapGlobals(values url.Values) {
@@ -55,15 +56,7 @@ func (g Globals) mapGlobals(values url.Values) {
 	if g.Verbose {
 		values.Set("verbose", "true")
 	}
-	// Wei     bool            `json:"wei,omitempty"`
-	// Ether   bool            `json:"ether,omitempty"`
-	// Help    bool            `json:"help,omitempty"`
-	// File    string          `json:"file,omitempty"`
-	// Version bool            `json:"version,omitempty"`
-	// Noop    bool            `json:"noop,omitempty"`
-	// NoColor bool            `json:"noColor,omitempty"`
-	// Cache   bool            `json:"cache,omitempty"`
-	// Decache bool            `json:"decache,omitempty"`
-	// Caps    caps.Capability `json:"-"`
-	// output.OutputOptions
+	if len(g.Chain) > 0 {
+		values.Set("chain", g.Chain)
+	}
 }
