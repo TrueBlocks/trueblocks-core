@@ -35,6 +35,7 @@ func (opts *ScrapeOptions) HandleScrape() error {
 		path = "--unchained-path--"
 	}
 	logger.Info("Scraping:")
+	logger.Info("  RPC:     ", config.GetChain(chain).RpcProvider)
 	logger.Info("  Path:    ", path)
 	logger.Info("  Settings:", config.GetScrape(chain))
 	if opts.DryRun {
