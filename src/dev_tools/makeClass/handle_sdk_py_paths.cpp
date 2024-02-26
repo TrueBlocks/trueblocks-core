@@ -14,13 +14,17 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-string_q getGlobals(const string_q& apiRoute) {
+extern string_q getGlobalFeature(const string_q& route, const string_q& feature);
+
+//------------------------------------------------------------------------------------------------------------
+string_q getGlobals(const CCommandOption& ep) {
     ostringstream os;
 
-    CStringArray globals = getGlobalsArray();
+    string_q caps = get_corrected_caps(ep.capabilities);
+    CStringArray globals;
+    explode(globals, caps, '|');
     for (auto global : globals) {
-        global = nextTokenClear(global, ':');
-        string_q g = getGlobalFeature(apiRoute, global);
+        string_q g = getGlobalFeature(ep.api_route, global);
         CStringArray parts;
         explode(parts, g, '|');
         if (parts.size() < 4)
@@ -34,7 +38,7 @@ string_q getGlobals(const string_q& apiRoute) {
         replace(line, "[{TYPE}]", parts[2] == "boolean" ? "switch" : "flag");
         os << line << endl;
 
-        reportOneOption(apiRoute, optionName, "python-sdk");
+        reportOneOption(ep.api_route, optionName, "python-sdk");
     }
     return os.str();
 }
@@ -90,7 +94,7 @@ bool COptions::handle_sdk_py_paths(CStringArray& pathsOut) {
                 }
             }
 
-            replace(source, "[{GLOBALS}]", getGlobals(apiRoute));
+            replace(source, "[{GLOBALS}]", getGlobals(ep));
             replace(source, "[{OPTIONS}]", params.str());
             replace(source, "[{FIRST}]", firstPos);
         }

@@ -170,13 +170,10 @@ bool COptions::handle_sdk_go_outersdk(void) {
         }
         fields << "\t" << toProper("Globals") << endl << endl;
 
-        // Just for reporting...
-        CStringArray globals = getGlobalsArray();
+        string_q caps = get_corrected_caps(ep.capabilities);
+        CStringArray globals;
+        explode(globals, caps, '|');
         for (auto global : globals) {
-            global = nextTokenClear(global, ':');
-            string_q g = getGlobalFeature(ep.api_route, global);
-            if (g.empty())
-                continue;
             reportOneOption(ep.api_route, global, "go-sdk");
         }
 

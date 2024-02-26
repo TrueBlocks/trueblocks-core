@@ -156,5 +156,4 @@ extern string_q getAliases(COptions* opts, const string_q& group, const string_q
 
 //---------------------------------------------------------------------------------------------------
 extern void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase);
-extern string_q getGlobalFeature(const string_q& route, const string_q& feature);
-extern CStringArray getGlobalsArray(void);
+extern string_q get_corrected_caps(const string_q& capsIn);

@@ -8,9 +8,10 @@ configPos = "mode"
 configFmt = "json"
 configOpts = {
     "paths": {"hotkey": "-a", "type": "switch"},
+    "fmt": {"hotkey": "txt", "type": "flag"},
+    "chain": {"hotkey": "-", "type": "flag"},
+    "noHeader": {"hotkey": "-", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
-    "verbose:": {"hotkey": "-v", "type": "switch"},
-    "help": {"hotkey": "-h", "type": "switch"},
 }
 
 def config(self):

@@ -176,23 +176,36 @@ string_q getSchema(const string_q& data_type, const CCommandOption* cmd = NULL) 
     return lead + "type: " + "string";
 }
 
+//------------------------------------------------------------------------------------------------------------
+CStringArray getGlobalsArray() {
+    CStringArray globals;
+    globals.push_back("chain:string");
+    globals.push_back("noHeader:boolean");
+    globals.push_back("fmt:string");
+    globals.push_back("verbose:boolean");
+    globals.push_back("ether:boolean");
+    globals.push_back("raw:boolean");
+    globals.push_back("cache:boolean");
+    globals.push_back("decache:boolean");
+    return globals;
+}
+
 //---------------------------------------------------------------------------------------------------
 string_q getGlobalFeature(const string_q& route, const string_q& feature) {
-    // TODO: This should use whatever technique we use for GoLang Capabilities
     if (feature == "raw") {
-        if (route == "blocks" || route == "logs" || route == "receipts" || route == "slurp" || route == "traces" ||
-            route == "transactions") {
-            return "raw|report raw data directly from the source|boolean|-w";
-        }
+        return "raw|report raw data directly from the source|boolean|-w";
     } else if (feature == "cache") {
-        if (route == "blocks" || route == "export" || route == "logs" || route == "receipts" || route == "slurp" ||
-            route == "state" || route == "tokens" || route == "traces" || route == "transactions" || route == "when") {
-            return "cache|force the results of the query into the cache|boolean|-o";
-        }
+        return "cache|force the results of the query into the cache|boolean|-o";
+    } else if (feature == "decache") {
+        return "decache|removes related items from the cache|boolean|-D";
     } else if (feature == "ether") {
-        if (route == "export" || route == "state" || route == "transactions") {
-            return "ether|export values in ether|boolean|-H";
-        }
+        return "ether|export values in ether|boolean|-H";
+    } else if (feature == "fmt") {
+        return "fmt|export format, one of [none|json*|txt|csv]|string|-x";
+    } else if (feature % "noheader") {
+        return "noHeader|suppress the header in the output|boolean|-";
+    } else if (feature % "chain") {
+        return "chain|the chain to use|string|-";
     }
     return "";
 }
@@ -244,14 +257,15 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
         }
     }
 
-    CStringArray globals = getGlobalsArray();
+    string_q caps = get_corrected_caps(cmd.capabilities);
+    CStringArray globals;
+    explode(globals, caps, '|');
     for (auto global : globals) {
-        global = nextTokenClear(global, ':');
         string_q g = getGlobalFeature(apiRoute, global);
-        if (g.empty())
-            continue;
         CStringArray parts;
         explode(parts, g, '|');
+        if (parts.size() < 3)
+            continue;
         string_q optionName = toCamelCase(parts[0]);
         string_q yp = STR_PARAM_YAML;
         replace(yp, "[{NAME}]", optionName);

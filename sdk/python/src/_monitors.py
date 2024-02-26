@@ -17,9 +17,12 @@ monitorsOpts = {
     "commands": {"hotkey": "-c", "type": "flag"},
     "batchSize": {"hotkey": "-b", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
+    "fmt": {"hotkey": "txt", "type": "flag"},
+    "chain": {"hotkey": "-", "type": "flag"},
+    "noHeader": {"hotkey": "-", "type": "switch"},
+    "cache": {"hotkey": "-o", "type": "switch"},
+    "decache": {"hotkey": "-D", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
-    "verbose:": {"hotkey": "-v", "type": "switch"},
-    "help": {"hotkey": "-h", "type": "switch"},
 }
 
 def monitors(self):

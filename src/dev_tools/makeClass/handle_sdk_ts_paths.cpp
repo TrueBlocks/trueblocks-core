@@ -68,30 +68,35 @@ string_q toTsType(const string_q& in, map<string_q, string_q>& map) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-CStringArray getGlobalsArray() {
-    CStringArray globals;
-    globals.push_back("chain:string");
-    globals.push_back("noHeader:boolean");
-    globals.push_back("fmt:string");
-    globals.push_back("verbose:boolean");
-    globals.push_back("ether:boolean");
-    globals.push_back("raw:boolean");
-    globals.push_back("cache:boolean");
-    globals.push_back("decache:boolean");
-    return globals;
+string_q get_corrected_caps(const string_q& capsIn) {
+    string_q x = "fmt|chain|noHeader";
+    string_q capsOut = substitute(capsIn, "default", x);
+    replace(capsOut, "caching", "cache|decache");
+    replace(capsOut, "verbose|", "");
+    replace(capsOut, "version|", "");
+    replace(capsOut, "noop|", "");
+    replace(capsOut, "noColor|", "");
+    replace(capsOut, "help|", "");
+    return capsOut;
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q getGlobalParams(const string_q& route) {
-    string_q ret = "";
-    CStringArray globals = getGlobalsArray();
+string_q getGlobalParams(const string_q& s1, const string_q& route) {
+    string_q caps = get_corrected_caps(s1);
+    CStringArray globals;
+    explode(globals, caps, '|');
+
+    ostringstream os;
     for (auto global : globals) {
-        CStringArray parts;
-        explode(parts, global, ':');
-        ret += "    " + parts[0] + (parts[0] == "chain" ? "" : "?") + ": " + parts[1] + ",\n";
-        reportOneOption(route, parts[0], "typescript-sdk");
+        os << "    " << global << (global == "chain" ? "" : "?") << ": ";
+        if (global == "chain" || global == "fmt") {
+            os << "string,\n";
+        } else {
+            os << "boolean,\n";
+        }
+        reportOneOption(route, global, "typescript-sdk");
     }
-    return ret;
+    return os.str();
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -163,7 +168,7 @@ bool COptions::handle_sdk_ts_paths(CStringArray& pathsOut) {
         replaceAll(source, "[{RETTYPE}]", trim(returns.str(), '\n'));
         replaceAll(source, "[{TYPES}]", trim(typeImports.str(), '\n'));
         replaceAll(source, "[{PARAMS}]", trim(params.str(), '\n'));
-        replaceAll(source, "[{GLOBALS}]", getGlobalParams(apiRoute));
+        replaceAll(source, "[{GLOBALS}]", getGlobalParams(ep.capabilities, apiRoute));
 
         pathsOut.push_back(apiRoute);
         writeIfDifferent(filename.str(), source);

@@ -10,11 +10,14 @@ tracesOpts = {
     "articulate": {"hotkey": "-a", "type": "switch"},
     "filter": {"hotkey": "-f", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
-    "raw": {"hotkey": "-w", "type": "switch"},
+    "fmt": {"hotkey": "txt", "type": "flag"},
+    "chain": {"hotkey": "-", "type": "flag"},
+    "noHeader": {"hotkey": "-", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
+    "decache": {"hotkey": "-D", "type": "switch"},
+    "ether": {"hotkey": "-H", "type": "switch"},
+    "raw": {"hotkey": "-w", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
-    "verbose:": {"hotkey": "-v", "type": "switch"},
-    "help": {"hotkey": "-h", "type": "switch"},
 }
 
 def traces(self):

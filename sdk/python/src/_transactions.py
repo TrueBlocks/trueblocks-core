@@ -14,12 +14,14 @@ transactionsOpts = {
     "logs": {"hotkey": "-l", "type": "switch"},
     "emitter": {"hotkey": "-m", "type": "flag"},
     "topic": {"hotkey": "-B", "type": "flag"},
+    "fmt": {"hotkey": "txt", "type": "flag"},
+    "chain": {"hotkey": "-", "type": "flag"},
+    "noHeader": {"hotkey": "-", "type": "switch"},
+    "cache": {"hotkey": "-o", "type": "switch"},
+    "decache": {"hotkey": "-D", "type": "switch"},
     "ether": {"hotkey": "-H", "type": "switch"},
     "raw": {"hotkey": "-w", "type": "switch"},
-    "cache": {"hotkey": "-o", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
-    "verbose:": {"hotkey": "-v", "type": "switch"},
-    "help": {"hotkey": "-h", "type": "switch"},
 }
 
 def transactions(self):
