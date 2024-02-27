@@ -25,7 +25,7 @@
 
 ## Introduction
 
-TrueBlocks improves access to blockchain data for any EVM-compatible chain (particularly Ethereum mainnet) while remaining entirely local.
+TrueBlocks improves access to blockchain data for EVM-compatible chains (particularly Ethereum mainnet) while remaining entirely local.
 
 Features:
 
