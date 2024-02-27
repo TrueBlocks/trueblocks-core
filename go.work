@@ -6,3 +6,5 @@ use ./src/apps/chifra
 use ./src/examples/usesSDK
 
 use ./sdk/go
+
+use ./src/dev_tools/goTester
