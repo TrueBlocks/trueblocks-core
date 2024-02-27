@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -43,6 +44,19 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 	return config.Config(w, values)
 }
 
+// GetConfigOptions returns an options instance given a string array of arguments.
+func GetConfigOptions(args []string) (*ConfigOptions, error) {
+	var opts ConfigOptions
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 type ConfigMode int
 
 const (
@@ -61,4 +75,3 @@ func (v ConfigMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

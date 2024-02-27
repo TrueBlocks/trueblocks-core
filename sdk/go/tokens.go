@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -59,6 +60,19 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 	return tokens.Tokens(w, values)
 }
 
+// GetTokensOptions returns an options instance given a string array of arguments.
+func GetTokensOptions(args []string) (*TokensOptions, error) {
+	var opts TokensOptions
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 type TokensParts int
 
 const (
@@ -85,4 +99,3 @@ func (v TokensParts) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

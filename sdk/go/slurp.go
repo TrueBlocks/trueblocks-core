@@ -68,6 +68,19 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 	return slurp.Slurp(w, values)
 }
 
+// GetSlurpOptions returns an options instance given a string array of arguments.
+func GetSlurpOptions(args []string) (*SlurpOptions, error) {
+	var opts SlurpOptions
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 type SlurpTypes int
 
 const (
@@ -116,4 +129,3 @@ func (v SlurpSource) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

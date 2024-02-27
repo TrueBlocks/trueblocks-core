@@ -56,6 +56,19 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 	return status.Status(w, values)
 }
 
+// GetStatusOptions returns an options instance given a string array of arguments.
+func GetStatusOptions(args []string) (*StatusOptions, error) {
+	var opts StatusOptions
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 type StatusModes int
 
 const (
@@ -108,4 +121,3 @@ func (v StatusModes) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

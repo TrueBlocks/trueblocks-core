@@ -93,6 +93,19 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	return chunks.Chunks(w, values)
 }
 
+// GetChunksOptions returns an options instance given a string array of arguments.
+func GetChunksOptions(args []string) (*ChunksOptions, error) {
+	var opts ChunksOptions
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 type ChunksMode int
 
 const (
@@ -121,4 +134,3 @@ func (v ChunksMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -60,6 +61,18 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 	return abis.Abis(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// GetAbisOptions returns an options instance given a string array of arguments.
+func GetAbisOptions(args []string) (*AbisOptions, error) {
+	var opts AbisOptions
 
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

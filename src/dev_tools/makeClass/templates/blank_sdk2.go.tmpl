@@ -29,5 +29,17 @@ func (opts *[{PROPER}]Options) [{PROPER}](w io.Writer) error {
 	return [{PKG}].[{PROPER}](w, values)
 }
 
+// Get[{PROPER}]Options returns an options instance given a string array of arguments.
+func Get[{PROPER}]Options(args []string) (*[{PROPER}]Options, error) {
+	var opts [{PROPER}]Options
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 [{ENUMS}]// EXISTING_CODE
 // EXISTING_CODE

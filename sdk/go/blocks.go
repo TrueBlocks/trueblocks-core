@@ -88,6 +88,19 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	return blocks.Blocks(w, values)
 }
 
+// GetBlocksOptions returns an options instance given a string array of arguments.
+func GetBlocksOptions(args []string) (*BlocksOptions, error) {
+	var opts BlocksOptions
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 type BlocksFlow int
 
 const (
@@ -108,4 +121,3 @@ func (v BlocksFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

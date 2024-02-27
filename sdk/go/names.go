@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -104,6 +105,18 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 	return names.Names(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// GetNamesOptions returns an options instance given a string array of arguments.
+func GetNamesOptions(args []string) (*NamesOptions, error) {
+	var opts NamesOptions
 
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

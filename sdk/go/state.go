@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -68,6 +69,19 @@ func (opts *StateOptions) State(w io.Writer) error {
 	return state.State(w, values)
 }
 
+// GetStateOptions returns an options instance given a string array of arguments.
+func GetStateOptions(args []string) (*StateOptions, error) {
+	var opts StateOptions
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 type StateParts int
 
 const (
@@ -100,4 +114,3 @@ func (v StateParts) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

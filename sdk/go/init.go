@@ -53,6 +53,18 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	return initPkg.Init(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// GetInitOptions returns an options instance given a string array of arguments.
+func GetInitOptions(args []string) (*InitOptions, error) {
+	var opts InitOptions
 
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

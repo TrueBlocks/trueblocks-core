@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -67,6 +68,18 @@ func (opts *WhenOptions) When(w io.Writer) error {
 	return when.When(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// GetWhenOptions returns an options instance given a string array of arguments.
+func GetWhenOptions(args []string) (*WhenOptions, error) {
+	var opts WhenOptions
 
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

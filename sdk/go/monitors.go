@@ -80,6 +80,18 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 	return monitors.Monitors(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// GetMonitorsOptions returns an options instance given a string array of arguments.
+func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
+	var opts MonitorsOptions
 
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
+// EXISTING_CODE
+// EXISTING_CODE

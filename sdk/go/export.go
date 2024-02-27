@@ -153,6 +153,19 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 	return export.Export(w, values)
 }
 
+// GetExportOptions returns an options instance given a string array of arguments.
+func GetExportOptions(args []string) (*ExportOptions, error) {
+	var opts ExportOptions
+
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
 type ExportFlow int
 
 const (
@@ -173,4 +186,3 @@ func (v ExportFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

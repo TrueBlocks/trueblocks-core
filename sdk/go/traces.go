@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"fmt"
 	"io"
 	"net/url"
 
@@ -51,6 +52,18 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 	return traces.Traces(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// GetTracesOptions returns an options instance given a string array of arguments.
+func GetTracesOptions(args []string) (*TracesOptions, error) {
+	var opts TracesOptions
 
+	for _, arg := range args {
+		// EXISTING_CODE
+		fmt.Println("arg: ", arg)
+		// EXISTING_CODE
+	}
+
+	return &opts, nil
+}
+
+// EXISTING_CODE
+// EXISTING_CODE
