@@ -140,7 +140,7 @@ func getEtherscanUrl(chain, value string, requestType string, paginator *Paginat
 	}
 
 	if actions[requestType] == "" {
-		logger.Fatal("should not happen ==> in getEtherscanUrl", requestType)
+		return "", fmt.Errorf("should not happen (%s) ==> in getEtherscanUrl", requestType)
 	}
 
 	key := config.GetKey("etherscan").ApiKey

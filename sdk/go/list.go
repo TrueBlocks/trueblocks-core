@@ -13,8 +13,10 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -82,5 +84,42 @@ func (opts *ListOptions) List(w io.Writer) error {
 }
 
 // EXISTING_CODE
-// EXISTING_CODE
+func GetListOpts(args []string) (lo ListOptions, err error) {
+	for _, arg := range args {
+		opt := strings.Split(arg, "=")
+		switch opt[0] {
+		case "@b", "bounds":
+			lo.Bounds = true
+		case "@c", "first_record":
+			lo.FirstRecord = utils.MustParseUint(opt[1])
+		case "@e", "max_records":
+			lo.MaxRecords = utils.MustParseUint(opt[1])
+		case "@E", "reversed":
+			lo.Reversed = true
+		case "@F", "first_block":
+			lo.FirstBlock = utils.MustParseUint(opt[1])
+		case "@h", "help":
+		case "@L", "last_block":
+			lo.LastBlock = utils.MustParseUint(opt[1])
+		case "@P", "publisher":
+			// lo.Publisher = opt[1]
+		case "@s", "silent":
+			lo.Silent = true
+		case "@U", "count":
+			lo.Count = true
+		case "@u", "unripe":
+			lo.Unripe = true
+		case "@v", "verbose":
+			lo.Verbose = true
+		// case "@x", "fmt string":
+		// 	lo.Fmt = opt[1]
+		case "@z", "no_zero":
+			lo.NoZero = true
+		default:
+			return lo, fmt.Errorf("unknown option: %s", opt[0])
+		}
+	}
+	return lo, nil
+}
 
+// EXISTING_CODE
