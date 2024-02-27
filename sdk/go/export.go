@@ -15,6 +15,7 @@ import (
 	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -157,9 +158,9 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 func GetExportOptions(args []string) (*ExportOptions, error) {
 	var opts ExportOptions
 
-	for _, arg := range args {
+	for i, arg := range args {
 		// EXISTING_CODE
-		fmt.Println("arg: ", arg)
+		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
 		// EXISTING_CODE
 	}
 

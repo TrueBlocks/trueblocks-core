@@ -14,6 +14,7 @@ import (
 	"io"
 	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -60,9 +61,9 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 func GetStatusOptions(args []string) (*StatusOptions, error) {
 	var opts StatusOptions
 
-	for _, arg := range args {
+	for i, arg := range args {
 		// EXISTING_CODE
-		fmt.Println("arg: ", arg)
+		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
 		// EXISTING_CODE
 	}
 

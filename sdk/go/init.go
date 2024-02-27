@@ -15,6 +15,7 @@ import (
 	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -57,9 +58,9 @@ func (opts *InitOptions) Init(w io.Writer) error {
 func GetInitOptions(args []string) (*InitOptions, error) {
 	var opts InitOptions
 
-	for _, arg := range args {
+	for i, arg := range args {
 		// EXISTING_CODE
-		fmt.Println("arg: ", arg)
+		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
 		// EXISTING_CODE
 	}
 

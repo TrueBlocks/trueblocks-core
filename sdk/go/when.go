@@ -14,6 +14,7 @@ import (
 	"io"
 	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -72,9 +73,9 @@ func (opts *WhenOptions) When(w io.Writer) error {
 func GetWhenOptions(args []string) (*WhenOptions, error) {
 	var opts WhenOptions
 
-	for _, arg := range args {
+	for i, arg := range args {
 		// EXISTING_CODE
-		fmt.Println("arg: ", arg)
+		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
 		// EXISTING_CODE
 	}
 

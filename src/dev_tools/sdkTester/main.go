@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/csv"
 	"fmt"
 	"io"
@@ -94,22 +95,24 @@ func processCSVFile(filePath string) {
 
 	os.Setenv("TEST_MODE", "true")
 	for _, testCase := range testCases {
-		// cmd := fmt.Sprintf("chifra %s %s", testCase.Route, testCase.Clean())
-		// cmd = strings.Trim(cmd, " ")
-
-		// // logger.Info("")
-		// // logger.Info(colors.Yellow+"Enabled: %v, Route: %s, PathTool: %s, Options: %v"+colors.Off, testCase.Enabled, testCase.Route, testCase.PathTool, testCase.Options)
-		// // logger.Info("\t" + colors.Green + cmd + colors.Off)
-		// // testCase.SdkTest()
-
 		if testCase.Enabled {
-			// 	fmt.Printf("echo \"%s\"\n", cmd)
-			// 	fmt.Printf("cd %s ; echo \"%s\" >%s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination)
-			// 	out := fmt.Sprintf("[ -f ./output_test_file ] && echo '----' >>%s && echo 'Results in ./output_test_file' >>%s && cat ./output_test_file >>%s && echo >>%s && rm -f ./output_test_file", testCase.Destination, testCase.Destination, testCase.Destination, testCase.Destination)
-			// 	fmt.Printf("cd %s ; TEST_MODE=true NO_COLOR=true %s >>%s 2>&1 ; %s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination, out)
-			// fmt.Println(colors.White + testCase.Original.Options + colors.Off)
-			// fmt.Println(colors.BrightBlue + testCase.Cannonical + colors.Off)
-			fmt.Println("curl -H \"User-Agent: testRunner\" \"http://localhost:8080/" + testCase.Route + "?" + testCase.Cannonical + "\"")
+			cmd := fmt.Sprintf("chifra %s %s", testCase.Route, testCase.Clean())
+			cmd = strings.Trim(cmd, " ")
+
+			// logger.Info(fmt.Sprintf(colors.Yellow+"Enabled: %v, Route: %s, PathTool: %s, Options: %v"+colors.Off, testCase.Enabled, testCase.Route, testCase.PathTool, testCase.Options))
+			// logger.Info("\t" + colors.Green + cmd + colors.Off)
+			logger.Info(fmt.Sprintf("Enabled: %v, Route: %s, PathTool: %s, Options: %v", testCase.Enabled, testCase.Route, testCase.PathTool, testCase.Options))
+			logger.Info("\t" + cmd)
+			var buff bytes.Buffer
+			testCase.SdkTest(&buff)
+
+			// // 	fmt.Printf("echo \"%s\"\n", cmd)
+			// // 	fmt.Printf("cd %s ; echo \"%s\" >%s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination)
+			// // 	out := fmt.Sprintf("[ -f ./output_test_file ] && echo '----' >>%s && echo 'Results in ./output_test_file' >>%s && cat ./output_test_file >>%s && echo >>%s && rm -f ./output_test_file", testCase.Destination, testCase.Destination, testCase.Destination, testCase.Destination)
+			// // 	fmt.Printf("cd %s ; TEST_MODE=true NO_COLOR=true %s >>%s 2>&1 ; %s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination, out)
+			// // fmt.Println(colors.White + testCase.Original.Options + colors.Off)
+			// // fmt.Println(colors.BrightBlue + testCase.Cannonical + colors.Off)
+			// fmt.Println("curl -H \"User-Agent: testRunner\" \"http://localhost:8080/" + testCase.Route + "?" + testCase.Cannonical + "\"")
 		}
 	}
 }

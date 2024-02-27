@@ -14,6 +14,7 @@ import (
 	"io"
 	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -52,9 +53,9 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 	var opts ScrapeOptions
 
-	for _, arg := range args {
+	for i, arg := range args {
 		// EXISTING_CODE
-		fmt.Println("arg: ", arg)
+		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
 		// EXISTING_CODE
 	}
 

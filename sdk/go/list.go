@@ -13,10 +13,9 @@ import (
 	"fmt"
 	"io"
 	"net/url"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -87,40 +86,41 @@ func (opts *ListOptions) List(w io.Writer) error {
 func GetListOptions(args []string) (*ListOptions, error) {
 	var opts ListOptions
 
-	for _, arg := range args {
+	for i, arg := range args {
 		// EXISTING_CODE
-		opt := strings.Split(arg, "=")
-		switch opt[0] {
-		case "@b", "bounds":
-			opts.Bounds = true
-		case "@c", "first_record":
-			opts.FirstRecord = utils.MustParseUint(opt[1])
-		case "@e", "max_records":
-			opts.MaxRecords = utils.MustParseUint(opt[1])
-		case "@E", "reversed":
-			opts.Reversed = true
-		case "@F", "first_block":
-			opts.FirstBlock = utils.MustParseUint(opt[1])
-		case "@h", "help":
-		case "@L", "last_block":
-			opts.LastBlock = utils.MustParseUint(opt[1])
-		case "@P", "publisher":
-			// opts.Publisher = opt[1]
-		case "@s", "silent":
-			opts.Silent = true
-		case "@U", "count":
-			opts.Count = true
-		case "@u", "unripe":
-			opts.Unripe = true
-		case "@v", "verbose":
-			opts.Verbose = true
-		// case "@x", "fmt string":
-		// 	opts.Fmt = opt[1]
-		case "@z", "no_zero":
-			opts.NoZero = true
-		default:
-			return &opts, fmt.Errorf("unknown option: %s", opt[0])
-		}
+		logger.Info(fmt.Sprintf("\t%d: %s\n", i, arg))
+		// opt := strings.Split(arg, "=")
+		// switch opt[0] {
+		// case "@b", "bounds":
+		// 	opts.Bounds = true
+		// case "@c", "first_record":
+		// 	opts.FirstRecord = utils.MustParseUint(opt[1])
+		// case "@e", "max_records":
+		// 	opts.MaxRecords = utils.MustParseUint(opt[1])
+		// case "@E", "reversed":
+		// 	opts.Reversed = true
+		// case "@F", "first_block":
+		// 	opts.FirstBlock = utils.MustParseUint(opt[1])
+		// case "@h", "help":
+		// case "@L", "last_block":
+		// 	opts.LastBlock = utils.MustParseUint(opt[1])
+		// case "@P", "publisher":
+		// 	// opts.Publisher = opt[1]
+		// case "@s", "silent":
+		// 	opts.Silent = true
+		// case "@U", "count":
+		// 	opts.Count = true
+		// case "@u", "unripe":
+		// 	opts.Unripe = true
+		// case "@v", "verbose":
+		// 	opts.Verbose = true
+		// // case "@x", "fmt string":
+		// // 	opts.Fmt = opt[1]
+		// case "@z", "no_zero":
+		// 	opts.NoZero = true
+		// default:
+		// 	return &opts, fmt.Errorf("unknown option: %s", opt[0])
+		// }
 		// EXISTING_CODE
 	}
 

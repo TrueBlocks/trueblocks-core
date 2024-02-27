@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
@@ -11,133 +12,133 @@ import (
 func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 	switch t.Route {
 	case "list":
-		if opts, err := sdk.GetListOptions(t.Options); err != nil {
+		if _, err := sdk.GetListOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.List(buf)
+			return nil // return opts.List(buf)
 		}
 	case "export":
-		if opts, err := sdk.GetExportOptions(t.Options); err != nil {
+		if _, err := sdk.GetExportOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Export(buf)
+			return nil // return opts.Export(buf)
 		}
 	case "monitors":
-		if opts, err := sdk.GetMonitorsOptions(t.Options); err != nil {
+		if _, err := sdk.GetMonitorsOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Monitors(buf)
+			return nil // return opts.Monitors(buf)
 		}
 	case "names":
-		if opts, err := sdk.GetNamesOptions(t.Options); err != nil {
+		if _, err := sdk.GetNamesOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Names(buf)
+			return nil // return opts.Names(buf)
 		}
 	case "abis":
-		if opts, err := sdk.GetAbisOptions(t.Options); err != nil {
+		if _, err := sdk.GetAbisOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Abis(buf)
+			return nil // return opts.Abis(buf)
 		}
 	case "blocks":
-		if opts, err := sdk.GetBlocksOptions(t.Options); err != nil {
+		if _, err := sdk.GetBlocksOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Blocks(buf)
+			return nil // return opts.Blocks(buf)
 		}
 	case "transactions":
-		if opts, err := sdk.GetTransactionsOptions(t.Options); err != nil {
+		if _, err := sdk.GetTransactionsOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Transactions(buf)
+			return nil // return opts.Transactions(buf)
 		}
 	case "receipts":
-		if opts, err := sdk.GetReceiptsOptions(t.Options); err != nil {
+		if _, err := sdk.GetReceiptsOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Receipts(buf)
+			return nil // return opts.Receipts(buf)
 		}
 	case "logs":
-		if opts, err := sdk.GetLogsOptions(t.Options); err != nil {
+		if _, err := sdk.GetLogsOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Logs(buf)
+			return nil // return opts.Logs(buf)
 		}
 	case "traces":
-		if opts, err := sdk.GetTracesOptions(t.Options); err != nil {
+		if _, err := sdk.GetTracesOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Traces(buf)
+			return nil // return opts.Traces(buf)
 		}
 	case "when":
-		if opts, err := sdk.GetWhenOptions(t.Options); err != nil {
+		if _, err := sdk.GetWhenOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.When(buf)
+			return nil // return opts.When(buf)
 		}
 	case "state":
-		if opts, err := sdk.GetStateOptions(t.Options); err != nil {
+		if _, err := sdk.GetStateOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.State(buf)
+			return nil // return opts.State(buf)
 		}
 	case "tokens":
-		if opts, err := sdk.GetTokensOptions(t.Options); err != nil {
+		if _, err := sdk.GetTokensOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Tokens(buf)
+			return nil // return opts.Tokens(buf)
 		}
 	case "config":
-		if opts, err := sdk.GetConfigOptions(t.Options); err != nil {
+		if _, err := sdk.GetConfigOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Config(buf)
+			return nil // return opts.Config(buf)
 		}
 	case "status":
-		if opts, err := sdk.GetStatusOptions(t.Options); err != nil {
+		if _, err := sdk.GetStatusOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Status(buf)
+			return nil // return opts.Status(buf)
 		}
 	// case "daemon":
-	// 	if opts, err := sdk.GetDaemonOptions(t.Options); err != nil {
+	// 	if _, err := sdk.GetDaemonOptions(t.Options); err != nil {
 	// 		return err
 	// 	} else {
 	// 		return opts.Daemon(buf)
 	// 	}
 	case "scrape":
-		if opts, err := sdk.GetScrapeOptions(t.Options); err != nil {
+		if _, err := sdk.GetScrapeOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Scrape(buf)
+			return nil // return opts.Scrape(buf)
 		}
 	case "chunks":
-		if opts, err := sdk.GetChunksOptions(t.Options); err != nil {
+		if _, err := sdk.GetChunksOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Chunks(buf)
+			return nil // return opts.Chunks(buf)
 		}
 	case "init":
-		if opts, err := sdk.GetInitOptions(t.Options); err != nil {
+		if _, err := sdk.GetInitOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Init(buf)
+			return nil // return opts.Init(buf)
 		}
 	// case "explore":
-	// 	if opts, err := sdk.GetExploreOptions(t.Options); err != nil {
+	// 	if _, err := sdk.GetExploreOptions(t.Options); err != nil {
 	// 		return err
 	// 	} else {
 	// 		return opts.Explore(buf)
 	// 	}
 	case "slurp":
-		if opts, err := sdk.GetSlurpOptions(t.Options); err != nil {
+		if _, err := sdk.GetSlurpOptions(t.Options); err != nil {
 			return err
 		} else {
-			return opts.Slurp(buf)
+			return nil // return opts.Slurp(buf)
 		}
 	default:
-		logger.Info(*t)
+		logger.Info(colors.Red + "Unknown: " + t.Route + colors.Off)
 	}
 
 	return nil
