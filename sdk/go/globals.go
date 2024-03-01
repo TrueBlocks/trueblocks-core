@@ -24,14 +24,15 @@ func (f Fmt) String() string {
 }
 
 type Globals struct {
+	Chain    string
 	Ether    bool
 	Raw      bool
 	NoHeader bool
 	Cache    bool
 	Decache  bool
-	Fmt      Fmt
-	Verbose  bool
-	Chain    string
+	Fmt      Fmt  `flag:"fmt,x"`
+	Verbose  bool `flag:"verbose,v"`
+	Help     bool `flag:"help,h"`
 }
 
 func (g Globals) mapGlobals(values url.Values) {

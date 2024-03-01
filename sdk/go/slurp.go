@@ -14,7 +14,6 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -72,13 +71,6 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 // GetSlurpOptions returns an options instance given a string array of arguments.
 func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	var opts SlurpOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
-	}
-
 	return &opts, nil
 }
 

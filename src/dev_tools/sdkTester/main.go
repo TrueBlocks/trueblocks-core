@@ -1,16 +1,16 @@
 package main
 
 import (
-	"bytes"
 	"encoding/csv"
 	"fmt"
 	"io"
 	"net/url"
 	"os"
-	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
 type Original struct {
@@ -103,8 +103,8 @@ func processCSVFile(filePath string) {
 			// logger.Info("\t" + colors.Green + cmd + colors.Off)
 			logger.Info(fmt.Sprintf("Enabled: %v, Route: %s, PathTool: %s, Options: %v", testCase.Enabled, testCase.Route, testCase.PathTool, testCase.Options))
 			logger.Info("\t" + cmd)
-			var buff bytes.Buffer
-			testCase.SdkTest(&buff)
+			// var buff bytes.Buffer
+			// testCase.SdkTest(&buff)
 
 			// // 	fmt.Printf("echo \"%s\"\n", cmd)
 			// // 	fmt.Printf("cd %s ; echo \"%s\" >%s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination)
@@ -117,30 +117,63 @@ func processCSVFile(filePath string) {
 	}
 }
 
+// func main() {
+// 	paths := []string{
+// 		"../testRunner/testCases/tools",
+// 		"../testRunner/testCases/apps",
+// 		// "../testRunner/testCases/dev_tools",
+// 	}
+
+// 	for _, rootPath := range paths {
+// 		err := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
+// 			if err != nil {
+// 				fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
+// 				return err
+// 			}
+// 			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
+// 				// fmt.Printf(colors.Yellow+"Processing CSV file: %s\n", path+colors.Off)
+// 				processCSVFile(path)
+// 			}
+// 			return nil
+// 		})
+// 		if err != nil {
+// 			fmt.Printf("error walking the path %q: %v\n", rootPath, err)
+// 		}
+// 	}
+// 	// canonicalizeURL(os.Args[1])
+// }
+
 func main() {
-	paths := []string{
-		"../testRunner/testCases/tools",
-		"../testRunner/testCases/apps",
-		// "../testRunner/testCases/dev_tools",
+	raw := "addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & first_record = 3 & max_records = 10"
+	url := canonicalizeURL(raw)
+	fmt.Println(colors.Green + url + colors.Off)
+	cmd := canonicalizeCmd(url)
+	fmt.Println(colors.Green + cmd + colors.Off)
+	args := strings.Split(cmd, " ") // strings.Split("--count --first_record 100 --fmt json 0x123 0x456", " ")
+
+	var err error
+	var opts sdk.ListOptions
+	opts.Positionals, err = sdk.ParseOptions[sdk.ListOptions](args, &opts)
+	if err != nil {
+		fmt.Println("Error parsing list options:", err)
+		os.Exit(1)
 	}
 
-	for _, rootPath := range paths {
-		err := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
-				return err
-			}
-			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
-				// fmt.Printf(colors.Yellow+"Processing CSV file: %s\n", path+colors.Off)
-				processCSVFile(path)
-			}
-			return nil
-		})
-		if err != nil {
-			fmt.Printf("error walking the path %q: %v\n", rootPath, err)
-		}
-	}
-	// canonicalizeURL(os.Args[1])
+	// Print the parsed options and addresses to verify
+	fmt.Printf("Options: %+v\n", opts)
+	fmt.Printf("Positionals: %v\n", opts.Positionals)
+}
+
+func canonicalizeCmd(rawURL string) string {
+	ret := "--" + rawURL
+	ret = strings.Replace(ret, "&", " --", -1)
+	ret = strings.Replace(ret, "=", " ", -1)
+	ret = strings.Replace(ret, "%20", " ", -1)
+	ret = strings.Replace(ret, "--addrs", " ", -1)
+	ret = strings.Replace(ret, "--blocks", " ", -1)
+	ret = strings.Replace(ret, "--transactions", " ", -1)
+	ret = strings.Replace(ret, "--terms", " ", -1)
+	return strings.Trim(ret, " ")
 }
 
 // parses the URL, and returns a canonicalized version of the URL.

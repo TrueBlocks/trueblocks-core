@@ -10,11 +10,10 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
+
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -64,13 +63,6 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 // GetTokensOptions returns an options instance given a string array of arguments.
 func GetTokensOptions(args []string) (*TokensOptions, error) {
 	var opts TokensOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
-	}
-
 	return &opts, nil
 }
 

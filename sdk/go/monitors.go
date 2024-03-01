@@ -14,7 +14,6 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -84,13 +83,6 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 // GetMonitorsOptions returns an options instance given a string array of arguments.
 func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	var opts MonitorsOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
-	}
-
 	return &opts, nil
 }
 

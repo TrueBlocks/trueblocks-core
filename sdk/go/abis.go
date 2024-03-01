@@ -10,12 +10,11 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
+
 	"io"
 	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -65,13 +64,6 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 // GetAbisOptions returns an options instance given a string array of arguments.
 func GetAbisOptions(args []string) (*AbisOptions, error) {
 	var opts AbisOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
-	}
-
 	return &opts, nil
 }
 

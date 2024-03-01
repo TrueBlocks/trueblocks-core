@@ -10,11 +10,10 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
+
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -56,13 +55,6 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 // GetLogsOptions returns an options instance given a string array of arguments.
 func GetLogsOptions(args []string) (*LogsOptions, error) {
 	var opts LogsOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
-	}
-
 	return &opts, nil
 }
 

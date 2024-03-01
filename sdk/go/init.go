@@ -15,7 +15,6 @@ import (
 	"net/url"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -57,13 +56,6 @@ func (opts *InitOptions) Init(w io.Writer) error {
 // GetInitOptions returns an options instance given a string array of arguments.
 func GetInitOptions(args []string) (*InitOptions, error) {
 	var opts InitOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
-	}
-
 	return &opts, nil
 }
 

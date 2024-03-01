@@ -14,28 +14,28 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
+// ListOptions represents the command line options for the chifra list command
 type ListOptions struct {
-	Addrs       []string // allow for ENS names and addresses
-	Count       bool
-	NoZero      bool
-	Bounds      bool
-	Unripe      bool
-	Silent      bool
-	FirstRecord uint64
-	MaxRecords  uint64
-	Reversed    bool
-	FirstBlock  base.Blknum
-	LastBlock   base.Blknum
+	Count       bool     `flag:"count,U"`
+	NoZero      bool     `flag:"noZero,z"`
+	Bounds      bool     `flag:"bounds,b"`
+	Unripe      bool     `flag:"unripe,u"`
+	Silent      bool     `flag:"silent,s"`
+	FirstRecord uint     `flag:"firstRecord,c"`
+	MaxRecords  uint     `flag:"maxRecords,e"`
+	Reversed    bool     `flag:"reversed,E"`
+	Publisher   string   `flag:"publisher,P"`
+	FirstBlock  uint     `flag:"firstBlock,F"`
+	LastBlock   uint     `flag:"lastBlock,L"`
+	Format      string   `flag:"fmt,x"`
+	Verbose     bool     `flag:"verbose,v"`
+	Help        bool     `flag:"help,h"`
+	Positionals []string // Stores positional arguments (addresses)
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // List implements the chifra list command for the SDK.
@@ -43,7 +43,7 @@ func (opts *ListOptions) List(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	for _, v := range opts.Addrs {
+	for _, v := range opts.Positionals {
 		values.Add("addrs", v)
 	}
 	if opts.Count {
@@ -70,6 +70,9 @@ func (opts *ListOptions) List(w io.Writer) error {
 	if opts.Reversed {
 		values.Set("reversed", "true")
 	}
+	if opts.Publisher != "" {
+		values.Set("publisher", opts.Publisher)
+	}
 	if opts.FirstBlock > 0 {
 		values.Set("first_block", fmt.Sprint(opts.FirstBlock))
 	}
@@ -77,54 +80,17 @@ func (opts *ListOptions) List(w io.Writer) error {
 		values.Set("last_block", fmt.Sprint(opts.LastBlock))
 	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
+	// opts.Globals.mapGlobals(values)
 
 	return list.List(w, values)
 }
 
 // GetListOptions returns an options instance given a string array of arguments.
 func GetListOptions(args []string) (*ListOptions, error) {
+	var err error
 	var opts ListOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s\n", i, arg))
-		// opt := strings.Split(arg, "=")
-		// switch opt[0] {
-		// case "@b", "bounds":
-		// 	opts.Bounds = true
-		// case "@c", "first_record":
-		// 	opts.FirstRecord = utils.MustParseUint(opt[1])
-		// case "@e", "max_records":
-		// 	opts.MaxRecords = utils.MustParseUint(opt[1])
-		// case "@E", "reversed":
-		// 	opts.Reversed = true
-		// case "@F", "first_block":
-		// 	opts.FirstBlock = utils.MustParseUint(opt[1])
-		// case "@h", "help":
-		// case "@L", "last_block":
-		// 	opts.LastBlock = utils.MustParseUint(opt[1])
-		// case "@P", "publisher":
-		// 	// opts.Publisher = opt[1]
-		// case "@s", "silent":
-		// 	opts.Silent = true
-		// case "@U", "count":
-		// 	opts.Count = true
-		// case "@u", "unripe":
-		// 	opts.Unripe = true
-		// case "@v", "verbose":
-		// 	opts.Verbose = true
-		// // case "@x", "fmt string":
-		// // 	opts.Fmt = opt[1]
-		// case "@z", "no_zero":
-		// 	opts.NoZero = true
-		// default:
-		// 	return &opts, fmt.Errorf("unknown option: %s", opt[0])
-		// }
-		// EXISTING_CODE
-	}
-
-	return &opts, nil
+	opts.Positionals, err = ParseOptions[ListOptions](args, &opts)
+	return &opts, err
 }
 
 // EXISTING_CODE
