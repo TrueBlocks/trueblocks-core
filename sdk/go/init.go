@@ -67,6 +67,8 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 	return &opts, nil
 }
 
+// No enums
+
 // EXISTING_CODE
 // EXISTING_CODE
 

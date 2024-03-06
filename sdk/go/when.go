@@ -82,6 +82,8 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 	return &opts, nil
 }
 
+// No enums
+
 // EXISTING_CODE
 // EXISTING_CODE
 

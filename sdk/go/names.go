@@ -119,6 +119,8 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 	return &opts, nil
 }
 
+// No enums
+
 // EXISTING_CODE
 // EXISTING_CODE
 

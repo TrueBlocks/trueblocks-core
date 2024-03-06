@@ -66,6 +66,8 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 	return &opts, nil
 }
 
+// No enums
+
 // EXISTING_CODE
 // EXISTING_CODE
 

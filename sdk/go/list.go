@@ -127,6 +127,8 @@ func GetListOptions(args []string) (*ListOptions, error) {
 	return &opts, nil
 }
 
+// No enums
+
 // EXISTING_CODE
 // EXISTING_CODE
 

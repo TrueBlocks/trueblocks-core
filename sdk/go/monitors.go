@@ -94,6 +94,8 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	return &opts, nil
 }
 
+// No enums
+
 // EXISTING_CODE
 // EXISTING_CODE
 
