@@ -20,9 +20,9 @@ import (
 )
 
 type ScrapeOptions struct {
-	BlockCnt uint64
-	Sleep    float64
-	Touch    uint64
+	BlockCnt  uint64
+	Sleep     float64
+	Touch     uint64
 	Globals
 
 	// EXISTING_CODE
@@ -64,3 +64,4 @@ func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+
