@@ -11,6 +11,7 @@ package sdk
 import (
 	"io"
 	"net/url"
+	"os"
 
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -18,7 +19,8 @@ import (
 
 // Slurp provides an interface to the command line chifra slurp through the SDK.
 func Slurp(w io.Writer, values url.Values) error {
-	slurp.ResetOptions(false)
+	testMode := os.Getenv("TEST_MODE") == "true"
+	slurp.ResetOptions(testMode)
 	opts := slurp.SlurpFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("slurp", true)
 	// EXISTING_CODE

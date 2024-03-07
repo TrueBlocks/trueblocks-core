@@ -11,6 +11,7 @@ package sdk
 import (
 	"io"
 	"net/url"
+	"os"
 
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -18,7 +19,8 @@ import (
 
 // Monitors provides an interface to the command line chifra monitors through the SDK.
 func Monitors(w io.Writer, values url.Values) error {
-	monitors.ResetOptions(false)
+	testMode := os.Getenv("TEST_MODE") == "true"
+	monitors.ResetOptions(testMode)
 	opts := monitors.MonitorsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("monitors", true)
 	// EXISTING_CODE

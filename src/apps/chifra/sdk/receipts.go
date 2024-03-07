@@ -11,6 +11,7 @@ package sdk
 import (
 	"io"
 	"net/url"
+	"os"
 
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -18,7 +19,8 @@ import (
 
 // Receipts provides an interface to the command line chifra receipts through the SDK.
 func Receipts(w io.Writer, values url.Values) error {
-	receipts.ResetOptions(false)
+	testMode := os.Getenv("TEST_MODE") == "true"
+	receipts.ResetOptions(testMode)
 	opts := receipts.ReceiptsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("receipts", true)
 	// EXISTING_CODE

@@ -11,6 +11,7 @@ package sdk
 import (
 	"io"
 	"net/url"
+	"os"
 
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -18,7 +19,8 @@ import (
 
 // Transactions provides an interface to the command line chifra transactions through the SDK.
 func Transactions(w io.Writer, values url.Values) error {
-	transactions.ResetOptions(false)
+	testMode := os.Getenv("TEST_MODE") == "true"
+	transactions.ResetOptions(testMode)
 	opts := transactions.TransactionsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("transactions", true)
 	// EXISTING_CODE

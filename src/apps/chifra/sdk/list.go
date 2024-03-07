@@ -11,6 +11,7 @@ package sdk
 import (
 	"io"
 	"net/url"
+	"os"
 
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -18,7 +19,8 @@ import (
 
 // List provides an interface to the command line chifra list through the SDK.
 func List(w io.Writer, values url.Values) error {
-	list.ResetOptions(false)
+	testMode := os.Getenv("TEST_MODE") == "true"
+	list.ResetOptions(testMode)
 	opts := list.ListFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("list", true)
 	// EXISTING_CODE

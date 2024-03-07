@@ -11,6 +11,7 @@ package sdk
 import (
 	"io"
 	"net/url"
+	"os"
 
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -18,7 +19,8 @@ import (
 
 // Config provides an interface to the command line chifra config through the SDK.
 func Config(w io.Writer, values url.Values) error {
-	config.ResetOptions(false)
+	testMode := os.Getenv("TEST_MODE") == "true"
+	config.ResetOptions(testMode)
 	opts := config.ConfigFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("config", true)
 	// EXISTING_CODE

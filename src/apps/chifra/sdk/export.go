@@ -11,6 +11,7 @@ package sdk
 import (
 	"io"
 	"net/url"
+	"os"
 
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -18,7 +19,8 @@ import (
 
 // Export provides an interface to the command line chifra export through the SDK.
 func Export(w io.Writer, values url.Values) error {
-	export.ResetOptions(false)
+	testMode := os.Getenv("TEST_MODE") == "true"
+	export.ResetOptions(testMode)
 	opts := export.ExportFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("export", true)
 	// EXISTING_CODE
