@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
 	"io"
 	"net/url"
 
@@ -20,8 +19,8 @@ import (
 )
 
 type ReceiptsOptions struct {
-	TransactionIds []string
-	Articulate     bool
+	TransactionIds []string `arg:"transactions" json:"transactions,omitempty"`
+	Articulate     bool     `arg:"articulate" json:"articulate,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -48,11 +47,11 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 // GetReceiptsOptions returns an options instance given a string array of arguments.
 func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 	var opts ReceiptsOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -62,4 +61,3 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

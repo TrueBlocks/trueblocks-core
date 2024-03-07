@@ -72,11 +72,11 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 // GetSlurpOptions returns an options instance given a string array of arguments.
 func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	var opts SlurpOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -130,4 +130,3 @@ func (v SlurpSource) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

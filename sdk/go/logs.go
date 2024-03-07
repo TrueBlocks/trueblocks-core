@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
 	"io"
 	"net/url"
 
@@ -56,11 +55,11 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 // GetLogsOptions returns an options instance given a string array of arguments.
 func GetLogsOptions(args []string) (*LogsOptions, error) {
 	var opts LogsOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -70,4 +69,3 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

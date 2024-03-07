@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
 	"io"
 	"net/url"
 
@@ -109,11 +108,11 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 // GetNamesOptions returns an options instance given a string array of arguments.
 func GetNamesOptions(args []string) (*NamesOptions, error) {
 	var opts NamesOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -123,4 +122,3 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

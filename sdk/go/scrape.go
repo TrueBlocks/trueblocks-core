@@ -20,9 +20,9 @@ import (
 )
 
 type ScrapeOptions struct {
-	BlockCnt  uint64
-	Sleep     float64
-	Touch     uint64
+	BlockCnt uint64
+	Sleep    float64
+	Touch    uint64
 	Globals
 
 	// EXISTING_CODE
@@ -52,11 +52,11 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 // GetScrapeOptions returns an options instance given a string array of arguments.
 func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 	var opts ScrapeOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -66,4 +66,3 @@ func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
 	"io"
 	"net/url"
 
@@ -72,11 +71,11 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 // GetTransactionsOptions returns an options instance given a string array of arguments.
 func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	var opts TransactionsOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -100,4 +99,3 @@ func (v TransactionsFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

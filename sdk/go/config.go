@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
 	"io"
 	"net/url"
 
@@ -48,11 +47,11 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 // GetConfigOptions returns an options instance given a string array of arguments.
 func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	var opts ConfigOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -76,4 +75,3 @@ func (v ConfigMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

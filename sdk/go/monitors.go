@@ -84,11 +84,11 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 // GetMonitorsOptions returns an options instance given a string array of arguments.
 func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	var opts MonitorsOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -98,4 +98,3 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

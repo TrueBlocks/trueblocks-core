@@ -157,11 +157,11 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 // GetExportOptions returns an options instance given a string array of arguments.
 func GetExportOptions(args []string) (*ExportOptions, error) {
 	var opts ExportOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -187,4 +187,3 @@ func (v ExportFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

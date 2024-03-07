@@ -60,11 +60,11 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 // GetStatusOptions returns an options instance given a string array of arguments.
 func GetStatusOptions(args []string) (*StatusOptions, error) {
 	var opts StatusOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -122,4 +122,3 @@ func (v StatusModes) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

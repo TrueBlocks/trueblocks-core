@@ -97,11 +97,11 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 // GetChunksOptions returns an options instance given a string array of arguments.
 func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	var opts ChunksOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -135,4 +135,3 @@ func (v ChunksMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
 	"io"
 	"net/url"
 
@@ -65,11 +64,11 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 // GetAbisOptions returns an options instance given a string array of arguments.
 func GetAbisOptions(args []string) (*AbisOptions, error) {
 	var opts AbisOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -79,4 +78,3 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

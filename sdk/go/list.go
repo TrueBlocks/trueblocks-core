@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -21,21 +22,27 @@ import (
 )
 
 type ListOptions struct {
-	Addrs       []string // allow for ENS names and addresses
-	Count       bool
-	NoZero      bool
-	Bounds      bool
-	Unripe      bool
-	Silent      bool
-	FirstRecord uint64
-	MaxRecords  uint64
-	Reversed    bool
-	FirstBlock  base.Blknum
-	LastBlock   base.Blknum
+	Addrs       []string    `arg:"addrs,omitempty" json:"addrs,omitempty"`
+	Count       bool        `arg:"count,omitempty" json:"count,omitempty"`
+	NoZero      bool        `arg:"noZero,omitempty" json:"noZero,omitempty"`
+	Bounds      bool        `arg:"bounds,omitempty" json:"bounds,omitempty"`
+	Unripe      bool        `arg:"unripe,omitempty" json:"unripe,omitempty"`
+	Silent      bool        `arg:"silent,omitempty" json:"silent,omitempty"`
+	FirstRecord uint64      `arg:"firstRecord,omitempty" json:"firstRecord,omitempty"`
+	MaxRecords  uint64      `arg:"maxRecords,omitempty" json:"maxRecords,omitempty"`
+	Reversed    bool        `arg:"reversed,omitempty" json:"reversed,omitempty"`
+	Publisher   string      `arg:"publisher,omitempty" json:"publisher,omitempty"`
+	FirstBlock  base.Blknum `arg:"firstBlock,omitempty" json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum `arg:"lastBlock,omitempty" json:"lastBlock,omitempty"`
 	Globals
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (opts *ListOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // List implements the chifra list command for the SDK.
@@ -50,7 +57,7 @@ func (opts *ListOptions) List(w io.Writer) error {
 		values.Set("count", "true")
 	}
 	if opts.NoZero {
-		values.Set("no_zero", "true")
+		values.Set("noZero", "true")
 	}
 	if opts.Bounds {
 		values.Set("bounds", "true")
@@ -62,19 +69,19 @@ func (opts *ListOptions) List(w io.Writer) error {
 		values.Set("silent", "true")
 	}
 	if opts.FirstRecord != 0 {
-		values.Set("first_record", fmt.Sprint(opts.FirstRecord))
+		values.Set("firstRecord", fmt.Sprint(opts.FirstRecord))
 	}
 	if opts.MaxRecords != 0 {
-		values.Set("max_records", fmt.Sprint(opts.MaxRecords))
+		values.Set("maxRecords", fmt.Sprint(opts.MaxRecords))
 	}
 	if opts.Reversed {
 		values.Set("reversed", "true")
 	}
 	if opts.FirstBlock > 0 {
-		values.Set("first_block", fmt.Sprint(opts.FirstBlock))
+		values.Set("firstBlock", fmt.Sprint(opts.FirstBlock))
 	}
 	if opts.LastBlock > 0 {
-		values.Set("last_block", fmt.Sprint(opts.LastBlock))
+		values.Set("lastBlock", fmt.Sprint(opts.LastBlock))
 	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
@@ -85,43 +92,11 @@ func (opts *ListOptions) List(w io.Writer) error {
 // GetListOptions returns an options instance given a string array of arguments.
 func GetListOptions(args []string) (*ListOptions, error) {
 	var opts ListOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s\n", i, arg))
-		// opt := strings.Split(arg, "=")
-		// switch opt[0] {
-		// case "@b", "bounds":
-		// 	opts.Bounds = true
-		// case "@c", "first_record":
-		// 	opts.FirstRecord = utils.MustParseUint(opt[1])
-		// case "@e", "max_records":
-		// 	opts.MaxRecords = utils.MustParseUint(opt[1])
-		// case "@E", "reversed":
-		// 	opts.Reversed = true
-		// case "@F", "first_block":
-		// 	opts.FirstBlock = utils.MustParseUint(opt[1])
-		// case "@h", "help":
-		// case "@L", "last_block":
-		// 	opts.LastBlock = utils.MustParseUint(opt[1])
-		// case "@P", "publisher":
-		// 	// opts.Publisher = opt[1]
-		// case "@s", "silent":
-		// 	opts.Silent = true
-		// case "@U", "count":
-		// 	opts.Count = true
-		// case "@u", "unripe":
-		// 	opts.Unripe = true
-		// case "@v", "verbose":
-		// 	opts.Verbose = true
-		// // case "@x", "fmt string":
-		// // 	opts.Fmt = opt[1]
-		// case "@z", "no_zero":
-		// 	opts.NoZero = true
-		// default:
-		// 	return &opts, fmt.Errorf("unknown option: %s", opt[0])
-		// }
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -131,4 +106,3 @@ func GetListOptions(args []string) (*ListOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

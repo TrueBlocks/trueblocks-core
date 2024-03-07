@@ -10,7 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
-	"fmt"
+	"encoding/json"
 	"io"
 	"net/url"
 
@@ -20,18 +20,23 @@ import (
 )
 
 type WhenOptions struct {
-	BlockIds   []string
-	List       bool
-	Timestamps bool
-	Count      bool
-	Repair     bool
-	Check      bool
-	Update     bool
-	Deep       bool
+	BlockIds   []string `arg:"blocks" json:"blocks,omitempty"`
+	List       bool     `arg:"list" json:"list,omitempty"`
+	Timestamps bool     `arg:"timestamps" json:"timestamps,omitempty"`
+	Count      bool     `arg:"count" json:"count,omitempty"`
+	Repair     bool     `arg:"repair" json:"repair,omitempty"`
+	Check      bool     `arg:"check" json:"check,omitempty"`
+	Update     bool     `arg:"update" json:"update,omitempty"`
+	Deep       bool     `arg:"deep" json:"deep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+func (opts *WhenOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // When implements the chifra when command for the SDK.
@@ -72,11 +77,11 @@ func (opts *WhenOptions) When(w io.Writer) error {
 // GetWhenOptions returns an options instance given a string array of arguments.
 func GetWhenOptions(args []string) (*WhenOptions, error) {
 	var opts WhenOptions
-
-	for i, arg := range args {
-		// EXISTING_CODE
-		logger.Info(fmt.Sprintf("\t%d: %s", i, arg))
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 
 	return &opts, nil
@@ -86,4 +91,3 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
