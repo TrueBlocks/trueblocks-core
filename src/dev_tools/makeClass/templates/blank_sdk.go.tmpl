@@ -11,6 +11,7 @@ package sdk
 import (
 	"io"
 	"net/url"
+	"os"
 
 	[{PKG}] "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{LOWER}]"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -18,7 +19,8 @@ import (
 
 // [{PROPER}] provides an interface to the command line chifra [{LOWER}] through the SDK.
 func [{PROPER}](w io.Writer, values url.Values) error {
-	[{PKG}].ResetOptions(false)
+	testMode := os.Getenv("TEST_MODE") == "true"
+	[{PKG}].ResetOptions(testMode)
 	opts := [{PKG}].[{PROPER}]FinishParseInternal(w, values)
 	outputHelpers.EnableCommand("[{LOWER}]", true)
 	// EXISTING_CODE

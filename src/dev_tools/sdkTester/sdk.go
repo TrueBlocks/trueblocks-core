@@ -12,10 +12,10 @@ import (
 func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 	switch t.Route {
 	case "list":
-		if _, err := sdk.GetListOptions(t.Options); err != nil {
+		if opts, err := sdk.GetListOptions(t.Options); err != nil {
 			return err
 		} else {
-			return nil // return opts.List(buf)
+			return opts.List(buf)
 		}
 	case "export":
 		if _, err := sdk.GetExportOptions(t.Options); err != nil {
@@ -54,10 +54,10 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 			return nil // return opts.Transactions(buf)
 		}
 	case "receipts":
-		if _, err := sdk.GetReceiptsOptions(t.Options); err != nil {
+		if opts, err := sdk.GetReceiptsOptions(t.Options); err != nil {
 			return err
 		} else {
-			return nil // return opts.Receipts(buf)
+			return opts.Receipts(buf)
 		}
 	case "logs":
 		if _, err := sdk.GetLogsOptions(t.Options); err != nil {
@@ -72,10 +72,10 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 			return nil // return opts.Traces(buf)
 		}
 	case "when":
-		if _, err := sdk.GetWhenOptions(t.Options); err != nil {
+		if opts, err := sdk.GetWhenOptions(t.Options); err != nil {
 			return err
 		} else {
-			return nil // return opts.When(buf)
+			return opts.When(buf)
 		}
 	case "state":
 		if _, err := sdk.GetStateOptions(t.Options); err != nil {

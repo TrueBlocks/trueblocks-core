@@ -3,15 +3,48 @@ package main
 import (
 	"bytes"
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
+
+var pathToTests = []string{
+	"../src/dev_tools/testRunner/testCases/tools",
+	"../src/dev_tools/testRunner/testCases/apps",
+	// "../src/dev_tools/testRunner/testCases/dev_tools",
+}
+
+// var pathToTests = []string{
+// 	"../testRunner/testCases/tools",
+// 	"../testRunner/testCases/apps",
+// }
+
+func main() {
+	walkFunc := func(path string, info os.FileInfo, err error) error {
+		if err == nil {
+			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
+				processCSVFile(path)
+			}
+		}
+		return err
+	}
+
+	fmt.Println(os.Getwd())
+	for _, rootPath := range pathToTests {
+		if err := filepath.Walk(rootPath, walkFunc); err != nil {
+			fmt.Printf("error walking the path %q: %v\n", rootPath, err)
+		}
+	}
+}
 
 type Original struct {
 	Enabled  string `json:"enabled"`
@@ -31,20 +64,21 @@ type TestCase struct {
 	Options     []string  `json:"options"`
 	GoldPath    string    `json:"goldPath"`
 	WorkingPath string    `json:"workingPath"`
-	Destination string    `json:"destination"`
 	Cannonical  string    `json:"cannonical"`
 	Original    *Original `json:"original"`
 }
 
 func processCSVFile(filePath string) {
-	file, err := os.Open(filePath)
+	ff, err := os.Open(filePath)
 	if err != nil {
 		fmt.Printf("Error opening file: %v\n", err)
 		return
 	}
-	defer file.Close()
+	defer ff.Close()
 
-	reader := csv.NewReader(file)
+	fmt.Println("Processing", filePath)
+
+	reader := csv.NewReader(ff)
 	const requiredFields = 8
 	lineNumber := 0
 
@@ -67,6 +101,14 @@ func processCSVFile(filePath string) {
 		}
 
 		if !strings.HasPrefix(record[3], "route") {
+			if strings.Contains(record[7], "@") {
+				continue // skip these weird (hot-key only) single character test cases for the SDK
+			}
+
+			// fmt.Println(strings.Repeat("-", 80))
+			// fmt.Println(record[5])
+			// fmt.Println(strings.Repeat("-", 80))
+
 			orig := Original{
 				Enabled:  strings.Trim(record[0], " "),
 				Mode:     strings.Trim(record[1], " "),
@@ -77,96 +119,104 @@ func processCSVFile(filePath string) {
 				Post:     strings.Trim(record[6], " "),
 				Options:  strings.Trim(record[7], " "),
 			}
-			parts := strings.Split(orig.PathTool, "/")
+
 			testCase := TestCase{
 				Enabled:     orig.Enabled == "on",
 				Route:       orig.Route,
 				PathTool:    orig.PathTool,
 				Options:     strings.Split(clean(orig.Options), "&"),
-				GoldPath:    "../test/gold/" + orig.PathTool + "/",
-				WorkingPath: "../../../working/" + orig.PathTool + "/",
-				Destination: "../../../working/" + orig.PathTool + "/" + parts[1] + "_" + orig.Filename + ".txt",
+				GoldPath:    "../src/dev_tools/sdkTester/test/gold/" + orig.PathTool + "/",
+				WorkingPath: "../src/dev_tools/sdkTester/test/working/" + orig.PathTool + "/",
 				Cannonical:  canonicalizeURL(orig.Options),
 				Original:    &orig,
 			}
+
+			// fmt.Println(strings.Repeat("-", 80))
+			// fmt.Println(record[5])
+			// fmt.Println(strings.Repeat("-", 80))
+
 			testCases = append(testCases, testCase)
 		}
 	}
 
-	os.Setenv("TEST_MODE", "true")
 	for _, testCase := range testCases {
-		if testCase.Enabled {
-			cmd := fmt.Sprintf("chifra %s %s", testCase.Route, testCase.Clean())
-			cmd = strings.Trim(cmd, " ")
-
-			// logger.Info(fmt.Sprintf(colors.Yellow+"Enabled: %v, Route: %s, PathTool: %s, Options: %v"+colors.Off, testCase.Enabled, testCase.Route, testCase.PathTool, testCase.Options))
-			// logger.Info("\t" + colors.Green + cmd + colors.Off)
-			logger.Info(fmt.Sprintf("Enabled: %v, Route: %s, PathTool: %s, Options: %v", testCase.Enabled, testCase.Route, testCase.PathTool, testCase.Options))
-			logger.Info("\t" + cmd)
-			var buff bytes.Buffer
-			testCase.SdkTest(&buff)
-
-			// // 	fmt.Printf("echo \"%s\"\n", cmd)
-			// // 	fmt.Printf("cd %s ; echo \"%s\" >%s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination)
-			// // 	out := fmt.Sprintf("[ -f ./output_test_file ] && echo '----' >>%s && echo 'Results in ./output_test_file' >>%s && cat ./output_test_file >>%s && echo >>%s && rm -f ./output_test_file", testCase.Destination, testCase.Destination, testCase.Destination, testCase.Destination)
-			// // 	fmt.Printf("cd %s ; TEST_MODE=true NO_COLOR=true %s >>%s 2>&1 ; %s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination, out)
-			// // fmt.Println(colors.White + testCase.Original.Options + colors.Off)
-			// // fmt.Println(colors.BrightBlue + testCase.Cannonical + colors.Off)
-			// fmt.Println("curl -H \"User-Agent: testRunner\" \"http://localhost:8080/" + testCase.Route + "?" + testCase.Cannonical + "\"")
-		}
+		testCase.RunTest()
 	}
 }
 
-func main() {
-	paths := []string{
-		"../testRunner/testCases/tools",
-		"../testRunner/testCases/apps",
-		// "../testRunner/testCases/dev_tools",
-	}
-
-	for _, rootPath := range paths {
-		err := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
-				return err
-			}
-			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
-				// fmt.Printf(colors.Yellow+"Processing CSV file: %s\n", path+colors.Off)
-				processCSVFile(path)
-			}
-			return nil
-		})
-		if err != nil {
-			fmt.Printf("error walking the path %q: %v\n", rootPath, err)
-		}
-	}
-	// canonicalizeURL(os.Args[1])
+func preClean(rawURL string) string {
+	rawURL = regexp.MustCompile(`\s*&\s*`).ReplaceAllString(rawURL, "&")
+	rawURL = regexp.MustCompile(`\s*=\s*`).ReplaceAllString(rawURL, "=")
+	rawURL = regexp.MustCompile(`\s+`).ReplaceAllString(rawURL, "%20")
+	return rawURL
 }
 
-// parses the URL, and returns a canonicalized version of the URL.
 func canonicalizeURL(rawURL string) string {
-	// Trim spaces around the URL and between tokens
-	rawURL = strings.Replace(rawURL, ":", "[COLON]", -1)
+	rawURL = preClean(strings.Replace(rawURL, ":", "%3A", -1))
 	cleanURL := strings.Join(strings.Fields(rawURL), "")
-
-	// Parse the cleaned URL
-	parsedURL, err := url.Parse(cleanURL)
-	if err != nil {
+	if parsedURL, err := url.Parse("http://localhost?" + cleanURL); err != nil {
 		logger.Error(err)
 		return ""
+	} else {
+		removes := "help,wei,fmt,version,noop,nocolor,no_header,file"
+		rawQuery := parsedURL.RawQuery
+		var newQuery string
+		for _, part := range strings.Split(rawQuery, "&") {
+			kv := strings.SplitN(part, "=", 2)
+			key := kv[0]
+			value := ""
+			if len(kv) > 1 {
+				value = kv[1]
+			}
+			if strings.Contains(removes, key) {
+				continue
+			} else if strings.Contains(key, "_") {
+				key = snakeCase(key)
+			}
+			if newQuery != "" {
+				newQuery += "&"
+			}
+			if value == "" {
+				newQuery += key
+			} else {
+				newQuery += key + "=" + value
+			}
+		}
+		canonicalURL := newQuery
+		canonicalURL = strings.Replace(canonicalURL, "%3A", ":", -1)
+		canonicalURL = strings.Replace(canonicalURL, "+", "%20", -1)
+		return canonicalURL
 	}
+}
 
-	// Rebuild the URL to ensure it's in a canonical form
-	// Here, you might want to further manipulate parsedURL to adjust scheme, host, etc., as needed
-	canonicalURL := strings.Replace(parsedURL.String(), "[COLON]", ":", -1)
-	// fmt.Println(colors.Yellow+rawURL, canonicalURL+colors.Off)
-	return canonicalURL
+func snakeCase(s string) string {
+	result := ""
+	toUpper := false
+	for _, c := range s {
+		if c == '_' {
+			toUpper = true
+			continue
+		}
+		if toUpper {
+			result += strings.ToUpper(string(c))
+			toUpper = false
+		} else {
+			result += string(c)
+		}
+	}
+	return result
 }
 
 func clean(s string) string {
 	options := strings.Replace(strings.Replace(s, "& ", "&", -1), " &", "&", -1)
 	options = strings.Replace(strings.Replace(options, "= ", "=", -1), " =", "=", -1)
 	options = strings.Replace(options, "%20", " ", -1)
+	parts := strings.Split(options, "&")
+	for _, part := range parts {
+		opts := strings.Split(part, "=")
+		opts[0] = snakeCase(opts[0])
+		options = strings.Replace(options, part, strings.Join(opts, "="), -1)
+	}
 	return options
 }
 
@@ -187,4 +237,77 @@ func (t *TestCase) Clean() string {
 		}
 	}
 	return strings.Join(ret, " ")
+}
+
+func init() {
+	os.Setenv("TEST_MODE", "true")
+	os.Setenv("NO_COLOR", "true")
+	colors.ColorsOff()
+}
+
+func (t *TestCase) RunTest() {
+	if !t.Enabled {
+		return
+	}
+
+	// interesting := t.PathTool == "tools/getLogs" && t.Original.Filename == "bad_blkhash_msg_raw" // (t.Route == "list" || t.Route == "receipts" || t.Route == "when") && t.PathTool != "apps/chifra"
+	interesting := (t.Route == "list" || t.Route == "receipts" || t.Route == "when") && t.PathTool != "apps/chifra"
+	if !interesting {
+		return
+	}
+
+	if interesting {
+		parts := strings.Split(t.PathTool, "/")
+		if len(parts) != 2 {
+			fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)
+			return
+		}
+
+		folder := t.WorkingPath
+		if !file.FolderExists(folder) {
+			// fmt.Println("Creating folder", folder)
+			// fmt.Println()
+			file.EstablishFolder(folder)
+			file.StringToAsciiFile(filepath.Join(folder, ".gitignore"), "# place holder - do not remove")
+		}
+		fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
+		fmt.Printf("Testing %s...", fn)
+
+		ff, _ := os.Create(fn)
+		logger.SetLoggerWriter(ff)
+		logger.ToggleDecoration()
+		logger.SetTestMode(true)
+		os.Setenv("TEST_MODE", "true")
+		defer func() {
+			logger.ToggleDecoration()
+			logger.SetLoggerWriter(os.Stderr)
+			ff.Close()
+			fmt.Println("Done.")
+		}()
+		logger.Info(t.Route + "?" + t.Cannonical)
+
+	} else {
+		logger.Info()
+		logger.Info(strings.Repeat("=", 40), t.Original.Filename, strings.Repeat("=", 40))
+		logger.Info(fmt.Sprintf("Route: %s, PathTool: %s, Enabled: %v, Options: %v", t.Route, t.PathTool, t.Enabled, t.Options))
+		logger.Info("\t" + strings.Trim(fmt.Sprintf("chifra %s %s", t.Route, t.Clean()), " "))
+	}
+
+	var buff bytes.Buffer
+	var results string
+	if err := t.SdkTest(&buff); err != nil {
+		type E struct {
+			Errors []string `json:"errors"`
+		}
+		e := E{Errors: []string{err.Error()}}
+		bytes, _ := json.MarshalIndent(e, "", "  ")
+		results = string(bytes)
+	} else {
+		results = strings.Trim(buff.String(), "\n\r")
+	}
+	if len(results) > 0 {
+		// because testRunner does this, we need to do it here
+		results = strings.Replace(results, "3735928559", "\"0xdeadbeef\"", -1)
+		logger.Info(results)
+	}
 }
