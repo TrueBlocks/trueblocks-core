@@ -11,7 +11,6 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -19,8 +18,7 @@ import (
 
 // Tokens provides an interface to the command line chifra tokens through the SDK.
 func Tokens(w io.Writer, values url.Values) error {
-	testMode := os.Getenv("TEST_MODE") == "true"
-	tokens.ResetOptions(testMode)
+	tokens.ResetOptions(sdkTestMode)
 	opts := tokens.TokensFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("tokens", true)
 	// EXISTING_CODE
@@ -34,4 +32,3 @@ func Tokens(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

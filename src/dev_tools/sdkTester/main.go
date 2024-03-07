@@ -120,14 +120,15 @@ func processCSVFile(filePath string) {
 				Options:  strings.Trim(record[7], " "),
 			}
 
+			cannon := canonicalizeURL(orig.Options)
 			testCase := TestCase{
 				Enabled:     orig.Enabled == "on",
 				Route:       orig.Route,
 				PathTool:    orig.PathTool,
-				Options:     strings.Split(clean(orig.Options), "&"),
 				GoldPath:    "../src/dev_tools/sdkTester/test/gold/" + orig.PathTool + "/",
 				WorkingPath: "../src/dev_tools/sdkTester/test/working/" + orig.PathTool + "/",
-				Cannonical:  canonicalizeURL(orig.Options),
+				Cannonical:  cannon,
+				Options:     strings.Split(strings.Replace(cannon, "%20", " ", -1), "&"),
 				Original:    &orig,
 			}
 
@@ -151,6 +152,8 @@ func preClean(rawURL string) string {
 	return rawURL
 }
 
+var removes = "help,wei,fmt,version,noop,nocolor,no_header,file"
+
 func canonicalizeURL(rawURL string) string {
 	rawURL = preClean(strings.Replace(rawURL, ":", "%3A", -1))
 	cleanURL := strings.Join(strings.Fields(rawURL), "")
@@ -158,7 +161,6 @@ func canonicalizeURL(rawURL string) string {
 		logger.Error(err)
 		return ""
 	} else {
-		removes := "help,wei,fmt,version,noop,nocolor,no_header,file"
 		rawQuery := parsedURL.RawQuery
 		var newQuery string
 		for _, part := range strings.Split(rawQuery, "&") {
@@ -205,19 +207,6 @@ func snakeCase(s string) string {
 		}
 	}
 	return result
-}
-
-func clean(s string) string {
-	options := strings.Replace(strings.Replace(s, "& ", "&", -1), " &", "&", -1)
-	options = strings.Replace(strings.Replace(options, "= ", "=", -1), " =", "=", -1)
-	options = strings.Replace(options, "%20", " ", -1)
-	parts := strings.Split(options, "&")
-	for _, part := range parts {
-		opts := strings.Split(part, "=")
-		opts[0] = snakeCase(opts[0])
-		options = strings.Replace(options, part, strings.Join(opts, "="), -1)
-	}
-	return options
 }
 
 func (t *TestCase) Clean() string {

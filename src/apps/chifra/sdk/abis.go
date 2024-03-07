@@ -11,7 +11,6 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -19,8 +18,7 @@ import (
 
 // Abis provides an interface to the command line chifra abis through the SDK.
 func Abis(w io.Writer, values url.Values) error {
-	testMode := os.Getenv("TEST_MODE") == "true"
-	abis.ResetOptions(testMode)
+	abis.ResetOptions(sdkTestMode)
 	opts := abis.AbisFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("abis", true)
 	// EXISTING_CODE
@@ -34,4 +32,3 @@ func Abis(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

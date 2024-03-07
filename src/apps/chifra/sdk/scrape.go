@@ -11,7 +11,6 @@ package sdk
 import (
 	"io"
 	"net/url"
-	"os"
 
 	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -19,8 +18,7 @@ import (
 
 // Scrape provides an interface to the command line chifra scrape through the SDK.
 func Scrape(w io.Writer, values url.Values) error {
-	testMode := os.Getenv("TEST_MODE") == "true"
-	scrape.ResetOptions(testMode)
+	scrape.ResetOptions(sdkTestMode)
 	opts := scrape.ScrapeFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("scrape", true)
 	// EXISTING_CODE
@@ -34,4 +32,3 @@ func Scrape(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
