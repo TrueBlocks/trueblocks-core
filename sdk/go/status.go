@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -28,6 +29,12 @@ type StatusOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *StatusOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Status implements the chifra status command for the SDK.
@@ -56,16 +63,12 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 	return status.Status(w, values)
 }
 
-// GetStatusOptions returns an options instance given a string array of arguments.
+// GetStatusOptions returns a filled-in options instance given a string array of arguments.
 func GetStatusOptions(args []string) (*StatusOptions, error) {
 	var opts StatusOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -121,3 +124,4 @@ func (v StatusModes) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

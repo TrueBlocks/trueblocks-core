@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"io"
 	"net/url"
 
@@ -29,6 +30,12 @@ type AbisOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *AbisOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Abis implements the chifra abis command for the SDK.
@@ -60,16 +67,12 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 	return abis.Abis(w, values)
 }
 
-// GetAbisOptions returns an options instance given a string array of arguments.
+// GetAbisOptions returns a filled-in options instance given a string array of arguments.
 func GetAbisOptions(args []string) (*AbisOptions, error) {
 	var opts AbisOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -77,3 +80,4 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

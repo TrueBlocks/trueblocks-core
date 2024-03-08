@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"io"
 	"net/url"
 
@@ -30,6 +31,12 @@ type TransactionsOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *TransactionsOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Transactions implements the chifra transactions command for the SDK.
@@ -67,16 +74,12 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 	return transactions.Transactions(w, values)
 }
 
-// GetTransactionsOptions returns an options instance given a string array of arguments.
+// GetTransactionsOptions returns a filled-in options instance given a string array of arguments.
 func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	var opts TransactionsOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -98,3 +101,4 @@ func (v TransactionsFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

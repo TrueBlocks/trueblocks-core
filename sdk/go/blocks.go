@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -36,6 +37,12 @@ type BlocksOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *BlocksOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Blocks implements the chifra blocks command for the SDK.
@@ -88,16 +95,12 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	return blocks.Blocks(w, values)
 }
 
-// GetBlocksOptions returns an options instance given a string array of arguments.
+// GetBlocksOptions returns a filled-in options instance given a string array of arguments.
 func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	var opts BlocksOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -121,3 +124,4 @@ func (v BlocksFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

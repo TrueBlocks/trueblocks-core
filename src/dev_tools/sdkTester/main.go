@@ -1,26 +1,20 @@
 package main
 
 import (
+	"bytes"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
 	"os"
-<<<<<<< HEAD
-	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-=======
 	"path/filepath"
 	"regexp"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
->>>>>>> ec00f9d435535d8bad8b2049a4d6980dd03473db
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
 var pathToTests = []string{
@@ -147,87 +141,6 @@ func processCSVFile(filePath string) {
 	}
 
 	for _, testCase := range testCases {
-<<<<<<< HEAD
-		if testCase.Enabled {
-			cmd := fmt.Sprintf("chifra %s %s", testCase.Route, testCase.Clean())
-			cmd = strings.Trim(cmd, " ")
-
-			// logger.Info(fmt.Sprintf(colors.Yellow+"Enabled: %v, Route: %s, PathTool: %s, Options: %v"+colors.Off, testCase.Enabled, testCase.Route, testCase.PathTool, testCase.Options))
-			// logger.Info("\t" + colors.Green + cmd + colors.Off)
-			logger.Info(fmt.Sprintf("Enabled: %v, Route: %s, PathTool: %s, Options: %v", testCase.Enabled, testCase.Route, testCase.PathTool, testCase.Options))
-			logger.Info("\t" + cmd)
-			// var buff bytes.Buffer
-			// testCase.SdkTest(&buff)
-
-			// // 	fmt.Printf("echo \"%s\"\n", cmd)
-			// // 	fmt.Printf("cd %s ; echo \"%s\" >%s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination)
-			// // 	out := fmt.Sprintf("[ -f ./output_test_file ] && echo '----' >>%s && echo 'Results in ./output_test_file' >>%s && cat ./output_test_file >>%s && echo >>%s && rm -f ./output_test_file", testCase.Destination, testCase.Destination, testCase.Destination, testCase.Destination)
-			// // 	fmt.Printf("cd %s ; TEST_MODE=true NO_COLOR=true %s >>%s 2>&1 ; %s ; cd -\n", testCase.GoldPath, cmd, testCase.Destination, out)
-			// // fmt.Println(colors.White + testCase.Original.Options + colors.Off)
-			// // fmt.Println(colors.BrightBlue + testCase.Cannonical + colors.Off)
-			// fmt.Println("curl -H \"User-Agent: testRunner\" \"http://localhost:8080/" + testCase.Route + "?" + testCase.Cannonical + "\"")
-		}
-	}
-}
-
-// func main() {
-// 	paths := []string{
-// 		"../testRunner/testCases/tools",
-// 		"../testRunner/testCases/apps",
-// 		// "../testRunner/testCases/dev_tools",
-// 	}
-
-// 	for _, rootPath := range paths {
-// 		err := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
-// 			if err != nil {
-// 				fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
-// 				return err
-// 			}
-// 			if !info.IsDir() && strings.HasSuffix(path, ".csv") {
-// 				// fmt.Printf(colors.Yellow+"Processing CSV file: %s\n", path+colors.Off)
-// 				processCSVFile(path)
-// 			}
-// 			return nil
-// 		})
-// 		if err != nil {
-// 			fmt.Printf("error walking the path %q: %v\n", rootPath, err)
-// 		}
-// 	}
-// 	// canonicalizeURL(os.Args[1])
-// }
-
-func main() {
-	raw := "addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & fmt = txt & first_block = 90 & first_record = 3 & max_records = 10"
-	url := canonicalizeURL(raw)
-	fmt.Println(colors.Green + url + colors.Off)
-	cmd := canonicalizeCmd(url)
-	fmt.Println(colors.Green + cmd + colors.Off)
-	args := strings.Split(cmd, " ") // strings.Split("--count --first_record 100 --fmt json 0x123 0x456", " ")
-
-	var err error
-	var opts sdk.ListOptions
-	opts.Positionals, err = sdk.ParseOptions[sdk.ListOptions](args, &opts)
-	if err != nil {
-		fmt.Println("Error parsing list options:", err)
-		os.Exit(1)
-	}
-
-	// Print the parsed options and addresses to verify
-	fmt.Printf("Options: %+v\n", opts)
-	fmt.Printf("Positionals: %v\n", opts.Positionals)
-}
-
-func canonicalizeCmd(rawURL string) string {
-	ret := "--" + rawURL
-	ret = strings.Replace(ret, "&", " --", -1)
-	ret = strings.Replace(ret, "=", " ", -1)
-	ret = strings.Replace(ret, "%20", " ", -1)
-	ret = strings.Replace(ret, "--addrs", " ", -1)
-	ret = strings.Replace(ret, "--blocks", " ", -1)
-	ret = strings.Replace(ret, "--transactions", " ", -1)
-	ret = strings.Replace(ret, "--terms", " ", -1)
-	return strings.Trim(ret, " ")
-=======
 		testCase.RunTest()
 	}
 }
@@ -237,7 +150,6 @@ func preClean(rawURL string) string {
 	rawURL = regexp.MustCompile(`\s*=\s*`).ReplaceAllString(rawURL, "=")
 	rawURL = regexp.MustCompile(`\s+`).ReplaceAllString(rawURL, "%20")
 	return rawURL
->>>>>>> ec00f9d435535d8bad8b2049a4d6980dd03473db
 }
 
 var removes = "help,wei,fmt,version,noop,nocolor,no_header,file"

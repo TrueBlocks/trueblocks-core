@@ -33,6 +33,7 @@ type WhenOptions struct {
 	// EXISTING_CODE
 }
 
+// String implements the stringer interface
 func (opts *WhenOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
@@ -73,16 +74,12 @@ func (opts *WhenOptions) When(w io.Writer) error {
 	return when.When(w, values)
 }
 
-// GetWhenOptions returns an options instance given a string array of arguments.
+// GetWhenOptions returns a filled-in options instance given a string array of arguments.
 func GetWhenOptions(args []string) (*WhenOptions, error) {
 	var opts WhenOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -90,3 +87,4 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

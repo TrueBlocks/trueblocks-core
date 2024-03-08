@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"io"
 	"net/url"
 
@@ -26,6 +27,12 @@ type TracesOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *TracesOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Traces implements the chifra traces command for the SDK.
@@ -51,16 +58,12 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 	return traces.Traces(w, values)
 }
 
-// GetTracesOptions returns an options instance given a string array of arguments.
+// GetTracesOptions returns a filled-in options instance given a string array of arguments.
 func GetTracesOptions(args []string) (*TracesOptions, error) {
 	var opts TracesOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -68,3 +71,4 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

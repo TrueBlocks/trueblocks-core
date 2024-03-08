@@ -15,6 +15,7 @@ import (
 	"io"
 	"net/url"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -34,8 +35,12 @@ type ListOptions struct {
 	FirstBlock  base.Blknum `arg:"firstBlock,omitempty" json:"firstBlock,omitempty"`
 	LastBlock   base.Blknum `arg:"lastBlock,omitempty" json:"lastBlock,omitempty"`
 	Globals
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
+// String implements the stringer interface
 func (opts *ListOptions) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
@@ -46,7 +51,7 @@ func (opts *ListOptions) List(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
-	for _, v := range opts.Positionals {
+	for _, v := range opts.Addrs {
 		values.Add("addrs", v)
 	}
 	if opts.Count {
@@ -83,22 +88,17 @@ func (opts *ListOptions) List(w io.Writer) error {
 		values.Set("lastBlock", fmt.Sprint(opts.LastBlock))
 	}
 	// EXISTING_CODE
-	// opts.Globals.mapGlobals(values)
+	opts.Globals.mapGlobals(values)
 
 	return list.List(w, values)
 }
 
-// GetListOptions returns an options instance given a string array of arguments.
+// GetListOptions returns a filled-in options instance given a string array of arguments.
 func GetListOptions(args []string) (*ListOptions, error) {
-	var err error
 	var opts ListOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -106,3 +106,4 @@ func GetListOptions(args []string) (*ListOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

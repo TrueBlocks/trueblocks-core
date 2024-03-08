@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -31,6 +32,12 @@ type SlurpOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *SlurpOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Slurp implements the chifra slurp command for the SDK.
@@ -68,16 +75,12 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 	return slurp.Slurp(w, values)
 }
 
-// GetSlurpOptions returns an options instance given a string array of arguments.
+// GetSlurpOptions returns a filled-in options instance given a string array of arguments.
 func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	var opts SlurpOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -129,3 +132,4 @@ func (v SlurpSource) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

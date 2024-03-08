@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -28,6 +29,12 @@ type InitOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *InitOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Init implements the chifra init command for the SDK.
@@ -53,16 +60,12 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	return initPkg.Init(w, values)
 }
 
-// GetInitOptions returns an options instance given a string array of arguments.
+// GetInitOptions returns a filled-in options instance given a string array of arguments.
 func GetInitOptions(args []string) (*InitOptions, error) {
 	var opts InitOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -70,3 +73,4 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

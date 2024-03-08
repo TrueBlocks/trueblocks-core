@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"io"
 	"net/url"
 
@@ -40,6 +41,12 @@ type NamesOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *NamesOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Names implements the chifra names command for the SDK.
@@ -104,16 +111,12 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 	return names.Names(w, values)
 }
 
-// GetNamesOptions returns an options instance given a string array of arguments.
+// GetNamesOptions returns a filled-in options instance given a string array of arguments.
 func GetNamesOptions(args []string) (*NamesOptions, error) {
 	var opts NamesOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -121,3 +124,4 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -19,13 +20,19 @@ import (
 )
 
 type ScrapeOptions struct {
-	BlockCnt uint64
-	Sleep    float64
-	Touch    uint64
+	BlockCnt  uint64
+	Sleep     float64
+	Touch     uint64
 	Globals
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *ScrapeOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Scrape implements the chifra scrape command for the SDK.
@@ -48,16 +55,12 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 	return scrape.Scrape(w, values)
 }
 
-// GetScrapeOptions returns an options instance given a string array of arguments.
+// GetScrapeOptions returns a filled-in options instance given a string array of arguments.
 func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 	var opts ScrapeOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -65,3 +68,4 @@ func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

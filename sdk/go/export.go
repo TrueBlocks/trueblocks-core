@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -53,6 +54,12 @@ type ExportOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *ExportOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Export implements the chifra export command for the SDK.
@@ -153,16 +160,12 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 	return export.Export(w, values)
 }
 
-// GetExportOptions returns an options instance given a string array of arguments.
+// GetExportOptions returns a filled-in options instance given a string array of arguments.
 func GetExportOptions(args []string) (*ExportOptions, error) {
 	var opts ExportOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -186,3 +189,4 @@ func (v ExportFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

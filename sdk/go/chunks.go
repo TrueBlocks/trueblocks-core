@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -38,6 +39,12 @@ type ChunksOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *ChunksOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Chunks implements the chifra chunks command for the SDK.
@@ -93,16 +100,12 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	return chunks.Chunks(w, values)
 }
 
-// GetChunksOptions returns an options instance given a string array of arguments.
+// GetChunksOptions returns a filled-in options instance given a string array of arguments.
 func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	var opts ChunksOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -134,3 +137,4 @@ func (v ChunksMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

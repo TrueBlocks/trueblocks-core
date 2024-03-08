@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"io"
 	"net/url"
 
@@ -26,6 +27,12 @@ type LogsOptions struct {
 
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// String implements the stringer interface
+func (opts *LogsOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Logs implements the chifra logs command for the SDK.
@@ -51,16 +58,12 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 	return logs.Logs(w, values)
 }
 
-// GetLogsOptions returns an options instance given a string array of arguments.
+// GetLogsOptions returns a filled-in options instance given a string array of arguments.
 func GetLogsOptions(args []string) (*LogsOptions, error) {
 	var opts LogsOptions
-	err := assignValuesFromArgs(&opts, &opts.Globals, args)
-	logger.Info("Args:", args)
-	logger.Info("Opts:", opts.String())
-	if err != nil {
+	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
-
 	return &opts, nil
 }
 
@@ -68,3 +71,4 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+
