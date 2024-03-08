@@ -18,7 +18,7 @@ import (
 
 // When provides an interface to the command line chifra when through the SDK.
 func When(w io.Writer, values url.Values) error {
-	when.ResetOptions(false)
+	when.ResetOptions(sdkTestMode)
 	opts := when.WhenFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("when", true)
 	// EXISTING_CODE
@@ -32,4 +32,3 @@ func When(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

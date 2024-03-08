@@ -18,7 +18,7 @@ import (
 
 // Config provides an interface to the command line chifra config through the SDK.
 func Config(w io.Writer, values url.Values) error {
-	config.ResetOptions(false)
+	config.ResetOptions(sdkTestMode)
 	opts := config.ConfigFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("config", true)
 	// EXISTING_CODE
@@ -32,4 +32,3 @@ func Config(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

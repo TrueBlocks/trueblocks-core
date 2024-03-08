@@ -18,7 +18,7 @@ import (
 
 // State provides an interface to the command line chifra state through the SDK.
 func State(w io.Writer, values url.Values) error {
-	state.ResetOptions(false)
+	state.ResetOptions(sdkTestMode)
 	opts := state.StateFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("state", true)
 	// EXISTING_CODE
@@ -32,4 +32,3 @@ func State(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

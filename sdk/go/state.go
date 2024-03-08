@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"io"
 	"net/url"
 
@@ -72,6 +71,13 @@ func (opts *StateOptions) State(w io.Writer) error {
 // GetStateOptions returns an options instance given a string array of arguments.
 func GetStateOptions(args []string) (*StateOptions, error) {
 	var opts StateOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
 

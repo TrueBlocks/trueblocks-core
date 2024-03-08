@@ -59,6 +59,13 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 // GetStatusOptions returns an options instance given a string array of arguments.
 func GetStatusOptions(args []string) (*StatusOptions, error) {
 	var opts StatusOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
 

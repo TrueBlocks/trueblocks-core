@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"io"
 	"net/url"
 
@@ -63,6 +62,13 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 // GetTokensOptions returns an options instance given a string array of arguments.
 func GetTokensOptions(args []string) (*TokensOptions, error) {
 	var opts TokensOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
 

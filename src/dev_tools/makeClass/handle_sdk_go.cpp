@@ -181,7 +181,7 @@ bool COptions::handle_sdk_go_outersdk(void) {
         string_q contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
         contents = substitute(contents, "[{CODE}]", "");
         contents = substitute(contents, "[{FIELDS}]", fields.str());
-        contents = substitute(contents, "[{ENUMS}]", enums.str());
+        contents = substitute(contents, "[{ENUMS}]", enums.str() == "" ? "// No enums\n\n" : enums.str());
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);

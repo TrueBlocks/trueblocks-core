@@ -91,6 +91,13 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 // GetBlocksOptions returns an options instance given a string array of arguments.
 func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	var opts BlocksOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
 

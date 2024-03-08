@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/url"
@@ -20,22 +21,24 @@ import (
 
 // ListOptions represents the command line options for the chifra list command
 type ListOptions struct {
-	Count       bool     `flag:"count,U"`
-	NoZero      bool     `flag:"noZero,z"`
-	Bounds      bool     `flag:"bounds,b"`
-	Unripe      bool     `flag:"unripe,u"`
-	Silent      bool     `flag:"silent,s"`
-	FirstRecord uint     `flag:"firstRecord,c"`
-	MaxRecords  uint     `flag:"maxRecords,e"`
-	Reversed    bool     `flag:"reversed,E"`
-	Publisher   string   `flag:"publisher,P"`
-	FirstBlock  uint     `flag:"firstBlock,F"`
-	LastBlock   uint     `flag:"lastBlock,L"`
-	Format      string   `flag:"fmt,x"`
-	Verbose     bool     `flag:"verbose,v"`
-	Help        bool     `flag:"help,h"`
-	Positionals []string // Stores positional arguments (addresses)
+	Addrs       []string    `arg:"addrs,omitempty" json:"addrs,omitempty"`
+	Count       bool        `arg:"count,omitempty" json:"count,omitempty"`
+	NoZero      bool        `arg:"noZero,omitempty" json:"noZero,omitempty"`
+	Bounds      bool        `arg:"bounds,omitempty" json:"bounds,omitempty"`
+	Unripe      bool        `arg:"unripe,omitempty" json:"unripe,omitempty"`
+	Silent      bool        `arg:"silent,omitempty" json:"silent,omitempty"`
+	FirstRecord uint64      `arg:"firstRecord,omitempty" json:"firstRecord,omitempty"`
+	MaxRecords  uint64      `arg:"maxRecords,omitempty" json:"maxRecords,omitempty"`
+	Reversed    bool        `arg:"reversed,omitempty" json:"reversed,omitempty"`
+	Publisher   string      `arg:"publisher,omitempty" json:"publisher,omitempty"`
+	FirstBlock  base.Blknum `arg:"firstBlock,omitempty" json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum `arg:"lastBlock,omitempty" json:"lastBlock,omitempty"`
 	Globals
+}
+
+func (opts *ListOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // List implements the chifra list command for the SDK.
@@ -50,7 +53,7 @@ func (opts *ListOptions) List(w io.Writer) error {
 		values.Set("count", "true")
 	}
 	if opts.NoZero {
-		values.Set("no_zero", "true")
+		values.Set("noZero", "true")
 	}
 	if opts.Bounds {
 		values.Set("bounds", "true")
@@ -62,10 +65,10 @@ func (opts *ListOptions) List(w io.Writer) error {
 		values.Set("silent", "true")
 	}
 	if opts.FirstRecord != 0 {
-		values.Set("first_record", fmt.Sprint(opts.FirstRecord))
+		values.Set("firstRecord", fmt.Sprint(opts.FirstRecord))
 	}
 	if opts.MaxRecords != 0 {
-		values.Set("max_records", fmt.Sprint(opts.MaxRecords))
+		values.Set("maxRecords", fmt.Sprint(opts.MaxRecords))
 	}
 	if opts.Reversed {
 		values.Set("reversed", "true")
@@ -74,10 +77,10 @@ func (opts *ListOptions) List(w io.Writer) error {
 		values.Set("publisher", opts.Publisher)
 	}
 	if opts.FirstBlock > 0 {
-		values.Set("first_block", fmt.Sprint(opts.FirstBlock))
+		values.Set("firstBlock", fmt.Sprint(opts.FirstBlock))
 	}
 	if opts.LastBlock > 0 {
-		values.Set("last_block", fmt.Sprint(opts.LastBlock))
+		values.Set("lastBlock", fmt.Sprint(opts.LastBlock))
 	}
 	// EXISTING_CODE
 	// opts.Globals.mapGlobals(values)
@@ -89,9 +92,17 @@ func (opts *ListOptions) List(w io.Writer) error {
 func GetListOptions(args []string) (*ListOptions, error) {
 	var err error
 	var opts ListOptions
-	opts.Positionals, err = ParseOptions[ListOptions](args, &opts)
-	return &opts, err
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
 }
+
+// No enums
 
 // EXISTING_CODE
 // EXISTING_CODE

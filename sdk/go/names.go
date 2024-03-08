@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"io"
 	"net/url"
 
@@ -108,8 +107,17 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 // GetNamesOptions returns an options instance given a string array of arguments.
 func GetNamesOptions(args []string) (*NamesOptions, error) {
 	var opts NamesOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
+
+// No enums
 
 // EXISTING_CODE
 // EXISTING_CODE

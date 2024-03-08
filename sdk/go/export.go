@@ -156,6 +156,13 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 // GetExportOptions returns an options instance given a string array of arguments.
 func GetExportOptions(args []string) (*ExportOptions, error) {
 	var opts ExportOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
 

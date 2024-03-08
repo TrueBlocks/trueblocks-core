@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"io"
 	"net/url"
 
@@ -47,6 +46,13 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 // GetConfigOptions returns an options instance given a string array of arguments.
 func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	var opts ConfigOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
 

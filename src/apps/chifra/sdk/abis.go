@@ -18,7 +18,7 @@ import (
 
 // Abis provides an interface to the command line chifra abis through the SDK.
 func Abis(w io.Writer, values url.Values) error {
-	abis.ResetOptions(false)
+	abis.ResetOptions(sdkTestMode)
 	opts := abis.AbisFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("abis", true)
 	// EXISTING_CODE
@@ -32,4 +32,3 @@ func Abis(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

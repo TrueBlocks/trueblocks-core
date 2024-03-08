@@ -18,7 +18,7 @@ import (
 
 // Logs provides an interface to the command line chifra logs through the SDK.
 func Logs(w io.Writer, values url.Values) error {
-	logs.ResetOptions(false)
+	logs.ResetOptions(sdkTestMode)
 	opts := logs.LogsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("logs", true)
 	// EXISTING_CODE
@@ -32,4 +32,3 @@ func Logs(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

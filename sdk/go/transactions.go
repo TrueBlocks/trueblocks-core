@@ -10,7 +10,6 @@ package sdk
 
 import (
 	// EXISTING_CODE
-
 	"io"
 	"net/url"
 
@@ -71,6 +70,13 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 // GetTransactionsOptions returns an options instance given a string array of arguments.
 func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	var opts TransactionsOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
 

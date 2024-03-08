@@ -32,10 +32,11 @@ func (opts *[{PROPER}]Options) [{PROPER}](w io.Writer) error {
 // Get[{PROPER}]Options returns an options instance given a string array of arguments.
 func Get[{PROPER}]Options(args []string) (*[{PROPER}]Options, error) {
 	var opts [{PROPER}]Options
-	err := ParseOptions[[{PROPER}]Options](args, &opts)
-	{
-		// EXISTING_CODE
-		// EXISTING_CODE
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
 	}
 	return &opts, err
 }

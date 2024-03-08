@@ -18,7 +18,7 @@ import (
 
 // Tokens provides an interface to the command line chifra tokens through the SDK.
 func Tokens(w io.Writer, values url.Values) error {
-	tokens.ResetOptions(false)
+	tokens.ResetOptions(sdkTestMode)
 	opts := tokens.TokensFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("tokens", true)
 	// EXISTING_CODE
@@ -32,4 +32,3 @@ func Tokens(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

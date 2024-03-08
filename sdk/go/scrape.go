@@ -51,8 +51,17 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 // GetScrapeOptions returns an options instance given a string array of arguments.
 func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 	var opts ScrapeOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
+
+// No enums
 
 // EXISTING_CODE
 // EXISTING_CODE

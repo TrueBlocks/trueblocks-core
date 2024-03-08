@@ -83,8 +83,17 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 // GetMonitorsOptions returns an options instance given a string array of arguments.
 func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	var opts MonitorsOptions
+	err := assignValuesFromArgs(&opts, &opts.Globals, args)
+	logger.Info("Args:", args)
+	logger.Info("Opts:", opts.String())
+	if err != nil {
+		return nil, err
+	}
+
 	return &opts, nil
 }
+
+// No enums
 
 // EXISTING_CODE
 // EXISTING_CODE
