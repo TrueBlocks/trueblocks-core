@@ -78,9 +78,9 @@ func (opts *ListOptions) List(w io.Writer) error {
 	if opts.Reversed {
 		values.Set("reversed", "true")
 	}
-	if opts.Publisher != "" {
-		values.Set("publisher", opts.Publisher)
-	}
+	// if opts.Publisher != "" {
+	// 	values.Set("publisher", opts.Publisher)
+	// }
 	if opts.FirstBlock > 0 {
 		values.Set("firstBlock", fmt.Sprint(opts.FirstBlock))
 	}

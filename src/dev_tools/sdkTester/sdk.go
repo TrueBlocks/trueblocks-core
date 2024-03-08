@@ -2,228 +2,199 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
+func reportOpts(s fmt.Stringer) {
+	if s == nil {
+		return
+	}
+	logger.Info("Opts:", s.String())
+}
+
 // SdkTest runs a test case through the SDK and returns the results in the provided bytes.Buffer
 func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
+	logger.Info("Args:", t.Options)
+
 	switch t.Route {
 	case "list":
-		if opts, err := sdk.GetListOptions(t.Options); err != nil {
-			logger.Info("Args:", t.Options)
-			logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetListOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			logger.Info("Args:", t.Options)
-			logger.Info("Opts:", opts.String())
-			return opts.List(buf)
 		}
+		return opts.List(buf)
+
 	case "export":
 		if _, err := sdk.GetExportOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Export(buf)
 		}
+
 	case "monitors":
 		if _, err := sdk.GetMonitorsOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Monitors(buf)
 		}
+
 	case "names":
 		if _, err := sdk.GetNamesOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Names(buf)
 		}
+
 	case "abis":
 		if _, err := sdk.GetAbisOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Abis(buf)
 		}
+
 	case "blocks":
 		if _, err := sdk.GetBlocksOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Blocks(buf)
 		}
+
 	case "transactions":
 		if _, err := sdk.GetTransactionsOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Transactions(buf)
 		}
+
 	case "receipts":
-		if opts, err := sdk.GetReceiptsOptions(t.Options); err != nil {
-			logger.Info("Args:", t.Options)
-			logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetReceiptsOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			logger.Info("Args:", t.Options)
-			logger.Info("Opts:", opts.String())
-			return opts.Receipts(buf)
 		}
+		return opts.Receipts(buf)
+
 	case "logs":
 		if _, err := sdk.GetLogsOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Logs(buf)
 		}
+
 	case "traces":
 		if _, err := sdk.GetTracesOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Traces(buf)
 		}
+
 	case "when":
-		if opts, err := sdk.GetWhenOptions(t.Options); err != nil {
-			logger.Info("Args:", t.Options)
-			logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetWhenOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			logger.Info("Args:", t.Options)
-			logger.Info("Opts:", opts.String())
-			return opts.When(buf)
 		}
+		return opts.When(buf)
+
 	case "state":
 		if _, err := sdk.GetStateOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.State(buf)
 		}
+
 	case "tokens":
 		if _, err := sdk.GetTokensOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Tokens(buf)
 		}
+
 	case "config":
 		if _, err := sdk.GetConfigOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Config(buf)
 		}
+
 	case "status":
 		if _, err := sdk.GetStatusOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Status(buf)
 		}
-	// case "daemon":
-	// 	if _, err := sdk.GetDaemonOptions(t.Options); err != nil {
-	// logger.Info("Args:", t.Options)
-	// // logger.Info("Opts:", opts.String())
-	// 		return err
-	// 	} else {
-	// logger.Info("Args:", t.Options)
-	// logger.Info("Opts:", opts.String())
-	// 		return opts.Daemon(buf)
-	// 	}
+
 	case "scrape":
 		if _, err := sdk.GetScrapeOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Scrape(buf)
 		}
+
 	case "chunks":
 		if _, err := sdk.GetChunksOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Chunks(buf)
 		}
+
 	case "init":
 		if _, err := sdk.GetInitOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Init(buf)
 		}
-	// case "explore":
-	// 	if _, err := sdk.GetExploreOptions(t.Options); err != nil {
-	// logger.Info("Args:", t.Options)
-	// // logger.Info("Opts:", opts.String())
-	// 		return err
-	// 	} else {
-	// logger.Info("Args:", t.Options)
-	// logger.Info("Opts:", opts.String())
-	// 		return opts.Explore(buf)
-	// 	}
+
 	case "slurp":
 		if _, err := sdk.GetSlurpOptions(t.Options); err != nil {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return err
 		} else {
-			// logger.Info("Args:", t.Options)
 			// logger.Info("Opts:", opts.String())
 			return nil // return opts.Slurp(buf)
 		}
+
+	// case "daemon":
+	// case "explore":
+
 	default:
 		logger.Info(colors.Red + "Unknown: " + t.Route + colors.Off)
-	}
 
+	}
 	return nil
 }
