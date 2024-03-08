@@ -61,7 +61,7 @@ on      ,both ,fast  ,list     ,apps/acctExport ,caps_allowed_l           ,y    
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_1_l      ,y    ,addrs = trueblocks.eth & cache
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_2_l      ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_3_l      ,y    ,addrs = trueblocks.eth & ether
-on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l      ,y    ,addrs = trueblocks.eth & wei
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l      ,y    ,addrs = trueblocks.eth & wei & max_records = 10
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_l      ,y    ,addrs = trueblocks.eth & decache
 
 # Not tested for chifra list
