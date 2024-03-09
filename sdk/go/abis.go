@@ -20,12 +20,12 @@ import (
 )
 
 type AbisOptions struct {
-	Addrs    []string // allow for ENS names and addresses
-	Known    bool
-	ProxyFor base.Address
-	Find     []string
-	Hint     []string
-	Encode   string
+	Addrs    []string     `json:"addrs,omitempty"`
+	Known    bool         `json:"known,omitempty"`
+	ProxyFor base.Address `json:"proxyFor,omitempty"`
+	Find     []string     `json:"find,omitempty"`
+	Hint     []string     `json:"hint,omitempty"`
+	Encode   string       `json:"encode,omitempty"`
 	Globals
 
 	// EXISTING_CODE

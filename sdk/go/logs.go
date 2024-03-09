@@ -19,10 +19,10 @@ import (
 )
 
 type LogsOptions struct {
-	TransactionIds []string
-	Emitter        []string // allow for ENS names and addresses
-	Topic          []string // topics are strings
-	Articulate     bool
+	TransactionIds []string `json:"transactions,omitempty"`
+	Emitter        []string `json:"emitter,omitempty"`
+	Topic          []string `json:"topic,omitempty"`
+	Articulate     bool     `json:"articulate,omitempty"`
 	Globals
 
 	// EXISTING_CODE

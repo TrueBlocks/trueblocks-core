@@ -20,20 +20,18 @@ import (
 	// EXISTING_CODE
 )
 
-// ListOptions represents the command line options for the chifra list command
 type ListOptions struct {
-	Addrs       []string    `arg:"addrs,omitempty" json:"addrs,omitempty"`
-	Count       bool        `arg:"count,omitempty" json:"count,omitempty"`
-	NoZero      bool        `arg:"noZero,omitempty" json:"noZero,omitempty"`
-	Bounds      bool        `arg:"bounds,omitempty" json:"bounds,omitempty"`
-	Unripe      bool        `arg:"unripe,omitempty" json:"unripe,omitempty"`
-	Silent      bool        `arg:"silent,omitempty" json:"silent,omitempty"`
-	FirstRecord uint64      `arg:"firstRecord,omitempty" json:"firstRecord,omitempty"`
-	MaxRecords  uint64      `arg:"maxRecords,omitempty" json:"maxRecords,omitempty"`
-	Reversed    bool        `arg:"reversed,omitempty" json:"reversed,omitempty"`
-	Publisher   string      `arg:"publisher,omitempty" json:"publisher,omitempty"`
-	FirstBlock  base.Blknum `arg:"firstBlock,omitempty" json:"firstBlock,omitempty"`
-	LastBlock   base.Blknum `arg:"lastBlock,omitempty" json:"lastBlock,omitempty"`
+	Addrs       []string     `json:"addrs,omitempty"`
+	Count       bool         `json:"count,omitempty"`
+	NoZero      bool         `json:"noZero,omitempty"`
+	Bounds      bool         `json:"bounds,omitempty"`
+	Unripe      bool         `json:"unripe,omitempty"`
+	Silent      bool         `json:"silent,omitempty"`
+	FirstRecord uint64       `json:"firstRecord,omitempty"`
+	MaxRecords  uint64       `json:"maxRecords,omitempty"`
+	Reversed    bool         `json:"reversed,omitempty"`
+	FirstBlock  base.Blknum  `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum  `json:"lastBlock,omitempty"`
 	Globals
 
 	// EXISTING_CODE

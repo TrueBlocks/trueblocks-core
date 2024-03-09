@@ -20,19 +20,19 @@ import (
 )
 
 type BlocksOptions struct {
-	BlockIds    []string // allow for block ranges and steps
-	Hashes      bool
-	Uncles      bool
-	Traces      bool
-	Uniq        bool
-	Flow        BlocksFlow
-	Logs        bool
-	Emitter     []string // allow for ENS names and addresses
-	Topic       []string // topics are strings
-	Withdrawals bool
-	Articulate  bool
-	BigRange    uint64
-	Count       bool
+	BlockIds    []string    `json:"blocks,omitempty"`
+	Hashes      bool        `json:"hashes,omitempty"`
+	Uncles      bool        `json:"uncles,omitempty"`
+	Traces      bool        `json:"traces,omitempty"`
+	Uniq        bool        `json:"uniq,omitempty"`
+	Flow        BlocksFlow  `json:"flow,omitempty"`
+	Logs        bool        `json:"logs,omitempty"`
+	Emitter     []string    `json:"emitter,omitempty"`
+	Topic       []string    `json:"topic,omitempty"`
+	Withdrawals bool        `json:"withdrawals,omitempty"`
+	Articulate  bool        `json:"articulate,omitempty"`
+	BigRange    uint64      `json:"bigRange,omitempty"`
+	Count       bool        `json:"count,omitempty"`
 	Globals
 
 	// EXISTING_CODE

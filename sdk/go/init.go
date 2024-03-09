@@ -21,10 +21,10 @@ import (
 )
 
 type InitOptions struct {
-	All        bool
-	DryRun     bool
-	FirstBlock base.Blknum
-	Sleep      float64
+	All        bool         `json:"all,omitempty"`
+	DryRun     bool         `json:"dryRun,omitempty"`
+	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
+	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE

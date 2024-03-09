@@ -19,14 +19,14 @@ import (
 )
 
 type TransactionsOptions struct {
-	TransactionIds []string
-	Articulate     bool
-	Traces         bool
-	Uniq           bool
-	Flow           TransactionsFlow
-	Logs           bool
-	Emitter        []string // allow for ENS names and addresses
-	Topic          []string // topics are strings
+	TransactionIds []string         `json:"transactions,omitempty"`
+	Articulate     bool             `json:"articulate,omitempty"`
+	Traces         bool             `json:"traces,omitempty"`
+	Uniq           bool             `json:"uniq,omitempty"`
+	Flow           TransactionsFlow `json:"flow,omitempty"`
+	Logs           bool             `json:"logs,omitempty"`
+	Emitter        []string         `json:"emitter,omitempty"`
+	Topic          []string         `json:"topic,omitempty"`
 	Globals
 
 	// EXISTING_CODE

@@ -29,7 +29,7 @@ func assignValuesFromArgs(target interface{}, globals *Globals, args []string) e
 		found := false
 		for i := 0; i < t.NumField(); i++ {
 			field := val.Field(i)
-			tag := t.Field(i).Tag.Get("arg")
+			tag := t.Field(i).Tag.Get("json")
 
 			// Splitting the tag to support both single letter and full word options
 			tags := strings.Split(tag, ",")
@@ -69,7 +69,7 @@ func assignValuesFromArgs(target interface{}, globals *Globals, args []string) e
 			found = true
 		}
 
-		if !found && option != "fmt" && option != "noHeader" {
+		if !found {
 			//lint:ignore ST1005 sorry
 			return fmt.Errorf("Invalid key (%s) in route.", option)
 		}

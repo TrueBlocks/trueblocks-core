@@ -20,11 +20,11 @@ import (
 )
 
 type StatusOptions struct {
-	Modes       StatusModes
-	Diagnose    bool
-	FirstRecord uint64
-	MaxRecords  uint64
-	Chains      bool
+	Modes       StatusModes `json:"modes,omitempty"`
+	Diagnose    bool        `json:"diagnose,omitempty"`
+	FirstRecord uint64      `json:"firstRecord,omitempty"`
+	MaxRecords  uint64      `json:"maxRecords,omitempty"`
+	Chains      bool        `json:"chains,omitempty"`
 	Globals
 
 	// EXISTING_CODE

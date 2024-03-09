@@ -20,17 +20,17 @@ import (
 )
 
 type MonitorsOptions struct {
-	Addrs     []string // allow for ENS names and addresses
-	Delete    bool
-	Undelete  bool
-	Remove    bool
-	Clean     bool
-	List      bool
-	Watch     bool
-	Watchlist string
-	Commands  string
-	BatchSize uint64
-	Sleep     float64
+	Addrs     []string `json:"addrs,omitempty"`
+	Delete    bool     `json:"delete,omitempty"`
+	Undelete  bool     `json:"undelete,omitempty"`
+	Remove    bool     `json:"remove,omitempty"`
+	Clean     bool     `json:"clean,omitempty"`
+	List      bool     `json:"list,omitempty"`
+	Watch     bool     `json:"watch,omitempty"`
+	Watchlist string   `json:"watchlist,omitempty"`
+	Commands  string   `json:"commands,omitempty"`
+	BatchSize uint64   `json:"batchSize,omitempty"`
+	Sleep     float64  `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE

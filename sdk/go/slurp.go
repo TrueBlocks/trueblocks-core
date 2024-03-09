@@ -20,14 +20,14 @@ import (
 )
 
 type SlurpOptions struct {
-	Addrs       []string // allow for ENS names and addresses
-	BlockIds    []string // allow for block ranges and steps
-	Types       SlurpTypes
-	Appearances bool
-	Articulate  bool
-	Source      SlurpSource
-	Count       bool
-	Sleep       float64
+	Addrs       []string    `json:"addrs,omitempty"`
+	BlockIds    []string    `json:"blocks,omitempty"`
+	Types       SlurpTypes  `json:"types,omitempty"`
+	Appearances bool        `json:"appearances,omitempty"`
+	Articulate  bool        `json:"articulate,omitempty"`
+	Source      SlurpSource `json:"source,omitempty"`
+	Count       bool        `json:"count,omitempty"`
+	Sleep       float64     `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE

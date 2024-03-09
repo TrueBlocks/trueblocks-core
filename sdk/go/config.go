@@ -19,8 +19,8 @@ import (
 )
 
 type ConfigOptions struct {
-	Mode  ConfigMode
-	Paths bool
+	Mode  ConfigMode `json:"mode,omitempty"`
+	Paths bool       `json:"paths,omitempty"`
 	Globals
 
 	// EXISTING_CODE

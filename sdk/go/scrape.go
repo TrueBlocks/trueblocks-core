@@ -20,9 +20,9 @@ import (
 )
 
 type ScrapeOptions struct {
-	BlockCnt  uint64
-	Sleep     float64
-	Touch     uint64
+	BlockCnt  uint64       `json:"blockCnt,omitempty"`
+	Sleep     float64      `json:"sleep,omitempty"`
+	Touch     uint64       `json:"touch,omitempty"`
 	Globals
 
 	// EXISTING_CODE

@@ -19,14 +19,14 @@ import (
 )
 
 type WhenOptions struct {
-	BlockIds   []string `arg:"blocks" json:"blocks,omitempty"`
-	List       bool     `arg:"list" json:"list,omitempty"`
-	Timestamps bool     `arg:"timestamps" json:"timestamps,omitempty"`
-	Count      bool     `arg:"count" json:"count,omitempty"`
-	Repair     bool     `arg:"repair" json:"repair,omitempty"`
-	Check      bool     `arg:"check" json:"check,omitempty"`
-	Update     bool     `arg:"update" json:"update,omitempty"`
-	Deep       bool     `arg:"deep" json:"deep,omitempty"`
+	BlockIds   []string    `json:"blocks,omitempty"`
+	List       bool        `json:"list,omitempty"`
+	Timestamps bool        `json:"timestamps,omitempty"`
+	Count      bool        `json:"count,omitempty"`
+	Repair     bool        `json:"repair,omitempty"`
+	Check      bool        `json:"check,omitempty"`
+	Update     bool        `json:"update,omitempty"`
+	Deep       bool        `json:"deep,omitempty"`
 	Globals
 
 	// EXISTING_CODE

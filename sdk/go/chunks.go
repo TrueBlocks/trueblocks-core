@@ -21,20 +21,20 @@ import (
 )
 
 type ChunksOptions struct {
-	Mode       ChunksMode
-	BlockIds   []string // allow for block ranges and steps
-	Check      bool
-	Pin        bool
-	Publish    bool
-	Remote     bool
-	Belongs    []string // allow for ENS names and addresses
-	FirstBlock base.Blknum
-	LastBlock  base.Blknum
-	MaxAddrs   base.Blknum
-	Deep       bool
-	Rewrite    bool
-	Count      bool
-	Sleep      float64
+	Mode       ChunksMode   `json:"mode,omitempty"`
+	BlockIds   []string     `json:"blocks,omitempty"`
+	Check      bool         `json:"check,omitempty"`
+	Pin        bool         `json:"pin,omitempty"`
+	Publish    bool         `json:"publish,omitempty"`
+	Remote     bool         `json:"remote,omitempty"`
+	Belongs    []string     `json:"belongs,omitempty"`
+	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
+	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
+	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
+	Deep       bool         `json:"deep,omitempty"`
+	Rewrite    bool         `json:"rewrite,omitempty"`
+	Count      bool         `json:"count,omitempty"`
+	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE

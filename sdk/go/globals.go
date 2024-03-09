@@ -8,14 +8,14 @@ import (
 // Globals is a subset of globally available options from the command line
 // that make sense in the SDK context
 type Globals struct {
-	Ether   bool   `arg:"ether,omitempty" json:"ether,omitempty"`
-	Raw     bool   `arg:"raw,omitempty" json:"raw,omitempty"`
-	Cache   bool   `arg:"cache,omitempty" json:"cache,omitempty"`
-	Decache bool   `arg:"decache,omitempty" json:"decache,omitempty"`
-	Verbose bool   `arg:"verbose,omitempty" json:"verbose,omitempty"`
-	Chain   string `arg:"chain,omitempty" json:"chain,omitempty"`
-	Output  string `arg:"output,omitempty" json:"output,omitempty"`
-	Append  bool   `arg:"append,omitempty" json:"append,omitempty"`
+	Ether   bool   `json:"ether,omitempty"`
+	Raw     bool   `json:"raw,omitempty"`
+	Cache   bool   `json:"cache,omitempty"`
+	Decache bool   `json:"decache,omitempty"`
+	Verbose bool   `json:"verbose,omitempty"`
+	Chain   string `json:"chain,omitempty"`
+	Output  string `json:"output,omitempty"`
+	Append  bool   `json:"append,omitempty"`
 	// Probably can't support
 	// --file
 	// Global things ignored in the SDK

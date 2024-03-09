@@ -239,8 +239,14 @@ func (t *TestCase) RunTest() {
 		return
 	}
 
-	// interesting := t.PathTool == "tools/getLogs" && t.Original.Filename == "bad_blkhash_msg_raw" // (t.Route == "list" || t.Route == "receipts" || t.Route == "when") && t.PathTool != "apps/chifra"
-	interesting := (t.Route == "list" || t.Route == "receipts" || t.Route == "when") && t.PathTool != "apps/chifra"
+	testing := []string{"list", "receipts", "logs", "tokens", "when"}
+	interesting := false
+	for _, test := range testing {
+		if test == t.Route && t.PathTool != "apps/chifra" {
+			interesting = true
+			break
+		}
+	}
 	if !interesting {
 		return
 	}

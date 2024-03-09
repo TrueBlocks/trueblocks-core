@@ -19,10 +19,10 @@ import (
 )
 
 type TracesOptions struct {
-	TransactionIds []string
-	Articulate     bool
-	Filter         string
-	Count          bool
+	TransactionIds []string `json:"transactions,omitempty"`
+	Articulate     bool     `json:"articulate,omitempty"`
+	Filter         string   `json:"filter,omitempty"`
+	Count          bool     `json:"count,omitempty"`
 	Globals
 
 	// EXISTING_CODE

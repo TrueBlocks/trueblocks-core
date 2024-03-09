@@ -114,7 +114,8 @@ bool COptions::handle_sdk_go_outersdk(void) {
             continue;
         }
 
-        size_t maxWidth = 0;
+        size_t maxNameWid = 0;
+        size_t maxTypeWid = 0;
         ostringstream fields, enums;
         for (auto member : routeOptionArray) {
             if (member.generate == "config") {
@@ -128,7 +129,25 @@ bool COptions::handle_sdk_go_outersdk(void) {
                 } else if (fn == "Transactions") {
                     fn = "TransactionIds";
                 }
-                maxWidth = max(maxWidth, (fn + " ").size());
+                maxNameWid = max(maxNameWid, (fn).size() + 1);
+                string_q t = member.go_intype;
+                if (member.data_type == "<blknum>" || member.data_type == "<txnum>") {
+                    t = "base.Blknum";
+                } else if (member.data_type == "list<addr>") {
+                    t = "[]string";
+                } else if (member.data_type == "list<blknum>") {
+                    t = "[]string";
+                } else if (member.data_type == "list<topic>") {
+                    t = "[]string";
+                } else if (contains(member.data_type, "enum")) {
+                    t = toProper(member.api_route) + toProper(member.longName);
+                    // enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
+                } else if (contains(member.data_type, "address")) {
+                    t = "base.Address";
+                } else if (contains(member.data_type, "topic")) {
+                    t = "base.Topic";
+                }
+                maxTypeWid = max(maxTypeWid, t.size() + 1);
             }
         }
 
@@ -149,11 +168,11 @@ bool COptions::handle_sdk_go_outersdk(void) {
                 if (member.data_type == "<blknum>" || member.data_type == "<txnum>") {
                     t = "base.Blknum";
                 } else if (member.data_type == "list<addr>") {
-                    t = "[]string // allow for ENS names and addresses";
+                    t = "[]string";
                 } else if (member.data_type == "list<blknum>") {
-                    t = "[]string // allow for block ranges and steps";
+                    t = "[]string";
                 } else if (member.data_type == "list<topic>") {
-                    t = "[]string // topics are strings";
+                    t = "[]string";
                 } else if (contains(member.data_type, "enum")) {
                     t = toProper(member.api_route) + toProper(member.longName);
                     enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
@@ -162,7 +181,10 @@ bool COptions::handle_sdk_go_outersdk(void) {
                 } else if (contains(member.data_type, "topic")) {
                     t = "base.Topic";
                 }
-                fields << "\t" << padRight(fn + " ", maxWidth) << t << endl;
+                ostringstream f;
+                f << padRight(fn + " ", maxNameWid) << t;
+                fields << "\t" << padRight(f.str(), maxNameWid + maxTypeWid);
+                fields << "`json:\"" << substitute(firstLower(fn), "Ids", "s") << ",omitempty\"`" << endl;
                 if (!(member.option_type % "positional")) {
                     reportOneOption(ep.api_route, toCamelCase(member.longName), "go-sdk");
                 }

@@ -20,14 +20,14 @@ import (
 )
 
 type StateOptions struct {
-	Addrs      []string // allow for ENS names and addresses
-	BlockIds   []string // allow for block ranges and steps
-	Parts      StateParts
-	Changes    bool
-	NoZero     bool
-	Call       string
-	Articulate bool
-	ProxyFor   base.Address
+	Addrs      []string     `json:"addrs,omitempty"`
+	BlockIds   []string     `json:"blocks,omitempty"`
+	Parts      StateParts   `json:"parts,omitempty"`
+	Changes    bool         `json:"changes,omitempty"`
+	NoZero     bool         `json:"noZero,omitempty"`
+	Call       string       `json:"call,omitempty"`
+	Articulate bool         `json:"articulate,omitempty"`
+	ProxyFor   base.Address `json:"proxyFor,omitempty"`
 	Globals
 
 	// EXISTING_CODE

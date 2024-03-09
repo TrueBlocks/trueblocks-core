@@ -21,35 +21,35 @@ import (
 )
 
 type ExportOptions struct {
-	Addrs       []string // allow for ENS names and addresses
-	Topics      []string // topics are strings
-	Fourbytes   []string
-	Appearances bool
-	Receipts    bool
-	Logs        bool
-	Traces      bool
-	Neighbors   bool
-	Accounting  bool
-	Statements  bool
-	Balances    bool
-	Withdrawals bool
-	Articulate  bool
-	CacheTraces bool
-	Count       bool
-	FirstRecord uint64
-	MaxRecords  uint64
-	Relevant    bool
-	Emitter     []string // allow for ENS names and addresses
-	Topic       []string // topics are strings
-	Reverted    bool
-	Asset       []string // allow for ENS names and addresses
-	Flow        ExportFlow
-	Factory     bool
-	Unripe      bool
-	Reversed    bool
-	NoZero      bool
-	FirstBlock  base.Blknum
-	LastBlock   base.Blknum
+	Addrs       []string    `json:"addrs,omitempty"`
+	Topics      []string    `json:"topics,omitempty"`
+	Fourbytes   []string    `json:"fourbytes,omitempty"`
+	Appearances bool        `json:"appearances,omitempty"`
+	Receipts    bool        `json:"receipts,omitempty"`
+	Logs        bool        `json:"logs,omitempty"`
+	Traces      bool        `json:"traces,omitempty"`
+	Neighbors   bool        `json:"neighbors,omitempty"`
+	Accounting  bool        `json:"accounting,omitempty"`
+	Statements  bool        `json:"statements,omitempty"`
+	Balances    bool        `json:"balances,omitempty"`
+	Withdrawals bool        `json:"withdrawals,omitempty"`
+	Articulate  bool        `json:"articulate,omitempty"`
+	CacheTraces bool        `json:"cacheTraces,omitempty"`
+	Count       bool        `json:"count,omitempty"`
+	FirstRecord uint64      `json:"firstRecord,omitempty"`
+	MaxRecords  uint64      `json:"maxRecords,omitempty"`
+	Relevant    bool        `json:"relevant,omitempty"`
+	Emitter     []string    `json:"emitter,omitempty"`
+	Topic       []string    `json:"topic,omitempty"`
+	Reverted    bool        `json:"reverted,omitempty"`
+	Asset       []string    `json:"asset,omitempty"`
+	Flow        ExportFlow  `json:"flow,omitempty"`
+	Factory     bool        `json:"factory,omitempty"`
+	Unripe      bool        `json:"unripe,omitempty"`
+	Reversed    bool        `json:"reversed,omitempty"`
+	NoZero      bool        `json:"noZero,omitempty"`
+	FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum `json:"lastBlock,omitempty"`
 	Globals
 
 	// EXISTING_CODE

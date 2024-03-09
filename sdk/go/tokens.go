@@ -19,12 +19,12 @@ import (
 )
 
 type TokensOptions struct {
-	Addrs    []string // allow for ENS names and addresses
-	BlockIds []string // allow for block ranges and steps
-	Parts    TokensParts
-	ByAcct   bool
-	Changes  bool
-	NoZero   bool
+	Addrs    []string    `json:"addrs,omitempty"`
+	BlockIds []string    `json:"blocks,omitempty"`
+	Parts    TokensParts `json:"parts,omitempty"`
+	ByAcct   bool        `json:"byAcct,omitempty"`
+	Changes  bool        `json:"changes,omitempty"`
+	NoZero   bool        `json:"noZero,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -52,13 +52,13 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 		values.Set("parts", opts.Parts.String())
 	}
 	if opts.ByAcct {
-		values.Set("by_acct", "true")
+		values.Set("byAcct", "true")
 	}
 	if opts.Changes {
 		values.Set("changes", "true")
 	}
 	if opts.NoZero {
-		values.Set("no_zero", "true")
+		values.Set("noZero", "true")
 	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
@@ -101,4 +101,3 @@ func (v TokensParts) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

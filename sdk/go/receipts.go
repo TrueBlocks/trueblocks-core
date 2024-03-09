@@ -19,8 +19,8 @@ import (
 )
 
 type ReceiptsOptions struct {
-	TransactionIds []string `arg:"transactions" json:"transactions,omitempty"`
-	Articulate     bool     `arg:"articulate" json:"articulate,omitempty"`
+	TransactionIds []string `json:"transactions,omitempty"`
+	Articulate     bool     `json:"articulate,omitempty"`
 	Globals
 
 	// EXISTING_CODE
