@@ -11,8 +11,10 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -72,32 +74,88 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
+
+	// EXISTING_CODE
+	var err error
+	for i := 0; i < len(args); i++ {
+		if strings.HasPrefix(args[i], "parts=") {
+			if opts.Parts, err = FromStrings(strings.Split(args[i][6:], ",")); err != nil {
+				return nil, err
+			}
+		}
+	}
+	// EXISTING_CODE
+
 	return &opts, nil
 }
 
 type TokensParts int
 
 const (
-	NoTP TokensParts = iota
+	NoTP TokensParts = 1 << iota
 	TPName
 	TPSymbol
 	TPDecimals
 	TPTotalSupply
 	TPVersion
-	TPAll
+	TPAll = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
 )
 
 func (v TokensParts) String() string {
-	return []string{
-		"notp",
-		"name",
-		"symbol",
-		"decimals",
-		"totalsupply",
-		"version",
-		"all",
-	}[v]
+	if v == TPAll {
+		return "all"
+	}
+
+	var m = map[TokensParts]string{
+		TPName: "name",
+		TPSymbol: "symbol",
+		TPDecimals: "decimals",
+		TPTotalSupply: "totalSupply",
+		TPVersion: "version",
+	}
+
+	var ret []string
+	for _, val := range []TokensParts{TPName, TPSymbol, TPDecimals, TPTotalSupply, TPVersion, TPAll} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE
+func FromStrings(values []string) (TokensParts, error) {
+	if len(values) == 0 {
+		return NoTP, fmt.Errorf("no value provided for parts option")
+	}
+
+	var result TokensParts
+	if len(values) == 1 && values[0] == "all" {
+		return TPAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return TPName | TPSymbol | TPDecimals, nil
+	}
+
+	for _, val := range values {
+		switch val {
+		case "name":
+			result |= TPName
+		case "symbol":
+			result |= TPSymbol
+		case "decimals":
+			result |= TPDecimals
+		case "totalSupply":
+			result |= TPTotalSupply
+		case "version":
+			result |= TPVersion
+		default:
+			return NoTP, fmt.Errorf("unknown part: %s", val)
+		}
+	}
+
+	return result, nil
+}
+
 // EXISTING_CODE
+

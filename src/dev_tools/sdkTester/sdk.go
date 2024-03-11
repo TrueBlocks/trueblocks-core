@@ -157,13 +157,12 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		}
 
 	case "state":
-		if _, err := sdk.GetStateOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetStateOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.State(buf)
 		}
+		return opts.State(buf)
 
 	case "tokens":
 		opts, err := sdk.GetTokensOptions(t.Options)

@@ -23,10 +23,12 @@ var pathToTests = []string{
 	// "../src/dev_tools/testRunner/testCases/dev_tools",
 }
 
-// var pathToTests = []string{
-// 	"../testRunner/testCases/tools",
-// 	"../testRunner/testCases/apps",
-// }
+var interactiveTests = false
+
+var pathToTestsTesting = []string{
+	"../testRunner/testCases/tools",
+	"../testRunner/testCases/apps",
+}
 
 func main() {
 	walkFunc := func(path string, info os.FileInfo, err error) error {
@@ -38,8 +40,13 @@ func main() {
 		return err
 	}
 
+	thePaths := pathToTests
+	if interactiveTests {
+		thePaths = pathToTestsTesting
+	}
+
 	fmt.Println(os.Getwd())
-	for _, rootPath := range pathToTests {
+	for _, rootPath := range thePaths {
 		if err := filepath.Walk(rootPath, walkFunc); err != nil {
 			fmt.Printf("error walking the path %q: %v\n", rootPath, err)
 		}
@@ -239,7 +246,7 @@ func (t *TestCase) RunTest() {
 		return
 	}
 
-	testing := []string{"list", "receipts", "logs", "tokens", "when"}
+	testing := []string{"tokens"} // "list", "receipts", "logs", "state", "tokens", "when"}
 	interesting := false
 	for _, test := range testing {
 		if test == t.Route && t.PathTool != "apps/chifra" {
@@ -247,6 +254,7 @@ func (t *TestCase) RunTest() {
 			break
 		}
 	}
+	// interesting = t.Original.Filename == "info_symbol2"
 	if !interesting {
 		return
 	}

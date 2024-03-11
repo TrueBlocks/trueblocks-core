@@ -15,6 +15,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 extern string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option);
+extern string_q handle_sdk_go_enum_bitmask(const string_q& route, const string_q& fn, const CCommandOption& option);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_go(void) {
@@ -28,6 +29,90 @@ bool COptions::handle_sdk_go(void) {
     LOG_INFO(log.str());
 
     return true;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q handle_sdk_go_enum_bitmask(const string_q& route, const string_q& fn, const CCommandOption& option) {
+    string_q ret = option.data_type;
+    replace(ret, "list<", "");
+    replace(ret, "enum[", "");
+    replace(ret, "]", "");
+    replace(ret, ">", "");
+    replaceAll(ret, "*", "");
+
+    CStringArray parts;
+    explode(parts, ret, '|');
+
+    ostringstream os;
+    os << "type " << toProper(route) << fn << " int" << endl;
+    os << endl;
+    os << "const (\n";
+    string_q r(1, route[0]);
+    r = toProper(r) + fn[0];
+    string_q a = "";
+    os << "\t"
+       << "No" << r << a << " " << toProper(route) << fn << " = 1 << iota" << endl;
+    for (auto& part : parts) {
+        if (part == "all") {
+            continue;
+        }
+        os << "\t" << r << firstUpper(part) << endl;
+    }
+    os << "\tTPAll = ";
+    for (size_t i = 0; i < parts.size() - 1; ++i) {
+        if (i > 0)
+            os << " | ";
+        os << r << firstUpper(parts[i]);
+    }
+    os << endl << ")" << endl << endl;
+
+    os << "func (v " << toProper(route) << fn << ") String() string {\n";
+    os << "\tif v == TPAll {" << endl;
+    os << "\t\treturn \"all\"" << endl;
+    os << "\t}" << endl << endl;
+    os << "\tvar m = map[" << toProper(route) << fn << "]string{" << endl;
+    for (auto& part : parts) {
+        if (part == "all") {
+            continue;
+        }
+        os << "\t\t" << r << firstUpper(part) << ": \"" << firstLower(part) << "\"," << endl;
+    }
+    os << "\t}" << endl << endl;
+    os << "\tvar ret []string" << endl;
+    os << "\tfor _, val := range []" << toProper(route) << fn << "{";
+    for (size_t i = 0; i < parts.size(); ++i) {
+        if (i > 0)
+            os << ", ";
+        os << r << firstUpper(parts[i]);
+    }
+    os << "} {" << endl;
+    os << "\t\tif v&val != 0 {" << endl;
+    os << "\t\t\tret = append(ret, m[val])" << endl;
+    os << "\t\t}" << endl;
+    os << "\t}" << endl << endl;
+    os << "\treturn strings.Join(ret, \",\")\n";
+    os << "}" << endl << endl;
+
+    // Include the new StringsToTokensParts function
+    // os << "// EXISTING_CODE\n";
+    // os << "func StringsToTokensParts(values []string) " << toProper(route) << fn << " {\n";
+    // os << "\tvar result " << toProper(route) << fn << "\n";
+    // os << "\tif len(values) == 1 && values[0] == \"all\" {\n";
+    // os << "\t\treturn TPAll\n";
+    // os << "\t} else if len(values) == 1 && values[0] == \"some\" {\n";
+    // os << "\t\treturn TPName | TPSymbol | TPDecimals\n\t}\n\n";
+    // os << "\tfor _, val := range values {\n";
+    // os << "\t\tswitch val {\n";
+    // os << "\t\tcase \"name\":\n\t\t\tresult |= TPName\n";
+    // os << "\t\tcase \"symbol\":\n\t\t\tresult |= TPSymbol\n";
+    // os << "\t\tcase \"decimals\":\n\t\t\tresult |= TPDecimals\n";
+    // os << "\t\tcase \"totalsupply\":\n\t\t\tresult |= TPTotalSupply\n";
+    // os << "\t\tcase \"version\":\n\t\t\tresult |= TPVersion\n\t\t}\n\t}\n\n";
+    // os << "\treturn result\n";
+    // os << "}\n";
+    // os << "// EXISTING_CODE\n";
+
+    return os.str();
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -175,7 +260,11 @@ bool COptions::handle_sdk_go_outersdk(void) {
                     t = "[]string";
                 } else if (contains(member.data_type, "enum")) {
                     t = toProper(member.api_route) + toProper(member.longName);
-                    enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
+                    if (member.longName == "parts" && ep.api_route == "tokens") {
+                        enums << handle_sdk_go_enum_bitmask(ep.api_route, fn, member) << endl;
+                    } else {
+                        enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
+                    }
                 } else if (contains(member.data_type, "address")) {
                     t = "base.Address";
                 } else if (contains(member.data_type, "topic")) {
