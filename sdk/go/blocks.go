@@ -101,6 +101,10 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
 		return nil, err
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	return &opts, nil
 }
 
