@@ -246,7 +246,7 @@ func (t *TestCase) RunTest() {
 		return
 	}
 
-	testing := []string{"tokens"} // "list", "receipts", "logs", "state", "tokens", "when"}
+	testing := []string{"blocks"} // "tokens","state","list", "receipts", "logs", "when","state"
 	interesting := false
 	for _, test := range testing {
 		if test == t.Route && t.PathTool != "apps/chifra" {

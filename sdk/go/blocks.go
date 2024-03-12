@@ -36,6 +36,10 @@ type BlocksOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	List        uint64 `json:"list,omitempty"`
+	ListCount   uint64 `json:"listCount,omitempty"`
+	CacheTxs    bool   `json:"cacheTxs,omitempty"`
+	CacheTraces bool   `json:"cacheTraces,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -88,6 +92,18 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	}
 	if opts.Count {
 		values.Set("count", "true")
+	}
+	if opts.List > 0 {
+		values.Set("list", fmt.Sprintf("%d", opts.List))
+	}
+	if opts.ListCount > 0 {
+		values.Set("listCount", fmt.Sprintf("%d", opts.ListCount))
+	}
+	if opts.CacheTxs {
+		values.Set("cacheTxs", "true")
+	}
+	if opts.CacheTraces {
+		values.Set("cacheTraces", "true")
 	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)

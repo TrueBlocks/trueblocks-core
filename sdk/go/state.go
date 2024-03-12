@@ -58,7 +58,7 @@ func (opts *StateOptions) State(w io.Writer) error {
 		values.Set("changes", "true")
 	}
 	if opts.NoZero {
-		values.Set("no_zero", "true")
+		values.Set("noZero", "true")
 	}
 	if opts.Call != "" {
 		values.Set("call", opts.Call)
@@ -67,7 +67,7 @@ func (opts *StateOptions) State(w io.Writer) error {
 		values.Set("articulate", "true")
 	}
 	if opts.ProxyFor.IsZero() {
-		values.Set("proxy_for", opts.ProxyFor.String())
+		values.Set("proxyFor", opts.ProxyFor.String())
 	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)

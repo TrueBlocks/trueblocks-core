@@ -114,13 +114,12 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		}
 
 	case "blocks":
-		if _, err := sdk.GetBlocksOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetBlocksOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Blocks(buf)
 		}
+		return opts.Blocks(buf)
 
 	case "transactions":
 		if _, err := sdk.GetTransactionsOptions(t.Options); err != nil {

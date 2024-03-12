@@ -113,10 +113,10 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 		values.Set("count", "true")
 	}
 	if opts.FirstRecord > 0 {
-		values.Set("first_record", fmt.Sprintf("%d", opts.FirstRecord))
+		values.Set("firstRecord", fmt.Sprintf("%d", opts.FirstRecord))
 	}
 	if opts.MaxRecords > 0 {
-		values.Set("max_records", fmt.Sprintf("%d", opts.MaxRecords))
+		values.Set("maxRecords", fmt.Sprintf("%d", opts.MaxRecords))
 	}
 	if opts.Relevant {
 		values.Set("relevant", "true")
@@ -146,13 +146,13 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 		values.Set("reversed", "true")
 	}
 	if opts.NoZero {
-		values.Set("no_zero", "true")
+		values.Set("noZero", "true")
 	}
 	if opts.FirstBlock > 0 {
-		values.Set("first_block", fmt.Sprintf("%d", opts.FirstBlock))
+		values.Set("firstBlock", fmt.Sprintf("%d", opts.FirstBlock))
 	}
 	if opts.LastBlock > 0 {
-		values.Set("last_block", fmt.Sprintf("%d", opts.LastBlock))
+		values.Set("lastBlock", fmt.Sprintf("%d", opts.LastBlock))
 	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)

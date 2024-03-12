@@ -18,6 +18,7 @@ import (
 
 func (opts *StateOptions) validateState() error {
 	chain := opts.Globals.Chain
+	proxy := base.HexToAddress(opts.ProxyFor)
 
 	opts.testLog()
 
@@ -60,8 +61,8 @@ func (opts *StateOptions) validateState() error {
 			}
 
 			contract := opts.Addrs[0]
-			if len(opts.ProxyFor) > 0 {
-				contract = opts.ProxyFor
+			if !proxy.IsZero() {
+				contract = proxy.Hex()
 			}
 
 			err := opts.Conn.IsContractAt(base.HexToAddress(contract), nil)
@@ -74,8 +75,8 @@ func (opts *StateOptions) validateState() error {
 
 			// Before we do anythinng, let's just make sure we have a valid four-byte
 			callAddress := base.HexToAddress(opts.Addrs[0])
-			if opts.ProxyFor != "" {
-				callAddress = base.HexToAddress(opts.ProxyFor)
+			if !proxy.IsZero() {
+				callAddress = proxy
 			}
 			// TODO: Can't we preserve the results of this so we don't have to do it later?
 			if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, opts.Call); err != nil {
@@ -99,7 +100,7 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call")
 			}
 
-			if len(opts.ProxyFor) > 0 {
+			if !proxy.IsZero() {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call")
 			}
 

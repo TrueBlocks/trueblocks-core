@@ -50,7 +50,7 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 		values.Set("known", "true")
 	}
 	if !opts.ProxyFor.IsZero() {
-		values.Set("proxy_for", opts.ProxyFor.Hex())
+		values.Set("proxyFor", opts.ProxyFor.Hex())
 	}
 	for _, find := range opts.Find {
 		values.Add("find", find)
