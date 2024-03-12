@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -46,10 +47,16 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("addrs", item)
+		}
 	}
 	for _, v := range opts.BlockIds {
-		values.Add("blocks", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("blocks", item)
+		}
 	}
 	if opts.Types != NoST {
 		values.Set("types", opts.Types.String())
@@ -78,7 +85,7 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 // GetSlurpOptions returns a filled-in options instance given a string array of arguments.
 func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	var opts SlurpOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -136,4 +143,3 @@ func (v SlurpSource) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

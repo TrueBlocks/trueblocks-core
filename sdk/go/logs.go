@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/url"
+	"strings"
 
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -41,13 +42,22 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.TransactionIds {
-		values.Add("transactions", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("transactions", item)
+		}
 	}
 	for _, v := range opts.Emitter {
-		values.Add("emitter", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("emitter", item)
+		}
 	}
 	for _, v := range opts.Topic {
-		values.Add("topic", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("topic", item)
+		}
 	}
 	if opts.Articulate {
 		values.Set("articulate", "true")
@@ -61,7 +71,7 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 // GetLogsOptions returns a filled-in options instance given a string array of arguments.
 func GetLogsOptions(args []string) (*LogsOptions, error) {
 	var opts LogsOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -75,4 +85,3 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

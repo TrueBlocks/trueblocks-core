@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -68,13 +69,22 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("addrs", item)
+		}
 	}
 	for _, v := range opts.Topics {
-		values.Add("topics", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("topics", item)
+		}
 	}
 	for _, v := range opts.Fourbytes {
-		values.Add("fourbytes", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("fourbytes", item)
+		}
 	}
 	if opts.Appearances {
 		values.Set("appearances", "true")
@@ -122,16 +132,25 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 		values.Set("relevant", "true")
 	}
 	for _, v := range opts.Emitter {
-		values.Add("emitter", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("emitter", item)
+		}
 	}
 	for _, v := range opts.Topic {
-		values.Add("topic", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("topic", item)
+		}
 	}
 	if opts.Reverted {
 		values.Set("reverted", "true")
 	}
 	for _, v := range opts.Asset {
-		values.Add("asset", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("asset", item)
+		}
 	}
 	if opts.Flow != NoEF {
 		values.Set("flow", opts.Flow.String())
@@ -163,7 +182,7 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 // GetExportOptions returns a filled-in options instance given a string array of arguments.
 func GetExportOptions(args []string) (*ExportOptions, error) {
 	var opts ExportOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -193,4 +212,3 @@ func (v ExportFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

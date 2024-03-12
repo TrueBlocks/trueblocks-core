@@ -13,20 +13,21 @@ import (
 	"encoding/json"
 	"io"
 	"net/url"
+	"strings"
 
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type WhenOptions struct {
-	BlockIds   []string    `json:"blocks,omitempty"`
-	List       bool        `json:"list,omitempty"`
-	Timestamps bool        `json:"timestamps,omitempty"`
-	Count      bool        `json:"count,omitempty"`
-	Repair     bool        `json:"repair,omitempty"`
-	Check      bool        `json:"check,omitempty"`
-	Update     bool        `json:"update,omitempty"`
-	Deep       bool        `json:"deep,omitempty"`
+	BlockIds   []string `json:"blocks,omitempty"`
+	List       bool     `json:"list,omitempty"`
+	Timestamps bool     `json:"timestamps,omitempty"`
+	Count      bool     `json:"count,omitempty"`
+	Repair     bool     `json:"repair,omitempty"`
+	Check      bool     `json:"check,omitempty"`
+	Update     bool     `json:"update,omitempty"`
+	Deep       bool     `json:"deep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -45,7 +46,10 @@ func (opts *WhenOptions) When(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, blockId := range opts.BlockIds {
-		values.Add("blocks", blockId)
+		items := strings.Split(blockId, " ")
+		for _, item := range items {
+			values.Add("blocks", item)
+		}
 	}
 	if opts.List {
 		values.Set("list", "true")
@@ -77,7 +81,7 @@ func (opts *WhenOptions) When(w io.Writer) error {
 // GetWhenOptions returns a filled-in options instance given a string array of arguments.
 func GetWhenOptions(args []string) (*WhenOptions, error) {
 	var opts WhenOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -91,4 +95,3 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/url"
+	"strings"
 
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -41,7 +42,10 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.TransactionIds {
-		values.Add("transactions", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("transactions", item)
+		}
 	}
 	if opts.Articulate {
 		values.Set("articulate", "true")
@@ -61,7 +65,7 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 // GetTracesOptions returns a filled-in options instance given a string array of arguments.
 func GetTracesOptions(args []string) (*TracesOptions, error) {
 	var opts TracesOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -75,4 +79,3 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

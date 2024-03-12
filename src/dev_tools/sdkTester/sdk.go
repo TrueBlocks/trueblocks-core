@@ -172,13 +172,12 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		return opts.Tokens(buf)
 
 	case "abis":
-		if _, err := sdk.GetAbisOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetAbisOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Abis(buf)
 		}
+		return opts.Abis(buf)
 
 	case "when":
 		opts, err := sdk.GetWhenOptions(t.Options)

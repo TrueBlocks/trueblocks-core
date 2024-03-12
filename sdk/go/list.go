@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -21,17 +22,17 @@ import (
 )
 
 type ListOptions struct {
-	Addrs       []string     `json:"addrs,omitempty"`
-	Count       bool         `json:"count,omitempty"`
-	NoZero      bool         `json:"noZero,omitempty"`
-	Bounds      bool         `json:"bounds,omitempty"`
-	Unripe      bool         `json:"unripe,omitempty"`
-	Silent      bool         `json:"silent,omitempty"`
-	FirstRecord uint64       `json:"firstRecord,omitempty"`
-	MaxRecords  uint64       `json:"maxRecords,omitempty"`
-	Reversed    bool         `json:"reversed,omitempty"`
-	FirstBlock  base.Blknum  `json:"firstBlock,omitempty"`
-	LastBlock   base.Blknum  `json:"lastBlock,omitempty"`
+	Addrs       []string    `json:"addrs,omitempty"`
+	Count       bool        `json:"count,omitempty"`
+	NoZero      bool        `json:"noZero,omitempty"`
+	Bounds      bool        `json:"bounds,omitempty"`
+	Unripe      bool        `json:"unripe,omitempty"`
+	Silent      bool        `json:"silent,omitempty"`
+	FirstRecord uint64      `json:"firstRecord,omitempty"`
+	MaxRecords  uint64      `json:"maxRecords,omitempty"`
+	Reversed    bool        `json:"reversed,omitempty"`
+	FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum `json:"lastBlock,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -50,7 +51,10 @@ func (opts *ListOptions) List(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("addrs", item)
+		}
 	}
 	if opts.Count {
 		values.Set("count", "true")
@@ -94,7 +98,7 @@ func (opts *ListOptions) List(w io.Writer) error {
 // GetListOptions returns a filled-in options instance given a string array of arguments.
 func GetListOptions(args []string) (*ListOptions, error) {
 	var opts ListOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -108,4 +112,3 @@ func GetListOptions(args []string) (*ListOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

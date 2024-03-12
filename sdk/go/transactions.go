@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/url"
+	"strings"
 
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -45,7 +46,10 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.TransactionIds {
-		values.Add("transactions", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("transactions", item)
+		}
 	}
 	if opts.Articulate {
 		values.Set("articulate", "true")
@@ -63,10 +67,16 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 		values.Set("logs", "true")
 	}
 	for _, v := range opts.Emitter {
-		values.Add("emitter", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("emitter", item)
+		}
 	}
 	for _, v := range opts.Topic {
-		values.Add("topic", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("topic", item)
+		}
 	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
@@ -77,7 +87,7 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 // GetTransactionsOptions returns a filled-in options instance given a string array of arguments.
 func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	var opts TransactionsOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -105,4 +115,3 @@ func (v TransactionsFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

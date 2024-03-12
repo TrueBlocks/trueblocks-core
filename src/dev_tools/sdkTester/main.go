@@ -246,7 +246,16 @@ func (t *TestCase) RunTest() {
 		return
 	}
 
-	testing := []string{"blocks"} // "tokens","state","list", "receipts", "logs", "when","state"
+	testing := []string{
+		// "abis",
+		"blocks",
+		"list",
+		"logs",
+		"receipts",
+		"state",
+		// "tokens",
+		"when",
+	}
 	interesting := false
 	for _, test := range testing {
 		if test == t.Route && t.PathTool != "apps/chifra" {
@@ -254,39 +263,39 @@ func (t *TestCase) RunTest() {
 			break
 		}
 	}
-	// interesting = t.Original.Filename == "info_symbol2"
+	// interesting = t.Route == "state" && t.Original.Filename == "contract_call"
 	if !interesting {
 		return
 	}
 
 	if interesting {
-		parts := strings.Split(t.PathTool, "/")
-		if len(parts) != 2 {
-			fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)
-			return
-		}
-
-		folder := t.WorkingPath
-		if !file.FolderExists(folder) {
-			// fmt.Println("Creating folder", folder)
-			// fmt.Println()
-			file.EstablishFolder(folder)
-			file.StringToAsciiFile(filepath.Join(folder, ".gitignore"), "# place holder - do not remove")
-		}
-		fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
-		fmt.Printf("Testing %s...", fn)
-
-		ff, _ := os.Create(fn)
-		logger.SetLoggerWriter(ff)
-		logger.ToggleDecoration()
-		logger.SetTestMode(true)
 		os.Setenv("TEST_MODE", "true")
-		defer func() {
+		logger.SetTestMode(true)
+		if !interactiveTests {
+			parts := strings.Split(t.PathTool, "/")
+			if len(parts) != 2 {
+				fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)
+				return
+			}
+
+			folder := t.WorkingPath
+			if !file.FolderExists(folder) {
+				file.EstablishFolder(folder)
+				file.StringToAsciiFile(filepath.Join(folder, ".gitignore"), "# place holder - do not remove")
+			}
+			fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
+			fmt.Printf("Testing %s...", fn)
+
+			ff, _ := os.Create(fn)
+			logger.SetLoggerWriter(ff)
 			logger.ToggleDecoration()
-			logger.SetLoggerWriter(os.Stderr)
-			ff.Close()
-			fmt.Println("Done.")
-		}()
+			defer func() {
+				logger.ToggleDecoration()
+				logger.SetLoggerWriter(os.Stderr)
+				ff.Close()
+				fmt.Println("Done.")
+			}()
+		}
 		logger.Info(t.Route + "?" + t.Cannonical)
 
 	} else {

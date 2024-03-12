@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -49,7 +50,10 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("addrs", item)
+		}
 	}
 	if opts.Delete {
 		values.Set("delete", "true")
@@ -90,7 +94,7 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 // GetMonitorsOptions returns a filled-in options instance given a string array of arguments.
 func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	var opts MonitorsOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -104,4 +108,3 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

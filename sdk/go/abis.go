@@ -11,8 +11,10 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -44,7 +46,10 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, addr := range opts.Addrs {
-		values.Add("addrs", addr)
+		items := strings.Split(addr, " ")
+		for _, item := range items {
+			values.Add("addrs", item)
+		}
 	}
 	if opts.Known {
 		values.Set("known", "true")
@@ -53,10 +58,16 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 		values.Set("proxyFor", opts.ProxyFor.Hex())
 	}
 	for _, find := range opts.Find {
-		values.Add("find", find)
+		items := strings.Split(find, " ")
+		for _, item := range items {
+			values.Add("find", item)
+		}
 	}
 	for _, hint := range opts.Hint {
-		values.Add("hint", hint)
+		items := strings.Split(hint, " ")
+		for _, item := range items {
+			values.Add("hint", item)
+		}
 	}
 	if opts.Encode != "" {
 		values.Set("encode", opts.Encode)
@@ -69,8 +80,24 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 
 // GetAbisOptions returns a filled-in options instance given a string array of arguments.
 func GetAbisOptions(args []string) (*AbisOptions, error) {
+	parseFunc := func(target interface{}, key, value string) (bool, error) {
+		opts, ok := target.(*AbisOptions)
+		if !ok {
+			return false, fmt.Errorf("parseFunc(abis): target is not of correct type")
+		}
+
+		var found bool
+		switch key {
+		case "proxyFor":
+			opts.ProxyFor = base.HexToAddress(value)
+			return base.IsValidAddress(value), nil
+		}
+
+		return found, nil
+	}
+
 	var opts AbisOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, parseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -84,4 +111,3 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

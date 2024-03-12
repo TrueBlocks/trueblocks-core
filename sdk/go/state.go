@@ -11,8 +11,10 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -46,10 +48,16 @@ func (opts *StateOptions) State(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("addrs", item)
+		}
 	}
 	for _, v := range opts.BlockIds {
-		values.Add("blocks", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("blocks", item)
+		}
 	}
 	if opts.Parts != NoSP {
 		values.Set("parts", opts.Parts.String())
@@ -66,7 +74,7 @@ func (opts *StateOptions) State(w io.Writer) error {
 	if opts.Articulate {
 		values.Set("articulate", "true")
 	}
-	if opts.ProxyFor.IsZero() {
+	if !opts.ProxyFor.IsZero() {
 		values.Set("proxyFor", opts.ProxyFor.String())
 	}
 	// EXISTING_CODE
@@ -77,8 +85,32 @@ func (opts *StateOptions) State(w io.Writer) error {
 
 // GetStateOptions returns a filled-in options instance given a string array of arguments.
 func GetStateOptions(args []string) (*StateOptions, error) {
+	parseFunc := func(target interface{}, key, value string) (bool, error) {
+		opts, ok := target.(*StateOptions)
+		if !ok {
+			return false, fmt.Errorf("parseFunc(state): target is not of correct type")
+		}
+
+		var found bool
+		switch key {
+		case "parts":
+			var err error
+			values := strings.Split(value, ",")
+			if opts.Parts, err = enumsFromStrsState(values); err != nil {
+				return false, err
+			} else {
+				found = true
+			}
+		case "proxyFor":
+			opts.ProxyFor = base.HexToAddress(value)
+			return base.IsValidAddress(value), nil
+		}
+
+		return found, nil
+	}
+
 	var opts StateOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, parseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -91,33 +123,82 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 type StateParts int
 
 const (
-	NoSP StateParts = iota
-	SPNone
-	SPSome
-	SPAll
-	SPBalance
+	NoSP      StateParts = 0
+	SPBalance            = 1 << iota
 	SPNonce
 	SPCode
 	SPProxy
 	SPDeployed
 	SPAccttype
+	SPSome = SPBalance | SPProxy | SPDeployed | SPAccttype
+	SPAll  = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
 )
 
 func (v StateParts) String() string {
-	return []string{
-		"nosp",
-		"none",
-		"some",
-		"all",
-		"balance",
-		"nonce",
-		"code",
-		"proxy",
-		"deployed",
-		"accttype",
-	}[v]
+	if v == SPAll {
+		return "all"
+	} else if v == SPSome {
+		return "some"
+	}
+
+	var m = map[StateParts]string{
+		SPBalance:  "balance",
+		SPNonce:    "nonce",
+		SPCode:     "code",
+		SPProxy:    "proxy",
+		SPDeployed: "deployed",
+		SPAccttype: "accttype",
+	}
+
+	var ret []string
+	for _, val := range []StateParts{SPBalance, SPNonce, SPCode, SPProxy, SPDeployed, SPAccttype} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE
-// EXISTING_CODE
+func enumsFromStrsState(values []string) (StateParts, error) {
+	if len(values) == 0 {
+		return NoSP, fmt.Errorf("no value provided for parts option")
+	}
 
+	var result StateParts
+	if len(values) == 1 && values[0] == "all" {
+		return SPAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return SPBalance | SPProxy | SPDeployed | SPAccttype, nil
+	}
+
+	for _, val := range values {
+		switch val {
+		case "none":
+			result = NoSP
+		case "some":
+			result |= SPSome
+		case "all":
+			result |= SPAll
+		case "balance":
+			result |= SPBalance
+		case "nonce":
+			result |= SPNonce
+		case "code":
+			result |= SPCode
+		case "proxy":
+			result |= SPProxy
+		case "deployed":
+			result |= SPDeployed
+		case "accttype":
+			result |= SPAccttype
+		default:
+			return NoSP, fmt.Errorf("unknown part: %s", val)
+		}
+	}
+
+	return result, nil
+}
+
+// EXISTING_CODE

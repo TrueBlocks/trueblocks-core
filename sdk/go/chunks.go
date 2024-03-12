@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -21,20 +22,20 @@ import (
 )
 
 type ChunksOptions struct {
-	Mode       ChunksMode   `json:"mode,omitempty"`
-	BlockIds   []string     `json:"blocks,omitempty"`
-	Check      bool         `json:"check,omitempty"`
-	Pin        bool         `json:"pin,omitempty"`
-	Publish    bool         `json:"publish,omitempty"`
-	Remote     bool         `json:"remote,omitempty"`
-	Belongs    []string     `json:"belongs,omitempty"`
-	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
-	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
-	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
-	Deep       bool         `json:"deep,omitempty"`
-	Rewrite    bool         `json:"rewrite,omitempty"`
-	Count      bool         `json:"count,omitempty"`
-	Sleep      float64      `json:"sleep,omitempty"`
+	Mode       ChunksMode  `json:"mode,omitempty"`
+	BlockIds   []string    `json:"blocks,omitempty"`
+	Check      bool        `json:"check,omitempty"`
+	Pin        bool        `json:"pin,omitempty"`
+	Publish    bool        `json:"publish,omitempty"`
+	Remote     bool        `json:"remote,omitempty"`
+	Belongs    []string    `json:"belongs,omitempty"`
+	FirstBlock base.Blknum `json:"firstBlock,omitempty"`
+	LastBlock  base.Blknum `json:"lastBlock,omitempty"`
+	MaxAddrs   base.Blknum `json:"maxAddrs,omitempty"`
+	Deep       bool        `json:"deep,omitempty"`
+	Rewrite    bool        `json:"rewrite,omitempty"`
+	Count      bool        `json:"count,omitempty"`
+	Sleep      float64     `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -56,7 +57,10 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 		values.Set("mode", opts.Mode.String())
 	}
 	for _, v := range opts.BlockIds {
-		values.Add("blocks", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("blocks", item)
+		}
 	}
 	if opts.Check {
 		values.Set("check", "true")
@@ -71,7 +75,10 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 		values.Set("remote", "true")
 	}
 	for _, v := range opts.Belongs {
-		values.Add("belongs", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("belongs", item)
+		}
 	}
 	if opts.FirstBlock > 0 {
 		values.Set("first_block", fmt.Sprint(opts.FirstBlock))
@@ -103,7 +110,7 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 // GetChunksOptions returns a filled-in options instance given a string array of arguments.
 func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	var opts ChunksOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -141,4 +148,3 @@ func (v ChunksMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

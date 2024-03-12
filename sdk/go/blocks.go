@@ -14,25 +14,26 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type BlocksOptions struct {
-	BlockIds    []string    `json:"blocks,omitempty"`
-	Hashes      bool        `json:"hashes,omitempty"`
-	Uncles      bool        `json:"uncles,omitempty"`
-	Traces      bool        `json:"traces,omitempty"`
-	Uniq        bool        `json:"uniq,omitempty"`
-	Flow        BlocksFlow  `json:"flow,omitempty"`
-	Logs        bool        `json:"logs,omitempty"`
-	Emitter     []string    `json:"emitter,omitempty"`
-	Topic       []string    `json:"topic,omitempty"`
-	Withdrawals bool        `json:"withdrawals,omitempty"`
-	Articulate  bool        `json:"articulate,omitempty"`
-	BigRange    uint64      `json:"bigRange,omitempty"`
-	Count       bool        `json:"count,omitempty"`
+	BlockIds    []string   `json:"blocks,omitempty"`
+	Hashes      bool       `json:"hashes,omitempty"`
+	Uncles      bool       `json:"uncles,omitempty"`
+	Traces      bool       `json:"traces,omitempty"`
+	Uniq        bool       `json:"uniq,omitempty"`
+	Flow        BlocksFlow `json:"flow,omitempty"`
+	Logs        bool       `json:"logs,omitempty"`
+	Emitter     []string   `json:"emitter,omitempty"`
+	Topic       []string   `json:"topic,omitempty"`
+	Withdrawals bool       `json:"withdrawals,omitempty"`
+	Articulate  bool       `json:"articulate,omitempty"`
+	BigRange    uint64     `json:"bigRange,omitempty"`
+	Count       bool       `json:"count,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -55,7 +56,10 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, blockId := range opts.BlockIds {
-		values.Add("blocks", blockId)
+		items := strings.Split(blockId, " ")
+		for _, item := range items {
+			values.Add("blocks", item)
+		}
 	}
 	if opts.Hashes {
 		values.Set("hashes", "true")
@@ -76,7 +80,10 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 		values.Set("logs", "true")
 	}
 	for _, emitter := range opts.Emitter {
-		values.Add("emitter", emitter)
+		items := strings.Split(emitter, " ")
+		for _, item := range items {
+			values.Add("emitter", item)
+		}
 	}
 	for _, topic := range opts.Topic {
 		values.Add("topic", topic)
@@ -113,8 +120,29 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 
 // GetBlocksOptions returns a filled-in options instance given a string array of arguments.
 func GetBlocksOptions(args []string) (*BlocksOptions, error) {
+	parseFunc := func(target interface{}, key, value string) (bool, error) {
+		opts, ok := target.(*BlocksOptions)
+		if !ok {
+			return false, fmt.Errorf("parseFunc(blocks): target is not of correct type")
+		}
+
+		var found bool
+		switch key {
+		case "flow":
+			var err error
+			values := strings.Split(value, ",")
+			if opts.Flow, err = enumsFromStrsBlocks(values); err != nil {
+				return false, err
+			} else {
+				found = true
+			}
+		}
+
+		return found, nil
+	}
+
 	var opts BlocksOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, parseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -143,5 +171,26 @@ func (v BlocksFlow) String() string {
 }
 
 // EXISTING_CODE
-// EXISTING_CODE
+func enumsFromStrsBlocks(values []string) (BlocksFlow, error) {
+	if len(values) == 0 {
+		return NoBF, fmt.Errorf("no value provided for flow option")
+	}
 
+	var result BlocksFlow
+	for _, val := range values {
+		switch val {
+		case "from":
+			result = BFFrom
+		case "to":
+			result = BFTo
+		case "reward":
+			result = BFReward
+		default:
+			return NoBF, fmt.Errorf("unknown flow: %s", val)
+		}
+	}
+
+	return result, nil
+}
+
+// EXISTING_CODE

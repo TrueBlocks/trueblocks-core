@@ -45,10 +45,16 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("addrs", item)
+		}
 	}
 	for _, v := range opts.BlockIds {
-		values.Add("blocks", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("blocks", item)
+		}
 	}
 	if opts.Parts != NoTP {
 		values.Set("parts", opts.Parts.String())
@@ -70,20 +76,33 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 
 // GetTokensOptions returns a filled-in options instance given a string array of arguments.
 func GetTokensOptions(args []string) (*TokensOptions, error) {
+	parseFunc := func(target interface{}, key, value string) (bool, error) {
+		opts, ok := target.(*TokensOptions)
+		if !ok {
+			return false, fmt.Errorf("parseFunc(tokens): target is not of correct type")
+		}
+
+		var found bool
+		switch key {
+		case "parts":
+			var err error
+			values := strings.Split(value, ",")
+			if opts.Parts, err = enumsFromStrsTokens(values); err != nil {
+				return false, err
+			} else {
+				found = true
+			}
+		}
+
+		return found, nil
+	}
+
 	var opts TokensOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, parseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
 	// EXISTING_CODE
-	var err error
-	for i := 0; i < len(args); i++ {
-		if strings.HasPrefix(args[i], "parts=") {
-			if opts.Parts, err = FromStrings(strings.Split(args[i][6:], ",")); err != nil {
-				return nil, err
-			}
-		}
-	}
 	// EXISTING_CODE
 
 	return &opts, nil
@@ -107,11 +126,11 @@ func (v TokensParts) String() string {
 	}
 
 	var m = map[TokensParts]string{
-		TPName: "name",
-		TPSymbol: "symbol",
-		TPDecimals: "decimals",
+		TPName:        "name",
+		TPSymbol:      "symbol",
+		TPDecimals:    "decimals",
 		TPTotalSupply: "totalSupply",
-		TPVersion: "version",
+		TPVersion:     "version",
 	}
 
 	var ret []string
@@ -125,7 +144,7 @@ func (v TokensParts) String() string {
 }
 
 // EXISTING_CODE
-func FromStrings(values []string) (TokensParts, error) {
+func enumsFromStrsTokens(values []string) (TokensParts, error) {
 	if len(values) == 0 {
 		return NoTP, fmt.Errorf("no value provided for parts option")
 	}
@@ -158,4 +177,3 @@ func FromStrings(values []string) (TokensParts, error) {
 }
 
 // EXISTING_CODE
-

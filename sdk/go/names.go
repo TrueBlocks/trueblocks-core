@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -55,7 +56,10 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 
 	// EXISTING_CODE
 	for _, v := range opts.Terms {
-		values.Add("terms", v)
+		items := strings.Split(v, " ")
+		for _, item := range items {
+			values.Add("terms", item)
+		}
 	}
 	if opts.Expand {
 		values.Set("expand", "true")
@@ -114,7 +118,7 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 // GetNamesOptions returns a filled-in options instance given a string array of arguments.
 func GetNamesOptions(args []string) (*NamesOptions, error) {
 	var opts NamesOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -128,4 +132,3 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

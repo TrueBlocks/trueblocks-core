@@ -21,10 +21,10 @@ import (
 )
 
 type InitOptions struct {
-	All        bool         `json:"all,omitempty"`
-	DryRun     bool         `json:"dryRun,omitempty"`
-	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
-	Sleep      float64      `json:"sleep,omitempty"`
+	All        bool        `json:"all,omitempty"`
+	DryRun     bool        `json:"dryRun,omitempty"`
+	FirstBlock base.Blknum `json:"firstBlock,omitempty"`
+	Sleep      float64     `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -63,7 +63,7 @@ func (opts *InitOptions) Init(w io.Writer) error {
 // GetInitOptions returns a filled-in options instance given a string array of arguments.
 func GetInitOptions(args []string) (*InitOptions, error) {
 	var opts InitOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -77,4 +77,3 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

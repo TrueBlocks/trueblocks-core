@@ -53,7 +53,7 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 // GetConfigOptions returns a filled-in options instance given a string array of arguments.
 func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	var opts ConfigOptions
-	if err := assignValuesFromArgs(&opts, &opts.Globals, args); err != nil {
+	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -81,4 +81,3 @@ func (v ConfigMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
