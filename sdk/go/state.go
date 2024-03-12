@@ -83,34 +83,37 @@ func (opts *StateOptions) State(w io.Writer) error {
 	return state.State(w, values)
 }
 
-// GetStateOptions returns a filled-in options instance given a string array of arguments.
-func GetStateOptions(args []string) (*StateOptions, error) {
-	parseFunc := func(target interface{}, key, value string) (bool, error) {
-		opts, ok := target.(*StateOptions)
-		if !ok {
-			return false, fmt.Errorf("parseFunc(state): target is not of correct type")
-		}
-
-		var found bool
-		switch key {
-		case "parts":
-			var err error
-			values := strings.Split(value, ",")
-			if opts.Parts, err = enumsFromStrsState(values); err != nil {
-				return false, err
-			} else {
-				found = true
-			}
-		case "proxyFor":
-			opts.ProxyFor = base.HexToAddress(value)
-			return base.IsValidAddress(value), nil
-		}
-
-		return found, nil
+// stateParseFunc handles specail cases such as structs and enums (if any).
+func stateParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	opts, ok := target.(*StateOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(state): target is not of correct type")
 	}
 
+	switch key {
+	case "parts":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Parts, err = enumsFromStrsState(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	case "proxyFor":
+		opts.ProxyFor = base.HexToAddress(value)
+		return base.IsValidAddress(value), nil
+	}
+
+	// EXISTING_CODE
+	return found, nil
+}
+
+// GetStateOptions returns a filled-in options instance given a string array of arguments.
+func GetStateOptions(args []string) (*StateOptions, error) {
 	var opts StateOptions
-	if err := assignValuesFromArgs(args, parseFunc, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, stateParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -135,10 +138,13 @@ const (
 )
 
 func (v StateParts) String() string {
-	if v == SPAll {
-		return "all"
-	} else if v == SPSome {
+	switch v {
+	case NoSP:
+		return "none"
+	case SPSome:
 		return "some"
+	case SPAll:
+		return "all"
 	}
 
 	var m = map[StateParts]string{

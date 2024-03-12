@@ -84,10 +84,18 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 	return transactions.Transactions(w, values)
 }
 
+// transactionsParseFunc handles specail cases such as structs and enums (if any).
+func transactionsParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetTransactionsOptions returns a filled-in options instance given a string array of arguments.
 func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	var opts TransactionsOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, transactionsParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -115,3 +123,4 @@ func (v TransactionsFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

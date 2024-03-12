@@ -115,10 +115,18 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 	return names.Names(w, values)
 }
 
+// namesParseFunc handles specail cases such as structs and enums (if any).
+func namesParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetNamesOptions returns a filled-in options instance given a string array of arguments.
 func GetNamesOptions(args []string) (*NamesOptions, error) {
 	var opts NamesOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, namesParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -132,3 +140,4 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

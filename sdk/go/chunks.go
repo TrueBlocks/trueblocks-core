@@ -22,20 +22,20 @@ import (
 )
 
 type ChunksOptions struct {
-	Mode       ChunksMode  `json:"mode,omitempty"`
-	BlockIds   []string    `json:"blocks,omitempty"`
-	Check      bool        `json:"check,omitempty"`
-	Pin        bool        `json:"pin,omitempty"`
-	Publish    bool        `json:"publish,omitempty"`
-	Remote     bool        `json:"remote,omitempty"`
-	Belongs    []string    `json:"belongs,omitempty"`
-	FirstBlock base.Blknum `json:"firstBlock,omitempty"`
-	LastBlock  base.Blknum `json:"lastBlock,omitempty"`
-	MaxAddrs   base.Blknum `json:"maxAddrs,omitempty"`
-	Deep       bool        `json:"deep,omitempty"`
-	Rewrite    bool        `json:"rewrite,omitempty"`
-	Count      bool        `json:"count,omitempty"`
-	Sleep      float64     `json:"sleep,omitempty"`
+	Mode       ChunksMode   `json:"mode,omitempty"`
+	BlockIds   []string     `json:"blocks,omitempty"`
+	Check      bool         `json:"check,omitempty"`
+	Pin        bool         `json:"pin,omitempty"`
+	Publish    bool         `json:"publish,omitempty"`
+	Remote     bool         `json:"remote,omitempty"`
+	Belongs    []string     `json:"belongs,omitempty"`
+	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
+	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
+	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
+	Deep       bool         `json:"deep,omitempty"`
+	Rewrite    bool         `json:"rewrite,omitempty"`
+	Count      bool         `json:"count,omitempty"`
+	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -107,10 +107,18 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	return chunks.Chunks(w, values)
 }
 
+// chunksParseFunc handles specail cases such as structs and enums (if any).
+func chunksParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetChunksOptions returns a filled-in options instance given a string array of arguments.
 func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	var opts ChunksOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, chunksParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -148,3 +156,4 @@ func (v ChunksMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

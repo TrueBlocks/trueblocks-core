@@ -21,10 +21,10 @@ import (
 )
 
 type InitOptions struct {
-	All        bool        `json:"all,omitempty"`
-	DryRun     bool        `json:"dryRun,omitempty"`
-	FirstBlock base.Blknum `json:"firstBlock,omitempty"`
-	Sleep      float64     `json:"sleep,omitempty"`
+	All        bool         `json:"all,omitempty"`
+	DryRun     bool         `json:"dryRun,omitempty"`
+	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
+	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -60,10 +60,18 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	return initPkg.Init(w, values)
 }
 
+// initParseFunc handles specail cases such as structs and enums (if any).
+func initParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetInitOptions returns a filled-in options instance given a string array of arguments.
 func GetInitOptions(args []string) (*InitOptions, error) {
 	var opts InitOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, initParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -77,3 +85,4 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

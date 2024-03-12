@@ -82,10 +82,18 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 	return slurp.Slurp(w, values)
 }
 
+// slurpParseFunc handles specail cases such as structs and enums (if any).
+func slurpParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetSlurpOptions returns a filled-in options instance given a string array of arguments.
 func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	var opts SlurpOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, slurpParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -143,3 +151,4 @@ func (v SlurpSource) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

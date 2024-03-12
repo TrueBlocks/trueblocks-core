@@ -68,10 +68,18 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 	return logs.Logs(w, values)
 }
 
+// logsParseFunc handles specail cases such as structs and enums (if any).
+func logsParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetLogsOptions returns a filled-in options instance given a string array of arguments.
 func GetLogsOptions(args []string) (*LogsOptions, error) {
 	var opts LogsOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, logsParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -85,3 +93,4 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

@@ -260,7 +260,8 @@ bool COptions::handle_sdk_go_outersdk(void) {
                     t = "[]string";
                 } else if (contains(member.data_type, "enum")) {
                     t = toProper(member.api_route) + toProper(member.longName);
-                    if (member.longName == "parts" && ep.api_route == "tokens") {
+                    if ((member.longName == "parts" && ep.api_route == "tokens") ||
+                        (member.longName == "parts" && ep.api_route == "state")) {
                         enums << handle_sdk_go_enum_bitmask(ep.api_route, fn, member) << endl;
                     } else {
                         enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;

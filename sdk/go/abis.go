@@ -78,26 +78,29 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 	return abis.Abis(w, values)
 }
 
-// GetAbisOptions returns a filled-in options instance given a string array of arguments.
-func GetAbisOptions(args []string) (*AbisOptions, error) {
-	parseFunc := func(target interface{}, key, value string) (bool, error) {
-		opts, ok := target.(*AbisOptions)
-		if !ok {
-			return false, fmt.Errorf("parseFunc(abis): target is not of correct type")
-		}
-
-		var found bool
-		switch key {
-		case "proxyFor":
-			opts.ProxyFor = base.HexToAddress(value)
-			return base.IsValidAddress(value), nil
-		}
-
-		return found, nil
+// abisParseFunc handles specail cases such as structs and enums (if any).
+func abisParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	opts, ok := target.(*AbisOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(abis): target is not of correct type")
 	}
 
+	switch key {
+	case "proxyFor":
+		opts.ProxyFor = base.HexToAddress(value)
+		return base.IsValidAddress(value), nil
+	}
+
+	// EXISTING_CODE
+	return found, nil
+}
+
+// GetAbisOptions returns a filled-in options instance given a string array of arguments.
+func GetAbisOptions(args []string) (*AbisOptions, error) {
 	var opts AbisOptions
-	if err := assignValuesFromArgs(args, parseFunc, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, abisParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -111,3 +114,4 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

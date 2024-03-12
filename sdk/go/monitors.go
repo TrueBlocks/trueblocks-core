@@ -91,10 +91,18 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 	return monitors.Monitors(w, values)
 }
 
+// monitorsParseFunc handles specail cases such as structs and enums (if any).
+func monitorsParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetMonitorsOptions returns a filled-in options instance given a string array of arguments.
 func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	var opts MonitorsOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, monitorsParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -108,3 +116,4 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

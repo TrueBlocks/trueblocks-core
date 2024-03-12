@@ -20,14 +20,14 @@ import (
 )
 
 type WhenOptions struct {
-	BlockIds   []string `json:"blocks,omitempty"`
-	List       bool     `json:"list,omitempty"`
-	Timestamps bool     `json:"timestamps,omitempty"`
-	Count      bool     `json:"count,omitempty"`
-	Repair     bool     `json:"repair,omitempty"`
-	Check      bool     `json:"check,omitempty"`
-	Update     bool     `json:"update,omitempty"`
-	Deep       bool     `json:"deep,omitempty"`
+	BlockIds   []string    `json:"blocks,omitempty"`
+	List       bool        `json:"list,omitempty"`
+	Timestamps bool        `json:"timestamps,omitempty"`
+	Count      bool        `json:"count,omitempty"`
+	Repair     bool        `json:"repair,omitempty"`
+	Check      bool        `json:"check,omitempty"`
+	Update     bool        `json:"update,omitempty"`
+	Deep       bool        `json:"deep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -78,10 +78,18 @@ func (opts *WhenOptions) When(w io.Writer) error {
 	return when.When(w, values)
 }
 
+// whenParseFunc handles specail cases such as structs and enums (if any).
+func whenParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetWhenOptions returns a filled-in options instance given a string array of arguments.
 func GetWhenOptions(args []string) (*WhenOptions, error) {
 	var opts WhenOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, whenParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -95,3 +103,4 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

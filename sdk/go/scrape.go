@@ -20,9 +20,9 @@ import (
 )
 
 type ScrapeOptions struct {
-	BlockCnt uint64  `json:"blockCnt,omitempty"`
-	Sleep    float64 `json:"sleep,omitempty"`
-	Touch    uint64  `json:"touch,omitempty"`
+	BlockCnt  uint64       `json:"blockCnt,omitempty"`
+	Sleep     float64      `json:"sleep,omitempty"`
+	Touch     uint64       `json:"touch,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -55,10 +55,18 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 	return scrape.Scrape(w, values)
 }
 
+// scrapeParseFunc handles specail cases such as structs and enums (if any).
+func scrapeParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetScrapeOptions returns a filled-in options instance given a string array of arguments.
 func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 	var opts ScrapeOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, scrapeParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -72,3 +80,4 @@ func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

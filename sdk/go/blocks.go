@@ -21,19 +21,19 @@ import (
 )
 
 type BlocksOptions struct {
-	BlockIds    []string   `json:"blocks,omitempty"`
-	Hashes      bool       `json:"hashes,omitempty"`
-	Uncles      bool       `json:"uncles,omitempty"`
-	Traces      bool       `json:"traces,omitempty"`
-	Uniq        bool       `json:"uniq,omitempty"`
-	Flow        BlocksFlow `json:"flow,omitempty"`
-	Logs        bool       `json:"logs,omitempty"`
-	Emitter     []string   `json:"emitter,omitempty"`
-	Topic       []string   `json:"topic,omitempty"`
-	Withdrawals bool       `json:"withdrawals,omitempty"`
-	Articulate  bool       `json:"articulate,omitempty"`
-	BigRange    uint64     `json:"bigRange,omitempty"`
-	Count       bool       `json:"count,omitempty"`
+	BlockIds    []string    `json:"blocks,omitempty"`
+	Hashes      bool        `json:"hashes,omitempty"`
+	Uncles      bool        `json:"uncles,omitempty"`
+	Traces      bool        `json:"traces,omitempty"`
+	Uniq        bool        `json:"uniq,omitempty"`
+	Flow        BlocksFlow  `json:"flow,omitempty"`
+	Logs        bool        `json:"logs,omitempty"`
+	Emitter     []string    `json:"emitter,omitempty"`
+	Topic       []string    `json:"topic,omitempty"`
+	Withdrawals bool        `json:"withdrawals,omitempty"`
+	Articulate  bool        `json:"articulate,omitempty"`
+	BigRange    uint64      `json:"bigRange,omitempty"`
+	Count       bool        `json:"count,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -118,31 +118,34 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	return blocks.Blocks(w, values)
 }
 
-// GetBlocksOptions returns a filled-in options instance given a string array of arguments.
-func GetBlocksOptions(args []string) (*BlocksOptions, error) {
-	parseFunc := func(target interface{}, key, value string) (bool, error) {
-		opts, ok := target.(*BlocksOptions)
-		if !ok {
-			return false, fmt.Errorf("parseFunc(blocks): target is not of correct type")
-		}
-
-		var found bool
-		switch key {
-		case "flow":
-			var err error
-			values := strings.Split(value, ",")
-			if opts.Flow, err = enumsFromStrsBlocks(values); err != nil {
-				return false, err
-			} else {
-				found = true
-			}
-		}
-
-		return found, nil
+// blocksParseFunc handles specail cases such as structs and enums (if any).
+func blocksParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	opts, ok := target.(*BlocksOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(blocks): target is not of correct type")
 	}
 
+	switch key {
+	case "flow":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Flow, err = enumsFromStrsBlocks(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
+	// EXISTING_CODE
+	return found, nil
+}
+
+// GetBlocksOptions returns a filled-in options instance given a string array of arguments.
+func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	var opts BlocksOptions
-	if err := assignValuesFromArgs(args, parseFunc, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, blocksParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -194,3 +197,4 @@ func enumsFromStrsBlocks(values []string) (BlocksFlow, error) {
 }
 
 // EXISTING_CODE
+

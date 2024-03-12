@@ -22,17 +22,17 @@ import (
 )
 
 type ListOptions struct {
-	Addrs       []string    `json:"addrs,omitempty"`
-	Count       bool        `json:"count,omitempty"`
-	NoZero      bool        `json:"noZero,omitempty"`
-	Bounds      bool        `json:"bounds,omitempty"`
-	Unripe      bool        `json:"unripe,omitempty"`
-	Silent      bool        `json:"silent,omitempty"`
-	FirstRecord uint64      `json:"firstRecord,omitempty"`
-	MaxRecords  uint64      `json:"maxRecords,omitempty"`
-	Reversed    bool        `json:"reversed,omitempty"`
-	FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
-	LastBlock   base.Blknum `json:"lastBlock,omitempty"`
+	Addrs       []string     `json:"addrs,omitempty"`
+	Count       bool         `json:"count,omitempty"`
+	NoZero      bool         `json:"noZero,omitempty"`
+	Bounds      bool         `json:"bounds,omitempty"`
+	Unripe      bool         `json:"unripe,omitempty"`
+	Silent      bool         `json:"silent,omitempty"`
+	FirstRecord uint64       `json:"firstRecord,omitempty"`
+	MaxRecords  uint64       `json:"maxRecords,omitempty"`
+	Reversed    bool         `json:"reversed,omitempty"`
+	FirstBlock  base.Blknum  `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum  `json:"lastBlock,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -95,10 +95,18 @@ func (opts *ListOptions) List(w io.Writer) error {
 	return list.List(w, values)
 }
 
+// listParseFunc handles specail cases such as structs and enums (if any).
+func listParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetListOptions returns a filled-in options instance given a string array of arguments.
 func GetListOptions(args []string) (*ListOptions, error) {
 	var opts ListOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, listParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -112,3 +120,4 @@ func GetListOptions(args []string) (*ListOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

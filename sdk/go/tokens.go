@@ -74,31 +74,34 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 	return tokens.Tokens(w, values)
 }
 
-// GetTokensOptions returns a filled-in options instance given a string array of arguments.
-func GetTokensOptions(args []string) (*TokensOptions, error) {
-	parseFunc := func(target interface{}, key, value string) (bool, error) {
-		opts, ok := target.(*TokensOptions)
-		if !ok {
-			return false, fmt.Errorf("parseFunc(tokens): target is not of correct type")
-		}
-
-		var found bool
-		switch key {
-		case "parts":
-			var err error
-			values := strings.Split(value, ",")
-			if opts.Parts, err = enumsFromStrsTokens(values); err != nil {
-				return false, err
-			} else {
-				found = true
-			}
-		}
-
-		return found, nil
+// tokensParseFunc handles specail cases such as structs and enums (if any).
+func tokensParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	opts, ok := target.(*TokensOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(tokens): target is not of correct type")
 	}
 
+	switch key {
+	case "parts":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Parts, err = enumsFromStrsTokens(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
+	// EXISTING_CODE
+	return found, nil
+}
+
+// GetTokensOptions returns a filled-in options instance given a string array of arguments.
+func GetTokensOptions(args []string) (*TokensOptions, error) {
 	var opts TokensOptions
-	if err := assignValuesFromArgs(args, parseFunc, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, tokensParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -117,30 +120,35 @@ const (
 	TPDecimals
 	TPTotalSupply
 	TPVersion
-	TPAll = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
+	TPSome = TPName | TPSymbol | TPDecimals
+	TPAll  = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
 )
 
 func (v TokensParts) String() string {
-	if v == TPAll {
+	switch v {
+	case NoTP:
+		return "none"
+	case TPSome:
+		return "some"
+	case TPAll:
 		return "all"
-	}
-
-	var m = map[TokensParts]string{
-		TPName:        "name",
-		TPSymbol:      "symbol",
-		TPDecimals:    "decimals",
-		TPTotalSupply: "totalSupply",
-		TPVersion:     "version",
-	}
-
-	var ret []string
-	for _, val := range []TokensParts{TPName, TPSymbol, TPDecimals, TPTotalSupply, TPVersion, TPAll} {
-		if v&val != 0 {
-			ret = append(ret, m[val])
+	default:
+		var m = map[TokensParts]string{
+			TPName:        "name",
+			TPSymbol:      "symbol",
+			TPDecimals:    "decimals",
+			TPTotalSupply: "totalSupply",
+			TPVersion:     "version",
 		}
-	}
 
-	return strings.Join(ret, ",")
+		var ret []string
+		for _, val := range []TokensParts{TPName, TPSymbol, TPDecimals, TPTotalSupply, TPVersion} {
+			if v&val != 0 {
+				ret = append(ret, m[val])
+			}
+		}
+		return strings.Join(ret, ",")
+	}
 }
 
 // EXISTING_CODE

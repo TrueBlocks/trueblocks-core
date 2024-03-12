@@ -179,10 +179,18 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 	return export.Export(w, values)
 }
 
+// exportParseFunc handles specail cases such as structs and enums (if any).
+func exportParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetExportOptions returns a filled-in options instance given a string array of arguments.
 func GetExportOptions(args []string) (*ExportOptions, error) {
 	var opts ExportOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, exportParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -212,3 +220,4 @@ func (v ExportFlow) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

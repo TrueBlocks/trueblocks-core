@@ -54,10 +54,18 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 	return receipts.Receipts(w, values)
 }
 
+// receiptsParseFunc handles specail cases such as structs and enums (if any).
+func receiptsParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetReceiptsOptions returns a filled-in options instance given a string array of arguments.
 func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 	var opts ReceiptsOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, receiptsParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -71,3 +79,4 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

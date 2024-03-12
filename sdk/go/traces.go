@@ -62,10 +62,18 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 	return traces.Traces(w, values)
 }
 
+// tracesParseFunc handles specail cases such as structs and enums (if any).
+func tracesParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetTracesOptions returns a filled-in options instance given a string array of arguments.
 func GetTracesOptions(args []string) (*TracesOptions, error) {
 	var opts TracesOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, tracesParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -79,3 +87,4 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

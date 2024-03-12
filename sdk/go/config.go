@@ -50,10 +50,18 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 	return config.Config(w, values)
 }
 
+// configParseFunc handles specail cases such as structs and enums (if any).
+func configParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return found, nil
+}
+
 // GetConfigOptions returns a filled-in options instance given a string array of arguments.
 func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	var opts ConfigOptions
-	if err := assignValuesFromArgs(args, nil, &opts, &opts.Globals); err != nil {
+	if err := assignValuesFromArgs(args, configParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
@@ -81,3 +89,4 @@ func (v ConfigMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+
