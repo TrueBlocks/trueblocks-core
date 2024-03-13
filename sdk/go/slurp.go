@@ -80,6 +80,7 @@ const (
 	STMiner
 	STUncles
 	STWithdrawals
+	STSome
 	STAll
 )
 
@@ -94,6 +95,7 @@ func (v SlurpTypes) String() string {
 		"miner",
 		"uncles",
 		"withdrawals",
+		"some",
 		"all",
 	}[v]
 }

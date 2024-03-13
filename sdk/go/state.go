@@ -72,29 +72,27 @@ type StateParts int
 
 const (
 	NoSP StateParts = iota
-	SPNone
-	SPSome
-	SPAll
 	SPBalance
 	SPNonce
 	SPCode
 	SPProxy
 	SPDeployed
 	SPAccttype
+	SPSome
+	SPAll
 )
 
 func (v StateParts) String() string {
 	return []string{
 		"nosp",
-		"none",
-		"some",
-		"all",
 		"balance",
 		"nonce",
 		"code",
 		"proxy",
 		"deployed",
 		"accttype",
+		"some",
+		"all",
 	}[v]
 }
 

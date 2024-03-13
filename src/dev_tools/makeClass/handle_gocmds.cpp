@@ -314,7 +314,6 @@ string_q get_use(const CCommandOption& cmd) {
     }
     replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
     replace(ret, "[{POSITIONALS}]", arguments.str());
-    replace(ret, "enum[index|monitors|names|abis|caches|some*|all]", " <mode>\n");
     replace(ret, "enum[show*|edit]", " <mode>\n");
     replace(ret, "[flags] <mode> [blocks...]", "<mode> [flags] [blocks...]");
     replace(ret, "[flags] <mode> [mode...]", "<mode> [mode...] [flags]");

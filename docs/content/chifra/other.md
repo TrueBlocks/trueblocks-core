@@ -83,7 +83,7 @@ Arguments:
 
 Flags:
   -t, --types strings   which types of transactions to request
-                        One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | all ]
+                        One or more of [ ext | int | token | nfts | 1155 | miner | uncles | withdrawals | some | all ]
   -p, --appearances     show only the blocknumber.tx_id appearances of the exported transactions
   -a, --articulate      articulate the retrieved data if ABIs can be found
   -S, --source string   the source of the slurped data
