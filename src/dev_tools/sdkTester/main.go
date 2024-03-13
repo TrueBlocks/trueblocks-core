@@ -281,7 +281,6 @@ func (t *TestCase) RunTest() {
 			folder := t.WorkingPath
 			if !file.FolderExists(folder) {
 				file.EstablishFolder(folder)
-				file.StringToAsciiFile(filepath.Join(folder, ".gitignore"), "# place holder - do not remove")
 			}
 			fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
 			fmt.Printf("Testing %s...", fn)
