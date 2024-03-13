@@ -108,17 +108,30 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 type TransactionsFlow int
 
 const (
-	NoTF TransactionsFlow = iota
-	TFFrom
+	NoTF TransactionsFlow = 0
+	TFFrom = 1 << iota
 	TFTo
 )
 
 func (v TransactionsFlow) String() string {
-	return []string{
-		"notf",
-		"from",
-		"to",
-	}[v]
+	switch v {
+	case NoTF:
+		return "none"
+	}
+
+	var m = map[TransactionsFlow]string{
+		TFFrom: "from",
+		TFTo: "to",
+	}
+
+	var ret []string
+	for _, val := range []TransactionsFlow{TFFrom, TFTo} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE

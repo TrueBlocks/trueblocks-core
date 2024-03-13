@@ -114,14 +114,14 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 type TokensParts int
 
 const (
-	NoTP TokensParts = 1 << iota
-	TPName
+	NoTP TokensParts = 0
+	TPName = 1 << iota
 	TPSymbol
 	TPDecimals
 	TPTotalSupply
 	TPVersion
-	TPSome = TPName | TPSymbol | TPDecimals
-	TPAll  = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
+	TPSome = TPName | TPSymbol | TPDecimals | TPTotalSupply
+	TPAll = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
 )
 
 func (v TokensParts) String() string {
@@ -132,23 +132,24 @@ func (v TokensParts) String() string {
 		return "some"
 	case TPAll:
 		return "all"
-	default:
-		var m = map[TokensParts]string{
-			TPName:        "name",
-			TPSymbol:      "symbol",
-			TPDecimals:    "decimals",
-			TPTotalSupply: "totalSupply",
-			TPVersion:     "version",
-		}
-
-		var ret []string
-		for _, val := range []TokensParts{TPName, TPSymbol, TPDecimals, TPTotalSupply, TPVersion} {
-			if v&val != 0 {
-				ret = append(ret, m[val])
-			}
-		}
-		return strings.Join(ret, ",")
 	}
+
+	var m = map[TokensParts]string{
+		TPName: "name",
+		TPSymbol: "symbol",
+		TPDecimals: "decimals",
+		TPTotalSupply: "totalSupply",
+		TPVersion: "version",
+	}
+
+	var ret []string
+	for _, val := range []TokensParts{TPName, TPSymbol, TPDecimals, TPTotalSupply, TPVersion} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE
@@ -185,3 +186,4 @@ func enumsFromStrsTokens(values []string) (TokensParts, error) {
 }
 
 // EXISTING_CODE
+

@@ -158,19 +158,32 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 type BlocksFlow int
 
 const (
-	NoBF BlocksFlow = iota
-	BFFrom
+	NoBF BlocksFlow = 0
+	BFFrom = 1 << iota
 	BFTo
 	BFReward
 )
 
 func (v BlocksFlow) String() string {
-	return []string{
-		"nobf",
-		"from",
-		"to",
-		"reward",
-	}[v]
+	switch v {
+	case NoBF:
+		return "none"
+	}
+
+	var m = map[BlocksFlow]string{
+		BFFrom: "from",
+		BFTo: "to",
+		BFReward: "reward",
+	}
+
+	var ret []string
+	for _, val := range []BlocksFlow{BFFrom, BFTo, BFReward} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE

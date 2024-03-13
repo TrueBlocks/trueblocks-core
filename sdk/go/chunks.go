@@ -131,8 +131,8 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 type ChunksMode int
 
 const (
-	NoCM2 ChunksMode = iota
-	CMManifest
+	NoCM2 ChunksMode = 0
+	CMManifest = 1 << iota
 	CMIndex
 	CMBlooms
 	CMPins
@@ -142,16 +142,29 @@ const (
 )
 
 func (v ChunksMode) String() string {
-	return []string{
-		"nocm2",
-		"manifest",
-		"index",
-		"blooms",
-		"pins",
-		"addresses",
-		"appearances",
-		"stats",
-	}[v]
+	switch v {
+	case NoCM2:
+		return "none"
+	}
+
+	var m = map[ChunksMode]string{
+		CMManifest: "manifest",
+		CMIndex: "index",
+		CMBlooms: "blooms",
+		CMPins: "pins",
+		CMAddresses: "addresses",
+		CMAppearances: "appearances",
+		CMStats: "stats",
+	}
+
+	var ret []string
+	for _, val := range []ChunksMode{CMManifest, CMIndex, CMBlooms, CMPins, CMAddresses, CMAppearances, CMStats} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE

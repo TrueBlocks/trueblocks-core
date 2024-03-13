@@ -203,19 +203,32 @@ func GetExportOptions(args []string) (*ExportOptions, error) {
 type ExportFlow int
 
 const (
-	NoEF ExportFlow = iota
-	EFIn
+	NoEF ExportFlow = 0
+	EFIn = 1 << iota
 	EFOut
 	EFZero
 )
 
 func (v ExportFlow) String() string {
-	return []string{
-		"noef",
-		"in",
-		"out",
-		"zero",
-	}[v]
+	switch v {
+	case NoEF:
+		return "none"
+	}
+
+	var m = map[ExportFlow]string{
+		EFIn: "in",
+		EFOut: "out",
+		EFZero: "zero",
+	}
+
+	var ret []string
+	for _, val := range []ExportFlow{EFIn, EFOut, EFZero} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE

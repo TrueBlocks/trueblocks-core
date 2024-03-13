@@ -39,98 +39,11 @@ string_q handle_sdk_go_enum_bitmask(const string_q& route, const string_q& fn, c
     replace(ret, "]", "");
     replace(ret, ">", "");
     replaceAll(ret, "*", "");
+    bool hasAll = contains(ret, "all");
 
     CStringArray parts;
     explode(parts, ret, '|');
 
-    ostringstream os;
-    os << "type " << toProper(route) << fn << " int" << endl;
-    os << endl;
-    os << "const (\n";
-    string_q r(1, route[0]);
-    r = toProper(r) + fn[0];
-    string_q a = "";
-    os << "\t"
-       << "No" << r << a << " " << toProper(route) << fn << " = 1 << iota" << endl;
-    for (auto& part : parts) {
-        if (part == "all") {
-            continue;
-        }
-        os << "\t" << r << firstUpper(part) << endl;
-    }
-    os << "\tTPAll = ";
-    for (size_t i = 0; i < parts.size() - 1; ++i) {
-        if (i > 0)
-            os << " | ";
-        os << r << firstUpper(parts[i]);
-    }
-    os << endl << ")" << endl << endl;
-
-    os << "func (v " << toProper(route) << fn << ") String() string {\n";
-    os << "\tif v == TPAll {" << endl;
-    os << "\t\treturn \"all\"" << endl;
-    os << "\t}" << endl << endl;
-    os << "\tvar m = map[" << toProper(route) << fn << "]string{" << endl;
-    for (auto& part : parts) {
-        if (part == "all") {
-            continue;
-        }
-        os << "\t\t" << r << firstUpper(part) << ": \"" << firstLower(part) << "\"," << endl;
-    }
-    os << "\t}" << endl << endl;
-    os << "\tvar ret []string" << endl;
-    os << "\tfor _, val := range []" << toProper(route) << fn << "{";
-    for (size_t i = 0; i < parts.size(); ++i) {
-        if (i > 0)
-            os << ", ";
-        os << r << firstUpper(parts[i]);
-    }
-    os << "} {" << endl;
-    os << "\t\tif v&val != 0 {" << endl;
-    os << "\t\t\tret = append(ret, m[val])" << endl;
-    os << "\t\t}" << endl;
-    os << "\t}" << endl << endl;
-    os << "\treturn strings.Join(ret, \",\")\n";
-    os << "}" << endl << endl;
-
-    // Include the new StringsToTokensParts function
-    // os << "// EXISTING_CODE\n";
-    // os << "func StringsToTokensParts(values []string) " << toProper(route) << fn << " {\n";
-    // os << "\tvar result " << toProper(route) << fn << "\n";
-    // os << "\tif len(values) == 1 && values[0] == \"all\" {\n";
-    // os << "\t\treturn TPAll\n";
-    // os << "\t} else if len(values) == 1 && values[0] == \"some\" {\n";
-    // os << "\t\treturn TPName | TPSymbol | TPDecimals\n\t}\n\n";
-    // os << "\tfor _, val := range values {\n";
-    // os << "\t\tswitch val {\n";
-    // os << "\t\tcase \"name\":\n\t\t\tresult |= TPName\n";
-    // os << "\t\tcase \"symbol\":\n\t\t\tresult |= TPSymbol\n";
-    // os << "\t\tcase \"decimals\":\n\t\t\tresult |= TPDecimals\n";
-    // os << "\t\tcase \"totalsupply\":\n\t\t\tresult |= TPTotalSupply\n";
-    // os << "\t\tcase \"version\":\n\t\t\tresult |= TPVersion\n\t\t}\n\t}\n\n";
-    // os << "\treturn result\n";
-    // os << "}\n";
-    // os << "// EXISTING_CODE\n";
-
-    return os.str();
-}
-
-//------------------------------------------------------------------------------------------------------------
-string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option) {
-    string_q ret = option.data_type;
-    replace(ret, "list<", "");
-    replace(ret, "enum[", "");
-    replace(ret, "]", "");
-    replace(ret, ">", "");
-    replaceAll(ret, "*", "");
-
-    CStringArray parts;
-    explode(parts, ret, '|');
-
-    ostringstream os;
-    os << "type " << toProper(route) << fn << " int" << endl;
-    os << endl;
-    os << "const (\n";
     string_q r(1, route[0]);
     r = toProper(r) + fn[0];
     string_q a = "";
@@ -143,21 +56,84 @@ string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCo
         }
         cnt = 2;
     }
-    os << "\t"
-       << "No" << r << a << " " << toProper(route) << fn << " = iota" << endl;
-    for (auto& part : parts) {
-        os << "\t" << r << firstUpper(part) << endl;
+    string_q none = "No" + r + a;
+    string_q some = r + "Some";
+    string_q all = r + "All";
+    string_q inc =
+        "balance|proxy|deployed|accttype|name|symbol|decimals|totalsupply|ext|int|token|nfts|1155|index|blooms";
+
+    ostringstream os;
+    os << "type " << toProper(route) << fn << " int" << endl;
+    os << endl;
+    os << "const (\n";
+    os << "\t" << none << " " << toProper(route) << fn << " = 0" << endl;
+    for (size_t i = 0; i < parts.size() - (hasAll ? 2 : 0); i++) {
+        string_q part = parts[i];
+        os << "\t" << r << firstUpper(part);
+        if (i == 0) {
+            os << " = 1 << iota";
+        }
+        os << endl;
+    }
+    if (hasAll) {
+        os << "\t" << some << " = ";
+        bool first = true;
+        for (auto p : parts) {
+            if (containsI(inc, p)) {
+                if (!first)
+                    os << " | ";
+                os << r << firstUpper(p);
+                first = false;
+            }
+        }
+        os << endl;
+        os << "\t" << all << " = ";
+        for (size_t i = 0; i < parts.size() - 2; ++i) {
+            if (i > 0)
+                os << " | ";
+            os << r << firstUpper(parts[i]);
+        }
+        os << endl;
     }
     os << ")" << endl;
     os << endl;
-    os << "func (v " << toProper(route) << fn << ") String() string {" << endl;
-    os << "\treturn []string{" << endl;
-    os << "\t\t\"no" << toLower(r) << toLower(a) << "\"," << endl;
-    for (auto& part : parts) {
-        os << "\t\t\"" << toLower(part) << "\"," << endl;
+
+    os << "func (v " << toProper(route) << fn << ") String() string {\n";
+
+    os << "\tswitch v {" << endl;
+    os << "\tcase " << none << ":" << endl;
+    os << "\t\treturn \"none\"" << endl;
+    if (hasAll) {
+        os << "\tcase " << some << ":" << endl;
+        os << "\t\treturn \"some\"" << endl;
+        os << "\tcase " << all << ":" << endl;
+        os << "\t\treturn \"all\"" << endl;
     }
-    os << "\t}[v]" << endl;
-    os << "}" << endl;
+    os << "\t}" << endl;
+    os << endl;
+
+    os << "\tvar m = map[" << toProper(route) << fn << "]string{" << endl;
+    for (auto& part : parts) {
+        if (part == "all" || part == "some") {
+            continue;
+        }
+        os << "\t\t" << r << firstUpper(part) << ": \"" << firstLower(part) << "\"," << endl;
+    }
+    os << "\t}" << endl << endl;
+    os << "\tvar ret []string" << endl;
+    os << "\tfor _, val := range []" << toProper(route) << fn << "{";
+    for (size_t i = 0; i < parts.size() - (hasAll ? 2 : 0); ++i) {
+        if (i > 0)
+            os << ", ";
+        os << r << firstUpper(parts[i]);
+    }
+    os << "} {" << endl;
+    os << "\t\tif v&val != 0 {" << endl;
+    os << "\t\t\tret = append(ret, m[val])" << endl;
+    os << "\t\t}" << endl;
+    os << "\t}" << endl << endl;
+    os << "\treturn strings.Join(ret, \",\")\n";
+    os << "}" << endl << endl;
 
     return os.str();
 }
@@ -260,12 +236,7 @@ bool COptions::handle_sdk_go_outersdk(void) {
                     t = "[]string";
                 } else if (contains(member.data_type, "enum")) {
                     t = toProper(member.api_route) + toProper(member.longName);
-                    if ((member.longName == "parts" && ep.api_route == "tokens") ||
-                        (member.longName == "parts" && ep.api_route == "state")) {
-                        enums << handle_sdk_go_enum_bitmask(ep.api_route, fn, member) << endl;
-                    } else {
-                        enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
-                    }
+                    enums << handle_sdk_go_enum_bitmask(ep.api_route, fn, member) << endl;
                 } else if (contains(member.data_type, "address")) {
                     t = "base.Address";
                 } else if (contains(member.data_type, "topic")) {

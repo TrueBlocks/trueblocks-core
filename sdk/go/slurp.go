@@ -106,8 +106,8 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 type SlurpTypes int
 
 const (
-	NoST SlurpTypes = iota
-	STExt
+	NoST SlurpTypes = 0
+	STExt = 1 << iota
 	STInt
 	STToken
 	STNfts
@@ -115,40 +115,68 @@ const (
 	STMiner
 	STUncles
 	STWithdrawals
-	STSome
-	STAll
+	STSome = STExt | STInt | STToken | STNfts | ST1155
+	STAll = STExt | STInt | STToken | STNfts | ST1155 | STMiner | STUncles | STWithdrawals
 )
 
 func (v SlurpTypes) String() string {
-	return []string{
-		"nost",
-		"ext",
-		"int",
-		"token",
-		"nfts",
-		"1155",
-		"miner",
-		"uncles",
-		"withdrawals",
-		"some",
-		"all",
-	}[v]
+	switch v {
+	case NoST:
+		return "none"
+	case STSome:
+		return "some"
+	case STAll:
+		return "all"
+	}
+
+	var m = map[SlurpTypes]string{
+		STExt: "ext",
+		STInt: "int",
+		STToken: "token",
+		STNfts: "nfts",
+		ST1155: "1155",
+		STMiner: "miner",
+		STUncles: "uncles",
+		STWithdrawals: "withdrawals",
+	}
+
+	var ret []string
+	for _, val := range []SlurpTypes{STExt, STInt, STToken, STNfts, ST1155, STMiner, STUncles, STWithdrawals} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 type SlurpSource int
 
 const (
-	NoSS SlurpSource = iota
-	SSEtherscan
+	NoSS SlurpSource = 0
+	SSEtherscan = 1 << iota
 	SSKey
 )
 
 func (v SlurpSource) String() string {
-	return []string{
-		"noss",
-		"etherscan",
-		"key",
-	}[v]
+	switch v {
+	case NoSS:
+		return "none"
+	}
+
+	var m = map[SlurpSource]string{
+		SSEtherscan: "etherscan",
+		SSKey: "key",
+	}
+
+	var ret []string
+	for _, val := range []SlurpSource{SSEtherscan, SSKey} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE

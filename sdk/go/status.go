@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"strings"
 
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -87,8 +88,8 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 type StatusModes int
 
 const (
-	NoSM StatusModes = iota
-	SMIndex
+	NoSM StatusModes = 0
+	SMIndex = 1 << iota
 	SMBlooms
 	SMBlocks
 	SMTransactions
@@ -105,33 +106,48 @@ const (
 	SMStaging
 	SMUnripe
 	SMMaps
-	SMSome
-	SMAll
+	SMSome = SMIndex | SMBlooms
+	SMAll = SMIndex | SMBlooms | SMBlocks | SMTransactions | SMTraces | SMLogs | SMStatements | SMResults | SMState | SMTokens | SMMonitors | SMNames | SMAbis | SMSlurps | SMStaging | SMUnripe | SMMaps
 )
 
 func (v StatusModes) String() string {
-	return []string{
-		"nosm",
-		"index",
-		"blooms",
-		"blocks",
-		"transactions",
-		"traces",
-		"logs",
-		"statements",
-		"results",
-		"state",
-		"tokens",
-		"monitors",
-		"names",
-		"abis",
-		"slurps",
-		"staging",
-		"unripe",
-		"maps",
-		"some",
-		"all",
-	}[v]
+	switch v {
+	case NoSM:
+		return "none"
+	case SMSome:
+		return "some"
+	case SMAll:
+		return "all"
+	}
+
+	var m = map[StatusModes]string{
+		SMIndex: "index",
+		SMBlooms: "blooms",
+		SMBlocks: "blocks",
+		SMTransactions: "transactions",
+		SMTraces: "traces",
+		SMLogs: "logs",
+		SMStatements: "statements",
+		SMResults: "results",
+		SMState: "state",
+		SMTokens: "tokens",
+		SMMonitors: "monitors",
+		SMNames: "names",
+		SMAbis: "abis",
+		SMSlurps: "slurps",
+		SMStaging: "staging",
+		SMUnripe: "unripe",
+		SMMaps: "maps",
+	}
+
+	var ret []string
+	for _, val := range []StatusModes{SMIndex, SMBlooms, SMBlocks, SMTransactions, SMTraces, SMLogs, SMStatements, SMResults, SMState, SMTokens, SMMonitors, SMNames, SMAbis, SMSlurps, SMStaging, SMUnripe, SMMaps} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE

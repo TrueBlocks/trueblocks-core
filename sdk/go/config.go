@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/url"
+	"strings"
 
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -74,17 +75,30 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 type ConfigMode int
 
 const (
-	NoCM1 ConfigMode = iota
-	CMShow
+	NoCM1 ConfigMode = 0
+	CMShow = 1 << iota
 	CMEdit
 )
 
 func (v ConfigMode) String() string {
-	return []string{
-		"nocm1",
-		"show",
-		"edit",
-	}[v]
+	switch v {
+	case NoCM1:
+		return "none"
+	}
+
+	var m = map[ConfigMode]string{
+		CMShow: "show",
+		CMEdit: "edit",
+	}
+
+	var ret []string
+	for _, val := range []ConfigMode{CMShow, CMEdit} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
 // EXISTING_CODE
