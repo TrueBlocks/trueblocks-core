@@ -195,7 +195,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13100,tools,ChainState,state,getState,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,ChainState,state,getState,blocks,,,false,false,true,true,gocmd,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,gocmd,flag,list<enum[none|some*|all|balance|nonce|code|proxy|deployed|accttype]>,control which state to export
+13140,tools,ChainState,state,getState,parts,p,,false,false,true,true,gocmd,flag,list<enum[balance|nonce|code|proxy|deployed|accttype|some*|all]>,control which state to export
 13160,tools,ChainState,state,getState,changes,c,,false,false,true,true,gocmd,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,ChainState,state,getState,no_zero,z,,false,false,true,true,gocmd,switch,<boolean>,suppress the display of zero balance accounts
 13190,tools,ChainState,state,getState,call,l,,false,false,true,true,gocmd,flag,<string>,call a smart contract with a solidity syntax&#44; a four-byte and parameters&#44; or encoded call data
@@ -212,7 +212,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13260,tools,ChainState,tokens,getTokens,addrs,,,true,false,true,true,gocmd,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 13280,tools,ChainState,tokens,getTokens,blocks,,,false,false,true,true,gocmd,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13300,tools,ChainState,tokens,getTokens,parts,p,,false,false,true,true,gocmd,flag,list<enum[name|symbol|decimals|totalSupply|version|all*]>,which parts of the token information to retrieve
+13300,tools,ChainState,tokens,getTokens,parts,p,,false,false,true,true,gocmd,flag,list<enum[name|symbol|decimals|totalSupply|version|some|all*]>,which parts of the token information to retrieve
 13320,tools,ChainState,tokens,getTokens,by_acct,b,,false,false,true,true,gocmd,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
 13320,tools,ChainState,tokens,getTokens,changes,c,,false,false,true,true,gocmd,switch,<boolean>,only report a balance when it changes from one block to the next
 13340,tools,ChainState,tokens,getTokens,no_zero,z,,false,false,true,true,gocmd,switch,<boolean>,suppress the display of zero balance accounts
@@ -312,7 +312,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,gocmd,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,gocmd,positional,list<blknum>,an optional range of blocks to slurp
-12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,gocmd,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|all]>,which types of transactions to request
+12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,gocmd,flag,list<enum[ext*|int|token|nfts|1155|miner|uncles|withdrawals|some|all]>,which types of transactions to request
 12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,gocmd,switch,<boolean>,show only the blocknumber.tx_id appearances of the exported transactions
 12185,tools,Other,slurp,ethslurp,articulate,a,,false,false,true,true,gocmd,switch,<boolean>,articulate the retrieved data if ABIs can be found
 12200,tools,Other,slurp,ethslurp,source,S,etherscan,false,false,true,true,gocmd,flag,enum[etherscan*|key],the source of the slurped data

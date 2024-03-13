@@ -120,7 +120,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 		}
 	} else {
 		// TODO: BOGUS PERF
-		// logger.Warn("Transaction", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), "does not reconcile")
+		// logger.Warn("Trace statement at", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile.")
 		statements = append(statements, ret)
 	}
 

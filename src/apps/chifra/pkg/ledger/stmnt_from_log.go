@@ -106,11 +106,11 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 			}
 			s.EndBal = *eBal
 
-			id := fmt.Sprintf("%d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 			if !l.trialBalance("token", &s) {
-				logger.Warn(colors.Yellow+"Transaction", id, "does not reconcile"+colors.Off)
+				logger.Warn(colors.Yellow+"Log statement at ", id, " does not reconcile."+colors.Off)
 			} else {
-				logger.Progress(true, colors.Green+"Transaction", id, "reconciled"+colors.Off)
+				logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
 			}
 		}
 
