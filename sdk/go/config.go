@@ -11,6 +11,7 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"strings"
@@ -39,6 +40,9 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	if opts.Mode.String() == "edit" {
+		return fmt.Errorf("edit mode not implemented in sdk")
+	}
 	if opts.Mode != NoCM1 {
 		values.Set("mode", opts.Mode.String())
 	}
@@ -75,8 +79,8 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 type ConfigMode int
 
 const (
-	NoCM1 ConfigMode = 0
-	CMShow = 1 << iota
+	NoCM1  ConfigMode = 0
+	CMShow            = 1 << iota
 	CMEdit
 )
 
@@ -103,4 +107,3 @@ func (v ConfigMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

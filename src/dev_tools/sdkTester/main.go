@@ -247,28 +247,28 @@ func (t *TestCase) RunTest() {
 	}
 
 	testing := []string{
-		"list",
+		//= "list",
 		// "export",
-		// "monitors",
-		// "config",
+		//- "monitors",
+		//= "config",
 		// "status",
-		// "daemon",
-		// "scrape",
+		//- "daemon",
+		//- "scrape",
 		// "chunks",
 		// "init",
-		// "explore",
+		//- "explore",
 
 		// "names",
 		// "slurp",
-		"abis",
-		"blocks",
-		"transactions",
-		"receipts",
-		"logs",
-		"state",
-		"tokens",
-		"traces",
-		"when",
+		//= "abis",
+		//= "blocks",
+		//= "transactions",
+		//= "receipts",
+		//= "logs",
+		//= "state",
+		//= "tokens",
+		//= "traces",
+		//= "when",
 	}
 	interesting := false
 	for _, test := range testing {

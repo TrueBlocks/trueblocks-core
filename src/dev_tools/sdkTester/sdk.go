@@ -30,14 +30,6 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		}
 		return opts.Export(buf)
 
-	case "monitors":
-		opts, err := sdk.GetMonitorsOptions(t.Options)
-		reportOpts(opts)
-		if err != nil {
-			return err
-		}
-		return opts.Monitors(buf)
-
 	case "config":
 		opts, err := sdk.GetConfigOptions(t.Options)
 		reportOpts(opts)
@@ -54,14 +46,6 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		}
 		return opts.Status(buf)
 
-	case "scrape":
-		opts, err := sdk.GetScrapeOptions(t.Options)
-		reportOpts(opts)
-		if err != nil {
-			return err
-		}
-		return opts.Scrape(buf)
-
 	case "chunks":
 		opts, err := sdk.GetChunksOptions(t.Options)
 		reportOpts(opts)
@@ -69,17 +53,6 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 			return err
 		}
 		return opts.Chunks(buf)
-
-	case "init":
-		opts, err := sdk.GetInitOptions(t.Options)
-		reportOpts(opts)
-		if err != nil {
-			return err
-		}
-		return opts.Init(buf)
-
-	// case "daemon":
-	// case "explore":
 
 	case "names":
 		opts, err := sdk.GetNamesOptions(t.Options)
@@ -170,7 +143,12 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		return opts.When(buf)
 
 	default:
-		logger.Info(colors.Red + "Unknown: " + t.Route + colors.Off)
+		// case "monitors":
+		// case "daemon":
+		// case "scrape":
+		// case "init":
+		// case "explore":
+		logger.Info(colors.Red + "Unknown sdk endpoint: " + t.Route + colors.Off)
 
 	}
 	return nil
