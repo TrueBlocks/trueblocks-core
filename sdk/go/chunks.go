@@ -39,6 +39,12 @@ type ChunksOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	// Publisher  base.Address `json:"publisher,omitempty"`
+	// Truncate   base.Blknum  `json:"truncate,omitempty"`
+	// Diff       bool         `json:"diff,omitempty"`
+	// List       bool         `json:"list,omitempty"`
+	// Unpin      bool         `json:"unpin,omitempty"`
+	// Tag        string       `json:"tag,omitempty"`
 	// EXISTING_CODE
 }
 

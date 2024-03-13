@@ -54,6 +54,7 @@ type ExportOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	// Load        string      `json:"load,omitempty"`
 	// EXISTING_CODE
 }
 

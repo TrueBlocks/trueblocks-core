@@ -35,6 +35,7 @@ type MonitorsOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	// RunCount  uint64   `json:"runCount,omitempty"`
 	// EXISTING_CODE
 }
 

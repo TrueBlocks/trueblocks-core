@@ -36,6 +36,7 @@ type ListOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	// Publisher   base.Address `json:"publisher,omitempty"`
 	// EXISTING_CODE
 }
 

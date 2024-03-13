@@ -9,13 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 )
 
-func reportOpts(s fmt.Stringer) {
-	if s == nil {
-		return
-	}
-	logger.Info("Opts:", s.String())
-}
-
 // SdkTest runs a test case through the SDK and returns the results in the provided bytes.Buffer
 func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 	logger.Info("Args:", t.Options)
@@ -30,88 +23,79 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		return opts.List(buf)
 
 	case "export":
-		if _, err := sdk.GetExportOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetExportOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Export(buf)
 		}
+		return opts.Export(buf)
 
 	case "monitors":
-		if _, err := sdk.GetMonitorsOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetMonitorsOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Monitors(buf)
 		}
+		return opts.Monitors(buf)
 
 	case "config":
-		if _, err := sdk.GetConfigOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetConfigOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Config(buf)
 		}
+		return opts.Config(buf)
 
 	case "status":
-		if _, err := sdk.GetStatusOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetStatusOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Status(buf)
 		}
+		return opts.Status(buf)
 
 	case "scrape":
-		if _, err := sdk.GetScrapeOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetScrapeOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Scrape(buf)
 		}
+		return opts.Scrape(buf)
 
 	case "chunks":
-		if _, err := sdk.GetChunksOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetChunksOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Chunks(buf)
 		}
+		return opts.Chunks(buf)
 
 	case "init":
-		if _, err := sdk.GetInitOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetInitOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Init(buf)
 		}
+		return opts.Init(buf)
 
 	// case "daemon":
 	// case "explore":
 
 	case "names":
-		if _, err := sdk.GetNamesOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetNamesOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Names(buf)
 		}
+		return opts.Names(buf)
 
 	case "slurp":
-		if _, err := sdk.GetSlurpOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetSlurpOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Slurp(buf)
 		}
+		return opts.Slurp(buf)
 
 	case "blocks":
 		opts, err := sdk.GetBlocksOptions(t.Options)
@@ -122,13 +106,12 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		return opts.Blocks(buf)
 
 	case "transactions":
-		if _, err := sdk.GetTransactionsOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetTransactionsOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Transactions(buf)
 		}
+		return opts.Transactions(buf)
 
 	case "receipts":
 		opts, err := sdk.GetReceiptsOptions(t.Options)
@@ -147,13 +130,12 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		return opts.Logs(buf)
 
 	case "traces":
-		if _, err := sdk.GetTracesOptions(t.Options); err != nil {
-			// logger.Info("Opts:", opts.String())
+		opts, err := sdk.GetTracesOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
 			return err
-		} else {
-			// logger.Info("Opts:", opts.String())
-			return nil // return opts.Traces(buf)
 		}
+		return opts.Traces(buf)
 
 	case "state":
 		opts, err := sdk.GetStateOptions(t.Options)
@@ -192,4 +174,11 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 
 	}
 	return nil
+}
+
+func reportOpts(s fmt.Stringer) {
+	if s == nil {
+		return
+	}
+	logger.Info("Opts:", s.String())
 }

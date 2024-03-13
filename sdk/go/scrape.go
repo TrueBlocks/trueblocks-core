@@ -26,6 +26,9 @@ type ScrapeOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	// RunCount  uint64       `json:"runCount,omitempty"`
+	// Publisher base.Address `json:"publisher,omitempty"`
+	// DryRun    bool         `json:"dryRun,omitempty"`
 	// EXISTING_CODE
 }
 

@@ -213,6 +213,9 @@ bool COptions::handle_sdk_go_outersdk(void) {
         }
 
         for (auto member : routeOptionArray) {
+            if (member.generate == "config") {
+                continue;
+            }
             if (!member.is_visible_docs) {  //  && !containsI(member.longName, "cache")) {
                 continue;
             }

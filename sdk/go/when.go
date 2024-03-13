@@ -31,6 +31,7 @@ type WhenOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	// Truncate   base.Blknum `json:"truncate,omitempty"`
 	// EXISTING_CODE
 }
 

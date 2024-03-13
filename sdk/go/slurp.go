@@ -32,6 +32,8 @@ type SlurpOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	Page        uint64      `json:"page,omitempty"`
+	PerPage     uint64      `json:"perPage,omitempty"`
 	// EXISTING_CODE
 }
 

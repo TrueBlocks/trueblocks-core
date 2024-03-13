@@ -247,13 +247,27 @@ func (t *TestCase) RunTest() {
 	}
 
 	testing := []string{
-		// "abis",
-		"blocks",
 		"list",
-		"logs",
+		// "export",
+		// "monitors",
+		// "config",
+		// "status",
+		// "daemon",
+		// "scrape",
+		// "chunks",
+		// "init",
+		// "explore",
+
+		// "names",
+		// "slurp",
+		"abis",
+		"blocks",
+		"transactions",
 		"receipts",
+		"logs",
 		"state",
-		// "tokens",
+		"tokens",
+		"traces",
 		"when",
 	}
 	interesting := false

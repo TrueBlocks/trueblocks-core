@@ -11,6 +11,7 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"strings"
@@ -31,6 +32,8 @@ type TransactionsOptions struct {
 	Globals
 
 	// EXISTING_CODE
+	CacheTraces    bool             `json:"cacheTraces,omitempty"`
+	// Seed           bool             `json:"seed,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -78,6 +81,9 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 			values.Add("topic", item)
 		}
 	}
+	if opts.CacheTraces {
+		values.Set("cacheTraces", "true")
+	}
 	// EXISTING_CODE
 	opts.Globals.mapGlobals(values)
 
@@ -88,6 +94,22 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 func transactionsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	// EXISTING_CODE
+	opts, ok := target.(*TransactionsOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(transactions): target is not of correct type")
+	}
+
+	switch key {
+	case "flow":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Flow, err = enumsFromStrsTransactions(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
 	// EXISTING_CODE
 	return found, nil
 }
@@ -135,5 +157,27 @@ func (v TransactionsFlow) String() string {
 }
 
 // EXISTING_CODE
+func enumsFromStrsTransactions(values []string) (TransactionsFlow, error) {
+	if len(values) == 0 {
+		return NoTF, fmt.Errorf("no value provided for flow option")
+	}
+
+	var result TransactionsFlow
+	for _, val := range values {
+		switch val {
+		case "from":
+			result = BFFrom
+		case "to":
+			result = BFTo
+		case "reward":
+			result = BFReward
+		default:
+			return NoTF, fmt.Errorf("unknown flow: %s", val)
+		}
+	}
+
+	return result, nil
+}
+
 // EXISTING_CODE
 
