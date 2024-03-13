@@ -29,7 +29,7 @@ func (opts *StateOptions) validateState() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[none|some|all|balance|nonce|code|proxy|deployed|accttype]")
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[balance|nonce|code|proxy|deployed|accttype|some|all]")
 	if err != nil {
 		return err
 	}

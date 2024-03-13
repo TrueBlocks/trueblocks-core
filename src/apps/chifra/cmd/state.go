@@ -68,7 +68,7 @@ func init() {
 	stateCmd.Flags().SortFlags = false
 
 	stateCmd.Flags().StringSliceVarP(&statePkg.GetOptions().Parts, "parts", "p", nil, `control which state to export
-One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]`)
+One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Call, "call", "l", "", "call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data")

@@ -14,7 +14,7 @@ Arguments:
 
 Flags:
   -p, --parts strings      control which state to export
-                           One or more of [ none | some | all | balance | nonce | code | proxy | deployed | accttype ]
+                           One or more of [ balance | nonce | code | proxy | deployed | accttype | some | all ]
   -c, --changes            only report a balance when it changes from one block to the next
   -z, --no_zero            suppress the display of zero balance accounts
   -l, --call string        call a smart contract with a solidity syntax, a four-byte and parameters, or encoded call data

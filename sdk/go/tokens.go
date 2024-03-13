@@ -68,6 +68,7 @@ const (
 	TPDecimals
 	TPTotalSupply
 	TPVersion
+	TPSome
 	TPAll
 )
 
@@ -79,6 +80,7 @@ func (v TokensParts) String() string {
 		"decimals",
 		"totalsupply",
 		"version",
+		"some",
 		"all",
 	}[v]
 }

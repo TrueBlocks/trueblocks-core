@@ -26,7 +26,7 @@ func (opts *TokensOptions) validateTokens() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[name|symbol|decimals|totalSupply|version|all]")
+	err := validate.ValidateEnumSlice("--parts", opts.Parts, "[name|symbol|decimals|totalSupply|version|some|all]")
 	if err != nil {
 		return err
 	}
