@@ -27,9 +27,6 @@ type StatusOptions struct {
 	MaxRecords  uint64      `json:"maxRecords,omitempty"`
 	Chains      bool        `json:"chains,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -44,9 +41,6 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting status struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return status.Status(w, values)
 }
@@ -82,9 +76,6 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 	if err := assignValuesFromArgs(args, statusParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return &opts, nil
 }
@@ -209,7 +200,4 @@ func enumFromStatusModes(values []string) (StatusModes, error) {
 
 	return result, nil
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
 

@@ -28,13 +28,10 @@ type SlurpOptions struct {
 	Articulate  bool        `json:"articulate,omitempty"`
 	Source      SlurpSource `json:"source,omitempty"`
 	Count       bool        `json:"count,omitempty"`
+	Page        uint64      `json:"page,omitempty"`
+	PerPage     uint64      `json:"perPage,omitempty"`
 	Sleep       float64     `json:"sleep,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	Page    uint64 `json:"page,omitempty"`
-	PerPage uint64 `json:"perPage,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -49,9 +46,6 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting slurp struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return slurp.Slurp(w, values)
 }
@@ -95,9 +89,6 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	if err := assignValuesFromArgs(args, slurpParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return &opts, nil
 }
@@ -235,7 +226,4 @@ func enumFromSlurpSource(values []string) (SlurpSource, error) {
 
 	return result, nil
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
 

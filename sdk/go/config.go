@@ -24,9 +24,6 @@ type ConfigOptions struct {
 	Mode  ConfigMode `json:"mode,omitempty"`
 	Paths bool       `json:"paths,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -41,9 +38,6 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting config struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return config.Config(w, values)
 }
@@ -79,9 +73,6 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	if err := assignValuesFromArgs(args, configParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return &opts, nil
 }
@@ -134,7 +125,4 @@ func enumFromConfigMode(values []string) (ConfigMode, error) {
 
 	return result, nil
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
 

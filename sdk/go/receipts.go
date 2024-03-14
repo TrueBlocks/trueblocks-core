@@ -23,9 +23,6 @@ type ReceiptsOptions struct {
 	TransactionIds []string `json:"transactions,omitempty"`
 	Articulate     bool     `json:"articulate,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -40,9 +37,6 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting receipts struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return receipts.Receipts(w, values)
 }
@@ -70,14 +64,8 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 

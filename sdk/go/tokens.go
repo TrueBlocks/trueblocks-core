@@ -28,9 +28,6 @@ type TokensOptions struct {
 	Changes  bool        `json:"changes,omitempty"`
 	NoZero   bool        `json:"noZero,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -45,9 +42,6 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting tokens struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return tokens.Tokens(w, values)
 }
@@ -83,9 +77,6 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 	if err := assignValuesFromArgs(args, tokensParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return &opts, nil
 }
@@ -162,7 +153,4 @@ func enumFromTokensParts(values []string) (TokensParts, error) {
 
 	return result, nil
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
 

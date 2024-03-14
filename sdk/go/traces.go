@@ -25,9 +25,6 @@ type TracesOptions struct {
 	Filter         string   `json:"filter,omitempty"`
 	Count          bool     `json:"count,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -42,9 +39,6 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting traces struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return traces.Traces(w, values)
 }
@@ -72,14 +66,8 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 

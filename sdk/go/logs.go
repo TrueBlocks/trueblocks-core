@@ -25,9 +25,6 @@ type LogsOptions struct {
 	Topic          []string `json:"topic,omitempty"`
 	Articulate     bool     `json:"articulate,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -42,9 +39,6 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting logs struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return logs.Logs(w, values)
 }
@@ -72,14 +66,8 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 

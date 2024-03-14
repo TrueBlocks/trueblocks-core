@@ -27,25 +27,22 @@ type ChunksOptions struct {
 	Check      bool         `json:"check,omitempty"`
 	Pin        bool         `json:"pin,omitempty"`
 	Publish    bool         `json:"publish,omitempty"`
+	Publisher  base.Address `json:"publisher,omitempty"`
+	Truncate   base.Blknum  `json:"truncate,omitempty"`
 	Remote     bool         `json:"remote,omitempty"`
 	Belongs    []string     `json:"belongs,omitempty"`
+	Diff       bool         `json:"diff,omitempty"`
 	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
 	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
 	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
 	Deep       bool         `json:"deep,omitempty"`
 	Rewrite    bool         `json:"rewrite,omitempty"`
+	List       bool         `json:"list,omitempty"`
+	Unpin      bool         `json:"unpin,omitempty"`
 	Count      bool         `json:"count,omitempty"`
+	Tag        string       `json:"tag,omitempty"`
 	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// Publisher  base.Address `json:"publisher,omitempty"`
-	// Truncate   base.Blknum  `json:"truncate,omitempty"`
-	// Diff       bool         `json:"diff,omitempty"`
-	// List       bool         `json:"list,omitempty"`
-	// Unpin      bool         `json:"unpin,omitempty"`
-	// Tag        string       `json:"tag,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -60,9 +57,6 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting chunks struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return chunks.Chunks(w, values)
 }
@@ -98,9 +92,6 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	if err := assignValuesFromArgs(args, chunksParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return &opts, nil
 }
@@ -173,7 +164,4 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 
 	return result, nil
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
 

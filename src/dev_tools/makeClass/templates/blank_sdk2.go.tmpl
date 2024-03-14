@@ -14,9 +14,7 @@ import (
 )
 
 type [{PROPER}]Options struct {
-[{FIELDS}]	// EXISTING_CODE
-	// EXISTING_CODE
-}
+[{FIELDS}]}
 
 // String implements the stringer interface
 func (opts *[{PROPER}]Options) String() string {
@@ -31,9 +29,6 @@ func (opts *[{PROPER}]Options) [{PROPER}](w io.Writer) error {
 		log.Fatalf("Error converting [{LOWER}] struct to URL values: %v", err)
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return [{PKG}].[{PROPER}](w, values)
 }
 
@@ -45,7 +40,7 @@ func [{LOWER}]ParseFunc(target interface{}, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc([{LOWER}]): target is not of correct type")
 	}
 
-[{ENUMTHING}]
+[{ENUMS2}]
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -59,11 +54,7 @@ func Get[{PROPER}]Options(args []string) (*[{PROPER}]Options, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
-[{ENUMS}]// EXISTING_CODE
-// EXISTING_CODE
+[{ENUMS1}]

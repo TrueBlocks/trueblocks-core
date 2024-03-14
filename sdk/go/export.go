@@ -14,7 +14,6 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -48,15 +47,12 @@ type ExportOptions struct {
 	Flow        ExportFlow  `json:"flow,omitempty"`
 	Factory     bool        `json:"factory,omitempty"`
 	Unripe      bool        `json:"unripe,omitempty"`
+	Load        string      `json:"load,omitempty"`
 	Reversed    bool        `json:"reversed,omitempty"`
 	NoZero      bool        `json:"noZero,omitempty"`
 	FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
 	LastBlock   base.Blknum `json:"lastBlock,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// Load        string      `json:"load,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -71,10 +67,6 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting export struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	os.Setenv("NO_USERQUERY", "true")
-	// EXISTING_CODE
 
 	return export.Export(w, values)
 }
@@ -110,9 +102,6 @@ func GetExportOptions(args []string) (*ExportOptions, error) {
 	if err := assignValuesFromArgs(args, exportParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return &opts, nil
 }
@@ -169,7 +158,4 @@ func enumFromExportFlow(values []string) (ExportFlow, error) {
 
 	return result, nil
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
 

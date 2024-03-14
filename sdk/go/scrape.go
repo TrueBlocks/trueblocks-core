@@ -15,6 +15,7 @@ import (
 	"io"
 	"log"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -23,13 +24,10 @@ type ScrapeOptions struct {
 	BlockCnt  uint64       `json:"blockCnt,omitempty"`
 	Sleep     float64      `json:"sleep,omitempty"`
 	Touch     uint64       `json:"touch,omitempty"`
+	RunCount  uint64       `json:"runCount,omitempty"`
+	Publisher base.Address `json:"publisher,omitempty"`
+	DryRun    bool         `json:"dryRun,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// RunCount  uint64       `json:"runCount,omitempty"`
-	// Publisher base.Address `json:"publisher,omitempty"`
-	// DryRun    bool         `json:"dryRun,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -44,9 +42,6 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting scrape struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return scrape.Scrape(w, values)
 }
@@ -74,14 +69,8 @@ func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 

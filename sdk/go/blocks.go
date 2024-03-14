@@ -16,6 +16,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -34,14 +35,11 @@ type BlocksOptions struct {
 	Articulate  bool        `json:"articulate,omitempty"`
 	BigRange    uint64      `json:"bigRange,omitempty"`
 	Count       bool        `json:"count,omitempty"`
+	CacheTxs    bool        `json:"cacheTxs,omitempty"`
+	CacheTraces bool        `json:"cacheTraces,omitempty"`
+	List        base.Blknum `json:"list,omitempty"`
+	ListCount   base.Blknum `json:"listCount,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	List        uint64 `json:"list,omitempty"`
-	ListCount   uint64 `json:"listCount,omitempty"`
-	CacheTxs    bool   `json:"cacheTxs,omitempty"`
-	CacheTraces bool   `json:"cacheTraces,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -56,9 +54,6 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting blocks struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return blocks.Blocks(w, values)
 }
@@ -94,9 +89,6 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	if err := assignValuesFromArgs(args, blocksParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return &opts, nil
 }
@@ -153,7 +145,4 @@ func enumFromBlocksFlow(values []string) (BlocksFlow, error) {
 
 	return result, nil
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
 

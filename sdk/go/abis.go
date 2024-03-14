@@ -28,9 +28,6 @@ type AbisOptions struct {
 	Hint     []string     `json:"hint,omitempty"`
 	Encode   string       `json:"encode,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -45,9 +42,6 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting abis struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return abis.Abis(w, values)
 }
@@ -80,13 +74,8 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
 
-// EXISTING_CODE
-// EXISTING_CODE

@@ -31,9 +31,6 @@ type StateOptions struct {
 	Articulate bool         `json:"articulate,omitempty"`
 	ProxyFor   base.Address `json:"proxyFor,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -48,9 +45,6 @@ func (opts *StateOptions) State(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting state struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return state.State(w, values)
 }
@@ -91,24 +85,21 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 type StateParts int
 
 const (
-	NoSP      StateParts = 0
-	SPBalance            = 1 << iota
+	NoSP StateParts = 0
+	SPBalance = 1 << iota
 	SPNonce
 	SPCode
 	SPProxy
 	SPDeployed
 	SPAccttype
 	SPSome = SPBalance | SPProxy | SPDeployed | SPAccttype
-	SPAll  = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
+	SPAll = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
 )
 
 func (v StateParts) String() string {
@@ -122,10 +113,10 @@ func (v StateParts) String() string {
 	}
 
 	var m = map[StateParts]string{
-		SPBalance:  "balance",
-		SPNonce:    "nonce",
-		SPCode:     "code",
-		SPProxy:    "proxy",
+		SPBalance: "balance",
+		SPNonce: "nonce",
+		SPCode: "code",
+		SPProxy: "proxy",
 		SPDeployed: "deployed",
 		SPAccttype: "accttype",
 	}
@@ -174,5 +165,3 @@ func enumFromStateParts(values []string) (StateParts, error) {
 	return result, nil
 }
 
-// EXISTING_CODE
-// EXISTING_CODE

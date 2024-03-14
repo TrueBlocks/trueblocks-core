@@ -273,9 +273,6 @@ bool COptions::handle_sdk_go_outersdk(void) {
             if (member.generate == "config") {
                 continue;
             }
-            if (!member.is_visible_docs) {  //  && !containsI(member.longName, "cache")) {
-                continue;
-            }
 
             bool isOne = member.api_route == ep.api_route && member.isChifraRoute(true);
             if (isOne) {
@@ -323,15 +320,15 @@ bool COptions::handle_sdk_go_outersdk(void) {
         string_q package = toLower(ep.api_route) + (toLower(ep.api_route) == "init" ? "Pkg" : "");
         string_q contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
         contents = substitute(contents, "[{FIELDS}]", fields.str());
-        contents = substitute(contents, "[{ENUMS}]", enums.str() == "" ? "// No enums\n\n" : enums.str());
+        contents = substitute(contents, "[{ENUMS1}]", enums.str() == "" ? "// No enums\n\n" : enums.str());
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);
         if (enumsThing.str() == "") {
-            contents = substitute(substitute(contents, "[{ENUMTHING}]", "\t// No enums\n\n"), "opts, ok := target.(*",
+            contents = substitute(substitute(contents, "[{ENUMS2}]", "\t// No enums\n\n"), "opts, ok := target.(*",
                                   "_, ok := target.(*");
         } else {
-            contents = substitute(contents, "[{ENUMTHING}]", "\tswitch key {\n" + enumsThing.str() + "\t}\n");
+            contents = substitute(contents, "[{ENUMS2}]", "\tswitch key {\n" + enumsThing.str() + "\t}\n");
         }
 
         codewrite_t cw(path + ep.api_route + ".go", contents);

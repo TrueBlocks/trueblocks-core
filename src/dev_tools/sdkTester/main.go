@@ -256,6 +256,7 @@ func (t *TestCase) Clean() string {
 }
 
 func init() {
+	os.Setenv("NO_USERQUERY", "true")
 	os.Setenv("TEST_MODE", "true")
 	os.Setenv("NO_COLOR", "true")
 	colors.ColorsOff()

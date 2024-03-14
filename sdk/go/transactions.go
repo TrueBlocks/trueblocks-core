@@ -29,12 +29,9 @@ type TransactionsOptions struct {
 	Logs           bool             `json:"logs,omitempty"`
 	Emitter        []string         `json:"emitter,omitempty"`
 	Topic          []string         `json:"topic,omitempty"`
+	CacheTraces    bool             `json:"cacheTraces,omitempty"`
+	Seed           bool             `json:"seed,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	CacheTraces bool `json:"cacheTraces,omitempty"`
-	// Seed           bool             `json:"seed,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -49,9 +46,6 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting transactions struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return transactions.Transactions(w, values)
 }
@@ -87,9 +81,6 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	if err := assignValuesFromArgs(args, transactionsParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return &opts, nil
 }
@@ -142,7 +133,4 @@ func enumFromTransactionsFlow(values []string) (TransactionsFlow, error) {
 
 	return result, nil
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
 

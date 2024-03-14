@@ -15,6 +15,7 @@ import (
 	"io"
 	"log"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -24,15 +25,12 @@ type WhenOptions struct {
 	List       bool        `json:"list,omitempty"`
 	Timestamps bool        `json:"timestamps,omitempty"`
 	Count      bool        `json:"count,omitempty"`
+	Truncate   base.Blknum `json:"truncate,omitempty"`
 	Repair     bool        `json:"repair,omitempty"`
 	Check      bool        `json:"check,omitempty"`
 	Update     bool        `json:"update,omitempty"`
 	Deep       bool        `json:"deep,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// Truncate   base.Blknum `json:"truncate,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -47,9 +45,6 @@ func (opts *WhenOptions) When(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting when struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return when.When(w, values)
 }
@@ -77,14 +72,8 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 

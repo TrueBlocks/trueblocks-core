@@ -23,13 +23,10 @@ import (
 type InitOptions struct {
 	All        bool         `json:"all,omitempty"`
 	DryRun     bool         `json:"dryRun,omitempty"`
+	Publisher  base.Address `json:"publisher,omitempty"`
 	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
 	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// Publisher  base.Address `json:"publisher,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -44,9 +41,6 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting init struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return initPkg.Init(w, values)
 }
@@ -74,14 +68,8 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 

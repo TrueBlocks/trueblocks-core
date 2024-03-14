@@ -30,13 +30,10 @@ type ListOptions struct {
 	FirstRecord uint64       `json:"firstRecord,omitempty"`
 	MaxRecords  uint64       `json:"maxRecords,omitempty"`
 	Reversed    bool         `json:"reversed,omitempty"`
+	Publisher   base.Address `json:"publisher,omitempty"`
 	FirstBlock  base.Blknum  `json:"firstBlock,omitempty"`
 	LastBlock   base.Blknum  `json:"lastBlock,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// Publisher   base.Address `json:"publisher,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -51,9 +48,6 @@ func (opts *ListOptions) List(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting list struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return list.List(w, values)
 }
@@ -81,14 +75,8 @@ func GetListOptions(args []string) (*ListOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 

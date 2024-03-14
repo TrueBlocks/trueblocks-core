@@ -30,12 +30,9 @@ type MonitorsOptions struct {
 	Watchlist string   `json:"watchlist,omitempty"`
 	Commands  string   `json:"commands,omitempty"`
 	BatchSize uint64   `json:"batchSize,omitempty"`
+	RunCount  uint64   `json:"runCount,omitempty"`
 	Sleep     float64  `json:"sleep,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// RunCount  uint64   `json:"runCount,omitempty"`
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -50,9 +47,6 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting monitors struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return monitors.Monitors(w, values)
 }
@@ -80,14 +74,8 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 

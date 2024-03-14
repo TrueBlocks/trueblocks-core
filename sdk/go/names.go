@@ -39,9 +39,6 @@ type NamesOptions struct {
 	Undelete  bool         `json:"undelete,omitempty"`
 	Remove    bool         `json:"remove,omitempty"`
 	Globals
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 }
 
 // String implements the stringer interface
@@ -56,9 +53,6 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 	if err != nil {
 		log.Fatalf("Error converting names struct to URL values: %v", err)
 	}
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	return names.Names(w, values)
 }
@@ -86,14 +80,8 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 		return nil, err
 	}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	return &opts, nil
 }
 
 // No enums
-
-// EXISTING_CODE
-// EXISTING_CODE
 
