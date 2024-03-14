@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"strings"
 
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -37,20 +37,13 @@ func (opts *ConfigOptions) String() string {
 
 // Config implements the chifra config command for the SDK.
 func (opts *ConfigOptions) Config(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting config struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	if opts.Mode.String() == "edit" {
-		return fmt.Errorf("edit mode not implemented in sdk")
-	}
-	if opts.Mode != NoCM1 {
-		values.Set("mode", opts.Mode.String())
-	}
-	if opts.Paths {
-		values.Set("paths", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return config.Config(w, values)
 }
@@ -135,14 +128,9 @@ func enumFromConfigMode(values []string) (ConfigMode, error) {
 		case "edit":
 			result |= CMEdit
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoCM1, fmt.Errorf("unknown mode: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }

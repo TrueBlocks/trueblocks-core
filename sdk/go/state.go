@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -44,41 +44,13 @@ func (opts *StateOptions) String() string {
 
 // State implements the chifra state command for the SDK.
 func (opts *StateOptions) State(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting state struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.Addrs {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("addrs", item)
-		}
-	}
-	for _, v := range opts.BlockIds {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("blocks", item)
-		}
-	}
-	if opts.Parts != NoSP {
-		values.Set("parts", opts.Parts.String())
-	}
-	if opts.Changes {
-		values.Set("changes", "true")
-	}
-	if opts.NoZero {
-		values.Set("noZero", "true")
-	}
-	if opts.Call != "" {
-		values.Set("call", opts.Call)
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if !opts.ProxyFor.IsZero() {
-		values.Set("proxyFor", opts.ProxyFor.String())
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return state.State(w, values)
 }
@@ -128,15 +100,15 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 type StateParts int
 
 const (
-	NoSP StateParts = 0
-	SPBalance = 1 << iota
+	NoSP      StateParts = 0
+	SPBalance            = 1 << iota
 	SPNonce
 	SPCode
 	SPProxy
 	SPDeployed
 	SPAccttype
 	SPSome = SPBalance | SPProxy | SPDeployed | SPAccttype
-	SPAll = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
+	SPAll  = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
 )
 
 func (v StateParts) String() string {
@@ -150,10 +122,10 @@ func (v StateParts) String() string {
 	}
 
 	var m = map[StateParts]string{
-		SPBalance: "balance",
-		SPNonce: "nonce",
-		SPCode: "code",
-		SPProxy: "proxy",
+		SPBalance:  "balance",
+		SPNonce:    "nonce",
+		SPCode:     "code",
+		SPProxy:    "proxy",
 		SPDeployed: "deployed",
 		SPAccttype: "accttype",
 	}
@@ -195,18 +167,12 @@ func enumFromStateParts(values []string) (StateParts, error) {
 		case "accttype":
 			result |= SPAccttype
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoSP, fmt.Errorf("unknown parts: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"strings"
 
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -52,68 +52,13 @@ func (opts *BlocksOptions) String() string {
 
 // Blocks implements the chifra blocks command for the SDK.
 func (opts *BlocksOptions) Blocks(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting blocks struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, blockId := range opts.BlockIds {
-		items := strings.Split(blockId, " ")
-		for _, item := range items {
-			values.Add("blocks", item)
-		}
-	}
-	if opts.Hashes {
-		values.Set("hashes", "true")
-	}
-	if opts.Uncles {
-		values.Set("uncles", "true")
-	}
-	if opts.Traces {
-		values.Set("traces", "true")
-	}
-	if opts.Uniq {
-		values.Set("uniq", "true")
-	}
-	if opts.Flow != NoBF {
-		values.Set("flow", opts.Flow.String())
-	}
-	if opts.Logs {
-		values.Set("logs", "true")
-	}
-	for _, emitter := range opts.Emitter {
-		items := strings.Split(emitter, " ")
-		for _, item := range items {
-			values.Add("emitter", item)
-		}
-	}
-	for _, topic := range opts.Topic {
-		values.Add("topic", topic)
-	}
-	if opts.Withdrawals {
-		values.Set("withdrawals", "true")
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if opts.BigRange > 0 {
-		values.Set("bigRange", fmt.Sprintf("%d", opts.BigRange))
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.List > 0 {
-		values.Set("list", fmt.Sprintf("%d", opts.List))
-	}
-	if opts.ListCount > 0 {
-		values.Set("listCount", fmt.Sprintf("%d", opts.ListCount))
-	}
-	if opts.CacheTxs {
-		values.Set("cacheTxs", "true")
-	}
-	if opts.CacheTraces {
-		values.Set("cacheTraces", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return blocks.Blocks(w, values)
 }
@@ -202,14 +147,9 @@ func enumFromBlocksFlow(values []string) (BlocksFlow, error) {
 		case "reward":
 			result |= BFReward
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoBF, fmt.Errorf("unknown flow: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }

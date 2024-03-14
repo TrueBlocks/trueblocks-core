@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"strings"
 
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -45,41 +45,13 @@ func (opts *SlurpOptions) String() string {
 
 // Slurp implements the chifra slurp command for the SDK.
 func (opts *SlurpOptions) Slurp(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting slurp struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.Addrs {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("addrs", item)
-		}
-	}
-	for _, v := range opts.BlockIds {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("blocks", item)
-		}
-	}
-	if opts.Types != NoST {
-		values.Set("types", opts.Types.String())
-	}
-	if opts.Appearances {
-		values.Set("appearances", "true")
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if opts.Source != NoSS {
-		values.Set("source", opts.Source.String())
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.Sleep > 0 {
-		values.Set("sleep", fmt.Sprint(opts.Sleep))
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return slurp.Slurp(w, values)
 }
@@ -208,14 +180,9 @@ func enumFromSlurpTypes(values []string) (SlurpTypes, error) {
 		case "withdrawals":
 			result |= STWithdrawals
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoST, fmt.Errorf("unknown types: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }
@@ -262,14 +229,9 @@ func enumFromSlurpSource(values []string) (SlurpSource, error) {
 		case "key":
 			result |= SSKey
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoSS, fmt.Errorf("unknown source: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }

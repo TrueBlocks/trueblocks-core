@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"strings"
 
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -40,26 +40,13 @@ func (opts *StatusOptions) String() string {
 
 // Status implements the chifra status command for the SDK.
 func (opts *StatusOptions) Status(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting status struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	if opts.Modes != NoSM {
-		values.Set("modes", opts.Modes.String())
-	}
-	if opts.Diagnose {
-		values.Set("diagnose", "true")
-	}
-	if opts.FirstRecord != 0 {
-		values.Set("firstRecord", fmt.Sprintf("%d", opts.FirstRecord))
-	}
-	if opts.MaxRecords != 0 {
-		values.Set("maxRecords", fmt.Sprintf("%d", opts.MaxRecords))
-	}
-	if opts.Chains {
-		values.Set("chains", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return status.Status(w, values)
 }
@@ -216,14 +203,9 @@ func enumFromStatusModes(values []string) (StatusModes, error) {
 		case "maps":
 			result |= SMMaps
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoSM, fmt.Errorf("unknown modes: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }

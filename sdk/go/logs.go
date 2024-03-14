@@ -13,8 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
-	"strings"
+	"log"
 
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -39,32 +38,13 @@ func (opts *LogsOptions) String() string {
 
 // Logs implements the chifra logs command for the SDK.
 func (opts *LogsOptions) Logs(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting logs struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.TransactionIds {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("transactions", item)
-		}
-	}
-	for _, v := range opts.Emitter {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("emitter", item)
-		}
-	}
-	for _, v := range opts.Topic {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("topic", item)
-		}
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return logs.Logs(w, values)
 }

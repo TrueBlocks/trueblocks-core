@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"os"
 	"strings"
 
@@ -67,117 +67,14 @@ func (opts *ExportOptions) String() string {
 
 // Export implements the chifra export command for the SDK.
 func (opts *ExportOptions) Export(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting export struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
 	os.Setenv("NO_USERQUERY", "true")
-	for _, v := range opts.Addrs {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("addrs", item)
-		}
-	}
-	for _, v := range opts.Topics {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("topics", item)
-		}
-	}
-	for _, v := range opts.Fourbytes {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("fourbytes", item)
-		}
-	}
-	if opts.Appearances {
-		values.Set("appearances", "true")
-	}
-	if opts.Receipts {
-		values.Set("receipts", "true")
-	}
-	if opts.Logs {
-		values.Set("logs", "true")
-	}
-	if opts.Traces {
-		values.Set("traces", "true")
-	}
-	if opts.Neighbors {
-		values.Set("neighbors", "true")
-	}
-	if opts.Accounting {
-		values.Set("accounting", "true")
-	}
-	if opts.Statements {
-		values.Set("statements", "true")
-	}
-	if opts.Balances {
-		values.Set("balances", "true")
-	}
-	if opts.Withdrawals {
-		values.Set("withdrawals", "true")
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if opts.CacheTraces {
-		values.Set("cacheTraces", "true")
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.FirstRecord > 0 {
-		values.Set("firstRecord", fmt.Sprintf("%d", opts.FirstRecord))
-	}
-	if opts.MaxRecords > 0 {
-		values.Set("maxRecords", fmt.Sprintf("%d", opts.MaxRecords))
-	}
-	if opts.Relevant {
-		values.Set("relevant", "true")
-	}
-	for _, v := range opts.Emitter {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("emitter", item)
-		}
-	}
-	for _, v := range opts.Topic {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("topic", item)
-		}
-	}
-	if opts.Reverted {
-		values.Set("reverted", "true")
-	}
-	for _, v := range opts.Asset {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("asset", item)
-		}
-	}
-	if opts.Flow != NoEF {
-		values.Set("flow", opts.Flow.String())
-	}
-	if opts.Factory {
-		values.Set("factory", "true")
-	}
-	if opts.Unripe {
-		values.Set("unripe", "true")
-	}
-	if opts.Reversed {
-		values.Set("reversed", "true")
-	}
-	if opts.NoZero {
-		values.Set("noZero", "true")
-	}
-	if opts.FirstBlock > 0 {
-		values.Set("firstBlock", fmt.Sprintf("%d", opts.FirstBlock))
-	}
-	if opts.LastBlock > 0 {
-		values.Set("lastBlock", fmt.Sprintf("%d", opts.LastBlock))
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return export.Export(w, values)
 }
@@ -266,14 +163,9 @@ func enumFromExportFlow(values []string) (ExportFlow, error) {
 		case "zero":
 			result |= EFZero
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoEF, fmt.Errorf("unknown flow: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }

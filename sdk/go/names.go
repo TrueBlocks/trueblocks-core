@@ -13,8 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
-	"strings"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -53,65 +52,13 @@ func (opts *NamesOptions) String() string {
 
 // Names implements the chifra names command for the SDK.
 func (opts *NamesOptions) Names(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting names struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.Terms {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("terms", item)
-		}
-	}
-	if opts.Expand {
-		values.Set("expand", "true")
-	}
-	if opts.MatchCase {
-		values.Set("matchCase", "true")
-	}
-	if opts.All {
-		values.Set("all", "true")
-	}
-	if opts.Custom {
-		values.Set("custom", "true")
-	}
-	if opts.Prefund {
-		values.Set("prefund", "true")
-	}
-	if opts.Addr {
-		values.Set("addr", "true")
-	}
-	if opts.Tags {
-		values.Set("tags", "true")
-	}
-	if opts.Clean {
-		values.Set("clean", "true")
-	}
-	if opts.Regular {
-		values.Set("regular", "true")
-	}
-	if opts.DryRun {
-		values.Set("dryRun", "true")
-	}
-	if !opts.Autoname.IsZero() {
-		values.Set("autoname", opts.Autoname.String())
-	}
-	if opts.Create {
-		values.Set("create", "true")
-	}
-	if opts.Update {
-		values.Set("update", "true")
-	}
-	if opts.Delete {
-		values.Set("delete", "true")
-	}
-	if opts.Undelete {
-		values.Set("undelete", "true")
-	}
-	if opts.Remove {
-		values.Set("remove", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return names.Names(w, values)
 }

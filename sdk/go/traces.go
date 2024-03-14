@@ -13,8 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
-	"strings"
+	"log"
 
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -39,26 +38,13 @@ func (opts *TracesOptions) String() string {
 
 // Traces implements the chifra traces command for the SDK.
 func (opts *TracesOptions) Traces(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting traces struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.TransactionIds {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("transactions", item)
-		}
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if opts.Filter != "" {
-		values.Set("filter", opts.Filter)
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return traces.Traces(w, values)
 }

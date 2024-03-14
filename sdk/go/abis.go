@@ -13,8 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
-	"strings"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -42,38 +41,13 @@ func (opts *AbisOptions) String() string {
 
 // Abis implements the chifra abis command for the SDK.
 func (opts *AbisOptions) Abis(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting abis struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, addr := range opts.Addrs {
-		items := strings.Split(addr, " ")
-		for _, item := range items {
-			values.Add("addrs", item)
-		}
-	}
-	if opts.Known {
-		values.Set("known", "true")
-	}
-	if !opts.ProxyFor.IsZero() {
-		values.Set("proxyFor", opts.ProxyFor.Hex())
-	}
-	for _, find := range opts.Find {
-		items := strings.Split(find, " ")
-		for _, item := range items {
-			values.Add("find", item)
-		}
-	}
-	for _, hint := range opts.Hint {
-		items := strings.Split(hint, " ")
-		for _, item := range items {
-			values.Add("hint", item)
-		}
-	}
-	if opts.Encode != "" {
-		values.Set("encode", opts.Encode)
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return abis.Abis(w, values)
 }
@@ -116,4 +90,3 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

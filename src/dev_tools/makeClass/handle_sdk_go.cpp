@@ -148,14 +148,9 @@ string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCo
         "	for _, val := range values {\n"
         "		switch val {\n"
         "[{CASES}]		default:\n"
-        "			// JIMMYJAM\n"
-        "			// JIMMYJAM\n"
         "			return [{none}], fmt.Errorf(\"unknown [{LNAME}]: %s\", val)\n"
         "		}\n"
         "	}\n"
-        "\n"
-        "	// JIMMYJAM\n"
-        "	// JIMMYJAM\n"
         "\n"
         "	return result, nil\n"
         "}\n";
@@ -327,7 +322,6 @@ bool COptions::handle_sdk_go_outersdk(void) {
 
         string_q package = toLower(ep.api_route) + (toLower(ep.api_route) == "init" ? "Pkg" : "");
         string_q contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
-        contents = substitute(contents, "[{CODE}]", "");
         contents = substitute(contents, "[{FIELDS}]", fields.str());
         contents = substitute(contents, "[{ENUMS}]", enums.str() == "" ? "// No enums\n\n" : enums.str());
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));

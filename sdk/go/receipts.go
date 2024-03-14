@@ -13,8 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
-	"strings"
+	"log"
 
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -37,20 +36,13 @@ func (opts *ReceiptsOptions) String() string {
 
 // Receipts implements the chifra receipts command for the SDK.
 func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting receipts struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.TransactionIds {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("transactions", item)
-		}
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return receipts.Receipts(w, values)
 }

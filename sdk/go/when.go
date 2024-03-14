@@ -13,8 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
-	"strings"
+	"log"
 
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -44,38 +43,13 @@ func (opts *WhenOptions) String() string {
 
 // When implements the chifra when command for the SDK.
 func (opts *WhenOptions) When(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting when struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, blockId := range opts.BlockIds {
-		items := strings.Split(blockId, " ")
-		for _, item := range items {
-			values.Add("blocks", item)
-		}
-	}
-	if opts.List {
-		values.Set("list", "true")
-	}
-	if opts.Timestamps {
-		values.Set("timestamps", "true")
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.Repair {
-		values.Set("repair", "true")
-	}
-	if opts.Check {
-		values.Set("check", "true")
-	}
-	if opts.Update {
-		values.Set("update", "true")
-	}
-	if opts.Deep {
-		values.Set("deep", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return when.When(w, values)
 }

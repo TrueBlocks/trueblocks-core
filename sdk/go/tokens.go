@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"strings"
 
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -41,35 +41,13 @@ func (opts *TokensOptions) String() string {
 
 // Tokens implements the chifra tokens command for the SDK.
 func (opts *TokensOptions) Tokens(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting tokens struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.Addrs {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("addrs", item)
-		}
-	}
-	for _, v := range opts.BlockIds {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("blocks", item)
-		}
-	}
-	if opts.Parts != NoTP {
-		values.Set("parts", opts.Parts.String())
-	}
-	if opts.ByAcct {
-		values.Set("byAcct", "true")
-	}
-	if opts.Changes {
-		values.Set("changes", "true")
-	}
-	if opts.NoZero {
-		values.Set("noZero", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return tokens.Tokens(w, values)
 }
@@ -178,14 +156,9 @@ func enumFromTokensParts(values []string) (TokensParts, error) {
 		case "version":
 			result |= TPVersion
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoTP, fmt.Errorf("unknown parts: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }

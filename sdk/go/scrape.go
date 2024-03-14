@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 
 	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -40,20 +40,13 @@ func (opts *ScrapeOptions) String() string {
 
 // Scrape implements the chifra scrape command for the SDK.
 func (opts *ScrapeOptions) Scrape(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting scrape struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	if opts.BlockCnt != 0 {
-		values.Set("block_cnt", fmt.Sprint(opts.BlockCnt))
-	}
-	if opts.Sleep != 0 {
-		values.Set("sleep", fmt.Sprint(opts.Sleep))
-	}
-	if opts.Touch != 0 {
-		values.Set("touch", fmt.Sprint(opts.Touch))
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return scrape.Scrape(w, values)
 }

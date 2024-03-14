@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"strings"
 
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -45,47 +45,13 @@ func (opts *TransactionsOptions) String() string {
 
 // Transactions implements the chifra transactions command for the SDK.
 func (opts *TransactionsOptions) Transactions(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting transactions struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.TransactionIds {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("transactions", item)
-		}
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if opts.Traces {
-		values.Set("traces", "true")
-	}
-	if opts.Uniq {
-		values.Set("uniq", "true")
-	}
-	if opts.Flow != NoTF {
-		values.Set("flow", opts.Flow.String())
-	}
-	if opts.Logs {
-		values.Set("logs", "true")
-	}
-	for _, v := range opts.Emitter {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("emitter", item)
-		}
-	}
-	for _, v := range opts.Topic {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("topic", item)
-		}
-	}
-	if opts.CacheTraces {
-		values.Set("cacheTraces", "true")
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return transactions.Transactions(w, values)
 }
@@ -170,14 +136,9 @@ func enumFromTransactionsFlow(values []string) (TransactionsFlow, error) {
 		case "to":
 			result |= TFTo
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoTF, fmt.Errorf("unknown flow: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }

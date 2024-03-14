@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -56,59 +56,13 @@ func (opts *ChunksOptions) String() string {
 
 // Chunks implements the chifra chunks command for the SDK.
 func (opts *ChunksOptions) Chunks(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting chunks struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	if opts.Mode != NoCM2 {
-		values.Set("mode", opts.Mode.String())
-	}
-	for _, v := range opts.BlockIds {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("blocks", item)
-		}
-	}
-	if opts.Check {
-		values.Set("check", "true")
-	}
-	if opts.Pin {
-		values.Set("pin", "true")
-	}
-	if opts.Publish {
-		values.Set("publish", "true")
-	}
-	if opts.Remote {
-		values.Set("remote", "true")
-	}
-	for _, v := range opts.Belongs {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("belongs", item)
-		}
-	}
-	if opts.FirstBlock > 0 {
-		values.Set("first_block", fmt.Sprint(opts.FirstBlock))
-	}
-	if opts.LastBlock > 0 {
-		values.Set("last_block", fmt.Sprint(opts.LastBlock))
-	}
-	if opts.MaxAddrs > 0 {
-		values.Set("max_addrs", fmt.Sprint(opts.MaxAddrs))
-	}
-	if opts.Deep {
-		values.Set("deep", "true")
-	}
-	if opts.Rewrite {
-		values.Set("rewrite", "true")
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.Sleep > 0 {
-		values.Set("sleep", fmt.Sprint(opts.Sleep))
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return chunks.Chunks(w, values)
 }
@@ -213,14 +167,9 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 		case "stats":
 			result |= CMStats
 		default:
-			// JIMMYJAM
-			// JIMMYJAM
 			return NoCM2, fmt.Errorf("unknown mode: %s", val)
 		}
 	}
-
-	// JIMMYJAM
-	// JIMMYJAM
 
 	return result, nil
 }

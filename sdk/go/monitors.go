@@ -13,8 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
-	"strings"
+	"log"
 
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
@@ -47,47 +46,13 @@ func (opts *MonitorsOptions) String() string {
 
 // Monitors implements the chifra monitors command for the SDK.
 func (opts *MonitorsOptions) Monitors(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting monitors struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.Addrs {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("addrs", item)
-		}
-	}
-	if opts.Delete {
-		values.Set("delete", "true")
-	}
-	if opts.Undelete {
-		values.Set("undelete", "true")
-	}
-	if opts.Remove {
-		values.Set("remove", "true")
-	}
-	if opts.Clean {
-		values.Set("clean", "true")
-	}
-	if opts.List {
-		values.Set("list", "true")
-	}
-	if opts.Watch {
-		values.Set("watch", "true")
-	}
-	if opts.Watchlist != "" {
-		values.Set("watchlist", opts.Watchlist)
-	}
-	if opts.Commands != "" {
-		values.Set("commands", opts.Commands)
-	}
-	if opts.BatchSize > 0 {
-		values.Set("batch_size", fmt.Sprint(opts.BatchSize))
-	}
-	if opts.Sleep > 0 {
-		values.Set("sleep", fmt.Sprint(opts.Sleep))
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return monitors.Monitors(w, values)
 }

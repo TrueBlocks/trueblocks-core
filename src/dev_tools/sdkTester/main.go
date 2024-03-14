@@ -168,7 +168,8 @@ func processCSVFile(filePath string) {
 	if nTested != nPassed {
 		msg = cm["redX"]
 	}
-	fmt.Println(colors.White, "    Passed", nPassed, "of", nTested, "tests.", msg, colors.Off, strings.Repeat(" ", utils.Max(0, 90)), "\n")
+	fmt.Println(colors.White, "    Passed", nPassed, "of", nTested, "tests.", msg, colors.Off, strings.Repeat(" ", utils.Max(0, 90)))
+	fmt.Println()
 }
 
 func preClean(rawURL string) string {
@@ -295,7 +296,7 @@ func (t *TestCase) RunTest(i, n int) (bool, bool) {
 			break
 		}
 	}
-	// interesting = t.Route == "status" && t.Original.Filename == "explorer_3"
+	// interesting = t.Route == "init" && t.Original.Filename == "fmt_txt"
 	if !interesting {
 		return false, false
 	}

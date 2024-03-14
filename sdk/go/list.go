@@ -13,8 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
-	"strings"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -48,50 +47,13 @@ func (opts *ListOptions) String() string {
 
 // List implements the chifra list command for the SDK.
 func (opts *ListOptions) List(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting list struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	for _, v := range opts.Addrs {
-		items := strings.Split(v, " ")
-		for _, item := range items {
-			values.Add("addrs", item)
-		}
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.NoZero {
-		values.Set("noZero", "true")
-	}
-	if opts.Bounds {
-		values.Set("bounds", "true")
-	}
-	if opts.Unripe {
-		values.Set("unripe", "true")
-	}
-	if opts.Silent {
-		values.Set("silent", "true")
-	}
-	if opts.FirstRecord != 0 {
-		values.Set("firstRecord", fmt.Sprint(opts.FirstRecord))
-	}
-	if opts.MaxRecords != 0 {
-		values.Set("maxRecords", fmt.Sprint(opts.MaxRecords))
-	}
-	if opts.Reversed {
-		values.Set("reversed", "true")
-	}
-	// if opts.Publisher != "" {
-	// 	values.Set("publisher", opts.Publisher)
-	// }
-	if opts.FirstBlock > 0 {
-		values.Set("firstBlock", fmt.Sprint(opts.FirstBlock))
-	}
-	if opts.LastBlock > 0 {
-		values.Set("lastBlock", fmt.Sprint(opts.LastBlock))
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return list.List(w, values)
 }

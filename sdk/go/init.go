@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -40,23 +40,13 @@ func (opts *InitOptions) String() string {
 
 // Init implements the chifra init command for the SDK.
 func (opts *InitOptions) Init(w io.Writer) error {
-	values := make(url.Values)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting init struct to URL values: %v", err)
+	}
 
 	// EXISTING_CODE
-	if opts.All {
-		values.Set("all", "true")
-	}
-	if opts.DryRun {
-		values.Set("dry_run", "true")
-	}
-	if opts.FirstBlock != 0 {
-		values.Set("first_block", fmt.Sprintf("%d", opts.FirstBlock))
-	}
-	if opts.Sleep != 0 {
-		values.Set("sleep", fmt.Sprint(opts.Sleep))
-	}
 	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return initPkg.Init(w, values)
 }
