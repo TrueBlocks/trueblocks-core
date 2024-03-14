@@ -18,7 +18,7 @@ import (
 
 // Traces provides an interface to the command line chifra traces through the SDK.
 func Traces(w io.Writer, values url.Values) error {
-	traces.ResetOptions(false)
+	traces.ResetOptions(sdkTestMode)
 	opts := traces.TracesFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("traces", true)
 	// EXISTING_CODE

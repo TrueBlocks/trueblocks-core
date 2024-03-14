@@ -18,7 +18,7 @@ import (
 
 // Explore provides an interface to the command line chifra explore through the SDK.
 func Explore(w io.Writer, values url.Values) error {
-	explore.ResetOptions(false)
+	explore.ResetOptions(sdkTestMode)
 	opts := explore.ExploreFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("explore", true)
 	// EXISTING_CODE
@@ -32,4 +32,3 @@ func Explore(w io.Writer, values url.Values) error {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

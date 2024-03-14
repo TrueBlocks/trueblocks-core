@@ -18,7 +18,7 @@ import (
 
 // Export provides an interface to the command line chifra export through the SDK.
 func Export(w io.Writer, values url.Values) error {
-	export.ResetOptions(false)
+	export.ResetOptions(sdkTestMode)
 	opts := export.ExportFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("export", true)
 	// EXISTING_CODE

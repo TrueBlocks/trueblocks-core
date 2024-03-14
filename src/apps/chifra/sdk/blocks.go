@@ -18,7 +18,7 @@ import (
 
 // Blocks provides an interface to the command line chifra blocks through the SDK.
 func Blocks(w io.Writer, values url.Values) error {
-	blocks.ResetOptions(false)
+	blocks.ResetOptions(sdkTestMode)
 	opts := blocks.BlocksFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("blocks", true)
 	// EXISTING_CODE
