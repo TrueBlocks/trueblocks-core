@@ -61,7 +61,7 @@ on      ,both ,fast  ,list     ,apps/acctExport ,caps_allowed_l           ,y    
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_1_l      ,y    ,addrs = trueblocks.eth & cache
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_2_l      ,y    ,addrs = trueblocks.eth & raw
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_3_l      ,y    ,addrs = trueblocks.eth & ether
-on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l      ,y    ,addrs = trueblocks.eth & wei
+on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_4_l      ,y    ,addrs = trueblocks.eth & wei & max_records = 10
 on      ,both ,fast  ,list     ,apps/acctExport ,caps_disallowed_5_l      ,y    ,addrs = trueblocks.eth & decache
 
 # Not tested for chifra list
@@ -320,5 +320,5 @@ statbad ,both ,fast  ,export   ,apps/acctExport ,statement_forward        ,y    
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & raw & ether
 on      ,both ,fast  ,export   ,apps/acctExport ,caps_allowed_e           ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether & fail_on_purpose
-on      ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_1_e      ,y    ,addrs = trueblocks.eth & raw
-on      ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_2_e      ,y    ,addrs = trueblocks.eth & wei
+on      ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_1_e      ,y    ,addrs = trueblocks.eth & raw & max_records = 3
+on      ,both ,fast  ,export   ,apps/acctExport ,caps_disallowed_2_e      ,y    ,addrs = trueblocks.eth & wei & max_records = 3

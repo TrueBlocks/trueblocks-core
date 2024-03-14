@@ -806,7 +806,7 @@ void COptionsBase::closeRedirect(void) {
                 // only report if the user isn't in API mode
                 break;
             default:
-                cout << "{ \"outputFilename\": \"" << outFn << "\" }";
+                cerr << "{ \"outputFilename\": \"" << outFn << "\" }";
                 break;
         }
 

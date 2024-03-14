@@ -76,7 +76,7 @@ func (opts *SlurpOptions) HandleAppearancesKey() error {
 						sleep := opts.Sleep
 						if sleep > 0 {
 							ms := time.Duration(sleep*1000) * time.Millisecond
-							logger.Progress(!opts.Globals.TestMode, fmt.Sprintf("Sleeping for %g seconds", sleep))
+							logger.Progress(true, fmt.Sprintf("Sleeping for %g seconds", sleep))
 							time.Sleep(ms)
 						}
 					}
