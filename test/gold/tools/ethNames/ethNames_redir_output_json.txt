@@ -2,7 +2,7 @@ chifra names  0x1234 --output output_file.json
 TEST[DATE|TIME] Terms:  [0x1234]
 TEST[DATE|TIME] OutputFn:  output_file.json
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 ----
 Results in ./output_file.json
 {

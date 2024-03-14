@@ -49,7 +49,7 @@ func (opts *AbisOptions) HandleAbiFind() error {
 				str, _ := hex.DecodeString(arg[2:])
 				if bytes.Equal(sigBytes[:len(str)], str) {
 					scanBar.Found++
-					logger.Progress(!testMode || len(opts.Find) < 2, "Found", scanBar.Found, "of", scanBar.Wanted, arg, testSig)
+					logger.Progress(len(opts.Find) < 2, "Found", scanBar.Found, "of", scanBar.Wanted, arg, testSig)
 					found := types.SimpleFunction{Encoding: arg, Signature: testSig.(string)}
 					if testMode {
 						mutex.Lock()
