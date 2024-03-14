@@ -20,8 +20,9 @@ func (opts *AbisOptions) HandleMany() (err error) {
 		for _, addr := range opts.Addrs {
 			abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
 			address := base.HexToAddress(addr)
-			if len(opts.ProxyFor) > 0 {
-				address = base.HexToAddress(opts.ProxyFor)
+			proxy := base.HexToAddress(opts.ProxyFor)
+			if !proxy.IsZero() {
+				address = proxy
 			}
 			err = abi.LoadAbi(opts.Conn, address, &abiCache.AbiMap)
 			if err != nil {
