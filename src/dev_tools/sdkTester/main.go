@@ -18,17 +18,16 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var pathToTests = []string{
-	"../src/dev_tools/testRunner/testCases/tools",
-	"../src/dev_tools/testRunner/testCases/apps",
-	// "../src/dev_tools/testRunner/testCases/dev_tools",
-}
-
 var interactiveTests = false
 
+var pathToTests = []string{
+	"../src/dev_tools/testRunner/testCases/apps",
+	"../src/dev_tools/testRunner/testCases/tools",
+}
+
 var pathToTestsTesting = []string{
-	"../testRunner/testCases/tools",
 	"../testRunner/testCases/apps",
+	"../testRunner/testCases/tools",
 }
 
 func main() {
@@ -148,8 +147,11 @@ func processCSVFile(filePath string) {
 		}
 	}
 
+	nPassed := 0
 	for i, testCase := range testCases {
-		testCase.RunTest(i, len(testCases))
+		if testCase.RunTest(i, len(testCases)) {
+			nPassed++
+		}
 	}
 }
 
@@ -242,33 +244,33 @@ func init() {
 	colors.ColorsOff()
 }
 
-func (t *TestCase) RunTest(id, cnt int) {
+func (t *TestCase) RunTest(id, cnt int) bool {
 	if !t.Enabled {
-		return
+		return false
 	}
 
 	testing := []string{
-		//- "list",
+		"list",
 		"export",
-		//- "monitors",
-		//- "config",
+		"monitors",
+		"config",
 		//- "status",
-		//- "daemon",
-		//- "scrape",
-		//- "chunks",
-		//- "init",
-		//- "explore",
-		// "names",
-		// "slurp",
-		//- "abis",
-		//- "blocks",
-		//- "transactions",
-		//- "receipts",
-		//- "logs",
-		//- "state",
-		//- "tokens",
-		//- "traces",
-		//- "when",
+		"daemon",
+		"scrape",
+		"chunks",
+		"init",
+		"explore",
+		//- "names",
+		//- "slurp",
+		"abis",
+		"blocks",
+		"transactions",
+		"receipts",
+		"logs",
+		"state",
+		"tokens",
+		"traces",
+		"when",
 	}
 	interesting := false
 	for _, test := range testing {
@@ -279,33 +281,46 @@ func (t *TestCase) RunTest(id, cnt int) {
 	}
 	// interesting = t.Route == "status" && t.Original.Filename == "explorer_3"
 	if !interesting {
-		return
+		return false
 	}
+
+	parts := strings.Split(t.PathTool, "/")
+	if len(parts) != 2 {
+		fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)
+		return false
+	}
+
+	var ff *os.File
+	folder := t.WorkingPath
+	if !file.FolderExists(folder) {
+		file.EstablishFolder(folder)
+	}
+	fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
+	retVal := true
 
 	if interesting {
 		os.Setenv("TEST_MODE", "true")
 		logger.SetTestMode(true)
 		if !interactiveTests {
-			parts := strings.Split(t.PathTool, "/")
-			if len(parts) != 2 {
-				fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)
-				return
-			}
-
-			folder := t.WorkingPath
-			if !file.FolderExists(folder) {
-				file.EstablishFolder(folder)
-			}
-			fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
-
-			ff, _ := os.Create(fn)
+			ff, _ = os.Create(fn)
 			logger.SetLoggerWriter(ff)
 			logger.ToggleDecoration()
 			defer func() {
 				logger.ToggleDecoration()
 				logger.SetLoggerWriter(os.Stderr)
-				ff.Close()
-				fmt.Printf("% 4d of % 4d: %s...%s\r", id, cnt, fn, strings.Repeat(" ", utils.Max(0, 120-len(fn))))
+				cm := map[string]string{
+					"greenCheck":    "\033[32m✓\033[0m",
+					"yellowCaution": "\033[33m!!\033[0m",
+					"redX":          "\033[31mX\033[0m",
+					"whiteStar":     "\033[37m*\033[0m",
+				}
+				msg := cm["greenCheck"]
+				eol := "\r"
+				if !retVal {
+					msg = cm["redX"]
+					eol = "\n"
+				}
+				fmt.Printf("% 4d of % 4d: %s %s...%s%s", id, cnt, msg, fn, strings.Repeat(" ", utils.Max(0, 120-len(fn))), eol)
 			}()
 		}
 		logger.Info(t.Route + "?" + t.Cannonical)
@@ -334,4 +349,12 @@ func (t *TestCase) RunTest(id, cnt int) {
 		results = strings.Replace(results, "3735928559", "\"0xdeadbeef\"", -1)
 		logger.Info(results)
 	}
+
+	if ff != nil {
+		ff.Close()
+		newContents := file.AsciiFileToString(fn)
+		oldContents := file.AsciiFileToString(strings.Replace(fn, "working", "gold", -1))
+		retVal = newContents == oldContents
+	}
+	return retVal
 }

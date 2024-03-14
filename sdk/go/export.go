@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -69,6 +70,7 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 	values := make(url.Values)
 
 	// EXISTING_CODE
+	os.Setenv("NO_USERQUERY", "true")
 	for _, v := range opts.Addrs {
 		items := strings.Split(v, " ")
 		for _, item := range items {
@@ -118,7 +120,7 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 		values.Set("articulate", "true")
 	}
 	if opts.CacheTraces {
-		values.Set("cache_traces", "true")
+		values.Set("cacheTraces", "true")
 	}
 	if opts.Count {
 		values.Set("count", "true")
