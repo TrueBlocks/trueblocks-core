@@ -130,8 +130,8 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 type TransactionsFlow int
 
 const (
-	NoTF   TransactionsFlow = 0
-	TFFrom                  = 1 << iota
+	NoTF TransactionsFlow = 0
+	TFFrom = 1 << iota
 	TFTo
 )
 
@@ -143,7 +143,7 @@ func (v TransactionsFlow) String() string {
 
 	var m = map[TransactionsFlow]string{
 		TFFrom: "from",
-		TFTo:   "to",
+		TFTo: "to",
 	}
 
 	var ret []string

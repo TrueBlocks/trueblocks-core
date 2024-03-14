@@ -5,7 +5,7 @@ TEST[DATE|TIME] File:  cmd_file
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Transactions:  [3657480.78]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] NoHeader:  true
@@ -13,7 +13,7 @@ TEST[DATE|TIME] File:  cmd_file
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Transactions:  [0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad]
 TEST[DATE|TIME] Count:  true
 TEST[DATE|TIME] Verbose:  true
@@ -22,7 +22,7 @@ TEST[DATE|TIME] File:  cmd_file
 TEST[DATE|TIME] OutputFn:  by_file_v_out.file
 TEST[DATE|TIME] Caps:  cache,decache,raw,ether
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 ----
 Results in ./by_file_v_out.file
 {

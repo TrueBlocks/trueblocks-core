@@ -22,20 +22,20 @@ import (
 )
 
 type ChunksOptions struct {
-	Mode       ChunksMode  `json:"mode,omitempty"`
-	BlockIds   []string    `json:"blocks,omitempty"`
-	Check      bool        `json:"check,omitempty"`
-	Pin        bool        `json:"pin,omitempty"`
-	Publish    bool        `json:"publish,omitempty"`
-	Remote     bool        `json:"remote,omitempty"`
-	Belongs    []string    `json:"belongs,omitempty"`
-	FirstBlock base.Blknum `json:"firstBlock,omitempty"`
-	LastBlock  base.Blknum `json:"lastBlock,omitempty"`
-	MaxAddrs   base.Blknum `json:"maxAddrs,omitempty"`
-	Deep       bool        `json:"deep,omitempty"`
-	Rewrite    bool        `json:"rewrite,omitempty"`
-	Count      bool        `json:"count,omitempty"`
-	Sleep      float64     `json:"sleep,omitempty"`
+	Mode       ChunksMode   `json:"mode,omitempty"`
+	BlockIds   []string     `json:"blocks,omitempty"`
+	Check      bool         `json:"check,omitempty"`
+	Pin        bool         `json:"pin,omitempty"`
+	Publish    bool         `json:"publish,omitempty"`
+	Remote     bool         `json:"remote,omitempty"`
+	Belongs    []string     `json:"belongs,omitempty"`
+	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
+	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
+	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
+	Deep       bool         `json:"deep,omitempty"`
+	Rewrite    bool         `json:"rewrite,omitempty"`
+	Count      bool         `json:"count,omitempty"`
+	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -153,8 +153,8 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 type ChunksMode int
 
 const (
-	NoCM2      ChunksMode = 0
-	CMManifest            = 1 << iota
+	NoCM2 ChunksMode = 0
+	CMManifest = 1 << iota
 	CMIndex
 	CMBlooms
 	CMPins
@@ -170,13 +170,13 @@ func (v ChunksMode) String() string {
 	}
 
 	var m = map[ChunksMode]string{
-		CMManifest:    "manifest",
-		CMIndex:       "index",
-		CMBlooms:      "blooms",
-		CMPins:        "pins",
-		CMAddresses:   "addresses",
+		CMManifest: "manifest",
+		CMIndex: "index",
+		CMBlooms: "blooms",
+		CMPins: "pins",
+		CMAddresses: "addresses",
 		CMAppearances: "appearances",
-		CMStats:       "stats",
+		CMStats: "stats",
 	}
 
 	var ret []string

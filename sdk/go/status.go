@@ -104,8 +104,8 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 type StatusModes int
 
 const (
-	NoSM    StatusModes = 0
-	SMIndex             = 1 << iota
+	NoSM StatusModes = 0
+	SMIndex = 1 << iota
 	SMBlooms
 	SMBlocks
 	SMTransactions
@@ -123,7 +123,7 @@ const (
 	SMUnripe
 	SMMaps
 	SMSome = SMIndex | SMBlooms
-	SMAll  = SMIndex | SMBlooms | SMBlocks | SMTransactions | SMTraces | SMLogs | SMStatements | SMResults | SMState | SMTokens | SMMonitors | SMNames | SMAbis | SMSlurps | SMStaging | SMUnripe | SMMaps
+	SMAll = SMIndex | SMBlooms | SMBlocks | SMTransactions | SMTraces | SMLogs | SMStatements | SMResults | SMState | SMTokens | SMMonitors | SMNames | SMAbis | SMSlurps | SMStaging | SMUnripe | SMMaps
 )
 
 func (v StatusModes) String() string {
@@ -137,23 +137,23 @@ func (v StatusModes) String() string {
 	}
 
 	var m = map[StatusModes]string{
-		SMIndex:        "index",
-		SMBlooms:       "blooms",
-		SMBlocks:       "blocks",
+		SMIndex: "index",
+		SMBlooms: "blooms",
+		SMBlocks: "blocks",
 		SMTransactions: "transactions",
-		SMTraces:       "traces",
-		SMLogs:         "logs",
-		SMStatements:   "statements",
-		SMResults:      "results",
-		SMState:        "state",
-		SMTokens:       "tokens",
-		SMMonitors:     "monitors",
-		SMNames:        "names",
-		SMAbis:         "abis",
-		SMSlurps:       "slurps",
-		SMStaging:      "staging",
-		SMUnripe:       "unripe",
-		SMMaps:         "maps",
+		SMTraces: "traces",
+		SMLogs: "logs",
+		SMStatements: "statements",
+		SMResults: "results",
+		SMState: "state",
+		SMTokens: "tokens",
+		SMMonitors: "monitors",
+		SMNames: "names",
+		SMAbis: "abis",
+		SMSlurps: "slurps",
+		SMStaging: "staging",
+		SMUnripe: "unripe",
+		SMMaps: "maps",
 	}
 
 	var ret []string
