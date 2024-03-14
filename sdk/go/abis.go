@@ -90,6 +90,7 @@ func abisParseFunc(target interface{}, key, value string) (bool, error) {
 
 	// EXISTING_CODE
 	if key == "proxyFor" {
+		opts, _ := target.(*AbisOptions)
 		opts.ProxyFor = base.HexToAddress(value)
 		return base.IsValidAddress(value), nil
 	}
