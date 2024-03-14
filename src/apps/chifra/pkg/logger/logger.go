@@ -64,6 +64,7 @@ func TestLog(notDefault bool, a ...interface{}) {
 }
 
 var (
+	isTestMode    = false
 	timingModeSet = false
 	timingMode    = true
 	decorationOff = false
@@ -82,8 +83,8 @@ var loggerWriter io.Writer = nil
 func init() {
 	if !timingModeSet {
 		on := os.Getenv("TB_LOGTIMER_OFF") == ""
-		testing := os.Getenv("TEST_MODE") == "true"
-		timingMode = on && !testing
+		isTestMode = os.Getenv("TEST_MODE") == "true"
+		timingMode = on && !isTestMode
 		timingModeSet = true
 	}
 	loggerWriter = os.Stderr
@@ -161,7 +162,7 @@ func Panic(v ...any) {
 }
 
 func Progress(tick bool, v ...any) {
-	if !utils.IsTerminal() || !tick {
+	if isTestMode || !utils.IsTerminal() || !tick {
 		return
 	}
 	toLog(progress, v...)

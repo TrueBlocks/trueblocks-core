@@ -66,7 +66,7 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 		values.Set("expand", "true")
 	}
 	if opts.MatchCase {
-		values.Set("match_case", "true")
+		values.Set("matchCase", "true")
 	}
 	if opts.All {
 		values.Set("all", "true")
@@ -90,7 +90,7 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 		values.Set("regular", "true")
 	}
 	if opts.DryRun {
-		values.Set("dry_run", "true")
+		values.Set("dryRun", "true")
 	}
 	if !opts.Autoname.IsZero() {
 		values.Set("autoname", opts.Autoname.String())

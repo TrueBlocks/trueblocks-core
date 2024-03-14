@@ -75,6 +75,13 @@ type TestCase struct {
 	Original    *Original `json:"original"`
 }
 
+var cm = map[string]string{
+	"greenCheck":    "\033[32m✓\033[0m",
+	"yellowCaution": "\033[33m!!\033[0m",
+	"redX":          "\033[31mX\033[0m",
+	"whiteStar":     "\033[37m*\033[0m",
+}
+
 func processCSVFile(filePath string) {
 	ff, err := os.Open(filePath)
 	if err != nil {
@@ -147,12 +154,21 @@ func processCSVFile(filePath string) {
 		}
 	}
 
-	nPassed := 0
+	nTested, nPassed := 0, 0
 	for i, testCase := range testCases {
-		if testCase.RunTest(i, len(testCases)) {
+		tested, passed := testCase.RunTest(i, len(testCases))
+		if tested {
+			nTested++
+		}
+		if passed {
 			nPassed++
 		}
 	}
+	msg := cm["greenCheck"]
+	if nTested != nPassed {
+		msg = cm["redX"]
+	}
+	fmt.Println(colors.White, "    Passed", nPassed, "of", nTested, "tests.", msg, colors.Off, strings.Repeat(" ", utils.Max(0, 90)), "\n")
 }
 
 func preClean(rawURL string) string {
@@ -244,9 +260,9 @@ func init() {
 	colors.ColorsOff()
 }
 
-func (t *TestCase) RunTest(id, cnt int) bool {
+func (t *TestCase) RunTest(i, n int) (bool, bool) {
 	if !t.Enabled {
-		return false
+		return false, false
 	}
 
 	testing := []string{
@@ -260,7 +276,7 @@ func (t *TestCase) RunTest(id, cnt int) bool {
 		"chunks",
 		"init",
 		"explore",
-		//- "names",
+		"names",
 		//- "slurp",
 		"abis",
 		"blocks",
@@ -281,13 +297,13 @@ func (t *TestCase) RunTest(id, cnt int) bool {
 	}
 	// interesting = t.Route == "status" && t.Original.Filename == "explorer_3"
 	if !interesting {
-		return false
+		return false, false
 	}
 
 	parts := strings.Split(t.PathTool, "/")
 	if len(parts) != 2 {
 		fmt.Fprintf(os.Stderr, "Invalid pathTool: %s\n", t.PathTool)
-		return false
+		return false, false
 	}
 
 	var ff *os.File
@@ -295,9 +311,11 @@ func (t *TestCase) RunTest(id, cnt int) bool {
 	if !file.FolderExists(folder) {
 		file.EstablishFolder(folder)
 	}
-	fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
-	retVal := true
 
+	wasTested := false
+	passedTest := false
+
+	fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
 	if interesting {
 		os.Setenv("TEST_MODE", "true")
 		logger.SetTestMode(true)
@@ -308,19 +326,14 @@ func (t *TestCase) RunTest(id, cnt int) bool {
 			defer func() {
 				logger.ToggleDecoration()
 				logger.SetLoggerWriter(os.Stderr)
-				cm := map[string]string{
-					"greenCheck":    "\033[32m✓\033[0m",
-					"yellowCaution": "\033[33m!!\033[0m",
-					"redX":          "\033[31mX\033[0m",
-					"whiteStar":     "\033[37m*\033[0m",
-				}
-				msg := cm["greenCheck"]
+				msg := "[passed " + cm["greenCheck"] + "]"
 				eol := "\r"
-				if !retVal {
-					msg = cm["redX"]
+				if wasTested && !passedTest {
+					msg = "[failed " + cm["redX"] + "]"
 					eol = "\n"
 				}
-				fmt.Printf("% 4d of % 4d: %s %s...%s%s", id, cnt, msg, fn, strings.Repeat(" ", utils.Max(0, 120-len(fn))), eol)
+				skip := strings.Repeat(" ", utils.Max(0, 120-len(fn)))
+				fmt.Printf("   Testing %d of %d %s %s%s%s", i, n, msg, fn, skip, eol)
 			}()
 		}
 		logger.Info(t.Route + "?" + t.Cannonical)
@@ -330,10 +343,12 @@ func (t *TestCase) RunTest(id, cnt int) bool {
 		logger.Info(strings.Repeat("=", 40), t.Original.Filename, strings.Repeat("=", 40))
 		logger.Info(fmt.Sprintf("Route: %s, PathTool: %s, Enabled: %v, Options: %v", t.Route, t.PathTool, t.Enabled, t.Options))
 		logger.Info("\t" + strings.Trim(fmt.Sprintf("chifra %s %s", t.Route, t.Clean()), " "))
+		return false, false
 	}
 
 	var buff bytes.Buffer
 	var results string
+	wasTested = true
 	if err := t.SdkTest(&buff); err != nil {
 		type E struct {
 			Errors []string `json:"errors"`
@@ -344,6 +359,7 @@ func (t *TestCase) RunTest(id, cnt int) bool {
 	} else {
 		results = strings.Trim(buff.String(), "\n\r")
 	}
+
 	if len(results) > 0 {
 		// because testRunner does this, we need to do it here
 		results = strings.Replace(results, "3735928559", "\"0xdeadbeef\"", -1)
@@ -354,7 +370,7 @@ func (t *TestCase) RunTest(id, cnt int) bool {
 		ff.Close()
 		newContents := file.AsciiFileToString(fn)
 		oldContents := file.AsciiFileToString(strings.Replace(fn, "working", "gold", -1))
-		retVal = newContents == oldContents
+		passedTest = newContents == oldContents
 	}
-	return retVal
+	return wasTested, passedTest
 }
