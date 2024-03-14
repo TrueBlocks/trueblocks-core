@@ -131,7 +131,7 @@ func blocksParseFunc(target interface{}, key, value string) (bool, error) {
 	case "flow":
 		var err error
 		values := strings.Split(value, ",")
-		if opts.Flow, err = enumsFromStrsBlocks(values); err != nil {
+		if opts.Flow, err = enumFromBlocksFlow(values); err != nil {
 			return false, err
 		} else {
 			found = true
@@ -186,8 +186,7 @@ func (v BlocksFlow) String() string {
 	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-func enumsFromStrsBlocks(values []string) (BlocksFlow, error) {
+func enumFromBlocksFlow(values []string) (BlocksFlow, error) {
 	if len(values) == 0 {
 		return NoBF, fmt.Errorf("no value provided for flow option")
 	}
@@ -202,11 +201,18 @@ func enumsFromStrsBlocks(values []string) (BlocksFlow, error) {
 		case "reward":
 			result |= BFReward
 		default:
+			// JIMMYJAM
+			// JIMMYJAM
 			return NoBF, fmt.Errorf("unknown flow: %s", val)
 		}
 	}
+
+	// JIMMYJAM
+	// JIMMYJAM
 
 	return result, nil
 }
 
 // EXISTING_CODE
+// EXISTING_CODE
+

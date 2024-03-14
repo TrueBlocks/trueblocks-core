@@ -77,7 +77,7 @@ func statusParseFunc(target interface{}, key, value string) (bool, error) {
 	case "mode":
 		var err error
 		values := strings.Split(value, ",")
-		if opts.Modes, err = enumsFromStrsStatus(values); err != nil {
+		if opts.Modes, err = enumFromStatusModes(values); err != nil {
 			return false, err
 		} else {
 			found = true
@@ -166,10 +166,15 @@ func (v StatusModes) String() string {
 	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-func enumsFromStrsStatus(values []string) (StatusModes, error) {
+func enumFromStatusModes(values []string) (StatusModes, error) {
 	if len(values) == 0 {
-		return NoSM, fmt.Errorf("no value provided for parts option")
+		return NoSM, fmt.Errorf("no value provided for modes option")
+	}
+
+	if len(values) == 1 && values[0] == "all" {
+		return SMAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return SMSome, nil
 	}
 
 	var result StatusModes
@@ -210,10 +215,18 @@ func enumsFromStrsStatus(values []string) (StatusModes, error) {
 		case "maps":
 			result |= SMMaps
 		default:
+			// JIMMYJAM
+			// JIMMYJAM
 			return NoSM, fmt.Errorf("unknown modes: %s", val)
 		}
 	}
+
+	// JIMMYJAM
+	// JIMMYJAM
+
 	return result, nil
 }
 
 // EXISTING_CODE
+// EXISTING_CODE
+

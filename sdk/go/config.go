@@ -105,6 +105,31 @@ func (v ConfigMode) String() string {
 	return strings.Join(ret, ",")
 }
 
+func enumFromConfigMode(values []string) (ConfigMode, error) {
+	if len(values) == 0 {
+		return NoCM1, fmt.Errorf("no value provided for mode option")
+	}
+
+	var result ConfigMode
+	for _, val := range values {
+		switch val {
+		case "show":
+			result |= CMShow
+		case "edit":
+			result |= CMEdit
+		default:
+			// JIMMYJAM
+			// JIMMYJAM
+			return NoCM1, fmt.Errorf("unknown mode: %s", val)
+		}
+	}
+
+	// JIMMYJAM
+	// JIMMYJAM
+
+	return result, nil
+}
+
 // EXISTING_CODE
 // EXISTING_CODE
 

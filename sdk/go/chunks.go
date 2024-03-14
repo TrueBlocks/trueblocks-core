@@ -126,7 +126,7 @@ func chunksParseFunc(target interface{}, key, value string) (bool, error) {
 	case "mode":
 		var err error
 		values := strings.Split(value, ",")
-		if opts.Mode, err = enumsFromStrsChunks(values); err != nil {
+		if opts.Mode, err = enumFromChunksMode(values); err != nil {
 			return false, err
 		} else {
 			found = true
@@ -189,10 +189,9 @@ func (v ChunksMode) String() string {
 	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-func enumsFromStrsChunks(values []string) (ChunksMode, error) {
+func enumFromChunksMode(values []string) (ChunksMode, error) {
 	if len(values) == 0 {
-		return NoCM2, fmt.Errorf("no value provided for parts option")
+		return NoCM2, fmt.Errorf("no value provided for mode option")
 	}
 
 	var result ChunksMode
@@ -213,10 +212,18 @@ func enumsFromStrsChunks(values []string) (ChunksMode, error) {
 		case "stats":
 			result |= CMStats
 		default:
+			// JIMMYJAM
+			// JIMMYJAM
 			return NoCM2, fmt.Errorf("unknown mode: %s", val)
 		}
 	}
+
+	// JIMMYJAM
+	// JIMMYJAM
+
 	return result, nil
 }
 
 // EXISTING_CODE
+// EXISTING_CODE
+

@@ -32,8 +32,8 @@ type SlurpOptions struct {
 	Globals
 
 	// EXISTING_CODE
-	Page        uint64      `json:"page,omitempty"`
-	PerPage     uint64      `json:"perPage,omitempty"`
+	Page    uint64 `json:"page,omitempty"`
+	PerPage uint64 `json:"perPage,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -152,6 +152,49 @@ func (v SlurpTypes) String() string {
 	return strings.Join(ret, ",")
 }
 
+func enumFromSlurpTypes(values []string) (SlurpTypes, error) {
+	if len(values) == 0 {
+		return NoST, fmt.Errorf("no value provided for types option")
+	}
+
+	if len(values) == 1 && values[0] == "all" {
+		return STAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return STSome, nil
+	}
+
+	var result SlurpTypes
+	for _, val := range values {
+		switch val {
+		case "ext":
+			result |= STExt
+		case "int":
+			result |= STInt
+		case "token":
+			result |= STToken
+		case "nfts":
+			result |= STNfts
+		case "1155":
+			result |= ST1155
+		case "miner":
+			result |= STMiner
+		case "uncles":
+			result |= STUncles
+		case "withdrawals":
+			result |= STWithdrawals
+		default:
+			// JIMMYJAM
+			// JIMMYJAM
+			return NoST, fmt.Errorf("unknown types: %s", val)
+		}
+	}
+
+	// JIMMYJAM
+	// JIMMYJAM
+
+	return result, nil
+}
+
 type SlurpSource int
 
 const (
@@ -179,6 +222,31 @@ func (v SlurpSource) String() string {
 	}
 
 	return strings.Join(ret, ",")
+}
+
+func enumFromSlurpSource(values []string) (SlurpSource, error) {
+	if len(values) == 0 {
+		return NoSS, fmt.Errorf("no value provided for source option")
+	}
+
+	var result SlurpSource
+	for _, val := range values {
+		switch val {
+		case "etherscan":
+			result |= SSEtherscan
+		case "key":
+			result |= SSKey
+		default:
+			// JIMMYJAM
+			// JIMMYJAM
+			return NoSS, fmt.Errorf("unknown source: %s", val)
+		}
+	}
+
+	// JIMMYJAM
+	// JIMMYJAM
+
+	return result, nil
 }
 
 // EXISTING_CODE

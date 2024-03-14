@@ -87,7 +87,7 @@ func tokensParseFunc(target interface{}, key, value string) (bool, error) {
 	case "parts":
 		var err error
 		values := strings.Split(value, ",")
-		if opts.Parts, err = enumsFromStrsTokens(values); err != nil {
+		if opts.Parts, err = enumFromTokensParts(values); err != nil {
 			return false, err
 		} else {
 			found = true
@@ -152,19 +152,18 @@ func (v TokensParts) String() string {
 	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-func enumsFromStrsTokens(values []string) (TokensParts, error) {
+func enumFromTokensParts(values []string) (TokensParts, error) {
 	if len(values) == 0 {
 		return NoTP, fmt.Errorf("no value provided for parts option")
 	}
 
-	var result TokensParts
 	if len(values) == 1 && values[0] == "all" {
 		return TPAll, nil
 	} else if len(values) == 1 && values[0] == "some" {
-		return TPName | TPSymbol | TPDecimals, nil
+		return TPSome, nil
 	}
 
+	var result TokensParts
 	for _, val := range values {
 		switch val {
 		case "name":
@@ -178,12 +177,18 @@ func enumsFromStrsTokens(values []string) (TokensParts, error) {
 		case "version":
 			result |= TPVersion
 		default:
-			return NoTP, fmt.Errorf("unknown part: %s", val)
+			// JIMMYJAM
+			// JIMMYJAM
+			return NoTP, fmt.Errorf("unknown parts: %s", val)
 		}
 	}
+
+	// JIMMYJAM
+	// JIMMYJAM
 
 	return result, nil
 }
 
+// EXISTING_CODE
 // EXISTING_CODE
 

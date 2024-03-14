@@ -103,7 +103,7 @@ func transactionsParseFunc(target interface{}, key, value string) (bool, error) 
 	case "flow":
 		var err error
 		values := strings.Split(value, ",")
-		if opts.Flow, err = enumsFromStrsTransactions(values); err != nil {
+		if opts.Flow, err = enumFromTransactionsFlow(values); err != nil {
 			return false, err
 		} else {
 			found = true
@@ -156,8 +156,7 @@ func (v TransactionsFlow) String() string {
 	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-func enumsFromStrsTransactions(values []string) (TransactionsFlow, error) {
+func enumFromTransactionsFlow(values []string) (TransactionsFlow, error) {
 	if len(values) == 0 {
 		return NoTF, fmt.Errorf("no value provided for flow option")
 	}
@@ -166,17 +165,22 @@ func enumsFromStrsTransactions(values []string) (TransactionsFlow, error) {
 	for _, val := range values {
 		switch val {
 		case "from":
-			result |= BFFrom
+			result |= TFFrom
 		case "to":
-			result |= BFTo
-		case "reward":
-			result |= BFReward
+			result |= TFTo
 		default:
+			// JIMMYJAM
+			// JIMMYJAM
 			return NoTF, fmt.Errorf("unknown flow: %s", val)
 		}
 	}
+
+	// JIMMYJAM
+	// JIMMYJAM
 
 	return result, nil
 }
 
 // EXISTING_CODE
+// EXISTING_CODE
+

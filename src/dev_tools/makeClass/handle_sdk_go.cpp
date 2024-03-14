@@ -15,7 +15,6 @@
 
 //------------------------------------------------------------------------------------------------------------
 extern string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option);
-extern string_q handle_sdk_go_enum_bitmask(const string_q& route, const string_q& fn, const CCommandOption& option);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_go(void) {
@@ -32,7 +31,7 @@ bool COptions::handle_sdk_go(void) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q handle_sdk_go_enum_bitmask(const string_q& route, const string_q& fn, const CCommandOption& option) {
+string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option) {
     string_q ret = option.data_type;
     replace(ret, "list<", "");
     replace(ret, "enum[", "");
@@ -122,10 +121,13 @@ string_q handle_sdk_go_enum_bitmask(const string_q& route, const string_q& fn, c
     os << "\t}" << endl << endl;
     os << "\tvar ret []string" << endl;
     os << "\tfor _, val := range []" << toProper(route) << fn << "{";
+    ostringstream cases;
     for (size_t i = 0; i < parts.size() - (hasAll ? 2 : 0); ++i) {
         if (i > 0)
             os << ", ";
         os << r << firstUpper(parts[i]);
+        cases << "\t\tcase \"" << firstLower(parts[i]) << "\":" << endl;
+        cases << "\t\t\tresult |= " << r << firstUpper(parts[i]) << endl;
     }
     os << "} {" << endl;
     os << "\t\tif v&val != 0 {" << endl;
@@ -134,6 +136,50 @@ string_q handle_sdk_go_enum_bitmask(const string_q& route, const string_q& fn, c
     os << "\t}" << endl << endl;
     os << "\treturn strings.Join(ret, \",\")\n";
     os << "}" << endl << endl;
+
+    const char* STR_FROMSTRS =
+        "func enumFrom[{PROPER}][{NAME}](values []string) ([{PROPER}][{NAME}], error) {\n"
+        "	if len(values) == 0 {\n"
+        "		return [{none}], fmt.Errorf(\"no value provided for [{LNAME}] option\")\n"
+        "	}\n"
+        "\n"
+        "[{ALLTHING}]	var result [{PROPER}][{NAME}]\n"
+        "	for _, val := range values {\n"
+        "		switch val {\n"
+        "[{CASES}]		default:\n"
+        "			// JIMMYJAM\n"
+        "			// JIMMYJAM\n"
+        "			return [{none}], fmt.Errorf(\"unknown [{LNAME}]: %s\", val)\n"
+        "		}\n"
+        "	}\n"
+        "\n"
+        "	// JIMMYJAM\n"
+        "	// JIMMYJAM\n"
+        "\n"
+        "	return result, nil\n"
+        "}\n";
+
+    string_q aStr;
+    if (hasAll) {
+        const char* STR_ALL =
+            "\tif len(values) == 1 && values[0] == \"all\" {\n"
+            "\t\treturn [{ALL}], nil\n"
+            "\t} else if len(values) == 1 && values[0] == \"some\" {\n"
+            "\t\treturn [{SOME}], nil\n"
+            "\t}\n\n";
+        aStr = STR_ALL;
+        replace(aStr, "[{ALL}]", all);
+        replace(aStr, "[{SOME}]", some);
+    }
+
+    string_q str = STR_FROMSTRS;
+    replaceAll(str, "[{PROPER}]", toProper(route));
+    replaceAll(str, "[{CASES}]", cases.str());
+    replaceAll(str, "[{LNAME}]", toLower(fn));
+    replaceAll(str, "[{NAME}]", fn);
+    replaceAll(str, "[{none}]", none);
+    replaceAll(str, "[{ALLTHING}]", aStr);
+    os << str;
 
     return os.str();
 }
@@ -239,7 +285,7 @@ bool COptions::handle_sdk_go_outersdk(void) {
                     t = "[]string";
                 } else if (contains(member.data_type, "enum")) {
                     t = toProper(member.api_route) + toProper(member.longName);
-                    enums << handle_sdk_go_enum_bitmask(ep.api_route, fn, member) << endl;
+                    enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
                 } else if (contains(member.data_type, "address")) {
                     t = "base.Address";
                 } else if (contains(member.data_type, "topic")) {

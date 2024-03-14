@@ -96,7 +96,7 @@ func stateParseFunc(target interface{}, key, value string) (bool, error) {
 	case "parts":
 		var err error
 		values := strings.Split(value, ",")
-		if opts.Parts, err = enumsFromStrsState(values); err != nil {
+		if opts.Parts, err = enumFromStateParts(values); err != nil {
 			return false, err
 		} else {
 			found = true
@@ -166,27 +166,20 @@ func (v StateParts) String() string {
 	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-func enumsFromStrsState(values []string) (StateParts, error) {
+func enumFromStateParts(values []string) (StateParts, error) {
 	if len(values) == 0 {
 		return NoSP, fmt.Errorf("no value provided for parts option")
 	}
 
-	var result StateParts
 	if len(values) == 1 && values[0] == "all" {
 		return SPAll, nil
 	} else if len(values) == 1 && values[0] == "some" {
-		return SPBalance | SPProxy | SPDeployed | SPAccttype, nil
+		return SPSome, nil
 	}
 
+	var result StateParts
 	for _, val := range values {
 		switch val {
-		case "none":
-			result = NoSP
-		case "some":
-			result |= SPSome
-		case "all":
-			result |= SPAll
 		case "balance":
 			result |= SPBalance
 		case "nonce":
@@ -200,12 +193,18 @@ func enumsFromStrsState(values []string) (StateParts, error) {
 		case "accttype":
 			result |= SPAccttype
 		default:
-			return NoSP, fmt.Errorf("unknown part: %s", val)
+			// JIMMYJAM
+			// JIMMYJAM
+			return NoSP, fmt.Errorf("unknown parts: %s", val)
 		}
 	}
+
+	// JIMMYJAM
+	// JIMMYJAM
 
 	return result, nil
 }
 
+// EXISTING_CODE
 // EXISTING_CODE
 
