@@ -93,7 +93,6 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 // transactionsParseFunc handles specail cases such as structs and enums (if any).
 func transactionsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
-	// EXISTING_CODE
 	opts, ok := target.(*TransactionsOptions)
 	if !ok {
 		return false, fmt.Errorf("parseFunc(transactions): target is not of correct type")
@@ -111,6 +110,8 @@ func transactionsParseFunc(target interface{}, key, value string) (bool, error) 
 	}
 
 	// EXISTING_CODE
+	// EXISTING_CODE
+
 	return found, nil
 }
 

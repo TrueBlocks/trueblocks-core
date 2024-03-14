@@ -87,8 +87,33 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 // slurpParseFunc handles specail cases such as structs and enums (if any).
 func slurpParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	opts, ok := target.(*SlurpOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(slurp): target is not of correct type")
+	}
+
+	switch key {
+	case "types":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Types, err = enumFromSlurpTypes(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	case "source":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Source, err = enumFromSlurpSource(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

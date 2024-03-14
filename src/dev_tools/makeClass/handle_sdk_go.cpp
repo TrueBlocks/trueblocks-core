@@ -31,7 +31,8 @@ bool COptions::handle_sdk_go(void) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option) {
+string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option,
+                            ostringstream& enumsThing) {
     string_q ret = option.data_type;
     replace(ret, "list<", "");
     replace(ret, "enum[", "");
@@ -181,6 +182,21 @@ string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCo
     replaceAll(str, "[{ALLTHING}]", aStr);
     os << str;
 
+    const char* STR_ENUM_THING =
+        "\tcase \"[{LNAME}]\":\n"
+        "\t\tvar err error\n"
+        "\t\tvalues := strings.Split(value, \",\")\n"
+        "\t\tif opts.[{NAME}], err = enumFrom[{PROPER}][{NAME}](values); err != nil {\n"
+        "\t\t\treturn false, err\n"
+        "\t\t} else {\n"
+        "\t\t\tfound = true\n"
+        "\t\t}";
+    string_q eT = STR_ENUM_THING;
+    replaceAll(eT, "[{LNAME}]", firstLower(fn));
+    replaceAll(eT, "[{NAME}]", firstUpper(fn));
+    replaceAll(eT, "[{PROPER}]", toProper(route));
+    enumsThing << eT << endl;
+
     return os.str();
 }
 
@@ -223,7 +239,7 @@ bool COptions::handle_sdk_go_outersdk(void) {
 
         size_t maxNameWid = 0;
         size_t maxTypeWid = 0;
-        ostringstream fields, enums;
+        ostringstream fields, enums, enumsThing;
         for (auto member : routeOptionArray) {
             if (member.generate == "config") {
                 continue;
@@ -285,7 +301,7 @@ bool COptions::handle_sdk_go_outersdk(void) {
                     t = "[]string";
                 } else if (contains(member.data_type, "enum")) {
                     t = toProper(member.api_route) + toProper(member.longName);
-                    enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
+                    enums << handle_sdk_go_enum(ep.api_route, fn, member, enumsThing) << endl;
                 } else if (contains(member.data_type, "address")) {
                     t = "base.Address";
                 } else if (contains(member.data_type, "topic")) {
@@ -317,6 +333,12 @@ bool COptions::handle_sdk_go_outersdk(void) {
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);
+        if (enumsThing.str() == "") {
+            contents = substitute(substitute(contents, "[{ENUMTHING}]", "\t// No enums\n\n"), "opts, ok := target.(*",
+                                  "_, ok := target.(*");
+        } else {
+            contents = substitute(contents, "[{ENUMTHING}]", "\tswitch key {\n" + enumsThing.str() + "\t}\n");
+        }
 
         codewrite_t cw(path + ep.api_route + ".go", contents);
         cw.nSpaces = 0;

@@ -11,6 +11,7 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"strings"
@@ -82,8 +83,16 @@ func (opts *WhenOptions) When(w io.Writer) error {
 // whenParseFunc handles specail cases such as structs and enums (if any).
 func whenParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*WhenOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(when): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

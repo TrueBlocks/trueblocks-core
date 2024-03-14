@@ -99,8 +99,16 @@ func (opts *ListOptions) List(w io.Writer) error {
 // listParseFunc handles specail cases such as structs and enums (if any).
 func listParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*ListOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(list): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

@@ -58,8 +58,25 @@ func (opts *ConfigOptions) Config(w io.Writer) error {
 // configParseFunc handles specail cases such as structs and enums (if any).
 func configParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	opts, ok := target.(*ConfigOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(config): target is not of correct type")
+	}
+
+	switch key {
+	case "mode":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Mode, err = enumFromConfigMode(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

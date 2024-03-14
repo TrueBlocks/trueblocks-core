@@ -67,14 +67,13 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 // statusParseFunc handles specail cases such as structs and enums (if any).
 func statusParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
-	// EXISTING_CODE
 	opts, ok := target.(*StatusOptions)
 	if !ok {
-		return false, fmt.Errorf("parseFunc(chunks): target is not of correct type")
+		return false, fmt.Errorf("parseFunc(status): target is not of correct type")
 	}
 
 	switch key {
-	case "mode":
+	case "modes":
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Modes, err = enumFromStatusModes(values); err != nil {
@@ -85,6 +84,8 @@ func statusParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// EXISTING_CODE
+	// EXISTING_CODE
+
 	return found, nil
 }
 

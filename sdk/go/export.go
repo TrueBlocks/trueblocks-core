@@ -183,8 +183,25 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 // exportParseFunc handles specail cases such as structs and enums (if any).
 func exportParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	opts, ok := target.(*ExportOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(export): target is not of correct type")
+	}
+
+	switch key {
+	case "flow":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Flow, err = enumFromExportFlow(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

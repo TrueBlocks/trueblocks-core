@@ -11,6 +11,7 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"strings"
@@ -71,8 +72,16 @@ func (opts *LogsOptions) Logs(w io.Writer) error {
 // logsParseFunc handles specail cases such as structs and enums (if any).
 func logsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*LogsOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(logs): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

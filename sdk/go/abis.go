@@ -81,19 +81,20 @@ func (opts *AbisOptions) Abis(w io.Writer) error {
 // abisParseFunc handles specail cases such as structs and enums (if any).
 func abisParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
-	// EXISTING_CODE
-	opts, ok := target.(*AbisOptions)
+	_, ok := target.(*AbisOptions)
 	if !ok {
 		return false, fmt.Errorf("parseFunc(abis): target is not of correct type")
 	}
 
-	switch key {
-	case "proxyFor":
+	// No enums
+
+	// EXISTING_CODE
+	if key == "proxyFor" {
 		opts.ProxyFor = base.HexToAddress(value)
 		return base.IsValidAddress(value), nil
 	}
-
 	// EXISTING_CODE
+
 	return found, nil
 }
 

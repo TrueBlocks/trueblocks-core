@@ -61,8 +61,16 @@ func (opts *ScrapeOptions) Scrape(w io.Writer) error {
 // scrapeParseFunc handles specail cases such as structs and enums (if any).
 func scrapeParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*ScrapeOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(scrape): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

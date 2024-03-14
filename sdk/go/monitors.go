@@ -95,8 +95,16 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 // monitorsParseFunc handles specail cases such as structs and enums (if any).
 func monitorsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*MonitorsOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(monitors): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

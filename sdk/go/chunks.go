@@ -116,7 +116,6 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 // chunksParseFunc handles specail cases such as structs and enums (if any).
 func chunksParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
-	// EXISTING_CODE
 	opts, ok := target.(*ChunksOptions)
 	if !ok {
 		return false, fmt.Errorf("parseFunc(chunks): target is not of correct type")
@@ -134,6 +133,8 @@ func chunksParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// EXISTING_CODE
+	// EXISTING_CODE
+
 	return found, nil
 }
 

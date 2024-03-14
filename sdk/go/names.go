@@ -11,6 +11,7 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"strings"
@@ -118,8 +119,16 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 // namesParseFunc handles specail cases such as structs and enums (if any).
 func namesParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*NamesOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(names): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

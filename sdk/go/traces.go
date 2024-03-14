@@ -11,6 +11,7 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"strings"
@@ -65,8 +66,16 @@ func (opts *TracesOptions) Traces(w io.Writer) error {
 // tracesParseFunc handles specail cases such as structs and enums (if any).
 func tracesParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*TracesOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(traces): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

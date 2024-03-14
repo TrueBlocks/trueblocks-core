@@ -11,6 +11,7 @@ package sdk
 import (
 	// EXISTING_CODE
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/url"
 	"strings"
@@ -57,8 +58,16 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 // receiptsParseFunc handles specail cases such as structs and enums (if any).
 func receiptsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*ReceiptsOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(receipts): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

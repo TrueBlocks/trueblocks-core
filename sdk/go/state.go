@@ -86,7 +86,6 @@ func (opts *StateOptions) State(w io.Writer) error {
 // stateParseFunc handles specail cases such as structs and enums (if any).
 func stateParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
-	// EXISTING_CODE
 	opts, ok := target.(*StateOptions)
 	if !ok {
 		return false, fmt.Errorf("parseFunc(state): target is not of correct type")
@@ -101,12 +100,15 @@ func stateParseFunc(target interface{}, key, value string) (bool, error) {
 		} else {
 			found = true
 		}
-	case "proxyFor":
-		opts.ProxyFor = base.HexToAddress(value)
-		return base.IsValidAddress(value), nil
 	}
 
 	// EXISTING_CODE
+	if key == "proxyFor" {
+		opts.ProxyFor = base.HexToAddress(value)
+		return base.IsValidAddress(value), nil
+	}
+	// EXISTING_CODE
+
 	return found, nil
 }
 

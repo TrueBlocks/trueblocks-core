@@ -64,8 +64,16 @@ func (opts *InitOptions) Init(w io.Writer) error {
 // initParseFunc handles specail cases such as structs and enums (if any).
 func initParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
+	_, ok := target.(*InitOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(init): target is not of correct type")
+	}
+
+	// No enums
+
 	// EXISTING_CODE
 	// EXISTING_CODE
+
 	return found, nil
 }
 

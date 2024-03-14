@@ -121,7 +121,6 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 // blocksParseFunc handles specail cases such as structs and enums (if any).
 func blocksParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
-	// EXISTING_CODE
 	opts, ok := target.(*BlocksOptions)
 	if !ok {
 		return false, fmt.Errorf("parseFunc(blocks): target is not of correct type")
@@ -139,6 +138,8 @@ func blocksParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// EXISTING_CODE
+	// EXISTING_CODE
+
 	return found, nil
 }
 
