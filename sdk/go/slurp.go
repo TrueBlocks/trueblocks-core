@@ -10,69 +10,94 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
+	"strings"
 
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type SlurpOptions struct {
-	Addrs       []string // allow for ENS names and addresses
-	BlockIds    []string // allow for block ranges and steps
-	Types       SlurpTypes
-	Appearances bool
-	Articulate  bool
-	Source      SlurpSource
-	Count       bool
-	Sleep       float64
+	Addrs       []string    `json:"addrs,omitempty"`
+	BlockIds    []string    `json:"blocks,omitempty"`
+	Types       SlurpTypes  `json:"types,omitempty"`
+	Appearances bool        `json:"appearances,omitempty"`
+	Articulate  bool        `json:"articulate,omitempty"`
+	Source      SlurpSource `json:"source,omitempty"`
+	Count       bool        `json:"count,omitempty"`
+	Page        uint64      `json:"page,omitempty"`
+	PerPage     uint64      `json:"perPage,omitempty"`
+	Sleep       float64     `json:"sleep,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *SlurpOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Slurp implements the chifra slurp command for the SDK.
 func (opts *SlurpOptions) Slurp(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting slurp struct to URL values: %v", err)
 	}
-	for _, v := range opts.BlockIds {
-		values.Add("blocks", v)
-	}
-	if opts.Types != NoST {
-		values.Set("types", opts.Types.String())
-	}
-	if opts.Appearances {
-		values.Set("appearances", "true")
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if opts.Source != NoSS {
-		values.Set("source", opts.Source.String())
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.Sleep > 0 {
-		values.Set("sleep", fmt.Sprint(opts.Sleep))
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return slurp.Slurp(w, values)
+}
+
+// slurpParseFunc handles specail cases such as structs and enums (if any).
+func slurpParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	opts, ok := target.(*SlurpOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(slurp): target is not of correct type")
+	}
+
+	switch key {
+	case "types":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Types, err = enumFromSlurpTypes(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	case "source":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Source, err = enumFromSlurpSource(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetSlurpOptions returns a filled-in options instance given a string array of arguments.
+func GetSlurpOptions(args []string) (*SlurpOptions, error) {
+	var opts SlurpOptions
+	if err := assignValuesFromArgs(args, slurpParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
 }
 
 type SlurpTypes int
 
 const (
-	NoST SlurpTypes = iota
-	STExt
+	NoST SlurpTypes = 0
+	STExt = 1 << iota
 	STInt
 	STToken
 	STNfts
@@ -80,42 +105,125 @@ const (
 	STMiner
 	STUncles
 	STWithdrawals
-	STSome
-	STAll
+	STSome = STExt | STInt | STToken | STNfts | ST1155
+	STAll = STExt | STInt | STToken | STNfts | ST1155 | STMiner | STUncles | STWithdrawals
 )
 
 func (v SlurpTypes) String() string {
-	return []string{
-		"nost",
-		"ext",
-		"int",
-		"token",
-		"nfts",
-		"1155",
-		"miner",
-		"uncles",
-		"withdrawals",
-		"some",
-		"all",
-	}[v]
+	switch v {
+	case NoST:
+		return "none"
+	case STSome:
+		return "some"
+	case STAll:
+		return "all"
+	}
+
+	var m = map[SlurpTypes]string{
+		STExt: "ext",
+		STInt: "int",
+		STToken: "token",
+		STNfts: "nfts",
+		ST1155: "1155",
+		STMiner: "miner",
+		STUncles: "uncles",
+		STWithdrawals: "withdrawals",
+	}
+
+	var ret []string
+	for _, val := range []SlurpTypes{STExt, STInt, STToken, STNfts, ST1155, STMiner, STUncles, STWithdrawals} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
+}
+
+func enumFromSlurpTypes(values []string) (SlurpTypes, error) {
+	if len(values) == 0 {
+		return NoST, fmt.Errorf("no value provided for types option")
+	}
+
+	if len(values) == 1 && values[0] == "all" {
+		return STAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return STSome, nil
+	}
+
+	var result SlurpTypes
+	for _, val := range values {
+		switch val {
+		case "ext":
+			result |= STExt
+		case "int":
+			result |= STInt
+		case "token":
+			result |= STToken
+		case "nfts":
+			result |= STNfts
+		case "1155":
+			result |= ST1155
+		case "miner":
+			result |= STMiner
+		case "uncles":
+			result |= STUncles
+		case "withdrawals":
+			result |= STWithdrawals
+		default:
+			return NoST, fmt.Errorf("unknown types: %s", val)
+		}
+	}
+
+	return result, nil
 }
 
 type SlurpSource int
 
 const (
-	NoSS SlurpSource = iota
-	SSEtherscan
+	NoSS SlurpSource = 0
+	SSEtherscan = 1 << iota
 	SSKey
 )
 
 func (v SlurpSource) String() string {
-	return []string{
-		"noss",
-		"etherscan",
-		"key",
-	}[v]
+	switch v {
+	case NoSS:
+		return "none"
+	}
+
+	var m = map[SlurpSource]string{
+		SSEtherscan: "etherscan",
+		SSKey: "key",
+	}
+
+	var ret []string
+	for _, val := range []SlurpSource{SSEtherscan, SSKey} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+func enumFromSlurpSource(values []string) (SlurpSource, error) {
+	if len(values) == 0 {
+		return NoSS, fmt.Errorf("no value provided for source option")
+	}
+
+	var result SlurpSource
+	for _, val := range values {
+		switch val {
+		case "etherscan":
+			result |= SSEtherscan
+		case "key":
+			result |= SSKey
+		default:
+			return NoSS, fmt.Errorf("unknown source: %s", val)
+		}
+	}
+
+	return result, nil
+}
 

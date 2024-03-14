@@ -10,47 +10,64 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
 	"io"
-	"net/url"
+	"log"
 
 	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type LogsOptions struct {
-	TransactionIds []string
-	Emitter        []string // allow for ENS names and addresses
-	Topic          []string // topics are strings
-	Articulate     bool
+	TransactionIds []string `json:"transactions,omitempty"`
+	Emitter        []string `json:"emitter,omitempty"`
+	Topic          []string `json:"topic,omitempty"`
+	Articulate     bool     `json:"articulate,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *LogsOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Logs implements the chifra logs command for the SDK.
 func (opts *LogsOptions) Logs(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, v := range opts.TransactionIds {
-		values.Add("transactions", v)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting logs struct to URL values: %v", err)
 	}
-	for _, v := range opts.Emitter {
-		values.Add("emitter", v)
-	}
-	for _, v := range opts.Topic {
-		values.Add("topic", v)
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return logs.Logs(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// logsParseFunc handles specail cases such as structs and enums (if any).
+func logsParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	_, ok := target.(*LogsOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(logs): target is not of correct type")
+	}
+
+	// No enums
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetLogsOptions returns a filled-in options instance given a string array of arguments.
+func GetLogsOptions(args []string) (*LogsOptions, error) {
+	var opts LogsOptions
+	if err := assignValuesFromArgs(args, logsParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
+}
+
+// No enums
 

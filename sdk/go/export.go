@@ -10,9 +10,11 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -20,157 +22,140 @@ import (
 )
 
 type ExportOptions struct {
-	Addrs       []string // allow for ENS names and addresses
-	Topics      []string // topics are strings
-	Fourbytes   []string
-	Appearances bool
-	Receipts    bool
-	Logs        bool
-	Traces      bool
-	Neighbors   bool
-	Accounting  bool
-	Statements  bool
-	Balances    bool
-	Withdrawals bool
-	Articulate  bool
-	CacheTraces bool
-	Count       bool
-	FirstRecord uint64
-	MaxRecords  uint64
-	Relevant    bool
-	Emitter     []string // allow for ENS names and addresses
-	Topic       []string // topics are strings
-	Reverted    bool
-	Asset       []string // allow for ENS names and addresses
-	Flow        ExportFlow
-	Factory     bool
-	Unripe      bool
-	Reversed    bool
-	NoZero      bool
-	FirstBlock  base.Blknum
-	LastBlock   base.Blknum
+	Addrs       []string    `json:"addrs,omitempty"`
+	Topics      []string    `json:"topics,omitempty"`
+	Fourbytes   []string    `json:"fourbytes,omitempty"`
+	Appearances bool        `json:"appearances,omitempty"`
+	Receipts    bool        `json:"receipts,omitempty"`
+	Logs        bool        `json:"logs,omitempty"`
+	Traces      bool        `json:"traces,omitempty"`
+	Neighbors   bool        `json:"neighbors,omitempty"`
+	Accounting  bool        `json:"accounting,omitempty"`
+	Statements  bool        `json:"statements,omitempty"`
+	Balances    bool        `json:"balances,omitempty"`
+	Withdrawals bool        `json:"withdrawals,omitempty"`
+	Articulate  bool        `json:"articulate,omitempty"`
+	CacheTraces bool        `json:"cacheTraces,omitempty"`
+	Count       bool        `json:"count,omitempty"`
+	FirstRecord uint64      `json:"firstRecord,omitempty"`
+	MaxRecords  uint64      `json:"maxRecords,omitempty"`
+	Relevant    bool        `json:"relevant,omitempty"`
+	Emitter     []string    `json:"emitter,omitempty"`
+	Topic       []string    `json:"topic,omitempty"`
+	Reverted    bool        `json:"reverted,omitempty"`
+	Asset       []string    `json:"asset,omitempty"`
+	Flow        ExportFlow  `json:"flow,omitempty"`
+	Factory     bool        `json:"factory,omitempty"`
+	Unripe      bool        `json:"unripe,omitempty"`
+	Load        string      `json:"load,omitempty"`
+	Reversed    bool        `json:"reversed,omitempty"`
+	NoZero      bool        `json:"noZero,omitempty"`
+	FirstBlock  base.Blknum `json:"firstBlock,omitempty"`
+	LastBlock   base.Blknum `json:"lastBlock,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *ExportOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Export implements the chifra export command for the SDK.
 func (opts *ExportOptions) Export(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting export struct to URL values: %v", err)
 	}
-	for _, v := range opts.Topics {
-		values.Add("topics", v)
-	}
-	for _, v := range opts.Fourbytes {
-		values.Add("fourbytes", v)
-	}
-	if opts.Appearances {
-		values.Set("appearances", "true")
-	}
-	if opts.Receipts {
-		values.Set("receipts", "true")
-	}
-	if opts.Logs {
-		values.Set("logs", "true")
-	}
-	if opts.Traces {
-		values.Set("traces", "true")
-	}
-	if opts.Neighbors {
-		values.Set("neighbors", "true")
-	}
-	if opts.Accounting {
-		values.Set("accounting", "true")
-	}
-	if opts.Statements {
-		values.Set("statements", "true")
-	}
-	if opts.Balances {
-		values.Set("balances", "true")
-	}
-	if opts.Withdrawals {
-		values.Set("withdrawals", "true")
-	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if opts.CacheTraces {
-		values.Set("cache_traces", "true")
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.FirstRecord > 0 {
-		values.Set("first_record", fmt.Sprintf("%d", opts.FirstRecord))
-	}
-	if opts.MaxRecords > 0 {
-		values.Set("max_records", fmt.Sprintf("%d", opts.MaxRecords))
-	}
-	if opts.Relevant {
-		values.Set("relevant", "true")
-	}
-	for _, v := range opts.Emitter {
-		values.Add("emitter", v)
-	}
-	for _, v := range opts.Topic {
-		values.Add("topic", v)
-	}
-	if opts.Reverted {
-		values.Set("reverted", "true")
-	}
-	for _, v := range opts.Asset {
-		values.Add("asset", v)
-	}
-	if opts.Flow != NoEF {
-		values.Set("flow", opts.Flow.String())
-	}
-	if opts.Factory {
-		values.Set("factory", "true")
-	}
-	if opts.Unripe {
-		values.Set("unripe", "true")
-	}
-	if opts.Reversed {
-		values.Set("reversed", "true")
-	}
-	if opts.NoZero {
-		values.Set("no_zero", "true")
-	}
-	if opts.FirstBlock > 0 {
-		values.Set("first_block", fmt.Sprintf("%d", opts.FirstBlock))
-	}
-	if opts.LastBlock > 0 {
-		values.Set("last_block", fmt.Sprintf("%d", opts.LastBlock))
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return export.Export(w, values)
+}
+
+// exportParseFunc handles specail cases such as structs and enums (if any).
+func exportParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	opts, ok := target.(*ExportOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(export): target is not of correct type")
+	}
+
+	switch key {
+	case "flow":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Flow, err = enumFromExportFlow(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetExportOptions returns a filled-in options instance given a string array of arguments.
+func GetExportOptions(args []string) (*ExportOptions, error) {
+	var opts ExportOptions
+	if err := assignValuesFromArgs(args, exportParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
 }
 
 type ExportFlow int
 
 const (
-	NoEF ExportFlow = iota
-	EFIn
+	NoEF ExportFlow = 0
+	EFIn = 1 << iota
 	EFOut
 	EFZero
 )
 
 func (v ExportFlow) String() string {
-	return []string{
-		"noef",
-		"in",
-		"out",
-		"zero",
-	}[v]
+	switch v {
+	case NoEF:
+		return "none"
+	}
+
+	var m = map[ExportFlow]string{
+		EFIn: "in",
+		EFOut: "out",
+		EFZero: "zero",
+	}
+
+	var ret []string
+	for _, val := range []ExportFlow{EFIn, EFOut, EFZero} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+func enumFromExportFlow(values []string) (ExportFlow, error) {
+	if len(values) == 0 {
+		return NoEF, fmt.Errorf("no value provided for flow option")
+	}
+
+	var result ExportFlow
+	for _, val := range values {
+		switch val {
+		case "in":
+			result |= EFIn
+		case "out":
+			result |= EFOut
+		case "zero":
+			result |= EFZero
+		default:
+			return NoEF, fmt.Errorf("unknown flow: %s", val)
+		}
+	}
+
+	return result, nil
+}
 

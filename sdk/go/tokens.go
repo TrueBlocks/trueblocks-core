@@ -10,81 +10,147 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
 	"io"
-	"net/url"
+	"log"
+	"strings"
 
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type TokensOptions struct {
-	Addrs    []string // allow for ENS names and addresses
-	BlockIds []string // allow for block ranges and steps
-	Parts    TokensParts
-	ByAcct   bool
-	Changes  bool
-	NoZero   bool
+	Addrs    []string    `json:"addrs,omitempty"`
+	BlockIds []string    `json:"blocks,omitempty"`
+	Parts    TokensParts `json:"parts,omitempty"`
+	ByAcct   bool        `json:"byAcct,omitempty"`
+	Changes  bool        `json:"changes,omitempty"`
+	NoZero   bool        `json:"noZero,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *TokensOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Tokens implements the chifra tokens command for the SDK.
 func (opts *TokensOptions) Tokens(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, v := range opts.Addrs {
-		values.Add("addrs", v)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting tokens struct to URL values: %v", err)
 	}
-	for _, v := range opts.BlockIds {
-		values.Add("blocks", v)
-	}
-	if opts.Parts != NoTP {
-		values.Set("parts", opts.Parts.String())
-	}
-	if opts.ByAcct {
-		values.Set("by_acct", "true")
-	}
-	if opts.Changes {
-		values.Set("changes", "true")
-	}
-	if opts.NoZero {
-		values.Set("no_zero", "true")
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return tokens.Tokens(w, values)
+}
+
+// tokensParseFunc handles specail cases such as structs and enums (if any).
+func tokensParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	opts, ok := target.(*TokensOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(tokens): target is not of correct type")
+	}
+
+	switch key {
+	case "parts":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Parts, err = enumFromTokensParts(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetTokensOptions returns a filled-in options instance given a string array of arguments.
+func GetTokensOptions(args []string) (*TokensOptions, error) {
+	var opts TokensOptions
+	if err := assignValuesFromArgs(args, tokensParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
 }
 
 type TokensParts int
 
 const (
-	NoTP TokensParts = iota
-	TPName
+	NoTP TokensParts = 0
+	TPName = 1 << iota
 	TPSymbol
 	TPDecimals
 	TPTotalSupply
 	TPVersion
-	TPSome
-	TPAll
+	TPSome = TPName | TPSymbol | TPDecimals | TPTotalSupply
+	TPAll = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
 )
 
 func (v TokensParts) String() string {
-	return []string{
-		"notp",
-		"name",
-		"symbol",
-		"decimals",
-		"totalsupply",
-		"version",
-		"some",
-		"all",
-	}[v]
+	switch v {
+	case NoTP:
+		return "none"
+	case TPSome:
+		return "some"
+	case TPAll:
+		return "all"
+	}
+
+	var m = map[TokensParts]string{
+		TPName: "name",
+		TPSymbol: "symbol",
+		TPDecimals: "decimals",
+		TPTotalSupply: "totalSupply",
+		TPVersion: "version",
+	}
+
+	var ret []string
+	for _, val := range []TokensParts{TPName, TPSymbol, TPDecimals, TPTotalSupply, TPVersion} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+func enumFromTokensParts(values []string) (TokensParts, error) {
+	if len(values) == 0 {
+		return NoTP, fmt.Errorf("no value provided for parts option")
+	}
+
+	if len(values) == 1 && values[0] == "all" {
+		return TPAll, nil
+	} else if len(values) == 1 && values[0] == "some" {
+		return TPSome, nil
+	}
+
+	var result TokensParts
+	for _, val := range values {
+		switch val {
+		case "name":
+			result |= TPName
+		case "symbol":
+			result |= TPSymbol
+		case "decimals":
+			result |= TPDecimals
+		case "totalSupply":
+			result |= TPTotalSupply
+		case "version":
+			result |= TPVersion
+		default:
+			return NoTP, fmt.Errorf("unknown parts: %s", val)
+		}
+	}
+
+	return result, nil
+}
 

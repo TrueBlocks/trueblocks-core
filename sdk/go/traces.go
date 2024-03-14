@@ -10,47 +10,64 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
 	"io"
-	"net/url"
+	"log"
 
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type TracesOptions struct {
-	TransactionIds []string
-	Articulate     bool
-	Filter         string
-	Count          bool
+	TransactionIds []string `json:"transactions,omitempty"`
+	Articulate     bool     `json:"articulate,omitempty"`
+	Filter         string   `json:"filter,omitempty"`
+	Count          bool     `json:"count,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *TracesOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Traces implements the chifra traces command for the SDK.
 func (opts *TracesOptions) Traces(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, v := range opts.TransactionIds {
-		values.Add("transactions", v)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting traces struct to URL values: %v", err)
 	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	if opts.Filter != "" {
-		values.Set("filter", opts.Filter)
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return traces.Traces(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// tracesParseFunc handles specail cases such as structs and enums (if any).
+func tracesParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	_, ok := target.(*TracesOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(traces): target is not of correct type")
+	}
+
+	// No enums
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetTracesOptions returns a filled-in options instance given a string array of arguments.
+func GetTracesOptions(args []string) (*TracesOptions, error) {
+	var opts TracesOptions
+	if err := assignValuesFromArgs(args, tracesParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
+}
+
+// No enums
 

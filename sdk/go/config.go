@@ -10,55 +10,119 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
 	"io"
-	"net/url"
+	"log"
+	"strings"
 
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type ConfigOptions struct {
-	Mode  ConfigMode
-	Paths bool
+	Mode  ConfigMode `json:"mode,omitempty"`
+	Paths bool       `json:"paths,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *ConfigOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Config implements the chifra config command for the SDK.
 func (opts *ConfigOptions) Config(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	if opts.Mode != NoCM1 {
-		values.Set("mode", opts.Mode.String())
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting config struct to URL values: %v", err)
 	}
-	if opts.Paths {
-		values.Set("paths", "true")
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return config.Config(w, values)
+}
+
+// configParseFunc handles specail cases such as structs and enums (if any).
+func configParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	opts, ok := target.(*ConfigOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(config): target is not of correct type")
+	}
+
+	switch key {
+	case "mode":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Mode, err = enumFromConfigMode(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetConfigOptions returns a filled-in options instance given a string array of arguments.
+func GetConfigOptions(args []string) (*ConfigOptions, error) {
+	var opts ConfigOptions
+	if err := assignValuesFromArgs(args, configParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
 }
 
 type ConfigMode int
 
 const (
-	NoCM1 ConfigMode = iota
-	CMShow
+	NoCM1 ConfigMode = 0
+	CMShow = 1 << iota
 	CMEdit
 )
 
 func (v ConfigMode) String() string {
-	return []string{
-		"nocm1",
-		"show",
-		"edit",
-	}[v]
+	switch v {
+	case NoCM1:
+		return "none"
+	}
+
+	var m = map[ConfigMode]string{
+		CMShow: "show",
+		CMEdit: "edit",
+	}
+
+	var ret []string
+	for _, val := range []ConfigMode{CMShow, CMEdit} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+func enumFromConfigMode(values []string) (ConfigMode, error) {
+	if len(values) == 0 {
+		return NoCM1, fmt.Errorf("no value provided for mode option")
+	}
+
+	var result ConfigMode
+	for _, val := range values {
+		switch val {
+		case "show":
+			result |= CMShow
+		case "edit":
+			result |= CMEdit
+		default:
+			return NoCM1, fmt.Errorf("unknown mode: %s", val)
+		}
+	}
+
+	return result, nil
+}
 

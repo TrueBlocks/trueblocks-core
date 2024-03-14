@@ -10,8 +10,10 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
 	"io"
-	"net/url"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -19,47 +21,61 @@ import (
 )
 
 type AbisOptions struct {
-	Addrs    []string // allow for ENS names and addresses
-	Known    bool
-	ProxyFor base.Address
-	Find     []string
-	Hint     []string
-	Encode   string
+	Addrs    []string     `json:"addrs,omitempty"`
+	Known    bool         `json:"known,omitempty"`
+	ProxyFor base.Address `json:"proxyFor,omitempty"`
+	Find     []string     `json:"find,omitempty"`
+	Hint     []string     `json:"hint,omitempty"`
+	Encode   string       `json:"encode,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *AbisOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Abis implements the chifra abis command for the SDK.
 func (opts *AbisOptions) Abis(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, addr := range opts.Addrs {
-		values.Add("addrs", addr)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting abis struct to URL values: %v", err)
 	}
-	if opts.Known {
-		values.Set("known", "true")
-	}
-	if !opts.ProxyFor.IsZero() {
-		values.Set("proxy_for", opts.ProxyFor.Hex())
-	}
-	for _, find := range opts.Find {
-		values.Add("find", find)
-	}
-	for _, hint := range opts.Hint {
-		values.Add("hint", hint)
-	}
-	if opts.Encode != "" {
-		values.Set("encode", opts.Encode)
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return abis.Abis(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// abisParseFunc handles specail cases such as structs and enums (if any).
+func abisParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	_, ok := target.(*AbisOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(abis): target is not of correct type")
+	}
+
+	// No enums
+
+	// EXISTING_CODE
+	if key == "proxyFor" {
+		opts, _ := target.(*AbisOptions)
+		opts.ProxyFor = base.HexToAddress(value)
+		return base.IsValidAddress(value), nil
+	}
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetAbisOptions returns a filled-in options instance given a string array of arguments.
+func GetAbisOptions(args []string) (*AbisOptions, error) {
+	var opts AbisOptions
+	if err := assignValuesFromArgs(args, abisParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
+}
+
+// No enums
 

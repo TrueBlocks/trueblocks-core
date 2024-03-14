@@ -31,21 +31,19 @@ bool COptions::handle_sdk_go(void) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option) {
+string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option,
+                            ostringstream& enumsThing) {
     string_q ret = option.data_type;
     replace(ret, "list<", "");
     replace(ret, "enum[", "");
     replace(ret, "]", "");
     replace(ret, ">", "");
     replaceAll(ret, "*", "");
+    bool hasAll = contains(ret, "all");
 
     CStringArray parts;
     explode(parts, ret, '|');
 
-    ostringstream os;
-    os << "type " << toProper(route) << fn << " int" << endl;
-    os << endl;
-    os << "const (\n";
     string_q r(1, route[0]);
     r = toProper(r) + fn[0];
     string_q a = "";
@@ -58,21 +56,141 @@ string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCo
         }
         cnt = 2;
     }
-    os << "\t"
-       << "No" << r << a << " " << toProper(route) << fn << " = iota" << endl;
-    for (auto& part : parts) {
-        os << "\t" << r << firstUpper(part) << endl;
+    string_q none = "No" + r + a;
+    string_q some = r + "Some";
+    string_q all = r + "All";
+    string_q inc =
+        "balance|proxy|deployed|accttype|name|symbol|decimals|totalsupply|ext|int|token|nfts|1155|index|blooms";
+
+    ostringstream os;
+    os << "type " << toProper(route) << fn << " int" << endl;
+    os << endl;
+    os << "const (\n";
+    os << "\t" << none << " " << toProper(route) << fn << " = 0" << endl;
+    for (size_t i = 0; i < parts.size() - (hasAll ? 2 : 0); i++) {
+        string_q part = parts[i];
+        os << "\t" << r << firstUpper(part);
+        if (i == 0) {
+            os << " = 1 << iota";
+        }
+        os << endl;
+    }
+    if (hasAll) {
+        os << "\t" << some << " = ";
+        bool first = true;
+        for (auto p : parts) {
+            if (containsI(inc, p)) {
+                if (!first)
+                    os << " | ";
+                os << r << firstUpper(p);
+                first = false;
+            }
+        }
+        os << endl;
+        os << "\t" << all << " = ";
+        for (size_t i = 0; i < parts.size() - 2; ++i) {
+            if (i > 0)
+                os << " | ";
+            os << r << firstUpper(parts[i]);
+        }
+        os << endl;
     }
     os << ")" << endl;
     os << endl;
-    os << "func (v " << toProper(route) << fn << ") String() string {" << endl;
-    os << "\treturn []string{" << endl;
-    os << "\t\t\"no" << toLower(r) << toLower(a) << "\"," << endl;
-    for (auto& part : parts) {
-        os << "\t\t\"" << toLower(part) << "\"," << endl;
+
+    os << "func (v " << toProper(route) << fn << ") String() string {\n";
+
+    os << "\tswitch v {" << endl;
+    os << "\tcase " << none << ":" << endl;
+    os << "\t\treturn \"none\"" << endl;
+    if (hasAll) {
+        os << "\tcase " << some << ":" << endl;
+        os << "\t\treturn \"some\"" << endl;
+        os << "\tcase " << all << ":" << endl;
+        os << "\t\treturn \"all\"" << endl;
     }
-    os << "\t}[v]" << endl;
-    os << "}" << endl;
+    os << "\t}" << endl;
+    os << endl;
+
+    os << "\tvar m = map[" << toProper(route) << fn << "]string{" << endl;
+    for (auto& part : parts) {
+        if (part == "all" || part == "some") {
+            continue;
+        }
+        os << "\t\t" << r << firstUpper(part) << ": \"" << firstLower(part) << "\"," << endl;
+    }
+    os << "\t}" << endl << endl;
+    os << "\tvar ret []string" << endl;
+    os << "\tfor _, val := range []" << toProper(route) << fn << "{";
+    ostringstream cases;
+    for (size_t i = 0; i < parts.size() - (hasAll ? 2 : 0); ++i) {
+        if (i > 0)
+            os << ", ";
+        os << r << firstUpper(parts[i]);
+        cases << "\t\tcase \"" << firstLower(parts[i]) << "\":" << endl;
+        cases << "\t\t\tresult |= " << r << firstUpper(parts[i]) << endl;
+    }
+    os << "} {" << endl;
+    os << "\t\tif v&val != 0 {" << endl;
+    os << "\t\t\tret = append(ret, m[val])" << endl;
+    os << "\t\t}" << endl;
+    os << "\t}" << endl << endl;
+    os << "\treturn strings.Join(ret, \",\")\n";
+    os << "}" << endl << endl;
+
+    const char* STR_FROMSTRS =
+        "func enumFrom[{PROPER}][{NAME}](values []string) ([{PROPER}][{NAME}], error) {\n"
+        "	if len(values) == 0 {\n"
+        "		return [{none}], fmt.Errorf(\"no value provided for [{LNAME}] option\")\n"
+        "	}\n"
+        "\n"
+        "[{ALLTHING}]	var result [{PROPER}][{NAME}]\n"
+        "	for _, val := range values {\n"
+        "		switch val {\n"
+        "[{CASES}]		default:\n"
+        "			return [{none}], fmt.Errorf(\"unknown [{LNAME}]: %s\", val)\n"
+        "		}\n"
+        "	}\n"
+        "\n"
+        "	return result, nil\n"
+        "}\n";
+
+    string_q aStr;
+    if (hasAll) {
+        const char* STR_ALL =
+            "\tif len(values) == 1 && values[0] == \"all\" {\n"
+            "\t\treturn [{ALL}], nil\n"
+            "\t} else if len(values) == 1 && values[0] == \"some\" {\n"
+            "\t\treturn [{SOME}], nil\n"
+            "\t}\n\n";
+        aStr = STR_ALL;
+        replace(aStr, "[{ALL}]", all);
+        replace(aStr, "[{SOME}]", some);
+    }
+
+    string_q str = STR_FROMSTRS;
+    replaceAll(str, "[{PROPER}]", toProper(route));
+    replaceAll(str, "[{CASES}]", cases.str());
+    replaceAll(str, "[{LNAME}]", toLower(fn));
+    replaceAll(str, "[{NAME}]", fn);
+    replaceAll(str, "[{none}]", none);
+    replaceAll(str, "[{ALLTHING}]", aStr);
+    os << str;
+
+    const char* STR_ENUM_THING =
+        "\tcase \"[{LNAME}]\":\n"
+        "\t\tvar err error\n"
+        "\t\tvalues := strings.Split(value, \",\")\n"
+        "\t\tif opts.[{NAME}], err = enumFrom[{PROPER}][{NAME}](values); err != nil {\n"
+        "\t\t\treturn false, err\n"
+        "\t\t} else {\n"
+        "\t\t\tfound = true\n"
+        "\t\t}";
+    string_q eT = STR_ENUM_THING;
+    replaceAll(eT, "[{LNAME}]", firstLower(fn));
+    replaceAll(eT, "[{NAME}]", firstUpper(fn));
+    replaceAll(eT, "[{PROPER}]", toProper(route));
+    enumsThing << eT << endl;
 
     return os.str();
 }
@@ -114,8 +232,9 @@ bool COptions::handle_sdk_go_outersdk(void) {
             continue;
         }
 
-        size_t maxWidth = 0;
-        ostringstream fields, enums;
+        size_t maxNameWid = 0;
+        size_t maxTypeWid = 0;
+        ostringstream fields, enums, enumsThing;
         for (auto member : routeOptionArray) {
             if (member.generate == "config") {
                 continue;
@@ -128,12 +247,30 @@ bool COptions::handle_sdk_go_outersdk(void) {
                 } else if (fn == "Transactions") {
                     fn = "TransactionIds";
                 }
-                maxWidth = max(maxWidth, (fn + " ").size());
+                maxNameWid = max(maxNameWid, (fn).size() + 1);
+                string_q t = member.go_intype;
+                if (member.data_type == "<blknum>" || member.data_type == "<txnum>") {
+                    t = "base.Blknum";
+                } else if (member.data_type == "list<addr>") {
+                    t = "[]string";
+                } else if (member.data_type == "list<blknum>") {
+                    t = "[]string";
+                } else if (member.data_type == "list<topic>") {
+                    t = "[]string";
+                } else if (contains(member.data_type, "enum")) {
+                    t = toProper(member.api_route) + toProper(member.longName);
+                    // enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
+                } else if (contains(member.data_type, "address")) {
+                    t = "base.Address";
+                } else if (contains(member.data_type, "topic")) {
+                    t = "base.Topic";
+                }
+                maxTypeWid = max(maxTypeWid, t.size() + 1);
             }
         }
 
         for (auto member : routeOptionArray) {
-            if (!member.is_visible_docs) {  //  && !containsI(member.longName, "cache")) {
+            if (member.generate == "config") {
                 continue;
             }
 
@@ -149,20 +286,23 @@ bool COptions::handle_sdk_go_outersdk(void) {
                 if (member.data_type == "<blknum>" || member.data_type == "<txnum>") {
                     t = "base.Blknum";
                 } else if (member.data_type == "list<addr>") {
-                    t = "[]string // allow for ENS names and addresses";
+                    t = "[]string";
                 } else if (member.data_type == "list<blknum>") {
-                    t = "[]string // allow for block ranges and steps";
+                    t = "[]string";
                 } else if (member.data_type == "list<topic>") {
-                    t = "[]string // topics are strings";
+                    t = "[]string";
                 } else if (contains(member.data_type, "enum")) {
                     t = toProper(member.api_route) + toProper(member.longName);
-                    enums << handle_sdk_go_enum(ep.api_route, fn, member) << endl;
+                    enums << handle_sdk_go_enum(ep.api_route, fn, member, enumsThing) << endl;
                 } else if (contains(member.data_type, "address")) {
                     t = "base.Address";
                 } else if (contains(member.data_type, "topic")) {
                     t = "base.Topic";
                 }
-                fields << "\t" << padRight(fn + " ", maxWidth) << t << endl;
+                ostringstream f;
+                f << padRight(fn + " ", maxNameWid) << t;
+                fields << "\t" << padRight(f.str(), maxNameWid + maxTypeWid);
+                fields << "`json:\"" << substitute(firstLower(fn), "Ids", "s") << ",omitempty\"`" << endl;
                 if (!(member.option_type % "positional")) {
                     reportOneOption(ep.api_route, toCamelCase(member.longName), "go-sdk");
                 }
@@ -179,12 +319,17 @@ bool COptions::handle_sdk_go_outersdk(void) {
 
         string_q package = toLower(ep.api_route) + (toLower(ep.api_route) == "init" ? "Pkg" : "");
         string_q contents = asciiFileToString(getPathToTemplates("blank_sdk2.go.tmpl"));
-        contents = substitute(contents, "[{CODE}]", "");
         contents = substitute(contents, "[{FIELDS}]", fields.str());
-        contents = substitute(contents, "[{ENUMS}]", enums.str());
+        contents = substitute(contents, "[{ENUMS1}]", enums.str() == "" ? "// No enums\n\n" : enums.str());
         contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
         contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
         contents = substitute(contents, "[{PKG}]", package);
+        if (enumsThing.str() == "") {
+            contents = substitute(substitute(contents, "[{ENUMS2}]", "\t// No enums\n\n"), "opts, ok := target.(*",
+                                  "_, ok := target.(*");
+        } else {
+            contents = substitute(contents, "[{ENUMS2}]", "\tswitch key {\n" + enumsThing.str() + "\t}\n");
+        }
 
         codewrite_t cw(path + ep.api_route + ".go", contents);
         cw.nSpaces = 0;
