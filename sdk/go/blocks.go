@@ -21,19 +21,19 @@ import (
 )
 
 type BlocksOptions struct {
-	BlockIds    []string    `json:"blocks,omitempty"`
-	Hashes      bool        `json:"hashes,omitempty"`
-	Uncles      bool        `json:"uncles,omitempty"`
-	Traces      bool        `json:"traces,omitempty"`
-	Uniq        bool        `json:"uniq,omitempty"`
-	Flow        BlocksFlow  `json:"flow,omitempty"`
-	Logs        bool        `json:"logs,omitempty"`
-	Emitter     []string    `json:"emitter,omitempty"`
-	Topic       []string    `json:"topic,omitempty"`
-	Withdrawals bool        `json:"withdrawals,omitempty"`
-	Articulate  bool        `json:"articulate,omitempty"`
-	BigRange    uint64      `json:"bigRange,omitempty"`
-	Count       bool        `json:"count,omitempty"`
+	BlockIds    []string   `json:"blocks,omitempty"`
+	Hashes      bool       `json:"hashes,omitempty"`
+	Uncles      bool       `json:"uncles,omitempty"`
+	Traces      bool       `json:"traces,omitempty"`
+	Uniq        bool       `json:"uniq,omitempty"`
+	Flow        BlocksFlow `json:"flow,omitempty"`
+	Logs        bool       `json:"logs,omitempty"`
+	Emitter     []string   `json:"emitter,omitempty"`
+	Topic       []string   `json:"topic,omitempty"`
+	Withdrawals bool       `json:"withdrawals,omitempty"`
+	Articulate  bool       `json:"articulate,omitempty"`
+	BigRange    uint64     `json:"bigRange,omitempty"`
+	Count       bool       `json:"count,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -158,8 +158,8 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 type BlocksFlow int
 
 const (
-	NoBF BlocksFlow = 0
-	BFFrom = 1 << iota
+	NoBF   BlocksFlow = 0
+	BFFrom            = 1 << iota
 	BFTo
 	BFReward
 )
@@ -171,8 +171,8 @@ func (v BlocksFlow) String() string {
 	}
 
 	var m = map[BlocksFlow]string{
-		BFFrom: "from",
-		BFTo: "to",
+		BFFrom:   "from",
+		BFTo:     "to",
 		BFReward: "reward",
 	}
 
@@ -196,11 +196,11 @@ func enumsFromStrsBlocks(values []string) (BlocksFlow, error) {
 	for _, val := range values {
 		switch val {
 		case "from":
-			result = BFFrom
+			result |= BFFrom
 		case "to":
-			result = BFTo
+			result |= BFTo
 		case "reward":
-			result = BFReward
+			result |= BFReward
 		default:
 			return NoBF, fmt.Errorf("unknown flow: %s", val)
 		}

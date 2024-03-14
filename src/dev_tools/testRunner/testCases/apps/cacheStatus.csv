@@ -5,7 +5,7 @@ on      ,cmd  ,fast  ,status ,apps/cacheStatus ,help_long           ,n    ,help
 on      ,both ,fast  ,status ,apps/cacheStatus ,no_params           ,y    ,
 on      ,both ,fast  ,status ,apps/cacheStatus ,invalid_param_1     ,y    ,junk
 on      ,cmd  ,fast  ,status ,apps/cacheStatus ,invalid_param_2     ,y    ,@l & junk
-on      ,both ,fast  ,status ,apps/cacheStatus ,status_bad          ,y    ,modes = config & verbose
+local   ,both ,fast  ,status ,apps/cacheStatus ,status_bad          ,y    ,modes = config & verbose
 
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_none          ,y    ,
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_fail          ,y    ,modes = junk

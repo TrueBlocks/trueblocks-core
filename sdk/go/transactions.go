@@ -32,7 +32,7 @@ type TransactionsOptions struct {
 	Globals
 
 	// EXISTING_CODE
-	CacheTraces    bool             `json:"cacheTraces,omitempty"`
+	CacheTraces bool `json:"cacheTraces,omitempty"`
 	// Seed           bool             `json:"seed,omitempty"`
 	// EXISTING_CODE
 }
@@ -130,8 +130,8 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 type TransactionsFlow int
 
 const (
-	NoTF TransactionsFlow = 0
-	TFFrom = 1 << iota
+	NoTF   TransactionsFlow = 0
+	TFFrom                  = 1 << iota
 	TFTo
 )
 
@@ -143,7 +143,7 @@ func (v TransactionsFlow) String() string {
 
 	var m = map[TransactionsFlow]string{
 		TFFrom: "from",
-		TFTo: "to",
+		TFTo:   "to",
 	}
 
 	var ret []string
@@ -166,11 +166,11 @@ func enumsFromStrsTransactions(values []string) (TransactionsFlow, error) {
 	for _, val := range values {
 		switch val {
 		case "from":
-			result = BFFrom
+			result |= BFFrom
 		case "to":
-			result = BFTo
+			result |= BFTo
 		case "reward":
-			result = BFReward
+			result |= BFReward
 		default:
 			return NoTF, fmt.Errorf("unknown flow: %s", val)
 		}
@@ -180,4 +180,3 @@ func enumsFromStrsTransactions(values []string) (TransactionsFlow, error) {
 }
 
 // EXISTING_CODE
-

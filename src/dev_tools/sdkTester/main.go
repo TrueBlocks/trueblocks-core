@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var pathToTests = []string{
@@ -83,7 +84,7 @@ func processCSVFile(filePath string) {
 	}
 	defer ff.Close()
 
-	fmt.Println("Processing", filePath)
+	fmt.Println("Testing", filePath, strings.Repeat(" ", 120-len(filePath)))
 
 	reader := csv.NewReader(ff)
 	const requiredFields = 8
@@ -147,8 +148,8 @@ func processCSVFile(filePath string) {
 		}
 	}
 
-	for _, testCase := range testCases {
-		testCase.RunTest()
+	for i, testCase := range testCases {
+		testCase.RunTest(i, len(testCases))
 	}
 }
 
@@ -241,34 +242,33 @@ func init() {
 	colors.ColorsOff()
 }
 
-func (t *TestCase) RunTest() {
+func (t *TestCase) RunTest(id, cnt int) {
 	if !t.Enabled {
 		return
 	}
 
 	testing := []string{
-		//= "list",
+		"list",
 		// "export",
-		//- "monitors",
-		//= "config",
-		// "status",
-		//- "daemon",
-		//- "scrape",
-		// "chunks",
-		// "init",
-		//- "explore",
-
+		"monitors",
+		"config",
+		"status",
+		"daemon",
+		"scrape",
+		"chunks",
+		"init",
+		"explore",
 		// "names",
 		// "slurp",
-		//= "abis",
-		//= "blocks",
-		//= "transactions",
-		//= "receipts",
-		//= "logs",
-		//= "state",
-		//= "tokens",
-		//= "traces",
-		//= "when",
+		"abis",
+		"blocks",
+		"transactions",
+		"receipts",
+		"logs",
+		"state",
+		"tokens",
+		"traces",
+		"when",
 	}
 	interesting := false
 	for _, test := range testing {
@@ -277,7 +277,7 @@ func (t *TestCase) RunTest() {
 			break
 		}
 	}
-	// interesting = t.Route == "state" && t.Original.Filename == "contract_call"
+	// interesting = t.Route == "status" && t.Original.Filename == "explorer_3"
 	if !interesting {
 		return
 	}
@@ -297,7 +297,6 @@ func (t *TestCase) RunTest() {
 				file.EstablishFolder(folder)
 			}
 			fn := filepath.Join(folder, parts[1]+"_"+t.Original.Filename+".txt")
-			fmt.Printf("Testing %s...", fn)
 
 			ff, _ := os.Create(fn)
 			logger.SetLoggerWriter(ff)
@@ -306,7 +305,7 @@ func (t *TestCase) RunTest() {
 				logger.ToggleDecoration()
 				logger.SetLoggerWriter(os.Stderr)
 				ff.Close()
-				fmt.Println("Done.")
+				fmt.Printf("% 4d of % 4d: %s...%s\r", id, cnt, fn, strings.Repeat(" ", utils.Max(0, 120-len(fn))))
 			}()
 		}
 		logger.Info(t.Route + "?" + t.Cannonical)

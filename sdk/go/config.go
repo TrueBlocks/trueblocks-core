@@ -79,8 +79,8 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 type ConfigMode int
 
 const (
-	NoCM1  ConfigMode = 0
-	CMShow            = 1 << iota
+	NoCM1 ConfigMode = 0
+	CMShow = 1 << iota
 	CMEdit
 )
 
@@ -107,3 +107,4 @@ func (v ConfigMode) String() string {
 
 // EXISTING_CODE
 // EXISTING_CODE
+

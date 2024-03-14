@@ -22,20 +22,20 @@ import (
 )
 
 type ChunksOptions struct {
-	Mode       ChunksMode   `json:"mode,omitempty"`
-	BlockIds   []string     `json:"blocks,omitempty"`
-	Check      bool         `json:"check,omitempty"`
-	Pin        bool         `json:"pin,omitempty"`
-	Publish    bool         `json:"publish,omitempty"`
-	Remote     bool         `json:"remote,omitempty"`
-	Belongs    []string     `json:"belongs,omitempty"`
-	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
-	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
-	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
-	Deep       bool         `json:"deep,omitempty"`
-	Rewrite    bool         `json:"rewrite,omitempty"`
-	Count      bool         `json:"count,omitempty"`
-	Sleep      float64      `json:"sleep,omitempty"`
+	Mode       ChunksMode  `json:"mode,omitempty"`
+	BlockIds   []string    `json:"blocks,omitempty"`
+	Check      bool        `json:"check,omitempty"`
+	Pin        bool        `json:"pin,omitempty"`
+	Publish    bool        `json:"publish,omitempty"`
+	Remote     bool        `json:"remote,omitempty"`
+	Belongs    []string    `json:"belongs,omitempty"`
+	FirstBlock base.Blknum `json:"firstBlock,omitempty"`
+	LastBlock  base.Blknum `json:"lastBlock,omitempty"`
+	MaxAddrs   base.Blknum `json:"maxAddrs,omitempty"`
+	Deep       bool        `json:"deep,omitempty"`
+	Rewrite    bool        `json:"rewrite,omitempty"`
+	Count      bool        `json:"count,omitempty"`
+	Sleep      float64     `json:"sleep,omitempty"`
 	Globals
 
 	// EXISTING_CODE
@@ -117,6 +117,22 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 func chunksParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	// EXISTING_CODE
+	opts, ok := target.(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(chunks): target is not of correct type")
+	}
+
+	switch key {
+	case "mode":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Mode, err = enumsFromStrsChunks(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
 	// EXISTING_CODE
 	return found, nil
 }
@@ -137,8 +153,8 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 type ChunksMode int
 
 const (
-	NoCM2 ChunksMode = 0
-	CMManifest = 1 << iota
+	NoCM2      ChunksMode = 0
+	CMManifest            = 1 << iota
 	CMIndex
 	CMBlooms
 	CMPins
@@ -154,13 +170,13 @@ func (v ChunksMode) String() string {
 	}
 
 	var m = map[ChunksMode]string{
-		CMManifest: "manifest",
-		CMIndex: "index",
-		CMBlooms: "blooms",
-		CMPins: "pins",
-		CMAddresses: "addresses",
+		CMManifest:    "manifest",
+		CMIndex:       "index",
+		CMBlooms:      "blooms",
+		CMPins:        "pins",
+		CMAddresses:   "addresses",
 		CMAppearances: "appearances",
-		CMStats: "stats",
+		CMStats:       "stats",
 	}
 
 	var ret []string
@@ -174,5 +190,33 @@ func (v ChunksMode) String() string {
 }
 
 // EXISTING_CODE
-// EXISTING_CODE
+func enumsFromStrsChunks(values []string) (ChunksMode, error) {
+	if len(values) == 0 {
+		return NoCM2, fmt.Errorf("no value provided for parts option")
+	}
 
+	var result ChunksMode
+	for _, val := range values {
+		switch val {
+		case "manifest":
+			result |= CMManifest
+		case "index":
+			result |= CMIndex
+		case "blooms":
+			result |= CMBlooms
+		case "pins":
+			result |= CMPins
+		case "addresses":
+			result |= CMAddresses
+		case "appearances":
+			result |= CMAppearances
+		case "stats":
+			result |= CMStats
+		default:
+			return NoCM2, fmt.Errorf("unknown mode: %s", val)
+		}
+	}
+	return result, nil
+}
+
+// EXISTING_CODE

@@ -50,10 +50,10 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 		values.Set("diagnose", "true")
 	}
 	if opts.FirstRecord != 0 {
-		values.Set("first_record", fmt.Sprint(opts.FirstRecord))
+		values.Set("firstRecord", fmt.Sprintf("%d", opts.FirstRecord))
 	}
 	if opts.MaxRecords != 0 {
-		values.Set("max_records", fmt.Sprint(opts.MaxRecords))
+		values.Set("maxRecords", fmt.Sprintf("%d", opts.MaxRecords))
 	}
 	if opts.Chains {
 		values.Set("chains", "true")
@@ -68,6 +68,22 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 func statusParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	// EXISTING_CODE
+	opts, ok := target.(*StatusOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(chunks): target is not of correct type")
+	}
+
+	switch key {
+	case "mode":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Modes, err = enumsFromStrsStatus(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
 	// EXISTING_CODE
 	return found, nil
 }
@@ -88,8 +104,8 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 type StatusModes int
 
 const (
-	NoSM StatusModes = 0
-	SMIndex = 1 << iota
+	NoSM    StatusModes = 0
+	SMIndex             = 1 << iota
 	SMBlooms
 	SMBlocks
 	SMTransactions
@@ -107,7 +123,7 @@ const (
 	SMUnripe
 	SMMaps
 	SMSome = SMIndex | SMBlooms
-	SMAll = SMIndex | SMBlooms | SMBlocks | SMTransactions | SMTraces | SMLogs | SMStatements | SMResults | SMState | SMTokens | SMMonitors | SMNames | SMAbis | SMSlurps | SMStaging | SMUnripe | SMMaps
+	SMAll  = SMIndex | SMBlooms | SMBlocks | SMTransactions | SMTraces | SMLogs | SMStatements | SMResults | SMState | SMTokens | SMMonitors | SMNames | SMAbis | SMSlurps | SMStaging | SMUnripe | SMMaps
 )
 
 func (v StatusModes) String() string {
@@ -121,23 +137,23 @@ func (v StatusModes) String() string {
 	}
 
 	var m = map[StatusModes]string{
-		SMIndex: "index",
-		SMBlooms: "blooms",
-		SMBlocks: "blocks",
+		SMIndex:        "index",
+		SMBlooms:       "blooms",
+		SMBlocks:       "blocks",
 		SMTransactions: "transactions",
-		SMTraces: "traces",
-		SMLogs: "logs",
-		SMStatements: "statements",
-		SMResults: "results",
-		SMState: "state",
-		SMTokens: "tokens",
-		SMMonitors: "monitors",
-		SMNames: "names",
-		SMAbis: "abis",
-		SMSlurps: "slurps",
-		SMStaging: "staging",
-		SMUnripe: "unripe",
-		SMMaps: "maps",
+		SMTraces:       "traces",
+		SMLogs:         "logs",
+		SMStatements:   "statements",
+		SMResults:      "results",
+		SMState:        "state",
+		SMTokens:       "tokens",
+		SMMonitors:     "monitors",
+		SMNames:        "names",
+		SMAbis:         "abis",
+		SMSlurps:       "slurps",
+		SMStaging:      "staging",
+		SMUnripe:       "unripe",
+		SMMaps:         "maps",
 	}
 
 	var ret []string
@@ -151,5 +167,53 @@ func (v StatusModes) String() string {
 }
 
 // EXISTING_CODE
-// EXISTING_CODE
+func enumsFromStrsStatus(values []string) (StatusModes, error) {
+	if len(values) == 0 {
+		return NoSM, fmt.Errorf("no value provided for parts option")
+	}
 
+	var result StatusModes
+	for _, val := range values {
+		switch val {
+		case "index":
+			result |= SMIndex
+		case "blooms":
+			result |= SMBlooms
+		case "blocks":
+			result |= SMBlocks
+		case "transactions":
+			result |= SMTransactions
+		case "traces":
+			result |= SMTraces
+		case "logs":
+			result |= SMLogs
+		case "statements":
+			result |= SMStatements
+		case "results":
+			result |= SMResults
+		case "state":
+			result |= SMState
+		case "tokens":
+			result |= SMTokens
+		case "monitors":
+			result |= SMMonitors
+		case "names":
+			result |= SMNames
+		case "abis":
+			result |= SMAbis
+		case "slurps":
+			result |= SMSlurps
+		case "staging":
+			result |= SMStaging
+		case "unripe":
+			result |= SMUnripe
+		case "maps":
+			result |= SMMaps
+		default:
+			return NoSM, fmt.Errorf("unknown modes: %s", val)
+		}
+	}
+	return result, nil
+}
+
+// EXISTING_CODE

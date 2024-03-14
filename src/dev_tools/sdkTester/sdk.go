@@ -54,6 +54,14 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		}
 		return opts.Chunks(buf)
 
+	case "init":
+		opts, err := sdk.GetInitOptions(t.Options)
+		reportOpts(opts)
+		if err != nil {
+			return err
+		}
+		return opts.Init(buf)
+
 	case "names":
 		opts, err := sdk.GetNamesOptions(t.Options)
 		reportOpts(opts)
@@ -146,7 +154,6 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		// case "monitors":
 		// case "daemon":
 		// case "scrape":
-		// case "init":
 		// case "explore":
 		logger.Info(colors.Red + "Unknown sdk endpoint: " + t.Route + colors.Off)
 
