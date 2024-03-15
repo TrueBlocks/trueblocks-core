@@ -1,0 +1,28 @@
+package main
+
+import (
+	"bytes"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
+)
+
+// DoWhen tests the When sdk function
+func DoWhen() {
+	logger.Info("DoMonitors")
+
+	opts := sdk.WhenOptions{
+		Globals: sdk.Globals{
+			Verbose: true,
+		},
+		BlockIds: testBlocks,
+	}
+
+	buf := bytes.Buffer{}
+	if err := opts.When(&buf); err != nil {
+		logger.Fatal(err)
+	}
+
+	file.StringToAsciiFile("usesSDK/when.json", buf.String())
+}

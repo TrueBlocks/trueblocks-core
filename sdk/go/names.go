@@ -10,12 +10,16 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -85,3 +89,21 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 
 // No enums
 
+func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
+	namesBuf := bytes.Buffer{}
+	if err := opts.Names(&namesBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	type result struct {
+		Data []types.SimpleName `json:"data"`
+		Meta rpc.MetaData       `json:"meta"`
+	}
+
+	var names result
+	if err := json.Unmarshal(namesBuf.Bytes(), &names); err != nil {
+		return nil, nil, err
+	} else {
+		return names.Data, &names.Meta, nil
+	}
+}
