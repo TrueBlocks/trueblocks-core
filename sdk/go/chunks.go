@@ -10,9 +10,11 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -20,84 +22,85 @@ import (
 )
 
 type ChunksOptions struct {
-	Mode       ChunksMode
-	BlockIds   []string // allow for block ranges and steps
-	Check      bool
-	Pin        bool
-	Publish    bool
-	Remote     bool
-	Belongs    []string // allow for ENS names and addresses
-	FirstBlock base.Blknum
-	LastBlock  base.Blknum
-	MaxAddrs   base.Blknum
-	Deep       bool
-	Rewrite    bool
-	Count      bool
-	Sleep      float64
+	Mode       ChunksMode   `json:"mode,omitempty"`
+	BlockIds   []string     `json:"blocks,omitempty"`
+	Check      bool         `json:"check,omitempty"`
+	Pin        bool         `json:"pin,omitempty"`
+	Publish    bool         `json:"publish,omitempty"`
+	Publisher  base.Address `json:"publisher,omitempty"`
+	Truncate   base.Blknum  `json:"truncate,omitempty"`
+	Remote     bool         `json:"remote,omitempty"`
+	Belongs    []string     `json:"belongs,omitempty"`
+	Diff       bool         `json:"diff,omitempty"`
+	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
+	LastBlock  base.Blknum  `json:"lastBlock,omitempty"`
+	MaxAddrs   base.Blknum  `json:"maxAddrs,omitempty"`
+	Deep       bool         `json:"deep,omitempty"`
+	Rewrite    bool         `json:"rewrite,omitempty"`
+	List       bool         `json:"list,omitempty"`
+	Unpin      bool         `json:"unpin,omitempty"`
+	Count      bool         `json:"count,omitempty"`
+	Tag        string       `json:"tag,omitempty"`
+	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *ChunksOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Chunks implements the chifra chunks command for the SDK.
 func (opts *ChunksOptions) Chunks(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	if opts.Mode != NoCM2 {
-		values.Set("mode", opts.Mode.String())
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting chunks struct to URL values: %v", err)
 	}
-	for _, v := range opts.BlockIds {
-		values.Add("blocks", v)
-	}
-	if opts.Check {
-		values.Set("check", "true")
-	}
-	if opts.Pin {
-		values.Set("pin", "true")
-	}
-	if opts.Publish {
-		values.Set("publish", "true")
-	}
-	if opts.Remote {
-		values.Set("remote", "true")
-	}
-	for _, v := range opts.Belongs {
-		values.Add("belongs", v)
-	}
-	if opts.FirstBlock > 0 {
-		values.Set("first_block", fmt.Sprint(opts.FirstBlock))
-	}
-	if opts.LastBlock > 0 {
-		values.Set("last_block", fmt.Sprint(opts.LastBlock))
-	}
-	if opts.MaxAddrs > 0 {
-		values.Set("max_addrs", fmt.Sprint(opts.MaxAddrs))
-	}
-	if opts.Deep {
-		values.Set("deep", "true")
-	}
-	if opts.Rewrite {
-		values.Set("rewrite", "true")
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.Sleep > 0 {
-		values.Set("sleep", fmt.Sprint(opts.Sleep))
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return chunks.Chunks(w, values)
+}
+
+// chunksParseFunc handles specail cases such as structs and enums (if any).
+func chunksParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	opts, ok := target.(*ChunksOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(chunks): target is not of correct type")
+	}
+
+	switch key {
+	case "mode":
+		var err error
+		values := strings.Split(value, ",")
+		if opts.Mode, err = enumFromChunksMode(values); err != nil {
+			return false, err
+		} else {
+			found = true
+		}
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetChunksOptions returns a filled-in options instance given a string array of arguments.
+func GetChunksOptions(args []string) (*ChunksOptions, error) {
+	var opts ChunksOptions
+	if err := assignValuesFromArgs(args, chunksParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
 }
 
 type ChunksMode int
 
 const (
-	NoCM2 ChunksMode = iota
-	CMManifest
+	NoCM2 ChunksMode = 0
+	CMManifest = 1 << iota
 	CMIndex
 	CMBlooms
 	CMPins
@@ -107,18 +110,58 @@ const (
 )
 
 func (v ChunksMode) String() string {
-	return []string{
-		"nocm2",
-		"manifest",
-		"index",
-		"blooms",
-		"pins",
-		"addresses",
-		"appearances",
-		"stats",
-	}[v]
+	switch v {
+	case NoCM2:
+		return "none"
+	}
+
+	var m = map[ChunksMode]string{
+		CMManifest: "manifest",
+		CMIndex: "index",
+		CMBlooms: "blooms",
+		CMPins: "pins",
+		CMAddresses: "addresses",
+		CMAppearances: "appearances",
+		CMStats: "stats",
+	}
+
+	var ret []string
+	for _, val := range []ChunksMode{CMManifest, CMIndex, CMBlooms, CMPins, CMAddresses, CMAppearances, CMStats} {
+		if v&val != 0 {
+			ret = append(ret, m[val])
+		}
+	}
+
+	return strings.Join(ret, ",")
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+func enumFromChunksMode(values []string) (ChunksMode, error) {
+	if len(values) == 0 {
+		return NoCM2, fmt.Errorf("no value provided for mode option")
+	}
+
+	var result ChunksMode
+	for _, val := range values {
+		switch val {
+		case "manifest":
+			result |= CMManifest
+		case "index":
+			result |= CMIndex
+		case "blooms":
+			result |= CMBlooms
+		case "pins":
+			result |= CMPins
+		case "addresses":
+			result |= CMAddresses
+		case "appearances":
+			result |= CMAppearances
+		case "stats":
+			result |= CMStats
+		default:
+			return NoCM2, fmt.Errorf("unknown mode: %s", val)
+		}
+	}
+
+	return result, nil
+}
 

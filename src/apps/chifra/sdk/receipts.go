@@ -18,7 +18,7 @@ import (
 
 // Receipts provides an interface to the command line chifra receipts through the SDK.
 func Receipts(w io.Writer, values url.Values) error {
-	receipts.ResetOptions(false)
+	receipts.ResetOptions(sdkTestMode)
 	opts := receipts.ReceiptsFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("receipts", true)
 	// EXISTING_CODE

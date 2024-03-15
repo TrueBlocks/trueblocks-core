@@ -10,39 +10,62 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
 	"io"
-	"net/url"
+	"log"
 
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type ReceiptsOptions struct {
-	TransactionIds []string
-	Articulate     bool
+	TransactionIds []string `json:"transactions,omitempty"`
+	Articulate     bool     `json:"articulate,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *ReceiptsOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Receipts implements the chifra receipts command for the SDK.
 func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, v := range opts.TransactionIds {
-		values.Add("transactions", v)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting receipts struct to URL values: %v", err)
 	}
-	if opts.Articulate {
-		values.Set("articulate", "true")
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return receipts.Receipts(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// receiptsParseFunc handles specail cases such as structs and enums (if any).
+func receiptsParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	_, ok := target.(*ReceiptsOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(receipts): target is not of correct type")
+	}
+
+	// No enums
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetReceiptsOptions returns a filled-in options instance given a string array of arguments.
+func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
+	var opts ReceiptsOptions
+	if err := assignValuesFromArgs(args, receiptsParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
+}
+
+// No enums
 

@@ -18,7 +18,7 @@ import (
 
 // [{PROPER}] provides an interface to the command line chifra [{LOWER}] through the SDK.
 func [{PROPER}](w io.Writer, values url.Values) error {
-	[{PKG}].ResetOptions(false)
+	[{PKG}].ResetOptions(sdkTestMode)
 	opts := [{PKG}].[{PROPER}]FinishParseInternal(w, values)
 	outputHelpers.EnableCommand("[{LOWER}]", true)
 	// EXISTING_CODE

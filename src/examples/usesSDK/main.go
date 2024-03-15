@@ -28,7 +28,6 @@ func DoBlocks() {
 func DoWhen() {
 	opts := sdk.WhenOptions{
 		Globals: sdk.Globals{
-			Fmt:     sdk.Csv,
 			Verbose: true,
 		},
 		BlockIds: testBlocks,

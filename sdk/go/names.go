@@ -10,8 +10,10 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
 	"io"
-	"net/url"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -19,91 +21,67 @@ import (
 )
 
 type NamesOptions struct {
-	Terms     []string
-	Expand    bool
-	MatchCase bool
-	All       bool
-	Custom    bool
-	Prefund   bool
-	Addr      bool
-	Tags      bool
-	Clean     bool
-	Regular   bool
-	DryRun    bool
-	Autoname  base.Address
-	Create    bool
-	Update    bool
-	Delete    bool
-	Undelete  bool
-	Remove    bool
+	Terms     []string     `json:"terms,omitempty"`
+	Expand    bool         `json:"expand,omitempty"`
+	MatchCase bool         `json:"matchCase,omitempty"`
+	All       bool         `json:"all,omitempty"`
+	Custom    bool         `json:"custom,omitempty"`
+	Prefund   bool         `json:"prefund,omitempty"`
+	Addr      bool         `json:"addr,omitempty"`
+	Tags      bool         `json:"tags,omitempty"`
+	Clean     bool         `json:"clean,omitempty"`
+	Regular   bool         `json:"regular,omitempty"`
+	DryRun    bool         `json:"dryRun,omitempty"`
+	Autoname  base.Address `json:"autoname,omitempty"`
+	Create    bool         `json:"create,omitempty"`
+	Update    bool         `json:"update,omitempty"`
+	Delete    bool         `json:"delete,omitempty"`
+	Undelete  bool         `json:"undelete,omitempty"`
+	Remove    bool         `json:"remove,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *NamesOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Names implements the chifra names command for the SDK.
 func (opts *NamesOptions) Names(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, v := range opts.Terms {
-		values.Add("terms", v)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting names struct to URL values: %v", err)
 	}
-	if opts.Expand {
-		values.Set("expand", "true")
-	}
-	if opts.MatchCase {
-		values.Set("match_case", "true")
-	}
-	if opts.All {
-		values.Set("all", "true")
-	}
-	if opts.Custom {
-		values.Set("custom", "true")
-	}
-	if opts.Prefund {
-		values.Set("prefund", "true")
-	}
-	if opts.Addr {
-		values.Set("addr", "true")
-	}
-	if opts.Tags {
-		values.Set("tags", "true")
-	}
-	if opts.Clean {
-		values.Set("clean", "true")
-	}
-	if opts.Regular {
-		values.Set("regular", "true")
-	}
-	if opts.DryRun {
-		values.Set("dry_run", "true")
-	}
-	if !opts.Autoname.IsZero() {
-		values.Set("autoname", opts.Autoname.String())
-	}
-	if opts.Create {
-		values.Set("create", "true")
-	}
-	if opts.Update {
-		values.Set("update", "true")
-	}
-	if opts.Delete {
-		values.Set("delete", "true")
-	}
-	if opts.Undelete {
-		values.Set("undelete", "true")
-	}
-	if opts.Remove {
-		values.Set("remove", "true")
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return names.Names(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// namesParseFunc handles specail cases such as structs and enums (if any).
+func namesParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	_, ok := target.(*NamesOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(names): target is not of correct type")
+	}
+
+	// No enums
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetNamesOptions returns a filled-in options instance given a string array of arguments.
+func GetNamesOptions(args []string) (*NamesOptions, error) {
+	var opts NamesOptions
+	if err := assignValuesFromArgs(args, namesParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
+}
+
+// No enums
 

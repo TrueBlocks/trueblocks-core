@@ -10,9 +10,10 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
 	"fmt"
 	"io"
-	"net/url"
+	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
@@ -20,39 +21,55 @@ import (
 )
 
 type InitOptions struct {
-	All        bool
-	DryRun     bool
-	FirstBlock base.Blknum
-	Sleep      float64
+	All        bool         `json:"all,omitempty"`
+	DryRun     bool         `json:"dryRun,omitempty"`
+	Publisher  base.Address `json:"publisher,omitempty"`
+	FirstBlock base.Blknum  `json:"firstBlock,omitempty"`
+	Sleep      float64      `json:"sleep,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *InitOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // Init implements the chifra init command for the SDK.
 func (opts *InitOptions) Init(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	if opts.All {
-		values.Set("all", "true")
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting init struct to URL values: %v", err)
 	}
-	if opts.DryRun {
-		values.Set("dry_run", "true")
-	}
-	if opts.FirstBlock != 0 {
-		values.Set("first_block", fmt.Sprintf("%d", opts.FirstBlock))
-	}
-	if opts.Sleep != 0 {
-		values.Set("sleep", fmt.Sprint(opts.Sleep))
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return initPkg.Init(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// initParseFunc handles specail cases such as structs and enums (if any).
+func initParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	_, ok := target.(*InitOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(init): target is not of correct type")
+	}
+
+	// No enums
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetInitOptions returns a filled-in options instance given a string array of arguments.
+func GetInitOptions(args []string) (*InitOptions, error) {
+	var opts InitOptions
+	if err := assignValuesFromArgs(args, initParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
+}
+
+// No enums
 

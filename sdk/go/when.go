@@ -10,63 +10,70 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"encoding/json"
+	"fmt"
 	"io"
-	"net/url"
+	"log"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
 
 type WhenOptions struct {
-	BlockIds   []string
-	List       bool
-	Timestamps bool
-	Count      bool
-	Repair     bool
-	Check      bool
-	Update     bool
-	Deep       bool
+	BlockIds   []string    `json:"blocks,omitempty"`
+	List       bool        `json:"list,omitempty"`
+	Timestamps bool        `json:"timestamps,omitempty"`
+	Count      bool        `json:"count,omitempty"`
+	Truncate   base.Blknum `json:"truncate,omitempty"`
+	Repair     bool        `json:"repair,omitempty"`
+	Check      bool        `json:"check,omitempty"`
+	Update     bool        `json:"update,omitempty"`
+	Deep       bool        `json:"deep,omitempty"`
 	Globals
+}
 
-	// EXISTING_CODE
-	// EXISTING_CODE
+// String implements the stringer interface
+func (opts *WhenOptions) String() string {
+	bytes, _ := json.Marshal(opts)
+	return string(bytes)
 }
 
 // When implements the chifra when command for the SDK.
 func (opts *WhenOptions) When(w io.Writer) error {
-	values := make(url.Values)
-
-	// EXISTING_CODE
-	for _, blockId := range opts.BlockIds {
-		values.Add("blocks", blockId)
+	values, err := structToValues(*opts)
+	if err != nil {
+		log.Fatalf("Error converting when struct to URL values: %v", err)
 	}
-	if opts.List {
-		values.Set("list", "true")
-	}
-	if opts.Timestamps {
-		values.Set("timestamps", "true")
-	}
-	if opts.Count {
-		values.Set("count", "true")
-	}
-	if opts.Repair {
-		values.Set("repair", "true")
-	}
-	if opts.Check {
-		values.Set("check", "true")
-	}
-	if opts.Update {
-		values.Set("update", "true")
-	}
-	if opts.Deep {
-		values.Set("deep", "true")
-	}
-	// EXISTING_CODE
-	opts.Globals.mapGlobals(values)
 
 	return when.When(w, values)
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// whenParseFunc handles specail cases such as structs and enums (if any).
+func whenParseFunc(target interface{}, key, value string) (bool, error) {
+	var found bool
+	_, ok := target.(*WhenOptions)
+	if !ok {
+		return false, fmt.Errorf("parseFunc(when): target is not of correct type")
+	}
+
+	// No enums
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return found, nil
+}
+
+// GetWhenOptions returns a filled-in options instance given a string array of arguments.
+func GetWhenOptions(args []string) (*WhenOptions, error) {
+	var opts WhenOptions
+	if err := assignValuesFromArgs(args, whenParseFunc, &opts, &opts.Globals); err != nil {
+		return nil, err
+	}
+
+	return &opts, nil
+}
+
+// No enums
 

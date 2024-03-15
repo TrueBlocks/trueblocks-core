@@ -18,7 +18,7 @@ import (
 
 // Chunks provides an interface to the command line chifra chunks through the SDK.
 func Chunks(w io.Writer, values url.Values) error {
-	chunks.ResetOptions(false)
+	chunks.ResetOptions(sdkTestMode)
 	opts := chunks.ChunksFinishParseInternal(w, values)
 	outputHelpers.EnableCommand("chunks", true)
 	// EXISTING_CODE
