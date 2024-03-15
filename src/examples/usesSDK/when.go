@@ -10,11 +10,12 @@ import (
 
 // DoWhen tests the When sdk function
 func DoWhen() {
-	logger.Info("DoMonitors")
+	logger.Info("DoWhen")
 
 	opts := sdk.WhenOptions{
 		Globals: sdk.Globals{
 			Verbose: true,
+			Cache:   true,
 		},
 		BlockIds: testBlocks,
 	}
