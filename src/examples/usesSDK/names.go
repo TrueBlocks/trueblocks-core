@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -23,4 +24,5 @@ func DoNames() {
 	}
 
 	file.StringToAsciiFile("usesSDK/names.json", buf.String())
+	fmt.Println(buf.String())
 }

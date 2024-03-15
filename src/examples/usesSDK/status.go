@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -22,4 +23,5 @@ func DoStatus() {
 	}
 
 	file.StringToAsciiFile("usesSDK/status.json", buf.String())
+	fmt.Println(buf.String())
 }

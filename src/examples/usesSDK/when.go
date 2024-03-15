@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -26,4 +27,5 @@ func DoWhen() {
 	}
 
 	file.StringToAsciiFile("usesSDK/when.json", buf.String())
+	fmt.Println(buf.String())
 }

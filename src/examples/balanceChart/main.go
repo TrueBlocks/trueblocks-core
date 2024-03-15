@@ -31,7 +31,7 @@ func createChart(data []types.SimpleState, filename string) {
 	}
 
 	p.Title.Text = "Block Number vs. Balance"
-	p.X.Label.Text = "Block Number"
+	p.X.Label.Text = "Timestamp"
 	p.Y.Label.Text = "Balance"
 
 	// Add the line plot to the plot
@@ -50,7 +50,8 @@ func createChart(data []types.SimpleState, filename string) {
 var dateFmt = "YYYY-MM-DDTHH:mm:ss"
 var m sync.Mutex
 
-func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) (data []types.SimpleState) {
+func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) []types.SimpleState {
+	var data []types.SimpleState
 	whenOpts := sdk.WhenOptions{
 		BlockIds: []string{start.Format(dateFmt), end.Format(dateFmt)},
 		Globals:  sdk.Globals{Cache: true},
@@ -61,7 +62,8 @@ func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) (
 	var blocks []types.SimpleNamedBlock
 	blocks, _, err = whenOpts.Query()
 	if err != nil {
-		logger.Fatal(err)
+		logger.Error(err)
+		return data
 	}
 
 	namesOpts := sdk.NamesOptions{
@@ -70,8 +72,10 @@ func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) (
 	}
 
 	if names, _, _ := namesOpts.Query(); len(names) == 0 {
-		logger.Fatal(fmt.Errorf("no names found"))
+		logger.Error(fmt.Errorf("no names found"))
+		return data
 	} else {
+		fmt.Println("Getting balances for", len(names), "addresses")
 		ch := make(chan sdk.StateSdk)
 		var wg sync.WaitGroup
 		wg.Add(len(names))
@@ -88,10 +92,15 @@ func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) (
 					},
 				}
 				m.Lock()
+				fmt.Println("Getting balance for", name.Address.Hex())
 				if state, _, err := stateOpts.Query(); err != nil {
-					logger.Fatal(err)
+					m.Unlock()
+					logger.Error(err)
+					return
 				} else if len(state) == 0 {
-					logger.Fatal(fmt.Errorf("weird outcome"))
+					m.Unlock()
+					logger.Error(fmt.Errorf("weird outcome"))
+					return
 				} else {
 					m.Unlock()
 					zero := new(big.Int)
@@ -102,6 +111,7 @@ func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) (
 						}
 					}
 				}
+				fmt.Println("Got balance for", name.Address.Hex())
 			}(name)
 		}
 
@@ -120,7 +130,8 @@ func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) (
 			fmt.Println(state.Address.Address.Hex(), state.BlockNumber, ethStr)
 		}
 	}
-	return
+
+	return data
 }
 
 func main() {
@@ -128,7 +139,9 @@ func main() {
 	startDate := gostradamus.NewDateTime(2015, 8, 1, 0, 0, 0, 0, gostradamus.UTC)
 	endDate := gostradamus.NewDateTime(2023, 12, 31, 23, 59, 59, 0, gostradamus.UTC)
 
-	data := getBalances(addrs, startDate, endDate, "hourly")
+	fmt.Println("Getting balances...")
+	data := getBalances(addrs, startDate, endDate, "daily")
+	fmt.Println("Done...")
 	createChart(data, "plot.svg")
 	utils.System("open plot.svg")
 }
