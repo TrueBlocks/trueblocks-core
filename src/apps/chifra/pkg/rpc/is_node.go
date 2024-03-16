@@ -38,6 +38,9 @@ var ErrTraceBlockMissing = "trace_block is missing"
 // queries block 1 (which we presume exists). The function returns false if
 // block_trace an error.
 func (conn *Connection) IsNodeTracing() bool {
+	if conn.Chain == "optimism" {
+		return true
+	}
 	_, err := conn.GetTracesByBlockNumber(1)
 	return err == nil
 }
