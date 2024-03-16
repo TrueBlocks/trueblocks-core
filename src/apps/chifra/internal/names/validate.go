@@ -26,7 +26,7 @@ func (opts *NamesOptions) validateNames() error {
 
 	isDryRunnable := opts.Clean || len(opts.Autoname) > 0
 	if opts.DryRun && !isDryRunnable {
-		return validate.Usage("The {0} option is is only available with the {1} options.", "--dry_run", "--clean or --autoname")
+		return validate.Usage("The {0} option is only available with the {1} options.", "--dry_run", "--clean or --autoname")
 	}
 
 	if opts.Tags {
