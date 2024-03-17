@@ -29,5 +29,4 @@ func DoState() {
 
 	file.StringToAsciiFile("usesSDK/state.json", buf.String())
 	fmt.Println(buf.String())
-
 }

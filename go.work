@@ -7,6 +7,8 @@ use ./src/examples/usesSDK
 
 use ./src/examples/balanceChart
 
+use ./src/examples/optimism1
+
 use ./sdk/go
 
 use ./src/dev_tools/sdkTester
