@@ -1,14 +1,11 @@
 // Go Version
 go 1.22
 
-use ./src/apps/chifra
-
-use ./src/examples/usesSDK
-
-use ./src/examples/balanceChart
-
-use ./src/examples/optimism1
-
-use ./sdk/go
-
-use ./src/dev_tools/sdkTester
+use  (
+    ./sdk/go
+    ./src/apps/chifra
+    ./src/dev_tools/sdkTester
+    ./src/examples/usesSDK
+    ./src/examples/balanceChart
+    ./src/examples/optimism1
+)
