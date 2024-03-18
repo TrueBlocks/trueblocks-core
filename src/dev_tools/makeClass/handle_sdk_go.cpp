@@ -14,9 +14,6 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-extern string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option);
-
-//------------------------------------------------------------------------------------------------------------
 bool COptions::handle_sdk_go(void) {
     handle_sdk_go_innersdk();
     handle_sdk_go_outersdk();
@@ -31,9 +28,9 @@ bool COptions::handle_sdk_go(void) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& option,
+string_q handle_sdk_go_enum(const string_q& route, const string_q& fn, const CCommandOption& member,
                             ostringstream& enumsThing) {
-    string_q ret = option.data_type;
+    string_q ret = member.data_type;
     replace(ret, "list<", "");
     replace(ret, "enum[", "");
     replace(ret, "]", "");
@@ -234,7 +231,7 @@ bool COptions::handle_sdk_go_outersdk(void) {
 
         size_t maxNameWid = 0;
         size_t maxTypeWid = 0;
-        ostringstream fields, enums, enumsThing;
+        ostringstream fields, enums, query, enumsThing;
         for (auto member : routeOptionArray) {
             if (member.generate == "config") {
                 continue;
@@ -330,6 +327,10 @@ bool COptions::handle_sdk_go_outersdk(void) {
         } else {
             contents = substitute(contents, "[{ENUMS2}]", "\tswitch key {\n" + enumsThing.str() + "\t}\n");
         }
+
+        contents = substitute(contents, "[{SINGULAR}]", toProper(toSingular(ep.api_route)));
+        contents = substitute(contents, "[{PROPER}]", toProper(ep.api_route));
+        contents = substitute(contents, "[{LOWER}]", toLower(ep.api_route));
 
         codewrite_t cw(path + ep.api_route + ".go", contents);
         cw.nSpaces = 0;
