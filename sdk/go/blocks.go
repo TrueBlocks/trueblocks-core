@@ -100,8 +100,8 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 type BlocksFlow int
 
 const (
-	NoBF   BlocksFlow = 0
-	BFFrom            = 1 << iota
+	NoBF BlocksFlow = 0
+	BFFrom = 1 << iota
 	BFTo
 	BFReward
 )
@@ -113,8 +113,8 @@ func (v BlocksFlow) String() string {
 	}
 
 	var m = map[BlocksFlow]string{
-		BFFrom:   "from",
-		BFTo:     "to",
+		BFFrom: "from",
+		BFTo: "to",
 		BFReward: "reward",
 	}
 

@@ -96,15 +96,15 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 type StateParts int
 
 const (
-	NoSP      StateParts = 0
-	SPBalance            = 1 << iota
+	NoSP StateParts = 0
+	SPBalance = 1 << iota
 	SPNonce
 	SPCode
 	SPProxy
 	SPDeployed
 	SPAccttype
 	SPSome = SPBalance | SPProxy | SPDeployed | SPAccttype
-	SPAll  = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
+	SPAll = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
 )
 
 func (v StateParts) String() string {
@@ -118,10 +118,10 @@ func (v StateParts) String() string {
 	}
 
 	var m = map[StateParts]string{
-		SPBalance:  "balance",
-		SPNonce:    "nonce",
-		SPCode:     "code",
-		SPProxy:    "proxy",
+		SPBalance: "balance",
+		SPNonce: "nonce",
+		SPCode: "code",
+		SPProxy: "proxy",
 		SPDeployed: "deployed",
 		SPAccttype: "accttype",
 	}
