@@ -117,18 +117,18 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getDocsPathContent("chifra/"));
     }
 
-    string_q endpointsFile = getPathToSource("cmd-line-endpoints.csv");
+    string_q endpointsFile = getPathToSource("other/data-models/cmd-line-endpoints.csv");
     if (!fileExists(endpointsFile)) {
-        endpointsFile = "./cmd-line-endpoints.csv";
+        endpointsFile = "./other/data-models/cmd-line-endpoints.csv";
         if (!fileExists(endpointsFile)) {
             return usage("Could not find " + endpointsFile);
         }
     }
     forEveryLineInAsciiFile(endpointsFile, parseEndpointsFile, this);
 
-    string_q optionsFile = getPathToSource("cmd-line-options.csv");
+    string_q optionsFile = getPathToSource("other/data-models/cmd-line-options.csv");
     if (!fileExists(optionsFile)) {
-        optionsFile = "./cmd-line-options.csv";
+        optionsFile = "./other/data-models/cmd-line-options.csv";
         if (!fileExists(optionsFile)) {
             return usage("Could not find " + optionsFile);
         }
