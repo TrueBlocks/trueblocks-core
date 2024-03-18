@@ -89,6 +89,7 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 
 // No enums
 
+// EXISTING_CODE
 func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
 	namesBuf := bytes.Buffer{}
 	if err := opts.Names(&namesBuf); err != nil {
@@ -107,3 +108,6 @@ func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
 		return names.Data, &names.Meta, nil
 	}
 }
+
+// EXISTING_CODE
+

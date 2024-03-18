@@ -74,3 +74,6 @@ func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 
 // No enums
 
+// EXISTING_CODE
+// EXISTING_CODE
+

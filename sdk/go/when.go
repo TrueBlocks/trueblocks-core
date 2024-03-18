@@ -81,6 +81,7 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 
 // No enums
 
+// EXISTING_CODE
 func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *rpc.MetaData, error) {
 	stateBuf := bytes.Buffer{}
 	if err := opts.When(&stateBuf); err != nil {
@@ -100,3 +101,6 @@ func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *rpc.MetaData, error
 		return when.Data, &when.Meta, nil
 	}
 }
+
+// EXISTING_CODE
+

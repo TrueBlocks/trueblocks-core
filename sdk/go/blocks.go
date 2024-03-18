@@ -150,6 +150,7 @@ func enumFromBlocksFlow(values []string) (BlocksFlow, error) {
 	return result, nil
 }
 
+// EXISTING_CODE
 func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *rpc.MetaData, error) {
 	stateBuf := bytes.Buffer{}
 	if err := opts.Blocks(&stateBuf); err != nil {
@@ -168,3 +169,6 @@ func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *rpc.MetaData, 
 		return blocks.Data, &blocks.Meta, nil
 	}
 }
+
+// EXISTING_CODE
+

@@ -170,6 +170,7 @@ func enumFromStateParts(values []string) (StateParts, error) {
 	return result, nil
 }
 
+// EXISTING_CODE
 type sdkState struct {
 	AccountType string         `json:"accountType"`
 	Address     string         `json:"address"`
@@ -214,3 +215,6 @@ func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
 		return data, &state.Meta, nil
 	}
 }
+
+// EXISTING_CODE
+
