@@ -58,8 +58,6 @@ func init() {
 	var capabilities caps.Capability // capabilities for chifra monitors
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	monitorsCmd.Flags().SortFlags = false
 

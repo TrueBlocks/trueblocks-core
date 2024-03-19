@@ -57,8 +57,6 @@ func init() {
 	capabilities = capabilities.Add(caps.Version)
 	capabilities = capabilities.Add(caps.Noop)
 	capabilities = capabilities.Add(caps.NoColor)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	daemonCmd.Flags().SortFlags = false
 

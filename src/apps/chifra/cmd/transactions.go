@@ -59,8 +59,6 @@ func init() {
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Ether)
 	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	transactionsCmd.Flags().SortFlags = false
 
