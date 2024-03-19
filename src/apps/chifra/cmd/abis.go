@@ -54,8 +54,6 @@ func init() {
 	var capabilities caps.Capability // capabilities for chifra abis
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	abisCmd.Flags().SortFlags = false
 
