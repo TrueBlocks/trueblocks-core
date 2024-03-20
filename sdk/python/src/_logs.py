@@ -10,7 +10,6 @@ logsOpts = {
     "emitter": {"hotkey": "-m", "type": "flag"},
     "topic": {"hotkey": "-B", "type": "flag"},
     "articulate": {"hotkey": "-a", "type": "switch"},
-    "fmt": {"hotkey": "txt", "type": "flag"},
     "chain": {"hotkey": "-", "type": "flag"},
     "noHeader": {"hotkey": "-", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
@@ -25,4 +24,3 @@ def logs(self):
     if ret[0] == 'json':
         return session.get(url).json()
     return session.get(url).text
-
