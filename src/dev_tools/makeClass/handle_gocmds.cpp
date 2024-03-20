@@ -203,27 +203,12 @@ bool COptions::handle_gocmds_output(const CCommandOption& ep) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q toChifraHelp(const CCommandOption& cmd) {
-    if ((cmd.description.empty() && !cmd.api_route.empty()) || cmd.api_route == "blaze")
-        return "";
-
-    CCommandOption ret = cmd;
-    replaceAll(ret.description, ".", "");
-    ret.description = firstLower(ret.description);
-    if (cmd.api_route.empty())
-        return toProper(ret.Format("  [{GROUP}]:")) + "\n";
-    return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]") + "\n";
-}
-
-//---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds(void) {
     LOG_INFO(cYellow, "handling go commands...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
 
     for (auto ep : endpointArray) {
         if (!ep.is_visible) {
-            if (!ep.group.empty())
-                chifraHelpStream << toChifraHelp(ep);
             continue;
         }
         CCommandOptionArray members;
@@ -248,17 +233,7 @@ bool COptions::handle_gocmds(void) {
         handle_gocmds_options(ep);
         handle_gocmds_output(ep);
         handle_gocmds_docfile(ep);
-        chifraHelpStream << toChifraHelp(ep);
     }
-    chifraHelpStream << STR_CHIFRA_HELP_END;
-
-    string_q contents = asciiFileToString(getPathToTemplates("help_text.go.tmpl"));
-    replace(contents, "[{HELP_TEXT}]", chifraHelpStream.str());
-    stringToAsciiFile(getPathToSource("apps/chifra/cmd/help_text.go"), contents);
-
-    contents = asciiFileToString(getPathToTemplates("version.go.tmpl"));
-    replace(contents, "[{VERSION}]", getVersionStr(true, false));
-    stringToAsciiFile(getPathToSource("apps/chifra/pkg/version/string.go"), contents);
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));

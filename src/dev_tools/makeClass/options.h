@@ -38,7 +38,6 @@ class CCounter {
 class COptions : public COptionsBase {
   public:
     bool all;
-    bool sdk;
     bool openapi;
     bool protobuf;
 
@@ -56,7 +55,7 @@ class COptions : public COptionsBase {
     map<string_q, string_q> hugoAliasMap;
 
     ostringstream goCallStream, goPkgStream;
-    ostringstream goRouteStream, chifraHelpStream;
+    ostringstream goRouteStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream goStream;
 
@@ -70,17 +69,6 @@ class COptions : public COptionsBase {
     bool handle_gocmds(void);
     bool handle_format(void);
     bool handle_datamodel(void);
-
-    bool handle_sdk(void);
-    bool handle_sdk_ts(void);
-    bool handle_sdk_ts_paths(CStringArray& pathsOut);
-    bool handle_sdk_ts_types(CStringArray& typesOut);
-    bool handle_sdk_py(void);
-    bool handle_sdk_py_paths(CStringArray& pathsOut);
-    bool handle_sdk_py_types(CStringArray& typesOut);
-    bool handle_sdk_go(void);
-    bool handle_sdk_go_innersdk(void);
-    bool handle_sdk_go_outersdk(void);
 
     bool handle_gocmds_cmd(const CCommandOption& ep);
     bool handle_gocmds_options(const CCommandOption& ep);
