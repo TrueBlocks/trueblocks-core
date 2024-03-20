@@ -20,4 +20,3 @@ export function getInit(
     { endpoint: '/init', method: 'get', parameters, options },
   );
 }
-

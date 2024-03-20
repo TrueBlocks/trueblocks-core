@@ -26,4 +26,3 @@ export function getTokens(
     { endpoint: '/tokens', method: 'get', parameters, options },
   );
 }
-

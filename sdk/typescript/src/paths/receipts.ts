@@ -23,4 +23,3 @@ export function getReceipts(
     { endpoint: '/receipts', method: 'get', parameters, options },
   );
 }
-
