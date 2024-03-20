@@ -12,7 +12,7 @@
 
 - [Introduction](#introduction)
 - [Installing](#installing)
-- [Command line](#command-line)
+- [Command Line](#command-line)
 - [Chifra Serve](#chifra-serve)
 - [Troubleshooting](#troubleshooting)
 - [The unchained index](#the-unchained-index)
