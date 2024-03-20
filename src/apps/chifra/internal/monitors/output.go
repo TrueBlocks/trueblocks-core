@@ -102,4 +102,3 @@ func GetMonitorsOptions(args []string, g *globals.GlobalOptions) *MonitorsOption
 
 // EXISTING_CODE
 // EXISTING_CODE
-

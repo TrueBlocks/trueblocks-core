@@ -85,4 +85,3 @@ func GetListOptions(args []string, g *globals.GlobalOptions) *ListOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

@@ -118,4 +118,3 @@ func GetDaemonOptions(args []string, g *globals.GlobalOptions) *DaemonOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

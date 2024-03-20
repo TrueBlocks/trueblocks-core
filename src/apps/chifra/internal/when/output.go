@@ -103,4 +103,3 @@ func GetWhenOptions(args []string, g *globals.GlobalOptions) *WhenOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

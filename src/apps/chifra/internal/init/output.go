@@ -75,4 +75,3 @@ func GetInitOptions(args []string, g *globals.GlobalOptions) *InitOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
