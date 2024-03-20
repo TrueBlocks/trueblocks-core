@@ -54,8 +54,6 @@ Notes:
 func init() {
 	var capabilities caps.Capability // capabilities for chifra names
 	capabilities = capabilities.Add(caps.Default)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	namesCmd.Flags().SortFlags = false
 
@@ -92,4 +90,3 @@ func init() {
 
 	chifraCmd.AddCommand(namesCmd)
 }
-

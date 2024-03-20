@@ -52,8 +52,6 @@ const notesConfig = ``
 func init() {
 	var capabilities caps.Capability // capabilities for chifra config
 	capabilities = capabilities.Add(caps.Default)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	configCmd.Flags().SortFlags = false
 
@@ -68,4 +66,3 @@ func init() {
 
 	chifraCmd.AddCommand(configCmd)
 }
-

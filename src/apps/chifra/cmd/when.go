@@ -56,8 +56,6 @@ func init() {
 	var capabilities caps.Capability // capabilities for chifra when
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	whenCmd.Flags().SortFlags = false
 
@@ -82,4 +80,3 @@ func init() {
 
 	chifraCmd.AddCommand(whenCmd)
 }
-

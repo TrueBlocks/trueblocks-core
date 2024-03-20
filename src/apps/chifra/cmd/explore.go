@@ -56,8 +56,6 @@ func init() {
 	capabilities = capabilities.Add(caps.NoColor)
 	capabilities = capabilities.Add(caps.Chain)
 	capabilities = capabilities.Add(caps.File)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	exploreCmd.Flags().SortFlags = false
 
@@ -75,4 +73,3 @@ func init() {
 
 	chifraCmd.AddCommand(exploreCmd)
 }
-

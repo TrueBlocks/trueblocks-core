@@ -58,8 +58,6 @@ func init() {
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
 	capabilities = capabilities.Add(caps.Raw)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	logsCmd.Flags().SortFlags = false
 
@@ -76,4 +74,3 @@ func init() {
 
 	chifraCmd.AddCommand(logsCmd)
 }
-
