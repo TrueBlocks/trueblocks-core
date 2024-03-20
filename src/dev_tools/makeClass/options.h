@@ -70,10 +70,8 @@ class COptions : public COptionsBase {
     bool handle_format(void);
     bool handle_datamodel(void);
 
-    bool handle_gocmds_cmd(const CCommandOption& ep);
     bool handle_gocmds_options(const CCommandOption& ep);
     bool handle_gocmds_docfile(const CCommandOption& ep);
-    bool handle_gocmds_output(const CCommandOption& ep);
     void verifyGoEnumValidators(void);
 
     bool writeOpenApiFile(void);
@@ -138,9 +136,6 @@ extern bool isApiRoute(const string_q& route);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
-
-//---------------------------------------------------------------------------------------------------
-#define sdkPath string_q("../sdk/")
 
 //---------------------------------------------------------------------------------------------------
 extern void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase);
