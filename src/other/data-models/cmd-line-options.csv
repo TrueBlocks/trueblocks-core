@@ -235,7 +235,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12175,apps,Admin,scrape,blockScrape,first_snap,,2000000,false,false,false,false,config,flag,<uint64>,the first block at which snap_to_grid is enabled
 12165,apps,Admin,scrape,blockScrape,unripe_dist,,28,false,false,false,false,config,flag,<uint64>,the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe
 12150,apps,Admin,scrape,blockScrape,channel_count,,20,false,false,false,false,config,flag,<uint64>,number of concurrent processing channels
-12180,apps,Admin,scrape,blockScrape,allow_missing,,true,false,false,false,false,config,flag,<boolean>,do not report errors for blockchains that contain blocks with zero addresses
+12180,apps,Admin,scrape,blockScrape,allow_missing,,,false,false,false,false,config,flag,<boolean>,do not report errors for blockchains that contain blocks with zero addresses
 12195,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 12196,apps,Admin,scrape,blockScrape,n1,,,false,false,false,false,--,note,,The --touch option may only be used for blocks after the latest scraped block (if any). It will be snapped back to the latest snap_to block.
 
@@ -326,20 +326,20 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12226,tools,Other,slurp,ethslurp,n3,,,false,false,false,false,--,note,,The withdrawals option is only available on certain chains. It is ignored otherwise.
 12228,tools,Other,slurp,ethslurp,n4,,,false,false,false,false,--,note,,If the value of --source is key&#44; --types is ignored and only appearances or counts are returned.
 
-11660,dev_tools,,,makeClass,files,,,true,false,true,true,gocmd,positional,list<path>,one or more class definition files
-11740,dev_tools,,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder
-11780,dev_tools,,,makeClass,options,o,,false,false,true,true,gocmd,switch,<boolean>,export options code (check validity in the process)
-11780,dev_tools,,,makeClass,gocmds,g,,false,false,true,true,gocmd,switch,<boolean>,export go command code
-11780,dev_tools,,,makeClass,readmes,m,,false,false,true,true,gocmd,switch,<boolean>,create readme files for each tool and app
-11782,dev_tools,,,makeClass,format,f,,false,false,true,true,gocmd,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
-11787,dev_tools,,,makeClass,sdk,s,,false,false,true,true,gocmd,switch,<boolean>,create typescript sdk
-11781,dev_tools,,,makeClass,openapi,A,,false,false,true,true,gocmd,switch,<boolean>,export openapi.yaml file for API documentation
-11824,dev_tools,,,makeClass,,,,false,false,true,true,--,description,,Automatically writes C++ for various purposes.
-11826,dev_tools,,,makeClass,n1,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
-11830,dev_tools,,,makeClass,n2,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
+11660,dev_tools,Dev,,makeClass,files,,,true,false,true,true,gocmd,positional,list<path>,one or more class definition files
+11740,dev_tools,Dev,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder
+11780,dev_tools,Dev,,makeClass,options,o,,false,false,true,true,gocmd,switch,<boolean>,export options code (check validity in the process)
+11780,dev_tools,Dev,,makeClass,gocmds,g,,false,false,true,true,gocmd,switch,<boolean>,export go command code
+11780,dev_tools,Dev,,makeClass,readmes,m,,false,false,true,true,gocmd,switch,<boolean>,create readme files for each tool and app
+11782,dev_tools,Dev,,makeClass,format,f,,false,false,true,true,gocmd,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
+11787,dev_tools,Dev,,makeClass,sdk,s,,false,false,true,true,gocmd,switch,<boolean>,create typescript sdk
+11781,dev_tools,Dev,,makeClass,openapi,A,,false,false,true,true,gocmd,switch,<boolean>,export openapi.yaml file for API documentation
+11824,dev_tools,Dev,,makeClass,,,,false,false,true,true,--,description,,Automatically writes C++ for various purposes.
+11826,dev_tools,Dev,,makeClass,n1,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
+11830,dev_tools,Dev,,makeClass,n2,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
 
-11880,dev_tools,,,testRunner,mode,m,,false,false,true,true,gocmd,flag,enum[cmd*|api|both],determine which set of tests to run
-11900,dev_tools,,,testRunner,filter,f,,false,false,true,true,gocmd,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
-11930,dev_tools,,,testRunner,skip,s,1,false,false,true,true,gocmd,flag,<uint64>,run only every 'skip' test (faster)
-11960,dev_tools,,,testRunner,report,r,,false,false,true,true,gocmd,switch,<boolean>,display performance report to screen
-11980,dev_tools,,,testRunner,,,,false,false,true,true,--,description,,Run TrueBlocks' test cases with options.
+11880,dev_tools,Dev,,testRunner,mode,m,,false,false,true,true,gocmd,flag,enum[cmd*|api|both],determine which set of tests to run
+11900,dev_tools,Dev,,testRunner,filter,f,,false,false,true,true,gocmd,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
+11930,dev_tools,Dev,,testRunner,skip,s,1,false,false,true,true,gocmd,flag,<uint64>,run only every 'skip' test (faster)
+11960,dev_tools,Dev,,testRunner,report,r,,false,false,true,true,gocmd,switch,<boolean>,display performance report to screen
+11980,dev_tools,Dev,,testRunner,,,,false,false,true,true,--,description,,Run TrueBlocks' test cases with options.

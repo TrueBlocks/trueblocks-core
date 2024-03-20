@@ -153,4 +153,3 @@ func FormattedTag(verbose bool, hash base.Hash) string {
 }
 
 // EXISTING_CODE
-

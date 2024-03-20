@@ -5,4 +5,4 @@
 | firstSnap          | uint64       | 2000000      | the first block at which snap_to_grid is enabled |
 | unripeDist         | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
 | channelCount       | uint64       | 20           | number of concurrent processing channels |
-| allowMissing       | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
+| allowMissing       | bool         | false        | do not report errors for blockchains that contain blocks with zero addresses |

@@ -32,4 +32,3 @@ export function getChunks(
     { endpoint: '/chunks', method: 'get', parameters, options },
   );
 }
-

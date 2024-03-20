@@ -284,6 +284,13 @@ string_q toUpper(const string_q& in) {
 }
 
 //--------------------------------------------------------------------
+string_q toSingular(const string_q& in) {
+    string_q ret = in;
+    replaceReverse(ret, "s", "");
+    return endsWith(in, "s") ? ret : in;
+}
+
+//--------------------------------------------------------------------
 string_q toProper(const string_q& in) {
     string ret;
     string str = in.c_str();

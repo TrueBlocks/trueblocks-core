@@ -55,7 +55,6 @@ func abisParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// No enums
-
 	// EXISTING_CODE
 	if key == "proxyFor" {
 		opts, _ := target.(*AbisOptions)
@@ -78,4 +77,3 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 }
 
 // No enums
-

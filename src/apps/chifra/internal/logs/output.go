@@ -74,4 +74,3 @@ func GetLogsOptions(args []string, g *globals.GlobalOptions) *LogsOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

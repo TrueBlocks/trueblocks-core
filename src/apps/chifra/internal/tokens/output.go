@@ -76,4 +76,3 @@ func GetTokensOptions(args []string, g *globals.GlobalOptions) *TokensOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

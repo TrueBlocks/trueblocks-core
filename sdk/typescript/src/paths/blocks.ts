@@ -35,4 +35,3 @@ export function getBlocks(
     { endpoint: '/blocks', method: 'get', parameters, options },
   );
 }
-

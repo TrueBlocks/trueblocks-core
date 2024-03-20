@@ -78,4 +78,3 @@ func GetTracesOptions(args []string, g *globals.GlobalOptions) *TracesOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

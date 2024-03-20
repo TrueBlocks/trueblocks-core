@@ -8,6 +8,7 @@
 package whenPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
 	"io"
 	"net/http"
@@ -21,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // WhenOptions provides all command options for the chifra when command.
@@ -183,4 +185,3 @@ func (opts *WhenOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

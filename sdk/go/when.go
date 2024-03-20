@@ -58,7 +58,6 @@ func whenParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// No enums
-
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -76,4 +75,3 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 }
 
 // No enums
-

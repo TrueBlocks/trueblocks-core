@@ -115,4 +115,3 @@ One of [ in | out | zero ]`)
 
 	chifraCmd.AddCommand(exportCmd)
 }
-

@@ -26,4 +26,3 @@ export function getTraces(
     { endpoint: '/traces', method: 'get', parameters, options },
   );
 }
-

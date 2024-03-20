@@ -58,8 +58,7 @@ func slurpParseFunc(target interface{}, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc(slurp): target is not of correct type")
 	}
 
-	switch key {
-	case "types":
+	if key == "types" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Types, err = enumFromSlurpTypes(values); err != nil {
@@ -67,7 +66,8 @@ func slurpParseFunc(target interface{}, key, value string) (bool, error) {
 		} else {
 			found = true
 		}
-	case "source":
+	}
+	if key == "source" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Source, err = enumFromSlurpSource(values); err != nil {
@@ -96,8 +96,8 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 type SlurpTypes int
 
 const (
-	NoST SlurpTypes = 0
-	STExt = 1 << iota
+	NoST  SlurpTypes = 0
+	STExt            = 1 << iota
 	STInt
 	STToken
 	STNfts
@@ -105,8 +105,8 @@ const (
 	STMiner
 	STUncles
 	STWithdrawals
-	STSome = STExt | STInt | STToken | STNfts | ST1155
-	STAll = STExt | STInt | STToken | STNfts | ST1155 | STMiner | STUncles | STWithdrawals
+	STSome = STExt | STInt | STToken | STNfts
+	STAll  = STExt | STInt | STToken | STNfts | ST1155 | STMiner | STUncles | STWithdrawals
 )
 
 func (v SlurpTypes) String() string {
@@ -120,13 +120,13 @@ func (v SlurpTypes) String() string {
 	}
 
 	var m = map[SlurpTypes]string{
-		STExt: "ext",
-		STInt: "int",
-		STToken: "token",
-		STNfts: "nfts",
-		ST1155: "1155",
-		STMiner: "miner",
-		STUncles: "uncles",
+		STExt:         "ext",
+		STInt:         "int",
+		STToken:       "token",
+		STNfts:        "nfts",
+		ST1155:        "1155",
+		STMiner:       "miner",
+		STUncles:      "uncles",
 		STWithdrawals: "withdrawals",
 	}
 
@@ -181,8 +181,8 @@ func enumFromSlurpTypes(values []string) (SlurpTypes, error) {
 type SlurpSource int
 
 const (
-	NoSS SlurpSource = 0
-	SSEtherscan = 1 << iota
+	NoSS        SlurpSource = 0
+	SSEtherscan             = 1 << iota
 	SSKey
 )
 
@@ -194,7 +194,7 @@ func (v SlurpSource) String() string {
 
 	var m = map[SlurpSource]string{
 		SSEtherscan: "etherscan",
-		SSKey: "key",
+		SSKey:       "key",
 	}
 
 	var ret []string
@@ -226,4 +226,3 @@ func enumFromSlurpSource(values []string) (SlurpSource, error) {
 
 	return result, nil
 }
-

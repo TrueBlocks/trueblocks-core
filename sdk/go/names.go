@@ -66,7 +66,6 @@ func namesParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// No enums
-
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -84,4 +83,3 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 }
 
 // No enums
-

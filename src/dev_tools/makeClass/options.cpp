@@ -26,7 +26,6 @@ static const COption params[] = {
     COption("gocmds", "g", "", OPT_SWITCH, "export go command code"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
-    COption("sdk", "s", "", OPT_SWITCH, "create typescript sdk"),
     COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("protobuf", "p", "", OPT_SWITCH, "compile protobufs"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
@@ -71,9 +70,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--format") {
             format = true;
 
-        } else if (arg == "-s" || arg == "--sdk") {
-            sdk = true;
-
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
 
@@ -117,18 +113,18 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getDocsPathContent("chifra/"));
     }
 
-    string_q endpointsFile = getPathToSource("cmd-line-endpoints.csv");
+    string_q endpointsFile = getPathToSource("other/data-models/cmd-line-endpoints.csv");
     if (!fileExists(endpointsFile)) {
-        endpointsFile = "./cmd-line-endpoints.csv";
+        endpointsFile = "./other/data-models/cmd-line-endpoints.csv";
         if (!fileExists(endpointsFile)) {
             return usage("Could not find " + endpointsFile);
         }
     }
     forEveryLineInAsciiFile(endpointsFile, parseEndpointsFile, this);
 
-    string_q optionsFile = getPathToSource("cmd-line-options.csv");
+    string_q optionsFile = getPathToSource("other/data-models/cmd-line-options.csv");
     if (!fileExists(optionsFile)) {
-        optionsFile = "./cmd-line-options.csv";
+        optionsFile = "./other/data-models/cmd-line-options.csv";
         if (!fileExists(optionsFile)) {
             return usage("Could not find " + optionsFile);
         }
@@ -202,8 +198,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     if (format && !handle_format())
         return false;
-    if (sdk && !handle_sdk())
-        return false;
     if (protobuf && !handle_protobuf())
         return false;
 
@@ -218,7 +212,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage(usageErrs[ERR_NEEDONECLASS]);
 
     // We need the template files
-    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go.tmpl", "blank_options.go.tmpl"};
+    CStringArray templs = {"", "blank.yaml", "blank_options.go.tmpl"};
     for (auto temp : templs) {
         if (!fileExists(getPathToTemplates(temp))) {
             return makeError(ERR_CONFIGMISSING, getPathToTemplates(temp));
@@ -235,7 +229,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     all = false;
-    sdk = false;
     openapi = false;
 
     classDefs.clear();
@@ -414,4 +407,17 @@ void COptions::verifyDescriptions(void) {
             }
         }
     }
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q get_corrected_caps(const string_q& capsIn) {
+    string_q x = "fmt|chain|noHeader";
+    string_q capsOut = substitute(capsIn, "default", x);
+    replace(capsOut, "caching", "cache|decache");
+    replace(capsOut, "verbose|", "");
+    replace(capsOut, "version|", "");
+    replace(capsOut, "noop|", "");
+    replace(capsOut, "noColor|", "");
+    replace(capsOut, "help|", "");
+    return capsOut;
 }

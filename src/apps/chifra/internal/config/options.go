@@ -8,6 +8,7 @@
 package configPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
 	"io"
 	"net/http"
@@ -18,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // ConfigOptions provides all command options for the chifra config command.
@@ -144,4 +146,3 @@ func (opts *ConfigOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

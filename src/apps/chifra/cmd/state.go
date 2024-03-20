@@ -82,4 +82,3 @@ One or more of [ balance | nonce | code | proxy | deployed | accttype | some | a
 
 	chifraCmd.AddCommand(stateCmd)
 }
-

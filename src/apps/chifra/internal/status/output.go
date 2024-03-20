@@ -76,4 +76,3 @@ func GetStatusOptions(args []string, g *globals.GlobalOptions) *StatusOptions {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

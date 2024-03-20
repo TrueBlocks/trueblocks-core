@@ -34,10 +34,7 @@ var daemonCmd = &cobra.Command{
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
-	Aliases: []string{
-		"serve",
-	},
-}
+	Aliases: []string{"serve"}}
 
 const usageDaemon = `daemon [flags]`
 
@@ -84,4 +81,3 @@ One of [ off | blooms | index ]`)
 
 	chifraCmd.AddCommand(daemonCmd)
 }
-

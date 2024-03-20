@@ -60,7 +60,6 @@ func monitorsParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// No enums
-
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -78,4 +77,3 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 }
 
 // No enums
-

@@ -12,9 +12,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-extern string_q get_hidden(const CCommandOption& cmd);
-extern string_q get_notes2(const CCommandOption& cmd);
-extern string_q get_aliases(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_defaults_apis(const CCommandOption& cmd);
@@ -26,47 +23,12 @@ extern string_q get_walk_package(const CCommandOption& cmd);
 extern string_q get_os_package(const string_q& fn);
 extern string_q get_base_package(const string_q& fn);
 extern string_q get_index_package(const string_q& fn);
-extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_godefaults(const CCommandOption& cmd);
-extern string_q get_use(const CCommandOption& cmd);
 extern string_q clean_go_positionals(const string_q& in, bool hasRpc);
-extern string_q clean_positionals(const string& progName, const string_q& strIn);
 
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
-extern const char* STR_CHIFRA_HELP_END;
-
-//---------------------------------------------------------------------------------------------------
-bool COptions::handle_gocmds_cmd(const CCommandOption& ep) {
-    string_q source = asciiFileToString(getPathToTemplates("blank.go.tmpl"));
-
-    replaceAll(source, "[{CAPABILITIES}]", get_capabilities(ep));
-    replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
-    replaceAll(source, "[{OPT_DEF}]", "");
-    replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
-    replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
-    replaceAll(source, "[{HIDDEN}]", get_hidden(ep));
-    replaceAll(source, "[{USE}]", get_use(ep));
-    replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
-    replaceAll(source, "[{LOWER}]", toLower(ep.api_route));
-    replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
-    replaceAll(source, "[{POSTNOTES}]", get_notes2(ep));
-    replaceAll(source, "[{ALIASES}]", get_aliases(ep));
-    string_q descr = firstLower(ep.description);
-    if (endsWith(descr, "."))
-        replaceReverse(descr, ".", "");
-    replaceAll(source, "[{SHORT}]", descr);
-
-    string_q fn = getPathToSource("apps/chifra/cmd/" + ep.api_route + ".go");
-    codewrite_t cw(fn, source);
-    cw.nSpaces = 0;
-    cw.stripEOFNL = false;
-    counter.nProcessed += writeCodeIn(this, cw);
-    counter.nVisited++;
-
-    return true;
-}
 
 //---------------------------------------------------------------------------------------------------
 bool hasValidator(const string_q& route, const string_q& str) {
@@ -182,50 +144,11 @@ bool COptions::handle_gocmds_options(const CCommandOption& ep) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_gocmds_output(const CCommandOption& ep) {
-    string_q source = asciiFileToString(getPathToTemplates("blank_output.go.tmpl"));
-    replaceAll(source, "[{ROUTE}]", ep.api_route);
-    replaceAll(source, "[{LOWER}]", toLower(ep.api_route));
-    source = substitute(source, "[]string", "++SAVED++");
-    source = ep.Format(source);
-    replaceAll(source, "++SAVED++", "[]string");
-
-    string_q fn = getPathToSource("apps/chifra/internal/" + ep.api_route + "/output.go");
-
-    establishFolder(fn);
-    codewrite_t cw(fn, source);
-    cw.nSpaces = 0;
-    cw.stripEOFNL = false;
-    counter.nProcessed += writeCodeIn(this, cw);
-    counter.nVisited++;
-
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q toChifraHelp(const CCommandOption& cmd) {
-    if ((cmd.description.empty() && !cmd.api_route.empty()) || cmd.api_route == "blaze")
-        return "";
-
-    CCommandOption ret = cmd;
-    replaceAll(ret.description, ".", "");
-    ret.description = firstLower(ret.description);
-    if (cmd.api_route.empty())
-        return toProper(ret.Format("  [{GROUP}]:")) + "\n";
-    return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]") + "\n";
-}
-
-//---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds(void) {
     LOG_INFO(cYellow, "handling go commands...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
 
     for (auto ep : endpointArray) {
-        if (!ep.is_visible) {
-            if (!ep.group.empty())
-                chifraHelpStream << toChifraHelp(ep);
-            continue;
-        }
         CCommandOptionArray members;
         CCommandOptionArray notes;
         for (auto option : routeOptionArray) {
@@ -244,112 +167,14 @@ bool COptions::handle_gocmds(void) {
         ep.members = &members;
         ep.notes = &notes;
 
-        handle_gocmds_cmd(ep);
         handle_gocmds_options(ep);
-        handle_gocmds_output(ep);
         handle_gocmds_docfile(ep);
-        chifraHelpStream << toChifraHelp(ep);
     }
-    chifraHelpStream << STR_CHIFRA_HELP_END;
-
-    string_q contents = asciiFileToString(getPathToTemplates("help_text.go.tmpl"));
-    replace(contents, "[{HELP_TEXT}]", chifraHelpStream.str());
-    stringToAsciiFile(getPathToSource("apps/chifra/cmd/help_text.go"), contents);
-
-    contents = asciiFileToString(getPathToTemplates("version.go.tmpl"));
-    replace(contents, "[{VERSION}]", getVersionStr(true, false));
-    stringToAsciiFile(getPathToSource("apps/chifra/pkg/version/version_strings.go"), contents);
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 
     return true;
-}
-
-bool visitEnumItem2(string_q& item, void* data) {
-    ostringstream* osp = (ostringstream*)data;
-    if (osp->str().empty())
-        *osp << endl << "One of [ ";
-    else
-        *osp << " | ";
-    *osp << item;
-    return true;
-}
-
-string_q get_use(const CCommandOption& cmd) {
-    ostringstream arguments;
-    for (auto member : *((CCommandOptionArray*)cmd.members)) {
-        if (member.option_type == "positional") {
-            if (arguments.str().empty())
-                arguments << endl << "Arguments:" << endl;
-            else
-                arguments << endl;
-            arguments << member.Format("  [{LONGNAME}] - [{DESCRIPTION}]");
-            if (member.is_required)
-                arguments << " (required)";
-            if (contains(member.data_type, "enum")) {
-                ostringstream os;
-                forEveryEnum(visitEnumItem2, member.data_type, &os);
-                os << " ]";
-                string_q str = substitute(os.str(), "One of",
-                                          contains(member.data_type, "list") ? "\tOne or more of" : "\tOne of");
-                // replace(str, "", "");
-                arguments << str;
-            }
-        }
-    }
-
-    ostringstream positionals;
-    for (auto member : *((CCommandOptionArray*)cmd.members)) {
-        if (member.option_type == "positional") {
-            if (!positionals.str().empty())
-                positionals << " ";
-            positionals << member.data_type;
-        }
-    }
-
-    string_q ret = "[{ROUTE}] [flags][{TYPES}][{POSITIONALS}]";
-    if (contains(toLower(cmd.tool), "scrape")) {
-        ret = "[{ROUTE}] [flags]";
-    }
-    replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
-    replace(ret, "[{POSITIONALS}]", arguments.str());
-    replace(ret, "enum[show*|edit]", " <mode>\n");
-    replace(ret, "[flags] <mode> [blocks...]", "<mode> [flags] [blocks...]");
-    replace(ret, "[flags] <mode> [mode...]", "<mode> [mode...] [flags]");
-    replace(ret, "[flags] <mode>", "<mode> [flags]");
-    return ret;
-}
-
-string_q get_notes2(const CCommandOption& cmd) {
-    ostringstream os;
-    for (auto note : *((CCommandOptionArray*)cmd.notes)) {
-        if (os.str().empty()) {
-            os << endl;
-            os << "Notes:" << endl;
-        } else {
-            os << endl;
-        }
-        os << "  - " << substitute(note.description, "`", "");
-        // TODO: Coloring in notes (search in makeClass for this note)
-        // os << "  - " << substitute(note.description, "`", "++");
-    }
-
-    return trim(substitute(os.str(), "|", "\n    "));
-}
-
-string_q get_aliases(const CCommandOption& cmd) {
-    if (cmd.aliases.size() == 0) {
-        return "";
-    }
-
-    ostringstream os;
-    os << "\tAliases: []string{" << endl;
-    for (auto a : cmd.aliases) {
-        os << "\t\t\"" << a << "\"," << endl;
-    }
-    os << "\t}," << endl;
-    return os.str();
 }
 
 string_q noUnderbars(const string_q& in) {
@@ -691,55 +516,6 @@ string_q get_requestopts(const CCommandOption& cmd) {
     return os.str();
 }
 
-string_q get_goDefault(const CCommandOption& p) {
-    if (p.go_intype == "[]string") {
-        return "nil";
-    } else if (p.go_intype == "float64") {
-        if (contains(p.def_val, "NOPOS")) {
-            return "0.0";
-        } else if (!p.def_val.empty())
-            return p.def_val;
-        return "0.0";
-    } else if (p.go_intype == "string") {
-        if (contains(p.def_val, ".eth")) {  // an address
-            return "\"" + p.def_val + "\"";
-        } else {
-            return p.def_val;
-        }
-    } else if (p.go_intype == "uint64") {
-        if (contains(p.def_val, "NOPOS")) {
-            return "0";
-        } else if (!p.def_val.empty() && !startsWith(p.def_val, "(")) {
-            return p.def_val;
-        }
-        return "0";
-    }
-    return "false";
-}
-
-string_q get_goDescription(const CCommandOption& cmd) {
-    string_q addendum;
-    if (contains(cmd.data_type, "enum")) {
-        ostringstream os;
-        forEveryEnum(visitEnumItem2, cmd.data_type, &os);
-        os << " ]";
-        addendum += substitute(os.str(), "One of", contains(cmd.data_type, "list") ? "One or more of" : "One of");
-    }
-
-    string_q fmt = "[{DESCRIPTION}]";
-    string_q ret = cmd.Format(fmt);
-    if (contains(ret, " (default")) {
-        replace(ret, " (default", "#");
-        ret = nextTokenClear(ret, '#');
-    }
-    ret += cmd.is_visible ? "" : " (hidden)";
-    ret += addendum;
-    ret = "\"" + ret + "\"";
-    if (!addendum.empty())
-        replaceAll(ret, "\"", "`");
-    return ret;
-}
-
 //---------------------------------------------------------------------------------------------------
 string_q clean_go_positionals(const string_q& in, bool hasRpc) {
     string_q ret = in;
@@ -754,99 +530,6 @@ string_q clean_go_positionals(const string_q& in, bool hasRpc) {
     return ret;
 }
 
-string_q get_hidden(const CCommandOption& cmd) {
-    ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.members)) {
-        if (!p.is_visible) {
-            os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
-        }
-    }
-    ostringstream hide;
-    if (os.str().empty()) {
-        return "";
-    }
-
-    ostringstream ret;
-    ret << "\tif os.Getenv(\"TEST_MODE\") != \"true\" {" << endl;
-    ret << os.str();
-    ret << "\t}" << endl;
-    return ret.str();
-}
-
-string_q get_setopts(const CCommandOption& cmd) {
-    ostringstream os;
-    for (auto p : *((CCommandOptionArray*)cmd.members)) {
-        if (p.option_type != "positional") {
-            os << "\t[{ROUTE}]Cmd.Flags().";
-            os << p.go_flagtype;
-            os << "(&[{ROUTE}]Pkg.GetOptions().";
-            if (p.isConfig) {
-                os << "Settings." + p.Format("[{VARIABLE}]") << ", ";
-            } else {
-                os << p.Format("[{VARIABLE}]") << ", ";
-            }
-            os << p.Format("\"[{LONGNAME}]\", ");
-            os << p.Format("\"[{HOTKEY}]\", ");
-            os << get_goDefault(p) << ", ";
-            os << get_goDescription(p);
-            os << ")" << endl;
-        }
-    }
-    return os.str();
-}
-
-//--------------------------------------------------------------------------------
-string_q clean_positionals(const string_q& progName, const string_q& strIn) {
-    if (contains(strIn, "<")) {
-        ostringstream os;
-        os << (strIn == "list<addr>" ? "<address> [address...]" : "");
-        os << (strIn == "list<blknum>" ? "<block> [block...]" : "");
-        os << (strIn == "list<tx_id>" ? "<tx_id> [tx_id...]" : "");
-        os << (startsWith(strIn, "list<addr> list<topic> list<fourbyte>")
-                   ? "<address> [address...] [topics...] [fourbytes...]"
-                   : "");
-        os << (startsWith(strIn, "list<enum") ? "<mode> [mode...]" : "");
-
-        if (contains(toLower(progName), "tokens")) {
-            os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
-
-        } else if (contains(toLower(progName), "chunks")) {
-            os << (strIn == "enum[manifest|index|blooms|pins|addresses|appearances|stats] list<blknum>"
-                       ? "<mode> [blocks...] [address...]"
-                       : "");
-
-        } else {
-            os << (strIn == "list<addr> list<blknum>" ? "<address> [address...] [block...]" : "");
-        }
-
-        if (contains(toLower(progName), "when"))
-            os << (strIn == "list<string>" ? "< block | date > [ block... | date... ]" : "");
-        else
-            os << (strIn == "list<string>" ? "<term> [term...]" : "");
-
-        if (os.str().empty()) {
-            cerr << "Could not convert " << strIn << " for tool " << progName << endl;
-            os << strIn;
-        }
-
-        os << endl;
-        return " " + os.str();
-    }
-    string_q strOut = strIn;
-    replaceAll(strOut, "addrs blocks", "<address> [address...] [block...]");
-    replaceAll(strOut, "transactions", "<tx_id> [tx_id...]");
-    if (contains(progName, "when"))
-        replaceAll(strOut, "blocks", "< block | date > [ block... | date... ]");
-    else
-        replaceAll(strOut, "blocks", "<block> [block...]");
-    replaceAll(strOut, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
-    replaceAll(strOut, "addrs", "<address> [address...]");
-    replaceAll(strOut, "files", "<file> [file...]");
-    replaceAll(strOut, "terms", "<term> [term...]");
-    replaceAll(strOut, "modes", "<mode> [mode...]");
-    return trim(strOut);
-}
-
 const char* STR_REQUEST_CASE1 =
     "\t\tcase \"++LOWER++\":\n"
     "\t\t\topts.[{VARIABLE}] = [{ASSIGN}]";
@@ -857,9 +540,3 @@ const char* STR_REQUEST_CASE2 =
     "\t\t\t\ts := strings.Split(val, \" \") // may contain space separated items\n"
     "\t\t\t\topts.[{VARIABLE}] = append(opts.[{VARIABLE}], s...)\n"
     "\t\t\t}";
-
-const char* STR_CHIFRA_HELP_END =
-    "  Flags:\n"
-    "    -h, --help    display this help screen\n"
-    "\n"
-    "  Use \"chifra [command] --help\" for more information about a command.\n";

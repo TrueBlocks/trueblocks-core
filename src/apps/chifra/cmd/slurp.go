@@ -87,4 +87,3 @@ One of [ etherscan | key ]`)
 
 	chifraCmd.AddCommand(slurpCmd)
 }
-

@@ -74,4 +74,3 @@ func GetReceiptsOptions(args []string, g *globals.GlobalOptions) *ReceiptsOption
 
 // EXISTING_CODE
 // EXISTING_CODE
-

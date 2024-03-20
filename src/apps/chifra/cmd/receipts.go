@@ -71,4 +71,3 @@ func init() {
 
 	chifraCmd.AddCommand(receiptsCmd)
 }
-

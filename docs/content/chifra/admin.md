@@ -237,7 +237,7 @@ Each of the following additional configurable command line options are available
 | firstSnap          | uint64       | 2000000      | the first block at which snap_to_grid is enabled |
 | unripeDist         | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
 | channelCount       | uint64       | 20           | number of concurrent processing channels |
-| allowMissing       | bool         | true         | do not report errors for blockchains that contain blocks with zero addresses |
+| allowMissing       | bool         | false        | do not report errors for blockchains that contain blocks with zero addresses |
 
 Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 

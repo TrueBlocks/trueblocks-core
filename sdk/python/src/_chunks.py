@@ -19,7 +19,6 @@ chunksOpts = {
     "rewrite": {"hotkey": "-e", "type": "switch"},
     "count": {"hotkey": "-U", "type": "switch"},
     "sleep": {"hotkey": "-s", "type": "flag"},
-    "fmt": {"hotkey": "txt", "type": "flag"},
     "chain": {"hotkey": "-", "type": "flag"},
     "noHeader": {"hotkey": "-", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
@@ -31,4 +30,3 @@ def chunks(self):
     if ret[0] == 'json':
         return session.get(url).json()
     return session.get(url).text
-

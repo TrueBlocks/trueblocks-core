@@ -19,7 +19,6 @@ blocksOpts = {
     "articulate": {"hotkey": "-a", "type": "switch"},
     "bigRange": {"hotkey": "-r", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
-    "fmt": {"hotkey": "txt", "type": "flag"},
     "chain": {"hotkey": "-", "type": "flag"},
     "noHeader": {"hotkey": "-", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
@@ -35,4 +34,3 @@ def blocks(self):
     if ret[0] == 'json':
         return session.get(url).json()
     return session.get(url).text
-

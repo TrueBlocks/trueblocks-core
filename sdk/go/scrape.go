@@ -73,4 +73,3 @@ func GetScrapeOptions(args []string) (*ScrapeOptions, error) {
 }
 
 // No enums
-

@@ -36,7 +36,7 @@ var exploreCmd = &cobra.Command{
 	}),
 }
 
-const usageExplore = `explore [flags] <term> [term...]
+const usageExplore = `explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier`
@@ -73,4 +73,3 @@ func init() {
 
 	chifraCmd.AddCommand(exploreCmd)
 }
-

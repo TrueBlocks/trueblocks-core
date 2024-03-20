@@ -85,4 +85,3 @@ func init() {
 
 	chifraCmd.AddCommand(monitorsCmd)
 }
-
