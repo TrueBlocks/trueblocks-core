@@ -66,20 +66,12 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool handle_readmes(void);
-    bool handle_gocmds(void);
     bool handle_format(void);
     bool handle_datamodel(void);
-
-    bool handle_gocmds_options(const CCommandOption& ep);
-    bool handle_gocmds_docfile(const CCommandOption& ep);
-    void verifyGoEnumValidators(void);
-
     bool writeOpenApiFile(void);
-
     bool handle_protobuf(void);
 
     string_q getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes);
-    void verifyDescriptions(void);
 };
 
 //-------------------------------------------------------------------

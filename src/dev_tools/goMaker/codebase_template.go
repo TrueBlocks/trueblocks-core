@@ -11,6 +11,7 @@ import (
 )
 
 func (cb *CodeBase) processFile(source string) {
+	source = strings.Replace(source, ".tmpl", "", -1)
 	result := cb.executeTemplate(source, file.AsciiFileToString(source))
 
 	dest := strings.Replace(source, "templates/", "/Users/jrush/Development/trueblocks-core/", -1)

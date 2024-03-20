@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"strings"
 	"text/template"
@@ -10,9 +11,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-func (c *Command) processFile(source string) {
-	if !shouldProcess(source, c.Route) {
-		return
+func (c *Command) processFile(source string) error {
+	source = strings.Replace(source, ".tmpl", "", -1)
+	if ok, err := shouldProcess(source, c.Route); err != nil {
+		return err
+	} else if !ok {
+		return nil
 	}
 
 	result := c.executeTemplate(source, file.AsciiFileToString(source))
@@ -29,15 +33,19 @@ func (c *Command) processFile(source string) {
 	logger.Info("Writing", dest)
 	file.StringToAsciiFile(dest+".new", string(result))
 	WriteOut(dest+".new", dest)
+	return nil
 }
 
-func shouldProcess(source, route string) bool {
+func shouldProcess(source, route string) (bool, error) {
 	if strings.Contains(source, "templates/sdk") {
 		if route == "explore" || route == "daemon" || route == "scrape" {
-			return false
+			return false, nil
 		}
 	}
-	return true
+	if !file.FileExists(source) {
+		return false, fmt.Errorf("file does not exist %s", source)
+	}
+	return true, nil
 }
 
 func (c *Command) executeTemplate(name, tmplCode string) string {
