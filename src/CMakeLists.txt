@@ -69,6 +69,7 @@ add_custom_target(lint COMMAND "golangci-lint" "run" WORKING_DIRECTORY "${CMAKE_
 add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --openapi" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "--all --readmes --openapi --options --gocmds --sdk --protobuf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate2 COMMAND "${BIN_DIR}/goMaker" "" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 add_custom_target(sdk COMMAND "${BIN_DIR}/makeClass" "--sdk" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(gocmds COMMAND "${BIN_DIR}/makeClass" "--options --gocmds" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
