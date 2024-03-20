@@ -50,7 +50,6 @@ func receiptsParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// No enums
-
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -68,4 +67,3 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 }
 
 // No enums
-

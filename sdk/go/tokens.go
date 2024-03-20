@@ -54,8 +54,7 @@ func tokensParseFunc(target interface{}, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc(tokens): target is not of correct type")
 	}
 
-	switch key {
-	case "parts":
+	if key == "parts" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Parts, err = enumFromTokensParts(values); err != nil {
@@ -84,14 +83,14 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 type TokensParts int
 
 const (
-	NoTP TokensParts = 0
-	TPName = 1 << iota
+	NoTP   TokensParts = 0
+	TPName             = 1 << iota
 	TPSymbol
 	TPDecimals
 	TPTotalSupply
 	TPVersion
 	TPSome = TPName | TPSymbol | TPDecimals | TPTotalSupply
-	TPAll = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
+	TPAll  = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
 )
 
 func (v TokensParts) String() string {
@@ -105,11 +104,11 @@ func (v TokensParts) String() string {
 	}
 
 	var m = map[TokensParts]string{
-		TPName: "name",
-		TPSymbol: "symbol",
-		TPDecimals: "decimals",
+		TPName:        "name",
+		TPSymbol:      "symbol",
+		TPDecimals:    "decimals",
 		TPTotalSupply: "totalSupply",
-		TPVersion: "version",
+		TPVersion:     "version",
 	}
 
 	var ret []string
@@ -153,4 +152,3 @@ func enumFromTokensParts(values []string) (TokensParts, error) {
 
 	return result, nil
 }
-

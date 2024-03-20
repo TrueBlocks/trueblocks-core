@@ -52,7 +52,6 @@ func logsParseFunc(target interface{}, key, value string) (bool, error) {
 	}
 
 	// No enums
-
 	// EXISTING_CODE
 	// EXISTING_CODE
 
@@ -70,4 +69,3 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 }
 
 // No enums
-

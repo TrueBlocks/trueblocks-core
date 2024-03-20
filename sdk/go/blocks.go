@@ -66,8 +66,7 @@ func blocksParseFunc(target interface{}, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc(blocks): target is not of correct type")
 	}
 
-	switch key {
-	case "flow":
+	if key == "flow" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Flow, err = enumFromBlocksFlow(values); err != nil {
@@ -96,8 +95,8 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 type BlocksFlow int
 
 const (
-	NoBF BlocksFlow = 0
-	BFFrom = 1 << iota
+	NoBF   BlocksFlow = 0
+	BFFrom            = 1 << iota
 	BFTo
 	BFReward
 )
@@ -109,8 +108,8 @@ func (v BlocksFlow) String() string {
 	}
 
 	var m = map[BlocksFlow]string{
-		BFFrom: "from",
-		BFTo: "to",
+		BFFrom:   "from",
+		BFTo:     "to",
 		BFReward: "reward",
 	}
 
@@ -145,4 +144,3 @@ func enumFromBlocksFlow(values []string) (BlocksFlow, error) {
 
 	return result, nil
 }
-
