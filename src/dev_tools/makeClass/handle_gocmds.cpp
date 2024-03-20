@@ -258,7 +258,7 @@ bool COptions::handle_gocmds(void) {
 
     contents = asciiFileToString(getPathToTemplates("version.go.tmpl"));
     replace(contents, "[{VERSION}]", getVersionStr(true, false));
-    stringToAsciiFile(getPathToSource("apps/chifra/pkg/version/version_strings.go"), contents);
+    stringToAsciiFile(getPathToSource("apps/chifra/pkg/version/string.go"), contents);
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
