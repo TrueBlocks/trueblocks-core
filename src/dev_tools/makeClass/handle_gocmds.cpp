@@ -821,6 +821,8 @@ string_q clean_positionals(const string_q& progName, const string_q& strIn) {
 
         if (contains(toLower(progName), "when"))
             os << (strIn == "list<string>" ? "< block | date > [ block... | date... ]" : "");
+        else if (contains(toLower(progName), "explore"))
+            os << (strIn == "list<string>" ? "[terms...]" : "");
         else
             os << (strIn == "list<string>" ? "<term> [term...]" : "");
 
@@ -842,8 +844,10 @@ string_q clean_positionals(const string_q& progName, const string_q& strIn) {
     replaceAll(strOut, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
     replaceAll(strOut, "addrs", "<address> [address...]");
     replaceAll(strOut, "files", "<file> [file...]");
-    replaceAll(strOut, "terms", "<term> [term...]");
-    replaceAll(strOut, "modes", "<mode> [mode...]");
+    if (contains(toLower(progName), "explore"))
+        replaceAll(strOut, "terms", "[terms...]");
+    else
+        replaceAll(strOut, "modes", "<mode> [mode...]");
     return trim(strOut);
 }
 

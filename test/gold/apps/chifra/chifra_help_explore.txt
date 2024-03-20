@@ -3,7 +3,7 @@ Purpose:
   Open a local or remote explorer for one or more addresses, blocks, or transactions.
 
 Usage:
-  chifra explore [flags] <term> [term...]
+  chifra explore [flags] [terms...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier
