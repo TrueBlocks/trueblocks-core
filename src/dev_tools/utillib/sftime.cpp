@@ -701,7 +701,7 @@ TYPE lfloor(TYPE a, TYPE b) {
 time_q::CDate& time_q::CDate::setValues(uint32_t y, uint32_t m, uint32_t d) {
     m_nDays = (uint64_t)LONG_MIN;
     if (m >= JANUARY && m <= DECEMBER && d <= DaysInMonth(y, m)) {
-        // The following algorithm has been taken from from an article in
+        // The following algorithm has been taken from an article in
         // the March 1993 issue of the Windows / Dos Developers Journal.
         m_nDays = (y - 1) * 365 + (uint64_t)lfloor((int32_t)(y - 1), 4);
 
