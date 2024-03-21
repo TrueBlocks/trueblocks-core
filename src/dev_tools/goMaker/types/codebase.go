@@ -24,6 +24,9 @@ func (cb *CodeBase) summary(filter string) string {
 		return cb.Commands[i].Endpoint.Num < cb.Commands[j].Endpoint.Num
 	})
 	for _, c := range cb.Commands {
+		pad := func(s string, width int) string {
+			return s + strings.Repeat(" ", width-len(s))
+		}
 		if c.Endpoint.Group == filter {
 			descr := strings.ToLower(c.Endpoint.Description[0:1])
 			descr += strings.TrimSuffix(c.Endpoint.Description[1:], ".")

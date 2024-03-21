@@ -38,55 +38,9 @@ func (op CmdLineOption) Validate() bool {
 	return len(op.ApiRoute) > 0
 }
 
-func (op *CmdLineOption) Hidden() bool {
-	return !op.IsVisibleDocs || (!op.IsRequired && !op.IsCustomizable && !op.IsVisible && op.IsVisibleDocs)
-}
-
-func (op *CmdLineOption) CobraType() string {
-	m := map[string]string{
-		"<string>":     "String",
-		"<address>":    "String",
-		"<uint64>":     "Uint64",
-		"<blknum>":     "Uint64",
-		"<double>":     "Float64",
-		"list<addr>":   "StringSlice",
-		"list<topic>":  "StringSlice",
-		"list<string>": "StringSlice",
-		"list<enum>":   "StringSlice",
-		"enum":         "String",
-		"<boolean>":    "Bool",
-	}
-	return m[op.DataType]
-}
-
-func (op *CmdLineOption) DescrCaps() string {
-	return strings.ToUpper(op.Description[0:1]) + op.Description[1:]
-}
-
-func (op *CmdLineOption) CobraDescription() string {
-	d := op.Description
-	if op.Hidden() {
-		d += " (hidden)"
-	}
-	if op.IsEnum {
-		e := "One of "
-		if op.IsArray {
-			e = "One or more of "
-		}
-		e += "[ " + strings.Join(op.Enums, " | ") + " ]"
-		return "`" + d + "\n" + e + "`"
-	}
-	return "\"" + d + "\""
-}
-
-func (op *CmdLineOption) SetOptions() string {
-	ret := ""
-	if op.OptionType != "positional" && op.OptionType != "alias" {
-		tmpl := `[{ROUTE}]Cmd.Flags().{{.CobraType}}VarP(&[{ROUTE}]Pkg.GetOptions().{{.GoName}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, {{.CobraDescription}})`
-		ret = op.executeTemplate("setOptions", tmpl)
-	}
-	ret = strings.ReplaceAll(ret, "[{ROUTE}]", op.ApiRoute)
-	return ret
+func (op *CmdLineOption) IsHidden() bool {
+	return !op.IsVisibleDocs ||
+		(!op.IsRequired && !op.IsCustomizable && !op.IsVisible && op.IsVisibleDocs)
 }
 
 func (op *CmdLineOption) toGoName() string {
@@ -143,22 +97,6 @@ func (op *CmdLineOption) toGoSdkName() string {
 	return ret
 }
 
-func (op *CmdLineOption) Enum1() string {
-	if !op.IsEnum {
-		return ""
-	}
-	tmpl := enum1Tmpl
-	return op.executeTemplate("enum1", tmpl)
-}
-
-func (op *CmdLineOption) Enum2() string {
-	if !op.IsEnum {
-		return ""
-	}
-	tmpl := enum2Tmpl
-	return op.executeTemplate("enum2", tmpl)
-}
-
 func (op *CmdLineOption) toGoOptionsType() string {
 	if strings.HasPrefix(op.DataType, "enum") {
 		return "string"
@@ -204,18 +142,8 @@ func (op *CmdLineOption) toGoSdkType() string {
 	return m[dt]
 }
 
-func pad(s string, width int) string {
-	return s + strings.Repeat(" ", width-len(s))
-}
-
 func (op *CmdLineOption) JsonTag() string {
 	return "`json:\"" + op.SnakeCase() + ",omitempty\"`"
-}
-
-func (op *CmdLineOption) SdkField() string {
-	tmpl := `	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-`
-	return op.executeTemplate("sdkField", tmpl)
 }
 
 func (op *CmdLineOption) SnakeCase() string {
@@ -383,60 +311,6 @@ func (op *CmdLineOption) EnumCases() string {
 	ret = append(ret, v)
 	return strings.Join(ret, "\n")
 }
-
-var enum1Tmpl = `	if key == "{{.LongName}}" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.{{.GoName}}, err = enumFrom{{.EnumName}}(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-	`
-
-var enum2Tmpl = `type {{.EnumName}} int
-
-const (
-{{.EnumDef}}
-)
-
-func (v {{.EnumName}}) String() string {
-	switch v {
-	case {{.EnumNone}}:
-		return "none"
-{{.SomeCases}}	}
-
-	var m = map[{{.EnumName}}]string{
-{{.EnumMap}}
-	}
-
-	var ret []string
-	for _, val := range []{{.EnumList}} {
-		if v&val != 0 {
-			ret = append(ret, m[val])
-		}
-	}
-
-	return strings.Join(ret, ",")
-}
-
-func enumFrom{{.EnumName}}(values []string) ({{.EnumName}}, error) {
-	if len(values) == 0 {
-		return {{.EnumNone}}, fmt.Errorf("no value provided for {{.Lower}} option")
-	}
-
-{{.PreSwitch}}	var result {{.EnumName}}
-	for _, val := range values {
-		switch val {
-{{.EnumCases}}
-		}
-	}
-
-	return result, nil
-}
-
-`
 
 func (op *CmdLineOption) IsConfigurableAddr() bool {
 	return op.GoName == "Publisher"
