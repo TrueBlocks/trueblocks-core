@@ -69,3 +69,5 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 }
 
 // No enums
+// EXISTING_CODE
+// EXISTING_CODE
