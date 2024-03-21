@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -99,7 +100,7 @@ One of [ in | out | zero ]`)
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to process (inclusive)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to process (inclusive)")
 	if os.Getenv("TEST_MODE") != "true" {
-		exportCmd.Flags().MarkHidden("load")
+		_ = exportCmd.Flags().MarkHidden("load")
 	}
 	globals.InitGlobals("export", exportCmd, &exportPkg.GetOptions().Globals, capabilities)
 
@@ -110,7 +111,7 @@ One of [ in | out | zero ]`)
 	// This no-op makes scripting a bit easier. You may provide `--txs` option to the chifra export command, and it will be the same as no parameters at all.
 	var unused bool
 	exportCmd.Flags().BoolVarP(&unused, "txs", "", false, "no-op options shows transactions (same as default)")
-	exportCmd.Flags().MarkHidden("txs")
+	_ = exportCmd.Flags().MarkHidden("txs")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(exportCmd)

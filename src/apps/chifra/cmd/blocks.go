@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -85,10 +86,10 @@ One of [ from | to | reward ]`)
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().List, "list", "L", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.GetOptions().ListCount, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		blocksCmd.Flags().MarkHidden("cache_txs")
-		blocksCmd.Flags().MarkHidden("cache_traces")
-		blocksCmd.Flags().MarkHidden("list")
-		blocksCmd.Flags().MarkHidden("list_count")
+		_ = blocksCmd.Flags().MarkHidden("cache_txs")
+		_ = blocksCmd.Flags().MarkHidden("cache_traces")
+		_ = blocksCmd.Flags().MarkHidden("list")
+		_ = blocksCmd.Flags().MarkHidden("list_count")
 	}
 	globals.InitGlobals("blocks", blocksCmd, &blocksPkg.GetOptions().Globals, capabilities)
 

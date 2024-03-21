@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -65,7 +66,7 @@ func init() {
 	initCmd.Flags().Uint64VarP(&initPkg.GetOptions().FirstBlock, "first_block", "F", 0, "do not download any chunks earlier than this block")
 	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, "seconds to sleep between downloads")
 	if os.Getenv("TEST_MODE") != "true" {
-		initCmd.Flags().MarkHidden("publisher")
+		_ = initCmd.Flags().MarkHidden("publisher")
 	}
 	globals.InitGlobals("init", initCmd, &initPkg.GetOptions().Globals, capabilities)
 

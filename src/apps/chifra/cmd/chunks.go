@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -86,12 +87,12 @@ func init() {
 	chunksCmd.Flags().StringVarP(&chunksPkg.GetOptions().Tag, "tag", "t", "", "visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str) (hidden)")
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, "for --remote pinning only, seconds to sleep between API calls")
 	if os.Getenv("TEST_MODE") != "true" {
-		chunksCmd.Flags().MarkHidden("publisher")
-		chunksCmd.Flags().MarkHidden("truncate")
-		chunksCmd.Flags().MarkHidden("diff")
-		chunksCmd.Flags().MarkHidden("list")
-		chunksCmd.Flags().MarkHidden("unpin")
-		chunksCmd.Flags().MarkHidden("tag")
+		_ = chunksCmd.Flags().MarkHidden("publisher")
+		_ = chunksCmd.Flags().MarkHidden("truncate")
+		_ = chunksCmd.Flags().MarkHidden("diff")
+		_ = chunksCmd.Flags().MarkHidden("list")
+		_ = chunksCmd.Flags().MarkHidden("unpin")
+		_ = chunksCmd.Flags().MarkHidden("tag")
 	}
 	globals.InitGlobals("chunks", chunksCmd, &chunksPkg.GetOptions().Globals, capabilities)
 

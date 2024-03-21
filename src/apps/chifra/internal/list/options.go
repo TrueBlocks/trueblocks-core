@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package listPkg
@@ -89,9 +90,7 @@ func listFinishParseApi(w http.ResponseWriter, r *http.Request) *ListOptions {
 func ListFinishParseInternal(w io.Writer, values url.Values) *ListOptions {
 	copy := defaultListOptions
 	opts := &copy
-	opts.FirstRecord = 0
 	opts.MaxRecords = 250
-	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	for key, value := range values {
 		switch key {

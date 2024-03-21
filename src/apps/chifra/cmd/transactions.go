@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -73,8 +74,8 @@ One of [ from | to ]`)
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "", false, "force the transaction's traces into the cache (hidden)")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Seed, "seed", "S", false, "find the source of the funds sent to the receiver (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		transactionsCmd.Flags().MarkHidden("cache_traces")
-		transactionsCmd.Flags().MarkHidden("seed")
+		_ = transactionsCmd.Flags().MarkHidden("cache_traces")
+		_ = transactionsCmd.Flags().MarkHidden("seed")
 	}
 	globals.InitGlobals("transactions", transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
 

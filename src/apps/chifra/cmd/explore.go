@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -67,8 +68,8 @@ func init() {
 	exploreCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	exploreCmd.Flags().MarkHidden("verbose")
-	exploreCmd.Flags().MarkHidden("fmt")
+	_ = exploreCmd.Flags().MarkHidden("verbose")
+	_ = exploreCmd.Flags().MarkHidden("fmt")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(exploreCmd)
