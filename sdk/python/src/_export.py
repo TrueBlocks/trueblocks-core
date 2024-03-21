@@ -33,7 +33,6 @@ exportOpts = {
     "noZero": {"hotkey": "-z", "type": "switch"},
     "firstBlock": {"hotkey": "-F", "type": "flag"},
     "lastBlock": {"hotkey": "-L", "type": "flag"},
-    "fmt": {"hotkey": "txt", "type": "flag"},
     "chain": {"hotkey": "-", "type": "flag"},
     "noHeader": {"hotkey": "-", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
@@ -48,4 +47,3 @@ def export(self):
     if ret[0] == 'json':
         return session.get(url).json()
     return session.get(url).text
-

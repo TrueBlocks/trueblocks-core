@@ -13,8 +13,6 @@ Arguments:
 
 Flags:
   -a, --all         list, or run all class definitions found in the local folder
-  -o, --options     export options code (check validity in the process)
-  -g, --gocmds      export go command code
   -m, --readmes     create readme files for each tool and app
   -f, --format      format source code files (.cpp and .h) found in local folder and below
   -d, --dump        dump any classDefinition config tomls to screen and quit (hidden)

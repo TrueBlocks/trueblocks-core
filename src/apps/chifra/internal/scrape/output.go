@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -102,4 +102,3 @@ func getConfigCmdsFromArgs() map[string]string {
 }
 
 // EXISTING_CODE
-

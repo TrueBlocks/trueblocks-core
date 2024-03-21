@@ -13,7 +13,6 @@ slurpOpts = {
     "source": {"hotkey": "-S", "type": "flag"},
     "count": {"hotkey": "-U", "type": "switch"},
     "sleep": {"hotkey": "-s", "type": "flag"},
-    "fmt": {"hotkey": "txt", "type": "flag"},
     "chain": {"hotkey": "-", "type": "flag"},
     "noHeader": {"hotkey": "-", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
@@ -29,4 +28,3 @@ def slurp(self):
     if ret[0] == 'json':
         return session.get(url).json()
     return session.get(url).text
-

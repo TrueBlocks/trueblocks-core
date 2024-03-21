@@ -13,8 +13,6 @@
 | -------- | ----------------------------- | -------------------------------------------------------------------------- |
 |          | files                         | one or more class definition files (required)                              |
 | &#8208;a | &#8208;&#8208;all             | list, or run all class definitions found in the local<br/>folder           |
-| &#8208;o | &#8208;&#8208;options         | export options code (check validity in the process)                        |
-| &#8208;g | &#8208;&#8208;gocmds          | export go command code                                                     |
 | &#8208;m | &#8208;&#8208;readmes         | create readme files for each tool and app                                  |
 | &#8208;f | &#8208;&#8208;format          | format source code files (.cpp and .h) found in local<br/>folder and below |
 | &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv]                               |

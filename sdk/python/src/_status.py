@@ -11,7 +11,6 @@ statusOpts = {
     "firstRecord": {"hotkey": "-c", "type": "flag"},
     "maxRecords": {"hotkey": "-e", "type": "flag"},
     "chains": {"hotkey": "-a", "type": "switch"},
-    "fmt": {"hotkey": "txt", "type": "flag"},
     "chain": {"hotkey": "-", "type": "flag"},
     "noHeader": {"hotkey": "-", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
@@ -23,4 +22,3 @@ def status(self):
     if ret[0] == 'json':
         return session.get(url).json()
     return session.get(url).text
-

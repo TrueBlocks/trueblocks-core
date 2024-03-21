@@ -1,13 +1,15 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package slurpPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
 	"io"
 	"net/http"
@@ -21,6 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // SlurpOptions provides all command options for the chifra slurp command.
@@ -46,6 +49,7 @@ type SlurpOptions struct {
 var defaultSlurpOptions = SlurpOptions{
 	Source:  "etherscan",
 	PerPage: 3000,
+	Sleep:   .25,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -82,7 +86,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	copy := defaultSlurpOptions
 	opts := &copy
-	opts.Page = 0
+	opts.Source = "etherscan"
 	opts.PerPage = 3000
 	opts.Sleep = .25
 	for key, value := range values {
@@ -219,4 +223,3 @@ func (opts *SlurpOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

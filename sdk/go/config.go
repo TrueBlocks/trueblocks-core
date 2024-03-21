@@ -1,8 +1,8 @@
-// Copyright 2024 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -50,8 +50,7 @@ func configParseFunc(target interface{}, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc(config): target is not of correct type")
 	}
 
-	switch key {
-	case "mode":
+	if key == "mode" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Mode, err = enumFromConfigMode(values); err != nil {
@@ -80,14 +79,14 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 type ConfigMode int
 
 const (
-	NoCM1 ConfigMode = 0
-	CMShow = 1 << iota
+	NoCOM  ConfigMode = 0
+	CMShow            = 1 << iota
 	CMEdit
 )
 
 func (v ConfigMode) String() string {
 	switch v {
-	case NoCM1:
+	case NoCOM:
 		return "none"
 	}
 
@@ -108,7 +107,7 @@ func (v ConfigMode) String() string {
 
 func enumFromConfigMode(values []string) (ConfigMode, error) {
 	if len(values) == 0 {
-		return NoCM1, fmt.Errorf("no value provided for mode option")
+		return NoCOM, fmt.Errorf("no value provided for mode option")
 	}
 
 	var result ConfigMode
@@ -119,10 +118,9 @@ func enumFromConfigMode(values []string) (ConfigMode, error) {
 		case "edit":
 			result |= CMEdit
 		default:
-			return NoCM1, fmt.Errorf("unknown mode: %s", val)
+			return NoCOM, fmt.Errorf("unknown mode: %s", val)
 		}
 	}
 
 	return result, nil
 }
-
