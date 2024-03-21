@@ -1,8 +1,8 @@
-// Copyright 2024 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -54,8 +54,7 @@ func tokensParseFunc(target interface{}, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc(tokens): target is not of correct type")
 	}
 
-	switch key {
-	case "parts":
+	if key == "parts" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Parts, err = enumFromTokensParts(values); err != nil {
@@ -84,14 +83,14 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 type TokensParts int
 
 const (
-	NoTP TokensParts = 0
-	TPName = 1 << iota
+	NoTP   TokensParts = 0
+	TPName             = 1 << iota
 	TPSymbol
 	TPDecimals
 	TPTotalSupply
 	TPVersion
 	TPSome = TPName | TPSymbol | TPDecimals | TPTotalSupply
-	TPAll = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
+	TPAll  = TPName | TPSymbol | TPDecimals | TPTotalSupply | TPVersion
 )
 
 func (v TokensParts) String() string {
@@ -105,11 +104,11 @@ func (v TokensParts) String() string {
 	}
 
 	var m = map[TokensParts]string{
-		TPName: "name",
-		TPSymbol: "symbol",
-		TPDecimals: "decimals",
+		TPName:        "name",
+		TPSymbol:      "symbol",
+		TPDecimals:    "decimals",
 		TPTotalSupply: "totalSupply",
-		TPVersion: "version",
+		TPVersion:     "version",
 	}
 
 	var ret []string
@@ -153,7 +152,5 @@ func enumFromTokensParts(values []string) (TokensParts, error) {
 
 	return result, nil
 }
-
 // EXISTING_CODE
 // EXISTING_CODE
-

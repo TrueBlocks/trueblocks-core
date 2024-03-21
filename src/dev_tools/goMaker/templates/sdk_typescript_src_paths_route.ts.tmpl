@@ -1,0 +1,23 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * This file was auto generated. DO NOT EDIT.
+ */
+/* eslint object-curly-newline: ["error", "never"] */
+/* eslint max-len: ["error", 160] */
+
+import * as ApiCallers from '../lib/api_callers';
+import { [{TYPES}] } from '../types';
+
+export function get{{.Proper}}(
+  parameters?: {
+[{TS_OPTIONS}]
+[{GLOBALS}]
+  },
+  options?: RequestInit,
+) {
+  return ApiCallers.fetch<[{RETTYPE}]>(
+    { endpoint: '/{{.Lower}}', method: 'get', parameters, options },
+  );
+}

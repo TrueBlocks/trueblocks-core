@@ -3,107 +3,76 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
-	"github.com/gocarina/gocsv"
+	"github.com/TrueBlocks/trueblocks-core/goMaker/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type Namer interface {
-	Name() string
-}
-
-func LoadCsv[T Namer, D any](thePath string, callBack func(*T, *D) (bool, error), data *D) ([]T, error) {
-	records := make([]T, 0)
-	callbackFunc := func(record T) error {
-		ok, err := callBack(&record, data)
-		if err != nil {
-			return err
-		} else if !ok {
-			return nil
-		}
-		if record.Name() != "" {
-			records = append(records, record)
-		}
-		return nil
-	}
-
-	if theFile, err := os.OpenFile(thePath, os.O_RDWR, os.ModePerm); err != nil {
-		return []T{}, err
-
-	} else {
-		defer theFile.Close()
-		if err := gocsv.UnmarshalToCallback(theFile, callbackFunc); err != nil {
-			return []T{}, err
-		}
-	}
-
-	return records, nil
-}
-
-type CmdLineOption struct {
-	Num            string `csv:"num"`
-	Group          string `csv:"group"`
-	Tags           string `csv:"tags"`
-	ApiRoute       string `csv:"api_route"`
-	Tool           string `csv:"tool"`
-	LongName       string `csv:"longName"`
-	HotKey         string `csv:"hotKey"`
-	DefVal         string `csv:"def_val"`
-	IsRequired     string `csv:"is_required"`
-	IsCustomizable string `csv:"is_customizable"`
-	IsVisible      string `csv:"is_visible"`
-	IsVisibleDocs  string `csv:"is_visible_docs"`
-	Generate       string `csv:"generate"`
-	OptionType     string `csv:"option_type"`
-	DataType       string `csv:"data_type"`
-	Description    string `csv:"description"`
-}
-
-func (c CmdLineOption) Name() string { return c.LongName }
-
-func ReadCmdOption(cmd *CmdLineOption, data *any) (bool, error) {
-	return true, nil
-}
-
-type CmdLineEndpoint struct {
-	Num           string `csv:"num"`
-	Group         string `csv:"group"`
-	IsVisible     string `csv:"is_visible"`
-	IsVisibleDocs string `csv:"is_visible_docs"`
-	ApiGroup      string `csv:"api_group"`
-	ApiRoute      string `csv:"api_route"`
-	Tool          string `csv:"tool"`
-	Summary       string `csv:"summary"`
-	Capabilities  string `csv:"capabilities"`
-	Description   string `csv:"description"`
-}
-
-func (c CmdLineEndpoint) Name() string { return c.ApiRoute }
-
-func ReadCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {
-	return true, nil
-}
-
 func main() {
-	thePath := "/Users/jrush/Development/trueblocks-core/src/other/data-models/cmd-line-options.csv"
-
-	cmds, err := LoadCsv[CmdLineOption](thePath, ReadCmdOption, nil)
+	codeBase, err := LoadDefinitions()
 	if err != nil {
-		fmt.Println(err)
-		return
+		logger.Error(err)
+		os.Exit(1)
 	}
 
-	for _, cmd := range cmds {
-		fmt.Println(cmd.Tool, cmd.LongName, cmd.OptionType)
+	// fmt.Println(codeBase.String())
+	for _, source := range goCodePerRoute {
+		for _, c := range codeBase.Commands {
+			if err := c.ProcessFile(source); err != nil {
+				logger.Error(err)
+				os.Exit(1)
+			}
+		}
 	}
 
-	thePath = "/Users/jrush/Development/trueblocks-core/src/other/data-models/cmd-line-endpoints.csv"
-	eps, err := LoadCsv[CmdLineEndpoint](thePath, ReadCmdEndpoint, nil)
+	for _, source := range goCodePerCodeBase {
+		if err := codeBase.ProcessFile(source); err != nil {
+			logger.Error(err)
+			os.Exit(1)
+		}
+	}
+}
+
+// LoadDefinitions loads the definitions from the data-models folder
+func LoadDefinitions() (types.CodeBase, error) {
+	cwd, _ := os.Getwd()
+	if !strings.HasSuffix(strings.Trim(cwd, "/"), "trueblocks-core") {
+		return types.CodeBase{}, fmt.Errorf("this program must be run from the ./trueblocks-core folder")
+	}
+
+	thePath := "src/other/data-models/"
+	if !file.FolderExists(thePath) {
+		return types.CodeBase{}, fmt.Errorf("the path %s does not exist", thePath)
+	}
+
+	codeBase, err := types.LoadCommands(thePath)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return types.CodeBase{}, err
 	}
 
-	for _, ep := range eps {
-		fmt.Println(ep.Tool, ep.ApiGroup, ep.ApiRoute)
+	if len(codeBase.Commands) == 0 {
+		return types.CodeBase{}, fmt.Errorf("no commands were found in %s", thePath)
 	}
+
+	return codeBase, nil
+}
+
+// goCodePerRoute is the list of files to process per route
+var goCodePerRoute = []string{
+	"sdk_go_route.go.tmpl",
+	// // // - "sdk_python_src__route.py.tmpl",
+	// // // - "sdk_typescript_src_paths_route.ts.tmpl",
+	"src_apps_chifra_cmd_route.go.tmpl",
+	"src_apps_chifra_internal_route_output.go.tmpl",
+	// "src_apps_chifra_internal_route_options.go.tmpl",
+	"src_apps_chifra_internal_route_doc.go.tmpl",
+	"src_apps_chifra_sdk_route.go.tmpl",
+}
+
+// goCodePerCodeBase is the list of files to process per code base
+var goCodePerCodeBase = []string{
+	"src_apps_chifra_cmd_helpfile.go.tmpl",
+	"src_apps_chifra_pkg_version_string.go.tmpl",
 }

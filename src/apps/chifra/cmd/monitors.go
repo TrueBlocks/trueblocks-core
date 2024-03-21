@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -58,8 +59,6 @@ func init() {
 	var capabilities caps.Capability // capabilities for chifra monitors
 	capabilities = capabilities.Add(caps.Default)
 	capabilities = capabilities.Add(caps.Caching)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	monitorsCmd.Flags().SortFlags = false
 
@@ -75,7 +74,7 @@ func init() {
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.GetOptions().RunCount, "run_count", "u", 0, "available with --watch option only, run the monitor this many times, then quit (hidden)")
 	monitorsCmd.Flags().Float64VarP(&monitorsPkg.GetOptions().Sleep, "sleep", "s", 14, "available with --watch option only, the number of seconds to sleep between runs")
 	if os.Getenv("TEST_MODE") != "true" {
-		monitorsCmd.Flags().MarkHidden("run_count")
+		_ = monitorsCmd.Flags().MarkHidden("run_count")
 	}
 	globals.InitGlobals("monitors", monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
 
@@ -87,4 +86,3 @@ func init() {
 
 	chifraCmd.AddCommand(monitorsCmd)
 }
-

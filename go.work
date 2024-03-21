@@ -1,7 +1,7 @@
 // Go Version
 go 1.22
 
-use  (
+use (
     ./sdk/go
     ./src/apps/chifra
     ./src/dev_tools/goMaker

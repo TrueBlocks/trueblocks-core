@@ -1,8 +1,9 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package cmd
@@ -34,10 +35,7 @@ var daemonCmd = &cobra.Command{
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &daemonPkg.GetOptions().Globals
 	}),
-	Aliases: []string{
-		"serve",
-	},
-}
+	Aliases: []string{"serve"}}
 
 const usageDaemon = `daemon [flags]`
 
@@ -57,8 +55,6 @@ func init() {
 	capabilities = capabilities.Add(caps.Version)
 	capabilities = capabilities.Add(caps.Noop)
 	capabilities = capabilities.Add(caps.NoColor)
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	daemonCmd.Flags().SortFlags = false
 
@@ -71,9 +67,9 @@ One of [ off | blooms | index ]`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, "run gRPC server to serve names")
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "deprecated please use --url flag instead")
 	if os.Getenv("TEST_MODE") != "true" {
-		daemonCmd.Flags().MarkHidden("api")
-		daemonCmd.Flags().MarkHidden("scrape")
-		daemonCmd.Flags().MarkHidden("monitor")
+		_ = daemonCmd.Flags().MarkHidden("api")
+		_ = daemonCmd.Flags().MarkHidden("scrape")
+		_ = daemonCmd.Flags().MarkHidden("monitor")
 	}
 	globals.InitGlobals("daemon", daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
 
@@ -81,9 +77,8 @@ One of [ off | blooms | index ]`)
 	daemonCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated. Please use --url instead.") //cmd is the parent/top level command
+	_ = daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated. Please use --url instead.") //cmd is the parent/top level command
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(daemonCmd)
 }
-

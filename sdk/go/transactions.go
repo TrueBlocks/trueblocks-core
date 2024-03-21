@@ -1,8 +1,8 @@
-// Copyright 2024 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -58,8 +58,7 @@ func transactionsParseFunc(target interface{}, key, value string) (bool, error) 
 		return false, fmt.Errorf("parseFunc(transactions): target is not of correct type")
 	}
 
-	switch key {
-	case "flow":
+	if key == "flow" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Flow, err = enumFromTransactionsFlow(values); err != nil {
@@ -88,8 +87,8 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 type TransactionsFlow int
 
 const (
-	NoTF TransactionsFlow = 0
-	TFFrom = 1 << iota
+	NoTF   TransactionsFlow = 0
+	TFFrom                  = 1 << iota
 	TFTo
 )
 
@@ -101,7 +100,7 @@ func (v TransactionsFlow) String() string {
 
 	var m = map[TransactionsFlow]string{
 		TFFrom: "from",
-		TFTo: "to",
+		TFTo:   "to",
 	}
 
 	var ret []string
@@ -133,7 +132,5 @@ func enumFromTransactionsFlow(values []string) (TransactionsFlow, error) {
 
 	return result, nil
 }
-
 // EXISTING_CODE
 // EXISTING_CODE
-

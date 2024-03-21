@@ -1,8 +1,8 @@
-// Copyright 2024 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -62,8 +62,7 @@ func stateParseFunc(target interface{}, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc(state): target is not of correct type")
 	}
 
-	switch key {
-	case "parts":
+	if key == "parts" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Parts, err = enumFromStateParts(values); err != nil {
@@ -96,15 +95,15 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 type StateParts int
 
 const (
-	NoSP StateParts = 0
-	SPBalance = 1 << iota
+	NoSP      StateParts = 0
+	SPBalance            = 1 << iota
 	SPNonce
 	SPCode
 	SPProxy
 	SPDeployed
 	SPAccttype
 	SPSome = SPBalance | SPProxy | SPDeployed | SPAccttype
-	SPAll = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
+	SPAll  = SPBalance | SPNonce | SPCode | SPProxy | SPDeployed | SPAccttype
 )
 
 func (v StateParts) String() string {
@@ -118,10 +117,10 @@ func (v StateParts) String() string {
 	}
 
 	var m = map[StateParts]string{
-		SPBalance: "balance",
-		SPNonce: "nonce",
-		SPCode: "code",
-		SPProxy: "proxy",
+		SPBalance:  "balance",
+		SPNonce:    "nonce",
+		SPCode:     "code",
+		SPProxy:    "proxy",
 		SPDeployed: "deployed",
 		SPAccttype: "accttype",
 	}
@@ -169,7 +168,6 @@ func enumFromStateParts(values []string) (StateParts, error) {
 
 	return result, nil
 }
-
 // EXISTING_CODE
 type sdkState struct {
 	AccountType string         `json:"accountType"`

@@ -38,7 +38,6 @@ class CCounter {
 class COptions : public COptionsBase {
   public:
     bool all;
-    bool sdk;
     bool openapi;
     bool protobuf;
 
@@ -56,7 +55,7 @@ class COptions : public COptionsBase {
     map<string_q, string_q> hugoAliasMap;
 
     ostringstream goCallStream, goPkgStream;
-    ostringstream goRouteStream, chifraHelpStream;
+    ostringstream goRouteStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream goStream;
 
@@ -67,33 +66,12 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool handle_readmes(void);
-    bool handle_gocmds(void);
     bool handle_format(void);
     bool handle_datamodel(void);
-
-    bool handle_sdk(void);
-    bool handle_sdk_ts(void);
-    bool handle_sdk_ts_paths(CStringArray& pathsOut);
-    bool handle_sdk_ts_types(CStringArray& typesOut);
-    bool handle_sdk_py(void);
-    bool handle_sdk_py_paths(CStringArray& pathsOut);
-    bool handle_sdk_py_types(CStringArray& typesOut);
-    bool handle_sdk_go(void);
-    bool handle_sdk_go_innersdk(void);
-    bool handle_sdk_go_outersdk(void);
-
-    bool handle_gocmds_cmd(const CCommandOption& ep);
-    bool handle_gocmds_options(const CCommandOption& ep);
-    bool handle_gocmds_docfile(const CCommandOption& ep);
-    bool handle_gocmds_output(const CCommandOption& ep);
-    void verifyGoEnumValidators(void);
-
     bool writeOpenApiFile(void);
-
     bool handle_protobuf(void);
 
     string_q getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes);
-    void verifyDescriptions(void);
 };
 
 //-------------------------------------------------------------------
@@ -150,9 +128,6 @@ extern bool isApiRoute(const string_q& route);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
-
-//---------------------------------------------------------------------------------------------------
-#define sdkPath string_q("../sdk/")
 
 //---------------------------------------------------------------------------------------------------
 extern void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase);

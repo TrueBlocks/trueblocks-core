@@ -1,8 +1,8 @@
-// Copyright 2024 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -69,8 +69,7 @@ func chunksParseFunc(target interface{}, key, value string) (bool, error) {
 		return false, fmt.Errorf("parseFunc(chunks): target is not of correct type")
 	}
 
-	switch key {
-	case "mode":
+	if key == "mode" {
 		var err error
 		values := strings.Split(value, ",")
 		if opts.Mode, err = enumFromChunksMode(values); err != nil {
@@ -99,8 +98,8 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 type ChunksMode int
 
 const (
-	NoCM2 ChunksMode = 0
-	CMManifest = 1 << iota
+	NoCHM      ChunksMode = 0
+	CMManifest            = 1 << iota
 	CMIndex
 	CMBlooms
 	CMPins
@@ -111,18 +110,18 @@ const (
 
 func (v ChunksMode) String() string {
 	switch v {
-	case NoCM2:
+	case NoCHM:
 		return "none"
 	}
 
 	var m = map[ChunksMode]string{
-		CMManifest: "manifest",
-		CMIndex: "index",
-		CMBlooms: "blooms",
-		CMPins: "pins",
-		CMAddresses: "addresses",
+		CMManifest:    "manifest",
+		CMIndex:       "index",
+		CMBlooms:      "blooms",
+		CMPins:        "pins",
+		CMAddresses:   "addresses",
 		CMAppearances: "appearances",
-		CMStats: "stats",
+		CMStats:       "stats",
 	}
 
 	var ret []string
@@ -137,7 +136,7 @@ func (v ChunksMode) String() string {
 
 func enumFromChunksMode(values []string) (ChunksMode, error) {
 	if len(values) == 0 {
-		return NoCM2, fmt.Errorf("no value provided for mode option")
+		return NoCHM, fmt.Errorf("no value provided for mode option")
 	}
 
 	var result ChunksMode
@@ -158,13 +157,11 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 		case "stats":
 			result |= CMStats
 		default:
-			return NoCM2, fmt.Errorf("unknown mode: %s", val)
+			return NoCHM, fmt.Errorf("unknown mode: %s", val)
 		}
 	}
 
 	return result, nil
 }
-
 // EXISTING_CODE
 // EXISTING_CODE
-

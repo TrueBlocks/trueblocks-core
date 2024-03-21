@@ -22,11 +22,8 @@ static const COption params[] = {
     // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
-    COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
-    COption("gocmds", "g", "", OPT_SWITCH, "export go command code"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
-    COption("sdk", "s", "", OPT_SWITCH, "create typescript sdk"),
     COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("protobuf", "p", "", OPT_SWITCH, "compile protobufs"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
@@ -46,8 +43,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     CStringArray files;
-    bool options = false;
-    bool gocmds = false;
     bool readmes = false;
     bool format = false;
 
@@ -59,20 +54,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
-        } else if (arg == "-o" || arg == "--options") {
-            options = true;
-
-        } else if (arg == "-g" || arg == "--gocmds") {
-            gocmds = true;
-
         } else if (arg == "-m" || arg == "--readmes") {
             readmes = true;
 
         } else if (arg == "-f" || arg == "--format") {
             format = true;
-
-        } else if (arg == "-s" || arg == "--sdk") {
-            sdk = true;
 
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
@@ -142,11 +128,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    verifyDescriptions();
-    if (gocmds) {
-        verifyGoEnumValidators();
-    }
-
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
     for (auto file : files) {
@@ -187,22 +168,14 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (gocmds && !options) {
-        options = true;
-    }
-
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (openapi && !handle_datamodel())
         return false;
     if (openapi && !writeOpenApiFile())
         return false;
-    if (gocmds && !handle_gocmds())
-        return false;
     if (readmes && !handle_readmes())
         return false;
     if (format && !handle_format())
-        return false;
-    if (sdk && !handle_sdk())
         return false;
     if (protobuf && !handle_protobuf())
         return false;
@@ -210,7 +183,7 @@ bool COptions::parseArguments(string_q& command) {
     // Default to run if we get only all
 
     // Maybe the user only wants to generate code, or format
-    if (all && (options + format + readmes) > 0)
+    if (all && (format + readmes) > 0)
         return false;
 
     // If not, we need classDefs to work with...
@@ -218,7 +191,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage(usageErrs[ERR_NEEDONECLASS]);
 
     // We need the template files
-    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go.tmpl", "blank_options.go.tmpl"};
+    CStringArray templs = {"", "blank.yaml"};
     for (auto temp : templs) {
         if (!fileExists(getPathToTemplates(temp))) {
             return makeError(ERR_CONFIGMISSING, getPathToTemplates(temp));
@@ -235,7 +208,6 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     all = false;
-    sdk = false;
     openapi = false;
 
     classDefs.clear();
@@ -251,7 +223,6 @@ COptions::COptions(void) : classFile("") {
     Init();
 
     // clang-format off
-    notes.push_back("The `--options` flag generates `COption` code for each of the various tools.");
     notes.push_back("More information on class definition files is found in the documentation.");
     // clang-format on
 
@@ -397,21 +368,15 @@ bool parseOptionsFile(const char* str, void* data) {
     return true;
 }
 
-//---------------------------------------------------------------------------------------------------
-void COptions::verifyDescriptions(void) {
-    for (auto ep : endpointArray) {
-        if (!ep.is_visible)
-            continue;
-        for (auto option : cmdOptionArray) {
-            if (ep.api_route == option.api_route && option.option_type == "description") {
-                if (ep.description != option.description) {
-                    ostringstream os;
-                    os << "Endpoint descriptions for " << ep.api_route << " do not agree:" << endl;
-                    os << "\tendpoint: " << ep.description << endl;
-                    os << "\toption:   " << option.description << endl;
-                    LOG_WARN(os.str());
-                }
-            }
-        }
-    }
+//------------------------------------------------------------------------------------------------------------
+string_q get_corrected_caps(const string_q& capsIn) {
+    string_q x = "fmt|chain|noHeader";
+    string_q capsOut = substitute(capsIn, "default", x);
+    replace(capsOut, "caching", "cache|decache");
+    replace(capsOut, "verbose|", "");
+    replace(capsOut, "version|", "");
+    replace(capsOut, "noop|", "");
+    replace(capsOut, "noColor|", "");
+    replace(capsOut, "help|", "");
+    return capsOut;
 }

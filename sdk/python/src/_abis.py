@@ -26,4 +26,3 @@ def abis(self):
     if ret[0] == 'json':
         return session.get(url).json()
     return session.get(url).text
-

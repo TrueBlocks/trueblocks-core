@@ -1,13 +1,15 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 package namesPkg
 
 import (
+	// EXISTING_CODE
 	"encoding/json"
 	"io"
 	"net/http"
@@ -20,6 +22,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	// EXISTING_CODE
 )
 
 // NamesOptions provides all command options for the chifra names command.
@@ -45,7 +48,7 @@ type NamesOptions struct {
 	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
 	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
-	crudData *CrudData
+	crudData     *CrudData
 	AutonameAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
@@ -209,4 +212,3 @@ func (opts *NamesOptions) getCaches() (m map[string]bool) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
