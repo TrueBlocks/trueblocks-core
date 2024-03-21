@@ -7,4 +7,5 @@ use (
     ./src/dev_tools/goMaker
     ./src/dev_tools/sdkTester
     ./src/examples/usesSDK
+    ./src/examples/balanceChart
 )
