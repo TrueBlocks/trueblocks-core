@@ -2,17 +2,20 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 	"strings"
 	"text/template"
 
+	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func (c *Command) processFile(source string) error {
-	source = strings.Replace(source, ".tmpl", "", -1)
+	cwd, _ := os.Getwd()
+	source = filepath.Join(cwd, templateFolder, source)
 	if ok, err := shouldProcess(source, c.Route); err != nil {
 		return err
 	} else if !ok {
@@ -21,31 +24,9 @@ func (c *Command) processFile(source string) error {
 
 	result := c.executeTemplate(source, file.AsciiFileToString(source))
 
-	dest := strings.Replace(source, "templates/", "/Users/jrush/Development/trueblocks-core/", -1)
-	dest = strings.Replace(dest, "_route_", "/"+c.Route+"/", -1)
-	dest = strings.Replace(dest, "__route", "_+route", -1)
-	dest = strings.Replace(dest, "route.go", c.Route+".go", -1)
-	dest = strings.Replace(dest, "route.py", c.Route+".py", -1)
-	dest = strings.Replace(dest, "route.ts", c.Route+".ts", -1)
-	dest = strings.Replace(dest, "_", "/", -1)
-	dest = strings.Replace(dest, "+", "_", -1)
-
-	logger.Info("Writing", dest)
-	file.StringToAsciiFile(dest+".new", string(result))
-	WriteOut(dest+".new", dest)
-	return nil
-}
-
-func shouldProcess(source, route string) (bool, error) {
-	if strings.Contains(source, "templates/sdk") {
-		if route == "explore" || route == "daemon" || route == "scrape" {
-			return false, nil
-		}
-	}
-	if !file.FileExists(source) {
-		return false, fmt.Errorf("file does not exist %s", source)
-	}
-	return true, nil
+	dest := convertToDestPath(source, c.Route)
+	logger.Info("Writing to: ", dest)
+	return codeWriter.WriteCode(dest, result)
 }
 
 func (c *Command) executeTemplate(name, tmplCode string) string {

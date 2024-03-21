@@ -3,23 +3,29 @@ package main
 import (
 	"bytes"
 	"log"
-	"strings"
+	"os"
+	"path/filepath"
 	"text/template"
 
+	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-func (cb *CodeBase) processFile(source string) {
-	source = strings.Replace(source, ".tmpl", "", -1)
+func (cb *CodeBase) processFile(source string) error {
+	cwd, _ := os.Getwd()
+	source = filepath.Join(cwd, templateFolder, source)
+	if ok, err := shouldProcess(source, ""); err != nil {
+		return err
+	} else if !ok {
+		return nil
+	}
+
 	result := cb.executeTemplate(source, file.AsciiFileToString(source))
 
-	dest := strings.Replace(source, "templates/", "/Users/jrush/Development/trueblocks-core/", -1)
-	dest = strings.Replace(dest, "_", "/", -1)
-
-	logger.Info("Writing", dest)
-	file.StringToAsciiFile(dest+".new", string(result))
-	WriteOut(dest+".new", dest)
+	dest := convertToDestPath(source, "")
+	logger.Info("Writing to: ", dest)
+	return codeWriter.WriteCode(dest, result)
 }
 
 func (cb *CodeBase) executeTemplate(name, tmplCode string) string {

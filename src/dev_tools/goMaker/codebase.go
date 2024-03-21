@@ -55,6 +55,6 @@ func (cb *CodeBase) OtherSummary() string {
 }
 
 func (cb *CodeBase) Version() string {
-	vers := strings.Trim(file.AsciiFileToString("../../../VERSION"), "\n\r")
+	vers := strings.Trim(file.AsciiFileToString("VERSION"), "\n\r")
 	return "GHC-TrueBlocks//" + vers + "-release"
 }

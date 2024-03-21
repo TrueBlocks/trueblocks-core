@@ -1,4 +1,4 @@
-package main
+package codeWriter
 
 import (
 	"bufio"
@@ -9,20 +9,23 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-func WriteOut(source, dest string) {
-	existingCode, err := extractExistingCode(dest)
+func WriteCode(existingFn, result string) error {
+	destFn := existingFn + ".new"
+	file.StringToAsciiFile(destFn, string(result))
+
+	existingCode, err := extractExistingCode(existingFn)
 	if err != nil {
-		fmt.Println("Error extracting existing code:", err)
-		return
+		return fmt.Errorf("error extracting existing code: %v", err)
 	}
 
-	err = applyTemplate(source, existingCode)
+	err = applyTemplate(destFn, existingCode)
 	if err != nil {
-		fmt.Println("Error applying template:", err)
+		return fmt.Errorf("error applying template: %v", err)
 	}
+
+	return nil
 }
 
 func extractExistingCode(fileName string) (map[int]string, error) {
@@ -74,15 +77,17 @@ func applyTemplate(fileName string, existingCode map[int]string) error {
 	}
 	defer func() {
 		output.Close()
-		FormatCode(dest)
+		formatCode(dest)
 		os.Remove(fileName)
 	}()
 
 	scanner := bufio.NewScanner(ff)
 	codeSection := 0
 	isOpen := false
+	lineCnt := 0
 	for scanner.Scan() {
 		line := scanner.Text()
+		lineCnt++
 		if strings.Contains(line, "// EXISTING_CODE") {
 			if isOpen {
 				isOpen = false
@@ -92,7 +97,8 @@ func applyTemplate(fileName string, existingCode map[int]string) error {
 					output.WriteString(code)
 					isOpen = true
 				} else {
-					logger.Fatal("No existing code for section", codeSection)
+					os.Remove(fileName)
+					return fmt.Errorf("missing // EXISTING_CODE section %d line %d", codeSection, lineCnt)
 				}
 			}
 		} else {
@@ -107,7 +113,7 @@ func applyTemplate(fileName string, existingCode map[int]string) error {
 	return nil
 }
 
-func FormatCode(fn string) {
+func formatCode(fn string) {
 	if !strings.HasSuffix(fn, ".go") {
 		return
 	}

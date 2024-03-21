@@ -6,26 +6,32 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func main() {
-	fmt.Println("Generating Go code for TrueBlocks disabled")
-	os.Exit(1)
-	// codeBase, err := LoadDefinitions()
-	// if err != nil {
-	// 	logger.Error(err)
-	// 	os.Exit(1)
-	// }
+	codeBase, err := LoadDefinitions()
+	if err != nil {
+		logger.Error(err)
+		os.Exit(1)
+	}
 
-	// for _, source := range goCodePerRoute {
-	// 	for _, c := range codeBase.Commands {
-	// 		c.processFile(source)
-	// 	}
-	// }
+	// fmt.Println(codeBase.String())
+	for _, source := range goCodePerRoute {
+		for _, c := range codeBase.Commands {
+			if err := c.processFile(source); err != nil {
+				logger.Error(err)
+				os.Exit(1)
+			}
+		}
+	}
 
-	// for _, source := range goCodePerCodeBase {
-	// 	codeBase.processFile(source)
-	// }
+	for _, source := range goCodePerCodeBase {
+		if err := codeBase.processFile(source); err != nil {
+			logger.Error(err)
+			os.Exit(1)
+		}
+	}
 }
 
 // LoadDefinitions loads the definitions from the data-models folder
@@ -52,19 +58,48 @@ func LoadDefinitions() (CodeBase, error) {
 	return codeBase, nil
 }
 
+func shouldProcess(source, route string) (bool, error) {
+	if strings.Contains(source, "sdk_") {
+		if route == "explore" || route == "daemon" || route == "scrape" {
+			return false, nil
+		}
+	}
+
+	if !file.FileExists(source) {
+		return false, fmt.Errorf("file does not exist %s", source)
+	}
+
+	return true, nil
+}
+
+func convertToDestPath(source, route string) string {
+	dest := strings.Replace(source, templateFolder, "", -1)
+	dest = strings.Replace(dest, ".tmpl", "", -1)
+	dest = strings.Replace(dest, "_route_", "/"+route+"/", -1)
+	dest = strings.Replace(dest, "__route", "_+route", -1)
+	dest = strings.Replace(dest, "route.go", route+".go", -1)
+	dest = strings.Replace(dest, "route.py", route+".py", -1)
+	dest = strings.Replace(dest, "route.ts", route+".ts", -1)
+	dest = strings.Replace(dest, "_", "/", -1)
+	dest = strings.Replace(dest, "+", "_", -1)
+	return dest
+}
+
+var templateFolder = "src/dev_tools/goMaker/templates"
+
 // goCodePerRoute is the list of files to process per route
 var goCodePerRoute = []string{
-	"templates/sdk_go_route.go.tmpl",
-	// "templates/sdk_python_src__route.py.tmpl",
-	// "templates/sdk_typescript_src_paths_route.ts.tmpl",
-	"templates/src_apps_chifra_cmd_route.go.tmpl",
-	"templates/src_apps_chifra_internal_route_output.go.tmpl",
-	"templates/src_apps_chifra_internal_route_options.go.tmpl",
-	"templates/src_apps_chifra_sdk_route.go.tmpl",
+	"sdk_go_route.go.tmpl",
+	// // // - "sdk_python_src__route.py.tmpl",
+	// // // - "sdk_typescript_src_paths_route.ts.tmpl",
+	// "src_apps_chifra_cmd_route.go.tmpl",
+	"src_apps_chifra_internal_route_output.go.tmpl",
+	// "src_apps_chifra_internal_route_options.go.tmpl",
+	"src_apps_chifra_sdk_route.go.tmpl",
 }
 
 // goCodePerCodeBase is the list of files to process per code base
 var goCodePerCodeBase = []string{
-	"templates/src_apps_chifra_cmd_helpfile.go.tmpl",
-	"templates/src_apps_chifra_pkg_version_string.go.tmpl",
+	"src_apps_chifra_cmd_helpfile.go.tmpl",
+	"src_apps_chifra_pkg_version_string.go.tmpl",
 }
