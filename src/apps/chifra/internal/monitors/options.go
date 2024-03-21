@@ -48,6 +48,7 @@ type MonitorsOptions struct {
 
 var defaultMonitorsOptions = MonitorsOptions{
 	BatchSize: 8,
+	Sleep:     14,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -87,7 +88,6 @@ func MonitorsFinishParseInternal(w io.Writer, values url.Values) *MonitorsOption
 	copy := defaultMonitorsOptions
 	opts := &copy
 	opts.BatchSize = 8
-	opts.RunCount = 0
 	opts.Sleep = 14
 	for key, value := range values {
 		switch key {

@@ -4,14 +4,13 @@ import (
 	"encoding/json"
 	"sort"
 	"strings"
-	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 type CodeBase struct {
-	Commands  []Command                     `json:"commands"`
-	templates map[string]*template.Template `json:"-"`
+	Commands  []Command   `json:"commands"`
+	templates TemplateMap `json:"-"`
 }
 
 func (c *CodeBase) String() string {

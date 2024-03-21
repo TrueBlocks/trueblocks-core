@@ -12,6 +12,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
+// ProcessFile processes a single file, applying the template to it and
+// writing the result to the destination.
 func (cb *CodeBase) ProcessFile(source string) error {
 	cwd, _ := os.Getwd()
 	source = filepath.Join(cwd, templateFolder, source)
@@ -28,6 +30,9 @@ func (cb *CodeBase) ProcessFile(source string) error {
 	return codeWriter.WriteCode(dest, result)
 }
 
+// executeTemplate executes the template with the given name and returns
+// the result. It stores the parsed template in the templates map to avoid
+// parsing it more than once.
 func (cb *CodeBase) executeTemplate(name, tmplCode string) string {
 	if cb.templates == nil {
 		cb.templates = make(map[string]*template.Template)

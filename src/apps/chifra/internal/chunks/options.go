@@ -110,10 +110,8 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 	copy := defaultChunksOptions
 	opts := &copy
 	opts.Truncate = utils.NOPOS
-	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	opts.MaxAddrs = utils.NOPOS
-	opts.Sleep = 0.0
 	for key, value := range values {
 		switch key {
 		case "mode":

@@ -2,62 +2,40 @@ package types
 
 import (
 	"strings"
-	"text/template"
 )
 
 type CmdLineOption struct {
+	Num            string      `json:"num"`
+	Group          string      `json:"group"`
+	Tags           string      `json:"tags"`
+	ApiRoute       string      `json:"api_route"`
+	Tool           string      `json:"tool"`
+	LongName       string      `json:"longName"`
+	HotKey         string      `json:"hotKey"`
+	DefVal         string      `json:"def_val"`
+	IsRequired     bool        `json:"is_required"`
+	IsCustomizable bool        `json:"is_customizable"`
+	IsVisible      bool        `json:"is_visible"`
+	IsVisibleDocs  bool        `json:"is_visible_docs"`
+	Generate       string      `json:"generate"`
+	OptionType     string      `json:"option_type"`
+	DataType       string      `json:"data_type"`
+	Description    string      `json:"description"`
+	IsArray        bool        `json:"is_array"`
+	IsEnum         bool        `json:"is_enum"`
+	Enums          []string    `json:"enums"`
+	DefaultEnum    string      `json:"default_enum"`
+	GoName         string      `json:"go_name"`
+	GoType         string      `json:"go_type"`
+	GoSdkName      string      `json:"go_sdk_name"`
+	GoSdkType      string      `json:"go_sdk_type"`
+	GoOptionsType  string      `json:"go_options_type"`
+	templates      TemplateMap `json:"-"`
 	cmd            *Command
-	Num            string   `json:"num"`
-	Group          string   `json:"group"`
-	Tags           string   `json:"tags"`
-	ApiRoute       string   `json:"api_route"`
-	Tool           string   `json:"tool"`
-	LongName       string   `json:"longName"`
-	HotKey         string   `json:"hotKey"`
-	DefVal         string   `json:"def_val"`
-	IsRequired     bool     `json:"is_required"`
-	IsCustomizable bool     `json:"is_customizable"`
-	IsVisible      bool     `json:"is_visible"`
-	IsVisibleDocs  bool     `json:"is_visible_docs"`
-	Generate       string   `json:"generate"`
-	OptionType     string   `json:"option_type"`
-	DataType       string   `json:"data_type"`
-	Description    string   `json:"description"`
-	IsArray        bool     `json:"is_array"`
-	IsEnum1        bool     `json:"is_enum"`
-	Enums          []string `json:"enums"`
-	DefaultEnum    string   `json:"default_enum"`
-	GoName1        string   `json:"go_name"`
-	GoType         string   `json:"go_type"`
-	GoSdkName      string   `json:"go_sdk_name"`
-	GoSdkType      string   `json:"go_sdk_type"`
-	GoOptionsType  string   `json:"go_options_type"`
-	templates      map[string]*template.Template
 }
 
-func (op CmdLineOption) Validate() bool { return len(op.ApiRoute) > 0 }
-
-func ReadCmdOption(op *CmdLineOption, data *any) (bool, error) {
-	op.Description = strings.ReplaceAll(op.Description, "&#44;", ",")
-	return true, nil
-}
-
-func snakeCase(s string) string {
-	result := ""
-	toUpper := false
-	for _, c := range s {
-		if c == '_' {
-			toUpper = true
-			continue
-		}
-		if toUpper {
-			result += strings.ToUpper(string(c))
-			toUpper = false
-		} else {
-			result += string(c)
-		}
-	}
-	return result
+func (op CmdLineOption) Validate() bool {
+	return len(op.ApiRoute) > 0
 }
 
 func (op *CmdLineOption) Hidden() bool {
@@ -90,7 +68,7 @@ func (op *CmdLineOption) CobraDescription() string {
 	if op.Hidden() {
 		d += " (hidden)"
 	}
-	if op.IsEnum1 {
+	if op.IsEnum {
 		e := "One of "
 		if op.IsArray {
 			e = "One or more of "
@@ -104,7 +82,7 @@ func (op *CmdLineOption) CobraDescription() string {
 func (op *CmdLineOption) SetOptions() string {
 	ret := ""
 	if op.OptionType != "positional" && op.OptionType != "alias" {
-		tmpl := `[{ROUTE}]Cmd.Flags().{{.CobraType}}VarP(&[{ROUTE}]Pkg.GetOptions().{{.GoName1}}, "{{.LongName}}", "{{.HotKey}}", {{.Default}}, {{.CobraDescription}})`
+		tmpl := `[{ROUTE}]Cmd.Flags().{{.CobraType}}VarP(&[{ROUTE}]Pkg.GetOptions().{{.GoName}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, {{.CobraDescription}})`
 		ret = op.executeTemplate("setOptions", tmpl)
 	}
 	ret = strings.ReplaceAll(ret, "[{ROUTE}]", op.ApiRoute)
@@ -166,7 +144,7 @@ func (op *CmdLineOption) toGoSdkName() string {
 }
 
 func (op *CmdLineOption) Enum1() string {
-	if !op.IsEnum1 {
+	if !op.IsEnum {
 		return ""
 	}
 	tmpl := enum1Tmpl
@@ -174,7 +152,7 @@ func (op *CmdLineOption) Enum1() string {
 }
 
 func (op *CmdLineOption) Enum2() string {
-	if !op.IsEnum1 {
+	if !op.IsEnum {
 		return ""
 	}
 	tmpl := enum2Tmpl
@@ -255,6 +233,10 @@ func (op *CmdLineOption) PyHotKey() string {
 	return "-" + op.HotKey
 }
 
+func (op *CmdLineOption) CmdDefault() string {
+	return strings.Replace(op.Default(), "utils.NOPOS", "0", -1)
+}
+
 func (op *CmdLineOption) Default() string {
 	if op.IsArray || strings.HasPrefix(op.DataType, "list") {
 		return "nil"
@@ -281,7 +263,7 @@ func (op *CmdLineOption) Default() string {
 }
 
 func (op *CmdLineOption) EnumName() string {
-	return strings.ToUpper(op.ApiRoute[0:1]) + op.ApiRoute[1:] + op.GoName1
+	return strings.ToUpper(op.ApiRoute[0:1]) + op.ApiRoute[1:] + op.GoName
 }
 
 func (op *CmdLineOption) EnumTag() string {
@@ -405,7 +387,7 @@ func (op *CmdLineOption) EnumCases() string {
 var enum1Tmpl = `	if key == "{{.LongName}}" {
 		var err error
 		values := strings.Split(value, ",")
-		if opts.{{.GoName1}}, err = enumFrom{{.EnumName}}(values); err != nil {
+		if opts.{{.GoName}}, err = enumFrom{{.EnumName}}(values); err != nil {
 			return false, err
 		} else {
 			found = true
@@ -457,27 +439,27 @@ func enumFrom{{.EnumName}}(values []string) ({{.EnumName}}, error) {
 `
 
 func (op *CmdLineOption) IsConfigurableAddr() bool {
-	return op.GoName1 == "Publisher"
+	return op.GoName == "Publisher"
 }
 
 func (op *CmdLineOption) IsSpecialAddr() bool {
-	return op.GoName1 == "ProxyFor" || op.IsConfigurableAddr() || op.GoName1 == "Autoname"
+	return op.GoName == "ProxyFor" || op.IsConfigurableAddr() || op.GoName == "Autoname"
 }
 
 func (op *CmdLineOption) EnsConvert() string {
 	ret := ""
 
 	if op.DataType == "<address>" {
-		t1 := "	opts.{{.GoName1}}, _ = opts.Conn.GetEnsAddress(opts.{{.GoName1}})"
+		t1 := "	opts.{{.GoName}}, _ = opts.Conn.GetEnsAddress(opts.{{.GoName}})"
 		if op.IsConfigurableAddr() {
-			t1 = "	opts.{{.GoName1}}, _ = opts.Conn.GetEnsAddress(config.Get{{.GoName1}}(opts.{{.GoName1}}))"
+			t1 = "	opts.{{.GoName}}, _ = opts.Conn.GetEnsAddress(config.Get{{.GoName}}(opts.{{.GoName}}))"
 		}
 		ret = op.executeTemplate("ens", t1)
 		if op.IsSpecialAddr() {
-			ret += "\n" + op.executeTemplate("ens2", "	opts.{{.GoName1}}Addr = base.HexToAddress(opts.{{.GoName1}})")
+			ret += "\n" + op.executeTemplate("ens2", "	opts.{{.GoName}}Addr = base.HexToAddress(opts.{{.GoName}})")
 		}
 	} else if op.DataType == "list<addr>" {
-		t1 := "	opts.{{.GoName1}}, _ = opts.Conn.GetEnsAddresses(opts.{{.GoName1}})"
+		t1 := "	opts.{{.GoName}}, _ = opts.Conn.GetEnsAddresses(opts.{{.GoName}})"
 		ret = op.executeTemplate("ensSlice", t1)
 	}
 

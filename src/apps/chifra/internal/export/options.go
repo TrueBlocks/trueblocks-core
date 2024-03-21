@@ -123,9 +123,7 @@ func exportFinishParseApi(w http.ResponseWriter, r *http.Request) *ExportOptions
 func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 	copy := defaultExportOptions
 	opts := &copy
-	opts.FirstRecord = 0
 	opts.MaxRecords = 250
-	opts.FirstBlock = 0
 	opts.LastBlock = utils.NOPOS
 	for key, value := range values {
 		switch key {

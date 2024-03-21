@@ -183,7 +183,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,true,gocmd,switch,<boolean>,export a list of the 'special' blocks
 13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,gocmd,switch,<boolean>,display or process timestamps
 13968,tools,ChainData,when,whenBlock,count,U,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; returns the number of timestamps in the cache
-13970,tools,ChainData,when,whenBlock,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,with --timestamps only&#44; truncates the timestamp file at this block
+13970,tools,ChainData,when,whenBlock,truncate,n,NOPOS,false,false,false,false,gocmd,flag,<blknum>,with --timestamps only&#44; truncates the timestamp file at this block
 13972,tools,ChainData,when,whenBlock,repair,r,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; repairs block(s) in the block range by re-querying from the chain
 13974,tools,ChainData,when,whenBlock,check,c,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; checks the validity of the timestamp data
 13976,tools,ChainData,when,whenBlock,update,u,,false,false,true,true,gocmd,switch,<boolean>,with --timestamps only&#44; bring the timestamp database forward to the latest block
@@ -255,7 +255,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10860,apps,Admin,config,config,,,,false,false,true,true,--,description,,Report on and edit the configuration of the TrueBlocks system.
 
 20810,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,gocmd,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,the (optional) name of the binary cache to report on&#44; terse otherwise
-20812,apps,Admin,status,cacheStatus,diagnose,d,0,false,false,true,true,gocmd,switch,<boolean>,same as the default but with additional diagnostics
+20812,apps,Admin,status,cacheStatus,diagnose,d,,false,false,true,true,gocmd,switch,<boolean>,same as the default but with additional diagnostics
 20815,apps,Admin,status,cacheStatus,first_record,c,0,false,false,true,true,gocmd,flag,<uint64>,the first record to process
 20820,apps,Admin,status,cacheStatus,max_records,e,10000,false,false,true,true,gocmd,flag,<uint64>,the maximum number of records to process
 20820,apps,Admin,status,cacheStatus,chains,a,,false,false,true,true,gocmd,switch,<boolean>,include a list of chain configurations in the output
@@ -269,7 +269,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 31935,apps,Admin,chunks,chunkMan,pin,i,,false,false,true,true,gocmd,switch,<boolean>,pin the manifest or each index chunk and bloom
 31940,apps,Admin,chunks,chunkMan,publish,p,,false,false,true,true,gocmd,switch,<boolean>,publish the manifest to the Unchained Index smart contract
 31942,apps,Admin,chunks,chunkMan,publisher,P,,false,false,false,false,gocmd,flag,<address>,for some query options&#44; the publisher of the index
-31925,apps,Admin,chunks,chunkMan,truncate,n,,false,false,false,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
+31925,apps,Admin,chunks,chunkMan,truncate,n,NOPOS,false,false,false,false,gocmd,flag,<blknum>,truncate the entire index at this block (requires a block identifier)
 31940,apps,Admin,chunks,chunkMan,remote,r,,false,false,true,true,gocmd,switch,<boolean>,prior to processing&#44; retrieve the manifest from the Unchained Index smart contract
 31942,apps,Admin,chunks,chunkMan,belongs,b,,false,false,true,true,gocmd,flag,list<addr>,in index mode only&#44; checks the address(es) for inclusion in the given index chunk
 31944,apps,Admin,chunks,chunkMan,diff,f,,false,false,false,false,gocmd,switch,<boolean>,compare two index portions (see notes)

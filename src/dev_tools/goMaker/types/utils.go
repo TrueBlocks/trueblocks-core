@@ -3,9 +3,12 @@ package types
 import (
 	"fmt"
 	"strings"
+	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
+
+type TemplateMap map[string]*template.Template
 
 func shouldProcess(source, route string) (bool, error) {
 	if strings.Contains(source, "sdk_") {
@@ -35,3 +38,21 @@ func convertToDestPath(source, route string) string {
 }
 
 var templateFolder = "src/dev_tools/goMaker/templates"
+
+func snakeCase(s string) string {
+	result := ""
+	toUpper := false
+	for _, c := range s {
+		if c == '_' {
+			toUpper = true
+			continue
+		}
+		if toUpper {
+			result += strings.ToUpper(string(c))
+			toUpper = false
+		} else {
+			result += string(c)
+		}
+	}
+	return result
+}

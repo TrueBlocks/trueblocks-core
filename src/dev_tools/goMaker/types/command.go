@@ -2,7 +2,6 @@ package types
 
 import (
 	"strings"
-	"text/template"
 
 	"github.com/bykof/gostradamus"
 	"golang.org/x/text/cases"
@@ -20,7 +19,7 @@ type Command struct {
 	Hidden      []string        `json:"hidden"`
 	Proper      string          `json:"proper"`
 	Lower       string          `json:"lower"`
-	templates   map[string]*template.Template
+	templates   TemplateMap     `json:"-"`
 }
 
 func (c *Command) SdkFields() string {
@@ -35,7 +34,7 @@ func (c *Command) SdkFields() string {
 
 func (c *Command) HasEnums() bool {
 	for _, op := range c.Options {
-		if op.IsEnum1 {
+		if op.IsEnum {
 			return true
 		}
 	}
@@ -87,7 +86,7 @@ func (c *Command) clean() {
 	aliases := []string{}
 	hiddens := []string{}
 	for _, op := range c.Options {
-		op.GoName1 = op.toGoName()
+		op.GoName = op.toGoName()
 		op.GoType = op.toGoType()
 		op.GoSdkName = op.toGoSdkName()
 		op.GoSdkType = op.toGoSdkType()
@@ -105,7 +104,7 @@ func (c *Command) clean() {
 				op.Enums[i] = e
 			}
 			op.IsArray = strings.Contains(op.DataType, "list")
-			op.IsEnum1 = true
+			op.IsEnum = true
 			if strings.Contains(op.DataType, "list<enum") {
 				op.DataType = "list<enum>"
 			} else {
@@ -227,7 +226,7 @@ func (c *Command) Positionals() []string {
 				req = " (required)"
 			}
 			item := "\n  " + op.LongName + " - " + op.Description + req
-			if op.IsEnum1 {
+			if op.IsEnum {
 				e := "\n\tOne of "
 				if op.IsArray {
 					e = "\n\tOne or more of "
@@ -274,7 +273,7 @@ func (op *CmdLineOption) OptFields() string {
 	if strings.Contains(op.toGoName(), "Settings.") {
 		return ""
 	}
-	ret := op.executeTemplate("optFields", `	{{.GoName1}} {{.GoOptionsType}} {{.JsonTag}} // {{.DescrCaps}}`)
+	ret := op.executeTemplate("optFields", `	{{.GoName}} {{.GoOptionsType}} {{.JsonTag}} // {{.DescrCaps}}`)
 	if op.LongName == "blocks" {
 		ret += "\n" + op.executeTemplate("optFields2", `	{{.GoSdkName}} []identifiers.Identifier`)
 		ret += "`json:\"blockIds,omitempty\"`   // Block identifiers"
@@ -312,9 +311,9 @@ func (op *CmdLineOption) GoDefs() string {
 		return ""
 	}
 	if op.DataType == "<string>" || strings.Contains(op.DataType, "enum") {
-		return op.executeTemplate("goDefs2", `	{{.GoName1}}: "{{.DefVal}}",`)
+		return op.executeTemplate("goDefs2", `	{{.GoName}}: "{{.DefVal}}",`)
 	}
-	return op.executeTemplate("goDefs", `	{{.GoName1}}: {{.DefVal}},`)
+	return op.executeTemplate("goDefs", `	{{.GoName}}: {{.DefVal}},`)
 }
 
 func (c *Command) GoDefs() string {
@@ -334,18 +333,18 @@ func (c *Command) GoDefs() string {
 func (op *CmdLineOption) TestLog() string {
 	tmpl := `	logger.TestLog(`
 	if op.DataType == "<double>" {
-		tmpl += `opts.{{.GoName1}} != float64({{.Default}})`
+		tmpl += `opts.{{.GoName}} != float64({{.Default}})`
 	} else if strings.HasPrefix(op.DataType, "list") ||
 		strings.HasPrefix(op.DataType, "enum") ||
 		op.DataType == "<string>" ||
 		op.DataType == "<address>" {
-		tmpl += `len(opts.{{.GoName1}}) > 0`
+		tmpl += `len(opts.{{.GoName}}) > 0`
 	} else if op.DataType == "<boolean>" {
-		tmpl += `opts.{{.GoName1}}`
+		tmpl += `opts.{{.GoName}}`
 	} else {
-		tmpl += `opts.{{.GoName1}} != {{.Default}}`
+		tmpl += `opts.{{.GoName}} != {{.Default}}`
 	}
-	tmpl += `, "{{.GoName1}}: ", opts.{{.GoName1}})`
+	tmpl += `, "{{.GoName}}: ", opts.{{.GoName}})`
 	return op.executeTemplate("testLogs", tmpl)
 }
 
@@ -362,9 +361,9 @@ func (op *CmdLineOption) DefaultApi() string {
 		return ""
 	}
 	if op.DataType == "<string>" {
-		return op.executeTemplate("defaultApi2", `	opts.{{.GoName1}} = "{{.DefVal}}"`)
+		return op.executeTemplate("defaultApi2", `	opts.{{.GoName}} = "{{.DefVal}}"`)
 	}
-	return op.executeTemplate("defaultApi", `	opts.{{.GoName1}} = {{.DefVal}}`)
+	return op.executeTemplate("defaultApi", `	opts.{{.GoName}} = {{.DefVal}}`)
 }
 
 func (c *Command) DefaultsApi() string {
@@ -387,20 +386,20 @@ func (op *CmdLineOption) RequestOpt() string {
 		tmpl += `
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
-				opts.{{.GoName1}} = append(opts.{{.GoName1}}, s...)
+				opts.{{.GoName}} = append(opts.{{.GoName}}, s...)
 			}`
 	} else if op.DataType == "<boolean>" {
 		tmpl += `
-			opts.{{.GoName1}} = true`
+			opts.{{.GoName}} = true`
 	} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
 		tmpl += `
-			opts.{{.GoName1}} = globals.ToUint64(value[0])`
+			opts.{{.GoName}} = globals.ToUint64(value[0])`
 	} else if op.DataType == "<double>" {
 		tmpl += `
-			opts.{{.GoName1}} = globals.ToFloat64(value[0])`
+			opts.{{.GoName}} = globals.ToFloat64(value[0])`
 	} else {
 		tmpl += `
-			opts.{{.GoName1}} = value[0]`
+			opts.{{.GoName}} = value[0]`
 	}
 	return op.executeTemplate("requestOpts", tmpl)
 }
@@ -464,4 +463,15 @@ func (c *Command) EnsConvert2() string {
 		return ""
 	}
 	return strings.Join(ret, "\n") + "\n"
+}
+
+func (c *Command) PyOptions() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if op.OptionType != "positional" && !op.Hidden() {
+			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			ret = append(ret, op.executeTemplate("pyoption", code))
+		}
+	}
+	return strings.Join(ret, "\n")
 }

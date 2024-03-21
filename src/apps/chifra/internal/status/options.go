@@ -73,7 +73,6 @@ func statusFinishParseApi(w http.ResponseWriter, r *http.Request) *StatusOptions
 func StatusFinishParseInternal(w io.Writer, values url.Values) *StatusOptions {
 	copy := defaultStatusOptions
 	opts := &copy
-	opts.FirstRecord = 0
 	opts.MaxRecords = 10000
 	for key, value := range values {
 		switch key {

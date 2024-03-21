@@ -49,6 +49,7 @@ type SlurpOptions struct {
 var defaultSlurpOptions = SlurpOptions{
 	Source:  "etherscan",
 	PerPage: 3000,
+	Sleep:   .25,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -85,7 +86,7 @@ func slurpFinishParseApi(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 func SlurpFinishParseInternal(w io.Writer, values url.Values) *SlurpOptions {
 	copy := defaultSlurpOptions
 	opts := &copy
-	opts.Page = 0
+	opts.Source = "etherscan"
 	opts.PerPage = 3000
 	opts.Sleep = .25
 	for key, value := range values {

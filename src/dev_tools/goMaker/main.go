@@ -64,7 +64,7 @@ var goCodePerRoute = []string{
 	"sdk_go_route.go.tmpl",
 	// // // - "sdk_python_src__route.py.tmpl",
 	// // // - "sdk_typescript_src_paths_route.ts.tmpl",
-	// "src_apps_chifra_cmd_route.go.tmpl",
+	"src_apps_chifra_cmd_route.go.tmpl",
 	"src_apps_chifra_internal_route_output.go.tmpl",
 	// "src_apps_chifra_internal_route_options.go.tmpl",
 	"src_apps_chifra_sdk_route.go.tmpl",

@@ -98,8 +98,6 @@ func BlocksFinishParseInternal(w io.Writer, values url.Values) *BlocksOptions {
 	copy := defaultBlocksOptions
 	opts := &copy
 	opts.BigRange = 500
-	opts.List = 0
-	opts.ListCount = 0
 	for key, value := range values {
 		switch key {
 		case "blocks":

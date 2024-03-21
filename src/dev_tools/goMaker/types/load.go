@@ -2,8 +2,12 @@ package types
 
 import (
 	"sort"
+	"strings"
 )
 
+// LoadCommands loads the two csv files and returns the codebase which
+// contains all the commands (each with its own options and endpoint).
+// This will also eventually carry the data types.
 func LoadCommands(thePath string) (CodeBase, error) {
 	theMap := make(map[string]Command)
 
@@ -46,4 +50,14 @@ func LoadCommands(thePath string) (CodeBase, error) {
 	})
 
 	return cb, nil
+}
+
+func ReadCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {
+	cmd.Description = strings.ReplaceAll(cmd.Description, "&#44;", ",")
+	return true, nil
+}
+
+func ReadCmdOption(op *CmdLineOption, data *any) (bool, error) {
+	op.Description = strings.ReplaceAll(op.Description, "&#44;", ",")
+	return true, nil
 }

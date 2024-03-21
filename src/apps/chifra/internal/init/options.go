@@ -71,8 +71,6 @@ func initFinishParseApi(w http.ResponseWriter, r *http.Request) *InitOptions {
 func InitFinishParseInternal(w io.Writer, values url.Values) *InitOptions {
 	copy := defaultInitOptions
 	opts := &copy
-	opts.FirstBlock = 0
-	opts.Sleep = 0.0
 	for key, value := range values {
 		switch key {
 		case "all":

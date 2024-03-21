@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
@@ -13,6 +12,8 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
+// ProcessFile processes a single file, applying the template to it and
+// writing the result to the destination.
 func (c *Command) ProcessFile(source string) error {
 	cwd, _ := os.Getwd()
 	source = filepath.Join(cwd, templateFolder, source)
@@ -29,6 +30,9 @@ func (c *Command) ProcessFile(source string) error {
 	return codeWriter.WriteCode(dest, result)
 }
 
+// executeTemplate executes the template with the given name and returns
+// the result. It stores the parsed template in the templates map to avoid
+// parsing it more than once.
 func (c *Command) executeTemplate(name, tmplCode string) string {
 	if c.templates == nil {
 		c.templates = make(map[string]*template.Template)
@@ -47,15 +51,4 @@ func (c *Command) executeTemplate(name, tmplCode string) string {
 		log.Fatalf("executing template failed: %v", err)
 	}
 	return tplBuffer.String()
-}
-
-func (c *Command) PyOptions() string {
-	ret := []string{}
-	for _, op := range c.Options {
-		if op.OptionType != "positional" && !op.Hidden() {
-			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
-			ret = append(ret, op.executeTemplate("pyoption", code))
-		}
-	}
-	return strings.Join(ret, "\n")
 }

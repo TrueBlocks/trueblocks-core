@@ -74,6 +74,9 @@ func daemonFinishParseApi(w http.ResponseWriter, r *http.Request) *DaemonOptions
 func DaemonFinishParseInternal(w io.Writer, values url.Values) *DaemonOptions {
 	copy := defaultDaemonOptions
 	opts := &copy
+	opts.Url = "localhost:8080"
+	opts.Api = "on"
+	opts.Port = ":8080"
 	for key, value := range values {
 		switch key {
 		case "url":
