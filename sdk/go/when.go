@@ -85,7 +85,6 @@ func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *rpc.MetaData, error
 	if err := opts.When(&stateBuf); err != nil {
 		logger.Fatal(err)
 	}
-	// fmt.Println(stateBuf.String())
 
 	type result struct {
 		Data []types.SimpleNamedBlock `json:"data"`
@@ -101,4 +100,3 @@ func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *rpc.MetaData, error
 }
 
 // EXISTING_CODE
-

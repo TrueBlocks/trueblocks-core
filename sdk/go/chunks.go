@@ -163,5 +163,6 @@ func enumFromChunksMode(values []string) (ChunksMode, error) {
 
 	return result, nil
 }
+
 // EXISTING_CODE
 // EXISTING_CODE

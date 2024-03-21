@@ -254,4 +254,3 @@ func (s *SimpleState) FinishUnmarshal() {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

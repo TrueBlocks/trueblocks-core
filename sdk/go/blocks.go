@@ -170,4 +170,3 @@ func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *rpc.MetaData, 
 }
 
 // EXISTING_CODE
-

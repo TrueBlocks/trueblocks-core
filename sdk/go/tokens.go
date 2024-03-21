@@ -152,5 +152,6 @@ func enumFromTokensParts(values []string) (TokensParts, error) {
 
 	return result, nil
 }
+
 // EXISTING_CODE
 // EXISTING_CODE

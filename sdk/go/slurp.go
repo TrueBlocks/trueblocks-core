@@ -226,5 +226,6 @@ func enumFromSlurpSource(values []string) (SlurpSource, error) {
 
 	return result, nil
 }
+
 // EXISTING_CODE
 // EXISTING_CODE

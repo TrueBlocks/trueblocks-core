@@ -108,4 +108,3 @@ func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
 }
 
 // EXISTING_CODE
-

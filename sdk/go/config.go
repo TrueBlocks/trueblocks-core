@@ -124,5 +124,6 @@ func enumFromConfigMode(values []string) (ConfigMode, error) {
 
 	return result, nil
 }
+
 // EXISTING_CODE
 // EXISTING_CODE
