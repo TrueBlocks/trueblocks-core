@@ -68,8 +68,8 @@ func init() {
 	exploreCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	exploreCmd.Flags().MarkHidden("verbose")
-	exploreCmd.Flags().MarkHidden("fmt")
+	_ = exploreCmd.Flags().MarkHidden("verbose")
+	_ = exploreCmd.Flags().MarkHidden("fmt")
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(exploreCmd)

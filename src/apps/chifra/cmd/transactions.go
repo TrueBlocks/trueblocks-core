@@ -74,8 +74,8 @@ One of [ from | to ]`)
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().CacheTraces, "cache_traces", "", false, "force the transaction's traces into the cache (hidden)")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.GetOptions().Seed, "seed", "S", false, "find the source of the funds sent to the receiver (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		transactionsCmd.Flags().MarkHidden("cache_traces")
-		transactionsCmd.Flags().MarkHidden("seed")
+		_ = transactionsCmd.Flags().MarkHidden("cache_traces")
+		_ = transactionsCmd.Flags().MarkHidden("seed")
 	}
 	globals.InitGlobals("transactions", transactionsCmd, &transactionsPkg.GetOptions().Globals, capabilities)
 

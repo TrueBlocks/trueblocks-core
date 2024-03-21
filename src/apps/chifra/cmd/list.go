@@ -70,7 +70,7 @@ func init() {
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().FirstBlock, "first_block", "F", 0, "first block to export (inclusive, ignored when freshening)")
 	listCmd.Flags().Uint64VarP(&listPkg.GetOptions().LastBlock, "last_block", "L", 0, "last block to export (inclusive, ignored when freshening)")
 	if os.Getenv("TEST_MODE") != "true" {
-		listCmd.Flags().MarkHidden("publisher")
+		_ = listCmd.Flags().MarkHidden("publisher")
 	}
 	globals.InitGlobals("list", listCmd, &listPkg.GetOptions().Globals, capabilities)
 

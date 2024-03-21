@@ -75,8 +75,8 @@ One of [ etherscan | key ]`)
 	slurpCmd.Flags().Uint64VarP(&slurpPkg.GetOptions().PerPage, "per_page", "P", 3000, "the number of records to request on each page (hidden)")
 	slurpCmd.Flags().Float64VarP(&slurpPkg.GetOptions().Sleep, "sleep", "s", .25, "seconds to sleep between requests")
 	if os.Getenv("TEST_MODE") != "true" {
-		slurpCmd.Flags().MarkHidden("page")
-		slurpCmd.Flags().MarkHidden("per_page")
+		_ = slurpCmd.Flags().MarkHidden("page")
+		_ = slurpCmd.Flags().MarkHidden("per_page")
 	}
 	globals.InitGlobals("slurp", slurpCmd, &slurpPkg.GetOptions().Globals, capabilities)
 

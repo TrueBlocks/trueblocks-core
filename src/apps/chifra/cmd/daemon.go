@@ -67,9 +67,9 @@ One of [ off | blooms | index ]`)
 	daemonCmd.Flags().BoolVarP(&daemonPkg.GetOptions().Grpc, "grpc", "g", false, "run gRPC server to serve names")
 	daemonCmd.Flags().StringVarP(&daemonPkg.GetOptions().Port, "port", "p", ":8080", "deprecated please use --url flag instead")
 	if os.Getenv("TEST_MODE") != "true" {
-		daemonCmd.Flags().MarkHidden("api")
-		daemonCmd.Flags().MarkHidden("scrape")
-		daemonCmd.Flags().MarkHidden("monitor")
+		_ = daemonCmd.Flags().MarkHidden("api")
+		_ = daemonCmd.Flags().MarkHidden("scrape")
+		_ = daemonCmd.Flags().MarkHidden("monitor")
 	}
 	globals.InitGlobals("daemon", daemonCmd, &daemonPkg.GetOptions().Globals, capabilities)
 
@@ -77,7 +77,7 @@ One of [ off | blooms | index ]`)
 	daemonCmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE
-	daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated. Please use --url instead.") //cmd is the parent/top level command
+	_ = daemonCmd.Flags().MarkDeprecated("port", "The --port option has been deprecated. Please use --url instead.") //cmd is the parent/top level command
 	// EXISTING_CODE
 
 	chifraCmd.AddCommand(daemonCmd)

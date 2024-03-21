@@ -75,11 +75,11 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Undelete, "undelete", "", false, "undelete a previously deleted name (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Remove, "remove", "", false, "remove a previously deleted name (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
-		namesCmd.Flags().MarkHidden("create")
-		namesCmd.Flags().MarkHidden("update")
-		namesCmd.Flags().MarkHidden("delete")
-		namesCmd.Flags().MarkHidden("undelete")
-		namesCmd.Flags().MarkHidden("remove")
+		_ = namesCmd.Flags().MarkHidden("create")
+		_ = namesCmd.Flags().MarkHidden("update")
+		_ = namesCmd.Flags().MarkHidden("delete")
+		_ = namesCmd.Flags().MarkHidden("undelete")
+		_ = namesCmd.Flags().MarkHidden("remove")
 	}
 	globals.InitGlobals("names", namesCmd, &namesPkg.GetOptions().Globals, capabilities)
 

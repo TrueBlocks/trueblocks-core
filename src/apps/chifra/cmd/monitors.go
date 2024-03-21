@@ -74,7 +74,7 @@ func init() {
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.GetOptions().RunCount, "run_count", "u", 0, "available with --watch option only, run the monitor this many times, then quit (hidden)")
 	monitorsCmd.Flags().Float64VarP(&monitorsPkg.GetOptions().Sleep, "sleep", "s", 14, "available with --watch option only, the number of seconds to sleep between runs")
 	if os.Getenv("TEST_MODE") != "true" {
-		monitorsCmd.Flags().MarkHidden("run_count")
+		_ = monitorsCmd.Flags().MarkHidden("run_count")
 	}
 	globals.InitGlobals("monitors", monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
 

@@ -69,7 +69,7 @@ func init() {
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, "with --timestamps only, bring the timestamp database forward to the latest block")
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "d", false, "with --timestamps --check only, verifies timestamps from on chain (slow)")
 	if os.Getenv("TEST_MODE") != "true" {
-		whenCmd.Flags().MarkHidden("truncate")
+		_ = whenCmd.Flags().MarkHidden("truncate")
 	}
 	globals.InitGlobals("when", whenCmd, &whenPkg.GetOptions().Globals, capabilities)
 

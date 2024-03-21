@@ -149,7 +149,7 @@ func (c *Command) HiddenStr() string {
 	}
 	hiddens := []string{}
 	for _, hidden := range c.Hidden {
-		h := "\t" + c.Route + "Cmd.Flags().MarkHidden(\"" + hidden + "\")"
+		h := "\t_ = " + c.Route + "Cmd.Flags().MarkHidden(\"" + hidden + "\")"
 		hiddens = append(hiddens, "	"+h)
 	}
 	ret := `	if os.Getenv("TEST_MODE") != "true" {
