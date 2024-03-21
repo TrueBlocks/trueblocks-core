@@ -1,4 +1,4 @@
-package main
+package types
 
 import (
 	"bytes"
@@ -13,7 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-func (c *Command) processFile(source string) error {
+func (c *Command) ProcessFile(source string) error {
 	cwd, _ := os.Getwd()
 	source = filepath.Join(cwd, templateFolder, source)
 	if ok, err := shouldProcess(source, c.Route); err != nil {

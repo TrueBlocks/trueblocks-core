@@ -1,4 +1,4 @@
-package main
+package types
 
 // handle_gocmds_docfile
 // verifyGoEnumValidators
