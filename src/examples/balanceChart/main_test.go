@@ -2,6 +2,6 @@ package main
 
 import "testing"
 
-func TestBal(t *testing.T) {
+func TestMain(t *testing.T) {
 	main()
 }

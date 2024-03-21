@@ -12,7 +12,7 @@ import (
 	"gonum.org/v1/plot/vg"
 )
 
-func LineChart(data []types.SimpleState, filename string) {
+func LineChart(data []types.SimpleState, title string, filename string) {
 	// Manually define a color palette
 	colorPalette := []color.Color{
 		color.RGBA{R: 255, G: 0, B: 0, A: 255},   // Red
@@ -34,7 +34,7 @@ func LineChart(data []types.SimpleState, filename string) {
 		log.Fatalf("Error creating plot: %v", err)
 	}
 
-	applyCustomStyling(p)
+	applyCustomStyling(p, title)
 
 	colorIndex := 0
 

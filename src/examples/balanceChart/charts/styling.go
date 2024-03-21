@@ -7,8 +7,8 @@ import (
 	"gonum.org/v1/plot/vg"
 )
 
-func applyCustomStyling(p *plot.Plot) {
-	p.Title.Text = "Block Number vs. Balance"
+func applyCustomStyling(p *plot.Plot, title string) {
+	p.Title.Text = title
 	p.Title.Font.Size = vg.Points(25)
 	p.Title.Color = color.RGBA{R: 255, G: 255, B: 255, A: 255}
 	p.X.Label.Color = color.RGBA{R: 255, G: 255, B: 255, A: 255}

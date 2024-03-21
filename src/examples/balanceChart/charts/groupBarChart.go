@@ -13,7 +13,7 @@ import (
 	"gonum.org/v1/plot/vg"
 )
 
-func GroupedBarChart(data []types.SimpleState, filename string) {
+func GroupedBarChart(data []types.SimpleState, title string, filename string) {
 	// Manually define a color palette
 	colorPalette := []color.Color{
 		color.RGBA{R: 255, G: 0, B: 0, A: 255},   // Red
@@ -28,7 +28,7 @@ func GroupedBarChart(data []types.SimpleState, filename string) {
 		log.Fatalf("Error creating plot: %v", err)
 	}
 
-	applyCustomStyling(p)
+	applyCustomStyling(p, title)
 
 	// Extract unique block numbers and sort them
 	blockNumbers := uniqueBlockNumbers(data)

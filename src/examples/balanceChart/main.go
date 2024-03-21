@@ -56,9 +56,9 @@ func main() {
 	fmt.Println("Getting balances...")
 	data := getBalances(addrs, startDate, endDate, "monthly")
 
-	charts.LineChart(data, "line.svg")
-	charts.GroupedBarChart(data, "bar.svg")
+	// charts.LineChart(data, "Account Balance over Time", "line.svg")
+	// utils.System("open line.svg")
 
-	utils.System("open line.svg")
+	charts.GroupedBarChart(data, "Account Balance over Time", "bar.svg")
 	utils.System("open bar.svg")
 }
