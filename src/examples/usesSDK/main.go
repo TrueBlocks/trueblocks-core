@@ -1,53 +1,37 @@
 package main
 
-import (
-	"bytes"
-	"fmt"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
-)
-
-// DoBlocks tests the Blocks sdk function
-func DoBlocks() {
-	var buf bytes.Buffer
-
-	opts := sdk.BlocksOptions{
-		BlockIds: testBlocks,
-		Hashes:   true,
-	}
-
-	if err := opts.Blocks(&buf); err != nil {
-		logger.Fatal(err)
-	}
-
-	fmt.Println(buf.String())
-}
-
-// DoWhen tests the When sdk function
-func DoWhen() {
-	opts := sdk.WhenOptions{
-		Globals: sdk.Globals{
-			Verbose: true,
-		},
-		BlockIds: testBlocks,
-		// Timestamps: true,
-	}
-
-	buf := bytes.Buffer{}
-	if err := opts.When(&buf); err != nil {
-		logger.Fatal(err)
-	}
-
-	fmt.Print(buf.String())
-}
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 
 func main() {
-	DoBlocks()
-	DoWhen()
+	file.EstablishFolder("usesSDK")
+	// DoList()
+	// DoExport()
+	// DoMonitors()
+	// DoNames()
+	// DoAbis()
+	// DoBlocks()
+	// DoTransactions()
+	// DoReceipts()
+	// DoLogs()
+	// DoTraces()
+	// DoWhen()
+	DoState()
+	// DoTokens()
+	// // DoConfig()
+	// DoStatus()
+	// DoDaemon()
+	// // DoScrape()
+	// DoChunks()
+	// // DoInit()
+	// DoExplore()
+	// DoSlurp()
 }
 
 var testBlocks = []string{
 	"13800-1000000:monthly",
 	"14011011",
+}
+
+var testAddrs = []string{
+	"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
 }

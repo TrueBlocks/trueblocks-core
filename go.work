@@ -8,4 +8,5 @@ use (
     ./src/dev_tools/sdkTester
     ./src/examples/usesSDK
     ./src/examples/balanceChart
+    ./src/examples/optimism1
 )

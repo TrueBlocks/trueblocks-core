@@ -67,3 +67,5 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 }
 
 // No enums
+// EXISTING_CODE
+// EXISTING_CODE

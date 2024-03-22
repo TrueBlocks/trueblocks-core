@@ -199,3 +199,6 @@ func enumFromStatusModes(values []string) (StatusModes, error) {
 
 	return result, nil
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
