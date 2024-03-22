@@ -1,132 +1,164 @@
 package charts
 
 import (
+	"fmt"
 	"image/color"
 	"log"
-	"sort"
-	"strconv"
+	"math"
+	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum/params"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
 	"gonum.org/v1/plot/vg"
+	"gonum.org/v1/plot/vg/draw"
 )
 
-func GroupedBarChart(data []types.SimpleState, title string, filename string) {
-	// Manually define a color palette
-	colorPalette := []color.Color{
-		color.RGBA{R: 255, G: 0, B: 0, A: 255},   // Red
-		color.RGBA{R: 0, G: 255, B: 0, A: 255},   // Green
-		color.RGBA{R: 0, G: 0, B: 255, A: 255},   // Blue
-		color.RGBA{R: 255, G: 255, B: 0, A: 255}, // Yellow
+// GroupedBarChart creates a grouped bar chart from an array of State objects
+func GroupedBarChart(data []types.SimpleState, names []types.SimpleName, title string, filename string) {
+	var err error
+	var p *plot.Plot
+	if p, err = plot.New(); err != nil {
+		log.Panic(err)
 	}
 
-	// Create a new plot
-	p, err := plot.New()
-	if err != nil {
-		log.Fatalf("Error creating plot: %v", err)
+	p.Title.Text = title
+	p.Title.Font.Size = vg.Points(18)
+	p.X.Label.Text = "Block Number"
+	p.Y.Label.Text = "Balance"
+	p.BackgroundColor = bgColor
+	// p.Legend.Top = true
+	// p.Legend.Left = true
+	// p.Legend.Font.Size = vg.Points(11)
+	// p.Legend.Font.SetName("Mono")
+	p.Title.Padding = vg.Points(10)
+	p.X.Padding = vg.Points(10)
+	p.Y.Padding = vg.Points(10)
+	p.X.Tick.Label.Rotation = math.Pi / 2.8
+	p.X.Tick.Label.XAlign = draw.XRight
+	p.X.Tick.Label.YAlign = draw.YBottom
+	p.X.Tick.Label.Color = color.Black
+	p.X.Tick.Color = color.Black
+	p.X.LineStyle.Color = color.Black
+	p.Y.Tick.Label.Color = color.Black
+	p.Y.Tick.Color = color.Black
+	p.Y.LineStyle.Color = color.Black
+
+	namesMap := make(map[string]types.SimpleName, len(names))
+	for _, n := range names {
+		namesMap[small(n.Address)] = n
 	}
 
-	applyCustomStyling(p, title)
+	addrMap := make(map[string]int)
+	cnt := 1
+	for _, d := range data {
+		if addrMap[small(d.Address)] == 0 {
+			addrMap[small(d.Address)] = cnt
+			cnt++
+		}
+	}
 
-	// Extract unique block numbers and sort them
-	blockNumbers := uniqueBlockNumbers(data)
-	sortedBlocks := sort.IntSlice(blockNumbers)
-	sort.Sort(sortedBlocks)
+	addrs := []string{}
+	for key := range addrMap {
+		addrs = append(addrs, key)
+	}
+	nAddrs := len(addrs)
 
-	w := vg.Points(4)
-	offsets := calculateOffsets(len(data), len(sortedBlocks), w)
+	wid := 4.
 
-	groupedByAddress := groupDataByAddress(data)
+	offsets := []float64{}
+	for i := 0; i < nAddrs; i++ {
+		f := float64(-4 + (i * 4))
+		fmt.Println(i, i+1, -4+(i*4), f)
+		offsets = append(offsets, f) // []float64{-4, -2, 2, 4}
+	}
+	// offsetx := []float64{ 0,  2, 6, 8}
 
-	colorIndex := 0
-	for address, group := range groupedByAddress {
-		bars, err := createBarsForGroup(group, sortedBlocks, w, offsets[colorIndex], colorPalette[colorIndex%len(colorPalette)])
+	balances := []plotter.Values{}
+	for i := 0; i < nAddrs; i++ {
+		balances = append(balances, plotter.Values{})
+	}
+
+	for _, d := range data {
+		idx := addrMap[small(d.Address)] - 1
+		ff, _ := weiToEther(&d.Balance).Float64()
+		balances[idx] = append(balances[idx], ff)
+	}
+	for i := 0; i < nAddrs; i++ {
+		balances[i] = append(balances[i], 0)
+	}
+
+	if len(balances) != nAddrs {
+		log.Panic("Invalid balance length. Have ", len(balances), " want ", nAddrs)
+	}
+	if len(offsets) < nAddrs {
+		log.Panic("Invalid offsets length. Have ", len(offsets), " want ", nAddrs)
+	}
+
+	minOffset := 0
+	maxOffset := 0
+	for i := 0; i < nAddrs; i++ {
+		bar, err := plotter.NewBarChart(balances[i], vg.Points(wid))
 		if err != nil {
-			log.Fatalf("Error creating bars for address %s: %v", address, err)
+			log.Panic(err)
 		}
-		p.Add(bars)
-		p.Legend.Add(address, bars)
-
-		colorIndex++
+		bar.LineStyle.Width = vg.Length(1)
+		bar.LineStyle.Color = colors[(i+6)%len(colors)]
+		bar.Color = colors[i%len(colors)]
+		bar.Offset = vg.Points(offsets[i])
+		maxOffset += nAddrs * int(wid)
+		fmt.Println("Adding", namesMap[addrs[i]].Name, "at", offsets[i], "for", addrs[i])
+		// p.Legend.Add(namesMap[addrs[i]].Name, bar)
+		p.Add(bar)
 	}
 
-	// Customizing the X-axis
-	p.NominalX(blockNumberLabels(sortedBlocks)...)
+	nTicks := 6
+	lWid := (maxOffset - minOffset) / nTicks
+	ticks := []plot.Tick{}
+	for i := 0; i < nTicks; i++ {
+		v := minOffset + i*lWid
+		ticks = append(ticks, plot.Tick{Value: float64(v), Label: fmt.Sprintf("%d", v)})
+	}
+	p.X.Tick.Marker = plot.ConstantTicks(ticks)
 
-	// Save the plot to an SVG file
 	if err := p.Save(16*vg.Inch, 8*vg.Inch, filename); err != nil {
-		log.Fatalf("Error saving plot: %v", err)
+		log.Panic(err)
 	}
+
+	utils.System("open " + filename)
 }
 
-func blockNumberLabels(sortedBlocks []int) []string {
-	labels := make([]string, len(sortedBlocks))
-	for i, block := range sortedBlocks {
-		labels[i] = strconv.Itoa(block)
-	}
-	return labels
+var bgColor = color.RGBA{R: 255, G: 255, B: 255, A: 255}
+var colors = []color.Color{
+	color.RGBA{0x00, 0x00, 0xff, 0xff},
+	color.RGBA{0x00, 0xff, 0x00, 0xff},
+	color.RGBA{0xff, 0x00, 0x00, 0xff},
+	color.RGBA{0x00, 0xff, 0xff, 0xff},
+	color.RGBA{0xff, 0xff, 0x00, 0xff},
+	color.RGBA{0xff, 0x00, 0xff, 0xff},
+
+	color.RGBA{0x00, 0x00, 0x88, 0xff},
+	color.RGBA{0x00, 0x88, 0x00, 0xff},
+	color.RGBA{0x88, 0x00, 0x00, 0xff},
+	color.RGBA{0x00, 0x88, 0x88, 0xff},
+	color.RGBA{0x88, 0x88, 0x00, 0xff},
+	color.RGBA{0x88, 0x00, 0x88, 0xff},
 }
 
-func createBarsForGroup(group []types.SimpleState, sortedBlocks []int, barWidth vg.Length, offset vg.Length, color color.Color) (*plotter.BarChart, error) {
-	values := make(plotter.Values, len(sortedBlocks))
-	blockIndexMap := make(map[int]int)
-	for i, block := range sortedBlocks {
-		blockIndexMap[block] = i
-	}
-
-	for _, state := range group {
-		if index, exists := blockIndexMap[int(state.BlockNumber)]; exists {
-			value, err := strconv.ParseFloat(utils.FormattedValue(state.Balance, true, 18), 64)
-			if err != nil {
-				return nil, err
-			}
-			values[index] = value
-		}
-	}
-
-	bars, err := plotter.NewBarChart(values, barWidth)
-	if err != nil {
-		return nil, err
-	}
-	bars.Color = color
-	bars.Offset = offset
-	return bars, nil
+func weiToEther(wei *big.Int) *big.Float {
+	// Copied from https://github.com/ethereum/go-ethereum/issues/21221#issuecomment-805852059
+	f := new(big.Float)
+	f.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
+	f.SetMode(big.ToNearestEven)
+	fWei := new(big.Float)
+	fWei.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
+	fWei.SetMode(big.ToNearestEven)
+	return f.Quo(fWei.SetInt(wei), big.NewFloat(params.Ether))
 }
 
-// groupDataByAddress groups the input data by the Address field.
-func groupDataByAddress(data []types.SimpleState) map[string][]types.SimpleState {
-	grouped := make(map[string][]types.SimpleState)
-	for _, item := range data {
-		addressHex := item.Address.Hex()
-		grouped[addressHex] = append(grouped[addressHex], item)
-	}
-	return grouped
-}
-
-// Updated calculateOffsets function signature to include numBlocks
-func calculateOffsets(numGroups, numBlocks int, barWidth vg.Length) []vg.Length {
-	offsets := make([]vg.Length, numGroups)
-	gap := barWidth * 0.2
-	groupWidth := barWidth + gap
-	totalWidth := vg.Length(numBlocks) * groupWidth
-	startOffset := -totalWidth/2 + barWidth/2
-	for i := 0; i < numGroups; i++ {
-		offsets[i] = startOffset + vg.Length(i)*groupWidth
-	}
-	return offsets
-}
-
-func uniqueBlockNumbers(data []types.SimpleState) []int {
-	blockMap := make(map[int]bool)
-	for _, item := range data {
-		blockMap[int(item.BlockNumber)] = true
-	}
-	uniqueBlocks := make([]int, 0, len(blockMap))
-	for blockNumber := range blockMap {
-		uniqueBlocks = append(uniqueBlocks, blockNumber)
-	}
-
-	return uniqueBlocks
+func small(a base.Address) string {
+	return a.Hex()[:6] + "..." + a.Hex()[len(a.Hex())-4:]
 }

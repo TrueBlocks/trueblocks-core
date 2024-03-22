@@ -31,3 +31,7 @@ func QueryUser(prompt, noResponse string) bool {
 	}
 	return true
 }
+
+func Wait() {
+	QueryUser("Press Enter to continue", "Continuing...")
+}
