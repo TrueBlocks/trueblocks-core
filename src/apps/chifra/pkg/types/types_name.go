@@ -108,7 +108,9 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		model["address"] = strings.ToLower(s.Address.String())
 	}
 
-	if extraOptions["expand"] != true && extraOptions["prefund"] != true {
+	isExpanded := extraOptions["expand"] == true
+	isPrefund := extraOptions["prefund"] == true
+	if !isExpanded && !isPrefund {
 		x := []string{}
 		for _, v := range order {
 			if v != "source" {
@@ -117,6 +119,11 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 		}
 		order = x
 		delete(model, "source")
+	}
+
+	if isExpanded && isPrefund {
+		model["prefund"] = s.Prefund.String()
+		order = append(order, "prefund")
 	}
 
 	if format == "json" {
@@ -178,7 +185,7 @@ func (s *SimpleName) Model(chain, format string, verbose bool, extraOptions map[
 			model["decimals"] = ""
 		}
 
-		if extraOptions["expand"] == true {
+		if isExpanded {
 			model["deleted"] = s.Deleted
 			order = append(order, "deleted")
 			model["isCustom"] = s.IsCustom
