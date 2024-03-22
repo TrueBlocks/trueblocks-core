@@ -5,9 +5,12 @@ import (
 	"image/color"
 	"log"
 	"math"
+	"math/big"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/ethereum/go-ethereum/params"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
 	"gonum.org/v1/plot/vg"
@@ -15,7 +18,7 @@ import (
 )
 
 // GroupedBarChart creates a grouped bar chart from an array of State objects
-func GroupedBarChart(data []types.SimpleState, title string, filename string) {
+func GroupedBarChart(data []types.SimpleState, names []types.SimpleName, title string, filename string) {
 	var err error
 	var p *plot.Plot
 	if p, err = plot.New(); err != nil {
@@ -27,10 +30,10 @@ func GroupedBarChart(data []types.SimpleState, title string, filename string) {
 	p.X.Label.Text = "Block Number"
 	p.Y.Label.Text = "Balance"
 	p.BackgroundColor = bgColor
-	p.Legend.Top = true
-	p.Legend.Left = true
-	p.Legend.Font.Size = vg.Points(11)
-	p.Legend.Font.SetName("Mono")
+	// p.Legend.Top = true
+	// p.Legend.Left = true
+	// p.Legend.Font.Size = vg.Points(11)
+	// p.Legend.Font.SetName("Mono")
 	p.Title.Padding = vg.Points(10)
 	p.X.Padding = vg.Points(10)
 	p.Y.Padding = vg.Points(10)
@@ -44,15 +47,20 @@ func GroupedBarChart(data []types.SimpleState, title string, filename string) {
 	p.Y.Tick.Color = color.Black
 	p.Y.LineStyle.Color = color.Black
 
+	namesMap := make(map[string]types.SimpleName, len(names))
+	for _, n := range names {
+		namesMap[small(n.Address)] = n
+	}
+
 	addrMap := make(map[string]int)
 	cnt := 1
 	for _, d := range data {
-		small := d.Address.Hex()[:6] + "..." + d.Address.Hex()[len(d.Address.Hex())-4:]
-		if addrMap[small] == 0 {
-			addrMap[small] = cnt
+		if addrMap[small(d.Address)] == 0 {
+			addrMap[small(d.Address)] = cnt
 			cnt++
 		}
 	}
+
 	addrs := []string{}
 	for key := range addrMap {
 		addrs = append(addrs, key)
@@ -60,7 +68,14 @@ func GroupedBarChart(data []types.SimpleState, title string, filename string) {
 	nAddrs := len(addrs)
 
 	wid := 4.
-	offsets := []float64{-wid, -(wid / 2), wid / 2, wid}
+
+	offsets := []float64{}
+	for i := 0; i < nAddrs; i++ {
+		f := float64(-4 + (i * 4))
+		fmt.Println(i, i+1, -4+(i*4), f)
+		offsets = append(offsets, f) // []float64{-4, -2, 2, 4}
+	}
+	// offsetx := []float64{ 0,  2, 6, 8}
 
 	balances := []plotter.Values{}
 	for i := 0; i < nAddrs; i++ {
@@ -68,20 +83,19 @@ func GroupedBarChart(data []types.SimpleState, title string, filename string) {
 	}
 
 	for _, d := range data {
-		small := d.Address.Hex()[:6] + "..." + d.Address.Hex()[len(d.Address.Hex())-4:]
-		idx := addrMap[small] - 1
-		ff, _ := d.Balance.Float64()
+		idx := addrMap[small(d.Address)] - 1
+		ff, _ := weiToEther(&d.Balance).Float64()
 		balances[idx] = append(balances[idx], ff)
 	}
 	for i := 0; i < nAddrs; i++ {
 		balances[i] = append(balances[i], 0)
 	}
 
-	if len(balances) != nAddrs || len(offsets) < nAddrs {
-		log.Panic("Invalid balance length")
+	if len(balances) != nAddrs {
+		log.Panic("Invalid balance length. Have ", len(balances), " want ", nAddrs)
 	}
 	if len(offsets) < nAddrs {
-		log.Panic("Invalid offset length")
+		log.Panic("Invalid offsets length. Have ", len(offsets), " want ", nAddrs)
 	}
 
 	minOffset := 0
@@ -96,7 +110,8 @@ func GroupedBarChart(data []types.SimpleState, title string, filename string) {
 		bar.Color = colors[i%len(colors)]
 		bar.Offset = vg.Points(offsets[i])
 		maxOffset += nAddrs * int(wid)
-		p.Legend.Add(addrs[i], bar)
+		fmt.Println("Adding", namesMap[addrs[i]].Name, "at", offsets[i], "for", addrs[i])
+		// p.Legend.Add(namesMap[addrs[i]].Name, bar)
 		p.Add(bar)
 	}
 
@@ -109,7 +124,7 @@ func GroupedBarChart(data []types.SimpleState, title string, filename string) {
 	}
 	p.X.Tick.Marker = plot.ConstantTicks(ticks)
 
-	if err := p.Save(12*vg.Inch, 8*vg.Inch, filename); err != nil {
+	if err := p.Save(16*vg.Inch, 8*vg.Inch, filename); err != nil {
 		log.Panic(err)
 	}
 
@@ -131,4 +146,19 @@ var colors = []color.Color{
 	color.RGBA{0x00, 0x88, 0x88, 0xff},
 	color.RGBA{0x88, 0x88, 0x00, 0xff},
 	color.RGBA{0x88, 0x00, 0x88, 0xff},
+}
+
+func weiToEther(wei *big.Int) *big.Float {
+	// Copied from https://github.com/ethereum/go-ethereum/issues/21221#issuecomment-805852059
+	f := new(big.Float)
+	f.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
+	f.SetMode(big.ToNearestEven)
+	fWei := new(big.Float)
+	fWei.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
+	fWei.SetMode(big.ToNearestEven)
+	return f.Quo(fWei.SetInt(wei), big.NewFloat(params.Ether))
+}
+
+func small(a base.Address) string {
+	return a.Hex()[:6] + "..." + a.Hex()[len(a.Hex())-4:]
 }
