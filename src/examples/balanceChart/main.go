@@ -4,29 +4,55 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 	"github.com/bykof/gostradamus"
 
 	"github.com/TrueBlocks/balanceChart/charts"
 )
 
-var dateFmt = "YYYY-MM-DDTHH:mm:ss"
+func main() {
+	names := []types.SimpleName{
+		{Name: "bankless.eth"},
+		{Name: "trueblocks.eth"},
+		{Name: "giveth.eth"},
+		{Name: "rotki.eth"},
+	}
 
-func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) []types.SimpleState {
-	// First, we get the block numbers from the dates
+	chains := []string{
+		"mainnet",
+		// "optimism",
+		// "gnosis",
+		"sepolia",
+	}
+
+	for _, chain := range chains {
+		fmt.Println("Getting balances for", chain)
+		data := getBalances(names, chain, NewDate(2022, 1, 1), NewDate(2023, 12, 31), "monthly")
+		charts.GroupedBarChart(data, "Monthly Balances on ["+chain+"]", chain+"bar.png")
+	}
+}
+func getBalances(names []types.SimpleName, chain string, start, end gostradamus.DateTime, freq string) []types.SimpleState {
 	whenOpts := sdk.WhenOptions{
-		BlockIds: []string{start.Format(dateFmt), end.Format(dateFmt)},
-		Globals:  sdk.Globals{Cache: true},
+		BlockIds: []string{start.Format("YYYY-MM-DDTHH:mm:ss"), end.Format("YYYY-MM-DDTHH:mm:ss")},
+		Globals: sdk.Globals{
+			Cache: true,
+			Chain: chain,
+		},
 	}
 
 	if blocks, _, err := whenOpts.Query(); err != nil {
 		logger.Error(err)
 		return []types.SimpleState{}
 	} else {
-		fmt.Println("Getting balances for", len(addrs), "addresses at", len(blocks), "blocks...")
+		addrs := make([]string, len(names))
+		for i, name := range names {
+			conn := rpc.TempConnection("mainnet")
+			addrs[i], _ = conn.GetEnsAddress(name.Name)
+		}
 
+		fmt.Println("Getting balances for", len(addrs), "addresses at", len(blocks), "blocks...")
 		blockRange := fmt.Sprintf("%d-%d:%s", blocks[0].BlockNumber, blocks[1].BlockNumber, freq)
 		stateOpts := sdk.StateOptions{
 			Addrs:    addrs,
@@ -36,29 +62,20 @@ func getBalances(addrs []string, start, end gostradamus.DateTime, freq string) [
 			Globals: sdk.Globals{
 				Ether: true,
 				Cache: true,
+				Chain: chain,
 			},
 		}
 
-		if state, _, err := stateOpts.Query(); err != nil {
+		if state, meta, err := stateOpts.Query(); err != nil {
 			logger.Error(err)
 			return []types.SimpleState{}
 		} else {
+			fmt.Println("Got", len(state), "states to block", meta.Latest)
 			return state
 		}
 	}
 }
 
-func main() {
-	addrs := []string{"meriam.eth", "trueblocks.eth", "giveth.eth", "rotki.eth"}
-	startDate := gostradamus.NewDateTime(2015, 8, 2, 0, 0, 0, 0, gostradamus.UTC)
-	endDate := gostradamus.NewDateTime(2023, 12, 31, 23, 59, 59, 0, gostradamus.UTC)
-
-	fmt.Println("Getting balances...")
-	data := getBalances(addrs, startDate, endDate, "monthly")
-
-	// charts.LineChart(data, "Account Balance over Time", "line.svg")
-	// utils.System("open line.svg")
-
-	charts.GroupedBarChart(data, "Account Balance over Time", "bar.svg")
-	utils.System("open bar.svg")
+func NewDate(year, month, day int) gostradamus.DateTime {
+	return gostradamus.NewDateTime(year, month, day, 0, 0, 0, 0, "UTC")
 }
