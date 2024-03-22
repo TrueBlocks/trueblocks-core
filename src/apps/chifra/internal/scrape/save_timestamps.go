@@ -12,17 +12,6 @@ import (
 )
 
 // TODO: Protect against overwriting files on disc
-func logProgressTs(msgIn string, cur, total base.Blknum) {
-	frequency := base.Blknum(13)
-	left := total - cur
-	msg := fmt.Sprintf("%s%-04d of %-04d (%-04d remaining)"+spaces,
-		msgIn,
-		cur,
-		total,
-		left,
-	)
-	logger.Progress((cur%frequency) == 0, msg)
-}
 
 func (bm *BlazeManager) WriteTimestamps(blocks []base.Blknum) error {
 	chain := bm.chain
