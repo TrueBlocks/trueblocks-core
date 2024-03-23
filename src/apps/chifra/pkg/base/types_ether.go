@@ -27,6 +27,10 @@ func (e *Ether) SetInt(i *big.Int) *Ether {
 	return (*Ether)((*big.Float)(e).SetInt(i))
 }
 
+func (e *Ether) SetMyWei(i *MyWei) *Ether {
+	return (*Ether)((*big.Float)(e).SetInt((*big.Int)(i)))
+}
+
 func (e *Ether) SetInt64(i int64) *Ether {
 	return (*Ether)((*big.Float)(e).SetInt64(i))
 }
@@ -69,6 +73,12 @@ func ToEther(wei *big.Int) *Ether {
 	f := NewEther(0)
 	e := NewEther(1e18)
 	return f.Quo(new(Ether).SetInt(wei), e)
+}
+
+func ToEther2(wei *MyWei) *Ether {
+	f := NewEther(0)
+	e := NewEther(1e18)
+	return f.Quo(new(Ether).SetMyWei(wei), e)
 }
 
 func FormattedValue(in big.Int, asEther bool, decimals int) string {

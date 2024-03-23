@@ -85,23 +85,23 @@ func TestFormatValue(t *testing.T) {
 
 func TestWei2EtherStr(t *testing.T) {
 	type TestCase struct {
-		input    *Wei
+		input    *MyWei
 		expected string
 	}
 
-	v1, _ := new(Wei).SetString("123456789012345678", 10)
-	v2, _ := new(Wei).SetString("1234567890123456789", 10)
+	v1, _ := new(MyWei).SetString("123456789012345678", 10)
+	v2, _ := new(MyWei).SetString("1234567890123456789", 10)
 	var tests = []TestCase{
-		{new(Wei).SetUint64(0), "0"},
-		{new(Wei).SetUint64(1), "0.000000000000000001"},
+		{NewMyWei(0), "0"},
+		{NewMyWei(1), "0.000000000000000001"},
 		{v1, "0.123456789012345678"},
 		{v2, "1.234567890123456789"},
 	}
 
 	for _, test := range tests {
-		got := ToEther(test.input).String()
+		got := ToEther2(test.input).String()
 		if got != test.expected {
-			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
+			t.Errorf("ToEther2(%v) want %v, got %v", test.input, test.expected, got)
 		}
 	}
 }
