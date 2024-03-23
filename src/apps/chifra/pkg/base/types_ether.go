@@ -3,8 +3,6 @@ package base
 import (
 	"math/big"
 	"strings"
-
-	"github.com/ethereum/go-ethereum/params"
 )
 
 // Ether encapsulates big.Float so we can Unmarshal strings into a big.Float.
@@ -13,27 +11,16 @@ import (
 // big.Float and call in to the same function.
 type Ether big.Float
 
+func NewEther(f float64) *Ether {
+	e := new(Ether)
+	(*big.Float)(e).SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
+	(*big.Float)(e).SetMode(big.ToNearestEven)
+	return e.SetFloat64(f)
+}
+
 func (e *Ether) String() string {
-	return (*big.Float)(e).String()
-}
-
-func (e *Ether) UnmarshalJSON(data []byte) error {
-	str := strings.Replace(string(data), "\"", "", -1)
-	(*big.Float)(e).SetString(str)
-	return nil
-}
-
-func (e *Ether) Text(fmt byte, prec int) string {
-	return (*big.Float)(e).Text(fmt, prec)
-}
-
-func (e *Ether) Float64() (float64, big.Accuracy) {
-	f, a := (*big.Float)(e).Float64()
-	return f, a
-}
-
-func (e *Ether) Cmp(other *Ether) int {
-	return (*big.Float)(e).Cmp((*big.Float)(other))
+	// the negative number removes trailing zeros
+	return (*big.Float)(e).Text('f', -18)
 }
 
 func (e *Ether) SetInt(i *big.Int) *Ether {
@@ -59,36 +46,34 @@ func (e *Ether) SetString(s string) (*Ether, bool) {
 	return nil, false
 }
 
+func (e *Ether) Float64() (float64, big.Accuracy) {
+	f, a := (*big.Float)(e).Float64()
+	return f, a
+}
+
+func (e *Ether) Cmp(other *Ether) int {
+	return (*big.Float)(e).Cmp((*big.Float)(other))
+}
+
 func (e *Ether) Quo(a, b *Ether) *Ether {
 	return (*Ether)((*big.Float)(e).Quo((*big.Float)(a), (*big.Float)(b)))
 }
 
-func (e *Ether) SetPrec(prec uint) *Ether {
-	return (*Ether)((*big.Float)(e).SetPrec(prec))
-}
-
-func (e *Ether) SetMode(mode big.RoundingMode) *Ether {
-	return (*Ether)((*big.Float)(e).SetMode(mode))
-}
-
-func NewEther(f float64) *Ether {
-	return new(Ether).SetFloat64(f)
+func (e *Ether) UnmarshalJSON(data []byte) error {
+	str := strings.Replace(string(data), "\"", "", -1)
+	(*big.Float)(e).SetString(str)
+	return nil
 }
 
 func ToEther(wei *big.Int) *Ether {
-	// Copied from https://github.com/ethereum/go-ethereum/issues/21221#issuecomment-805852059
-	f := new(Ether)
-	f.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
-	f.SetMode(big.ToNearestEven)
-	fWei := new(Ether)
-	fWei.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
-	fWei.SetMode(big.ToNearestEven)
-	return f.Quo(fWei.SetInt(wei), NewEther(params.Ether))
+	f := NewEther(0)
+	e := NewEther(1e18)
+	return f.Quo(new(Ether).SetInt(wei), e)
 }
 
 func FormattedValue(in big.Int, asEther bool, decimals int) string {
 	if asEther {
-		return ToEther(&in).Text('f', -1*decimals)
+		return (*big.Float)(ToEther(&in)).Text('f', -1*decimals)
 	}
 	return in.Text(10)
 }
