@@ -12,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/v0/sdk"
 	"github.com/bykof/gostradamus"
-	"github.com/ethereum/go-ethereum/params"
 
 	"github.com/TrueBlocks/balanceChart/charts"
 )
@@ -41,7 +40,7 @@ func main() {
 	filtered := make([]types.SimpleName, 0, len(names))
 	for i, name := range names {
 		names[i].Name = name.Address.Hex()
-		if len(filtered) < 25 && weiToEther(&name.Prefund).Cmp(big.NewFloat(10000)) < 0 {
+		if len(filtered) < 25 && base.ToEther(&name.Prefund).Cmp(big.NewEther(10000)) < 0 {
 			filtered = append(filtered, name)
 		}
 	}
@@ -137,15 +136,4 @@ func getBalances(names []types.SimpleName, chain string, start, end gostradamus.
 
 func NewDate(year, month, day int) gostradamus.DateTime {
 	return gostradamus.NewDateTime(year, month, day, 0, 0, 0, 0, "UTC")
-}
-
-func weiToEther(wei *big.Int) *big.Float {
-	// Copied from https://github.com/ethereum/go-ethereum/issues/21221#issuecomment-805852059
-	f := new(big.Float)
-	f.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
-	f.SetMode(big.ToNearestEven)
-	fWei := new(big.Float)
-	fWei.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
-	fWei.SetMode(big.ToNearestEven)
-	return f.Quo(fWei.SetInt(wei), big.NewFloat(params.Ether))
 }

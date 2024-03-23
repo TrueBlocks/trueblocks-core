@@ -5,12 +5,10 @@ import (
 	"image/color"
 	"log"
 	"math"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/ethereum/go-ethereum/params"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
 	"gonum.org/v1/plot/vg"
@@ -84,7 +82,7 @@ func GroupedBarChart(data []types.SimpleState, names []types.SimpleName, title s
 
 	for _, d := range data {
 		idx := addrMap[small(d.Address)] - 1
-		ff, _ := weiToEther(&d.Balance).Float64()
+		ff, _ := base.ToEther(&d.Balance).Float64()
 		balances[idx] = append(balances[idx], ff)
 	}
 	for i := 0; i < nAddrs; i++ {
@@ -146,17 +144,6 @@ var colors = []color.Color{
 	color.RGBA{0x00, 0x88, 0x88, 0xff},
 	color.RGBA{0x88, 0x88, 0x00, 0xff},
 	color.RGBA{0x88, 0x00, 0x88, 0xff},
-}
-
-func weiToEther(wei *big.Int) *big.Float {
-	// Copied from https://github.com/ethereum/go-ethereum/issues/21221#issuecomment-805852059
-	f := new(big.Float)
-	f.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
-	f.SetMode(big.ToNearestEven)
-	fWei := new(big.Float)
-	fWei.SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
-	fWei.SetMode(big.ToNearestEven)
-	return f.Quo(fWei.SetInt(wei), big.NewFloat(params.Ether))
 }
 
 func small(a base.Address) string {

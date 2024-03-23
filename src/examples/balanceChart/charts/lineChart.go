@@ -5,8 +5,8 @@ import (
 	"log"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
 	"gonum.org/v1/plot/vg"
@@ -43,7 +43,7 @@ func LineChart(data []types.SimpleState, title string, filename string) {
 		points := make(plotter.XYs, len(group))
 		for i, d := range group {
 			points[i].X = float64(d.BlockNumber)
-			points[i].Y, _ = strconv.ParseFloat(utils.FormattedValue(d.Balance, true, 18), 64)
+			points[i].Y, _ = strconv.ParseFloat(base.FormattedValue(d.Balance, true, 18), 64)
 		}
 
 		line, err := plotter.NewLine(points)
