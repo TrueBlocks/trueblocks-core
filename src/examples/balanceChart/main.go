@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/big"
 	"sort"
 	"strings"
 
@@ -40,7 +39,7 @@ func main() {
 	filtered := make([]types.SimpleName, 0, len(names))
 	for i, name := range names {
 		names[i].Name = name.Address.Hex()
-		if len(filtered) < 25 && base.ToEther(&name.Prefund).Cmp(big.NewEther(10000)) < 0 {
+		if len(filtered) < 25 && base.ToEther(&name.Prefund).Cmp(base.NewEther(30000)) < 0 {
 			filtered = append(filtered, name)
 		}
 	}
