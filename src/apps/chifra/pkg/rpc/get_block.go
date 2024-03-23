@@ -288,16 +288,16 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 // anything about the Known blocks.
 
 // getBlockReward returns the block reward for a given block number
-func (conn *Connection) getBlockReward(bn uint64) *big.Int {
+func (conn *Connection) getBlockReward(bn uint64) *base.MyWei {
 	if bn == 0 {
-		return big.NewInt(0)
+		return base.NewMyWei(0)
 	} else if bn < base.KnownBlock(conn.Chain, base.Byzantium) {
-		return big.NewInt(5000000000000000000)
+		return base.NewMyWei(5000000000000000000)
 	} else if bn < base.KnownBlock(conn.Chain, base.Constantinople) {
-		return big.NewInt(3000000000000000000)
+		return base.NewMyWei(3000000000000000000)
 	} else if bn < base.KnownBlock(conn.Chain, base.Merge) {
-		return big.NewInt(2000000000000000000)
+		return base.NewMyWei(2000000000000000000)
 	} else {
-		return big.NewInt(0)
+		return base.NewMyWei(0)
 	}
 }

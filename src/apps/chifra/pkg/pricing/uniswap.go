@@ -92,7 +92,7 @@ func priceUsdUniswap(conn *rpc.Connection, testMode bool, statement *types.Simpl
 	bigPrice := new(base.Ether)
 	bigPrice = bigPrice.Quo(reserve0, reserve1)
 
-	price, _ = bigPrice.Float64()
+	price = bigPrice.Float64()
 	price *= multiplier
 	source = "uniswap"
 

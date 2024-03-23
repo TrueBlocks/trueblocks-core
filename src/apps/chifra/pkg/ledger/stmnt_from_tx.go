@@ -87,10 +87,10 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 				ret.PrefundIn = trans.Value
 			} else {
 				if trans.Rewards != nil {
-					ret.MinerBaseRewardIn = trans.Rewards.Block
-					ret.MinerNephewRewardIn = trans.Rewards.Nephew
-					ret.MinerTxFeeIn = trans.Rewards.TxFee
-					ret.MinerUncleRewardIn = trans.Rewards.Uncle
+					ret.MinerBaseRewardIn = (big.Int)(trans.Rewards.Block)
+					ret.MinerNephewRewardIn = (big.Int)(trans.Rewards.Nephew)
+					ret.MinerTxFeeIn = (big.Int)(trans.Rewards.TxFee)
+					ret.MinerUncleRewardIn = (big.Int)(trans.Rewards.Uncle)
 				} else {
 					ret.AmountIn = trans.Value
 				}
