@@ -19,12 +19,12 @@ type priceDebugger struct {
 	first       base.Address
 	second      base.Address
 	reversed    bool
-	float0      *big.Float
-	float1      *big.Float
-	float2      *big.Float
+	float0      *base.Ether
+	float1      *base.Ether
+	float2      *base.Ether
 	int0        *big.Int
 	int1        *big.Int
-	bigPrice    *big.Float
+	bigPrice    *base.Ether
 	price       float64
 	source      string
 }

@@ -115,7 +115,7 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "address":
 			model["address"] = s.Address
 		case "balance":
-			model["balance"] = utils.FormattedValue(s.Balance, true, int(name.Decimals))
+			model["balance"] = base.FormattedValue(s.Balance, true, int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
 		case "date":
@@ -123,7 +123,7 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "decimals":
 			model["decimals"] = name.Decimals
 		case "diff":
-			model["diff"] = utils.FormattedValue(s.Diff, true, int(name.Decimals))
+			model["diff"] = base.FormattedValue(s.Diff, true, int(name.Decimals))
 		case "holder":
 			model["holder"] = s.Holder
 		case "name":
@@ -133,11 +133,11 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "timestamp":
 			model["timestamp"] = s.Timestamp
 		case "totalSupply":
-			model["totalSupply"] = utils.FormattedValue(s.TotalSupply, true, int(name.Decimals))
+			model["totalSupply"] = base.FormattedValue(s.TotalSupply, true, int(name.Decimals))
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
 		case "units":
-			model["units"] = utils.FormattedValue(s.Balance, false, int(name.Decimals)) // present underlying units
+			model["units"] = base.FormattedValue(s.Balance, false, int(name.Decimals)) // present underlying units
 		case "version":
 			model["version"] = ""
 		}
