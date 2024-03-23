@@ -100,18 +100,18 @@ func TestWei2EtherStr(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		got := ToEther2(test.input).Text('f', -18)
+		got := ToEther(test.input).Text('f', -18)
 		if got != test.expected {
-			t.Errorf("ToEther2(%v) want %v, got %v", test.input, test.expected, got)
+			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
 		}
-		got = ToEther2(test.input).String()
+		got = ToEther(test.input).String()
 		if got != test.expected {
-			t.Errorf("ToEther2(%v) want %v, got %v", test.input, test.expected, got)
+			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
 		}
 		//lint:ignore S1025 sorry
-		got = fmt.Sprintf("%s", ToEther2(test.input))
+		got = fmt.Sprintf("%s", ToEther(test.input))
 		if got != test.expected {
-			t.Errorf("ToEther2(%v) want %v, got %v", test.input, test.expected, got)
+			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
 		}
 	}
 }

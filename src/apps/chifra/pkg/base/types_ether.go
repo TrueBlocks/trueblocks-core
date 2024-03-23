@@ -74,13 +74,7 @@ func (e *Ether) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func ToEther(wei *big.Int) *Ether {
-	f := NewEther(0)
-	e := NewEther(1e18)
-	return f.Quo(new(Ether).SetInt(wei), e)
-}
-
-func ToEther2(wei *MyWei) *Ether {
+func ToEther(wei *MyWei) *Ether {
 	f := NewEther(0)
 	e := NewEther(1e18)
 	return f.Quo(new(Ether).SetMyWei(wei), e)
@@ -88,7 +82,7 @@ func ToEther2(wei *MyWei) *Ether {
 
 func FormattedValue(in big.Int, asEther bool, decimals int) string {
 	if asEther {
-		return ToEther(&in).Text('f', -1*decimals)
+		return ToEther((*MyWei)(&in)).Text('f', -1*decimals)
 	}
 	return in.Text(10)
 }
