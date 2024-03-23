@@ -56,8 +56,8 @@ func priceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 	int0 = int0.Mul(int0, new(big.Int).SetInt64(100000))
 	int1 := new(big.Int).Quo(int0, divisor)
 
-	bigPrice := new(big.Float).SetInt(int1)
-	bigPrice = bigPrice.Quo(bigPrice, new(big.Float).SetInt64(100000))
+	bigPrice := new(base.Ether).SetInt(int1)
+	bigPrice = bigPrice.Quo(bigPrice, new(base.Ether).SetInt64(100000))
 	price, _ = bigPrice.Float64()
 	source = "maker"
 	r := priceDebugger{
