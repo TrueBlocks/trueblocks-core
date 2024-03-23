@@ -180,7 +180,7 @@ type sdkState struct {
 	Nonce       uint64         `json:"nonce"`
 	Proxy       AddressStr     `json:"proxy"`
 	Timestamp   base.Timestamp `json:"timestamp"`
-	Ether       FloatStr       `json:"ether"`
+	Ether       base.Ether     `json:"ether"`
 }
 
 func (s sdkState) Date() string {

@@ -45,17 +45,3 @@ func (i *IntStr) UnmarshalJSON(data []byte) error {
 	*i = IntStr(intValue)
 	return nil
 }
-
-type FloatStr float64
-
-func (f *FloatStr) UnmarshalJSON(data []byte) error {
-	if len(data) < 3 {
-		return nil
-	}
-	floatValue, err := strconv.ParseFloat(string(data[1:len(data)-1]), 64)
-	if err != nil {
-		return err
-	}
-	*f = FloatStr(floatValue)
-	return nil
-}

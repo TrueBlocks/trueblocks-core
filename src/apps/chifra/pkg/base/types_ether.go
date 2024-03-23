@@ -2,6 +2,7 @@ package base
 
 import (
 	"math/big"
+	"strings"
 
 	"github.com/ethereum/go-ethereum/params"
 )
@@ -14,6 +15,12 @@ type Ether big.Float
 
 func (e *Ether) String() string {
 	return (*big.Float)(e).String()
+}
+
+func (e *Ether) UnmarshalJSON(data []byte) error {
+	str := strings.Replace(string(data), "\"", "", -1)
+	(*big.Float)(e).SetString(str)
+	return nil
 }
 
 func (e *Ether) Text(fmt byte, prec int) string {
