@@ -130,36 +130,36 @@ func (s *SimpleStatement) Model(chain, format string, verbose bool, extraOptions
 		"accountedFor":        s.AccountedFor,
 		"sender":              s.Sender,
 		"recipient":           s.Recipient,
-		"begBal":              base.FormattedValue(s.BegBal, asEther, decimals),
-		"amountNet":           base.FormattedValue(*s.AmountNet(), asEther, decimals),
-		"endBal":              base.FormattedValue(s.EndBal, asEther, decimals),
+		"begBal":              base.FormattedValue((*base.MyWei)(&s.BegBal), asEther, decimals),
+		"amountNet":           base.FormattedValue((*base.MyWei)(s.AmountNet()), asEther, decimals),
+		"endBal":              base.FormattedValue((*base.MyWei)(&s.EndBal), asEther, decimals),
 		"reconciliationType":  s.ReconType.String(),
 		"reconciled":          s.Reconciled(),
-		"totalIn":             base.FormattedValue(*s.TotalIn(), asEther, decimals),
-		"amountIn":            base.FormattedValue(s.AmountIn, asEther, decimals),
-		"internalIn":          base.FormattedValue(s.InternalIn, asEther, decimals),
-		"selfDestructIn":      base.FormattedValue(s.SelfDestructIn, asEther, decimals),
-		"minerBaseRewardIn":   base.FormattedValue(s.MinerBaseRewardIn, asEther, decimals),
-		"minerNephewRewardIn": base.FormattedValue(s.MinerNephewRewardIn, asEther, decimals),
-		"minerTxFeeIn":        base.FormattedValue(s.MinerTxFeeIn, asEther, decimals),
-		"minerUncleRewardIn":  base.FormattedValue(s.MinerUncleRewardIn, asEther, decimals),
-		"correctingIn":        base.FormattedValue(s.CorrectingIn, asEther, decimals),
-		"prefundIn":           base.FormattedValue(s.PrefundIn, asEther, decimals),
-		"totalOut":            base.FormattedValue(*s.TotalOut(), asEther, decimals),
-		"amountOut":           base.FormattedValue(s.AmountOut, asEther, decimals),
-		"internalOut":         base.FormattedValue(s.InternalOut, asEther, decimals),
-		"correctingOut":       base.FormattedValue(s.CorrectingOut, asEther, decimals),
-		"selfDestructOut":     base.FormattedValue(s.SelfDestructOut, asEther, decimals),
-		"gasOut":              base.FormattedValue(s.GasOut, asEther, decimals),
-		"totalOutLessGas":     base.FormattedValue(*s.TotalOutLessGas(), asEther, decimals),
-		"begBalDiff":          base.FormattedValue(*s.BegBalDiff(), asEther, decimals),
-		"endBalDiff":          base.FormattedValue(*s.EndBalDiff(), asEther, decimals),
-		"endBalCalc":          base.FormattedValue(*s.EndBalCalc(), asEther, decimals),
+		"totalIn":             base.FormattedValue((*base.MyWei)(s.TotalIn()), asEther, decimals),
+		"amountIn":            base.FormattedValue((*base.MyWei)(&s.AmountIn), asEther, decimals),
+		"internalIn":          base.FormattedValue((*base.MyWei)(&s.InternalIn), asEther, decimals),
+		"selfDestructIn":      base.FormattedValue((*base.MyWei)(&s.SelfDestructIn), asEther, decimals),
+		"minerBaseRewardIn":   base.FormattedValue((*base.MyWei)(&s.MinerBaseRewardIn), asEther, decimals),
+		"minerNephewRewardIn": base.FormattedValue((*base.MyWei)(&s.MinerNephewRewardIn), asEther, decimals),
+		"minerTxFeeIn":        base.FormattedValue((*base.MyWei)(&s.MinerTxFeeIn), asEther, decimals),
+		"minerUncleRewardIn":  base.FormattedValue((*base.MyWei)(&s.MinerUncleRewardIn), asEther, decimals),
+		"correctingIn":        base.FormattedValue((*base.MyWei)(&s.CorrectingIn), asEther, decimals),
+		"prefundIn":           base.FormattedValue((*base.MyWei)(&s.PrefundIn), asEther, decimals),
+		"totalOut":            base.FormattedValue((*base.MyWei)(s.TotalOut()), asEther, decimals),
+		"amountOut":           base.FormattedValue((*base.MyWei)(&s.AmountOut), asEther, decimals),
+		"internalOut":         base.FormattedValue((*base.MyWei)(&s.InternalOut), asEther, decimals),
+		"correctingOut":       base.FormattedValue((*base.MyWei)(&s.CorrectingOut), asEther, decimals),
+		"selfDestructOut":     base.FormattedValue((*base.MyWei)(&s.SelfDestructOut), asEther, decimals),
+		"gasOut":              base.FormattedValue((*base.MyWei)(&s.GasOut), asEther, decimals),
+		"totalOutLessGas":     base.FormattedValue((*base.MyWei)(s.TotalOutLessGas()), asEther, decimals),
+		"begBalDiff":          base.FormattedValue((*base.MyWei)(s.BegBalDiff()), asEther, decimals),
+		"endBalDiff":          base.FormattedValue((*base.MyWei)(s.EndBalDiff()), asEther, decimals),
+		"endBalCalc":          base.FormattedValue((*base.MyWei)(s.EndBalCalc()), asEther, decimals),
 		"correctingReason":    s.CorrectingReason,
 	}
 
 	if s.ReconType&First == 0 {
-		model["prevBal"] = base.FormattedValue(s.PrevBal, asEther, decimals)
+		model["prevBal"] = base.FormattedValue((*base.MyWei)(&s.PrevBal), asEther, decimals)
 	} else if format != "json" {
 		model["prevBal"] = ""
 	}
@@ -802,16 +802,16 @@ func isZero(val *big.Int) bool {
 }
 
 func reportE(msg string, val *big.Int) {
-	logger.TestLog(!isZero(val), msg, base.FormattedValue(*val, true, 18))
+	logger.TestLog(!isZero(val), msg, base.FormattedValue((*base.MyWei)(val), true, 18))
 }
 
 func report2(msg string, v1 *big.Int, v2 *big.Int) {
 	s := ""
 	if v1 != nil {
-		s = base.FormattedValue(*v1, true, 18)
+		s = base.FormattedValue((*base.MyWei)(v1), true, 18)
 	}
 	if v2 != nil {
-		s += " (" + base.FormattedValue(*v2, true, 18) + ")"
+		s += " (" + base.FormattedValue((*base.MyWei)(v2), true, 18) + ")"
 	}
 	logger.TestLog(true, msg, s)
 }
@@ -825,4 +825,3 @@ func report1(msg string, val *big.Int) {
 }
 
 // EXISTING_CODE
-

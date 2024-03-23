@@ -24,6 +24,15 @@ func (w *MyWei) SetString(s string, base int) (*MyWei, bool) {
 	return nil, false
 }
 
+func (w *MyWei) Float64() float64 {
+	f, _ := (*big.Int)(w).Float64()
+	return f
+}
+
+func (x *MyWei) Text(base int) string {
+	return (*big.Int)(x).Text(base)
+}
+
 func (w *MyWei) Add(x, y *MyWei) *MyWei {
 	return (*MyWei)((*big.Int)(w).Add((*big.Int)(x), (*big.Int)(y)))
 }
@@ -34,4 +43,17 @@ func (w *MyWei) Mul(x, y *MyWei) *MyWei {
 
 func (w *MyWei) Div(x, y *MyWei) *MyWei {
 	return (*MyWei)((*big.Int)(w).Div((*big.Int)(x), (*big.Int)(y)))
+}
+
+func FormattedValue(in *MyWei, asEther bool, decimals int) string {
+	if asEther {
+		return ToEther(in).Text('f', -1*decimals)
+	}
+	return in.Text(10)
+}
+
+func ToEther(wei *MyWei) *Ether {
+	f := NewEther(0)
+	e := NewEther(1e18)
+	return f.Quo(new(Ether).SetMyWei(wei), e)
 }

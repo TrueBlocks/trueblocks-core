@@ -108,7 +108,7 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		"timestamp":   s.Timestamp,
 		"date":        s.Date(),
 		"to":          s.To,
-		"value":       base.FormattedValue(s.Value, asEther, 18),
+		"value":       s.ToDisplay((*base.MyWei)(&s.Value), asEther),
 	}
 
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
@@ -572,6 +572,13 @@ func (s *SimpleSlurp) FinishUnmarshal() {
 
 func (s *SimpleSlurp) GasCost() base.Gas {
 	return s.GasPrice * s.GasUsed
+}
+
+func (s *SimpleSlurp) ToDisplay(val *base.MyWei, asEther bool) string {
+	if asEther {
+		return base.ToEther(val).String()
+	}
+	return s.Value.Text(10)
 }
 
 // EXISTING_CODE

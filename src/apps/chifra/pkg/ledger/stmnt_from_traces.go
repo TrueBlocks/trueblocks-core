@@ -3,7 +3,6 @@ package ledger
 import (
 	"math/big"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -49,7 +48,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 					trace.Action.CallType,
 					"to",
 					trace.Action.To.Hex(),
-					base.FormattedValue(trace.Action.Value, true, 18),
+					trace.Action.Value.Text(10),
 				)
 				continue
 			}
