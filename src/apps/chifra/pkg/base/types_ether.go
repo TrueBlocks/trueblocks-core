@@ -5,10 +5,10 @@ import (
 	"strings"
 )
 
-// Ether encapsulates big.Float so we can Unmarshal strings into a big.Float.
-// This is necessary because we sometimes import data from Json where we must
-// use strings or lose precision. The type does nothing other than cast to the
-// big.Float and call in to the same function.
+// Ether encapsulates big.Float so we can Unmarshal strings into various of
+// our types. This is necessary because we export big.Floats to Json strings
+// so we don't lose precision. The types mostly just cast to the big.Float and
+// call in to the identical functions.
 type Ether big.Float
 
 func NewEther(f float64) *Ether {
@@ -20,7 +20,6 @@ func NewEther(f float64) *Ether {
 
 func (e *Ether) String() string {
 	// the negative number removes trailing zeros
-	// logger.Fatal("Ether.String() is not implemented")
 	return e.Text('f', -18)
 }
 
@@ -49,7 +48,8 @@ func (e *Ether) SetFloat64(f float64) *Ether {
 }
 
 func (e *Ether) SetString(s string) (*Ether, bool) {
-	if f, _, err := (*big.Float)(e).Parse(s, 0); err == nil {
+	str := strings.Trim(strings.TrimSpace(s), "\"") // strip quotes and whitespace if any
+	if f, _, err := (*big.Float)(e).Parse(str, 0); err == nil {
 		return (*Ether)(f), true
 	}
 	return nil, false
@@ -69,9 +69,12 @@ func (e *Ether) Quo(a, b *Ether) *Ether {
 }
 
 func (e *Ether) UnmarshalJSON(data []byte) error {
-	str := strings.Replace(string(data), "\"", "", -1)
-	(*big.Float)(e).SetString(str)
-	return nil
+	str := strings.Trim(strings.TrimSpace(string(data)), "\"") // strip quotes and whitespace if any
+	return (*big.Float)(e).UnmarshalText([]byte(str))
+}
+
+func (e *Ether) MarshalJSON() ([]byte, error) {
+	return []byte(`"` + e.String() + `"`), nil
 }
 
 func ToEther(wei *MyWei) *Ether {
