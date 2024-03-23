@@ -58,7 +58,7 @@ func priceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 
 	bigPrice := new(base.Ether).SetInt(int1)
 	bigPrice = bigPrice.Quo(bigPrice, new(base.Ether).SetInt64(100000))
-	price, _ = bigPrice.Float64()
+	price = bigPrice.Float64()
 	source = "maker"
 	r := priceDebugger{
 		address:     statement.AssetAddr,
