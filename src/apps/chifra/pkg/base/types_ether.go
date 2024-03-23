@@ -20,7 +20,12 @@ func NewEther(f float64) *Ether {
 
 func (e *Ether) String() string {
 	// the negative number removes trailing zeros
-	return (*big.Float)(e).Text('f', -18)
+	// logger.Fatal("Ether.String() is not implemented")
+	return e.Text('f', -18)
+}
+
+func (x *Ether) Text(format byte, prec int) string {
+	return (*big.Float)(x).Text(format, prec)
 }
 
 func (e *Ether) SetInt(i *big.Int) *Ether {
@@ -83,7 +88,7 @@ func ToEther2(wei *MyWei) *Ether {
 
 func FormattedValue(in big.Int, asEther bool, decimals int) string {
 	if asEther {
-		return (*big.Float)(ToEther(&in)).Text('f', -1*decimals)
+		return ToEther(&in).Text('f', -1*decimals)
 	}
 	return in.Text(10)
 }
