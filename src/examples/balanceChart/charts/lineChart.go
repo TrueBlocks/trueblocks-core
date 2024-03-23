@@ -3,7 +3,6 @@ package charts
 import (
 	"image/color"
 	"log"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -43,7 +42,7 @@ func LineChart(data []types.SimpleState, title string, filename string) {
 		points := make(plotter.XYs, len(group))
 		for i, d := range group {
 			points[i].X = float64(d.BlockNumber)
-			points[i].Y, _ = strconv.ParseFloat(base.FormattedValue(d.Balance, true, 18), 64)
+			points[i].Y = (*base.MyWei)(&d.Balance).Float64()
 		}
 
 		line, err := plotter.NewLine(points)

@@ -10,12 +10,16 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	when "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -76,4 +80,23 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 
 // No enums
 // EXISTING_CODE
+func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *rpc.MetaData, error) {
+	stateBuf := bytes.Buffer{}
+	if err := opts.When(&stateBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	type result struct {
+		Data []types.SimpleNamedBlock `json:"data"`
+		Meta rpc.MetaData             `json:"meta"`
+	}
+
+	var when result
+	if err := json.Unmarshal(stateBuf.Bytes(), &when); err != nil {
+		return nil, nil, err
+	} else {
+		return when.Data, &when.Meta, nil
+	}
+}
+
 // EXISTING_CODE
