@@ -46,9 +46,9 @@ func (e *Ether) SetString(s string) (*Ether, bool) {
 	return nil, false
 }
 
-func (e *Ether) Float64() (float64, big.Accuracy) {
-	f, a := (*big.Float)(e).Float64()
-	return f, a
+func (e *Ether) Float64() float64 {
+	f, _ := (*big.Float)(e).Float64()
+	return f
 }
 
 func (e *Ether) Cmp(other *Ether) int {
