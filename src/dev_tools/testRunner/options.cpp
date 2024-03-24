@@ -19,13 +19,8 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // clang-format off
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
-    COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
-    COption("skip", "s", "<uint64>", OPT_FLAG, "run only every 'skip' test (faster)"),
-    COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
-    // clang-format on
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -56,21 +51,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-m" || arg == "--mode") {
             return flag_required("mode");
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
-            if (!confirmEnum("filter", filter, arg))
-                return false;
-        } else if (arg == "-f" || arg == "--filter") {
-            return flag_required("filter");
-
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
-            if (!confirmUint("skip", skip, arg))
-                return false;
-        } else if (arg == "-s" || arg == "--skip") {
-            return flag_required("skip");
-
-        } else if (arg == "-r" || arg == "--report") {
-            report = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -134,11 +114,6 @@ bool COptions::parseArguments(string_q& command) {
 
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
 
-    if (filter.empty())
-        filter = "fast";
-    else if (filter == "all")
-        filter = "";
-
     if (tests.empty()) {
         full_test = true;
         if (runSlurps) {
@@ -183,10 +158,6 @@ void COptions::Init(void) {
     registerOptions(nParams, params, 0);
     // END_CODE_GLOBALOPTS
 
-    filter = "";
-    skip = 1;
-    report = false;
-
     full_test = false;
     minArgs = 0;
 }
@@ -196,9 +167,6 @@ COptions::COptions(void) {
     CMeasure::registerClass();
 
     Init();
-
-    // clang-format off
-    // clang-format on
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -208,11 +176,9 @@ COptions::~COptions(void) {
 //---------------------------------------------------------------------------------------------------
 bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     ostringstream os;
-    // clang-format off
     os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
     return true;
 }
 

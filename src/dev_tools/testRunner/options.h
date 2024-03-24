@@ -26,16 +26,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    string_q filter;
-    uint64_t skip;
-    bool report;
-
     int modes = CMD;
     bool ignoreOff = false;
     CStringArray tests;
     bool full_test;
     string_q apiProvider;
-    uint64_t nRun = 0;
 
     COptions(void);
     ~COptions(void);
@@ -44,7 +39,7 @@ class COptions : public COptionsBase {
     void Init(void) override;
 
     void doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                 int which, bool doRemove);
+                 int which);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 

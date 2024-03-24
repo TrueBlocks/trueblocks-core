@@ -546,7 +546,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
 }
 
 //---------------------------------------------------------------------------------------------
-void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
+void CTestCase::prepareTest(bool cmdLine) {
     goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/", "/test/gold/" + path + "/" + tool + "/");
     workPath = substitute(goldPath, "/gold/", "/working/");
     establishFolder(goldPath);
@@ -588,12 +588,6 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
             goldPath += "api_tests/";
             workPath += "api_tests/";
         }
-    }
-
-    if (removeWorking) {
-        string_q removePath = workPath + fileName;  // order matters
-        if (fileExists(removePath))
-            ::remove(removePath.c_str());
     }
 }
 

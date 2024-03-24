@@ -53,7 +53,7 @@ class CTestCase : public CBaseNode {
     // EXISTING_CODE
     string_q getOutputFile(bool isApi, const string_q& goldApiPath) const;
     explicit CTestCase(const string_q& line, uint32_t id);
-    void prepareTest(bool cmdLine, bool removeWorking);
+    void prepareTest(bool cmdLine);
     // EXISTING_CODE
     bool operator==(const CTestCase& it) const;
     bool operator!=(const CTestCase& it) const {

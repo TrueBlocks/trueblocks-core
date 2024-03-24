@@ -628,7 +628,6 @@ time_q str_2_Date(const string_q& strIn) {
     }
 
     replaceAny(str, "T:-", "");
-    // clang-format off
     if (str.length() == 4)  str += "0101000000";       // YYYY NOLINT
     else if (str.length() == 6)  str += "01000000";    // YYYYMM
     else if (str.length() == 8)  str += "000000";      // YYYYMMDD
@@ -636,7 +635,7 @@ time_q str_2_Date(const string_q& strIn) {
     else if (str.length() == 12) str += "00";          // YYYYMMDDHHMM
     else if (str.length() == 14) str += "";            // YYYYMMDDHHMMSS
     else { LOG_WARN("str_2_Date: Invalid date string '", strIn, "'"); }  // NOLINT
-                                                                         // clang-format off
+
 
 #define NP ((uint32_t)-1)
 #define str_2_Int32u(a) (uint32_t) str_2_Uint((a))

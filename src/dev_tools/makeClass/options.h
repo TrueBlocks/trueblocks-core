@@ -66,7 +66,6 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool handle_readmes(void);
-    bool handle_format(void);
     bool handle_datamodel(void);
     bool writeOpenApiFile(void);
     bool handle_protobuf(void);
@@ -76,8 +75,6 @@ class COptions : public COptionsBase {
 
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void* data);
-extern bool formatCppFiles(const string_q& path, void* data);
-extern bool formatGoFiles(const string_q& path, void* data);
 extern string_q splitIfTooWide(const string_q& in);
 extern void expandTabbys(string_q& strOut);
 

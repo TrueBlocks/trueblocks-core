@@ -66,11 +66,9 @@ endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 # Enable testing
 # enable_testing()
 add_custom_target(lint COMMAND "golangci-lint" "run" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra")
-add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "--all --readmes --openapi --protobuf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(generate2 COMMAND "${BIN_DIR}/goMaker" "" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/..")
 add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(tests COMMAND "${BIN_TEST_DIR}/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 

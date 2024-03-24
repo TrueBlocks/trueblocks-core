@@ -204,3 +204,4 @@ func (s *SimpleWithdrawal) FinishUnmarshal() {
 
 // EXISTING_CODE
 // EXISTING_CODE
+
