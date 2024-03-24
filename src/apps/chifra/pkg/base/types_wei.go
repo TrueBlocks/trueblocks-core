@@ -1,6 +1,9 @@
 package base
 
-import "math/big"
+import (
+	"math/big"
+	"strings"
+)
 
 // Wei is a type alias for big.Int. This means we can't extend it by
 // adding any of our own methods.
@@ -17,7 +20,19 @@ func NewMyWei(x int64) *MyWei {
 	return (*MyWei)(big.NewInt(x))
 }
 
+func (b *MyWei) ToInt() *big.Int {
+	return (*big.Int)(b)
+}
+
+func (w *MyWei) String() string {
+	return (*big.Int)(w).String()
+}
+
 func (w *MyWei) SetString(s string, base int) (*MyWei, bool) {
+	if strings.HasPrefix(s, "0x") {
+		s = s[2:]
+		base = 16
+	}
 	if i, ok := (*big.Int)(w).SetString(s, base); ok {
 		return (*MyWei)(i), true
 	}
@@ -37,12 +52,33 @@ func (w *MyWei) Add(x, y *MyWei) *MyWei {
 	return (*MyWei)((*big.Int)(w).Add((*big.Int)(x), (*big.Int)(y)))
 }
 
+func (w *MyWei) Sub(x, y *MyWei) *MyWei {
+	return (*MyWei)((*big.Int)(w).Sub((*big.Int)(x), (*big.Int)(y)))
+}
+
 func (w *MyWei) Mul(x, y *MyWei) *MyWei {
 	return (*MyWei)((*big.Int)(w).Mul((*big.Int)(x), (*big.Int)(y)))
 }
 
 func (w *MyWei) Div(x, y *MyWei) *MyWei {
 	return (*MyWei)((*big.Int)(w).Div((*big.Int)(x), (*big.Int)(y)))
+}
+
+func (w *MyWei) Quo(x, y *MyWei) *MyWei {
+	return (*MyWei)((*big.Int)(w).Quo((*big.Int)(x), (*big.Int)(y)))
+}
+
+func (w *MyWei) Cmp(y *MyWei) int {
+	return (*big.Int)(w).Cmp((*big.Int)(y))
+}
+
+func (w *MyWei) MarshalText() (text []byte, err error) {
+	return (*big.Int)(w).MarshalText()
+}
+
+// UnmarshalText implements the [encoding.TextUnmarshaler] interface.
+func (w *MyWei) UnmarshalText(text []byte) error {
+	return (*big.Int)(w).UnmarshalText(text)
 }
 
 func FormattedValue(in *MyWei, asEther bool, decimals int) string {
