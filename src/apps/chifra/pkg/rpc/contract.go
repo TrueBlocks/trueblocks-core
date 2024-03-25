@@ -3,7 +3,6 @@ package rpc
 import (
 	"context"
 	"errors"
-	"math/big"
 	"sort"
 	"sync"
 
@@ -84,15 +83,13 @@ func (conn *Connection) GetContractProxyAt(address base.Address, blockNumber bas
 			return proxy, err
 		}
 
-		bn := big.NewInt(0).SetUint64(blockNumber)
-
 		for _, location := range locations {
 			var value []byte
 			value, err = ec.StorageAt(
 				context.Background(),
 				address.Address,
 				common.HexToHash(location),
-				bn,
+				base.BiFromUint64(blockNumber),
 			)
 			if err != nil {
 				return proxy, err
