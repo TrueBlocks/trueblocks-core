@@ -8,7 +8,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -126,11 +125,7 @@ func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
 	} else {
 		defer ec.Close()
 
-		var blockNumber *big.Int
-		if bn != utils.NOPOS {
-			blockNumber = big.NewInt(int64(bn))
-		}
-		r, err := ec.HeaderByNumber(context.Background(), blockNumber)
+		r, err := ec.HeaderByNumber(context.Background(), base.BiFromUint64(bn))
 		if err != nil {
 			logger.Error("Could not connect to RPC client", err)
 			return 0
@@ -186,7 +181,7 @@ func (conn *Connection) GetBlockHashByNumber(bn uint64) (base.Hash, error) {
 	} else {
 		defer ec.Close()
 
-		ethBlock, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
+		ethBlock, err := ec.BlockByNumber(context.Background(), base.BiFromUint64(bn))
 		if err != nil {
 			return base.Hash{}, err
 		}
@@ -248,7 +243,7 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 	if len(rawBlock.Withdrawals) > 0 {
 		block.Withdrawals = make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
 		for _, withdrawal := range rawBlock.Withdrawals {
-			amt := big.NewInt(0)
+			amt := base.NewWei(0)
 			amt.SetString(withdrawal.Amount, 0)
 			s := types.SimpleWithdrawal{
 				Address:        base.HexToAddress(withdrawal.Address),
