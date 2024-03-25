@@ -3,7 +3,6 @@ package rpc
 import (
 	"context"
 	"errors"
-	"math/big"
 	"sort"
 	"sync"
 

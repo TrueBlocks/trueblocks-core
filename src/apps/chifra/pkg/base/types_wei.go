@@ -1,10 +1,18 @@
 package base
 
-import "math/big"
+import (
+	"math/big"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+)
 
 // Wei is a type alias for big.Int. This means we can't extend it by
 // adding any of our own methods.
 type Wei = big.Int
+
+func NewWei(x uint64) *Wei {
+	return (*Wei)(big.NewInt(int64(x)))
+}
 
 // MyWei is a type in its own right. This means we can extend it by
 // adding our own methods, such as UnMarshalJSON and MarshalJSON which
