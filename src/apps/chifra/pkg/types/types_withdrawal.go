@@ -35,7 +35,7 @@ type RawWithdrawal struct {
 
 type SimpleWithdrawal struct {
 	Address        base.Address   `json:"address"`
-	Amount         base.MyWei     `json:"amount"`
+	Amount         base.Wei       `json:"amount"`
 	BlockNumber    base.Blknum    `json:"blockNumber"`
 	Index          uint64         `json:"index"`
 	Timestamp      base.Timestamp `json:"timestamp"`
@@ -61,7 +61,7 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"address":        s.Address,
-		"amount":         base.FormattedValue((*base.MyWei)(&s.Amount), asEther, 18),
+		"amount":         base.FormattedValue(&s.Amount, asEther, 18),
 		"blockNumber":    s.BlockNumber,
 		"date":           s.Date(),
 		"index":          s.Index,

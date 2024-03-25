@@ -38,7 +38,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
 		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
-			prevBal = new(base.MyWei)
+			prevBal = new(base.Wei)
 		}
 		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
 		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
@@ -69,21 +69,21 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 
 		// Do not collapse. A single transaction may have many movements of money
 		if l.AccountFor == ret.Sender {
-			gasUsed := new(base.MyWei)
+			gasUsed := new(base.Wei)
 			if trans.Receipt != nil {
 				gasUsed.SetUint64(trans.Receipt.GasUsed)
 			}
-			gasPrice := new(base.MyWei).SetUint64(trans.GasPrice)
-			gasOut := new(base.MyWei).Mul(gasUsed, gasPrice)
+			gasPrice := new(base.Wei).SetUint64(trans.GasPrice)
+			gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
 
-			ret.AmountOut = (base.MyWei)(trans.Value)
+			ret.AmountOut = (base.Wei)(trans.Value)
 			ret.GasOut = *gasOut
 		}
 
 		// Do not collapse. A single transaction may have many movements of money
 		if l.AccountFor == ret.Recipient {
 			if ret.BlockNumber == 0 {
-				ret.PrefundIn = (base.MyWei)(trans.Value)
+				ret.PrefundIn = (base.Wei)(trans.Value)
 			} else {
 				if trans.Rewards != nil {
 					ret.MinerBaseRewardIn = trans.Rewards.Block
@@ -91,7 +91,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 					ret.MinerTxFeeIn = trans.Rewards.TxFee
 					ret.MinerUncleRewardIn = trans.Rewards.Uncle
 				} else {
-					ret.AmountIn = (base.MyWei)(trans.Value)
+					ret.AmountIn = (base.Wei)(trans.Value)
 				}
 				// TODO: BOGUS PERF - WHAT ABOUT WITHDRAWALS?
 			}

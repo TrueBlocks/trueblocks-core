@@ -52,13 +52,13 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 				continue
 			}
 
-			plusEq := func(a1, a2 *base.MyWei) base.MyWei {
+			plusEq := func(a1, a2 *base.Wei) base.Wei {
 				return *a1.Add(a1, a2)
 			}
 
 			// Do not collapse, more than one of these can be true at the same time
 			if trace.Action.From == s.AccountedFor {
-				ret.InternalOut = plusEq(&ret.InternalOut, (*base.MyWei)(&trace.Action.Value))
+				ret.InternalOut = plusEq(&ret.InternalOut, (*base.Wei)(&trace.Action.Value))
 				ret.Sender = trace.Action.From
 				if trace.Action.To.IsZero() {
 					if trace.Result != nil {
@@ -70,13 +70,13 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 			}
 
 			if trace.Action.To == s.AccountedFor {
-				ret.InternalIn = plusEq(&ret.InternalIn, (*base.MyWei)(&trace.Action.Value))
+				ret.InternalIn = plusEq(&ret.InternalIn, (*base.Wei)(&trace.Action.Value))
 				ret.Sender = trace.Action.From
 				ret.Recipient = trace.Action.To
 			}
 
 			if trace.Action.SelfDestructed == s.AccountedFor {
-				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, (*base.MyWei)(&trace.Action.Balance))
+				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, (*base.Wei)(&trace.Action.Balance))
 				ret.Sender = trace.Action.SelfDestructed
 				if ret.Sender.IsZero() {
 					ret.Sender = trace.Action.Address
@@ -85,7 +85,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 			}
 
 			if trace.Action.RefundAddress == s.AccountedFor {
-				ret.SelfDestructIn = plusEq(&ret.SelfDestructIn, (*base.MyWei)(&trace.Action.Balance))
+				ret.SelfDestructIn = plusEq(&ret.SelfDestructIn, (*base.Wei)(&trace.Action.Balance))
 				ret.Sender = trace.Action.SelfDestructed
 				if ret.Sender.IsZero() {
 					ret.Sender = trace.Action.Address
@@ -94,7 +94,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 			}
 
 			if trace.Action.Address == s.AccountedFor && !trace.Action.RefundAddress.IsZero() {
-				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, (*base.MyWei)(&trace.Action.Balance))
+				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, (*base.Wei)(&trace.Action.Balance))
 				// self destructed send
 				ret.Sender = trace.Action.Address
 				ret.Recipient = trace.Action.RefundAddress
@@ -102,7 +102,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 
 			if trace.Result != nil {
 				if trace.Result.Address == s.AccountedFor {
-					ret.InternalIn = plusEq(&ret.InternalIn, (*base.MyWei)(&trace.Action.Value))
+					ret.InternalIn = plusEq(&ret.InternalIn, (*base.Wei)(&trace.Action.Value))
 					ret.Sender = trace.Action.From
 					ret.Recipient = trace.Result.Address
 				}

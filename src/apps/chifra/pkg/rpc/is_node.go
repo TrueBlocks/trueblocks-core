@@ -30,7 +30,7 @@ func (conn *Connection) IsNodeArchive() bool {
 		return false
 	}
 
-	return bal.Cmp((*base.MyWei)(&largest.Balance)) == 0
+	return bal.Cmp((*base.Wei)(&largest.Balance)) == 0
 }
 
 // ErrTraceBlockMissing is returned when the node does not support the trace_block endpoint.

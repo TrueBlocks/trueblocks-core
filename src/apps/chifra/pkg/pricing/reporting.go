@@ -21,8 +21,8 @@ type priceDebugger struct {
 	float0      *base.Ether
 	float1      *base.Ether
 	float2      *base.Ether
-	int0        *base.MyWei
-	int1        *base.MyWei
+	int0        *base.Wei
+	int1        *base.Wei
 	bigPrice    *base.Ether
 	price       float64
 	source      string

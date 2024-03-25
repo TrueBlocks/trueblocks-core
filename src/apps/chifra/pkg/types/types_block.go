@@ -51,7 +51,7 @@ type RawBlock struct {
 }
 
 type SimpleBlock[Tx string | SimpleTransaction] struct {
-	BaseFeePerGas base.MyWei         `json:"baseFeePerGas"`
+	BaseFeePerGas base.Wei           `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum        `json:"blockNumber"`
 	Difficulty    uint64             `json:"difficulty"`
 	GasLimit      base.Gas           `json:"gasLimit"`

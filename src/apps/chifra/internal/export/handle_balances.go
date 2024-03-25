@@ -36,7 +36,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 	ctx, cancel := context.WithCancel(context.Background())
 	fetchData := func(modelChan chan types.Modeler[types.RawToken], errorChan chan error) {
 		currentBn := uint64(0)
-		prevBalance := base.NewMyWei(0)
+		prevBalance := base.NewWei(0)
 
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -72,7 +72,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 						}
 
 						iterFunc := func(app types.SimpleAppearance, value *types.SimpleToken) error {
-							var balance *base.MyWei
+							var balance *base.Wei
 							if balance, err = opts.Conn.GetBalanceAt(mon.Address, uint64(app.BlockNumber)); err != nil {
 								return err
 							}
@@ -117,7 +117,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 								}
 								currentBn = item.BlockNumber
 								if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-									item.Diff = *base.NewMyWei(0).Sub(&item.Balance, &item.PriorBalance)
+									item.Diff = *base.NewWei(0).Sub(&item.Balance, &item.PriorBalance)
 									var passes bool
 									passes, finished = filter.ApplyCountFilter()
 									if passes {
@@ -138,7 +138,7 @@ func (opts *ExportOptions) HandleBalances(monitorArray []monitor.Monitor) error 
 					}
 					bar.Finish(true /* newLine */)
 				}
-				prevBalance = base.NewMyWei(0)
+				prevBalance = base.NewWei(0)
 			}
 
 		}

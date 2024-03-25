@@ -26,14 +26,14 @@ type StorageSlot struct {
 }
 
 type Rewards struct {
-	Block  base.MyWei `json:"block"`
-	Nephew base.MyWei `json:"nephew"`
-	TxFee  base.MyWei `json:"txFee"`
-	Uncle  base.MyWei `json:"uncle"`
+	Block  base.Wei `json:"block"`
+	Nephew base.Wei `json:"nephew"`
+	TxFee  base.Wei `json:"txFee"`
+	Uncle  base.Wei `json:"uncle"`
 }
 
-func NewReward(block, nephew, txFee, uncle *base.MyWei) (Rewards, base.MyWei) {
-	total := new(base.MyWei).Add(block, nephew)
+func NewReward(block, nephew, txFee, uncle *base.Wei) (Rewards, base.Wei) {
+	total := new(base.Wei).Add(block, nephew)
 	total = total.Add(total, txFee)
 	total = total.Add(total, uncle)
 	return Rewards{
@@ -89,7 +89,7 @@ type SimpleTransaction struct {
 	Traces               []SimpleTrace   `json:"traces"`
 	TransactionIndex     base.Blknum     `json:"transactionIndex"`
 	TransactionType      string          `json:"type"`
-	Value                base.MyWei      `json:"value"`
+	Value                base.Wei        `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
 	Message    string             `json:"-"`
@@ -127,7 +127,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		"date":             s.Date(),
 		"to":               to,
 		"transactionIndex": s.TransactionIndex,
-		"value":            base.FormattedValue((*base.MyWei)(&s.Value), asEther, 18),
+		"value":            base.FormattedValue(&s.Value, asEther, 18),
 	}
 
 	order = []string{
@@ -184,10 +184,10 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
 		}
-		model["value"] = base.FormattedValue((*base.MyWei)(&s.Value), asEther, 18)
+		model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		model["gas"] = s.Gas
 
-		model["ether"] = base.FormattedValue((*base.MyWei)(&s.Value), true, 18)
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
 		}
@@ -277,8 +277,8 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		model["ether"] = base.FormattedValue((*base.MyWei)(&s.Value), true, 18)
-		ethGasPrice := base.FormattedValue((*base.MyWei)(base.NewMyWei(0).SetUint64(s.GasPrice)), true, 18)
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
+		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 

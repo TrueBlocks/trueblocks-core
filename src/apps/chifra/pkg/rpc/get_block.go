@@ -243,7 +243,7 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 	if len(rawBlock.Withdrawals) > 0 {
 		block.Withdrawals = make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
 		for _, withdrawal := range rawBlock.Withdrawals {
-			amt := base.NewMyWei(0)
+			amt := base.NewWei(0)
 			amt.SetString(withdrawal.Amount, 0)
 			s := types.SimpleWithdrawal{
 				Address:        base.HexToAddress(withdrawal.Address),
@@ -283,16 +283,16 @@ func (conn *Connection) getBlockRaw(bn uint64, withTxs bool) (*types.RawBlock, e
 // anything about the Known blocks.
 
 // getBlockReward returns the block reward for a given block number
-func (conn *Connection) getBlockReward(bn uint64) *base.MyWei {
+func (conn *Connection) getBlockReward(bn uint64) *base.Wei {
 	if bn == 0 {
-		return base.NewMyWei(0)
+		return base.NewWei(0)
 	} else if bn < base.KnownBlock(conn.Chain, base.Byzantium) {
-		return base.NewMyWei(5000000000000000000)
+		return base.NewWei(5000000000000000000)
 	} else if bn < base.KnownBlock(conn.Chain, base.Constantinople) {
-		return base.NewMyWei(3000000000000000000)
+		return base.NewWei(3000000000000000000)
 	} else if bn < base.KnownBlock(conn.Chain, base.Merge) {
-		return base.NewMyWei(2000000000000000000)
+		return base.NewWei(2000000000000000000)
 	} else {
-		return base.NewMyWei(0)
+		return base.NewWei(0)
 	}
 }

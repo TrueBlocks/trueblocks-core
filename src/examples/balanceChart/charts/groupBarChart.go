@@ -82,7 +82,7 @@ func GroupedBarChart(data []types.SimpleState, names []types.SimpleName, title s
 
 	for _, d := range data {
 		idx := addrMap[small(d.Address)] - 1
-		ff := base.ToEther((*base.MyWei)(&d.Balance)).Float64()
+		ff := base.ToEther(&d.Balance).Float64()
 		balances[idx] = append(balances[idx], ff)
 	}
 	for i := 0; i < nAddrs; i++ {

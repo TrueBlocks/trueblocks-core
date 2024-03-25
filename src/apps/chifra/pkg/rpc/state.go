@@ -31,7 +31,7 @@ const (
 )
 
 type StateFilters struct {
-	Balance func(address base.Address, balance *base.MyWei) bool
+	Balance func(address base.Address, balance *base.Wei) bool
 }
 
 // GetState returns account state
@@ -87,7 +87,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	}
 
 	value := queryResults["balance"]
-	balance := base.NewMyWei(0)
+	balance := base.NewWei(0)
 	balance.SetString(*value, 0)
 
 	if filters.Balance != nil {
@@ -97,7 +97,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	}
 
 	if (fieldBits & Balance) != 0 {
-		state.Balance = *(*base.MyWei)(balance)
+		state.Balance = *(*base.Wei)(balance)
 	}
 	if value, ok := queryResults["nonce"]; ok && (fieldBits&Nonce) != 0 {
 		nonce, err := strconv.ParseUint(*value, 0, 64)
@@ -159,14 +159,14 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*base.MyWei, error) {
+func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*base.Wei, error) {
 	if ec, err := conn.getClient(); err != nil {
-		var zero base.MyWei
+		var zero base.Wei
 		return &zero, err
 	} else {
 		defer ec.Close()
 		ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromUint64(bn))
-		return (*base.MyWei)(ret), err
+		return (*base.Wei)(ret), err
 	}
 }
 

@@ -43,19 +43,19 @@ func priceUsdMaker(conn *rpc.Connection, testMode bool, statement *types.SimpleS
 		return 0.0, "not-priced", err
 	}
 
-	divisor := new(base.MyWei)
+	divisor := new(base.Wei)
 	divisor.SetString("1000000000000000000", 10)
 
 	// TODO: Since Dawid fixed the articulate code, we should use the value at results["val_1"] instead of this
 	//       hacky string manipulation
 	rawHex := strings.TrimPrefix(string(result.ReturnedBytes), "0x")
 	rawHex = rawHex[:64]
-	int0 := new(base.MyWei)
+	int0 := new(base.Wei)
 	int0.SetString(rawHex, 16)
-	int0 = int0.Mul(int0, new(base.MyWei).SetInt64(100000))
-	int1 := new(base.MyWei).Quo(int0, divisor)
+	int0 = int0.Mul(int0, new(base.Wei).SetInt64(100000))
+	int1 := new(base.Wei).Quo(int0, divisor)
 
-	bigPrice := new(base.Ether).SetMyWei(int1)
+	bigPrice := new(base.Ether).SetWei(int1)
 	bigPrice = bigPrice.Quo(bigPrice, new(base.Ether).SetInt64(100000))
 	price = bigPrice.Float64()
 	source = "maker"

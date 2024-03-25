@@ -53,7 +53,7 @@ type SimpleName struct {
 	Tags       string       `json:"tags"`
 	raw        *RawName     `json:"-"`
 	// EXISTING_CODE
-	Prefund base.MyWei `json:"prefund,omitempty"`
+	Prefund base.Wei `json:"prefund,omitempty"`
 	// EXISTING_CODE
 }
 

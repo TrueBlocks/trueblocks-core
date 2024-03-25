@@ -76,7 +76,7 @@ type SimpleSlurp struct {
 	TransactionIndex  base.Blknum     `json:"transactionIndex"`
 	TxReceiptStatus   string          `json:"txReceiptStatus"`
 	ValidatorIndex    uint64          `json:"validatorIndex"`
-	Value             base.MyWei      `json:"value"`
+	Value             base.Wei        `json:"value"`
 	WithdrawalIndex   uint64          `json:"withdrawalIndex"`
 	raw               *RawSlurp       `json:"-"`
 	// EXISTING_CODE
@@ -108,7 +108,7 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		"timestamp":   s.Timestamp,
 		"date":        s.Date(),
 		"to":          s.To,
-		"value":       s.ToDisplay((*base.MyWei)(&s.Value), asEther),
+		"value":       s.ToDisplay((*base.Wei)(&s.Value), asEther),
 	}
 
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
@@ -574,7 +574,7 @@ func (s *SimpleSlurp) GasCost() base.Gas {
 	return s.GasPrice * s.GasUsed
 }
 
-func (s *SimpleSlurp) ToDisplay(val *base.MyWei, asEther bool) string {
+func (s *SimpleSlurp) ToDisplay(val *base.Wei, asEther bool) string {
 	if asEther {
 		return base.ToEther(val).String()
 	}

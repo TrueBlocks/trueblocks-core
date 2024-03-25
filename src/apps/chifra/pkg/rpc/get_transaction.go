@@ -251,10 +251,10 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 		if uncles, err := conn.GetUncleBodiesByNumber(uint64(raw.BlockNumber)); err != nil {
 			return nil, err
 		} else {
-			var blockReward = base.NewMyWei(0)
-			var nephewReward = base.NewMyWei(0)
-			var feeReward = base.NewMyWei(0)
-			var uncleReward = base.NewMyWei(0)
+			var blockReward = base.NewWei(0)
+			var nephewReward = base.NewWei(0)
+			var feeReward = base.NewWei(0)
+			var uncleReward = base.NewWei(0)
 
 			sender := base.HexToAddress(raw.Address)
 			bn := uint64(raw.BlockNumber)
@@ -265,16 +265,16 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 					sender = base.BlockRewardSender
 					nUncles := len(uncles)
 					if nUncles > 0 {
-						nephewReward = new(base.MyWei).Mul(blockReward, base.NewMyWei(int64(nUncles)))
-						nephewReward.Div(nephewReward, base.NewMyWei(32))
+						nephewReward = new(base.Wei).Mul(blockReward, base.NewWei(int64(nUncles)))
+						nephewReward.Div(nephewReward, base.NewWei(32))
 					}
 					for _, tx := range block.Transactions {
-						gp := base.NewMyWei(int64(tx.GasPrice))
-						gu := base.NewMyWei(int64(tx.Receipt.GasUsed))
+						gp := base.NewWei(int64(tx.GasPrice))
+						gu := base.NewWei(int64(tx.Receipt.GasUsed))
 						feeReward = feeReward.Add(feeReward, gp.Mul(gp, gu))
 					}
 				} else {
-					blockReward = base.NewMyWei(0)
+					blockReward = base.NewWei(0)
 				}
 			case types.UncleReward:
 				for _, uncle := range uncles {
@@ -282,8 +282,8 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 						sender = base.UncleRewardSender
 						if bn < uncle.BlockNumber+6 {
 							diff := (uncle.BlockNumber + 8 - bn) // positive since +6 < bn
-							uncleReward = new(base.MyWei).Mul(blockReward, base.NewMyWei(int64(diff)))
-							uncleReward.Div(uncleReward, base.NewMyWei(8))
+							uncleReward = new(base.Wei).Mul(blockReward, base.NewWei(int64(diff)))
+							uncleReward.Div(uncleReward, base.NewWei(8))
 						}
 					}
 				}
@@ -298,7 +298,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 						feeReward = &minerTx.Rewards.TxFee
 					}
 				} else {
-					blockReward = base.NewMyWei(0)
+					blockReward = base.NewWei(0)
 				}
 			case types.NephewReward:
 				fallthrough

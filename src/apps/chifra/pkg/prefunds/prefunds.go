@@ -16,7 +16,7 @@ func GetPrefundPath(chain string) string {
 // Allocation is a single allocation in the genesis file
 type Allocation struct {
 	Address base.Address `json:"address" csv:"address"`
-	Balance base.MyWei   `json:"balance" csv:"balance"`
+	Balance base.Wei     `json:"balance" csv:"balance"`
 }
 
 // emptyAllocs is a list of empty allocations. We use this to return at least one allocation

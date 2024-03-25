@@ -40,7 +40,7 @@ type RawTraceAction struct {
 type SimpleTraceAction struct {
 	Address        base.Address    `json:"address,omitempty"`
 	Author         base.Address    `json:"author,omitempty"`
-	Balance        base.MyWei      `json:"balance,omitempty"`
+	Balance        base.Wei        `json:"balance,omitempty"`
 	CallType       string          `json:"callType"`
 	From           base.Address    `json:"from"`
 	Gas            base.Gas        `json:"gas"`
@@ -50,7 +50,7 @@ type SimpleTraceAction struct {
 	RewardType     string          `json:"rewardType,omitempty"`
 	SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
 	To             base.Address    `json:"to"`
-	Value          base.MyWei      `json:"value"`
+	Value          base.Wei        `json:"value"`
 	raw            *RawTraceAction `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -90,13 +90,13 @@ func (s *SimpleTraceAction) Model(chain, format string, verbose bool, extraOptio
 			model["input"] = s.Input
 		}
 		if s.Value.String() != "0" {
-			model["value"] = base.FormattedValue((*base.MyWei)(&s.Value), asEther, 18)
+			model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		}
 		if !s.RefundAddress.IsZero() {
 			model["refundAddress"] = s.RefundAddress
 			model["balance"] = s.Balance.String()
 			if s.Value.String() != "0" {
-				model["value"] = base.FormattedValue((*base.MyWei)(&s.Balance), asEther, 18)
+				model["value"] = base.FormattedValue(&s.Balance, asEther, 18)
 			}
 		} else {
 			if s.To.IsZero() {
@@ -104,7 +104,7 @@ func (s *SimpleTraceAction) Model(chain, format string, verbose bool, extraOptio
 			} else {
 				model["to"] = s.To
 			}
-			model["value"] = base.FormattedValue((*base.MyWei)(&s.Value), asEther, 18)
+			model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		}
 		if len(s.Init) > 0 {
 			model["init"] = utils.FormattedCode(verbose, s.Init)

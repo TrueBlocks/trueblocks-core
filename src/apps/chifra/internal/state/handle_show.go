@@ -16,11 +16,11 @@ import (
 func (opts *StateOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 
-	previousBalance := make(map[base.Address]*base.MyWei, len(opts.Addrs))
+	previousBalance := make(map[base.Address]*base.Wei, len(opts.Addrs))
 	var filters rpc.StateFilters
 	if opts.Changes || opts.NoZero {
 		filters = rpc.StateFilters{
-			Balance: func(address base.Address, balance *base.MyWei) bool {
+			Balance: func(address base.Address, balance *base.Wei) bool {
 				if opts.Changes {
 					previous := previousBalance[address]
 					if balance.Text(10) == previous.Text(10) {

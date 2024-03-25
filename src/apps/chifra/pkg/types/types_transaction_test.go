@@ -40,7 +40,7 @@ func TestTransactionCache(t *testing.T) {
 		Timestamp:        1499633571,
 		To:               base.HexToAddress("0x68c4dc84382822d4ebaf4d2fbbafdc5fde80279b"),
 		TransactionIndex: 10,
-		Value:            *(base.NewMyWei(517)),
+		Value:            *(base.NewWei(517)),
 	}
 
 	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
@@ -110,7 +110,7 @@ func TestTransactionCacheArticulated(t *testing.T) {
 		Timestamp:        1686186779,
 		To:               base.HexToAddress("0x0c316b7042b419d07d343f2f4f5bd54ff731183d"),
 		TransactionIndex: 44,
-		Value:            *(base.NewMyWei(0)),
+		Value:            *(base.NewWei(0)),
 	}
 
 	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})

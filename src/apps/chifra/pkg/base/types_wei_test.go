@@ -6,60 +6,60 @@ import (
 )
 
 func TestFormattedValue(t *testing.T) {
-	vv := NewMyWei(0)
+	vv := NewWei(0)
 	vv, _ = vv.SetString("599853750352891471017612", 10)
 	tests := []struct {
 		name     string
-		bigIn    *MyWei
+		bigIn    *Wei
 		asEther  bool
 		decimals int
 		want     string
 	}{
 		{
 			name:     "Test with positive value",
-			bigIn:    NewMyWei(1000000000000000000),
+			bigIn:    NewWei(1000000000000000000),
 			asEther:  true,
 			decimals: 18,
 			want:     "1",
 		},
 		{
 			name:     "Test with negative value",
-			bigIn:    NewMyWei(-1000000000000000000),
+			bigIn:    NewWei(-1000000000000000000),
 			asEther:  true,
 			decimals: 18,
 			want:     "-1",
 		},
 		{
 			name:     "Test with zero value",
-			bigIn:    NewMyWei(0),
+			bigIn:    NewWei(0),
 			asEther:  true,
 			decimals: 18,
 			want:     "0",
 		},
 		{
 			name:     "Test with large positive value",
-			bigIn:    NewMyWei(123456789012345678),
+			bigIn:    NewWei(123456789012345678),
 			asEther:  true,
 			decimals: 18,
 			want:     "0.123456789012345678",
 		},
 		{
 			name:     "Test with large negative value",
-			bigIn:    NewMyWei(-123456789012345678),
+			bigIn:    NewWei(-123456789012345678),
 			asEther:  true,
 			decimals: 18,
 			want:     "-0.123456789012345678",
 		},
 		{
 			name:     "Test with non-ether value",
-			bigIn:    NewMyWei(1234567890),
+			bigIn:    NewWei(1234567890),
 			asEther:  false,
 			decimals: 0,
 			want:     "1234567890",
 		},
 		{
 			name:     "Test with non-ether value and decimals",
-			bigIn:    NewMyWei(1234567890),
+			bigIn:    NewWei(1234567890),
 			asEther:  false,
 			decimals: 2, // decimals is not used when asEther is false
 			want:     "1234567890",
@@ -85,15 +85,15 @@ func TestFormattedValue(t *testing.T) {
 
 func TestToEther(t *testing.T) {
 	type TestCase struct {
-		input    *MyWei
+		input    *Wei
 		expected string
 	}
 
-	v1, _ := new(MyWei).SetString("123456789012345678", 10)
-	v2, _ := new(MyWei).SetString("1234567890123456789", 10)
+	v1, _ := new(Wei).SetString("123456789012345678", 10)
+	v2, _ := new(Wei).SetString("1234567890123456789", 10)
 	var tests = []TestCase{
-		{NewMyWei(0), "0"},
-		{NewMyWei(1), "0.000000000000000001"},
+		{NewWei(0), "0"},
+		{NewWei(1), "0.000000000000000001"},
 		{v1, "0.123456789012345678"},
 		{v2, "1.234567890123456789"},
 	}

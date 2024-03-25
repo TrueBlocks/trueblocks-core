@@ -4,7 +4,6 @@ import (
 	"image/color"
 	"log"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
@@ -42,7 +41,7 @@ func LineChart(data []types.SimpleState, title string, filename string) {
 		points := make(plotter.XYs, len(group))
 		for i, d := range group {
 			points[i].X = float64(d.BlockNumber)
-			points[i].Y = (*base.MyWei)(&d.Balance).Float64()
+			points[i].Y = d.Balance.Float64()
 		}
 
 		line, err := plotter.NewLine(points)

@@ -42,10 +42,10 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 
 		sender := base.HexToAddress(log.Topics[1].Hex())
 		recipient := base.HexToAddress(log.Topics[2].Hex())
-		var amountIn, amountOut base.MyWei
-		var amt *base.MyWei
-		if amt, _ = new(base.MyWei).SetString(strings.Replace(log.Data, "0x", "", -1), 16); amt == nil {
-			amt = base.NewMyWei(0)
+		var amountIn, amountOut base.Wei
+		var amt *base.Wei
+		if amt, _ = new(base.Wei).SetString(strings.Replace(log.Data, "0x", "", -1), 16); amt == nil {
+			amt = base.NewWei(0)
 		}
 
 		ofInterest := false
@@ -87,19 +87,19 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 
 		if ofInterest {
 			var err error
-			pBal := new(base.MyWei)
+			pBal := new(base.Wei)
 			if pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 				return s, err
 			}
 			s.PrevBal = *pBal
 
-			bBal := new(base.MyWei)
+			bBal := new(base.Wei)
 			if bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 				return s, err
 			}
 			s.BegBal = *bBal
 
-			eBal := new(base.MyWei)
+			eBal := new(base.Wei)
 			if eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 				return s, err
 			}
