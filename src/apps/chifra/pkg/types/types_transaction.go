@@ -26,14 +26,14 @@ type StorageSlot struct {
 }
 
 type Rewards struct {
-	Block  base.MyWei `json:"block"`
-	Nephew base.MyWei `json:"nephew"`
-	TxFee  base.MyWei `json:"txFee"`
-	Uncle  base.MyWei `json:"uncle"`
+	Block  base.Wei `json:"block"`
+	Nephew base.Wei `json:"nephew"`
+	TxFee  base.Wei `json:"txFee"`
+	Uncle  base.Wei `json:"uncle"`
 }
 
-func NewReward(block, nephew, txFee, uncle *base.MyWei) (Rewards, base.MyWei) {
-	total := new(base.MyWei).Add(block, nephew)
+func NewReward(block, nephew, txFee, uncle *base.Wei) (Rewards, base.Wei) {
+	total := new(base.Wei).Add(block, nephew)
 	total = total.Add(total, txFee)
 	total = total.Add(total, uncle)
 	return Rewards{

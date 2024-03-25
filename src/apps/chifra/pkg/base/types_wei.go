@@ -1,62 +1,125 @@
 package base
 
 import (
+	"io"
 	"math/big"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Wei is a type alias for big.Int. This means we can't extend it by
-// adding any of our own methods.
-type Wei = big.Int
-
-func NewWei(x uint64) *Wei {
-	return (*Wei)(big.NewInt(int64(x)))
-}
-
-// MyWei is a type in its own right. This means we can extend it by
+// Wei is a type in its own right. This means we can extend it by
 // adding our own methods, such as UnMarshalJSON and MarshalJSON which
 // are required because our Json encodes big.Ints as strings. Note that
-// MyWei is only temporary and will be replaced by Wei once the
-// encoding issue is resolved.
-type MyWei big.Int
+type Wei big.Int
 
-func NewMyWei(x int64) *MyWei {
-	return (*MyWei)(big.NewInt(x))
+func NewWei(x int64) *Wei {
+	return (*Wei)(big.NewInt(x))
 }
 
-func (w *MyWei) SetString(s string, base int) (*MyWei, bool) {
+func (b *Wei) ToInt() *big.Int {
+	return (*big.Int)(b)
+}
+
+func (w *Wei) Bytes() []byte {
+	return (*big.Int)(w).Bytes()
+}
+
+func (w *Wei) String() string {
+	return (*big.Int)(w).String()
+}
+
+func (w *Wei) SetUint64(x uint64) *Wei {
+	return (*Wei)((*big.Int)(w).SetUint64(x))
+}
+
+func (w *Wei) SetInt64(x int64) *Wei {
+	return (*Wei)((*big.Int)(w).SetInt64(x))
+}
+
+func (w *Wei) SetString(s string, base int) (*Wei, bool) {
+	if strings.HasPrefix(s, "0x") {
+		s = s[2:]
+		base = 16
+	}
 	if i, ok := (*big.Int)(w).SetString(s, base); ok {
-		return (*MyWei)(i), true
+		return (*Wei)(i), true
 	}
 	return nil, false
 }
 
-func (w *MyWei) Add(x, y *MyWei) *MyWei {
-	return (*MyWei)((*big.Int)(w).Add((*big.Int)(x), (*big.Int)(y)))
+func (w *Wei) Float64() float64 {
+	f, _ := (*big.Int)(w).Float64()
+	return f
 }
 
-func (w *MyWei) Mul(x, y *MyWei) *MyWei {
-	return (*MyWei)((*big.Int)(w).Mul((*big.Int)(x), (*big.Int)(y)))
+func (w *Wei) Uint64() uint64 {
+	return (*big.Int)(w).Uint64()
 }
 
-func (w *MyWei) Div(x, y *MyWei) *MyWei {
-	return (*MyWei)((*big.Int)(w).Div((*big.Int)(x), (*big.Int)(y)))
+func (x *Wei) Text(base int) string {
+	return (*big.Int)(x).Text(base)
 }
 
+func (w *Wei) Add(x, y *Wei) *Wei {
+	return (*Wei)((*big.Int)(w).Add((*big.Int)(x), (*big.Int)(y)))
+}
+
+func (w *Wei) Sub(x, y *Wei) *Wei {
+	return (*Wei)((*big.Int)(w).Sub((*big.Int)(x), (*big.Int)(y)))
+}
+
+func (w *Wei) Mul(x, y *Wei) *Wei {
+	return (*Wei)((*big.Int)(w).Mul((*big.Int)(x), (*big.Int)(y)))
+}
+
+func (w *Wei) Div(x, y *Wei) *Wei {
+	return (*Wei)((*big.Int)(w).Div((*big.Int)(x), (*big.Int)(y)))
+}
+
+func (w *Wei) Quo(x, y *Wei) *Wei {
+	return (*Wei)((*big.Int)(w).Quo((*big.Int)(x), (*big.Int)(y)))
+}
+
+func (w *Wei) Cmp(y *Wei) int {
+	return (*big.Int)(w).Cmp((*big.Int)(y))
+}
+
+func (w *Wei) MarshalText() (text []byte, err error) {
+	return (*big.Int)(w).MarshalText()
+}
+
+func (w *Wei) UnmarshalCache(version uint64, reader io.Reader) error {
+	var v big.Int
+	if err := cache.ReadValue(reader, &v, version); err != nil {
+		return err
+	}
+	*w = (Wei)(v)
+	return nil
+}
+
+func (w *Wei) MarshalCache(writer io.Writer) error {
+	v := *w.ToInt()
+	return cache.WriteValue(writer, &v)
+}
+
+func (w *Wei) UnmarshalText(text []byte) error {
+	return (*big.Int)(w).UnmarshalText(text)
+}
 // TODO: BOGUS - THIS NAME SUCKS
 
-func FormattedValue(in *big.Int, asEther bool, decimals int) string {
+func FormattedValue(in *Wei, asEther bool, decimals int) string {
 	if asEther {
-		return ToEther((*MyWei)(in)).Text('f', -1*decimals)
+		return ToEther(in).Text('f', -1*decimals)
 	}
 	return in.Text(10)
 }
 
-func ToEther(wei *MyWei) *Ether {
+func ToEther(wei *Wei) *Ether {
 	f := NewEther(0)
 	e := NewEther(1e18)
-	return f.Quo(new(Ether).SetMyWei(wei), e)
+	return f.Quo(new(Ether).SetWei(wei), e)
 }
 
 func BiFromUint64(bn uint64) *big.Int {

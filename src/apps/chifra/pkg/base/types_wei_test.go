@@ -22,13 +22,13 @@ func TestFormattedValue(t *testing.T) {
 			decimals: 18,
 			want:     "1",
 		},
-		// {
-		// 	name:     "Test with negative value",
-		// 	bigIn:    NewWei(-1000000000000000000),
-		// 	asEther:  true,
-		// 	decimals: 18,
-		// 	want:     "-1",
-		// },
+		{
+			name:     "Test with negative value",
+			bigIn:    NewWei(-1000000000000000000),
+			asEther:  true,
+			decimals: 18,
+			want:     "-1",
+		},
 		{
 			name:     "Test with zero value",
 			bigIn:    NewWei(0),
@@ -43,13 +43,13 @@ func TestFormattedValue(t *testing.T) {
 			decimals: 18,
 			want:     "0.123456789012345678",
 		},
-		// {
-		// 	name:     "Test with large negative value",
-		// 	bigIn:    NewWei(-123456789012345678),
-		// 	asEther:  true,
-		// 	decimals: 18,
-		// 	want:     "-0.123456789012345678",
-		// },
+		{
+			name:     "Test with large negative value",
+			bigIn:    NewWei(-123456789012345678),
+			asEther:  true,
+			decimals: 18,
+			want:     "-0.123456789012345678",
+		},
 		{
 			name:     "Test with non-ether value",
 			bigIn:    NewWei(1234567890),
@@ -85,15 +85,15 @@ func TestFormattedValue(t *testing.T) {
 
 func TestToEther(t *testing.T) {
 	type TestCase struct {
-		input    *MyWei
+		input    *Wei
 		expected string
 	}
 
-	v1, _ := new(MyWei).SetString("123456789012345678", 10)
-	v2, _ := new(MyWei).SetString("1234567890123456789", 10)
+	v1, _ := new(Wei).SetString("123456789012345678", 10)
+	v2, _ := new(Wei).SetString("1234567890123456789", 10)
 	var tests = []TestCase{
-		{NewMyWei(0), "0"},
-		{NewMyWei(1), "0.000000000000000001"},
+		{NewWei(0), "0"},
+		{NewWei(1), "0.000000000000000001"},
 		{v1, "0.123456789012345678"},
 		{v2, "1.234567890123456789"},
 	}
