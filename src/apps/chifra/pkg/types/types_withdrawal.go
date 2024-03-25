@@ -35,7 +35,7 @@ type RawWithdrawal struct {
 
 type SimpleWithdrawal struct {
 	Address        base.Address   `json:"address"`
-	Amount         base.Wei2      `json:"amount"`
+	Amount         base.MyWei     `json:"amount"`
 	BlockNumber    base.Blknum    `json:"blockNumber"`
 	Index          uint64         `json:"index"`
 	Timestamp      base.Timestamp `json:"timestamp"`

@@ -76,7 +76,7 @@ type SimpleSlurp struct {
 	TransactionIndex  base.Blknum     `json:"transactionIndex"`
 	TxReceiptStatus   string          `json:"txReceiptStatus"`
 	ValidatorIndex    uint64          `json:"validatorIndex"`
-	Value             base.Wei2       `json:"value"`
+	Value             base.MyWei      `json:"value"`
 	WithdrawalIndex   uint64          `json:"withdrawalIndex"`
 	raw               *RawSlurp       `json:"-"`
 	// EXISTING_CODE

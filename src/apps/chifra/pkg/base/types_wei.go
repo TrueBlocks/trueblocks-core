@@ -9,10 +9,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// Wei is a type alias for big.Int. This means we can't extend it by
-// adding any of our own methods.
-type Wei2 = MyWei
-
 // MyWei is a type in its own right. This means we can extend it by
 // adding our own methods, such as UnMarshalJSON and MarshalJSON which
 // are required because our Json encodes big.Ints as strings. Note that

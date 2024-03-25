@@ -89,7 +89,7 @@ type SimpleTransaction struct {
 	Traces               []SimpleTrace   `json:"traces"`
 	TransactionIndex     base.Blknum     `json:"transactionIndex"`
 	TransactionType      string          `json:"type"`
-	Value                base.Wei2       `json:"value"`
+	Value                base.MyWei      `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
 	Message    string             `json:"-"`

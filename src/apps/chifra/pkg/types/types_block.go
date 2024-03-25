@@ -51,7 +51,7 @@ type RawBlock struct {
 }
 
 type SimpleBlock[Tx string | SimpleTransaction] struct {
-	BaseFeePerGas base.Wei2          `json:"baseFeePerGas"`
+	BaseFeePerGas base.MyWei         `json:"baseFeePerGas"`
 	BlockNumber   base.Blknum        `json:"blockNumber"`
 	Difficulty    uint64             `json:"difficulty"`
 	GasLimit      base.Gas           `json:"gasLimit"`
@@ -411,3 +411,4 @@ func (s *SimpleBlock[string]) Dup(target *SimpleBlock[SimpleTransaction]) {
 }
 
 // EXISTING_CODE
+
