@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"math/big"
 	"reflect"
 	"strings"
 	"testing"
@@ -214,7 +213,7 @@ func TestArgument_AbiType(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	int256 := big.NewInt(0)
+	int256 := base.NewMyWei(0)
 	_, ok := int256.SetString("-57896044618658097711785492504343953926634992332820282019728792003956564819968", 0)
 	if !ok {
 		t.Fatal("cannot set int256 value")
