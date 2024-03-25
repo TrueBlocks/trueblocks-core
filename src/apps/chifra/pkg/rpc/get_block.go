@@ -8,7 +8,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -244,7 +243,7 @@ func loadBlock[Tx string | types.SimpleTransaction](conn *Connection, bn uint64,
 	if len(rawBlock.Withdrawals) > 0 {
 		block.Withdrawals = make([]types.SimpleWithdrawal, 0, len(rawBlock.Withdrawals))
 		for _, withdrawal := range rawBlock.Withdrawals {
-			amt := big.NewInt(0)
+			amt := base.NewMyWei(0)
 			amt.SetString(withdrawal.Amount, 0)
 			s := types.SimpleWithdrawal{
 				Address:        base.HexToAddress(withdrawal.Address),

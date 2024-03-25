@@ -2,7 +2,6 @@ package types
 
 import (
 	"fmt"
-	"math/big"
 	"reflect"
 	"testing"
 
@@ -41,7 +40,7 @@ func TestTransactionCache(t *testing.T) {
 		Timestamp:        1499633571,
 		To:               base.HexToAddress("0x68c4dc84382822d4ebaf4d2fbbafdc5fde80279b"),
 		TransactionIndex: 10,
-		Value:            *(big.NewInt(517)),
+		Value:            *(base.NewMyWei(517)),
 	}
 
 	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})
@@ -111,7 +110,7 @@ func TestTransactionCacheArticulated(t *testing.T) {
 		Timestamp:        1686186779,
 		To:               base.HexToAddress("0x0c316b7042b419d07d343f2f4f5bd54ff731183d"),
 		TransactionIndex: 44,
-		Value:            *(big.NewInt(0)),
+		Value:            *(base.NewMyWei(0)),
 	}
 
 	store, err := cache.NewStore(&cache.StoreOptions{Location: cache.MemoryCache})

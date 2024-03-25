@@ -177,7 +177,7 @@ string_q type_2_GoType(const CMember& field) {
     if (type == "gas")
         return "base.Gas";
     if (type == "wei")
-        return "base.Wei";
+        return "base.Wei2";
     if (type == "int256")
         return "base.MyWei";
     if (type == "double")
@@ -582,7 +582,7 @@ string_q get_marshal_fields(const CClassDefinition& modelIn) {
             continue;
         }
         string_q goType = type_2_GoType(field);
-        if (goType == "base.MyWei" || goType == "base.Wei" || goType == "base.Hash") {
+        if (goType == "base.MyWei" || goType == "base.Wei2" || goType == "base.Hash") {
             if (name != "s.CumulativeGasUsed") {
                 name = "&" + name;
             }

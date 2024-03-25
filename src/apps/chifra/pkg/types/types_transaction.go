@@ -12,7 +12,6 @@ package types
 import (
 	"fmt"
 	"io"
-	"math/big"
 	"path/filepath"
 	"strings"
 
@@ -90,7 +89,7 @@ type SimpleTransaction struct {
 	Traces               []SimpleTrace   `json:"traces"`
 	TransactionIndex     base.Blknum     `json:"transactionIndex"`
 	TransactionType      string          `json:"type"`
-	Value                base.Wei        `json:"value"`
+	Value                base.Wei2       `json:"value"`
 	raw                  *RawTransaction `json:"-"`
 	// EXISTING_CODE
 	Message    string             `json:"-"`
@@ -279,7 +278,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		}
 		order = append(order, "type")
 		model["ether"] = base.FormattedValue((*base.MyWei)(&s.Value), true, 18)
-		ethGasPrice := base.FormattedValue((*base.MyWei)(big.NewInt(0).SetUint64(s.GasPrice)), true, 18)
+		ethGasPrice := base.FormattedValue((*base.MyWei)(base.NewMyWei(0).SetUint64(s.GasPrice)), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 

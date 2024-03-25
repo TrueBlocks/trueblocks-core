@@ -1,7 +1,6 @@
 package types
 
 import (
-	"math/big"
 	"reflect"
 	"testing"
 
@@ -12,7 +11,7 @@ import (
 func TestBlockCache(t *testing.T) {
 	expected := &SimpleBlock[string]{
 		BlockNumber:   4000001,
-		BaseFeePerGas: *(big.NewInt(0)),
+		BaseFeePerGas: *(base.NewMyWei(0)),
 		Difficulty:    uint64(1097113993909745),
 		GasLimit:      uint64(6712392),
 		GasUsed:       uint64(337966),

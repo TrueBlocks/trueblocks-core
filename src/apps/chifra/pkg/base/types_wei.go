@@ -1,15 +1,17 @@
 package base
 
 import (
+	"io"
 	"math/big"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Wei is a type alias for big.Int. This means we can't extend it by
 // adding any of our own methods.
-type Wei = big.Int
+type Wei2 = MyWei
 
 // MyWei is a type in its own right. This means we can extend it by
 // adding our own methods, such as UnMarshalJSON and MarshalJSON which
@@ -58,6 +60,10 @@ func (w *MyWei) Float64() float64 {
 	return f
 }
 
+func (w *MyWei) Uint64() uint64 {
+	return (*big.Int)(w).Uint64()
+}
+
 func (x *MyWei) Text(base int) string {
 	return (*big.Int)(x).Text(base)
 }
@@ -90,7 +96,20 @@ func (w *MyWei) MarshalText() (text []byte, err error) {
 	return (*big.Int)(w).MarshalText()
 }
 
-// UnmarshalText implements the [encoding.TextUnmarshaler] interface.
+func (w *MyWei) UnmarshalCache(version uint64, reader io.Reader) error {
+	var v big.Int
+	if err := cache.ReadValue(reader, &v, version); err != nil {
+		return err
+	}
+	*w = (MyWei)(v)
+	return nil
+}
+
+func (w *MyWei) MarshalCache(writer io.Writer) error {
+	v := *w.ToInt()
+	return cache.WriteValue(writer, &v)
+}
+
 func (w *MyWei) UnmarshalText(text []byte) error {
 	return (*big.Int)(w).UnmarshalText(text)
 }

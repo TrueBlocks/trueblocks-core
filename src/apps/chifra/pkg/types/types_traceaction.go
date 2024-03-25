@@ -40,7 +40,7 @@ type RawTraceAction struct {
 type SimpleTraceAction struct {
 	Address        base.Address    `json:"address,omitempty"`
 	Author         base.Address    `json:"author,omitempty"`
-	Balance        base.Wei        `json:"balance,omitempty"`
+	Balance        base.Wei2       `json:"balance,omitempty"`
 	CallType       string          `json:"callType"`
 	From           base.Address    `json:"from"`
 	Gas            base.Gas        `json:"gas"`
@@ -50,7 +50,7 @@ type SimpleTraceAction struct {
 	RewardType     string          `json:"rewardType,omitempty"`
 	SelfDestructed base.Address    `json:"selfDestructed,omitempty"`
 	To             base.Address    `json:"to"`
-	Value          base.Wei        `json:"value"`
+	Value          base.Wei2       `json:"value"`
 	raw            *RawTraceAction `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

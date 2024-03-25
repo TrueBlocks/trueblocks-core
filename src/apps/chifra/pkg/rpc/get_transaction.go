@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/prefunds"
@@ -224,7 +223,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 				Timestamp:        ts,
 				From:             base.PrefundSender,
 				To:               base.HexToAddress(raw.Address),
-				Value:            (big.Int)(entry.Prefund),
+				Value:            entry.Prefund,
 			}
 			return &ret, nil
 		}
@@ -317,7 +316,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, raw *typ
 				Timestamp:        block.Timestamp,
 				From:             sender,
 				To:               base.HexToAddress(raw.Address),
-				Value:            (big.Int)(total),
+				Value:            total,
 				Rewards:          &rewards,
 			}
 			return tx, nil
