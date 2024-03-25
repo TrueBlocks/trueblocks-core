@@ -2,7 +2,6 @@ package parser
 
 import (
 	"fmt"
-	"math/big"
 	"strconv"
 	"strings"
 
@@ -71,7 +70,7 @@ func (h *ArgHex) Capture(values []string) error {
 type ArgNumber struct {
 	Int  *int64
 	Uint *uint64
-	Big  *big.Int
+	Big  *base.Wei
 }
 
 func (n *ArgNumber) Capture(values []string) error {
@@ -93,7 +92,7 @@ func (n *ArgNumber) Capture(values []string) error {
 	}
 
 	// If we are here, the number is bigger than int64
-	asBig := big.NewInt(0)
+	asBig := base.NewWei(0)
 	_, ok := asBig.SetString(literal, 10)
 	if ok {
 		n.Big = asBig
