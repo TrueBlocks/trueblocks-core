@@ -6,19 +6,20 @@ type Txnum = uint64
 type Topic = string
 type Timestamp = int64
 
-func HexToWei(hex string) (result *Wei) {
-	result = new(Wei)
+// TODO: This is probably the same as String (could be removed)
+
+func HexToWei(hex string) *MyWei {
+	result := new(MyWei)
 	if hex == "" {
-		return
+		return result
 	}
 
 	if len(hex) > 66 {
-		// Cut garbage off if hex is too long
 		result.SetString(hex[2:66], 16)
 	} else {
 		result.SetString(hex[2:], 16)
 	}
-	return
+	return result
 }
 
 func IsFinal(latestTs, blockTs Timestamp) bool {

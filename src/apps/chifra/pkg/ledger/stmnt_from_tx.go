@@ -39,7 +39,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
 		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
-			prevBal = new(big.Int)
+			prevBal = new(base.MyWei)
 		}
 		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
 		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
@@ -58,9 +58,9 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			Decimals:         18,
 			SpotPrice:        0.0,
 			PriceSource:      "not-priced",
-			PrevBal:          *prevBal,
-			BegBal:           *begBal,
-			EndBal:           *endBal,
+			PrevBal:          *(*big.Int)(prevBal),
+			BegBal:           *(*big.Int)(begBal),
+			EndBal:           *(*big.Int)(endBal),
 			ReconType:        ctx.ReconType,
 		}
 

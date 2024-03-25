@@ -25,7 +25,7 @@ func (conn *Connection) IsNodeArchive() bool {
 		return false
 	}
 
-	bal, err := conn.GetBalanceAtMyWei(largest.Address, 0)
+	bal, err := conn.GetBalanceAt(largest.Address, 0)
 	if err != nil {
 		return false
 	}

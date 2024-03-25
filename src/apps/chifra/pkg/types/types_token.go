@@ -10,8 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"math/big"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -38,16 +36,16 @@ type RawToken struct {
 
 type SimpleToken struct {
 	Address          base.Address   `json:"address"`
-	Balance          big.Int        `json:"balance"`
+	Balance          base.MyWei     `json:"balance"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Decimals         uint64         `json:"decimals"`
-	Diff             big.Int        `json:"diff,omitempty"`
+	Diff             base.MyWei     `json:"diff,omitempty"`
 	Holder           base.Address   `json:"holder"`
 	Name             string         `json:"name"`
-	PriorBalance     big.Int        `json:"priorBalance,omitempty"`
+	PriorBalance     base.MyWei     `json:"priorBalance,omitempty"`
 	Symbol           string         `json:"symbol"`
 	Timestamp        base.Timestamp `json:"timestamp"`
-	TotalSupply      big.Int        `json:"totalSupply"`
+	TotalSupply      base.MyWei     `json:"totalSupply"`
 	TransactionIndex base.Blknum    `json:"transactionIndex,omitempty"`
 	TokenType        TokenType      `json:"type"`
 	raw              *RawToken      `json:"-"`
@@ -181,4 +179,3 @@ func (t TokenType) IsErc721() bool {
 }
 
 // EXISTING_CODE
-

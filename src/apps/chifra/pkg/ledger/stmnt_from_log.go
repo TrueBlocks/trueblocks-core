@@ -88,23 +88,23 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 
 		if ofInterest {
 			var err error
-			pBal := new(big.Int)
+			pBal := new(base.MyWei)
 			if pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 				return s, err
 			}
-			s.PrevBal = *pBal
+			s.PrevBal = *(*big.Int)(pBal)
 
-			bBal := new(big.Int)
+			bBal := new(base.MyWei)
 			if bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 				return s, err
 			}
-			s.BegBal = *bBal
+			s.BegBal = *(*big.Int)(bBal)
 
-			eBal := new(big.Int)
+			eBal := new(base.MyWei)
 			if eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 				return s, err
 			}
-			s.EndBal = *eBal
+			s.EndBal = *(*big.Int)(eBal)
 
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 			if !l.trialBalance("token", &s) {
