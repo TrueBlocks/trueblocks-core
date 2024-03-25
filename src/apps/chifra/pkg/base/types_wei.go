@@ -50,3 +50,20 @@ func BiFromUint64(bn uint64) *big.Int {
 	}
 	return new(big.Int).SetUint64(bn)
 }
+
+// TODO: This is probably the same as String (could be removed)
+
+func HexToWei(hex string) *Wei {
+	result := new(Wei)
+	if hex == "" {
+		return result
+	}
+
+	if len(hex) > 66 {
+		// Cut garbage off if hex is too long
+		result.SetString(hex[2:66], 16)
+	} else {
+		result.SetString(hex[2:], 16)
+	}
+	return result
+}

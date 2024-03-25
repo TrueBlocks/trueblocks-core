@@ -127,5 +127,5 @@ extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
 
 //---------------------------------------------------------------------------------------------------
-extern void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase);
+// extern void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase);
 extern string_q get_corrected_caps(const string_q& capsIn);
