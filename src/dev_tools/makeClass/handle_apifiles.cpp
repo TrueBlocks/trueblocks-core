@@ -251,9 +251,9 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
                 memberStream << "      parameters:\n";
             memberStream << yp << endl;
             fieldCnt++;
-            // if (!(member.option_type % "positional")) {
-            //     reportOneOption(apiRoute, optionName, "api");
-            // }
+            if (!(member.option_type % "positional")) {
+                reportOneOption(apiRoute, optionName, "api");
+            }
         }
     }
 
@@ -274,7 +274,7 @@ string_q toApiPath(const CCommandOption& cmd, const string_q& returnTypesIn, con
         replace(yp, "[{SCHEMA}]", getSchema(parts[2]));
         memberStream << yp << endl;
         fieldCnt++;
-        // reportOneOption(apiRoute, optionName, "api");
+        reportOneOption(apiRoute, optionName, "api");
     }
 
     if (fieldCnt == 0) {
