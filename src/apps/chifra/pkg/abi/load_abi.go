@@ -27,7 +27,7 @@ import (
 
 // LoadAbi tries to load ABI from any source (local file, cache, download from 3rd party)
 func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *SelectorSyncMap) error {
-	err := conn.IsContractAt(address, nil)
+	err := conn.IsContractAtLatest(address)
 	if err != nil {
 		if errors.Is(err, rpc.ErrNotAContract) {
 			logger.Progress(true, fmt.Sprintf("Skipping EOA %s", colors.Cyan+address.Hex()+colors.Off))

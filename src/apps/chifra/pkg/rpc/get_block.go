@@ -126,11 +126,7 @@ func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
 	} else {
 		defer ec.Close()
 
-		var blockNumber *big.Int
-		if bn != utils.NOPOS {
-			blockNumber = big.NewInt(int64(bn))
-		}
-		r, err := ec.HeaderByNumber(context.Background(), blockNumber)
+		r, err := ec.HeaderByNumber(context.Background(), bnFromUint64(bn))
 		if err != nil {
 			logger.Error("Could not connect to RPC client", err)
 			return 0

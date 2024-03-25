@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -166,7 +165,7 @@ func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*base.MyWei,
 		return &zero, err
 	} else {
 		defer ec.Close()
-		ret, err := ec.BalanceAt(context.Background(), addr.Common(), new(big.Int).SetUint64(bn))
+		ret, err := ec.BalanceAt(context.Background(), addr.Common(), bnFromUint64(bn))
 		return (*base.MyWei)(ret), err
 	}
 }
@@ -234,8 +233,8 @@ func (conn *Connection) GetFieldsFromParts(parts []string, asEther bool) (stateF
 	return
 }
 
-func (conn *Connection) getTypeNonProxy(address base.Address, blockNumber base.Blknum) string {
-	isContractErr := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: blockNumber})
+func (conn *Connection) getTypeNonProxy(address base.Address, bn base.Blknum) string {
+	isContractErr := conn.IsContractAt(address, bn)
 	if errors.Is(isContractErr, ErrNotAContract) {
 		return "EOA"
 	}
