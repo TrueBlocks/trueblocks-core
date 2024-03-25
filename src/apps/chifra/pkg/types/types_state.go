@@ -80,9 +80,9 @@ func (s *SimpleState) Model(chain, format string, verbose bool, extraOptions map
 				for _, field := range fields {
 					switch field {
 					case "ether":
-						model["ether"] = base.FormattedValue(s.Balance, true, 18)
+						model["ether"] = base.FormattedValue(&s.Balance, true, 18)
 					case "balance":
-						model["balance"] = base.FormattedValue(s.Balance, false, 18)
+						model["balance"] = base.FormattedValue(&s.Balance, false, 18)
 					case "nonce":
 						model["nonce"] = s.Nonce
 					case "code":
@@ -106,10 +106,10 @@ func (s *SimpleState) Model(chain, format string, verbose bool, extraOptions map
 	if format == "json" {
 		// In JSON format we display both balances
 		if _, ok := model["ether"]; !ok {
-			model["ether"] = base.FormattedValue(s.Balance, true, 18)
+			model["ether"] = base.FormattedValue(&s.Balance, true, 18)
 		}
 		if _, ok := model["balance"]; !ok {
-			model["balance"] = base.FormattedValue(s.Balance, false, 18)
+			model["balance"] = base.FormattedValue(&s.Balance, false, 18)
 		}
 	}
 	// EXISTING_CODE

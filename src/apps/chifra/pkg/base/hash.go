@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/ethereum/go-ethereum/common"
@@ -72,10 +71,6 @@ func (h *Hash) SetCommon(c *common.Hash) Hash {
 func HexToHash(hex string) (hash Hash) {
 	hash.SetHex(hex)
 	return
-}
-
-func BigToHash(b *big.Int) Hash {
-	return BytesToHash(b.Bytes())
 }
 
 func BytesToHash(b []byte) (hash Hash) {

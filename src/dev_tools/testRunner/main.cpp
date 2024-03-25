@@ -35,12 +35,6 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return EXIT_FAILURE;
 
-    bool runLocal = getGlobalConfig("testRunner")->getConfigBool("settings", "run_local", false);
-    if (runLocal) {
-        cerr << "Running local tests. Hit enter to continue." << endl;
-        getchar();
-    }
-
     total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     string_q testFolder = getSourcePath3();
     uint32_t testID = 0;
@@ -69,40 +63,11 @@ int main(int argc, const char* argv[]) {
             explode(lines, contents, '\n');
 
             map<string_q, CTestCase> testMap;
-            string_q ttOnly = getEnvStr("TEST_TEST_ONLY");
-            bool ttOnlyB = !ttOnly.empty();
             for (auto line : lines) {
-                if (ttOnlyB) {
-                    runLocal = false;
-                    if (startsWith(line, "test")) {
-                        replace(line, "test", "on");
-                    } else if (startsWith(line, ttOnly)) {
-                        replace(line, ttOnly, "on");
-                    } else if (startsWith(line, "on")) {
-                        replace(line, "on", "local");
-                    }
-                }
-                if (startsWith(line, "erigon"))
-                    replace(line, "erigon", "local");
-                if (runLocal && startsWith(line, "local"))
-                    replace(line, "local", "on");
                 bool ignore1 = startsWith(line, "#");
                 bool ignore2 = !startsWith(line, "on") && !options.ignoreOff;
                 bool ignore3 = startsWith(line, "enabled");
-                bool ignore4 = false;
-                if (!ignore3 && !options.filter.empty()) {
-                    if (contains(line, " all,")) {
-                        printf("%s", "");  // do nothing - do not remove cruft - squelches compiler warning
-                    } else if (options.filter == "fast") {
-                        ignore4 = !contains(line, "fast,");
-                    } else if (options.filter == "slow") {
-                        ignore4 = !contains(line, "slow,");
-                    } else if (options.filter == "medi") {
-                        ignore4 = !contains(line, "medi,");
-                    }
-                }
-
-                if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
+                if (line.empty() || ignore1 || ignore2 || ignore3) {
                     if (ignore2 && !options.ignoreOff) {
                         if (trim(line).substr(0, 120).length() > 0) {
                             cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
@@ -144,8 +109,8 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            options.doTests(total, testArray, path, testName, API, !ttOnlyB);
-            options.doTests(total, testArray, path, testName, CMD, !ttOnlyB);
+            options.doTests(total, testArray, path, testName, API);
+            options.doTests(total, testArray, path, testName, CMD);
             if (shouldQuit())
                 break;
 
@@ -161,18 +126,17 @@ int main(int argc, const char* argv[]) {
     total.allPassed = total.nTests == total.nPassed;
     ::sleep(1);
     total.date = Now().Format(FMT_EXPORT);
-    if (options.report && options.skip == 1) {
-        // Write performance data to a file and results to the screen
-        perf << total.Format(perf_fmt) << endl;
-        cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
-        if (options.full_test && options.report) {
-            string_q perfFile =
-                rootConfigs + string_q("perf/performance") + (total.allPassed ? "" : "_failed") + ".csv";
-            appendToAsciiFile(perfFile, perf.str());
-            appendToAsciiFile(rootConfigs + "perf/performance_slow.csv", slow.str());
-        } else {
-            LOG_WARN(cRed, "Performance results not written because not full test", cOff);
-        }
+
+    // Write performance data to a file and results to the screen
+    perf << total.Format(perf_fmt) << endl;
+    cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
+    if (options.full_test) {
+        string_q perfFile =
+            rootConfigs + string_q("perf/performance") + (total.allPassed ? "" : "_failed") + ".csv";
+        appendToAsciiFile(perfFile, perf.str());
+        appendToAsciiFile(rootConfigs + "perf/performance_slow.csv", slow.str());
+    } else {
+        LOG_WARN(cRed, "Performance results not written because not full test", cOff);
     }
 
     // If configured, copy the data out to the folder our performance measurement tool knows about
@@ -185,9 +149,7 @@ int main(int argc, const char* argv[]) {
                 ostringstream copyCmd;
                 copyCmd << "cp -f \"";
                 copyCmd << rootConfigs + file << "\" \"" << copyPath << "\"";
-                // clang-format off
                 if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-                // clang-format on
             }
         }
     }
@@ -201,8 +163,7 @@ int main(int argc, const char* argv[]) {
 }
 
 //-----------------------------------------------------------------------
-void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName,
-                       int whichTest, bool doRemove) {
+void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
     if (!(modes & whichTest))
         return;
 
@@ -213,11 +174,9 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test : testArray) {
-        if (skip != 1 && nRun++ % skip)
-            continue;
         if (verbose)
             cerr << string_q(120, '=') << endl << test << endl << string_q(120, '=') << endl;
-        test.prepareTest(cmdTests, skip > 0 && doRemove);
+        test.prepareTest(cmdTests);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode
 
@@ -322,9 +281,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.nTests++;
-            // clang-format off
             if (system(theCmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-            // clang-format on
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
             forEveryFileInFolder(test.goldPath + "*", postCleanup, NULL);
@@ -357,12 +314,10 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             double thisTime = str_2_Double(TIC());
             if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.totSecs += thisTime;
-            // clang-format off
             string_q timeRep = (thisTime > tooSlow       ? cRed
                                 : thisTime <= fastEnough ? cGreen
                                                          : "") +
                                double_2_Str(thisTime, 5) + cOff;
-            // clang-format on
 
             if (endsWith(test.path, "lib"))
                 replace(test.workPath, "../", "");

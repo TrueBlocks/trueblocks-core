@@ -4,7 +4,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"math/big"
 	"path/filepath"
 	"strings"
 
@@ -81,10 +80,6 @@ func (a *Address) SetCommon(c *common.Address) Address {
 func HexToAddress(hex string) (addr Address) {
 	addr.SetHex(hex)
 	return
-}
-
-func BigToAddress(b *big.Int) Address {
-	return BytesToAddress(b.Bytes())
 }
 
 func BytesToAddress(b []byte) (addr Address) {

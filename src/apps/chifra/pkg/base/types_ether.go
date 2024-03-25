@@ -27,11 +27,7 @@ func (x *Ether) Text(format byte, prec int) string {
 	return (*big.Float)(x).Text(format, prec)
 }
 
-func (e *Ether) SetInt(i *big.Int) *Ether {
-	return (*Ether)((*big.Float)(e).SetInt(i))
-}
-
-func (e *Ether) SetMyWei(i *MyWei) *Ether {
+func (e *Ether) SetWei(i *Wei) *Ether {
 	return (*Ether)((*big.Float)(e).SetInt((*big.Int)(i)))
 }
 
@@ -75,17 +71,4 @@ func (e *Ether) UnmarshalJSON(data []byte) error {
 
 func (e *Ether) MarshalJSON() ([]byte, error) {
 	return []byte(`"` + e.String() + `"`), nil
-}
-
-func ToEther(wei *MyWei) *Ether {
-	f := NewEther(0)
-	e := NewEther(1e18)
-	return f.Quo(new(Ether).SetMyWei(wei), e)
-}
-
-func FormattedValue(in big.Int, asEther bool, decimals int) string {
-	if asEther {
-		return ToEther((*MyWei)(&in)).Text('f', -1*decimals)
-	}
-	return in.Text(10)
 }

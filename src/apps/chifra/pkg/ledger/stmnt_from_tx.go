@@ -2,7 +2,6 @@ package ledger
 
 import (
 	"fmt"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -39,7 +38,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 		// TODO: BOGUS PERF - This greatly increases the number of times we call into eth_getBalance which is quite slow
 		prevBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.PrevBlock)
 		if trans.BlockNumber == 0 {
-			prevBal = new(big.Int)
+			prevBal = new(base.Wei)
 		}
 		begBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock-1)
 		endBal, _ := conn.GetBalanceAt(l.AccountFor, ctx.CurBlock)
@@ -70,12 +69,12 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 
 		// Do not collapse. A single transaction may have many movements of money
 		if l.AccountFor == ret.Sender {
-			gasUsed := new(big.Int)
+			gasUsed := new(base.Wei)
 			if trans.Receipt != nil {
 				gasUsed.SetUint64(trans.Receipt.GasUsed)
 			}
-			gasPrice := new(big.Int).SetUint64(trans.GasPrice)
-			gasOut := new(big.Int).Mul(gasUsed, gasPrice)
+			gasPrice := new(base.Wei).SetUint64(trans.GasPrice)
+			gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
 
 			ret.AmountOut = trans.Value
 			ret.GasOut = *gasOut
@@ -87,10 +86,10 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 				ret.PrefundIn = trans.Value
 			} else {
 				if trans.Rewards != nil {
-					ret.MinerBaseRewardIn = (big.Int)(trans.Rewards.Block)
-					ret.MinerNephewRewardIn = (big.Int)(trans.Rewards.Nephew)
-					ret.MinerTxFeeIn = (big.Int)(trans.Rewards.TxFee)
-					ret.MinerUncleRewardIn = (big.Int)(trans.Rewards.Uncle)
+					ret.MinerBaseRewardIn = trans.Rewards.Block
+					ret.MinerNephewRewardIn = trans.Rewards.Nephew
+					ret.MinerTxFeeIn = trans.Rewards.TxFee
+					ret.MinerUncleRewardIn = trans.Rewards.Uncle
 				} else {
 					ret.AmountIn = trans.Value
 				}

@@ -3,7 +3,6 @@ package statePkg
 import (
 	"context"
 	"errors"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
@@ -17,11 +16,11 @@ import (
 func (opts *StateOptions) HandleShow() error {
 	chain := opts.Globals.Chain
 
-	previousBalance := make(map[base.Address]*big.Int, len(opts.Addrs))
+	previousBalance := make(map[base.Address]*base.Wei, len(opts.Addrs))
 	var filters rpc.StateFilters
 	if opts.Changes || opts.NoZero {
 		filters = rpc.StateFilters{
-			Balance: func(address base.Address, balance *big.Int) bool {
+			Balance: func(address base.Address, balance *base.Wei) bool {
 				if opts.Changes {
 					previous := previousBalance[address]
 					if balance.Text(10) == previous.Text(10) {
