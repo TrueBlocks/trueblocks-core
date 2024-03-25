@@ -33,7 +33,7 @@ cd ..
 make generate finish
 make -j 8
 
-~/.local/bin/chifra/test/test-api.sh --filter all --mode both --report $@
+~/.local/bin/chifra/test/test-api.sh --mode both $@
 RESULT=$?
 
 export DEST_FOLDER="$HOME/Library/Application Support/TrueBlocks/config/mainnet"

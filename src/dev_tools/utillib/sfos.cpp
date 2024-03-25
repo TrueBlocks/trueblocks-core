@@ -179,9 +179,7 @@ string_q doCommand(const string_q& cmd, bool readStderr) {
     if (readStderr) {
         theCommand = (cmd + " >/dev/null 2>" + filename);
     }
-    // clang-format off
     if (system(theCommand.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
 
     // Check twice for existance since the previous command creates the file but may take some time
     waitForCreate(filename);

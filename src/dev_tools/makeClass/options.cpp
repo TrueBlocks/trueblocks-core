@@ -19,15 +19,12 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
-    COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("protobuf", "p", "", OPT_SWITCH, "compile protobufs"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
-    // clang-format on
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -44,7 +41,6 @@ bool COptions::parseArguments(string_q& command) {
 
     CStringArray files;
     bool readmes = false;
-    bool format = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -56,9 +52,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-m" || arg == "--readmes") {
             readmes = true;
-
-        } else if (arg == "-f" || arg == "--format") {
-            format = true;
 
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
@@ -175,15 +168,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     if (readmes && !handle_readmes())
         return false;
-    if (format && !handle_format())
-        return false;
     if (protobuf && !handle_protobuf())
         return false;
 
     // Default to run if we get only all
 
-    // Maybe the user only wants to generate code, or format
-    if (all && (format + readmes) > 0)
+    // Maybe the user only wants to generate code
+    if (all && readmes > 0)
         return false;
 
     // If not, we need classDefs to work with...
@@ -222,9 +213,7 @@ void COptions::Init(void) {
 COptions::COptions(void) : classFile("") {
     Init();
 
-    // clang-format off
     notes.push_back("More information on class definition files is found in the documentation.");
-    // clang-format on
 
     usageErrs[ERR_NOERROR] = "No error";
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";

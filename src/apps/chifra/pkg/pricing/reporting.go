@@ -1,7 +1,6 @@
 package pricing
 
 import (
-	"math/big"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -22,8 +21,8 @@ type priceDebugger struct {
 	float0      *base.Ether
 	float1      *base.Ether
 	float2      *base.Ether
-	int0        *big.Int
-	int1        *big.Int
+	int0        *base.Wei
+	int1        *base.Wei
 	bigPrice    *base.Ether
 	price       float64
 	source      string

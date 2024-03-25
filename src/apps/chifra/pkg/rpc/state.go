@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"math/big"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -32,7 +31,7 @@ const (
 )
 
 type StateFilters struct {
-	Balance func(address base.Address, balance *big.Int) bool
+	Balance func(address base.Address, balance *base.Wei) bool
 }
 
 // GetState returns account state
@@ -88,7 +87,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	}
 
 	value := queryResults["balance"]
-	balance := big.NewInt(0)
+	balance := base.NewWei(0)
 	balance.SetString(*value, 0)
 
 	if filters.Balance != nil {
@@ -160,13 +159,14 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 }
 
 // GetBalanceAt returns a balance for an address at a block
-func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*big.Int, error) {
+func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*base.Wei, error) {
 	if ec, err := conn.getClient(); err != nil {
-		var zero big.Int
+		var zero base.Wei
 		return &zero, err
 	} else {
 		defer ec.Close()
-		return ec.BalanceAt(context.Background(), addr.Common(), new(big.Int).SetUint64(bn))
+		ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromUint64(bn))
+		return (*base.Wei)(ret), err
 	}
 }
 
@@ -233,8 +233,8 @@ func (conn *Connection) GetFieldsFromParts(parts []string, asEther bool) (stateF
 	return
 }
 
-func (conn *Connection) getTypeNonProxy(address base.Address, blockNumber base.Blknum) string {
-	isContractErr := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: blockNumber})
+func (conn *Connection) getTypeNonProxy(address base.Address, bn base.Blknum) string {
+	isContractErr := conn.IsContractAt(address, bn)
 	if errors.Is(isContractErr, ErrNotAContract) {
 		return "EOA"
 	}

@@ -10,7 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"math/big"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -54,7 +53,7 @@ type SimpleName struct {
 	Tags       string       `json:"tags"`
 	raw        *RawName     `json:"-"`
 	// EXISTING_CODE
-	Prefund big.Int `json:"prefund,omitempty"`
+	Prefund base.Wei `json:"prefund,omitempty"`
 	// EXISTING_CODE
 }
 

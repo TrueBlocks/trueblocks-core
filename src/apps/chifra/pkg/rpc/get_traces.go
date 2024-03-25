@@ -6,7 +6,6 @@ package rpc
 
 import (
 	"fmt"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
@@ -47,7 +46,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 			traceAction := types.SimpleTraceAction{
 				Address:        base.HexToAddress(rawTrace.Action.Address),
 				Author:         base.HexToAddress(rawTrace.Action.Author),
-				Balance:        *big.NewInt(0).SetUint64(utils.MustParseUint(rawTrace.Action.Balance)),
+				Balance:        *base.NewWei(0).SetUint64(utils.MustParseUint(rawTrace.Action.Balance)),
 				CallType:       rawTrace.Action.CallType,
 				From:           base.HexToAddress(rawTrace.Action.From),
 				Gas:            utils.MustParseUint(rawTrace.Action.Gas),
@@ -57,7 +56,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn uint64) ([]types.SimpleTrace, 
 				RewardType:     rawTrace.Action.RewardType,
 				SelfDestructed: base.HexToAddress(rawTrace.Action.SelfDestructed),
 				To:             base.HexToAddress(rawTrace.Action.To),
-				Value:          *big.NewInt(0).SetUint64(utils.MustParseUint(rawTrace.Action.Value)),
+				Value:          *base.NewWei(0).SetUint64(utils.MustParseUint(rawTrace.Action.Value)),
 			}
 			traceResult := types.SimpleTraceResult{}
 			if rawTrace.Result != nil {
@@ -152,9 +151,9 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 		var idx uint64
 
 		for _, rawTrace := range *rawTraces {
-			value := big.NewInt(0)
+			value := base.NewWei(0)
 			value.SetString(rawTrace.Action.Value, 0)
-			balance := big.NewInt(0)
+			balance := base.NewWei(0)
 			balance.SetString(rawTrace.Action.Balance, 0)
 
 			action := types.SimpleTraceAction{
@@ -252,9 +251,9 @@ func (conn *Connection) GetTracesByFilter(filter string) ([]types.SimpleTrace, e
 
 		// TODO: This could be loadTrace in the same way load Blocks works
 		for _, rawTrace := range *rawTraces {
-			value := big.NewInt(0)
+			value := base.NewWei(0)
 			value.SetString(rawTrace.Action.Value, 0)
-			balance := big.NewInt(0)
+			balance := base.NewWei(0)
 			balance.SetString(rawTrace.Action.Balance, 0)
 
 			action := types.SimpleTraceAction{

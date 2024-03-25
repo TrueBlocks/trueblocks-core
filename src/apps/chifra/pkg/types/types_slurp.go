@@ -108,7 +108,7 @@ func (s *SimpleSlurp) Model(chain, format string, verbose bool, extraOptions map
 		"timestamp":   s.Timestamp,
 		"date":        s.Date(),
 		"to":          s.To,
-		"value":       base.FormattedValue(s.Value, asEther, 18),
+		"value":       base.FormattedValue(&s.Value, asEther, 18),
 	}
 
 	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {

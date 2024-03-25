@@ -69,7 +69,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         cerr.rdbuf(cout.rdbuf());
 
     // We allow users to add 'true' or 'false' to boolean options, but the following code works by the
-    // presence or absense of the boolean key, so here we spin through, removing 'true' and 'false' and
+    // presence or absence of the boolean key, so here we spin through, removing 'true' and 'false' and
     // removing the key if we find 'false'
     CStringArray cleaned_;
     for (int i = 1; i < argCountIn; i++) {
@@ -814,9 +814,7 @@ void COptionsBase::closeRedirect(void) {
         if (!isTestMode() && rd_zipOnClose) {
             ostringstream os;
             os << "gzip -fv " << substitute(outFn, ".gz", "");
-            // clang-format off
             if (system(os.str().c_str())) {}  // Don't remove. Silences warnings
-            // clang-format on
         }
 
         rd_zipOnClose = false;
