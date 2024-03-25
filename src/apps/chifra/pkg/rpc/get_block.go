@@ -126,7 +126,7 @@ func (conn *Connection) GetBlockTimestamp(bn base.Blknum) base.Timestamp {
 	} else {
 		defer ec.Close()
 
-		r, err := ec.HeaderByNumber(context.Background(), bnFromUint64(bn))
+		r, err := ec.HeaderByNumber(context.Background(), base.BiFromUint64(bn))
 		if err != nil {
 			logger.Error("Could not connect to RPC client", err)
 			return 0
@@ -182,7 +182,7 @@ func (conn *Connection) GetBlockHashByNumber(bn uint64) (base.Hash, error) {
 	} else {
 		defer ec.Close()
 
-		ethBlock, err := ec.BlockByNumber(context.Background(), new(big.Int).SetUint64(bn))
+		ethBlock, err := ec.BlockByNumber(context.Background(), base.BiFromUint64(bn))
 		if err != nil {
 			return base.Hash{}, err
 		}

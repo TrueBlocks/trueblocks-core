@@ -3,6 +3,8 @@ package base
 import (
 	"math/big"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Wei is a type alias for big.Int. This means we can't extend it by
@@ -104,4 +106,11 @@ func ToEther(wei *MyWei) *Ether {
 	f := NewEther(0)
 	e := NewEther(1e18)
 	return f.Quo(new(Ether).SetMyWei(wei), e)
+}
+
+func BiFromUint64(bn uint64) *big.Int {
+	if bn == utils.NOPOS {
+		return nil
+	}
+	return new(big.Int).SetUint64(bn)
 }

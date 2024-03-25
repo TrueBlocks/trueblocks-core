@@ -28,7 +28,7 @@ func (conn *Connection) IsContractAt(address base.Address, bn uint64) error {
 		defer ec.Close()
 
 		ctx := context.Background()
-		if code, err := ec.CodeAt(ctx, address.Common(), bnFromUint64(bn)); err != nil {
+		if code, err := ec.CodeAt(ctx, address.Common(), base.BiFromUint64(bn)); err != nil {
 			return err
 		} else {
 			if len(code) == 0 {
@@ -45,7 +45,7 @@ func (conn *Connection) GetContractCodeAt(addr base.Address, bn uint64) ([]byte,
 		return []byte{}, err
 	} else {
 		defer ec.Close()
-		return ec.CodeAt(context.Background(), addr.Common(), bnFromUint64(bn))
+		return ec.CodeAt(context.Background(), addr.Common(), base.BiFromUint64(bn))
 	}
 }
 

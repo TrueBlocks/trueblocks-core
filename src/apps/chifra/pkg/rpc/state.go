@@ -165,7 +165,7 @@ func (conn *Connection) GetBalanceAt(addr base.Address, bn uint64) (*base.MyWei,
 		return &zero, err
 	} else {
 		defer ec.Close()
-		ret, err := ec.BalanceAt(context.Background(), addr.Common(), bnFromUint64(bn))
+		ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromUint64(bn))
 		return (*base.MyWei)(ret), err
 	}
 }
