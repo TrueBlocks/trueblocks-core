@@ -814,9 +814,7 @@ void COptionsBase::closeRedirect(void) {
         if (!isTestMode() && rd_zipOnClose) {
             ostringstream os;
             os << "gzip -fv " << substitute(outFn, ".gz", "");
-            // clang-format off
             if (system(os.str().c_str())) {}  // Don't remove. Silences warnings
-            // clang-format on
         }
 
         rd_zipOnClose = false;

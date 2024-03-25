@@ -383,7 +383,6 @@ string_q extract(const string_q& haystack, size_t pos, size_t len) {
 string_q escape_string(const string_q& str) {
     string_q res;
     for (auto it = str.begin(); it != str.end(); ++it) {
-        // clang-format off
              if (*it == '\b') res += "\\b";  // NOLINT
         else if (*it == '\t') res += "\\t";
         else if (*it == '\n') res += "\\n";
@@ -399,7 +398,6 @@ string_q escape_string(const string_q& str) {
         } else {
             res += *it;
         }
-        // clang-format on
     }
     return res;
 }

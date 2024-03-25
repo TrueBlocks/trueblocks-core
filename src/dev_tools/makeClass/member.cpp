@@ -150,7 +150,6 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    // clang-format off
 #define BOOL_ASSIGN_MASK(a, b) { if (str_2_Bool(fieldValue)) { a |= (b); } else { a &= uint64_t(~b); } }
     if (fieldName % "is_pointer")   { BOOL_ASSIGN_MASK(memberFlags, IS_POINTER);   return true; }
     if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(memberFlags, IS_ARRAY);     return true; }
@@ -158,7 +157,6 @@ bool CMember::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
     if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(memberFlags, IS_BUILTIN);   return true; }
     if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(memberFlags, IS_ENABLED);   return true; }
     if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(memberFlags, IS_OMITEMPTY); return true; }
-    // clang-format on
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -389,7 +387,6 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (mem) {
         switch (tolower(fieldIn[0])) {
                 // EXISTING_CODE
-                // clang-format off
             case 'i':
                 if (fieldIn % "is_pointer")   return bool_2_Str_t(mem->memberFlags & IS_POINTER);
                 if (fieldIn % "is_array")     return bool_2_Str_t(mem->memberFlags & IS_ARRAY);
@@ -405,7 +402,6 @@ string_q nextMemberChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                     return stripWhitespace(mem->value);
                 }
                 break;
-            // clang-format off
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
