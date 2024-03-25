@@ -32,6 +32,14 @@ func (w *MyWei) String() string {
 	return (*big.Int)(w).String()
 }
 
+func (w *MyWei) SetUint64(x uint64) *MyWei {
+	return (*MyWei)((*big.Int)(w).SetUint64(x))
+}
+
+func (w *MyWei) SetInt64(x int64) *MyWei {
+	return (*MyWei)((*big.Int)(w).SetInt64(x))
+}
+
 func (w *MyWei) SetString(s string, base int) (*MyWei, bool) {
 	if strings.HasPrefix(s, "0x") {
 		s = s[2:]

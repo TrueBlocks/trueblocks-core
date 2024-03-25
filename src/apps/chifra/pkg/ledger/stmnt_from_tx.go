@@ -2,7 +2,6 @@ package ledger
 
 import (
 	"fmt"
-	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -58,9 +57,9 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 			Decimals:         18,
 			SpotPrice:        0.0,
 			PriceSource:      "not-priced",
-			PrevBal:          *(*big.Int)(prevBal),
-			BegBal:           *(*big.Int)(begBal),
-			EndBal:           *(*big.Int)(endBal),
+			PrevBal:          *prevBal,
+			BegBal:           *begBal,
+			EndBal:           *endBal,
 			ReconType:        ctx.ReconType,
 		}
 
@@ -70,29 +69,29 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFi
 
 		// Do not collapse. A single transaction may have many movements of money
 		if l.AccountFor == ret.Sender {
-			gasUsed := new(big.Int)
+			gasUsed := new(base.MyWei)
 			if trans.Receipt != nil {
 				gasUsed.SetUint64(trans.Receipt.GasUsed)
 			}
-			gasPrice := new(big.Int).SetUint64(trans.GasPrice)
-			gasOut := new(big.Int).Mul(gasUsed, gasPrice)
+			gasPrice := new(base.MyWei).SetUint64(trans.GasPrice)
+			gasOut := new(base.MyWei).Mul(gasUsed, gasPrice)
 
-			ret.AmountOut = trans.Value
+			ret.AmountOut = (base.MyWei)(trans.Value)
 			ret.GasOut = *gasOut
 		}
 
 		// Do not collapse. A single transaction may have many movements of money
 		if l.AccountFor == ret.Recipient {
 			if ret.BlockNumber == 0 {
-				ret.PrefundIn = trans.Value
+				ret.PrefundIn = (base.MyWei)(trans.Value)
 			} else {
 				if trans.Rewards != nil {
-					ret.MinerBaseRewardIn = (big.Int)(trans.Rewards.Block)
-					ret.MinerNephewRewardIn = (big.Int)(trans.Rewards.Nephew)
-					ret.MinerTxFeeIn = (big.Int)(trans.Rewards.TxFee)
-					ret.MinerUncleRewardIn = (big.Int)(trans.Rewards.Uncle)
+					ret.MinerBaseRewardIn = trans.Rewards.Block
+					ret.MinerNephewRewardIn = trans.Rewards.Nephew
+					ret.MinerTxFeeIn = trans.Rewards.TxFee
+					ret.MinerUncleRewardIn = trans.Rewards.Uncle
 				} else {
-					ret.AmountIn = trans.Value
+					ret.AmountIn = (base.MyWei)(trans.Value)
 				}
 				// TODO: BOGUS PERF - WHAT ABOUT WITHDRAWALS?
 			}

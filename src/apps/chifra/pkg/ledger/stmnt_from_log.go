@@ -2,7 +2,6 @@ package ledger
 
 import (
 	"fmt"
-	"math/big"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -43,10 +42,10 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 
 		sender := base.HexToAddress(log.Topics[1].Hex())
 		recipient := base.HexToAddress(log.Topics[2].Hex())
-		var amountIn, amountOut big.Int
-		var amt *big.Int
-		if amt, _ = new(big.Int).SetString(strings.Replace(log.Data, "0x", "", -1), 16); amt == nil {
-			amt = big.NewInt(0)
+		var amountIn, amountOut base.MyWei
+		var amt *base.MyWei
+		if amt, _ = new(base.MyWei).SetString(strings.Replace(log.Data, "0x", "", -1), 16); amt == nil {
+			amt = base.NewMyWei(0)
 		}
 
 		ofInterest := false
@@ -92,19 +91,19 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.SimpleL
 			if pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 				return s, err
 			}
-			s.PrevBal = *(*big.Int)(pBal)
+			s.PrevBal = *pBal
 
 			bBal := new(base.MyWei)
 			if bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 				return s, err
 			}
-			s.BegBal = *(*big.Int)(bBal)
+			s.BegBal = *bBal
 
 			eBal := new(base.MyWei)
 			if eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 				return s, err
 			}
-			s.EndBal = *(*big.Int)(eBal)
+			s.EndBal = *eBal
 
 			id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 			if !l.trialBalance("token", &s) {

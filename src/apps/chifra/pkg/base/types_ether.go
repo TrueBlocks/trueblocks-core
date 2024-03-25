@@ -27,10 +27,6 @@ func (x *Ether) Text(format byte, prec int) string {
 	return (*big.Float)(x).Text(format, prec)
 }
 
-func (e *Ether) SetInt(i *big.Int) *Ether {
-	return (*Ether)((*big.Float)(e).SetInt(i))
-}
-
 func (e *Ether) SetMyWei(i *MyWei) *Ether {
 	return (*Ether)((*big.Float)(e).SetInt((*big.Int)(i)))
 }

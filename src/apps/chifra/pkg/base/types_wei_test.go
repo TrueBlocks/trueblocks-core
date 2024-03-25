@@ -2,72 +2,71 @@ package base
 
 import (
 	"fmt"
-	"math/big"
 	"testing"
 )
 
 func TestFormattedValue(t *testing.T) {
-	vv := big.NewInt(0)
+	vv := NewMyWei(0)
 	vv, _ = vv.SetString("599853750352891471017612", 10)
 	tests := []struct {
 		name     string
-		bigIn    big.Int
+		bigIn    *MyWei
 		asEther  bool
 		decimals int
 		want     string
 	}{
 		{
 			name:     "Test with positive value",
-			bigIn:    *big.NewInt(1000000000000000000),
+			bigIn:    NewMyWei(1000000000000000000),
 			asEther:  true,
 			decimals: 18,
 			want:     "1",
 		},
 		{
 			name:     "Test with negative value",
-			bigIn:    *big.NewInt(-1000000000000000000),
+			bigIn:    NewMyWei(-1000000000000000000),
 			asEther:  true,
 			decimals: 18,
 			want:     "-1",
 		},
 		{
 			name:     "Test with zero value",
-			bigIn:    *big.NewInt(0),
+			bigIn:    NewMyWei(0),
 			asEther:  true,
 			decimals: 18,
 			want:     "0",
 		},
 		{
 			name:     "Test with large positive value",
-			bigIn:    *big.NewInt(123456789012345678),
+			bigIn:    NewMyWei(123456789012345678),
 			asEther:  true,
 			decimals: 18,
 			want:     "0.123456789012345678",
 		},
 		{
 			name:     "Test with large negative value",
-			bigIn:    *big.NewInt(-123456789012345678),
+			bigIn:    NewMyWei(-123456789012345678),
 			asEther:  true,
 			decimals: 18,
 			want:     "-0.123456789012345678",
 		},
 		{
 			name:     "Test with non-ether value",
-			bigIn:    *big.NewInt(1234567890),
+			bigIn:    NewMyWei(1234567890),
 			asEther:  false,
 			decimals: 0,
 			want:     "1234567890",
 		},
 		{
 			name:     "Test with non-ether value and decimals",
-			bigIn:    *big.NewInt(1234567890),
+			bigIn:    NewMyWei(1234567890),
 			asEther:  false,
 			decimals: 2, // decimals is not used when asEther is false
 			want:     "1234567890",
 		},
 		{
 			name:     "live test",
-			bigIn:    *vv,
+			bigIn:    vv,
 			asEther:  true,
 			decimals: 18,
 			want:     "599853.750352891471017612",
@@ -76,7 +75,7 @@ func TestFormattedValue(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := FormattedValue((*MyWei)(&tt.bigIn), tt.asEther, tt.decimals)
+			got := FormattedValue(tt.bigIn, tt.asEther, tt.decimals)
 			if got != tt.want {
 				t.Errorf("%s FormattedValue() = %v, want %v", tt.name, got, tt.want)
 			}

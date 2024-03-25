@@ -12,7 +12,6 @@ package types
 import (
 	"fmt"
 	"io"
-	"math/big"
 	"path/filepath"
 	"strings"
 
@@ -62,31 +61,31 @@ type RawStatement struct {
 
 type SimpleStatement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
-	AmountIn            big.Int        `json:"amountIn,omitempty"`
-	AmountOut           big.Int        `json:"amountOut,omitempty"`
+	AmountIn            base.MyWei     `json:"amountIn,omitempty"`
+	AmountOut           base.MyWei     `json:"amountOut,omitempty"`
 	AssetAddr           base.Address   `json:"assetAddr"`
 	AssetSymbol         string         `json:"assetSymbol"`
-	BegBal              big.Int        `json:"begBal"`
+	BegBal              base.MyWei     `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
-	CorrectingIn        big.Int        `json:"correctingIn,omitempty"`
-	CorrectingOut       big.Int        `json:"correctingOut,omitempty"`
+	CorrectingIn        base.MyWei     `json:"correctingIn,omitempty"`
+	CorrectingOut       base.MyWei     `json:"correctingOut,omitempty"`
 	CorrectingReason    string         `json:"correctingReason,omitempty"`
 	Decimals            uint64         `json:"decimals"`
-	EndBal              big.Int        `json:"endBal"`
-	GasOut              big.Int        `json:"gasOut,omitempty"`
-	InternalIn          big.Int        `json:"internalIn,omitempty"`
-	InternalOut         big.Int        `json:"internalOut,omitempty"`
+	EndBal              base.MyWei     `json:"endBal"`
+	GasOut              base.MyWei     `json:"gasOut,omitempty"`
+	InternalIn          base.MyWei     `json:"internalIn,omitempty"`
+	InternalOut         base.MyWei     `json:"internalOut,omitempty"`
 	LogIndex            base.Blknum    `json:"logIndex"`
-	MinerBaseRewardIn   big.Int        `json:"minerBaseRewardIn,omitempty"`
-	MinerNephewRewardIn big.Int        `json:"minerNephewRewardIn,omitempty"`
-	MinerTxFeeIn        big.Int        `json:"minerTxFeeIn,omitempty"`
-	MinerUncleRewardIn  big.Int        `json:"minerUncleRewardIn,omitempty"`
-	PrefundIn           big.Int        `json:"prefundIn,omitempty"`
-	PrevBal             big.Int        `json:"prevBal,omitempty"`
+	MinerBaseRewardIn   base.MyWei     `json:"minerBaseRewardIn,omitempty"`
+	MinerNephewRewardIn base.MyWei     `json:"minerNephewRewardIn,omitempty"`
+	MinerTxFeeIn        base.MyWei     `json:"minerTxFeeIn,omitempty"`
+	MinerUncleRewardIn  base.MyWei     `json:"minerUncleRewardIn,omitempty"`
+	PrefundIn           base.MyWei     `json:"prefundIn,omitempty"`
+	PrevBal             base.MyWei     `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
-	SelfDestructIn      big.Int        `json:"selfDestructIn,omitempty"`
-	SelfDestructOut     big.Int        `json:"selfDestructOut,omitempty"`
+	SelfDestructIn      base.MyWei     `json:"selfDestructIn,omitempty"`
+	SelfDestructOut     base.MyWei     `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
 	SpotPrice           float64        `json:"spotPrice"`
 	Timestamp           base.Timestamp `json:"timestamp"`
@@ -551,8 +550,8 @@ func (s *SimpleStatement) FinishUnmarshal() {
 // EXISTING_CODE
 //
 
-func (s *SimpleStatement) TotalIn() *big.Int {
-	vals := []big.Int{
+func (s *SimpleStatement) TotalIn() *base.MyWei {
+	vals := []base.MyWei{
 		s.AmountIn,
 		s.InternalIn,
 		s.SelfDestructIn,
@@ -564,7 +563,7 @@ func (s *SimpleStatement) TotalIn() *big.Int {
 		s.PrefundIn,
 	}
 
-	sum := big.NewInt(0)
+	sum := base.NewMyWei(0)
 	for _, n := range vals {
 		sum = sum.Add(sum, &n)
 	}
@@ -572,8 +571,8 @@ func (s *SimpleStatement) TotalIn() *big.Int {
 	return sum
 }
 
-func (s *SimpleStatement) TotalOut() *big.Int {
-	vals := []big.Int{
+func (s *SimpleStatement) TotalOut() *base.MyWei {
+	vals := []base.MyWei{
 		s.AmountOut,
 		s.InternalOut,
 		s.CorrectingOut,
@@ -581,7 +580,7 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 		s.GasOut,
 	}
 
-	sum := big.NewInt(0)
+	sum := base.NewMyWei(0)
 	for _, n := range vals {
 		sum = sum.Add(sum, &n)
 	}
@@ -590,40 +589,40 @@ func (s *SimpleStatement) TotalOut() *big.Int {
 }
 
 func (s *SimpleStatement) IsMaterial() bool {
-	return s.TotalIn().Cmp(new(big.Int)) != 0 || s.TotalOut().Cmp(new(big.Int)) != 0
+	return s.TotalIn().Cmp(new(base.MyWei)) != 0 || s.TotalOut().Cmp(new(base.MyWei)) != 0
 }
 
-func (s *SimpleStatement) AmountNet() *big.Int {
-	return new(big.Int).Sub(s.TotalIn(), s.TotalOut())
+func (s *SimpleStatement) AmountNet() *base.MyWei {
+	return new(base.MyWei).Sub(s.TotalIn(), s.TotalOut())
 }
 
-func (s *SimpleStatement) TotalOutLessGas() *big.Int {
+func (s *SimpleStatement) TotalOutLessGas() *base.MyWei {
 	val := s.TotalOut()
-	return new(big.Int).Sub(val, &s.GasOut)
+	return new(base.MyWei).Sub(val, &s.GasOut)
 }
 
-func (s *SimpleStatement) BegBalDiff() *big.Int {
-	val := &big.Int{}
+func (s *SimpleStatement) BegBalDiff() *base.MyWei {
+	val := &base.MyWei{}
 
 	if s.BlockNumber == 0 {
-		val = new(big.Int).SetInt64(0)
+		val = new(base.MyWei).SetInt64(0)
 	} else {
-		new(big.Int).Sub(&s.BegBal, &s.PrevBal)
+		new(base.MyWei).Sub(&s.BegBal, &s.PrevBal)
 	}
 
 	return val
 }
 
-func (s *SimpleStatement) EndBalCalc() *big.Int {
-	return new(big.Int).Add(&s.BegBal, s.AmountNet())
+func (s *SimpleStatement) EndBalCalc() *base.MyWei {
+	return new(base.MyWei).Add(&s.BegBal, s.AmountNet())
 }
 
-func (s *SimpleStatement) EndBalDiff() *big.Int {
-	return new(big.Int).Sub(s.EndBalCalc(), &s.EndBal)
+func (s *SimpleStatement) EndBalDiff() *base.MyWei {
+	return new(base.MyWei).Sub(s.EndBalCalc(), &s.EndBal)
 }
 
 func (s *SimpleStatement) Reconciled() bool {
-	zero := new(big.Int).SetInt64(0)
+	zero := new(base.MyWei).SetInt64(0)
 	return (s.EndBalDiff().Cmp(zero) == 0 && s.BegBalDiff().Cmp(zero) == 0)
 }
 
@@ -679,8 +678,8 @@ func (s *SimpleStatement) CorrectForNullTransfer(tx *SimpleTransaction) bool {
 		if s.isNullTransfer(tx) {
 			logger.TestLog(true, "Correcting token transfer for a null transfer")
 			amt := s.TotalIn() // use totalIn since this is the amount that was faked
-			s.AmountOut = *new(big.Int)
-			s.AmountIn = *new(big.Int)
+			s.AmountOut = *new(base.MyWei)
+			s.AmountIn = *new(base.MyWei)
 			s.CorrectingIn = *amt
 			s.CorrectingOut = *amt
 			s.CorrectingReason = "null-transfer"
@@ -709,7 +708,7 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 		s.CorrectingIn.SetUint64(0)
 		s.CorrectingOut.SetUint64(0)
 		s.CorrectingReason = ""
-		zero := new(big.Int).SetInt64(0)
+		zero := new(base.MyWei).SetInt64(0)
 		cmpBegBal := s.BegBalDiff().Cmp(zero)
 		cmpEndBal := s.EndBalDiff().Cmp(zero)
 
@@ -722,11 +721,11 @@ func (s *SimpleStatement) CorrectForSomethingElse(tx *SimpleTransaction) bool {
 		}
 
 		if cmpEndBal > 0 {
-			n := new(big.Int).Add(&s.CorrectingIn, s.EndBalDiff())
+			n := new(base.MyWei).Add(&s.CorrectingIn, s.EndBalDiff())
 			s.CorrectingIn = *n
 			s.CorrectingReason += "endbal"
 		} else if cmpEndBal < 0 {
-			n := new(big.Int).Add(&s.CorrectingOut, s.EndBalDiff())
+			n := new(base.MyWei).Add(&s.CorrectingOut, s.EndBalDiff())
 			s.CorrectingOut = *n
 			s.CorrectingReason += "endbal"
 		}
@@ -797,21 +796,21 @@ func (s *SimpleStatement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "End of trial balance report")
 }
 
-func isZero(val *big.Int) bool {
-	return val.Cmp(big.NewInt(0)) == 0
+func isZero(val *base.MyWei) bool {
+	return val.Cmp(base.NewMyWei(0)) == 0
 }
 
-func reportE(msg string, val *big.Int) {
+func reportE(msg string, val *base.MyWei) {
 	logger.TestLog(!isZero(val), msg, base.FormattedValue((*base.MyWei)(val), true, 18))
 }
 
-func report2(msg string, v1 *big.Int, v2 *big.Int) {
+func report2(msg string, v1 *base.MyWei, v2 *base.MyWei) {
 	s := ""
 	if v1 != nil {
-		s = base.FormattedValue((*base.MyWei)(v1), true, 18)
+		s = base.FormattedValue(v1, true, 18)
 	}
 	if v2 != nil {
-		s += " (" + base.FormattedValue((*base.MyWei)(v2), true, 18) + ")"
+		s += " (" + base.FormattedValue(v2, true, 18) + ")"
 	}
 	logger.TestLog(true, msg, s)
 }
@@ -820,9 +819,8 @@ func reportL(msg string) {
 	report2(msg, nil, nil)
 }
 
-func report1(msg string, val *big.Int) {
+func report1(msg string, val *base.MyWei) {
 	report2(msg, val, nil)
 }
 
 // EXISTING_CODE
-
