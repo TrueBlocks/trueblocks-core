@@ -21,7 +21,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -170,23 +169,6 @@ func enumFromStateParts(values []string) (StateParts, error) {
 }
 
 // EXISTING_CODE
-type sdkState struct {
-	AccountType string         `json:"accountType"`
-	Address     string         `json:"address"`
-	Balance     BigIntStr      `json:"balance"`
-	BlockNumber base.Blknum    `json:"blockNumber"`
-	Code        string         `json:"code"`
-	Deployed    IntStr         `json:"deployed"`
-	Nonce       uint64         `json:"nonce"`
-	Proxy       AddressStr     `json:"proxy"`
-	Timestamp   base.Timestamp `json:"timestamp"`
-	Ether       base.Ether     `json:"ether"`
-}
-
-func (s sdkState) Date() string {
-	return utils.FormattedDate(s.Timestamp)
-}
-
 func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
 	stateBuf := bytes.Buffer{}
 	if err := opts.State(&stateBuf); err != nil {
@@ -194,24 +176,15 @@ func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
 	}
 
 	type result struct {
-		Data []sdkState   `json:"data"`
-		Meta rpc.MetaData `json:"meta"`
+		Data []types.SimpleState `json:"data"`
+		Meta rpc.MetaData        `json:"meta"`
 	}
 
 	var state result
 	if err := json.Unmarshal(stateBuf.Bytes(), &state); err != nil {
 		return nil, nil, err
 	} else {
-		data := make([]types.SimpleState, 0, len(state.Data))
-		for _, st := range state.Data {
-			data = append(data, types.SimpleState{
-				Address:     base.HexToAddress(st.Address),
-				BlockNumber: st.BlockNumber,
-				Timestamp:   st.Timestamp,
-				Balance:     st.Balance.Int,
-			})
-		}
-		return data, &state.Meta, nil
+		return state.Data, &state.Meta, nil
 	}
 }
 
