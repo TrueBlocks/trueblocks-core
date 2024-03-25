@@ -88,57 +88,21 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 
 // No enums
 // EXISTING_CODE
-type sdkName struct {
-	Address    base.Address `json:"address"`
-	Decimals   uint64       `json:"decimals"`
-	Deleted    bool         `json:"deleted,omitempty"`
-	IsContract bool         `json:"isContract,omitempty"`
-	IsCustom   bool         `json:"isCustom,omitempty"`
-	IsErc20    bool         `json:"isErc20,omitempty"`
-	IsErc721   bool         `json:"isErc721,omitempty"`
-	IsPrefund  bool         `json:"isPrefund,omitempty"`
-	Name       string       `json:"name"`
-	Petname    string       `json:"petname"`
-	Source     string       `json:"source"`
-	Symbol     string       `json:"symbol"`
-	Tags       string       `json:"tags"`
-	Balance    BigIntStr    `json:"prefund,omitempty"`
-}
-
 func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
 	namesBuf := bytes.Buffer{}
 	if err := opts.Names(&namesBuf); err != nil {
 		logger.Fatal(err)
 	}
 	type result struct {
-		Data []sdkName    `json:"data"`
-		Meta rpc.MetaData `json:"meta"`
+		Data []types.SimpleName `json:"data"`
+		Meta rpc.MetaData       `json:"meta"`
 	}
 
 	var names result
 	if err := json.Unmarshal(namesBuf.Bytes(), &names); err != nil {
 		return nil, nil, err
 	} else {
-		data := make([]types.SimpleName, 0, len(names.Data))
-		for _, n := range names.Data {
-			data = append(data, types.SimpleName{
-				Address:    n.Address,
-				Decimals:   n.Decimals,
-				Deleted:    n.Deleted,
-				IsContract: n.IsContract,
-				IsCustom:   n.IsCustom,
-				IsErc20:    n.IsErc20,
-				IsErc721:   n.IsErc721,
-				IsPrefund:  n.IsPrefund,
-				Name:       n.Name,
-				Petname:    n.Petname,
-				Source:     n.Source,
-				Symbol:     n.Symbol,
-				Tags:       n.Tags,
-				Prefund:    n.Balance.Int,
-			})
-		}
-		return data, &names.Meta, nil
+		return names.Data, &names.Meta, nil
 	}
 }
 

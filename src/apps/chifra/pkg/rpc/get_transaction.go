@@ -224,7 +224,7 @@ func (conn *Connection) GetTransactionPrefundByApp(raw *types.RawAppearance) (tx
 				Timestamp:        ts,
 				From:             base.PrefundSender,
 				To:               base.HexToAddress(raw.Address),
-				Value:            entry.Prefund,
+				Value:            (big.Int)(entry.Prefund),
 			}
 			return &ret, nil
 		}

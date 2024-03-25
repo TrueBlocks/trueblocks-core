@@ -25,12 +25,12 @@ func (conn *Connection) IsNodeArchive() bool {
 		return false
 	}
 
-	bal, err := conn.GetBalanceAt(largest.Address, 0)
+	bal, err := conn.GetBalanceAtMyWei(largest.Address, 0)
 	if err != nil {
 		return false
 	}
 
-	return bal.Cmp(&largest.Balance) == 0
+	return bal.Cmp((*base.MyWei)(&largest.Balance)) == 0
 }
 
 // ErrTraceBlockMissing is returned when the node does not support the trace_block endpoint.
