@@ -98,7 +98,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	}
 
 	if (fieldBits & Balance) != 0 {
-		state.Balance = *balance
+		state.Balance = *(*base.MyWei)(balance)
 	}
 	if value, ok := queryResults["nonce"]; ok && (fieldBits&Nonce) != 0 {
 		nonce, err := strconv.ParseUint(*value, 0, 64)

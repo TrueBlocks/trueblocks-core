@@ -44,7 +44,7 @@ func TestGetState(t *testing.T) {
 			wantState: &types.SimpleState{
 				Address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				BlockNumber: uint64(15531843),
-				Balance:     func() big.Int { b, _ := big.NewInt(0).SetString("57006123709077586392", 10); return *b }(),
+				Balance:     func() base.MyWei { b, _ := base.NewMyWei(0).SetString("57006123709077586392", 10); return *b }(),
 				Deployed:    utils.NOPOS,
 			},
 		},
@@ -59,8 +59,8 @@ func TestGetState(t *testing.T) {
 			wantState: &types.SimpleState{
 				Address:     base.HexToAddress("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"),
 				BlockNumber: uint64(15531843),
-				Balance: func() big.Int {
-					b, _ := big.NewInt(0).SetString("32460000000000000021", 10)
+				Balance: func() base.MyWei {
+					b, _ := base.NewMyWei(0).SetString("32460000000000000021", 10)
 					return *b
 				}(),
 				Nonce: 0,

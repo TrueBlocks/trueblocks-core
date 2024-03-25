@@ -39,7 +39,7 @@ type RawState struct {
 type SimpleState struct {
 	AccountType string         `json:"accountType"`
 	Address     base.Address   `json:"address"`
-	Balance     base.Wei       `json:"balance"`
+	Balance     base.MyWei     `json:"balance"`
 	BlockNumber base.Blknum    `json:"blockNumber"`
 	Code        string         `json:"code"`
 	Deployed    base.Blknum    `json:"deployed"`
@@ -254,4 +254,3 @@ func (s *SimpleState) FinishUnmarshal() {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
