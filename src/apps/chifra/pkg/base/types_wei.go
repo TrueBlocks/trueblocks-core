@@ -24,6 +24,10 @@ func (b *MyWei) ToInt() *big.Int {
 	return (*big.Int)(b)
 }
 
+func (w *MyWei) Bytes() []byte {
+	return (*big.Int)(w).Bytes()
+}
+
 func (w *MyWei) String() string {
 	return (*big.Int)(w).String()
 }

@@ -32,7 +32,7 @@ const (
 )
 
 type StateFilters struct {
-	Balance func(address base.Address, balance *big.Int) bool
+	Balance func(address base.Address, balance *base.MyWei) bool
 }
 
 // GetState returns account state
@@ -88,7 +88,7 @@ func (conn *Connection) GetState(fieldBits StatePart, address base.Address, bloc
 	}
 
 	value := queryResults["balance"]
-	balance := big.NewInt(0)
+	balance := base.NewMyWei(0)
 	balance.SetString(*value, 0)
 
 	if filters.Balance != nil {

@@ -5,7 +5,6 @@ package rpc
 
 import (
 	"fmt"
-	"math/big"
 	"reflect"
 	"strconv"
 	"strings"
@@ -118,8 +117,8 @@ func TestGetState(t *testing.T) {
 				address:     base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b"),
 				blockNumber: uint64(15531843),
 				filters: StateFilters{
-					Balance: func(address base.Address, balance *big.Int) bool {
-						return balance == big.NewInt(0)
+					Balance: func(address base.Address, balance *base.MyWei) bool {
+						return balance == base.NewMyWei(0)
 					},
 				},
 			},
