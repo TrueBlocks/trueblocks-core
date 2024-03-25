@@ -65,7 +65,7 @@ func (opts *StateOptions) validateState() error {
 				contract = proxy.Hex()
 			}
 
-			err := opts.Conn.IsContractAt(base.HexToAddress(contract), nil)
+			err := opts.Conn.IsContractAtLatest(base.HexToAddress(contract))
 			if err != nil {
 				if errors.Is(err, rpc.ErrNotAContract) {
 					return validate.Usage("The address for the --call option must be a smart contract.")

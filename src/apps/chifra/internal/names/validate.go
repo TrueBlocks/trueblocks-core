@@ -71,7 +71,7 @@ func (opts *NamesOptions) validateNames() error {
 		if !base.IsValidAddress(opts.Autoname) || opts.AutonameAddr.IsZero() {
 			return validate.Usage("You must provide an address to the {0} option.", "--autoname")
 		}
-		if err := opts.Conn.IsContractAt(opts.AutonameAddr, nil); err != nil {
+		if err := opts.Conn.IsContractAtLatest(opts.AutonameAddr); err != nil {
 			if err == rpc.ErrNotAContract {
 				return validate.Usage("The address provided to the {0} option is not a token contract.", "--autoname")
 			}

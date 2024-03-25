@@ -233,8 +233,8 @@ func (conn *Connection) GetFieldsFromParts(parts []string, asEther bool) (stateF
 	return
 }
 
-func (conn *Connection) getTypeNonProxy(address base.Address, blockNumber base.Blknum) string {
-	isContractErr := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: blockNumber})
+func (conn *Connection) getTypeNonProxy(address base.Address, bn base.Blknum) string {
+	isContractErr := conn.IsContractAt(address, bn)
 	if errors.Is(isContractErr, ErrNotAContract) {
 		return "EOA"
 	}

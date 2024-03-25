@@ -9,26 +9,26 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common"
 )
 
 var ErrNotAContract = errors.New("not a contract")
 
+// IsContractAtLatest checks if an account is a contract at the latest block
+func (conn *Connection) IsContractAtLatest(address base.Address) error {
+	return conn.IsContractAt(address, utils.NOPOS)
+}
+
 // IsContractAt checks if an account is a contract
-func (conn *Connection) IsContractAt(address base.Address, block *types.SimpleNamedBlock) error {
+func (conn *Connection) IsContractAt(address base.Address, bn uint64) error {
 	if ec, err := conn.getClient(); err != nil {
 		return err
 	} else {
 		defer ec.Close()
 
-		var clientBlockArg *big.Int = nil
-		if block != nil && block.Name != "latest" {
-			clientBlockArg = big.NewInt(0).SetUint64(block.BlockNumber)
-		}
-
 		ctx := context.Background()
-		if code, err := ec.CodeAt(ctx, address.Common(), clientBlockArg); err != nil {
+		if code, err := ec.CodeAt(ctx, address.Common(), base.BiFromUint64(bn)); err != nil {
 			return err
 		} else {
 			if len(code) == 0 {
@@ -45,7 +45,7 @@ func (conn *Connection) GetContractCodeAt(addr base.Address, bn uint64) ([]byte,
 		return []byte{}, err
 	} else {
 		defer ec.Close()
-		return ec.CodeAt(context.Background(), addr.Common(), new(big.Int).SetUint64(bn))
+		return ec.CodeAt(context.Background(), addr.Common(), base.BiFromUint64(bn))
 	}
 }
 
@@ -84,22 +84,20 @@ func (conn *Connection) GetContractProxyAt(address base.Address, blockNumber bas
 			return proxy, err
 		}
 
-		bn := big.NewInt(0).SetUint64(blockNumber)
-
 		for _, location := range locations {
 			var value []byte
 			value, err = ec.StorageAt(
 				context.Background(),
 				address.Address,
 				common.HexToHash(location),
-				bn,
+				base.BiFromUint64(blockNumber),
 			)
 			if err != nil {
 				return proxy, err
 			}
 			proxy = base.BytesToAddress(value)
 			if !proxy.IsZero() && proxy.Hex() != address.Hex() {
-				err = conn.IsContractAt(proxy, &types.SimpleNamedBlock{BlockNumber: blockNumber})
+				err = conn.IsContractAt(proxy, blockNumber)
 				if errors.Is(err, ErrNotAContract) {
 					// Not a proxy
 					return base.Address{}, nil
@@ -128,12 +126,12 @@ func (conn *Connection) GetContractDeployBlock(address base.Address) (block base
 	}
 
 	latest := conn.GetLatestBlockNumber()
-	if err = conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: latest}); err != nil {
+	if err = conn.IsContractAt(address, latest); err != nil {
 		return
 	}
 
-	found := sort.Search(int(latest)+1, func(blockNumber int) bool {
-		err := conn.IsContractAt(address, &types.SimpleNamedBlock{BlockNumber: base.Blknum(blockNumber)})
+	found := sort.Search(int(latest)+1, func(bn int) bool {
+		err := conn.IsContractAt(address, uint64(bn))
 		return err == nil
 	})
 

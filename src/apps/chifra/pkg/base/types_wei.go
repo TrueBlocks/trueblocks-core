@@ -35,3 +35,10 @@ func (w *MyWei) Mul(x, y *MyWei) *MyWei {
 func (w *MyWei) Div(x, y *MyWei) *MyWei {
 	return (*MyWei)((*big.Int)(w).Div((*big.Int)(x), (*big.Int)(y)))
 }
+
+func BiFromUint64(bn uint64) *big.Int {
+	if bn == utils.NOPOS {
+		return nil
+	}
+	return new(big.Int).SetUint64(bn)
+}
