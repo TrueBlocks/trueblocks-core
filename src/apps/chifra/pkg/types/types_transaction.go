@@ -12,7 +12,6 @@ package types
 import (
 	"fmt"
 	"io"
-	"math/big"
 	"path/filepath"
 	"strings"
 
@@ -128,7 +127,7 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		"date":             s.Date(),
 		"to":               to,
 		"transactionIndex": s.TransactionIndex,
-		"value":            base.FormattedValue(s.Value, asEther, 18),
+		"value":            base.FormattedValue(&s.Value, asEther, 18),
 	}
 
 	order = []string{
@@ -185,10 +184,10 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
 		}
-		model["value"] = base.FormattedValue(s.Value, asEther, 18)
+		model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		model["gas"] = s.Gas
 
-		model["ether"] = base.FormattedValue(s.Value, true, 18)
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
 		}
@@ -278,8 +277,8 @@ func (s *SimpleTransaction) Model(chain, format string, verbose bool, extraOptio
 			model["type"] = ""
 		}
 		order = append(order, "type")
-		model["ether"] = base.FormattedValue(s.Value, true, 18)
-		ethGasPrice := base.FormattedValue(*big.NewInt(0).SetUint64(s.GasPrice), true, 18)
+		model["ether"] = base.FormattedValue(&s.Value, true, 18)
+		ethGasPrice := base.FormattedValue(base.NewWei(0).SetUint64(s.GasPrice), true, 18)
 		model["ethGasPrice"] = ethGasPrice
 		model["isError"] = s.IsError
 

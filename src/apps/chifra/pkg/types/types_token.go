@@ -10,8 +10,6 @@ package types
 
 // EXISTING_CODE
 import (
-	"math/big"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -38,16 +36,16 @@ type RawToken struct {
 
 type SimpleToken struct {
 	Address          base.Address   `json:"address"`
-	Balance          big.Int        `json:"balance"`
+	Balance          base.Wei       `json:"balance"`
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Decimals         uint64         `json:"decimals"`
-	Diff             big.Int        `json:"diff,omitempty"`
+	Diff             base.Wei       `json:"diff,omitempty"`
 	Holder           base.Address   `json:"holder"`
 	Name             string         `json:"name"`
-	PriorBalance     big.Int        `json:"priorBalance,omitempty"`
+	PriorBalance     base.Wei       `json:"priorBalance,omitempty"`
 	Symbol           string         `json:"symbol"`
 	Timestamp        base.Timestamp `json:"timestamp"`
-	TotalSupply      big.Int        `json:"totalSupply"`
+	TotalSupply      base.Wei       `json:"totalSupply"`
 	TransactionIndex base.Blknum    `json:"transactionIndex,omitempty"`
 	TokenType        TokenType      `json:"type"`
 	raw              *RawToken      `json:"-"`
@@ -115,7 +113,7 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "address":
 			model["address"] = s.Address
 		case "balance":
-			model["balance"] = base.FormattedValue(s.Balance, true, int(name.Decimals))
+			model["balance"] = base.FormattedValue(&s.Balance, true, int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
 		case "date":
@@ -123,7 +121,7 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "decimals":
 			model["decimals"] = name.Decimals
 		case "diff":
-			model["diff"] = base.FormattedValue(s.Diff, true, int(name.Decimals))
+			model["diff"] = base.FormattedValue(&s.Diff, true, int(name.Decimals))
 		case "holder":
 			model["holder"] = s.Holder
 		case "name":
@@ -133,11 +131,11 @@ func (s *SimpleToken) Model(chain, format string, verbose bool, extraOptions map
 		case "timestamp":
 			model["timestamp"] = s.Timestamp
 		case "totalSupply":
-			model["totalSupply"] = base.FormattedValue(s.TotalSupply, true, int(name.Decimals))
+			model["totalSupply"] = base.FormattedValue(&s.TotalSupply, true, int(name.Decimals))
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
 		case "units":
-			model["units"] = base.FormattedValue(s.Balance, false, int(name.Decimals)) // present underlying units
+			model["units"] = base.FormattedValue(&s.Balance, false, int(name.Decimals)) // present underlying units
 		case "version":
 			model["version"] = ""
 		}

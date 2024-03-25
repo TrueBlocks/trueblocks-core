@@ -49,7 +49,7 @@ func (l *Ledger) getStatementsFromTraces(conn *rpc.Connection, trans *types.Simp
 					trace.Action.CallType,
 					"to",
 					trace.Action.To.Hex(),
-					base.FormattedValue(trace.Action.Value, true, 18),
+					base.FormattedValue(&trace.Action.Value, true, 18),
 				)
 				continue
 			}

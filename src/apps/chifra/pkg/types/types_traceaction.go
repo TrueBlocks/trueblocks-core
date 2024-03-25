@@ -90,13 +90,13 @@ func (s *SimpleTraceAction) Model(chain, format string, verbose bool, extraOptio
 			model["input"] = s.Input
 		}
 		if s.Value.String() != "0" {
-			model["value"] = base.FormattedValue(s.Value, asEther, 18)
+			model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		}
 		if !s.RefundAddress.IsZero() {
 			model["refundAddress"] = s.RefundAddress
 			model["balance"] = s.Balance.String()
 			if s.Value.String() != "0" {
-				model["value"] = base.FormattedValue(s.Balance, asEther, 18)
+				model["value"] = base.FormattedValue(&s.Balance, asEther, 18)
 			}
 		} else {
 			if s.To.IsZero() {
@@ -104,7 +104,7 @@ func (s *SimpleTraceAction) Model(chain, format string, verbose bool, extraOptio
 			} else {
 				model["to"] = s.To
 			}
-			model["value"] = base.FormattedValue(s.Value, asEther, 18)
+			model["value"] = base.FormattedValue(&s.Value, asEther, 18)
 		}
 		if len(s.Init) > 0 {
 			model["init"] = utils.FormattedCode(verbose, s.Init)

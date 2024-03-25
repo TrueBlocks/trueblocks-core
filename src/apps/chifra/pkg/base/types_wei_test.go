@@ -75,7 +75,7 @@ func TestFormattedValue(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := FormattedValue(*tt.bigIn, tt.asEther, tt.decimals)
+			got := FormattedValue(tt.bigIn, tt.asEther, tt.decimals)
 			if got != tt.want {
 				t.Errorf("%s FormattedValue() = %v, want %v", tt.name, got, tt.want)
 			}

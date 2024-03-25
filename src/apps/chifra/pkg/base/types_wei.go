@@ -44,6 +44,21 @@ func (w *MyWei) Div(x, y *MyWei) *MyWei {
 	return (*MyWei)((*big.Int)(w).Div((*big.Int)(x), (*big.Int)(y)))
 }
 
+// TODO: BOGUS - THIS NAME SUCKS
+
+func FormattedValue(in *big.Int, asEther bool, decimals int) string {
+	if asEther {
+		return ToEther((*MyWei)(in)).Text('f', -1*decimals)
+	}
+	return in.Text(10)
+}
+
+func ToEther(wei *MyWei) *Ether {
+	f := NewEther(0)
+	e := NewEther(1e18)
+	return f.Quo(new(Ether).SetMyWei(wei), e)
+}
+
 func BiFromUint64(bn uint64) *big.Int {
 	if bn == utils.NOPOS {
 		return nil

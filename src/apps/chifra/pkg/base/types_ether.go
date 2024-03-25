@@ -77,15 +77,3 @@ func (e *Ether) MarshalJSON() ([]byte, error) {
 	return []byte(`"` + e.String() + `"`), nil
 }
 
-func ToEther(wei *MyWei) *Ether {
-	f := NewEther(0)
-	e := NewEther(1e18)
-	return f.Quo(new(Ether).SetMyWei(wei), e)
-}
-
-func FormattedValue(in big.Int, asEther bool, decimals int) string {
-	if asEther {
-		return ToEther((*MyWei)(&in)).Text('f', -1*decimals)
-	}
-	return in.Text(10)
-}

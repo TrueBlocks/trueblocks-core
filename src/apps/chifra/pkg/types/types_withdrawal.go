@@ -61,7 +61,7 @@ func (s *SimpleWithdrawal) Model(chain, format string, verbose bool, extraOption
 	asEther := extraOptions["ether"] == true
 	model = map[string]interface{}{
 		"address":        s.Address,
-		"amount":         base.FormattedValue(s.Amount, asEther, 18),
+		"amount":         base.FormattedValue(&s.Amount, asEther, 18),
 		"blockNumber":    s.BlockNumber,
 		"date":           s.Date(),
 		"index":          s.Index,
