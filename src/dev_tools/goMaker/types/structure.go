@@ -35,53 +35,38 @@ func (s *Structure) String() string {
 
 func (s *Structure) RawFields() string {
 	ret := []string{}
-	for _, member := range s.Members {
-		if member.IsCalc || strings.Contains(member.Name, "::") {
+	for _, m := range s.Members {
+		if m.IsCalc || m.IsSimpleOnly || strings.Contains(m.Name, "::") {
 			continue
 		}
-		fu := member.GoName()
-		omit := ""
-		v := "\t" + fu + " string `json:\"" + member.Name + omit + "\"`"
-		ret = append(ret, v)
+		tmpl := `{{.GoName}} {{.RawType}} {{.RawTag}}`
+		ret = append(ret, m.executeTemplate("rawFields", tmpl))
 	}
 	return strings.Join(ret, "\n")
 }
 
 func (s *Structure) MemberFields() string {
 	ret := []string{}
-	for _, member := range s.Members {
-		if member.IsCalc || member.IsRawonly || strings.Contains(member.Name, "::") {
+	for _, m := range s.Members {
+		if m.IsCalc || m.IsRawOnly || strings.Contains(m.Name, "::") {
 			continue
 		}
-		fu := strings.ToUpper(member.Name[0:1]) + member.Name[1:]
-		omit := ""
-		if member.IsOmitempty {
-			omit = ",omitempty"
-		}
-		v := "\t" + fu + " " + member.GoType() + " `json:\"" + member.Name + omit + "\"`"
-		ret = append(ret, v)
+		tmpl := `{{.GoName}} {{.GoType}} {{.Tag}}`
+		ret = append(ret, m.executeTemplate("fields", tmpl))
 	}
-	ret = append(ret, "\traw *Raw"+s.Class+" `json:\"-\"`")
+	tmpl := "raw *Raw{{.Class}} `json:\"-\"`"
+	ret = append(ret, s.executeTemplate("raw", tmpl))
 
 	return strings.Join(ret, "\n")
 }
 
-func (s *Structure) DateCode() string {
-	hasTs := false
-	for _, member := range s.Members {
-		if member.Name == "timestamp" {
-			hasTs = true
-			break
+func (s *Structure) HasTimestamp() bool {
+	for _, m := range s.Members {
+		if m.Name == "timestamp" {
+			return true
 		}
 	}
-	if hasTs {
-		ret := `func (s *Simple{{.ModelName}}) Date() string {
-	return utils.FormattedDate(s.Timestamp)
-}`
-		return strings.Replace(ret, "{{.ModelName}}", s.ModelName(), -1)
-	} else {
-		return ""
-	}
+	return false
 }
 
 func (s *Structure) CacheCode() string {

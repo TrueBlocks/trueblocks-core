@@ -5,4 +5,4 @@
     doc_descr = "summary statistics about an Unchained Index bloom filter and index chunk"
     doc_route = "407-chunkStats"
     doc_producer = "chunks"
-    go_output = "src/apps/chifra/internal/chunks/"
+    go_output = "src/apps/chifra/internal/chunks"

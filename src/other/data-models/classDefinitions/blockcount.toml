@@ -5,4 +5,4 @@
     doc_descr = "counts of various parts of the block data such as tx_count, trace_count, etc."
     doc_route = "213-blockCount"
     doc_producer = "blocks"
-    go_output = "src/apps/chifra/internal/blocks/"
+    go_output = "src/apps/chifra/internal/blocks"

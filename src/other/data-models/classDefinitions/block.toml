@@ -9,3 +9,4 @@
     go_model = "Block[Tx]"
     cache_type = "cacheable"
     cache_by = "block"
+    disable_go = true

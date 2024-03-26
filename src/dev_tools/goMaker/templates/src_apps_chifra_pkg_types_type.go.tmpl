@@ -44,7 +44,11 @@ func (s *Simple{{.ModelName}}) Model(chain, format string, verbose bool, extraOp
 	}
 }
 
-{{.DateCode}}
+{{if .HasTimestamp}} 
+func (s *Simple{{.ModelName}}) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+{{end}}
 
 {{.CacheCode}}
 

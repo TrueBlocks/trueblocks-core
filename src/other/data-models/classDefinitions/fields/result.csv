@@ -7,4 +7,4 @@ name             ,string    ,           ,           ,       5 ,the name of the f
 encoding         ,string    ,           ,           ,       6 ,the encoding for the function call
 signature        ,string    ,           ,           ,       7 ,the canonical signature of the interface
 encodedArguments ,string    ,           ,           ,       8 ,the bytes data following the encoding of the call
-articulatedOut   ,Function  ,           ,           ,       9 ,the result of the call articulated as other models
+articulatedOut   ,*Function ,           ,simponly   ,       9 ,the result of the call articulated as other models

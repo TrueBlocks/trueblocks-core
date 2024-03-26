@@ -24,8 +24,8 @@ type RawParameter struct {
 	Indexed       string `json:"indexed"`
 	InternalType  string `json:"internalType"`
 	Name          string `json:"name"`
-	StrDefault    string `json:"strDefault"`
 	ParameterType string `json:"type"`
+	StrDefault    string `json:"strDefault"`
 	Value         string `json:"value"`
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -36,8 +36,8 @@ type SimpleParameter struct {
 	Indexed       bool              `json:"indexed,omitempty"`
 	InternalType  string            `json:"internalType,omitempty"`
 	Name          string            `json:"name"`
-	StrDefault    string            `json:"strDefault,omitempty"`
 	ParameterType string            `json:"type"`
+	StrDefault    string            `json:"strDefault,omitempty"`
 	Value         any               `json:"value,omitempty"`
 	raw           *RawParameter     `json:"-"`
 	// EXISTING_CODE

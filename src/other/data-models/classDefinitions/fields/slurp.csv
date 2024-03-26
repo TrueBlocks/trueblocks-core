@@ -13,9 +13,9 @@ gas               ,gas       ,           ,           ,      11 ,the maximum numb
 gasPrice          ,gas       ,           ,           ,      12 ,the number of wei per unit of gas the sender is willing to spend
 input             ,bytes     ,           ,           ,      13 ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
 hasToken          ,bool      ,           ,           ,      14 ,`true` if the transaction is token related&#44; `false` otherwise
-articulatedTx     ,Function  ,           ,           ,      15 ,if present&#44; the function that was called in the transaction
-compressedTx      ,string    ,           ,           ,      16 ,truncated&#44; more readable version of the articulation
-isError           ,bool      ,           ,           ,      17 ,`true` if the transaction ended in error&#44; `false` otherwise
+articulatedTx     ,*Function ,           ,simponly   ,      15 ,if present&#44; the function that was called in the transaction
+compressedTx      ,string    ,           ,simponly   ,      16 ,truncated&#44; more readable version of the articulation
+isError           ,bool      ,           ,simponly   ,      17 ,`true` if the transaction ended in error&#44; `false` otherwise
 functionName      ,string    ,           ,           ,         ,the name of the articulated function if any
 methodId          ,string    ,           ,           ,         ,the fourbyte of the function
 gasUsed           ,gas       ,           ,           ,         ,the amount of gas used by the transaction (from the receipt)

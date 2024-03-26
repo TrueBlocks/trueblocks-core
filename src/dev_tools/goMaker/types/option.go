@@ -38,6 +38,11 @@ func (op CmdLineOption) Validate() bool {
 	return len(op.ApiRoute) > 0
 }
 
+func readCmdOption(op *CmdLineOption, data *any) (bool, error) {
+	op.Description = strings.ReplaceAll(op.Description, "&#44;", ",")
+	return true, nil
+}
+
 func (op *CmdLineOption) IsHidden() bool {
 	return !op.IsVisibleDocs ||
 		(!op.IsRequired && !op.IsCustomizable && !op.IsVisible && op.IsVisibleDocs)

@@ -5,4 +5,4 @@
     doc_descr = "internal-use only data model detailing a single remote or local ipfs pinned file"
     doc_route = "406-ipfsPin"
     doc_producer = "chunks"
-    go_output = "src/apps/chifra/internal/chunks/"
+    go_output = "src/apps/chifra/internal/chunks"

@@ -6,4 +6,4 @@
     doc_route = "401-config"
     doc_alias = "Status"
     doc_producer = "status"
-    go_output = "src/apps/chifra/internal/status/"
+    go_output = "src/apps/chifra/internal/status"
