@@ -2,7 +2,7 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -252,4 +252,3 @@ func NewNameFromGrpc(gRpcName *proto.Name) *SimpleName {
 }
 
 // EXISTING_CODE
-
