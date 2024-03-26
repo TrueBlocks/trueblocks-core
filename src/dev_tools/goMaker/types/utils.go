@@ -10,9 +10,9 @@ import (
 
 type TemplateMap map[string]*template.Template
 
-func shouldProcess(source, route string) (bool, error) {
+func shouldProcess(source, tag string) (bool, error) {
 	if strings.Contains(source, "sdk_") {
-		if route == "explore" || route == "daemon" || route == "scrape" {
+		if tag == "explore" || tag == "daemon" || tag == "scrape" {
 			return false, nil
 		}
 	}
@@ -24,14 +24,15 @@ func shouldProcess(source, route string) (bool, error) {
 	return true, nil
 }
 
-func convertToDestPath(source, route string) string {
+func convertToDestPath(source, tag string) string {
 	dest := strings.Replace(source, templateFolder, "", -1)
 	dest = strings.Replace(dest, ".tmpl", "", -1)
-	dest = strings.Replace(dest, "_route_", "/"+route+"/", -1)
+	dest = strings.Replace(dest, "_type.go", "/"+tag+".go", -1)
+	dest = strings.Replace(dest, "_route_", "/"+tag+"/", -1)
 	dest = strings.Replace(dest, "__route", "_+route", -1)
-	dest = strings.Replace(dest, "route.go", route+".go", -1)
-	dest = strings.Replace(dest, "route.py", route+".py", -1)
-	dest = strings.Replace(dest, "route.ts", route+".ts", -1)
+	dest = strings.Replace(dest, "route.go", tag+".go", -1)
+	dest = strings.Replace(dest, "route.py", tag+".py", -1)
+	dest = strings.Replace(dest, "route.ts", tag+".ts", -1)
 	dest = strings.Replace(dest, "_", "/", -1)
 	dest = strings.Replace(dest, "+", "_", -1)
 	return dest

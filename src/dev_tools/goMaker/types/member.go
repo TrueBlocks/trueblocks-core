@@ -1,6 +1,9 @@
 package types
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"strings"
+)
 
 type Member struct {
 	Num         int    `json:"num" csv:"num"`
@@ -19,4 +22,8 @@ func (m *Member) String() string {
 
 func (m Member) Validate() bool {
 	return m.Name != "" && m.Type != ""
+}
+
+func (m *Member) GoName() string {
+	return strings.ToUpper(m.Name[0:1]) + m.Name[1:]
 }

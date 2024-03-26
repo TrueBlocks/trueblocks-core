@@ -85,6 +85,10 @@ func ReadStructures(thePath string, cb *CodeBase) error {
 				if f.Settings.Class[0] == 'C' {
 					f.Settings.Class = f.Settings.Class[1:]
 				}
+				f.Settings.Name = class
+				if f.Settings.GoOutput == "documentation only" {
+					f.Settings.GoOutput = "<docs_only>"
+				}
 				cb.Structures[class] = f.Settings
 			}
 		}

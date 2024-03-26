@@ -558,16 +558,45 @@ func (op *CmdLineOption) DescrCaps() string {
 
 func (c *Command) ReturnType() string {
 	switch c.Route {
-	case "names":
-		return "types.SimpleName"
 	case "blocks":
 		return "types.SimpleBlock[string]"
-	case "state":
-		return "types.SimpleState"
+	case "transactions":
+		return "types.SimpleTransaction"
+	case "receipts":
+		return "types.SimpleReceipt"
+	case "logs":
+		return "types.SimpleLog"
+	case "traces":
+		return "types.SimpleTrace"
 	case "when":
 		return "types.SimpleNamedBlock"
+	case "state":
+		return "types.SimpleState"
+	case "tokens":
+		return "bool"
+	case "slurp":
+		return "types.SimpleSlurp"
+	case "names":
+		return "types.SimpleName"
+	case "abis":
+		return "bool"
+	case "list":
+		return "types.SimpleAppearance"
+	case "export":
+		return "bool"
+	case "monitors":
+		return "bool"
+	case "config":
+		return "bool"
+	case "status":
+		return "bool"
+	case "chunks":
+		return "bool"
+	case "init":
+		return "bool"
+	default:
+		return "bool"
 	}
-	return "bool"
 }
 
 // RequestOpts for tag {{.RequestOpts}}

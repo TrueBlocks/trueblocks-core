@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 	"sync"
 
@@ -22,9 +23,7 @@ func main() {
 	// if true {
 	// 	fastPath(&codeBase)
 	// }
-}
 
-func slowPath(codeBase *types.CodeBase) {
 	// array := []types.Structure{}
 	// for _, structure := range codeBase.Structures {
 	// 	array = append(array, structure)
@@ -32,7 +31,6 @@ func slowPath(codeBase *types.CodeBase) {
 	// sort.Slice(array, func(i, j int) bool {
 	// 	return array[i].Class < array[j].Class
 	// })
-
 	// fmt.Println("[")
 	// for i, structure := range array {
 	// 	if i > 0 {
@@ -41,7 +39,9 @@ func slowPath(codeBase *types.CodeBase) {
 	// 	fmt.Printf("%s\n", structure.String())
 	// }
 	// fmt.Println("]")
+}
 
+func slowPath(codeBase *types.CodeBase) {
 	for _, source := range goCodePerRoute {
 		for _, c := range codeBase.Commands {
 			if err := c.ProcessFile(source); err != nil {
@@ -54,6 +54,17 @@ func slowPath(codeBase *types.CodeBase) {
 		if err := codeBase.ProcessFile(source); err != nil {
 			logger.Error(err)
 			os.Exit(1)
+		}
+	}
+	for _, source := range goTypes {
+		for _, s := range codeBase.Structures {
+			sort.Slice(s.Members, func(i, j int) bool {
+				return s.Members[i].GoName() < s.Members[j].GoName()
+			})
+			if err := s.ProcessFile(source); err != nil {
+				logger.Error(err)
+				os.Exit(1)
+			}
 		}
 	}
 }
@@ -117,18 +128,22 @@ func LoadDefinitions() (types.CodeBase, error) {
 
 // goCodePerRoute is the list of files to process per route
 var goCodePerRoute = []string{
-	"sdk_go_route.go.tmpl",
+	// "sdk_go_route.go.tmpl",
 	// // // - "sdk_python_src__route.py.tmpl",
 	// // // - "sdk_typescript_src_paths_route.ts.tmpl",
-	"src_apps_chifra_cmd_route.go.tmpl",
-	"src_apps_chifra_internal_route_output.go.tmpl",
-	// "src_apps_chifra_internal_route_options.go.tmpl",
-	"src_apps_chifra_internal_route_doc.go.tmpl",
-	"src_apps_chifra_sdk_route.go.tmpl",
+	// "src_apps_chifra_cmd_route.go.tmpl",
+	// "src_apps_chifra_internal_route_output.go.tmpl",
+	// // "src_apps_chifra_internal_route_options.go.tmpl",
+	// "src_apps_chifra_internal_route_doc.go.tmpl",
+	// "src_apps_chifra_sdk_route.go.tmpl",
 }
 
 // goCodePerCodeBase is the list of files to process per code base
 var goCodePerCodeBase = []string{
-	"src_apps_chifra_cmd_helpfile.go.tmpl",
-	"src_apps_chifra_pkg_version_string.go.tmpl",
+	// "src_apps_chifra_cmd_helpfile.go.tmpl",
+	// "src_apps_chifra_pkg_version_string.go.tmpl",
+}
+
+var goTypes = []string{
+	"src_apps_chifra_pkg_types_type.go.tmpl",
 }
