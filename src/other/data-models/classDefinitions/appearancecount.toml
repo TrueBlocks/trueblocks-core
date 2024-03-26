@@ -1,8 +1,9 @@
 [settings]
-class="CAppearanceCount"
-fields="appearancecount.csv"
-doc_group="01-Accounts"
-doc_descr="the number of records, file size, and last visited block for a given monitor"
-doc_route="106-appearanceCount"
-doc_producer="list, export"
-# go_output="documentation only"
+    class = "CAppearanceCount"
+    fields = "appearancecount.csv"
+    doc_group = "01-Accounts"
+    doc_descr = "the number of records, file size, and last visited block for a given monitor"
+    doc_route = "106-appearanceCount"
+    doc_producer = "list, export"
+    go_output = "documentation only"
+    disable_go = true
