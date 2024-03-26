@@ -30,7 +30,6 @@ func LoadCsv[T Validater, D any](thePath string, callBack func(*T, *D) (bool, er
 
 	} else {
 		defer theFile.Close()
-		gocsv.TagName = "json"
 		if err := gocsv.UnmarshalToCallback(theFile, callbackFunc); err != nil {
 			return []T{}, err
 		}

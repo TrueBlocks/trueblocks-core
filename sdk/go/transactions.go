@@ -10,12 +10,15 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -82,6 +85,25 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type transactionsResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *TransactionsOptions) Query() ([]bool, *rpc.MetaData, error) {
+	transactionsBuf := bytes.Buffer{}
+	if err := opts.Transactions(&transactionsBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var transactions transactionsResult
+	if err := json.Unmarshal(transactionsBuf.Bytes(), &transactions); err != nil {
+		return nil, nil, err
+	} else {
+		return transactions.Data, &transactions.Meta, nil
+	}
 }
 
 type TransactionsFlow int

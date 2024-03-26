@@ -1,4 +1,4 @@
-name          ,type          ,strDefault ,omitempty ,doc ,description
+name          ,type          ,strDefault ,omitempty ,docOrder,description
 version       ,string        ,           ,          ,  1 ,the version string hashed into the chunk data
 chain         ,string        ,           ,          ,  2 ,the chain to which this manifest belongs
 specification ,ipfshash      ,           ,          ,  3 ,IPFS cid of the specification

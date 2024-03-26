@@ -1,4 +1,4 @@
-name       ,type     ,strDefault ,omitempty ,doc ,description
+name       ,type     ,strDefault ,omitempty ,docOrder,description
 result     ,string   ,           ,          ,  1 ,the result of the check
 visitedCnt ,uint32   ,           ,          ,  2 ,the number of visited items in the cache
 checkedCnt ,uint32   ,           ,          ,  3 ,the number of checks

@@ -10,12 +10,15 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -77,6 +80,25 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type statusResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *StatusOptions) Query() ([]bool, *rpc.MetaData, error) {
+	statusBuf := bytes.Buffer{}
+	if err := opts.Status(&statusBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var status statusResult
+	if err := json.Unmarshal(statusBuf.Bytes(), &status); err != nil {
+		return nil, nil, err
+	} else {
+		return status.Data, &status.Meta, nil
+	}
 }
 
 type StatusModes int

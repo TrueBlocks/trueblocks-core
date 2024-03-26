@@ -5,33 +5,33 @@ import (
 )
 
 type CmdLineOption struct {
-	Num            string      `json:"num"`
-	Group          string      `json:"group"`
-	Tags           string      `json:"tags"`
-	ApiRoute       string      `json:"api_route"`
-	Tool           string      `json:"tool"`
-	LongName       string      `json:"longName"`
-	HotKey         string      `json:"hotKey"`
-	DefVal         string      `json:"def_val"`
-	IsRequired     bool        `json:"is_required"`
-	IsCustomizable bool        `json:"is_customizable"`
-	IsVisible      bool        `json:"is_visible"`
-	IsVisibleDocs  bool        `json:"is_visible_docs"`
-	Generate       string      `json:"generate"`
-	OptionType     string      `json:"option_type"`
-	DataType       string      `json:"data_type"`
-	Description    string      `json:"description"`
-	IsArray        bool        `json:"is_array"`
-	IsEnum         bool        `json:"is_enum"`
-	Enums          []string    `json:"enums"`
-	DefaultEnum    string      `json:"default_enum"`
-	GoName         string      `json:"go_name"`
-	GoType         string      `json:"go_type"`
-	GoSdkName      string      `json:"go_sdk_name"`
-	GoSdkType      string      `json:"go_sdk_type"`
-	GoOptionsType  string      `json:"go_options_type"`
-	templates      TemplateMap `json:"-"`
-	cmd            *Command
+	Num            string      `json:"num" csv:"num"`
+	Group          string      `json:"group" csv:"group"`
+	Tags           string      `json:"tags" csv:"tags"`
+	ApiRoute       string      `json:"api_route" csv:"api_route"`
+	Tool           string      `json:"tool" csv:"tool"`
+	LongName       string      `json:"longName" csv:"longName"`
+	HotKey         string      `json:"hotKey" csv:"hotKey"`
+	DefVal         string      `json:"def_val" csv:"def_val"`
+	IsRequired     bool        `json:"is_required" csv:"is_required"`
+	IsCustomizable bool        `json:"is_customizable" csv:"is_customizable"`
+	IsVisible      bool        `json:"is_visible" csv:"is_visible"`
+	IsVisibleDocs  bool        `json:"is_visible_docs" csv:"is_visible_docs"`
+	Generate       string      `json:"generate" csv:"generate"`
+	OptionType     string      `json:"option_type" csv:"option_type"`
+	DataType       string      `json:"data_type" csv:"data_type"`
+	Description    string      `json:"description" csv:"description"`
+	IsArray        bool        `json:"is_array" csv:"is_array"`
+	IsEnum         bool        `json:"is_enum" csv:"is_enum"`
+	Enums          []string    `json:"enums" csv:"enums"`
+	DefaultEnum    string      `json:"default_enum" csv:"default_enum"`
+	GoName         string      `json:"go_name" csv:"go_name"`
+	GoType         string      `json:"go_type" csv:"go_type"`
+	GoSdkName      string      `json:"go_sdk_name" csv:"go_sdk_name"`
+	GoSdkType      string      `json:"go_sdk_type" csv:"go_sdk_type"`
+	GoOptionsType  string      `json:"go_options_type" csv:"go_options_type"`
+	templates      TemplateMap `json:"-" csv:"-"`
+	cmd            *Command    `json:"-" csv:"-"`
 }
 
 func (op CmdLineOption) Validate() bool {

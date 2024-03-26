@@ -78,25 +78,25 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 	return &opts, nil
 }
 
-// No enums
-// EXISTING_CODE
+type whenResult struct {
+	Data []types.SimpleNamedBlock `json:"data"`
+	Meta rpc.MetaData             `json:"meta"`
+}
+
 func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *rpc.MetaData, error) {
-	stateBuf := bytes.Buffer{}
-	if err := opts.When(&stateBuf); err != nil {
+	whenBuf := bytes.Buffer{}
+	if err := opts.When(&whenBuf); err != nil {
 		logger.Fatal(err)
 	}
 
-	type result struct {
-		Data []types.SimpleNamedBlock `json:"data"`
-		Meta rpc.MetaData             `json:"meta"`
-	}
-
-	var when result
-	if err := json.Unmarshal(stateBuf.Bytes(), &when); err != nil {
+	var when whenResult
+	if err := json.Unmarshal(whenBuf.Bytes(), &when); err != nil {
 		return nil, nil, err
 	} else {
 		return when.Data, &when.Meta, nil
 	}
 }
 
+// No enums
+// EXISTING_CODE
 // EXISTING_CODE

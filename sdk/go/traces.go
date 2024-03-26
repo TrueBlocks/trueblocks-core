@@ -10,11 +10,14 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -66,6 +69,25 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type tracesResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *TracesOptions) Query() ([]bool, *rpc.MetaData, error) {
+	tracesBuf := bytes.Buffer{}
+	if err := opts.Traces(&tracesBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var traces tracesResult
+	if err := json.Unmarshal(tracesBuf.Bytes(), &traces); err != nil {
+		return nil, nil, err
+	} else {
+		return traces.Data, &traces.Meta, nil
+	}
 }
 
 // No enums

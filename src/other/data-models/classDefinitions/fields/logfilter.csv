@@ -1,4 +1,4 @@
-name      ,type      ,strDefault ,omitempty ,doc ,description
+name      ,type      ,strDefault ,omitempty ,docOrder,description
 fromBlock ,blknum    ,           ,          ,  1 ,the first block in the block range to query with eth_getLogs
 toBlock   ,blknum    ,           ,          ,  2 ,the last block in the range to query with eth_getLogs
 blockHash ,hash      ,           ,          ,  3 ,an alternative to blocks specification&#44; the hash of the block to query

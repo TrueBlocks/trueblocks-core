@@ -1,4 +1,4 @@
-name           ,type   ,strDefault                  ,omitempty ,doc ,description
+name           ,type   ,strDefault                  ,omitempty ,docOrder,description
 chain          ,string ,                            ,          ,  1 ,the common name of the chain
 chainId        ,uint64 ,                            ,          ,  2 ,the chain id as reported by the RPC
 symbol         ,string ,                            ,          ,  3 ,the symbol of the base currency on the chain

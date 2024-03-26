@@ -1,4 +1,4 @@
-name             ,type        ,strDefault ,omitempty ,doc ,description
+name             ,type        ,strDefault ,omitempty ,docOrder,description
 blockHash        ,hash        ,           ,          ,  1 ,the hash of the block containing this trace
 blockNumber      ,blknum      ,           ,          ,  2 ,the number of the block
 subtraces        ,uint64      ,           ,          ,  8 ,the number of children traces that the trace hash

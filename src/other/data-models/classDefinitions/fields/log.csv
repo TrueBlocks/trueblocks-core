@@ -1,4 +1,4 @@
-name             ,type      ,strDefault ,omitempty ,doc ,description
+name             ,type      ,strDefault ,omitempty ,docOrder,description
 blockNumber      ,blknum    ,           ,          ,  1 ,the number of the block
 transactionIndex ,uint64    ,           ,          ,  2 ,the zero-indexed position of the transaction in the block
 logIndex         ,uint64    ,           ,          ,  3 ,the zero-indexed position of this log relative to the block

@@ -1,4 +1,4 @@
-name        ,type    ,strDefault ,omitempty ,doc ,description
+name        ,type    ,strDefault ,omitempty ,docOrder,description
 fromBlock   ,blknum  ,           ,true      ,  1 ,the first block to include in the queried list of traces.
 toBlock     ,blknum  ,           ,true      ,  2 ,the last block to include in the queried list of traces.
 fromAddress ,address ,           ,true      ,  3 ,if included&#44; only traces `from` this address will be included.

@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -17,6 +18,8 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -103,6 +106,25 @@ func GetExportOptions(args []string) (*ExportOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type exportResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *ExportOptions) Query() ([]bool, *rpc.MetaData, error) {
+	exportBuf := bytes.Buffer{}
+	if err := opts.Export(&exportBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var export exportResult
+	if err := json.Unmarshal(exportBuf.Bytes(), &export); err != nil {
+		return nil, nil, err
+	} else {
+		return export.Data, &export.Meta, nil
+	}
 }
 
 type ExportFlow int

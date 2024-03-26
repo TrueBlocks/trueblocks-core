@@ -1,4 +1,4 @@
-name             ,type          ,strDefault ,omitempty ,doc ,description
+name             ,type          ,strDefault ,omitempty ,docOrder,description
 author           ,address       ,           ,rawonly   ,    ,
 gasLimit         ,gas           ,           ,          ,  1 ,the system-wide maximum amount of gas permitted in this block
 gasUsed          ,gas           ,           ,          ,    ,the total amount of gas used in this block

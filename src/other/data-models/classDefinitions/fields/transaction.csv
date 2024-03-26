@@ -1,4 +1,4 @@
-name                 ,type          ,strDefault ,omitempty ,doc ,description
+name                 ,type          ,strDefault ,omitempty ,docOrder,description
 accessList           ,[]StorageSlot ,           ,rawonly   ,    ,
 chainId              ,string        ,           ,rawonly   ,    ,
 blockNumber          ,blknum        ,           ,          ,  3 ,the number of the block

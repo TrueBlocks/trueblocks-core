@@ -86,19 +86,18 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 	return &opts, nil
 }
 
-// No enums
-// EXISTING_CODE
+type namesResult struct {
+	Data []types.SimpleName `json:"data"`
+	Meta rpc.MetaData       `json:"meta"`
+}
+
 func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
 	namesBuf := bytes.Buffer{}
 	if err := opts.Names(&namesBuf); err != nil {
 		logger.Fatal(err)
 	}
-	type result struct {
-		Data []types.SimpleName `json:"data"`
-		Meta rpc.MetaData       `json:"meta"`
-	}
 
-	var names result
+	var names namesResult
 	if err := json.Unmarshal(namesBuf.Bytes(), &names); err != nil {
 		return nil, nil, err
 	} else {
@@ -106,4 +105,6 @@ func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
 	}
 }
 
+// No enums
+// EXISTING_CODE
 // EXISTING_CODE

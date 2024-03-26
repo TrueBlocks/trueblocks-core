@@ -10,12 +10,15 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -75,6 +78,25 @@ func GetListOptions(args []string) (*ListOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type listResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *ListOptions) Query() ([]bool, *rpc.MetaData, error) {
+	listBuf := bytes.Buffer{}
+	if err := opts.List(&listBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var list listResult
+	if err := json.Unmarshal(listBuf.Bytes(), &list); err != nil {
+		return nil, nil, err
+	} else {
+		return list.Data, &list.Meta, nil
+	}
 }
 
 // No enums

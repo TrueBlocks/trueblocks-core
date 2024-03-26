@@ -1,4 +1,4 @@
-name            ,type      ,strDefault ,omitempty ,doc ,description
+name            ,type      ,strDefault ,omitempty ,docOrder,description
 blockNumber     ,blknum    ,           ,          ,  1 ,the block's block number
 timestamp       ,timestamp ,           ,          ,  2 ,the timestamp of the block
 date            ,datetime  ,           ,calc      ,  3 ,the timestamp as a date

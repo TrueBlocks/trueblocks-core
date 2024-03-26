@@ -1,4 +1,4 @@
-name             ,type      ,strDefault ,omitempty ,doc ,description
+name             ,type      ,strDefault ,omitempty ,docOrder,description
 address          ,address   ,           ,          ,  1 ,the address of the appearance
 blockNumber      ,blknum    ,           ,          ,  2 ,the number of the block
 transactionIndex ,blknum    ,           ,          ,  3 ,the index of the transaction in the block

@@ -1,4 +1,4 @@
-name        ,type   ,strDefault ,omitempty ,doc ,description
+name        ,type   ,strDefault ,omitempty ,docOrder,description
 type        ,string ,           ,          ,  1 ,the type of the cache
 items       ,[]any  ,           ,          ,  2 ,the individual items in the cache (if --verbose)
 lastCached  ,string ,           ,true      ,  3 ,the date of the most recent item added to the cache

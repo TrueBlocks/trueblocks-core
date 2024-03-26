@@ -1,4 +1,4 @@
-name        ,type      ,strDefault ,omitempty ,doc ,description
+name        ,type      ,strDefault ,omitempty ,docOrder,description
 blockNumber ,blknum    ,           ,          ,  1 ,the block number at which this call was made
 timestamp   ,timestamp ,           ,          ,  2 ,the timestamp of the block for this call
 date        ,datetime  ,           ,calc      ,  3 ,the timestamp as a date

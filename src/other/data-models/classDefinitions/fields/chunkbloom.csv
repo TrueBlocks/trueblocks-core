@@ -1,4 +1,4 @@
-name      ,type     ,strDefault ,omitempty ,doc ,description
+name      ,type     ,strDefault ,omitempty ,docOrder,description
 range     ,blkrange ,           ,          ,  1 ,the block range (inclusive) covered by this chunk                  ,
 magic     ,string   ,           ,          ,  2 ,an internal use only magic number to indicate file format          ,
 hash      ,hash     ,           ,          ,  3 ,the hash of the specification under which this chunk was generated ,

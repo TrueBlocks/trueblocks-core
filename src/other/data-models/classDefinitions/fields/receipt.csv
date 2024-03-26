@@ -1,4 +1,4 @@
-name              ,type    ,strDefault ,omitempty ,doc ,description
+name              ,type    ,strDefault ,omitempty ,docOrder,description
 blockHash         ,hash    ,           ,true      ,  1 ,
 blockNumber       ,blknum  ,           ,          ,  2 ,
 contractAddress   ,address ,           ,true      ,  3 ,the address of the newly created contract&#44; if any

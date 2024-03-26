@@ -91,6 +91,25 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 	return &opts, nil
 }
 
+type stateResult struct {
+	Data []types.SimpleState `json:"data"`
+	Meta rpc.MetaData        `json:"meta"`
+}
+
+func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
+	stateBuf := bytes.Buffer{}
+	if err := opts.State(&stateBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var state stateResult
+	if err := json.Unmarshal(stateBuf.Bytes(), &state); err != nil {
+		return nil, nil, err
+	} else {
+		return state.Data, &state.Meta, nil
+	}
+}
+
 type StateParts int
 
 const (
@@ -169,23 +188,4 @@ func enumFromStateParts(values []string) (StateParts, error) {
 }
 
 // EXISTING_CODE
-func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
-	stateBuf := bytes.Buffer{}
-	if err := opts.State(&stateBuf); err != nil {
-		logger.Fatal(err)
-	}
-
-	type result struct {
-		Data []types.SimpleState `json:"data"`
-		Meta rpc.MetaData        `json:"meta"`
-	}
-
-	var state result
-	if err := json.Unmarshal(stateBuf.Bytes(), &state); err != nil {
-		return nil, nil, err
-	} else {
-		return state.Data, &state.Meta, nil
-	}
-}
-
 // EXISTING_CODE

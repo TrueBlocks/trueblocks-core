@@ -1,17 +1,21 @@
 package types
 
 import (
+	"io/fs"
+	"path/filepath"
 	"sort"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-// LoadCommands loads the two csv files and returns the codebase which
+// LoadCodebase loads the two csv files and returns the codebase which
 // contains all the commands (each with its own options and endpoint).
 // This will also eventually carry the data types.
-func LoadCommands(thePath string) (CodeBase, error) {
+func LoadCodebase(thePath string) (CodeBase, error) {
 	theMap := make(map[string]Command)
 
-	options, err := LoadCsv[CmdLineOption, any](thePath+"cmd-line-options.csv", ReadCmdOption, nil)
+	options, err := LoadCsv[CmdLineOption, any](thePath+"cmd-line-options.csv", readCmdOption, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
@@ -24,7 +28,7 @@ func LoadCommands(thePath string) (CodeBase, error) {
 		theMap[opt.ApiRoute] = cmd
 	}
 
-	endpoints, err := LoadCsv[CmdLineEndpoint, any](thePath+"cmd-line-endpoints.csv", ReadCmdEndpoint, nil)
+	endpoints, err := LoadCsv[CmdLineEndpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
@@ -40,6 +44,7 @@ func LoadCommands(thePath string) (CodeBase, error) {
 	}
 
 	var cb CodeBase
+	cb.Structures = make(map[string]Structure)
 	cb.Commands = make([]Command, 0, len(theMap))
 	for _, cmd := range theMap {
 		cmd.clean()
@@ -49,15 +54,95 @@ func LoadCommands(thePath string) (CodeBase, error) {
 		return cb.Commands[i].Route < cb.Commands[j].Route
 	})
 
+	thePath += "classDefinitions/"
+	if err := ReadStructures(thePath, &cb); err != nil {
+		return cb, err
+	}
+
+	if err := ReadMembers(thePath, &cb); err != nil {
+		return cb, err
+	}
+
 	return cb, nil
 }
 
-func ReadCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {
+func ReadStructures(thePath string, cb *CodeBase) error {
+	if err := filepath.Walk(thePath, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			if strings.HasSuffix(path, ".toml") {
+				class := strings.TrimSuffix(filepath.Base(path), ".toml")
+				type S struct {
+					Settings Structure `toml:"settings"`
+				}
+				var f S
+				err := config.ReadToml(path, &f)
+				if err != nil {
+					return err
+				}
+				if f.Settings.Class[0] == 'C' {
+					f.Settings.Class = f.Settings.Class[1:]
+				}
+				cb.Structures[class] = f.Settings
+			}
+		}
+		return nil
+	}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func ReadMembers(thePath string, cb *CodeBase) error {
+	if err := filepath.Walk(thePath, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			if strings.HasSuffix(path, ".csv") {
+				class := strings.TrimSuffix(filepath.Base(path), ".csv")
+				structure := cb.Structures[class]
+				var err error
+				structure.Members, err = LoadCsv[Member, any](path, readMember, nil)
+				if err != nil {
+					return err
+				}
+				for i := 0; i < len(structure.Members); i++ {
+					structure.Members[i].Num = (i + 1)
+				}
+				// sort.Slice(structure.Members, func(i, j int) bool {
+				// 	if structure.Members[i].DocOrder != 0 && (structure.Members[i].DocOrder != structure.Members[j].DocOrder) {
+				// 		return structure.Members[i].DocOrder < structure.Members[j].DocOrder
+				// 	}
+				// 	return structure.Members[i].Num < structure.Members[j].Num
+				// })
+				cb.Structures[class] = structure
+			}
+		}
+		return nil
+	}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func readCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {
 	cmd.Description = strings.ReplaceAll(cmd.Description, "&#44;", ",")
 	return true, nil
 }
 
-func ReadCmdOption(op *CmdLineOption, data *any) (bool, error) {
+func readCmdOption(op *CmdLineOption, data *any) (bool, error) {
 	op.Description = strings.ReplaceAll(op.Description, "&#44;", ",")
+	return true, nil
+}
+
+func readMember(m *Member, data *any) (bool, error) {
+	m.Description = strings.ReplaceAll(m.Description, "&#44;", ",")
+	m.Name = strings.Trim(m.Name, " ")
+	m.Type = strings.Trim(m.Type, " ")
+	m.StrDefault = strings.Trim(m.StrDefault, " ")
+	m.Description = strings.Trim(m.Description, " ")
 	return true, nil
 }

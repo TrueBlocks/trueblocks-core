@@ -1,4 +1,4 @@
-name            ,type        ,strDefault ,omitempty ,doc ,description
+name            ,type        ,strDefault ,omitempty ,docOrder,description
 name            ,string      ,           ,          ,  1 ,the name of the interface
 type            ,string      ,           ,          ,  2 ,the type of the interface&#44; either 'event' or 'function'
 anonymous       ,bool        ,           ,true      ,    ,

@@ -10,11 +10,14 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -64,6 +67,25 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type receiptsResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *ReceiptsOptions) Query() ([]bool, *rpc.MetaData, error) {
+	receiptsBuf := bytes.Buffer{}
+	if err := opts.Receipts(&receiptsBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var receipts receiptsResult
+	if err := json.Unmarshal(receiptsBuf.Bytes(), &receipts); err != nil {
+		return nil, nil, err
+	} else {
+		return receipts.Data, &receipts.Meta, nil
+	}
 }
 
 // No enums

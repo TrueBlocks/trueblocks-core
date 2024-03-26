@@ -1,4 +1,4 @@
-name    ,type    ,strDefault ,omitempty ,doc ,description
+name    ,type    ,strDefault ,omitempty ,docOrder,description
 address ,address ,           ,true      ,  1 ,address of new contract&#44; if any
 code    ,bytes   ,           ,true      ,  2 ,if this trace is creating a new smart contract&#44; the byte code of that contract
 gasUsed ,gas     ,           ,true      ,  3 ,the amount of gas used by this trace

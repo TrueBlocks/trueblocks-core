@@ -1,4 +1,4 @@
-name        ,type      ,strDefault ,omitempty ,doc ,description
+name        ,type      ,strDefault ,omitempty ,docOrder,description
 component   ,string    ,           ,true      ,    ,the name of the componet for which this record exists
 blockNumber ,blknum    ,           ,          ,  1 ,the number of the block
 timestamp   ,timestamp ,           ,          ,  2 ,the Unix timestamp of the block
