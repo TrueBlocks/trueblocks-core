@@ -36,14 +36,11 @@ func (s *Structure) String() string {
 func (s *Structure) RawFields() string {
 	ret := []string{}
 	for _, member := range s.Members {
-		if member.Name == "date" {
+		if member.IsCalc || strings.Contains(member.Name, "::") {
 			continue
 		}
 		fu := member.GoName()
 		omit := ""
-		if member.Omitempty {
-			omit = ",omitempty"
-		}
 		v := "\t" + fu + " string `json:\"" + member.Name + omit + "\"`"
 		ret = append(ret, v)
 	}
@@ -53,15 +50,15 @@ func (s *Structure) RawFields() string {
 func (s *Structure) MemberFields() string {
 	ret := []string{}
 	for _, member := range s.Members {
-		if member.Name == "date" {
+		if member.IsCalc || member.IsRawonly || strings.Contains(member.Name, "::") {
 			continue
 		}
 		fu := strings.ToUpper(member.Name[0:1]) + member.Name[1:]
 		omit := ""
-		if member.Omitempty {
+		if member.IsOmitempty {
 			omit = ",omitempty"
 		}
-		v := "\t" + fu + " " + member.Type + " `json:\"" + member.Name + omit + "\"`"
+		v := "\t" + fu + " " + member.GoType() + " `json:\"" + member.Name + omit + "\"`"
 		ret = append(ret, v)
 	}
 	ret = append(ret, "\traw *Raw"+s.Class+" `json:\"-\"`")
@@ -78,10 +75,10 @@ func (s *Structure) DateCode() string {
 		}
 	}
 	if hasTs {
-		ret := `func (s *Simple{{.Class}}) Date() string {
+		ret := `func (s *Simple{{.ModelName}}) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }`
-		return strings.Replace(ret, "{{.Class}}", s.Class, -1)
+		return strings.Replace(ret, "{{.ModelName}}", s.ModelName(), -1)
 	} else {
 		return ""
 	}
@@ -92,4 +89,11 @@ func (s *Structure) CacheCode() string {
 		return ""
 	}
 	return `// CacheCode`
+}
+
+func (s *Structure) ModelName() string {
+	if s.GoModel != "" {
+		return s.GoModel
+	}
+	return s.Class
 }

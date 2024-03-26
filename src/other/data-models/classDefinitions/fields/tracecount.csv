@@ -1,7 +1,7 @@
-name             ,type      ,strDefault ,omitempty ,docOrder,description
-blockNumber      ,blknum    ,           ,          ,  1 ,the block number
-transactionIndex ,blknum    ,           ,          ,  2 ,the transaction index
-transactionHash  ,hash      ,           ,          ,  3 ,the transaction's hash
-timestamp        ,timestamp ,           ,          ,  4 ,the timestamp of the block
-date             ,datetime  ,           ,calc      ,  5 ,the timestamp as a date
-tracesCnt        ,uint64    ,           ,          ,  6 ,the number of traces in the transaction
+name             ,type      ,strDefault ,attributes ,docOrder ,description
+blockNumber      ,blknum    ,           ,           ,       1 ,the block number
+transactionIndex ,blknum    ,           ,           ,       2 ,the transaction index
+transactionHash  ,hash      ,           ,           ,       3 ,the transaction's hash
+timestamp        ,timestamp ,           ,           ,       4 ,the timestamp of the block
+date             ,datetime  ,           ,calc       ,       5 ,the timestamp as a date
+tracesCnt        ,uint64    ,           ,           ,       6 ,the number of traces in the transaction

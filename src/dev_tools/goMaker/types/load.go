@@ -123,6 +123,9 @@ func ReadMembers(thePath string, cb *CodeBase) error {
 				// 	return structure.Members[i].Num < structure.Members[j].Num
 				// })
 				cb.Structures[class] = structure
+				for i := 0; i < len(structure.Members); i++ {
+					structure.Members[i].Struct = cb.Structures[class].Class
+				}
 			}
 		}
 		return nil
@@ -145,8 +148,12 @@ func readCmdOption(op *CmdLineOption, data *any) (bool, error) {
 func readMember(m *Member, data *any) (bool, error) {
 	m.Description = strings.ReplaceAll(m.Description, "&#44;", ",")
 	m.Name = strings.Trim(m.Name, " ")
+	m.Proper = strings.ToUpper(m.Name[0:1]) + m.Name[1:]
 	m.Type = strings.Trim(m.Type, " ")
 	m.StrDefault = strings.Trim(m.StrDefault, " ")
 	m.Description = strings.Trim(m.Description, " ")
+	m.IsOmitempty = strings.Contains(m.Attributes, "omitempty") || strings.Contains(m.Attributes, "true")
+	m.IsCalc = strings.Contains(m.Attributes, "calc")
+	m.IsRawonly = strings.Contains(m.Attributes, "rawonly")
 	return true, nil
 }

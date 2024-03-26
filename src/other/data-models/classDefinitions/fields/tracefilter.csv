@@ -1,7 +1,7 @@
-name        ,type    ,strDefault ,omitempty ,docOrder,description
-fromBlock   ,blknum  ,           ,true      ,  1 ,the first block to include in the queried list of traces.
-toBlock     ,blknum  ,           ,true      ,  2 ,the last block to include in the queried list of traces.
-fromAddress ,address ,           ,true      ,  3 ,if included&#44; only traces `from` this address will be included.
-toAddress   ,address ,           ,true      ,  4 ,if included&#44; only traces `to` this address will be included.
-after       ,uint64  ,           ,true      ,  5 ,only traces after this many traces are included.
-count       ,uint64  ,           ,true      ,  6 ,only this many traces are included.
+name        ,type    ,strDefault ,attributes ,docOrder ,description
+fromBlock   ,blknum  ,           ,omitempty  ,       1 ,the first block to include in the queried list of traces.
+toBlock     ,blknum  ,           ,omitempty  ,       2 ,the last block to include in the queried list of traces.
+fromAddress ,address ,           ,omitempty  ,       3 ,if included&#44; only traces `from` this address will be included.
+toAddress   ,address ,           ,omitempty  ,       4 ,if included&#44; only traces `to` this address will be included.
+after       ,uint64  ,           ,omitempty  ,       5 ,only traces after this many traces are included.
+count       ,uint64  ,           ,omitempty  ,       6 ,only this many traces are included.

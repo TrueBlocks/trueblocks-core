@@ -1,24 +1,24 @@
-name             ,type        ,strDefault ,omitempty ,docOrder,description
-blockHash        ,hash        ,           ,          ,  1 ,the hash of the block containing this trace
-blockNumber      ,blknum      ,           ,          ,  2 ,the number of the block
-subtraces        ,uint64      ,           ,          ,  8 ,the number of children traces that the trace hash
-traceAddress     ,[]uint64    ,           ,          ,  7 ,a particular trace's address in the trace tree
-transactionHash  ,hash        ,           ,          ,  5 ,the transaction's hash containing this trace
-transactionIndex ,blknum      ,           ,          ,  6 ,the zero-indexed position of the transaction in the block
-type             ,string      ,           ,true      ,  9 ,the type of the trace
-error            ,string      ,           ,true      ,    ,
-action           ,TraceAction ,           ,          , 10 ,the trace action for this trace
-result           ,TraceResult ,           ,          , 11 ,the trace result of this trace
-articulatedTrace ,Function    ,           ,true      , 12 ,human readable version of the trace action input data
-compressedTrace  ,string      ,           ,true      , 13 ,a compressed string version of the articulated trace
-action::callType ,string      ,           ,          ,    ,
-action::from     ,string      ,           ,          ,    ,
-action::to       ,string      ,           ,          ,    ,
-action::value    ,string      ,           ,          ,    ,
-action::ether    ,string      ,           ,          ,    ,
-action::gas      ,string      ,           ,          ,    ,
-result::gasUsed  ,string      ,           ,          ,    ,
-action::input    ,string      ,           ,          ,    ,
-result::output   ,string      ,           ,          ,    ,
-timestamp        ,timestamp   ,           ,          ,  3 ,the timestamp of the block
-date             ,datetime    ,           ,calc      ,  4 ,the timestamp as a date
+name             ,type        ,strDefault ,attributes ,docOrder ,description
+blockHash        ,hash        ,           ,           ,       1 ,the hash of the block containing this trace
+blockNumber      ,blknum      ,           ,           ,       2 ,the number of the block
+subtraces        ,uint64      ,           ,           ,       8 ,the number of children traces that the trace hash
+traceAddress     ,[]uint64    ,           ,           ,       7 ,a particular trace's address in the trace tree
+transactionHash  ,hash        ,           ,           ,       5 ,the transaction's hash containing this trace
+transactionIndex ,blknum      ,           ,           ,       6 ,the zero-indexed position of the transaction in the block
+type             ,string      ,           ,omitempty  ,       9 ,the type of the trace
+error            ,string      ,           ,omitempty  ,         ,
+action           ,TraceAction ,           ,           ,      10 ,the trace action for this trace
+result           ,TraceResult ,           ,           ,      11 ,the trace result of this trace
+articulatedTrace ,Function    ,           ,omitempty  ,      12 ,human readable version of the trace action input data
+compressedTrace  ,string      ,           ,omitempty  ,      13 ,a compressed string version of the articulated trace
+action::callType ,string      ,           ,           ,         ,
+action::from     ,string      ,           ,           ,         ,
+action::to       ,string      ,           ,           ,         ,
+action::value    ,string      ,           ,           ,         ,
+action::ether    ,string      ,           ,           ,         ,
+action::gas      ,string      ,           ,           ,         ,
+result::gasUsed  ,string      ,           ,           ,         ,
+action::input    ,string      ,           ,           ,         ,
+result::output   ,string      ,           ,           ,         ,
+timestamp        ,timestamp   ,           ,           ,       3 ,the timestamp of the block
+date             ,datetime    ,           ,omitempty  ,       4 ,the timestamp as a date

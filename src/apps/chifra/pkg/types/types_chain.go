@@ -76,5 +76,11 @@ func (s *SimpleChain) Model(chain, format string, verbose bool, extraOptions map
 	}
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleChain) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

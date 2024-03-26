@@ -100,5 +100,11 @@ func (s *SimpleNamedBlock) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleNamedBlock) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

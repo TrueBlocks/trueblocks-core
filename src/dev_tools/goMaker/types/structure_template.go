@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func (s *Structure) ProcessFile(source string) error {
@@ -28,7 +29,13 @@ func (s *Structure) ProcessFile(source string) error {
 	} else if !strings.Contains(s.GoOutput, "/internal/") {
 		dest := convertToDestPath(source, s.Name)
 		dest = strings.Replace(dest, "//src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
-		return codeWriter.WriteCode(dest, result)
+		err := codeWriter.WriteCode(dest, result)
+		defer func() {
+			m.Unlock()
+		}()
+		m.Lock()
+		logger.Info("Writing to: ", dest)
+		return err
 	} else {
 		return nil
 	}

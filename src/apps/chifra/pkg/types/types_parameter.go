@@ -183,6 +183,7 @@ func (s *SimpleParameter) UnmarshalCache(version uint64, reader io.Reader) (err 
 	return nil
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *SimpleParameter) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE

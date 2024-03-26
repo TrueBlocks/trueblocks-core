@@ -17,21 +17,21 @@ type Raw{{.Class}} struct {
 	// EXISTING_CODE
 }
 
-type Simple{{.Class}} struct {
+type Simple{{.ModelName}} struct {
 	{{.MemberFields}}
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *Simple{{.Class}}) Raw() *Raw{{.Class}} {
+func (s *Simple{{.ModelName}}) Raw() *Raw{{.Class}} {
 	return s.raw
 }
 
-func (s *Simple{{.Class}}) SetRaw(raw *Raw{{.Class}}) {
+func (s *Simple{{.ModelName}}) SetRaw(raw *Raw{{.Class}}) {
 	s.raw = raw
 }
 
-func (s *Simple{{.Class}}) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
+func (s *Simple{{.ModelName}}) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -49,7 +49,7 @@ func (s *Simple{{.Class}}) Model(chain, format string, verbose bool, extraOption
 {{.CacheCode}}
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Simple{{.Class}}) FinishUnmarshal() {
+func (s *Simple{{.ModelName}}) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

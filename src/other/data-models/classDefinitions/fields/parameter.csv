@@ -1,8 +1,8 @@
-name         ,type        ,strDefault ,omitempty ,docOrder,description
-type         ,string      ,           ,          ,  1 ,the type of this parameter
-name         ,string      ,           ,          ,  2 ,the name of this parameter
-strDefault   ,string      ,           ,true      ,  3 ,the default value of this parameter&#44; if any
-value        ,string      ,           ,true      ,    ,
-indexed      ,bool        ,           ,true      ,  4 ,`true` if this parameter is indexed
-internalType ,string      ,           ,true      ,  5 ,for composite types&#44; the internal type of the parameter
-components   ,[]Parameter ,           ,true      ,  6 ,for composite types&#44; the parameters making up the composite
+name         ,type        ,strDefault ,attributes ,docOrder ,description
+type         ,string      ,           ,           ,       1 ,the type of this parameter
+name         ,string      ,           ,           ,       2 ,the name of this parameter
+strDefault   ,string      ,           ,omitempty  ,       3 ,the default value of this parameter&#44; if any
+value        ,string      ,           ,omitempty  ,         ,
+indexed      ,bool        ,           ,omitempty  ,       4 ,`true` if this parameter is indexed
+internalType ,string      ,           ,omitempty  ,       5 ,for composite types&#44; the internal type of the parameter
+components   ,[]Parameter ,           ,omitempty  ,       6 ,for composite types&#44; the parameters making up the composite

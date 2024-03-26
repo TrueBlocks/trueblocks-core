@@ -27,7 +27,13 @@ func (c *Command) ProcessFile(source string) error {
 
 	dest := convertToDestPath(source, c.Route)
 	logger.Info("Writing to: ", dest)
-	return codeWriter.WriteCode(dest, result)
+	err := codeWriter.WriteCode(dest, result)
+	defer func() {
+		m.Unlock()
+	}()
+	m.Lock()
+	logger.Info("Writing to: ", dest)
+	return err
 }
 
 // executeTemplate executes the template with the given name and returns

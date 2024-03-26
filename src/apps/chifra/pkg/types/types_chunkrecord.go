@@ -73,6 +73,12 @@ func (s *SimpleChunkRecord) Model(chain, format string, verbose bool, extraOptio
 	}
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleChunkRecord) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
 // EXISTING_CODE
 func (s *SimpleChunkRecord) String() string {
 	bytes, _ := json.MarshalIndent(s, "", "  ")

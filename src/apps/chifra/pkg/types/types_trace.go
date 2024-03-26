@@ -396,6 +396,7 @@ func (s *SimpleTrace) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	return nil
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *SimpleTrace) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
