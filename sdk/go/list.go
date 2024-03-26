@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -81,11 +82,11 @@ func GetListOptions(args []string) (*ListOptions, error) {
 }
 
 type listResult struct {
-	Data []bool       `json:"data"`
-	Meta rpc.MetaData `json:"meta"`
+	Data []types.SimpleAppearance `json:"data"`
+	Meta rpc.MetaData             `json:"meta"`
 }
 
-func (opts *ListOptions) Query() ([]bool, *rpc.MetaData, error) {
+func (opts *ListOptions) Query() ([]types.SimpleAppearance, *rpc.MetaData, error) {
 	listBuf := bytes.Buffer{}
 	if err := opts.List(&listBuf); err != nil {
 		logger.Fatal(err)

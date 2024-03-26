@@ -19,6 +19,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -97,11 +98,11 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 }
 
 type slurpResult struct {
-	Data []bool       `json:"data"`
-	Meta rpc.MetaData `json:"meta"`
+	Data []types.SimpleSlurp `json:"data"`
+	Meta rpc.MetaData        `json:"meta"`
 }
 
-func (opts *SlurpOptions) Query() ([]bool, *rpc.MetaData, error) {
+func (opts *SlurpOptions) Query() ([]types.SimpleSlurp, *rpc.MetaData, error) {
 	slurpBuf := bytes.Buffer{}
 	if err := opts.Slurp(&slurpBuf); err != nil {
 		logger.Fatal(err)
