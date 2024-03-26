@@ -26,16 +26,18 @@ func (s *Structure) ProcessFile(source string) error {
 	if s.DisableGo {
 		// logger.Info(s.Class, "disabled", s.GoOutput)
 		return nil
-	} else if !strings.Contains(s.GoOutput, "/internal/") {
+	} else if s.Name != "" && !strings.Contains(s.GoOutput, "/internal/") {
 		dest := convertToDestPath(source, s.Name)
 		dest = strings.Replace(dest, "//src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
-		err := codeWriter.WriteCode(dest, result)
 		defer func() {
 			m.Unlock()
 		}()
 		m.Lock()
 		logger.Info("Writing to: ", dest)
-		return err
+		// fmt.Println("-----------------------------------------------------")
+		// fmt.Println(s.String())
+		// fmt.Println("-----------------------------------------------------")
+		return codeWriter.WriteCode(dest, result)
 	} else {
 		return nil
 	}
