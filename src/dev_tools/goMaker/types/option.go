@@ -30,7 +30,6 @@ type CmdLineOption struct {
 	GoSdkName      string      `json:"go_sdk_name" csv:"go_sdk_name"`
 	GoSdkType      string      `json:"go_sdk_type" csv:"go_sdk_type"`
 	GoOptionsType  string      `json:"go_options_type" csv:"go_options_type"`
-	Types          []string    `json:"types,omitempty" csv:"-"`
 	templates      TemplateMap `json:"-" csv:"-"`
 	cmd            *Command    `json:"-" csv:"-"`
 }

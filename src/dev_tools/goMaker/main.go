@@ -19,8 +19,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	slowPath(&codeBase)
-	if false {
+	// slowPath(&codeBase)
+	if true {
 		fastPath(&codeBase)
 	}
 }
