@@ -1,0 +1,8 @@
+[settings]
+class="CChunkAddress"
+fields="chunkaddress.csv"
+doc_group="04-Admin"
+doc_descr="internal-use only data model detailing a single address record in the address table of an index chunk"
+doc_route="406-chunkAddress"
+doc_producer="chunks"
+go_output="src/apps/chifra/internal/chunks/"

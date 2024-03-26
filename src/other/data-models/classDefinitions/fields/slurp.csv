@@ -1,4 +1,4 @@
-name              ,type      ,strDefault ,omitempty ,doc ,description
+name              ,type      ,strDefault ,omitempty ,docOrder,description
 hash              ,hash      ,           ,          ,  1 ,the hash of the transaction
 blockHash         ,hash      ,           ,          ,  2 ,the hash of the block containing this transaction
 blockNumber       ,blknum    ,           ,          ,  3 ,the number of the block

@@ -1,4 +1,4 @@
-name       ,type          ,strDefault ,omitempty ,doc ,description
+name       ,type          ,strDefault ,omitempty ,docOrder,description
 count      ,uint64        ,           ,          ,  1 ,the number of appearances for this address
 firstApp   ,RawAppearance ,           ,          ,  2 ,the block number and transaction id of the first appearance of this address
 firstTs    ,timestamp     ,           ,          ,  3 ,the timestamp of the first appearance of this address

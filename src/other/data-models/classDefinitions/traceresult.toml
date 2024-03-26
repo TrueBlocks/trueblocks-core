@@ -1,0 +1,10 @@
+[settings]
+class="CTraceResult"
+fields="traceresult.csv"
+contained_by="Trace"
+doc_group="02-Chain Data"
+doc_descr="trace result data as returned from the RPC (with slight enhancements)"
+doc_route="210-traceResult"
+doc_producer="traces, export, blocks"
+go_output="src/apps/chifra/pkg/types"
+cache_type="marshal_only"

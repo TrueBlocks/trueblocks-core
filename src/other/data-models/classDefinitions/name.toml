@@ -1,0 +1,8 @@
+[settings]
+class="CName"
+fields="name.csv"
+doc_group="01-Accounts"
+doc_descr="an association between a human-readable name and an address used throughout TrueBlocks"
+doc_route="104-name"
+doc_producer="names"
+go_output="src/apps/chifra/pkg/types"

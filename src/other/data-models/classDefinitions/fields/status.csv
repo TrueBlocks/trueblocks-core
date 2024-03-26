@@ -1,4 +1,4 @@
-name          ,type        ,strDefault ,omitempty ,doc ,description
+name          ,type        ,strDefault ,omitempty ,docOrder,description
 cachePath     ,string      ,           ,true      ,  1 ,the path to the local binary caches
 caches        ,[]CacheItem ,           ,          ,  2 ,a collection of information concerning the binary caches
 chain         ,string      ,           ,true      ,  3 ,the current chain

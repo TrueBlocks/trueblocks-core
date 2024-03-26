@@ -1,4 +1,4 @@
-name             ,type    ,strDefault ,omitempty ,doc ,description
+name             ,type    ,strDefault ,omitempty ,docOrder,description
 nAppearances     ,blknum  ,           ,          ,    ,
 lastExport       ,blknum  ,           ,          ,    ,
 firstAppearance  ,blknum  ,           ,          ,    ,

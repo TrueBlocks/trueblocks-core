@@ -5,12 +5,15 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sync"
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
+
+var m sync.Mutex
 
 // ProcessFile processes a single file, applying the template to it and
 // writing the result to the destination.
@@ -26,8 +29,14 @@ func (cb *CodeBase) ProcessFile(source string) error {
 	result := cb.executeTemplate(source, file.AsciiFileToString(source))
 
 	dest := convertToDestPath(source, "")
+
+	err := codeWriter.WriteCode(dest, result)
+	defer func() {
+		m.Unlock()
+	}()
+	m.Lock()
 	logger.Info("Writing to: ", dest)
-	return codeWriter.WriteCode(dest, result)
+	return err
 }
 
 // executeTemplate executes the template with the given name and returns

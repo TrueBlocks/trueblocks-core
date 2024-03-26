@@ -1,4 +1,4 @@
-name             ,type      ,strDefault ,omitempty ,doc ,description
+name             ,type      ,strDefault ,omitempty ,docOrder,description
 blockNumber      ,blknum    ,           ,          ,  1 ,the block at which the report is made
 transactionIndex ,blknum    ,           ,true      ,  2 ,the transaction index (if applicable) at which the report is made
 timestamp        ,timestamp ,           ,          ,  3 ,the timestamp of the block

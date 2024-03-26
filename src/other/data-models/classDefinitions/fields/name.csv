@@ -1,4 +1,4 @@
-name       ,type    ,strDefault ,omitempty ,doc ,description
+name       ,type    ,strDefault ,omitempty ,docOrder,description
 tags       ,string  ,           ,          ,  1 ,colon separated list of tags
 address    ,address ,           ,          ,  2 ,the address associated with this name
 name       ,string  ,           ,          ,  3 ,the name associated with this address (retrieved from on-chain data if available)

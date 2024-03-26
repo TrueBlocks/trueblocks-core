@@ -1,4 +1,4 @@
-name           ,type    ,strDefault ,omitempty ,doc ,description
+name           ,type    ,strDefault ,omitempty ,docOrder,description
 selfDestructed ,address ,           ,true      ,    ,
 balance        ,wei     ,           ,true      ,    ,
 callType       ,string  ,           ,          ,  5 ,the type of call

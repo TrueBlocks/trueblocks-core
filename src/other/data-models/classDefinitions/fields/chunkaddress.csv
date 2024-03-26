@@ -1,4 +1,4 @@
-name    ,type     ,strDefault ,omitempty ,doc ,description
+name    ,type     ,strDefault ,omitempty ,docOrder,description
 address ,address  ,           ,          ,  1 ,the address in this record                                                ,
 range   ,blkrange ,           ,          ,  2 ,the block range of the chunk from which this address record was taken     ,
 offset  ,uint64   ,           ,          ,  3 ,the offset into the appearance table of the first record for this address ,

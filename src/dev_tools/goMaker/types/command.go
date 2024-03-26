@@ -8,17 +8,17 @@ import (
 )
 
 type Command struct {
-	Route       string          `json:"route"`
-	Group       string          `json:"group"`
-	Description string          `json:"description"`
-	Endpoint    CmdLineEndpoint `json:"endpoint"`
-	Options     []CmdLineOption `json:"options"`
-	Notes       []string        `json:"notes"`
-	Aliases     []string        `json:"aliases"`
-	Hidden      []string        `json:"hidden"`
-	Proper      string          `json:"proper"`
-	Lower       string          `json:"lower"`
-	templates   TemplateMap     `json:"-"`
+	Route       string          `json:"route" csv:"route"`
+	Group       string          `json:"group" csv:"group"`
+	Description string          `json:"description" csv:"description"`
+	Endpoint    CmdLineEndpoint `json:"endpoint" csv:"endpoint"`
+	Options     []CmdLineOption `json:"options" csv:"options"`
+	Notes       []string        `json:"notes" csv:"notes"`
+	Aliases     []string        `json:"aliases" csv:"aliases"`
+	Hidden      []string        `json:"hidden" csv:"hidden"`
+	Proper      string          `json:"proper" csv:"proper"`
+	Lower       string          `json:"lower" csv:"lower"`
+	templates   TemplateMap     `json:"-" csv:"-"`
 }
 
 func (c *Command) HasEnums() bool {

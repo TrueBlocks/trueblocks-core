@@ -1,4 +1,4 @@
-name       ,type     ,strDefault ,omitempty ,doc ,description
+name       ,type     ,strDefault ,omitempty ,docOrder,description
 cid        ,ipfshash ,           ,          ,  1 ,the CID of the file
 datePinned ,string   ,           ,          ,  2 ,the date the CID was first created
 status     ,string   ,           ,          ,  3 ,the status of the file (one of [all|pinned|unpinned|pending])

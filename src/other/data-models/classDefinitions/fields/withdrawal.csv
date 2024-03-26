@@ -1,4 +1,4 @@
-name           ,type      ,strDefault ,omitempty ,doc ,description
+name           ,type      ,strDefault ,omitempty ,docOrder,description
 address        ,address   ,           ,          ,  1 ,the recipient for the withdrawn ether
 amount         ,wei       ,           ,          ,  2 ,a nonzero amount of ether given in gwei (1e9 wei)
 blockNumber    ,blknum    ,           ,          ,  3 ,the number of this block
