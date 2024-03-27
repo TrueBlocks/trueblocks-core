@@ -7,4 +7,3 @@
     doc_route = "103-monitor"
     doc_producer = "monitors, list, export"
     go_output = "documentation only"
-    disable_go = true

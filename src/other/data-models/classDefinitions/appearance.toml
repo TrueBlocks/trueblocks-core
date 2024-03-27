@@ -8,4 +8,3 @@
     doc_producer = "list, export, blocks, chunks"
     go_output = "documentation only"
     cache_type = "marshal_only"
-    disable_go = true

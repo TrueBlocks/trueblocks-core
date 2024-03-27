@@ -6,4 +6,3 @@
     doc_route = "106-appearanceCount"
     doc_producer = "list, export"
     go_output = "documentation only"
-    disable_go = true

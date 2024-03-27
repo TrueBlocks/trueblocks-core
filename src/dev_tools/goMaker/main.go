@@ -128,20 +128,20 @@ func LoadDefinitions() (types.CodeBase, error) {
 
 // goCodePerRoute is the list of files to process per route
 var goCodePerRoute = []string{
-	// "sdk_go_route.go.tmpl",
-	// // // - "sdk_python_src__route.py.tmpl",
-	// // // - "sdk_typescript_src_paths_route.ts.tmpl",
-	// "src_apps_chifra_cmd_route.go.tmpl",
-	// "src_apps_chifra_internal_route_output.go.tmpl",
-	// // "src_apps_chifra_internal_route_options.go.tmpl",
-	// "src_apps_chifra_internal_route_doc.go.tmpl",
-	// "src_apps_chifra_sdk_route.go.tmpl",
+	"sdk_go_route.go.tmpl",
+	// - "sdk_python_src__route.py.tmpl",
+	// - "sdk_typescript_src_paths_route.ts.tmpl",
+	"src_apps_chifra_cmd_route.go.tmpl",
+	"src_apps_chifra_internal_route_output.go.tmpl",
+	// "src_apps_chifra_internal_route_options.go.tmpl",
+	"src_apps_chifra_internal_route_doc.go.tmpl",
+	"src_apps_chifra_sdk_route.go.tmpl",
 }
 
 // goCodePerCodeBase is the list of files to process per code base
 var goCodePerCodeBase = []string{
-	// "src_apps_chifra_cmd_helpfile.go.tmpl",
-	// "src_apps_chifra_pkg_version_string.go.tmpl",
+	"src_apps_chifra_cmd_helpfile.go.tmpl",
+	"src_apps_chifra_pkg_version_string.go.tmpl",
 }
 
 var goTypes = []string{
