@@ -9,8 +9,6 @@
 package types
 
 // EXISTING_CODE
-type datetime = string
-
 // EXISTING_CODE
 
 type RawChunkStats struct {
@@ -42,7 +40,7 @@ type SimpleChunkStats struct {
 	NBlocks       uint64         `json:"nBlocks"`
 	NBlooms       uint64         `json:"nBlooms"`
 	Range         string         `json:"range"`
-	RangeEnd      datetime       `json:"rangeEnd"`
+	RangeEnd      string         `json:"rangeEnd"`
 	Ratio         float64        `json:"ratio"`
 	RecWid        uint64         `json:"recWid"`
 	raw           *RawChunkStats `json:"-"`

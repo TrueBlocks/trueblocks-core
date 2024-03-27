@@ -1,13 +1,44 @@
 package types
 
 import (
+	"fmt"
 	"io/fs"
+	"os"
 	"path/filepath"
 	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
+
+// LoadDefinitions loads the definitions from the data-models folder
+func LoadDefinitions() (CodeBase, error) {
+	cwd, _ := os.Getwd()
+	if !strings.HasSuffix(strings.Trim(cwd, "/"), "trueblocks-core") {
+		return CodeBase{}, fmt.Errorf("this program must be run from the ./trueblocks-core folder")
+	}
+
+	thePath := "src/other/data-models/"
+	if !file.FolderExists(thePath) {
+		return CodeBase{}, fmt.Errorf("the path %s does not exist", thePath)
+	}
+
+	codeBase, err := LoadCodebase(thePath)
+	if err != nil {
+		return CodeBase{}, err
+	}
+
+	if len(codeBase.Commands) == 0 {
+		return CodeBase{}, fmt.Errorf("no commands were found in %s", thePath)
+	}
+
+	if len(codeBase.Structures) == 0 {
+		return CodeBase{}, fmt.Errorf("no structures were found in %s", thePath)
+	}
+
+	return codeBase, nil
+}
 
 // LoadCodebase loads the two csv files and returns the codebase which
 // contains all the commands (each with its own options and endpoint).

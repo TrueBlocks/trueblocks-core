@@ -10,7 +10,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func (s *Structure) ProcessFile(source string) error {
@@ -43,11 +42,6 @@ func (s *Structure) ProcessFile(source string) error {
 
 	result := s.executeTemplate(source, file.AsciiFileToString(source))
 	dest = strings.Replace(dest, "//src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
-	defer func() {
-		m.Unlock()
-	}()
-	m.Lock()
-	logger.Info("Writing to: ", dest)
 	return codeWriter.WriteCode(dest, result)
 }
 

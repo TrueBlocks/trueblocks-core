@@ -2,27 +2,51 @@ package codeWriter
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"go/format"
-	"log"
 	"os"
 	"strings"
+	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-func WriteCode(existingFn, result string) error {
-	destFn := existingFn + ".new"
-	file.StringToAsciiFile(destFn, string(result))
+var m sync.Mutex
 
-	existingCode, err := extractExistingCode(existingFn)
+func WriteCode(existingFn, newCode string) error {
+	tempFn := existingFn + ".new"
+	defer func() {
+		// delete the temp file when we're done
+		os.Remove(tempFn)
+	}()
+
+	// save the new code in a temporary file
+	file.StringToAsciiFile(tempFn, newCode)
+
+	// extract the EXISTING_CODE from the existing file
+	existingParts, err := extractExistingCode(existingFn)
 	if err != nil {
 		return fmt.Errorf("error extracting existing code: %v", err)
 	}
 
-	err = applyTemplate(destFn, existingCode)
+	// apply the EXISTING_CODE to the new code, format the new code and
+	// write it back to the original file (potentially destroying it)
+	wasModified, err := applyTemplate(tempFn, existingParts)
 	if err != nil {
-		return fmt.Errorf("error applying template: %v", err)
+		return fmt.Errorf("error applying template: %v %s", err, existingFn)
+	}
+
+	defer func() {
+		m.Unlock()
+	}()
+	m.Lock()
+	if !wasModified {
+		logger.Progress(true, colors.Green+"No changes to", existingFn+colors.Off, strings.Repeat(" ", 20))
+	} else {
+		logger.Info(colors.Yellow+"Wrote changes to", existingFn, strings.Repeat(" ", 20)+colors.Off)
 	}
 
 	return nil
@@ -63,28 +87,20 @@ func extractExistingCode(fileName string) (map[int]string, error) {
 	return existingCode, nil
 }
 
-func applyTemplate(fileName string, existingCode map[int]string) error {
-	ff, err := os.Open(fileName)
+func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
+	defer os.Remove(tempFn) // we always try to remove this file
+
+	ff, err := os.Open(tempFn)
 	if err != nil {
-		return err
+		return false, err
 	}
 	defer ff.Close()
 
-	dest := strings.Replace(fileName, ".new", "", -1)
-	output, err := os.Create(dest)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		output.Close()
-		formatCode(dest)
-		os.Remove(fileName)
-	}()
-
-	scanner := bufio.NewScanner(ff)
-	codeSection := 0
 	isOpen := false
 	lineCnt := 0
+	codeSection := 0
+	var buffer bytes.Buffer
+	scanner := bufio.NewScanner(ff)
 	for scanner.Scan() {
 		line := scanner.Text()
 		lineCnt++
@@ -94,33 +110,35 @@ func applyTemplate(fileName string, existingCode map[int]string) error {
 				codeSection++
 			} else {
 				if code, ok := existingCode[codeSection]; ok {
-					output.WriteString(code)
+					buffer.WriteString(code)
 					isOpen = true
 				} else {
-					os.Remove(fileName)
-					return fmt.Errorf("missing // EXISTING_CODE section %d line %d", codeSection, lineCnt)
+					return false, fmt.Errorf("missing // EXISTING_CODE section %d line %d", codeSection, lineCnt)
 				}
 			}
 		} else {
-			output.WriteString(line + "\n")
+			buffer.WriteString(line + "\n")
 		}
 	}
 
 	if err := scanner.Err(); err != nil {
-		return err
+		return false, err
 	}
 
-	return nil
-}
-
-func formatCode(fn string) {
-	if !strings.HasSuffix(fn, ".go") {
-		return
+	origFn := strings.Replace(tempFn, ".new", "", 1)
+	newCode := buffer.String()
+	formatted := newCode
+	if strings.HasSuffix(origFn, ".go") {
+		formattedBytes, err := format.Source([]byte(newCode))
+		if err != nil {
+			return false, fmt.Errorf("format.Source failed: %v %s", err, file.AsciiFileToString(newCode))
+		}
+		formatted = string(formattedBytes)
 	}
-	raw := file.AsciiFileToString(fn)
-	formattedSrc, err := format.Source([]byte(raw))
-	if err != nil {
-		log.Fatalf("format.Source failed: %v %s", err, string(raw))
+	if string(formatted) == file.AsciiFileToString(origFn) {
+		return false, nil
+	} else {
+		file.StringToAsciiFile(origFn, string(formatted)) // modified code is in the original file
+		return true, nil
 	}
-	file.StringToAsciiFile(fn, string(formattedSrc))
 }

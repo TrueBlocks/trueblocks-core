@@ -5,15 +5,13 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"sync"
+	"sort"
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
-
-var m sync.Mutex
 
 // ProcessFile processes a single file, applying the template to it and
 // writing the result to the destination.
@@ -27,16 +25,7 @@ func (cb *CodeBase) ProcessFile(source string) error {
 	}
 
 	result := cb.executeTemplate(source, file.AsciiFileToString(source))
-
-	dest := convertToDestPath(source, "", "")
-
-	err := codeWriter.WriteCode(dest, result)
-	defer func() {
-		m.Unlock()
-	}()
-	m.Lock()
-	logger.Info("Writing to: ", dest)
-	return err
+	return codeWriter.WriteCode(convertToDestPath(source, "", ""), result)
 }
 
 // executeTemplate executes the template with the given name and returns
@@ -60,4 +49,32 @@ func (cb *CodeBase) executeTemplate(name, tmplCode string) string {
 		log.Fatalf("executing template failed: %v", err)
 	}
 	return tplBuffer.String()
+}
+
+func (cb *CodeBase) Generate(cbTmpls, routeTmpls, typeTmpls []string) {
+	for _, source := range cbTmpls {
+		if err := cb.ProcessFile(source); err != nil {
+			logger.Error(err)
+			os.Exit(1)
+		}
+	}
+	for _, source := range routeTmpls {
+		for _, c := range cb.Commands {
+			if err := c.ProcessFile(source); err != nil {
+				logger.Error(err)
+				os.Exit(1)
+			}
+		}
+	}
+	for _, source := range typeTmpls {
+		for _, s := range cb.Structures {
+			sort.Slice(s.Members, func(i, j int) bool {
+				return s.Members[i].SortName() < s.Members[j].SortName()
+			})
+			if err := s.ProcessFile(source); err != nil {
+				logger.Error(err)
+				os.Exit(1)
+			}
+		}
+	}
 }

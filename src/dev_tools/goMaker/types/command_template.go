@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // ProcessFile processes a single file, applying the template to it and
@@ -24,16 +23,7 @@ func (c *Command) ProcessFile(source string) error {
 	}
 
 	result := c.executeTemplate(source, file.AsciiFileToString(source))
-
-	dest := convertToDestPath(source, c.Route, "")
-	logger.Info("Writing to: ", dest)
-	err := codeWriter.WriteCode(dest, result)
-	defer func() {
-		m.Unlock()
-	}()
-	m.Lock()
-	logger.Info("Writing to: ", dest)
-	return err
+	return codeWriter.WriteCode(convertToDestPath(source, c.Route, ""), result)
 }
 
 // executeTemplate executes the template with the given name and returns

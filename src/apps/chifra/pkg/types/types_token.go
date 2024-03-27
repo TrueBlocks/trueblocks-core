@@ -27,9 +27,9 @@ type RawToken struct {
 	PriorBalance     string `json:"priorBalance"`
 	Symbol           string `json:"symbol"`
 	Timestamp        string `json:"timestamp"`
-	TokenType        string `json:"type"`
 	TotalSupply      string `json:"totalSupply"`
 	TransactionIndex string `json:"transactionIndex"`
+	TokenType        string `json:"type"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -45,9 +45,9 @@ type SimpleToken struct {
 	PriorBalance     base.Wei       `json:"priorBalance,omitempty"`
 	Symbol           string         `json:"symbol"`
 	Timestamp        base.Timestamp `json:"timestamp"`
-	TokenType        TokenType      `json:"type"`
 	TotalSupply      base.Wei       `json:"totalSupply"`
 	TransactionIndex base.Blknum    `json:"transactionIndex,omitempty"`
+	TokenType        TokenType      `json:"type"`
 	raw              *RawToken      `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE

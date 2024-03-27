@@ -52,6 +52,14 @@ func (m Member) Validate() bool {
 	return m.Name != "" && m.Type != ""
 }
 
+func (m *Member) SortName() string {
+	if m.Name == "type" {
+		// We can't change the sort for this because it effects the way things are stored in the cache
+		return m.Proper
+	}
+	return m.GoName()
+}
+
 func (m *Member) GoName() string {
 	if m.Name == "type" {
 		return m.Class + m.Proper

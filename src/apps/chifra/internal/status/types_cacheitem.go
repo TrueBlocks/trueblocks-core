@@ -16,13 +16,13 @@ import (
 // EXISTING_CODE
 
 type simpleCacheItem struct {
-	CacheItemType string `json:"type"`
 	Items         []any  `json:"items"`
 	LastCached    string `json:"lastCached,omitempty"`
 	NFiles        uint64 `json:"nFiles"`
 	NFolders      uint64 `json:"nFolders"`
 	Path          string `json:"path"`
 	SizeInBytes   int64  `json:"sizeInBytes"`
+	CacheItemType string `json:"type"`
 
 	// EXISTING_CODE
 	// EXISTING_CODE

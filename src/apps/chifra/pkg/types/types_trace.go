@@ -32,9 +32,9 @@ type RawTrace struct {
 	Result           *RawTraceResult `json:"result"`
 	Subtraces        uint64          `json:"subtraces"`
 	TraceAddress     []uint64        `json:"traceAddress"`
-	TraceType        string          `json:"type"`
 	TransactionHash  string          `json:"transactionHash"`
 	TransactionIndex uint64          `json:"transactionPosition"`
+	TraceType        string          `json:"type"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -50,9 +50,9 @@ type SimpleTrace struct {
 	Subtraces        uint64             `json:"subtraces"`
 	Timestamp        base.Timestamp     `json:"timestamp"`
 	TraceAddress     []uint64           `json:"traceAddress"`
-	TraceType        string             `json:"type,omitempty"`
 	TransactionHash  base.Hash          `json:"transactionHash"`
 	TransactionIndex uint64             `json:"transactionIndex"`
+	TraceType        string             `json:"type,omitempty"`
 	raw              *RawTrace          `json:"-"`
 	// EXISTING_CODE
 	TraceIndex base.Blknum `json:"-"`

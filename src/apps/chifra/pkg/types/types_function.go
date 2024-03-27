@@ -29,13 +29,13 @@ type RawFunction struct {
 	Anonymous       string `json:"anonymous"`
 	Constant        string `json:"constant"`
 	Encoding        string `json:"encoding"`
-	FunctionType    string `json:"type"`
 	Inputs          string `json:"inputs"`
 	Message         string `json:"message"`
 	Name            string `json:"name"`
 	Outputs         string `json:"outputs"`
 	Signature       string `json:"signature"`
 	StateMutability string `json:"stateMutability"`
+	FunctionType    string `json:"type"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -44,13 +44,13 @@ type SimpleFunction struct {
 	Anonymous       bool              `json:"anonymous,omitempty"`
 	Constant        bool              `json:"constant,omitempty"`
 	Encoding        string            `json:"encoding"`
-	FunctionType    string            `json:"type"`
 	Inputs          []SimpleParameter `json:"inputs"`
 	Message         string            `json:"message,omitempty"`
 	Name            string            `json:"name"`
 	Outputs         []SimpleParameter `json:"outputs"`
 	Signature       string            `json:"signature,omitempty"`
 	StateMutability string            `json:"stateMutability,omitempty"`
+	FunctionType    string            `json:"type"`
 	raw             *RawFunction      `json:"-"`
 	// EXISTING_CODE
 	payable   bool

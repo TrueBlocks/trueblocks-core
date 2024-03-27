@@ -10,7 +10,8 @@ from . import session
 {{.Route}}Pos = "{{.FirstPositional}}"
 {{.Route}}Fmt = "json"
 {{.Route}}Opts = {
-[{OPTIONS}][{GLOBALS}]    "fmt": {"hotkey": "-x", "type": "flag"},
+{{range .Options}}    "{{.LongName}}": {"hotkey": "-{{.HotKey}}"},
+{{end}}[{GLOBALS}]    "fmt": {"hotkey": "-x", "type": "flag"},
 }
 
 def {{.Route}}(self):

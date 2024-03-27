@@ -112,6 +112,10 @@ func (s *Structure) IsCacheAsGroup() bool {
 	return s.CacheAs == "group"
 }
 
+func (s *Structure) IncludeAddr() bool {
+	return s.CacheAs == "group"
+}
+
 func (s *Structure) CacheIdStr() string {
 	switch s.CacheBy {
 	case "address,block":
