@@ -88,6 +88,7 @@ func ReadStructures(thePath string, cb *CodeBase) error {
 				f.Settings.Name = class
 				if f.Settings.GoOutput == "documentation only" {
 					f.Settings.GoOutput = "<docs_only>"
+					f.Settings.DisableGo = true
 				}
 				cb.Structures[class] = f.Settings
 			}
