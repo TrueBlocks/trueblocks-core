@@ -99,7 +99,6 @@ inline string_q short3(const string_q& str) {
 
 //------------------------------------------------------------------------------------------------------------
 extern void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
-extern bool writeCodeIn(COptions* opts, const codewrite_t& cw);
 extern bool writeCodeOut(COptions* opts, const string_q& fn);
 extern bool writeIfDifferent(const string_q& path, const string_q& code);
 
@@ -123,7 +122,6 @@ extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
 extern bool isApiRoute(const string_q& route);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
-extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
 
 //---------------------------------------------------------------------------------------------------

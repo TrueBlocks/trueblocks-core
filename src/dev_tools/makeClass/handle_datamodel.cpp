@@ -204,13 +204,6 @@ bool sortByDoc(const CMember& c1, const CMember& c2) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-string_q type_2_ModelName(const string_q& type, bool raw) {
-    string_q ret = type;
-    replace(ret, "Array", "");
-    return raw ? nextTokenClear(ret, '[') : ret;
-}
-
-//------------------------------------------------------------------------------------------------------------
 string_q type_2_TypeName(const string_q& type, bool raw) {
     string_q ret = type;
     if (startsWith(ret, "C"))
