@@ -60,12 +60,18 @@ func (m *Member) GoName() string {
 }
 
 func (m *Member) TagName() string {
-	if m.Name == "transactionIndex" && m.Class == "Trace" {
-		return "transactionPosition"
-	} else if m.Name == "blockNumber" && m.Class == "Block" {
-		return "number"
-	}
 	return m.Name
+}
+
+func (m *Member) Lower() string {
+	return strings.ToLower(m.GoName())
+}
+
+func (m *Member) LowerSingular() string {
+	if strings.HasSuffix(m.GoName(), "s") {
+		return strings.ToLower(m.GoName())[:len(m.GoName())-1]
+	}
+	return strings.ToLower(m.GoName())
 }
 
 func (m *Member) IsObjType() bool {
@@ -73,34 +79,65 @@ func (m *Member) IsObjType() bool {
 }
 
 func (m *Member) RawTag() string {
+	if m.Name == "transactionIndex" && m.Class == "Trace" {
+		return "`json:\"transactionPosition\"`"
+	}
+	if m.Name == "blockNumber" && m.Class == "Block" {
+		return "`json:\"number\"`"
+	}
 	return "`json:\"" + m.TagName() + "\"`"
 }
 
 func (m *Member) Tag() string {
-	if m.IsOmitEmpty {
-		return "`json:\"" + m.TagName() + ",omitempty\"`"
-	} else {
-		return m.RawTag()
-	}
+	tmpl := "`json:\"{{.TagName}}{{if .IsOmitEmpty}},omitempty{{end}}\"`"
+	return m.executeTemplate("tag", tmpl)
 }
 
 func (m *Member) RawType() string {
-	if m.GoName() == "Logs" && m.Class == "Receipt" {
-		return "[]RawLog"
+	if strings.HasPrefix(m.Class, "Block") {
+		if m.GoName() == "Transactions" {
+			return "[]any"
+		} else if m.GoName() == "Withdrawals" {
+			return "[]RawWithdrawal"
+		}
 	}
-	if m.Class == "Trace" {
+
+	ret := "string"
+	switch m.Class {
+	case "Trace":
+		if m.GoName() == "Action" {
+			return "RawTraceAction"
+		} else if m.GoName() == "TransactionHash" {
+			return "string"
+		}
 		if m.IsObjType() {
 			if m.GoName() == "Result" {
 				return "*RawTraceResult"
 			}
-			return "Raw" + m.Type
+		} else {
+			switch m.GoName() {
+			case "BlockHash":
+				return "string"
+			case "BlockNumber":
+				return "base.Blknum"
+			case "TraceAddress":
+				return "[]uint64"
+			case "TransactionHash":
+				return "hash"
+			}
+			return m.Type
+		}
+	case "Receipt":
+		if m.GoName() == "Logs" {
+			return "[]RawLog"
+		}
+	case "Transaction":
+		if m.GoName() == "AccessList" {
+			return "[]StorageSlot"
 		}
 	}
-	if m.GoName() == "AccessList" && m.Class == "Transaction" {
-		return "[]StorageSlot"
-	}
 
-	ret := "string"
+	ret = "string"
 	one := m.Class == "Function" && (m.GoName() == "Inputs" || m.GoName() == "Outputs")
 	two := m.Class == "Manifest" && m.GoName() == "Chunks"
 	three := m.Class == "Parameter" && m.GoName() == "Components"
@@ -111,6 +148,10 @@ func (m *Member) RawType() string {
 }
 
 func (m *Member) GoType() string {
+	if strings.HasPrefix(m.Class, "Block") && m.GoName() == "Transactions" {
+		return "[]Tx"
+	}
+
 	ret := m.Type
 	if m.IsObjType() {
 		if m.GoName() != "TokenType" {
@@ -159,6 +200,126 @@ func (m *Member) GoType() string {
 	if m.IsArray {
 		ret = "[]" + ret
 	}
+	if strings.HasPrefix(ret, "SimpleRaw") {
+		ret = strings.Replace(ret, "SimpleRaw", "Raw", -1)
+	}
 
 	return ret
+}
+
+func (m *Member) NeedsPtr() bool {
+	return m.GoType() == "base.Hash" ||
+		m.GoType() == "base.Wei" ||
+		m.IsObjType()
+}
+
+func (m *Member) MarshalCode() string {
+	if strings.Contains(m.GoName(), "::") ||
+		m.IsCalc ||
+		m.IsRawOnly ||
+		(m.Class == "Transaction" &&
+			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
+		return ""
+	}
+
+	tmpl := ""
+	if m.GoName() == "Value" && m.Class == "Parameter" {
+		tmpl = `// {{.GoName}}
+	{{.Lower}}, err := json.Marshal(s.{{.GoName}})
+	if err != nil {
+		return fmt.Errorf("cannot marshal {{.GoName}}: %w", err)
+	}
+	if err = cache.WriteValue(writer, {{.Lower}}); err != nil {
+		return err
+	}
+
+`
+
+	} else if m.IsArray && m.GoName() != "Topics" && m.GoName() != "TraceAddress" && m.GoName() != "Uncles" {
+		tmpl = `// {{.GoName}}
+	{{.Lower}} := make([]cache.Marshaler, 0, len(s.{{.GoName}}))
+	for _, {{.LowerSingular}} := range s.{{.GoName}} {
+		{{.Lower}} = append({{.Lower}}, {{if .NeedsPtr}}&{{end}}{{.LowerSingular}})
+	}
+	if err = cache.WriteValue(writer, {{.Lower}}); err != nil {
+		return err
+	}
+
+`
+	} else if m.IsObjType() {
+
+		tmpl = `// {{.GoName}}
+	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
+		Value: s.{{.GoName}},
+	}
+	if err = cache.WriteValue(writer, opt{{.GoName}}); err != nil {
+		return err
+	}
+
+`
+
+	} else {
+		tmpl = `// {{.GoName}}
+	if err = cache.WriteValue(writer, {{if .NeedsPtr}}&{{end}}s.{{.GoName}}); err != nil {
+		return err
+	}
+
+`
+	}
+
+	return m.executeTemplate("marshalCode", tmpl)
+}
+
+func (m *Member) UnmarshalCode() string {
+	if strings.Contains(m.GoName(), "::") ||
+		m.IsCalc ||
+		m.IsRawOnly ||
+		(m.Class == "Transaction" &&
+			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
+		return ""
+	}
+
+	tmpl := ""
+	if m.GoName() == "Value" && m.Class == "Parameter" {
+		tmpl = `// {{.GoName}}
+	var {{.Lower}} string
+	if err = cache.ReadValue(reader, &{{.Lower}}, version); err != nil {
+		return err
+	}
+	if err = json.Unmarshal([]byte({{.Lower}}), &s.{{.GoName}}); err != nil {
+		return fmt.Errorf("cannot unmarshal {{.GoName}}: %w", err)
+	}
+
+`
+	} else if m.IsArray {
+		tmpl = `// {{.GoName}}
+	s.{{.GoName}} = make({{.GoType}}, 0)
+	if err = cache.ReadValue(reader, &s.{{.GoName}}, version); err != nil {
+		return err
+	}
+
+`
+	} else if m.IsObjType() {
+
+		tmpl = `// {{.GoName}}
+	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
+		Value: s.{{.GoName}},
+	}
+	if err = cache.ReadValue(reader, opt{{.GoName}}, version); err != nil {
+		return err
+	}
+	s.{{.GoName}} = opt{{.GoName}}.Get()
+
+`
+
+	} else {
+		tmpl = `// {{.GoName}}
+	if err = cache.ReadValue(reader, &s.{{.GoName}}, version); err != nil {
+		return err
+	}
+
+`
+	}
+
+	return m.executeTemplate("unmarshalCode", tmpl)
 }

@@ -146,4 +146,5 @@ var goCodePerCodeBase = []string{
 
 var goTypes = []string{
 	"src_apps_chifra_pkg_types_type.go.tmpl",
+	"src_apps_chifra_internal_route_types_type.go.tmpl",
 }

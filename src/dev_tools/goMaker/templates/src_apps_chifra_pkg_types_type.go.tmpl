@@ -17,7 +17,7 @@ type Raw{{.Class}} struct {
 	// EXISTING_CODE
 }
 
-type Simple{{.ModelName}} struct {
+type Simple{{.ModelName2}} struct {
 	{{.MemberFields}}
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -50,7 +50,64 @@ func (s *Simple{{.ModelName}}) Date() string {
 }
 {{end}}
 
-{{.CacheCode}}
+{{if .IsCachable}}
+// --> {{.CacheMsg}}
+{{if not .IsMarshalOnly}}
+{{if .IsCacheAsGroup}}
+type Simple{{.Class}}{{if .IsCacheAsGroup}}Group{{end}} struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Address          base.Address
+	{{.Class}}s      []Simple{{.Class}}
+}
+{{end}}
+func (s *Simple{{.ModelName}}{{if .IsCacheAsGroup}}Group{{end}}) CacheName() string {
+	return "{{.Class}}"
+}
+
+func (s *Simple{{.ModelName}}{{if .IsCacheAsGroup}}Group{{end}}) CacheId() string {
+	return fmt.Sprintf({{.CacheIdStr}})
+}
+
+func (s *Simple{{.ModelName}}{{if .IsCacheAsGroup}}Group{{end}}) CacheLocation() (directory string, extension string) {
+	paddedId := s.CacheId()
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+
+	subFolder := strings.ToLower(s.CacheName()) + "s"
+	directory = filepath.Join(subFolder, filepath.Join(parts...))
+	extension = "bin"
+
+	return
+}
+
+{{if .IsCacheAsGroup}}
+func (s *Simple{{.ModelName}}Group) MarshalCache(writer io.Writer) (err error) {
+	return cache.WriteValue(writer, s.{{.Class}}s)
+}
+
+func (s *Simple{{.ModelName}}Group) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	return cache.ReadValue(reader, &s.{{.Class}}s, version)
+}
+
+{{end}}
+{{end}}
+func (s *Simple{{.ModelName}}) MarshalCache(writer io.Writer) (err error) {
+	{{range .Members}}{{.MarshalCode}}{{end}}
+
+	return nil
+}
+
+func (s *Simple{{.ModelName}}) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+	{{range .Members}}{{.UnmarshalCode}}{{end}}
+
+	s.FinishUnmarshal()
+
+	return nil
+}
+{{end}}
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Simple{{.ModelName}}) FinishUnmarshal() {

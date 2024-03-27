@@ -14,6 +14,10 @@ import (
 )
 
 func (s *Structure) ProcessFile(source string) error {
+	if s.DisableGo {
+		return nil
+	}
+
 	cwd, _ := os.Getwd()
 	source = filepath.Join(cwd, templateFolder, source)
 	if ok, err := shouldProcess(source, s.Class); err != nil {
@@ -22,25 +26,29 @@ func (s *Structure) ProcessFile(source string) error {
 		return nil
 	}
 
-	result := s.executeTemplate(source, file.AsciiFileToString(source))
-	if s.DisableGo {
-		// logger.Info(s.Class, "disabled", s.GoOutput)
+	dest := ""
+	sourceIn := strings.Contains(source, "internal")
+	destIn := strings.Contains(s.GoOutput, "internal")
+	if destIn && !sourceIn || sourceIn && !destIn {
+		// fmt.Println("Mismatch", s.Class)
 		return nil
-	} else if s.Name != "" && !strings.Contains(s.GoOutput, "/internal/") {
-		dest := convertToDestPath(source, s.Name)
-		dest = strings.Replace(dest, "//src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
-		defer func() {
-			m.Unlock()
-		}()
-		m.Lock()
-		logger.Info("Writing to: ", dest)
-		// fmt.Println("-----------------------------------------------------")
-		// fmt.Println(s.String())
-		// fmt.Println("-----------------------------------------------------")
-		return codeWriter.WriteCode(dest, result)
+	} else if destIn {
+		s.Route = grabRoute(s.GoOutput)
+		dest = convertToDestPath(source, s.Route, s.Name)
+		dest = strings.Replace(dest, "/types/", "/types_", -1)
+		// return nil
 	} else {
-		return nil
+		dest = convertToDestPath(source, "", s.Name)
 	}
+
+	result := s.executeTemplate(source, file.AsciiFileToString(source))
+	dest = strings.Replace(dest, "//src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
+	defer func() {
+		m.Unlock()
+	}()
+	m.Lock()
+	logger.Info("Writing to: ", dest)
+	return codeWriter.WriteCode(dest, result)
 }
 
 // executeTemplate executes the template with the given name and returns
@@ -65,4 +73,12 @@ func (s *Structure) executeTemplate(name, tmplCode string) string {
 	}
 
 	return tplBuffer.String()
+}
+
+func grabRoute(dest string) string {
+	if !strings.Contains(dest, "/internal/") {
+		return ""
+	}
+	parts := strings.Split(dest, "/")
+	return parts[len(parts)-1]
 }

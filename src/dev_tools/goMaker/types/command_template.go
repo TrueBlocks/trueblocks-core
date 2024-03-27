@@ -25,7 +25,7 @@ func (c *Command) ProcessFile(source string) error {
 
 	result := c.executeTemplate(source, file.AsciiFileToString(source))
 
-	dest := convertToDestPath(source, c.Route)
+	dest := convertToDestPath(source, c.Route, "")
 	logger.Info("Writing to: ", dest)
 	err := codeWriter.WriteCode(dest, result)
 	defer func() {

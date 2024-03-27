@@ -28,7 +28,7 @@ func (cb *CodeBase) ProcessFile(source string) error {
 
 	result := cb.executeTemplate(source, file.AsciiFileToString(source))
 
-	dest := convertToDestPath(source, "")
+	dest := convertToDestPath(source, "", "")
 
 	err := codeWriter.WriteCode(dest, result)
 	defer func() {
