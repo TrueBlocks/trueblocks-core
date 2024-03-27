@@ -1,39 +1,53 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package listPkg
+package types
 
 // EXISTING_CODE
 import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
-type simpleBounds struct {
-	Count     uint64              `json:"count"`
-	FirstApp  types.RawAppearance `json:"firstApp"`
-	FirstTs   base.Timestamp      `json:"firstTs"`
-	LatestApp types.RawAppearance `json:"latestApp"`
-	LatestTs  base.Timestamp      `json:"latestTs"`
+type RawBounds struct {
+	Count     string `json:"count"`
+	FirstApp  string `json:"firstApp"`
+	FirstTs   string `json:"firstTs"`
+	LatestApp string `json:"latestApp"`
+	LatestTs  string `json:"latestTs"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *simpleBounds) Raw() *types.RawModeler {
-	return nil
+type SimpleBounds struct {
+	Count     uint64         `json:"count"`
+	FirstApp  RawAppearance  `json:"firstApp"`
+	FirstTs   base.Timestamp `json:"firstTs"`
+	LatestApp RawAppearance  `json:"latestApp"`
+	LatestTs  base.Timestamp `json:"latestTs"`
+	raw       *RawBounds     `json:"-"`
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
-func (s *simpleBounds) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleBounds) Raw() *RawBounds {
+	return s.raw
+}
+
+func (s *SimpleBounds) SetRaw(raw *RawBounds) {
+	s.raw = raw
+}
+
+func (s *SimpleBounds) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -64,12 +78,17 @@ func (s *simpleBounds) Model(chain, format string, verbose bool, extraOptions ma
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
-// EXISTING_CODE
-// EXISTING_CODE
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleBounds) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
 
+// EXISTING_CODE
+// EXISTING_CODE

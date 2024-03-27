@@ -22,6 +22,7 @@ type simpleReportCheck struct {
 	Result     string   `json:"result"`
 	SkippedCnt uint32   `json:"skippedCnt"`
 	VisitedCnt uint32   `json:"visitedCnt"`
+
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

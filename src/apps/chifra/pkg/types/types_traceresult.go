@@ -97,6 +97,7 @@ func (s *SimpleTraceResult) Model(chain, format string, verbose bool, extraOptio
 }
 
 // --> marshal_only
+
 func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {

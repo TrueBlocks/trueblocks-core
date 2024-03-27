@@ -216,6 +216,7 @@ func (s *SimpleBlock[Tx]) Date() string {
 }
 
 // --> cacheable by block
+
 func (s *SimpleBlock[Tx]) CacheName() string {
 	return "Block"
 }

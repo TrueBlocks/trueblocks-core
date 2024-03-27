@@ -155,6 +155,7 @@ func (s *SimpleLog) Date() string {
 }
 
 // --> cacheable by block as group
+
 type SimpleLogGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum

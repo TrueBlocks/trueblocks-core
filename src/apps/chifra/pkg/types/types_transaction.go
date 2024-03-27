@@ -318,6 +318,7 @@ func (s *SimpleTransaction) Date() string {
 }
 
 // --> cacheable by tx
+
 func (s *SimpleTransaction) CacheName() string {
 	return "Transaction"
 }

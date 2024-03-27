@@ -258,6 +258,7 @@ func (s *SimpleSlurp) Date() string {
 }
 
 // --> cacheable by address,tx as group
+
 type SimpleSlurpGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum

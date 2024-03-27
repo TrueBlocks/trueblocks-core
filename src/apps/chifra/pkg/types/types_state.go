@@ -125,6 +125,7 @@ func (s *SimpleState) Date() string {
 }
 
 // --> cacheable by address,block
+
 func (s *SimpleState) CacheName() string {
 	return "State"
 }
