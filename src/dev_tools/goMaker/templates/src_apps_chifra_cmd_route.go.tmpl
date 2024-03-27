@@ -35,7 +35,7 @@ const long{{.Proper}} = `{{.Long}}`
 const notes{{.Proper}} = `{{.NotesStr}}`
 
 {{.OptDef}}func init() {
-	{{.Capabilities}}
+	{{.AddCaps}}
 
 	{{.Route}}Cmd.Flags().SortFlags = false
 

@@ -87,10 +87,14 @@ func (c *Command) clean() {
 	c.Aliases = aliases
 }
 
+func (op *CmdLineOption) IsPositional() bool {
+	return op.OptionType == "positional"
+}
+
 func (c *Command) Positionals() []string {
 	ret := []string{}
 	for _, op := range c.Options {
-		if op.OptionType == "positional" {
+		if op.IsPositional() {
 			req := ""
 			if op.IsRequired {
 				req = " (required)"
@@ -112,7 +116,7 @@ func (c *Command) Positionals() []string {
 
 func (c *Command) FirstPositional() string {
 	for _, op := range c.Options {
-		if op.OptionType == "positional" {
+		if op.IsPositional() {
 			return op.LongName
 		}
 	}
@@ -142,7 +146,7 @@ func (c *Command) HasAddrs() bool {
 func (c *Command) PyOptions() string {
 	ret := []string{}
 	for _, op := range c.Options {
-		if op.OptionType != "positional" && !op.IsHidden() {
+		if !op.IsPositional() && !op.IsHidden() {
 			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
 			ret = append(ret, op.executeTemplate("pyoption", code))
 		}
@@ -298,8 +302,8 @@ func (c *Command) AliasStr() string {
 	return ret
 }
 
-// Capabilities for tag {{.Capabilities}}
-func (c *Command) Capabilities() string {
+// AddCaps for tag {{.AddCaps}}
+func (c *Command) AddCaps() string {
 	ret := []string{}
 	caps := strings.Split(c.Endpoint.Capabilities, "|")
 	for _, cap := range caps {
@@ -372,7 +376,7 @@ func (c *Command) SetOptions() string {
 // SetOption for tag {{.SetOption}}
 func (op *CmdLineOption) SetOption() string {
 	ret := ""
-	if op.OptionType != "positional" && op.OptionType != "alias" {
+	if !op.IsPositional() && op.OptionType != "alias" {
 		tmpl := `[{ROUTE}]Cmd.Flags().{{.CobraType}}VarP(&[{ROUTE}]Pkg.GetOptions().{{.GoName}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, {{.CobraDescription}})`
 		ret = op.executeTemplate("setOptions", tmpl)
 	}
