@@ -1,6 +1,7 @@
 package types
 
 import (
+	"encoding/json"
 	"strings"
 )
 
@@ -22,7 +23,12 @@ type CmdLineEndpoint struct {
 }
 
 func (c CmdLineEndpoint) Validate() bool {
-	return len(c.ApiRoute) > 0
+	return true
+}
+
+func (c CmdLineEndpoint) String() string {
+	bytes, _ := json.MarshalIndent(c, "", "    ")
+	return string(bytes)
 }
 
 func readCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {

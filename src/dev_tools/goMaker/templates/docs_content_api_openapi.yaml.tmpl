@@ -7,11 +7,11 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: [{VERSION}]
+  version: {{.Version}}
   description: >
 [{DESCRIPTION}]servers:
   - url: http://localhost:8080
     description: Local endpoints
 tags:
-[{TAGS}]paths:
+{{.Tags}}paths:
 [{PATHS}][{COMPONENTS}]

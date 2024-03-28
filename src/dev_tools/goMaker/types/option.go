@@ -35,7 +35,7 @@ type CmdLineOption struct {
 }
 
 func (op CmdLineOption) Validate() bool {
-	return len(op.ApiRoute) > 0
+	return true // op.Tags != "Dev"
 }
 
 func readCmdOption(op *CmdLineOption, data *any) (bool, error) {
@@ -196,6 +196,9 @@ func (op *CmdLineOption) Default() string {
 }
 
 func (op *CmdLineOption) EnumName() string {
+	if len(op.ApiRoute) < 2 {
+		return ""
+	}
 	return strings.ToUpper(op.ApiRoute[0:1]) + op.ApiRoute[1:] + op.GoName
 }
 

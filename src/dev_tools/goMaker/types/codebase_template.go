@@ -10,6 +10,7 @@ import (
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -19,7 +20,7 @@ import (
 func (cb *CodeBase) ProcessFile(source string) error {
 	cwd, _ := os.Getwd()
 	source = filepath.Join(cwd, templateFolder, source)
-	if ok, err := shouldProcess(source, ""); err != nil {
+	if ok, err := shouldProcess(source, "codebase"); err != nil {
 		return err
 	} else if !ok {
 		return nil
@@ -93,6 +94,6 @@ func (cb *CodeBase) Generate(cbTmpls, routeTmpls, typeTmpls []string) {
 		}
 	}
 
-	logger.Info(strings.Repeat(" ", 120))
+	logger.Info(colors.Green + "Done..." + strings.Repeat(" ", 120) + colors.Off + "\033[K")
 	// wg.Wait()
 }

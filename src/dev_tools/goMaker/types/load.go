@@ -52,11 +52,15 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 	}
 
 	for _, opt := range options {
+		lower := strings.ToLower(opt.ApiRoute)
+		if lower == "" {
+			lower = strings.ToLower(opt.Group)
+		}
 		cmd := Command{
 			Route:   opt.ApiRoute,
-			Options: append(theMap[opt.ApiRoute].Options, opt),
+			Options: append(theMap[lower].Options, opt),
 		}
-		theMap[opt.ApiRoute] = cmd
+		theMap[lower] = cmd
 	}
 
 	endpoints, err := LoadCsv[CmdLineEndpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
@@ -65,13 +69,18 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 	}
 
 	for _, endpoint := range endpoints {
-		theMap[endpoint.ApiRoute] = Command{
+		lower := strings.ToLower(endpoint.ApiRoute)
+		if lower == "" {
+			lower = strings.ToLower(endpoint.Group)
+		}
+		cmd := Command{
 			Route:       endpoint.ApiRoute,
 			Group:       endpoint.Group,
 			Description: endpoint.Description,
-			Options:     theMap[endpoint.ApiRoute].Options,
+			Options:     theMap[lower].Options,
 			Endpoint:    endpoint,
 		}
+		theMap[lower] = cmd
 	}
 
 	var cb CodeBase
@@ -82,6 +91,9 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 		cb.Commands = append(cb.Commands, cmd)
 	}
 	sort.Slice(cb.Commands, func(i, j int) bool {
+		if cb.Commands[i].Route == cb.Commands[j].Route {
+			return cb.Commands[i].Group < cb.Commands[j].Group
+		}
 		return cb.Commands[i].Route < cb.Commands[j].Route
 	})
 

@@ -25,6 +25,9 @@ func (cb *CodeBase) summary(filter string) string {
 		return cb.Commands[i].Endpoint.Num < cb.Commands[j].Endpoint.Num
 	})
 	for _, c := range cb.Commands {
+		if c.Route == "" {
+			continue
+		}
 		pad := func(s string, width int) string {
 			return s + strings.Repeat(" ", width-len(s))
 		}
@@ -59,5 +62,21 @@ func (cb *CodeBase) OtherSummary() string {
 
 func (cb *CodeBase) Version() string {
 	vers := strings.Trim(file.AsciiFileToString("VERSION"), "\n\r")
-	return "GHC-TrueBlocks//" + vers + "-release"
+	return vers + "-release"
+}
+
+func (cb *CodeBase) VersionLong() string {
+	return "GHC-TrueBlocks//" + cb.Version()
+}
+
+func (cb *CodeBase) Tags() string {
+	ret := []string{}
+	for _, cmd := range cb.Commands {
+		if cmd.Route == "" && cmd.Group != "" {
+			tmpl := `  - name: {{.Group}}
+    description: {{.Description}}`
+			ret = append(ret, cmd.executeTemplate("tags", tmpl))
+		}
+	}
+	return strings.Join(ret, "\n") + "\n"
 }
