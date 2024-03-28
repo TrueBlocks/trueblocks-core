@@ -153,6 +153,10 @@ func (c *Command) FirstPositional() string {
 	return ""
 }
 
+func (op *CmdLineOption) IsNullDefault2() bool {
+	return op.IsNullDefault() || op.Generate == "config"
+}
+
 func (op *CmdLineOption) IsNullDefault() bool {
 	if len(op.DefVal) == 0 ||
 		op.DefVal == "0" ||
@@ -472,11 +476,16 @@ func (c *Command) Use() string {
 // DefaultsApi for tag {{.DefaultsApi}}
 func (c *Command) DefaultsApi() string {
 	ret := []string{}
+	hasConfig := false
 	for _, op := range c.Options {
+		hasConfig = hasConfig || op.Generate == "config"
 		v := op.DefaultApi()
 		if len(v) > 0 {
 			ret = append(ret, v)
 		}
+	}
+	if hasConfig {
+		ret = append(ret, "	configs := make(map[string]string, 10)")
 	}
 	if len(ret) == 0 {
 		return ""
@@ -550,7 +559,7 @@ func (c *Command) GoDefs() string {
 }
 
 func (op *CmdLineOption) GoDef() string {
-	if op.IsNullDefault() {
+	if op.IsNullDefault2() {
 		return ""
 	}
 	if op.DataType == "<string>" || strings.Contains(op.DataType, "enum") {
@@ -563,7 +572,13 @@ func (op *CmdLineOption) GoDef() string {
 func (c *Command) OptFields() string {
 	ret := []string{}
 	for _, op := range c.Options {
-		ret = append(ret, op.OptField())
+		v := op.OptField()
+		if len(v) > 0 {
+			ret = append(ret, v)
+		}
+	}
+	if c.Route == "scrape" {
+		ret = append(ret, "Settings  config.ScrapeSettings `json:\"settings,omitempty\"`  // Configuration items for the scrape")
 	}
 	ret = append(ret, "Globals globals.GlobalOptions `json:\"globals,omitempty\"`  // The global options")
 	ret = append(ret, "Conn *rpc.Connection `json:\"conn,omitempty\"` // The connection to the RPC server")
@@ -650,33 +665,44 @@ func (c *Command) RequestOpts() string {
 
 func (op *CmdLineOption) RequestOpt() string {
 	tmpl := `		case "{{.SnakeCase}}":`
-	if strings.HasPrefix(op.DataType, "list") {
-		tmpl += `
+	if op.Generate == "config" {
+		tmpl = `	case "{{.SnakeCase}}":
+		configs[key] = value[0]`
+	} else {
+		if strings.HasPrefix(op.DataType, "list") {
+			tmpl += `
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.{{.GoName}} = append(opts.{{.GoName}}, s...)
 			}`
-	} else if op.DataType == "<boolean>" {
-		tmpl += `
+		} else if op.DataType == "<boolean>" {
+			tmpl += `
 			opts.{{.GoName}} = true`
-	} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
-		tmpl += `
+		} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
+			tmpl += `
 			opts.{{.GoName}} = globals.ToUint64(value[0])`
-	} else if op.DataType == "<double>" {
-		tmpl += `
+		} else if op.DataType == "<double>" {
+			tmpl += `
 			opts.{{.GoName}} = globals.ToFloat64(value[0])`
-	} else {
-		tmpl += `
+		} else {
+			tmpl += `
 			opts.{{.GoName}} = value[0]`
+		}
 	}
-	return op.executeTemplate("requestOpts", tmpl)
+	return strings.Replace(op.executeTemplate("requestOpts", tmpl), "Settings.", "", -1)
 }
 
 // TestLogs for tag {{.TestLogs}}
 func (c *Command) TestLogs() string {
 	ret := []string{}
 	for _, op := range c.Options {
-		ret = append(ret, op.TestLog())
+		v := op.TestLog()
+		if len(v) > 0 {
+			ret = append(ret, v)
+		}
+	}
+	if c.Route == "scrape" {
+		ret = append(ret, "opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)")
 	}
 	return strings.Join(ret, "\n") + "\n"
 }
@@ -697,6 +723,9 @@ func (op *CmdLineOption) IsFloat() bool {
 }
 
 func (op *CmdLineOption) TestLog() string {
+	if op.Generate == "config" {
+		return ""
+	}
 	tmpl := `	logger.TestLog(`
 	if op.IsFloat() {
 		tmpl += `opts.{{.GoName}} != float64({{.Default}})`

@@ -17,6 +17,12 @@ import (
 var m sync.Mutex
 
 func WriteCode(existingFn, newCode string) error {
+	if !file.FileExists(existingFn) {
+		logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
+		_, err := updateFile(existingFn, newCode)
+		return err
+	}
+
 	tempFn := existingFn + ".new"
 	defer func() {
 		// delete the temp file when we're done
@@ -125,16 +131,20 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 		return false, err
 	}
 
-	origFn := strings.Replace(tempFn, ".new", "", 1)
-	newCode := buffer.String()
+	return updateFile(tempFn, buffer.String())
+}
+
+func updateFile(tempFn, newCode string) (bool, error) {
 	formatted := newCode
-	if strings.HasSuffix(origFn, ".go") {
+	if strings.Contains(tempFn, ".go") {
 		formattedBytes, err := format.Source([]byte(newCode))
 		if err != nil {
-			return false, fmt.Errorf("format.Source failed: %v %s", err, file.AsciiFileToString(newCode))
+			return false, fmt.Errorf("format.Source failed: %v %s", err, file.AsciiFileToString(tempFn))
 		}
 		formatted = string(formattedBytes)
 	}
+
+	origFn := strings.Replace(tempFn, ".new", "", 1)
 	if string(formatted) == file.AsciiFileToString(origFn) {
 		return false, nil
 	} else {
