@@ -35,7 +35,7 @@ type CmdLineOption struct {
 }
 
 func (op CmdLineOption) Validate() bool {
-	return true // op.Tags != "Dev"
+	return op.Tags != "Dev"
 }
 
 func readCmdOption(op *CmdLineOption, data *any) (bool, error) {

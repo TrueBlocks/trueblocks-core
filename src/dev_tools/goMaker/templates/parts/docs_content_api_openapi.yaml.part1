@@ -1,22 +1,4 @@
-openapi: 3.1.3
-info:
-  title: TrueBlocks API
-  contact:
-    email: info@trueblocks.io
-    url: https://www.trueblocks.io
-  license:
-    name: GPL 3.0
-    url: http://www.gnu.org/licenses/
-  version: {{.Version}}
-  description: >
-{{.Description}}
-servers:
-  - url: http://localhost:8080
-    description: Local endpoints
-tags:
-{{.Tags}}
-paths:
-{{range .Commands}}  /{{.Route}}:
+  /{{.Route}}:
     get:
       tags:
         - {{.Group}}
@@ -46,15 +28,3 @@ paths:
                 example:
         "400":
           description: bad input parameter
-{{end}}
-components:
-  schemas:{{range .Structures}}
-    {{.Name}}:
-      description: "{{.DocDescr}}"
-      type: object
-      properties:{{range .Members}}
-        {{.Name}}:
-          type: {{.BaseType}}
-{{if not .IsBaseType}}          format: {{.Format}}
-{{end}}          description: "{{.Description}}{{if .IsCalc}} (calculated)}}{{end}}"{{end}}
-{{end}}

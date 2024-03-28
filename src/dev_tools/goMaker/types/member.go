@@ -367,3 +367,21 @@ func (m *Member) UnmarshalCode() string {
 
 	return m.executeTemplate("unmarshalCode", tmpl)
 }
+
+func (m *Member) BaseType() string {
+	if m.IsArray {
+		return "array"
+	}
+	if m.Type == "blknum" || m.Type == "timestamp" {
+		return "number"
+	}
+	return "string"
+}
+
+func (m *Member) IsBaseType() bool {
+	return m.Type == "string"
+}
+
+func (m *Member) Format() string {
+	return m.Type
+}

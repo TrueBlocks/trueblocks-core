@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"text/template"
 
@@ -11,9 +12,16 @@ import (
 type TemplateMap map[string]*template.Template
 
 func shouldProcess(source, tag string) (bool, error) {
+	single := os.Getenv("TB_GOMAKER_SINGLE")
+	if single != "" && !strings.Contains(source, single) {
+		// logger.Warn("skipping ", source, " because of ", single)
+		return false, nil
+	}
+
 	if tag == "" {
 		return false, nil
 	}
+
 	if strings.Contains(source, "sdk_") {
 		if tag == "explore" || tag == "daemon" || tag == "scrape" {
 			return false, nil

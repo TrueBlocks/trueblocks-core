@@ -70,6 +70,10 @@ func (cb *CodeBase) VersionLong() string {
 }
 
 func (cb *CodeBase) Tags() string {
+	sort.Slice(cb.Commands, func(i, j int) bool {
+		return cb.Commands[i].Endpoint.Num < cb.Commands[j].Endpoint.Num
+	})
+
 	ret := []string{}
 	for _, cmd := range cb.Commands {
 		if cmd.Route == "" && cmd.Group != "" {
@@ -78,5 +82,31 @@ func (cb *CodeBase) Tags() string {
 			ret = append(ret, cmd.executeTemplate("tags", tmpl))
 		}
 	}
-	return strings.Join(ret, "\n") + "\n"
+	return strings.Join(ret, "\n")
 }
+
+func (cb *CodeBase) Description() string {
+	return strings.Trim(file.AsciiFileToString("docs/templates/api/description.txt"), "\n\t\r")
+}
+
+// func (cb *CodeBase) Paths() string {
+// 	ret := []string{}
+// 	for _, cmd := range cb.Commands {
+// 		if cmd.Route != "" {
+// 			tmpl := part1
+// 			ret = append(ret, cmd.executeTemplate("paths", tmpl))
+// 		}
+// 	}
+// 	return strings.Join(ret, "\n")
+// }
+
+// func (cb *CodeBase) Components() string {
+// 	ret := []string{}
+// 	for _, st := range cb.Structures {
+// 		tmpl := `  {{.Name}}:`
+// 		ret = append(ret, st.executeTemplate("components", tmpl))
+// 	}
+// 	return strings.Join(ret, "\n")
+// }
+
+// var part1 = file.AsciiFileToString("src/dev_tools/goMaker/templates/parts/docs_content_api_openapi.yaml.part1")

@@ -752,3 +752,7 @@ func (op *CmdLineOption) TestLog() string {
 
 	return op.executeTemplate("testLogs", tmpl)
 }
+
+func (cmd *Command) LowerGroup() string {
+	return strings.ToLower(cmd.Group)
+}

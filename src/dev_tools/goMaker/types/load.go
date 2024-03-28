@@ -106,6 +106,10 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 		return cb, err
 	}
 
+	if true {
+		fmt.Println(cb.String())
+	}
+
 	return cb, nil
 }
 
