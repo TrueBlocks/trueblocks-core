@@ -160,6 +160,14 @@ func (m *Member) GoType() string {
 		return "[]Tx"
 	}
 
+	if m.Class == "Status" {
+		if m.Type == "CacheItem" {
+			return "[]simpleCacheItem"
+		} else if m.Type == "Chain" {
+			return "[]types.SimpleChain"
+		}
+	}
+
 	ret := m.Type
 	if m.IsObjType() {
 		if m.GoName() != "TokenType" {
@@ -186,6 +194,8 @@ func (m *Member) GoType() string {
 				ret = "base.Gas"
 			case "int256":
 				ret = "base.Wei"
+			case "datetime":
+				ret = "string"
 			case "double":
 				ret = "float64"
 			case "ipfshash":
@@ -231,7 +241,25 @@ func (m *Member) MarshalCode() string {
 	}
 
 	tmpl := ""
-	if m.GoName() == "Value" && m.Class == "Parameter" {
+	if m.GoName() == "Transactions" && m.Class == "Block" {
+		tmpl = `	// Transactions
+	var txHashes []string
+	switch v := any(s.Transactions).(type) {
+	case []string:
+		txHashes = v
+	case []SimpleTransaction:
+		txHashes = make([]string, 0, len(s.Transactions))
+		for _, tx := range v {
+			txHashes = append(txHashes, tx.Hash.Hex())
+		}
+	}
+	if err = cache.WriteValue(writer, txHashes); err != nil {
+		return err
+	}
+
+`
+
+	} else if m.GoName() == "Value" && m.Class == "Parameter" {
 		tmpl = `// {{.GoName}}
 	{{.Lower}}, err := json.Marshal(s.{{.GoName}})
 	if err != nil {
@@ -288,7 +316,15 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 	tmpl := ""
-	if m.GoName() == "Value" && m.Class == "Parameter" {
+	if m.GoName() == "Transactions" && m.Class == "Block" {
+		tmpl = `		// Transactions
+	s.Transactions = make([]string, 0)
+	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
+		return err
+	}
+
+`
+	} else if m.GoName() == "Value" && m.Class == "Parameter" {
 		tmpl = `// {{.GoName}}
 	var {{.Lower}} string
 	if err = cache.ReadValue(reader, &{{.Lower}}, version); err != nil {

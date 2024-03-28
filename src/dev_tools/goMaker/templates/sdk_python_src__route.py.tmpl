@@ -10,9 +10,8 @@ from . import session
 {{.Route}}Pos = "{{.FirstPositional}}"
 {{.Route}}Fmt = "json"
 {{.Route}}Opts = {
-{{range .Options}}{{if not .IsHidden}}{{if not .IsPositional}}    "{{.SnakeCase}}": {"hotkey": "-{{.HotKey}}", "type": "{{.OptionType}}"},
-{{end}}{{end}}{{end}}{{range .Endpoint.CapsArray}}{{if eq "{{.}}" ""}}{{else}}    "{{.}}": {"hotkey": "-{{.}}", "type": "bool"},
-{{end}}{{end}}
+{{range .Options}}{{if not .IsHidden}}{{if not .IsPositional}}    "{{.SnakeCase}}": {"hotkey": "{{.PyHotKey}}", "type": "{{.OptionType}}"},
+{{end}}{{end}}{{end}}{{.PyGlobals}}
 }
 
 def {{.Route}}(self):

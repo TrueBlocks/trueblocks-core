@@ -1,6 +1,8 @@
 package types
 
-import "strings"
+import (
+	"strings"
+)
 
 // CmdLineEndpoint carries some interesting information about a command such
 // capabilities and the usage string. Similar to the command's description option.
@@ -16,7 +18,6 @@ type CmdLineEndpoint struct {
 	Usage         string   `json:"usage" csv:"usage"`
 	Capabilities  string   `json:"capabilities" csv:"capabilities"`
 	Description   string   `json:"description" csv:"description"`
-	CapsArray     []string `json:"caps_array" csv:"caps_array"`
 	cmd           *Command `json:"-" csv:"-"`
 }
 
@@ -26,6 +27,5 @@ func (c CmdLineEndpoint) Validate() bool {
 
 func readCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {
 	cmd.Description = strings.ReplaceAll(cmd.Description, "&#44;", ",")
-	cmd.CapsArray = strings.Split(cmd.Capabilities, "|")
 	return true, nil
 }

@@ -114,6 +114,36 @@ func (c *Command) Positionals() []string {
 	return ret
 }
 
+var globals = []CmdLineOption{
+	{LongName: "create", HotKey: "", OptionType: "switch"},
+	{LongName: "update", HotKey: "", OptionType: "switch"},
+	{LongName: "delete", HotKey: "", OptionType: "switch"},
+	{LongName: "undelete", HotKey: "", OptionType: "switch"},
+	{LongName: "remove", HotKey: "", OptionType: "switch"},
+	{LongName: "chain", HotKey: "", OptionType: "flag"},
+	{LongName: "noHeader", HotKey: "", OptionType: "switch"},
+	{LongName: "cache", HotKey: "o", OptionType: "switch"},
+	{LongName: "decache", HotKey: "D", OptionType: "switch"},
+	{LongName: "ether", HotKey: "H", OptionType: "switch"},
+	{LongName: "raw", HotKey: "w", OptionType: "switch"},
+	{LongName: "fmt", HotKey: "x", OptionType: "flag"},
+}
+
+func (c *Command) PyGlobals() string {
+	ret := []string{}
+	caps := strings.Replace(strings.Replace(strings.ToLower(c.Endpoint.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
+	if c.Route == "names" {
+		caps = "create|update|delete|undelete|remove|" + caps
+	}
+	for _, op := range globals {
+		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
+			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			ret = append(ret, op.executeTemplate("pyglobals", code))
+		}
+	}
+	return strings.Join(ret, "\n")
+}
+
 func (c *Command) FirstPositional() string {
 	for _, op := range c.Options {
 		if op.IsPositional() {
@@ -458,7 +488,7 @@ func (op *CmdLineOption) DefaultApi() string {
 	if op.IsNullDefault() {
 		return ""
 	}
-	if op.DataType == "<string>" {
+	if op.DataType == "<string>" || strings.HasPrefix(op.DataType, "enum") {
 		return op.executeTemplate("defaultApi2", `	opts.{{.GoName}} = "{{.DefVal}}"`)
 	}
 	return op.executeTemplate("defaultApi", `	opts.{{.GoName}} = {{.DefVal}}`)
@@ -651,20 +681,45 @@ func (c *Command) TestLogs() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *CmdLineOption) TestLog() string {
-	tmpl := `	logger.TestLog(`
-	if op.DataType == "<double>" {
-		tmpl += `opts.{{.GoName}} != float64({{.Default}})`
-	} else if strings.HasPrefix(op.DataType, "list") ||
+func (op *CmdLineOption) IsStringLike() bool {
+	return strings.HasPrefix(op.DataType, "list") ||
 		strings.HasPrefix(op.DataType, "enum") ||
 		op.DataType == "<string>" ||
-		op.DataType == "<address>" {
-		tmpl += `len(opts.{{.GoName}}) > 0`
-	} else if op.DataType == "<boolean>" {
+		op.DataType == "<address>"
+}
+
+func (op *CmdLineOption) IsBool() bool {
+	return op.DataType == "<boolean>"
+}
+
+func (op *CmdLineOption) IsFloat() bool {
+	return op.DataType == "<double>"
+}
+
+func (op *CmdLineOption) TestLog() string {
+	tmpl := `	logger.TestLog(`
+	if op.IsFloat() {
+		tmpl += `opts.{{.GoName}} != float64({{.Default}})`
+
+	} else if op.IsBool() {
 		tmpl += `opts.{{.GoName}}`
+
+	} else if op.IsStringLike() {
+		tmpl += `len(opts.{{.GoName}}) > 0`
+		if !op.IsNullDefault() {
+			tmpl += ` && opts.{{.GoName}} != "{{.DefVal}}"`
+		}
+
 	} else {
 		tmpl += `opts.{{.GoName}} != {{.Default}}`
+		if strings.HasPrefix(op.LongName, "last") {
+			if !op.IsNullDefault() {
+				tmpl += ` && opts.{{.GoName}} != 0`
+			}
+		}
 	}
+
 	tmpl += `, "{{.GoName}}: ", opts.{{.GoName}})`
+
 	return op.executeTemplate("testLogs", tmpl)
 }

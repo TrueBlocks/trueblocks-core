@@ -200,10 +200,16 @@ func (op *CmdLineOption) EnumName() string {
 }
 
 func (op *CmdLineOption) EnumTag() string {
+	if len(op.ApiRoute) < 2 || len(op.GoSdkName) < 2 {
+		return ""
+	}
 	return strings.ToUpper(op.ApiRoute[0:1]) + op.GoSdkName[0:1]
 }
 
 func (op *CmdLineOption) EnumNone() string {
+	if len(op.ApiRoute) < 3 || len(op.GoSdkName) < 2 {
+		return ""
+	}
 	tag := op.EnumTag()
 	if tag == "CM" {
 		// name clash otherwise

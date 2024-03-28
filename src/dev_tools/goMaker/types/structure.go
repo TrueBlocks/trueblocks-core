@@ -93,6 +93,13 @@ func (s *Structure) ModelName() string {
 	return s.Class
 }
 
+func (s *Structure) ModelName3() string {
+	if s.GoModel != "" {
+		return strings.Replace(s.GoModel, "Block[Tx]", "Block[string]", -1)
+	}
+	return s.ModelName()
+}
+
 func (s *Structure) ModelName2() string {
 	if s.GoModel != "" {
 		return strings.Replace(s.GoModel, "Block[Tx]", "Block[Tx string | SimpleTransaction]", -1)
@@ -113,7 +120,7 @@ func (s *Structure) IsCacheAsGroup() bool {
 }
 
 func (s *Structure) IncludeAddr() bool {
-	return s.CacheAs == "group"
+	return strings.Contains(s.CacheBy, "address")
 }
 
 func (s *Structure) CacheIdStr() string {
