@@ -45,15 +45,15 @@ func WriteCode(existingFn, newCode string) error {
 		return fmt.Errorf("error applying template: %v %s", err, existingFn)
 	}
 
-	defer func() {
-		m.Unlock()
-	}()
-	m.Lock()
-	if !wasModified {
-		logger.Progress(true, colors.Green+"No changes to", existingFn+colors.Off, strings.Repeat(" ", 20))
-	} else {
-		logger.Info(colors.Yellow+"Wrote changes to", existingFn, strings.Repeat(" ", 20)+colors.Off)
+	msg := LogMessage{
+		MessageType: "Progress",
+		Message:     fmt.Sprintf("No changes to %s", existingFn),
 	}
+	if wasModified {
+		msg.MessageType = "Info"
+		msg.Message = fmt.Sprintf("Wrote changes to %s", existingFn)
+	}
+	logChannel <- msg
 
 	return nil
 }
@@ -151,4 +151,30 @@ func updateFile(tempFn, newCode string) (bool, error) {
 		file.StringToAsciiFile(origFn, string(formatted)) // modified code is in the original file
 		return true, nil
 	}
+}
+
+type LogMessage struct {
+	MessageType string
+	Message     string
+}
+
+var logChannel = make(chan LogMessage, 100) // Buffered channel
+
+// syncLogger goroutine
+func syncLogger() {
+	rep := strings.Repeat(" ", 20)
+	for logMsg := range logChannel {
+		switch logMsg.MessageType {
+		case "Progress":
+			logger.Progress(true, colors.Green+logMsg.Message+colors.Off+rep)
+		case "Info":
+			logger.Info(colors.Yellow + logMsg.Message + colors.Off + rep)
+		default:
+			logger.Error("Unknown message type:", logMsg.MessageType)
+		}
+	}
+}
+
+func init() {
+	go syncLogger()
 }
