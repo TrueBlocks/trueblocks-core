@@ -22,8 +22,8 @@ chunksOpts = {
     "rewrite": {"hotkey": "-e", "type": "switch"},
     "count": {"hotkey": "-U", "type": "switch"},
     "sleep": {"hotkey": "-s", "type": "flag"},
-    "chain": {"hotkey": "-", "type": "flag"},
-    "noHeader": {"hotkey": "-", "type": "switch"},
+    "chain": {"hotkey": "", "type": "flag"},
+    "noHeader": {"hotkey": "", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
 }
 

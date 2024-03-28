@@ -14,8 +14,7 @@ initOpts = {
     "dryRun": {"hotkey": "-d", "type": "switch"},
     "firstBlock": {"hotkey": "-F", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
-    "chain": {"hotkey": "-", "type": "flag"},
-    "fmt": {"hotkey": "-x", "type": "flag"},
+    "chain": {"hotkey": "", "type": "flag"},
 }
 
 def init(self):

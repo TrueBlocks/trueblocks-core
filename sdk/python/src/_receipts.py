@@ -11,8 +11,8 @@ receiptsPos = "transactions"
 receiptsFmt = "json"
 receiptsOpts = {
     "articulate": {"hotkey": "-a", "type": "switch"},
-    "chain": {"hotkey": "-", "type": "flag"},
-    "noHeader": {"hotkey": "-", "type": "switch"},
+    "chain": {"hotkey": "", "type": "flag"},
+    "noHeader": {"hotkey": "", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
     "decache": {"hotkey": "-D", "type": "switch"},
     "raw": {"hotkey": "-w", "type": "switch"},

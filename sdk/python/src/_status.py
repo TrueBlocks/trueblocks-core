@@ -14,8 +14,8 @@ statusOpts = {
     "firstRecord": {"hotkey": "-c", "type": "flag"},
     "maxRecords": {"hotkey": "-e", "type": "flag"},
     "chains": {"hotkey": "-a", "type": "switch"},
-    "chain": {"hotkey": "-", "type": "flag"},
-    "noHeader": {"hotkey": "-", "type": "switch"},
+    "chain": {"hotkey": "", "type": "flag"},
+    "noHeader": {"hotkey": "", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
 }
 

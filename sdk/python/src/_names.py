@@ -26,8 +26,8 @@ namesOpts = {
     "delete": {"hotkey": "", "type": "switch"},
     "undelete": {"hotkey": "", "type": "switch"},
     "remove": {"hotkey": "", "type": "switch"},
-    "chain": {"hotkey": "-", "type": "flag"},
-    "noHeader": {"hotkey": "-", "type": "switch"},
+    "chain": {"hotkey": "", "type": "flag"},
+    "noHeader": {"hotkey": "", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
 }
 

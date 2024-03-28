@@ -20,8 +20,8 @@ listOpts = {
     "reversed": {"hotkey": "-E", "type": "switch"},
     "firstBlock": {"hotkey": "-F", "type": "flag"},
     "lastBlock": {"hotkey": "-L", "type": "flag"},
-    "chain": {"hotkey": "-", "type": "flag"},
-    "noHeader": {"hotkey": "-", "type": "switch"},
+    "chain": {"hotkey": "", "type": "flag"},
+    "noHeader": {"hotkey": "", "type": "switch"},
     "fmt": {"hotkey": "-x", "type": "flag"},
 }
 
