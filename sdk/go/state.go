@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -17,6 +18,9 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -85,6 +89,25 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type stateResult struct {
+	Data []types.SimpleState `json:"data"`
+	Meta rpc.MetaData        `json:"meta"`
+}
+
+func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
+	stateBuf := bytes.Buffer{}
+	if err := opts.State(&stateBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var state stateResult
+	if err := json.Unmarshal(stateBuf.Bytes(), &state); err != nil {
+		return nil, nil, err
+	} else {
+		return state.Data, &state.Meta, nil
+	}
 }
 
 type StateParts int

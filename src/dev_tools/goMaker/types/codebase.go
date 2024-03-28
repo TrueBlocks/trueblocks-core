@@ -9,8 +9,9 @@ import (
 )
 
 type CodeBase struct {
-	Commands  []Command   `json:"commands"`
-	templates TemplateMap `json:"-"`
+	Commands   []Command            `json:"commands" csv:"commands"`
+	Structures map[string]Structure `json:"structures" csv:"structures"`
+	templates  TemplateMap          `json:"-" csv:"-"`
 }
 
 func (c *CodeBase) String() string {

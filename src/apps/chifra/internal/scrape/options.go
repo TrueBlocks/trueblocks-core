@@ -44,6 +44,7 @@ type ScrapeOptions struct {
 
 var defaultScrapeOptions = ScrapeOptions{
 	BlockCnt: 2000,
+	Sleep:    14,
 }
 
 // testLog is used only during testing to export the options for this test case.
@@ -79,8 +80,6 @@ func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 	opts := &copy
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
-	opts.Touch = 0
-	opts.RunCount = 0
 	opts.Settings.AppsPerChunk = 2000000
 	opts.Settings.SnapToGrid = 250000
 	opts.Settings.FirstSnap = 2000000
@@ -102,15 +101,15 @@ func ScrapeFinishParseInternal(w io.Writer, values url.Values) *ScrapeOptions {
 		case "dryRun":
 			opts.DryRun = true
 		case "appsPerChunk":
-			fallthrough
+			configs[key] = value[0]
 		case "snapToGrid":
-			fallthrough
+			configs[key] = value[0]
 		case "firstSnap":
-			fallthrough
+			configs[key] = value[0]
 		case "unripeDist":
-			fallthrough
+			configs[key] = value[0]
 		case "channelCount":
-			fallthrough
+			configs[key] = value[0]
 		case "allowMissing":
 			configs[key] = value[0]
 		default:

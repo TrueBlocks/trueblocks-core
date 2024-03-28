@@ -8,17 +8,17 @@ import (
 )
 
 type Command struct {
-	Route       string          `json:"route"`
-	Group       string          `json:"group"`
-	Description string          `json:"description"`
-	Endpoint    CmdLineEndpoint `json:"endpoint"`
-	Options     []CmdLineOption `json:"options"`
-	Notes       []string        `json:"notes"`
-	Aliases     []string        `json:"aliases"`
-	Hidden      []string        `json:"hidden"`
-	Proper      string          `json:"proper"`
-	Lower       string          `json:"lower"`
-	templates   TemplateMap     `json:"-"`
+	Route       string          `json:"route" csv:"route"`
+	Group       string          `json:"group" csv:"group"`
+	Description string          `json:"description" csv:"description"`
+	Endpoint    CmdLineEndpoint `json:"endpoint" csv:"endpoint"`
+	Options     []CmdLineOption `json:"options" csv:"options"`
+	Notes       []string        `json:"notes" csv:"notes"`
+	Aliases     []string        `json:"aliases" csv:"aliases"`
+	Hidden      []string        `json:"hidden" csv:"hidden"`
+	Proper      string          `json:"proper" csv:"proper"`
+	Lower       string          `json:"lower" csv:"lower"`
+	templates   TemplateMap     `json:"-" csv:"-"`
 }
 
 func (c *Command) HasEnums() bool {
@@ -87,10 +87,14 @@ func (c *Command) clean() {
 	c.Aliases = aliases
 }
 
+func (op *CmdLineOption) IsPositional() bool {
+	return op.OptionType == "positional"
+}
+
 func (c *Command) Positionals() []string {
 	ret := []string{}
 	for _, op := range c.Options {
-		if op.OptionType == "positional" {
+		if op.IsPositional() {
 			req := ""
 			if op.IsRequired {
 				req = " (required)"
@@ -110,13 +114,47 @@ func (c *Command) Positionals() []string {
 	return ret
 }
 
+var globals = []CmdLineOption{
+	{LongName: "create", HotKey: "", OptionType: "switch"},
+	{LongName: "update", HotKey: "", OptionType: "switch"},
+	{LongName: "delete", HotKey: "", OptionType: "switch"},
+	{LongName: "undelete", HotKey: "", OptionType: "switch"},
+	{LongName: "remove", HotKey: "", OptionType: "switch"},
+	{LongName: "chain", HotKey: "", OptionType: "flag"},
+	{LongName: "noHeader", HotKey: "", OptionType: "switch"},
+	{LongName: "cache", HotKey: "o", OptionType: "switch"},
+	{LongName: "decache", HotKey: "D", OptionType: "switch"},
+	{LongName: "ether", HotKey: "H", OptionType: "switch"},
+	{LongName: "raw", HotKey: "w", OptionType: "switch"},
+	{LongName: "fmt", HotKey: "x", OptionType: "flag"},
+}
+
+func (c *Command) PyGlobals() string {
+	ret := []string{}
+	caps := strings.Replace(strings.Replace(strings.ToLower(c.Endpoint.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
+	if c.Route == "names" {
+		caps = "create|update|delete|undelete|remove|" + caps
+	}
+	for _, op := range globals {
+		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
+			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			ret = append(ret, op.executeTemplate("pyglobals", code))
+		}
+	}
+	return strings.Join(ret, "\n")
+}
+
 func (c *Command) FirstPositional() string {
 	for _, op := range c.Options {
-		if op.OptionType == "positional" {
+		if op.IsPositional() {
 			return op.LongName
 		}
 	}
 	return ""
+}
+
+func (op *CmdLineOption) IsNullDefault2() bool {
+	return op.IsNullDefault() || op.Generate == "config"
 }
 
 func (op *CmdLineOption) IsNullDefault() bool {
@@ -142,7 +180,7 @@ func (c *Command) HasAddrs() bool {
 func (c *Command) PyOptions() string {
 	ret := []string{}
 	for _, op := range c.Options {
-		if op.OptionType != "positional" && !op.IsHidden() {
+		if !op.IsPositional() && !op.IsHidden() {
 			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
 			ret = append(ret, op.executeTemplate("pyoption", code))
 		}
@@ -298,8 +336,8 @@ func (c *Command) AliasStr() string {
 	return ret
 }
 
-// Capabilities for tag {{.Capabilities}}
-func (c *Command) Capabilities() string {
+// AddCaps for tag {{.AddCaps}}
+func (c *Command) AddCaps() string {
 	ret := []string{}
 	caps := strings.Split(c.Endpoint.Capabilities, "|")
 	for _, cap := range caps {
@@ -372,7 +410,7 @@ func (c *Command) SetOptions() string {
 // SetOption for tag {{.SetOption}}
 func (op *CmdLineOption) SetOption() string {
 	ret := ""
-	if op.OptionType != "positional" && op.OptionType != "alias" {
+	if !op.IsPositional() && op.OptionType != "alias" {
 		tmpl := `[{ROUTE}]Cmd.Flags().{{.CobraType}}VarP(&[{ROUTE}]Pkg.GetOptions().{{.GoName}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, {{.CobraDescription}})`
 		ret = op.executeTemplate("setOptions", tmpl)
 	}
@@ -438,11 +476,16 @@ func (c *Command) Use() string {
 // DefaultsApi for tag {{.DefaultsApi}}
 func (c *Command) DefaultsApi() string {
 	ret := []string{}
+	hasConfig := false
 	for _, op := range c.Options {
+		hasConfig = hasConfig || op.Generate == "config"
 		v := op.DefaultApi()
 		if len(v) > 0 {
 			ret = append(ret, v)
 		}
+	}
+	if hasConfig {
+		ret = append(ret, "	configs := make(map[string]string, 10)")
 	}
 	if len(ret) == 0 {
 		return ""
@@ -454,7 +497,7 @@ func (op *CmdLineOption) DefaultApi() string {
 	if op.IsNullDefault() {
 		return ""
 	}
-	if op.DataType == "<string>" {
+	if op.DataType == "<string>" || strings.HasPrefix(op.DataType, "enum") {
 		return op.executeTemplate("defaultApi2", `	opts.{{.GoName}} = "{{.DefVal}}"`)
 	}
 	return op.executeTemplate("defaultApi", `	opts.{{.GoName}} = {{.DefVal}}`)
@@ -516,7 +559,7 @@ func (c *Command) GoDefs() string {
 }
 
 func (op *CmdLineOption) GoDef() string {
-	if op.IsNullDefault() {
+	if op.IsNullDefault2() {
 		return ""
 	}
 	if op.DataType == "<string>" || strings.Contains(op.DataType, "enum") {
@@ -529,7 +572,13 @@ func (op *CmdLineOption) GoDef() string {
 func (c *Command) OptFields() string {
 	ret := []string{}
 	for _, op := range c.Options {
-		ret = append(ret, op.OptField())
+		v := op.OptField()
+		if len(v) > 0 {
+			ret = append(ret, v)
+		}
+	}
+	if c.Route == "scrape" {
+		ret = append(ret, "Settings  config.ScrapeSettings `json:\"settings,omitempty\"`  // Configuration items for the scrape")
 	}
 	ret = append(ret, "Globals globals.GlobalOptions `json:\"globals,omitempty\"`  // The global options")
 	ret = append(ret, "Conn *rpc.Connection `json:\"conn,omitempty\"` // The connection to the RPC server")
@@ -556,6 +605,49 @@ func (op *CmdLineOption) DescrCaps() string {
 	return strings.ToUpper(op.Description[0:1]) + op.Description[1:]
 }
 
+func (c *Command) ReturnType() string {
+	switch c.Route {
+	case "blocks":
+		return "types.SimpleBlock[string]"
+	case "transactions":
+		return "types.SimpleTransaction"
+	case "receipts":
+		return "types.SimpleReceipt"
+	case "logs":
+		return "types.SimpleLog"
+	case "traces":
+		return "types.SimpleTrace"
+	case "when":
+		return "types.SimpleNamedBlock"
+	case "state":
+		return "types.SimpleState"
+	case "tokens":
+		return "bool"
+	case "slurp":
+		return "types.SimpleSlurp"
+	case "names":
+		return "types.SimpleName"
+	case "abis":
+		return "bool"
+	case "list":
+		return "types.SimpleAppearance"
+	case "export":
+		return "bool"
+	case "monitors":
+		return "bool"
+	case "config":
+		return "bool"
+	case "status":
+		return "bool"
+	case "chunks":
+		return "bool"
+	case "init":
+		return "bool"
+	default:
+		return "bool"
+	}
+}
+
 // RequestOpts for tag {{.RequestOpts}}
 func (c *Command) RequestOpts() string {
 	ret := []string{}
@@ -573,51 +665,90 @@ func (c *Command) RequestOpts() string {
 
 func (op *CmdLineOption) RequestOpt() string {
 	tmpl := `		case "{{.SnakeCase}}":`
-	if strings.HasPrefix(op.DataType, "list") {
-		tmpl += `
+	if op.Generate == "config" {
+		tmpl = `	case "{{.SnakeCase}}":
+		configs[key] = value[0]`
+	} else {
+		if strings.HasPrefix(op.DataType, "list") {
+			tmpl += `
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.{{.GoName}} = append(opts.{{.GoName}}, s...)
 			}`
-	} else if op.DataType == "<boolean>" {
-		tmpl += `
+		} else if op.DataType == "<boolean>" {
+			tmpl += `
 			opts.{{.GoName}} = true`
-	} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
-		tmpl += `
+		} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
+			tmpl += `
 			opts.{{.GoName}} = globals.ToUint64(value[0])`
-	} else if op.DataType == "<double>" {
-		tmpl += `
+		} else if op.DataType == "<double>" {
+			tmpl += `
 			opts.{{.GoName}} = globals.ToFloat64(value[0])`
-	} else {
-		tmpl += `
+		} else {
+			tmpl += `
 			opts.{{.GoName}} = value[0]`
+		}
 	}
-	return op.executeTemplate("requestOpts", tmpl)
+	return strings.Replace(op.executeTemplate("requestOpts", tmpl), "Settings.", "", -1)
 }
 
 // TestLogs for tag {{.TestLogs}}
 func (c *Command) TestLogs() string {
 	ret := []string{}
 	for _, op := range c.Options {
-		ret = append(ret, op.TestLog())
+		v := op.TestLog()
+		if len(v) > 0 {
+			ret = append(ret, v)
+		}
+	}
+	if c.Route == "scrape" {
+		ret = append(ret, "opts.Settings.TestLog(opts.Globals.Chain, opts.Globals.TestMode)")
 	}
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *CmdLineOption) TestLog() string {
-	tmpl := `	logger.TestLog(`
-	if op.DataType == "<double>" {
-		tmpl += `opts.{{.GoName}} != float64({{.Default}})`
-	} else if strings.HasPrefix(op.DataType, "list") ||
+func (op *CmdLineOption) IsStringLike() bool {
+	return strings.HasPrefix(op.DataType, "list") ||
 		strings.HasPrefix(op.DataType, "enum") ||
 		op.DataType == "<string>" ||
-		op.DataType == "<address>" {
-		tmpl += `len(opts.{{.GoName}}) > 0`
-	} else if op.DataType == "<boolean>" {
+		op.DataType == "<address>"
+}
+
+func (op *CmdLineOption) IsBool() bool {
+	return op.DataType == "<boolean>"
+}
+
+func (op *CmdLineOption) IsFloat() bool {
+	return op.DataType == "<double>"
+}
+
+func (op *CmdLineOption) TestLog() string {
+	if op.Generate == "config" {
+		return ""
+	}
+	tmpl := `	logger.TestLog(`
+	if op.IsFloat() {
+		tmpl += `opts.{{.GoName}} != float64({{.Default}})`
+
+	} else if op.IsBool() {
 		tmpl += `opts.{{.GoName}}`
+
+	} else if op.IsStringLike() {
+		tmpl += `len(opts.{{.GoName}}) > 0`
+		if !op.IsNullDefault() {
+			tmpl += ` && opts.{{.GoName}} != "{{.DefVal}}"`
+		}
+
 	} else {
 		tmpl += `opts.{{.GoName}} != {{.Default}}`
+		if strings.HasPrefix(op.LongName, "last") {
+			if !op.IsNullDefault() {
+				tmpl += ` && opts.{{.GoName}} != 0`
+			}
+		}
 	}
+
 	tmpl += `, "{{.GoName}}: ", opts.{{.GoName}})`
+
 	return op.executeTemplate("testLogs", tmpl)
 }

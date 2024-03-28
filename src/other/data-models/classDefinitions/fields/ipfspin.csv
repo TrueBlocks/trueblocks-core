@@ -1,6 +1,6 @@
-name       ,type     ,strDefault ,omitempty ,doc ,description
-cid        ,ipfshash ,           ,          ,  1 ,the CID of the file
-datePinned ,string   ,           ,          ,  2 ,the date the CID was first created
-status     ,string   ,           ,          ,  3 ,the status of the file (one of [all|pinned|unpinned|pending])
-size       ,int64    ,           ,          ,  4 ,the size of the file in bytes
-fileName   ,string   ,           ,          ,  5 ,the metadata name of the pinned file
+name       ,type     ,strDefault ,attributes ,docOrder ,description
+cid        ,ipfshash ,           ,           ,       1 ,the CID of the file
+datePinned ,string   ,           ,           ,       2 ,the date the CID was first created
+status     ,string   ,           ,           ,       3 ,the status of the file (one of [all|pinned|unpinned|pending])
+size       ,int64    ,           ,           ,       4 ,the size of the file in bytes
+fileName   ,string   ,           ,           ,       5 ,the metadata name of the pinned file

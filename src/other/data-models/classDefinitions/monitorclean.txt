@@ -1,8 +1,0 @@
-[settings]
-class = CMonitorClean
-fields = monitorclean.csv
-doc_group = 04-Admin
-doc_descr = report on cleaning dups out of monitors
-doc_route = 408-monitorClean
-doc_producer = monitors
-go_output = src/apps/chifra/internal/monitors/

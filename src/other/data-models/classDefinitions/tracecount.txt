@@ -1,8 +1,0 @@
-[settings]
-class = CTraceCount
-fields = tracecount.csv
-doc_group = 02-Chain Data
-doc_descr = counts the number of traces in a transaction
-doc_route = 211-traceCount
-doc_producer = traces
-go_output = src/apps/chifra/internal/traces

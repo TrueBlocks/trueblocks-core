@@ -1,11 +1,11 @@
-name            ,type        ,strDefault ,omitempty ,doc ,description
-name            ,string      ,           ,          ,  1 ,the name of the interface
-type            ,string      ,           ,          ,  2 ,the type of the interface&#44; either 'event' or 'function'
-anonymous       ,bool        ,           ,true      ,    ,
-constant        ,bool        ,           ,true      ,    ,
-stateMutability ,string      ,           ,true      ,    ,
-signature       ,string      ,           ,true      ,  3 ,the canonical signature of the interface
-encoding        ,string      ,           ,          ,  4 ,the signature encoded with keccak
-message         ,string      ,           ,true      ,    ,
-inputs          ,[]Parameter ,           ,          ,  5 ,the input parameters to the function&#44; if any
-outputs         ,[]Parameter ,           ,          ,  6 ,the output parameters to the function&#44; if any
+name            ,type        ,strDefault ,attributes ,docOrder ,description
+name            ,string      ,           ,           ,       1 ,the name of the interface
+type            ,string      ,           ,           ,       2 ,the type of the interface&#44; either 'event' or 'function'
+anonymous       ,bool        ,           ,omitempty  ,         ,
+constant        ,bool        ,           ,omitempty  ,         ,
+stateMutability ,string      ,           ,omitempty  ,         ,
+signature       ,string      ,           ,omitempty  ,       3 ,the canonical signature of the interface
+encoding        ,string      ,           ,           ,       4 ,the signature encoded with keccak
+message         ,string      ,           ,omitempty  ,         ,
+inputs          ,[]Parameter ,           ,           ,       5 ,the input parameters to the function&#44; if any
+outputs         ,[]Parameter ,           ,           ,       6 ,the output parameters to the function&#44; if any

@@ -10,12 +10,15 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -74,6 +77,25 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type abisResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *AbisOptions) Query() ([]bool, *rpc.MetaData, error) {
+	abisBuf := bytes.Buffer{}
+	if err := opts.Abis(&abisBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var abis abisResult
+	if err := json.Unmarshal(abisBuf.Bytes(), &abis); err != nil {
+		return nil, nil, err
+	} else {
+		return abis.Data, &abis.Meta, nil
+	}
 }
 
 // No enums

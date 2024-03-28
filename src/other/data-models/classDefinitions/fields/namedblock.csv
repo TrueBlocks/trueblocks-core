@@ -1,7 +1,7 @@
-name        ,type      ,strDefault ,omitempty ,doc ,description
-component   ,string    ,           ,true      ,    ,the name of the componet for which this record exists
-blockNumber ,blknum    ,           ,          ,  1 ,the number of the block
-timestamp   ,timestamp ,           ,          ,  2 ,the Unix timestamp of the block
-date        ,datetime  ,           ,calc      ,  3 ,the timestamp as a date
-name        ,string    ,           ,true      ,  4 ,an optional name for the block
-description ,string    ,           ,true      ,  5 ,an optional description of the block
+name        ,type      ,strDefault ,attributes ,docOrder ,description
+component   ,string    ,           ,omitempty  ,         ,the name of the componet for which this record exists
+blockNumber ,blknum    ,           ,           ,       1 ,the number of the block
+timestamp   ,timestamp ,           ,           ,       2 ,the Unix timestamp of the block
+date        ,datetime  ,           ,calc       ,       3 ,the timestamp as a date
+name        ,string    ,           ,omitempty  ,       4 ,an optional name for the block
+description ,string    ,           ,omitempty  ,       5 ,an optional description of the block

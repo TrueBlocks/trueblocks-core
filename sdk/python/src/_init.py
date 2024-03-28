@@ -1,6 +1,9 @@
-#
-# This file was generated with makeClass --sdk. Do not edit it.
-#
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * This file was auto generated. DO NOT EDIT.
+ */
 from . import session
 
 initCmd = "init"
@@ -11,8 +14,7 @@ initOpts = {
     "dryRun": {"hotkey": "-d", "type": "switch"},
     "firstBlock": {"hotkey": "-F", "type": "flag"},
     "sleep": {"hotkey": "-s", "type": "flag"},
-    "chain": {"hotkey": "-", "type": "flag"},
-    "fmt": {"hotkey": "-x", "type": "flag"},
+    "chain": {"hotkey": "", "type": "flag"},
 }
 
 def init(self):

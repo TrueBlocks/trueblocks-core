@@ -1,17 +1,52 @@
 package types
 
 import (
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
 	"sort"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
-// LoadCommands loads the two csv files and returns the codebase which
+// LoadDefinitions loads the definitions from the data-models folder
+func LoadDefinitions() (CodeBase, error) {
+	cwd, _ := os.Getwd()
+	if !strings.HasSuffix(strings.Trim(cwd, "/"), "trueblocks-core") {
+		return CodeBase{}, fmt.Errorf("this program must be run from the ./trueblocks-core folder")
+	}
+
+	thePath := "src/other/data-models/"
+	if !file.FolderExists(thePath) {
+		return CodeBase{}, fmt.Errorf("the path %s does not exist", thePath)
+	}
+
+	codeBase, err := LoadCodebase(thePath)
+	if err != nil {
+		return CodeBase{}, err
+	}
+
+	if len(codeBase.Commands) == 0 {
+		return CodeBase{}, fmt.Errorf("no commands were found in %s", thePath)
+	}
+
+	if len(codeBase.Structures) == 0 {
+		return CodeBase{}, fmt.Errorf("no structures were found in %s", thePath)
+	}
+
+	return codeBase, nil
+}
+
+// LoadCodebase loads the two csv files and returns the codebase which
 // contains all the commands (each with its own options and endpoint).
 // This will also eventually carry the data types.
-func LoadCommands(thePath string) (CodeBase, error) {
+func LoadCodebase(thePath string) (CodeBase, error) {
 	theMap := make(map[string]Command)
 
-	options, err := LoadCsv[CmdLineOption, any](thePath+"cmd-line-options.csv", ReadCmdOption, nil)
+	options, err := LoadCsv[CmdLineOption, any](thePath+"cmd-line-options.csv", readCmdOption, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
@@ -24,7 +59,7 @@ func LoadCommands(thePath string) (CodeBase, error) {
 		theMap[opt.ApiRoute] = cmd
 	}
 
-	endpoints, err := LoadCsv[CmdLineEndpoint, any](thePath+"cmd-line-endpoints.csv", ReadCmdEndpoint, nil)
+	endpoints, err := LoadCsv[CmdLineEndpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
@@ -40,6 +75,7 @@ func LoadCommands(thePath string) (CodeBase, error) {
 	}
 
 	var cb CodeBase
+	cb.Structures = make(map[string]Structure)
 	cb.Commands = make([]Command, 0, len(theMap))
 	for _, cmd := range theMap {
 		cmd.clean()
@@ -49,15 +85,84 @@ func LoadCommands(thePath string) (CodeBase, error) {
 		return cb.Commands[i].Route < cb.Commands[j].Route
 	})
 
+	thePath += "classDefinitions/"
+	if err := ReadStructures(thePath, &cb); err != nil {
+		return cb, err
+	}
+
+	if err := ReadMembers(thePath, &cb); err != nil {
+		return cb, err
+	}
+
 	return cb, nil
 }
 
-func ReadCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {
-	cmd.Description = strings.ReplaceAll(cmd.Description, "&#44;", ",")
-	return true, nil
+func ReadStructures(thePath string, cb *CodeBase) error {
+	if err := filepath.Walk(thePath, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			if strings.HasSuffix(path, ".toml") {
+				class := strings.TrimSuffix(filepath.Base(path), ".toml")
+				type S struct {
+					Settings Structure `toml:"settings"`
+				}
+				var f S
+				err := config.ReadToml(path, &f)
+				if err != nil {
+					return err
+				}
+				if f.Settings.Class[0] == 'C' {
+					f.Settings.Class = f.Settings.Class[1:]
+				}
+				f.Settings.Name = class
+				if f.Settings.GoOutput == "documentation only" {
+					f.Settings.GoOutput = "<docs_only>"
+					f.Settings.DisableGo = true
+				}
+				cb.Structures[class] = f.Settings
+			}
+		}
+		return nil
+	}); err != nil {
+		return err
+	}
+	return nil
 }
 
-func ReadCmdOption(op *CmdLineOption, data *any) (bool, error) {
-	op.Description = strings.ReplaceAll(op.Description, "&#44;", ",")
-	return true, nil
+func ReadMembers(thePath string, cb *CodeBase) error {
+	if err := filepath.Walk(thePath, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			if strings.HasSuffix(path, ".csv") {
+				class := strings.TrimSuffix(filepath.Base(path), ".csv")
+				structure := cb.Structures[class]
+				var err error
+				structure.Members, err = LoadCsv[Member, any](path, readMember, nil)
+				if err != nil {
+					return err
+				}
+				for i := 0; i < len(structure.Members); i++ {
+					structure.Members[i].Num = (i + 1)
+				}
+				// sort.Slice(structure.Members, func(i, j int) bool {
+				// 	if structure.Members[i].DocOrder != 0 && (structure.Members[i].DocOrder != structure.Members[j].DocOrder) {
+				// 		return structure.Members[i].DocOrder < structure.Members[j].DocOrder
+				// 	}
+				// 	return structure.Members[i].Num < structure.Members[j].Num
+				// })
+				cb.Structures[class] = structure
+				for i := 0; i < len(structure.Members); i++ {
+					structure.Members[i].Class = cb.Structures[class].Class
+				}
+			}
+		}
+		return nil
+	}); err != nil {
+		return err
+	}
+	return nil
 }

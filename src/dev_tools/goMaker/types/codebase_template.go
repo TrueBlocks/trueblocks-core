@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
@@ -24,10 +26,7 @@ func (cb *CodeBase) ProcessFile(source string) error {
 	}
 
 	result := cb.executeTemplate(source, file.AsciiFileToString(source))
-
-	dest := convertToDestPath(source, "")
-	logger.Info("Writing to: ", dest)
-	return codeWriter.WriteCode(dest, result)
+	return codeWriter.WriteCode(convertToDestPath(source, "", ""), result)
 }
 
 // executeTemplate executes the template with the given name and returns
@@ -51,4 +50,49 @@ func (cb *CodeBase) executeTemplate(name, tmplCode string) string {
 		log.Fatalf("executing template failed: %v", err)
 	}
 	return tplBuffer.String()
+}
+
+// Generate generates the code for the codebase using the given templates.
+func (cb *CodeBase) Generate(cbTmpls, routeTmpls, typeTmpls []string) {
+	// var wg sync.WaitGroup
+
+	// wg.Add(len(cbTmpls))
+	for _, source := range cbTmpls {
+		// go func() {
+		// 	defer wg.Done()
+		if err := cb.ProcessFile(source); err != nil {
+			logger.Fatal(err)
+		}
+		// }()
+	}
+
+	// wg.Add(len(routeTmpls) * len(cb.Commands))
+	for _, source := range routeTmpls {
+		for _, c := range cb.Commands {
+			// go func() {
+			// 	defer wg.Done()
+			if err := c.ProcessFile(source); err != nil {
+				logger.Fatal(err)
+			}
+			// }()
+		}
+	}
+
+	// wg.Add(len(typeTmpls) * len(cb.Structures))
+	for _, source := range typeTmpls {
+		for _, s := range cb.Structures {
+			// go func() {
+			// 	defer wg.Done()
+			sort.Slice(s.Members, func(i, j int) bool {
+				return s.Members[i].SortName() < s.Members[j].SortName()
+			})
+			if err := s.ProcessFile(source); err != nil {
+				logger.Fatal(err)
+			}
+			// }()
+		}
+	}
+
+	logger.Info(strings.Repeat(" ", 120))
+	// wg.Wait()
 }

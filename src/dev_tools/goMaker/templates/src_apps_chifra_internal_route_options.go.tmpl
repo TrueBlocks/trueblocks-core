@@ -104,7 +104,7 @@ func ResetOptions(testMode bool) {
 	globals.SetDefaults(&default{{.Proper}}Options.Globals)
 	default{{.Proper}}Options.Globals.TestMode = testMode
 	default{{.Proper}}Options.Globals.Writer = w
-	{{.Capabilities}}	// EXISTING_CODE
+	{{.AddCaps}}	// EXISTING_CODE
 	// EXISTING_CODE
 	default{{.Proper}}Options.Globals.Caps = capabilities
 }

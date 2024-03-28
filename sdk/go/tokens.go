@@ -10,12 +10,15 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -78,6 +81,25 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type tokensResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *TokensOptions) Query() ([]bool, *rpc.MetaData, error) {
+	tokensBuf := bytes.Buffer{}
+	if err := opts.Tokens(&tokensBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var tokens tokensResult
+	if err := json.Unmarshal(tokensBuf.Bytes(), &tokens); err != nil {
+		return nil, nil, err
+	} else {
+		return tokens.Data, &tokens.Meta, nil
+	}
 }
 
 type TokensParts int

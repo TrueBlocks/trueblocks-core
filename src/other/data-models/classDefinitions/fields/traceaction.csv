@@ -1,14 +1,14 @@
-name           ,type    ,strDefault ,omitempty ,doc ,description
-selfDestructed ,address ,           ,true      ,    ,
-balance        ,wei     ,           ,true      ,    ,
-callType       ,string  ,           ,          ,  5 ,the type of call
-from           ,address ,           ,          ,  1 ,address from which the trace was sent
-gas            ,gas     ,           ,          ,  3 ,the maximum number of gas allowed for this trace
-init           ,string  ,           ,true      ,    ,
-input          ,bytes   ,           ,true      ,  4 ,an encoded version of the function call
-refundAddress  ,address ,           ,true      ,  6 ,if the call type is self-destruct&#44; the address to which the refund is sent
-rewardType     ,string  ,           ,true      ,  7 ,the type of reward
-to             ,address ,           ,          ,  2 ,address to which the trace was sent
-value          ,wei     ,           ,          ,    ,
-address        ,address ,           ,true      ,    ,
-author         ,address ,           ,true      ,    ,
+name           ,type    ,strDefault ,attributes ,docOrder ,description
+selfDestructed ,address ,           ,omitempty  ,         ,
+balance        ,wei     ,           ,omitempty  ,         ,
+callType       ,string  ,           ,           ,       5 ,the type of call
+from           ,address ,           ,           ,       1 ,address from which the trace was sent
+gas            ,gas     ,           ,           ,       3 ,the maximum number of gas allowed for this trace
+init           ,string  ,           ,omitempty  ,         ,
+input          ,bytes   ,           ,omitempty  ,       4 ,an encoded version of the function call
+refundAddress  ,address ,           ,omitempty  ,       6 ,if the call type is self-destruct&#44; the address to which the refund is sent
+rewardType     ,string  ,           ,omitempty  ,       7 ,the type of reward
+to             ,address ,           ,           ,       2 ,address to which the trace was sent
+value          ,wei     ,           ,           ,         ,
+address        ,address ,           ,omitempty  ,         ,
+author         ,address ,           ,omitempty  ,         ,

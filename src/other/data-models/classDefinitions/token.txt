@@ -1,8 +1,0 @@
-[settings]
-class = CToken
-fields = token.csv
-doc_group = 03-Chain State
-doc_descr = on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block
-doc_route = 302-token
-doc_producer = tokens, export
-go_output = src/apps/chifra/pkg/types/

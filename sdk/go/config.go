@@ -10,12 +10,15 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -74,6 +77,25 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+type configResult struct {
+	Data []bool       `json:"data"`
+	Meta rpc.MetaData `json:"meta"`
+}
+
+func (opts *ConfigOptions) Query() ([]bool, *rpc.MetaData, error) {
+	configBuf := bytes.Buffer{}
+	if err := opts.Config(&configBuf); err != nil {
+		logger.Fatal(err)
+	}
+
+	var config configResult
+	if err := json.Unmarshal(configBuf.Bytes(), &config); err != nil {
+		return nil, nil, err
+	} else {
+		return config.Data, &config.Meta, nil
+	}
 }
 
 type ConfigMode int

@@ -1,5 +1,5 @@
-name        ,type      ,strDefault ,omitempty ,doc ,description
-blockNumber ,blknum    ,           ,          ,  1 ,the number of the block
-timestamp   ,timestamp ,           ,          ,  2 ,the Unix timestamp of the block
-date        ,datetime  ,           ,calc      ,  3 ,the timestamp as a date
-diff        ,int64     ,           ,          ,  4 ,the number of seconds since the last block
+name        ,type      ,strDefault ,attributes ,docOrder ,description
+blockNumber ,blknum    ,           ,           ,       1 ,the number of the block
+timestamp   ,timestamp ,           ,           ,       2 ,the Unix timestamp of the block
+date        ,datetime  ,           ,calc       ,       3 ,the timestamp as a date
+diff        ,int64     ,           ,           ,       4 ,the number of seconds since the last block

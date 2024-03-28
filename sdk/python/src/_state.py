@@ -1,6 +1,9 @@
-#
-# This file was generated with makeClass --sdk. Do not edit it.
-#
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * This file was auto generated. DO NOT EDIT.
+ */
 from . import session
 
 stateCmd = "state"
@@ -13,8 +16,8 @@ stateOpts = {
     "call": {"hotkey": "-l", "type": "flag"},
     "articulate": {"hotkey": "-a", "type": "switch"},
     "proxyFor": {"hotkey": "-r", "type": "flag"},
-    "chain": {"hotkey": "-", "type": "flag"},
-    "noHeader": {"hotkey": "-", "type": "switch"},
+    "chain": {"hotkey": "", "type": "flag"},
+    "noHeader": {"hotkey": "", "type": "switch"},
     "cache": {"hotkey": "-o", "type": "switch"},
     "decache": {"hotkey": "-D", "type": "switch"},
     "ether": {"hotkey": "-H", "type": "switch"},

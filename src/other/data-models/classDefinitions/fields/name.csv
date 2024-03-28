@@ -1,14 +1,14 @@
-name       ,type    ,strDefault ,omitempty ,doc ,description
-tags       ,string  ,           ,          ,  1 ,colon separated list of tags
-address    ,address ,           ,          ,  2 ,the address associated with this name
-name       ,string  ,           ,          ,  3 ,the name associated with this address (retrieved from on-chain data if available)
-symbol     ,string  ,           ,          ,  4 ,the symbol for this address (retrieved from on-chain data if available)
-source     ,string  ,           ,          ,  5 ,user supplied source of where this name was found (or on-chain if name is on-chain)
-decimals   ,uint64  ,           ,          ,  6 ,number of decimals retrieved from an ERC20 smart contract&#44; defaults to 18
-petname    ,string  ,           ,          ,  7 ,the petname such as described here http://www.erights.org/elib/capability/pnml.html
-isCustom   ,bool    ,           ,true      ,  9 ,`true` if the address is a custom address&#44; `false` otherwise
-isPrefund  ,bool    ,           ,true      , 10 ,`true` if the address was one of the prefund addresses&#44; `false` otherwise
-isContract ,bool    ,           ,true      , 11 ,`true` if the address is a smart contract&#44; `false` otherwise
-isErc20    ,bool    ,           ,true      , 12 ,`true` if the address is an ERC20&#44; `false` otherwise
-isErc721   ,bool    ,           ,true      , 13 ,`true` if the address is an ERC720&#44; `false` otherwise
-deleted    ,bool    ,           ,true      ,  8 ,`true` if deleted&#44; `false` otherwise
+name       ,type    ,strDefault ,attributes ,docOrder ,description
+tags       ,string  ,           ,           ,       1 ,colon separated list of tags
+address    ,address ,           ,           ,       2 ,the address associated with this name
+name       ,string  ,           ,           ,       3 ,the name associated with this address (retrieved from on-chain data if available)
+symbol     ,string  ,           ,           ,       4 ,the symbol for this address (retrieved from on-chain data if available)
+source     ,string  ,           ,           ,       5 ,user supplied source of where this name was found (or on-chain if name is on-chain)
+decimals   ,uint64  ,           ,           ,       6 ,number of decimals retrieved from an ERC20 smart contract&#44; defaults to 18
+petname    ,string  ,           ,           ,       7 ,the petname such as described here http://www.erights.org/elib/capability/pnml.html
+isCustom   ,bool    ,           ,omitempty  ,       9 ,`true` if the address is a custom address&#44; `false` otherwise
+isPrefund  ,bool    ,           ,omitempty  ,      10 ,`true` if the address was one of the prefund addresses&#44; `false` otherwise
+isContract ,bool    ,           ,omitempty  ,      11 ,`true` if the address is a smart contract&#44; `false` otherwise
+isErc20    ,bool    ,           ,omitempty  ,      12 ,`true` if the address is an ERC20&#44; `false` otherwise
+isErc721   ,bool    ,           ,omitempty  ,      13 ,`true` if the address is an ERC720&#44; `false` otherwise
+deleted    ,bool    ,           ,omitempty  ,       8 ,`true` if deleted&#44; `false` otherwise
