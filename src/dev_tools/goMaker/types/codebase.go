@@ -9,10 +9,9 @@ import (
 )
 
 type CodeBase struct {
-	Commands    []Command            `json:"commands" csv:"commands"`
-	Structures  map[string]Structure `json:"structures" csv:"structures"`
-	StructArray []Structure          `json:"-" csv:"-"`
-	templates   TemplateMap          `json:"-" csv:"-"`
+	Commands   []Command   `json:"commands" csv:"commands"`
+	Structures []Structure `json:"structures" csv:"structures"`
+	templates  TemplateMap `json:"-" csv:"-"`
 }
 
 func (c *CodeBase) String() string {
@@ -89,25 +88,3 @@ func (cb *CodeBase) Tags() string {
 func (cb *CodeBase) Description() string {
 	return "\n" + strings.Trim(file.AsciiFileToString("docs/templates/api/description.txt"), "\n\t\r")
 }
-
-// func (cb *CodeBase) Paths() string {
-// 	ret := []string{}
-// 	for _, cmd := range cb.Commands {
-// 		if cmd.Route != "" {
-// 			tmpl := part1
-// 			ret = append(ret, cmd.executeTemplate("paths", tmpl))
-// 		}
-// 	}
-// 	return strings.Join(ret, "\n")
-// }
-
-// func (cb *CodeBase) Components() string {
-// 	ret := []string{}
-// 	for _, st := range cb.Structures {
-// 		tmpl := `  {{.Name}}:`
-// 		ret = append(ret, st.executeTemplate("components", tmpl))
-// 	}
-// 	return strings.Join(ret, "\n")
-// }
-
-// var part1 = file.AsciiFileToString("src/dev_tools/goMaker/templates/parts/docs_content_api_openapi.yaml.part1")

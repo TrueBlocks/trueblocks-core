@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
@@ -35,11 +36,9 @@ func (c *Command) executeTemplate(name, tmplCode string) string {
 	}
 
 	if c.templates[name] == nil {
-		var err error
-		c.templates[name], err = template.New(name).Parse(tmplCode)
-		if err != nil {
-			log.Fatalf("parsing template failed: %v", err)
-		}
+		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
+		funcMap := template.FuncMap{"toSnake": toSnake}
+		c.templates[name] = template.Must(template.New(name).Funcs(funcMap).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer

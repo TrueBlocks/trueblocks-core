@@ -54,11 +54,9 @@ func (s *Structure) executeTemplate(name, tmplCode string) string {
 	}
 
 	if s.templates[name] == nil {
-		var err error
-		s.templates[name], err = template.New(name).Parse(tmplCode)
-		if err != nil {
-			log.Fatalf("parsing template failed: %v", err)
-		}
+		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
+		funcMap := template.FuncMap{"toSnake": toSnake}
+		s.templates[name] = template.Must(template.New(name).Funcs(funcMap).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer

@@ -3,6 +3,7 @@ package types
 import (
 	"bytes"
 	"log"
+	"strings"
 	"text/template"
 )
 
@@ -15,11 +16,9 @@ func (op *CmdLineOption) executeTemplate(name, tmplCode string) string {
 	}
 
 	if op.templates[name] == nil {
-		var err error
-		op.templates[name], err = template.New(name).Parse(tmplCode)
-		if err != nil {
-			log.Fatalf("parsing template failed: %v", err)
-		}
+		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
+		funcMap := template.FuncMap{"toSnake": toSnake}
+		op.templates[name] = template.Must(template.New(name).Funcs(funcMap).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer

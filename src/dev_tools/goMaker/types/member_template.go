@@ -3,27 +3,26 @@ package types
 import (
 	"bytes"
 	"log"
+	"strings"
 	"text/template"
 )
 
 // executeTemplate executes the template with the given name and returns
 // the result. It stores the parsed template in the templates map to avoid
 // parsing it more than once.
-func (s *Member) executeTemplate(name, tmplCode string) string {
-	if s.templates == nil {
-		s.templates = make(map[string]*template.Template)
+func (m *Member) executeTemplate(name, tmplCode string) string {
+	if m.templates == nil {
+		m.templates = make(map[string]*template.Template)
 	}
 
-	if s.templates[name] == nil {
-		var err error
-		s.templates[name], err = template.New(name).Parse(tmplCode)
-		if err != nil {
-			log.Fatalf("parsing template failed: %v", err)
-		}
+	if m.templates[name] == nil {
+		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
+		funcMap := template.FuncMap{"toSnake": toSnake}
+		m.templates[name] = template.Must(template.New(name).Funcs(funcMap).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer
-	if err := s.templates[name].Execute(&tplBuffer, s); err != nil {
+	if err := m.templates[name].Execute(&tplBuffer, m); err != nil {
 		log.Fatalf("executing template failed: %v", err)
 	}
 

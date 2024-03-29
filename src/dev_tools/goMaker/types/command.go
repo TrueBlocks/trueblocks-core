@@ -17,9 +17,14 @@ type Command struct {
 	Notes       []string        `json:"notes" csv:"notes"`
 	Aliases     []string        `json:"aliases" csv:"aliases"`
 	Hidden      []string        `json:"hidden" csv:"hidden"`
+	Producers   []string        `json:"producers" csv:"producers"`
 	Proper      string          `json:"proper" csv:"proper"`
 	Lower       string          `json:"lower" csv:"lower"`
 	templates   TemplateMap     `json:"-" csv:"-"`
+}
+
+func (c *Command) NProducers() int {
+	return len(c.Producers)
 }
 
 func (c *Command) HasEnums() bool {

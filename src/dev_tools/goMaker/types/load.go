@@ -44,23 +44,10 @@ func LoadDefinitions() (CodeBase, error) {
 // contains all the commands (each with its own options and endpoint).
 // This will also eventually carry the data types.
 func LoadCodebase(thePath string) (CodeBase, error) {
-	theMap := make(map[string]Command)
-
+	var cb CodeBase
 	options, err := LoadCsv[CmdLineOption, any](thePath+"cmd-line-options.csv", readCmdOption, nil)
 	if err != nil {
 		return CodeBase{}, err
-	}
-
-	for _, opt := range options {
-		lower := strings.ToLower(opt.ApiRoute)
-		if lower == "" {
-			lower = strings.ToLower(opt.Group)
-		}
-		cmd := Command{
-			Route:   opt.ApiRoute,
-			Options: append(theMap[lower].Options, opt),
-		}
-		theMap[lower] = cmd
 	}
 
 	endpoints, err := LoadCsv[CmdLineEndpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
@@ -68,60 +55,23 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 		return CodeBase{}, err
 	}
 
-	for _, endpoint := range endpoints {
-		lower := strings.ToLower(endpoint.ApiRoute)
-		if lower == "" {
-			lower = strings.ToLower(endpoint.Group)
-		}
-		cmd := Command{
-			Route:       endpoint.ApiRoute,
-			Group:       endpoint.Group,
-			Description: endpoint.Description,
-			Options:     theMap[lower].Options,
-			Endpoint:    endpoint,
-		}
-		theMap[lower] = cmd
-	}
-
-	var cb CodeBase
-	cb.Structures = make(map[string]Structure)
-	cb.Commands = make([]Command, 0, len(theMap))
-	for _, cmd := range theMap {
-		cmd.clean()
-		cb.Commands = append(cb.Commands, cmd)
-	}
-	sort.Slice(cb.Commands, func(i, j int) bool {
-		if cb.Commands[i].Route == cb.Commands[j].Route {
-			return cb.Commands[i].Group < cb.Commands[j].Group
-		}
-		return cb.Commands[i].Route < cb.Commands[j].Route
-	})
-
-	thePath += "classDefinitions/"
-	if err := ReadStructures(thePath, &cb); err != nil {
+	structMap := make(map[string]Structure)
+	err = cb.LoadStructures(thePath+"classDefinitions/", structMap)
+	if err != nil {
 		return cb, err
 	}
 
-	if err := ReadMembers(thePath, &cb); err != nil {
+	err = cb.LoadMembers(thePath+"classDefinitions/", structMap)
+	if err != nil {
 		return cb, err
 	}
 
-	cb.StructArray = make([]Structure, 0, len(cb.Structures))
-	for _, value := range cb.Structures {
-		cb.StructArray = append(cb.StructArray, value)
-	}
-	sort.Slice(cb.StructArray, func(i, j int) bool {
-		return cb.StructArray[i].DocRoute < cb.StructArray[j].DocRoute
-	})
-
-	if true {
-		fmt.Println(cb.String())
-	}
+	cb.FinishLoad(options, endpoints, structMap)
 
 	return cb, nil
 }
 
-func ReadStructures(thePath string, cb *CodeBase) error {
+func (cb *CodeBase) LoadStructures(thePath string, structMap map[string]Structure) error {
 	if err := filepath.Walk(thePath, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -145,7 +95,7 @@ func ReadStructures(thePath string, cb *CodeBase) error {
 					f.Settings.GoOutput = "<docs_only>"
 					f.Settings.DisableGo = true
 				}
-				cb.Structures[class] = f.Settings
+				structMap[class] = f.Settings
 			}
 		}
 		return nil
@@ -156,7 +106,7 @@ func ReadStructures(thePath string, cb *CodeBase) error {
 	return nil
 }
 
-func ReadMembers(thePath string, cb *CodeBase) error {
+func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) error {
 	if err := filepath.Walk(thePath, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -164,7 +114,7 @@ func ReadMembers(thePath string, cb *CodeBase) error {
 		if !info.IsDir() {
 			if strings.HasSuffix(path, ".csv") {
 				class := strings.TrimSuffix(filepath.Base(path), ".csv")
-				structure := cb.Structures[class]
+				structure := structMap[class]
 				var err error
 				structure.Members, err = LoadCsv[Member, any](path, readMember, nil)
 				if err != nil {
@@ -179,9 +129,9 @@ func ReadMembers(thePath string, cb *CodeBase) error {
 					}
 					return structure.Members[i].Num < structure.Members[j].Num
 				})
-				cb.Structures[class] = structure
+				structMap[class] = structure
 				for i := 0; i < len(structure.Members); i++ {
-					structure.Members[i].Class = cb.Structures[class].Class
+					structure.Members[i].Class = structMap[class].Class
 				}
 			}
 		}
@@ -191,4 +141,71 @@ func ReadMembers(thePath string, cb *CodeBase) error {
 	}
 
 	return nil
+}
+
+func (cb *CodeBase) FinishLoad(options []CmdLineOption, endpoints []CmdLineEndpoint, structMap map[string]Structure) {
+	theMap := make(map[string]Command)
+
+	prodMap := make(map[string][]string)
+
+	// Create the structure array (and sort it by DocRoute) from the map
+	cb.Structures = make([]Structure, 0, len(structMap))
+	for _, value := range structMap {
+		cb.Structures = append(cb.Structures, value)
+		producers := strings.Split(strings.Replace(value.DocProducer, " ", "", -1), ",")
+		for _, producer := range producers {
+			prodMap[producer] = append(prodMap[producer], value.Name)
+		}
+	}
+	sort.Slice(cb.Structures, func(i, j int) bool {
+		return cb.Structures[i].DocRoute < cb.Structures[j].DocRoute
+	})
+
+	// Attach each option to its command (i.e. its route)
+	for _, opt := range options {
+		route := strings.ToLower(opt.ApiRoute)
+		cmd := Command{
+			Options: append(theMap[route].Options, opt),
+		}
+		theMap[route] = cmd
+	}
+
+	// Enhance the commands with information from the endpoints data (could have been combined,
+	// but this way we can keep the data separate and still have a single command object)
+	for _, endpoint := range endpoints {
+		route := strings.ToLower(endpoint.ApiRoute)
+		if route == "" {
+			route = strings.ToLower(endpoint.Group)
+		}
+		sort.Slice(prodMap[route], func(i, j int) bool {
+			return prodMap[route][i] < prodMap[route][j]
+		})
+
+		cmd := Command{
+			Route:       endpoint.ApiRoute,
+			Group:       endpoint.Group,
+			Description: endpoint.Description,
+			Options:     theMap[route].Options,
+			Endpoint:    endpoint,
+			Producers:   prodMap[route],
+		}
+		theMap[route] = cmd
+	}
+
+	// Create a command array from the map and sort it by route within group
+	cb.Commands = make([]Command, 0, len(theMap))
+	for _, cmd := range theMap {
+		cmd.clean()
+		cb.Commands = append(cb.Commands, cmd)
+	}
+	sort.Slice(cb.Commands, func(i, j int) bool {
+		if cb.Commands[i].Route == cb.Commands[j].Route {
+			return cb.Commands[i].Group < cb.Commands[j].Group
+		}
+		return cb.Commands[i].Route < cb.Commands[j].Route
+	})
+
+	if os.Getenv("TB_MAKER_DEBUG") == "true" {
+		fmt.Println(cb.String())
+	}
 }

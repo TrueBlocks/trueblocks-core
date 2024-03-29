@@ -218,9 +218,9 @@ paths:
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
-                        - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/appearanceCount"
                         - $ref: "#/components/schemas/bounds"
+                        - $ref: "#/components/schemas/monitor"
                 example:
                   {
                     "data": [
@@ -566,18 +566,18 @@ paths:
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
-                        - $ref: "#/components/schemas/monitor"
                         - $ref: "#/components/schemas/appearanceCount"
-                        - $ref: "#/components/schemas/statement"
-                        - $ref: "#/components/schemas/transaction"
-                        - $ref: "#/components/schemas/receipt"
+                        - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/monitor"
+                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/receipt"
+                        - $ref: "#/components/schemas/statement"
+                        - $ref: "#/components/schemas/token"
                         - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
-                        - $ref: "#/components/schemas/token"
-                        - $ref: "#/components/schemas/function"
-                        - $ref: "#/components/schemas/parameter"
+                        - $ref: "#/components/schemas/transaction"
                 example:
                   {
                     "data": [
@@ -1073,7 +1073,8 @@ paths:
                         - $ref: "#/components/schemas/abi"
                         - $ref: "#/components/schemas/function"
                         - $ref: "#/components/schemas/parameter"
-                example:{
+                example:
+                  {
                     "data": [
                       {
                         "name": "PairCreated",
@@ -1306,13 +1307,13 @@ paths:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
                         - $ref: "#/components/schemas/block"
-                        - $ref: "#/components/schemas/withdrawal"
+                        - $ref: "#/components/schemas/blockCount"
                         - $ref: "#/components/schemas/log"
-                        - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/logFilter"
+                        - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
-                        - $ref: "#/components/schemas/blockCount"
+                        - $ref: "#/components/schemas/withdrawal"
                 example:
                   {
                     "blockNumber": 3141592,
@@ -2435,8 +2436,8 @@ paths:
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/config"
                         - $ref: "#/components/schemas/cacheItem"
+                        - $ref: "#/components/schemas/config"
                         - $ref: "#/components/schemas/chain"
         "400":
           description: bad input parameter
@@ -2495,8 +2496,8 @@ paths:
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/manifest"
                         - $ref: "#/components/schemas/chunkRecord"
+                        - $ref: "#/components/schemas/manifest"
         "400":
           description: bad input parameter
   /chunks:
@@ -2674,15 +2675,15 @@ paths:
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
-                        - $ref: "#/components/schemas/manifest"
-                        - $ref: "#/components/schemas/chunkRecord"
-                        - $ref: "#/components/schemas/chunkIndex"
-                        - $ref: "#/components/schemas/chunkBloom"
                         - $ref: "#/components/schemas/chunkAddress"
-                        - $ref: "#/components/schemas/ipfsPin"
-                        - $ref: "#/components/schemas/chunkStats"
-                        - $ref: "#/components/schemas/reportCheck"
+                        - $ref: "#/components/schemas/chunkBloom"
+                        - $ref: "#/components/schemas/chunkIndex"
                         - $ref: "#/components/schemas/chunkPinReport"
+                        - $ref: "#/components/schemas/chunkRecord"
+                        - $ref: "#/components/schemas/chunkStats"
+                        - $ref: "#/components/schemas/ipfsPin"
+                        - $ref: "#/components/schemas/manifest"
+                        - $ref: "#/components/schemas/reportCheck"
                 example:
                   {
                     "data": [
@@ -2765,8 +2766,8 @@ paths:
                     type: array
                     items:
                       oneOf:
-                        - $ref: "#/components/schemas/manifest"
                         - $ref: "#/components/schemas/chunkRecord"
+                        - $ref: "#/components/schemas/manifest"
         "400":
           description: bad input parameter
   /slurp:

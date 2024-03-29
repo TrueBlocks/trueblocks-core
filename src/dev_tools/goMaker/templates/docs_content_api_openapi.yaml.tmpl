@@ -42,15 +42,23 @@ paths:
                 properties:
                   data:
                     description: [{PRODUCES}]
-                    type: object
-                    properties:
-                      .DataName:
-                        type: string
-{{if .HasExample}}                example:{{.Example}}
-{{end}}        "400":
+                    type: array
+                    items:
+{{if eq .NProducers 1}}
+{{range .Producers}}
+                      - $ref: "#/components/schemas/{{toSnake .}}"
+{{end}}
+{{else}}
+                      oneOf:
+{{range .Producers}}                        - $ref: "#/components/schemas/{{toSnake .}}"
+{{end}}
+{{end}}
+{{if .HasExample}}                example:
+                  {{.Example}}{{end}}
+        "400":
           description: bad input parameter
 {{end}}{{end}}components:
-  schemas:{{range .StructArray}}
+  schemas:{{range .Structures}}
     {{.Name}}:
       description: "{{.DocDescr}}"
       type: object
