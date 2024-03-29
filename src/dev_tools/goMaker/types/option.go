@@ -353,3 +353,72 @@ func (op *CmdLineOption) EnsConvert() string {
 
 	return ret
 }
+
+func (op *CmdLineOption) DocType() string {
+	if op.DataType == "bool" || op.DataType == "<boolean>" {
+		return "boolean"
+	} else if op.DataType == "list<addr>" {
+		return `array
+            items:
+              type: string
+              format: address`
+	} else if op.DataType == "list<topic>" {
+		return `array
+            items:
+              type: string
+              format: topic`
+	} else if op.DataType == "list<fourbyte>" {
+		return `array
+            items:
+              type: string
+              format: fourbyte`
+	} else if op.DataType == "list<string>" {
+		return `array
+            items:
+              type: string
+              format: string`
+	} else if op.DataType == "list<blknum>" {
+		return `array
+            items:
+              type: string
+              format: blknum`
+	} else if op.DataType == "list<tx_id>" {
+		return `array
+            items:
+              type: string
+              format: tx_id`
+	} else if op.DataType == "uint64" || op.DataType == "<uint64>" || op.DataType == "<blknum>" {
+		return `number
+            format: blknum`
+	} else if op.DataType == "<string>" {
+		return `string`
+	} else if op.DataType == "<address>" {
+		return `string
+            format: address`
+	} else if op.DataType == "<double>" {
+		return `number
+            format: double`
+	} else if op.DataType == "enum" {
+		ret := `string
+            enum:
+`
+		for _, e := range op.Enums {
+			ret += "              - " + e + "\n"
+		}
+		return strings.Trim(ret, "\n")
+	} else if op.DataType == "list<enum>" {
+		ret := `array
+            items:
+              type: string
+              enum:
+`
+		for _, e := range op.Enums {
+			if e == "1155" {
+				e = "\"1155\""
+			}
+			ret += "                - " + e + "\n"
+		}
+		return strings.Trim(ret, "\n")
+	}
+	return op.DataType
+}

@@ -106,6 +106,14 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 		return cb, err
 	}
 
+	cb.StructArray = make([]Structure, 0, len(cb.Structures))
+	for _, value := range cb.Structures {
+		cb.StructArray = append(cb.StructArray, value)
+	}
+	sort.Slice(cb.StructArray, func(i, j int) bool {
+		return cb.StructArray[i].DocRoute < cb.StructArray[j].DocRoute
+	})
+
 	if true {
 		fmt.Println(cb.String())
 	}
@@ -144,6 +152,7 @@ func ReadStructures(thePath string, cb *CodeBase) error {
 	}); err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -164,12 +173,12 @@ func ReadMembers(thePath string, cb *CodeBase) error {
 				for i := 0; i < len(structure.Members); i++ {
 					structure.Members[i].Num = (i + 1)
 				}
-				// sort.Slice(structure.Members, func(i, j int) bool {
-				// 	if structure.Members[i].DocOrder != 0 && (structure.Members[i].DocOrder != structure.Members[j].DocOrder) {
-				// 		return structure.Members[i].DocOrder < structure.Members[j].DocOrder
-				// 	}
-				// 	return structure.Members[i].Num < structure.Members[j].Num
-				// })
+				sort.Slice(structure.Members, func(i, j int) bool {
+					if structure.Members[i].DocOrder != 0 && (structure.Members[i].DocOrder != structure.Members[j].DocOrder) {
+						return structure.Members[i].DocOrder < structure.Members[j].DocOrder
+					}
+					return structure.Members[i].Num < structure.Members[j].Num
+				})
 				cb.Structures[class] = structure
 				for i := 0; i < len(structure.Members); i++ {
 					structure.Members[i].Class = cb.Structures[class].Class
@@ -180,5 +189,6 @@ func ReadMembers(thePath string, cb *CodeBase) error {
 	}); err != nil {
 		return err
 	}
+
 	return nil
 }

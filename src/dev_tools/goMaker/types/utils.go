@@ -28,6 +28,12 @@ func shouldProcess(source, tag string) (bool, error) {
 		}
 	}
 
+	if strings.HasPrefix(source, "docs_") && tag == "codebase" {
+		if tag == "explore" || tag == "daemon" {
+			return false, nil
+		}
+	}
+
 	if !file.FileExists(source) {
 		return false, fmt.Errorf("file does not exist %s", source)
 	}

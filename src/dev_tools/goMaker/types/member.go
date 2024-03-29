@@ -372,14 +372,17 @@ func (m *Member) BaseType() string {
 	if m.IsArray {
 		return "array"
 	}
-	if m.Type == "blknum" || m.Type == "timestamp" {
+	if m.Type == "blknum" || m.Type == "timestamp" || m.Type == "uint64" || m.Type == "int64" || m.Type == "double" {
 		return "number"
+	}
+	if m.Type == "bool" || m.Type == "uint8" {
+		return "boolean"
 	}
 	return "string"
 }
 
 func (m *Member) IsBaseType() bool {
-	return m.Type == "string"
+	return m.Type == "string" || m.Type == "bool"
 }
 
 func (m *Member) Format() string {

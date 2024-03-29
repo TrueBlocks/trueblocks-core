@@ -3,6 +3,7 @@ package types
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -117,16 +118,16 @@ func (c *Command) Positionals() []string {
 var globals = []CmdLineOption{
 	{LongName: "create", HotKey: "", OptionType: "switch"},
 	{LongName: "update", HotKey: "", OptionType: "switch"},
-	{LongName: "delete", HotKey: "", OptionType: "switch"},
-	{LongName: "undelete", HotKey: "", OptionType: "switch"},
-	{LongName: "remove", HotKey: "", OptionType: "switch"},
-	{LongName: "chain", HotKey: "", OptionType: "flag"},
-	{LongName: "noHeader", HotKey: "", OptionType: "switch"},
-	{LongName: "cache", HotKey: "o", OptionType: "switch"},
-	{LongName: "decache", HotKey: "D", OptionType: "switch"},
-	{LongName: "ether", HotKey: "H", OptionType: "switch"},
-	{LongName: "raw", HotKey: "w", OptionType: "switch"},
-	{LongName: "fmt", HotKey: "x", OptionType: "flag"},
+	{LongName: "delete", HotKey: "", OptionType: "switch", Description: "delete the item, but do not remove it", DataType: "boolean"},
+	{LongName: "undelete", HotKey: "", OptionType: "switch", Description: "undelete a previously deleted item", DataType: "boolean"},
+	{LongName: "remove", HotKey: "", OptionType: "switch", Description: "remove a previously deleted item", DataType: "boolean"},
+	{LongName: "chain", HotKey: "", OptionType: "flag", Description: "the chain to use", DataType: "string"},
+	{LongName: "noHeader", HotKey: "", OptionType: "switch", Description: "suppress the header in the output", DataType: "boolean"},
+	{LongName: "cache", HotKey: "o", OptionType: "switch", Description: "force the results of the query into the cache", DataType: "boolean"},
+	{LongName: "decache", HotKey: "D", OptionType: "switch", Description: "removes related items from the cache", DataType: "boolean"},
+	{LongName: "ether", HotKey: "H", OptionType: "switch", Description: "export values in ether", DataType: "boolean"},
+	{LongName: "raw", HotKey: "w", OptionType: "switch", Description: "report raw data directly from the source", DataType: "boolean"},
+	{LongName: "fmt", HotKey: "x", OptionType: "flag", Description: "export format, one of [ txt | csv | json ]", DataType: "string"},
 }
 
 func (c *Command) PyGlobals() string {
@@ -138,6 +139,28 @@ func (c *Command) PyGlobals() string {
 	for _, op := range globals {
 		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
 			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			ret = append(ret, op.executeTemplate("pyglobals", code))
+		}
+	}
+	return strings.Join(ret, "\n")
+}
+
+func (c *Command) YamlGlobals() string {
+	ret := []string{}
+	caps := strings.Replace(strings.Replace(strings.ToLower(c.Endpoint.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
+	if c.Route == "names" {
+		caps = "create|update|delete|undelete|remove|" + caps
+	}
+	for _, op := range globals {
+		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
+			code := `        - name: {{.SnakeCase}}
+          description: {{.Description}}
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: {{.DataType}}`
 			ret = append(ret, op.executeTemplate("pyglobals", code))
 		}
 	}
@@ -754,5 +777,22 @@ func (op *CmdLineOption) TestLog() string {
 }
 
 func (cmd *Command) LowerGroup() string {
-	return strings.ToLower(cmd.Group)
+	return strings.Replace(strings.ToLower(cmd.Group), " ", "", -1)
+}
+
+func (cmd *Command) IsRoute() bool {
+	return len(cmd.Route) > 0 && cmd.Route != "daemon" && cmd.Route != "explore"
+}
+
+func (cmd *Command) HasExample() bool {
+	if len(cmd.Route) == 0 {
+		return false
+	}
+	return file.FileExists("./docs/templates/api/examples/" + cmd.Route + ".txt")
+}
+
+func (cmd *Command) Example() string {
+	contents := strings.Trim(file.AsciiFileToString("./docs/templates/api/examples/"+cmd.Route+".txt"), "\n\r\t")
+	contents = strings.Replace(contents, "\n", "\n                  ", -1)
+	return contents
 }

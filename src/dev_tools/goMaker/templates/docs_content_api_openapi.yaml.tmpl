@@ -16,20 +16,23 @@ servers:
 tags:
 {{.Tags}}
 paths:
-{{range .Commands}}  /{{.Route}}:
+{{range .Commands}}{{if .IsRoute}}  /{{.Route}}:
     get:
       tags:
         - {{.Group}}
       summary: {{.Endpoint.Summary}}
-      description: {{.Description}}
+      description: {{.Description}} Corresponds to the <a href="/chifra/{{.LowerGroup}}/#chifra-{{.Route}}">chifra {{.Route}}</a> command line.
       operationId: {{.LowerGroup}}-{{.Route}}
       parameters:
-        - name: .ParamName
+{{range .Options}}{{if not .IsHidden}}        - name: {{.SnakeCase}}
+          description: {{.Description}}
+          required: {{.IsRequired}}
+          style: form
           in: query
-          description: .ParamDescription
-          required: true
+          explode: true
           schema:
-            type: string
+            type: {{.DocType}}
+{{end}}{{end}}{{.YamlGlobals}}
       responses:
         "200":
           description: returns the requested data
@@ -43,18 +46,16 @@ paths:
                     properties:
                       .DataName:
                         type: string
-                example:
-        "400":
+{{if .HasExample}}                example:{{.Example}}
+{{end}}        "400":
           description: bad input parameter
-{{end}}
-components:
-  schemas:{{range .Structures}}
+{{end}}{{end}}components:
+  schemas:{{range .StructArray}}
     {{.Name}}:
       description: "{{.DocDescr}}"
       type: object
-      properties:{{range .Members}}
+      properties:{{range .Members}}{{if ne .DocOrder 0}}
         {{.Name}}:
           type: {{.BaseType}}
 {{if not .IsBaseType}}          format: {{.Format}}
-{{end}}          description: "{{.Description}}{{if .IsCalc}} (calculated)}}{{end}}"{{end}}
-{{end}}
+{{end}}{{if ne .Description ""}}          description: "{{.Description}}{{if .IsCalc}} (calculated){{end}}"{{end}}{{end}}{{end}}{{end}}

@@ -9,9 +9,10 @@ import (
 )
 
 type CodeBase struct {
-	Commands   []Command            `json:"commands" csv:"commands"`
-	Structures map[string]Structure `json:"structures" csv:"structures"`
-	templates  TemplateMap          `json:"-" csv:"-"`
+	Commands    []Command            `json:"commands" csv:"commands"`
+	Structures  map[string]Structure `json:"structures" csv:"structures"`
+	StructArray []Structure          `json:"-" csv:"-"`
+	templates   TemplateMap          `json:"-" csv:"-"`
 }
 
 func (c *CodeBase) String() string {
@@ -86,7 +87,7 @@ func (cb *CodeBase) Tags() string {
 }
 
 func (cb *CodeBase) Description() string {
-	return strings.Trim(file.AsciiFileToString("docs/templates/api/description.txt"), "\n\t\r")
+	return "\n" + strings.Trim(file.AsciiFileToString("docs/templates/api/description.txt"), "\n\t\r")
 }
 
 // func (cb *CodeBase) Paths() string {
