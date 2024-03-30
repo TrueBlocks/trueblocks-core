@@ -11,17 +11,9 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --options. Edit only those parts of
- * the code outside of the BEG_CODE/END_CODE sections
- */
 #include "utillib.h"
 #include "commandoption.h"
 #include "classdefinition.h"
-
-#define ERR_CLASSDEFNOTEXIST 1
-#define ERR_CONFIGMISSING 2
-#define ERR_NEEDONECLASS 3
 
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -34,66 +26,24 @@ class COptions : public COptionsBase {
     CCommandOptionArray routeOptionArray;
     CStringBoolMap cmdExistsMap;
     CToml classFile;
-    timestamp_t lastFormat;
     CCommandOptionArray endpointArray;
     map<string_q, string_q> hugoAliasMap;
 
     COptions(void);
     ~COptions(void);
-
     bool parseArguments(string_q& command);
     void Init(void);
-
     bool handle_readmes(void);
     bool handle_datamodel(void);
 };
 
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void* data);
-extern string_q splitIfTooWide(const string_q& in);
-extern void expandTabbys(string_q& strOut);
-
-//------------------------------------------------------------------------------------------------------------
-inline bool is_reserved(const string_q& str) {
-    CStringArray reserved = {"new", "ret", "do", "or"};
-    for (auto r : reserved)
-        if (startsWith(str, r))
-            return true;
-    return false;
-}
-
-//------------------------------------------------------------------------------------------------------------
-inline string_q short2(const string_q& str) {
-    return extract(str, 0, (is_reserved(str) ? 4 : 2));
-}
-
-//------------------------------------------------------------------------------------------------------------
-inline string_q short3(const string_q& str) {
-    return extract(str, 0, (is_reserved(str) ? 4 : 3));
-}
-
-//------------------------------------------------------------------------------------------------------------
-extern void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
 extern bool writeCodeIn(COptions* opts, const codewrite_t& cw);
 extern bool writeCodeOut(COptions* opts, const string_q& fn);
 extern bool writeIfDifferent(const string_q& path, const string_q& code);
-
-//---------------------------------------------------------------------------------------------------
 extern const char* STR_YAML_FRONTMATTER;
-#define routeCount fileCount
-#define cmdCount nVisited
-
-//---------------------------------------------------------------------------------------------------
-#define makeError(a, b) usage(substitute(usageErrs[(a)], "{0}", (b)))
-
-//---------------------------------------------------------------------------------------------------
 extern string_q getPathToSource(const string_q& part);
-extern string_q getPathToDocs(const string_q& _part);
-extern string_q getDocsPathContent(const string_q& _part);
-extern string_q getDocsPathTemplates(const string_q& _part);
-extern string_q getDocsPathReadmes(const string_q& _part);
-extern string_q getPathToTemplates(const string_q& part);
-
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
 extern string_q type_2_ModelName(const string_q& type, bool raw);

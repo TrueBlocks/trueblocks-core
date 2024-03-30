@@ -824,11 +824,11 @@ func (cmd *Command) HasExample() bool {
 	if len(cmd.Route) == 0 {
 		return false
 	}
-	return file.FileExists("./docs/templates/api/examples/" + cmd.Route + ".txt")
+	return file.FileExists("./src/dev_tools/goMaker/templates/examples/" + cmd.Route + ".txt")
 }
 
 func (cmd *Command) Example() string {
-	contents := strings.Trim(file.AsciiFileToString("./docs/templates/api/examples/"+cmd.Route+".txt"), "\n\r\t")
+	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/examples/"+cmd.Route+".txt"), "\n\r\t")
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
 	return strings.Trim(contents, "\n\r\t") + "\n"
 }

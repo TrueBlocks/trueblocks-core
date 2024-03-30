@@ -36,7 +36,7 @@ bool COptions::handle_datamodel(void) {
     map<string_q, string_q> typeMaps;
     map<string_q, bool> frontMatterMap;
     CNameValueMap baseTypes;
-    asciiFileToMap(getDocsPathTemplates("base-types.csv"), baseTypes);
+    asciiFileToMap("../templates/base-types.csv", baseTypes);
 
     bool badStuff = false;
     for (auto model : dataModels) {
@@ -44,9 +44,9 @@ bool COptions::handle_datamodel(void) {
             continue;
         }
         string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
-        string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
+        string_q groupFn = "../templates/model-groups/" + groupLow + ".md";
         if (!fileExists(groupFn)) {
-            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(groupFn), cOff);
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToSource("dev_tools/makeClass/templates/"+groupFn), cOff);
             badStuff = true;
             continue;
         }
@@ -78,15 +78,15 @@ bool COptions::handle_datamodel(void) {
             weight += 200;
         }
 
-        string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".md");
+        string_q modelFn = "../templates/model-intros/" + model.doc_route + ".md";
         if (!fileExists(modelFn)) {
-            LOG_WARN("Missing data model intro file: ", bYellow, getPathToTemplates(modelFn), cOff);
+            LOG_WARN("Missing data model intro file: ", bYellow, getPathToSource("dev_tools/makeClass/templates/"+modelFn), cOff);
             badStuff = true;
             continue;
         } else {
             docStream << STR_MODEL_HEADER << asciiFileToString(modelFn) << get_producer_table(model, endpointArray)
                       << STR_MODEL_FOOTER << endl;
-            string_q notesFn = getDocsPathTemplates("model-intros/" + model.doc_route + ".notes.md");
+            string_q notesFn = "../templates/model-intros/" + model.doc_route + ".notes.md";
             if (fileExists(notesFn)) {
                 docStream << "### Notes\n\n" << asciiFileToString(notesFn) << endl;
             }
@@ -160,7 +160,7 @@ bool COptions::handle_datamodel(void) {
         }
 
         document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tailStream.str());
-        string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
+        string_q outFn = "../content/data-model/" + substitute(toLower(document.first), " ", "") + ".md";
         if (!contains(outFn, "/.md")) {
             writeIfDifferent(outFn, substitute(document.second, "\n\n\n", "\n\n"));
         }

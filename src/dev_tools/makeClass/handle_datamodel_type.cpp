@@ -32,9 +32,9 @@ void generate_go_type(COptions* opts, const CClassDefinition& modelIn) {
     }
 
     bool isInternal = contains(modelIn.go_output, "/internal/");
-    string_q contents = asciiFileToString(getPathToTemplates("blank_type.go.tmpl"));
+    string_q contents = asciiFileToString(getPathToSource("dev_tools/makeClass/templates/blank_type.go.tmpl"));
     if (isInternal) {
-        contents = asciiFileToString(getPathToTemplates("blank_type_int.go.tmpl"));
+        contents = asciiFileToString(getPathToSource("dev_tools/makeClass/templates/blank_type_int.go.tmpl"));
     }
     replaceAll(contents, "[{CLASS_NAME}]", type_2_ModelName(model.go_model, false));
     replaceAll(contents, "[{RAW_NAME}]", "Raw" + type_2_ModelName(model.go_model, true));

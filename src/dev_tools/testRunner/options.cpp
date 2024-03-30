@@ -10,10 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --options. Edit only those parts of
- * the code outside of the BEG_CODE/END_CODE sections
- */
 #include "options.h"
 #include "measure.h"
 
@@ -154,10 +150,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, 0);
-    // END_CODE_GLOBALOPTS
-
     full_test = false;
     minArgs = 0;
 }

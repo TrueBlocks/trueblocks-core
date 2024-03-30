@@ -25,14 +25,14 @@ extern const char* STR_README_ENDPARTS;
 //------------------------------------------------------------------------------------------------------------
 string_q get_config_usage(const CCommandOption& ep) {
     string_q n = "readme-intros/" + substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".config.md";
-    string_q docFn = getDocsPathTemplates(n);
+    string_q docFn = "../templates/"+n;
     return fileExists(docFn) ? substitute(STR_CONFIG, "[{CONFIGS}]", asciiFileToString(docFn)) : "";
 }
 
 //------------------------------------------------------------------------------------------------------------
 string_q get_readme_notes(const CCommandOption& ep) {
     string_q n = "readme-intros/" + substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".notes.md";
-    string_q docFn = getDocsPathTemplates(n);
+    string_q docFn = "../templates/"+n;
     return fileExists(docFn) ? "\n\n" + trim(asciiFileToString(docFn), '\n') : "";
 }
 
@@ -102,15 +102,6 @@ string_q get_models(const CClassDefinitionArray& models, const string_q& route) 
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
-    CToml config(rootConfigToml_makeClass);
-    bool enabled = config.getConfigBool("enabled", "readmes", false);
-    if (!enabled) {
-        LOG_WARN("Skipping readmes...");
-        return true;
-    }
-
-    LOG_INFO(cYellow, "handling readmes...", cOff);
-
     map<string_q, string_q> groupParts;
     map<string_q, uint64_t> weights;
     uint32_t weight = 1000;
@@ -124,7 +115,7 @@ bool COptions::handle_readmes(void) {
                 groupParts[ep.group] += ep.api_route + ",";
 
                 string_q docFn = substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".md";
-                string_q docSource = getDocsPathTemplates("readme-intros/" + docFn);
+                string_q docSource = "../templates/readme-intros/" + docFn;
                 string_q docContents = STR_README_BEGPARTS + asciiFileToString(docSource) + STR_README_ENDPARTS;
 
                 replaceAll(docContents, "[{USAGE}]", get_usage(ep.api_route));
@@ -133,10 +124,10 @@ bool COptions::handle_readmes(void) {
                 replaceAll(docContents, "[{MODELS}]", get_models(dataModels, ep.api_route));
                 replaceAll(docContents, "[{NAME}]", "chifra " + ep.api_route);
                 string_q noTicks = substitute(docContents, "'", "'");
-                writeIfDifferent(getDocsPathReadmes(docFn),
+                writeIfDifferent("../readmes/"+docFn,
                                  substitute(substitute(noTicks, "[{LINKS}]", get_links(ep)), "[{FOOTER}]", "\n"));
 
-                string_q footerFn = getDocsPathTemplates("readme-intros/README.footer.md");
+                string_q footerFn = "../templates/readme-intros/README.footer.md";
                 string_q sourceFooter = "\n\n" + trim(asciiFileToString(footerFn), '\n') + "\n";
                 string_q sourceReadme =
                     substitute(getPathToSource("apps/chifra/internal/" + ep.api_route + "/README.md"), "//", "/");
@@ -160,22 +151,19 @@ bool COptions::handle_readmes(void) {
 
         ostringstream os;
         os << front;
-        os << endl << asciiFileToString(getDocsPathTemplates("readme-groups/" + group + ".md")) << endl;
+        os << endl << asciiFileToString("../templates/readme-groups/" + group + ".md") << endl;
 
         CStringArray paths;
         explode(paths, tool, ',');
         for (auto p : paths) {
-            string_q pp = getDocsPathReadmes(group + "-" + p + ".md");
+            string_q pp = "../readmes/" + group + "-" + p + ".md";
             os << asciiFileToString(pp);
         }
 
-        string_q outFn = getDocsPathContent("chifra/" + group + ".md");
+        string_q outFn = "../content/chifra/" + group + ".md";
         string_q out = os.str();
         writeIfDifferent(outFn, out);
     }
-
-    LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed files (changed).", string_q(40, ' '));
-
     return true;
 }
 

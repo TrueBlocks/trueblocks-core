@@ -1,10 +1,6 @@
 // Copyright 2021 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
-/*
- * Parts of this file were generated with makeClass --openapi. Edit only those parts of
- * the code outside of 'BEG_ROUTE/END_ROUTE' tags.
- */
 
 package daemonPkg
 
