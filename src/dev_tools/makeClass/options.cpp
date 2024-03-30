@@ -22,8 +22,6 @@ static const COption params[] = {
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
-    COption("openapi", "A", "", OPT_SWITCH, "export openapi.yaml file for API documentation"),
-    COption("protobuf", "p", "", OPT_SWITCH, "compile protobufs"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -52,12 +50,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-m" || arg == "--readmes") {
             readmes = true;
-
-        } else if (arg == "-A" || arg == "--openapi") {
-            openapi = true;
-
-        } else if (arg == "-p" || arg == "--protobuf") {
-            protobuf = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -88,7 +80,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (readmes || openapi) {
+    if (readmes) {
         establishFolder(getDocsPathContent(""));
         establishFolder(getDocsPathContent("api/"));
         establishFolder(getDocsPathContent("data-model/"));
@@ -162,13 +154,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
-    if (openapi && !handle_datamodel())
-        return false;
-    if (openapi && !writeOpenApiFile())
-        return false;
     if (readmes && !handle_readmes())
-        return false;
-    if (protobuf && !handle_protobuf())
         return false;
 
     // Default to run if we get only all
@@ -199,10 +185,8 @@ void COptions::Init(void) {
     // END_CODE_GLOBALOPTS
 
     all = false;
-    openapi = false;
 
     classDefs.clear();
-    counter = CCounter();
 
     CToml toml(rootConfigToml_makeClass);
     lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "last_format", 0));
@@ -351,21 +335,7 @@ bool parseOptionsFile(const char* str, void* data) {
             opts->cmdExistsMap[key] = true;
         }
         opts->routeOptionArray.push_back(option);
-        opts->toolMap[option.group + "/" + option.tool] = true;
     }
 
     return true;
-}
-
-//------------------------------------------------------------------------------------------------------------
-string_q get_corrected_caps(const string_q& capsIn) {
-    string_q x = "fmt|chain|noHeader";
-    string_q capsOut = substitute(capsIn, "default", x);
-    replace(capsOut, "caching", "cache|decache");
-    replace(capsOut, "verbose|", "");
-    replace(capsOut, "version|", "");
-    replace(capsOut, "noop|", "");
-    replace(capsOut, "noColor|", "");
-    replace(capsOut, "help|", "");
-    return capsOut;
 }

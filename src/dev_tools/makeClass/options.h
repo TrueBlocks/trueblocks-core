@@ -24,40 +24,19 @@
 #define ERR_NEEDONECLASS 3
 
 //-------------------------------------------------------------------
-class CCounter {
-  public:
-    size_t fileCount;
-    size_t nVisited;
-    size_t nProcessed;
-    bool is_counting;
-    CCounter(void) : fileCount(0), nVisited(0), nProcessed(0), is_counting(true) {
-    }
-};
-
-//-------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
     bool all;
-    bool openapi;
-    bool protobuf;
 
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
     CCommandOptionArray cmdOptionArray;
     CCommandOptionArray routeOptionArray;
-    CStringBoolMap toolMap;
     CStringBoolMap cmdExistsMap;
-    CStringArray positionals;
     CToml classFile;
-    CCounter counter;
     timestamp_t lastFormat;
     CCommandOptionArray endpointArray;
     map<string_q, string_q> hugoAliasMap;
-
-    ostringstream goCallStream, goPkgStream;
-    ostringstream goRouteStream;
-    ostringstream apiTagStream, apiPathStream;
-    ostringstream goStream;
 
     COptions(void);
     ~COptions(void);
@@ -67,10 +46,6 @@ class COptions : public COptionsBase {
 
     bool handle_readmes(void);
     bool handle_datamodel(void);
-    bool writeOpenApiFile(void);
-    bool handle_protobuf(void);
-
-    string_q getReturnTypes(const CCommandOption& ep, CStringArray& returnTypes);
 };
 
 //-------------------------------------------------------------------
@@ -121,11 +96,5 @@ extern string_q getPathToTemplates(const string_q& part);
 
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);
-extern bool isApiRoute(const string_q& route);
-extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 extern string_q type_2_ModelName(const string_q& type, bool raw);
 extern string_q getAliases(COptions* opts, const string_q& group, const string_q& route);
-
-//---------------------------------------------------------------------------------------------------
-extern void reportOneOption(const string_q& route, const string_q& option, const string_q& codebase);
-extern string_q get_corrected_caps(const string_q& capsIn);

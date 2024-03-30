@@ -280,7 +280,5 @@ inline bool CCommandOption::isChifraRoute(bool goCode) {
     return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
             option_type != "alias" && option_type != "config" && option_type != "error");
 }
-
-extern string_q get_corresponds_link(const string_q& toolGroup, const string_q& toolRoute);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -359,4 +359,3 @@ func Logger(inner http.Handler, name string) http.Handler {
 func isTestModeServer(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
 }
-

@@ -330,7 +330,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11740,dev_tools,Dev,,makeClass,all,a,,false,false,true,true,gocmd,switch,<boolean>,list&#44; or run all class definitions found in the local folder
 11780,dev_tools,Dev,,makeClass,readmes,m,,false,false,true,true,gocmd,switch,<boolean>,create readme files for each tool and app
 11782,dev_tools,Dev,,makeClass,format,f,,false,false,true,true,gocmd,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
-11781,dev_tools,Dev,,makeClass,openapi,A,,false,false,true,true,gocmd,switch,<boolean>,export openapi.yaml file for API documentation
 11824,dev_tools,Dev,,makeClass,,,,false,false,true,true,--,description,,Automatically writes C++ for various purposes.
 11830,dev_tools,Dev,,makeClass,n2,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
 

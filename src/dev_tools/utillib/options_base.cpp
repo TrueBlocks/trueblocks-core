@@ -551,7 +551,7 @@ bool COptionsBase::findParam(const string_q& name, COption& paramOut) const {
             paramOut = option;
             return true;
         }
-        if (startsWith(option.longName, name)) {  // positionals
+        if (startsWith(option.longName, name)) {
             paramOut = option;
             return true;
         }

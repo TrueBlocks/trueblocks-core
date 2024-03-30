@@ -94,12 +94,7 @@ bool writeCodeIn(COptions* opts, const codewrite_t& cw) {
         replace(codeOut, "::virtual ~Q", "::~Q");
     }
 
-    opts->counter.nVisited++;
-    if (writeIfDifferent(cw.fileName, codeOut)) {
-        opts->counter.nProcessed++;
-        return true;
-    }
-    return false;
+    return writeIfDifferent(cw.fileName, codeOut);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -112,33 +107,9 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
 
     string_q orig = asciiFileToString(fn);
     string_q codeOut = orig;
-    if (endsWith(fn, ".go.tmpl") || endsWith(fn, ".go")) {
-        codeOut = replaceCode(codeOut, "ROUTE_PKGS", trim(opts->goPkgStream.str(), '\n') + "\n");
-        codeOut = replaceCode(codeOut, "ROUTE_CODE", opts->goCallStream.str());
-        codeOut = replaceCode(codeOut, "ROUTE_ITEMS", opts->goRouteStream.str());
+    cerr << "Unknown file type for " << fn << endl;
 
-    } else if (endsWith(fn, ".yaml")) {
-        string_q components = trim(asciiFileToString(getDocsPathTemplates("api/components.txt")), '\n');
-        string_q descr = asciiFileToString(getDocsPathTemplates("api/description.txt"));
-        replaceAll(descr, "~~~~", "    ");
-
-        codeOut = asciiFileToString(getPathToTemplates("blank.yaml"));
-        replace(codeOut, "[{TAGS}]", opts->apiTagStream.str());
-        replace(codeOut, "[{PATHS}]", opts->apiPathStream.str());
-        replace(codeOut, "[{DESCRIPTION}]", descr);
-        replace(codeOut, "[{COMPONENTS}]", components);
-        replace(codeOut, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
-
-    } else {
-        cerr << "Unknown file type for " << fn << endl;
-    }
-
-    opts->counter.nVisited++;
-    if (writeIfDifferent(fn, codeOut)) {
-        opts->counter.nProcessed++;
-        return true;
-    }
-    return false;
+    return writeIfDifferent(fn, codeOut);
 }
 
 //--------------------------------------------------------------------------------

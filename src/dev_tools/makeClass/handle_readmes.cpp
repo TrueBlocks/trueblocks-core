@@ -174,8 +174,7 @@ bool COptions::handle_readmes(void) {
         writeIfDifferent(outFn, out);
     }
 
-    LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
-             counter.nProcessed, ").", string_q(40, ' '));
+    LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed files (changed).", string_q(40, ' '));
 
     return true;
 }
