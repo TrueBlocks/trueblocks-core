@@ -87,5 +87,5 @@ func (cb *CodeBase) Tags() string {
 }
 
 func (cb *CodeBase) Description() string {
-	return "\n" + strings.Trim(file.AsciiFileToString("docs/templates/api/description.txt"), "\n\t\r")
+	return "\n" + strings.Trim(file.AsciiFileToString("src/dev_tools/goMaker/templates/api/description.txt"), "\n\t\r")
 }
