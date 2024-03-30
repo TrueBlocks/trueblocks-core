@@ -18,6 +18,7 @@ func main() {
 
 // cbTemplates are the templates for the code base
 var cbTemplates = []string{
+	"src_apps_chifra_internal_daemon_routes.go.tmpl",
 	"src_apps_chifra_cmd_helpfile.go.tmpl",
 	"src_apps_chifra_pkg_version_string.go.tmpl",
 	"docs_content_api_openapi.yaml.tmpl",
