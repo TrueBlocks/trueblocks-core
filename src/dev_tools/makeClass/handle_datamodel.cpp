@@ -13,9 +13,7 @@
 #include "utillib.h"
 #include "options.h"
 
-extern const char* STR_YAML_TAIL;
 extern const char* STR_DOCUMENT_TAIL;
-extern const char* STR_YAML_MODELHEADER;
 extern const char* STR_MODEL_PRODUCERS;
 extern const char* STR_MODEL_FOOTER;
 extern const char* STR_MODEL_HEADER;
@@ -39,10 +37,6 @@ bool COptions::handle_datamodel(void) {
     map<string_q, bool> frontMatterMap;
     CNameValueMap baseTypes;
     asciiFileToMap(getDocsPathTemplates("base-types.csv"), baseTypes);
-
-    ostringstream yamlStream;
-    yamlStream << "components:" << endl;
-    yamlStream << "  schemas:" << endl;
 
     bool badStuff = false;
     for (auto model : dataModels) {
@@ -103,12 +97,8 @@ bool COptions::handle_datamodel(void) {
         fieldStream << markDownRow("-", "", "", fieldWidths);
 
         size_t cnt = 0;
-        ostringstream yamlPropStream;
         for (auto fld : model.fieldArray) {
             if (fld.doc) {
-                yamlPropStream << fld.Format("[        {NAME}:\n]");
-                yamlPropStream << fld.Format(typeFmt(fld));
-                yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
                 fieldStream << markDownRow(fld.name, fld.description, type_2_Link(dataModels, fld), fieldWidths);
                 addToTypeMap(typeMaps, model.doc_group, fld.type);
                 cnt++;
@@ -118,10 +108,6 @@ bool COptions::handle_datamodel(void) {
             cerr << bRed << "Data model for " << model.class_name << " has zero documented fields." << cOff << endl;
             exit(0);
         }
-
-        string_q head = model.Format(STR_YAML_MODELHEADER);
-        yamlStream << head;
-        yamlStream << yamlPropStream.str();
 
         string_q thisDoc = docStream.str();
         replaceAll(thisDoc, "[{TYPE}]", model.doc_route);
@@ -145,10 +131,6 @@ bool COptions::handle_datamodel(void) {
     if (badStuff) {
         exit(0);
     }
-
-    yamlStream << STR_YAML_TAIL;
-    string_q doc = substitute(yamlStream.str(), "&#44;", ",");
-    writeIfDifferent(getDocsPathTemplates("api/components.txt"), doc);
 
     for (auto document : documentMap) {
         ostringstream tailStream;
@@ -348,54 +330,12 @@ string_q plural(const string_q& in) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-const char* STR_YAML_TAIL =
-    "    response:\n"
-    "      required:\n"
-    "        - result\n"
-    "      type: object\n"
-    "      properties:\n"
-    "        data:\n"
-    "          type: object\n"
-    "        error:\n"
-    "          type: array\n"
-    "          example:\n"
-    "            - error 1\n"
-    "            - error 2\n"
-    "          items:\n"
-    "            type: string\n"
-    "    hash:\n"
-    "      type: string\n"
-    "      format: hash\n"
-    "      description: \"The 32-byte hash\"\n"
-    "      example: \"0xf128...1e98\"\n"
-    "    address:\n"
-    "      type: string\n"
-    "    string:\n"
-    "      type: string\n"
-    "    uint64:\n"
-    "      type: number\n"
-    "      format: uint64\n"
-    "    topic:\n"
-    "      type: string\n"
-    "      format: bytes\n"
-    "      description: \"One of four 32-byte topics of a log\"\n"
-    "      example: \"0xf128...1e98\"\n"
-    "\n";
-
-//------------------------------------------------------------------------------------------------------------
 const char* STR_DOCUMENT_TAIL =
     "## Base types\n"
     "\n"
     "This documentation mentions the following basic data types.\n"
     "\n"
     "[{TYPES}]";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_YAML_MODELHEADER =
-    "[    {DOC_ROUTE}:\n]"
-    "[      description: \"{DOC_DESCR}\"\n]"
-    "[      type: object\n]"
-    "[      properties:\n]";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_MODEL_FOOTER =
