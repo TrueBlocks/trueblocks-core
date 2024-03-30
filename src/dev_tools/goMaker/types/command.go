@@ -152,11 +152,11 @@ func (c *Command) Positionals() []string {
 }
 
 var globals = []CmdLineOption{
-	{LongName: "create", HotKey: "", OptionType: "switch"},
-	{LongName: "update", HotKey: "", OptionType: "switch"},
-	{LongName: "delete", HotKey: "", OptionType: "switch", Description: "delete the item, but do not remove it", DataType: "boolean"},
-	{LongName: "undelete", HotKey: "", OptionType: "switch", Description: "undelete a previously deleted item", DataType: "boolean"},
-	{LongName: "remove", HotKey: "", OptionType: "switch", Description: "remove a previously deleted item", DataType: "boolean"},
+	{LongName: "create", HotKey: "", OptionType: "switch", Description: "create a new item", DataType: "string"},
+	{LongName: "update", HotKey: "", OptionType: "switch", Description: "update an existing item", DataType: "string"},
+	{LongName: "delete", HotKey: "", OptionType: "switch", Description: "delete the item, but do not remove it", DataType: "string"},
+	{LongName: "undelete", HotKey: "", OptionType: "switch", Description: "undelete a previously deleted item", DataType: "string"},
+	{LongName: "remove", HotKey: "", OptionType: "switch", Description: "remove a previously deleted item", DataType: "string"},
 	{LongName: "chain", HotKey: "", OptionType: "flag", Description: "the chain to use", DataType: "string"},
 	{LongName: "noHeader", HotKey: "", OptionType: "switch", Description: "suppress the header in the output", DataType: "boolean"},
 	{LongName: "cache", HotKey: "o", OptionType: "switch", Description: "force the results of the query into the cache", DataType: "boolean"},

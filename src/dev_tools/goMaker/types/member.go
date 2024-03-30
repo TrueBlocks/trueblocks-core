@@ -381,11 +381,7 @@ func (m *Member) BaseType() string {
 	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + m.SnakeCase() + "\"")
 	f := fmt.Sprintf("\n          format: %s", m.Type)
 	if m.IsArray {
-		if m.IsObjType() {
-			return "array" + o
-		} else {
-			return "array"
-		}
+		return "array" + o
 	}
 	if m.IsObjType() {
 		return "object" + o
