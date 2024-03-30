@@ -146,7 +146,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 func (cb *CodeBase) FinishLoad(options []CmdLineOption, endpoints []CmdLineEndpoint, structMap map[string]Structure) {
 	theMap := make(map[string]Command)
 
-	prodMap := make(map[string][]string)
+	producesMap := make(map[string][]string)
 
 	// Create the structure array (and sort it by DocRoute) from the map
 	cb.Structures = make([]Structure, 0, len(structMap))
@@ -154,7 +154,15 @@ func (cb *CodeBase) FinishLoad(options []CmdLineOption, endpoints []CmdLineEndpo
 		cb.Structures = append(cb.Structures, value)
 		producers := strings.Split(strings.Replace(value.DocProducer, " ", "", -1), ",")
 		for _, producer := range producers {
-			prodMap[producer] = append(prodMap[producer], value.Name)
+			producesMap[producer] = append(producesMap[producer], value.Class)
+		}
+		if cb.TypeToGroup == nil {
+			cb.TypeToGroup = make(map[string]string)
+		}
+		dg := strings.Split(value.DocGroup, "-")
+		if len(dg) > 1 {
+			ddg := strings.ToLower(dg[1])
+			cb.TypeToGroup[strings.ToLower(value.Name)] = strings.ToLower(strings.Replace(ddg, " ", "", -1))
 		}
 	}
 	sort.Slice(cb.Structures, func(i, j int) bool {
@@ -177,17 +185,17 @@ func (cb *CodeBase) FinishLoad(options []CmdLineOption, endpoints []CmdLineEndpo
 		if route == "" {
 			route = strings.ToLower(endpoint.Group)
 		}
-		sort.Slice(prodMap[route], func(i, j int) bool {
-			return prodMap[route][i] < prodMap[route][j]
+		sort.Slice(producesMap[route], func(i, j int) bool {
+			return producesMap[route][i] < producesMap[route][j]
 		})
-
 		cmd := Command{
 			Route:       endpoint.ApiRoute,
 			Group:       endpoint.Group,
 			Description: endpoint.Description,
 			Options:     theMap[route].Options,
 			Endpoint:    endpoint,
-			Producers:   prodMap[route],
+			Produces:    producesMap[route],
+			cb:          cb,
 		}
 		theMap[route] = cmd
 	}

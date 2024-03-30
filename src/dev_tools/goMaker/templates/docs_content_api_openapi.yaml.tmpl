@@ -41,29 +41,49 @@ paths:
               schema:
                 properties:
                   data:
-                    description: [{PRODUCES}]
+                    description: {{.Produces1}}
                     type: array
                     items:
-{{if eq .NProducers 1}}
-{{range .Producers}}
-                      - $ref: "#/components/schemas/{{toSnake .}}"
-{{end}}
-{{else}}
-                      oneOf:
-{{range .Producers}}                        - $ref: "#/components/schemas/{{toSnake .}}"
-{{end}}
-{{end}}
-{{if .HasExample}}                example:
-                  {{.Example}}{{end}}
-        "400":
+{{.Produces2}}{{if .HasExample}}                example:
+                  {{.Example}}{{end}}        "400":
           description: bad input parameter
 {{end}}{{end}}components:
   schemas:{{range .Structures}}
-    {{.Name}}:
+{{if ne .SnakeCase ""}}    {{.SnakeCase}}:
       description: "{{.DocDescr}}"
       type: object
       properties:{{range .Members}}{{if ne .DocOrder 0}}
         {{.Name}}:
-          type: {{.BaseType}}
-{{if not .IsBaseType}}          format: {{.Format}}
-{{end}}{{if ne .Description ""}}          description: "{{.Description}}{{if .IsCalc}} (calculated){{end}}"{{end}}{{end}}{{end}}{{end}}
+          type: {{.BaseType}}{{if ne .Description ""}}
+          description: "{{.Description}}{{if .IsCalc}} (calculated){{end}}"{{end}}{{end}}{{end}}{{end}}{{end}}
+    response:
+      required:
+        - result
+      type: object
+      properties:
+        data:
+          type: object
+        error:
+          type: array
+          example:
+            - error 1
+            - error 2
+          items:
+            type: string
+    hash:
+      type: string
+      format: hash
+      description: "The 32-byte hash"
+      example: "0xf128...1e98"
+    address:
+      type: string
+    string:
+      type: string
+    uint64:
+      type: number
+      format: uint64
+    topic:
+      type: string
+      format: bytes
+      description: "One of four 32-byte topics of a log"
+      example: "0xf128...1e98"

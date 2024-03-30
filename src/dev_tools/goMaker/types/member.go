@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 )
 
@@ -83,7 +84,8 @@ func (m *Member) LowerSingular() string {
 }
 
 func (m *Member) IsObjType() bool {
-	return m.Type[0:1] != strings.ToLower(m.Type[0:1])
+	t := strings.Replace(m.Type, "[]", "", -1)
+	return t[0:1] != strings.ToLower(t[0:1])
 }
 
 func (m *Member) RawTag() string {
@@ -368,23 +370,33 @@ func (m *Member) UnmarshalCode() string {
 	return m.executeTemplate("unmarshalCode", tmpl)
 }
 
+func (m *Member) SnakeCase() string {
+	if len(m.Type) < 2 {
+		return ""
+	}
+	return strings.ToLower(m.Type[0:1]) + m.Type[1:]
+}
+
 func (m *Member) BaseType() string {
+	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + m.SnakeCase() + "\"")
+	f := fmt.Sprintf("\n          format: %s", m.Type)
 	if m.IsArray {
-		return "array"
+		if m.IsObjType() {
+			return "array" + o
+		} else {
+			return "array"
+		}
 	}
-	if m.Type == "blknum" || m.Type == "timestamp" || m.Type == "uint64" || m.Type == "int64" || m.Type == "double" {
-		return "number"
-	}
-	if m.Type == "bool" || m.Type == "uint8" {
+	if m.IsObjType() {
+		return "object" + o
+	} else if m.Type == "blknum" || m.Type == "timestamp" || m.Type == "double" ||
+		m.Type == "gas" || m.Type == "uint64" || m.Type == "int64" || m.Type == "uint32" {
+		return "number" + f
+	} else if m.Type == "address" || m.Type == "datetime" || m.Type == "hash" || m.Type == "ipfshash" || m.Type == "blkrange" ||
+		m.Type == "topic" || m.Type == "int256" || m.Type == "uint256" || m.Type == "wei" || m.Type == "bytes" {
+		return "string" + f
+	} else if m.Type == "bool" || m.Type == "uint8" {
 		return "boolean"
 	}
 	return "string"
-}
-
-func (m *Member) IsBaseType() bool {
-	return m.Type == "string" || m.Type == "bool"
-}
-
-func (m *Member) Format() string {
-	return m.Type
 }

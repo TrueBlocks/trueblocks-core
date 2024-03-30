@@ -3,7 +3,7 @@
     fields = "status.csv"
     doc_group = "04-Admin"
     doc_descr = "status-related data about the TrueBlocks system including the server and local binary caches"
-    doc_route = "401-config"
+    doc_route = "401-status"
     doc_alias = "Status"
     doc_producer = "status"
     go_output = "src/apps/chifra/internal/status"

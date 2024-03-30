@@ -36,6 +36,13 @@ func (s *Structure) String() string {
 	return string(bytes)
 }
 
+func (s *Structure) SnakeCase() string {
+	if len(s.Class) < 2 {
+		return ""
+	}
+	return strings.ToLower(s.Class[0:1]) + s.Class[1:]
+}
+
 func (s *Structure) RawFields() string {
 	ret := []string{}
 	for _, m := range s.Members {

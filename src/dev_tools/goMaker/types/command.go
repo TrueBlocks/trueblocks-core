@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -17,14 +18,44 @@ type Command struct {
 	Notes       []string        `json:"notes" csv:"notes"`
 	Aliases     []string        `json:"aliases" csv:"aliases"`
 	Hidden      []string        `json:"hidden" csv:"hidden"`
-	Producers   []string        `json:"producers" csv:"producers"`
+	Produces    []string        `json:"produces" csv:"produces"`
 	Proper      string          `json:"proper" csv:"proper"`
 	Lower       string          `json:"lower" csv:"lower"`
+	cb          *CodeBase       `json:"-" csv:"-"`
 	templates   TemplateMap     `json:"-" csv:"-"`
 }
 
-func (c *Command) NProducers() int {
-	return len(c.Producers)
+func (c *Command) Produces1() string {
+	g := strings.Replace(strings.ToLower(c.Group), " ", "", -1)
+	tmpl := fmt.Sprintf(" Corresponds to the <a href=\"/chifra/%s/#chifra-{{.Route}}\">chifra {{.Route}}</a> command line.", g)
+	types := []string{}
+	for i, p := range c.Produces {
+		ppp := strings.ToLower(p)
+		gg := c.cb.TypeToGroup[ppp]
+		if i > 0 {
+			if i == len(c.Produces)-1 {
+				types = append(types, " or ")
+			} else {
+				types = append(types, ", ")
+			}
+		}
+		types = append(types, c.executeTemplate("produces"+p, fmt.Sprintf("<a href=\"/data-model/%s/#%s\">%s</a>", gg, ppp, p)))
+	}
+	return "Produces " + strings.Join(types, "") + " data." + c.executeTemplate("corresponds", tmpl)
+}
+
+func (c *Command) Produces2() string {
+	ret := []string{}
+	if len(c.Produces) == 1 {
+		ret = []string{fmt.Sprintf("                      $ref: \"#/components/schemas/%s\"", strings.ToLower(c.Produces[0][0:1])+c.Produces[0][1:])}
+	} else {
+		ret = append(ret, "                      oneOf:")
+		for _, p := range c.Produces {
+			s := fmt.Sprintf("                        - $ref: \"#/components/schemas/%s\"", strings.ToLower(p[0:1])+p[1:])
+			ret = append(ret, s)
+		}
+	}
+	return strings.Trim(strings.Join(ret, "\n"), "\r\n\t") + "\n"
 }
 
 func (c *Command) HasEnums() bool {
@@ -799,5 +830,5 @@ func (cmd *Command) HasExample() bool {
 func (cmd *Command) Example() string {
 	contents := strings.Trim(file.AsciiFileToString("./docs/templates/api/examples/"+cmd.Route+".txt"), "\n\r\t")
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
-	return contents
+	return strings.Trim(contents, "\n\r\t") + "\n"
 }

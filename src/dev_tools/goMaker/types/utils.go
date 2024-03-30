@@ -12,7 +12,7 @@ import (
 type TemplateMap map[string]*template.Template
 
 func shouldProcess(source, tag string) (bool, error) {
-	single := os.Getenv("TB_GOMAKER_SINGLE")
+	single := os.Getenv("TB_MAKER_SINGLE")
 	if single != "" && !strings.Contains(source, single) {
 		// logger.Warn("skipping ", source, " because of ", single)
 		return false, nil
