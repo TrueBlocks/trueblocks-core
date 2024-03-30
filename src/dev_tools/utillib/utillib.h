@@ -35,6 +35,5 @@
 #include "keccak.h"
 #include "markdown.h"
 #include "configenv.h"
-#include "key.h"
 
 using namespace qblocks;  // NOLINT
