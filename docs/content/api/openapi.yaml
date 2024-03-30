@@ -3359,6 +3359,8 @@ components:
           description: "the base fee for this block"
         uncles:
           type: array
+          items:
+            $ref: "#/components/schemas/hash"
           description: "a possibly empty array of uncle hashes"
         withdrawals:
           type: array
@@ -3540,6 +3542,8 @@ components:
           description: "the smart contract that emitted this log"
         topics:
           type: array
+          items:
+            $ref: "#/components/schemas/topic"
           description: "the first topic hashes event signature of the log, up to 3 additional index parameters may appear"
         data:
           type: string
@@ -3583,6 +3587,8 @@ components:
           description: "the zero-indexed position of the transaction in the block"
         traceAddress:
           type: array
+          items:
+            $ref: "#/components/schemas/uint64"
           description: "a particular trace's address in the trace tree"
         subtraces:
           type: number
@@ -3635,9 +3641,13 @@ components:
           description: "an alternative to blocks specification, the hash of the block to query"
         emitters:
           type: array
+          items:
+            $ref: "#/components/schemas/address"
           description: "one or more emitting addresses from which logs were emitted"
         topics:
           type: array
+          items:
+            $ref: "#/components/schemas/topic"
           description: "one or more topics which logs represent"
     traceAction:
       description: "trace action data as returned from the RPC (with slight enhancements)"
@@ -4268,6 +4278,8 @@ components:
           description: "the type of the cache"
         items:
           type: array
+          items:
+            $ref: "#/components/schemas/cacheItem"
           description: "the individual items in the cache (if --verbose)"
         lastCached:
           type: string
