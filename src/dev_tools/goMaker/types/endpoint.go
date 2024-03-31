@@ -17,7 +17,7 @@ type Endpoint struct {
 	Usage         string   `json:"usage" csv:"usage"`
 	Capabilities  string   `json:"capabilities" csv:"capabilities"`
 	Description   string   `json:"description" csv:"description"`
-	cmd           *Command `json:"-" csv:"-"`
+	cmdPtr        *Command `json:"-" csv:"-"`
 }
 
 func (c Endpoint) String() string {
@@ -29,7 +29,7 @@ func (c Endpoint) Validate() bool {
 	return true
 }
 
-func readCmdEndpoint(cmd *Endpoint, data *any) (bool, error) {
-	cmd.Description = strings.ReplaceAll(cmd.Description, "&#44;", ",")
+func readCmdEndpoint(ep *Endpoint, data *any) (bool, error) {
+	ep.Description = strings.ReplaceAll(ep.Description, "&#44;", ",")
 	return true, nil
 }

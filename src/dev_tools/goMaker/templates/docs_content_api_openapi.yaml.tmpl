@@ -41,10 +41,10 @@ paths:
               schema:
                 properties:
                   data:
-                    description: {{.Produces1}}
+                    description: {{.ProducedByDescr}}
                     type: array
                     items:
-{{.Produces2}}{{if .HasExample}}                example:
+{{.ProducedByList}}{{if .HasExample}}                example:
                   {{.Example}}{{end}}        "400":
           description: bad input parameter
 {{end}}{{end}}components:

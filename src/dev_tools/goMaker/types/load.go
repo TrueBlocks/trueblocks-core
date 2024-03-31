@@ -153,9 +153,9 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 	// Create the structure array (and sort it by DocRoute) from the map
 	cb.Structures = make([]Structure, 0, len(structMap))
 	for _, st := range structMap {
-		cb.Structures = append(cb.Structures, st)
-		producers := strings.Split(strings.Replace(st.DocProducer, " ", "", -1), ",")
-		for _, producer := range producers {
+		st.DocProducer = strings.Replace(st.DocProducer, " ", "", -1)
+		st.Producers = strings.Split(st.DocProducer, ",")
+		for _, producer := range st.Producers {
 			producesMap[producer] = append(producesMap[producer], st.Class)
 		}
 		if cb.TypeToGroup == nil {
@@ -167,6 +167,11 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 			ddg = strings.Replace(ddg, " ", "", -1)
 			cb.TypeToGroup[strings.ToLower(st.Name)] = ddg
 		}
+		st.cbPtr = cb
+		cb.Structures = append(cb.Structures, st)
+		for i := 0; i < len(cb.Structures[len(cb.Structures)-1].Members); i++ {
+			cb.Structures[len(cb.Structures)-1].Members[i].stPtr = &cb.Structures[len(cb.Structures)-1]
+		}
 	}
 	sort.Slice(cb.Structures, func(i, j int) bool {
 		return cb.Structures[i].DocRoute < cb.Structures[j].DocRoute
@@ -175,10 +180,10 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 	// Attach each option to its command (i.e. its route)
 	for _, opt := range options {
 		route := strings.ToLower(opt.ApiRoute)
-		cmd := Command{
+		c := Command{
 			Options: append(theMap[route].Options, opt),
 		}
-		theMap[route] = cmd
+		theMap[route] = c
 	}
 
 	// Enhance the commands with information from the endpoints data (could have been combined,
@@ -191,23 +196,23 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 		sort.Slice(producesMap[route], func(i, j int) bool {
 			return producesMap[route][i] < producesMap[route][j]
 		})
-		cmd := Command{
+		c := Command{
 			Route:       endpoint.ApiRoute,
 			Group:       endpoint.Group,
 			Description: endpoint.Description,
 			Options:     theMap[route].Options,
 			Endpoint:    endpoint,
-			Produces:    producesMap[route],
-			cb:          cb,
+			Productions: producesMap[route],
+			cbPtr:       cb,
 		}
-		theMap[route] = cmd
+		theMap[route] = c
 	}
 
 	// Create a command array from the map and sort it by route within group
 	cb.Commands = make([]Command, 0, len(theMap))
-	for _, cmd := range theMap {
-		cmd.clean()
-		cb.Commands = append(cb.Commands, cmd)
+	for _, c := range theMap {
+		c.clean()
+		cb.Commands = append(cb.Commands, c)
 	}
 	sort.Slice(cb.Commands, func(i, j int) bool {
 		if cb.Commands[i].Route == cb.Commands[j].Route {
@@ -216,7 +221,5 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 		return cb.Commands[i].Route < cb.Commands[j].Route
 	})
 
-	if os.Getenv("TB_MAKER_DEBUG") == "true" {
-		fmt.Println(cb.String())
-	}
+	file.StringToAsciiFile("src/dev_tools/goMaker/results/codebase.json", cb.String())
 }

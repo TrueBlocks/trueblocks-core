@@ -45,6 +45,7 @@ func convertToDestPath(source, routeTag, typeTag string) string {
 	dest := strings.Replace(source, templateFolder, "", -1)
 	dest = strings.Replace(dest, ".tmpl", "", -1)
 	dest = strings.Replace(dest, "_type.go", "/"+typeTag+".go", -1)
+	dest = strings.Replace(dest, "_type.md", "/"+typeTag+".md", -1)
 	dest = strings.Replace(dest, "_route_", "/"+routeTag+"/", -1)
 	dest = strings.Replace(dest, "route.go", routeTag+".go", -1)
 	dest = strings.Replace(dest, "route.md", routeTag+".md", -1)
@@ -57,7 +58,11 @@ func convertToDestPath(source, routeTag, typeTag string) string {
 
 var templateFolder = "src/dev_tools/goMaker/templates"
 
-func snakeCase(s string) string {
+func SnakeCase(s string) string {
+	if len(s) < 2 {
+		return s
+	}
+
 	result := ""
 	toUpper := false
 	for _, c := range s {
@@ -72,5 +77,16 @@ func snakeCase(s string) string {
 			result += string(c)
 		}
 	}
-	return result
+	return strings.Replace(strings.ToLower(result[0:1])+result[1:], " ", "", -1)
+}
+
+func Pad(s string, width int) string {
+	return s + strings.Repeat(" ", width-len(s))
+}
+
+func Plural(s string) string {
+	if strings.HasSuffix(s, "s") {
+		return s
+	}
+	return s + "s"
 }

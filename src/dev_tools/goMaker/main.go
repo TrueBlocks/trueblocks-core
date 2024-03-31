@@ -41,6 +41,7 @@ var routeTemplates = []string{
 
 // typeTemplates are the templates for the data models
 var typeTemplates = []string{
+	"src_dev+tools_goMaker_templates_models_type.md.tmpl",
 	"src_apps_chifra_pkg_types_type.go.tmpl",
 	"src_apps_chifra_internal_route_types_type.go.tmpl",
 }

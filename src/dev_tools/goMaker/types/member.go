@@ -22,7 +22,17 @@ type Member struct {
 	IsPointer    bool        `json:"isPointer,omitempty" csv:"-"`
 	Proper       string      `json:"-" csv:"-"`
 	Class        string      `json:"-" csv:"-"`
+	stPtr        *Structure  `json:"-" csv:"-"`
 	templates    TemplateMap `json:"-" csv:"-"`
+}
+
+func (m *Member) String() string {
+	bytes, _ := json.MarshalIndent(m, "", "  ")
+	return string(bytes)
+}
+
+func (m *Member) SnakeCase() string {
+	return SnakeCase(m.Type)
 }
 
 func readMember(m *Member, data *any) (bool, error) {
@@ -42,11 +52,6 @@ func readMember(m *Member, data *any) (bool, error) {
 	m.Description = strings.Trim(m.Description, " ")
 
 	return true, nil
-}
-
-func (m *Member) String() string {
-	bytes, _ := json.MarshalIndent(m, "", "  ")
-	return string(bytes)
 }
 
 func (m Member) Validate() bool {
@@ -370,13 +375,6 @@ func (m *Member) UnmarshalCode() string {
 	return m.executeTemplate("unmarshalCode", tmpl)
 }
 
-func (m *Member) SnakeCase() string {
-	if len(m.Type) < 2 {
-		return ""
-	}
-	return strings.ToLower(m.Type[0:1]) + m.Type[1:]
-}
-
 func (m *Member) BaseType() string {
 	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + m.SnakeCase() + "\"")
 	f := fmt.Sprintf("\n          format: %s", m.Type)
@@ -395,4 +393,8 @@ func (m *Member) BaseType() string {
 		return "boolean"
 	}
 	return "string"
+}
+
+func (m *Member) TypeToGroup(t string) string {
+	return m.stPtr.TypeToGroup(strings.ToLower(t))
 }

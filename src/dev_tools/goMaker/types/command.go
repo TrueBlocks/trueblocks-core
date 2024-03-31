@@ -20,40 +20,46 @@ type Command struct {
 	Notes       []string    `json:"notes" csv:"notes"`
 	Aliases     []string    `json:"aliases" csv:"aliases"`
 	Hidden      []string    `json:"hidden" csv:"hidden"`
-	Produces    []string    `json:"produces" csv:"produces"`
+	Productions []string    `json:"productions" csv:"productions"`
 	Proper      string      `json:"proper" csv:"proper"`
 	Lower       string      `json:"lower" csv:"lower"`
-	cb          *CodeBase   `json:"-" csv:"-"`
+	cbPtr       *CodeBase   `json:"-" csv:"-"`
 	templates   TemplateMap `json:"-" csv:"-"`
 }
 
-func (c *Command) Produces1() string {
+func (c *Command) TypeToGroup(t string) string {
+	return c.cbPtr.TypeToGroup[t]
+}
+
+func (c *Command) ProducedByDescr() string {
 	g := strings.Replace(strings.ToLower(c.Group), " ", "", -1)
 	tmpl := fmt.Sprintf(" Corresponds to the <a href=\"/chifra/%s/#chifra-{{.Route}}\">chifra {{.Route}}</a> command line.", g)
 	types := []string{}
-	for i, p := range c.Produces {
-		ppp := strings.ToLower(p)
-		gg := c.cb.TypeToGroup[ppp]
+	for i, production := range c.Productions {
+		lowerProd := strings.ToLower(production)
+		groupProd := c.TypeToGroup(lowerProd)
 		if i > 0 {
-			if i == len(c.Produces)-1 {
+			if i == len(c.Productions)-1 {
 				types = append(types, " or ")
 			} else {
 				types = append(types, ", ")
 			}
 		}
-		types = append(types, c.executeTemplate("produces"+p, fmt.Sprintf("<a href=\"/data-model/%s/#%s\">%s</a>", gg, ppp, p)))
+		types = append(types, c.executeTemplate("produces"+production, fmt.Sprintf("<a href=\"/data-model/%s/#%s\">%s</a>", groupProd, lowerProd, production)))
 	}
 	return "Produces " + strings.Join(types, "") + " data." + c.executeTemplate("corresponds", tmpl)
 }
 
-func (c *Command) Produces2() string {
+func (c *Command) ProducedByList() string {
 	ret := []string{}
-	if len(c.Produces) == 1 {
-		ret = []string{fmt.Sprintf("                      $ref: \"#/components/schemas/%s\"", strings.ToLower(c.Produces[0][0:1])+c.Produces[0][1:])}
+	if len(c.Productions) == 1 {
+		snaked := SnakeCase(c.Productions[0])
+		ret = []string{fmt.Sprintf("                      $ref: \"#/components/schemas/%s\"", snaked)}
 	} else {
 		ret = append(ret, "                      oneOf:")
-		for _, p := range c.Produces {
-			s := fmt.Sprintf("                        - $ref: \"#/components/schemas/%s\"", strings.ToLower(p[0:1])+p[1:])
+		for _, production := range c.Productions {
+			snaked := SnakeCase(production)
+			s := fmt.Sprintf("                        - $ref: \"#/components/schemas/%s\"", snaked)
 			ret = append(ret, s)
 		}
 	}
@@ -108,18 +114,18 @@ func (c *Command) clean() {
 		} else if op.OptionType == "description" {
 			c.Description = op.Description
 		} else if op.IsHidden() {
-			op.cmd = c
+			op.cmdPtr = c
 			cleaned = append(cleaned, op)
 			hiddens = append(hiddens, op.LongName)
 		} else {
-			op.cmd = c
+			op.cmdPtr = c
 			cleaned = append(cleaned, op)
 		}
 	}
 	titleCaser := cases.Title(language.English)
 	c.Proper = titleCaser.String(c.Route)
 	c.Lower = strings.ToLower(c.Route)
-	c.Endpoint.cmd = c
+	c.Endpoint.cmdPtr = c
 	c.Options = cleaned
 	c.Notes = notes
 	c.Hidden = hiddens
@@ -814,63 +820,62 @@ func (op *Option) TestLog() string {
 	return op.executeTemplate("testLogs", tmpl)
 }
 
-func (cmd *Command) LowerGroup() string {
-	return strings.Replace(strings.ToLower(cmd.Group), " ", "", -1)
+func (c *Command) LowerGroup() string {
+	return strings.Replace(strings.ToLower(c.Group), " ", "", -1)
 }
 
-func (cmd *Command) IsRoute() bool {
-	return len(cmd.Route) > 0 && cmd.Route != "daemon" && cmd.Route != "explore"
+func (c *Command) IsRoute() bool {
+	return len(c.Route) > 0 && c.Route != "daemon" && c.Route != "explore"
 }
 
-func (cmd *Command) HasExample() bool {
-	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + cmd.Route + ".txt")
+func (c *Command) HasExample() bool {
+	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".txt")
 }
 
-func (cmd *Command) Example() string {
-	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+cmd.Route+".txt"), "\n\r\t")
+func (c *Command) Example() string {
+	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".txt"), "\n\r\t")
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
 	return strings.Trim(contents, "\n\r\t") + "\n"
 }
 
-func (cmd *Command) ReadmeName() string {
-	return cmd.Route + ".md"
+func (c *Command) ReadmeName() string {
+	return c.Route + ".md"
 }
 
-func (cmd *Command) HelpIntro() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + cmd.ReadmeName()
+func (c *Command) HelpIntro() string {
+	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
 	tmpl := file.AsciiFileToString(thePath)
-	return strings.Trim(cmd.executeTemplate("Intro", tmpl), "\r\n\t")
+	return strings.Trim(c.executeTemplate("Intro", tmpl), "\r\n\t")
 }
 
-func (cmd *Command) HelpText() string {
-	thePath := "src/dev_tools/goMaker/templates/readmes/" + cmd.ReadmeName() + ".tmp"
+func (c *Command) HelpText() string {
+	thePath := "src/dev_tools/goMaker/templates/readmes/" + c.ReadmeName() + ".tmp"
 	defer os.Remove(thePath)
-	utils.System("chifra " + cmd.Route + " --help 2>" + thePath)
+	utils.System("chifra " + c.Route + " --help 2>" + thePath)
 	helpText := strings.Trim(file.AsciiFileToString(thePath), "\r\n\t")
 	return helpText
 }
 
-func (cmd *Command) HelpDataModels() string {
-	if len(cmd.Produces) == 0 {
-		return "- none"
-	}
-
-	ret := []string{}
-	for _, p := range cmd.Produces {
-		ppp := strings.ToLower(p)
-		gg := cmd.cb.TypeToGroup[ppp]
-		ret = append(ret, "- ["+ppp+"](/data-model/"+gg+"/#"+ppp+")")
+func (c *Command) HelpDataModels() string {
+	ret := []string{"- none"}
+	for i, production := range c.Productions {
+		if i == 0 {
+			ret = []string{}
+		}
+		lowerProd := strings.ToLower(production)
+		groupProd := c.TypeToGroup(lowerProd)
+		ret = append(ret, "- ["+lowerProd+"](/data-model/"+groupProd+"/#"+lowerProd+")")
 	}
 	return strings.Join(ret, "\n")
 }
 
-func (cmd *Command) HelpLinks() string {
+func (c *Command) HelpLinks() string {
 	tmpl := ""
-	if cmd.Route == "daemon" {
+	if c.Route == "daemon" {
 		tmpl = `- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
 - no tests for this command`
-	} else if cmd.Route == "explore" {
+	} else if c.Route == "explore" {
 		tmpl = `- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.Tool}}.csv)`
@@ -879,20 +884,20 @@ func (cmd *Command) HelpLinks() string {
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.Tool}}.csv)`
 	}
-	return cmd.executeTemplate("Links", tmpl)
+	return c.executeTemplate("Links", tmpl)
 }
 
-func (cmd *Command) HelpNotes() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + cmd.ReadmeName()
+func (c *Command) HelpNotes() string {
+	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
 	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
 	if file.FileExists(thePath) {
 		tmpl := file.AsciiFileToString(thePath)
-		return "\n\n" + strings.Trim(cmd.executeTemplate("Notes", tmpl), "\r\n\t")
+		return "\n\n" + strings.Trim(c.executeTemplate("Notes", tmpl), "\r\n\t")
 	}
 	return ""
 }
 
-func (cmd *Command) ReadmeFooter() string {
+func (c *Command) ReadmeFooter() string {
 	thePath := "src/dev_tools/goMaker/templates/readme-intros/README.footer.md"
 	return "\n" + strings.Trim(file.AsciiFileToString(thePath), "\n\r\t")
 }

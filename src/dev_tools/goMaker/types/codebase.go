@@ -29,13 +29,10 @@ func (cb *CodeBase) summary(filter string) string {
 		if c.Route == "" {
 			continue
 		}
-		pad := func(s string, width int) string {
-			return s + strings.Repeat(" ", width-len(s))
-		}
 		if c.Endpoint.Group == filter {
 			descr := strings.ToLower(c.Endpoint.Description[0:1])
 			descr += strings.TrimSuffix(c.Endpoint.Description[1:], ".")
-			ret = append(ret, "    "+pad(c.Endpoint.ApiRoute, 14)+descr)
+			ret = append(ret, "    "+Pad(c.Endpoint.ApiRoute, 14)+descr)
 		}
 	}
 	return strings.Join(ret, "\n")
@@ -76,11 +73,11 @@ func (cb *CodeBase) Tags() string {
 	})
 
 	ret := []string{}
-	for _, cmd := range cb.Commands {
-		if cmd.Route == "" && cmd.Group != "" {
+	for _, c := range cb.Commands {
+		if c.Route == "" && c.Group != "" {
 			tmpl := `  - name: {{.Group}}
     description: {{.Description}}`
-			ret = append(ret, cmd.executeTemplate("tags", tmpl))
+			ret = append(ret, c.executeTemplate("tags", tmpl))
 		}
 	}
 	return strings.Join(ret, "\n")
@@ -88,4 +85,13 @@ func (cb *CodeBase) Tags() string {
 
 func (cb *CodeBase) Description() string {
 	return "\n" + strings.Trim(file.AsciiFileToString("src/dev_tools/goMaker/templates/api/description.txt"), "\n\t\r")
+}
+
+func (cb *CodeBase) RouteToGroup(route string) string {
+	for _, c := range cb.Commands {
+		if c.Route == route {
+			return strings.ToLower(SnakeCase(c.Group))
+		}
+	}
+	return ""
 }

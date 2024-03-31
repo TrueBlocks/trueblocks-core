@@ -32,12 +32,16 @@ type Option struct {
 	GoSdkType      string      `json:"go_sdk_type" csv:"go_sdk_type"`
 	GoOptionsType  string      `json:"go_options_type" csv:"go_options_type"`
 	templates      TemplateMap `json:"-" csv:"-"`
-	cmd            *Command    `json:"-" csv:"-"`
+	cmdPtr         *Command    `json:"-" csv:"-"`
 }
 
 func (op Option) String() string {
 	bytes, _ := json.MarshalIndent(op, "", "    ")
 	return string(bytes)
+}
+
+func (op *Option) SnakeCase() string {
+	return SnakeCase(op.LongName)
 }
 
 func (op Option) Validate() bool {
@@ -57,7 +61,7 @@ func (op *Option) IsHidden() bool {
 func (op *Option) toGoName() string {
 	ret := op.LongName
 	if len(op.LongName) >= 2 {
-		ret = strings.ToUpper(op.LongName[0:1]) + snakeCase(op.LongName)[1:]
+		ret = strings.ToUpper(op.LongName[0:1]) + SnakeCase(op.LongName)[1:]
 		if op.Generate == "config" {
 			ret = "Settings." + ret
 		}
@@ -153,14 +157,6 @@ func (op *Option) toGoSdkType() string {
 
 func (op *Option) JsonTag() string {
 	return "`json:\"" + op.SnakeCase() + ",omitempty\"`"
-}
-
-func (op *Option) SnakeCase() string {
-	ret := snakeCase(op.LongName)
-	if op.Generate == "config" {
-		ret = "Settings." + ret
-	}
-	return ret
 }
 
 func (op *Option) PyHotKey() string {
