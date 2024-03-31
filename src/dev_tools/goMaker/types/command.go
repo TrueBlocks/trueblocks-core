@@ -12,19 +12,19 @@ import (
 )
 
 type Command struct {
-	Route       string          `json:"route" csv:"route"`
-	Group       string          `json:"group" csv:"group"`
-	Description string          `json:"description" csv:"description"`
-	Endpoint    CmdLineEndpoint `json:"endpoint" csv:"endpoint"`
-	Options     []CmdLineOption `json:"options" csv:"options"`
-	Notes       []string        `json:"notes" csv:"notes"`
-	Aliases     []string        `json:"aliases" csv:"aliases"`
-	Hidden      []string        `json:"hidden" csv:"hidden"`
-	Produces    []string        `json:"produces" csv:"produces"`
-	Proper      string          `json:"proper" csv:"proper"`
-	Lower       string          `json:"lower" csv:"lower"`
-	cb          *CodeBase       `json:"-" csv:"-"`
-	templates   TemplateMap     `json:"-" csv:"-"`
+	Route       string      `json:"route" csv:"route"`
+	Group       string      `json:"group" csv:"group"`
+	Description string      `json:"description" csv:"description"`
+	Endpoint    Endpoint    `json:"endpoint" csv:"endpoint"`
+	Options     []Option    `json:"options" csv:"options"`
+	Notes       []string    `json:"notes" csv:"notes"`
+	Aliases     []string    `json:"aliases" csv:"aliases"`
+	Hidden      []string    `json:"hidden" csv:"hidden"`
+	Produces    []string    `json:"produces" csv:"produces"`
+	Proper      string      `json:"proper" csv:"proper"`
+	Lower       string      `json:"lower" csv:"lower"`
+	cb          *CodeBase   `json:"-" csv:"-"`
+	templates   TemplateMap `json:"-" csv:"-"`
 }
 
 func (c *Command) Produces1() string {
@@ -70,7 +70,7 @@ func (c *Command) HasEnums() bool {
 }
 
 func (c *Command) clean() {
-	cleaned := []CmdLineOption{}
+	cleaned := []Option{}
 	notes := []string{}
 	aliases := []string{}
 	hiddens := []string{}
@@ -126,7 +126,7 @@ func (c *Command) clean() {
 	c.Aliases = aliases
 }
 
-func (op *CmdLineOption) IsPositional() bool {
+func (op *Option) IsPositional() bool {
 	return op.OptionType == "positional"
 }
 
@@ -153,7 +153,7 @@ func (c *Command) Positionals() []string {
 	return ret
 }
 
-var globals = []CmdLineOption{
+var globals = []Option{
 	{LongName: "create", HotKey: "", OptionType: "switch", Description: "create a new item", DataType: "string"},
 	{LongName: "update", HotKey: "", OptionType: "switch", Description: "update an existing item", DataType: "string"},
 	{LongName: "delete", HotKey: "", OptionType: "switch", Description: "delete the item, but do not remove it", DataType: "string"},
@@ -214,11 +214,11 @@ func (c *Command) FirstPositional() string {
 	return ""
 }
 
-func (op *CmdLineOption) IsNullDefault2() bool {
+func (op *Option) IsNullDefault2() bool {
 	return op.IsNullDefault() || op.Generate == "config"
 }
 
-func (op *CmdLineOption) IsNullDefault() bool {
+func (op *Option) IsNullDefault() bool {
 	if len(op.DefVal) == 0 ||
 		op.DefVal == "0" ||
 		op.DefVal == "0.0" ||
@@ -265,7 +265,7 @@ func (c *Command) Enums1() string {
 }
 
 // Enum1 for tag {{.Enum1}}
-func (op *CmdLineOption) Enum1() string {
+func (op *Option) Enum1() string {
 	if !op.IsEnum {
 		return ""
 	}
@@ -296,7 +296,7 @@ func (c *Command) Enums2() string {
 }
 
 // Enum2 for tag {{.Enum2}}
-func (op *CmdLineOption) Enum2() string {
+func (op *Option) Enum2() string {
 	if !op.IsEnum {
 		return ""
 	}
@@ -374,7 +374,7 @@ func (c *Command) SdkFields() string {
 }
 
 // SdkField for tag {{.SdkField}}}
-func (op *CmdLineOption) SdkField() string {
+func (op *Option) SdkField() string {
 	tmpl := `	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
 `
 	return op.executeTemplate("sdkField", tmpl)
@@ -469,7 +469,7 @@ func (c *Command) SetOptions() string {
 }
 
 // SetOption for tag {{.SetOption}}
-func (op *CmdLineOption) SetOption() string {
+func (op *Option) SetOption() string {
 	ret := ""
 	if !op.IsPositional() && op.OptionType != "alias" {
 		tmpl := `[{ROUTE}]Cmd.Flags().{{.CobraType}}VarP(&[{ROUTE}]Pkg.GetOptions().{{.GoName}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, {{.CobraDescription}})`
@@ -479,24 +479,24 @@ func (op *CmdLineOption) SetOption() string {
 	return ret
 }
 
-func (op *CmdLineOption) CobraType() string {
+func (op *Option) CobraType() string {
 	m := map[string]string{
-		"<string>":     "String",
 		"<address>":    "String",
-		"<uint64>":     "Uint64",
 		"<blknum>":     "Uint64",
-		"<double>":     "Float64",
-		"list<addr>":   "StringSlice",
-		"list<topic>":  "StringSlice",
-		"list<string>": "StringSlice",
-		"list<enum>":   "StringSlice",
-		"enum":         "String",
 		"<boolean>":    "Bool",
+		"<double>":     "Float64",
+		"<string>":     "String",
+		"<uint64>":     "Uint64",
+		"enum":         "String",
+		"list<addr>":   "StringSlice",
+		"list<enum>":   "StringSlice",
+		"list<string>": "StringSlice",
+		"list<topic>":  "StringSlice",
 	}
 	return m[op.DataType]
 }
 
-func (op *CmdLineOption) CobraDescription() string {
+func (op *Option) CobraDescription() string {
 	d := op.Description
 	if op.IsHidden() {
 		d += " (hidden)"
@@ -554,7 +554,7 @@ func (c *Command) DefaultsApi() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *CmdLineOption) DefaultApi() string {
+func (op *Option) DefaultApi() string {
 	if op.IsNullDefault() {
 		return ""
 	}
@@ -619,7 +619,7 @@ func (c *Command) GoDefs() string {
 	return strings.Join(ret, "\n")
 }
 
-func (op *CmdLineOption) GoDef() string {
+func (op *Option) GoDef() string {
 	if op.IsNullDefault2() {
 		return ""
 	}
@@ -647,7 +647,7 @@ func (c *Command) OptFields() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *CmdLineOption) OptField() string {
+func (op *Option) OptField() string {
 	if strings.Contains(op.toGoName(), "Settings.") {
 		return ""
 	}
@@ -662,7 +662,7 @@ func (op *CmdLineOption) OptField() string {
 	return ret
 }
 
-func (op *CmdLineOption) DescrCaps() string {
+func (op *Option) DescrCaps() string {
 	return strings.ToUpper(op.Description[0:1]) + op.Description[1:]
 }
 
@@ -724,7 +724,7 @@ func (c *Command) RequestOpts() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *CmdLineOption) RequestOpt() string {
+func (op *Option) RequestOpt() string {
 	tmpl := `		case "{{.SnakeCase}}":`
 	if op.Generate == "config" {
 		tmpl = `	case "{{.SnakeCase}}":
@@ -768,22 +768,22 @@ func (c *Command) TestLogs() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *CmdLineOption) IsStringLike() bool {
+func (op *Option) IsStringLike() bool {
 	return strings.HasPrefix(op.DataType, "list") ||
 		strings.HasPrefix(op.DataType, "enum") ||
 		op.DataType == "<string>" ||
 		op.DataType == "<address>"
 }
 
-func (op *CmdLineOption) IsBool() bool {
+func (op *Option) IsBool() bool {
 	return op.DataType == "<boolean>"
 }
 
-func (op *CmdLineOption) IsFloat() bool {
+func (op *Option) IsFloat() bool {
 	return op.DataType == "<double>"
 }
 
-func (op *CmdLineOption) TestLog() string {
+func (op *Option) TestLog() string {
 	if op.Generate == "config" {
 		return ""
 	}
@@ -873,11 +873,11 @@ func (cmd *Command) HelpLinks() string {
 	} else if cmd.Route == "explore" {
 		tmpl = `- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.ToolName}}.csv)`
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.Tool}}.csv)`
 	} else {
 		tmpl = `- [api docs](/api/#operation/{{.LowerGroup}}-{{.Route}})
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.ToolName}}.csv)`
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.Tool}}.csv)`
 	}
 	return cmd.executeTemplate("Links", tmpl)
 }

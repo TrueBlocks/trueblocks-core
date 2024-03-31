@@ -1,8 +1,8 @@
 num,group,is_visible,is_visible_docs,folder,api_route,tool,summary,usage,capabilities,description
 11,Accounts,false,true,,,,,,,Access and cache transactional data
-12,Accounts,true,true,apps,list,acctExport --appearances,List transactions,[flags] <address> [address...],default|,List every appearance of an address anywhere on the chain.
+12,Accounts,true,true,apps,list,acctExport,List transactions,[flags] <address> [address...],default|,List every appearance of an address anywhere on the chain.
 13,Accounts,true,true,apps,export,acctExport,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|,Export full details of transactions for one or more addresses.
-14,Accounts,true,true,apps,monitors,acctExport --appearances,Manage monitors,[flags] <address> [address...],default|caching|,Add&#44; remove&#44; clean&#44; and list address monitors.
+14,Accounts,true,true,apps,monitors,acctExport,Manage monitors,[flags] <address> [address...],default|caching|,Add&#44; remove&#44; clean&#44; and list address monitors.
 15,Accounts,true,true,tools,names,ethNames,Names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
 16,Accounts,true,true,tools,abis,grabABI,ABIs,[flags] <address> [address...],default|caching|,Fetches the ABI for a smart contract.
 

@@ -1,10 +1,11 @@
 package types
 
 import (
+	"encoding/json"
 	"strings"
 )
 
-type CmdLineOption struct {
+type Option struct {
 	Num            string      `json:"num" csv:"num"`
 	Folder         string      `json:"folder" csv:"folder"`
 	Tags           string      `json:"tags" csv:"tags"`
@@ -34,64 +35,67 @@ type CmdLineOption struct {
 	cmd            *Command    `json:"-" csv:"-"`
 }
 
-func (op CmdLineOption) Validate() bool {
+func (op Option) String() string {
+	bytes, _ := json.MarshalIndent(op, "", "    ")
+	return string(bytes)
+}
+
+func (op Option) Validate() bool {
 	return op.Tags != "Dev"
 }
 
-func readCmdOption(op *CmdLineOption, data *any) (bool, error) {
+func readCmdOption(op *Option, data *any) (bool, error) {
 	op.Description = strings.ReplaceAll(op.Description, "&#44;", ",")
 	return true, nil
 }
 
-func (op *CmdLineOption) IsHidden() bool {
+func (op *Option) IsHidden() bool {
 	return !op.IsVisibleDocs ||
 		(!op.IsRequired && !op.IsCustomizable && !op.IsVisible && op.IsVisibleDocs)
 }
 
-func (op *CmdLineOption) toGoName() string {
-	if len(op.LongName) < 2 {
-		return op.LongName
+func (op *Option) toGoName() string {
+	ret := op.LongName
+	if len(op.LongName) >= 2 {
+		ret = strings.ToUpper(op.LongName[0:1]) + snakeCase(op.LongName)[1:]
+		if op.Generate == "config" {
+			ret = "Settings." + ret
+		}
 	}
-
-	ret := strings.ToUpper(op.LongName[0:1]) + snakeCase(op.LongName)[1:]
-	if op.Generate == "config" {
-		ret = "Settings." + ret
-	}
-
 	return ret
 }
 
-func (op *CmdLineOption) toGoType() string {
+func (op *Option) toGoType() string {
 	dt := op.DataType
-	if len(dt) < 2 {
-		return dt
+	if len(dt) >= 2 {
+		isList := strings.HasPrefix(dt, "list")
+		isEnum := strings.Contains(dt, "enum[")
+		dt = strings.Replace(dt, "list", "", -1)
+		if isEnum {
+			dt = "<string>"
+		}
+		m := map[string]string{
+			"<addr>":     "base.Address",
+			"<address>":  "base.Address",
+			"<blknum>":   "base.Blknum",
+			"<boolean>":  "bool",
+			"<double>":   "float64",
+			"<fourbyte>": "base.Fourbyte",
+			"<string>":   "string",
+			"<topic>":    "base.Hash",
+			"<tx_id>":    "base.Blknum",
+			"<uint64>":   "uint64",
+		}
+		if isList {
+			dt = "[]" + m[dt]
+		} else {
+			dt = m[dt]
+		}
 	}
-
-	isList := strings.HasPrefix(dt, "list")
-	isEnum := strings.Contains(dt, "enum[")
-	dt = strings.Replace(dt, "list", "", -1)
-	if isEnum {
-		dt = "<string>"
-	}
-	m := map[string]string{
-		"<addr>":     "base.Address",
-		"<address>":  "base.Address",
-		"<blknum>":   "base.Blknum",
-		"<tx_id>":    "base.Blknum",
-		"<boolean>":  "bool",
-		"<double>":   "float64",
-		"<string>":   "string",
-		"<uint64>":   "uint64",
-		"<fourbyte>": "base.Fourbyte",
-		"<topic>":    "base.Hash",
-	}
-	if isList {
-		return "[]" + m[dt]
-	}
-	return m[dt]
+	return dt
 }
 
-func (op *CmdLineOption) toGoSdkName() string {
+func (op *Option) toGoSdkName() string {
 	ret := op.toGoName()
 	if ret == "Blocks" {
 		ret = "BlockIds"
@@ -102,7 +106,7 @@ func (op *CmdLineOption) toGoSdkName() string {
 	return ret
 }
 
-func (op *CmdLineOption) toGoOptionsType() string {
+func (op *Option) toGoOptionsType() string {
 	if strings.HasPrefix(op.DataType, "enum") {
 		return "string"
 	}
@@ -115,7 +119,7 @@ func (op *CmdLineOption) toGoOptionsType() string {
 	return ret
 }
 
-func (op *CmdLineOption) toGoSdkType() string {
+func (op *Option) toGoSdkType() string {
 	dt := op.DataType
 	if len(dt) < 2 {
 		return dt
@@ -132,13 +136,13 @@ func (op *CmdLineOption) toGoSdkType() string {
 		"<addr>":     "string",
 		"<address>":  "base.Address",
 		"<blknum>":   "base.Blknum",
-		"<tx_id>":    "string",
 		"<boolean>":  "bool",
 		"<double>":   "float64",
-		"<string>":   "string",
-		"<uint64>":   "uint64",
 		"<fourbyte>": "string",
+		"<string>":   "string",
 		"<topic>":    "string",
+		"<tx_id>":    "string",
+		"<uint64>":   "uint64",
 	}
 	if isList {
 		m["<blknum>"] = "string"
@@ -147,11 +151,11 @@ func (op *CmdLineOption) toGoSdkType() string {
 	return m[dt]
 }
 
-func (op *CmdLineOption) JsonTag() string {
+func (op *Option) JsonTag() string {
 	return "`json:\"" + op.SnakeCase() + ",omitempty\"`"
 }
 
-func (op *CmdLineOption) SnakeCase() string {
+func (op *Option) SnakeCase() string {
 	ret := snakeCase(op.LongName)
 	if op.Generate == "config" {
 		ret = "Settings." + ret
@@ -159,18 +163,18 @@ func (op *CmdLineOption) SnakeCase() string {
 	return ret
 }
 
-func (op *CmdLineOption) PyHotKey() string {
+func (op *Option) PyHotKey() string {
 	if len(op.HotKey) == 0 {
 		return ""
 	}
 	return "-" + op.HotKey
 }
 
-func (op *CmdLineOption) CmdDefault() string {
+func (op *Option) CmdDefault() string {
 	return strings.Replace(op.Default(), "utils.NOPOS", "0", -1)
 }
 
-func (op *CmdLineOption) Default() string {
+func (op *Option) Default() string {
 	if op.IsArray || strings.HasPrefix(op.DataType, "list") {
 		return "nil"
 	}
@@ -195,21 +199,21 @@ func (op *CmdLineOption) Default() string {
 	return op.DefVal
 }
 
-func (op *CmdLineOption) EnumName() string {
+func (op *Option) EnumName() string {
 	if len(op.ApiRoute) < 2 {
 		return ""
 	}
 	return strings.ToUpper(op.ApiRoute[0:1]) + op.ApiRoute[1:] + op.GoName
 }
 
-func (op *CmdLineOption) EnumTag() string {
+func (op *Option) EnumTag() string {
 	if len(op.ApiRoute) < 2 || len(op.GoSdkName) < 2 {
 		return ""
 	}
 	return strings.ToUpper(op.ApiRoute[0:1]) + op.GoSdkName[0:1]
 }
 
-func (op *CmdLineOption) EnumNone() string {
+func (op *Option) EnumNone() string {
 	if len(op.ApiRoute) < 3 || len(op.GoSdkName) < 2 {
 		return ""
 	}
@@ -221,7 +225,7 @@ func (op *CmdLineOption) EnumNone() string {
 	return "No" + tag
 }
 
-func (op *CmdLineOption) EnumDef() string {
+func (op *Option) EnumDef() string {
 	tag := op.EnumTag()
 	some := []string{}
 	all := []string{}
@@ -250,7 +254,7 @@ func (op *CmdLineOption) EnumDef() string {
 	return strings.Join(ret, "\n")
 }
 
-func (op *CmdLineOption) EnumMap() string {
+func (op *Option) EnumMap() string {
 	ret := []string{}
 	for _, e := range op.Enums {
 		if e == "some" || e == "all" {
@@ -262,11 +266,11 @@ func (op *CmdLineOption) EnumMap() string {
 	return strings.Join(ret, "\n")
 }
 
-func (op *CmdLineOption) Lower() string {
+func (op *Option) Lower() string {
 	return strings.ToLower(op.LongName)
 }
 
-func (op *CmdLineOption) EnumList() string {
+func (op *Option) EnumList() string {
 	ret := []string{}
 	for _, e := range op.Enums {
 		if e == "some" || e == "all" {
@@ -277,7 +281,7 @@ func (op *CmdLineOption) EnumList() string {
 	return op.EnumName() + "{" + strings.Join(ret, ", ") + "}"
 }
 
-func (op *CmdLineOption) HasEnumAll() bool {
+func (op *Option) HasEnumAll() bool {
 	for _, e := range op.Enums {
 		if e == "all" {
 			return true
@@ -286,7 +290,7 @@ func (op *CmdLineOption) HasEnumAll() bool {
 	return false
 }
 
-func (op *CmdLineOption) PreSwitch() string {
+func (op *Option) PreSwitch() string {
 	if !op.HasEnumAll() {
 		return ""
 	}
@@ -300,7 +304,7 @@ func (op *CmdLineOption) PreSwitch() string {
 	return op.executeTemplate("preSwitch", tmpl)
 }
 
-func (op *CmdLineOption) SomeCases() string {
+func (op *Option) SomeCases() string {
 	if !op.HasEnumAll() {
 		return ""
 	}
@@ -312,7 +316,7 @@ func (op *CmdLineOption) SomeCases() string {
 	return op.executeTemplate("someCases", tmpl)
 }
 
-func (op *CmdLineOption) EnumCases() string {
+func (op *Option) EnumCases() string {
 	ret := []string{}
 	for _, e := range op.Enums {
 		if e == "some" || e == "all" {
@@ -326,15 +330,15 @@ func (op *CmdLineOption) EnumCases() string {
 	return strings.Join(ret, "\n")
 }
 
-func (op *CmdLineOption) IsConfigurableAddr() bool {
+func (op *Option) IsConfigurableAddr() bool {
 	return op.GoName == "Publisher"
 }
 
-func (op *CmdLineOption) IsSpecialAddr() bool {
+func (op *Option) IsSpecialAddr() bool {
 	return op.GoName == "ProxyFor" || op.IsConfigurableAddr() || op.GoName == "Autoname"
 }
 
-func (op *CmdLineOption) EnsConvert() string {
+func (op *Option) EnsConvert() string {
 	ret := ""
 
 	if op.DataType == "<address>" {
@@ -354,7 +358,7 @@ func (op *CmdLineOption) EnsConvert() string {
 	return ret
 }
 
-func (op *CmdLineOption) DocType() string {
+func (op *Option) DocType() string {
 	if op.DataType == "bool" || op.DataType == "<boolean>" {
 		return "boolean"
 	} else if op.DataType == "list<addr>" {

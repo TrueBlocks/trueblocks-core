@@ -45,12 +45,12 @@ func LoadDefinitions() (CodeBase, error) {
 // This will also eventually carry the data types.
 func LoadCodebase(thePath string) (CodeBase, error) {
 	var cb CodeBase
-	options, err := LoadCsv[CmdLineOption, any](thePath+"cmd-line-options.csv", readCmdOption, nil)
+	options, err := LoadCsv[Option, any](thePath+"cmd-line-options.csv", readCmdOption, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
 
-	endpoints, err := LoadCsv[CmdLineEndpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
+	endpoints, err := LoadCsv[Endpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
@@ -143,7 +143,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 	return nil
 }
 
-func (cb *CodeBase) FinishLoad(options []CmdLineOption, endpoints []CmdLineEndpoint, structMap map[string]Structure) {
+func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap map[string]Structure) {
 	theMap := make(map[string]Command)
 
 	producesMap := make(map[string][]string)

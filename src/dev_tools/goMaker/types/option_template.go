@@ -10,7 +10,7 @@ import (
 // executeTemplate executes the template with the given name and returns
 // the result. It stores the parsed template in the templates map to avoid
 // parsing it more than once.
-func (op *CmdLineOption) executeTemplate(name, tmplCode string) string {
+func (op *Option) executeTemplate(name, tmplCode string) string {
 	if op.templates == nil {
 		op.templates = make(map[string]*template.Template)
 	}

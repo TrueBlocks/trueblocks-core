@@ -5,9 +5,7 @@ import (
 	"strings"
 )
 
-// CmdLineEndpoint carries some interesting information about a command such
-// capabilities and the usage string. Similar to the command's description option.
-type CmdLineEndpoint struct {
+type Endpoint struct {
 	Num           string   `json:"num" csv:"num"`
 	Group         string   `json:"group" csv:"group"`
 	IsVisible     string   `json:"is_visible" csv:"is_visible"`
@@ -22,20 +20,16 @@ type CmdLineEndpoint struct {
 	cmd           *Command `json:"-" csv:"-"`
 }
 
-func (c CmdLineEndpoint) Validate() bool {
-	return true
-}
-
-func (c CmdLineEndpoint) String() string {
+func (c Endpoint) String() string {
 	bytes, _ := json.MarshalIndent(c, "", "    ")
 	return string(bytes)
 }
 
-func readCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {
-	cmd.Description = strings.ReplaceAll(cmd.Description, "&#44;", ",")
-	return true, nil
+func (c Endpoint) Validate() bool {
+	return true
 }
 
-func (c *CmdLineEndpoint) ToolName() string {
-	return strings.Split(c.Tool, " ")[0]
+func readCmdEndpoint(cmd *Endpoint, data *any) (bool, error) {
+	cmd.Description = strings.ReplaceAll(cmd.Description, "&#44;", ",")
+	return true, nil
 }
