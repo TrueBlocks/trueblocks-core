@@ -34,9 +34,9 @@ Notes:
 
 Data models produced by this tool:
 
-- [status](/data-model/admin/#status)
 - [cacheitem](/data-model/admin/#cacheitem)
 - [chain](/data-model/admin/#chain)
+- [status](/data-model/admin/#status)
 
 ### Other Options
 
@@ -56,4 +56,3 @@ of any line makes it a comment.
 **Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
-

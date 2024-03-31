@@ -886,18 +886,13 @@ func (cmd *Command) HelpNotes() string {
 	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + cmd.ReadmeName()
 	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
 	if file.FileExists(thePath) {
-		tmpl := "\n" + strings.Trim(file.AsciiFileToString(thePath), "\r\n\t")
-		return "\n" + strings.Trim(cmd.executeTemplate("Notes", tmpl), "\r\n\t")
+		tmpl := file.AsciiFileToString(thePath)
+		return "\n\n" + strings.Trim(cmd.executeTemplate("Notes", tmpl), "\r\n\t")
 	}
 	return ""
 }
 
-func (cmd *Command) HelpConfig() string {
-	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + cmd.ReadmeName()
-	thePath = strings.Replace(thePath, ".md", ".config.md", -1)
-	if file.FileExists(thePath) {
-		tmpl := "\n" + strings.Trim(file.AsciiFileToString(thePath), "\r\n\t")
-		return "\n" + strings.Trim(cmd.executeTemplate("Config", tmpl), "\r\n\t") + "\n"
-	}
-	return ""
+func (cmd *Command) ReadmeFooter() string {
+	thePath := "src/dev_tools/goMaker/templates/readme-intros/README.footer.md"
+	return "\n" + strings.Trim(file.AsciiFileToString(thePath), "\n\r\t")
 }

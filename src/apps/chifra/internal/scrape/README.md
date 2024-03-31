@@ -38,8 +38,8 @@ Notes:
 
 Data models produced by this tool:
 
-- [manifest](/data-model/admin/#manifest)
 - [chunkrecord](/data-model/admin/#chunkrecord)
+- [manifest](/data-model/admin/#manifest)
 
 ### configuration
 
@@ -48,14 +48,14 @@ Each of the following additional configurable command line options are available
 **Configuration file:** `trueBlocks.toml`  
 **Configuration group:** `[scrape.<chain>]`  
 
-| Item               | Type         | Default      | Description / Default |
-| ------------------ | ------------ | ------------ | --------- |
-| appsPerChunk       | uint64       | 2000000      | the number of appearances to build into a chunk before consolidating it |
-| snapToGrid         | uint64       | 250000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| firstSnap          | uint64       | 2000000      | the first block at which snap_to_grid is enabled |
-| unripeDist         | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
-| channelCount       | uint64       | 20           | number of concurrent processing channels |
-| allowMissing       | bool         | false        | do not report errors for blockchains that contain blocks with zero addresses |
+| Item         | Type   | Default | Description / Default                                                                                                    |
+| ------------ | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| appsPerChunk | uint64 | 2000000 | the number of appearances to build into a chunk before consolidating it                                                  |
+| snapToGrid   | uint64 | 250000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| firstSnap    | uint64 | 2000000 | the first block at which snap_to_grid is enabled                                                                         |
+| unripeDist   | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
+| channelCount | uint64 | 20      | number of concurrent processing channels                                                                                 |
+| allowMissing | bool   | false   | do not report errors for blockchains that contain blocks with zero addresses                                             |
 
 Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
@@ -119,4 +119,3 @@ of any line makes it a comment.
 **Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
-

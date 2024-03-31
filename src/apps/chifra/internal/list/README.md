@@ -44,9 +44,9 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [monitor](/data-model/accounts/#monitor)
 - [appearancecount](/data-model/accounts/#appearancecount)
 - [bounds](/data-model/accounts/#bounds)
+- [monitor](/data-model/accounts/#monitor)
 
 ### Other Options
 
@@ -66,4 +66,3 @@ of any line makes it a comment.
 **Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
-

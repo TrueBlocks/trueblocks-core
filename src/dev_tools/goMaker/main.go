@@ -35,6 +35,7 @@ var routeTemplates = []string{
 	"src_apps_chifra_internal_route_output.go.tmpl",
 	"src_apps_chifra_internal_route_options.go.tmpl",
 	"src_apps_chifra_internal_route_doc.go.tmpl",
+	"src_apps_chifra_internal_route_README.md.tmpl",
 	"src_apps_chifra_sdk_route.go.tmpl",
 }
 

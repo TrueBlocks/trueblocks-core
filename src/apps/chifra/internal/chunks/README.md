@@ -1,6 +1,6 @@
 ## chifra chunks
 
-The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
+The `chifra chunks` routine provides tools for interacting with, checking the validity of, cleaning up,
 and analyzing the Unchained Index. It provides options to list pins, the Manifest, summary data
 on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
 tool will eventually allow users to clean their local index, clean their remote index, study
@@ -51,15 +51,15 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [manifest](/data-model/admin/#manifest)
-- [chunkrecord](/data-model/admin/#chunkrecord)
-- [chunkindex](/data-model/admin/#chunkindex)
-- [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkaddress](/data-model/admin/#chunkaddress)
-- [ipfspin](/data-model/admin/#ipfspin)
-- [chunkstats](/data-model/admin/#chunkstats)
-- [reportcheck](/data-model/admin/#reportcheck)
+- [chunkbloom](/data-model/admin/#chunkbloom)
+- [chunkindex](/data-model/admin/#chunkindex)
 - [chunkpinreport](/data-model/admin/#chunkpinreport)
+- [chunkrecord](/data-model/admin/#chunkrecord)
+- [chunkstats](/data-model/admin/#chunkstats)
+- [ipfspin](/data-model/admin/#ipfspin)
+- [manifest](/data-model/admin/#manifest)
+- [reportcheck](/data-model/admin/#reportcheck)
 
 ### Other Options
 
@@ -79,4 +79,3 @@ of any line makes it a comment.
 **Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
-

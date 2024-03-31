@@ -59,13 +59,13 @@ Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
-- [withdrawal](/data-model/chaindata/#withdrawal)
+- [blockcount](/data-model/chaindata/#blockcount)
 - [log](/data-model/chaindata/#log)
-- [trace](/data-model/chaindata/#trace)
 - [logfilter](/data-model/chaindata/#logfilter)
+- [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [blockcount](/data-model/chaindata/#blockcount)
+- [withdrawal](/data-model/chaindata/#withdrawal)
 
 ### Other Options
 
@@ -85,4 +85,3 @@ of any line makes it a comment.
 **Note:** If you use `--output --append` option and at the same time the `--file` option, you may not switch
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
-

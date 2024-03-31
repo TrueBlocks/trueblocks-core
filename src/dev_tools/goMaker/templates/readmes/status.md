@@ -43,4 +43,3 @@ Links:
 - [api docs](/api/#operation/admin-status)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/status)
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/cacheStatus.csv)
-

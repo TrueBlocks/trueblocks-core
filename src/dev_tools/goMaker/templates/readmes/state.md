@@ -53,4 +53,3 @@ Links:
 - [api docs](/api/#operation/chainstate-state)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getState.csv)
-
