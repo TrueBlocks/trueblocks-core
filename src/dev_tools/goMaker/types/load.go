@@ -150,19 +150,20 @@ func (cb *CodeBase) FinishLoad(options []CmdLineOption, endpoints []CmdLineEndpo
 
 	// Create the structure array (and sort it by DocRoute) from the map
 	cb.Structures = make([]Structure, 0, len(structMap))
-	for _, value := range structMap {
-		cb.Structures = append(cb.Structures, value)
-		producers := strings.Split(strings.Replace(value.DocProducer, " ", "", -1), ",")
+	for _, st := range structMap {
+		cb.Structures = append(cb.Structures, st)
+		producers := strings.Split(strings.Replace(st.DocProducer, " ", "", -1), ",")
 		for _, producer := range producers {
-			producesMap[producer] = append(producesMap[producer], value.Class)
+			producesMap[producer] = append(producesMap[producer], st.Class)
 		}
 		if cb.TypeToGroup == nil {
 			cb.TypeToGroup = make(map[string]string)
 		}
-		dg := strings.Split(value.DocGroup, "-")
+		dg := strings.Split(st.DocGroup, "-")
 		if len(dg) > 1 {
 			ddg := strings.ToLower(dg[1])
-			cb.TypeToGroup[strings.ToLower(value.Name)] = strings.ToLower(strings.Replace(ddg, " ", "", -1))
+			ddg = strings.Replace(ddg, " ", "", -1)
+			cb.TypeToGroup[strings.ToLower(st.Name)] = ddg
 		}
 	}
 	sort.Slice(cb.Structures, func(i, j int) bool {

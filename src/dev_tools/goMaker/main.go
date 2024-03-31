@@ -22,12 +22,14 @@ var cbTemplates = []string{
 	"src_apps_chifra_cmd_helpfile.go.tmpl",
 	"src_apps_chifra_pkg_version_string.go.tmpl",
 	"docs_content_api_openapi.yaml.tmpl",
+	"src_dev+tools_goMaker_templates_readmes_chifra.md.tmpl",
 }
 
 // routeTemplates are the templates for the routes
 var routeTemplates = []string{
+	"src_dev+tools_goMaker_templates_readmes_route.md.tmpl",
 	"sdk_go_route.go.tmpl",
-	"sdk_python_src__route.py.tmpl",
+	"sdk_python_src_+route.py.tmpl",
 	// "sdk_typescript_src_paths_route.ts.tmpl",
 	"src_apps_chifra_cmd_route.go.tmpl",
 	"src_apps_chifra_internal_route_output.go.tmpl",

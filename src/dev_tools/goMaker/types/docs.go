@@ -7,13 +7,13 @@ import (
 )
 
 func (c *Command) PkgDoc() string {
-	docsPath := "docs/templates/readme-intros/" + strings.ToLower(c.Group) + "-" + c.Route + ".md"
+	docsPath := "src/dev_tools/goMaker/templates/readme-intros/" + c.Route + ".md"
 	docsPath = strings.ReplaceAll(docsPath, " ", "")
 	contents := file.AsciiFileToString(docsPath)
 	contents = strings.ReplaceAll(contents, "`", "")
 	contents = strings.ReplaceAll(contents, "\n", " ")
 	contents = strings.ReplaceAll(contents, "  ", " ")
-	contents = strings.ReplaceAll(contents, "[{NAME}]", "chifra "+c.Route)
+	contents = strings.ReplaceAll(contents, "{{.Route}}", c.Route)
 	sentences := strings.Split(contents, ".")
 	return "// " + strings.Join(sentences, ".")
 }

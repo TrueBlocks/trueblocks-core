@@ -12,7 +12,7 @@ type CmdLineEndpoint struct {
 	Group         string   `json:"group" csv:"group"`
 	IsVisible     string   `json:"is_visible" csv:"is_visible"`
 	IsVisibleDocs string   `json:"is_visible_docs" csv:"is_visible_docs"`
-	ApiGroup      string   `json:"api_group" csv:"api_group"`
+	Folder        string   `json:"folder" csv:"folder"`
 	ApiRoute      string   `json:"api_route" csv:"api_route"`
 	Tool          string   `json:"tool" csv:"tool"`
 	Summary       string   `json:"summary" csv:"summary"`
@@ -34,4 +34,8 @@ func (c CmdLineEndpoint) String() string {
 func readCmdEndpoint(cmd *CmdLineEndpoint, data *any) (bool, error) {
 	cmd.Description = strings.ReplaceAll(cmd.Description, "&#44;", ",")
 	return true, nil
+}
+
+func (c *CmdLineEndpoint) ToolName() string {
+	return strings.Split(c.Tool, " ")[0]
 }

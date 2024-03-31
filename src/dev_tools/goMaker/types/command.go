@@ -2,9 +2,11 @@ package types
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -828,4 +830,74 @@ func (cmd *Command) Example() string {
 	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+cmd.Route+".txt"), "\n\r\t")
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
 	return strings.Trim(contents, "\n\r\t") + "\n"
+}
+
+func (cmd *Command) ReadmeName() string {
+	return cmd.Route + ".md"
+}
+
+func (cmd *Command) HelpIntro() string {
+	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + cmd.ReadmeName()
+	tmpl := file.AsciiFileToString(thePath)
+	return strings.Trim(cmd.executeTemplate("Intro", tmpl), "\r\n\t")
+}
+
+func (cmd *Command) HelpText() string {
+	thePath := "src/dev_tools/goMaker/templates/readmes/" + cmd.ReadmeName()
+	utils.System("chifra " + cmd.Route + " --help 2>" + thePath)
+	helpText := strings.Trim(file.AsciiFileToString(thePath), "\r\n\t")
+	os.Remove(thePath)
+	return helpText
+}
+
+func (cmd *Command) HelpDataModels() string {
+	if len(cmd.Produces) == 0 {
+		return "- none"
+	}
+
+	ret := []string{}
+	for _, p := range cmd.Produces {
+		ppp := strings.ToLower(p)
+		gg := cmd.cb.TypeToGroup[ppp]
+		ret = append(ret, "- ["+ppp+"](/data-model/"+gg+"/#"+ppp+")")
+	}
+	return strings.Join(ret, "\n")
+}
+
+func (cmd *Command) HelpLinks() string {
+	tmpl := ""
+	if cmd.Route == "daemon" {
+		tmpl = `- no api for this command
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
+- no tests for this command`
+	} else if cmd.Route == "explore" {
+		tmpl = `- no api for this command
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.ToolName}}.csv)`
+	} else {
+		tmpl = `- [api docs](/api/#operation/{{.LowerGroup}}-{{.Route}})
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.ToolName}}.csv)`
+	}
+	return cmd.executeTemplate("Links", tmpl)
+}
+
+func (cmd *Command) HelpNotes() string {
+	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + cmd.ReadmeName()
+	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
+	if file.FileExists(thePath) {
+		tmpl := "\n" + strings.Trim(file.AsciiFileToString(thePath), "\r\n\t")
+		return "\n" + strings.Trim(cmd.executeTemplate("Notes", tmpl), "\r\n\t")
+	}
+	return ""
+}
+
+func (cmd *Command) HelpConfig() string {
+	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + cmd.ReadmeName()
+	thePath = strings.Replace(thePath, ".md", ".config.md", -1)
+	if file.FileExists(thePath) {
+		tmpl := "\n" + strings.Trim(file.AsciiFileToString(thePath), "\r\n\t")
+		return "\n" + strings.Trim(cmd.executeTemplate("Config", tmpl), "\r\n\t") + "\n"
+	}
+	return ""
 }

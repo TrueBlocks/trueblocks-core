@@ -6,7 +6,7 @@ import (
 
 type CmdLineOption struct {
 	Num            string      `json:"num" csv:"num"`
-	Group          string      `json:"group" csv:"group"`
+	Folder         string      `json:"folder" csv:"folder"`
 	Tags           string      `json:"tags" csv:"tags"`
 	ApiRoute       string      `json:"api_route" csv:"api_route"`
 	Tool           string      `json:"tool" csv:"tool"`

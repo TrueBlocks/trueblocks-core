@@ -1,4 +1,4 @@
-num,group,is_visible,is_visible_docs,api_group,api_route,tool,summary,usage,capabilities,description
+num,group,is_visible,is_visible_docs,folder,api_route,tool,summary,usage,capabilities,description
 11,Accounts,false,true,,,,,,,Access and cache transactional data
 12,Accounts,true,true,apps,list,acctExport --appearances,List transactions,[flags] <address> [address...],default|,List every appearance of an address anywhere on the chain.
 13,Accounts,true,true,apps,export,acctExport,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|,Export full details of transactions for one or more addresses.
