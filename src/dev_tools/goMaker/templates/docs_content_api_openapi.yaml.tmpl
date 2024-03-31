@@ -54,7 +54,7 @@ paths:
       type: object
       properties:{{range .Members}}{{if ne .DocOrder 0}}
         {{.Name}}:
-          type: {{.BaseType}}{{if ne .Description ""}}
+          type: {{.YamlType}}{{if ne .Description ""}}
           description: "{{.Description}}{{if .IsCalc}} (calculated){{end}}"{{end}}{{end}}{{end}}{{end}}{{end}}
     response:
       required:

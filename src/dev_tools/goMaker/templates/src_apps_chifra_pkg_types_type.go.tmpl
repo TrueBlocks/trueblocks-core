@@ -12,13 +12,14 @@ package types
 // EXISTING_CODE
 
 type Raw{{.Class}} struct {
-	{{.RawFields}}
-	// EXISTING_CODE
+{{range .Members}}{{if .IsRawField}}{{.GoName}} {{.RawType}} {{.RawTag}}
+{{end}}{{end}}	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type Simple{{.ModelName2}} struct {
-	{{.MemberFields}}
+{{range .Members}}{{if .IsSimpField}}{{.GoName}} {{.GoType}} {{.Tag}}
+{{end}}{{end}}	raw *Raw{{.Class}} `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -51,7 +52,6 @@ func (s *Simple{{.ModelName}}) Date() string {
 {{end}}
 
 {{if .IsCachable}}
-// --> {{.CacheMsg}}
 {{if not .IsMarshalOnly}}
 {{if .IsCacheAsGroup}}
 type Simple{{.Class}}{{if .IsCacheAsGroup}}Group{{end}} struct {

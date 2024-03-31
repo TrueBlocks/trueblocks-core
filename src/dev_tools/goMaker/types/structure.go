@@ -43,33 +43,6 @@ func (s *Structure) SnakeCase() string {
 	return SnakeCase(s.Class)
 }
 
-func (s *Structure) RawFields() string {
-	ret := []string{}
-	for _, m := range s.Members {
-		if m.IsCalc || m.IsSimpleOnly || strings.Contains(m.Name, "::") {
-			continue
-		}
-		tmpl := `{{.GoName}} {{.RawType}} {{.RawTag}}`
-		ret = append(ret, m.executeTemplate("rawFields", tmpl))
-	}
-	return strings.Join(ret, "\n")
-}
-
-func (s *Structure) MemberFields() string {
-	ret := []string{}
-	for _, m := range s.Members {
-		if m.IsCalc || m.IsRawOnly || strings.Contains(m.Name, "::") {
-			continue
-		}
-		tmpl := `{{.GoName}} {{.GoType}} {{.Tag}}`
-		ret = append(ret, m.executeTemplate("fields", tmpl))
-	}
-	tmpl := "raw *Raw{{.Class}} `json:\"-\"`"
-	ret = append(ret, s.executeTemplate("raw", tmpl))
-
-	return strings.Join(ret, "\n")
-}
-
 func (s *Structure) HasTimestamp() bool {
 	for _, m := range s.Members {
 		if m.Name == "timestamp" {
@@ -77,20 +50,6 @@ func (s *Structure) HasTimestamp() bool {
 		}
 	}
 	return false
-}
-
-func (s *Structure) CacheMsg() string {
-	ret := ""
-	if s.CacheType != "" {
-		ret = s.CacheType
-		if s.CacheBy != "" {
-			ret += " by " + s.CacheBy
-		}
-		if s.CacheAs != "" {
-			ret += " as " + s.CacheAs
-		}
-	}
-	return ret
 }
 
 func (s *Structure) ModelName() string {
@@ -170,31 +129,8 @@ func (s *Structure) ModelProducers() string {
 	return strings.Join(ret, "\n")
 }
 
-func (m *Member) MarkdownDescription() string {
-	descr := m.Description
-	if m.IsCalc {
-		descr += " (calculated)"
-	}
-	return descr
-}
-
 func (s *Structure) TypeToGroup(t string) string {
 	return s.cbPtr.TypeToGroup[strings.ToLower(t)]
-}
-
-func (m *Member) MarkdownType() string {
-	typ := m.Type
-	if m.IsArray {
-		typ = typ + "[]"
-	}
-	if m.Type[0:1] != strings.ToLower(m.Type[0:1]) {
-		typeLower := strings.ToLower(m.Type)
-		group := strings.ToLower(m.TypeToGroup(typeLower))
-		if group != "" {
-			return "[" + typ + "](/data-model/" + group + "/#" + strings.ToLower(m.Type) + ")"
-		}
-	}
-	return typ
 }
 
 func (s *Structure) Widest() (int, int, int) {

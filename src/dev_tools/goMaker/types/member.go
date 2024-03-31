@@ -7,23 +7,17 @@ import (
 )
 
 type Member struct {
-	Num          int         `json:"num" csv:"num"`
-	DocOrder     int         `json:"docOrder,omitempty" csv:"docOrder"`
-	Name         string      `json:"name,omitempty" csv:"name"`
-	Type         string      `json:"type,omitempty" csv:"type"`
-	StrDefault   string      `json:"strDefault,omitempty" csv:"strDefault"`
-	Attributes   string      `json:"attributes,omitempty" csv:"attributes"`
-	Description  string      `json:"description,omitempty" csv:"description"`
-	IsOmitEmpty  bool        `json:"isOmitEmpty,omitempty" csv:"-"`
-	IsCalc       bool        `json:"isCalc,omitempty" csv:"-"`
-	IsRawOnly    bool        `json:"isRawOnly,omitempty" csv:"-"`
-	IsSimpleOnly bool        `json:"isSimpleOnly,omitempty" csv:"-"`
-	IsArray      bool        `json:"isArray,omitempty" csv:"-"`
-	IsPointer    bool        `json:"isPointer,omitempty" csv:"-"`
-	Proper       string      `json:"-" csv:"-"`
-	Class        string      `json:"-" csv:"-"`
-	stPtr        *Structure  `json:"-" csv:"-"`
-	templates    TemplateMap `json:"-" csv:"-"`
+	Name        string      `json:"name,omitempty" csv:"name"`
+	Type        string      `json:"type,omitempty" csv:"type"`
+	StrDefault  string      `json:"strDefault,omitempty" csv:"strDefault"`
+	Attributes  string      `json:"attributes,omitempty" csv:"attributes"`
+	DocOrder    int         `json:"docOrder,omitempty" csv:"docOrder"`
+	Description string      `json:"description,omitempty" csv:"description"`
+	Num         int         `json:"num"`
+	IsArray     bool        `json:"isArray,omitempty"`
+	IsPointer   bool        `json:"isPointer,omitempty"`
+	stPtr       *Structure  `json:"-"`
+	templates   TemplateMap `json:"-"`
 }
 
 func (m *Member) String() string {
@@ -31,50 +25,8 @@ func (m *Member) String() string {
 	return string(bytes)
 }
 
-func (m *Member) SnakeCase() string {
-	return SnakeCase(m.Type)
-}
-
-func readMember(m *Member, data *any) (bool, error) {
-	m.IsPointer = strings.Contains(m.Type, "*")
-	m.IsArray = strings.Contains(m.Type, "[]")
-	m.IsOmitEmpty = strings.Contains(m.Attributes, "omitempty")
-	m.IsCalc = strings.Contains(m.Attributes, "calc")
-	m.IsRawOnly = strings.Contains(m.Attributes, "rawonly")
-	m.IsSimpleOnly = strings.Contains(m.Attributes, "simponly")
-
-	m.Name = strings.Trim(m.Name, " ")
-	m.Type = strings.Trim(m.Type, " []*")
-	m.StrDefault = strings.Trim(m.StrDefault, " ")
-	m.Attributes = strings.Trim(m.Attributes, " ")
-	m.Description = strings.ReplaceAll(m.Description, "&#44;", ",")
-	m.Proper = strings.ToUpper(m.Name[0:1]) + m.Name[1:]
-	m.Description = strings.Trim(m.Description, " ")
-
-	return true, nil
-}
-
 func (m Member) Validate() bool {
 	return m.Name != "" && m.Type != ""
-}
-
-func (m *Member) SortName() string {
-	if m.Name == "type" {
-		// We can't change the sort for this because it effects the way things are stored in the cache
-		return m.Proper
-	}
-	return m.GoName()
-}
-
-func (m *Member) GoName() string {
-	if m.Name == "type" {
-		return m.Class + m.Proper
-	}
-	return m.Proper
-}
-
-func (m *Member) TagName() string {
-	return m.Name
 }
 
 func (m *Member) Lower() string {
@@ -88,28 +40,98 @@ func (m *Member) LowerSingular() string {
 	return strings.ToLower(m.GoName())
 }
 
-func (m *Member) IsObjType() bool {
-	t := strings.Replace(m.Type, "[]", "", -1)
-	return t[0:1] != strings.ToLower(t[0:1])
+func (m *Member) Container() string {
+	return m.stPtr.Class
+}
+
+func (m *Member) GoName() string {
+	if m.Name == "type" {
+		return m.Container() + FirstUpper(m.Name)
+	}
+	return FirstUpper(m.Name)
+}
+
+func (m *Member) IsObject() bool {
+	// assume it's an object if its the first letter of its type is upper case.
+	return m.Type != FirstLower(m.Type)
+}
+
+func (m *Member) IsOmitEmpty() bool {
+	return strings.Contains(m.Attributes, "omitempty")
+}
+
+func (m *Member) IsRawOnly() bool {
+	return strings.Contains(m.Attributes, "rawonly")
+}
+
+func (m *Member) IsSimpOnly() bool {
+	return strings.Contains(m.Attributes, "simponly")
+
+}
+
+func (m *Member) IsSubField() bool {
+	return strings.Contains(m.Name, "::")
+}
+
+func (m *Member) IsCalc() bool {
+	return strings.Contains(m.Attributes, "calc")
+}
+
+func (m *Member) IsRawField() bool {
+	return !m.IsCalc() && !m.IsSimpOnly() && !m.IsSubField()
+}
+
+func (m *Member) IsSimpField() bool {
+	return !m.IsCalc() && !m.IsRawOnly() && !m.IsSubField()
+}
+
+func (m *Member) SortName() string {
+	if m.Name == "type" {
+		return Proper(m.Name)
+	}
+	return m.GoName()
 }
 
 func (m *Member) RawTag() string {
-	if m.Name == "transactionIndex" && m.Class == "Trace" {
+	if m.Name == "transactionIndex" && m.Container() == "Trace" {
 		return "`json:\"transactionPosition\"`"
 	}
-	if m.Name == "blockNumber" && m.Class == "Block" {
+	if m.Name == "blockNumber" && m.Container() == "Block" {
 		return "`json:\"number\"`"
 	}
-	return "`json:\"" + m.TagName() + "\"`"
+	return "`json:\"" + m.Name + "\"`"
 }
 
 func (m *Member) Tag() string {
-	tmpl := "`json:\"{{.TagName}}{{if .IsOmitEmpty}},omitempty{{end}}\"`"
+	tmpl := "`json:\"{{.Name}}{{if .IsOmitEmpty}},omitempty{{end}}\"`"
 	return m.executeTemplate("tag", tmpl)
 }
 
+func (m *Member) MarkdownDescription() string {
+	descr := m.Description
+	if m.IsCalc() {
+		descr += " (calculated)"
+	}
+	return descr
+}
+
+func (m *Member) MarkdownType() string {
+	typ := m.Type
+	if m.IsArray {
+		typ = typ + "[]"
+	}
+	if m.IsObject() {
+		typeLower := strings.ToLower(m.Type)
+		group := strings.ToLower(m.TypeToGroup(typeLower))
+		if group != "" {
+			return "[" + typ + "](/data-model/" + group + "/#" + strings.ToLower(m.Type) + ")"
+		}
+	}
+	return typ
+}
+
 func (m *Member) RawType() string {
-	if strings.HasPrefix(m.Class, "Block") {
+	if strings.HasPrefix(m.Container(), "Block") {
 		if m.GoName() == "Transactions" {
 			return "[]any"
 		} else if m.GoName() == "Withdrawals" {
@@ -118,14 +140,14 @@ func (m *Member) RawType() string {
 	}
 
 	ret := "string"
-	switch m.Class {
+	switch m.Container() {
 	case "Trace":
 		if m.GoName() == "Action" {
 			return "RawTraceAction"
 		} else if m.GoName() == "TransactionHash" {
 			return "string"
 		}
-		if m.IsObjType() {
+		if m.IsObject() {
 			if m.GoName() == "Result" {
 				return "*RawTraceResult"
 			}
@@ -153,9 +175,9 @@ func (m *Member) RawType() string {
 	}
 
 	ret = "string"
-	one := m.Class == "Function" && (m.GoName() == "Inputs" || m.GoName() == "Outputs")
-	two := m.Class == "Manifest" && m.GoName() == "Chunks"
-	three := m.Class == "Parameter" && m.GoName() == "Components"
+	one := m.Container() == "Function" && (m.GoName() == "Inputs" || m.GoName() == "Outputs")
+	two := m.Container() == "Manifest" && m.GoName() == "Chunks"
+	three := m.Container() == "Parameter" && m.GoName() == "Components"
 	if !one && !two && !three && m.IsArray {
 		ret = "[]" + ret
 	}
@@ -163,11 +185,11 @@ func (m *Member) RawType() string {
 }
 
 func (m *Member) GoType() string {
-	if strings.HasPrefix(m.Class, "Block") && m.GoName() == "Transactions" {
+	if strings.HasPrefix(m.Container(), "Block") && m.GoName() == "Transactions" {
 		return "[]Tx"
 	}
 
-	if m.Class == "Status" {
+	if m.Container() == "Status" {
 		if m.Type == "CacheItem" {
 			return "[]simpleCacheItem"
 		} else if m.Type == "Chain" {
@@ -176,14 +198,14 @@ func (m *Member) GoType() string {
 	}
 
 	ret := m.Type
-	if m.IsObjType() {
+	if m.IsObject() {
 		if m.GoName() != "TokenType" {
 			ret = "Simple" + ret
 		}
 	} else {
-		if m.GoName() == "Value" && m.Class == "Parameter" {
+		if m.GoName() == "Value" && m.Container() == "Parameter" {
 			ret = "any"
-		} else if m.GoName() == "CumulativeGasUsed" && m.Class == "Receipt" {
+		} else if m.GoName() == "CumulativeGasUsed" && m.Container() == "Receipt" {
 			ret = "string"
 		} else {
 			switch m.Type {
@@ -235,20 +257,20 @@ func (m *Member) GoType() string {
 func (m *Member) NeedsPtr() bool {
 	return m.GoType() == "base.Hash" ||
 		m.GoType() == "base.Wei" ||
-		m.IsObjType()
+		m.IsObject()
 }
 
 func (m *Member) MarshalCode() string {
 	if strings.Contains(m.GoName(), "::") ||
-		m.IsCalc ||
-		m.IsRawOnly ||
-		(m.Class == "Transaction" &&
+		m.IsCalc() ||
+		m.IsRawOnly() ||
+		(m.Container() == "Transaction" &&
 			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
 		return ""
 	}
 
 	tmpl := ""
-	if m.GoName() == "Transactions" && m.Class == "Block" {
+	if m.GoName() == "Transactions" && m.Container() == "Block" {
 		tmpl = `	// Transactions
 	var txHashes []string
 	switch v := any(s.Transactions).(type) {
@@ -266,7 +288,7 @@ func (m *Member) MarshalCode() string {
 
 `
 
-	} else if m.GoName() == "Value" && m.Class == "Parameter" {
+	} else if m.GoName() == "Value" && m.Container() == "Parameter" {
 		tmpl = `// {{.GoName}}
 	{{.Lower}}, err := json.Marshal(s.{{.GoName}})
 	if err != nil {
@@ -289,7 +311,7 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-	} else if m.IsObjType() {
+	} else if m.IsObject() {
 
 		tmpl = `// {{.GoName}}
 	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
@@ -315,15 +337,15 @@ func (m *Member) MarshalCode() string {
 
 func (m *Member) UnmarshalCode() string {
 	if strings.Contains(m.GoName(), "::") ||
-		m.IsCalc ||
-		m.IsRawOnly ||
-		(m.Class == "Transaction" &&
+		m.IsCalc() ||
+		m.IsRawOnly() ||
+		(m.Container() == "Transaction" &&
 			(m.GoName() == "CompressedTx" || m.GoName() == "Traces")) {
 		return ""
 	}
 
 	tmpl := ""
-	if m.GoName() == "Transactions" && m.Class == "Block" {
+	if m.GoName() == "Transactions" && m.Container() == "Block" {
 		tmpl = `		// Transactions
 	s.Transactions = make([]string, 0)
 	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
@@ -331,7 +353,7 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 `
-	} else if m.GoName() == "Value" && m.Class == "Parameter" {
+	} else if m.GoName() == "Value" && m.Container() == "Parameter" {
 		tmpl = `// {{.GoName}}
 	var {{.Lower}} string
 	if err = cache.ReadValue(reader, &{{.Lower}}, version); err != nil {
@@ -350,7 +372,7 @@ func (m *Member) UnmarshalCode() string {
 	}
 
 `
-	} else if m.IsObjType() {
+	} else if m.IsObject() {
 
 		tmpl = `// {{.GoName}}
 	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
@@ -375,13 +397,13 @@ func (m *Member) UnmarshalCode() string {
 	return m.executeTemplate("unmarshalCode", tmpl)
 }
 
-func (m *Member) BaseType() string {
-	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + m.SnakeCase() + "\"")
+func (m *Member) YamlType() string {
+	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + SnakeCase(m.Type) + "\"")
 	f := fmt.Sprintf("\n          format: %s", m.Type)
 	if m.IsArray {
 		return "array" + o
 	}
-	if m.IsObjType() {
+	if m.IsObject() {
 		return "object" + o
 	} else if m.Type == "blknum" || m.Type == "timestamp" || m.Type == "double" ||
 		m.Type == "gas" || m.Type == "uint64" || m.Type == "int64" || m.Type == "uint32" {
@@ -390,11 +412,28 @@ func (m *Member) BaseType() string {
 		m.Type == "topic" || m.Type == "int256" || m.Type == "uint256" || m.Type == "wei" || m.Type == "bytes" {
 		return "string" + f
 	} else if m.Type == "bool" || m.Type == "uint8" {
-		return "boolean"
+		return "boolean\n          format: boolean"
 	}
-	return "string"
+	return "string" + f
 }
 
 func (m *Member) TypeToGroup(t string) string {
 	return m.stPtr.TypeToGroup(strings.ToLower(t))
+}
+
+func readMember(m *Member, data *any) (bool, error) {
+	// trim spaces read from the file (if any)
+	m.Name = strings.Trim(m.Name, " ")
+	m.Type = strings.Trim(m.Type, " ")
+	m.StrDefault = strings.Trim(m.StrDefault, " ")
+	m.Attributes = strings.Trim(m.Attributes, " ")
+	m.Description = strings.Trim(m.Description, " ")
+
+	m.Description = strings.ReplaceAll(m.Description, "&#44;", ",")
+
+	m.IsPointer = strings.Contains(m.Type, "*")
+	m.IsArray = strings.Contains(m.Type, "[]")
+	m.Type = strings.Trim(m.Type, "[]*")
+
+	return true, nil
 }

@@ -12,7 +12,7 @@ package {{.Route}}Pkg
 // EXISTING_CODE
 
 type simple{{.Class}} struct {
-{{range .Members}}{{if not .IsCalc}}{{.GoName}} {{.GoType}} {{.Tag}}
+{{range .Members}}{{if .IsSimpField}}{{.GoName}} {{.GoType}} {{.Tag}}
 {{end}}{{end}}
 	// EXISTING_CODE
 	// EXISTING_CODE

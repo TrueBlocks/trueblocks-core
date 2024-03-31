@@ -134,8 +134,6 @@ func (s *SimpleResult) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by address,block,fourbyte
-
 func (s *SimpleResult) CacheName() string {
 	return "Result"
 }

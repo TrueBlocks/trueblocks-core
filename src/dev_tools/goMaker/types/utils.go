@@ -7,6 +7,8 @@ import (
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 type TemplateMap map[string]*template.Template
@@ -84,9 +86,32 @@ func Pad(s string, width int) string {
 	return s + strings.Repeat(" ", width-len(s))
 }
 
+func FirstUpper(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return strings.ToUpper(s[0:1]) + s[1:]
+}
+
+func FirstLower(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return strings.ToLower(s[0:1]) + s[1:]
+}
+
 func Plural(s string) string {
 	if strings.HasSuffix(s, "s") {
 		return s
 	}
 	return s + "s"
+}
+
+func Proper(s string) string {
+	titleCaser := cases.Title(language.English)
+	return titleCaser.String(s)
+}
+
+func Lower(s string) string {
+	return strings.ToLower(s)
 }

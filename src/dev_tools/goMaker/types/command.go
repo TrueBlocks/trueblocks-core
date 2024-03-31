@@ -7,8 +7,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
 type Command struct {
@@ -122,8 +120,7 @@ func (c *Command) clean() {
 			cleaned = append(cleaned, op)
 		}
 	}
-	titleCaser := cases.Title(language.English)
-	c.Proper = titleCaser.String(c.Route)
+	c.Proper = Proper(c.Route)
 	c.Lower = strings.ToLower(c.Route)
 	c.Endpoint.cmdPtr = c
 	c.Options = cleaned

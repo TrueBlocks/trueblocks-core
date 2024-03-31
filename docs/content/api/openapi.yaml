@@ -3002,9 +3002,11 @@ components:
           description: "the zero-based index of the trace in the transaction"
         reason:
           type: string
+          format: string
           description: "the location in the data where the appearance was found"
         name:
           type: string
+          format: string
           description: "the name of the address, if found"
         timestamp:
           type: number
@@ -3036,6 +3038,7 @@ components:
           description: "the size of this monitor on disc"
         tags:
           type: string
+          format: string
           description: "the tag given to this address"
         address:
           type: string
@@ -3043,28 +3046,35 @@ components:
           description: "the address being monitored"
         name:
           type: string
+          format: string
           description: "the name given to this address"
         isCustom:
           type: boolean
+          format: boolean
           description: "`true` if this address is customized"
         deleted:
           type: boolean
+          format: boolean
           description: "`true` if deleted, `false` otherwise"
         symbol:
           type: string
+          format: string
         source:
           type: string
+          format: string
         decimals:
           type: number
           format: uint64
         isContract:
           type: boolean
+          format: boolean
     name:
       description: "an association between a human-readable name and an address used throughout TrueBlocks"
       type: object
       properties:
         tags:
           type: string
+          format: string
           description: "colon separated list of tags"
         address:
           type: string
@@ -3072,12 +3082,15 @@ components:
           description: "the address associated with this name"
         name:
           type: string
+          format: string
           description: "the name associated with this address (retrieved from on-chain data if available)"
         symbol:
           type: string
+          format: string
           description: "the symbol for this address (retrieved from on-chain data if available)"
         source:
           type: string
+          format: string
           description: "user supplied source of where this name was found (or on-chain if name is on-chain)"
         decimals:
           type: number
@@ -3085,24 +3098,31 @@ components:
           description: "number of decimals retrieved from an ERC20 smart contract, defaults to 18"
         petname:
           type: string
+          format: string
           description: "the petname such as described here http://www.erights.org/elib/capability/pnml.html"
         deleted:
           type: boolean
+          format: boolean
           description: "`true` if deleted, `false` otherwise"
         isCustom:
           type: boolean
+          format: boolean
           description: "`true` if the address is a custom address, `false` otherwise"
         isPrefund:
           type: boolean
+          format: boolean
           description: "`true` if the address was one of the prefund addresses, `false` otherwise"
         isContract:
           type: boolean
+          format: boolean
           description: "`true` if the address is a smart contract, `false` otherwise"
         isErc20:
           type: boolean
+          format: boolean
           description: "`true` if the address is an ERC20, `false` otherwise"
         isErc721:
           type: boolean
+          format: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     appearanceCount:
       description: "the number of records, file size, and last visited block for a given monitor"
@@ -3188,6 +3208,7 @@ components:
           description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
         assetSymbol:
           type: string
+          format: string
           description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
         decimals:
           type: number
@@ -3199,6 +3220,7 @@ components:
           description: "the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         priceSource:
           type: string
+          format: string
           description: "the on-chain source from which the spot price was taken"
         accountedFor:
           type: string
@@ -3226,9 +3248,11 @@ components:
           description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
         reconciliationType:
           type: string
+          format: string
           description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)"
         reconciled:
           type: boolean
+          format: boolean
           description: "true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise. (calculated)"
         totalIn:
           type: string
@@ -3316,6 +3340,7 @@ components:
           description: "begBal + amountNet (calculated)"
         correctingReason:
           type: string
+          format: string
           description: "the reason for the correcting entries, if any"
     block:
       description: "block data as returned from the RPC (with slight enhancements)"
@@ -3434,9 +3459,11 @@ components:
             $ref: "#/components/schemas/receipt"
         hasToken:
           type: boolean
+          format: boolean
           description: "`true` if the transaction is token related, `false` otherwise"
         isError:
           type: boolean
+          format: boolean
           description: "`true` if the transaction ended in error, `false` otherwise"
         statements:
           type: array
@@ -3449,6 +3476,7 @@ components:
             $ref: "#/components/schemas/function"
         compressedTx:
           type: string
+          format: string
           description: "truncated, more readable version of the articulation"
     withdrawal:
       description: "withdrawal record for post-Shanghai withdrawals from the consensus layer"
@@ -3502,6 +3530,7 @@ components:
           description: "the amount of gas actually used by the transaction"
         isError:
           type: boolean
+          format: boolean
         logs:
           type: array
           items:
@@ -3569,6 +3598,7 @@ components:
           description: "a human-readable version of the topic and data fields"
         compressedLog:
           type: string
+          format: string
           description: "a truncated, more readable version of the articulation"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
@@ -3601,6 +3631,7 @@ components:
           description: "the number of children traces that the trace hash"
         type:
           type: string
+          format: string
           description: "the type of the trace"
         blockHash:
           type: string
@@ -3627,6 +3658,7 @@ components:
           description: "human readable version of the trace action input data"
         compressedTrace:
           type: string
+          format: string
           description: "a compressed string version of the articulated trace"
     logFilter:
       description: "used by the fast path log queries for various commands"
@@ -3676,6 +3708,7 @@ components:
           description: "an encoded version of the function call"
         callType:
           type: string
+          format: string
           description: "the type of call"
         refundAddress:
           type: string
@@ -3683,6 +3716,7 @@ components:
           description: "if the call type is self-destruct, the address to which the refund is sent"
         rewardType:
           type: string
+          format: string
           description: "the type of reward"
     traceResult:
       description: "trace result data as returned from the RPC (with slight enhancements)"
@@ -3818,9 +3852,11 @@ components:
           description: "the timestamp as a date (calculated)"
         name:
           type: string
+          format: string
           description: "an optional name for the block"
         description:
           type: string
+          format: string
           description: "an optional description of the block"
     timestamp:
       description: "the timestamp, date and difference in timestamp of previous block produced by chifra when"
@@ -3872,15 +3908,19 @@ components:
           description: "the address of contract being called"
         name:
           type: string
+          format: string
           description: "the name of the function call"
         encoding:
           type: string
+          format: string
           description: "the encoding for the function call"
         signature:
           type: string
+          format: string
           description: "the canonical signature of the interface"
         encodedArguments:
           type: string
+          format: string
           description: "the bytes data following the encoding of the call"
         articulatedOut:
           type: object
@@ -3909,6 +3949,7 @@ components:
           description: "the address of contract being called"
         accountType:
           type: string
+          format: string
           description: "the type of account at the given block"
         balance:
           type: string
@@ -3916,6 +3957,7 @@ components:
           description: "the balance of the account at the given block"
         code:
           type: string
+          format: string
           description: "the code of the account"
         deployed:
           type: number
@@ -3975,9 +4017,11 @@ components:
           description: "the difference#&44; if any#&44; between the prior and current balance"
         name:
           type: string
+          format: string
           description: "the name of the token contract, if available"
         symbol:
           type: string
+          format: string
           description: "the symbol of the token contract"
         decimals:
           type: number
@@ -3994,6 +4038,7 @@ components:
       properties:
         cachePath:
           type: string
+          format: string
           description: "the path to the local binary caches"
         caches:
           type: array
@@ -4002,54 +4047,71 @@ components:
           description: "a collection of information concerning the binary caches"
         chain:
           type: string
+          format: string
           description: "the current chain"
         chainConfig:
           type: string
+          format: string
           description: "the path to the chain configuration folder"
         clientVersion:
           type: string
+          format: string
           description: "the version string as reported by the rpcProvider"
         chainId:
           type: string
+          format: string
           description: "the path to config files"
         hasEsKey:
           type: boolean
+          format: boolean
           description: "`true` if an Etherscan key is present"
         hasPinKey:
           type: boolean
+          format: boolean
           description: "`true` if a Pinata API key is present"
         indexPath:
           type: string
+          format: string
           description: "the path to the local binary indexes"
         isApi:
           type: boolean
+          format: boolean
           description: "`true` if the server is running in API mode"
         isArchive:
           type: boolean
+          format: boolean
           description: "`true` if the rpcProvider is an archive node"
         isTesting:
           type: boolean
+          format: boolean
           description: "`true` if the server is running in test mode"
         isTracing:
           type: boolean
+          format: boolean
           description: "`true` if the rpcProvider provides Parity traces"
         isScraping:
           type: boolean
+          format: boolean
           description: "`true` if the scraper is running"
         networkId:
           type: string
+          format: string
           description: "the network id as reported by the rpcProvider"
         progress:
           type: string
+          format: string
           description: "the progress string of the system"
         rootConfig:
           type: string
+          format: string
           description: "the path to the root configuration folder"
         rpcProvider:
           type: string
+          format: string
           description: "the current rpcProvider"
         version:
           type: string
+          format: string
           description: "the TrueBlocks version string"
         chains:
           type: array
@@ -4062,9 +4124,11 @@ components:
       properties:
         version:
           type: string
+          format: string
           description: "the version string hashed into the chunk data"
         chain:
           type: string
+          format: string
           description: "the chain to which this manifest belongs"
         specification:
           type: string
@@ -4109,6 +4173,7 @@ components:
           description: "the block range (inclusive) covered by this chunk"
         magic:
           type: string
+          format: string
           description: "an internal use only magic number to indicate file format"
         hash:
           type: string
@@ -4136,6 +4201,7 @@ components:
           description: "the block range (inclusive) covered by this chunk"
         magic:
           type: string
+          format: string
           description: "an internal use only magic number to indicate file format"
         hash:
           type: string
@@ -4187,9 +4253,11 @@ components:
           description: "the CID of the file"
         datePinned:
           type: string
+          format: string
           description: "the date the CID was first created"
         status:
           type: string
+          format: string
           description: "the status of the file (one of [all|pinned|unpinned|pending])"
         size:
           type: number
@@ -4197,6 +4265,7 @@ components:
           description: "the size of the file in bytes"
         fileName:
           type: string
+          format: string
           description: "the metadata name of the pinned file"
     chunkStats:
       description: "summary statistics about an Unchained Index bloom filter and index chunk"
@@ -4280,6 +4349,7 @@ components:
       properties:
         type:
           type: string
+          format: string
           description: "the type of the cache"
         items:
           type: array
@@ -4288,6 +4358,7 @@ components:
           description: "the individual items in the cache (if --verbose)"
         lastCached:
           type: string
+          format: string
           description: "the date of the most recent item added to the cache"
         nFiles:
           type: number
@@ -4299,6 +4370,7 @@ components:
           description: "the number of folders holding that many items"
         path:
           type: string
+          format: string
           description: "the path to the top of the given cache"
         sizeInBytes:
           type: number
@@ -4310,6 +4382,7 @@ components:
       properties:
         result:
           type: string
+          format: string
           description: "the result of the check"
         visitedCnt:
           type: number
@@ -4338,6 +4411,7 @@ components:
           description: "an array of messages explaining failed checks"
         reason:
           type: string
+          format: string
           description: "the reason for the test"
     chunkPinReport:
       description: "a JSON object containing the results of pinning the Unchained Index"
@@ -4345,9 +4419,11 @@ components:
       properties:
         version:
           type: string
+          format: string
           description: "the version string hashed into the chunk data"
         chain:
           type: string
+          format: string
           description: "the chain to which this manifest belongs"
         timestampHash:
           type: string
@@ -4367,6 +4443,7 @@ components:
       properties:
         chain:
           type: string
+          format: string
           description: "the common name of the chain"
         chainId:
           type: number
@@ -4374,18 +4451,23 @@ components:
           description: "the chain id as reported by the RPC"
         symbol:
           type: string
+          format: string
           description: "the symbol of the base currency on the chain"
         rpcProvider:
           type: string
+          format: string
           description: "a valid RPC provider for the chain"
         remoteExplorer:
           type: string
+          format: string
           description: "a remote explorer for the chain such as Etherscan"
         localExplorer:
           type: string
+          format: string
           description: "the local explorer for the chain (typically TrueBlocks Explorer)"
         ipfsGateway:
           type: string
+          format: string
           description: "an IPFS gateway for pinning the index if enabled"
     abi:
       description: "a human-readable representation of a Solidity smart contract"
@@ -4406,15 +4488,19 @@ components:
       properties:
         name:
           type: string
+          format: string
           description: "the name of the interface"
         type:
           type: string
+          format: string
           description: "the type of the interface, either 'event' or 'function'"
         signature:
           type: string
+          format: string
           description: "the canonical signature of the interface"
         encoding:
           type: string
+          format: string
           description: "the signature encoded with keccak"
         inputs:
           type: array
@@ -4432,18 +4518,23 @@ components:
       properties:
         type:
           type: string
+          format: string
           description: "the type of this parameter"
         name:
           type: string
+          format: string
           description: "the name of this parameter"
         strDefault:
           type: string
+          format: string
           description: "the default value of this parameter, if any"
         indexed:
           type: boolean
+          format: boolean
           description: "`true` if this parameter is indexed"
         internalType:
           type: string
+          format: string
           description: "for composite types, the internal type of the parameter"
         components:
           type: array
@@ -4508,6 +4599,7 @@ components:
           description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
         hasToken:
           type: boolean
+          format: boolean
           description: "`true` if the transaction is token related, `false` otherwise"
         articulatedTx:
           type: object
@@ -4516,9 +4608,11 @@ components:
           description: "if present, the function that was called in the transaction"
         compressedTx:
           type: string
+          format: string
           description: "truncated, more readable version of the articulation"
         isError:
           type: boolean
+          format: boolean
           description: "`true` if the transaction ended in error, `false` otherwise"
     response:
       required:

@@ -128,8 +128,6 @@ func (s *SimpleFunction) Model(chain, format string, verbose bool, extraOptions 
 	}
 }
 
-// --> marshal_only
-
 func (s *SimpleFunction) MarshalCache(writer io.Writer) (err error) {
 	// Anonymous
 	if err = cache.WriteValue(writer, s.Anonymous); err != nil {

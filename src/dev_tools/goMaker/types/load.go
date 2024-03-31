@@ -132,9 +132,6 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 					return structure.Members[i].Num < structure.Members[j].Num
 				})
 				structMap[mapKey] = structure
-				for i := 0; i < len(structure.Members); i++ {
-					structure.Members[i].Class = structMap[mapKey].Class
-				}
 			}
 		}
 		return nil
@@ -168,10 +165,10 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 			cb.TypeToGroup[strings.ToLower(st.Name)] = ddg
 		}
 		st.cbPtr = cb
-		cb.Structures = append(cb.Structures, st)
-		for i := 0; i < len(cb.Structures[len(cb.Structures)-1].Members); i++ {
-			cb.Structures[len(cb.Structures)-1].Members[i].stPtr = &cb.Structures[len(cb.Structures)-1]
+		for i := 0; i < len(st.Members); i++ {
+			st.Members[i].stPtr = &st
 		}
+		cb.Structures = append(cb.Structures, st)
 	}
 	sort.Slice(cb.Structures, func(i, j int) bool {
 		return cb.Structures[i].DocRoute < cb.Structures[j].DocRoute

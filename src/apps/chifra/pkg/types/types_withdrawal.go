@@ -90,8 +90,6 @@ func (s *SimpleWithdrawal) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by block as group
-
 type SimpleWithdrawalGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum

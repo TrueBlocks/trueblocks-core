@@ -144,8 +144,6 @@ func (s *SimpleReceipt) Model(chain, format string, verbose bool, extraOptions m
 	}
 }
 
-// --> cacheable by block as group
-
 type SimpleReceiptGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
