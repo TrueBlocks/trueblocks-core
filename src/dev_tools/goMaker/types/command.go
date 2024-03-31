@@ -843,10 +843,10 @@ func (cmd *Command) HelpIntro() string {
 }
 
 func (cmd *Command) HelpText() string {
-	thePath := "src/dev_tools/goMaker/templates/readmes/" + cmd.ReadmeName()
+	thePath := "src/dev_tools/goMaker/templates/readmes/" + cmd.ReadmeName() + ".tmp"
+	defer os.Remove(thePath)
 	utils.System("chifra " + cmd.Route + " --help 2>" + thePath)
 	helpText := strings.Trim(file.AsciiFileToString(thePath), "\r\n\t")
-	os.Remove(thePath)
 	return helpText
 }
 

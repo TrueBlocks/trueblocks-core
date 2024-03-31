@@ -47,11 +47,11 @@ func WriteCode(existingFn, newCode string) error {
 
 	msg := LogMessage{
 		MessageType: "Progress",
-		Message:     fmt.Sprintf("No changes to %s", existingFn),
+		Message:     existingFn,
 	}
 	if wasModified {
 		msg.MessageType = "Info"
-		msg.Message = fmt.Sprintf("Wrote changes to %s", existingFn)
+		msg.Message = fmt.Sprintf("Wrote %s", existingFn)
 	}
 	logChannel <- msg
 
@@ -162,7 +162,7 @@ var logChannel = make(chan LogMessage, 100) // Buffered channel
 
 // syncLogger goroutine
 func syncLogger() {
-	rep := strings.Repeat(" ", 20)
+	rep := strings.Repeat(" ", 30)
 	for logMsg := range logChannel {
 		switch logMsg.MessageType {
 		case "Progress":
