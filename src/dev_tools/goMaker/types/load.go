@@ -95,7 +95,8 @@ func (cb *CodeBase) LoadStructures(thePath string, structMap map[string]Structur
 					f.Settings.GoOutput = "<docs_only>"
 					f.Settings.DisableGo = true
 				}
-				structMap[class] = f.Settings
+				mapKey := strings.ToLower(class)
+				structMap[mapKey] = f.Settings
 			}
 		}
 		return nil
@@ -114,7 +115,8 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		if !info.IsDir() {
 			if strings.HasSuffix(path, ".csv") {
 				class := strings.TrimSuffix(filepath.Base(path), ".csv")
-				structure := structMap[class]
+				mapKey := strings.ToLower(class)
+				structure := structMap[mapKey]
 				var err error
 				structure.Members, err = LoadCsv[Member, any](path, readMember, nil)
 				if err != nil {
@@ -129,9 +131,9 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 					}
 					return structure.Members[i].Num < structure.Members[j].Num
 				})
-				structMap[class] = structure
+				structMap[mapKey] = structure
 				for i := 0; i < len(structure.Members); i++ {
-					structure.Members[i].Class = structMap[class].Class
+					structure.Members[i].Class = structMap[mapKey].Class
 				}
 			}
 		}
