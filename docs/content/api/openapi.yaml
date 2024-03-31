@@ -223,19 +223,20 @@ paths:
                         - $ref: "#/components/schemas/monitor"
                 example:
                   {
-                    "data": [
-                      {
-                        "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                        "blockNumber": 4037786,
-                        "transactionIndex": 47
-                      },
-                      {
-                        "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                        "blockNumber": 4037800,
-                        "transactionIndex": 77
-                      },
-                      { "...": "..." },
-                    ]
+                    "data":
+                      [
+                        {
+                          "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                          "blockNumber": 4037786,
+                          "transactionIndex": 47,
+                        },
+                        {
+                          "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                          "blockNumber": 4037800,
+                          "transactionIndex": 77,
+                        },
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -580,36 +581,38 @@ paths:
                         - $ref: "#/components/schemas/transaction"
                 example:
                   {
-                    "data": [
-                      {
-                        "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
-                        "blockHash": "0xdf551eb24dd5275c22d497b9076f1111f483b71ca37002bee51d5db55d20d2fa",
-                        "blockNumber": 4037786,
-                        "transactionIndex": 47,
-                        "timestamp": 1500352888,
-                        "from": "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15",
-                        "to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
-                        "value": 84353870000000000,
-                        "gas": 90000,
-                        "gasPrice": 20000000000,
-                        "maxFeePerGas": 0,
-                        "maxPriorityFeePerGas": 0,
-                        "isError": 0,
-                        "hasToken": 0,
-                        "receipt": {
-                          "contractAddress": "0x0",
+                    "data":
+                      [
+                        {
+                          "hash": "0x78a17b79e638190d72a3030a79645c32cf3420a133ea2835206778e5ab63fdc7",
+                          "blockHash": "0xdf551eb24dd5275c22d497b9076f1111f483b71ca37002bee51d5db55d20d2fa",
+                          "blockNumber": 4037786,
+                          "transactionIndex": 47,
+                          "timestamp": 1500352888,
+                          "from": "0x29205869522cc9d1f84b0ad5279a8e74a7c66c15",
+                          "to": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
+                          "value": 84353870000000000,
+                          "gas": 90000,
+                          "gasPrice": 20000000000,
+                          "maxFeePerGas": 0,
+                          "maxPriorityFeePerGas": 0,
+                          "isError": 0,
+                          "hasToken": 0,
+                          "receipt":
+                            {
+                              "contractAddress": "0x0",
+                              "gasUsed": 21000,
+                              "effectiveGasPrice": 20000000000,
+                              "status": null,
+                            },
+                          "compressedTx": "0x()",
+                          "gasCost": 420000000000000,
                           "gasUsed": 21000,
-                          "effectiveGasPrice": 20000000000,
-                          "status": null
+                          "date": "2017-07-18 04:41:28 UTC",
+                          "ether": 0.08435387,
                         },
-                        "compressedTx": "0x()",
-                        "gasCost": 420000000000000,
-                        "gasUsed": 21000,
-                        "date": "2017-07-18 04:41:28 UTC",
-                        "ether": 0.08435387
-                      },
-                      { "...": "..." }
-                    ]
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1091,39 +1094,41 @@ paths:
                         - $ref: "#/components/schemas/parameter"
                 example:
                   {
-                    "data": [
-                      {
-                        "name": "PairCreated",
-                        "type": "event",
-                        "stateMutability": "nonpayable",
-                        "signature": "PairCreated(address,address,address,uint256)",
-                        "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                        "inputs": [
-                          {
-                            "type": "address",
-                            "name": "token0",
-                            "indexed": true,
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "address",
-                            "name": "token1",
-                            "indexed": true,
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "address",
-                            "name": "pair",
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "uint256",
-                            "name": "val_0",
-                            "internalType": "uint256"
-                          }
-                        ]
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "name": "PairCreated",
+                          "type": "event",
+                          "stateMutability": "nonpayable",
+                          "signature": "PairCreated(address,address,address,uint256)",
+                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                          "inputs":
+                            [
+                              {
+                                "type": "address",
+                                "name": "token0",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "token1",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "pair",
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "uint256",
+                                "name": "val_0",
+                                "internalType": "uint256",
+                              },
+                            ],
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -2243,18 +2248,19 @@ paths:
                       $ref: "#/components/schemas/token"
                 example:
                   {
-                    "data": [
-                      {
-                        "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-                        "balance": "624980000000000000",
-                        "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-                        "name": "The DAO Original",
-                        "decimals": 1,
-                        "isContract": true,
-                        "isErc20": true,
-                        "isErc721": true
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                          "balance": "624980000000000000",
+                          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                          "name": "The DAO Original",
+                          "decimals": 1,
+                          "isContract": true,
+                          "isErc20": true,
+                          "isErc721": true,
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -2701,21 +2707,20 @@ paths:
                         - $ref: "#/components/schemas/reportCheck"
                 example:
                   {
-                    "data": [
-                      {
-                        "fileName": "000000000-000000000",
-                        "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
-                        "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
-                      },
-                      {
-                        "fileName": "000000001-000590501",
-                        "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
-                        "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
-                      },
-                      {
-                        "...": "..."
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "fileName": "000000000-000000000",
+                          "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
+                          "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4",
+                        },
+                        {
+                          "fileName": "000000001-000590501",
+                          "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+                          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp",
+                        },
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter

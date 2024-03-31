@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var m sync.Mutex
@@ -100,7 +101,6 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	defer ff.Close()
 
 	isOpen := false
 	lineCnt := 0
@@ -131,6 +131,7 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 		return false, err
 	}
 
+	ff.Close()
 	return updateFile(tempFn, buffer.String())
 }
 
@@ -142,6 +143,13 @@ func updateFile(tempFn, newCode string) (bool, error) {
 			return false, fmt.Errorf("format.Source failed: %v %s", err, file.AsciiFileToString(tempFn))
 		}
 		formatted = string(formattedBytes)
+	} else if strings.Contains(tempFn, ".md") {
+		// This works, but it's too slow, and--it doesn't correct anything
+		// utils.System("prettier -w --parser markdown " + tempFn + " >/dev/null")
+		// formatted = file.AsciiFileToString(tempFn)
+	} else if strings.Contains(tempFn, ".yaml") {
+		utils.System("prettier -w --parser yaml " + tempFn + " >/dev/null")
+		formatted = file.AsciiFileToString(tempFn)
 	}
 
 	origFn := strings.Replace(tempFn, ".new", "", 1)

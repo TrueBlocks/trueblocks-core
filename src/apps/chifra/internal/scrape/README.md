@@ -46,7 +46,7 @@ Data models produced by this tool:
 Each of the following additional configurable command line options are available.
 
 **Configuration file:** `trueBlocks.toml`  
-**Configuration group:** `[scrape.<chain>]`  
+**Configuration group:** `[scrape.<chain>]`
 
 | Item         | Type   | Default | Description / Default                                                                                                    |
 | ------------ | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -62,8 +62,8 @@ Note that for Ethereum mainnet, the default values for appsPerChunk and firstSna
 These items may be set in three ways, each overriding the preceding method:
 
 -- in the above configuration file under the `[scrape.<chain>]` group,  
--- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
--- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
+-- in the environment by exporting the configuration item as upper case (with underbars removed) and prepended with (TB underbar SCRAPE underbar CHAIN) with the underbars included, or  
+-- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).
 
 ### further information
 
@@ -110,7 +110,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start

@@ -228,7 +228,7 @@ Links:
 Each of the following additional configurable command line options are available.
 
 **Configuration file:** `trueBlocks.toml`  
-**Configuration group:** `[scrape.<chain>]`  
+**Configuration group:** `[scrape.<chain>]`
 
 | Item               | Type         | Default      | Description / Default |
 | ------------------ | ------------ | ------------ | --------- |
@@ -245,7 +245,7 @@ These items may be set in three ways, each overriding the preceding method:
 
 -- in the above configuration file under the `[scrape.<chain>]` group,  
 -- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
--- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
+-- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).
 
 ### further information
 
@@ -406,4 +406,3 @@ Links:
 - [api docs](/api/#operation/admin-init)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/init.csv)
-

@@ -52,7 +52,7 @@ Links:
 Each of the following additional configurable command line options are available.
 
 **Configuration file:** `trueBlocks.toml`  
-**Configuration group:** `[scrape.<chain>]`  
+**Configuration group:** `[scrape.<chain>]`
 
 | Item         | Type   | Default | Description / Default                                                                                                    |
 | ------------ | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -68,8 +68,8 @@ Note that for Ethereum mainnet, the default values for appsPerChunk and firstSna
 These items may be set in three ways, each overriding the preceding method:
 
 -- in the above configuration file under the `[scrape.<chain>]` group,  
--- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
--- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).  
+-- in the environment by exporting the configuration item as upper case (with underbars removed) and prepended with (TB underbar SCRAPE underbar CHAIN) with the underbars included, or  
+-- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).
 
 ### further information
 
