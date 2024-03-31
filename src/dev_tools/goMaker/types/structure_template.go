@@ -45,6 +45,14 @@ func (s *Structure) ProcessFile(source string) error {
 	return codeWriter.WriteCode(dest, result)
 }
 
+func grabRoute(dest string) string {
+	if !strings.Contains(dest, "/internal/") {
+		return ""
+	}
+	parts := strings.Split(dest, "/")
+	return parts[len(parts)-1]
+}
+
 // executeTemplate executes the template with the given name and returns
 // the result. It stores the parsed template in the templates map to avoid
 // parsing it more than once.
@@ -67,10 +75,3 @@ func (s *Structure) executeTemplate(name, tmplCode string) string {
 	return tplBuffer.String()
 }
 
-func grabRoute(dest string) string {
-	if !strings.Contains(dest, "/internal/") {
-		return ""
-	}
-	parts := strings.Split(dest, "/")
-	return parts[len(parts)-1]
-}
