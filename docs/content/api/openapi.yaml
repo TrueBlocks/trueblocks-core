@@ -777,7 +777,7 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Names
+      summary: Manage names for addresses
       description: Query addresses or names of well-known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
       operationId: accounts-names
       parameters:
@@ -975,7 +975,7 @@ paths:
     get:
       tags:
         - Accounts
-      summary: ABIs
+      summary: Manage Abi files
       description: Fetches the ABI for a smart contract. Corresponds to the <a href="/chifra/accounts/#chifra-abis">chifra abis</a> command line.
       operationId: accounts-abis
       parameters:
@@ -2794,7 +2794,7 @@ paths:
     get:
       tags:
         - Other
-      summary: Slurp Etherscan
+      summary: Slurp Api services
       description: Fetch data from Etherscan for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
       operationId: other-slurp
       parameters:

@@ -6,22 +6,29 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Command struct {
-	Route       string       `json:"route" csv:"route"`
-	Group       string       `json:"group" csv:"group"`
-	Description string       `json:"description" csv:"description"`
-	Endpoint    Endpoint     `json:"endpoint" csv:"endpoint"`
-	Options     []Option     `json:"options" csv:"options"`
-	Notes       []string     `json:"notes" csv:"notes"`
-	Aliases     []string     `json:"aliases" csv:"aliases"`
-	Hidden      []string     `json:"hidden" csv:"hidden"`
-	Productions []Production `json:"productions"`
-	Proper      string       `json:"proper"`
-	Lower       string       `json:"lower"`
-	cbPtr       *CodeBase    `json:"-"`
+	Num           int          `json:"num" csv:"num"`
+	Route         string       `json:"route,omitempty" csv:"route"`
+	Group         string       `json:"group,omitempty" csv:"group"`
+	Description   string       `json:"description,omitempty" csv:"description"`
+	Endpoint      Endpoint     `json:"endpoint,omitempty" csv:"endpoint"`
+	Options       []Option     `json:"options,omitempty" csv:"options"`
+	Capabilities  string       `json:"capabilities,omitempty" csv:"capabilities"`
+	Usage         string       `json:"usage,omitempty" csv:"usage"`
+	Folder        string       `json:"folder,omitempty" csv:"folder"`
+	Tool          string       `json:"tool,omitempty" csv:"tool"`
+	Summary       string       `json:"summary,omitempty" csv:"summary"`
+	Notes         []string     `json:"notes,omitempty" csv:"notes"`
+	Aliases       []string     `json:"aliases,omitempty" csv:"aliases"`
+	Hidden        []string     `json:"hidden,omitempty" csv:"hidden"`
+	Productions   []Production `json:"productions,omitempty"`
+	Proper        string       `json:"proper,omitempty"`
+	Lower         string       `json:"lower,omitempty"`
+	cbPtr         *CodeBase    `json:"-"`
 }
 
 func (c *Command) TypeToGroup(t string) string {
@@ -385,8 +392,8 @@ func (c *Command) Short() string {
 	return FirstLower(strings.Replace(c.Endpoint.Description, ".", "", -1))
 }
 
-// Usage for tag {{.Usage}}
-func (c *Command) Usage() string {
+// UsageStr for tag {{.UsageStr}}
+func (c *Command) UsageStr() string {
 	ret := c.Route + " " + c.Endpoint.Usage
 	if len(c.Positionals()) > 0 {
 		ret += `
@@ -613,7 +620,10 @@ func (c *Command) HelpText() string {
 	thePath := "src/dev_tools/goMaker/templates/readmes/" + c.ReadmeName() + ".tmp"
 	defer os.Remove(thePath)
 	utils.System("chifra " + c.Route + " --help 2>" + thePath)
-	helpText := strings.Trim(file.AsciiFileToString(thePath), "\r\n\t")
+	helpText := strings.Trim(file.AsciiFileToString(thePath), wss)
+	if strings.Contains(helpText, "unknown") {
+		logger.Fatal("Error: " + helpText)
+	}
 	return helpText
 }
 

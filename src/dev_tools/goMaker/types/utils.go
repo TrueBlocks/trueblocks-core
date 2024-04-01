@@ -120,3 +120,9 @@ func Proper(s string) string {
 func Lower(s string) string {
 	return strings.ToLower(s)
 }
+
+// ws white space
+var ws = " "
+
+// wss white space with space
+var wss = "\n\r\t" + ws

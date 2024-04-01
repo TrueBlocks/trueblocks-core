@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // LoadDefinitions loads the definitions from the data-models folder
@@ -185,14 +186,31 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 			return producesMap[route][i].Value < producesMap[route][j].Value
 		})
 		c := Command{
-			Route:       endpoint.ApiRoute,
-			Group:       endpoint.Group,
-			Description: endpoint.Description,
-			Options:     theMap[route].Options,
-			Endpoint:    endpoint,
-			Productions: producesMap[route],
-			cbPtr:       cb,
+			Route:        endpoint.ApiRoute,
+			Group:        endpoint.Group,
+			Description:  endpoint.Description,
+			Options:      theMap[route].Options,
+			Endpoint:     endpoint,
+			Num:          endpoint.Num,
+			Capabilities: endpoint.Capabilities,
+			Usage:        endpoint.Usage,
+			Folder:       endpoint.Folder,
+			Tool:         endpoint.Tool,
+			Summary:      endpoint.Summary,
+			Productions:  producesMap[route],
+			cbPtr:        cb,
 		}
+
+		if endpoint.ApiRoute != c.Route {
+			logger.Fatal("route mismatch", endpoint.ApiRoute, c.Route)
+		}
+		if endpoint.Group != c.Group {
+			logger.Fatal("group mismatch", endpoint.Group, c.Group)
+		}
+		if endpoint.Description != c.Description {
+			logger.Fatal("description mismatch", endpoint.Description, c.Description)
+		}
+
 		theMap[route] = c
 	}
 

@@ -59,10 +59,10 @@ func (cb *CodeBase) TypeToGroup(typ string) string {
 	return "unknown type: " + typ
 }
 
-// Summary - returns a summary of the commands used in the helpText
-func (cb *CodeBase) Summary(filter string) string {
+// SummaryTag - returns a summary of the commands used in the helpText
+func (cb *CodeBase) SummaryTag(filter string) string {
 	sort.Slice(cb.Commands, func(i, j int) bool {
-		return cb.Commands[i].Endpoint.Num < cb.Commands[j].Endpoint.Num
+		return cb.Commands[i].Num < cb.Commands[j].Num
 	})
 
 	ret := []string{}
@@ -78,7 +78,7 @@ func (cb *CodeBase) Summary(filter string) string {
 // TagSummary - returns a summary of the tags used in the openapi.yaml file
 func (cb *CodeBase) TagSummary() string {
 	sort.Slice(cb.Commands, func(i, j int) bool {
-		return cb.Commands[i].Endpoint.Num < cb.Commands[j].Endpoint.Num
+		return cb.Commands[i].Num < cb.Commands[j].Num
 	})
 
 	ret := []string{}
