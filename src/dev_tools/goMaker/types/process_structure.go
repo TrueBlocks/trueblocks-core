@@ -37,7 +37,9 @@ func (s *Structure) ProcessFile(source string) error {
 		dest = convertToDestPath(source, "", s.Name)
 	}
 
-	result := s.executeTemplate(source, file.AsciiFileToString(source))
+	tmplName := source
+	tmpl := file.AsciiFileToString(source)
+	result := s.executeTemplate(tmplName, tmpl)
 	dest = strings.Replace(dest, "//src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
 	return codeWriter.WriteCode(dest, result)
 }

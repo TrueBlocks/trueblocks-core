@@ -10,28 +10,27 @@ import (
 )
 
 type Structure struct {
-	Name        string      `json:"name,omitempty" toml:"name"`
-	Class       string      `json:"class,omitempty" toml:"class"`
-	BaseClass   string      `json:"base_class,omitempty" toml:"base_class"`
-	Fields      string      `json:"fields,omitempty" toml:"fields"`
-	GoOutput    string      `json:"go_output,omitempty" toml:"go_output"`
-	DocGroup    string      `json:"doc_group,omitempty" toml:"doc_group"`
-	DocRoute    string      `json:"doc_route,omitempty" toml:"doc_route"`
-	DocDescr    string      `json:"doc_descr,omitempty" toml:"doc_descr"`
-	DocAlias    string      `json:"doc_alias,omitempty" toml:"doc_alias"`
-	DocProducer string      `json:"doc_producer,omitempty" toml:"doc_producer"`
-	ContainedBy string      `json:"contained_by,omitempty" toml:"contained_by"`
-	GoModel     string      `json:"go_model,omitempty" toml:"go_model"`
-	CacheAs     string      `json:"cache_as,omitempty" toml:"cache_as"`
-	CacheBy     string      `json:"cache_by,omitempty" toml:"cache_by"`
-	CacheType   string      `json:"cache_type,omitempty" toml:"cache_type"`
-	DisableGo   bool        `json:"disable_go,omitempty" toml:"disable_go"`
-	DisableDocs bool        `json:"disable_docs,omitempty" toml:"disable_docs"`
-	Members     []Member    `json:"members,omitempty" toml:"members"`
-	Route       string      `json:"-" toml:"-"`
-	Producers   []string    `json:"-" toml:"-"`
-	cbPtr       *CodeBase   `json:"-" toml:"-"`
-	templates   TemplateMap `json:"-" toml:"-"`
+	Name        string    `json:"name,omitempty" toml:"name"`
+	Class       string    `json:"class,omitempty" toml:"class"`
+	BaseClass   string    `json:"base_class,omitempty" toml:"base_class"`
+	Fields      string    `json:"fields,omitempty" toml:"fields"`
+	GoOutput    string    `json:"go_output,omitempty" toml:"go_output"`
+	DocGroup    string    `json:"doc_group,omitempty" toml:"doc_group"`
+	DocRoute    string    `json:"doc_route,omitempty" toml:"doc_route"`
+	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr"`
+	DocAlias    string    `json:"doc_alias,omitempty" toml:"doc_alias"`
+	DocProducer string    `json:"doc_producer,omitempty" toml:"doc_producer"`
+	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
+	GoModel     string    `json:"go_model,omitempty" toml:"go_model"`
+	CacheAs     string    `json:"cache_as,omitempty" toml:"cache_as"`
+	CacheBy     string    `json:"cache_by,omitempty" toml:"cache_by"`
+	CacheType   string    `json:"cache_type,omitempty" toml:"cache_type"`
+	DisableGo   bool      `json:"disable_go,omitempty" toml:"disable_go"`
+	DisableDocs bool      `json:"disable_docs,omitempty" toml:"disable_docs"`
+	Members     []Member  `json:"members,omitempty" toml:"members"`
+	Route       string    `json:"-" toml:"-"`
+	Producers   []string  `json:"-" toml:"-"`
+	cbPtr       *CodeBase `json:"-" toml:"-"`
 }
 
 func (s *Structure) String() string {
@@ -108,8 +107,9 @@ func (s *Structure) CacheIdStr() string {
 }
 
 func (s *Structure) ModelIntro() string {
+	tmplName := "modelIntro" + s.Class
 	tmpl := strings.Trim(file.AsciiFileToString("src/dev_tools/goMaker/templates/model-intros/"+SnakeCase(s.Class)+".md"), "\n\r\t")
-	return s.executeTemplate("Intro", tmpl)
+	return s.executeTemplate(tmplName, tmpl)
 }
 
 func (s *Structure) RouteToGroup(r string) string {
@@ -119,18 +119,19 @@ func (s *Structure) RouteToGroup(r string) string {
 func (s *Structure) ModelProducers() string {
 	ret := []string{}
 	for _, producer := range s.Producers {
+		tmplName := "modelProducers"
 		tmpl := `- [chifra {{.Route}}](/chifra/{{.Group}}/#chifra-{{.Route}})`
 		c := Command{
 			Route: producer,
 			Group: s.RouteToGroup(producer),
 		}
-		ret = append(ret, c.executeTemplate("modelProducers", tmpl))
+		ret = append(ret, c.executeTemplate(tmplName, tmpl))
 	}
 	return strings.Join(ret, "\n")
 }
 
-func (s *Structure) TypeToGroup(t string) string {
-	return s.cbPtr.TypeToGroup[strings.ToLower(t)]
+func (s *Structure) TypeToGroup2(t string) string {
+	return s.cbPtr.TypeToGroup3[strings.ToLower(t)]
 }
 
 func (s *Structure) Widest() (int, int, int) {
@@ -151,7 +152,7 @@ func (s *Structure) Widest() (int, int, int) {
 	return widest[0], widest[1], widest[2]
 }
 
-func (s *Structure) dividerRow() string {
+func (s *Structure) DividerRow() string {
 	wName, wDescr, wType := s.Widest()
 	name := strings.Repeat("-", wName)
 	descr := strings.Repeat("-", wDescr)
@@ -159,7 +160,7 @@ func (s *Structure) dividerRow() string {
 	return "| " + strings.Join([]string{name, descr, typ}, " | ") + " |"
 }
 
-func (s *Structure) markdownRow(fields []string) string {
+func (s *Structure) MarkdownRow(fields []string) string {
 	wName, wDescr, wType := s.Widest()
 	name := Pad(fields[0], wName)
 	descr := Pad(fields[1], wDescr)
@@ -172,11 +173,11 @@ func (s *Structure) MarkdownTable() string {
 		return s.Members[i].DocOrder < s.Members[j].DocOrder
 	})
 	ret := []string{}
-	ret = append(ret, s.markdownRow([]string{"Field", "Description", "Type"}))
-	ret = append(ret, s.dividerRow())
+	ret = append(ret, s.MarkdownRow([]string{"Field", "Description", "Type"}))
+	ret = append(ret, s.DividerRow())
 	for _, m := range s.Members {
 		if m.DocOrder > 0 {
-			ret = append(ret, s.markdownRow([]string{m.Name, m.MarkdownDescription(), m.MarkdownType()}))
+			ret = append(ret, s.MarkdownRow([]string{m.Name, m.MarkdownDescription(), m.MarkdownType()}))
 		}
 	}
 	return strings.Join(ret, "\n")
@@ -197,8 +198,9 @@ func (s *Structure) ModelNotes() string {
 	thePath := "src/dev_tools/goMaker/templates/model-intros/" + SnakeCase(s.Class) + ".md"
 	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
 	if file.FileExists(thePath) {
+		tmplName := "Notes" + s.Class
 		tmpl := file.AsciiFileToString(thePath)
-		return "\n\n" + strings.Trim(s.executeTemplate("Notes", tmpl), "\r\n\t")
+		return "\n\n" + strings.Trim(s.executeTemplate(tmplName, tmpl), "\r\n\t")
 	}
 	return ""
 }

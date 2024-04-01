@@ -1,23 +1,5 @@
 package types
 
-import (
-	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-)
-
-func (c *Command) PkgDoc() string {
-	docsPath := "src/dev_tools/goMaker/templates/readme-intros/" + c.Route + ".md"
-	docsPath = strings.ReplaceAll(docsPath, " ", "")
-	contents := file.AsciiFileToString(docsPath)
-	contents = strings.ReplaceAll(contents, "`", "")
-	contents = strings.ReplaceAll(contents, "\n", " ")
-	contents = strings.ReplaceAll(contents, "  ", " ")
-	contents = strings.ReplaceAll(contents, "{{.Route}}", c.Route)
-	sentences := strings.Split(contents, ".")
-	return "// " + strings.Join(sentences, ".")
-}
-
 // handle_gocmds_docfile
 // verifyGoEnumValidators
 // verifyDescriptions

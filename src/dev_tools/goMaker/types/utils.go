@@ -4,14 +4,11 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
-
-type TemplateMap map[string]*template.Template
 
 func shouldProcess(source, tag string) (bool, error) {
 	single := os.Getenv("TB_MAKER_SINGLE")

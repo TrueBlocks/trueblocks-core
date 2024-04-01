@@ -7,17 +7,16 @@ import (
 )
 
 type Member struct {
-	Name        string      `json:"name,omitempty" csv:"name"`
-	Type        string      `json:"type,omitempty" csv:"type"`
-	StrDefault  string      `json:"strDefault,omitempty" csv:"strDefault"`
-	Attributes  string      `json:"attributes,omitempty" csv:"attributes"`
-	DocOrder    int         `json:"docOrder,omitempty" csv:"docOrder"`
-	Description string      `json:"description,omitempty" csv:"description"`
-	Num         int         `json:"num"`
-	IsArray     bool        `json:"isArray,omitempty"`
-	IsPointer   bool        `json:"isPointer,omitempty"`
-	stPtr       *Structure  `json:"-"`
-	templates   TemplateMap `json:"-"`
+	Name        string     `json:"name,omitempty" csv:"name"`
+	Type        string     `json:"type,omitempty" csv:"type"`
+	StrDefault  string     `json:"strDefault,omitempty" csv:"strDefault"`
+	Attributes  string     `json:"attributes,omitempty" csv:"attributes"`
+	DocOrder    int        `json:"docOrder,omitempty" csv:"docOrder"`
+	Description string     `json:"description,omitempty" csv:"description"`
+	Num         int        `json:"num"`
+	IsArray     bool       `json:"isArray,omitempty"`
+	IsPointer   bool       `json:"isPointer,omitempty"`
+	stPtr       *Structure `json:"-"`
 }
 
 func (m *Member) String() string {
@@ -103,8 +102,9 @@ func (m *Member) RawTag() string {
 }
 
 func (m *Member) Tag() string {
+	tmplName := "tag"
 	tmpl := "`json:\"{{.Name}}{{if .IsOmitEmpty}},omitempty{{end}}\"`"
-	return m.executeTemplate("tag", tmpl)
+	return m.executeTemplate(tmplName, tmpl)
 }
 
 func (m *Member) MarkdownDescription() string {
@@ -122,7 +122,7 @@ func (m *Member) MarkdownType() string {
 	}
 	if m.IsObject() {
 		typeLower := strings.ToLower(m.Type)
-		group := strings.ToLower(m.TypeToGroup(typeLower))
+		group := strings.ToLower(m.TypeToGroup1(typeLower))
 		if group != "" {
 			return "[" + typ + "](/data-model/" + group + "/#" + strings.ToLower(m.Type) + ")"
 		}
@@ -269,10 +269,10 @@ func (m *Member) MarshalCode() string {
 		return ""
 	}
 
+	tmplName := "cache"
 	tmpl := ""
-	cacheName := "cache"
 	if m.GoName() == "Transactions" && m.Container() == "Block" {
-		cacheName += "1"
+		tmplName += "1"
 		tmpl = `	// Transactions
 	var txHashes []string
 	switch v := any(s.Transactions).(type) {
@@ -290,7 +290,7 @@ func (m *Member) MarshalCode() string {
 
 `
 	} else if m.GoName() == "Value" && m.Container() == "Parameter" {
-		cacheName += "2"
+		tmplName += "2"
 		tmpl = `// {{.GoName}}
 	{{.Lower}}, err := json.Marshal(s.{{.GoName}})
 	if err != nil {
@@ -302,7 +302,7 @@ func (m *Member) MarshalCode() string {
 
 `
 	} else if m.IsArray && m.GoName() != "Topics" && m.GoName() != "TraceAddress" && m.GoName() != "Uncles" {
-		cacheName += "3"
+		tmplName += "3"
 		tmpl = `// {{.GoName}}
 	{{.Lower}} := make([]cache.Marshaler, 0, len(s.{{.GoName}}))
 	for _, {{.LowerSingular}} := range s.{{.GoName}} {
@@ -314,7 +314,7 @@ func (m *Member) MarshalCode() string {
 
 `
 	} else if m.IsObject() {
-		cacheName += "4"
+		tmplName += "4"
 		tmpl = `// {{.GoName}}
 	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
 		Value: s.{{.GoName}},
@@ -325,7 +325,7 @@ func (m *Member) MarshalCode() string {
 
 `
 	} else {
-		cacheName += "5"
+		tmplName += "5"
 		tmpl = `// {{.GoName}}
 	if err = cache.WriteValue(writer, {{if .NeedsPtr}}&{{end}}s.{{.GoName}}); err != nil {
 		return err
@@ -334,7 +334,7 @@ func (m *Member) MarshalCode() string {
 `
 	}
 
-	return m.executeTemplate(cacheName, tmpl)
+	return m.executeTemplate(tmplName, tmpl)
 }
 
 func (m *Member) UnmarshalCode() string {
@@ -346,8 +346,10 @@ func (m *Member) UnmarshalCode() string {
 		return ""
 	}
 
+	tmplName := "unmarshalCode"
 	tmpl := ""
 	if m.GoName() == "Transactions" && m.Container() == "Block" {
+		tmplName += "1"
 		tmpl = `		// Transactions
 	s.Transactions = make([]string, 0)
 	if err = cache.ReadValue(reader, &s.Transactions, version); err != nil {
@@ -356,6 +358,7 @@ func (m *Member) UnmarshalCode() string {
 
 `
 	} else if m.GoName() == "Value" && m.Container() == "Parameter" {
+		tmplName += "2"
 		tmpl = `// {{.GoName}}
 	var {{.Lower}} string
 	if err = cache.ReadValue(reader, &{{.Lower}}, version); err != nil {
@@ -367,6 +370,7 @@ func (m *Member) UnmarshalCode() string {
 
 `
 	} else if m.IsArray {
+		tmplName += "3"
 		tmpl = `// {{.GoName}}
 	s.{{.GoName}} = make({{.GoType}}, 0)
 	if err = cache.ReadValue(reader, &s.{{.GoName}}, version); err != nil {
@@ -375,7 +379,7 @@ func (m *Member) UnmarshalCode() string {
 
 `
 	} else if m.IsObject() {
-
+		tmplName += "4"
 		tmpl = `// {{.GoName}}
 	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
 		Value: s.{{.GoName}},
@@ -388,6 +392,7 @@ func (m *Member) UnmarshalCode() string {
 `
 
 	} else {
+		tmplName += "5"
 		tmpl = `// {{.GoName}}
 	if err = cache.ReadValue(reader, &s.{{.GoName}}, version); err != nil {
 		return err
@@ -396,7 +401,7 @@ func (m *Member) UnmarshalCode() string {
 `
 	}
 
-	return m.executeTemplate("unmarshalCode", tmpl)
+	return m.executeTemplate(tmplName, tmpl)
 }
 
 func (m *Member) YamlType() string {
@@ -419,8 +424,8 @@ func (m *Member) YamlType() string {
 	return "string" + f
 }
 
-func (m *Member) TypeToGroup(t string) string {
-	return m.stPtr.TypeToGroup(strings.ToLower(t))
+func (m *Member) TypeToGroup1(t string) string {
+	return m.stPtr.TypeToGroup2(strings.ToLower(t))
 }
 
 func readMember(m *Member, data *any) (bool, error) {

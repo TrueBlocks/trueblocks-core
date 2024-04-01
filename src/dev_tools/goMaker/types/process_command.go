@@ -19,6 +19,8 @@ func (c *Command) ProcessFile(source string) error {
 		return nil
 	}
 
-	result := c.executeTemplate(source, file.AsciiFileToString(source))
+	tmplName := source
+	tmpl := file.AsciiFileToString(source)
+	result := c.executeTemplate(tmplName, tmpl)
 	return codeWriter.WriteCode(convertToDestPath(source, c.Route, ""), result)
 }

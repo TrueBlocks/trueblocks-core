@@ -10,32 +10,30 @@ import (
 )
 
 type Command struct {
-	Route       string      `json:"route" csv:"route"`
-	Group       string      `json:"group" csv:"group"`
-	Description string      `json:"description" csv:"description"`
-	Endpoint    Endpoint    `json:"endpoint" csv:"endpoint"`
-	Options     []Option    `json:"options" csv:"options"`
-	Notes       []string    `json:"notes" csv:"notes"`
-	Aliases     []string    `json:"aliases" csv:"aliases"`
-	Hidden      []string    `json:"hidden" csv:"hidden"`
-	Productions []string    `json:"productions" csv:"productions"`
-	Proper      string      `json:"proper" csv:"proper"`
-	Lower       string      `json:"lower" csv:"lower"`
-	cbPtr       *CodeBase   `json:"-" csv:"-"`
-	templates   TemplateMap `json:"-" csv:"-"`
+	Route       string       `json:"route" csv:"route"`
+	Group       string       `json:"group" csv:"group"`
+	Description string       `json:"description" csv:"description"`
+	Endpoint    Endpoint     `json:"endpoint" csv:"endpoint"`
+	Options     []Option     `json:"options" csv:"options"`
+	Notes       []string     `json:"notes" csv:"notes"`
+	Aliases     []string     `json:"aliases" csv:"aliases"`
+	Hidden      []string     `json:"hidden" csv:"hidden"`
+	Productions []Production `json:"productions"`
+	Proper      string       `json:"proper"`
+	Lower       string       `json:"lower"`
+	cbPtr       *CodeBase    `json:"-"`
 }
 
-func (c *Command) TypeToGroup(t string) string {
-	return c.cbPtr.TypeToGroup[t]
+func (c *Command) TypeToGroup2(t string) string {
+	return c.cbPtr.TypeToGroup3[t]
 }
 
 func (c *Command) ProducedByDescr() string {
 	g := strings.Replace(strings.ToLower(c.Group), " ", "", -1)
-	tmpl := fmt.Sprintf(" Corresponds to the <a href=\"/chifra/%s/#chifra-{{.Route}}\">chifra {{.Route}}</a> command line.", g)
 	types := []string{}
 	for i, production := range c.Productions {
-		lowerProd := strings.ToLower(production)
-		groupProd := c.TypeToGroup(lowerProd)
+		lowerProd := strings.ToLower(production.Value)
+		groupProd := c.TypeToGroup2(lowerProd)
 		if i > 0 {
 			if i == len(c.Productions)-1 {
 				types = append(types, " or ")
@@ -43,20 +41,22 @@ func (c *Command) ProducedByDescr() string {
 				types = append(types, ", ")
 			}
 		}
-		types = append(types, c.executeTemplate("produces"+production, fmt.Sprintf("<a href=\"/data-model/%s/#%s\">%s</a>", groupProd, lowerProd, production)))
+		tmpl := fmt.Sprintf("<a href=\"/data-model/%s/#%s\">%s</a>", groupProd, lowerProd, production.Value)
+		types = append(types, c.executeTemplate("produces"+production.Value, tmpl))
 	}
-	return "Produces " + strings.Join(types, "") + " data." + c.executeTemplate("corresponds", tmpl)
+	tmpl := fmt.Sprintf(" Corresponds to the <a href=\"/chifra/%s/#chifra-{{.Route}}\">chifra {{.Route}}</a> command line.", g)
+	return "Produces " + strings.Join(types, "") + " data." + c.executeTemplate("corresponds"+c.Route, tmpl)
 }
 
 func (c *Command) ProducedByList() string {
 	ret := []string{}
 	if len(c.Productions) == 1 {
-		snaked := SnakeCase(c.Productions[0])
+		snaked := SnakeCase(c.Productions[0].Value)
 		ret = []string{fmt.Sprintf("                      $ref: \"#/components/schemas/%s\"", snaked)}
 	} else {
 		ret = append(ret, "                      oneOf:")
 		for _, production := range c.Productions {
-			snaked := SnakeCase(production)
+			snaked := SnakeCase(production.Value)
 			s := fmt.Sprintf("                        - $ref: \"#/components/schemas/%s\"", snaked)
 			ret = append(ret, s)
 		}
@@ -73,7 +73,7 @@ func (c *Command) HasEnums() bool {
 	return false
 }
 
-func (c *Command) clean() {
+func (c *Command) Clean() {
 	cleaned := []Option{}
 	notes := []string{}
 	aliases := []string{}
@@ -129,10 +129,6 @@ func (c *Command) clean() {
 	c.Aliases = aliases
 }
 
-func (op *Option) IsPositional() bool {
-	return op.OptionType == "positional"
-}
-
 func (c *Command) Positionals() []string {
 	ret := []string{}
 	for _, op := range c.Options {
@@ -179,8 +175,9 @@ func (c *Command) PyGlobals() string {
 	}
 	for _, op := range globals {
 		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
-			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
-			ret = append(ret, op.executeTemplate("pyglobals", code))
+			tmplName := "pyglobals1"
+			tmpl := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			ret = append(ret, op.executeTemplate(tmplName, tmpl))
 		}
 	}
 	return strings.Join(ret, "\n")
@@ -194,7 +191,8 @@ func (c *Command) YamlGlobals() string {
 	}
 	for _, op := range globals {
 		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
-			code := `        - name: {{.SnakeCase}}
+			tmplName := "pyglobals2"
+			tmpl := `        - name: {{.SnakeCase}}
           description: {{.Description}}
           required: false
           style: form
@@ -202,7 +200,7 @@ func (c *Command) YamlGlobals() string {
           explode: true
           schema:
             type: {{.DataType}}`
-			ret = append(ret, op.executeTemplate("pyglobals", code))
+			ret = append(ret, op.executeTemplate(tmplName, tmpl))
 		}
 	}
 	return strings.Join(ret, "\n")
@@ -215,21 +213,6 @@ func (c *Command) FirstPositional() string {
 		}
 	}
 	return ""
-}
-
-func (op *Option) IsNullDefault2() bool {
-	return op.IsNullDefault() || op.Generate == "config"
-}
-
-func (op *Option) IsNullDefault() bool {
-	if len(op.DefVal) == 0 ||
-		op.DefVal == "0" ||
-		op.DefVal == "0.0" ||
-		op.DefVal == "false" ||
-		op.DefVal == "nil" {
-		return true
-	}
-	return false
 }
 
 func (c *Command) HasAddrs() bool {
@@ -245,8 +228,9 @@ func (c *Command) PyOptions() string {
 	ret := []string{}
 	for _, op := range c.Options {
 		if !op.IsPositional() && !op.IsHidden() {
-			code := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
-			ret = append(ret, op.executeTemplate("pyoption", code))
+			tmplName := "pyoption"
+			tmpl := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			ret = append(ret, op.executeTemplate(tmplName, tmpl))
 		}
 	}
 	return strings.Join(ret, "\n")
@@ -267,24 +251,6 @@ func (c *Command) Enums1() string {
 	return ret
 }
 
-// Enum1 for tag {{.Enum1}}
-func (op *Option) Enum1() string {
-	if !op.IsEnum {
-		return ""
-	}
-	tmpl := `	if key == "{{.LongName}}" {
-		var err error
-		values := strings.Split(value, ",")
-		if opts.{{.GoName}}, err = enumFrom{{.EnumName}}(values); err != nil {
-			return false, err
-		} else {
-			found = true
-		}
-	}
-	`
-	return op.executeTemplate("enum1", tmpl)
-}
-
 // Enums2 for tag {{.Enums2}}
 func (c *Command) Enums2() string {
 	if !c.HasEnums() {
@@ -296,56 +262,6 @@ func (c *Command) Enums2() string {
 		ret += op.Enum2()
 	}
 	return ret
-}
-
-// Enum2 for tag {{.Enum2}}
-func (op *Option) Enum2() string {
-	if !op.IsEnum {
-		return ""
-	}
-	tmpl := `type {{.EnumName}} int
-
-const (
-{{.EnumDef}}
-)
-
-func (v {{.EnumName}}) String() string {
-	switch v {
-	case {{.EnumNone}}:
-		return "none"
-{{.SomeCases}}	}
-
-	var m = map[{{.EnumName}}]string{
-{{.EnumMap}}
-	}
-
-	var ret []string
-	for _, val := range []{{.EnumList}} {
-		if v&val != 0 {
-			ret = append(ret, m[val])
-		}
-	}
-
-	return strings.Join(ret, ",")
-}
-
-func enumFrom{{.EnumName}}(values []string) ({{.EnumName}}, error) {
-	if len(values) == 0 {
-		return {{.EnumNone}}, fmt.Errorf("no value provided for {{.Lower}} option")
-	}
-
-{{.PreSwitch}}	var result {{.EnumName}}
-	for _, val := range values {
-		switch val {
-{{.EnumCases}}
-		}
-	}
-
-	return result, nil
-}
-
-`
-	return op.executeTemplate("enum2", tmpl)
 }
 
 // Enums3 for tag {{.Enums3}}
@@ -374,13 +290,6 @@ func (c *Command) SdkFields() string {
 	ret += `	Globals
 `
 	return ret
-}
-
-// SdkField for tag {{.SdkField}}}
-func (op *Option) SdkField() string {
-	tmpl := `	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-`
-	return op.executeTemplate("sdkField", tmpl)
 }
 
 // No unique tags found in apps_chifra_sdk_route.go
@@ -471,50 +380,6 @@ func (c *Command) SetOptions() string {
 	return strings.Join(options, "\n") + "\n"
 }
 
-// SetOption for tag {{.SetOption}}
-func (op *Option) SetOption() string {
-	ret := ""
-	if !op.IsPositional() && op.OptionType != "alias" {
-		tmpl := `[{ROUTE}]Cmd.Flags().{{.CobraType}}VarP(&[{ROUTE}]Pkg.GetOptions().{{.GoName}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, {{.CobraDescription}})`
-		ret = op.executeTemplate("setOptions", tmpl)
-	}
-	ret = strings.ReplaceAll(ret, "[{ROUTE}]", op.ApiRoute)
-	return ret
-}
-
-func (op *Option) CobraType() string {
-	m := map[string]string{
-		"<address>":    "String",
-		"<blknum>":     "Uint64",
-		"<boolean>":    "Bool",
-		"<double>":     "Float64",
-		"<string>":     "String",
-		"<uint64>":     "Uint64",
-		"enum":         "String",
-		"list<addr>":   "StringSlice",
-		"list<enum>":   "StringSlice",
-		"list<string>": "StringSlice",
-		"list<topic>":  "StringSlice",
-	}
-	return m[op.DataType]
-}
-
-func (op *Option) CobraDescription() string {
-	d := op.Description
-	if op.IsHidden() {
-		d += " (hidden)"
-	}
-	if op.IsEnum {
-		e := "One of "
-		if op.IsArray {
-			e = "One or more of "
-		}
-		e += "[ " + strings.Join(op.Enums, " | ") + " ]"
-		return "`" + d + "\n" + e + "`"
-	}
-	return "\"" + d + "\""
-}
-
 // Short for tag {{.Short}}"
 func (c *Command) Short() string {
 	return strings.ToLower(c.Endpoint.Description[0:1]) + strings.Replace(c.Endpoint.Description[1:], ".", "", -1)
@@ -555,16 +420,6 @@ func (c *Command) DefaultsApi() string {
 		return ""
 	}
 	return strings.Join(ret, "\n") + "\n"
-}
-
-func (op *Option) DefaultApi() string {
-	if op.IsNullDefault() {
-		return ""
-	}
-	if op.DataType == "<string>" || strings.HasPrefix(op.DataType, "enum") {
-		return op.executeTemplate("defaultApi2", `	opts.{{.GoName}} = "{{.DefVal}}"`)
-	}
-	return op.executeTemplate("defaultApi", `	opts.{{.GoName}} = {{.DefVal}}`)
 }
 
 // EnsConvert1 for tag {{.EnsConvert1}}
@@ -622,16 +477,6 @@ func (c *Command) GoDefs() string {
 	return strings.Join(ret, "\n")
 }
 
-func (op *Option) GoDef() string {
-	if op.IsNullDefault2() {
-		return ""
-	}
-	if op.DataType == "<string>" || strings.Contains(op.DataType, "enum") {
-		return op.executeTemplate("goDefs2", `	{{.GoName}}: "{{.DefVal}}",`)
-	}
-	return op.executeTemplate("goDefs", `	{{.GoName}}: {{.DefVal}},`)
-}
-
 // OptFields for tag {{.OptFields}}
 func (c *Command) OptFields() string {
 	ret := []string{}
@@ -648,25 +493,6 @@ func (c *Command) OptFields() string {
 	ret = append(ret, "Conn *rpc.Connection `json:\"conn,omitempty\"` // The connection to the RPC server")
 	ret = append(ret, "BadFlag error `json:\"badFlag,omitempty\"` // An error flag if needed")
 	return strings.Join(ret, "\n") + "\n"
-}
-
-func (op *Option) OptField() string {
-	if strings.Contains(op.toGoName(), "Settings.") {
-		return ""
-	}
-	ret := op.executeTemplate("optFields", `	{{.GoName}} {{.GoOptionsType}} {{.JsonTag}} // {{.DescrCaps}}`)
-	if op.LongName == "blocks" {
-		ret += "\n" + op.executeTemplate("optFields2", `	{{.GoSdkName}} []identifiers.Identifier`)
-		ret += "`json:\"blockIds,omitempty\"`   // Block identifiers"
-	} else if op.LongName == "transactions" {
-		ret += "\n" + op.executeTemplate("optFields2", `	{{.GoSdkName}} []identifiers.Identifier`)
-		ret += "`json:\"transactionIds,omitempty\"`   // Transaction identifiers"
-	}
-	return ret
-}
-
-func (op *Option) DescrCaps() string {
-	return strings.ToUpper(op.Description[0:1]) + op.Description[1:]
 }
 
 func (c *Command) ReturnType() string {
@@ -727,35 +553,6 @@ func (c *Command) RequestOpts() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *Option) RequestOpt() string {
-	tmpl := `		case "{{.SnakeCase}}":`
-	if op.Generate == "config" {
-		tmpl = `	case "{{.SnakeCase}}":
-		configs[key] = value[0]`
-	} else {
-		if strings.HasPrefix(op.DataType, "list") {
-			tmpl += `
-			for _, val := range value {
-				s := strings.Split(val, " ") // may contain space separated items
-				opts.{{.GoName}} = append(opts.{{.GoName}}, s...)
-			}`
-		} else if op.DataType == "<boolean>" {
-			tmpl += `
-			opts.{{.GoName}} = true`
-		} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
-			tmpl += `
-			opts.{{.GoName}} = globals.ToUint64(value[0])`
-		} else if op.DataType == "<double>" {
-			tmpl += `
-			opts.{{.GoName}} = globals.ToFloat64(value[0])`
-		} else {
-			tmpl += `
-			opts.{{.GoName}} = value[0]`
-		}
-	}
-	return strings.Replace(op.executeTemplate("requestOpts", tmpl), "Settings.", "", -1)
-}
-
 // TestLogs for tag {{.TestLogs}}
 func (c *Command) TestLogs() string {
 	ret := []string{}
@@ -771,50 +568,16 @@ func (c *Command) TestLogs() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (op *Option) IsStringLike() bool {
-	return strings.HasPrefix(op.DataType, "list") ||
-		strings.HasPrefix(op.DataType, "enum") ||
-		op.DataType == "<string>" ||
-		op.DataType == "<address>"
-}
-
-func (op *Option) IsBool() bool {
-	return op.DataType == "<boolean>"
-}
-
-func (op *Option) IsFloat() bool {
-	return op.DataType == "<double>"
-}
-
-func (op *Option) TestLog() string {
-	if op.Generate == "config" {
-		return ""
-	}
-	tmpl := `	logger.TestLog(`
-	if op.IsFloat() {
-		tmpl += `opts.{{.GoName}} != float64({{.Default}})`
-
-	} else if op.IsBool() {
-		tmpl += `opts.{{.GoName}}`
-
-	} else if op.IsStringLike() {
-		tmpl += `len(opts.{{.GoName}}) > 0`
-		if !op.IsNullDefault() {
-			tmpl += ` && opts.{{.GoName}} != "{{.DefVal}}"`
-		}
-
-	} else {
-		tmpl += `opts.{{.GoName}} != {{.Default}}`
-		if strings.HasPrefix(op.LongName, "last") {
-			if !op.IsNullDefault() {
-				tmpl += ` && opts.{{.GoName}} != 0`
-			}
-		}
-	}
-
-	tmpl += `, "{{.GoName}}: ", opts.{{.GoName}})`
-
-	return op.executeTemplate("testLogs", tmpl)
+func (c *Command) PkgDoc() string {
+	docsPath := "src/dev_tools/goMaker/templates/readme-intros/" + c.Route + ".md"
+	docsPath = strings.ReplaceAll(docsPath, " ", "")
+	contents := file.AsciiFileToString(docsPath)
+	contents = strings.ReplaceAll(contents, "`", "")
+	contents = strings.ReplaceAll(contents, "\n", " ")
+	contents = strings.ReplaceAll(contents, "  ", " ")
+	contents = strings.ReplaceAll(contents, "{{.Route}}", c.Route)
+	sentences := strings.Split(contents, ".")
+	return "// " + strings.Join(sentences, ".")
 }
 
 func (c *Command) LowerGroup() string {
@@ -841,8 +604,9 @@ func (c *Command) ReadmeName() string {
 
 func (c *Command) HelpIntro() string {
 	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
+	tmplName := "helpIntro" + c.ReadmeName()
 	tmpl := file.AsciiFileToString(thePath)
-	return strings.Trim(c.executeTemplate("Intro", tmpl), "\r\n\t")
+	return strings.Trim(c.executeTemplate(tmplName, tmpl), "\r\n\t")
 }
 
 func (c *Command) HelpText() string {
@@ -859,37 +623,42 @@ func (c *Command) HelpDataModels() string {
 		if i == 0 {
 			ret = []string{}
 		}
-		lowerProd := strings.ToLower(production)
-		groupProd := c.TypeToGroup(lowerProd)
+		lowerProd := strings.ToLower(production.Value)
+		groupProd := c.TypeToGroup2(lowerProd)
 		ret = append(ret, "- ["+lowerProd+"](/data-model/"+groupProd+"/#"+lowerProd+")")
 	}
 	return strings.Join(ret, "\n")
 }
 
 func (c *Command) HelpLinks() string {
+	tmplName := "Links"
 	tmpl := ""
 	if c.Route == "daemon" {
+		tmplName += "1"
 		tmpl = `- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
 - no tests for this command`
 	} else if c.Route == "explore" {
+		tmplName += "2"
 		tmpl = `- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.Tool}}.csv)`
 	} else {
+		tmplName += "3"
 		tmpl = `- [api docs](/api/#operation/{{.LowerGroup}}-{{.Route}})
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.Tool}}.csv)`
 	}
-	return c.executeTemplate("Links", tmpl)
+	return c.executeTemplate(tmplName, tmpl)
 }
 
 func (c *Command) HelpNotes() string {
 	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
 	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
 	if file.FileExists(thePath) {
+		tmplName := "Notes" + c.ReadmeName()
 		tmpl := file.AsciiFileToString(thePath)
-		return "\n\n" + strings.Trim(c.executeTemplate("Notes", tmpl), "\r\n\t")
+		return "\n\n" + strings.Trim(c.executeTemplate(tmplName, tmpl), "\r\n\t")
 	}
 	return ""
 }

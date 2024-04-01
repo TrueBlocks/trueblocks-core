@@ -145,7 +145,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap map[string]Structure) {
 	theMap := make(map[string]Command)
 
-	producesMap := make(map[string][]string)
+	producesMap := make(map[string][]Production)
 
 	// Create the structure array (and sort it by DocRoute) from the map
 	cb.Structures = make([]Structure, 0, len(structMap))
@@ -153,16 +153,16 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 		st.DocProducer = strings.Replace(st.DocProducer, " ", "", -1)
 		st.Producers = strings.Split(st.DocProducer, ",")
 		for _, producer := range st.Producers {
-			producesMap[producer] = append(producesMap[producer], st.Class)
+			producesMap[producer] = append(producesMap[producer], Production{st.Class})
 		}
-		if cb.TypeToGroup == nil {
-			cb.TypeToGroup = make(map[string]string)
+		if cb.TypeToGroup3 == nil {
+			cb.TypeToGroup3 = make(map[string]string)
 		}
 		dg := strings.Split(st.DocGroup, "-")
 		if len(dg) > 1 {
 			ddg := strings.ToLower(dg[1])
 			ddg = strings.Replace(ddg, " ", "", -1)
-			cb.TypeToGroup[strings.ToLower(st.Name)] = ddg
+			cb.TypeToGroup3[strings.ToLower(st.Name)] = ddg
 		}
 		st.cbPtr = cb
 		for i := 0; i < len(st.Members); i++ {
@@ -191,7 +191,7 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 			route = strings.ToLower(endpoint.Group)
 		}
 		sort.Slice(producesMap[route], func(i, j int) bool {
-			return producesMap[route][i] < producesMap[route][j]
+			return producesMap[route][i].Value < producesMap[route][j].Value
 		})
 		c := Command{
 			Route:       endpoint.ApiRoute,
@@ -208,7 +208,7 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 	// Create a command array from the map and sort it by route within group
 	cb.Commands = make([]Command, 0, len(theMap))
 	for _, c := range theMap {
-		c.clean()
+		c.Clean()
 		cb.Commands = append(cb.Commands, c)
 	}
 	sort.Slice(cb.Commands, func(i, j int) bool {

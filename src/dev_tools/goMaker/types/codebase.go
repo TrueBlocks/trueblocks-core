@@ -9,10 +9,9 @@ import (
 )
 
 type CodeBase struct {
-	Commands    []Command         `json:"commands" csv:"commands"`
-	Structures  []Structure       `json:"structures" csv:"structures"`
-	TypeToGroup map[string]string `json:"-" csv:"-"`
-	templates   TemplateMap       `json:"-" csv:"-"`
+	Commands     []Command         `json:"commands" csv:"commands"`
+	Structures   []Structure       `json:"structures" csv:"structures"`
+	TypeToGroup3 map[string]string `json:"-" csv:"-"`
 }
 
 func (c *CodeBase) String() string {
@@ -20,7 +19,7 @@ func (c *CodeBase) String() string {
 	return string(bytes)
 }
 
-func (cb *CodeBase) summary(filter string) string {
+func (cb *CodeBase) Summary(filter string) string {
 	ret := []string{}
 	sort.Slice(cb.Commands, func(i, j int) bool {
 		return cb.Commands[i].Endpoint.Num < cb.Commands[j].Endpoint.Num
@@ -39,23 +38,23 @@ func (cb *CodeBase) summary(filter string) string {
 }
 
 func (cb *CodeBase) AccountsSummary() string {
-	return cb.summary("Accounts")
+	return cb.Summary("Accounts")
 }
 
 func (cb *CodeBase) ChainDataSummary() string {
-	return cb.summary("Chain Data")
+	return cb.Summary("Chain Data")
 }
 
 func (cb *CodeBase) ChainStateSummary() string {
-	return cb.summary("Chain State")
+	return cb.Summary("Chain State")
 }
 
 func (cb *CodeBase) AdminSummary() string {
-	return cb.summary("Admin")
+	return cb.Summary("Admin")
 }
 
 func (cb *CodeBase) OtherSummary() string {
-	return cb.summary("Other")
+	return cb.Summary("Other")
 }
 
 func (cb *CodeBase) Version() string {
@@ -75,9 +74,10 @@ func (cb *CodeBase) Tags() string {
 	ret := []string{}
 	for _, c := range cb.Commands {
 		if c.Route == "" && c.Group != "" {
+			tmplName := "tags"
 			tmpl := `  - name: {{.Group}}
     description: {{.Description}}`
-			ret = append(ret, c.executeTemplate("tags", tmpl))
+			ret = append(ret, c.executeTemplate(tmplName, tmpl))
 		}
 	}
 	return strings.Join(ret, "\n")
