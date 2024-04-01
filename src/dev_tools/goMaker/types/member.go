@@ -270,7 +270,9 @@ func (m *Member) MarshalCode() string {
 	}
 
 	tmpl := ""
+	cacheName := "cache"
 	if m.GoName() == "Transactions" && m.Container() == "Block" {
+		cacheName += "1"
 		tmpl = `	// Transactions
 	var txHashes []string
 	switch v := any(s.Transactions).(type) {
@@ -287,8 +289,8 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-
 	} else if m.GoName() == "Value" && m.Container() == "Parameter" {
+		cacheName += "2"
 		tmpl = `// {{.GoName}}
 	{{.Lower}}, err := json.Marshal(s.{{.GoName}})
 	if err != nil {
@@ -299,8 +301,8 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-
 	} else if m.IsArray && m.GoName() != "Topics" && m.GoName() != "TraceAddress" && m.GoName() != "Uncles" {
+		cacheName += "3"
 		tmpl = `// {{.GoName}}
 	{{.Lower}} := make([]cache.Marshaler, 0, len(s.{{.GoName}}))
 	for _, {{.LowerSingular}} := range s.{{.GoName}} {
@@ -312,7 +314,7 @@ func (m *Member) MarshalCode() string {
 
 `
 	} else if m.IsObject() {
-
+		cacheName += "4"
 		tmpl = `// {{.GoName}}
 	opt{{.GoName}} := &cache.Optional[Simple{{.Type}}]{
 		Value: s.{{.GoName}},
@@ -322,8 +324,8 @@ func (m *Member) MarshalCode() string {
 	}
 
 `
-
 	} else {
+		cacheName += "5"
 		tmpl = `// {{.GoName}}
 	if err = cache.WriteValue(writer, {{if .NeedsPtr}}&{{end}}s.{{.GoName}}); err != nil {
 		return err
@@ -332,7 +334,7 @@ func (m *Member) MarshalCode() string {
 `
 	}
 
-	return m.executeTemplate("marshalCode", tmpl)
+	return m.executeTemplate(cacheName, tmpl)
 }
 
 func (m *Member) UnmarshalCode() string {
