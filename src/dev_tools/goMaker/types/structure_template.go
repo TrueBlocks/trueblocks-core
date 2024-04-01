@@ -1,12 +1,9 @@
 package types
 
 import (
-	"bytes"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
-	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/goMaker/codeWriter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -52,26 +49,3 @@ func grabRoute(dest string) string {
 	parts := strings.Split(dest, "/")
 	return parts[len(parts)-1]
 }
-
-// executeTemplate executes the template with the given name and returns
-// the result. It stores the parsed template in the templates map to avoid
-// parsing it more than once.
-func (s *Structure) executeTemplate(name, tmplCode string) string {
-	if s.templates == nil {
-		s.templates = make(map[string]*template.Template)
-	}
-
-	if s.templates[name] == nil {
-		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
-		funcMap := template.FuncMap{"toSnake": toSnake}
-		s.templates[name] = template.Must(template.New(name).Funcs(funcMap).Parse(tmplCode))
-	}
-
-	var tplBuffer bytes.Buffer
-	if err := s.templates[name].Execute(&tplBuffer, s); err != nil {
-		log.Fatalf("executing template failed: %v", err)
-	}
-
-	return tplBuffer.String()
-}
-
