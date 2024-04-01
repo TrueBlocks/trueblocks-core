@@ -408,7 +408,7 @@ func (m *Member) UnmarshalCode() string {
 }
 
 func (m *Member) YamlType() string {
-	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + SnakeCase(m.Type) + "\"")
+	o := fmt.Sprintf("\n          items:\n            $ref: \"#/components/schemas/" + CamelCase(m.Type) + "\"")
 	f := fmt.Sprintf("\n          format: %s", m.Type)
 	if m.IsArray {
 		return "array" + o

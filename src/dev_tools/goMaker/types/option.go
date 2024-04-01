@@ -39,8 +39,8 @@ func (op Option) String() string {
 	return string(bytes)
 }
 
-func (op *Option) SnakeCase() string {
-	return SnakeCase(op.LongName)
+func (op *Option) CamelCase() string {
+	return CamelCase(op.LongName)
 }
 
 func (op Option) Validate() bool {
@@ -60,7 +60,7 @@ func (op *Option) IsHidden() bool {
 func (op *Option) toGoName() string {
 	ret := op.LongName
 	if len(op.LongName) >= 2 {
-		ret = strings.ToUpper(op.LongName[0:1]) + SnakeCase(op.LongName)[1:]
+		ret = GoName(op.LongName)
 		if op.Generate == "config" {
 			ret = "Settings." + ret
 		}
@@ -155,7 +155,7 @@ func (op *Option) toGoSdkType() string {
 }
 
 func (op *Option) JsonTag() string {
-	return "`json:\"" + op.SnakeCase() + ",omitempty\"`"
+	return "`json:\"" + op.CamelCase() + ",omitempty\"`"
 }
 
 func (op *Option) PyHotKey() string {
@@ -682,13 +682,13 @@ func (op *Option) RequestOpt() string {
 	var ret string
 	if op.Generate == "config" {
 		tmplName := "requestOpts1"
-		tmpl := `	case "{{.SnakeCase}}":
+		tmpl := `	case "{{.CamelCase}}":
 		configs[key] = value[0]`
 		ret = op.executeTemplate(tmplName, tmpl)
 	} else {
 		if strings.HasPrefix(op.DataType, "list") {
 			tmplName := "requestOpts2"
-			tmpl := `		case "{{.SnakeCase}}":
+			tmpl := `		case "{{.CamelCase}}":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.{{.GoName}} = append(opts.{{.GoName}}, s...)
@@ -696,22 +696,22 @@ func (op *Option) RequestOpt() string {
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<boolean>" {
 			tmplName := "requestOpts3"
-			tmpl := `		case "{{.SnakeCase}}":
+			tmpl := `		case "{{.CamelCase}}":
 			opts.{{.GoName}} = true`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
 			tmplName := "requestOpts4"
-			tmpl := `		case "{{.SnakeCase}}":
+			tmpl := `		case "{{.CamelCase}}":
 			opts.{{.GoName}} = globals.ToUint64(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<double>" {
 			tmplName := "requestOpts5"
-			tmpl := `		case "{{.SnakeCase}}":
+			tmpl := `		case "{{.CamelCase}}":
 			opts.{{.GoName}} = globals.ToFloat64(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else {
 			tmplName := "requestOpts6"
-			tmpl := `		case "{{.SnakeCase}}":
+			tmpl := `		case "{{.CamelCase}}":
 			opts.{{.GoName}} = value[0]`
 			ret = op.executeTemplate(tmplName, tmpl)
 		}

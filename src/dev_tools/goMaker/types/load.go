@@ -29,14 +29,6 @@ func LoadDefinitions() (CodeBase, error) {
 		return CodeBase{}, err
 	}
 
-	if len(codeBase.Commands) == 0 {
-		return CodeBase{}, fmt.Errorf("no commands were found in %s", thePath)
-	}
-
-	if len(codeBase.Structures) == 0 {
-		return CodeBase{}, fmt.Errorf("no structures were found in %s", thePath)
-	}
-
 	return codeBase, nil
 }
 
@@ -67,6 +59,14 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 	}
 
 	cb.FinishLoad(options, endpoints, structMap)
+
+	if len(cb.Commands) == 0 {
+		return cb, fmt.Errorf("no commands were found in %s", thePath)
+	}
+
+	if len(cb.Structures) == 0 {
+		return cb, fmt.Errorf("no structures were found in %s", thePath)
+	}
 
 	return cb, nil
 }

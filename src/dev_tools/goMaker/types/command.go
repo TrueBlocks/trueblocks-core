@@ -51,13 +51,13 @@ func (c *Command) ProducedByDescr() string {
 func (c *Command) ProducedByList() string {
 	ret := []string{}
 	if len(c.Productions) == 1 {
-		snaked := SnakeCase(c.Productions[0].Value)
-		ret = []string{fmt.Sprintf("                      $ref: \"#/components/schemas/%s\"", snaked)}
+		camel := CamelCase(c.Productions[0].Value)
+		ret = []string{fmt.Sprintf("                      $ref: \"#/components/schemas/%s\"", camel)}
 	} else {
 		ret = append(ret, "                      oneOf:")
 		for _, production := range c.Productions {
-			snaked := SnakeCase(production.Value)
-			s := fmt.Sprintf("                        - $ref: \"#/components/schemas/%s\"", snaked)
+			camel := CamelCase(production.Value)
+			s := fmt.Sprintf("                        - $ref: \"#/components/schemas/%s\"", camel)
 			ret = append(ret, s)
 		}
 	}
@@ -176,7 +176,7 @@ func (c *Command) PyGlobals() string {
 	for _, op := range globals {
 		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
 			tmplName := "pyglobals1"
-			tmpl := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			tmpl := "    \"{{.CamelCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
 			ret = append(ret, op.executeTemplate(tmplName, tmpl))
 		}
 	}
@@ -192,7 +192,7 @@ func (c *Command) YamlGlobals() string {
 	for _, op := range globals {
 		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
 			tmplName := "pyglobals2"
-			tmpl := `        - name: {{.SnakeCase}}
+			tmpl := `        - name: {{.CamelCase}}
           description: {{.Description}}
           required: false
           style: form
@@ -229,7 +229,7 @@ func (c *Command) PyOptions() string {
 	for _, op := range c.Options {
 		if !op.IsPositional() && !op.IsHidden() {
 			tmplName := "pyoption"
-			tmpl := "    \"{{.SnakeCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			tmpl := "    \"{{.CamelCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
 			ret = append(ret, op.executeTemplate(tmplName, tmpl))
 		}
 	}
@@ -382,7 +382,7 @@ func (c *Command) SetOptions() string {
 
 // Short for tag {{.Short}}"
 func (c *Command) Short() string {
-	return strings.ToLower(c.Endpoint.Description[0:1]) + strings.Replace(c.Endpoint.Description[1:], ".", "", -1)
+	return FirstLower(strings.Replace(c.Endpoint.Description, ".", "", -1))
 }
 
 // Usage for tag {{.Usage}}

@@ -9,15 +9,15 @@ package cmd
 
 // helpText is the help displayed with chifra --help
 const helpText = `  Accounts:
-{{.AccountsSummary}}
+{{.Summary "Accounts"}}
   Chain Data:
-{{.ChainDataSummary}}
+{{.Summary "Chain Data"}}
   Chain State:
-{{.ChainStateSummary}}
+{{.Summary "Chain State"}}
   Admin:
-{{.AdminSummary}}
+{{.Summary "Admin"}}
   Other:
-{{.OtherSummary}}
+{{.Summary "Other"}}
   Flags:
     -h, --help    display this help screen
 

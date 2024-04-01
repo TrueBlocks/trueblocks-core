@@ -57,7 +57,7 @@ func (s *Simple{{.ModelName}}) Date() string {
 type Simple{{.Class}}{{if .IsCacheAsGroup}}Group{{end}} struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	{{if .IncludeAddr}}Address          base.Address
+	{{if .NeedsAddress}}Address          base.Address
 	{{end}}{{.Class}}s      []Simple{{.Class}}
 }
 {{end}}

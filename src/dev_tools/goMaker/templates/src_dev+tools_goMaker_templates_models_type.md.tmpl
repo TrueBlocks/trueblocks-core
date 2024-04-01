@@ -2,10 +2,12 @@
 
 {{.ModelIntro}}
 
-The following commands produce and manage {{.Plural}}:
+The following commands produce and manage {{toPlural .Class}}:
 
 {{.ModelProducers}}
 
-{{.Plural}} consist of the following fields:
+{{toPlural .Class}} consist of the following fields:
 
-{{.MarkdownTable}}{{.ModelNotes}}
+{{.MarkdownTable}}{{if .HasNotes}}
+
+{{.ModelNotes}}{{end}}

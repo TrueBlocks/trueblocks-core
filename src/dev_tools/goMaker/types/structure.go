@@ -38,10 +38,6 @@ func (s *Structure) String() string {
 	return string(bytes)
 }
 
-func (s *Structure) SnakeCase() string {
-	return SnakeCase(s.Class)
-}
-
 func (s *Structure) HasTimestamp() bool {
 	for _, m := range s.Members {
 		if m.Name == "timestamp" {
@@ -51,6 +47,10 @@ func (s *Structure) HasTimestamp() bool {
 	return false
 }
 
+func (s *Structure) CamelCase() string {
+	return CamelCase(s.Class)
+}
+
 func (s *Structure) ModelName() string {
 	if s.GoModel != "" {
 		return s.GoModel
@@ -58,16 +58,16 @@ func (s *Structure) ModelName() string {
 	return s.Class
 }
 
-func (s *Structure) ModelName3() string {
+func (s *Structure) ModelName2() string {
 	if s.GoModel != "" {
-		return strings.Replace(s.GoModel, "Block[Tx]", "Block[string]", -1)
+		return strings.Replace(s.GoModel, "Block[Tx]", "Block[Tx string | SimpleTransaction]", -1)
 	}
 	return s.ModelName()
 }
 
-func (s *Structure) ModelName2() string {
+func (s *Structure) ModelName3() string {
 	if s.GoModel != "" {
-		return strings.Replace(s.GoModel, "Block[Tx]", "Block[Tx string | SimpleTransaction]", -1)
+		return strings.Replace(s.GoModel, "Block[Tx]", "Block[string]", -1)
 	}
 	return s.ModelName()
 }
@@ -84,7 +84,7 @@ func (s *Structure) IsCacheAsGroup() bool {
 	return s.CacheAs == "group"
 }
 
-func (s *Structure) IncludeAddr() bool {
+func (s *Structure) NeedsAddress() bool {
 	return strings.Contains(s.CacheBy, "address")
 }
 
@@ -108,7 +108,7 @@ func (s *Structure) CacheIdStr() string {
 
 func (s *Structure) ModelIntro() string {
 	tmplName := "modelIntro" + s.Class
-	tmpl := strings.Trim(file.AsciiFileToString("src/dev_tools/goMaker/templates/model-intros/"+SnakeCase(s.Class)+".md"), "\n\r\t")
+	tmpl := strings.Trim(file.AsciiFileToString("src/dev_tools/goMaker/templates/model-intros/"+CamelCase(s.Class)+".md"), "\n\r\t")
 	return s.executeTemplate(tmplName, tmpl)
 }
 
@@ -179,28 +179,17 @@ func (s *Structure) MarkdownTable() string {
 	return strings.Join(ret, "\n")
 }
 
-// | Field          | Description                                                                                                          | Type      |
-// | -------------- | -------------------------------------------------------------------------------------------------------------------- | --------- |
-// | address        | the recipient for the withdrawn ether                                                                                | address   |
-// | amount         | a nonzero amount of ether given in gwei (1e9 wei)                                                                    | wei       |
-// | blockNumber    | the number of this block                                                                                             | blknum    |
-// | index          | a monotonically increasing zero-based index that increments by 1 per withdrawal to uniquely identify each withdrawal | uint64    |
-// | timestamp      | the timestamp for this block                                                                                         | timestamp |
-// | date           | the timestamp as a date (calculated)                                                                                 | datetime  |
-// | validatorIndex | the validator_index of the validator on the consensus layer the withdrawal corresponds to                            | uint64    |
-// }
+func (s *Structure) HasNotes() bool {
+	thePath := "src/dev_tools/goMaker/templates/model-intros/" + CamelCase(s.Class) + ".notes.md"
+	return file.FileExists(thePath)
+}
 
 func (s *Structure) ModelNotes() string {
-	thePath := "src/dev_tools/goMaker/templates/model-intros/" + SnakeCase(s.Class) + ".md"
-	thePath = strings.Replace(thePath, ".md", ".notes.md", -1)
+	thePath := "src/dev_tools/goMaker/templates/model-intros/" + CamelCase(s.Class) + ".notes.md"
 	if file.FileExists(thePath) {
 		tmplName := "Notes" + s.Class
 		tmpl := file.AsciiFileToString(thePath)
-		return "\n\n" + strings.Trim(s.executeTemplate(tmplName, tmpl), "\r\n\t")
+		return strings.Trim(s.executeTemplate(tmplName, tmpl), "\r\n\t")
 	}
 	return ""
-}
-
-func (s *Structure) Plural() string {
-	return Plural(s.Class)
 }

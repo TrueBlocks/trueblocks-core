@@ -7,14 +7,14 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: {{.Version}}
+  version: {{.Version false}}
   description: >
 {{.Description}}
 servers:
   - url: http://localhost:8080
     description: Local endpoints
 tags:
-{{.Tags}}
+{{.TagSummary}}
 paths:
 {{range .Commands}}{{if .IsRoute}}  /{{.Route}}:
     get:
@@ -24,7 +24,7 @@ paths:
       description: {{.Description}} Corresponds to the <a href="/chifra/{{.LowerGroup}}/#chifra-{{.Route}}">chifra {{.Route}}</a> command line.
       operationId: {{.LowerGroup}}-{{.Route}}
       parameters:
-{{range .Options}}{{if not .IsHidden}}        - name: {{.SnakeCase}}
+{{range .Options}}{{if not .IsHidden}}        - name: {{.CamelCase}}
           description: {{.Description}}
           required: {{.IsRequired}}
           style: form
@@ -49,7 +49,7 @@ paths:
           description: bad input parameter
 {{end}}{{end}}components:
   schemas:{{range .Structures}}
-{{if ne .SnakeCase ""}}    {{.SnakeCase}}:
+{{if ne .CamelCase ""}}    {{.CamelCase}}:
       description: "{{.DocDescr}}"
       type: object
       properties:{{range .Members}}{{if ne .DocOrder 0}}

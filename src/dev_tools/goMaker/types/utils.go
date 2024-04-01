@@ -57,7 +57,15 @@ func convertToDestPath(source, routeTag, typeTag string) string {
 
 var templateFolder = "src/dev_tools/goMaker/templates"
 
-func SnakeCase(s string) string {
+func LowerNoSpaces(s string) string {
+	return strings.ToLower(strings.Replace(s, " ", "", -1))
+}
+
+func GoName(s string) string {
+	return FirstUpper(CamelCase(s))
+}
+
+func CamelCase(s string) string {
 	if len(s) < 2 {
 		return s
 	}

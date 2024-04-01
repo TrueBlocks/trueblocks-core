@@ -3,7 +3,6 @@ package types
 import (
 	"bytes"
 	"log"
-	"strings"
 	"text/template"
 )
 
@@ -16,9 +15,7 @@ func (cb *CodeBase) executeTemplate(name, tmplCode string) string {
 
 	tmplName := "codebase" + name
 	if codebaseCache[tmplName] == nil {
-		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
-		funcMap := template.FuncMap{"toSnake": toSnake}
-		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(funcMap).Parse(tmplCode))
+		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(getFuncMap()).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer
@@ -35,9 +32,7 @@ func (s *Structure) executeTemplate(name, tmplCode string) string {
 
 	tmplName := "structure" + name
 	if codebaseCache[tmplName] == nil {
-		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
-		funcMap := template.FuncMap{"toSnake": toSnake}
-		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(funcMap).Parse(tmplCode))
+		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(getFuncMap()).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer
@@ -55,9 +50,7 @@ func (m *Member) executeTemplate(name, tmplCode string) string {
 
 	tmplName := "member" + name
 	if codebaseCache[tmplName] == nil {
-		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
-		funcMap := template.FuncMap{"toSnake": toSnake}
-		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(funcMap).Parse(tmplCode))
+		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(getFuncMap()).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer
@@ -75,9 +68,7 @@ func (c *Command) executeTemplate(name, tmplCode string) string {
 
 	tmplName := "command" + name
 	if codebaseCache[tmplName] == nil {
-		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
-		funcMap := template.FuncMap{"toSnake": toSnake}
-		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(funcMap).Parse(tmplCode))
+		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(getFuncMap()).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer
@@ -94,9 +85,7 @@ func (op *Option) executeTemplate(name, tmplCode string) string {
 	}
 
 	if codebaseCache[tmplName] == nil {
-		toSnake := func(s string) string { return strings.ToLower(s[0:1]) + s[1:] }
-		funcMap := template.FuncMap{"toSnake": toSnake}
-		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(funcMap).Parse(tmplCode))
+		codebaseCache[tmplName] = template.Must(template.New(tmplName).Funcs(getFuncMap()).Parse(tmplCode))
 	}
 
 	var tplBuffer bytes.Buffer
@@ -104,4 +93,13 @@ func (op *Option) executeTemplate(name, tmplCode string) string {
 		log.Fatalf("executing template failed: %v", err)
 	}
 	return tplBuffer.String()
+}
+
+func getFuncMap() template.FuncMap {
+	toPlural := func(s string) string { return Plural(s) }
+	toCamel := func(s string) string { return CamelCase(s) }
+	return template.FuncMap{
+		"toCamel":  toCamel,
+		"toPlural": toPlural,
+	}
 }

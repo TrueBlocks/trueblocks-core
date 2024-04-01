@@ -5,6 +5,8 @@ import (
 	"strings"
 )
 
+// Endpoint is a struct that represents a single endpoint in the API. It is
+// attached to the assoicated Command structure.
 type Endpoint struct {
 	Num           string   `json:"num" csv:"num"`
 	Group         string   `json:"group" csv:"group"`
