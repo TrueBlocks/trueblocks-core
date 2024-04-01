@@ -148,8 +148,13 @@ func updateFile(tempFn, newCode string) (bool, error) {
 		// utils.System("prettier -w --parser markdown " + tempFn + " >/dev/null")
 		// formatted = file.AsciiFileToString(tempFn)
 	} else if strings.Contains(tempFn, ".yaml") {
-		utils.System("prettier -w --parser yaml " + tempFn + " >/dev/null")
-		formatted = file.AsciiFileToString(tempFn)
+		if hasPrettier() {
+			utils.System("prettier -w --parser yaml " + tempFn + " >/dev/null")
+			formatted = file.AsciiFileToString(tempFn)
+		} else {
+			logger.Warn("Prettier not found, skipping production of openapi.yaml.", "Add prettier with", "`"+colors.Cyan+"npm install -g prettier"+colors.Off+"`.")
+			return false, nil
+		}
 	}
 
 	origFn := strings.Replace(tempFn, ".new", "", 1)
@@ -185,4 +190,10 @@ func syncLogger() {
 
 func init() {
 	go syncLogger()
+}
+
+func hasPrettier() bool {
+	utils.System("which prettier >./found 2>/dev/null")
+	defer os.Remove("./found")
+	return file.FileExists("./found")
 }
