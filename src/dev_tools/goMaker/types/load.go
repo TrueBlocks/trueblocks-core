@@ -20,7 +20,7 @@ func LoadDefinitions() (CodeBase, error) {
 		return CodeBase{}, fmt.Errorf("this program must be run from the ./trueblocks-core folder")
 	}
 
-	thePath := "src/other/data-models/"
+	thePath := "src/dev_tools/goMaker/templates/"
 	if !file.FolderExists(thePath) {
 		return CodeBase{}, fmt.Errorf("the path %s does not exist", thePath)
 	}
@@ -226,7 +226,7 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []endpoint, structMap
 		return cb.Commands[i].Route < cb.Commands[j].Route
 	})
 
-	file.StringToAsciiFile("src/dev_tools/goMaker/results/codebase.json", cb.String())
+	file.StringToAsciiFile("src/dev_tools/goMaker/generated/codebase.json", cb.String())
 }
 
 type endpoint struct {

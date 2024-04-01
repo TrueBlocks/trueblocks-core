@@ -16,18 +16,18 @@ func main() {
 	codeBase.Generate(cbTemplates, routeTemplates, typeTemplates)
 }
 
-// cbTemplates are the templates for the code base
+// cbTemplates are the templates for the code base as a whole.
 var cbTemplates = []string{
 	"src_apps_chifra_internal_daemon_routes.go.tmpl",
 	"src_apps_chifra_cmd_helpfile.go.tmpl",
 	"src_apps_chifra_pkg_version_string.go.tmpl",
 	"docs_content_api_openapi.yaml.tmpl",
-	"src_dev+tools_goMaker_templates_readmes_chifra.md.tmpl",
+	"src_dev+tools_goMaker_generated_readme+chifra.md.tmpl",
 }
 
 // routeTemplates are the templates for the routes
 var routeTemplates = []string{
-	"src_dev+tools_goMaker_templates_readmes_route.md.tmpl",
+	"src_dev+tools_goMaker_generated_readme+route.md.tmpl",
 	"sdk_go_route.go.tmpl",
 	"sdk_python_src_+route.py.tmpl",
 	// "sdk_typescript_src_paths_route.ts.tmpl",
@@ -41,7 +41,7 @@ var routeTemplates = []string{
 
 // typeTemplates are the templates for the data models
 var typeTemplates = []string{
-	"src_dev+tools_goMaker_templates_models_type.md.tmpl",
+	"src_dev+tools_goMaker_generated_model+type.md.tmpl",
 	"src_apps_chifra_pkg_types_type.go.tmpl",
 	"src_apps_chifra_internal_route_types_type.go.tmpl",
 }

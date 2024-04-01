@@ -43,15 +43,15 @@ func shouldProcess(source, tag string) (bool, error) {
 func convertToDestPath(source, routeTag, typeTag string) string {
 	dest := strings.Replace(source, templateFolder, "", -1)
 	dest = strings.Replace(dest, ".tmpl", "", -1)
-	dest = strings.Replace(dest, "_type.go", "/"+typeTag+".go", -1)
-	dest = strings.Replace(dest, "_type.md", "/"+typeTag+".md", -1)
 	dest = strings.Replace(dest, "_route_", "/"+routeTag+"/", -1)
 	dest = strings.Replace(dest, "route.go", routeTag+".go", -1)
 	dest = strings.Replace(dest, "route.md", routeTag+".md", -1)
 	dest = strings.Replace(dest, "route.py", routeTag+".py", -1)
 	dest = strings.Replace(dest, "route.ts", routeTag+".ts", -1)
-	dest = strings.Replace(dest, "_", "/", -1)
-	dest = strings.Replace(dest, "+", "_", -1)
+	dest = strings.Replace(dest, "type.go", typeTag+".go", -1)
+	dest = strings.Replace(dest, "type.md", typeTag+".md", -1)
+	dest = strings.ReplaceAll(dest, "_", "/")
+	dest = strings.ReplaceAll(dest, "+", "_")
 	return dest
 }
 

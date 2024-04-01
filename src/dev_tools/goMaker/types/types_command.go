@@ -615,7 +615,7 @@ func (c *Command) HelpIntro() string {
 }
 
 func (c *Command) HelpText() string {
-	thePath := "src/dev_tools/goMaker/templates/readmes/" + c.ReadmeName() + ".tmp"
+	thePath := "src/dev_tools/goMaker/generated/" + c.ReadmeName() + ".tmp"
 	defer os.Remove(thePath)
 	utils.System("chifra " + c.Route + " --help 2>" + thePath)
 	helpText := strings.Trim(file.AsciiFileToString(thePath), wss)
