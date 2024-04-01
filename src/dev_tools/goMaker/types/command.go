@@ -11,24 +11,23 @@ import (
 )
 
 type Command struct {
-	Num           int          `json:"num" csv:"num"`
-	Route         string       `json:"route,omitempty" csv:"route"`
-	Group         string       `json:"group,omitempty" csv:"group"`
-	Description   string       `json:"description,omitempty" csv:"description"`
-	Endpoint      Endpoint     `json:"endpoint,omitempty" csv:"endpoint"`
-	Options       []Option     `json:"options,omitempty" csv:"options"`
-	Capabilities  string       `json:"capabilities,omitempty" csv:"capabilities"`
-	Usage         string       `json:"usage,omitempty" csv:"usage"`
-	Folder        string       `json:"folder,omitempty" csv:"folder"`
-	Tool          string       `json:"tool,omitempty" csv:"tool"`
-	Summary       string       `json:"summary,omitempty" csv:"summary"`
-	Notes         []string     `json:"notes,omitempty" csv:"notes"`
-	Aliases       []string     `json:"aliases,omitempty" csv:"aliases"`
-	Hidden        []string     `json:"hidden,omitempty" csv:"hidden"`
-	Productions   []Production `json:"productions,omitempty"`
-	Proper        string       `json:"proper,omitempty"`
-	Lower         string       `json:"lower,omitempty"`
-	cbPtr         *CodeBase    `json:"-"`
+	Num          int          `json:"num" csv:"num"`
+	Route        string       `json:"route,omitempty" csv:"route"`
+	Group        string       `json:"group,omitempty" csv:"group"`
+	Description  string       `json:"description,omitempty" csv:"description"`
+	Options      []Option     `json:"options,omitempty" csv:"options"`
+	Capabilities string       `json:"capabilities,omitempty" csv:"capabilities"`
+	Usage        string       `json:"usage,omitempty" csv:"usage"`
+	Folder       string       `json:"folder,omitempty" csv:"folder"`
+	Tool         string       `json:"tool,omitempty" csv:"tool"`
+	Summary      string       `json:"summary,omitempty" csv:"summary"`
+	Notes        []string     `json:"notes,omitempty" csv:"notes"`
+	Aliases      []string     `json:"aliases,omitempty" csv:"aliases"`
+	Hidden       []string     `json:"hidden,omitempty" csv:"hidden"`
+	Productions  []Production `json:"productions,omitempty"`
+	Proper       string       `json:"proper,omitempty"`
+	Lower        string       `json:"lower,omitempty"`
+	cbPtr        *CodeBase    `json:"-"`
 }
 
 func (c *Command) TypeToGroup(t string) string {
@@ -129,7 +128,6 @@ func (c *Command) Clean() {
 	}
 	c.Proper = Proper(c.Route)
 	c.Lower = strings.ToLower(c.Route)
-	c.Endpoint.cmdPtr = c
 	c.Options = cleaned
 	c.Notes = notes
 	c.Hidden = hiddens
@@ -176,7 +174,7 @@ var globals = []Option{
 
 func (c *Command) PyGlobals() string {
 	ret := []string{}
-	caps := strings.Replace(strings.Replace(strings.ToLower(c.Endpoint.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
+	caps := strings.Replace(strings.Replace(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
 	if c.Route == "names" {
 		caps = "create|update|delete|undelete|remove|" + caps
 	}
@@ -192,7 +190,7 @@ func (c *Command) PyGlobals() string {
 
 func (c *Command) YamlGlobals() string {
 	ret := []string{}
-	caps := strings.Replace(strings.Replace(strings.ToLower(c.Endpoint.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
+	caps := strings.Replace(strings.Replace(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
 	if c.Route == "names" {
 		caps = "create|update|delete|undelete|remove|" + caps
 	}
@@ -319,7 +317,7 @@ func (c *Command) AliasStr() string {
 // AddCaps for tag {{.AddCaps}}
 func (c *Command) AddCaps() string {
 	ret := []string{}
-	caps := strings.Split(c.Endpoint.Capabilities, "|")
+	caps := strings.Split(c.Capabilities, "|")
 	for _, cap := range caps {
 		if len(cap) == 0 {
 			continue
@@ -352,7 +350,7 @@ func (c *Command) HiddenStr() string {
 
 // Long for tag {{.Long}}
 func (c *Command) Long() string {
-	return "Purpose:\n  " + c.Endpoint.Description
+	return "Purpose:\n  " + c.Description
 }
 
 // NotesStr for tag {{.NotesStr}}
@@ -389,12 +387,12 @@ func (c *Command) SetOptions() string {
 
 // Short for tag {{.Short}}"
 func (c *Command) Short() string {
-	return FirstLower(strings.Replace(c.Endpoint.Description, ".", "", -1))
+	return FirstLower(strings.Replace(c.Description, ".", "", -1))
 }
 
 // UsageStr for tag {{.UsageStr}}
 func (c *Command) UsageStr() string {
-	ret := c.Route + " " + c.Endpoint.Usage
+	ret := c.Route + " " + c.Usage
 	if len(c.Positionals()) > 0 {
 		ret += `
 
@@ -652,12 +650,12 @@ func (c *Command) HelpLinks() string {
 		tmplName += "2"
 		tmpl = `- no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.Tool}}.csv)`
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Folder}}/{{.Tool}}.csv)`
 	} else {
 		tmplName += "3"
 		tmpl = `- [api docs](/api/#operation/{{.LowerGroup}}-{{.Route}})
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Endpoint.Folder}}/{{.Endpoint.Tool}}.csv)`
+- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Folder}}/{{.Tool}}.csv)`
 	}
 	return c.executeTemplate(tmplName, tmpl)
 }

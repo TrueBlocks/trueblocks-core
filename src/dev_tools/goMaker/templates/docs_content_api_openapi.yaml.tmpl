@@ -20,7 +20,7 @@ paths:
     get:
       tags:
         - {{.Group}}
-      summary: {{.Endpoint.Summary}}
+      summary: {{.Summary}}
       description: {{.Description}} Corresponds to the <a href="/chifra/{{.LowerGroup}}/#chifra-{{.Route}}">chifra {{.Route}}</a> command line.
       operationId: {{.LowerGroup}}-{{.Route}}
       parameters:

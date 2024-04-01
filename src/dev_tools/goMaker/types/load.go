@@ -43,7 +43,7 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 		return CodeBase{}, err
 	}
 
-	endpoints, err := LoadCsv[Endpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
+	endpoints, err := LoadCsv[endpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
@@ -143,7 +143,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 	return nil
 }
 
-func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap map[string]Structure) {
+func (cb *CodeBase) FinishLoad(options []Option, endpoints []endpoint, structMap map[string]Structure) {
 	theMap := make(map[string]Command)
 
 	producesMap := make(map[string][]Production)
@@ -190,7 +190,6 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 			Group:        endpoint.Group,
 			Description:  endpoint.Description,
 			Options:      theMap[route].Options,
-			Endpoint:     endpoint,
 			Num:          endpoint.Num,
 			Capabilities: endpoint.Capabilities,
 			Usage:        endpoint.Usage,
@@ -228,4 +227,35 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 	})
 
 	file.StringToAsciiFile("src/dev_tools/goMaker/results/codebase.json", cb.String())
+}
+
+type endpoint struct {
+	Num           int    `json:"num" csv:"num"`
+	Group         string `json:"group" csv:"group"`
+	IsVisible     bool   `json:"is_visible" csv:"is_visible"`
+	IsVisibleDocs bool   `json:"is_visible_docs" csv:"is_visible_docs"`
+	Folder        string `json:"folder" csv:"folder"`
+	ApiRoute      string `json:"api_route" csv:"api_route"`
+	Tool          string `json:"tool" csv:"tool"`
+	Summary       string `json:"summary" csv:"summary"`
+	Usage         string `json:"usage" csv:"usage"`
+	Capabilities  string `json:"capabilities" csv:"capabilities"`
+	Description   string `json:"description" csv:"description"`
+}
+
+func (c endpoint) Validate() bool {
+	return true
+}
+
+func readCmdEndpoint(ep *endpoint, data *any) (bool, error) {
+	ep.Description = strings.ReplaceAll(ep.Description, "&#44;", ",")
+	ep.Group = strings.Trim(ep.Group, wss)
+	ep.Folder = strings.Trim(ep.Folder, wss)
+	ep.ApiRoute = strings.Trim(ep.ApiRoute, wss)
+	ep.Tool = strings.Trim(ep.Tool, wss)
+	ep.Summary = strings.Trim(ep.Summary, wss)
+	ep.Usage = strings.Trim(ep.Usage, wss)
+	ep.Capabilities = strings.Trim(ep.Capabilities, wss)
+	ep.Description = strings.Trim(ep.Description, wss)
+	return true, nil
 }

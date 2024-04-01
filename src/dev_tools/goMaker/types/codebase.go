@@ -67,9 +67,9 @@ func (cb *CodeBase) SummaryTag(filter string) string {
 
 	ret := []string{}
 	for _, c := range cb.Commands {
-		if c.Route != "" && c.Endpoint.Group == filter {
-			descr := strings.TrimSuffix(FirstLower(c.Endpoint.Description), ".")
-			ret = append(ret, "    "+Pad(c.Endpoint.ApiRoute, 14)+descr)
+		if c.Route != "" && c.Group == filter {
+			descr := strings.TrimSuffix(FirstLower(c.Description), ".")
+			ret = append(ret, "    "+Pad(c.Route, 14)+descr)
 		}
 	}
 	return strings.Join(ret, "\n")
