@@ -115,15 +115,18 @@ func (m *Member) MarkdownDescription() string {
 	return descr
 }
 
+func (m *Member) TypeToGroup(t string) string {
+	return m.stPtr.cbPtr.TypeToGroup(m.Type)
+}
+
 func (m *Member) MarkdownType() string {
 	typ := m.Type
 	if m.IsArray {
 		typ = typ + "[]"
 	}
 	if m.IsObject() {
-		typeLower := strings.ToLower(m.Type)
-		group := strings.ToLower(m.TypeToGroup1(typeLower))
-		if group != "" {
+		group := m.TypeToGroup(m.Type)
+		if !strings.Contains(group, "unknown") {
 			return "[" + typ + "](/data-model/" + group + "/#" + strings.ToLower(m.Type) + ")"
 		}
 	}
@@ -422,10 +425,6 @@ func (m *Member) YamlType() string {
 		return "boolean\n          format: boolean"
 	}
 	return "string" + f
-}
-
-func (m *Member) TypeToGroup1(t string) string {
-	return m.stPtr.TypeToGroup2(strings.ToLower(t))
 }
 
 func readMember(m *Member, data *any) (bool, error) {

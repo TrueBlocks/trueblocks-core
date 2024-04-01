@@ -24,8 +24,8 @@ type Command struct {
 	cbPtr       *CodeBase    `json:"-"`
 }
 
-func (c *Command) TypeToGroup2(t string) string {
-	return c.cbPtr.TypeToGroup3[t]
+func (c *Command) TypeToGroup(t string) string {
+	return c.cbPtr.TypeToGroup(t)
 }
 
 func (c *Command) ProducedByDescr() string {
@@ -33,7 +33,7 @@ func (c *Command) ProducedByDescr() string {
 	types := []string{}
 	for i, production := range c.Productions {
 		lowerProd := strings.ToLower(production.Value)
-		groupProd := c.TypeToGroup2(lowerProd)
+		groupProd := c.TypeToGroup(lowerProd)
 		if i > 0 {
 			if i == len(c.Productions)-1 {
 				types = append(types, " or ")
@@ -624,7 +624,7 @@ func (c *Command) HelpDataModels() string {
 			ret = []string{}
 		}
 		lowerProd := strings.ToLower(production.Value)
-		groupProd := c.TypeToGroup2(lowerProd)
+		groupProd := c.TypeToGroup(lowerProd)
 		ret = append(ret, "- ["+lowerProd+"](/data-model/"+groupProd+"/#"+lowerProd+")")
 	}
 	return strings.Join(ret, "\n")

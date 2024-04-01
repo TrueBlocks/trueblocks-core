@@ -155,15 +155,6 @@ func (cb *CodeBase) FinishLoad(options []Option, endpoints []Endpoint, structMap
 		for _, producer := range st.Producers {
 			producesMap[producer] = append(producesMap[producer], Production{st.Class})
 		}
-		if cb.TypeToGroup3 == nil {
-			cb.TypeToGroup3 = make(map[string]string)
-		}
-		dg := strings.Split(st.DocGroup, "-")
-		if len(dg) > 1 {
-			ddg := strings.ToLower(dg[1])
-			ddg = strings.Replace(ddg, " ", "", -1)
-			cb.TypeToGroup3[strings.ToLower(st.Name)] = ddg
-		}
 		st.cbPtr = cb
 		for i := 0; i < len(st.Members); i++ {
 			st.Members[i].stPtr = &st

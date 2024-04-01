@@ -130,10 +130,6 @@ func (s *Structure) ModelProducers() string {
 	return strings.Join(ret, "\n")
 }
 
-func (s *Structure) TypeToGroup2(t string) string {
-	return s.cbPtr.TypeToGroup3[strings.ToLower(t)]
-}
-
 func (s *Structure) Widest() (int, int, int) {
 	widest := [3]int{1, 1, 1}
 	for _, m := range s.Members {
