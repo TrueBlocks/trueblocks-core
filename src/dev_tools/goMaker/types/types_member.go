@@ -443,3 +443,7 @@ func readMember(m *Member, data *any) (bool, error) {
 
 	return true, nil
 }
+
+func (m *Member) executeTemplate(name, tmplCode string) string {
+	return executeTemplate(m, "member", name, tmplCode)
+}

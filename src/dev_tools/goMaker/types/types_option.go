@@ -718,3 +718,7 @@ func (op *Option) RequestOpt() string {
 	}
 	return strings.Replace(ret, "Settings.", "", -1)
 }
+
+func (op *Option) executeTemplate(name, tmplCode string) string {
+	return executeTemplate(op, "option", name, tmplCode)
+}

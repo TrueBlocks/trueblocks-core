@@ -193,3 +193,7 @@ func (s *Structure) ModelNotes() string {
 	}
 	return ""
 }
+
+func (s *Structure) executeTemplate(name, tmplCode string) string {
+	return executeTemplate(s, "structure", name, tmplCode)
+}

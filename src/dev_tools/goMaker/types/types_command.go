@@ -675,3 +675,7 @@ func (c *Command) ReadmeFooter() string {
 	thePath := "src/dev_tools/goMaker/templates/readme-intros/README.footer.md"
 	return "\n" + strings.Trim(file.AsciiFileToString(thePath), "\n\r\t")
 }
+
+func (c *Command) executeTemplate(name, tmplCode string) string {
+	return executeTemplate(c, "command", name, tmplCode)
+}

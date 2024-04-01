@@ -92,3 +92,7 @@ func (cb *CodeBase) TagSummary() string {
 	}
 	return strings.Join(ret, "\n")
 }
+
+func (cb *CodeBase) executeTemplate(name, tmplCode string) string {
+	return executeTemplate(cb, "codebase", name, tmplCode)
+}
