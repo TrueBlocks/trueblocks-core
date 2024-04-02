@@ -81,9 +81,6 @@ extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node
     string_q getValueByName(const string_q& fieldName) const override;                                                 \
     bool setValueByName(const string_q& fieldName, const string_q& fieldValue) override;                               \
     void finishParse(void) override;                                                                                   \
-    bool Serialize(CArchive& archive) override;                                                                        \
-    bool SerializeC(CArchive& archive) const override;                                                                 \
-    bool Migrate(CArchive& archiveIn, CArchive& archiveOut) const override;                                            \
     void Format(ostream& ctx, const string_q& fmtIn, void* data = NULL) const override;                                \
     string_q Format(const string_q& fmtIn = "") const override {                                                       \
         stringstream ctx;                                                                                              \

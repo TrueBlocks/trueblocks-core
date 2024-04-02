@@ -57,7 +57,6 @@ class CConfigEnv : public CBaseNode {
     void clear(void);
     void initialize(void);
     void duplicate(const CConfigEnv& co);
-    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -152,14 +151,6 @@ inline bool operator<(const CConfigEnv& v1, const CConfigEnv& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CConfigEnv> CConfigEnvArray;
-extern CArchive& operator>>(CArchive& archive, CConfigEnvArray& array);
-extern CArchive& operator<<(CArchive& archive, const CConfigEnvArray& array);
-
-//---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CConfigEnv& con);
-extern CArchive& operator>>(CArchive& archive, CConfigEnv& con);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CONFIGENV;
 
 //---------------------------------------------------------------------------

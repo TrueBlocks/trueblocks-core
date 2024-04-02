@@ -16,7 +16,7 @@ Test cases contain the following fields:
 | options | the command line / API url options (in API format)                                       |
 | extra   | extra data needed for some tests                                                         |
 
-You may run all tests from the `./build` folder by entering `make test-all` (or `make tests` to run only the `cmd/fast` cases).
+You may run all tests from the `./build` folder by entering `make test-all`.
 
 Purpose:
   Run TrueBlocks' test cases with options.

@@ -18,10 +18,9 @@
 #include "database.h"
 #include "exportcontext.h"
 #include "options_base.h"
-#include "colors.h"
 #include "filenames.h"
-#include "rpcresult.h"
 #include "exportcontext.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -57,12 +56,6 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
     if (!getEnvStr("PROG_NAME").empty())
         COptionsBase::g_progName = getEnvStr("PROG_NAME");
-
-    bool noColor = getEnvStr("NO_COLOR") == "true";
-    bool isTerminal = isatty(STDOUT_FILENO) || getEnvStr("FROM_CHIFRA") == "true";
-    bool isTestRunner = getProgName() == "testRunner";
-    if (isApiMode() || noColor || (!isTestRunner && !isTerminal))
-        colorsOff();
 
     bool isRedir = getEnvStr("REDIR_CERR") == "true";
     if (isRedir)
@@ -118,6 +111,12 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
+    return false;
+}
+
+bool usage(const string_q& msg="") {
+    if (!msg.empty())
+        LOG_ERR(msg);
     return false;
 }
 
@@ -281,13 +280,11 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         cmdLine += " ";
 
     if (contains(cmdLine, "--version ")) {
-        cout << getProgName() << " " << getVersionStr() << "\n";
         return false;
     }
 
     if (contains(cmdLine, "--nocolor ")) {
         replaceAll(cmdLine, "--nocolor ", "");
-        colorsOff();
     }
 
     if (contains(cmdLine, "--no_header ")) {
@@ -678,7 +675,6 @@ const CToml* getGlobalConfig(const string_q& mergeIn) {
 
     if (!toml) {
         string_q configFile = rootConfigToml_trueBlocks;
-        LOG4(bGreen, "configFile: ", configFile, cOff);
         static CToml theToml(configFile);
         toml = &theToml;
         string_q name = COptionsBase::g_progName;

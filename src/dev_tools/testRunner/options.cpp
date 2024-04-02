@@ -110,7 +110,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
-        return usage("[dev]debug_curl is set in config file. All tests will fail.");
+        return false; // usage("[dev]debug_curl is set in config file. All tests will fail.");
 
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
 
@@ -193,7 +193,7 @@ void establishTestData(void) {
     jqDef = "jq .";
     // }
     postProcessor = getGlobalConfig("testRunner")->getConfigStr("settings", "json_pretty_print", jqDef);
-    cerr << bYellow << "Using `" << postProcessor << "` for post processing." << cOff << endl;
+    cerr << "Using `" << postProcessor << "` for post processing."  << endl;
 
     // TODO: This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO: these tests fail. To reproduce, delete the entire cache, comment the lines below
@@ -202,13 +202,13 @@ void establishTestData(void) {
     // Forces a few blocks into the cache
     doCommand("chifra blocks --uniq 0 2>/dev/null");
 
-    cerr << bYellow << "Cleaning monitor caches..." << cOff << endl;
+    cerr << "Cleaning monitor caches..."  << endl;
     doCommand("chifra monitors --decache 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2>/dev/null");
     doCommand("chifra monitors --decache 0x9531c059098e3d194ff87febb587ab07b30b1306 2>/dev/null");
     doCommand("chifra monitors --decache 0x5deda52dc2b3a565d77e10f0f8d4bd738401d7d3 2>/dev/null");
     doCommand("chifra monitors --decache 0xd0b3462481c33f63a288cd1923e2a261ee65b4ff 2>/dev/null");
 
-    cerr << bYellow << "Cleaning abi caches..." << cOff << endl;
+    cerr << "Cleaning abi caches..."  << endl;
     doCommand("chifra abis --decache 2>/dev/null");
     doCommand("chifra abis --decache 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51 2>/dev/null");
     doCommand("chifra abis --decache 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 2>/dev/null");
@@ -236,7 +236,7 @@ void establishTestData(void) {
     // grabABI_ens_test.txt, grabABI_ens_test.txt, acctExport_statement_unfiltered.txt,
     // acctExport_statement_unfiltered.txt It's all related to abis being in the cache Forces the retreival of a few ABI
     // files without which some tests will fail
-    cerr << bYellow << "Downloading abi files..." << cOff << endl;
+    cerr << "Downloading abi files..."  << endl;
     doCommand("chifra abis 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
     doCommand("chifra abis 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
     doCommand("chifra abis 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");

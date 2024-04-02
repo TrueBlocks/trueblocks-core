@@ -12,8 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
-#include "colors.h"
-#include "performance.h"
 
 namespace qblocks {
 
@@ -150,37 +148,37 @@ class logger {
         write_mutex.lock();
         switch (severity) {
             case sev_debug0:
-                log_stream << ": " << cWhite << "0" << cOff << "-";
+                log_stream << ": " << "0"  << "-";
                 break;
             case sev_debug1:
-                log_stream << ": " << cWhite << "1" << cOff << "--";
+                log_stream << ": " << "1"  << "--";
                 break;
             case sev_debug2:
-                log_stream << ": " << cGreen << "2" << cOff << "---";
+                log_stream << ": " << "2"  << "---";
                 break;
             case sev_debug3:
-                log_stream << ": " << cYellow << "3" << cOff << "----";
+                log_stream << ": " << "3"  << "----";
                 break;
             case sev_debug4:
-                log_stream << ": " << cRed << "4" << cOff << "-----";
+                log_stream << ": " << "4"  << "-----";
                 break;
             case sev_debug8:
-                log_stream << ": " << cTeal << "8" << cOff << "------";
+                log_stream << ": " << "8"  << "------";
                 break;
             case sev_prog:
-                log_stream << bGreen << "<PROG>  " << cOff << ": ";
+                log_stream << "<PROG>  "  << ": ";
                 break;
             case sev_info:
-                log_stream << bGreen << "<INFO>  " << cOff << ": ";
+                log_stream << "<INFO>  "  << ": ";
                 break;
             case sev_warning:
-                log_stream << bYellow << "<WARN> " << cOff << ": ";
+                log_stream << "<WARN> " << ": ";
                 break;
             case sev_error:
-                log_stream << bRed << "<EROR> " << cOff << ": ";
+                log_stream << "<EROR> " << ": ";
                 break;
             case sev_fatal:
-                log_stream << bTeal << "<FATL> " << cOff << ": ";
+                log_stream << "<FATL> " << ": ";
                 break;
         }
         print_impl(args...);
@@ -200,89 +198,10 @@ extern logger<log_policy_i>* dLogger;
 extern logger<log_policy_i>* eLogger;
 }  // namespace qblocks
 
-#define LOGGING_LEVEL
-#ifdef LOGGING_LEVEL
 #define LOG0 dLogger->print<sev_debug0>
-#define LOG1 dLogger->print<sev_debug1>
-#define LOG2 dLogger->print<sev_debug2>
-#define LOG3 dLogger->print<sev_debug3>
-#define LOG4 dLogger->print<sev_debug4>
 #define LOG8 dLogger->print<sev_debug8>
 #define LOG_PROG eLogger->print<sev_prog>
 #define LOG_INFO eLogger->print<sev_info>
 #define LOG_WARN eLogger->print<sev_warning>
 #define LOG_ERR eLogger->print<sev_error>
 #define LOG_FATAL eLogger->print<sev_fatal>
-#define SEP1(a) LOG1(cWhite + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#define SEP2(a) LOG2(cGreen + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#define SEP3(a) LOG3(cYellow + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#define SEP4(a) LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#else
-#define LOG0(...)
-#define LOG1(...)
-#define LOG2(...)
-#define LOG3(...)
-#define LOG4(...)
-#define LOG8(...)
-#define LOG_PROG(...)
-#define LOG_INFO(...)
-#define LOG_WARN(...)
-#define LOG_ERR(...)
-#define LOG_FATAL(...)
-#define SEP1(...)
-#define SEP2(...)
-#define SEP3(...)
-#define SEP4(...)
-#define SEP5(...)
-#endif
-
-// #ifdef LOGGING_LEVEL_TEST Turn the on before include in individual files if needed
-#ifdef LOGGING_LEVEL_TEST
-#define LOG_TEST(a, b, is_default)                                                                                     \
-    {                                                                                                                  \
-        if (isTestMode() && !(is_default)) {                                                                           \
-            LOG_INFO((string_q(a) + ": "), (b));                                                                       \
-        }                                                                                                              \
-    }
-#define LOG_TEST_STR(str)                                                                                              \
-    {                                                                                                                  \
-        if (isTestMode()) {                                                                                            \
-            LOG_INFO(str);                                                                                             \
-        }                                                                                                              \
-    }
-#define LOG_TEST_OBJ(obj)                                                                                              \
-    {                                                                                                                  \
-        if (isTestMode()) {                                                                                            \
-            LOG_INFO(obj.Format());                                                                                    \
-        }                                                                                                              \
-    }
-#define LOG_TEST_BOOL(a, b)                                                                                            \
-    {                                                                                                                  \
-        if ((b))                                                                                                       \
-            LOG_TEST((a), "true", false)                                                                               \
-    }
-#define LOG_TEST_LIST(a, b, is_default)                                                                                \
-    {                                                                                                                  \
-        if (isTestMode() && !(is_default)) {                                                                           \
-            LOG_INFO((a));                                                                                             \
-            for (size_t i = 0; i < min(size_t(4), (b).size()); i++) {                                                  \
-                ostringstream os;                                                                                      \
-                os << (b)[i];                                                                                          \
-                LOG_INFO("  " + (os.str()));                                                                           \
-            }                                                                                                          \
-            if ((b).size() > 4) {                                                                                      \
-                LOG_INFO("  more...");                                                                                 \
-            }                                                                                                          \
-        }                                                                                                              \
-    }
-#define LOG_TEST_CALL(a)                                                                                               \
-    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), cacheFolder, "$CACHE/") : (a)), cOff); }
-#else
-#define LOG_TEST(a, b, is_default)
-#define LOG_TEST_STR(str)
-#define LOG_TEST_BOOL(a, b)
-#define LOG_TEST_LIST(a, b, is_default)
-#define LOG_TEST_CALL(a)
-#define LOG_TEST_OBJ(a)
-#endif

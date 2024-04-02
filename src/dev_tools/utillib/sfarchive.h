@@ -13,7 +13,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "database.h"
 #include "conversions.h"
-#include "version.h"
 #include "sftime.h"
 
 namespace qblocks {
@@ -43,7 +42,7 @@ class CArchive : public CSharedResource {
 
     explicit CArchive(bool isReading) : CSharedResource() {
         m_isReading = isReading;
-        m_header.m_version = getVersionNum();
+        m_header.m_version = 20000+500+8;
         // writeMsgFunc     = NULL;
         // readMsgFunc      = NULL;
     }
