@@ -50,17 +50,6 @@ int cleanFolder(const string_q& path, bool recurse, bool interactive) {
 }
 
 //------------------------------------------------------------------
-int moveFile(const string_q& from, const string_q& to) {
-    if (from % to)
-        return true;
-    if (copyFile(from, to)) {
-        int ret = ::remove(from.c_str());  // remove file returns '0' on success
-        return !ret;
-    }
-    return false;
-}
-
-//------------------------------------------------------------------
 static string_q escapePath(const string_q& nameIn) {
     string_q name = nameIn;
     replaceAll(name, "&", "\\&");
@@ -261,39 +250,6 @@ bool establishFolder(const string_q& path, string_q& created) {
         }
     }
     return folderExists(targetFolder);
-}
-
-#if defined(__linux) || defined(__linux__) || defined(linux)
-#define OPTIONS x
-#elif defined(__APPLE__)
-#define MACOS
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
-#define WINDOWS
-#endif
-
-#ifdef MACOS
-// #error
-#endif
-
-#ifndef HOST_NAME_MAX
-#define HOST_NAME_MAX 256
-#endif
-#ifndef LOGIN_NAME_MAX
-#define LOGIN_NAME_MAX 64
-#endif
-//----------------------------------------------------------------------------
-string_q getUserName(void) {
-    char username[LOGIN_NAME_MAX + 1] = {0};
-    if (getlogin_r(username, LOGIN_NAME_MAX) != 0)
-        strncpy(username, "nobody", 7);
-    return username;
-}
-
-//----------------------------------------------------------------------------
-string_q getHostName(void) {
-    char hostname[HOST_NAME_MAX + 1] = {0};
-    gethostname(hostname, HOST_NAME_MAX);
-    return hostname;
 }
 
 }  // namespace qblocks

@@ -148,28 +148,28 @@ class logger {
         write_mutex.lock();
         switch (severity) {
             case sev_debug0:
-                log_stream << ": " << "0"  << "-";
+                log_stream << ": " << "0" << "-";
                 break;
             case sev_debug1:
-                log_stream << ": " << "1"  << "--";
+                log_stream << ": " << "1" << "--";
                 break;
             case sev_debug2:
-                log_stream << ": " << "2"  << "---";
+                log_stream << ": " << "2" << "---";
                 break;
             case sev_debug3:
-                log_stream << ": " << "3"  << "----";
+                log_stream << ": " << "3" << "----";
                 break;
             case sev_debug4:
-                log_stream << ": " << "4"  << "-----";
+                log_stream << ": " << "4" << "-----";
                 break;
             case sev_debug8:
-                log_stream << ": " << "8"  << "------";
+                log_stream << ": " << "8" << "------";
                 break;
             case sev_prog:
-                log_stream << "<PROG>  "  << ": ";
+                log_stream << "<PROG>  " << ": ";
                 break;
             case sev_info:
-                log_stream << "<INFO>  "  << ": ";
+                log_stream << "<INFO>  " << ": ";
                 break;
             case sev_warning:
                 log_stream << "<WARN> " << ": ";
@@ -198,10 +198,6 @@ extern logger<log_policy_i>* dLogger;
 extern logger<log_policy_i>* eLogger;
 }  // namespace qblocks
 
-#define LOG0 dLogger->print<sev_debug0>
-#define LOG8 dLogger->print<sev_debug8>
-#define LOG_PROG eLogger->print<sev_prog>
 #define LOG_INFO eLogger->print<sev_info>
 #define LOG_WARN eLogger->print<sev_warning>
 #define LOG_ERR eLogger->print<sev_error>
-#define LOG_FATAL eLogger->print<sev_fatal>

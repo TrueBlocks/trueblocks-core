@@ -74,7 +74,9 @@ class COptionsBase {
     void optionOn(uint32_t q);
 
     // usage related
-    bool usage(const string_q& errMsg = "") const;
+    inline bool usage(const string_q& errMsg = "") const {
+        return false;
+    }
 
     bool flag_required(const string_q& command) const;
     bool invalid_option(const string_q& arg) const;
@@ -130,30 +132,8 @@ inline bool listBlocks(uint64_t bn, void* data) {
     array->push_back(bn);
     return true;
 }
-class COptionsTransList {
-  public:
-    string_q queries;
-    void Init(void);
-    string_q parseTransList(const string_q& arg);
-    COptionsTransList(void);
-    string_q int_2_Str(void) const;
-    bool empty(void) const {
-        return queries.empty();
-    }
-    size_t size(void) const {
-        return countOf(queries, '|');
-    }
-    string_q operator[](size_t offset) const {
-        CStringArray parts;
-        explode(parts, queries, '|');
-        return parts[offset];
-    };
-};
-
-extern string_q colorize(const string_q& strIn);
 extern bool prepareEnv(int argc, const char* argv[]);
 extern string_q cleanFmt(const string_q& str);
-extern void errorMessage(const string_q& msg);
 inline bool isReserved(const string_q& command) {
     const char* STR_RESERVED =
         "|help|verbose|fmt|output|append|noop|version|nocolor|no_header|raw|"

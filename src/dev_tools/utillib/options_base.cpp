@@ -20,7 +20,6 @@
 #include "options_base.h"
 #include "filenames.h"
 #include "exportcontext.h"
-#include "logging.h"
 
 namespace qblocks {
 
@@ -111,12 +110,6 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    return false;
-}
-
-bool usage(const string_q& msg="") {
-    if (!msg.empty())
-        LOG_ERR(msg);
     return false;
 }
 
@@ -398,13 +391,7 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
             break;
         case TXT1:
         case CSV1:
-            if (isTestMode()) {
-                // Just warning the user as if this is set it may break test cases
-                string test = getGlobalConfig(tool)->getConfigStr("display", "format", "<not_set>");
-                if (test != "<not_set>")
-                    LOG_WARN("Tests will fail. Custom display string set to: ", test);
-            }
-            format = getGlobalConfig(tool)->getConfigStr("display", "format", defFormat);
+            format = defFormat;
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;
         case JSON1:
@@ -449,11 +436,6 @@ bool COptionsBase::confirmUint(const string_q& name, uint32_t& value, const stri
         return false;
     value = (uint32_t)temp;
     return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptionsBase::usage(const string_q& errMsg) const {
-    return false;
 }
 
 //---------------------------------------------------------------------------------------------------
