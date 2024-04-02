@@ -366,15 +366,11 @@ void cleanFileLocks(void) {
 //-----------------------------------------------------------------------
 void defaultQuitHandler(int signum) {
     if (quitCount(1) > 2) {
-        // LOG_INFO(cBlue, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum, cOff);
         cleanFileLocks();
         if (signum != -1) {
-            // LOG_INFO(cYellow, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum,
-            // cOff);
             exit(EXIT_SUCCESS);
         }
     }
-    // LOG_INFO(cTeal, COptionsBase::g_progName, ": defaultQuitHander (<2): ", quitCount(), ": ", signum, cOff);
 }
 
 //-----------------------------------------------------------------------

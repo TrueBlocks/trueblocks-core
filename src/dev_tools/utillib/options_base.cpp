@@ -18,9 +18,7 @@
 #include "database.h"
 #include "exportcontext.h"
 #include "options_base.h"
-#include "colors.h"
 #include "filenames.h"
-#include "rpcresult.h"
 #include "exportcontext.h"
 
 namespace qblocks {
@@ -57,12 +55,6 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
     if (!getEnvStr("PROG_NAME").empty())
         COptionsBase::g_progName = getEnvStr("PROG_NAME");
-
-    bool noColor = getEnvStr("NO_COLOR") == "true";
-    bool isTerminal = isatty(STDOUT_FILENO) || getEnvStr("FROM_CHIFRA") == "true";
-    bool isTestRunner = getProgName() == "testRunner";
-    if (isApiMode() || noColor || (!isTestRunner && !isTerminal))
-        colorsOff();
 
     bool isRedir = getEnvStr("REDIR_CERR") == "true";
     if (isRedir)
@@ -281,13 +273,11 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         cmdLine += " ";
 
     if (contains(cmdLine, "--version ")) {
-        cout << getProgName() << " " << getVersionStr() << "\n";
         return false;
     }
 
     if (contains(cmdLine, "--nocolor ")) {
         replaceAll(cmdLine, "--nocolor ", "");
-        colorsOff();
     }
 
     if (contains(cmdLine, "--no_header ")) {
@@ -401,13 +391,7 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
             break;
         case TXT1:
         case CSV1:
-            if (isTestMode()) {
-                // Just warning the user as if this is set it may break test cases
-                string test = getGlobalConfig(tool)->getConfigStr("display", "format", "<not_set>");
-                if (test != "<not_set>")
-                    LOG_WARN("Tests will fail. Custom display string set to: ", test);
-            }
-            format = getGlobalConfig(tool)->getConfigStr("display", "format", defFormat);
+            format = defFormat;
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;
         case JSON1:
@@ -678,7 +662,6 @@ const CToml* getGlobalConfig(const string_q& mergeIn) {
 
     if (!toml) {
         string_q configFile = rootConfigToml_trueBlocks;
-        LOG4(bGreen, "configFile: ", configFile, cOff);
         static CToml theToml(configFile);
         toml = &theToml;
         string_q name = COptionsBase::g_progName;

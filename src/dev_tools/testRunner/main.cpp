@@ -35,7 +35,7 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return EXIT_FAILURE;
 
-    total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
+    total.git_hash = "git_"; //  + string_q(GIT_COMMIT_HASH).substr(0, 10);
     string_q testFolder = getSourcePath3();
     uint32_t testID = 0;
     for (auto command : options.commandLines) {
@@ -44,7 +44,6 @@ int main(int argc, const char* argv[]) {
 
         for (auto testName : options.tests) {
             string_q path = nextTokenClear(testName, '/');
-            LOG1("Processing file: ", path);
             if (options.full_test) {
                 // only clean if we're testing all
                 options.cleanTest(path, testName);
@@ -70,7 +69,7 @@ int main(int argc, const char* argv[]) {
                 if (line.empty() || ignore1 || ignore2 || ignore3) {
                     if (ignore2 && !options.ignoreOff) {
                         if (trim(line).substr(0, 120).length() > 0) {
-                            cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                            cerr << "   # " << line.substr(0, 120) << endl;
                         }
                         CTestCase test(line, 0);
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
@@ -136,7 +135,7 @@ int main(int argc, const char* argv[]) {
         appendToAsciiFile(perfFile, perf.str());
         appendToAsciiFile(rootConfigs + "perf/performance_slow.csv", slow.str());
     } else {
-        LOG_WARN(cRed, "Performance results not written because not full test", cOff);
+        LOG_WARN("Performance results not written because not full test");
     }
 
     // If configured, copy the data out to the folder our performance measurement tool knows about
@@ -167,7 +166,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
     if (!(modes & whichTest))
         return;
 
-    resetClock();
     bool cmdTests = whichTest & CMD;
 
     CMeasure measure(testPath, testName, (cmdTests ? "cmd" : "api"));
@@ -272,7 +270,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
             if (test.builtin)
                 theCmd = "cd \"" + goldApiPath + "\" ; " + test.options;
-            LOG4(theCmd);
 
             string_q customized =
                 substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.name + "/",
@@ -311,14 +308,8 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 continue;
             }
 
-            double thisTime = str_2_Double(TIC());
-            if (test.mode == "both" || contains(test.tool, "lib"))
-                measure.totSecs += thisTime;
-            string_q timeRep = (thisTime > tooSlow       ? cRed
-                                : thisTime <= fastEnough ? cGreen
-                                                         : "") +
-                               double_2_Str(thisTime, 5) + cOff;
-
+            double thisTime = .02;
+            string_q timeRep = double_2_Str(thisTime, 5);
             if (endsWith(test.path, "lib"))
                 replace(test.workPath, "../", "");
 
@@ -343,19 +334,19 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 stringToAsciiFile(oldFn, oldText);
             }
 
-            string_q result = greenCheck;
+            string_q result = "ok";
             if (!newText.empty() && newText == oldText) {
                 if (test.mode == "both" || contains(test.tool, "lib"))
                     measure.nPassed++;
 
             } else {
                 ostringstream os;
-                os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
-                os << test.name << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "
-                   << trim(test.options) << ")" << cRed;
-                os << cOff << endl;
+                os << "\tFailed: " << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
+                os << test.name << ".txt " << "(" << (test.builtin ? "" : measure.cmd) << " "
+                   << trim(test.options) << ")";
+                os << endl;
                 fails.push_back(os.str());
-                result = redX;
+                result = "X";
             }
 
             if (!contains(test.origLine, " all,")) {
@@ -377,7 +368,6 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
 
             usleep(500);
             if (shouldQuit()) {
-                LOG4("Quitting because of shouldQuit");
                 break;
             }
             envLines.clear();

@@ -429,7 +429,7 @@ bool CArchive::needsUpgrade(bool arrayFile) {
     this->Read(schema);
     Seek(t, SEEK_SET);  // go back where we started
 
-    return schema < getVersionNum();
+    return false;
 }
 
 }  // namespace qblocks

@@ -21,7 +21,7 @@ static const COption params[] = {
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(string_q& command) {
+bool COptions::parse Arguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
