@@ -30,11 +30,11 @@ func (s *Structure) ProcessFile(source string) error {
 		return nil
 	} else if destIn {
 		s.Route = grabRoute(s.GoOutput)
-		dest = convertToDestPath(source, s.Route, s.Name)
+		dest = convertToDestPath(source, s.Route, s.Name())
 		dest = strings.Replace(dest, "/types/", "/types_", -1)
 		// return nil
 	} else {
-		dest = convertToDestPath(source, "", s.Name)
+		dest = convertToDestPath(source, "", s.Name())
 	}
 
 	tmplName := source

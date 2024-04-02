@@ -49,7 +49,7 @@ func (cb *CodeBase) RouteToGroup(route string) string {
 // TypeToGroup - returns the group given a type
 func (cb *CodeBase) TypeToGroup(typ string) string {
 	for _, st := range cb.Structures {
-		if strings.EqualFold(st.Name, typ) {
+		if strings.EqualFold(st.Name(), typ) {
 			parts := strings.Split(st.DocGroup, "-")
 			if len(parts) > 1 {
 				return LowerNoSpaces(parts[1])

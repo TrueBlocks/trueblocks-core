@@ -10,7 +10,6 @@ import (
 )
 
 type Structure struct {
-	Name        string    `json:"name,omitempty" toml:"name"`
 	Class       string    `json:"class,omitempty" toml:"class"`
 	BaseClass   string    `json:"base_class,omitempty" toml:"base_class"`
 	Fields      string    `json:"fields,omitempty" toml:"fields"`
@@ -196,4 +195,8 @@ func (s *Structure) ModelNotes() string {
 
 func (s *Structure) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(s, "structure", name, tmplCode)
+}
+
+func (s *Structure) Name() string {
+	return Lower(s.Class)
 }
