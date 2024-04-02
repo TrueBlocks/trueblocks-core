@@ -69,7 +69,7 @@ int main(int argc, const char* argv[]) {
                 if (line.empty() || ignore1 || ignore2 || ignore3) {
                     if (ignore2 && !options.ignoreOff) {
                         if (trim(line).substr(0, 120).length() > 0) {
-                            cerr << "   # " << line.substr(0, 120)  << endl;
+                            cerr << "   # " << line.substr(0, 120) << endl;
                         }
                         CTestCase test(line, 0);
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
@@ -308,9 +308,7 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
                 continue;
             }
 
-            double thisTime = 0.02; // str_2_Double(TIC());
-            if (test.mode == "both" || contains(test.tool, "lib"))
-                measure.totSecs += thisTime;
+            double thisTime = .02;
             string_q timeRep = double_2_Str(thisTime, 5);
             if (endsWith(test.path, "lib"))
                 replace(test.workPath, "../", "");
@@ -344,9 +342,9 @@ void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_
             } else {
                 ostringstream os;
                 os << "\tFailed: " << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
-                os << test.name << ".txt "  << "(" << (test.builtin ? "" : measure.cmd) << " "
+                os << test.name << ".txt " << "(" << (test.builtin ? "" : measure.cmd) << " "
                    << trim(test.options) << ")";
-                os  << endl;
+                os << endl;
                 fails.push_back(os.str());
                 result = "X";
             }

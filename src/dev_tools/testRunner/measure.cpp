@@ -324,11 +324,13 @@ const char* STR_DISPLAY_MEASURE =
 // EXISTING_CODE
 CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     initialize();
-    git_hash = "git_"; // string_q(GIT_COMMIT_HASH).substr(0, 10);
+    git_hash = ""; //"git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     date = Now().Format(FMT_EXPORT);
-    machine = toLower(getHostName());
+    machine = "test-machine";
     node = "TG";
-    epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" + uint_2_Str((2 * 100) + 5));
+    // uint16_t maj, min, build;
+    // getVersionValues(maj, min, build);
+    epoch = "not-a-test"; // getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" + uint_2_Str((maj * 100) + min));
     group = g;
     cmd = c;
     type = t;
