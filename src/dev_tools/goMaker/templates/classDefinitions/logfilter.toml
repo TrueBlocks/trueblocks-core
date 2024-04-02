@@ -3,6 +3,6 @@
     fields = "logfilter.csv"
     doc_group = "02-Chain Data"
     doc_descr = "used by the fast path log queries for various commands"
-    doc_route = "208-logFilter"
+    doc_route = "218-logFilter"
     doc_producer = "blocks, logs"
     go_output = "src/apps/chifra/pkg/types"

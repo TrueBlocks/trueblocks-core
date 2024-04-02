@@ -3,6 +3,6 @@
     fields = "tracefilter.csv"
     doc_group = "02-Chain Data"
     doc_descr = "used by chifra traces --filter option to query for traces"
-    doc_route = "212-traceFilter"
+    doc_route = "233-traceFilter"
     doc_producer = "traces"
     go_output = "src/apps/chifra/pkg/types"

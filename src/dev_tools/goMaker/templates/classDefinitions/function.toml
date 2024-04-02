@@ -4,7 +4,7 @@
     contained_by = "Abi"
     doc_group = "05-Other"
     doc_descr = "a human-readable representation of a Solidity function call or event"
-    doc_route = "502-function"
+    doc_route = "506-function"
     doc_producer = "abis, export"
     go_output = "src/apps/chifra/pkg/types"
     cache_type = "marshal_only"

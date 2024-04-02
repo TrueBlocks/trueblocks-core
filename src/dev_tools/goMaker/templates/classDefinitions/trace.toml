@@ -4,7 +4,7 @@
     contained_by = "Transaction"
     doc_group = "02-Chain Data"
     doc_descr = "trace data as returned from the RPC (with slight enhancements)"
-    doc_route = "207-trace"
+    doc_route = "221-trace"
     doc_producer = "traces, export, blocks"
     go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"

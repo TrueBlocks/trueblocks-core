@@ -3,6 +3,6 @@
     fields = "chunkbloom.csv"
     doc_group = "04-Admin"
     doc_descr = "internal-use only data model detailing a single bloom filter file"
-    doc_route = "405-chunkBloom"
+    doc_route = "415-chunkBloom"
     doc_producer = "chunks"
     go_output = "src/apps/chifra/internal/chunks"

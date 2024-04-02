@@ -3,7 +3,7 @@
     fields = "slurp.csv"
     doc_group = "05-Other"
     doc_descr = "transaction data as returned from by Etherscan"
-    doc_route = "504-slurp"
+    doc_route = "512-slurp"
     doc_producer = "slurp"
     go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
