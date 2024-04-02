@@ -88,9 +88,6 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'g':
-            if (fieldName % "git_hash") {
-                return git_hash;
-            }
             if (fieldName % "group") {
                 return group;
             }
@@ -162,10 +159,6 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
             }
             break;
         case 'g':
-            if (fieldName % "git_hash") {
-                git_hash = fieldValue;
-                return true;
-            }
             if (fieldName % "group") {
                 group = fieldValue;
                 return true;
@@ -224,7 +217,6 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMeasure, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMeasure, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "git_hash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "machine", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "node", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -324,7 +316,6 @@ const char* STR_DISPLAY_MEASURE =
 // EXISTING_CODE
 CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     initialize();
-    git_hash = ""; //"git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     date = Now().Format(FMT_EXPORT);
     machine = "test-machine";
     node = "TG";

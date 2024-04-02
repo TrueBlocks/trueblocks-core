@@ -22,10 +22,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    int modes = CMD;
-    bool ignoreOff = false;
+    // int modes = BOTH;
     CStringArray tests;
-    bool full_test;
     string_q apiProvider;
 
     COptions(void);

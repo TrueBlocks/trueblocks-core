@@ -108,33 +108,28 @@ bool COptions::parseArguments(string_q& command) {
     if (getGlobalConfig("")->getConfigBool("dev", "debug_curl", false))
         return usage("[dev]debug_curl is set in config file. All tests will fail.");
 
-    modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
-
-    if (tests.empty()) {
-        full_test = true;
-        if (runSlurps) {
-            tests.push_back("tools/ethslurp");
-        }
-        tests.push_back("tools/ethNames");
-        tests.push_back("tools/getBlocks");
-        tests.push_back("tools/getLogs");
-        tests.push_back("tools/getReceipts");
-        tests.push_back("tools/getState");
-        tests.push_back("tools/getTokens");
-        tests.push_back("tools/getTraces");
-        tests.push_back("tools/getTrans");
-        tests.push_back("tools/grabABI");
-        tests.push_back("tools/whenBlock");
-        tests.push_back("apps/acctExport");
-        tests.push_back("apps/blockScrape");
-        tests.push_back("apps/cacheStatus");
-        tests.push_back("apps/chunkMan");
-        tests.push_back("apps/chifra");
-        tests.push_back("apps/config");
-        tests.push_back("apps/fireStorm");
-        tests.push_back("apps/init");
-        tests.push_back("apps/daemon");
+    if (runSlurps) {
+        tests.push_back("tools/ethslurp");
     }
+    tests.push_back("tools/ethNames");
+    tests.push_back("tools/getBlocks");
+    tests.push_back("tools/getLogs");
+    tests.push_back("tools/getReceipts");
+    tests.push_back("tools/getState");
+    tests.push_back("tools/getTokens");
+    tests.push_back("tools/getTraces");
+    tests.push_back("tools/getTrans");
+    tests.push_back("tools/grabABI");
+    tests.push_back("tools/whenBlock");
+    tests.push_back("apps/acctExport");
+    tests.push_back("apps/blockScrape");
+    tests.push_back("apps/cacheStatus");
+    tests.push_back("apps/chunkMan");
+    tests.push_back("apps/chifra");
+    tests.push_back("apps/config");
+    tests.push_back("apps/fireStorm");
+    tests.push_back("apps/init");
+    tests.push_back("apps/daemon");
 
     SHOW_FIELD(CTestCase, "test_id");
 
@@ -151,7 +146,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params, 0);
-    full_test = false;
     minArgs = 0;
 }
 
