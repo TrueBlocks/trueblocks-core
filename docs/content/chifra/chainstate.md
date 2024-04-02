@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1400
+weight: 33000
 toc: true
 ---
 
@@ -143,3 +143,5 @@ Links:
 - [api docs](/api/#operation/chainstate-tokens)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/getTokens.csv)
+
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

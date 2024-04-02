@@ -1,3 +1,11 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
 // EXISTING_CODE
@@ -7,18 +15,18 @@ import (
 
 // EXISTING_CODE
 
-type RawMonitor interface {
+type RawMonitor struct {
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 type SimpleMonitor struct {
-	Address     string      `json:"address"`
-	NRecords    int         `json:"nRecords"`
-	FileSize    int64       `json:"fileSize"`
-	LastScanned uint32      `json:"lastScanned"`
-	Deleted     bool        `json:"deleted"`
-	raw         *RawMonitor `json:"-"`
+	Address     base.Address `json:"address"`
+	Deleted     bool         `json:"deleted"`
+	FileSize    int64        `json:"fileSize"`
+	LastScanned uint32       `json:"lastScanned"`
+	NRecords    int64        `json:"nRecords"`
+	raw         *RawMonitor  `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -59,7 +67,7 @@ func (s *SimpleMonitor) Model(chain, format string, verbose bool, extraOptions m
 		order = append(order, "lastScanned")
 		order = append(order, "deleted")
 		if extraOptions["namesMap"] != nil {
-			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[base.HexToAddress(s.Address)]
+			name := extraOptions["namesMap"].(map[base.Address]SimpleName)[s.Address]
 			if name.Address.Hex() != "0x0" {
 				model["name"] = name
 				order = append(order, "name")

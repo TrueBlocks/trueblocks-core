@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -161,6 +161,10 @@ func (s *SimpleAppearance) Model(chain, format string, verbose bool, extraOption
 	}
 }
 
+func (s *SimpleAppearance) Date() string {
+	return utils.FormattedDate(s.Timestamp)
+}
+
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *SimpleAppearance) FinishUnmarshal() {
 	// EXISTING_CODE
@@ -172,10 +176,6 @@ func (s *SimpleAppearance) FinishUnmarshal() {
 
 func (s *SimpleAppearance) GetKey() string {
 	return fmt.Sprintf("%s\t%09d\t%05d", s.Address, s.BlockNumber, s.TransactionIndex)
-}
-
-func (s *SimpleAppearance) Date() string {
-	return utils.FormattedDate(s.Timestamp)
 }
 
 func (s *SimpleAppearance) Orig() string {

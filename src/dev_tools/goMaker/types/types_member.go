@@ -175,6 +175,11 @@ func (m *Member) RawType() string {
 		if m.GoName() == "AccessList" {
 			return "[]StorageSlot"
 		}
+	case "Appearance":
+		gn := m.GoName()
+		if gn == "BlockNumber" || gn == "TransactionIndex" {
+			return "uint32"
+		}
 	}
 
 	ret = "string"

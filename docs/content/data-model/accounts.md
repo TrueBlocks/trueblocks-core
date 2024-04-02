@@ -29,7 +29,62 @@ and [Parameters](/data-model/accounts/#parameters).
 
 Each data structure is created by one or more tools which are detailed below.
 
+## Appearance
 
+An appearance is a pointer (`blknum, tx_id` pair) into the blockchain indicating where a
+particular address appears. This includes obvious locations such as `to` or `from` as well
+as esoteric locations such as deep inside a tenth-level trace or as the miner of an uncle block.
+The primary goal of TrueBlocks is to identify every appearance for any address on the chain.
+
+The TrueBlocks [index of appearances](/data-model/the-index/) (created by [chifra scrape](/chifra/admin/#chifra-scrape))
+makes the production of such a list possible. Appearances are stored in [Monitors](/data-model/accounts/#monitor).
+
+The following commands produce and manage Appearances:
+
+- [chifra list](/chifra/accounts/#chifra-list)
+- [chifra export](/chifra/accounts/#chifra-export)
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra chunks](/chifra/admin/#chifra-chunks)
+
+Appearances consist of the following fields:
+
+| Field            | Description                                             | Type      |
+| ---------------- | ------------------------------------------------------- | --------- |
+| address          | the address of the appearance                           | address   |
+| blockNumber      | the number of the block                                 | uint32    |
+| transactionIndex | the index of the transaction in the block               | uint32    |
+| traceIndex       | the zero-based index of the trace in the transaction    | uint32    |
+| reason           | the location in the data where the appearance was found | string    |
+| timestamp        | the timestamp for this appearance                       | timestamp |
+| date             | the timestamp as a date (calculated)                    | datetime  |
+
+## Monitor
+
+A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given
+address along with various details about those appearances. A monitor is created when a user
+expresses interest in an address by calling either [chifra list](/chifra/accounts/#chifra-list)
+or [chifra export](/chifra/accounts/#chifra-export) tool (or querying thier associated APIs).
+
+Once created, a monitor may be periodically *freshened* by calling either `chifra list` or `chifra
+export`, however, it is also possible to freshen a monitor continually with
+[chifra scrape --monitors](/chifra/admin/#chifra-scrape). This tool watches the front of the
+chain and repeatedly calls `chifra list`.
+
+The following commands produce and manage Monitors:
+
+- [chifra monitors](/chifra/accounts/#chifra-monitors)
+- [chifra list](/chifra/accounts/#chifra-list)
+- [chifra export](/chifra/accounts/#chifra-export)
+
+Monitors consist of the following fields:
+
+| Field       | Description                                | Type    |
+| ----------- | ------------------------------------------ | ------- |
+| address     | the address of this monitor                | address |
+| nRecords    | the number of appearances for this monitor | int64   |
+| fileSize    | the size of this monitor on disc           | int64   |
+| lastScanned | the last scanned block number              | uint32  |
+| deleted     | `true` if this monitor has been deleted    | bool    |
 
 ## Name
 
@@ -70,6 +125,23 @@ Names consist of the following fields:
 | isErc20    | `true` if the address is an ERC20, `false` otherwise                                | bool    |
 | isErc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
+## AppearanceCount
+
+The `appearanceCount` data model is used mostly by the frontend explorer application. It carries
+various information about the monitor data for an address.
+
+The following commands produce and manage AppearanceCounts:
+
+- [chifra list](/chifra/accounts/#chifra-list)
+- [chifra export](/chifra/accounts/#chifra-export)
+
+AppearanceCounts consist of the following fields:
+
+| Field    | Description                                               | Type    |
+| -------- | --------------------------------------------------------- | ------- |
+| address  | the address for this count                                | address |
+| nRecords | the number of appearances for the given address           | uint64  |
+| fileSize | the size of the monitor file containing those appearances | uint64  |
 
 ## Bounds
 
@@ -170,9 +242,11 @@ This documentation mentions the following basic data types.
 | datetime  | a JSON formatted date               | as a string    |
 | double    | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| int64     | a 64-bit signed integer             |                |
 | int256    | a signed big number                 | as a string    |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

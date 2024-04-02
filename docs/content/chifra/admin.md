@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1600
+weight: 47000
 toc: true
 ---
 
@@ -64,6 +64,12 @@ Links:
 
 ## chifra status
 
+The `chifra status` tool reports on the state (and size) of the various TrueBlocks local binary
+caches. TrueBlocks produces nine difference caches: `abis`, `blocks`, `monitors`, `names`, `objs`,
+`recons`, `slurps`, `traces`, `transactions`. In general practice, these caches may take up a
+few GB of hard drive space, however, for very popular smart contract the size of the caches may
+grow rather large. Keep an eye on it.
+
 The `chifra status` program allows you to manage the various TrueBlocks caches. You may list all of the
 caches, some of the cache, or even individual caches either in terse or full detail. The cache of
 interest is specified with the `modes` option.
@@ -98,9 +104,9 @@ Notes:
 
 Data models produced by this tool:
 
-- [status](/data-model/admin/#status)
 - [cacheitem](/data-model/admin/#cacheitem)
 - [chain](/data-model/admin/#chain)
+- [status](/data-model/admin/#status)
 
 Links:
 
@@ -160,7 +166,7 @@ Links:
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
 - no tests for this command
 
-### notes
+### further information
 
 To convert the options for a command line tool to an API call, do the following:
 
@@ -214,8 +220,8 @@ Notes:
 
 Data models produced by this tool:
 
-- [manifest](/data-model/admin/#manifest)
 - [chunkrecord](/data-model/admin/#chunkrecord)
+- [manifest](/data-model/admin/#manifest)
 
 Links:
 
@@ -230,21 +236,21 @@ Each of the following additional configurable command line options are available
 **Configuration file:** `trueBlocks.toml`  
 **Configuration group:** `[scrape.<chain>]`
 
-| Item               | Type         | Default      | Description / Default |
-| ------------------ | ------------ | ------------ | --------- |
-| appsPerChunk       | uint64       | 2000000      | the number of appearances to build into a chunk before consolidating it |
-| snapToGrid         | uint64       | 250000       | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
-| firstSnap          | uint64       | 2000000      | the first block at which snap_to_grid is enabled |
-| unripeDist         | uint64       | 28           | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe |
-| channelCount       | uint64       | 20           | number of concurrent processing channels |
-| allowMissing       | bool         | false        | do not report errors for blockchains that contain blocks with zero addresses |
+| Item         | Type   | Default | Description / Default                                                                                                    |
+| ------------ | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| appsPerChunk | uint64 | 2000000 | the number of appearances to build into a chunk before consolidating it                                                  |
+| snapToGrid   | uint64 | 250000  | an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index |
+| firstSnap    | uint64 | 2000000 | the first block at which snap_to_grid is enabled                                                                         |
+| unripeDist   | uint64 | 28      | the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe                |
+| channelCount | uint64 | 20      | number of concurrent processing channels                                                                                 |
+| allowMissing | bool   | false   | do not report errors for blockchains that contain blocks with zero addresses                                             |
 
 Note that for Ethereum mainnet, the default values for appsPerChunk and firstSnap are 2,000,000 and 2,300,000 respectively. See the specification for a justification of these values.
 
 These items may be set in three ways, each overriding the preceding method:
 
 -- in the above configuration file under the `[scrape.<chain>]` group,  
--- in the environment by exporting the configuration item as UPPER&lowbar;CASE (with underbars removed) and prepended with TB_SCRAPE&lowbar;CHAIN&lowbar;, or  
+-- in the environment by exporting the configuration item as upper case (with underbars removed) and prepended with (TB underbar SCRAPE underbar CHAIN) with the underbars included, or  
 -- on the command line using the configuration item with leading dashes and in snake case (i.e., `--snake_case`).
 
 ### further information
@@ -285,7 +291,7 @@ more information about running the scraper and building and sharing the index of
 
 ## chifra chunks
 
-The chifra chunks routine provides tools for interacting with, checking the validity of, cleaning up,
+The `chifra chunks` routine provides tools for interacting with, checking the validity of, cleaning up,
 and analyzing the Unchained Index. It provides options to list pins, the Manifest, summary data
 on the index, Bloom filters, addresses, and appearances. While still in its early stages, this
 tool will eventually allow users to clean their local index, clean their remote index, study
@@ -336,15 +342,15 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [manifest](/data-model/admin/#manifest)
-- [chunkrecord](/data-model/admin/#chunkrecord)
-- [chunkindex](/data-model/admin/#chunkindex)
-- [chunkbloom](/data-model/admin/#chunkbloom)
 - [chunkaddress](/data-model/admin/#chunkaddress)
-- [ipfspin](/data-model/admin/#ipfspin)
-- [chunkstats](/data-model/admin/#chunkstats)
-- [reportcheck](/data-model/admin/#reportcheck)
+- [chunkbloom](/data-model/admin/#chunkbloom)
+- [chunkindex](/data-model/admin/#chunkindex)
 - [chunkpinreport](/data-model/admin/#chunkpinreport)
+- [chunkrecord](/data-model/admin/#chunkrecord)
+- [chunkstats](/data-model/admin/#chunkstats)
+- [ipfspin](/data-model/admin/#ipfspin)
+- [manifest](/data-model/admin/#manifest)
+- [reportcheck](/data-model/admin/#reportcheck)
 
 Links:
 
@@ -398,11 +404,13 @@ Notes:
 
 Data models produced by this tool:
 
-- [manifest](/data-model/admin/#manifest)
 - [chunkrecord](/data-model/admin/#chunkrecord)
+- [manifest](/data-model/admin/#manifest)
 
 Links:
 
 - [api docs](/api/#operation/admin-init)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/init.csv)
+
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

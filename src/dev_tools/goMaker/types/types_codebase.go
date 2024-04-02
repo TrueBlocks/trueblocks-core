@@ -41,7 +41,7 @@ func (cb *CodeBase) Description() string {
 func (cb *CodeBase) RouteToGroup(route string) string {
 	for _, c := range cb.Commands {
 		if c.Route == route {
-			return LowerNoSpaces(c.Group)
+			return c.GroupName()
 		}
 	}
 	return ""
@@ -95,11 +95,6 @@ func (cb *CodeBase) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(cb, "codebase", name, tmplCode)
 }
 
-// StructureFiles
-func (cb *CodeBase) StructureFiles(groupFilter string) string {
-	return "StructureFiles"
-}
-
 func (cb *CodeBase) ModelList() []Structure {
 	theMap := map[string]Structure{}
 	for _, st := range cb.Structures {
@@ -114,6 +109,27 @@ func (cb *CodeBase) ModelList() []Structure {
 			cbPtr:    cb,
 		}
 		ret = append(ret, st)
+	}
+	return ret
+}
+
+func (cb *CodeBase) CommandList() []Command {
+	theMap := map[string]Command{}
+	for _, c := range cb.Commands {
+		theMap[c.GroupName()] = c
+	}
+
+	ret := []Command{}
+	for key := range theMap {
+		c := Command{
+			Route:       theMap[key].Route,
+			Group:       theMap[key].Group,
+			Description: theMap[key].Description,
+			Num:         theMap[key].Num,
+			Aliases:     theMap[key].Aliases,
+			cbPtr:       cb,
+		}
+		ret = append(ret, c)
 	}
 	return ret
 }

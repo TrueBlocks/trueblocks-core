@@ -2989,24 +2989,20 @@ components:
           description: "the address of the appearance"
         blockNumber:
           type: number
-          format: blknum
+          format: uint32
           description: "the number of the block"
         transactionIndex:
           type: number
-          format: blknum
+          format: uint32
           description: "the index of the transaction in the block"
         traceIndex:
           type: number
-          format: blknum
+          format: uint32
           description: "the zero-based index of the trace in the transaction"
         reason:
           type: string
           format: string
           description: "the location in the data where the appearance was found"
-        name:
-          type: string
-          format: string
-          description: "the name of the address, if found"
         timestamp:
           type: number
           format: timestamp
@@ -3019,54 +3015,26 @@ components:
       description: "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
       type: object
       properties:
-        nApps:
-          type: number
-          format: blknum
-          description: "the number of appearances for this monitor"
-        firstApp:
-          type: number
-          format: blknum
-          description: "the first block at which this address appears"
-        latestApp:
-          type: number
-          format: blknum
-          description: "the latest block at which this address appears"
-        sizeInBytes:
-          type: number
-          format: uint64
-          description: "the size of this monitor on disc"
-        tags:
-          type: string
-          format: string
-          description: "the tag given to this address"
         address:
           type: string
           format: address
-          description: "the address being monitored"
-        name:
-          type: string
-          format: string
-          description: "the name given to this address"
-        isCustom:
-          type: boolean
-          format: boolean
-          description: "`true` if this address is customized"
+          description: "the address of this monitor"
+        nRecords:
+          type: number
+          format: int64
+          description: "the number of appearances for this monitor"
+        fileSize:
+          type: number
+          format: int64
+          description: "the size of this monitor on disc"
+        lastScanned:
+          type: number
+          format: uint32
+          description: "the last scanned block number"
         deleted:
           type: boolean
           format: boolean
-          description: "`true` if deleted, `false` otherwise"
-        symbol:
-          type: string
-          format: string
-        source:
-          type: string
-          format: string
-        decimals:
-          type: number
-          format: uint64
-        isContract:
-          type: boolean
-          format: boolean
+          description: "`true` if this monitor has been deleted"
     name:
       description: "an association between a human-readable name and an address used throughout TrueBlocks"
       type: object

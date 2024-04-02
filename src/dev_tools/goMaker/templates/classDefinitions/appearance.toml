@@ -6,5 +6,4 @@
     doc_descr = "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain (note that in some cases, not all fields will appear depending on the command)"
     doc_route = "103-appearance"
     doc_producer = "list, export, blocks, chunks"
-    go_output = "documentation only"
-    cache_type = "marshal_only"
+    go_output = "src/apps/chifra/pkg/types"

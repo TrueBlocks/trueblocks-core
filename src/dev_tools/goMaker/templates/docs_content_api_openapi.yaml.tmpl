@@ -21,8 +21,8 @@ paths:
       tags:
         - {{.Group}}
       summary: {{.Summary}}
-      description: {{.Description}} Corresponds to the <a href="/chifra/{{.LowerGroup}}/#chifra-{{.Route}}">chifra {{.Route}}</a> command line.
-      operationId: {{.LowerGroup}}-{{.Route}}
+      description: {{.Description}} Corresponds to the <a href="/chifra/{{.GroupName}}/#chifra-{{.Route}}">chifra {{.Route}}</a> command line.
+      operationId: {{.GroupName}}-{{.Route}}
       parameters:
 {{range .Options}}{{if not .IsHidden}}        - name: {{.CamelCase}}
           description: {{.Description}}

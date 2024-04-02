@@ -1,4 +1,4 @@
-{{range .ModelList}}{{if eq .GroupName "[{GROUP}]"}}---
+{{range .CommandList}}{{if eq .GroupName "[{GROUP}]"}}---
 title: "{{.GroupTitle}}"
 description: ""
 lead: ""
@@ -7,20 +7,13 @@ lastmod:
   - lastmod
   - publishDate
 draft: false
-menu:
-  data:
-    parent: "collections"
+{{.GroupAlias}}menu:
+  chifra:
+    parent: commands
 weight: {{.GroupWeight}}
 toc: true
 ---
 
 {{.GroupIntro}}
-
 {{.Markdowns}}
-## Base types
-
-This documentation mentions the following basic data types.
-
-{{.BaseTypes}}
-
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*{{end}}{{end}}

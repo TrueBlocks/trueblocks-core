@@ -35,7 +35,7 @@ func (c *Command) TypeToGroup(t string) string {
 }
 
 func (c *Command) ProducedByDescr() string {
-	g := strings.Replace(strings.ToLower(c.Group), " ", "", -1)
+	g := c.GroupName()
 	types := []string{}
 	for i, production := range c.Productions {
 		lowerProd := strings.ToLower(production.Value)
@@ -585,8 +585,8 @@ func (c *Command) PkgDoc() string {
 	return "// " + strings.Join(sentences, ".")
 }
 
-func (c *Command) LowerGroup() string {
-	return strings.Replace(strings.ToLower(c.Group), " ", "", -1)
+func (c *Command) GroupName() string {
+	return LowerNoSpaces(c.Group)
 }
 
 func (c *Command) IsRoute() bool {
@@ -653,7 +653,7 @@ func (c *Command) HelpLinks() string {
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Folder}}/{{.Tool}}.csv)`
 	} else {
 		tmplName += "3"
-		tmpl = `- [api docs](/api/#operation/{{.LowerGroup}}-{{.Route}})
+		tmpl = `- [api docs](/api/#operation/{{.GroupName}}-{{.Route}})
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Folder}}/{{.Tool}}.csv)`
 	}
@@ -678,4 +678,38 @@ func (c *Command) ReadmeFooter() string {
 
 func (c *Command) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(c, "command", name, tmplCode)
+}
+
+func (c *Command) GroupTitle() string {
+	return FirstUpper(Lower(c.Group))
+}
+
+func (c *Command) GroupWeight() int {
+	return c.Num * 1000
+}
+
+func (c *Command) GroupIntro() string {
+	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/readme-groups/"+c.GroupName()+".md"), ws)
+	return contents
+}
+
+func (c *Command) GroupAlias() string {
+	ret := `aliases:
+ - "/docs/chifra/[{WHICH}]"
+`
+	return strings.Replace(ret, "[{WHICH}]", c.GroupName(), -1)
+}
+
+func (c *Command) Markdowns() string {
+	ret := []string{}
+
+	filter := c.GroupName()
+	for _, cmd := range c.cbPtr.Commands {
+		if cmd.GroupName() == filter {
+			contents := file.AsciiFileToString("src/dev_tools/goMaker/generated/readme_" + cmd.Route + ".md")
+			ret = append(ret, contents)
+		}
+	}
+
+	return strings.Join(ret, "\n")
 }

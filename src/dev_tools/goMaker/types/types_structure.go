@@ -19,7 +19,6 @@ type Structure struct {
 	DocRoute    string    `json:"doc_route,omitempty" toml:"doc_route"`
 	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr" csv:"doc_descr"`
 	DocNotes    string    `json:"doc_notes,omitempty" toml:"doc_notes" csv:"doc_notes"`
-	DocAlias    string    `json:"doc_alias,omitempty" toml:"doc_alias"`
 	DocProducer string    `json:"doc_producer,omitempty" toml:"doc_producer"`
 	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
 	GoModel     string    `json:"go_model,omitempty" toml:"go_model"`
@@ -180,13 +179,6 @@ func (s *Structure) DocLead() string {
 	return "DocLead" + s.Class
 }
 
-func (s *Structure) Aliases() string {
-	if s.DocAlias != "" {
-		return "Aliases" + s.Class
-	}
-	return ""
-}
-
 func (s *Structure) GroupWeight() int64 {
 	parts := strings.Split(s.DocGroup, "-")
 	return utils.MustParseInt(parts[0]) * 1000
@@ -202,7 +194,7 @@ func (s *Structure) GroupIntro() string {
 	return contents
 }
 
-func (s *Structure) StructureFiles() string {
+func (s *Structure) Markdowns() string {
 	ret := []string{}
 
 	filter := s.GroupName()

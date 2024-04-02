@@ -144,9 +144,14 @@ func updateFile(tempFn, newCode string) (bool, error) {
 		}
 		formatted = string(formattedBytes)
 	} else if strings.Contains(tempFn, ".md") {
-		// This works, but it's too slow, and--it doesn't correct anything
-		// utils.System("prettier -w --parser markdown " + tempFn + " >/dev/null")
-		// formatted = file.AsciiFileToString(tempFn)
+		// if hasPrettier() {
+		// 	// This works, but it's too slow, and--it doesn't correct anything
+		// 	utils.System("prettier -w --parser markdown " + tempFn + " >/dev/null")
+		// 	formatted = file.AsciiFileToString(tempFn)
+		// } else {
+		// 	logger.Warn("Prettier not found, skipping production of openapi.yaml.", "Add prettier with", "`"+colors.Cyan+"npm install -g prettier"+colors.Off+"`.")
+		// 	return false, nil
+		// }
 	} else if strings.Contains(tempFn, ".yaml") {
 		if hasPrettier() {
 			utils.System("prettier -w --parser yaml " + tempFn + " >/dev/null")

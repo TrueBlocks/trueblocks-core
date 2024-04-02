@@ -1,23 +1,6 @@
-name             ,type    ,strDefault ,attributes ,docOrder ,description
-nAppearances     ,blknum  ,           ,           ,         ,
-lastExport       ,blknum  ,           ,           ,         ,
-firstAppearance  ,blknum  ,           ,           ,         ,
-latestAppearance ,blknum  ,UINT_MAX   ,           ,         ,
-lastVisitedBlock ,blknum  ,NOPOS      ,           ,         ,
-sizeInBytes      ,uint64  ,           ,omitempty  ,       4 ,the size of this monitor on disc
-nApps            ,blknum  ,           ,           ,       1 ,the number of appearances for this monitor
-firstApp         ,blknum  ,           ,           ,       2 ,the first block at which this address appears
-latestApp        ,blknum  ,           ,           ,       3 ,the latest block at which this address appears
-address          ,address ,           ,           ,       6 ,the address being monitored
-decimals         ,uint64  ,           ,           ,      12 ,
-petname          ,string  ,           ,omitempty  ,         ,
-isContract       ,bool    ,           ,           ,      13 ,
-isCustom         ,bool    ,           ,           ,       8 ,`true` if this address is customized
-isErc20          ,bool    ,           ,omitempty  ,         ,
-isErc721         ,bool    ,           ,omitempty  ,         ,
-isPrefund        ,bool    ,           ,omitempty  ,         ,
-name             ,string  ,           ,           ,       7 ,the name given to this address
-source           ,string  ,           ,           ,      11 ,
-symbol           ,string  ,           ,           ,      10 ,
-tags             ,string  ,           ,           ,       5 ,the tag given to this address
-deleted          ,bool    ,           ,           ,       9 ,`true` if deleted&#44; `false` otherwise
+name        ,type    ,strDefault ,attributes ,docOrder ,description
+address     ,address ,           ,simponly   ,       1 ,the address of this monitor
+deleted     ,bool    ,           ,simponly   ,       5 ,`true` if this monitor has been deleted
+fileSize    ,int64   ,           ,simponly   ,       3 ,the size of this monitor on disc
+lastScanned ,uint32  ,           ,simponly   ,       4 ,the last scanned block number
+nRecords    ,int64   ,           ,simponly   ,       2 ,the number of appearances for this monitor

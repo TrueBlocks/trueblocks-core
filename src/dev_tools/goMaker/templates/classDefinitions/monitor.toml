@@ -6,4 +6,4 @@
     doc_descr = "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
     doc_route = "106-monitor"
     doc_producer = "monitors, list, export"
-    go_output = "documentation only"
+    go_output = "src/apps/chifra/pkg/types"
