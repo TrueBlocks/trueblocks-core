@@ -33,9 +33,11 @@ func executeTemplate(receiver interface{}, tmplPrefix, name, tmplCode string) st
 }
 
 func getFuncMap() template.FuncMap {
+	toProper := func(s string) string { return Proper(s) }
 	toPlural := func(s string) string { return Plural(s) }
 	toCamel := func(s string) string { return CamelCase(s) }
 	return template.FuncMap{
+		"toProper": toProper,
 		"toCamel":  toCamel,
 		"toPlural": toPlural,
 	}

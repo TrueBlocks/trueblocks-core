@@ -10,7 +10,7 @@ draft: false
 menu:
   data:
     parent: "collections"
-weight: 1700
+weight: 4000
 toc: true
 ---
 
@@ -33,11 +33,11 @@ registered chains, information about many of the internal binary caches maintain
 as well as current status information about the system including version information for both
 `chifra` and the node it's running against.
 
-The following commands produce and manage Statuses:
+The following commands produce and manage Status:
 
 - [chifra status](/chifra/admin/#chifra-status)
 
-Statuses consist of the following fields:
+Status consist of the following fields:
 
 | Field         | Description                                              | Type                                        |
 | ------------- | -------------------------------------------------------- | ------------------------------------------- |
@@ -113,11 +113,11 @@ ChunkRecords consist of the following fields:
 The `indexchunk` data model represents internal information about each Unchained Index index chunk.
 It is used mostly interenally to study the characteristics of the Unchained Index.
 
-The following commands produce and manage ChunkIndexes:
+The following commands produce and manage ChunkIndexs:
 
 - [chifra chunks](/chifra/admin/#chifra-chunks)
 
-ChunkIndexes consist of the following fields:
+ChunkIndexs consist of the following fields:
 
 | Field        | Description                                                        | Type     |
 | ------------ | ------------------------------------------------------------------ | -------- |
@@ -243,15 +243,15 @@ The following commands produce and manage CacheItems:
 
 CacheItems consist of the following fields:
 
-| Field       | Description                                         | Type      |
-| ----------- | --------------------------------------------------- | --------- |
-| type        | the type of the cache                               | string    |
-| items       | the individual items in the cache (if --verbose)    | Any       |
-| lastCached  | the date of the most recent item added to the cache | string    |
-| nFiles      | the number of items in the cache                    | uint64    |
-| nFolders    | the number of folders holding that many items       | uint64    |
-| path        | the path to the top of the given cache              | string    |
-| sizeInBytes | the size of the cache in bytes                      | int64     |
+| Field       | Description                                         | Type   |
+| ----------- | --------------------------------------------------- | ------ |
+| type        | the type of the cache                               | string |
+| items       | the individual items in the cache (if --verbose)    | any[]  |
+| lastCached  | the date of the most recent item added to the cache | string |
+| nFiles      | the number of items in the cache                    | uint64 |
+| nFolders    | the number of folders holding that many items       | uint64 |
+| path        | the path to the top of the given cache              | string |
+| sizeInBytes | the size of the cache in bytes                      | int64  |
 
 ## ReportCheck
 
@@ -271,7 +271,7 @@ ReportChecks consist of the following fields:
 | skippedCnt | the number of skipped checks                  | uint32   |
 | passedCnt  | the number of passed checks                   | uint32   |
 | failedCnt  | the number of failed checks                   | uint32   |
-| msgStrings | an array of messages explaining failed checks | []string |
+| msgStrings | an array of messages explaining failed checks | string[] |
 | reason     | the reason for the test                       | string   |
 
 ## ChunkPinReport
@@ -320,7 +320,6 @@ This documentation mentions the following basic data types.
 
 | Type     | Description                         | Notes       |
 | -------- | ----------------------------------- | ----------- |
-| []string | an array of strings                 |             |
 | address  | an '0x'-prefixed 20-byte hex string | lowercase   |
 | blkrange | a pair of nine-digit block numbers  | zero padded |
 | bool     | either `true`, `false`, `1`, or `0` |             |
@@ -332,3 +331,5 @@ This documentation mentions the following basic data types.
 | string   | a normal character string           |             |
 | uint32   | a 32-bit unsigned integer           |             |
 | uint64   | a 64-bit unsigned integer           |             |
+
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

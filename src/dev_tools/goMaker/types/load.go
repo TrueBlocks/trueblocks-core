@@ -38,6 +38,11 @@ func LoadDefinitions() (CodeBase, error) {
 // This will also eventually carry the data types.
 func LoadCodebase(thePath string) (CodeBase, error) {
 	var cb CodeBase
+	baseTypes, err := LoadCsv[Structure, any](thePath+"base-types.csv", readStructure, nil)
+	if err != nil {
+		return CodeBase{}, err
+	}
+
 	options, err := LoadCsv[Option, any](thePath+"cmd-line-options.csv", readCmdOption, nil)
 	if err != nil {
 		return CodeBase{}, err
@@ -59,7 +64,7 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 		return cb, err
 	}
 
-	cb.FinishLoad(options, endpoints, structMap)
+	cb.FinishLoad(baseTypes, options, endpoints, structMap)
 
 	if len(cb.Commands) == 0 {
 		return cb, fmt.Errorf("no commands were found in %s", thePath)
@@ -142,9 +147,13 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 	return nil
 }
 
-func (cb *CodeBase) FinishLoad(options []Option, endpoints []endpoint, structMap map[string]Structure) {
-	theMap := make(map[string]Command)
+func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, endpoints []endpoint, structMap map[string]Structure) {
+	cb.BaseTypes = baseTypes
+	for i := 0; i < len(cb.BaseTypes); i++ {
+		cb.BaseTypes[i].cbPtr = cb
+	}
 
+	theMap := make(map[string]Command)
 	producesMap := make(map[string][]Production)
 
 	// Create the structure array (and sort it by DocRoute) from the map

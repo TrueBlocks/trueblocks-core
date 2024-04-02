@@ -23,24 +23,25 @@ func (s *Structure) ProcessFile(source string) error {
 	}
 
 	dest := ""
-	sourceIn := strings.Contains(source, "internal")
-	destIn := strings.Contains(s.GoOutput, "internal")
-	if destIn && !sourceIn || sourceIn && !destIn {
+	isSourceInternal := strings.Contains(source, "internal")
+	isSourceGenerated := strings.Contains(source, "generated")
+	isDestInternal := strings.Contains(s.GoOutput, "internal")
+
+	if !isSourceGenerated && (isDestInternal && !isSourceInternal || isSourceInternal && !isDestInternal) {
 		// fmt.Println("Mismatch", s.Class)
 		return nil
-	} else if destIn {
+	} else if isDestInternal {
 		s.Route = grabRoute(s.GoOutput)
-		dest = convertToDestPath(source, s.Route, s.Name())
+		dest = convertToDestPath(source, s.Route, s.Name(), "")
 		dest = strings.Replace(dest, "/types/", "/types_", -1)
 		// return nil
 	} else {
-		dest = convertToDestPath(source, "", s.Name())
+		dest = convertToDestPath(source, "", s.Name(), "")
 	}
 
-	tmplName := source
 	tmpl := file.AsciiFileToString(source)
-	result := s.executeTemplate(tmplName, tmpl)
-	dest = strings.Replace(dest, "//src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
+	result := s.executeTemplate(source, tmpl)
+	dest = strings.Replace(dest, "/src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
 	return codeWriter.WriteCode(dest, result)
 }
 
@@ -50,4 +51,9 @@ func grabRoute(dest string) string {
 	}
 	parts := strings.Split(dest, "/")
 	return parts[len(parts)-1]
+}
+
+func readStructure(st *Structure, data *any) (bool, error) {
+	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
+	return true, nil
 }

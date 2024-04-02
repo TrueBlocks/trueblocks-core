@@ -14,6 +14,7 @@ import (
 type CodeBase struct {
 	Commands   []Command   `json:"commands"`
 	Structures []Structure `json:"structures"`
+	BaseTypes  []Structure `json:"baseTypes"`
 }
 
 // String - returns a JSON representation of the codebase
@@ -50,10 +51,7 @@ func (cb *CodeBase) RouteToGroup(route string) string {
 func (cb *CodeBase) TypeToGroup(typ string) string {
 	for _, st := range cb.Structures {
 		if strings.EqualFold(st.Name(), typ) {
-			parts := strings.Split(st.DocGroup, "-")
-			if len(parts) > 1 {
-				return LowerNoSpaces(parts[1])
-			}
+			return st.GroupName()
 		}
 	}
 	return "unknown type: " + typ
@@ -95,4 +93,27 @@ func (cb *CodeBase) TagSummary() string {
 
 func (cb *CodeBase) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(cb, "codebase", name, tmplCode)
+}
+
+// StructureFiles
+func (cb *CodeBase) StructureFiles(groupFilter string) string {
+	return "StructureFiles"
+}
+
+func (cb *CodeBase) ModelList() []Structure {
+	theMap := map[string]Structure{}
+	for _, st := range cb.Structures {
+		theMap[st.GroupName()] = st
+	}
+
+	ret := []Structure{}
+	for key := range theMap {
+		st := Structure{
+			DocGroup: theMap[key].DocGroup,
+			DocDescr: theMap[key].DocDescr,
+			cbPtr:    cb,
+		}
+		ret = append(ret, st)
+	}
+	return ret
 }

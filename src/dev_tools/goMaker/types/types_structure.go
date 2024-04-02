@@ -7,16 +7,18 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Structure struct {
-	Class       string    `json:"class,omitempty" toml:"class"`
+	Class       string    `json:"class,omitempty" toml:"class" csv:"class"`
 	BaseClass   string    `json:"base_class,omitempty" toml:"base_class"`
 	Fields      string    `json:"fields,omitempty" toml:"fields"`
 	GoOutput    string    `json:"go_output,omitempty" toml:"go_output"`
-	DocGroup    string    `json:"doc_group,omitempty" toml:"doc_group"`
+	DocGroup    string    `json:"doc_group,omitempty" toml:"doc_group" csv:"doc_group"`
 	DocRoute    string    `json:"doc_route,omitempty" toml:"doc_route"`
-	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr"`
+	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr" csv:"doc_descr"`
+	DocNotes    string    `json:"doc_notes,omitempty" toml:"doc_notes" csv:"doc_notes"`
 	DocAlias    string    `json:"doc_alias,omitempty" toml:"doc_alias"`
 	DocProducer string    `json:"doc_producer,omitempty" toml:"doc_producer"`
 	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
@@ -129,53 +131,18 @@ func (s *Structure) ModelProducers() string {
 	return strings.Join(ret, "\n")
 }
 
-func (s *Structure) Widest() (int, int, int) {
-	widest := [3]int{1, 1, 1}
-	for _, m := range s.Members {
-		if m.DocOrder > 0 {
-			if len(m.Name) > widest[0] {
-				widest[0] = len(m.Name)
-			}
-			if len(m.MarkdownDescription()) > widest[1] {
-				widest[1] = len(m.MarkdownDescription())
-			}
-			if len(m.MarkdownType()) > widest[2] {
-				widest[2] = len(m.MarkdownType())
-			}
-		}
-	}
-	return widest[0], widest[1], widest[2]
-}
-
-func (s *Structure) DividerRow() string {
-	wName, wDescr, wType := s.Widest()
-	name := strings.Repeat("-", wName)
-	descr := strings.Repeat("-", wDescr)
-	typ := strings.Repeat("-", wType)
-	return "| " + strings.Join([]string{name, descr, typ}, " | ") + " |"
-}
-
-func (s *Structure) MarkdownRow(fields []string) string {
-	wName, wDescr, wType := s.Widest()
-	name := Pad(fields[0], wName)
-	descr := Pad(fields[1], wDescr)
-	typ := Pad(fields[2], wType)
-	return "| " + strings.Join([]string{name, descr, typ}, " | ") + " |"
-}
-
-func (s *Structure) MarkdownTable() string {
+func (s *Structure) MemberTable() string {
 	sort.Slice(s.Members, func(i, j int) bool {
 		return s.Members[i].DocOrder < s.Members[j].DocOrder
 	})
-	ret := []string{}
-	ret = append(ret, s.MarkdownRow([]string{"Field", "Description", "Type"}))
-	ret = append(ret, s.DividerRow())
+	header := []string{"Field", "Description", "Type"}
+	rows := [][]string{}
 	for _, m := range s.Members {
 		if m.DocOrder > 0 {
-			ret = append(ret, s.MarkdownRow([]string{m.Name, m.MarkdownDescription(), m.MarkdownType()}))
+			rows = append(rows, []string{m.Name, m.MarkdownDescription(), m.MarkdownType()})
 		}
 	}
-	return strings.Join(ret, "\n")
+	return MarkdownTable(header, rows)
 }
 
 func (s *Structure) HasNotes() bool {
@@ -197,6 +164,79 @@ func (s *Structure) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(s, "structure", name, tmplCode)
 }
 
+func (s *Structure) GroupName() string {
+	parts := strings.Split(s.DocGroup, "-")
+	if len(parts) > 1 {
+		return LowerNoSpaces(parts[1])
+	}
+	return "unknown group: " + s.DocGroup
+}
+
 func (s *Structure) Name() string {
 	return Lower(s.Class)
+}
+
+func (s *Structure) DocLead() string {
+	return "DocLead" + s.Class
+}
+
+func (s *Structure) Aliases() string {
+	if s.DocAlias != "" {
+		return "Aliases" + s.Class
+	}
+	return ""
+}
+
+func (s *Structure) GroupWeight() int64 {
+	parts := strings.Split(s.DocGroup, "-")
+	return utils.MustParseInt(parts[0]) * 1000
+}
+
+func (s *Structure) GroupTitle() string {
+	parts := strings.Split(s.DocGroup, "-")
+	return FirstUpper(Lower(parts[1]))
+}
+
+func (s *Structure) GroupIntro() string {
+	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/model-groups/"+s.GroupName()+".md"), ws)
+	return contents
+}
+
+func (s *Structure) StructureFiles() string {
+	ret := []string{}
+
+	filter := s.GroupName()
+	for _, st := range s.cbPtr.Structures {
+		if st.GroupName() == filter {
+			contents := file.AsciiFileToString("src/dev_tools/goMaker/generated/model_" + st.Name() + ".md")
+			ret = append(ret, contents)
+		}
+	}
+
+	return strings.Join(ret, "\n")
+}
+
+func (s Structure) Validate() bool {
+	return true
+}
+
+func (s *Structure) BaseTypes() string {
+	filter := s.GroupName()
+	typeMap := map[string]bool{}
+	for _, st := range s.cbPtr.Structures {
+		g := st.GroupName()
+		if g == filter {
+			for _, m := range st.Members {
+				typeMap[m.Type] = true
+			}
+		}
+	}
+	ret := [][]string{}
+	for _, t := range s.cbPtr.BaseTypes {
+		if typeMap[t.Class] {
+			ret = append(ret, []string{t.Class, t.DocDescr, t.DocNotes})
+		}
+	}
+
+	return MarkdownTable([]string{"Type", "Description", "Notes"}, ret)
 }

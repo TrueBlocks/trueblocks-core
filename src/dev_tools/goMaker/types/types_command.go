@@ -598,9 +598,9 @@ func (c *Command) HasExample() bool {
 }
 
 func (c *Command) Example() string {
-	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".txt"), "\n\r\t")
+	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/api/examples/"+c.Route+".txt"), ws)
 	contents = strings.Replace(contents, "\n", "\n                  ", -1)
-	return strings.Trim(contents, "\n\r\t") + "\n"
+	return strings.Trim(contents, ws) + "\n"
 }
 
 func (c *Command) ReadmeName() string {

@@ -40,7 +40,7 @@ func shouldProcess(source, tag string) (bool, error) {
 	return true, nil
 }
 
-func convertToDestPath(source, routeTag, typeTag string) string {
+func convertToDestPath(source, routeTag, typeTag, groupTag string) string {
 	dest := strings.Replace(source, templateFolder, "", -1)
 	dest = strings.Replace(dest, ".tmpl", "", -1)
 	dest = strings.Replace(dest, "_route_", "/"+routeTag+"/", -1)
@@ -50,9 +50,10 @@ func convertToDestPath(source, routeTag, typeTag string) string {
 	dest = strings.Replace(dest, "route.ts", routeTag+".ts", -1)
 	dest = strings.Replace(dest, "type.go", typeTag+".go", -1)
 	dest = strings.Replace(dest, "type.md", typeTag+".md", -1)
+	dest = strings.Replace(dest, "group.md", groupTag+".md", -1)
 	dest = strings.ReplaceAll(dest, "_", "/")
 	dest = strings.ReplaceAll(dest, "+", "_")
-	return dest
+	return strings.Replace(dest, "//", "/", -1)
 }
 
 var templateFolder = "src/dev_tools/goMaker/templates"
