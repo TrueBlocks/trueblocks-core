@@ -3599,6 +3599,32 @@ components:
           type: string
           format: string
           description: "a truncated, more readable version of the articulation"
+    logFilter:
+      description: "used by the fast path log queries for various commands"
+      type: object
+      properties:
+        fromBlock:
+          type: number
+          format: blknum
+          description: "the first block in the block range to query with eth_getLogs"
+        toBlock:
+          type: number
+          format: blknum
+          description: "the last block in the range to query with eth_getLogs"
+        blockHash:
+          type: string
+          format: hash
+          description: "an alternative to blocks specification, the hash of the block to query"
+        emitters:
+          type: array
+          items:
+            $ref: "#/components/schemas/address"
+          description: "one or more emitting addresses from which logs were emitted"
+        topics:
+          type: array
+          items:
+            $ref: "#/components/schemas/topic"
+          description: "one or more topics which logs represent"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3659,32 +3685,6 @@ components:
           type: string
           format: string
           description: "a compressed string version of the articulated trace"
-    logFilter:
-      description: "used by the fast path log queries for various commands"
-      type: object
-      properties:
-        fromBlock:
-          type: number
-          format: blknum
-          description: "the first block in the block range to query with eth_getLogs"
-        toBlock:
-          type: number
-          format: blknum
-          description: "the last block in the range to query with eth_getLogs"
-        blockHash:
-          type: string
-          format: hash
-          description: "an alternative to blocks specification, the hash of the block to query"
-        emitters:
-          type: array
-          items:
-            $ref: "#/components/schemas/address"
-          description: "one or more emitting addresses from which logs were emitted"
-        topics:
-          type: array
-          items:
-            $ref: "#/components/schemas/topic"
-          description: "one or more topics which logs represent"
     traceAction:
       description: "trace action data as returned from the RPC (with slight enhancements)"
       type: object
@@ -3885,47 +3885,6 @@ components:
           type: number
           format: uint64
           description: "the number of timestamps in the timestamps database"
-    result:
-      description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          description: "the block number at which this call was made"
-        timestamp:
-          type: number
-          format: timestamp
-          description: "the timestamp of the block for this call"
-        date:
-          type: string
-          format: datetime
-          description: "the timestamp as a date (calculated)"
-        address:
-          type: string
-          format: address
-          description: "the address of contract being called"
-        name:
-          type: string
-          format: string
-          description: "the name of the function call"
-        encoding:
-          type: string
-          format: string
-          description: "the encoding for the function call"
-        signature:
-          type: string
-          format: string
-          description: "the canonical signature of the interface"
-        encodedArguments:
-          type: string
-          format: string
-          description: "the bytes data following the encoding of the call"
-        articulatedOut:
-          type: object
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the result of the call articulated as other models"
     state:
       description: "the state of an Ethereum account (EOA or smart contract) on-chain"
       type: object
@@ -4031,6 +3990,47 @@ components:
           items:
             $ref: "#/components/schemas/tokenType"
           description: "the type of token (ERC20 or ERC721) or none"
+    result:
+      description: "the result (articulated if possible, as bytes otherwise) of a call to a smart contract"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block number at which this call was made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block for this call"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        address:
+          type: string
+          format: address
+          description: "the address of contract being called"
+        name:
+          type: string
+          format: string
+          description: "the name of the function call"
+        encoding:
+          type: string
+          format: string
+          description: "the encoding for the function call"
+        signature:
+          type: string
+          format: string
+          description: "the canonical signature of the interface"
+        encodedArguments:
+          type: string
+          format: string
+          description: "the bytes data following the encoding of the call"
+        articulatedOut:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call articulated as other models"
     status:
       description: "status-related data about the TrueBlocks system including the server and local binary caches"
       type: object
