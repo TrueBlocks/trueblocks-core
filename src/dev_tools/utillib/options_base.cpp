@@ -452,6 +452,11 @@ bool COptionsBase::confirmUint(const string_q& name, uint32_t& value, const stri
 }
 
 //---------------------------------------------------------------------------------------------------
+bool COptionsBase::usage(const string_q& errMsg) const {
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptionsBase::confirmDouble(const string_q& name, double& value, const string_q& argIn) const {
     value = NOPOS;
 
