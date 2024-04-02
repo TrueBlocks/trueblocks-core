@@ -67,7 +67,7 @@ func (c *Command) ProducedByList() string {
 			ret = append(ret, s)
 		}
 	}
-	return strings.Trim(strings.Join(ret, "\n"), "\r\n\t") + "\n"
+	return strings.Join(ret, "\n") + "\n"
 }
 
 func (c *Command) HasEnums() bool {
@@ -673,7 +673,7 @@ func (c *Command) HelpNotes() string {
 
 func (c *Command) ReadmeFooter() string {
 	thePath := "src/dev_tools/goMaker/templates/readme-intros/README.footer.md"
-	return "\n" + strings.Trim(file.AsciiFileToString(thePath), "\n\r\t")
+	return strings.Trim(file.AsciiFileToString(thePath), ws)
 }
 
 func (c *Command) executeTemplate(name, tmplCode string) string {

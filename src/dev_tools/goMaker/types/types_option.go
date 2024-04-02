@@ -352,8 +352,9 @@ func (op *Option) EnsConvert() string {
 		ret = op.executeTemplate(tmplName, tmpl)
 		if op.IsSpecialAddr() {
 			tmplName += "2"
-			tmpl = "	opts.{{.GoName}}Addr = base.HexToAddress(opts.{{.GoName}})"
-			ret += "\n" + op.executeTemplate(tmplName, tmpl)
+			tmpl = `
+	opts.{{.GoName}}Addr = base.HexToAddress(opts.{{.GoName}})`
+			ret += op.executeTemplate(tmplName, tmpl)
 		}
 	} else if op.DataType == "list<addr>" {
 		tmplName := "ensSlice"
@@ -662,13 +663,15 @@ func (op *Option) OptField() string {
 	ret := op.executeTemplate(tmplName, tmpl)
 	if op.LongName == "blocks" {
 		tmplName := "optFields3"
-		tmpl := `	{{.GoSdkName}} []identifiers.Identifier`
-		ret += "\n" + op.executeTemplate(tmplName, tmpl)
+		tmpl := `
+	{{.GoSdkName}} []identifiers.Identifier`
+		ret += op.executeTemplate(tmplName, tmpl)
 		ret += "`json:\"blockIds,omitempty\"`   // Block identifiers"
 	} else if op.LongName == "transactions" {
 		tmplName := "optFields4"
-		tmpl := `	{{.GoSdkName}} []identifiers.Identifier`
-		ret += "\n" + op.executeTemplate(tmplName, tmpl)
+		tmpl := `
+	{{.GoSdkName}} []identifiers.Identifier`
+		ret += op.executeTemplate(tmplName, tmpl)
 		ret += "`json:\"transactionIds,omitempty\"`   // Transaction identifiers"
 	}
 	return ret

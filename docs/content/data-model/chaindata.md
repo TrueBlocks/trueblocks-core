@@ -410,4 +410,3 @@ This documentation mentions the following basic data types.
 | uint64    | a 64-bit unsigned integer           |                |
 | uint8     | an alias for the boolean type       |                |
 | wei       | an unsigned big number              | as a string    |
-

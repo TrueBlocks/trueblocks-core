@@ -122,7 +122,7 @@ func Lower(s string) string {
 }
 
 // ws white space
-var ws = " "
+var ws = "\n\r\t"
 
 // wss white space with space
-var wss = "\n\r\t" + ws
+var wss = ws + " "

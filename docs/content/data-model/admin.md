@@ -332,4 +332,3 @@ This documentation mentions the following basic data types.
 | string   | a normal character string           |             |
 | uint32   | a 32-bit unsigned integer           |             |
 | uint64   | a 64-bit unsigned integer           |             |
-

@@ -33,7 +33,7 @@ func (cb *CodeBase) Version(verbose bool) string {
 
 // Description - returns the description of the codebase for the openapi.yaml file
 func (cb *CodeBase) Description() string {
-	return "\n" + strings.Trim(file.AsciiFileToString("src/dev_tools/goMaker/templates/api/description.txt"), "\n\t\r")
+	return strings.Trim(file.AsciiFileToString("src/dev_tools/goMaker/templates/api/description.txt"), ws)
 }
 
 // RouteToGroup - returns the group given a route
