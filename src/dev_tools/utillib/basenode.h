@@ -17,9 +17,6 @@
 namespace qblocks {
 
 //----------------------------------------------------------------------------
-class CArchive;
-
-//----------------------------------------------------------------------------
 class CBaseNode {
   private:
     virtual char* parseJson1(char* s, size_t& nFields);
@@ -55,10 +52,6 @@ class CBaseNode {
     virtual string_q getKeyByName(const string_q& fieldName) const;
     virtual string_q getValueByName(const string_q& fieldName) const;
     virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue);
-    virtual bool Serialize(CArchive& archive);
-    virtual bool SerializeC(CArchive& archive) const;
-    virtual bool Migrate(CArchive& archiveIn, CArchive& archiveOut) const = 0;
-    virtual bool readBackLevel(CArchive& archive) = 0;
     virtual void finishParse(void) {
     }
     virtual void Format(ostream& ctx, const string_q& fmtIn, void* data = NULL) const {

@@ -46,7 +46,6 @@ string_q logger<log_policy_i>::get_logline_header(void) {
             last_clock = now;
         }
     }
-    header << cOff;
     return header.str();
 }
 

@@ -70,7 +70,6 @@ class CMeasure : public CBaseNode {
     void clear(void);
     void initialize(void);
     void duplicate(const CMeasure& me);
-    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -178,14 +177,6 @@ inline bool operator<(const CMeasure& v1, const CMeasure& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CMeasure> CMeasureArray;
-extern CArchive& operator>>(CArchive& archive, CMeasureArray& array);
-extern CArchive& operator<<(CArchive& archive, const CMeasureArray& array);
-
-//---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CMeasure& mea);
-extern CArchive& operator>>(CArchive& archive, CMeasure& mea);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_MEASURE;
 
 //---------------------------------------------------------------------------

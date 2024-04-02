@@ -14,7 +14,6 @@
 
 #include "toml.h"
 #include "conversions.h"
-#include "version.h"
 #include "sfstring.h"
 #include "logging.h"
 
@@ -116,7 +115,7 @@ bool CToml::readFile(const string_q& filename) {
     if (!contains(contents, "[version]")) {
         // return unused
         addSection("version");
-        addKey("version", "current", getVersionStr(false, false));
+        addKey("version", "current", "2.5.8-release");
     }
 
     while (!contents.empty()) {
@@ -186,9 +185,6 @@ bool CToml::writeFile(void) {
 
 //---------------------------------------------------------------------------------------
 bool CToml::isBackLevel(void) const {
-    if (getVersion() < getVersionNum(0, 6, 2))
-        return true;
-    // This is where we would handle future upgrades
     return false;
 }
 
@@ -224,11 +220,7 @@ string_q CToml::getConfigStr(const string_q& section, const string_q& key, const
 //-------------------------------------------------------------------------
 uint64_t CToml::getVersion(void) const {
     // handle older ways of stroring version. Note: after 0.6.0, always stored as [version]current
-    string_q value = getConfigStr("version", "current", getConfigStr("", "version", "0.0.0"));
-    uint16_t v1 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-    uint16_t v2 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-    uint16_t v3 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-    return getVersionNum(v1, v2, v3);
+    return 20000+500+8;
 }
 
 //-------------------------------------------------------------------------

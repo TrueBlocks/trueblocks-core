@@ -166,84 +166,6 @@ void CConfigEnv::finishParse() {
     // EXISTING_CODE
 }
 
-//---------------------------------------------------------------------------------------------------
-bool CConfigEnv::Serialize(CArchive& archive) {
-    if (archive.isWriting())
-        return SerializeC(archive);
-
-    // Always read the base class (it will handle its own backLevels if any, then
-    // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
-    if (readBackLevel(archive))
-        return true;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive >> chain;
-    archive >> configPath;
-    archive >> chainConfigPath;
-    archive >> cachePath;
-    archive >> indexPath;
-    archive >> defChain;
-    archive >> rpcProvider;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    finishParse();
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool CConfigEnv::SerializeC(CArchive& archive) const {
-    // Writing always writes the latest version of the data
-    CBaseNode::SerializeC(archive);
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive << chain;
-    archive << configPath;
-    archive << chainConfigPath;
-    archive << cachePath;
-    archive << indexPath;
-    archive << defChain;
-    archive << rpcProvider;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool CConfigEnv::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
-    ASSERT(archiveIn.isReading());
-    ASSERT(archiveOut.isWriting());
-    CConfigEnv copy;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    copy.Serialize(archiveIn);
-    copy.SerializeC(archiveOut);
-    return true;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CConfigEnvArray& array) {
-    uint64_t count;
-    archive >> count;
-    array.resize(count);
-    for (size_t i = 0; i < count; i++) {
-        ASSERT(i < array.capacity());
-        array.at(i).Serialize(archive);
-    }
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CConfigEnvArray& array) {
-    uint64_t count = array.size();
-    archive << count;
-    for (size_t i = 0; i < array.size(); i++)
-        array[i].SerializeC(archive);
-    return archive;
-}
-
 //---------------------------------------------------------------------------
 void CConfigEnv::registerClass(void) {
     // only do this once
@@ -300,26 +222,6 @@ string_q nextConfigenvChunk_custom(const string_q& fieldIn, const void* dataPtr)
 
 // EXISTING_CODE
 // EXISTING_CODE
-
-//---------------------------------------------------------------------------
-bool CConfigEnv::readBackLevel(CArchive& archive) {
-    bool done = false;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CConfigEnv& con) {
-    con.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CConfigEnv& con) {
-    con.Serialize(archive);
-    return archive;
-}
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CConfigEnv& it) {
