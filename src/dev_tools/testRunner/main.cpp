@@ -24,7 +24,7 @@ string_q perf_fmt;
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     loadEnvironmentPaths();
-    CTestCase::registerClass();
+    // CTestCase::registerClass();
 
     establishFolder(cacheFolder_tmp);
     CMeasure total("all", "all", "all");
@@ -35,7 +35,6 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return EXIT_FAILURE;
 
-    total.git_hash = "git_"; //  + string_q(GIT_COMMIT_HASH).substr(0, 10);
     string_q testFolder = getSourcePath3();
     uint32_t testID = 0;
     for (auto command : options.commandLines) {
@@ -44,12 +43,8 @@ int main(int argc, const char* argv[]) {
 
         for (auto testName : options.tests) {
             string_q path = nextTokenClear(testName, '/');
-            if (options.full_test) {
-                // only clean if we're testing all
-                options.cleanTest(path, testName);
-                if (options.modes & API)
-                    options.cleanTest(path, testName + "/api_tests");
-            }
+            options.cleanTest(path, testName);
+            options.cleanTest(path, testName + "/api_tests");
 
             string_q testFile = testFolder + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
@@ -64,10 +59,10 @@ int main(int argc, const char* argv[]) {
             map<string_q, CTestCase> testMap;
             for (auto line : lines) {
                 bool ignore1 = startsWith(line, "#");
-                bool ignore2 = !startsWith(line, "on") && !options.ignoreOff;
+                bool ignore2 = !startsWith(line, "on");
                 bool ignore3 = startsWith(line, "enabled");
                 if (line.empty() || ignore1 || ignore2 || ignore3) {
-                    if (ignore2 && !options.ignoreOff) {
+                    if (ignore2) {
                         if (trim(line).substr(0, 120).length() > 0) {
                             cerr << "   # " << line.substr(0, 120) << endl;
                         }
@@ -129,14 +124,10 @@ int main(int argc, const char* argv[]) {
     // Write performance data to a file and results to the screen
     perf << total.Format(perf_fmt) << endl;
     cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
-    if (options.full_test) {
-        string_q perfFile =
-            rootConfigs + string_q("perf/performance") + (total.allPassed ? "" : "_failed") + ".csv";
-        appendToAsciiFile(perfFile, perf.str());
-        appendToAsciiFile(rootConfigs + "perf/performance_slow.csv", slow.str());
-    } else {
-        LOG_WARN("Performance results not written because not full test");
-    }
+    string_q perfFile =
+        rootConfigs + string_q("perf/performance") + (total.allPassed ? "" : "_failed") + ".csv";
+    appendToAsciiFile(perfFile, perf.str());
+    appendToAsciiFile(rootConfigs + "perf/performance_slow.csv", slow.str());
 
     // If configured, copy the data out to the folder our performance measurement tool knows about
     string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copy_path", "<not_set>");
@@ -163,9 +154,6 @@ int main(int argc, const char* argv[]) {
 
 //-----------------------------------------------------------------------
 void COptions::doTests(CMeasure& total, CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
-    if (!(modes & whichTest))
-        return;
-
     bool cmdTests = whichTest & CMD;
 
     CMeasure measure(testPath, testName, (cmdTests ? "cmd" : "api"));

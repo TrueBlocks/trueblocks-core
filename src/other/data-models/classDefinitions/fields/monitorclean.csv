@@ -1,5 +1,0 @@
-name     ,type    ,strDefault ,omitempty ,doc ,description
-address  ,address ,           ,          ,  1 ,the address being cleaned
-sizeThen ,int64   ,           ,          ,  2 ,the number of appearances in the monitor prior to cleaning
-sizeNow  ,int64   ,           ,          ,  3 ,the number of appearances in the monitor after cleaning
-dups     ,int64   ,           ,          ,  4 ,the number of duplicates removed

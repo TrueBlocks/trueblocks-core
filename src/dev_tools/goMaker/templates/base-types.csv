@@ -1,0 +1,23 @@
+doc_group,class,doc_descr,doc_notes
+base,address,an '0x'-prefixed 20-byte hex string,lowercase
+base,blknum,an alias for a uint64,
+base,blkrange,a pair of nine-digit block numbers,zero padded
+base,bool,either `true`&#44; `false`&#44; `1`&#44; or `0`,
+base,bytes,an arbitrarily long string of bytes,
+base,bytes32,a 32-byte long string of bytes,
+base,datetime,a JSON formatted date,as a string
+base,double,a double precision float,64 bits
+base,gas,an unsigned big number,as a string
+base,hash,an '0x'-prefixed 32-byte hex string,lowercase
+base,int64,a 64-bit signed integer,
+base,int256,a signed big number,as a string
+base,ipfshash,a multi-hash produced by IPFS,mixed-case
+base,string,a normal character string,
+base,[]string,an array of strings,
+base,timestamp,a 64-bit unsigned integer,Unix timestamp
+base,topic,an '0x'-prefixed 32-byte hex string,lowercase
+base,uint256,a 256-bit unsigned integer,
+base,uint32,a 32-bit unsigned integer,
+base,uint64,a 64-bit unsigned integer,
+base,uint8,an alias for the boolean type,
+base,wei,an unsigned big number,as a string

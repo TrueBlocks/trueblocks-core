@@ -11,10 +11,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --options. Edit only those parts of
- * the code outside of the BEG_CODE/END_CODE sections
- */
 #include "utillib.h"
 #include "testcase.h"
 #include "measure.h"
@@ -26,10 +22,8 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
-    int modes = CMD;
-    bool ignoreOff = false;
+    // int modes = BOTH;
     CStringArray tests;
-    bool full_test;
     string_q apiProvider;
 
     COptions(void);

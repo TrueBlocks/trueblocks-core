@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -28,8 +29,8 @@ func (opts *SlurpOptions) HandleCountKey() error {
 					errorChan <- fmt.Errorf(msg)
 				} else {
 					s := types.SimpleMonitor{
-						Address:  addr,
-						NRecords: cnt,
+						Address:  base.HexToAddress(addr),
+						NRecords: int64(cnt),
 					}
 					modelChan <- &s
 				}

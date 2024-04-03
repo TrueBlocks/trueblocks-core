@@ -1,0 +1,14 @@
+name          ,type     ,strDefault ,attributes ,docOrder ,description
+range         ,blkrange ,           ,           ,       1 ,the block range (inclusive) covered by this chunk
+rangeEnd      ,datetime ,           ,           ,       2 ,the date of the last block in this range
+nAddrs        ,uint64   ,           ,           ,       3 ,the number of addresses in the chunk
+nApps         ,uint64   ,           ,           ,       4 ,the number of appearances in the chunk
+nBlocks       ,uint64   ,           ,           ,       5 ,the number of blocks in the chunk
+nBlooms       ,uint64   ,           ,           ,       6 ,the number of bloom filters in the chunk's bloom
+recWid        ,uint64   ,           ,           ,       7 ,the record width of a single bloom filter
+bloomSz       ,uint64   ,           ,           ,       8 ,the size of the bloom filters on disc in bytes
+chunkSz       ,uint64   ,           ,           ,       9 ,the size of the chunks on disc in bytes
+addrsPerBlock ,double   ,           ,           ,      10 ,the average number of addresses per block
+appsPerBlock  ,double   ,           ,           ,      11 ,the average number of appearances per block
+appsPerAddr   ,double   ,           ,           ,      12 ,the average number of appearances per address
+ratio         ,double   ,           ,           ,      13 ,the ratio of appearances to addresses

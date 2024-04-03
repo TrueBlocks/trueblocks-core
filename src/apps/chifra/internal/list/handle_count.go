@@ -41,8 +41,8 @@ func (opts *ListOptions) HandleCount(monitorArray []monitor.Monitor) error {
 				return
 			} else if !opts.NoZero || cnt > 0 {
 				s := types.SimpleMonitor{
-					Address:     mon.Address.Hex(),
-					NRecords:    len(apps),
+					Address:     mon.Address,
+					NRecords:    int64(len(apps)),
 					FileSize:    file.FileSize(mon.Path()),
 					LastScanned: mon.LastScanned,
 					Deleted:     mon.Deleted,

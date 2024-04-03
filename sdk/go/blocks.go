@@ -10,6 +10,7 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -17,6 +18,9 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -90,6 +94,20 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *rpc.MetaData, error) {
+	buffer := bytes.Buffer{}
+	if err := opts.Blocks(&buffer); err != nil {
+		logger.Fatal(err)
+	}
+
+	var result Result[types.SimpleBlock[string]]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
+		return nil, nil, err
+	} else {
+		return result.Data, &result.Meta, nil
+	}
 }
 
 type BlocksFlow int

@@ -1,3 +1,0 @@
-name            ,type        ,strDefault ,omitempty ,doc ,description
-address         ,address     ,           ,          ,  1 ,the address for the ABI
-functions       ,[]Function  ,           ,          ,  2 ,the functions for this address

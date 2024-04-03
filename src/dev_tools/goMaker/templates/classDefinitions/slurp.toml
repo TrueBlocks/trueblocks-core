@@ -1,0 +1,10 @@
+[settings]
+    class = "CSlurp"
+    doc_group = "05-Other"
+    doc_descr = "transaction data as returned from by Etherscan"
+    doc_route = "512-slurp"
+    produced_by = "slurp"
+    go_output = "src/apps/chifra/pkg/types"
+    cache_type = "cacheable"
+    cache_by = "address,tx"
+    cache_as = "group"

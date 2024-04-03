@@ -2,27 +2,16 @@
 
 In `develop` branch:
 
-|                                           |                                                   |
-| ----------------------------------------- | ------------------------------------------------- |
-| git checkout develop                      | # go to the develop branch                        |
-| git pull                                  | # make sure you have the latest code              |
-| edit ../VERSION                           | # bump the version number (for goMaker)           |
-| edit ../src/dev_tools/utillib/version.cpp | # bump the version number (for makeClass)         |
-| make test-all                             | # a number of tests wlil fail but all should only |
-|                                           | # fail due to version change. Resolve all tests.  |
-| git commit -am "Final note"               | # mark the commit as final commit before m erging |
-| git push                                  | # push the develop branch to remote               |
+|                                           |                                                  |
+| ----------------------------------------- | ------------------------------------------------ |
+| git checkout develop                      | # go to the develop branch                       |
+| git pull                                  | # make sure you have the latest code             |
+| git checkout -b feature/version-bump      | # create a new branch for the version bump       |
+| edit ../VERSION                           | # bump the version number (for goMaker)          |
+| edit ../src/dev_tools/utillib/version.cpp | # bump the version number (for testRunner)       |
+| make test-all                             | # resolve all tests                              |
+| git commit -am "Bumps version to..."      | # mark the commit as final commit before merging |
+| git push                                  | # push the develop branch to remote              |
 
-Then (as per the second answer [here](https://stackoverflow.com/questions/14168677/m erge-development-branch-with-master)):
-
-|                                |                                                               |
-| ------------------------------ | ------------------------------------------------------------- |
-| git log                        | # note the commit hash                                        |
-| git fetch origin master        | # pull a copy of master branch locally                        |
-| git merge master               | # do not proceed until all m erge conflicts are solved (then, |
-|                                | test and push)                                                |
-| git log                        | # note the latest commit on develop                           |
-| git push origin develop:master | # push the mer ged develop into master                        |
-| git checkout master            | # checkout local master                                       |
-| git pull                       | # pull newly me rged master locally                           |
-| git log                        | # should be same commit as above                              |
+Merge to `develop`, let tests pass there, merge to `master`, let tests pass there, and then tag
+the commit with the version number and announce the release.

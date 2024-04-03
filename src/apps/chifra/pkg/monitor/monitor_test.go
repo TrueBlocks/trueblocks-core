@@ -33,7 +33,7 @@ func Test_Monitor_Print(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := testClean(fmt.Sprintln(mon.toJson()))
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":6,\"fileSize\":56,\"lastScanned\":2002003,\"deleted\":false}"
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"deleted\":false,\"fileSize\":56,\"lastScanned\":2002003,\"nRecords\":6}"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -119,7 +119,7 @@ func Test_Monitor_Delete(t *testing.T) {
 
 	// The monitor should report that it has two appearances
 	got := testClean(fmt.Sprintln(mon.toJson()))
-	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"nRecords\":3,\"fileSize\":32,\"lastScanned\":2002003,\"deleted\":false}"
+	expected := "{\"address\":\"0x049029dd41661e58f99271a0112dfd34695f7000\",\"deleted\":false,\"fileSize\":32,\"lastScanned\":2002003,\"nRecords\":3}"
 	if got != expected {
 		t.Error("Expected:", expected, "Got:", got)
 	}
@@ -243,8 +243,8 @@ func testClean(s string) string {
 // toJson returns a JSON object from a Monitor
 func (mon Monitor) toJson() string {
 	sm := types.SimpleMonitor{
-		Address:     mon.Address.Hex(),
-		NRecords:    int(mon.Count()),
+		Address:     mon.Address,
+		NRecords:    mon.Count(),
 		FileSize:    file.FileSize(mon.Path()),
 		LastScanned: mon.LastScanned,
 		Deleted:     mon.Deleted,

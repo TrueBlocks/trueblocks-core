@@ -17,8 +17,6 @@
 #include "option.h"
 #include "config_paths.h"
 
-#define ERR_NOERROR 0
-
 //-----------------------------------------------------------------------------
 namespace qblocks {
 
@@ -34,7 +32,6 @@ class COptionsBase {
     CStringArray arguments;
     CStringArray notes;
     CStringArray configs;
-    CErrorStringMap usageErrs;
     CStringArray errors;
 
     uint64_t minArgs;

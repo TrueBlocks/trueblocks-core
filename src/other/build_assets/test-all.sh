@@ -30,7 +30,7 @@ cmake ../src
 cd dev_tools
 make -j 8
 cd ..
-# make generate finish
+# make generate
 make -j 8
 
 ~/.local/bin/chifra/test/test-api.sh --mode both $@

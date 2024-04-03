@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -96,7 +96,6 @@ func (s *SimpleTraceResult) Model(chain, format string, verbose bool, extraOptio
 	}
 }
 
-// --> marshal_only
 func (s *SimpleTraceResult) MarshalCache(writer io.Writer) (err error) {
 	// Address
 	if err = cache.WriteValue(writer, s.Address); err != nil {
@@ -147,6 +146,7 @@ func (s *SimpleTraceResult) UnmarshalCache(version uint64, reader io.Reader) (er
 	return nil
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *SimpleTraceResult) FinishUnmarshal() {
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -154,4 +154,3 @@ func (s *SimpleTraceResult) FinishUnmarshal() {
 
 // EXISTING_CODE
 // EXISTING_CODE
-

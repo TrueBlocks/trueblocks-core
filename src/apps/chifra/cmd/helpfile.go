@@ -7,6 +7,7 @@
 
 package cmd
 
+// helpText is the help displayed with chifra --help
 const helpText = `  Accounts:
     list          list every appearance of an address anywhere on the chain
     export        export full details of transactions for one or more addresses

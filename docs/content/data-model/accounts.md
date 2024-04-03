@@ -51,11 +51,10 @@ Appearances consist of the following fields:
 | Field            | Description                                             | Type      |
 | ---------------- | ------------------------------------------------------- | --------- |
 | address          | the address of the appearance                           | address   |
-| blockNumber      | the number of the block                                 | blknum    |
-| transactionIndex | the index of the transaction in the block               | blknum    |
-| traceIndex       | the zero-based index of the trace in the transaction    | blknum    |
+| blockNumber      | the number of the block                                 | uint32    |
+| transactionIndex | the index of the transaction in the block               | uint32    |
+| traceIndex       | the zero-based index of the trace in the transaction    | uint32    |
 | reason           | the location in the data where the appearance was found | string    |
-| name             | the name of the address, if found                       | string    |
 | timestamp        | the timestamp for this appearance                       | timestamp |
 | date             | the timestamp as a date (calculated)                    | datetime  |
 
@@ -79,21 +78,13 @@ The following commands produce and manage Monitors:
 
 Monitors consist of the following fields:
 
-| Field       | Description                                    | Type    |
-| ----------- | ---------------------------------------------- | ------- |
-| nApps       | the number of appearances for this monitor     | blknum  |
-| firstApp    | the first block at which this address appears  | blknum  |
-| latestApp   | the latest block at which this address appears | blknum  |
-| sizeInBytes | the size of this monitor on disc               | uint64  |
-| tags        | the tag given to this address                  | string  |
-| address     | the address being monitored                    | address |
-| name        | the name given to this address                 | string  |
-| isCustom    | `true` if this address is customized           | bool    |
-| deleted     | `true` if deleted, `false` otherwise           | bool    |
-| symbol      |                                                | string  |
-| source      |                                                | string  |
-| decimals    |                                                | uint64  |
-| isContract  |                                                | bool    |
+| Field       | Description                                | Type    |
+| ----------- | ------------------------------------------ | ------- |
+| address     | the address of this monitor                | address |
+| nRecords    | the number of appearances for this monitor | int64   |
+| fileSize    | the size of this monitor on disc           | int64   |
+| lastScanned | the last scanned block number              | uint32  |
+| deleted     | `true` if this monitor has been deleted    | bool    |
 
 ## Name
 
@@ -251,8 +242,11 @@ This documentation mentions the following basic data types.
 | datetime  | a JSON formatted date               | as a string    |
 | double    | a double precision float            | 64 bits        |
 | hash      | an '0x'-prefixed 32-byte hex string | lowercase      |
+| int64     | a 64-bit signed integer             |                |
 | int256    | a signed big number                 | as a string    |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

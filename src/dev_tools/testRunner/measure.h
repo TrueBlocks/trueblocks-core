@@ -25,7 +25,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CMeasure : public CBaseNode {
   public:
-    string_q git_hash;
     string_q date;
     string_q machine;
     string_q node;
@@ -109,7 +108,6 @@ inline void CMeasure::clear(void) {
 inline void CMeasure::initialize(void) {
     CBaseNode::initialize();
 
-    git_hash = "";
     date = "";
     machine = "";
     node = "";
@@ -133,7 +131,6 @@ inline void CMeasure::duplicate(const CMeasure& me) {
     clear();
     CBaseNode::duplicate(me);
 
-    git_hash = me.git_hash;
     date = me.date;
     machine = me.machine;
     node = me.node;

@@ -1,0 +1,15 @@
+name              ,type    ,strDefault ,attributes         ,docOrder ,description
+blockHash         ,hash    ,           ,omitempty          ,       1 ,
+blockNumber       ,blknum  ,           ,                   ,       2 ,
+contractAddress   ,address ,           ,omitempty          ,       3 ,the address of the newly created contract&#44; if any
+cumulativeGasUsed ,wei     ,           ,omitempty          ,         ,
+from              ,address ,           ,omitempty          ,         ,
+gasUsed           ,gas     ,           ,                   ,       4 ,the amount of gas actually used by the transaction
+effectiveGasPrice ,gas     ,           ,omitempty          ,         ,
+isError           ,bool    ,           ,omitempty|simponly ,       5 ,
+logs              ,[]Log   ,           ,                   ,       6 ,a possibly empty array of logs
+logsBloom         ,string  ,           ,omitempty|rawonly  ,         ,
+status            ,uint32  ,NO_STATUS  ,                   ,       7 ,`1` on transaction suceess&#44; `null` if tx preceeds Byzantium&#44; `0` otherwise
+to                ,address ,           ,omitempty          ,         ,
+transactionHash   ,hash    ,           ,                   ,       8 ,
+transactionIndex  ,blknum  ,           ,                   ,       9 ,

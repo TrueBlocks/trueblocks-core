@@ -1,0 +1,10 @@
+[settings]
+    class = "CBlock"
+    doc_group = "02-Chain Data"
+    doc_descr = "block data as returned from the RPC (with slight enhancements)"
+    doc_route = "203-block"
+    produced_by = "blocks, when"
+    go_output = "src/apps/chifra/pkg/types"
+    go_model = "Block[Tx]"
+    cache_type = "cacheable"
+    cache_by = "block"

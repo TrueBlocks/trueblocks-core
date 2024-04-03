@@ -78,7 +78,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(len(opts.Belongs) > 0, "Belongs: ", opts.Belongs)
 	logger.TestLog(opts.Diff, "Diff: ", opts.Diff)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != utils.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	logger.TestLog(opts.MaxAddrs != utils.NOPOS, "MaxAddrs: ", opts.MaxAddrs)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.Rewrite, "Rewrite: ", opts.Rewrite)

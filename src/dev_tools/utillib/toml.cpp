@@ -220,11 +220,7 @@ string_q CToml::getConfigStr(const string_q& section, const string_q& key, const
 //-------------------------------------------------------------------------
 uint64_t CToml::getVersion(void) const {
     // handle older ways of stroring version. Note: after 0.6.0, always stored as [version]current
-    // string_q value = getConfigStr("version", "current", getConfigStr("", "version", "0.0.0"));
-    // uint16_t v1 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-    // uint16_t v2 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-    // uint16_t v3 = (uint16_t)str_2_Uint(nextTokenClear(value, '.'));
-    return 20000+500+8; // getVersionNum(v1, v2, v3);
+    return 20000+500+8;
 }
 
 //-------------------------------------------------------------------------

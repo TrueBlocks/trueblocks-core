@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -51,7 +52,9 @@ func (opts *NamesOptions) HandleShow() error {
 		}
 		if len(namesArray) == 0 {
 			logger.Warn("No known names found for", opts.Terms)
-			logger.Warn("Original command:", os.Args)
+			args := os.Args
+			args[0] = filepath.Base(args[0])
+			logger.Warn("Original command:", args)
 			return nil
 		}
 

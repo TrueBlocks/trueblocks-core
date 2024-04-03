@@ -10,10 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --options. Edit only those parts of
- * the code outside of the BEG_CODE/END_CODE sections
- */
 #include "basetypes.h"
 #include "database.h"
 #include "exportcontext.h"
@@ -535,7 +531,7 @@ bool COptionsBase::findParam(const string_q& name, COption& paramOut) const {
             paramOut = option;
             return true;
         }
-        if (startsWith(option.longName, name)) {  // positionals
+        if (startsWith(option.longName, name)) {
             paramOut = option;
             return true;
         }
@@ -754,7 +750,6 @@ COptionsBase::COptionsBase(void) {
     noHeader = false;
     enableBits = OPT_DEFAULT;
     arguments.clear();
-    usageErrs.clear();
     notes.clear();
     commandLines.clear();
     coutSaved = NULL;

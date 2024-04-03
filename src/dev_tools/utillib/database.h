@@ -154,7 +154,6 @@ extern size_t stringToAsciiFile(const string_q& fileName, const string_q& conten
 extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, char sep = '\n');
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');
 extern size_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
-extern bool forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void* data);
 
 //----------------------------------------------------------------------
 typedef void (*QUITHANDLER)(int s);

@@ -50,7 +50,7 @@ on      ,cmd  ,fast  ,traces ,tools/getTraces ,by_filebad          ,n    ,bad & 
 on      ,cmd  ,fast  ,traces ,tools/getTraces ,by_file             ,n    ,file = cmd_file
 
 # This test loads 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b ABI from the local folder (which does not exist in the API mode), so only run against `cmd`
-on      ,cmd  ,slow  ,traces ,tools/getTraces ,articulate_arrays   ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = json & verbose
+local   ,cmd  ,slow  ,traces ,tools/getTraces ,articulate_arrays   ,y    ,transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = json & verbose
 
 # These two fail because they don't articulate a given function correctly. One of them only runs against `cmd`.
 delay   ,cmd  ,slow  ,traces ,tools/getTraces ,articulate          ,y    ,transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
