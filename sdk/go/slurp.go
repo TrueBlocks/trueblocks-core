@@ -10,12 +10,16 @@ package sdk
 
 import (
 	// EXISTING_CODE
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -91,6 +95,20 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	}
 
 	return &opts, nil
+}
+
+func (opts *SlurpOptions) Query() ([]types.SimpleSlurp, *rpc.MetaData, error) {
+	buffer := bytes.Buffer{}
+	if err := opts.Slurp(&buffer); err != nil {
+		logger.Fatal(err)
+	}
+
+	var result Result[types.SimpleSlurp]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
+		return nil, nil, err
+	} else {
+		return result.Data, &result.Meta, nil
+	}
 }
 
 type SlurpTypes int
