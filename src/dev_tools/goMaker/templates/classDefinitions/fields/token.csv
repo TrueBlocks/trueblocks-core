@@ -1,15 +1,15 @@
-name             ,type      ,strDefault ,omitempty ,doc ,description
-blockNumber      ,blknum    ,           ,          ,  1 ,the block at which the report is made
-transactionIndex ,blknum    ,           ,true      ,  2 ,the transaction index (if applicable) at which the report is made
-timestamp        ,timestamp ,           ,          ,  3 ,the timestamp of the block
-date             ,datetime  ,           ,calc      ,  4 ,the timestamp as a date
-totalSupply      ,int256    ,           ,          ,  5 ,the total supply of the token contract
-address          ,address   ,           ,          ,  6 ,the address of the token contract
-holder           ,address   ,           ,          ,  7 ,the holder address for which we are reporting
-priorBalance     ,int256    ,           ,true      ,  8 ,the holder's asset balance at its prior appearance
-balance          ,int256    ,           ,          ,  9 ,the holder's asset balance at the given block height
-diff             ,int256    ,           ,true      , 10 ,the difference#&44; if any#&44; between the prior and current balance
-name             ,string    ,           ,          , 11 ,the name of the token contract&#44; if available
-symbol           ,string    ,           ,          , 12 ,the symbol of the token contract
-decimals         ,uint64    ,           ,          , 13 ,the number of decimals for the token contract
-type             ,TokenType ,           ,          , 14 ,the type of token (ERC20 or ERC721) or none
+name             ,type      ,strDefault ,attributes ,docOrder ,description
+blockNumber      ,blknum    ,           ,           ,       1 ,the block at which the report is made
+transactionIndex ,blknum    ,           ,omitempty  ,       2 ,the transaction index (if applicable) at which the report is made
+timestamp        ,timestamp ,           ,           ,       3 ,the timestamp of the block
+date             ,datetime  ,           ,calc       ,       4 ,the timestamp as a date
+totalSupply      ,int256    ,           ,           ,       5 ,the total supply of the token contract
+address          ,address   ,           ,           ,       6 ,the address of the token contract
+holder           ,address   ,           ,           ,       7 ,the holder address for which we are reporting
+priorBalance     ,int256    ,           ,omitempty  ,       8 ,the holder's asset balance at its prior appearance
+balance          ,int256    ,           ,           ,       9 ,the holder's asset balance at the given block height
+diff             ,int256    ,           ,omitempty  ,      10 ,the difference#&44; if any#&44; between the prior and current balance
+name             ,string    ,           ,           ,      11 ,the name of the token contract&#44; if available
+symbol           ,string    ,           ,           ,      12 ,the symbol of the token contract
+decimals         ,uint64    ,           ,           ,      13 ,the number of decimals for the token contract
+type             ,TokenType ,           ,           ,      14 ,the type of token (ERC20 or ERC721) or none

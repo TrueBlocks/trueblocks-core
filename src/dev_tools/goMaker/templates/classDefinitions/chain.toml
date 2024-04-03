@@ -1,8 +1,8 @@
 [settings]
-class = CChain
-fields = chain.csv
-doc_group = 04-Admin
-doc_descr = a configuration item carrying information about a single chain
-doc_route = 413-chain
-doc_producer = status, config
-go_output = src/apps/chifra/pkg/types
+    class = "CChain"
+    contained_by = "status"
+    doc_group = "04-Admin"
+    doc_descr = "a configuration item carrying information about a single chain"
+    doc_route = "439-chain"
+    produced_by = "status, config"
+    go_output = "src/apps/chifra/pkg/types"

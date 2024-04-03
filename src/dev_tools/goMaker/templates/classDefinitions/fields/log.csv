@@ -1,13 +1,13 @@
-name             ,type      ,strDefault ,omitempty ,doc ,description
-blockNumber      ,blknum    ,           ,          ,  1 ,the number of the block
-transactionIndex ,uint64    ,           ,          ,  2 ,the zero-indexed position of the transaction in the block
-logIndex         ,uint64    ,           ,          ,  3 ,the zero-indexed position of this log relative to the block
-timestamp        ,timestamp ,           ,true      ,  4 ,the timestamp of the block this log appears in
-date             ,datetime  ,           ,calc      ,  5 ,the timestamp as a date
-address          ,address   ,           ,          ,  6 ,the smart contract that emitted this log
-topics           ,[]topic   ,           ,true      ,  7 ,the first topic hashes event signature of the log&#44; up to 3 additional index parameters may appear
-data             ,bytes     ,           ,true      ,  8 ,any remaining un-indexed parameters to the event
-transactionHash  ,hash      ,           ,          ,  9 ,the hash of the transction
-blockHash        ,hash      ,           ,          , 10 ,the hash of the block
-articulatedLog   ,Function  ,           ,true      , 11 ,a human-readable version of the topic and data fields
-compressedLog    ,string    ,           ,true      , 12 ,a truncated&#44; more readable version of the articulation
+name             ,type      ,strDefault ,attributes         ,docOrder ,description
+blockNumber      ,blknum    ,           ,                   ,       1 ,the number of the block
+transactionIndex ,uint64    ,           ,                   ,       2 ,the zero-indexed position of the transaction in the block
+logIndex         ,uint64    ,           ,                   ,       3 ,the zero-indexed position of this log relative to the block
+timestamp        ,timestamp ,           ,omitempty|simponly ,       4 ,the timestamp of the block this log appears in
+date             ,datetime  ,           ,calc               ,       5 ,the timestamp as a date
+address          ,address   ,           ,                   ,       6 ,the smart contract that emitted this log
+topics           ,[]topic   ,           ,omitempty          ,       7 ,the first topic hashes event signature of the log&#44; up to 3 additional index parameters may appear
+data             ,bytes     ,           ,omitempty          ,       8 ,any remaining un-indexed parameters to the event
+transactionHash  ,hash      ,           ,                   ,       9 ,the hash of the transction
+blockHash        ,hash      ,           ,                   ,      10 ,the hash of the block
+articulatedLog   ,*Function ,           ,omitempty|simponly ,      11 ,a human-readable version of the topic and data fields
+compressedLog    ,string    ,           ,omitempty|simponly ,      12 ,a truncated&#44; more readable version of the articulation

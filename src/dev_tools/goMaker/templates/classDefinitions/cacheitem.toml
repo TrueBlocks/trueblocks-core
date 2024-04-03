@@ -1,8 +1,8 @@
 [settings]
-class = CCacheItem
-fields = cacheitem.csv
-doc_group = 04-Admin
-doc_descr = a single entry in the results of a status query when `--verbose` is enabled
-doc_route = 410-cacheItem
-doc_producer = status
-go_output = src/apps/chifra/internal/status
+    class = "CCacheItem"
+    contained_by = "status"
+    doc_group = "04-Admin"
+    doc_descr = "a single entry in the results of a status query when `--verbose` is enabled"
+    doc_route = "430-cacheItem"
+    produced_by = "status"
+    go_output = "src/apps/chifra/internal/status"

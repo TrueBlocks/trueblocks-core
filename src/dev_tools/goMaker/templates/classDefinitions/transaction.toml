@@ -1,11 +1,10 @@
 [settings]
-class = CTransaction
-fields = transactions.csv
-contained_by = Block
-doc_group = 02-Chain Data
-doc_descr = transaction data as returned from the RPC (with slight enhancements)
-doc_route = 202-transaction
-doc_producer = transactions, export
-go_output = src/apps/chifra/pkg/types
-cache_type = cacheable
-cache_by = tx
+    class = "CTransaction"
+    contained_by = "block"
+    doc_group = "02-Chain Data"
+    doc_descr = "transaction data as returned from the RPC (with slight enhancements)"
+    doc_route = "206-transaction"
+    produced_by = "transactions, export"
+    go_output = "src/apps/chifra/pkg/types"
+    cache_type = "cacheable"
+    cache_by = "tx"
