@@ -7,7 +7,6 @@ import (
 	"go/format"
 	"os"
 	"strings"
-	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -15,11 +14,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var m sync.Mutex
-
 func WriteCode(existingFn, newCode string) error {
 	if !file.FileExists(existingFn) {
-		logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
+		if !strings.Contains(existingFn, "/generated/") {
+			logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
+		}
 		_, err := updateFile(existingFn, newCode)
 		return err
 	}
@@ -50,7 +49,7 @@ func WriteCode(existingFn, newCode string) error {
 		MessageType: "Progress",
 		Message:     existingFn,
 	}
-	if wasModified {
+	if !strings.Contains(existingFn, "/generated/") && wasModified {
 		msg.MessageType = "Info"
 		msg.Message = fmt.Sprintf("Wrote %s", existingFn)
 	}
