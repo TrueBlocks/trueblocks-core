@@ -17,15 +17,27 @@ toc: true
 ---
 ## Global Options
 
-All commands have these globally available options unless removed as shown in the Disabled column below. Some commands have additional globally available features as noted in the Enabled column.
+Every `chifra` command has the following globally available options (unless the option is removed as shown in the `Disabled` column below). Certain commands have additional globally available features as noted in the `Enabled` column.
 
-| Option                                                                      |
-| --------------------------------------------------------------------------- |
-| Verbose, Fmt, Version, Noop, NoColor, Chain, NoHeader, File, Output, Append |
+| Globally Options Available to All Commands                         |
+| ------------------------------------------------------------------ |
+| Verbose, Fmt, Version, Chain, NoHeader, File, Output, Append, Help |
+
+Where:
+
+  -v, --verbose            enable verbose output
+  -x, --fmt string         export format, one of [none|json*|txt|csv]
+      --version            displays the current version string
+      --chain              instructs the tool to operate against the given chain
+      --no_header          suppresses the display of the header in txt and csv format
+      --file               reads options from the specified file
+      --output             redirects output to the given file
+      --append             for --output only, appends results to the given file
+  -h, --help               displays the help screen
 
 ### Group 1
 
-These commands produce data but do not need to use the cache because they do not query the node.
+The tools in this group of commands produce data but do not need the cache because they do not query the node. They all have the above globally available options.
 
 | Group    | Cmd      | Enabled | Disabled |
 | -------- | -------- | ------- | -------- |
@@ -38,39 +50,52 @@ These commands produce data but do not need to use the cache because they do not
 
 ### Group 2
 
-These commands produce data, but because they do query the node, the need the cache.
+The tools in this group have all of the above options, but they query the node, therefore they need the cache.
 
-| Group       | Cmd    | Enabled | Disabled |
-| ----------- | ------ | ------- | -------- |
-| accounts    | abis   | Caching |          |
-| chain_data  | when   | Caching |          |
-| chain_state | tokens | Caching |          |
+| Group       | Cmd    | Enabled        | Disabled |
+| ----------- | ------ | -------------- | -------- |
+| accounts    | abis   | Cache, Decache |          |
+| chain_data  | when   | Cache, Decache |          |
+| chain_state | tokens | Cache, Decache |          |
+
+Where:
+
+  -o, --cache              force the results of the query into the cache
+  -D, --decache            removes related items from the cache
 
 ### Group 3
 
-These commands produce data, but because they do query the node, the need the cache. They also have wei values which are allowed to use `--ether` option to convert to ether. The --raw option is not available.
+The tools in this group have all of the above options, but because they do query the node, they need the cache. They also produce wei values therefore they have the `--ether` option as well.
 
-| Group       | Cmd    | Enabled             | Disabled |
-| ----------- | ------ | ------------------- | -------- |
-| accounts    | export | Caching, Ether, Wei |          |
-| chain_state | state  | Caching, Ether, Wei |          |
+| Group       | Cmd    | Enabled               | Disabled |
+| ----------- | ------ | --------------------- | -------- |
+| accounts    | export | Cache, Decache, Ether |          |
+| chain_state | state  | Cache, Decache, Ether |          |
+
+Where:
+
+  -H, --ether              specify value in ether
 
 ### Group 4
 
-These commands produce data, but because they do query the node, the need the cache. They also have wei values which are allowed to use `--ether` option to convert to ether. The `--raw` option shows the underlying data queried directly from the node.
+The tools in this group have all of the above options, but have an additional option, `--raw`, which shows the underlying data queried directly from the node (or API provider in the case of `slurp`).
 
-| Group      | Cmd          | Enabled                  | Disabled |
-| ---------- | ------------ | ------------------------ | -------- |
-| chain_data | transactions | Caching, Ether, Wei, Raw |          |
-| chain_data | blocks       | Caching, Ether, Wei, Raw |          |
-| chain_data | receipts     | Caching, Ether, Wei, Raw |          |
-| chain_data | logs         | Caching, Ether, Wei, Raw |          |
-| chain_data | traces       | Caching, Ether, Wei, Raw |          |
-| other      | slurp        | Caching, Ether, Wei, Raw |          |
+| Group      | Cmd          | Enabled                    | Disabled |
+| ---------- | ------------ | -------------------------- | -------- |
+| chain_data | blocks       | Cache, Decache, Ether, Raw |          |
+| chain_data | transactions | Cache, Decache, Ether, Raw |          |
+| chain_data | receipts     | Cache, Decache, Ether, Raw |          |
+| chain_data | logs         | Cache, Decache, Ether, Raw |          |
+| chain_data | traces       | Cache, Decache, Ether, Raw |          |
+| other      | slurp        | Cache, Decache, Ether, Raw |          |
+
+Where:
+
+      --raw                passes the data queried from the node directly to the display
 
 ### Group 5
 
-These commands do not produce any really data. They are mostly used for configuration / long running processing. The `--file` option allows for automation which in most cases, doesn't apply. The `daemon` option does not accept `--chain`.
+This final group of tools do not produce any real data. They are mostly used for configuration and/or to start and stop long-running processes. They allow no additional options over the default, but disable the following options depending on context. The `deamon` option, which provides all the tools via a local API, disables `--chain` because one sends chain with the URL.
 
 | Group | Cmd     | Enabled | Disabled                                   |
 | ----- | ------- | ------- | ------------------------------------------ |

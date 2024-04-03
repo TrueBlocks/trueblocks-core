@@ -10,7 +10,7 @@ draft: false
 menu:
   data:
     parent: "collections"
-weight: 1200
+weight: 2000
 toc: true
 ---
 
@@ -43,7 +43,7 @@ Blocks consist of the following fields:
 | date          | the timestamp as a date (calculated)                          | datetime                                            |
 | transactions  | a possibly empty array of transactions or transaction hashes  | [Transaction[]](/data-model/chaindata/#transaction) |
 | baseFeePerGas | the base fee for this block                                   | wei                                                 |
-| uncles        | a possibly empty array of uncle hashes                        | Hash                                                |
+| uncles        | a possibly empty array of uncle hashes                        | hash[]                                              |
 | withdrawals   | a possibly empty array of withdrawals (post Shanghai)         | [Withdrawal[]](/data-model/chaindata/#withdrawal)   |
 
 ## Transaction
@@ -78,7 +78,7 @@ Transactions consist of the following fields:
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                            |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                          |
 | receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)      |
-| statements       | array of reconciliations                                                                              | [Statement[]](/data-model/accounts/#statement) |
+| statements       | array of reconciliations (calculated)                                                                 | [Statement[]](/data-model/accounts/#statement) |
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                                          |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | uint8                                          |
@@ -162,6 +162,25 @@ Logs consist of the following fields:
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string                                  |
 
+## LogFilter
+
+Log filters are used to speed up querying of the node when searching for logs.
+
+The following commands produce and manage LogFilters:
+
+- [chifra blocks](/chifra/chaindata/#chifra-blocks)
+- [chifra logs](/chifra/chaindata/#chifra-logs)
+
+LogFilters consist of the following fields:
+
+| Field     | Description                                                            | Type      |
+| --------- | ---------------------------------------------------------------------- | --------- |
+| fromBlock | the first block in the block range to query with eth_getLogs           | blknum    |
+| toBlock   | the last block in the range to query with eth_getLogs                  | blknum    |
+| blockHash | an alternative to blocks specification, the hash of the block to query | hash      |
+| emitters  | one or more emitting addresses from which logs were emitted            | address[] |
+| topics    | one or more topics which logs represent                                | topic[]   |
+
 ## Trace
 
 The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which
@@ -188,7 +207,7 @@ Traces consist of the following fields:
 | timestamp        | the timestamp of the block                                | timestamp                                         |
 | date             | the timestamp as a date (calculated)                      | datetime                                          |
 | transactionHash  | the transaction's hash containing this trace              | hash                                              |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum                                            |
+| transactionIndex | the zero-indexed position of the transaction in the block | uint64                                            |
 | traceAddress     | a particular trace's address in the trace tree            | uint64[]                                          |
 | subtraces        | the number of children traces that the trace hash         | uint64                                            |
 | type             | the type of the trace                                     | string                                            |
@@ -212,25 +231,6 @@ Fields that change during self-destruct transaction:
 | Action::Value |                       | Action.Balance           |
 |               | Action.RefundAddress  |                          |
 |               | Action.Balance        |                          |
-
-## LogFilter
-
-Log filters are used to speed up querying of the node when searching for logs.
-
-The following commands produce and manage LogFilters:
-
-- [chifra blocks](/chifra/chaindata/#chifra-blocks)
-- [chifra logs](/chifra/chaindata/#chifra-logs)
-
-LogFilters consist of the following fields:
-
-| Field     | Description                                                            | Type      |
-| --------- | ---------------------------------------------------------------------- | --------- |
-| fromBlock | the first block in the block range to query with eth_getLogs           | blknum    |
-| toBlock   | the last block in the range to query with eth_getLogs                  | blknum    |
-| blockHash | an alternative to blocks specification, the hash of the block to query | hash      |
-| emitters  | one or more emitting addresses from which logs were emitted            | address[] |
-| topics    | one or more topics which logs represent                                | topic[]   |
 
 ## TraceAction
 
@@ -406,8 +406,10 @@ This documentation mentions the following basic data types.
 | int64     | a 64-bit signed integer             |                |
 | string    | a normal character string           |                |
 | timestamp | a 64-bit unsigned integer           | Unix timestamp |
+| topic     | an '0x'-prefixed 32-byte hex string | lowercase      |
 | uint32    | a 32-bit unsigned integer           |                |
 | uint64    | a 64-bit unsigned integer           |                |
 | uint8     | an alias for the boolean type       |                |
 | wei       | an unsigned big number              | as a string    |
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

@@ -10,7 +10,7 @@ draft: false
 menu:
   data:
     parent: "collections"
-weight: 1800
+weight: 5000
 toc: true
 ---
 
@@ -150,3 +150,4 @@ This documentation mentions the following basic data types.
 | uint64    | a 64-bit unsigned integer           |                |
 | wei       | an unsigned big number              | as a string    |
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

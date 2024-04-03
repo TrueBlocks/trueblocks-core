@@ -53,10 +53,10 @@ var cbTemplates = []types.Generator{
 		},
 	},
 	{
-		Against:   "groups",
+		Against: "groups",
 		Templates: []string{
-			// "docs_content_chifra_group.md.tmpl",
-			// "docs_content_data-model_group.md.tmpl",
+			"docs_content_chifra_group.md.tmpl",
+			"docs_content_data-model_group.md.tmpl",
 		},
 	},
 }

@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 1000
+weight: 16000
 toc: true
 ---
 
@@ -71,9 +71,9 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [monitor](/data-model/accounts/#monitor)
 - [appearancecount](/data-model/accounts/#appearancecount)
 - [bounds](/data-model/accounts/#bounds)
+- [monitor](/data-model/accounts/#monitor)
 
 Links:
 
@@ -162,18 +162,18 @@ Notes:
 Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
-- [monitor](/data-model/accounts/#monitor)
 - [appearancecount](/data-model/accounts/#appearancecount)
-- [statement](/data-model/accounts/#statement)
-- [transaction](/data-model/chaindata/#transaction)
-- [receipt](/data-model/chaindata/#receipt)
+- [function](/data-model/other/#function)
 - [log](/data-model/chaindata/#log)
+- [monitor](/data-model/accounts/#monitor)
+- [parameter](/data-model/other/#parameter)
+- [receipt](/data-model/chaindata/#receipt)
+- [statement](/data-model/accounts/#statement)
+- [token](/data-model/chainstate/#token)
 - [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [token](/data-model/chainstate/#token)
-- [function](/data-model/other/#function)
-- [parameter](/data-model/other/#parameter)
+- [transaction](/data-model/chaindata/#transaction)
 
 Links:
 
@@ -202,7 +202,7 @@ for the fact that the cache can be easily re-created with `chifra list <address>
 
 ### Watching addresses
 
-The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`.  The `--watchlist` file is simply a list of addresses or ENS names, one per line:
+The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`. The `--watchlist` file is simply a list of addresses or ENS names, one per line:
 
 ```[bash]
 0x5e349eca2dc61abcd9dd99ce94d04136151a09ee
@@ -390,7 +390,7 @@ Links:
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 - [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/grabABI.csv)
 
-### notes
+### further information
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.
 
@@ -399,3 +399,4 @@ names. The second set contains approximately 700 function signatures. The cross 
 combinations of name(signature) each of which is hashed to create either a four-byte or a 32-byte hash. Very infrequently,
 the tool will find matches for an otherwise unknown signatures.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*
