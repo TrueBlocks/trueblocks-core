@@ -2,17 +2,33 @@ package types
 
 import (
 	"fmt"
+	"os"
 	"strings"
-	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
-type TemplateMap map[string]*template.Template
+func shouldProcess(source, tag string) (bool, error) {
+	single := os.Getenv("TB_MAKER_SINGLE")
+	if single != "" && !strings.Contains(source, single) {
+		// logger.Warn("skipping ", source, " because of ", single)
+		return false, nil
+	}
 
-func shouldProcess(source, route string) (bool, error) {
+	if tag == "" {
+		return false, nil
+	}
+
 	if strings.Contains(source, "sdk_") {
-		if route == "explore" || route == "daemon" || route == "scrape" {
+		if tag == "explore" || tag == "daemon" || tag == "scrape" {
+			return false, nil
+		}
+	}
+
+	if strings.HasPrefix(source, "docs_") && tag == "codebase" {
+		if tag == "explore" || tag == "daemon" {
 			return false, nil
 		}
 	}
@@ -24,22 +40,37 @@ func shouldProcess(source, route string) (bool, error) {
 	return true, nil
 }
 
-func convertToDestPath(source, route string) string {
+func convertToDestPath(source, routeTag, typeTag, groupTag string) string {
 	dest := strings.Replace(source, templateFolder, "", -1)
 	dest = strings.Replace(dest, ".tmpl", "", -1)
-	dest = strings.Replace(dest, "_route_", "/"+route+"/", -1)
-	dest = strings.Replace(dest, "__route", "_+route", -1)
-	dest = strings.Replace(dest, "route.go", route+".go", -1)
-	dest = strings.Replace(dest, "route.py", route+".py", -1)
-	dest = strings.Replace(dest, "route.ts", route+".ts", -1)
-	dest = strings.Replace(dest, "_", "/", -1)
-	dest = strings.Replace(dest, "+", "_", -1)
-	return dest
+	dest = strings.Replace(dest, "_route_", "/"+routeTag+"/", -1)
+	dest = strings.Replace(dest, "route.go", routeTag+".go", -1)
+	dest = strings.Replace(dest, "route.md", routeTag+".md", -1)
+	dest = strings.Replace(dest, "route.py", routeTag+".py", -1)
+	dest = strings.Replace(dest, "route.ts", routeTag+".ts", -1)
+	dest = strings.Replace(dest, "type.go", typeTag+".go", -1)
+	dest = strings.Replace(dest, "type.md", typeTag+".md", -1)
+	dest = strings.Replace(dest, "group.md", groupTag+".md", -1)
+	dest = strings.ReplaceAll(dest, "_", "/")
+	dest = strings.ReplaceAll(dest, "+", "_")
+	return strings.Replace(dest, "//", "/", -1)
 }
 
 var templateFolder = "src/dev_tools/goMaker/templates"
 
-func snakeCase(s string) string {
+func LowerNoSpaces(s string) string {
+	return strings.ToLower(strings.Replace(s, " ", "", -1))
+}
+
+func GoName(s string) string {
+	return FirstUpper(CamelCase(s))
+}
+
+func CamelCase(s string) string {
+	if len(s) < 2 {
+		return s
+	}
+
 	result := ""
 	toUpper := false
 	for _, c := range s {
@@ -54,5 +85,45 @@ func snakeCase(s string) string {
 			result += string(c)
 		}
 	}
-	return result
+	return strings.Replace(strings.ToLower(result[0:1])+result[1:], " ", "", -1)
 }
+
+func Pad(s string, width int) string {
+	return s + strings.Repeat(" ", width-len(s))
+}
+
+func FirstUpper(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return strings.ToUpper(s[0:1]) + s[1:]
+}
+
+func FirstLower(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return strings.ToLower(s[0:1]) + s[1:]
+}
+
+func Plural(s string) string {
+	if strings.HasSuffix(s, "s") {
+		return s
+	}
+	return s + "s"
+}
+
+func Proper(s string) string {
+	titleCaser := cases.Title(language.English)
+	return titleCaser.String(s)
+}
+
+func Lower(s string) string {
+	return strings.ToLower(s)
+}
+
+// ws white space
+var ws = "\n\r\t"
+
+// wss white space with space
+var wss = ws + " "

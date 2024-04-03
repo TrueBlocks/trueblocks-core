@@ -1,23 +1,5 @@
 package types
 
-import (
-	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-)
-
-func (c *Command) PkgDoc() string {
-	docsPath := "docs/templates/readme-intros/" + strings.ToLower(c.Group) + "-" + c.Route + ".md"
-	docsPath = strings.ReplaceAll(docsPath, " ", "")
-	contents := file.AsciiFileToString(docsPath)
-	contents = strings.ReplaceAll(contents, "`", "")
-	contents = strings.ReplaceAll(contents, "\n", " ")
-	contents = strings.ReplaceAll(contents, "  ", " ")
-	contents = strings.ReplaceAll(contents, "[{NAME}]", "chifra "+c.Route)
-	sentences := strings.Split(contents, ".")
-	return "// " + strings.Join(sentences, ".")
-}
-
 // handle_gocmds_docfile
 // verifyGoEnumValidators
 // verifyDescriptions
@@ -27,7 +9,7 @@ func (c *Command) PkgDoc() string {
 // ::remove(configDocs.c_str());  // remove it if it exists, we will replace it
 // ostringstream os;
 // bool hasConfig = 0;
-// for (auto member : *((CCommandOptionArray*)cmd.members)) {
+// for (auto member : *((C CommandOptionArray*)cmd.members)) {
 //     if (member.generate == "config") {
 //         ostringstream dd;
 //         if (!hasConfig) {
@@ -62,7 +44,7 @@ func (c *Command) PkgDoc() string {
 // ONE(os, "Conn", varWidth, "*rpc.Connection", typeWidth, "the connection to the RPC server");
 // ONE(os, "BadFlag", varWidth, "error", typeWidth, "an error flag if needed");
 // hasValidator(const string_q& route, const string_q& str) {
-//     string_q contents = asciiFileToString(getPathToSource("apps/chifra/internal/" + route + "/validate.go"));
+//     string_q contents = asciiFileToString(getPathToSourc e("apps/chifra/internal/" + route + "/validate.go"));
 //     CStringArray parts;
 //     explode(parts, str, '|');
 //     for (auto part : parts) {
@@ -74,8 +56,6 @@ func (c *Command) PkgDoc() string {
 
 // //---------------------------------------------------------------------------------------------------
 // void COptions::verifyGoEnumValidators(void) {
-//     for (auto p : cmdOptionArray) {
-//         if (contains(p.data_type, "enum") && !p.api_route.empty()) {
 //             string_q e = p.data_type;
 //             replace(e, "enum", "");
 //             replace(e, "list", "");
@@ -100,7 +80,7 @@ func (c *Command) PkgDoc() string {
 // //---------------------------------------------------------------------------------------------------
 // bool COptions::handle_gocmds_docfile(const CCommandOption& ep) {
 //     string_q source = asciiFileToString(getPathToTemplates("blank_doc.go.tmpl"));
-//     string_q fn = getPathToSource("apps/chifra/internal/" + ep.api_route + "/doc.go");
+//     string_q fn = getPathToSourc e("apps/chifra/internal/" + ep.api_route + "/doc.go");
 //     establishFolder(fn);
 
 //     string_q docFn = substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".md";
@@ -119,17 +99,17 @@ func (c *Command) PkgDoc() string {
 //     codewrite_t cw(fn, source);
 //     cw.nSpaces = 0;
 //     cw.stripEOFNL = false;
-//     counter.nProcessed += writeCodeIn(this, cw);
+//     counter.nProcessed += writeCod eIn(this, cw);
 //     counter.nVisited++;
 
 //     return true;
 // }
 //---------------------------------------------------------------------------------------------------
 // void COptions::verifyDescriptions(void) {
-//     for (auto ep : endpointArray) {
+//     for (auto ep : endpointAr ray) {
 //         if (!ep.is_visible)
 //             continue;
-//         for (auto option : cmdOptionArray) {
+//         for (auto option : cmdOptionArra y) {
 //             if (ep.api_route == option.api_route && option.option_type == "description") {
 //                 if (ep.description != option.description) {
 //                     ostringstream os;

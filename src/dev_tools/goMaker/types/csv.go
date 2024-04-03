@@ -10,6 +10,9 @@ type Validater interface {
 	Validate() bool
 }
 
+// LoadCsv loads a csv file into a Validater (which is any type that implements the Validate() method).
+// The callBack function is called for each record in the csv file. If the callBack function returns false,
+// the record is skipped. If the callBack function returns an error, the function quits and returns the error.
 func LoadCsv[T Validater, D any](thePath string, callBack func(*T, *D) (bool, error), data *D) ([]T, error) {
 	records := make([]T, 0)
 	callbackFunc := func(record T) error {
@@ -30,7 +33,6 @@ func LoadCsv[T Validater, D any](thePath string, callBack func(*T, *D) (bool, er
 
 	} else {
 		defer theFile.Close()
-		gocsv.TagName = "json"
 		if err := gocsv.UnmarshalToCallback(theFile, callbackFunc); err != nil {
 			return []T{}, err
 		}
