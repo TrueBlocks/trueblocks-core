@@ -576,7 +576,7 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
 
 //-----------------------------------------------------------------------
 bool COptions::reportNeighbors(void) {
-    // BOGUS: NEW_CODE
+    // BOGUS: NEW_CO DE
     if (isTestMode()) {
         return true;
     }

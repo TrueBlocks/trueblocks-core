@@ -28,9 +28,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
-type CCacheItemArray []simpleCacheItem
-type CChainArray []types.SimpleChain
-
 // EXISTING_CODE
 
 type simpleStatus struct {
