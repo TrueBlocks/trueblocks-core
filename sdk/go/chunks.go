@@ -98,22 +98,17 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	return &opts, nil
 }
 
-type chunksResult struct {
-	Data []bool       `json:"data"`
-	Meta rpc.MetaData `json:"meta"`
-}
-
 func (opts *ChunksOptions) Query() ([]bool, *rpc.MetaData, error) {
-	chunksBuf := bytes.Buffer{}
-	if err := opts.Chunks(&chunksBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Chunks(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var chunks chunksResult
-	if err := json.Unmarshal(chunksBuf.Bytes(), &chunks); err != nil {
+	var result Result[bool]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return chunks.Data, &chunks.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

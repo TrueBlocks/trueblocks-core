@@ -72,22 +72,17 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 	return &opts, nil
 }
 
-type tracesResult struct {
-	Data []types.SimpleTrace `json:"data"`
-	Meta rpc.MetaData        `json:"meta"`
-}
-
 func (opts *TracesOptions) Query() ([]types.SimpleTrace, *rpc.MetaData, error) {
-	tracesBuf := bytes.Buffer{}
-	if err := opts.Traces(&tracesBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Traces(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var traces tracesResult
-	if err := json.Unmarshal(tracesBuf.Bytes(), &traces); err != nil {
+	var result Result[types.SimpleTrace]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return traces.Data, &traces.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

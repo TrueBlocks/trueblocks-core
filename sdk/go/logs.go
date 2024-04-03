@@ -72,22 +72,17 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 	return &opts, nil
 }
 
-type logsResult struct {
-	Data []types.SimpleLog `json:"data"`
-	Meta rpc.MetaData      `json:"meta"`
-}
-
 func (opts *LogsOptions) Query() ([]types.SimpleLog, *rpc.MetaData, error) {
-	logsBuf := bytes.Buffer{}
-	if err := opts.Logs(&logsBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Logs(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var logs logsResult
-	if err := json.Unmarshal(logsBuf.Bytes(), &logs); err != nil {
+	var result Result[types.SimpleLog]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return logs.Data, &logs.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

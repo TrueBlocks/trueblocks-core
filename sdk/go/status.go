@@ -82,22 +82,17 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 	return &opts, nil
 }
 
-type statusResult struct {
-	Data []bool       `json:"data"`
-	Meta rpc.MetaData `json:"meta"`
-}
-
 func (opts *StatusOptions) Query() ([]bool, *rpc.MetaData, error) {
-	statusBuf := bytes.Buffer{}
-	if err := opts.Status(&statusBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Status(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var status statusResult
-	if err := json.Unmarshal(statusBuf.Bytes(), &status); err != nil {
+	var result Result[bool]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return status.Data, &status.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

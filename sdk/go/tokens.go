@@ -83,22 +83,17 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 	return &opts, nil
 }
 
-type tokensResult struct {
-	Data []bool       `json:"data"`
-	Meta rpc.MetaData `json:"meta"`
-}
-
 func (opts *TokensOptions) Query() ([]bool, *rpc.MetaData, error) {
-	tokensBuf := bytes.Buffer{}
-	if err := opts.Tokens(&tokensBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Tokens(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var tokens tokensResult
-	if err := json.Unmarshal(tokensBuf.Bytes(), &tokens); err != nil {
+	var result Result[bool]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return tokens.Data, &tokens.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

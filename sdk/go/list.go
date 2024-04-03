@@ -81,22 +81,17 @@ func GetListOptions(args []string) (*ListOptions, error) {
 	return &opts, nil
 }
 
-type listResult struct {
-	Data []types.SimpleAppearance `json:"data"`
-	Meta rpc.MetaData             `json:"meta"`
-}
-
 func (opts *ListOptions) Query() ([]types.SimpleAppearance, *rpc.MetaData, error) {
-	listBuf := bytes.Buffer{}
-	if err := opts.List(&listBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.List(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var list listResult
-	if err := json.Unmarshal(listBuf.Bytes(), &list); err != nil {
+	var result Result[types.SimpleAppearance]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return list.Data, &list.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

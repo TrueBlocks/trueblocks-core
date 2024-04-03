@@ -96,22 +96,17 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 	return &opts, nil
 }
 
-type blocksResult struct {
-	Data []types.SimpleBlock[string] `json:"data"`
-	Meta rpc.MetaData                `json:"meta"`
-}
-
 func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *rpc.MetaData, error) {
-	blocksBuf := bytes.Buffer{}
-	if err := opts.Blocks(&blocksBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Blocks(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var blocks blocksResult
-	if err := json.Unmarshal(blocksBuf.Bytes(), &blocks); err != nil {
+	var result Result[types.SimpleBlock[string]]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return blocks.Data, &blocks.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

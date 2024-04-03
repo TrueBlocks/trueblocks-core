@@ -79,22 +79,17 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 	return &opts, nil
 }
 
-type abisResult struct {
-	Data []bool       `json:"data"`
-	Meta rpc.MetaData `json:"meta"`
-}
-
 func (opts *AbisOptions) Query() ([]bool, *rpc.MetaData, error) {
-	abisBuf := bytes.Buffer{}
-	if err := opts.Abis(&abisBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Abis(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var abis abisResult
-	if err := json.Unmarshal(abisBuf.Bytes(), &abis); err != nil {
+	var result Result[bool]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return abis.Data, &abis.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

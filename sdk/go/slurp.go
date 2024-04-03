@@ -97,22 +97,17 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	return &opts, nil
 }
 
-type slurpResult struct {
-	Data []types.SimpleSlurp `json:"data"`
-	Meta rpc.MetaData        `json:"meta"`
-}
-
 func (opts *SlurpOptions) Query() ([]types.SimpleSlurp, *rpc.MetaData, error) {
-	slurpBuf := bytes.Buffer{}
-	if err := opts.Slurp(&slurpBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Slurp(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var slurp slurpResult
-	if err := json.Unmarshal(slurpBuf.Bytes(), &slurp); err != nil {
+	var result Result[types.SimpleSlurp]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return slurp.Data, &slurp.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

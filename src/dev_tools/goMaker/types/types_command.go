@@ -500,7 +500,7 @@ func (c *Command) OptFields() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (c *Command) ReturnType() string {
+func (c *Command) Returns() string {
 	switch c.Route {
 	case "blocks":
 		return "types.SimpleBlock[string]"

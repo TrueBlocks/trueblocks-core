@@ -57,22 +57,17 @@ func Get{{.Proper}}Options(args []string) (*{{.Proper}}Options, error) {
 	return &opts, nil
 }
 
-type {{.Lower}}Result struct {
-	Data []{{.ReturnType}} `json:"data"`
-	Meta rpc.MetaData      `json:"meta"`
-}
-
-func (opts *{{.Proper}}Options) Query() ([]{{.ReturnType}}, *rpc.MetaData, error) {
-	{{.Lower}}Buf := bytes.Buffer{}
-	if err := opts.{{.Proper}}(&{{.Lower}}Buf); err != nil {
+func (opts *{{.Proper}}Options) Query() ([]{{.Returns}}, *rpc.MetaData, error) {
+	buffer := bytes.Buffer{}
+	if err := opts.{{.Proper}}(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var {{.Lower}} {{.Lower}}Result
-	if err := json.Unmarshal({{.Lower}}Buf.Bytes(), &{{.Lower}}); err != nil {
+	var result Result[{{.Returns}}]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return {{.Lower}}.Data, &{{.Lower}}.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

@@ -70,22 +70,17 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 	return &opts, nil
 }
 
-type receiptsResult struct {
-	Data []types.SimpleReceipt `json:"data"`
-	Meta rpc.MetaData          `json:"meta"`
-}
-
 func (opts *ReceiptsOptions) Query() ([]types.SimpleReceipt, *rpc.MetaData, error) {
-	receiptsBuf := bytes.Buffer{}
-	if err := opts.Receipts(&receiptsBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Receipts(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var receipts receiptsResult
-	if err := json.Unmarshal(receiptsBuf.Bytes(), &receipts); err != nil {
+	var result Result[types.SimpleReceipt]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return receipts.Data, &receipts.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

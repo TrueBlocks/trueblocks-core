@@ -88,22 +88,17 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	return &opts, nil
 }
 
-type transactionsResult struct {
-	Data []types.SimpleTransaction `json:"data"`
-	Meta rpc.MetaData              `json:"meta"`
-}
-
 func (opts *TransactionsOptions) Query() ([]types.SimpleTransaction, *rpc.MetaData, error) {
-	transactionsBuf := bytes.Buffer{}
-	if err := opts.Transactions(&transactionsBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Transactions(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var transactions transactionsResult
-	if err := json.Unmarshal(transactionsBuf.Bytes(), &transactions); err != nil {
+	var result Result[types.SimpleTransaction]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return transactions.Data, &transactions.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 

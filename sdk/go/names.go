@@ -86,22 +86,17 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 	return &opts, nil
 }
 
-type namesResult struct {
-	Data []types.SimpleName `json:"data"`
-	Meta rpc.MetaData       `json:"meta"`
-}
-
 func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
-	namesBuf := bytes.Buffer{}
-	if err := opts.Names(&namesBuf); err != nil {
+	buffer := bytes.Buffer{}
+	if err := opts.Names(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var names namesResult
-	if err := json.Unmarshal(namesBuf.Bytes(), &names); err != nil {
+	var result Result[types.SimpleName]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
-		return names.Data, &names.Meta, nil
+		return result.Data, &result.Meta, nil
 	}
 }
 
