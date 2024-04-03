@@ -59,13 +59,13 @@ Data models produced by this tool:
 
 - [appearance](/data-model/accounts/#appearance)
 - [block](/data-model/chaindata/#block)
-- [withdrawal](/data-model/chaindata/#withdrawal)
+- [blockcount](/data-model/chaindata/#blockcount)
 - [log](/data-model/chaindata/#log)
-- [trace](/data-model/chaindata/#trace)
 - [logfilter](/data-model/chaindata/#logfilter)
+- [trace](/data-model/chaindata/#trace)
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
-- [blockcount](/data-model/chaindata/#blockcount)
+- [withdrawal](/data-model/chaindata/#withdrawal)
 
 ### Other Options
 
@@ -76,7 +76,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -86,3 +86,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

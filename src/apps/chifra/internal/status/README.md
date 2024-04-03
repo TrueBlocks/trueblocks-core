@@ -1,5 +1,11 @@
 ## chifra status
 
+The `chifra status` tool reports on the state (and size) of the various TrueBlocks local binary
+caches. TrueBlocks produces nine difference caches: `abis`, `blocks`, `monitors`, `names`, `objs`,
+`recons`, `slurps`, `traces`, `transactions`. In general practice, these caches may take up a
+few GB of hard drive space, however, for very popular smart contract the size of the caches may
+grow rather large. Keep an eye on it.
+
 The `chifra status` program allows you to manage the various TrueBlocks caches. You may list all of the
 caches, some of the cache, or even individual caches either in terse or full detail. The cache of
 interest is specified with the `modes` option.
@@ -34,9 +40,9 @@ Notes:
 
 Data models produced by this tool:
 
-- [status](/data-model/admin/#status)
 - [cacheitem](/data-model/admin/#cacheitem)
 - [chain](/data-model/admin/#chain)
+- [status](/data-model/admin/#status)
 
 ### Other Options
 
@@ -47,7 +53,7 @@ All tools accept the following additional flags, although in some cases, they ha
       --output string   write the results to file 'fn' and return the filename
       --append          for --output command only append to instead of replace contents of file
       --file string     specify multiple sets of command line options in a file
-  ```
+```
 
 **Note:** For the `--file string` option, you may place a series of valid command lines in a file using any
 valid flags. In some cases, this may significantly improve performance. A semi-colon at the start
@@ -57,3 +63,4 @@ of any line makes it a comment.
 export formats in the command file. For example, a command file with two different commands, one with `--fmt csv`
 and the other with `--fmt json` will produce both invalid CSV and invalid JSON.
 
+*Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

@@ -67,7 +67,7 @@ func (opts *ListOptions) testLog() {
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(len(opts.Publisher) > 0, "Publisher: ", opts.Publisher)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != utils.NOPOS && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
 	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
