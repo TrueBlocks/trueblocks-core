@@ -200,7 +200,7 @@ func canonicalizeURL(rawURL string) string {
 			if strings.Contains(removes, key) {
 				continue
 			} else if strings.Contains(key, "_") {
-				key = snakeCase(key)
+				key = camelCase(key)
 			}
 			if newQuery != "" {
 				newQuery += "&"
@@ -218,7 +218,7 @@ func canonicalizeURL(rawURL string) string {
 	}
 }
 
-func snakeCase(s string) string {
+func camelCase(s string) string {
 	result := ""
 	toUpper := false
 	for _, c := range s {
