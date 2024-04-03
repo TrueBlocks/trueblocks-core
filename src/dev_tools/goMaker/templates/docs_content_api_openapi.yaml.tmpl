@@ -1,0 +1,89 @@
+openapi: 3.1.3
+info:
+  title: TrueBlocks API
+  contact:
+    email: info@trueblocks.io
+    url: https://www.trueblocks.io
+  license:
+    name: GPL 3.0
+    url: http://www.gnu.org/licenses/
+  version: {{.Version false}}
+  description: >
+{{.Description}}
+servers:
+  - url: http://localhost:8080
+    description: Local endpoints
+tags:
+{{.TagSummary}}
+paths:
+{{range .Commands}}{{if .IsRoute}}  /{{.Route}}:
+    get:
+      tags:
+        - {{.Group}}
+      summary: {{.Summary}}
+      description: {{.Description}} Corresponds to the <a href="/chifra/{{.GroupName}}/#chifra-{{.Route}}">chifra {{.Route}}</a> command line.
+      operationId: {{.GroupName}}-{{.Route}}
+      parameters:
+{{range .Options}}{{if not .IsHidden}}        - name: {{.CamelCase}}
+          description: {{.Description}}
+          required: {{.IsRequired}}
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: {{.DocType}}
+{{end}}{{end}}{{.YamlGlobals}}
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: {{.ProducedByDescr}}
+                    type: array
+                    items:
+{{.ProducedByList}}{{if .HasExample}}                example:
+                  {{.Example}}{{end}}        "400":
+          description: bad input parameter
+{{end}}{{end}}components:
+  schemas:{{range .Structures}}
+{{if ne .CamelCase ""}}    {{.CamelCase}}:
+      description: "{{.DocDescr}}"
+      type: object
+      properties:{{range .Members}}{{if ne .DocOrder 0}}
+        {{.Name}}:
+          type: {{.YamlType}}{{if ne .Description ""}}
+          description: "{{.Description}}{{if .IsCalc}} (calculated){{end}}"{{end}}{{end}}{{end}}{{end}}{{end}}
+    response:
+      required:
+        - result
+      type: object
+      properties:
+        data:
+          type: object
+        error:
+          type: array
+          example:
+            - error 1
+            - error 2
+          items:
+            type: string
+    hash:
+      type: string
+      format: hash
+      description: "The 32-byte hash"
+      example: "0xf128...1e98"
+    address:
+      type: string
+    string:
+      type: string
+    uint64:
+      type: number
+      format: uint64
+    topic:
+      type: string
+      format: bytes
+      description: "One of four 32-byte topics of a log"
+      example: "0xf128...1e98"
