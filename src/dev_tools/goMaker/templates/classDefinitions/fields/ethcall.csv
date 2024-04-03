@@ -1,8 +1,0 @@
-name             ,type    ,strDefault ,omitempty ,doc ,description
-blockNumber      ,blknum  ,           ,          ,  1 ,the block number at which this call was made
-address          ,address ,           ,          ,  2 ,the address of contract being called
-signature        ,string  ,           ,         ,  3 ,the canonical signature of the interface
-encoding         ,string  ,           ,          ,  4 ,the encoding for the function call
-bytes            ,string  ,           ,          ,  5 ,the bytes data following the encoding of the call
-compressedResult ,string  ,           ,          ,  6 ,the compressed version of the result of the call to the contract
-deployed         ,blknum  ,           ,          ,  7 ,the block number at which this smart contract was deployed (if a smart contract)

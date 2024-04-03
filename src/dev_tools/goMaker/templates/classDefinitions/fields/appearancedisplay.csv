@@ -1,7 +1,0 @@
-name             ,type      ,strDefault ,omitempty ,doc ,description
-address          ,address   ,           ,          ,  1 ,the address of the appearance
-blockNumber      ,blknum    ,           ,          ,  2 ,the number of the block
-transactionIndex ,blknum    ,           ,          ,  3 ,the zero-indexed position of the transaction in the block
-name             ,string    ,           ,          ,  4 ,the name of the address&#44; if found
-timestamp        ,timestamp ,           ,          ,  5 ,the timestamp for this appearance
-date             ,datetime  ,           ,calc      ,  6 ,the timestamp as a date
