@@ -57,6 +57,20 @@ func Get{{.Proper}}Options(args []string) (*{{.Proper}}Options, error) {
 	return &opts, nil
 }
 
+func (opts *{{.Proper}}Options) Query() ([]{{.Returns}}, *rpc.MetaData, error) {
+	buffer := bytes.Buffer{}
+	if err := opts.{{.Proper}}(&buffer); err != nil {
+		logger.Fatal(err)
+	}
+
+	var result Result[{{.Returns}}]
+	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
+		return nil, nil, err
+	} else {
+		return result.Data, &result.Meta, nil
+	}
+}
+
 {{.Enums2}}
 // EXISTING_CODE
 // EXISTING_CODE

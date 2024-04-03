@@ -26,7 +26,7 @@ var {{.Route}}Cmd = &cobra.Command{
 	}),
 {{.AliasStr}}}
 
-const usage{{.Proper}} = `{{.Usage}}{{.Use}}`
+const usage{{.Proper}} = `{{.UsageStr}}{{.Use}}`
 
 const short{{.Proper}} = "{{.Short}}"
 
@@ -35,7 +35,7 @@ const long{{.Proper}} = `{{.Long}}`
 const notes{{.Proper}} = `{{.NotesStr}}`
 
 {{.OptDef}}func init() {
-	{{.Capabilities}}
+	{{.AddCaps}}
 
 	{{.Route}}Cmd.Flags().SortFlags = false
 
