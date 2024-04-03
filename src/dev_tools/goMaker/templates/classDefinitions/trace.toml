@@ -1,11 +1,10 @@
 [settings]
     class = "CTrace"
-    fields = "trace.csv"
-    contained_by = "Transaction"
+    contained_by = "transaction"
     doc_group = "02-Chain Data"
     doc_descr = "trace data as returned from the RPC (with slight enhancements)"
     doc_route = "221-trace"
-    doc_producer = "traces, export, blocks"
+    produced_by = "traces, export, blocks"
     go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "tx"

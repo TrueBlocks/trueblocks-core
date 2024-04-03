@@ -1,11 +1,10 @@
 [settings]
     class = "CStatement"
-    fields = "statement.csv"
-    contained_by = "Transaction"
+    contained_by = "transaction"
     doc_group = "01-Accounts"
     doc_descr = "a statement, including all inflows and outflows, for a single transfer of an asset (including ETH) to or from a given address"
     doc_route = "118-statement"
-    doc_producer = "export"
+    produced_by = "export"
     go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "address,tx"

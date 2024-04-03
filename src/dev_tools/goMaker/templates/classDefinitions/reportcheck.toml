@@ -1,8 +1,7 @@
 [settings]
     class = "CReportCheck"
-    fields = "reportcheck.csv"
     doc_group = "04-Admin"
     doc_descr = "report on checking contents of chunks"
     doc_route = "433-reportCheck"
-    doc_producer = "chunks"
+    produced_by = "chunks"
     go_output = "src/apps/chifra/internal/chunks"

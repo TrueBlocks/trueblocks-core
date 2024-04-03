@@ -1,11 +1,10 @@
 [settings]
     class = "CReceipt"
-    fields = "receipt.csv"
-    contained_by = "Transaction"
+    contained_by = "transaction"
     doc_group = "02-Chain Data"
     doc_descr = "receipt data as returned from the RPC (with slight enhancements)"
     doc_route = "212-receipt"
-    doc_producer = "receipts, export"
+    produced_by = "receipts, export"
     go_output = "src/apps/chifra/pkg/types"
     cache_type = "cacheable"
     cache_by = "block"

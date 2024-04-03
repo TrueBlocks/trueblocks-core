@@ -1,8 +1,7 @@
 [settings]
     class = "CChunkStats"
-    fields = "chunkstats.csv"
     doc_group = "04-Admin"
     doc_descr = "summary statistics about an Unchained Index bloom filter and index chunk"
     doc_route = "424-chunkStats"
-    doc_producer = "chunks"
+    produced_by = "chunks"
     go_output = "src/apps/chifra/pkg/types"

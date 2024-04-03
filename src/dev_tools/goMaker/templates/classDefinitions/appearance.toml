@@ -1,9 +1,8 @@
 [settings]
     class = "CAppearance"
-    fields = "appearance.csv"
     contained_by = "Monitor"
     doc_group = "01-Accounts"
     doc_descr = "an appearance (`<blockNumber,transactionIndex>`) of an address anywhere on the chain (note that in some cases, not all fields will appear depending on the command)"
     doc_route = "103-appearance"
-    doc_producer = "list, export, blocks, chunks"
+    produced_by = "list, export, blocks, chunks"
     go_output = "src/apps/chifra/pkg/types"

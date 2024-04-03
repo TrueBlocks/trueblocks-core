@@ -159,8 +159,8 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, endpoint
 	// Create the structure array (and sort it by DocRoute) from the map
 	cb.Structures = make([]Structure, 0, len(structMap))
 	for _, st := range structMap {
-		st.DocProducer = strings.Replace(st.DocProducer, " ", "", -1)
-		st.Producers = strings.Split(st.DocProducer, ",")
+		st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
+		st.Producers = strings.Split(st.ProducedBy, ",")
 		for _, producer := range st.Producers {
 			producesMap[producer] = append(producesMap[producer], Production{st.Class})
 		}

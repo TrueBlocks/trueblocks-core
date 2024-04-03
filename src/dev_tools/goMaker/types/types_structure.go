@@ -13,13 +13,12 @@ import (
 type Structure struct {
 	Class       string    `json:"class,omitempty" toml:"class" csv:"class"`
 	BaseClass   string    `json:"base_class,omitempty" toml:"base_class"`
-	Fields      string    `json:"fields,omitempty" toml:"fields"`
 	GoOutput    string    `json:"go_output,omitempty" toml:"go_output"`
 	DocGroup    string    `json:"doc_group,omitempty" toml:"doc_group" csv:"doc_group"`
 	DocRoute    string    `json:"doc_route,omitempty" toml:"doc_route"`
 	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr" csv:"doc_descr"`
 	DocNotes    string    `json:"doc_notes,omitempty" toml:"doc_notes" csv:"doc_notes"`
-	DocProducer string    `json:"doc_producer,omitempty" toml:"doc_producer"`
+	ProducedBy  string    `json:"produced_by,omitempty" toml:"produced_by"`
 	ContainedBy string    `json:"contained_by,omitempty" toml:"contained_by"`
 	GoModel     string    `json:"go_model,omitempty" toml:"go_model"`
 	CacheAs     string    `json:"cache_as,omitempty" toml:"cache_as"`

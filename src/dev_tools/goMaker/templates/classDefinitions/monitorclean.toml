@@ -1,8 +1,7 @@
 [settings]
     class = "CMonitorClean"
-    fields = "monitorclean.csv"
     doc_group = "04-Admin"
     doc_descr = "report on cleaning dups out of monitors"
     doc_route = "427-monitorClean"
-    doc_producer = "monitors"
+    produced_by = "monitors"
     go_output = "src/apps/chifra/internal/monitors"
