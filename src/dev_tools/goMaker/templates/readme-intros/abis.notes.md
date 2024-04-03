@@ -1,4 +1,4 @@
-### notes
+### further information
 
 Without the --verbose option, the result is a compacted form of the ABI. Add --verbose for full details.
 

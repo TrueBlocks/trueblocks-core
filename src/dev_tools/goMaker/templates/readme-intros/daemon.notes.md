@@ -1,4 +1,4 @@
-### notes
+### further information
 
 To convert the options for a command line tool to an API call, do the following:
 
