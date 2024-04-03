@@ -1,4 +1,4 @@
-`[{NAME}]` returns the given transaction's receipt. You may specify multiple transaction identifiers
+`chifra {{.Route}}` returns the given transaction's receipt. You may specify multiple transaction identifiers
 per invocation.
 
 The `--articulate` option fetches the ABI from each encountered smart contract (including those

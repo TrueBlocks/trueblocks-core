@@ -1,4 +1,4 @@
-The `[{NAME}]` tool retrieves transactions directly from the Ethereum node (using the `--raw`
+The `chifra {{.Route}}` tool retrieves transactions directly from the Ethereum node (using the `--raw`
 option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers
 per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt
 and generated logs.

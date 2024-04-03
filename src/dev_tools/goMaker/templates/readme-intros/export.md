@@ -1,6 +1,6 @@
-The `[{NAME}]` tools provides a major part of the functionality of the TrueBlocks system. Using
+The `chifra {{.Route}}` tools provides a major part of the functionality of the TrueBlocks system. Using
 the index of appearances created with `chifra scrape` and the list of transaction identifiers
-created with `chifra list`, `[{NAME}]` completes the actual extraction of an address's transactional
+created with `chifra list`, `chifra {{.Route}}` completes the actual extraction of an address's transactional
 history from the node.
 
 You may use `topics`, `fourbyte` values at the start of a transaction's input data, and/or a log's

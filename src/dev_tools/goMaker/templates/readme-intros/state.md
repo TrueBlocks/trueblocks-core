@@ -1,4 +1,4 @@
-The `[{NAME}]` tool retrieves the balance of an address (or list of addresses) at the given block
+The `chifra {{.Route}}` tool retrieves the balance of an address (or list of addresses) at the given block
 (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify
 at least one address. If no block is specified, the latest block is reported.
 

@@ -1,4 +1,4 @@
-The `[{NAME}]` tool answers one of two questions: (1) "At what date and time did a given block
+The `chifra {{.Route}}` tool answers one of two questions: (1) "At what date and time did a given block
 occur?" or (2) "What block occurred at or before a given date and time?"
 
 In the first case, supply a block number or hash and the date and time of that block are displayed.

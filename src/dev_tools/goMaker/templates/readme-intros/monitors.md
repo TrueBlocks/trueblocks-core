@@ -1,4 +1,4 @@
-`[{NAME}]` has two purposes: (1) to display information about the current set of monitors, and (2)
+`chifra {{.Route}}` has two purposes: (1) to display information about the current set of monitors, and (2)
 to `--watch` a set of addresses. The `--watch` function allows one to "follow" an address (or set
 of addresses) and keep an off-chain database fresh.
 
@@ -17,7 +17,7 @@ for the fact that the cache can be easily re-created with `chifra list <address>
 
 ### Watching addresses
 
-The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`.  The `--watchlist` file is simply a list of addresses or ENS names, one per line:
+The `--watch` command is special. It starts a long-running process that continually reads the blockchain looking for appearances of the addresses it is instructed to watch. It command requires two additional parameters: `--watchlist <filename>` and `--commands <filename>`. The `--watchlist` file is simply a list of addresses or ENS names, one per line:
 
 ```[bash]
 0x5e349eca2dc61abcd9dd99ce94d04136151a09ee

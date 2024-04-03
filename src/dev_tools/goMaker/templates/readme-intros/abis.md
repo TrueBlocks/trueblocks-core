@@ -1,4 +1,4 @@
-The `[{NAME}]` tool retrieves one or more ABI files for the given address(es). It searches
+The `chifra {{.Route}}` tool retrieves one or more ABI files for the given address(es). It searches
 for ABIs, sequentially, in the following locations:
 
 - the current working folder,
