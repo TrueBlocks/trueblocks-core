@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -30,29 +30,31 @@ import (
 
 type CCacheItemArray []simpleCacheItem
 type CChainArray []types.SimpleChain
+
 // EXISTING_CODE
 
 type simpleStatus struct {
-	CachePath     string          `json:"cachePath,omitempty"`
-	Caches        CCacheItemArray `json:"caches"`
-	Chain         string          `json:"chain,omitempty"`
-	ChainConfig   string          `json:"chainConfig,omitempty"`
-	ChainId       string          `json:"chainId,omitempty"`
-	Chains        CChainArray     `json:"chains"`
-	ClientVersion string          `json:"clientVersion,omitempty"`
-	HasEsKey      bool            `json:"hasEsKey,omitempty"`
-	HasPinKey     bool            `json:"hasPinKey,omitempty"`
-	IndexPath     string          `json:"indexPath,omitempty"`
-	IsApi         bool            `json:"isApi,omitempty"`
-	IsArchive     bool            `json:"isArchive,omitempty"`
-	IsScraping    bool            `json:"isScraping,omitempty"`
-	IsTesting     bool            `json:"isTesting,omitempty"`
-	IsTracing     bool            `json:"isTracing,omitempty"`
-	NetworkId     string          `json:"networkId,omitempty"`
-	Progress      string          `json:"progress,omitempty"`
-	RootConfig    string          `json:"rootConfig,omitempty"`
-	RpcProvider   string          `json:"rpcProvider,omitempty"`
-	Version       string          `json:"version,omitempty"`
+	CachePath     string              `json:"cachePath,omitempty"`
+	Caches        []simpleCacheItem   `json:"caches"`
+	Chain         string              `json:"chain,omitempty"`
+	ChainConfig   string              `json:"chainConfig,omitempty"`
+	ChainId       string              `json:"chainId,omitempty"`
+	Chains        []types.SimpleChain `json:"chains"`
+	ClientVersion string              `json:"clientVersion,omitempty"`
+	HasEsKey      bool                `json:"hasEsKey,omitempty"`
+	HasPinKey     bool                `json:"hasPinKey,omitempty"`
+	IndexPath     string              `json:"indexPath,omitempty"`
+	IsApi         bool                `json:"isApi,omitempty"`
+	IsArchive     bool                `json:"isArchive,omitempty"`
+	IsScraping    bool                `json:"isScraping,omitempty"`
+	IsTesting     bool                `json:"isTesting,omitempty"`
+	IsTracing     bool                `json:"isTracing,omitempty"`
+	NetworkId     string              `json:"networkId,omitempty"`
+	Progress      string              `json:"progress,omitempty"`
+	RootConfig    string              `json:"rootConfig,omitempty"`
+	RpcProvider   string              `json:"rpcProvider,omitempty"`
+	Version       string              `json:"version,omitempty"`
+
 	// EXISTING_CODE
 	Meta  *rpc.MetaData `json:"meta,omitempty"`
 	Diffs *rpc.MetaData `json:"diffs,omitempty"`
@@ -344,4 +346,3 @@ TODO: WARN: is fully synced and your index catches up to the chain head.
 */
 
 // EXISTING_CODE
-

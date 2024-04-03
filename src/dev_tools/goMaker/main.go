@@ -45,11 +45,11 @@ var cbTemplates = []types.Generator{
 		},
 	},
 	{
-		Against:   "types",
+		Against: "types",
 		Templates: []string{
-			// "src_dev+tools_goMaker_generated_model+type.md.tmpl",
-			// "src_apps_chifra_pkg_types_type.go.tmpl",
-			// "src_apps_chifra_internal_route_types_type.go.tmpl",
+			"src_dev+tools_goMaker_generated_model+type.md.tmpl",
+			"src_apps_chifra_pkg_types_type.go.tmpl",
+			"src_apps_chifra_internal_route_types_type.go.tmpl",
 		},
 	},
 	{

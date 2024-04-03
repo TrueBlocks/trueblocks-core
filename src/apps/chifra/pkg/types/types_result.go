@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -134,14 +134,12 @@ func (s *SimpleResult) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 
-// --> cacheable by address,block,fourbyte
 func (s *SimpleResult) CacheName() string {
 	return "Result"
 }
 
 func (s *SimpleResult) CacheId() string {
 	return fmt.Sprintf("%s-%s-%09d", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber)
-	// TODO: The above creates a very large number of files for a large contract.
 }
 
 func (s *SimpleResult) CacheLocation() (directory string, extension string) {
@@ -255,6 +253,7 @@ func (s *SimpleResult) UnmarshalCache(version uint64, reader io.Reader) (err err
 	return nil
 }
 
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *SimpleResult) FinishUnmarshal() {
 	// EXISTING_CODE
 	s.Values = make(map[string]string)
@@ -265,5 +264,5 @@ func (s *SimpleResult) FinishUnmarshal() {
 }
 
 // EXISTING_CODE
+// TODO: The above CacheId makes a very large number of files for a large contract.
 // EXISTING_CODE
-

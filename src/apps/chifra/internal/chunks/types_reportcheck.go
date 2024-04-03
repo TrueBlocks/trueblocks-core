@@ -1,8 +1,8 @@
-// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 /*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * Parts of this file were auto generated. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
 
@@ -22,6 +22,7 @@ type simpleReportCheck struct {
 	Result     string   `json:"result"`
 	SkippedCnt uint32   `json:"skippedCnt"`
 	VisitedCnt uint32   `json:"visitedCnt"`
+
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -75,4 +76,3 @@ func (s *simpleReportCheck) Model(chain, format string, verbose bool, extraOptio
 
 // EXISTING_CODE
 // EXISTING_CODE
-
