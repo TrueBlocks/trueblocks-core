@@ -88,9 +88,6 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'g':
-            if (fieldName % "git_hash") {
-                return git_hash;
-            }
             if (fieldName % "group") {
                 return group;
             }
@@ -162,10 +159,6 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
             }
             break;
         case 'g':
-            if (fieldName % "git_hash") {
-                git_hash = fieldValue;
-                return true;
-            }
             if (fieldName % "group") {
                 group = fieldValue;
                 return true;
@@ -213,94 +206,6 @@ void CMeasure::finishParse() {
     // EXISTING_CODE
 }
 
-//---------------------------------------------------------------------------------------------------
-bool CMeasure::Serialize(CArchive& archive) {
-    if (archive.isWriting())
-        return SerializeC(archive);
-
-    // Always read the base class (it will handle its own backLevels if any, then
-    // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
-    if (readBackLevel(archive))
-        return true;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive >> git_hash;
-    archive >> date;
-    archive >> machine;
-    archive >> node;
-    archive >> chain;
-    archive >> epoch;
-    archive >> group;
-    archive >> cmd;
-    archive >> type;
-    archive >> nTests;
-    archive >> nPassed;
-    archive >> totSecs;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    finishParse();
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool CMeasure::SerializeC(CArchive& archive) const {
-    // Writing always writes the latest version of the data
-    CBaseNode::SerializeC(archive);
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive << git_hash;
-    archive << date;
-    archive << machine;
-    archive << node;
-    archive << chain;
-    archive << epoch;
-    archive << group;
-    archive << cmd;
-    archive << type;
-    archive << nTests;
-    archive << nPassed;
-    archive << totSecs;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool CMeasure::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
-    ASSERT(archiveIn.isReading());
-    ASSERT(archiveOut.isWriting());
-    CMeasure copy;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    copy.Serialize(archiveIn);
-    copy.SerializeC(archiveOut);
-    return true;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CMeasureArray& array) {
-    uint64_t count;
-    archive >> count;
-    array.resize(count);
-    for (size_t i = 0; i < count; i++) {
-        ASSERT(i < array.capacity());
-        array.at(i).Serialize(archive);
-    }
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CMeasureArray& array) {
-    uint64_t count = array.size();
-    archive << count;
-    for (size_t i = 0; i < array.size(); i++)
-        array[i].SerializeC(archive);
-    return archive;
-}
-
 //---------------------------------------------------------------------------
 void CMeasure::registerClass(void) {
     // only do this once
@@ -312,7 +217,6 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMeasure, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMeasure, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "git_hash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "machine", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "node", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -352,7 +256,7 @@ string_q nextMeasureChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 break;
             case 'c':
                 if (fieldIn % "check")
-                    return (mea->nPassed == mea->nTests ? greenCheck : "");
+                    return (mea->nPassed == mea->nTests ? "ok" : "");
                 break;
             case 'e':
                 if (fieldIn % "epoch")
@@ -381,26 +285,6 @@ string_q nextMeasureChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
-//---------------------------------------------------------------------------
-bool CMeasure::readBackLevel(CArchive& archive) {
-    bool done = false;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CMeasure& mea) {
-    mea.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CMeasure& mea) {
-    mea.Serialize(archive);
-    return archive;
-}
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CMeasure& it) {
@@ -432,13 +316,12 @@ const char* STR_DISPLAY_MEASURE =
 // EXISTING_CODE
 CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     initialize();
-    git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     date = Now().Format(FMT_EXPORT);
-    machine = toLower(getHostName());
+    machine = "test-machine";
     node = "TG";
-    uint16_t maj, min, build;
-    getVersionValues(maj, min, build);
-    epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" + uint_2_Str((maj * 100) + min));
+    // uint16_t maj, min, build;
+    // getVersionValues(maj, min, build);
+    epoch = "not-a-test"; // getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" + uint_2_Str((maj * 100) + min));
     group = g;
     cmd = c;
     type = t;

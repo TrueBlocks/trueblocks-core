@@ -82,7 +82,6 @@ class COption : public CBaseNode {
     void clear(void);
     void initialize(void);
     void duplicate(const COption& op);
-    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -181,14 +180,6 @@ inline bool operator<(const COption& v1, const COption& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<COption> COptionArray;
-extern CArchive& operator>>(CArchive& archive, COptionArray& array);
-extern CArchive& operator<<(CArchive& archive, const COptionArray& array);
-
-//---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const COption& opt);
-extern CArchive& operator>>(CArchive& archive, COption& opt);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_OPTION;
 
 //---------------------------------------------------------------------------

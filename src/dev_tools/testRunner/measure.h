@@ -25,7 +25,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CMeasure : public CBaseNode {
   public:
-    string_q git_hash;
     string_q date;
     string_q machine;
     string_q node;
@@ -70,7 +69,6 @@ class CMeasure : public CBaseNode {
     void clear(void);
     void initialize(void);
     void duplicate(const CMeasure& me);
-    bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -110,7 +108,6 @@ inline void CMeasure::clear(void) {
 inline void CMeasure::initialize(void) {
     CBaseNode::initialize();
 
-    git_hash = "";
     date = "";
     machine = "";
     node = "";
@@ -134,7 +131,6 @@ inline void CMeasure::duplicate(const CMeasure& me) {
     clear();
     CBaseNode::duplicate(me);
 
-    git_hash = me.git_hash;
     date = me.date;
     machine = me.machine;
     node = me.node;
@@ -178,14 +174,6 @@ inline bool operator<(const CMeasure& v1, const CMeasure& v2) {
 
 //---------------------------------------------------------------------------
 typedef vector<CMeasure> CMeasureArray;
-extern CArchive& operator>>(CArchive& archive, CMeasureArray& array);
-extern CArchive& operator<<(CArchive& archive, const CMeasureArray& array);
-
-//---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CMeasure& mea);
-extern CArchive& operator>>(CArchive& archive, CMeasure& mea);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_MEASURE;
 
 //---------------------------------------------------------------------------

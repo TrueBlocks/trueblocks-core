@@ -281,29 +281,6 @@ CArchive& CArchive::operator>>(time_q& date) {
 }
 
 //----------------------------------------------------------------------
-bool forEveryLineInAsciiFile(const string_q& filenameIn, CHARPTRFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    CFilename filename(filenameIn);
-    CArchive archive(READING_ARCHIVE);
-    if (archive.Lock(filename.getFullPath(), modeReadOnly, LOCK_NOWAIT)) {
-#define MAX_LINE (4096 * 1000)
-        char buffer[MAX_LINE];
-        bool done = false;
-        while (!done) {
-            bzero(buffer, MAX_LINE);
-            done = (archive.ReadLine(buffer, MAX_LINE) == NULL);
-            if (!done)
-                done = !(*func)(buffer, data);  // returns true to continue
-        }
-        archive.Release();
-        return done;
-    }
-    return true;
-}
-
-//----------------------------------------------------------------------
 size_t asciiFileToBuffer(const string_q& fileName, vector<char>& buffer) {
     size_t len = fileSize(fileName);
     buffer.resize(len);
@@ -429,7 +406,7 @@ bool CArchive::needsUpgrade(bool arrayFile) {
     this->Read(schema);
     Seek(t, SEEK_SET);  // go back where we started
 
-    return schema < getVersionNum();
+    return false;
 }
 
 }  // namespace qblocks

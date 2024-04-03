@@ -15,7 +15,6 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "option.h"
-#include "markdown.h"
 #include "exportcontext.h"
 
 namespace qblocks {
@@ -190,88 +189,6 @@ void COption::finishParse() {
     // EXISTING_CODE
 }
 
-//---------------------------------------------------------------------------------------------------
-bool COption::Serialize(CArchive& archive) {
-    if (archive.isWriting())
-        return SerializeC(archive);
-
-    // Always read the base class (it will handle its own backLevels if any, then
-    // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
-    if (readBackLevel(archive))
-        return true;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive >> hotKey;
-    archive >> longName;
-    archive >> description;
-    archive >> permitted;
-    archive >> option_type;
-    archive >> is_visible;
-    archive >> is_positional;
-    archive >> is_required;
-    archive >> is_deprecated;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    finishParse();
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COption::SerializeC(CArchive& archive) const {
-    // Writing always writes the latest version of the data
-    CBaseNode::SerializeC(archive);
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive << hotKey;
-    archive << longName;
-    archive << description;
-    archive << permitted;
-    archive << option_type;
-    archive << is_visible;
-    archive << is_positional;
-    archive << is_required;
-    archive << is_deprecated;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COption::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
-    ASSERT(archiveIn.isReading());
-    ASSERT(archiveOut.isWriting());
-    COption copy;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    copy.Serialize(archiveIn);
-    copy.SerializeC(archiveOut);
-    return true;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, COptionArray& array) {
-    uint64_t count;
-    archive >> count;
-    array.resize(count);
-    for (size_t i = 0; i < count; i++) {
-        ASSERT(i < array.capacity());
-        array.at(i).Serialize(archive);
-    }
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const COptionArray& array) {
-    uint64_t count = array.size();
-    archive << count;
-    for (size_t i = 0; i < array.size(); i++)
-        array[i].SerializeC(archive);
-    return archive;
-}
-
 //---------------------------------------------------------------------------
 void COption::registerClass(void) {
     // only do this once
@@ -330,26 +247,6 @@ string_q nextOptionChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 
 // EXISTING_CODE
 // EXISTING_CODE
-
-//---------------------------------------------------------------------------
-bool COption::readBackLevel(CArchive& archive) {
-    bool done = false;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const COption& opt) {
-    opt.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, COption& opt) {
-    opt.Serialize(archive);
-    return archive;
-}
 
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const COption& it) {

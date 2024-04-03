@@ -18,7 +18,6 @@ namespace qblocks {
 extern uint64_t fileSize(const string_q& file);
 
 extern int copyFile(const string_q& from, const string_q& to);
-extern int moveFile(const string_q& from, const string_q& to);
 extern int cleanFolder(const string_q& path, bool recurse = false, bool interactive = false);
 
 extern bool folderExists(const string_q& path);
@@ -33,8 +32,5 @@ inline bool establishFolder(const string_q& path) {
 extern string_q getCWD(const string_q& filename = "");
 extern string_q doCommand(const string_q& cmd, bool readStderr = false);
 extern string_q makeValidName(const string_q& inOut);
-
-extern string_q getUserName(void);
-extern string_q getHostName(void);
 
 }  // namespace qblocks

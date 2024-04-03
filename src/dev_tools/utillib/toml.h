@@ -16,7 +16,6 @@
 #include <vector>
 #include "database.h"
 #include "biglib.h"
-#include "colors.h"
 
 namespace qblocks {
 
