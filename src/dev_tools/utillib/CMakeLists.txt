@@ -3,8 +3,6 @@ cmake_minimum_required (VERSION 3.5)
 # library project
 project(util)
 
-# produce the version-git.cpp file with current git branch, hash and timestamp
-
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
 
