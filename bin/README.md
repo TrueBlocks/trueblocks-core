@@ -11,7 +11,7 @@ Add this folder to your $PATH.
 
 ### Getting Started
 
-To insure that you have your $PATH set correctly, you may enter this command:
+To insure that you have your $PATH set correctly, you may enter this command: testing
 
 ```[shell]
 chifra --version
