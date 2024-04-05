@@ -45,10 +45,6 @@ func (s *Structure) HasTimestamp() bool {
 	return false
 }
 
-func (s *Structure) CamelCase() string {
-	return CamelCase(s.Class)
-}
-
 func (s *Structure) ModelName() string {
 	if s.GoModel != "" {
 		return s.GoModel
@@ -161,72 +157,28 @@ func (s *Structure) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(s, "structure", name, tmplCode)
 }
 
+func (s *Structure) Num() int {
+	parts := strings.Split(s.DocGroup, "-")
+	if len(parts) > 1 {
+		return int(utils.MustParseInt(parts[0]))
+	}
+	logger.Fatal("unknown group: " + s.DocGroup)
+	return 0
+}
+
 func (s *Structure) GroupName() string {
 	parts := strings.Split(s.DocGroup, "-")
 	if len(parts) > 1 {
 		return LowerNoSpaces(parts[1])
 	}
-	return "unknown group: " + s.DocGroup
+	logger.Fatal("unknown group: " + s.DocGroup)
+	return ""
 }
 
 func (s *Structure) Name() string {
 	return Lower(s.Class)
 }
 
-func (s *Structure) DocLead() string {
-	return "DocLead" + s.Class
-}
-
-func (s *Structure) GroupWeight() int64 {
-	parts := strings.Split(s.DocGroup, "-")
-	return utils.MustParseInt(parts[0]) * 1000
-}
-
-func (s *Structure) GroupTitle() string {
-	parts := strings.Split(s.DocGroup, "-")
-	return FirstUpper(Lower(parts[1]))
-}
-
-func (s *Structure) GroupIntro() string {
-	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/model-groups/"+s.GroupName()+".md"), ws)
-	return contents
-}
-
-func (s *Structure) Markdowns() string {
-	ret := []string{}
-
-	filter := s.GroupName()
-	for _, st := range s.cbPtr.Structures {
-		if st.GroupName() == filter {
-			contents := file.AsciiFileToString("src/dev_tools/goMaker/generated/model_" + st.Name() + ".md")
-			ret = append(ret, contents)
-		}
-	}
-
-	return strings.Join(ret, "\n")
-}
-
 func (s Structure) Validate() bool {
 	return true
-}
-
-func (s *Structure) BaseTypes() string {
-	filter := s.GroupName()
-	typeMap := map[string]bool{}
-	for _, st := range s.cbPtr.Structures {
-		g := st.GroupName()
-		if g == filter {
-			for _, m := range st.Members {
-				typeMap[m.Type] = true
-			}
-		}
-	}
-	ret := [][]string{}
-	for _, t := range s.cbPtr.BaseTypes {
-		if typeMap[t.Class] {
-			ret = append(ret, []string{t.Class, t.DocDescr, t.DocNotes})
-		}
-	}
-
-	return MarkdownTable([]string{"Type", "Description", "Notes"}, ret)
 }

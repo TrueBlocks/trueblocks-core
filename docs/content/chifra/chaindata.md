@@ -1,6 +1,6 @@
 ---
 title: "Chain data"
-description: ""
+description: "Access and cache blockchain-related data"
 lead: ""
 lastmod:
   - :git

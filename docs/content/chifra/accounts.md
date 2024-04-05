@@ -1,6 +1,6 @@
 ---
 title: "Accounts"
-description: ""
+description: "Access and cache transactional data"
 lead: ""
 lastmod:
   - :git

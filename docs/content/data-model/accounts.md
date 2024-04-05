@@ -1,6 +1,6 @@
 ---
 title: "Accounts"
-description: ""
+description: "Access and cache transactional data"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 1000
+    parent: collections
+weight: 11000
 toc: true
 ---
 

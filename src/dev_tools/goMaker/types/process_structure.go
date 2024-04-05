@@ -31,10 +31,10 @@ func (s *Structure) ProcessFile(source string) error {
 		return nil
 	} else if isDestInternal {
 		s.Route = grabRoute(s.GoOutput)
-		dest = convertToDestPath(source, s.Route, s.Name(), "")
+		dest = convertToDestPath(source, s.Route, s.Name(), "", "")
 		dest = strings.Replace(dest, "/types/", "/types_", -1)
 	} else {
-		dest = convertToDestPath(source, "", s.Name(), "")
+		dest = convertToDestPath(source, "", s.Name(), "", "")
 	}
 
 	tmpl := file.AsciiFileToString(source)

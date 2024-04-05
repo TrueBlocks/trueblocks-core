@@ -69,10 +69,6 @@ func (op *Option) EnumChoices() string {
 	return ret + "[ " + strings.Join(op.Enums, " | ") + " ]"
 }
 
-func (op *Option) CamelCase() string {
-	return CamelCase(op.LongName)
-}
-
 func (op Option) Validate() bool {
 	return op.LongName != "--------"
 }
@@ -206,7 +202,7 @@ func (op *Option) toGoSdkType() string {
 }
 
 func (op *Option) JsonTag() string {
-	return "`json:\"" + op.CamelCase() + ",omitempty\"`"
+	return "`json:\"" + CamelCase(op.LongName) + ",omitempty\"`"
 }
 
 func (op *Option) PyHotKey() string {
@@ -716,13 +712,13 @@ func (op *Option) RequestOpt() string {
 	var ret string
 	if op.IsConfig() {
 		tmplName := "requestOpts1"
-		tmpl := `	case "{{.CamelCase}}":
+		tmpl := `	case "{{toCamel .LongName}}":
 		configs[key] = value[0]`
 		ret = op.executeTemplate(tmplName, tmpl)
 	} else {
 		if strings.HasPrefix(op.DataType, "list") {
 			tmplName := "requestOpts2"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.{{.GoName}} = append(opts.{{.GoName}}, s...)
@@ -730,22 +726,22 @@ func (op *Option) RequestOpt() string {
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<boolean>" {
 			tmplName := "requestOpts3"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = true`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<uint64>" || op.DataType == "<blknum>" {
 			tmplName := "requestOpts4"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = globals.ToUint64(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else if op.DataType == "<double>" {
 			tmplName := "requestOpts5"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = globals.ToFloat64(value[0])`
 			ret = op.executeTemplate(tmplName, tmpl)
 		} else {
 			tmplName := "requestOpts6"
-			tmpl := `		case "{{.CamelCase}}":
+			tmpl := `		case "{{toCamel .LongName}}":
 			opts.{{.GoName}} = value[0]`
 			ret = op.executeTemplate(tmplName, tmpl)
 		}

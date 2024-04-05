@@ -1,6 +1,6 @@
 ---
 title: "Other"
-description: ""
+description: "Access to other and external data"
 lead: ""
 lastmod:
   - :git

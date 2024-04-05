@@ -1,6 +1,6 @@
 ---
 title: "Chain state"
-description: ""
+description: "Access to account and token state"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 3000
+    parent: collections
+weight: 31000
 toc: true
 ---
 

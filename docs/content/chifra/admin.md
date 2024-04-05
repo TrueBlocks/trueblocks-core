@@ -1,6 +1,6 @@
 ---
 title: "Admin"
-description: ""
+description: "Control the scraper and build the index"
 lead: ""
 lastmod:
   - :git

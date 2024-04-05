@@ -1,6 +1,6 @@
 ---
 title: "Chain state"
-description: ""
+description: "Access to account and token state"
 lead: ""
 lastmod:
   - :git

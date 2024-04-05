@@ -1,6 +1,6 @@
 ---
 title: "Other"
-description: ""
+description: "Access to other and external data"
 lead: ""
 lastmod:
   - :git
@@ -9,8 +9,8 @@ lastmod:
 draft: false
 menu:
   data:
-    parent: "collections"
-weight: 5000
+    parent: collections
+weight: 51000
 toc: true
 ---
 

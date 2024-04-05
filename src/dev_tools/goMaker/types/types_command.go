@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
@@ -191,7 +192,7 @@ func (c *Command) PyGlobals() string {
 	for _, op := range globals {
 		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
 			tmplName := "pyglobals1"
-			tmpl := "    \"{{.CamelCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			tmpl := "    \"{{toCamel .LongName}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
 			ret = append(ret, op.executeTemplate(tmplName, tmpl))
 		}
 	}
@@ -207,7 +208,7 @@ func (c *Command) YamlGlobals() string {
 	for _, op := range globals {
 		if strings.Contains(caps, strings.ToLower(op.LongName)+"|") {
 			tmplName := "pyglobals2"
-			tmpl := `        - name: {{.CamelCase}}
+			tmpl := `        - name: {{toCamel .LongName}}
           description: {{.Description}}
           required: false
           style: form
@@ -235,7 +236,7 @@ func (c *Command) PyOptions() string {
 	for _, op := range c.Options {
 		if !op.IsPositional() && !op.IsHidden() {
 			tmplName := "pyoption"
-			tmpl := "    \"{{.CamelCase}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
+			tmpl := "    \"{{toCamel .LongName}}\": {\"hotkey\": \"{{.PyHotKey}}\", \"type\": \"{{.OptionType}}\"},"
 			ret = append(ret, op.executeTemplate(tmplName, tmpl))
 		}
 	}
@@ -591,32 +592,101 @@ func (c *Command) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(c, "command", name, tmplCode)
 }
 
+func (c *Command) GroupMenu(reason string) string {
+	if reason == "model" {
+		return `
+  data:
+    parent: collections`
+	} else if reason == "readme" {
+		return `
+  chifra:
+    parent: commands`
+	} else {
+		logger.Fatal("Unknown reason for group menu:", reason)
+		return ""
+	}
+}
+
 func (c *Command) GroupTitle() string {
 	return FirstUpper(Lower(c.Group))
 }
 
-func (c *Command) GroupIntro() string {
-	contents := strings.Trim(file.AsciiFileToString("./src/dev_tools/goMaker/templates/readme-groups/"+c.GroupName()+".md"), ws)
-	return contents
+func (c *Command) GroupAlias(reason string) string {
+	if reason == "model" {
+		return ""
+	}
+	return strings.ReplaceAll(`aliases:
+ - "/docs/chifra/[{GN}]"
+`, "[{GN}]", c.GroupName())
 }
 
-func (c *Command) GroupAlias() string {
-	ret := `aliases:
- - "/docs/chifra/[{WHICH}]"
-`
-	return strings.Replace(ret, "[{WHICH}]", c.GroupName(), -1)
+func getContents(fnIn string) string {
+	fn := "./src/dev_tools/goMaker/" + fnIn + ".md"
+	if !file.FileExists(fn) {
+		logger.Fatal("Error: file does not exist: " + fn)
+	}
+	return file.AsciiFileToString(fn)
 }
 
-func (c *Command) Markdowns() string {
+func (c *Command) GroupIntro(reason string) string {
+	return getContents("templates/" + reason + "-groups/" + c.GroupName())
+}
+
+func (c *Command) GroupMarkdowns(reason, filter string) string {
 	ret := []string{}
+	if reason == "model" {
+		sort.Slice(c.cbPtr.Structures, func(i, j int) bool {
+			return c.cbPtr.Structures[i].Num() < c.cbPtr.Structures[j].Num()
+		})
+		for _, st := range c.cbPtr.Structures {
+			if st.GroupName() == filter && st.Name() != "" {
+				ret = append(ret, getContents("generated/model_"+st.Name()))
+			}
+		}
+	} else if reason == "readme" {
+		sort.Slice(c.cbPtr.Commands, func(i, j int) bool {
+			return c.cbPtr.Commands[i].Num < c.cbPtr.Commands[j].Num
+		})
+		for _, cmd := range c.cbPtr.Commands {
+			if cmd.GroupName() == filter && cmd.Route != "" {
+				ret = append(ret, getContents("generated/readme_"+cmd.Route))
+			}
+		}
+	} else {
+		logger.Fatal("Error: unknown reason: " + reason)
+	}
+	return strings.Join(ret, "\n")
+}
 
-	filter := c.GroupName()
-	for _, cmd := range c.cbPtr.Commands {
-		if cmd.GroupName() == filter {
-			contents := file.AsciiFileToString("src/dev_tools/goMaker/generated/readme_" + cmd.Route + ".md")
-			ret = append(ret, contents)
+func (cb *CodeBase) GroupList(filter string) []Command {
+	ret := []Command{}
+	for _, c := range cb.Commands {
+		if c.Route == "" && c.Group != "" {
+			if filter == "" || c.GroupName() == filter {
+				ret = append(ret, c)
+			}
+		}
+	}
+	return ret
+}
+
+func (s *Command) BaseTypes() string {
+	filter := s.GroupName()
+	typeMap := map[string]bool{}
+	for _, st := range s.cbPtr.Structures {
+		g := st.GroupName()
+		if g == filter {
+			for _, m := range st.Members {
+				typeMap[m.Type] = true
+			}
+		}
+	}
+	ret := [][]string{}
+	for _, t := range s.cbPtr.BaseTypes {
+		if typeMap[t.Class] {
+			ret = append(ret, []string{t.Class, t.DocDescr, t.DocNotes})
 		}
 	}
 
-	return strings.Join(ret, "\n")
+	return MarkdownTable([]string{"Type", "Description", "Notes"}, ret)
 }
