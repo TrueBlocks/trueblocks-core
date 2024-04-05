@@ -13,7 +13,7 @@ referenced website for more information.
 
 ```[plaintext]
 Purpose:
-  Fetch data from Etherscan for any address.
+  Fetch data from Etherscan and other APIs for any address.
 
 Usage:
   chifra slurp [flags] <address> [address...] [block...]

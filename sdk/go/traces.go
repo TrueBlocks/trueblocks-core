@@ -86,6 +86,8 @@ func (opts *TracesOptions) Query() ([]types.SimpleTrace, *rpc.MetaData, error) {
 	}
 }
 
+// traces-+trace|traces-count+tracecount
+
 // No enums
 // EXISTING_CODE
 // EXISTING_CODE

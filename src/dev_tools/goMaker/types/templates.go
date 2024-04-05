@@ -15,7 +15,7 @@ func init() {
 }
 
 func executeTemplate(receiver interface{}, tmplPrefix, name, tmplCode string) string {
-	tmplName := tmplPrefix + name
+	tmplName := tmplPrefix + " " + name
 
 	if codebaseCache[tmplName] == nil {
 		tmpl, err := template.New(tmplName).Funcs(getFuncMap()).Parse(tmplCode)
@@ -36,9 +36,13 @@ func getFuncMap() template.FuncMap {
 	toProper := func(s string) string { return Proper(s) }
 	toPlural := func(s string) string { return Plural(s) }
 	toCamel := func(s string) string { return CamelCase(s) }
+	toLower := func(s string) string { return Lower(s) }
+	firstLower := func(s string) string { return FirstLower(s) }
 	return template.FuncMap{
-		"toProper": toProper,
-		"toCamel":  toCamel,
-		"toPlural": toPlural,
+		"toProper":   toProper,
+		"toCamel":    toCamel,
+		"toPlural":   toPlural,
+		"toLower":    toLower,
+		"firstLower": firstLower,
 	}
 }

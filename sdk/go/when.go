@@ -92,6 +92,8 @@ func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *rpc.MetaData, error
 	}
 }
 
+// when-+namedblock|when-timestamps+timestamp|when-count+timestampcount
+
 // No enums
 // EXISTING_CODE
 // EXISTING_CODE

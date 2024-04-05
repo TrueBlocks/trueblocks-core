@@ -13,31 +13,31 @@ import (
 	// EXISTING_CODE
 )
 
-type {{.Proper}}Options struct {
+type {{toProper .Route}}Options struct {
 {{.SdkFields}}}
 
 // String implements the stringer interface
-func (opts *{{.Proper}}Options) String() string {
+func (opts *{{toProper .Route}}Options) String() string {
 	bytes, _ := json.Marshal(opts)
 	return string(bytes)
 }
 
-// {{.Proper}} implements the chifra {{.Lower}} command for the SDK.
-func (opts *{{.Proper}}Options) {{.Proper}}(w io.Writer) error {
+// {{toProper .Route}} implements the chifra {{toLower .Route}} command for the SDK.
+func (opts *{{toProper .Route}}Options) {{toProper .Route}}(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
-		log.Fatalf("Error converting {{.Lower}} struct to URL values: %v", err)
+		log.Fatalf("Error converting {{toLower .Route}} struct to URL values: %v", err)
 	}
 
-	return {{.Pkg}}.{{.Proper}}(w, values)
+	return {{.Pkg}}.{{toProper .Route}}(w, values)
 }
 
-// {{.Lower}}ParseFunc handles specail cases such as structs and enums (if any).
-func {{.Lower}}ParseFunc(target interface{}, key, value string) (bool, error) {
+// {{toLower .Route}}ParseFunc handles specail cases such as structs and enums (if any).
+func {{toLower .Route}}ParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
-	{{.Enums3}}, ok := target.(*{{.Proper}}Options)
+	{{.Enums3}}, ok := target.(*{{toProper .Route}}Options)
 	if !ok {
-		return false, fmt.Errorf("parseFunc({{.Lower}}): target is not of correct type")
+		return false, fmt.Errorf("parseFunc({{toLower .Route}}): target is not of correct type")
 	}
 
 {{.Enums1}}
@@ -47,29 +47,31 @@ func {{.Lower}}ParseFunc(target interface{}, key, value string) (bool, error) {
 	return found, nil
 }
 
-// Get{{.Proper}}Options returns a filled-in options instance given a string array of arguments.
-func Get{{.Proper}}Options(args []string) (*{{.Proper}}Options, error) {
-	var opts {{.Proper}}Options
-	if err := assignValuesFromArgs(args, {{.Lower}}ParseFunc, &opts, &opts.Globals); err != nil {
+// Get{{toProper .Route}}Options returns a filled-in options instance given a string array of arguments.
+func Get{{toProper .Route}}Options(args []string) (*{{toProper .Route}}Options, error) {
+	var opts {{toProper .Route}}Options
+	if err := assignValuesFromArgs(args, {{toLower .Route}}ParseFunc, &opts, &opts.Globals); err != nil {
 		return nil, err
 	}
 
 	return &opts, nil
 }
 
-func (opts *{{.Proper}}Options) Query() ([]{{.Returns}}, *rpc.MetaData, error) {
+func (opts *{{toProper .Route}}Options) Query() ([]{{.ReturnType}}, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.{{.Proper}}(&buffer); err != nil {
+	if err := opts.{{toProper .Route}}(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[{{.Returns}}]
+	var result Result[{{.ReturnType}}]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
 }
+
+{{if ne .Returns ""}}// {{.Returns}}{{end}}
 
 {{.Enums2}}
 // EXISTING_CODE

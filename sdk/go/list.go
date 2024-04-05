@@ -95,6 +95,8 @@ func (opts *ListOptions) Query() ([]types.SimpleAppearance, *rpc.MetaData, error
 	}
 }
 
+// list-+appearance|list-count+appearancecount|list-bounds+bounds
+
 // No enums
 // EXISTING_CODE
 // EXISTING_CODE

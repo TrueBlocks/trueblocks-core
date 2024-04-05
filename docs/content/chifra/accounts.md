@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 16000
+weight: 11000
 toc: true
 ---
 
@@ -79,7 +79,6 @@ Links:
 
 - [api docs](/api/#operation/accounts-list)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 
 ## chifra export
 
@@ -179,7 +178,6 @@ Links:
 
 - [api docs](/api/#operation/accounts-export)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 
 ## chifra monitors
 
@@ -268,7 +266,6 @@ Links:
 
 - [api docs](/api/#operation/accounts-monitors)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/acctExport.csv)
 
 ## chifra names
 
@@ -325,7 +322,6 @@ Links:
 
 - [api docs](/api/#operation/accounts-names)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/ethNames.csv)
 
 ## chifra abis
 
@@ -388,7 +384,6 @@ Links:
 
 - [api docs](/api/#operation/accounts-abis)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/grabABI.csv)
 
 ### further information
 

@@ -776,7 +776,7 @@ paths:
     get:
       tags:
         - Accounts
-      summary: Manage names for addresses
+      summary: Manage names
       description: Query addresses or names of well-known accounts. Corresponds to the <a href="/chifra/accounts/#chifra-names">chifra names</a> command line.
       operationId: accounts-names
       parameters:
@@ -2794,7 +2794,7 @@ paths:
       tags:
         - Other
       summary: Slurp Api services
-      description: Fetch data from Etherscan for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
+      description: Fetch data from Etherscan and other APIs for any address. Corresponds to the <a href="/chifra/other/#chifra-slurp">chifra slurp</a> command line.
       operationId: other-slurp
       parameters:
         - name: addrs

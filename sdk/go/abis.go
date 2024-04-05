@@ -93,6 +93,8 @@ func (opts *AbisOptions) Query() ([]bool, *rpc.MetaData, error) {
 	}
 }
 
+// abis-+function
+
 // No enums
 // EXISTING_CODE
 // EXISTING_CODE

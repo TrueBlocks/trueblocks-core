@@ -110,6 +110,8 @@ func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *rpc.MetaData, 
 	}
 }
 
+// blocks-+block|blocks-hashes+block|blocks-traces+trace|blocks-uniq+appearance|blocks-logs+log|blocks-withdrawals+withdrawal|blocks-count+blockcount
+
 type BlocksFlow int
 
 const (

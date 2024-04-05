@@ -12,7 +12,7 @@ aliases:
 menu:
   chifra:
     parent: commands
-weight: 53000
+weight: 51000
 toc: true
 ---
 
@@ -55,7 +55,6 @@ Links:
 
 - no api for this command
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/explore)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/apps/fireStorm.csv)
 
 ## chifra slurp
 
@@ -72,7 +71,7 @@ referenced website for more information.
 
 ```[plaintext]
 Purpose:
-  Fetch data from Etherscan for any address.
+  Fetch data from Etherscan and other APIs for any address.
 
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
@@ -113,6 +112,5 @@ Links:
 
 - [api docs](/api/#operation/other-slurp)
 - [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/tools/ethslurp.csv)
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

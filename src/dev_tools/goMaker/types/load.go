@@ -10,11 +10,11 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-// LoadDefinitions loads the definitions from the data-models folder
-func LoadDefinitions() (CodeBase, error) {
+// LoadCodebase loads the two csv files and returns the codebase which
+// contains all the commands (each with its own set of options).
+func LoadCodebase() (CodeBase, error) {
 	cwd, _ := os.Getwd()
 	if !strings.HasSuffix(strings.Trim(cwd, "/"), "trueblocks-core") {
 		return CodeBase{}, fmt.Errorf("this program must be run from the ./trueblocks-core folder")
@@ -25,19 +25,6 @@ func LoadDefinitions() (CodeBase, error) {
 		return CodeBase{}, fmt.Errorf("the path %s does not exist", thePath)
 	}
 
-	codeBase, err := LoadCodebase(thePath)
-	if err != nil {
-		return CodeBase{}, err
-	}
-
-	return codeBase, nil
-}
-
-// LoadCodebase loads the two csv files and returns the codebase which
-// contains all the commands (each with its own options and endpoint).
-// This will also eventually carry the data types.
-func LoadCodebase(thePath string) (CodeBase, error) {
-	var cb CodeBase
 	baseTypes, err := LoadCsv[Structure, any](thePath+"base-types.csv", readStructure, nil)
 	if err != nil {
 		return CodeBase{}, err
@@ -48,11 +35,7 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 		return CodeBase{}, err
 	}
 
-	endpoints, err := LoadCsv[endpoint, any](thePath+"cmd-line-endpoints.csv", readCmdEndpoint, nil)
-	if err != nil {
-		return CodeBase{}, err
-	}
-
+	var cb CodeBase
 	structMap := make(map[string]Structure)
 	err = cb.LoadStructures(thePath+"classDefinitions/", structMap)
 	if err != nil {
@@ -64,7 +47,10 @@ func LoadCodebase(thePath string) (CodeBase, error) {
 		return cb, err
 	}
 
-	cb.FinishLoad(baseTypes, options, endpoints, structMap)
+	err = cb.FinishLoad(baseTypes, options, structMap)
+	if err != nil {
+		return cb, err
+	}
 
 	if len(cb.Commands) == 0 {
 		return cb, fmt.Errorf("no commands were found in %s", thePath)
@@ -147,13 +133,12 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 	return nil
 }
 
-func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, endpoints []endpoint, structMap map[string]Structure) {
+func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMap map[string]Structure) error {
 	cb.BaseTypes = baseTypes
 	for i := 0; i < len(cb.BaseTypes); i++ {
 		cb.BaseTypes[i].cbPtr = cb
 	}
 
-	theMap := make(map[string]Command)
 	producesMap := make(map[string][]Production)
 
 	// Create the structure array (and sort it by DocRoute) from the map
@@ -175,49 +160,47 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, endpoint
 	})
 
 	// Attach each option to its command (i.e. its route)
-	for _, opt := range options {
-		route := strings.ToLower(opt.ApiRoute)
+	theMap := make(map[string]Command)
+	for _, op := range options {
+		route := strings.ToLower(op.Route)
 		c := Command{
-			Options: append(theMap[route].Options, opt),
+			Options: append(theMap[route].Options, op),
 		}
+		val := ""
+		if len(op.Returns) > 0 {
+			val = Lower("|" + op.Route + "-" + op.LongName + "+" + op.Returns)
+		}
+		c.Returns = theMap[route].Returns + val
 		theMap[route] = c
 	}
 
 	// Enhance the commands with information from the endpoints data (could have been combined,
 	// but this way we can keep the data separate and still have a single command object)
-	for _, endpoint := range endpoints {
-		route := strings.ToLower(endpoint.ApiRoute)
+	for _, op := range options {
+		if op.OptionType != "group" && op.OptionType != "command" {
+			continue
+		}
+		route := strings.ToLower(op.Route)
 		if route == "" {
-			route = strings.ToLower(endpoint.Group)
+			route = strings.ToLower(op.Group)
 		}
 		sort.Slice(producesMap[route], func(i, j int) bool {
 			return producesMap[route][i].Value < producesMap[route][j].Value
 		})
 		c := Command{
-			Route:        endpoint.ApiRoute,
-			Group:        endpoint.Group,
-			Description:  endpoint.Description,
+			Route:        op.Route,
+			Group:        op.Group,
+			Description:  op.Description,
 			Options:      theMap[route].Options,
-			Num:          endpoint.Num,
-			Capabilities: endpoint.Capabilities,
-			Usage:        endpoint.Usage,
-			Folder:       endpoint.Folder,
-			Tool:         endpoint.Tool,
-			Summary:      endpoint.Summary,
+			Num:          op.Num,
+			Returns:      strings.Trim(theMap[op.Route].Returns, "|"),
+			Capabilities: op.Capabilities,
+			Usage:        op.Usage,
+			Folder:       op.Folder,
+			Summary:      op.Summary,
 			Productions:  producesMap[route],
 			cbPtr:        cb,
 		}
-
-		if endpoint.ApiRoute != c.Route {
-			logger.Fatal("route mismatch", endpoint.ApiRoute, c.Route)
-		}
-		if endpoint.Group != c.Group {
-			logger.Fatal("group mismatch", endpoint.Group, c.Group)
-		}
-		if endpoint.Description != c.Description {
-			logger.Fatal("description mismatch", endpoint.Description, c.Description)
-		}
-
 		theMap[route] = c
 	}
 
@@ -225,7 +208,9 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, endpoint
 	cb.Commands = make([]Command, 0, len(theMap))
 	for _, c := range theMap {
 		c.Clean()
-		cb.Commands = append(cb.Commands, c)
+		if len(c.Group) > 0 {
+			cb.Commands = append(cb.Commands, c)
+		}
 	}
 	sort.Slice(cb.Commands, func(i, j int) bool {
 		if cb.Commands[i].Route == cb.Commands[j].Route {
@@ -234,36 +219,10 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, endpoint
 		return cb.Commands[i].Route < cb.Commands[j].Route
 	})
 
+	current := file.AsciiFileToString("src/dev_tools/goMaker/generated/codebase.json")
 	file.StringToAsciiFile("src/dev_tools/goMaker/generated/codebase.json", cb.String())
-}
-
-type endpoint struct {
-	Num           int    `json:"num" csv:"num"`
-	Group         string `json:"group" csv:"group"`
-	IsVisible     bool   `json:"is_visible" csv:"is_visible"`
-	IsVisibleDocs bool   `json:"is_visible_docs" csv:"is_visible_docs"`
-	Folder        string `json:"folder" csv:"folder"`
-	ApiRoute      string `json:"api_route" csv:"api_route"`
-	Tool          string `json:"tool" csv:"tool"`
-	Summary       string `json:"summary" csv:"summary"`
-	Usage         string `json:"usage" csv:"usage"`
-	Capabilities  string `json:"capabilities" csv:"capabilities"`
-	Description   string `json:"description" csv:"description"`
-}
-
-func (c endpoint) Validate() bool {
-	return true
-}
-
-func readCmdEndpoint(ep *endpoint, data *any) (bool, error) {
-	ep.Description = strings.ReplaceAll(ep.Description, "&#44;", ",")
-	ep.Group = strings.Trim(ep.Group, wss)
-	ep.Folder = strings.Trim(ep.Folder, wss)
-	ep.ApiRoute = strings.Trim(ep.ApiRoute, wss)
-	ep.Tool = strings.Trim(ep.Tool, wss)
-	ep.Summary = strings.Trim(ep.Summary, wss)
-	ep.Usage = strings.Trim(ep.Usage, wss)
-	ep.Capabilities = strings.Trim(ep.Capabilities, wss)
-	ep.Description = strings.Trim(ep.Description, wss)
-	return true, nil
+	if current == cb.String() {
+		return nil
+	}
+	return fmt.Errorf("protective measure - not an error, but codebase.json has changed")
 }

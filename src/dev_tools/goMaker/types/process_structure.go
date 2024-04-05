@@ -42,7 +42,8 @@ func (s *Structure) ProcessFile(source string) error {
 	tmpl := file.AsciiFileToString(source)
 	result := s.executeTemplate(source, tmpl)
 	dest = strings.Replace(dest, "/src/apps/chifra/pkg/types/", "/"+s.GoOutput+"/types_", -1)
-	return codeWriter.WriteCode(dest, result)
+	_, err := codeWriter.WriteCode(dest, result)
+	return err
 }
 
 func grabRoute(dest string) string {

@@ -100,6 +100,8 @@ func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
 	}
 }
 
+// names-+name|names-addr+address|names-tags+tag
+
 // No enums
 // EXISTING_CODE
 // EXISTING_CODE

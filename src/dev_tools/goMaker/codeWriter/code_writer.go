@@ -14,13 +14,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func WriteCode(existingFn, newCode string) error {
+func WriteCode(existingFn, newCode string) (bool, error) {
 	if !file.FileExists(existingFn) {
 		if !strings.Contains(existingFn, "/generated/") {
 			logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
 		}
-		_, err := updateFile(existingFn, newCode)
-		return err
+		return updateFile(existingFn, newCode)
 	}
 
 	tempFn := existingFn + ".new"
@@ -35,14 +34,14 @@ func WriteCode(existingFn, newCode string) error {
 	// extract the EXISTING_CODE from the existing file
 	existingParts, err := extractExistingCode(existingFn)
 	if err != nil {
-		return fmt.Errorf("error extracting existing code: %v", err)
+		return false, fmt.Errorf("error extracting existing code: %v", err)
 	}
 
 	// apply the EXISTING_CODE to the new code, format the new code and
 	// write it back to the original file (potentially destroying it)
 	wasModified, err := applyTemplate(tempFn, existingParts)
 	if err != nil {
-		return fmt.Errorf("error applying template: %v %s", err, existingFn)
+		return false, fmt.Errorf("error applying template: %v %s", err, existingFn)
 	}
 
 	msg := LogMessage{
@@ -55,7 +54,7 @@ func WriteCode(existingFn, newCode string) error {
 	}
 	logChannel <- msg
 
-	return nil
+	return wasModified, nil
 }
 
 func extractExistingCode(fileName string) (map[int]string, error) {

@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	codeBase, err := types.LoadDefinitions()
+	codeBase, err := types.LoadCodebase()
 	if err != nil {
 		logger.Error(err)
 		os.Exit(1)

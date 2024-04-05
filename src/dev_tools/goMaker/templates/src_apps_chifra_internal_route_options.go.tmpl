@@ -13,39 +13,39 @@ import (
 	// EXISTING_CODE
 )
 
-// {{.Proper}}Options provides all command options for the chifra {{.Lower}} command.
-type {{.Proper}}Options struct {
+// {{toProper .Route}}Options provides all command options for the chifra {{toLower .Route}} command.
+type {{toProper .Route}}Options struct {
 {{.OptFields}}	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-var default{{.Proper}}Options = {{.Proper}}Options{
+var default{{toProper .Route}}Options = {{toProper .Route}}Options{
 	{{.GoDefs}}
 }
 
 // testLog is used only during testing to export the options for this test case.
-func (opts *{{.Proper}}Options) testLog() {
+func (opts *{{toProper .Route}}Options) testLog() {
 {{.TestLogs}}	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
 // String implements the Stringer interface
-func (opts *{{.Proper}}Options) String() string {
+func (opts *{{toProper .Route}}Options) String() string {
 	b, _ := json.MarshalIndent(opts, "", "  ")
 	return string(b)
 }
 
-// {{.Lower}}FinishParseApi finishes the parsing for server invocations. Returns a new {{.Proper}}Options.
-func {{.Lower}}FinishParseApi(w http.ResponseWriter, r *http.Request) *{{.Proper}}Options {
+// {{toLower .Route}}FinishParseApi finishes the parsing for server invocations. Returns a new {{toProper .Route}}Options.
+func {{toLower .Route}}FinishParseApi(w http.ResponseWriter, r *http.Request) *{{toProper .Route}}Options {
 	values := r.URL.Query()
 	if r.Header.Get("User-Agent") == "testRunner" {
 		values.Set("testRunner", "true")
 	}
-	return {{.Proper}}FinishParseInternal(w, values)
+	return {{toProper .Route}}FinishParseInternal(w, values)
 }
 
-func {{.Proper}}FinishParseInternal(w io.Writer, values url.Values) *{{.Proper}}Options {
-	copy := default{{.Proper}}Options
+func {{toProper .Route}}FinishParseInternal(w io.Writer, values url.Values) *{{toProper .Route}}Options {
+	copy := default{{toProper .Route}}Options
 	opts := &copy
 {{.DefaultsApi}}	for key, value := range values {
 		switch key {
@@ -63,8 +63,8 @@ func {{.Proper}}FinishParseInternal(w io.Writer, values url.Values) *{{.Proper}}
 	return opts
 }
 
-// {{.Lower}}FinishParse finishes the parsing for command line invocations. Returns a new {{.Proper}}Options.
-func {{.Lower}}FinishParse(args []string) *{{.Proper}}Options {
+// {{toLower .Route}}FinishParse finishes the parsing for command line invocations. Returns a new {{toProper .Route}}Options.
+func {{toLower .Route}}FinishParse(args []string) *{{toProper .Route}}Options {
 	// remove duplicates from args if any (not needed in api mode because the server does it).
 	dedup := map[string]int{}
 	if len(args) > 0 {
@@ -91,25 +91,25 @@ func {{.Lower}}FinishParse(args []string) *{{.Proper}}Options {
 	return opts
 }
 
-func GetOptions() *{{.Proper}}Options {
+func GetOptions() *{{toProper .Route}}Options {
 	// EXISTING_CODE
 	// EXISTING_CODE
-	return &default{{.Proper}}Options
+	return &default{{toProper .Route}}Options
 }
 
 func ResetOptions(testMode bool) {
 	// We want to keep writer between command file calls
 	w := GetOptions().Globals.Writer
-	default{{.Proper}}Options = {{.Proper}}Options{}
-	globals.SetDefaults(&default{{.Proper}}Options.Globals)
-	default{{.Proper}}Options.Globals.TestMode = testMode
-	default{{.Proper}}Options.Globals.Writer = w
+	default{{toProper .Route}}Options = {{toProper .Route}}Options{}
+	globals.SetDefaults(&default{{toProper .Route}}Options.Globals)
+	default{{toProper .Route}}Options.Globals.TestMode = testMode
+	default{{toProper .Route}}Options.Globals.Writer = w
 	{{.AddCaps}}	// EXISTING_CODE
 	// EXISTING_CODE
-	default{{.Proper}}Options.Globals.Caps = capabilities
+	default{{toProper .Route}}Options.Globals.Caps = capabilities
 }
 
-func (opts *{{.Proper}}Options) getCaches() (m map[string]bool) {
+func (opts *{{toProper .Route}}Options) getCaches() (m map[string]bool) {
 	// EXISTING_CODE
 	// EXISTING_CODE
 	return

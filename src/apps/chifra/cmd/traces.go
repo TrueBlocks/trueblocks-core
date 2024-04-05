@@ -25,7 +25,6 @@ import (
 // tracesCmd represents the traces command
 var tracesCmd = &cobra.Command{
 	Use:     usageTraces,
-	Short:   shortTraces,
 	Long:    longTraces,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("traces", func() *globals.GlobalOptions {
@@ -41,8 +40,6 @@ const usageTraces = `traces [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`
-
-const shortTraces = "retrieve traces for the given transaction(s)"
 
 const longTraces = `Purpose:
   Retrieve traces for the given transaction(s).`
@@ -63,9 +60,9 @@ func init() {
 
 	tracesCmd.Flags().SortFlags = false
 
-	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	tracesCmd.Flags().StringVarP(&tracesPkg.GetOptions().Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
-	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Count, "count", "U", false, "display only the number of traces for the transaction (fast)")
+	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Articulate, "articulate", "a", false, `articulate the retrieved data if ABIs can be found`)
+	tracesCmd.Flags().StringVarP(&tracesPkg.GetOptions().Filter, "filter", "f", "", `call the node's trace_filter routine with bang-separated filter`)
+	tracesCmd.Flags().BoolVarP(&tracesPkg.GetOptions().Count, "count", "U", false, `display only the number of traces for the transaction (fast)`)
 	globals.InitGlobals("traces", tracesCmd, &tracesPkg.GetOptions().Globals, capabilities)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))

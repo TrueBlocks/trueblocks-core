@@ -25,7 +25,6 @@ import (
 // tokensCmd represents the tokens command
 var tokensCmd = &cobra.Command{
 	Use:     usageTokens,
-	Short:   shortTokens,
 	Long:    longTokens,
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("tokens", func() *globals.GlobalOptions {
@@ -42,8 +41,6 @@ const usageTokens = `tokens [flags] <address> <address> [address...] [block...]
 Arguments:
   addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`
-
-const shortTokens = "retrieve token balance(s) for one or more addresses at given block(s)"
 
 const longTokens = `Purpose:
   Retrieve token balance(s) for one or more addresses at given block(s).`
@@ -66,9 +63,9 @@ func init() {
 
 	tokensCmd.Flags().StringSliceVarP(&tokensPkg.GetOptions().Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | some | all ]`)
-	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
-	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
-	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().NoZero, "no_zero", "z", false, "suppress the display of zero balance accounts")
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().ByAcct, "by_acct", "b", false, `consider each address an ERC20 token except the last, whose balance is reported for each token`)
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().Changes, "changes", "c", false, `only report a balance when it changes from one block to the next`)
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().NoZero, "no_zero", "z", false, `suppress the display of zero balance accounts`)
 	globals.InitGlobals("tokens", tokensCmd, &tokensPkg.GetOptions().Globals, capabilities)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))

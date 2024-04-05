@@ -11,22 +11,20 @@ import (
 )
 
 type Command struct {
-	Num          int          `json:"num" csv:"num"`
-	Route        string       `json:"route,omitempty" csv:"route"`
-	Group        string       `json:"group,omitempty" csv:"group"`
-	Description  string       `json:"description,omitempty" csv:"description"`
-	Options      []Option     `json:"options,omitempty" csv:"options"`
-	Capabilities string       `json:"capabilities,omitempty" csv:"capabilities"`
-	Usage        string       `json:"usage,omitempty" csv:"usage"`
-	Folder       string       `json:"folder,omitempty" csv:"folder"`
-	Tool         string       `json:"tool,omitempty" csv:"tool"`
-	Summary      string       `json:"summary,omitempty" csv:"summary"`
-	Notes        []string     `json:"notes,omitempty" csv:"notes"`
-	Aliases      []string     `json:"aliases,omitempty" csv:"aliases"`
-	Hidden       []string     `json:"hidden,omitempty" csv:"hidden"`
+	Num          int          `json:"num"`
+	Folder       string       `json:"folder,omitempty"`
+	Route        string       `json:"route,omitempty"`
+	Group        string       `json:"group,omitempty"`
+	Tool         string       `json:"tool,omitempty"`
+	Description  string       `json:"description,omitempty"`
+	Options      []Option     `json:"options,omitempty"`
+	Returns      string       `json:"returns,omitempty"`
+	Capabilities string       `json:"capabilities,omitempty"`
+	Usage        string       `json:"usage,omitempty"`
+	Summary      string       `json:"summary,omitempty"`
+	Notes        []string     `json:"notes,omitempty"`
+	Aliases      []string     `json:"aliases,omitempty"`
 	Productions  []Production `json:"productions,omitempty"`
-	Proper       string       `json:"proper,omitempty"`
-	Lower        string       `json:"lower,omitempty"`
 	cbPtr        *CodeBase    `json:"-"`
 }
 
@@ -70,9 +68,44 @@ func (c *Command) ProducedByList() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
+func (c *Command) HasPositionals() bool {
+	for _, op := range c.Options {
+		if op.IsPositional() {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *Command) HasNotes() bool {
+	return len(c.Notes) > 0
+}
+
+func (c *Command) HasExample() bool {
+	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".txt")
+}
+
+func (c *Command) HasHidden() bool {
+	for _, op := range c.Options {
+		if op.IsHidden() {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *Command) HasAddrs() bool {
+	for _, op := range c.Options {
+		if op.DataType == "<address>" || op.DataType == "list<addr>" {
+			return true
+		}
+	}
+	return false
+}
+
 func (c *Command) HasEnums() bool {
 	for _, op := range c.Options {
-		if op.IsEnum {
+		if op.IsEnum() {
 			return true
 		}
 	}
@@ -81,16 +114,14 @@ func (c *Command) HasEnums() bool {
 
 func (c *Command) Clean() {
 	cleaned := []Option{}
-	notes := []string{}
-	aliases := []string{}
-	hiddens := []string{}
+	c.Notes = []string{}
+	c.Aliases = []string{}
 	for _, op := range c.Options {
 		op.GoName = op.toGoName()
 		op.GoType = op.toGoType()
 		op.GoSdkName = op.toGoSdkName()
 		op.GoSdkType = op.toGoSdkType()
 		op.GoOptionsType = op.toGoOptionsType()
-		op.DefVal = strings.Replace(op.DefVal, "NOPOS", "utils.NOPOS", -1)
 		if strings.Contains(op.DataType, "enum[") {
 			v := strings.Replace(strings.Replace(strings.Split(op.DataType, "[")[1], "]", "", -1), ">", "", -1)
 			op.Enums = strings.Split(v, "|")
@@ -102,8 +133,6 @@ func (c *Command) Clean() {
 				}
 				op.Enums[i] = e
 			}
-			op.IsArray = strings.Contains(op.DataType, "list")
-			op.IsEnum = true
 			if strings.Contains(op.DataType, "list<enum") {
 				op.DataType = "list<enum>"
 			} else {
@@ -112,49 +141,30 @@ func (c *Command) Clean() {
 		}
 
 		if op.OptionType == "note" {
-			notes = append(notes, op.Description)
+			c.Notes = append(c.Notes, op.Description)
 		} else if op.OptionType == "alias" {
-			aliases = append(aliases, op.Description)
-		} else if op.OptionType == "description" {
+			c.Aliases = append(c.Aliases, op.Description)
+		} else if op.OptionType == "command" {
 			c.Description = op.Description
-		} else if op.IsHidden() {
-			op.cmdPtr = c
-			cleaned = append(cleaned, op)
-			hiddens = append(hiddens, op.LongName)
+		} else if op.OptionType == "group" {
+			// c.Description = op.Description
 		} else {
 			op.cmdPtr = c
 			cleaned = append(cleaned, op)
 		}
 	}
-	c.Proper = Proper(c.Route)
-	c.Lower = strings.ToLower(c.Route)
 	c.Options = cleaned
-	c.Notes = notes
-	c.Hidden = hiddens
-	c.Aliases = aliases
 }
 
-func (c *Command) Positionals() []string {
-	ret := []string{}
-	for _, op := range c.Options {
-		if op.IsPositional() {
-			req := ""
-			if op.IsRequired {
-				req = " (required)"
-			}
-			item := "\n  " + op.LongName + " - " + op.Description + req
-			if op.IsEnum {
-				e := "\n\tOne of "
-				if op.IsArray {
-					e = "\n\tOne or more of "
-				}
-				e += "[ " + strings.Join(op.Enums, " | ") + " ]"
-				item += e
-			}
-			ret = append(ret, item)
-		}
+func (op *Option) DescriptionEx() string {
+	d := op.Description
+	if op.IsRequired() {
+		d += " (required)"
 	}
-	return ret
+	if op.IsHidden() {
+		d += " (hidden)"
+	}
+	return d
 }
 
 var globals = []Option{
@@ -218,15 +228,6 @@ func (c *Command) FirstPositional() string {
 		}
 	}
 	return ""
-}
-
-func (c *Command) HasAddrs() bool {
-	for _, op := range c.Options {
-		if op.DataType == "<address>" || op.DataType == "list<addr>" {
-			return true
-		}
-	}
-	return false
 }
 
 func (c *Command) PyOptions() string {
@@ -297,10 +298,6 @@ func (c *Command) SdkFields() string {
 	return ret
 }
 
-// No unique tags found in apps_chifra_sdk_route.go
-// No unique tags found in apps_chifra_internal_route_output.go
-// No unique tags found in src_apps_chifra_cmd_route.go.go
-
 // AliasStr for tag {{.AliasStr}}}
 func (c *Command) AliasStr() string {
 	if len(c.Aliases) == 0 {
@@ -331,88 +328,13 @@ func (c *Command) AddCaps() string {
 	return strings.Replace(strings.Replace(str, "[{CAPS}]", strings.Join(ret, "\n"), -1), "[{ROUTE}]", c.Route, -1)
 }
 
-// HiddenStr for tag {{.HiddenStr}}
-func (c *Command) HiddenStr() string {
-	if len(c.Hidden) == 0 {
-		return ""
-	}
-	hiddens := []string{}
-	for _, hidden := range c.Hidden {
-		h := "\t_ = " + c.Route + "Cmd.Flags().MarkHidden(\"" + hidden + "\")"
-		hiddens = append(hiddens, "	"+h)
-	}
-	ret := `	if os.Getenv("TEST_MODE") != "true" {
-[{LIST}]
-	}
-`
-	return strings.Replace(ret, "[{LIST}]", strings.Join(hiddens, "\n"), -1)
-}
-
-// Long for tag {{.Long}}
-func (c *Command) Long() string {
-	return "Purpose:\n  " + c.Description
-}
-
-// NotesStr for tag {{.NotesStr}}
-func (c *Command) NotesStr() string {
-	if len(c.Notes) == 0 {
-		return ""
-	}
-
-	ret := `
-Notes:
-[{NOTES}]`
-	notes := []string{}
-	for _, note := range c.Notes {
-		note = strings.Replace(note, "`", "", -1)
-		note = strings.Replace(note, "&#39;", "'", -1)
-		notes = append(notes, "  - "+note)
-	}
-	return strings.Replace(ret, "[{NOTES}]", strings.Join(notes, "\n"), -1)
-}
-
-// OptDef for tag {{.OptDef}}
-func (c *Command) OptDef() string {
-	return ""
-}
-
-// SetOptions for tag {{.SetOptions}}
-func (c *Command) SetOptions() string {
-	options := []string{}
-	for _, op := range c.Options {
-		options = append(options, op.SetOption())
-	}
-	return strings.Join(options, "\n") + "\n"
-}
-
-// Short for tag {{.Short}}"
-func (c *Command) Short() string {
-	return FirstLower(strings.Replace(c.Description, ".", "", -1))
-}
-
-// UsageStr for tag {{.UsageStr}}
-func (c *Command) UsageStr() string {
-	ret := c.Route + " " + c.Usage
-	if len(c.Positionals()) > 0 {
-		ret += `
-
-Arguments:`
-	}
-	return ret
-}
-
-// Use for tag {{.Use}}
-func (c *Command) Use() string {
-	return strings.Join(c.Positionals(), "")
-}
-
 // src_apps_chifra_internal_route_options.go
 // DefaultsApi for tag {{.DefaultsApi}}
 func (c *Command) DefaultsApi() string {
 	ret := []string{}
 	hasConfig := false
 	for _, op := range c.Options {
-		hasConfig = hasConfig || op.Generate == "config"
+		hasConfig = hasConfig || op.IsConfig()
 		v := op.DefaultApi()
 		if len(v) > 0 {
 			ret = append(ret, v)
@@ -429,20 +351,16 @@ func (c *Command) DefaultsApi() string {
 
 // EnsConvert1 for tag {{.EnsConvert1}}
 func (c *Command) EnsConvert1() string {
-	if !c.HasAddrs() {
-		return ""
-	}
 	ret := []string{}
-	for _, op := range c.Options {
-		if op.IsSpecialAddr() {
-			v := op.EnsConvert()
-			if len(v) > 0 {
-				ret = append(ret, v)
+	if c.HasAddrs() {
+		for _, op := range c.Options {
+			if op.IsSpecialAddr() {
+				v := op.EnsConvert()
+				if len(v) > 0 {
+					ret = append(ret, v)
+				}
 			}
 		}
-	}
-	if len(ret) == 0 {
-		return ""
 	}
 	return strings.Join(ret, "\n") + "\n"
 }
@@ -500,7 +418,7 @@ func (c *Command) OptFields() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (c *Command) Returns() string {
+func (c *Command) ReturnType() string {
 	switch c.Route {
 	case "blocks":
 		return "types.SimpleBlock[string]"
@@ -573,16 +491,16 @@ func (c *Command) TestLogs() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (c *Command) PkgDoc() string {
+func (c *Command) PackageComments() string {
 	docsPath := "src/dev_tools/goMaker/templates/readme-intros/" + c.Route + ".md"
-	docsPath = strings.ReplaceAll(docsPath, " ", "")
-	contents := file.AsciiFileToString(docsPath)
-	contents = strings.ReplaceAll(contents, "`", "")
-	contents = strings.ReplaceAll(contents, "\n", " ")
-	contents = strings.ReplaceAll(contents, "  ", " ")
-	contents = strings.ReplaceAll(contents, "{{.Route}}", c.Route)
-	sentences := strings.Split(contents, ".")
-	return "// " + strings.Join(sentences, ".")
+	lines := file.AsciiFileToLines(docsPath)
+
+	ret := []string{"// " + c.Route + "Pkg implements the chifra " + c.Route + " command.\n//"}
+	for i := 0; i < len(lines); i++ {
+		lines[i] = strings.ReplaceAll(lines[i], "{{.Route}}", c.Route)
+		ret = append(ret, "// "+strings.ReplaceAll(lines[i], "`", ""))
+	}
+	return strings.Join(ret, "\n")
 }
 
 func (c *Command) GroupName() string {
@@ -591,10 +509,6 @@ func (c *Command) GroupName() string {
 
 func (c *Command) IsRoute() bool {
 	return len(c.Route) > 0 && c.Route != "daemon" && c.Route != "explore"
-}
-
-func (c *Command) HasExample() bool {
-	return file.FileExists("./src/dev_tools/goMaker/templates/api/examples/" + c.Route + ".txt")
 }
 
 func (c *Command) Example() string {
@@ -644,18 +558,15 @@ func (c *Command) HelpLinks() string {
 	if c.Route == "daemon" {
 		tmplName += "1"
 		tmpl = `- no api for this command
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
-- no tests for this command`
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})`
 	} else if c.Route == "explore" {
 		tmplName += "2"
 		tmpl = `- no api for this command
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Folder}}/{{.Tool}}.csv)`
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})`
 	} else {
 		tmplName += "3"
 		tmpl = `- [api docs](/api/#operation/{{.GroupName}}-{{.Route}})
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})
-- [tests](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner/testCases/{{.Folder}}/{{.Tool}}.csv)`
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/{{.Route}})`
 	}
 	return c.executeTemplate(tmplName, tmpl)
 }
@@ -682,10 +593,6 @@ func (c *Command) executeTemplate(name, tmplCode string) string {
 
 func (c *Command) GroupTitle() string {
 	return FirstUpper(Lower(c.Group))
-}
-
-func (c *Command) GroupWeight() int {
-	return c.Num * 1000
 }
 
 func (c *Command) GroupIntro() string {

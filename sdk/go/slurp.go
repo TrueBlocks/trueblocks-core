@@ -111,6 +111,8 @@ func (opts *SlurpOptions) Query() ([]types.SimpleSlurp, *rpc.MetaData, error) {
 	}
 }
 
+// slurp-+slurp
+
 type SlurpTypes int
 
 const (

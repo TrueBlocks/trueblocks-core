@@ -22,7 +22,8 @@ func (cb *CodeBase) ProcessFile(source string) error {
 
 	tmpl := file.AsciiFileToString(source)
 	result := cb.executeTemplate(source, tmpl)
-	return codeWriter.WriteCode(convertToDestPath(source, "", "", ""), result)
+	_, err := codeWriter.WriteCode(convertToDestPath(source, "", "", ""), result)
+	return err
 }
 
 // ProcessGroupFile processes a single file, applying the template to it and
@@ -40,5 +41,6 @@ func (cb *CodeBase) ProcessGroupFile(source, group string) error {
 	dest := convertToDestPath(source, "", "", group)
 	tmpl = strings.Replace(tmpl, "[{GROUP}]", group, -1)
 	result := cb.executeTemplate(source+group, tmpl)
-	return codeWriter.WriteCode(dest, result)
+	_, err := codeWriter.WriteCode(dest, result)
+	return err
 }

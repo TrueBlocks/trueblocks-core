@@ -96,6 +96,8 @@ func (opts *StatusOptions) Query() ([]bool, *rpc.MetaData, error) {
 	}
 }
 
+// status-+status|status-modes+cacheitem|status-chains+chain
+
 type StatusModes int
 
 const (

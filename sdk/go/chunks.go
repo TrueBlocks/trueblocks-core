@@ -112,6 +112,8 @@ func (opts *ChunksOptions) Query() ([]bool, *rpc.MetaData, error) {
 	}
 }
 
+// chunks-mode+chunk[type]|chunks-pin+ipfspin
+
 type ChunksMode int
 
 const (

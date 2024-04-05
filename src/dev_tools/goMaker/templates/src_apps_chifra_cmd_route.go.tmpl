@@ -13,35 +13,45 @@ package cmd
 
 // {{.Route}}Cmd represents the {{.Route}} command
 var {{.Route}}Cmd = &cobra.Command{
-	Use:     usage{{.Proper}},
-	Short:   short{{.Proper}},
-	Long:    long{{.Proper}},
+	Use:     usage{{toProper .Route}},
+	Long:    long{{toProper .Route}},
 	Version: versionText,
 	PreRun: outputHelpers.PreRunWithJsonWriter("{{.Route}}", func() *globals.GlobalOptions {
 		return &{{.Route}}Pkg.GetOptions().Globals
 	}),
-	RunE: file.RunWithFileSupport("{{.Route}}", {{.Route}}Pkg.Run{{.Proper}}, {{.Route}}Pkg.ResetOptions),
+	RunE: file.RunWithFileSupport("{{.Route}}", {{.Route}}Pkg.Run{{toProper .Route}}, {{.Route}}Pkg.ResetOptions),
 	PostRun: outputHelpers.PostRunWithJsonWriter(func() *globals.GlobalOptions {
 		return &{{.Route}}Pkg.GetOptions().Globals
 	}),
 {{.AliasStr}}}
 
-const usage{{.Proper}} = `{{.UsageStr}}{{.Use}}`
+const usage{{toProper .Route}} = `{{.Route}} {{.Usage}}{{if .HasPositionals}}
 
-const short{{.Proper}} = "{{.Short}}"
+Arguments:{{range .Options}}{{if .IsPositional}}
+  {{.LongName}} - {{.DescriptionEx}}{{if .IsEnum}}
+	{{.EnumChoices}}{{end}}{{end}}{{end}}{{end}}`
 
-const long{{.Proper}} = `{{.Long}}`
+const long{{toProper .Route}} = `Purpose:
+  {{.Description}}`
 
-const notes{{.Proper}} = `{{.NotesStr}}`
+const notes{{toProper .Route}} = `{{if .HasNotes}}
+Notes:{{range .Notes}}
+  - {{.}}{{end}}{{end}}`
 
-{{.OptDef}}func init() {
+func init() {
 	{{.AddCaps}}
 
 	{{.Route}}Cmd.Flags().SortFlags = false
 
-{{.SetOptions}}{{.HiddenStr}}	globals.InitGlobals("{{.Route}}", {{.Route}}Cmd, &{{.Route}}Pkg.GetOptions().Globals, capabilities)
+{{range .Options}}{{if .IsFlag}}
+{{.Route}}Cmd.Flags().{{.CobraType}}VarP(&{{.Route}}Pkg.GetOptions().{{.GoName}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, `{{.DescriptionEx}}{{if .IsEnum}}
+{{.EnumChoices}}{{end}}`){{end}}{{end}}
+{{if .HasHidden}}	if os.Getenv("TEST_MODE") != "true" {
+{{range .Options}}{{if .IsHidden}}	_ = {{.Route}}Cmd.Flags().MarkHidden("{{.LongName}}")
+{{end}}{{end}}	}
+{{end}}	globals.InitGlobals("{{.Route}}", {{.Route}}Cmd, &{{.Route}}Pkg.GetOptions().Globals, capabilities)
 
-	{{.Route}}Cmd.SetUsageTemplate(UsageWithNotes(notes{{.Proper}}))
+	{{.Route}}Cmd.SetUsageTemplate(UsageWithNotes(notes{{toProper .Route}}))
 	{{.Route}}Cmd.SetOut(os.Stderr)
 
 	// EXISTING_CODE

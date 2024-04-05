@@ -105,6 +105,8 @@ func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
 	}
 }
 
+// state-+state|state-call+result
+
 type StateParts int
 
 const (

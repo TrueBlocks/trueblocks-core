@@ -122,6 +122,8 @@ func (opts *ExportOptions) Query() ([]bool, *rpc.MetaData, error) {
 	}
 }
 
+// export-+transaction|export-appearances+appearance|export-receipts+receipt|export-logs+log|export-traces+trace|export-neighbors+neighbor|export-accounting+transaction|export-statements+statement|export-balances+state|export-withdrawals+withdrawal|export-count+appearancecount
+
 type ExportFlow int
 
 const (

@@ -93,6 +93,8 @@ func (opts *MonitorsOptions) Query() ([]bool, *rpc.MetaData, error) {
 	}
 }
 
+// monitors-clean+monitorclean|monitors-list+monitor
+
 // No enums
 // EXISTING_CODE
 // EXISTING_CODE

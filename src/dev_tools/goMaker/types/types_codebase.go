@@ -116,6 +116,10 @@ func (cb *CodeBase) ModelList() []Structure {
 func (cb *CodeBase) CommandList() []Command {
 	theMap := map[string]Command{}
 	for _, c := range cb.Commands {
+		if theMap[c.GroupName()].Num != 0 {
+			// first in wins
+			c.Num = theMap[c.GroupName()].Num
+		}
 		theMap[c.GroupName()] = c
 	}
 
