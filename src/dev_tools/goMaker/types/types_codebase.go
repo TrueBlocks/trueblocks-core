@@ -79,14 +79,16 @@ func (cb *CodeBase) TagSummary() string {
 		return cb.Commands[i].Num < cb.Commands[j].Num
 	})
 
+	cur := ""
 	ret := []string{}
 	for _, c := range cb.Commands {
-		if c.Route == "" {
+		if cur != c.Group {
 			tmplName := "tags"
 			tmpl := `  - name: {{.Group}}
     description: {{.Description}}`
 			ret = append(ret, c.executeTemplate(tmplName, tmpl))
 		}
+		cur = c.Group
 	}
 	return strings.Join(ret, "\n")
 }

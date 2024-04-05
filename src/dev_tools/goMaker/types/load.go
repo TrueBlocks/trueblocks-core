@@ -141,13 +141,13 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 		cb.BaseTypes[i].cbPtr = cb
 	}
 
-	producesMap := make(map[string][]Production)
+	producesMap := make(map[string][]*Structure)
 
 	// Create the structure array (and sort it by DocRoute) from the map
 	cb.Structures = make([]Structure, 0, len(structMap))
 	for _, st := range structMap {
 		for _, route := range st.Producers { // ProducedBy lists the routes that produce this structure
-			producesMap[route] = append(producesMap[route], Production{st.Class})
+			producesMap[route] = append(producesMap[route], &st)
 		}
 		st.cbPtr = cb
 		for i := 0; i < len(st.Members); i++ {
@@ -177,31 +177,35 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 	// Enhance the commands with information from the endpoints data (could have been combined,
 	// but this way we can keep the data separate and still have a single command object)
 	for _, op := range options {
-		if op.OptionType != "group" && op.OptionType != "command" {
-			continue
+		if op.OptionType == "group" {
+			c := Command{
+				Group:       op.Group,
+				Description: op.Description,
+				Num:         op.Num,
+				Summary:     op.Summary,
+				cbPtr:       cb,
+			}
+			theMap[op.Group] = c
+		} else if op.OptionType == "command" {
+			sort.Slice(producesMap[op.Route], func(i, j int) bool {
+				return producesMap[op.Route][i].Class < producesMap[op.Route][j].Class
+			})
+			c := Command{
+				Route:        op.Route,
+				Group:        op.Group,
+				Description:  op.Description,
+				Options:      theMap[op.Route].Options,
+				Num:          op.Num,
+				Returns:      strings.Trim(theMap[op.Route].Returns, "|"),
+				Capabilities: op.Capabilities,
+				Usage:        op.Usage,
+				Folder:       op.Folder,
+				Summary:      op.Summary,
+				Productions:  producesMap[op.Route],
+				cbPtr:        cb,
+			}
+			theMap[op.Route] = c
 		}
-		route := strings.ToLower(op.Route)
-		if route == "" {
-			route = strings.ToLower(op.Group)
-		}
-		sort.Slice(producesMap[route], func(i, j int) bool {
-			return producesMap[route][i].Class < producesMap[route][j].Class
-		})
-		c := Command{
-			Route:        op.Route,
-			Group:        op.Group,
-			Description:  op.Description,
-			Options:      theMap[route].Options,
-			Num:          op.Num,
-			Returns:      strings.Trim(theMap[op.Route].Returns, "|"),
-			Capabilities: op.Capabilities,
-			Usage:        op.Usage,
-			Folder:       op.Folder,
-			Summary:      op.Summary,
-			Productions:  producesMap[route],
-			cbPtr:        cb,
-		}
-		theMap[route] = c
 	}
 
 	// Create a command array from the map and sort it by route within group

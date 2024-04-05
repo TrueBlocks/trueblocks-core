@@ -24,7 +24,7 @@ type Command struct {
 	Summary      string       `json:"summary,omitempty"`
 	Notes        []string     `json:"notes,omitempty"`
 	Aliases      []string     `json:"aliases,omitempty"`
-	Productions  []Production `json:"productions,omitempty"`
+	Productions  []*Structure `json:"productions,omitempty"`
 	cbPtr        *CodeBase    `json:"-"`
 }
 
