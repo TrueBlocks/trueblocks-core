@@ -526,7 +526,7 @@ func (c *Command) HelpIntro() string {
 	thePath := "src/dev_tools/goMaker/templates/readme-intros/" + c.ReadmeName()
 	tmplName := "helpIntro" + c.ReadmeName()
 	tmpl := file.AsciiFileToString(thePath)
-	return strings.Trim(c.executeTemplate(tmplName, tmpl), "\r\n\t")
+	return strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
 }
 
 func (c *Command) HelpText() string {
@@ -578,7 +578,7 @@ func (c *Command) HelpNotes() string {
 	if file.FileExists(thePath) {
 		tmplName := "Notes" + c.ReadmeName()
 		tmpl := file.AsciiFileToString(thePath)
-		return "\n\n" + strings.Trim(c.executeTemplate(tmplName, tmpl), "\r\n\t")
+		return "\n\n" + strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
 	}
 	return ""
 }

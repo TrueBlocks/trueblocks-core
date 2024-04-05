@@ -78,7 +78,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
 
     for (auto item : cleaned_) {
         CStringArray parts;
-        string_q arg = substitute(substituteAny(item, "\n\r\t", " "), ",", " ");
+        string_q arg = substitute(substituteAny(item, "\r\n\t", " "), ",", " ");
         explode(parts, arg, ' ');
         for (auto part : parts) {
             if (!part.empty()) {

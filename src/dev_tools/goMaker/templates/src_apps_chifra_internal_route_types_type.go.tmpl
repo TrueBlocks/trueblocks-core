@@ -36,7 +36,7 @@ func (s *simple{{.Class}}) Model(chain, format string, verbose bool, extraOption
 }
 
 {{if .HasTimestamp}} 
-func (s *simple{{.ModelName}}) Date() string {
+func (s *simple{{.ModelName ""}}) Date() string {
 	return utils.FormattedDate(s.Timestamp)
 }
 {{end}}
