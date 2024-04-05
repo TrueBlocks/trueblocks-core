@@ -36,7 +36,7 @@ func (c *Command) ProducedByDescr() string {
 	g := c.GroupName()
 	types := []string{}
 	for i, production := range c.Productions {
-		lowerProd := strings.ToLower(production.Value)
+		lowerProd := strings.ToLower(production.Class)
 		groupProd := c.TypeToGroup(lowerProd)
 		if i > 0 {
 			if i == len(c.Productions)-1 {
@@ -45,8 +45,8 @@ func (c *Command) ProducedByDescr() string {
 				types = append(types, ", ")
 			}
 		}
-		tmpl := fmt.Sprintf("<a href=\"/data-model/%s/#%s\">%s</a>", groupProd, lowerProd, production.Value)
-		types = append(types, c.executeTemplate("produces"+production.Value, tmpl))
+		tmpl := fmt.Sprintf("<a href=\"/data-model/%s/#%s\">%s</a>", groupProd, lowerProd, production.Class)
+		types = append(types, c.executeTemplate("produces"+production.Class, tmpl))
 	}
 	tmpl := fmt.Sprintf(" Corresponds to the <a href=\"/chifra/%s/#chifra-{{.Route}}\">chifra {{.Route}}</a> command line.", g)
 	return "Produces " + strings.Join(types, "") + " data." + c.executeTemplate("corresponds"+c.Route, tmpl)
@@ -55,12 +55,12 @@ func (c *Command) ProducedByDescr() string {
 func (c *Command) ProducedByList() string {
 	ret := []string{}
 	if len(c.Productions) == 1 {
-		camel := CamelCase(c.Productions[0].Value)
+		camel := CamelCase(c.Productions[0].Class)
 		ret = []string{fmt.Sprintf("                      $ref: \"#/components/schemas/%s\"", camel)}
 	} else {
 		ret = append(ret, "                      oneOf:")
 		for _, production := range c.Productions {
-			camel := CamelCase(production.Value)
+			camel := CamelCase(production.Class)
 			s := fmt.Sprintf("                        - $ref: \"#/components/schemas/%s\"", camel)
 			ret = append(ret, s)
 		}
@@ -545,7 +545,7 @@ func (c *Command) HelpDataModels() string {
 		if i == 0 {
 			ret = []string{}
 		}
-		lowerProd := strings.ToLower(production.Value)
+		lowerProd := strings.ToLower(production.Class)
 		groupProd := c.TypeToGroup(lowerProd)
 		ret = append(ret, "- ["+lowerProd+"](/data-model/"+groupProd+"/#"+lowerProd+")")
 	}

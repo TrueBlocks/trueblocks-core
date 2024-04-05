@@ -28,13 +28,11 @@ func (s *Structure) ProcessFile(source string) error {
 	isDestInternal := strings.Contains(s.GoOutput, "internal")
 
 	if !isSourceGenerated && (isDestInternal && !isSourceInternal || isSourceInternal && !isDestInternal) {
-		// fmt.Println("Mismatch", s.Class)
 		return nil
 	} else if isDestInternal {
 		s.Route = grabRoute(s.GoOutput)
 		dest = convertToDestPath(source, s.Route, s.Name(), "")
 		dest = strings.Replace(dest, "/types/", "/types_", -1)
-		// return nil
 	} else {
 		dest = convertToDestPath(source, "", s.Name(), "")
 	}
@@ -56,5 +54,7 @@ func grabRoute(dest string) string {
 
 func readStructure(st *Structure, data *any) (bool, error) {
 	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
+	st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
+	st.Producers = strings.Split(st.ProducedBy, ",")
 	return true, nil
 }

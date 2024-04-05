@@ -1,5 +1,5 @@
 package types
 
 type Production struct {
-	Value string `json:"value"`
+	Class string `json:"value"`
 }

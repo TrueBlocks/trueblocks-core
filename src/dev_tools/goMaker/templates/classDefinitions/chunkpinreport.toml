@@ -1,5 +1,5 @@
 [settings]
-    class = "CChunkPinReport"
+    class = "ChunkPinReport"
     doc_group = "04-Admin"
     doc_descr = "a JSON object containing the results of pinning the Unchained Index"
     doc_route = "436-chunkPinReport"

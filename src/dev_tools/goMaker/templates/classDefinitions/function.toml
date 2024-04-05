@@ -1,5 +1,5 @@
 [settings]
-    class = "CFunction"
+    class = "Function"
     contained_by = "abi, log, result, slurp, trace, transaction"
     doc_group = "05-Other"
     doc_descr = "a human-readable representation of a Solidity function call or event"

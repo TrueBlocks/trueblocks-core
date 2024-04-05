@@ -198,7 +198,6 @@ The follow values are defined for each classDefinition file
 |              |                                                                    |
 | [settings]   |                                                                    |
 | class        | The name of the C++ class                                          |
-| base_class   | The baseclass for class<br />CBaseNode                             |
 | fields       | The name of the file holding the field definitions for the class   |
 | includes     | The include files for the class's header file                      |
 | cpp_includes | The include files for the class's c++ file                         |

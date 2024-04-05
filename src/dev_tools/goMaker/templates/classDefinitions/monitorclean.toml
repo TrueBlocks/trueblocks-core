@@ -1,5 +1,5 @@
 [settings]
-    class = "CMonitorClean"
+    class = "MonitorClean"
     doc_group = "04-Admin"
     doc_descr = "report on cleaning dups out of monitors"
     doc_route = "427-monitorClean"

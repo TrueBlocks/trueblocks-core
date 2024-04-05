@@ -1,5 +1,5 @@
 [settings]
-    class = "CWithdrawal"
+    class = "Withdrawal"
     contained_by = "block"
     doc_group = "02-Chain Data"
     doc_descr = "withdrawal record for post-Shanghai withdrawals from the consensus layer"

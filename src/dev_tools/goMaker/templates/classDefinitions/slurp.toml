@@ -1,5 +1,5 @@
 [settings]
-    class = "CSlurp"
+    class = "Slurp"
     doc_group = "05-Other"
     doc_descr = "transaction data as returned from by Etherscan"
     doc_route = "512-slurp"

@@ -37,7 +37,7 @@ func LoadCodebase() (CodeBase, error) {
 
 	var cb CodeBase
 	structMap := make(map[string]Structure)
-	err = cb.LoadStructures(thePath+"classDefinitions/", structMap)
+	err = cb.LoadStructures(thePath+"classDefinitions/", readStructure, structMap)
 	if err != nil {
 		return cb, err
 	}
@@ -63,34 +63,36 @@ func LoadCodebase() (CodeBase, error) {
 	return cb, nil
 }
 
-func (cb *CodeBase) LoadStructures(thePath string, structMap map[string]Structure) error {
+func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *any) (bool, error), structMap map[string]Structure) error {
 	if err := filepath.Walk(thePath, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() {
-			if strings.HasSuffix(path, ".toml") {
-				class := strings.TrimSuffix(filepath.Base(path), ".toml")
-				type S struct {
-					Settings Structure `toml:"settings"`
-				}
-				var f S
-				err := config.ReadToml(path, &f)
-				if err != nil {
-					return err
-				}
-				if f.Settings.Class[0] == 'C' {
-					f.Settings.Class = f.Settings.Class[1:]
-				}
-				if f.Settings.GoOutput == "documentation only" {
-					f.Settings.GoOutput = "<docs_only>"
-					f.Settings.DisableGo = true
-				}
-				mapKey := strings.ToLower(class)
-				structMap[mapKey] = f.Settings
-			}
+
+		if info.IsDir() || !strings.HasSuffix(path, ".toml") {
+			return nil
+		}
+
+		class := strings.TrimSuffix(filepath.Base(path), ".toml")
+		type Tmp struct {
+			Settings Structure `toml:"settings"` // don't change this, it won't parse
+		}
+
+		var f Tmp
+		err = config.ReadToml(path, &f)
+		if err != nil {
+			return err
+		}
+		ok, err := callBack(&f.Settings, nil)
+		if err != nil {
+			return err
+		}
+		if ok {
+			mapKey := strings.ToLower(class)
+			structMap[mapKey] = f.Settings
 		}
 		return nil
+
 	}); err != nil {
 		return err
 	}
@@ -103,28 +105,28 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() {
-			if strings.HasSuffix(path, ".csv") {
-				class := strings.TrimSuffix(filepath.Base(path), ".csv")
-				mapKey := strings.ToLower(class)
-				structure := structMap[mapKey]
-				var err error
-				structure.Members, err = LoadCsv[Member, any](path, readMember, nil)
-				if err != nil {
-					return err
-				}
-				for i := 0; i < len(structure.Members); i++ {
-					structure.Members[i].Num = (i + 1)
-				}
-				sort.Slice(structure.Members, func(i, j int) bool {
-					if structure.Members[i].DocOrder != 0 && (structure.Members[i].DocOrder != structure.Members[j].DocOrder) {
-						return structure.Members[i].DocOrder < structure.Members[j].DocOrder
-					}
-					return structure.Members[i].Num < structure.Members[j].Num
-				})
-				structMap[mapKey] = structure
-			}
+
+		if info.IsDir() || !strings.HasSuffix(path, ".csv") {
+			return nil
 		}
+
+		class := strings.TrimSuffix(filepath.Base(path), ".csv")
+		mapKey := strings.ToLower(class)
+		structure := structMap[mapKey]
+		structure.Members, err = LoadCsv[Member, any](path, readMember, nil)
+		if err != nil {
+			return err
+		}
+		for i := 0; i < len(structure.Members); i++ {
+			structure.Members[i].Num = (i + 1)
+		}
+		sort.Slice(structure.Members, func(i, j int) bool {
+			if structure.Members[i].DocOrder != 0 && (structure.Members[i].DocOrder != structure.Members[j].DocOrder) {
+				return structure.Members[i].DocOrder < structure.Members[j].DocOrder
+			}
+			return structure.Members[i].Num < structure.Members[j].Num
+		})
+		structMap[mapKey] = structure
 		return nil
 	}); err != nil {
 		return err
@@ -144,10 +146,8 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 	// Create the structure array (and sort it by DocRoute) from the map
 	cb.Structures = make([]Structure, 0, len(structMap))
 	for _, st := range structMap {
-		st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
-		st.Producers = strings.Split(st.ProducedBy, ",")
-		for _, producer := range st.Producers {
-			producesMap[producer] = append(producesMap[producer], Production{st.Class})
+		for _, route := range st.Producers { // ProducedBy lists the routes that produce this structure
+			producesMap[route] = append(producesMap[route], Production{st.Class})
 		}
 		st.cbPtr = cb
 		for i := 0; i < len(st.Members); i++ {
@@ -185,7 +185,7 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 			route = strings.ToLower(op.Group)
 		}
 		sort.Slice(producesMap[route], func(i, j int) bool {
-			return producesMap[route][i].Value < producesMap[route][j].Value
+			return producesMap[route][i].Class < producesMap[route][j].Class
 		})
 		c := Command{
 			Route:        op.Route,

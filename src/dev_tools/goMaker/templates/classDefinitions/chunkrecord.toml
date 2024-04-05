@@ -1,5 +1,5 @@
 [settings]
-    class = "CChunkRecord"
+    class = "ChunkRecord"
     contained_by = "manifest"
     doc_group = "04-Admin"
     doc_descr = "a single record in the manifest detailing the IPFS hases and file sizes for each bloom filter and index chunk"

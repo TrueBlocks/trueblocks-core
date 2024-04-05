@@ -1,5 +1,5 @@
 [settings]
-    class = "CReceipt"
+    class = "Receipt"
     contained_by = "transaction"
     doc_group = "02-Chain Data"
     doc_descr = "receipt data as returned from the RPC (with slight enhancements)"

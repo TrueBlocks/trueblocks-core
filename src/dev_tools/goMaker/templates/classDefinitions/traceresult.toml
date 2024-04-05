@@ -1,5 +1,5 @@
 [settings]
-    class = "CTraceResult"
+    class = "TraceResult"
     contained_by = "trace"
     doc_group = "02-Chain Data"
     doc_descr = "trace result data as returned from the RPC (with slight enhancements)"

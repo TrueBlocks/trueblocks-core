@@ -1,5 +1,5 @@
 [settings]
-    class = "CChain"
+    class = "Chain"
     contained_by = "status"
     doc_group = "04-Admin"
     doc_descr = "a configuration item carrying information about a single chain"

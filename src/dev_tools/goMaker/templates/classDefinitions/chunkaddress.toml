@@ -1,5 +1,5 @@
 [settings]
-    class = "CChunkAddress"
+    class = "ChunkAddress"
     doc_group = "04-Admin"
     doc_descr = "internal-use only data model detailing a single address record in the address table of an index chunk"
     doc_route = "418-chunkAddress"
