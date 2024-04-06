@@ -9,6 +9,6 @@ func GetMetaData() (*rpc.MetaData, error) {
 		BlockIds: []string{"1"},
 		Hashes:   true,
 	}
-	_, meta, err := unused.Query()
+	_, meta, err := unused.Blocks()
 	return meta, err
 }

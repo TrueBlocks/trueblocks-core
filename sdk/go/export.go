@@ -108,18 +108,25 @@ func GetExportOptions(args []string) (*ExportOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ExportOptions) Query() ([]bool, *rpc.MetaData, error) {
+type ExportReturnTypes = bool
+
+func queryexport[T ExportReturnTypes](opts *ExportOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ExportBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Export implements the chifra export command for the SDK.
+func (opts *ExportOptions) Export() ([]bool, *rpc.MetaData, error) {
+	return queryexport[bool](opts)
 }
 
 // export-+transaction|export-appearances+appearance|export-receipts+receipt|export-logs+log|export-traces+trace|export-neighbors+neighbor|export-accounting+transaction|export-statements+statement|export-balances+state|export-withdrawals+withdrawal|export-count+appearancecount

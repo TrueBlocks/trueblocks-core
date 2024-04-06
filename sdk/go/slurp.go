@@ -97,13 +97,15 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 	return &opts, nil
 }
 
-func (opts *SlurpOptions) Query() ([]types.SimpleSlurp, *rpc.MetaData, error) {
+type SlurpReturnTypes = types.SimpleSlurp
+
+func queryslurp[T SlurpReturnTypes](opts *SlurpOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.SlurpBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleSlurp]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
@@ -111,7 +113,10 @@ func (opts *SlurpOptions) Query() ([]types.SimpleSlurp, *rpc.MetaData, error) {
 	}
 }
 
-// slurp-+slurp
+// Slurp implements the chifra slurp command for the SDK.
+func (opts *SlurpOptions) Slurp() ([]types.SimpleSlurp, *rpc.MetaData, error) {
+	return queryslurp[types.SimpleSlurp](opts)
+}
 
 type SlurpTypes int
 

@@ -83,18 +83,25 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 	return &opts, nil
 }
 
-func (opts *TokensOptions) Query() ([]bool, *rpc.MetaData, error) {
+type TokensReturnTypes = bool
+
+func querytokens[T TokensReturnTypes](opts *TokensOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TokensBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Tokens implements the chifra tokens command for the SDK.
+func (opts *TokensOptions) Tokens() ([]bool, *rpc.MetaData, error) {
+	return querytokens[bool](opts)
 }
 
 // tokens-+token

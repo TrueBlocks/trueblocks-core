@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	abis "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -79,13 +80,15 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 	return &opts, nil
 }
 
-func (opts *AbisOptions) Query() ([]bool, *rpc.MetaData, error) {
+type AbisReturnTypes = types.SimpleFunction
+
+func queryabis[T AbisReturnTypes](opts *AbisOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.AbisBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
@@ -93,7 +96,10 @@ func (opts *AbisOptions) Query() ([]bool, *rpc.MetaData, error) {
 	}
 }
 
-// abis-+function
+// Abis implements the chifra abis command for the SDK.
+func (opts *AbisOptions) Abis() ([]types.SimpleFunction, *rpc.MetaData, error) {
+	return queryabis[types.SimpleFunction](opts)
+}
 
 // No enums
 // EXISTING_CODE

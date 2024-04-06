@@ -88,18 +88,25 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *TransactionsOptions) Query() ([]types.SimpleTransaction, *rpc.MetaData, error) {
+type TransactionsReturnTypes = types.SimpleTransaction
+
+func querytransactions[T TransactionsReturnTypes](opts *TransactionsOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TransactionsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleTransaction]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Transactions implements the chifra transactions command for the SDK.
+func (opts *TransactionsOptions) Transactions() ([]types.SimpleTransaction, *rpc.MetaData, error) {
+	return querytransactions[types.SimpleTransaction](opts)
 }
 
 type TransactionsFlow int

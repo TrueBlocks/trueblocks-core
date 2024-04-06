@@ -72,13 +72,17 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 	return &opts, nil
 }
 
-func (opts *TracesOptions) Query() ([]types.SimpleTrace, *rpc.MetaData, error) {
+type TracesReturnTypes interface {
+	types.SimpleTrace
+}
+
+func querytraces[T TracesReturnTypes](opts *TracesOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TracesBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleTrace]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
@@ -86,7 +90,15 @@ func (opts *TracesOptions) Query() ([]types.SimpleTrace, *rpc.MetaData, error) {
 	}
 }
 
-// traces-+trace|traces-count+tracecount
+// Traces implements the chifra traces command for the SDK.
+func (opts *TracesOptions) Traces() ([]types.SimpleTrace, *rpc.MetaData, error) {
+	return querytraces[types.SimpleTrace](opts)
+}
+
+// // TracesCount implements the chifra traces command for the SDK.
+// func (opts *TracesOptions) TracesCount() ([]types.SimpleTraceCount, *rpc.MetaData, error) {
+// 	return querytraces[types.SimpleTraceCount](opts)
+// }
 
 // No enums
 // EXISTING_CODE

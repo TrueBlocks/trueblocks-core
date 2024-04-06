@@ -91,13 +91,17 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 	return &opts, nil
 }
 
-func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
+type StateReturnTypes interface {
+	types.SimpleState | types.SimpleResult
+}
+
+func querystate[T StateReturnTypes](opts *StateOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.StateBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[types.SimpleState]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
@@ -105,7 +109,15 @@ func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
 	}
 }
 
-// state-+state|state-call+result
+// State implements the chifra state command for the SDK.
+func (opts *StateOptions) State() ([]types.SimpleState, *rpc.MetaData, error) {
+	return querystate[types.SimpleState](opts)
+}
+
+// StateCall implements the chifra state command for the SDK.
+func (opts *StateOptions) StateCall() ([]types.SimpleResult, *rpc.MetaData, error) {
+	return querystate[types.SimpleResult](opts)
+}
 
 type StateParts int
 

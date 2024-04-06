@@ -98,18 +98,25 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ChunksOptions) Query() ([]bool, *rpc.MetaData, error) {
+type ChunksReturnTypes = bool
+
+func querychunks[T ChunksReturnTypes](opts *ChunksOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ChunksBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Chunks implements the chifra chunks command for the SDK.
+func (opts *ChunksOptions) Chunks() ([]bool, *rpc.MetaData, error) {
+	return querychunks[bool](opts)
 }
 
 // chunks-mode+chunk[type]|chunks-pin+ipfspin

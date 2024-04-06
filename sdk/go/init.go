@@ -73,18 +73,25 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 	return &opts, nil
 }
 
-func (opts *InitOptions) Query() ([]bool, *rpc.MetaData, error) {
+type InitReturnTypes = bool
+
+func queryinit[T InitReturnTypes](opts *InitOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.InitBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Init implements the chifra init command for the SDK.
+func (opts *InitOptions) Init() ([]bool, *rpc.MetaData, error) {
+	return queryinit[bool](opts)
 }
 
 // No enums

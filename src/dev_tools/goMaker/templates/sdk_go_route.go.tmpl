@@ -59,18 +59,25 @@ func Get{{toProper .Route}}Options(args []string) (*{{toProper .Route}}Options, 
 	return &opts, nil
 }
 
-func (opts *{{toProper .Route}}Options) Query() ([]{{.ReturnType}}, *rpc.MetaData, error) {
+type {{toProper .Route}}ReturnTypes = {{.ReturnType}}
+
+func query{{toLower .Route}}[T {{toProper .Route}}ReturnTypes](opts *{{toProper .Route}}Options) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.{{toProper .Route}}Bytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[{{.ReturnType}}]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// {{toProper .Route}} implements the chifra {{toLower .Route}} command for the SDK.
+func (opts *{{toProper .Route}}Options) {{toProper .Route}}() ([]{{.ReturnType}}, *rpc.MetaData, error) {
+	return query{{toLower .Route}}[{{.ReturnType}}](opts)
 }
 
 {{if ne .Returns ""}}// {{.Returns}}{{end}}

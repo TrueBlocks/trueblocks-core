@@ -79,18 +79,25 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 	return &opts, nil
 }
 
-func (opts *ConfigOptions) Query() ([]bool, *rpc.MetaData, error) {
+type ConfigReturnTypes = bool
+
+func queryconfig[T ConfigReturnTypes](opts *ConfigOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ConfigBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Config implements the chifra config command for the SDK.
+func (opts *ConfigOptions) Config() ([]bool, *rpc.MetaData, error) {
+	return queryconfig[bool](opts)
 }
 
 type ConfigMode int

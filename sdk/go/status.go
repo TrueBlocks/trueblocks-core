@@ -82,18 +82,25 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 	return &opts, nil
 }
 
-func (opts *StatusOptions) Query() ([]bool, *rpc.MetaData, error) {
+type StatusReturnTypes = bool
+
+func querystatus[T StatusReturnTypes](opts *StatusOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.StatusBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Status implements the chifra status command for the SDK.
+func (opts *StatusOptions) Status() ([]bool, *rpc.MetaData, error) {
+	return querystatus[bool](opts)
 }
 
 // status-+status|status-modes+cacheitem|status-chains+chain

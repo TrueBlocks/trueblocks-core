@@ -79,18 +79,25 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	return &opts, nil
 }
 
-func (opts *MonitorsOptions) Query() ([]bool, *rpc.MetaData, error) {
+type MonitorsReturnTypes = bool
+
+func querymonitors[T MonitorsReturnTypes](opts *MonitorsOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.MonitorsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 
-	var result Result[bool]
+	var result Result[T]
 	if err := json.Unmarshal(buffer.Bytes(), &result); err != nil {
 		return nil, nil, err
 	} else {
 		return result.Data, &result.Meta, nil
 	}
+}
+
+// Monitors implements the chifra monitors command for the SDK.
+func (opts *MonitorsOptions) Monitors() ([]bool, *rpc.MetaData, error) {
+	return querymonitors[bool](opts)
 }
 
 // monitors-clean+monitorclean|monitors-list+monitor
