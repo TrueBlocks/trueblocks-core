@@ -1,3 +1,4 @@
+// TODO: This can be auto generated
 package main
 
 import (
@@ -19,7 +20,7 @@ func DoNames() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Names(&buf); err != nil {
+	if err := opts.NamesBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

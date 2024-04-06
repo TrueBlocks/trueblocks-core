@@ -44,8 +44,8 @@ func (opts *TransactionsOptions) String() string {
 	return string(bytes)
 }
 
-// Transactions implements the chifra transactions command for the SDK.
-func (opts *TransactionsOptions) Transactions(w io.Writer) error {
+// TransactionsBytes implements the chifra transactions command for the SDK.
+func (opts *TransactionsOptions) TransactionsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting transactions struct to URL values: %v", err)
@@ -90,7 +90,7 @@ func GetTransactionsOptions(args []string) (*TransactionsOptions, error) {
 
 func (opts *TransactionsOptions) Query() ([]types.SimpleTransaction, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Transactions(&buffer); err != nil {
+	if err := opts.TransactionsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

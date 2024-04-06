@@ -51,8 +51,8 @@ func (opts *NamesOptions) String() string {
 	return string(bytes)
 }
 
-// Names implements the chifra names command for the SDK.
-func (opts *NamesOptions) Names(w io.Writer) error {
+// NamesBytes implements the chifra names command for the SDK.
+func (opts *NamesOptions) NamesBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting names struct to URL values: %v", err)
@@ -88,7 +88,7 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 
 func (opts *NamesOptions) Query() ([]types.SimpleName, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Names(&buffer); err != nil {
+	if err := opts.NamesBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

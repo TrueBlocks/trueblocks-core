@@ -54,8 +54,8 @@ func (opts *ChunksOptions) String() string {
 	return string(bytes)
 }
 
-// Chunks implements the chifra chunks command for the SDK.
-func (opts *ChunksOptions) Chunks(w io.Writer) error {
+// ChunksBytes implements the chifra chunks command for the SDK.
+func (opts *ChunksOptions) ChunksBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting chunks struct to URL values: %v", err)
@@ -100,7 +100,7 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 
 func (opts *ChunksOptions) Query() ([]bool, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Chunks(&buffer); err != nil {
+	if err := opts.ChunksBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

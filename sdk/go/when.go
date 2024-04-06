@@ -43,8 +43,8 @@ func (opts *WhenOptions) String() string {
 	return string(bytes)
 }
 
-// When implements the chifra when command for the SDK.
-func (opts *WhenOptions) When(w io.Writer) error {
+// WhenBytes implements the chifra when command for the SDK.
+func (opts *WhenOptions) WhenBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting when struct to URL values: %v", err)
@@ -80,7 +80,7 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 
 func (opts *WhenOptions) Query() ([]types.SimpleNamedBlock, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.When(&buffer); err != nil {
+	if err := opts.WhenBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

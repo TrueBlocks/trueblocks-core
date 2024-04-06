@@ -1,3 +1,4 @@
+// TODO: This can be auto generated
 package main
 
 import (
@@ -18,7 +19,7 @@ func DoExport() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Export(&buf); err != nil {
+	if err := opts.ExportBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

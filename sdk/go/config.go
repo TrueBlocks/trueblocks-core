@@ -35,8 +35,8 @@ func (opts *ConfigOptions) String() string {
 	return string(bytes)
 }
 
-// Config implements the chifra config command for the SDK.
-func (opts *ConfigOptions) Config(w io.Writer) error {
+// ConfigBytes implements the chifra config command for the SDK.
+func (opts *ConfigOptions) ConfigBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting config struct to URL values: %v", err)
@@ -81,7 +81,7 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 
 func (opts *ConfigOptions) Query() ([]bool, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Config(&buffer); err != nil {
+	if err := opts.ConfigBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

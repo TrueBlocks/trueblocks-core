@@ -64,8 +64,8 @@ func (opts *ExportOptions) String() string {
 	return string(bytes)
 }
 
-// Export implements the chifra export command for the SDK.
-func (opts *ExportOptions) Export(w io.Writer) error {
+// ExportBytes implements the chifra export command for the SDK.
+func (opts *ExportOptions) ExportBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting export struct to URL values: %v", err)
@@ -110,7 +110,7 @@ func GetExportOptions(args []string) (*ExportOptions, error) {
 
 func (opts *ExportOptions) Query() ([]bool, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Export(&buffer); err != nil {
+	if err := opts.ExportBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

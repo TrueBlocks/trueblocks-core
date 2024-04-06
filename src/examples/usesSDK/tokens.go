@@ -1,3 +1,4 @@
+// TODO: This can be auto generated
 package main
 
 import (
@@ -18,7 +19,7 @@ func DoTokens() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Tokens(&buf); err != nil {
+	if err := opts.TokensBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

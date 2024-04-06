@@ -1,3 +1,4 @@
+// TODO: This can be auto generated
 package main
 
 import (
@@ -18,7 +19,7 @@ func DoLogs() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Logs(&buf); err != nil {
+	if err := opts.LogsBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

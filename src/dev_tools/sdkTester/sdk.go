@@ -1,3 +1,4 @@
+// TODO: This can be auto generated
 package main
 
 import (
@@ -20,7 +21,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.List(buf)
+		return opts.ListBytes(buf)
 
 	case "export":
 		opts, err := sdk.GetExportOptions(t.Options)
@@ -28,7 +29,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Export(buf)
+		return opts.ExportBytes(buf)
 
 	case "config":
 		opts, err := sdk.GetConfigOptions(t.Options)
@@ -36,7 +37,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Config(buf)
+		return opts.ConfigBytes(buf)
 
 	case "status":
 		opts, err := sdk.GetStatusOptions(t.Options)
@@ -44,7 +45,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Status(buf)
+		return opts.StatusBytes(buf)
 
 	case "chunks":
 		opts, err := sdk.GetChunksOptions(t.Options)
@@ -52,7 +53,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Chunks(buf)
+		return opts.ChunksBytes(buf)
 
 	case "init":
 		opts, err := sdk.GetInitOptions(t.Options)
@@ -60,7 +61,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Init(buf)
+		return opts.InitBytes(buf)
 
 	case "names":
 		opts, err := sdk.GetNamesOptions(t.Options)
@@ -68,7 +69,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Names(buf)
+		return opts.NamesBytes(buf)
 
 	case "slurp":
 		opts, err := sdk.GetSlurpOptions(t.Options)
@@ -76,7 +77,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Slurp(buf)
+		return opts.SlurpBytes(buf)
 
 	case "blocks":
 		opts, err := sdk.GetBlocksOptions(t.Options)
@@ -84,7 +85,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Blocks(buf)
+		return opts.BlocksBytes(buf)
 
 	case "transactions":
 		opts, err := sdk.GetTransactionsOptions(t.Options)
@@ -92,7 +93,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Transactions(buf)
+		return opts.TransactionsBytes(buf)
 
 	case "receipts":
 		opts, err := sdk.GetReceiptsOptions(t.Options)
@@ -100,7 +101,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Receipts(buf)
+		return opts.ReceiptsBytes(buf)
 
 	case "logs":
 		opts, err := sdk.GetLogsOptions(t.Options)
@@ -108,7 +109,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Logs(buf)
+		return opts.LogsBytes(buf)
 
 	case "traces":
 		opts, err := sdk.GetTracesOptions(t.Options)
@@ -116,7 +117,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Traces(buf)
+		return opts.TracesBytes(buf)
 
 	case "state":
 		opts, err := sdk.GetStateOptions(t.Options)
@@ -124,7 +125,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.State(buf)
+		return opts.StateBytes(buf)
 
 	case "tokens":
 		opts, err := sdk.GetTokensOptions(t.Options)
@@ -132,7 +133,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Tokens(buf)
+		return opts.TokensBytes(buf)
 
 	case "abis":
 		opts, err := sdk.GetAbisOptions(t.Options)
@@ -140,7 +141,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.Abis(buf)
+		return opts.AbisBytes(buf)
 
 	case "when":
 		opts, err := sdk.GetWhenOptions(t.Options)
@@ -148,7 +149,7 @@ func (t *TestCase) SdkTest(buf *bytes.Buffer) error {
 		if err != nil {
 			return err
 		}
-		return opts.When(buf)
+		return opts.WhenBytes(buf)
 
 	default:
 		// case "monitors":

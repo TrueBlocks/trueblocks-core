@@ -1,3 +1,4 @@
+// TODO: This can be auto generated
 package main
 
 import (
@@ -18,7 +19,7 @@ func DoChunks() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Chunks(&buf); err != nil {
+	if err := opts.ChunksBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

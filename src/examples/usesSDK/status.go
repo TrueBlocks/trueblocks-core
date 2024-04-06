@@ -1,3 +1,4 @@
+// TODO: This can be auto generated
 package main
 
 import (
@@ -18,7 +19,7 @@ func DoStatus() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Status(&buf); err != nil {
+	if err := opts.StatusBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 

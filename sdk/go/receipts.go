@@ -35,8 +35,8 @@ func (opts *ReceiptsOptions) String() string {
 	return string(bytes)
 }
 
-// Receipts implements the chifra receipts command for the SDK.
-func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
+// ReceiptsBytes implements the chifra receipts command for the SDK.
+func (opts *ReceiptsOptions) ReceiptsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting receipts struct to URL values: %v", err)
@@ -72,7 +72,7 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 
 func (opts *ReceiptsOptions) Query() ([]types.SimpleReceipt, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Receipts(&buffer); err != nil {
+	if err := opts.ReceiptsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

@@ -52,8 +52,8 @@ func (opts *BlocksOptions) String() string {
 	return string(bytes)
 }
 
-// Blocks implements the chifra blocks command for the SDK.
-func (opts *BlocksOptions) Blocks(w io.Writer) error {
+// BlocksBytes implements the chifra blocks command for the SDK.
+func (opts *BlocksOptions) BlocksBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting blocks struct to URL values: %v", err)
@@ -98,7 +98,7 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 
 func (opts *BlocksOptions) Query() ([]types.SimpleBlock[string], *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Blocks(&buffer); err != nil {
+	if err := opts.BlocksBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

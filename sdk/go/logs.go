@@ -37,8 +37,8 @@ func (opts *LogsOptions) String() string {
 	return string(bytes)
 }
 
-// Logs implements the chifra logs command for the SDK.
-func (opts *LogsOptions) Logs(w io.Writer) error {
+// LogsBytes implements the chifra logs command for the SDK.
+func (opts *LogsOptions) LogsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting logs struct to URL values: %v", err)
@@ -74,7 +74,7 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 
 func (opts *LogsOptions) Query() ([]types.SimpleLog, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Logs(&buffer); err != nil {
+	if err := opts.LogsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

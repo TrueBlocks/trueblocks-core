@@ -43,8 +43,8 @@ func (opts *StateOptions) String() string {
 	return string(bytes)
 }
 
-// State implements the chifra state command for the SDK.
-func (opts *StateOptions) State(w io.Writer) error {
+// StateBytes implements the chifra state command for the SDK.
+func (opts *StateOptions) StateBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting state struct to URL values: %v", err)
@@ -93,7 +93,7 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 
 func (opts *StateOptions) Query() ([]types.SimpleState, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.State(&buffer); err != nil {
+	if err := opts.StateBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

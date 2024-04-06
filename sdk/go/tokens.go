@@ -39,8 +39,8 @@ func (opts *TokensOptions) String() string {
 	return string(bytes)
 }
 
-// Tokens implements the chifra tokens command for the SDK.
-func (opts *TokensOptions) Tokens(w io.Writer) error {
+// TokensBytes implements the chifra tokens command for the SDK.
+func (opts *TokensOptions) TokensBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting tokens struct to URL values: %v", err)
@@ -85,7 +85,7 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 
 func (opts *TokensOptions) Query() ([]bool, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Tokens(&buffer); err != nil {
+	if err := opts.TokensBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

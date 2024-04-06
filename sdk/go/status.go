@@ -38,8 +38,8 @@ func (opts *StatusOptions) String() string {
 	return string(bytes)
 }
 
-// Status implements the chifra status command for the SDK.
-func (opts *StatusOptions) Status(w io.Writer) error {
+// StatusBytes implements the chifra status command for the SDK.
+func (opts *StatusOptions) StatusBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting status struct to URL values: %v", err)
@@ -84,7 +84,7 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 
 func (opts *StatusOptions) Query() ([]bool, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Status(&buffer); err != nil {
+	if err := opts.StatusBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

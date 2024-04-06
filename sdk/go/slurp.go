@@ -44,8 +44,8 @@ func (opts *SlurpOptions) String() string {
 	return string(bytes)
 }
 
-// Slurp implements the chifra slurp command for the SDK.
-func (opts *SlurpOptions) Slurp(w io.Writer) error {
+// SlurpBytes implements the chifra slurp command for the SDK.
+func (opts *SlurpOptions) SlurpBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting slurp struct to URL values: %v", err)
@@ -99,7 +99,7 @@ func GetSlurpOptions(args []string) (*SlurpOptions, error) {
 
 func (opts *SlurpOptions) Query() ([]types.SimpleSlurp, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Slurp(&buffer); err != nil {
+	if err := opts.SlurpBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

@@ -37,8 +37,8 @@ func (opts *TracesOptions) String() string {
 	return string(bytes)
 }
 
-// Traces implements the chifra traces command for the SDK.
-func (opts *TracesOptions) Traces(w io.Writer) error {
+// TracesBytes implements the chifra traces command for the SDK.
+func (opts *TracesOptions) TracesBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting traces struct to URL values: %v", err)
@@ -74,7 +74,7 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 
 func (opts *TracesOptions) Query() ([]types.SimpleTrace, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Traces(&buffer); err != nil {
+	if err := opts.TracesBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

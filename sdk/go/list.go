@@ -46,8 +46,8 @@ func (opts *ListOptions) String() string {
 	return string(bytes)
 }
 
-// List implements the chifra list command for the SDK.
-func (opts *ListOptions) List(w io.Writer) error {
+// ListBytes implements the chifra list command for the SDK.
+func (opts *ListOptions) ListBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting list struct to URL values: %v", err)
@@ -83,7 +83,7 @@ func GetListOptions(args []string) (*ListOptions, error) {
 
 func (opts *ListOptions) Query() ([]types.SimpleAppearance, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.List(&buffer); err != nil {
+	if err := opts.ListBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

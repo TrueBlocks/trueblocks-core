@@ -44,8 +44,8 @@ func (opts *MonitorsOptions) String() string {
 	return string(bytes)
 }
 
-// Monitors implements the chifra monitors command for the SDK.
-func (opts *MonitorsOptions) Monitors(w io.Writer) error {
+// MonitorsBytes implements the chifra monitors command for the SDK.
+func (opts *MonitorsOptions) MonitorsBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting monitors struct to URL values: %v", err)
@@ -81,7 +81,7 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 
 func (opts *MonitorsOptions) Query() ([]bool, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Monitors(&buffer); err != nil {
+	if err := opts.MonitorsBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

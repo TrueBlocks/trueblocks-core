@@ -39,8 +39,8 @@ func (opts *AbisOptions) String() string {
 	return string(bytes)
 }
 
-// Abis implements the chifra abis command for the SDK.
-func (opts *AbisOptions) Abis(w io.Writer) error {
+// AbisBytes implements the chifra abis command for the SDK.
+func (opts *AbisOptions) AbisBytes(w io.Writer) error {
 	values, err := structToValues(*opts)
 	if err != nil {
 		log.Fatalf("Error converting abis struct to URL values: %v", err)
@@ -81,7 +81,7 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 
 func (opts *AbisOptions) Query() ([]bool, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
-	if err := opts.Abis(&buffer); err != nil {
+	if err := opts.AbisBytes(&buffer); err != nil {
 		logger.Fatal(err)
 	}
 

@@ -1,3 +1,4 @@
+// TODO: This can be auto generated
 package main
 
 import (
@@ -18,7 +19,7 @@ func DoTraces() {
 	}
 
 	buf := bytes.Buffer{}
-	if err := opts.Traces(&buf); err != nil {
+	if err := opts.TracesBytes(&buf); err != nil {
 		logger.Fatal(err)
 	}
 
