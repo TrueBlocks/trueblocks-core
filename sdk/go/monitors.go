@@ -54,7 +54,7 @@ func (opts *MonitorsOptions) Monitors(w io.Writer) error {
 	return monitors.Monitors(w, values)
 }
 
-// monitorsParseFunc handles specail cases such as structs and enums (if any).
+// monitorsParseFunc handles special cases such as structs and enums (if any).
 func monitorsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*MonitorsOptions)

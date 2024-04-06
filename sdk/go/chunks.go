@@ -64,7 +64,7 @@ func (opts *ChunksOptions) Chunks(w io.Writer) error {
 	return chunks.Chunks(w, values)
 }
 
-// chunksParseFunc handles specail cases such as structs and enums (if any).
+// chunksParseFunc handles special cases such as structs and enums (if any).
 func chunksParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*ChunksOptions)

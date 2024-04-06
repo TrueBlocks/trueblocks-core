@@ -288,17 +288,6 @@ func (c *Command) Pkg() string {
 	return c.Route
 }
 
-// SdkFields for tag {{.SdkFields}}}
-func (c *Command) SdkFields() string {
-	ret := ""
-	for _, op := range c.Options {
-		ret += op.SdkField()
-	}
-	ret += `	Globals
-`
-	return ret
-}
-
 // AliasStr for tag {{.AliasStr}}}
 func (c *Command) AliasStr() string {
 	if len(c.Aliases) == 0 {

@@ -74,7 +74,7 @@ func (opts *ExportOptions) Export(w io.Writer) error {
 	return export.Export(w, values)
 }
 
-// exportParseFunc handles specail cases such as structs and enums (if any).
+// exportParseFunc handles special cases such as structs and enums (if any).
 func exportParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*ExportOptions)

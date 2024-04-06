@@ -45,7 +45,7 @@ func (opts *ReceiptsOptions) Receipts(w io.Writer) error {
 	return receipts.Receipts(w, values)
 }
 
-// receiptsParseFunc handles specail cases such as structs and enums (if any).
+// receiptsParseFunc handles special cases such as structs and enums (if any).
 func receiptsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*ReceiptsOptions)

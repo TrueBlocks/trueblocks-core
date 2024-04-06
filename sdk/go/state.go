@@ -53,7 +53,7 @@ func (opts *StateOptions) State(w io.Writer) error {
 	return state.State(w, values)
 }
 
-// stateParseFunc handles specail cases such as structs and enums (if any).
+// stateParseFunc handles special cases such as structs and enums (if any).
 func stateParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*StateOptions)

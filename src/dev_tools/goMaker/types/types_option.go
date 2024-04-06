@@ -626,14 +626,6 @@ func (op *Option) TestLog() string {
 	return op.executeTemplate(tmplName, tmpl)
 }
 
-// SdkField for tag {{.SdkField}}}
-func (op *Option) SdkField() string {
-	tmplName := "sdkField"
-	tmpl := `	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
-`
-	return op.executeTemplate(tmplName, tmpl)
-}
-
 func (op *Option) CobraType() string {
 	m := map[string]string{
 		"<address>":    "String",

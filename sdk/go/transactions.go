@@ -54,7 +54,7 @@ func (opts *TransactionsOptions) Transactions(w io.Writer) error {
 	return transactions.Transactions(w, values)
 }
 
-// transactionsParseFunc handles specail cases such as structs and enums (if any).
+// transactionsParseFunc handles special cases such as structs and enums (if any).
 func transactionsParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*TransactionsOptions)

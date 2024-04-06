@@ -62,7 +62,7 @@ func (opts *BlocksOptions) Blocks(w io.Writer) error {
 	return blocks.Blocks(w, values)
 }
 
-// blocksParseFunc handles specail cases such as structs and enums (if any).
+// blocksParseFunc handles special cases such as structs and enums (if any).
 func blocksParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*BlocksOptions)

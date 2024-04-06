@@ -61,7 +61,7 @@ func (opts *NamesOptions) Names(w io.Writer) error {
 	return names.Names(w, values)
 }
 
-// namesParseFunc handles specail cases such as structs and enums (if any).
+// namesParseFunc handles special cases such as structs and enums (if any).
 func namesParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*NamesOptions)

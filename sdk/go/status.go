@@ -48,7 +48,7 @@ func (opts *StatusOptions) Status(w io.Writer) error {
 	return status.Status(w, values)
 }
 
-// statusParseFunc handles specail cases such as structs and enums (if any).
+// statusParseFunc handles special cases such as structs and enums (if any).
 func statusParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*StatusOptions)

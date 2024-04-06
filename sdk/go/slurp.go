@@ -54,7 +54,7 @@ func (opts *SlurpOptions) Slurp(w io.Writer) error {
 	return slurp.Slurp(w, values)
 }
 
-// slurpParseFunc handles specail cases such as structs and enums (if any).
+// slurpParseFunc handles special cases such as structs and enums (if any).
 func slurpParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*SlurpOptions)

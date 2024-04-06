@@ -14,7 +14,9 @@ import (
 )
 
 type {{toProper .Route}}Options struct {
-{{.SdkFields}}}
+{{range .Options}}	{{.GoSdkName}} {{.GoSdkType}} {{.JsonTag}}
+{{end}}	Globals
+}
 
 // String implements the stringer interface
 func (opts *{{toProper .Route}}Options) String() string {
@@ -32,7 +34,7 @@ func (opts *{{toProper .Route}}Options) {{toProper .Route}}(w io.Writer) error {
 	return {{.Pkg}}.{{toProper .Route}}(w, values)
 }
 
-// {{toLower .Route}}ParseFunc handles specail cases such as structs and enums (if any).
+// {{toLower .Route}}ParseFunc handles special cases such as structs and enums (if any).
 func {{toLower .Route}}ParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	{{.Enums3}}, ok := target.(*{{toProper .Route}}Options)

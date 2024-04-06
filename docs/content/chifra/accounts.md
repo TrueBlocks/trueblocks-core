@@ -167,6 +167,7 @@ Data models produced by this tool:
 - [monitor](/data-model/accounts/#monitor)
 - [parameter](/data-model/other/#parameter)
 - [receipt](/data-model/chaindata/#receipt)
+- [state](/data-model/chainstate/#state)
 - [statement](/data-model/accounts/#statement)
 - [token](/data-model/chainstate/#token)
 - [trace](/data-model/chaindata/#trace)

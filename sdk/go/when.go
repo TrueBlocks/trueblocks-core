@@ -53,7 +53,7 @@ func (opts *WhenOptions) When(w io.Writer) error {
 	return when.When(w, values)
 }
 
-// whenParseFunc handles specail cases such as structs and enums (if any).
+// whenParseFunc handles special cases such as structs and enums (if any).
 func whenParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*WhenOptions)

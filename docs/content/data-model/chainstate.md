@@ -28,6 +28,7 @@ contract. This is the decoded `output` value of the smart contract call.
 
 The following commands produce and manage States:
 
+- [chifra export](/chifra/accounts/#chifra-export)
 - [chifra state](/chifra/chainstate/#chifra-state)
 
 States consist of the following fields:

@@ -56,7 +56,7 @@ func (opts *ListOptions) List(w io.Writer) error {
 	return list.List(w, values)
 }
 
-// listParseFunc handles specail cases such as structs and enums (if any).
+// listParseFunc handles special cases such as structs and enums (if any).
 func listParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*ListOptions)

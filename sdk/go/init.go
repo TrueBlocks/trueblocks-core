@@ -48,7 +48,7 @@ func (opts *InitOptions) Init(w io.Writer) error {
 	return initPkg.Init(w, values)
 }
 
-// initParseFunc handles specail cases such as structs and enums (if any).
+// initParseFunc handles special cases such as structs and enums (if any).
 func initParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	_, ok := target.(*InitOptions)

@@ -49,7 +49,7 @@ func (opts *TokensOptions) Tokens(w io.Writer) error {
 	return tokens.Tokens(w, values)
 }
 
-// tokensParseFunc handles specail cases such as structs and enums (if any).
+// tokensParseFunc handles special cases such as structs and enums (if any).
 func tokensParseFunc(target interface{}, key, value string) (bool, error) {
 	var found bool
 	opts, ok := target.(*TokensOptions)
