@@ -86,9 +86,11 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 	return &opts, nil
 }
 
-type NamesReturnTypes = types.SimpleName
+type namesGeneric interface {
+	types.SimpleName
+}
 
-func querynames[T NamesReturnTypes](opts *NamesOptions) ([]T, *rpc.MetaData, error) {
+func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.NamesBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -104,7 +106,7 @@ func querynames[T NamesReturnTypes](opts *NamesOptions) ([]T, *rpc.MetaData, err
 
 // Names implements the chifra names command for the SDK.
 func (opts *NamesOptions) Names() ([]types.SimpleName, *rpc.MetaData, error) {
-	return querynames[types.SimpleName](opts)
+	return queryNames[types.SimpleName](opts)
 }
 
 // names-+name|names-addr+address|names-tags+tag

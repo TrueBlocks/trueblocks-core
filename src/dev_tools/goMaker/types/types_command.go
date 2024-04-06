@@ -19,7 +19,7 @@ type Command struct {
 	Tool         string       `json:"tool,omitempty"`
 	Description  string       `json:"description,omitempty"`
 	Options      []Option     `json:"options,omitempty"`
-	Returns      string       `json:"returns,omitempty"`
+	ReturnTypes  string       `json:"return_types,omitempty"`
 	Capabilities string       `json:"capabilities,omitempty"`
 	Usage        string       `json:"usage,omitempty"`
 	Summary      string       `json:"summary,omitempty"`
@@ -411,7 +411,7 @@ func (c *Command) OptFields() string {
 func (c *Command) ReturnType() string {
 	switch c.Route {
 	case "blocks":
-		return "types.SimpleBlock[string]"
+		return "types.SimpleBlock[types.SimpleTransaction]"
 	case "transactions":
 		return "types.SimpleTransaction"
 	case "receipts":
@@ -431,13 +431,13 @@ func (c *Command) ReturnType() string {
 	case "names":
 		return "types.SimpleName"
 	case "abis":
-		return "bool"
+		return "types.SimpleFunction"
 	case "list":
 		return "types.SimpleAppearance"
 	case "export":
-		return "bool"
+		return "types.SimpleTransaction"
 	case "monitors":
-		return "bool"
+		return "types.SimpleMonitor"
 	case "config":
 		return "bool"
 	case "status":
@@ -447,7 +447,7 @@ func (c *Command) ReturnType() string {
 	case "init":
 		return "bool"
 	default:
-		return "bool"
+		return "unknown return type"
 	}
 }
 

@@ -80,9 +80,11 @@ func GetAbisOptions(args []string) (*AbisOptions, error) {
 	return &opts, nil
 }
 
-type AbisReturnTypes = types.SimpleFunction
+type abisGeneric interface {
+	types.SimpleFunction
+}
 
-func queryabis[T AbisReturnTypes](opts *AbisOptions) ([]T, *rpc.MetaData, error) {
+func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.AbisBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -98,7 +100,7 @@ func queryabis[T AbisReturnTypes](opts *AbisOptions) ([]T, *rpc.MetaData, error)
 
 // Abis implements the chifra abis command for the SDK.
 func (opts *AbisOptions) Abis() ([]types.SimpleFunction, *rpc.MetaData, error) {
-	return queryabis[types.SimpleFunction](opts)
+	return queryAbis[types.SimpleFunction](opts)
 }
 
 // No enums

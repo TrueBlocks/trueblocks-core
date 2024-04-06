@@ -59,9 +59,11 @@ func Get{{toProper .Route}}Options(args []string) (*{{toProper .Route}}Options, 
 	return &opts, nil
 }
 
-type {{toProper .Route}}ReturnTypes = {{.ReturnType}}
+type {{toCamel .Route}}Generic interface {
+	{{.ReturnType}}
+}
 
-func query{{toLower .Route}}[T {{toProper .Route}}ReturnTypes](opts *{{toProper .Route}}Options) ([]T, *rpc.MetaData, error) {
+func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toProper .Route}}Options) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.{{toProper .Route}}Bytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -77,10 +79,10 @@ func query{{toLower .Route}}[T {{toProper .Route}}ReturnTypes](opts *{{toProper 
 
 // {{toProper .Route}} implements the chifra {{toLower .Route}} command for the SDK.
 func (opts *{{toProper .Route}}Options) {{toProper .Route}}() ([]{{.ReturnType}}, *rpc.MetaData, error) {
-	return query{{toLower .Route}}[{{.ReturnType}}](opts)
+	return query{{toProper .Route}}[{{.ReturnType}}](opts)
 }
 
-{{if ne .Returns ""}}// {{.Returns}}{{end}}
+{{if ne .ReturnTypes ""}}// {{.ReturnTypes}}{{end}}
 
 {{.Enums2}}
 // EXISTING_CODE

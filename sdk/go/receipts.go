@@ -70,9 +70,11 @@ func GetReceiptsOptions(args []string) (*ReceiptsOptions, error) {
 	return &opts, nil
 }
 
-type ReceiptsReturnTypes = types.SimpleReceipt
+type receiptsGeneric interface {
+	types.SimpleReceipt
+}
 
-func queryreceipts[T ReceiptsReturnTypes](opts *ReceiptsOptions) ([]T, *rpc.MetaData, error) {
+func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ReceiptsBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -88,7 +90,7 @@ func queryreceipts[T ReceiptsReturnTypes](opts *ReceiptsOptions) ([]T, *rpc.Meta
 
 // Receipts implements the chifra receipts command for the SDK.
 func (opts *ReceiptsOptions) Receipts() ([]types.SimpleReceipt, *rpc.MetaData, error) {
-	return queryreceipts[types.SimpleReceipt](opts)
+	return queryReceipts[types.SimpleReceipt](opts)
 }
 
 // No enums

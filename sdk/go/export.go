@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	export "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -108,9 +109,11 @@ func GetExportOptions(args []string) (*ExportOptions, error) {
 	return &opts, nil
 }
 
-type ExportReturnTypes = bool
+type exportGeneric interface {
+	types.SimpleTransaction
+}
 
-func queryexport[T ExportReturnTypes](opts *ExportOptions) ([]T, *rpc.MetaData, error) {
+func queryExport[T exportGeneric](opts *ExportOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ExportBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -125,8 +128,8 @@ func queryexport[T ExportReturnTypes](opts *ExportOptions) ([]T, *rpc.MetaData, 
 }
 
 // Export implements the chifra export command for the SDK.
-func (opts *ExportOptions) Export() ([]bool, *rpc.MetaData, error) {
-	return queryexport[bool](opts)
+func (opts *ExportOptions) Export() ([]types.SimpleTransaction, *rpc.MetaData, error) {
+	return queryExport[types.SimpleTransaction](opts)
 }
 
 // export-+transaction|export-appearances+appearance|export-receipts+receipt|export-logs+log|export-traces+trace|export-neighbors+neighbor|export-accounting+transaction|export-statements+statement|export-balances+state|export-withdrawals+withdrawal|export-count+appearancecount

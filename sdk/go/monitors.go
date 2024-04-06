@@ -18,6 +18,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	monitors "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -79,9 +80,11 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 	return &opts, nil
 }
 
-type MonitorsReturnTypes = bool
+type monitorsGeneric interface {
+	types.SimpleMonitor
+}
 
-func querymonitors[T MonitorsReturnTypes](opts *MonitorsOptions) ([]T, *rpc.MetaData, error) {
+func queryMonitors[T monitorsGeneric](opts *MonitorsOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.MonitorsBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -96,8 +99,8 @@ func querymonitors[T MonitorsReturnTypes](opts *MonitorsOptions) ([]T, *rpc.Meta
 }
 
 // Monitors implements the chifra monitors command for the SDK.
-func (opts *MonitorsOptions) Monitors() ([]bool, *rpc.MetaData, error) {
-	return querymonitors[bool](opts)
+func (opts *MonitorsOptions) Monitors() ([]types.SimpleMonitor, *rpc.MetaData, error) {
+	return queryMonitors[types.SimpleMonitor](opts)
 }
 
 // monitors-clean+monitorclean|monitors-list+monitor

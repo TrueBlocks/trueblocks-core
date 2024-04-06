@@ -1,4 +1,4 @@
-num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_type,returns,summary,usage,capabilities,description
+num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_type,return_types,summary,usage,capabilities,description
 11000,,Accounts,,,,,,,group,,,,,,Access and cache transactional data
 12000,apps,Accounts,list,acctExport,,,,visible|docs,command,,appearance,List transactions,[flags] <address> [address...],default|,List every appearance of an address anywhere on the chain.
 12020,apps,Accounts,list,acctExport,addrs,,,required|visible|docs,positional,list<addr>,,,,,one or more addresses (0x...) to list
@@ -105,9 +105,9 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 16070,tools,Accounts,abis,grabABI,encode,e,,visible|docs,flag,<string>,,,,,generate the 32-byte encoding for a given cannonical function or event signature
 16090,tools,Accounts,abis,grabABI,n1,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 21000,,Chain Data,,,,,,,group,,,,,,Access and cache blockchain-related data
-22000,tools,Chain Data,blocks,getBlocks,,,,visible|docs,command,,block,Get blocks,[flags] <block> [block...],default|caching|ether|raw|,Retrieve one or more blocks from the chain or local cache.
+22000,tools,Chain Data,blocks,getBlocks,,,,visible|docs,command,,block[types.SimpleTransaction],Get blocks,[flags] <block> [block...],default|caching|ether|raw|,Retrieve one or more blocks from the chain or local cache.
 22020,tools,Chain Data,blocks,getBlocks,blocks,,,required|visible|docs,positional,list<blknum>,,,,,a space-separated list of one or more block identifiers
-22030,tools,Chain Data,blocks,getBlocks,hashes,e,,visible|docs,switch,<boolean>,block,,,,display only transaction hashes&#44; default is to display full transaction detail
+22030,tools,Chain Data,blocks,getBlocks,hashes,e,,visible|docs,switch,<boolean>,block[string],,,,display only transaction hashes&#44; default is to display full transaction detail
 22040,tools,Chain Data,blocks,getBlocks,uncles,c,,visible|docs,switch,<boolean>,,,,,display uncle blocks (if any) instead of the requested block
 22050,tools,Chain Data,blocks,getBlocks,traces,t,,visible|docs,switch,<boolean>,trace,,,,export the traces from the block as opposed to the block data
 22060,tools,Chain Data,blocks,getBlocks,uniq,u,,visible|docs,switch,<boolean>,appearance,,,,display a list of uniq address appearances per transaction

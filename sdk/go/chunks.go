@@ -98,9 +98,11 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 	return &opts, nil
 }
 
-type ChunksReturnTypes = bool
+type chunksGeneric interface {
+	bool
+}
 
-func querychunks[T ChunksReturnTypes](opts *ChunksOptions) ([]T, *rpc.MetaData, error) {
+func queryChunks[T chunksGeneric](opts *ChunksOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ChunksBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -116,7 +118,7 @@ func querychunks[T ChunksReturnTypes](opts *ChunksOptions) ([]T, *rpc.MetaData, 
 
 // Chunks implements the chifra chunks command for the SDK.
 func (opts *ChunksOptions) Chunks() ([]bool, *rpc.MetaData, error) {
-	return querychunks[bool](opts)
+	return queryChunks[bool](opts)
 }
 
 // chunks-mode+chunk[type]|chunks-pin+ipfspin

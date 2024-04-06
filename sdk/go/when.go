@@ -78,11 +78,11 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 	return &opts, nil
 }
 
-type WhenReturnTypes interface {
+type whenGeneric interface {
 	types.SimpleNamedBlock
 }
 
-func querywhen[T WhenReturnTypes](opts *WhenOptions) ([]T, *rpc.MetaData, error) {
+func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.WhenBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -98,7 +98,7 @@ func querywhen[T WhenReturnTypes](opts *WhenOptions) ([]T, *rpc.MetaData, error)
 
 // When implements the chifra when command for the SDK.
 func (opts *WhenOptions) When() ([]types.SimpleNamedBlock, *rpc.MetaData, error) {
-	return querywhen[types.SimpleNamedBlock](opts)
+	return queryWhen[types.SimpleNamedBlock](opts)
 }
 
 // // WhenTimestamps implements the chifra when command for the SDK.

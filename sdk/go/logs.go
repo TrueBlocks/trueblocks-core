@@ -72,9 +72,11 @@ func GetLogsOptions(args []string) (*LogsOptions, error) {
 	return &opts, nil
 }
 
-type LogsReturnTypes = types.SimpleLog
+type logsGeneric interface {
+	types.SimpleLog
+}
 
-func querylogs[T LogsReturnTypes](opts *LogsOptions) ([]T, *rpc.MetaData, error) {
+func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.LogsBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -90,7 +92,7 @@ func querylogs[T LogsReturnTypes](opts *LogsOptions) ([]T, *rpc.MetaData, error)
 
 // Logs implements the chifra logs command for the SDK.
 func (opts *LogsOptions) Logs() ([]types.SimpleLog, *rpc.MetaData, error) {
-	return querylogs[types.SimpleLog](opts)
+	return queryLogs[types.SimpleLog](opts)
 }
 
 // No enums

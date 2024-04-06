@@ -81,9 +81,11 @@ func GetListOptions(args []string) (*ListOptions, error) {
 	return &opts, nil
 }
 
-type ListReturnTypes = types.SimpleAppearance
+type listGeneric interface {
+	types.SimpleAppearance
+}
 
-func querylist[T ListReturnTypes](opts *ListOptions) ([]T, *rpc.MetaData, error) {
+func queryList[T listGeneric](opts *ListOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.ListBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -99,7 +101,7 @@ func querylist[T ListReturnTypes](opts *ListOptions) ([]T, *rpc.MetaData, error)
 
 // List implements the chifra list command for the SDK.
 func (opts *ListOptions) List() ([]types.SimpleAppearance, *rpc.MetaData, error) {
-	return querylist[types.SimpleAppearance](opts)
+	return queryList[types.SimpleAppearance](opts)
 }
 
 // list-+appearance|list-count+appearancecount|list-bounds+bounds

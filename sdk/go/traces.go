@@ -72,11 +72,11 @@ func GetTracesOptions(args []string) (*TracesOptions, error) {
 	return &opts, nil
 }
 
-type TracesReturnTypes interface {
+type tracesGeneric interface {
 	types.SimpleTrace
 }
 
-func querytraces[T TracesReturnTypes](opts *TracesOptions) ([]T, *rpc.MetaData, error) {
+func queryTraces[T tracesGeneric](opts *TracesOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TracesBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -92,7 +92,7 @@ func querytraces[T TracesReturnTypes](opts *TracesOptions) ([]T, *rpc.MetaData, 
 
 // Traces implements the chifra traces command for the SDK.
 func (opts *TracesOptions) Traces() ([]types.SimpleTrace, *rpc.MetaData, error) {
-	return querytraces[types.SimpleTrace](opts)
+	return queryTraces[types.SimpleTrace](opts)
 }
 
 // // TracesCount implements the chifra traces command for the SDK.

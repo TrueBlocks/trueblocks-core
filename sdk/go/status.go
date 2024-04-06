@@ -82,9 +82,11 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 	return &opts, nil
 }
 
-type StatusReturnTypes = bool
+type statusGeneric interface {
+	bool
+}
 
-func querystatus[T StatusReturnTypes](opts *StatusOptions) ([]T, *rpc.MetaData, error) {
+func queryStatus[T statusGeneric](opts *StatusOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.StatusBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -100,7 +102,7 @@ func querystatus[T StatusReturnTypes](opts *StatusOptions) ([]T, *rpc.MetaData, 
 
 // Status implements the chifra status command for the SDK.
 func (opts *StatusOptions) Status() ([]bool, *rpc.MetaData, error) {
-	return querystatus[bool](opts)
+	return queryStatus[bool](opts)
 }
 
 // status-+status|status-modes+cacheitem|status-chains+chain

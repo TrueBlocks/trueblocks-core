@@ -83,9 +83,11 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 	return &opts, nil
 }
 
-type TokensReturnTypes = bool
+type tokensGeneric interface {
+	bool
+}
 
-func querytokens[T TokensReturnTypes](opts *TokensOptions) ([]T, *rpc.MetaData, error) {
+func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *rpc.MetaData, error) {
 	buffer := bytes.Buffer{}
 	if err := opts.TokensBytes(&buffer); err != nil {
 		logger.Fatal(err)
@@ -101,7 +103,7 @@ func querytokens[T TokensReturnTypes](opts *TokensOptions) ([]T, *rpc.MetaData, 
 
 // Tokens implements the chifra tokens command for the SDK.
 func (opts *TokensOptions) Tokens() ([]bool, *rpc.MetaData, error) {
-	return querytokens[bool](opts)
+	return queryTokens[bool](opts)
 }
 
 // tokens-+token

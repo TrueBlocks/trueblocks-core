@@ -17,7 +17,7 @@ type Option struct {
 	Attributes    string   `json:"attributes" csv:"attributes"`
 	OptionType    string   `json:"option_type" csv:"option_type"`
 	DataType      string   `json:"data_type" csv:"data_type"`
-	Returns       string   `json:"returns,omitempty" csv:"returns"`
+	ReturnTypes   string   `json:"return_types,omitempty" csv:"return_types"`
 	Summary       string   `json:"summary,omitempty" csv:"summary"`
 	Usage         string   `json:"usage,omitempty" csv:"usage"`
 	Capabilities  string   `json:"capabilities,omitempty" csv:"capabilities"`
@@ -84,7 +84,7 @@ func readCmdOption(op *Option, data *any) (bool, error) {
 	op.Attributes = strings.Trim(op.Attributes, wss)
 	op.OptionType = strings.Trim(op.OptionType, wss)
 	op.DataType = strings.Trim(op.DataType, wss)
-	op.Returns = strings.Trim(op.Returns, wss)
+	op.ReturnTypes = strings.Trim(op.ReturnTypes, wss)
 	op.Summary = strings.Trim(op.Summary, wss)
 	op.Usage = strings.Trim(op.Usage, wss)
 	op.Capabilities = strings.Trim(op.Capabilities, wss)
