@@ -28,7 +28,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------------
 CRuntimeClass CBaseNode::classCBaseNode;
 static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
-vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
+vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have been registered
 
 //--------------------------------------------------------------------------------
 CBaseNode::CBaseNode(void) {
@@ -669,7 +669,7 @@ string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node) {
 string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data) {
     string_q chunk = fmtOut;
     if (!contains(fmtOut, "[")) {
-        // There are no more tokens.  Return the last chunk and empty out the format
+        // There are no more tokens. Return the last chunk and empty out the format
         fmtOut = "";
         return chunk;
     }
