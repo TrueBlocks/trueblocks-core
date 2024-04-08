@@ -132,6 +132,21 @@ Slurps consist of the following fields:
 | compressedTx     | truncated, more readable version of the articulation                                                  | string                                  |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                    |
 
+## SlurpCount
+
+The `slurpCount` carries information about the counts returned by remote APIs.
+
+The following commands produce and manage SlurpCounts:
+
+- [chifra slurp](/chifra/other/#chifra-slurp)
+
+SlurpCounts consist of the following fields:
+
+| Field   | Description                                             | Type    |
+| ------- | ------------------------------------------------------- | ------- |
+| address | the address used to query the API                       | address |
+| count   | the number of records known by the API for this address | uint64  |
+
 ## Base types
 
 This documentation mentions the following basic data types.

@@ -49,6 +49,7 @@ Notes:
 Data models produced by this tool:
 
 - [slurp](/data-model/other/#slurp)
+- [slurpcount](/data-model/other/#slurpcount)
 
 ### Other Options
 

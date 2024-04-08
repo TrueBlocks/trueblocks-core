@@ -160,11 +160,6 @@ func (opts *ExportOptions) ExportTraces() ([]types.SimpleTrace, *rpc.MetaData, e
 	return queryExport[types.SimpleTrace](opts)
 }
 
-// ExportAccounting implements the chifra export --accounting command.
-func (opts *ExportOptions) ExportAccounting() ([]types.SimpleTransaction, *rpc.MetaData, error) {
-	return queryExport[types.SimpleTransaction](opts)
-}
-
 // ExportStatements implements the chifra export --statements command.
 func (opts *ExportOptions) ExportStatements() ([]types.SimpleStatement, *rpc.MetaData, error) {
 	return queryExport[types.SimpleStatement](opts)

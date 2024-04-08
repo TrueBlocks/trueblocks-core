@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"go/format"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -17,6 +18,9 @@ import (
 func WriteCode(existingFn, newCode string) (bool, error) {
 	if !file.FileExists(existingFn) {
 		if !strings.Contains(existingFn, "/generated/") {
+			if !file.FolderExists(filepath.Dir(existingFn)) {
+				logger.Fatal("Folder does not exist for file", existingFn)
+			}
 			logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
 		}
 		return updateFile(existingFn, newCode)

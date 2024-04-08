@@ -25,8 +25,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,switch,<boolean>,log,,,,export logs instead of transactional data
 13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,switch,<boolean>,trace,,,,export traces instead of transactional data
-13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,switch,<boolean>,neighbor,,,,export the neighbors of the given address
-13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,switch,<boolean>,transaction,,,,attach accounting records to the exported data (applies to transactions export only)
+13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,switch,<boolean>,,,,,export the neighbors of the given address
+13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
 13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
 13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
 13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
@@ -236,7 +236,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,option_type,data_
 42030,apps,Admin,config,config,paths,a,,visible|docs,switch,<boolean>,,,,,show the configuration paths for the system
 #
 43000,apps,Admin,status,cacheStatus,,,,visible|docs,command,,,Get status on caches,<mode> [mode...] [flags],default|,Report on the state of the internal binary caches.
-43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,cacheItem,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
+43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
 43030,apps,Admin,status,cacheStatus,diagnose,d,,visible|docs,switch,<boolean>,,,,,same as the default but with additional diagnostics
 43040,apps,Admin,status,cacheStatus,first_record,c,,visible|docs,flag,<uint64>,,,,,the first record to process
 43050,apps,Admin,status,cacheStatus,max_records,e,10000,visible|docs,flag,<uint64>,,,,,the maximum number of records to process
