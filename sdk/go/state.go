@@ -92,7 +92,8 @@ func GetStateOptions(args []string) (*StateOptions, error) {
 }
 
 type stateGeneric interface {
-	types.SimpleState
+	types.SimpleState |
+		types.SimpleResult
 }
 
 func queryState[T stateGeneric](opts *StateOptions) ([]T, *rpc.MetaData, error) {
@@ -109,15 +110,15 @@ func queryState[T stateGeneric](opts *StateOptions) ([]T, *rpc.MetaData, error) 
 	}
 }
 
-// State implements the chifra state command for the SDK.
+// State implements the chifra state command.
 func (opts *StateOptions) State() ([]types.SimpleState, *rpc.MetaData, error) {
 	return queryState[types.SimpleState](opts)
 }
 
-// // StateCall implements the chifra state command for the SDK.
-// func (opts *StateOptions) StateCall() ([]types.SimpleResult, *rpc.MetaData, error) {
-// 	return queryState[types.SimpleResult](opts)
-// }
+// StateCall implements the chifra state --call command.
+func (opts *StateOptions) StateCall() ([]types.SimpleResult, *rpc.MetaData, error) {
+	return queryState[types.SimpleResult](opts)
+}
 
 type StateParts int
 

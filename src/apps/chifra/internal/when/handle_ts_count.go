@@ -17,7 +17,7 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 	testMode := opts.Globals.TestMode
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawTimestampCount], errorChan chan error) {
 		if count, err := tslib.NTimestamps(chain); err != nil {
 			errorChan <- err
 			return
@@ -27,7 +27,7 @@ func (opts *WhenOptions) HandleTimestampCount() error {
 				count = 5000000
 			}
 
-			s := simpleTimestampCount{
+			s := types.SimpleTimestampCount{
 				Count: count,
 			}
 

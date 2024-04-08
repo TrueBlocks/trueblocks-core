@@ -6,33 +6,46 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 
-package tracesPkg
+package types
 
 // EXISTING_CODE
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // EXISTING_CODE
 
-type simpleTraceCount struct {
+type RawTraceCount struct {
+	BlockNumber      string `json:"blockNumber"`
+	Timestamp        string `json:"timestamp"`
+	TracesCnt        string `json:"tracesCnt"`
+	TransactionHash  string `json:"transactionHash"`
+	TransactionIndex string `json:"transactionIndex"`
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+type SimpleTraceCount struct {
 	BlockNumber      base.Blknum    `json:"blockNumber"`
 	Timestamp        base.Timestamp `json:"timestamp"`
 	TracesCnt        uint64         `json:"tracesCnt"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Blknum    `json:"transactionIndex"`
-
+	raw              *RawTraceCount `json:"-"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
-func (s *simpleTraceCount) Raw() *types.RawModeler {
-	return nil
+func (s *SimpleTraceCount) Raw() *RawTraceCount {
+	return s.raw
 }
 
-func (s *simpleTraceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) types.Model {
+func (s *SimpleTraceCount) SetRaw(raw *RawTraceCount) {
+	s.raw = raw
+}
+
+func (s *SimpleTraceCount) Model(chain, format string, verbose bool, extraOptions map[string]any) Model {
 	var model = map[string]interface{}{}
 	var order = []string{}
 
@@ -53,14 +66,20 @@ func (s *simpleTraceCount) Model(chain, format string, verbose bool, extraOption
 	}
 	// EXISTING_CODE
 
-	return types.Model{
+	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
-func (s *simpleTraceCount) Date() string {
+func (s *SimpleTraceCount) Date() string {
 	return utils.FormattedDate(s.Timestamp)
+}
+
+// FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
+func (s *SimpleTraceCount) FinishUnmarshal() {
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
 
 // EXISTING_CODE

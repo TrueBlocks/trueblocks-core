@@ -79,7 +79,9 @@ func GetWhenOptions(args []string) (*WhenOptions, error) {
 }
 
 type whenGeneric interface {
-	types.SimpleNamedBlock
+	types.SimpleNamedBlock |
+		types.SimpleTimestamp |
+		types.SimpleTimestampCount
 }
 
 func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *rpc.MetaData, error) {
@@ -96,20 +98,20 @@ func queryWhen[T whenGeneric](opts *WhenOptions) ([]T, *rpc.MetaData, error) {
 	}
 }
 
-// When implements the chifra when command for the SDK.
+// When implements the chifra when command.
 func (opts *WhenOptions) When() ([]types.SimpleNamedBlock, *rpc.MetaData, error) {
 	return queryWhen[types.SimpleNamedBlock](opts)
 }
 
-// // WhenTimestamps implements the chifra when command for the SDK.
-// func (opts *WhenOptions) WhenTimestamps() ([]types.SimpleTimestamp, *rpc.MetaData, error) {
-// 	return querywhen[types.SimpleTimestamp](opts)
-// }
+// WhenTimestamps implements the chifra when --timestamps command.
+func (opts *WhenOptions) WhenTimestamps() ([]types.SimpleTimestamp, *rpc.MetaData, error) {
+	return queryWhen[types.SimpleTimestamp](opts)
+}
 
-// // WhenTimestampCount implements the chifra when command for the SDK.
-// func (opts *WhenOptions) WhenTimestampCount() ([]types.SimpleTimestamp, *rpc.MetaData, error) {
-// 	return querywhen[types.SimpleTimestamp](opts)
-// }
+// WhenCount implements the chifra when --count command.
+func (opts *WhenOptions) WhenCount() ([]types.SimpleTimestampCount, *rpc.MetaData, error) {
+	return queryWhen[types.SimpleTimestampCount](opts)
+}
 
 // No enums
 // EXISTING_CODE

@@ -81,7 +81,9 @@ func GetMonitorsOptions(args []string) (*MonitorsOptions, error) {
 }
 
 type monitorsGeneric interface {
-	types.SimpleMonitor
+	bool |
+		types.SimpleMonitorClean |
+		types.SimpleMonitor
 }
 
 func queryMonitors[T monitorsGeneric](opts *MonitorsOptions) ([]T, *rpc.MetaData, error) {
@@ -98,12 +100,20 @@ func queryMonitors[T monitorsGeneric](opts *MonitorsOptions) ([]T, *rpc.MetaData
 	}
 }
 
-// Monitors implements the chifra monitors command for the SDK.
-func (opts *MonitorsOptions) Monitors() ([]types.SimpleMonitor, *rpc.MetaData, error) {
-	return queryMonitors[types.SimpleMonitor](opts)
+// Monitors implements the chifra monitors command.
+func (opts *MonitorsOptions) Monitors() ([]bool, *rpc.MetaData, error) {
+	return queryMonitors[bool](opts)
 }
 
-// monitors-clean+monitorclean|monitors-list+monitor
+// MonitorsClean implements the chifra monitors --clean command.
+func (opts *MonitorsOptions) MonitorsClean() ([]types.SimpleMonitorClean, *rpc.MetaData, error) {
+	return queryMonitors[types.SimpleMonitorClean](opts)
+}
+
+// MonitorsList implements the chifra monitors --list command.
+func (opts *MonitorsOptions) MonitorsList() ([]types.SimpleMonitor, *rpc.MetaData, error) {
+	return queryMonitors[types.SimpleMonitor](opts)
+}
 
 // No enums
 // EXISTING_CODE

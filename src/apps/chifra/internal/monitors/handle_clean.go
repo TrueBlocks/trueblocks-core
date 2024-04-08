@@ -19,10 +19,10 @@ func (opts *MonitorsOptions) HandleClean() error {
 	_, monArray := monitor.GetMonitorMap(chain)
 
 	ctx := context.Background()
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawMonitorClean], errorChan chan error) {
 		for _, mon := range monArray {
 			addr := mon.Address.Hex()
-			s := simpleMonitorClean{
+			s := types.SimpleMonitorClean{
 				Address: mon.Address,
 			}
 			if testMode {

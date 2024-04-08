@@ -83,7 +83,7 @@ func GetStatusOptions(args []string) (*StatusOptions, error) {
 }
 
 type statusGeneric interface {
-	bool
+	// types.SimpleCacheItem
 }
 
 func queryStatus[T statusGeneric](opts *StatusOptions) ([]T, *rpc.MetaData, error) {
@@ -100,12 +100,10 @@ func queryStatus[T statusGeneric](opts *StatusOptions) ([]T, *rpc.MetaData, erro
 	}
 }
 
-// Status implements the chifra status command for the SDK.
-func (opts *StatusOptions) Status() ([]bool, *rpc.MetaData, error) {
-	return queryStatus[bool](opts)
-}
-
-// status-+status|status-modes+cacheitem|status-chains+chain
+// // Status implements the chifra status command.
+// func (opts *StatusOptions) Status() ([]types.SimpleCacheItem, *rpc.MetaData, error) {
+// 	return queryStatus[types.SimpleCacheItem](opts)
+// }
 
 type StatusModes int
 

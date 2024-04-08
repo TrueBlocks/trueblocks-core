@@ -82,7 +82,9 @@ func GetListOptions(args []string) (*ListOptions, error) {
 }
 
 type listGeneric interface {
-	types.SimpleAppearance
+	types.SimpleAppearance |
+		types.SimpleAppearanceCount |
+		types.SimpleBounds
 }
 
 func queryList[T listGeneric](opts *ListOptions) ([]T, *rpc.MetaData, error) {
@@ -99,12 +101,20 @@ func queryList[T listGeneric](opts *ListOptions) ([]T, *rpc.MetaData, error) {
 	}
 }
 
-// List implements the chifra list command for the SDK.
+// List implements the chifra list command.
 func (opts *ListOptions) List() ([]types.SimpleAppearance, *rpc.MetaData, error) {
 	return queryList[types.SimpleAppearance](opts)
 }
 
-// list-+appearance|list-count+appearancecount|list-bounds+bounds
+// ListCount implements the chifra list --count command.
+func (opts *ListOptions) ListCount() ([]types.SimpleAppearanceCount, *rpc.MetaData, error) {
+	return queryList[types.SimpleAppearanceCount](opts)
+}
+
+// ListBounds implements the chifra list --bounds command.
+func (opts *ListOptions) ListBounds() ([]types.SimpleBounds, *rpc.MetaData, error) {
+	return queryList[types.SimpleBounds](opts)
+}
 
 // No enums
 // EXISTING_CODE

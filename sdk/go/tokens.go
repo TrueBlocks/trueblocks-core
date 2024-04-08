@@ -19,6 +19,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	tokens "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/sdk"
 	// EXISTING_CODE
 )
@@ -84,7 +85,7 @@ func GetTokensOptions(args []string) (*TokensOptions, error) {
 }
 
 type tokensGeneric interface {
-	bool
+	types.SimpleToken
 }
 
 func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *rpc.MetaData, error) {
@@ -101,12 +102,10 @@ func queryTokens[T tokensGeneric](opts *TokensOptions) ([]T, *rpc.MetaData, erro
 	}
 }
 
-// Tokens implements the chifra tokens command for the SDK.
-func (opts *TokensOptions) Tokens() ([]bool, *rpc.MetaData, error) {
-	return queryTokens[bool](opts)
+// Tokens implements the chifra tokens command.
+func (opts *TokensOptions) Tokens() ([]types.SimpleToken, *rpc.MetaData, error) {
+	return queryTokens[types.SimpleToken](opts)
 }
-
-// tokens-+token
 
 type TokensParts int
 

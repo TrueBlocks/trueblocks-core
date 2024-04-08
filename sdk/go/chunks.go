@@ -99,7 +99,6 @@ func GetChunksOptions(args []string) (*ChunksOptions, error) {
 }
 
 type chunksGeneric interface {
-	bool
 }
 
 func queryChunks[T chunksGeneric](opts *ChunksOptions) ([]T, *rpc.MetaData, error) {
@@ -115,13 +114,6 @@ func queryChunks[T chunksGeneric](opts *ChunksOptions) ([]T, *rpc.MetaData, erro
 		return result.Data, &result.Meta, nil
 	}
 }
-
-// Chunks implements the chifra chunks command for the SDK.
-func (opts *ChunksOptions) Chunks() ([]bool, *rpc.MetaData, error) {
-	return queryChunks[bool](opts)
-}
-
-// chunks-mode+chunk[type]|chunks-pin+ipfspin
 
 type ChunksMode int
 

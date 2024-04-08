@@ -87,7 +87,9 @@ func GetNamesOptions(args []string) (*NamesOptions, error) {
 }
 
 type namesGeneric interface {
-	types.SimpleName
+	types.SimpleName |
+		base.Address |
+		string
 }
 
 func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *rpc.MetaData, error) {
@@ -104,12 +106,20 @@ func queryNames[T namesGeneric](opts *NamesOptions) ([]T, *rpc.MetaData, error) 
 	}
 }
 
-// Names implements the chifra names command for the SDK.
+// Names implements the chifra names command.
 func (opts *NamesOptions) Names() ([]types.SimpleName, *rpc.MetaData, error) {
 	return queryNames[types.SimpleName](opts)
 }
 
-// names-+name|names-addr+address|names-tags+tag
+// NamesAddr implements the chifra names --addr command.
+func (opts *NamesOptions) NamesAddr() ([]base.Address, *rpc.MetaData, error) {
+	return queryNames[base.Address](opts)
+}
+
+// NamesTags implements the chifra names --tags command.
+func (opts *NamesOptions) NamesTags() ([]string, *rpc.MetaData, error) {
+	return queryNames[string](opts)
+}
 
 // No enums
 // EXISTING_CODE

@@ -97,13 +97,13 @@ func GetBlocksOptions(args []string) (*BlocksOptions, error) {
 }
 
 type blocksGeneric interface {
-	types.SimpleBlock[string] |
-		types.SimpleBlock[types.SimpleTransaction] |
+	types.SimpleBlock[types.SimpleTransaction] |
+		types.SimpleBlock[string] |
 		types.SimpleTrace |
 		types.SimpleAppearance |
 		types.SimpleLog |
-		types.SimpleWithdrawal
-	// types.SimpleBlockCount
+		types.SimpleWithdrawal |
+		types.SimpleBlockCount
 }
 
 func queryBlocks[T blocksGeneric](opts *BlocksOptions) ([]T, *rpc.MetaData, error) {
@@ -120,40 +120,40 @@ func queryBlocks[T blocksGeneric](opts *BlocksOptions) ([]T, *rpc.MetaData, erro
 	}
 }
 
-// Blocks implements the chifra blocks command for the SDK.
+// Blocks implements the chifra blocks command.
 func (opts *BlocksOptions) Blocks() ([]types.SimpleBlock[types.SimpleTransaction], *rpc.MetaData, error) {
 	return queryBlocks[types.SimpleBlock[types.SimpleTransaction]](opts)
 }
 
-// BlocksHashes implements the chifra blocks command for the SDK.
+// BlocksHashes implements the chifra blocks --hashes command.
 func (opts *BlocksOptions) BlocksHashes() ([]types.SimpleBlock[string], *rpc.MetaData, error) {
 	return queryBlocks[types.SimpleBlock[string]](opts)
 }
 
-// BlocksTraces implements the chifra blocks command for the SDK.
+// BlocksTraces implements the chifra blocks --traces command.
 func (opts *BlocksOptions) BlocksTraces() ([]types.SimpleTrace, *rpc.MetaData, error) {
 	return queryBlocks[types.SimpleTrace](opts)
 }
 
-// BlocksUniq implements the chifra blocks command for the SDK.
+// BlocksUniq implements the chifra blocks --uniq command.
 func (opts *BlocksOptions) BlocksUniq() ([]types.SimpleAppearance, *rpc.MetaData, error) {
 	return queryBlocks[types.SimpleAppearance](opts)
 }
 
-// BlocksLogs implements the chifra blocks command for the SDK.
+// BlocksLogs implements the chifra blocks --logs command.
 func (opts *BlocksOptions) BlocksLogs() ([]types.SimpleLog, *rpc.MetaData, error) {
 	return queryBlocks[types.SimpleLog](opts)
 }
 
-// BlocksWithdrawals implements the chifra blocks command for the SDK.
+// BlocksWithdrawals implements the chifra blocks --withdrawals command.
 func (opts *BlocksOptions) BlocksWithdrawals() ([]types.SimpleWithdrawal, *rpc.MetaData, error) {
 	return queryBlocks[types.SimpleWithdrawal](opts)
 }
 
-// // BlocksCount implements the chifra blocks command for the SDK.
-// func (opts *BlocksOptions) BlocksCount() ([]types.SimpleBlockCount, *rpc.MetaData, error) {
-// 	return queryBlocks[types.SimpleBlockCount](opts)
-// }
+// BlocksCount implements the chifra blocks --count command.
+func (opts *BlocksOptions) BlocksCount() ([]types.SimpleBlockCount, *rpc.MetaData, error) {
+	return queryBlocks[types.SimpleBlockCount](opts)
+}
 
 type BlocksFlow int
 

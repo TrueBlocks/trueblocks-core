@@ -22,7 +22,7 @@ func (opts *TracesOptions) HandleCounts() error {
 	nErrors := 0
 
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawTraceCount], errorChan chan error) {
 		apps, _, err := identifiers.IdsToApps(chain, opts.TransactionIds)
 		if err != nil {
 			errorChan <- err
@@ -87,7 +87,7 @@ func (opts *TracesOptions) HandleCounts() error {
 				})
 
 				for _, item := range items {
-					counter := simpleTraceCount{
+					counter := types.SimpleTraceCount{
 						BlockNumber:      uint64(item.BlockNumber),
 						TransactionIndex: uint64(item.TransactionIndex),
 						TransactionHash:  item.Hash,

@@ -90,7 +90,7 @@ func queryLogs[T logsGeneric](opts *LogsOptions) ([]T, *rpc.MetaData, error) {
 	}
 }
 
-// Logs implements the chifra logs command for the SDK.
+// Logs implements the chifra logs command.
 func (opts *LogsOptions) Logs() ([]types.SimpleLog, *rpc.MetaData, error) {
 	return queryLogs[types.SimpleLog](opts)
 }

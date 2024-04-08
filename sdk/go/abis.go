@@ -98,7 +98,7 @@ func queryAbis[T abisGeneric](opts *AbisOptions) ([]T, *rpc.MetaData, error) {
 	}
 }
 
-// Abis implements the chifra abis command for the SDK.
+// Abis implements the chifra abis command.
 func (opts *AbisOptions) Abis() ([]types.SimpleFunction, *rpc.MetaData, error) {
 	return queryAbis[types.SimpleFunction](opts)
 }

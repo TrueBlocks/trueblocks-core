@@ -80,7 +80,6 @@ func GetConfigOptions(args []string) (*ConfigOptions, error) {
 }
 
 type configGeneric interface {
-	bool
 }
 
 func queryConfig[T configGeneric](opts *ConfigOptions) ([]T, *rpc.MetaData, error) {
@@ -95,11 +94,6 @@ func queryConfig[T configGeneric](opts *ConfigOptions) ([]T, *rpc.MetaData, erro
 	} else {
 		return result.Data, &result.Meta, nil
 	}
-}
-
-// Config implements the chifra config command for the SDK.
-func (opts *ConfigOptions) Config() ([]bool, *rpc.MetaData, error) {
-	return queryConfig[bool](opts)
 }
 
 type ConfigMode int

@@ -88,7 +88,7 @@ func queryReceipts[T receiptsGeneric](opts *ReceiptsOptions) ([]T, *rpc.MetaData
 	}
 }
 
-// Receipts implements the chifra receipts command for the SDK.
+// Receipts implements the chifra receipts command.
 func (opts *ReceiptsOptions) Receipts() ([]types.SimpleReceipt, *rpc.MetaData, error) {
 	return queryReceipts[types.SimpleReceipt](opts)
 }

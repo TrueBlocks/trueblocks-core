@@ -74,7 +74,6 @@ func GetInitOptions(args []string) (*InitOptions, error) {
 }
 
 type initGeneric interface {
-	bool
 }
 
 func queryInit[T initGeneric](opts *InitOptions) ([]T, *rpc.MetaData, error) {
@@ -89,11 +88,6 @@ func queryInit[T initGeneric](opts *InitOptions) ([]T, *rpc.MetaData, error) {
 	} else {
 		return result.Data, &result.Meta, nil
 	}
-}
-
-// Init implements the chifra init command for the SDK.
-func (opts *InitOptions) Init() ([]bool, *rpc.MetaData, error) {
-	return queryInit[bool](opts)
 }
 
 // No enums
