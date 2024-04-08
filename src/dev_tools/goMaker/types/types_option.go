@@ -17,7 +17,7 @@ type Option struct {
 	Attributes    string   `json:"attributes" csv:"attributes"`
 	OptionType    string   `json:"option_type" csv:"option_type"`
 	DataType      string   `json:"data_type" csv:"data_type"`
-	ReturnTypes   string   `json:"return_types,omitempty" csv:"return_types"`
+	ReturnType    string   `json:"return_type,omitempty" csv:"return_type"`
 	Summary       string   `json:"summary,omitempty" csv:"summary"`
 	Usage         string   `json:"usage,omitempty" csv:"usage"`
 	Capabilities  string   `json:"capabilities,omitempty" csv:"capabilities"`
@@ -84,7 +84,7 @@ func readCmdOption(op *Option, data *any) (bool, error) {
 	op.Attributes = strings.Trim(op.Attributes, wss)
 	op.OptionType = strings.Trim(op.OptionType, wss)
 	op.DataType = strings.Trim(op.DataType, wss)
-	op.ReturnTypes = strings.Trim(op.ReturnTypes, wss)
+	op.ReturnType = strings.Trim(op.ReturnType, wss)
 	op.Summary = strings.Trim(op.Summary, wss)
 	op.Usage = strings.Trim(op.Usage, wss)
 	op.Capabilities = strings.Trim(op.Capabilities, wss)
@@ -743,4 +743,42 @@ func (op *Option) RequestOpt() string {
 
 func (op *Option) executeTemplate(name, tmplCode string) string {
 	return executeTemplate(op, "option", name, tmplCode)
+}
+
+func (op *Option) RetType() string {
+	v := op.ReturnType
+	if v != "string" && v != "base.Address" && v != "bool" {
+		v = "types.Simple" + FirstUpper(v)
+	}
+	return v
+}
+
+func (op *Option) ToolTurd() string {
+	if op.Tool == "" {
+		return ""
+	}
+	return "--" + Lower(op.Tool) + " "
+}
+
+func (op *Option) SdkEndpoint() string {
+	if len(op.ReturnType) == 0 {
+		return ""
+	}
+
+	longName := FirstUpper(op.LongName)
+	if op.OptionType == "positional" {
+		longName = ""
+	}
+	opp := Option{
+		Route:      FirstUpper(op.Route),
+		Tool:       longName,
+		ReturnType: op.RetType(),
+	}
+	tmplName := "returnTypes"
+	tmpl := `	// {{.Route}}{{.Tool}} implements the chifra {{toLower .Route}} {{.ToolTurd}}command.
+func (opts *{{.Route}}Options) {{.Route}}{{.Tool}}() ([]{{.ReturnType}}, *rpc.MetaData, error) {
+	return query{{.Route}}[{{.ReturnType}}](opts)
+}
+`
+	return opp.executeTemplate(tmplName, tmpl)
 }

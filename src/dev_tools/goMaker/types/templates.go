@@ -38,11 +38,13 @@ func getFuncMap() template.FuncMap {
 	toCamel := func(s string) string { return CamelCase(s) }
 	toLower := func(s string) string { return Lower(s) }
 	firstLower := func(s string) string { return FirstLower(s) }
+	firstUpper := func(s string) string { return FirstUpper(s) }
 	return template.FuncMap{
 		"toProper":   toProper,
 		"toCamel":    toCamel,
 		"toPlural":   toPlural,
 		"toLower":    toLower,
 		"firstLower": firstLower,
+		"firstUpper": firstUpper,
 	}
 }

@@ -60,7 +60,7 @@ func Get{{toProper .Route}}Options(args []string) (*{{toProper .Route}}Options, 
 }
 
 type {{toCamel .Route}}Generic interface {
-	{{.ReturnType}}
+	{{.ReturnTypes}}
 }
 
 func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toProper .Route}}Options) ([]T, *rpc.MetaData, error) {
@@ -77,12 +77,7 @@ func query{{toProper .Route}}[T {{toCamel .Route}}Generic](opts *{{toProper .Rou
 	}
 }
 
-// {{toProper .Route}} implements the chifra {{toLower .Route}} command for the SDK.
-func (opts *{{toProper .Route}}Options) {{toProper .Route}}() ([]{{.ReturnType}}, *rpc.MetaData, error) {
-	return query{{toProper .Route}}[{{.ReturnType}}](opts)
-}
-
-{{if ne .ReturnTypes ""}}// {{.ReturnTypes}}{{end}}
+{{if .HasSdkEndpoints}}{{.SdkEndpoints}}{{end}}
 
 {{.Enums2}}
 // EXISTING_CODE

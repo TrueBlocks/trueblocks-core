@@ -166,11 +166,6 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 		c := Command{
 			Options: append(theMap[route].Options, op),
 		}
-		val := ""
-		if len(op.ReturnTypes) > 0 {
-			val = Lower("|" + op.Route + "-" + op.LongName + "+" + op.ReturnTypes)
-		}
-		c.ReturnTypes = theMap[route].ReturnTypes + val
 		theMap[route] = c
 	}
 
@@ -196,7 +191,7 @@ func (cb *CodeBase) FinishLoad(baseTypes []Structure, options []Option, structMa
 				Description:  op.Description,
 				Options:      theMap[op.Route].Options,
 				Num:          op.Num,
-				ReturnTypes:  strings.Trim(theMap[op.Route].ReturnTypes, "|"),
+				ReturnType:   op.ReturnType,
 				Capabilities: op.Capabilities,
 				Usage:        op.Usage,
 				Folder:       op.Folder,

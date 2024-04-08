@@ -19,7 +19,7 @@ type Command struct {
 	Tool         string       `json:"tool,omitempty"`
 	Description  string       `json:"description,omitempty"`
 	Options      []Option     `json:"options,omitempty"`
-	ReturnTypes  string       `json:"return_types,omitempty"`
+	ReturnType   string       `json:"return_type,omitempty"`
 	Capabilities string       `json:"capabilities,omitempty"`
 	Usage        string       `json:"usage,omitempty"`
 	Summary      string       `json:"summary,omitempty"`
@@ -408,49 +408,6 @@ func (c *Command) OptFields() string {
 	return strings.Join(ret, "\n") + "\n"
 }
 
-func (c *Command) ReturnType() string {
-	switch c.Route {
-	case "blocks":
-		return "types.SimpleBlock[types.SimpleTransaction]"
-	case "transactions":
-		return "types.SimpleTransaction"
-	case "receipts":
-		return "types.SimpleReceipt"
-	case "logs":
-		return "types.SimpleLog"
-	case "traces":
-		return "types.SimpleTrace"
-	case "when":
-		return "types.SimpleNamedBlock"
-	case "state":
-		return "types.SimpleState"
-	case "tokens":
-		return "bool"
-	case "slurp":
-		return "types.SimpleSlurp"
-	case "names":
-		return "types.SimpleName"
-	case "abis":
-		return "types.SimpleFunction"
-	case "list":
-		return "types.SimpleAppearance"
-	case "export":
-		return "types.SimpleTransaction"
-	case "monitors":
-		return "types.SimpleMonitor"
-	case "config":
-		return "bool"
-	case "status":
-		return "bool"
-	case "chunks":
-		return "bool"
-	case "init":
-		return "bool"
-	default:
-		return "unknown return type"
-	}
-}
-
 // RequestOpts for tag {{.RequestOpts}}
 func (c *Command) RequestOpts() string {
 	ret := []string{}
@@ -659,10 +616,10 @@ func (cb *CodeBase) GroupList(filter string) []Command {
 	return ret
 }
 
-func (s *Command) BaseTypes() string {
-	filter := s.GroupName()
+func (c *Command) BaseTypes() string {
+	filter := c.GroupName()
 	typeMap := map[string]bool{}
-	for _, st := range s.cbPtr.Structures {
+	for _, st := range c.cbPtr.Structures {
 		g := st.GroupName()
 		if g == filter {
 			for _, m := range st.Members {
@@ -671,11 +628,90 @@ func (s *Command) BaseTypes() string {
 		}
 	}
 	ret := [][]string{}
-	for _, t := range s.cbPtr.BaseTypes {
+	for _, t := range c.cbPtr.BaseTypes {
 		if typeMap[t.Class] {
 			ret = append(ret, []string{t.Class, t.DocDescr, t.DocNotes})
 		}
 	}
 
 	return MarkdownTable([]string{"Type", "Description", "Notes"}, ret)
+}
+
+func (c *Command) HasSdkEndpoints() bool {
+	for _, op := range c.Options {
+		if len(op.ReturnType) > 0 {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *Command) ReturnTypes() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if len(op.ReturnType) > 0 {
+			ret = append(ret, op.RetType())
+		}
+	}
+	return strings.Join(ret, "|\n")
+}
+
+func (c *Command) SdkEndpoints() string {
+	ret := []string{}
+	for _, op := range c.Options {
+		if len(op.ReturnType) > 0 {
+			v := op.SdkEndpoint()
+			if len(v) > 0 {
+				ret = append(ret, v)
+			}
+		}
+	}
+	return strings.Join(ret, "\n")
+}
+
+func (c *Command) ReturnTypeFunc() string {
+	return c.ReturnTypeInner()
+}
+
+func (c *Command) ReturnTypeInner() string {
+	switch c.Route {
+	case "abis":
+		return "types.SimpleFunction"
+	case "blocks":
+		return "types.SimpleBlock[types.SimpleTransaction]"
+	case "chunks":
+		return "bool"
+	case "config":
+		return "bool"
+	case "export":
+		return "types.SimpleTransaction"
+	case "init":
+		return "bool"
+	case "list":
+		return "types.SimpleAppearance"
+	case "logs":
+		return "types.SimpleLog"
+	case "monitors":
+		return "types.SimpleMonitor"
+	case "names":
+		return "types.SimpleName"
+	case "receipts":
+		return "types.SimpleReceipt"
+	case "slurp":
+		return "types.SimpleSlurp"
+	case "state":
+		return "types.SimpleState"
+	case "status":
+		return "bool"
+	case "tokens":
+		return "bool"
+	case "traces":
+		return "types.SimpleTrace"
+	case "transactions":
+		return "types.SimpleTransaction"
+	case "when":
+		return "types.SimpleNamedBlock"
+	default:
+		return "unknown return type"
+	}
 }
