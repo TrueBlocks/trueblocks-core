@@ -105,7 +105,7 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 
 	apps := make([]types.SimpleAppearance, 0, 500000)
 	for i := 0; i < int(indexChunk.Header.AddressCount); i++ {
-		s := SimpleAppearanceTable{}
+		s := types.SimpleAppearanceTable{}
 		if err := binary.Read(indexChunk.File, binary.LittleEndian, &s.AddressRecord); err != nil {
 			return false, err
 		}
@@ -118,14 +118,14 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 		if discApps, err = indexChunk.ReadAppearancesAndReset(&discAddr); err != nil {
 			return false, err
 		}
-		s.Appearances = make([]AppRecord, 0, len(discApps))
+		s.Appearances = make([]types.AppRecord, 0, len(discApps))
 		for _, a := range discApps {
-			s.Appearances = append(s.Appearances, AppRecord{
+			s.Appearances = append(s.Appearances, types.AppRecord{
 				BlockNumber:      uint32(a.BlockNumber),
 				TransactionIndex: uint32(a.TransactionIndex),
 			})
 		}
-		s.AddressRecord = AddrRecord{
+		s.AddressRecord = types.AddrRecord{
 			Address: discAddr.Address,
 			Offset:  discAddr.Offset,
 			Count:   uint32(len(discApps)),
