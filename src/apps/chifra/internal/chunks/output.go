@@ -14,8 +14,6 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
@@ -146,14 +144,6 @@ func (opts *ChunksOptions) shouldShow(obj AddrRecord) bool {
 		}
 	}
 	return false
-}
-
-func FormattedTag(verbose bool, hash base.Hash) string {
-	if tag, ok := config.VersionTags[hash.Hex()]; !ok {
-		return utils.FormattedHash(verbose, hash.Hex())
-	} else {
-		return tag
-	}
 }
 
 func GetChunkStats(chain, path string) (s types.SimpleChunkStats, err error) {

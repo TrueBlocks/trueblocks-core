@@ -23,12 +23,12 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 	chain := opts.Globals.Chain
 	been_here := 0
 	ctx, cancel := context.WithCancel(context.Background())
-	fetchData := func(modelChan chan types.Modeler[types.RawModeler], errorChan chan error) {
+	fetchData := func(modelChan chan types.Modeler[types.RawChunkAddress], errorChan chan error) {
 		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
 		if opts.Globals.Verbose {
-			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-				return opts.handleResolvedRecords(modelChan, walker, path, first)
-			}
+			// showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			// 	return opts.handleResolvedRecords(modelChan, walker, path, first)
+			// }
 		} else {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 				if path != index.ToBloomPath(path) {
@@ -74,7 +74,7 @@ func (opts *ChunksOptions) HandleAddresses(blockNums []uint64) error {
 						return false, err
 					}
 
-					s := simpleChunkAddress{
+					s := types.SimpleChunkAddress{
 						Address: obj.Address,
 						Range:   indexChunk.Range.String(),
 						Offset:  uint64(obj.Offset),
